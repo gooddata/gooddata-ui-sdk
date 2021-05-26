@@ -16,6 +16,7 @@ import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IElementsQueryOptions } from '@gooddata/sdk-backend-spi';
 import { IElementsQueryResult } from '@gooddata/sdk-backend-spi';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
+import { IPlaceholder } from '@gooddata/sdk-ui';
 import { IRankingFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-backend-spi';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-backend-spi';
@@ -26,6 +27,7 @@ import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { RelativeGranularityOffset } from '@gooddata/sdk-backend-spi';
+import { ValuesOrPlaceholders } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public
@@ -124,11 +126,17 @@ export interface IAttributeElementsProps {
 // @public (undocumented)
 export interface IAttributeFilterButtonOwnProps {
     backend?: IAnalyticalBackend;
+    connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     filter?: IAttributeFilter;
+    FilterError?: React_2.ComponentType<{
+        error?: any;
+    }>;
     // @deprecated
     identifier?: string;
-    onApply: (filter: IAttributeFilter, isInverted: boolean) => void;
+    onApply?: (filter: IAttributeFilter, isInverted: boolean) => void;
     onError?: (error: any) => void;
+    parentFilterOverAttribute?: ObjRef;
+    parentFilters?: ValuesOrPlaceholders<IAttributeFilter>;
     title?: string;
     workspace?: string;
 }
@@ -150,6 +158,8 @@ export interface IAttributeFilterProps {
     locale?: string;
     onApply: (filter: IAttributeFilter) => void;
     onError?: OnError;
+    parentFilterOverAttribute?: ObjRef;
+    parentFilters?: IAttributeFilter[];
     title?: string;
     titleWithSelection?: boolean;
     workspace?: string;

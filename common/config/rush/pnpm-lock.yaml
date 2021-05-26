@@ -21661,6 +21661,7 @@ packages:
       stylelint: 13.13.0
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.0
+      ts-invariant: 0.7.3
       ts-jest: 26.5.5_jest@26.6.3+typescript@4.0.2
       tslib: 2.2.0
       typescript: 4.0.2

@@ -1,6 +1,10 @@
 // (C) 2021 GoodData Corporation
 
-import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IAttributeElement,
+    IElementsQueryAttributeFilter,
+} from "@gooddata/sdk-backend-spi";
 import { IntlShape } from "react-intl";
 import {
     AttributeListItem,
@@ -8,20 +12,33 @@ import {
     IElementQueryResultWithEmptyItems,
     isNonEmptyListItem,
 } from "../AttributeDropdown/types";
-import { filterObjRef, IAttributeFilter, idRef, ObjRef } from "@gooddata/sdk-model";
+import {
+    filterAttributeElements,
+    filterIsEmpty,
+    filterObjRef,
+    IAttributeFilter,
+    idRef,
+    isAttributeElementsByRef,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
-export const getAllTitleIntl = (intl: IntlShape, isInverted: boolean, empty: boolean, equal: boolean) => {
+export const getAllTitleIntl = (
+    intl: IntlShape,
+    isInverted: boolean,
+    empty: boolean,
+    equal: boolean,
+): string => {
     if ((isInverted && empty) || (!isInverted && equal)) {
         return intl.formatMessage({ id: "attrf.all" });
     }
     return intl.formatMessage({ id: "attrf.all_except" });
 };
 
-export const getNoneTitleIntl = (intl: IntlShape) => {
+export const getNoneTitleIntl = (intl: IntlShape): string => {
     return intl.formatMessage({ id: "gs.filterLabel.none" });
 };
 
-export const getItemsTitles = (selectedFilterOptions: IAttributeElement[]) => {
+export const getItemsTitles = (selectedFilterOptions: IAttributeElement[]): string => {
     return selectedFilterOptions.map((selectedOption) => selectedOption.title).join(", ");
 };
 
@@ -64,12 +81,22 @@ export const getElementTotalCount = async (
     return elements.totalCount;
 };
 
+/**
+ * @internal
+ */
+export interface ILoadElementsResult {
+    selectedOptions: Array<IAttributeElement>;
+    validOptions: IElementQueryResultWithEmptyItems;
+    totalCount: number;
+}
+
 export const getElements = async (
     validElements: IElementQueryResultWithEmptyItems,
     offset: number,
     limit: number,
-    loadElements: (offset: number, limit: number) => void,
-): Promise<void> => {
+    loadElements: (offset: number, limit: number) => Promise<ILoadElementsResult>,
+    force = false,
+): Promise<ILoadElementsResult> => {
     const currentElements = validElements ? validElements.items : [];
     const isQueryOutOfBound = offset + limit > currentElements.length;
     const isMissingDataInWindow = currentElements
@@ -83,8 +110,8 @@ export const getElements = async (
 
     const needsLoading = !hasAllData && (isQueryOutOfBound || isMissingDataInWindow);
 
-    if (needsLoading) {
-        loadElements(offset, limit);
+    if (needsLoading || force) {
+        return loadElements(offset, limit);
     }
 };
 
@@ -104,4 +131,31 @@ export const getObjRef = (filter: IAttributeFilter, identifier: string): ObjRef 
         );
         return idRef(identifier);
     }
+};
+
+export const getValidElementsFilters = (
+    parentFilters: IAttributeFilter[],
+    overAttribute: ObjRef,
+): IElementsQueryAttributeFilter[] => {
+    if (!parentFilters || !overAttribute) {
+        return [];
+    }
+
+    return parentFilters
+        .filter((parentFilter) => {
+            return (
+                !filterIsEmpty(parentFilter) &&
+                isAttributeElementsByRef(filterAttributeElements(parentFilter))
+            );
+        })
+        .map((attributeFilter) => {
+            return {
+                attributeFilter,
+                overAttribute: overAttribute,
+            };
+        });
+};
+
+export const isParentFilteringEnabled = (backend: IAnalyticalBackend): boolean => {
+    return !!backend.capabilities.supportsElementsQueryParentFiltering;
 };

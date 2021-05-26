@@ -8,16 +8,25 @@ import AttributeFilterComponentExample from "./AttributeFilterComponentExample";
 import AttributeElementsExample from "./AttributeElementsExample";
 import AttributeFilterExample from "./AttributeFilterExample";
 import AttributeFilterButtonExample from "./AttributeFilterButtonExample";
+import { AttributeParentChildFilterExample } from "./AttributeParentChildFilterExample";
+import { AttributeParentChildFilterButtonExample } from "./AttributeParentChildFilterButtonExample";
+import { AttributeParentChildFilterButtonWithPlaceholder } from "./AttributeParentChildFilterButtonWithPlaceholder";
 
 import AttributeFilterComponentExampleSRC from "./AttributeFilterComponentExample?raw";
 import AttributeElementsExampleSRC from "./AttributeElementsExample?raw";
 import AttributeFilterExampleSRC from "./AttributeFilterExample?raw";
 import AttributeFilterButtonExampleSRC from "./AttributeFilterButtonExample?raw";
+import AttributeParentChildFilterExampleSRC from "./AttributeParentChildFilterExample?raw";
+import AttributeParentChildFilterButtonExampleSRC from "./AttributeParentChildFilterButtonExample?raw";
+import AttributeParentChildFilterButtonWithPlaceholderSRC from "./AttributeParentChildFilterButtonWithPlaceholder?raw";
 
 import AttributeFilterComponentExampleSRCJS from "./AttributeFilterComponentExample?rawJS";
 import AttributeElementsExampleSRCJS from "./AttributeElementsExample?rawJS";
 import AttributeFilterExampleSRCJS from "./AttributeFilterExample?rawJS";
 import AttributeFilterButtonExampleSRCJS from "./AttributeFilterButtonExample?rawJS";
+import AttributeParentChildFilterExampleSRCJS from "./AttributeParentChildFilterExample?rawJS";
+import AttributeParentChildFilterButtonExampleSRCJS from "./AttributeParentChildFilterButtonExample?rawJS";
+import AttributeParentChildFilterButtonWithPlaceholderSRCJS from "./AttributeParentChildFilterButtonWithPlaceholder?rawJS";
 
 export const AttributeFilter = (): JSX.Element => (
     <div>
@@ -83,6 +92,54 @@ export const AttributeFilter = (): JSX.Element => (
             for={AttributeFilterButtonExample}
             source={AttributeFilterButtonExampleSRC}
             sourceJS={AttributeFilterButtonExampleSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <h2>Parent-Child AttributeFilter</h2>
+
+        <p>
+            Pass parent filter via parentFilters property and attribute over which should be the child filter
+            reduced via parentFilterOverAttribute property to create parent-child dependency between filters.
+        </p>
+
+        <ExampleWithSource
+            for={AttributeParentChildFilterExample}
+            source={AttributeParentChildFilterExampleSRC}
+            sourceJS={AttributeParentChildFilterExampleSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <h2>Parent-Child AttributeFilterButton</h2>
+
+        <p>
+            Pass parent filter via parentFilters property and attribute over which should be the child filter
+            reduced via parentFilterOverAttribute property to create parent-child dependency between filters.
+        </p>
+
+        <ExampleWithSource
+            for={AttributeParentChildFilterButtonExample}
+            source={AttributeParentChildFilterButtonExampleSRC}
+            sourceJS={AttributeParentChildFilterButtonExampleSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <h2>Parent-Child AttributeFilterButton with placeholders</h2>
+
+        <p>
+            Pass placeholder for parent filter via parentFilters property and attribute over which should be
+            the child filter reduced via parentFilterOverAttribute property to create parent-child dependency
+            between filters.
+        </p>
+
+        <p>Dependency implemented via Placeholders.</p>
+
+        <ExampleWithSource
+            for={AttributeParentChildFilterButtonWithPlaceholder}
+            source={AttributeParentChildFilterButtonWithPlaceholderSRC}
+            sourceJS={AttributeParentChildFilterButtonWithPlaceholderSRCJS}
         />
     </div>
 );
