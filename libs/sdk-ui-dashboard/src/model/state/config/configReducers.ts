@@ -1,12 +1,12 @@
 // (C) 2021 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { ResolvedDashboardConfig } from "../../types/commonTypes";
 import { ConfigState } from "./configState";
-import { DashboardConfig } from "../../types/commonTypes";
 
 type ConfigReducer<A extends Action> = CaseReducer<ConfigState, A>;
 
-const setConfig: ConfigReducer<PayloadAction<DashboardConfig>> = (state, action) => {
+const setConfig: ConfigReducer<PayloadAction<ResolvedDashboardConfig>> = (state, action) => {
     state.config = action.payload;
 };
 

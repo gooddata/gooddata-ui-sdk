@@ -22,7 +22,12 @@ export {
 export { loadingSelector } from "./state/loading/loadingSelectors";
 export { LoadingState } from "./state/loading/loadingState";
 export { ConfigState } from "./state/config/configState";
-export { configSelector } from "./state/config/configSelectors";
+export {
+    configSelector,
+    localeSelector,
+    separatorsSelector,
+    settingsSelector,
+} from "./state/config/configSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
 export { filterContextSelector } from "./state/filterContext/filterContextSelectors";
 export { LayoutState } from "./state/layout/layoutState";
@@ -52,6 +57,6 @@ export {
     LoadDashboard,
     DashboardCommandType,
 } from "./commands/dashboard";
-export { DashboardContext, DashboardConfig } from "./types/commonTypes";
+export { DashboardContext, DashboardConfig, ResolvedDashboardConfig } from "./types/commonTypes";
 
 export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";

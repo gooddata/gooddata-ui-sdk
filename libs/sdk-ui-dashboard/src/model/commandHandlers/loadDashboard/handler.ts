@@ -7,7 +7,7 @@ import { filterContextActions } from "../../state/filterContext";
 import { insightsActions } from "../../state/insights";
 import { layoutActions } from "../../state/layout";
 import { loadingActions } from "../../state/loading";
-import { DashboardConfig, DashboardContext } from "../../types/commonTypes";
+import { DashboardContext, ResolvedDashboardConfig } from "../../types/commonTypes";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { loadDashboardConfig } from "./loadDashboardConfig";
 import { configActions } from "../../state/config";
@@ -30,7 +30,7 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
 
         const [dashboardWithReferences, config]: [
             PromiseFnReturnType<typeof loadDashboardFromBackend>,
-            DashboardConfig,
+            ResolvedDashboardConfig,
         ] = yield all([call(loadDashboardFromBackend, ctx), call(loadDashboardConfig, ctx, cmd)]);
 
         const { dashboard, references } = dashboardWithReferences;

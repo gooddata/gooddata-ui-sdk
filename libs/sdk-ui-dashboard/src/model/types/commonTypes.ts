@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
-import { IAnalyticalBackend, IDateFilterConfig, ISettings } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDateFilterConfig, ISeparators, ISettings } from "@gooddata/sdk-backend-spi";
 import { IColorPalette, ObjRef } from "@gooddata/sdk-model";
+import { ILocale } from "@gooddata/sdk-ui";
 
 /**
  * Dashboard configuration can influence the available features, look and feel and behavior of the dashboard.
@@ -8,6 +9,16 @@ import { IColorPalette, ObjRef } from "@gooddata/sdk-model";
  * @internal
  */
 export type DashboardConfig = {
+    /**
+     * Locale to use for the dashboard.
+     */
+    locale?: ILocale;
+
+    /**
+     * Number separators to use for charts and KPIs on the dashboard.
+     */
+    separators?: ISeparators;
+
     /**
      * Settings may influence how the dashboard behaves or what features it exposes.
      */
@@ -24,6 +35,13 @@ export type DashboardConfig = {
      */
     colorPalette?: IColorPalette;
 };
+
+/**
+ * Completely resolved dashboard config.
+ *
+ * @internal
+ */
+export type ResolvedDashboardConfig = Required<DashboardConfig>;
 
 /**
  * Values in this context will be available to all sagas.
