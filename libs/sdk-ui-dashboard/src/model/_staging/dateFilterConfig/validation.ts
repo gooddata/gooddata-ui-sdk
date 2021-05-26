@@ -7,8 +7,11 @@ import {
     IDateFilterOption,
     IRelativeDateFilterForm,
     IRelativeDateFilterPreset,
+    ISettings,
 } from "@gooddata/sdk-backend-spi";
 import { DateGranularity } from "@gooddata/sdk-model";
+import includes from "lodash/includes";
+import { defaultDateFilterConfig } from "./defaultConfig";
 
 const isNotWeekGranularity = (granularity: DateFilterGranularity) => granularity !== DateGranularity.week;
 const isNotWeekPreset = (preset: IRelativeDateFilterPreset) => preset.granularity !== DateGranularity.week;
@@ -136,4 +139,22 @@ export function filterOutWeeks(config: IDateFilterConfig): IDateFilterConfig {
         ...relativeFormProp,
         relativePresets: relativePresets?.filter(isNotWeekPreset),
     };
+}
+
+const FallbackToDefault: DateFilterConfigValidationResult[] = ["ConflictingIdentifiers", "NoVisibleOptions"];
+
+/**
+ * Given the date filter config loaded from backend and the settings, this function will perform validation
+ * of the config and if needed also cleanup of invalid/disabled presets.
+ */
+export function getValidDateFilterConfig(
+    config: IDateFilterConfig,
+    settings: ISettings,
+): [IDateFilterConfig, DateFilterConfigValidationResult] {
+    const configValidation = validateDateFilterConfig(config);
+    const validConfig = !includes(FallbackToDefault, configValidation) ? config : defaultDateFilterConfig;
+
+    const dateFilterConfig = !settings.enableWeekFilters ? filterOutWeeks(validConfig) : validConfig;
+
+    return [dateFilterConfig, configValidation];
 }
