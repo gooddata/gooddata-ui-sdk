@@ -6,6 +6,11 @@ export { AttributeElements, IAttributeElementsProps } from "./AttributeElements/
 export { IAttributeElementsChildren } from "./AttributeElements/types";
 export { AttributeFilter, IAttributeFilterProps } from "./AttributeFilter/AttributeFilter";
 export {
+    AttributeFilterButton,
+    IAttributeFilterButtonProps,
+    IAttributeFilterButtonOwnProps,
+} from "./AttributeFilter/AttributeFilterButton";
+export {
     DateFilter,
     IDateFilterCallbackProps,
     IDateFilterOwnProps,

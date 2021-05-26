@@ -3,7 +3,6 @@ import React from "react";
 import { injectIntl } from "react-intl";
 import MediaQuery from "react-responsive";
 import {
-    filterObjRef,
     isPositiveAttributeFilter,
     filterAttributeElements,
     isAttributeElementsByValue,
@@ -12,8 +11,6 @@ import {
     IAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
-    ObjRef,
-    idRef,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
 
@@ -27,6 +24,7 @@ import {
     withContexts,
 } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants";
+import { getObjRef } from "./utils/AttributeFilterUtils";
 
 /**
  * @public
@@ -150,26 +148,6 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         }
     }
 
-    private getObjRef = (): ObjRef => {
-        const { filter, identifier } = this.props;
-
-        if (filter && identifier) {
-            throw new Error("Don't use both identifier and filter to specify the attribute to filter");
-        }
-
-        if (filter) {
-            return filterObjRef(filter);
-        }
-
-        if (identifier) {
-            // eslint-disable-next-line no-console
-            console.warn(
-                "Definition of an attribute using 'identifier' is deprecated, use 'filter' property instead. Please see the documentation of [AttributeFilter component](https://sdk.gooddata.com/gooddata-ui/docs/attribute_filter_component.html) for further details.",
-            );
-            return idRef(identifier);
-        }
-    };
-
     private getSelectedItems = (elements: IAttributeElements): Array<Partial<IAttributeElement>> => {
         if (isAttributeElementsByValue(elements)) {
             return elements.values.map(
@@ -208,12 +186,12 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         if (!force && this.state.isLoading) {
             return;
         }
-
+        const { filter, identifier } = this.props;
         this.setState({ error: null, isLoading: true });
 
         try {
             const attributes = this.getBackend().workspace(this.props.workspace).attributes();
-            const displayForm = await attributes.getAttributeDisplayForm(this.getObjRef());
+            const displayForm = await attributes.getAttributeDisplayForm(getObjRef(filter, identifier));
             const attribute = await attributes.getAttribute(displayForm.attribute);
 
             this.setState({ title: attribute.title, error: null, isLoading: false });
@@ -231,7 +209,7 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         const filterFactory = isInverted ? newNegativeAttributeFilter : newPositiveAttributeFilter;
 
         const filter = filterFactory(
-            this.getObjRef(),
+            getObjRef(this.props.filter, this.props.identifier),
             useUriElements
                 ? { uris: selectedItems.map((item) => item.uri) }
                 : { values: selectedItems.map((item) => item.title) },
@@ -258,7 +236,7 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
                                     return (
                                         <AttributeDropdown
                                             titleWithSelection={titleWithSelection}
-                                            displayForm={this.getObjRef()}
+                                            displayForm={getObjRef(this.props.filter, this.props.identifier)}
                                             backend={backend}
                                             workspace={workspace}
                                             onApply={this.onApply}

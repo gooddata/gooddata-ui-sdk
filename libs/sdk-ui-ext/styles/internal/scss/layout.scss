@@ -205,7 +205,7 @@ $gd-dashboards-section-description-color: var(
             vertical-align: top;
             margin-left: 0.5em;
             margin-right: 0.1em;
-            font-family: "Indigo";
+            font-family: $gd-font-indigo;
         }
 
         &.active::before {
