@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboard } from "@gooddata/sdk-backend-spi";
+import { IDashboard, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import { DashboardConfig, DashboardContext } from "../types/commonTypes";
 import { DateFilterConfigValidationResult } from "../_staging/dateFilterConfig/validation";
@@ -56,9 +56,17 @@ export interface DashboardLoaded extends IDashboardEvent {
         insights: IInsight[];
 
         /**
-         * Configuration
+         * Configuration in effect for the dashboard. If the config was provided via props, then
+         * that same config is sent here. If there was no config in props, then the dashboard component load resolved
+         * all the config and includes it here.
          */
         config: DashboardConfig;
+
+        /**
+         * Permissions in effect for the dashboard. If the permissions were provided via props, then those
+         * same permissions are included here. Otherwise the dashboard will load the permissions and include it here.
+         */
+        permissions: IWorkspacePermissions;
     };
 }
 
@@ -67,6 +75,8 @@ export interface DashboardLoaded extends IDashboardEvent {
  * @param ctx
  * @param dashboard
  * @param insights
+ * @param config
+ * @param permissions
  * @param correlationId
  *
  */
@@ -75,6 +85,7 @@ export function dashboardLoaded(
     dashboard: IDashboard,
     insights: IInsight[],
     config: DashboardConfig,
+    permissions: IWorkspacePermissions,
     correlationId?: string,
 ): DashboardLoaded {
     return {
@@ -85,6 +96,7 @@ export function dashboardLoaded(
             dashboard,
             insights,
             config,
+            permissions,
         },
     };
 }
