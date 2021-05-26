@@ -5,7 +5,7 @@ import {
     IDateFilterConfig,
     IDateFilterConfigsQueryResult,
     ISettings,
-    IWorkspaceSettings,
+    IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 import { LoadDashboard } from "../../commands/dashboard";
 import { all, call } from "redux-saga/effects";
@@ -19,6 +19,7 @@ import {
 import { eventDispatcher } from "../../eventEmitter/eventDispatcher";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { PromiseFnReturnType } from "../../types/sagas";
+import { ILocale } from "@gooddata/sdk-ui";
 
 function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
     const { backend, workspace } = ctx;
@@ -34,7 +35,7 @@ function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigs
         });
 }
 
-function loadSettingsForCurrentUser(ctx: DashboardContext): Promise<IWorkspaceSettings> {
+function loadSettingsForCurrentUser(ctx: DashboardContext): Promise<IUserWorkspaceSettings> {
     const { backend, workspace } = ctx;
 
     return backend.workspace(workspace).settings().getSettingsForCurrentUser();
@@ -50,8 +51,7 @@ const FallbackToDefault: DateFilterConfigValidationResult[] = ["ConflictingIdent
 
 /**
  * Given the date filter config loaded from backend and the settings, this function will perform validation
- * of the config and if needed also cleanup of invalid/disabled presents
- *
+ * of the config and if needed also cleanup of invalid/disabled presets.
  */
 function getValidDateFilterConfig(
     config: IDateFilterConfig,
@@ -63,6 +63,18 @@ function getValidDateFilterConfig(
     const dateFilterConfig = !settings.enableWeekFilters ? filterOutWeeks(validConfig) : validConfig;
 
     return [dateFilterConfig, configValidation];
+}
+
+function stripUserAndWorkspaceProps(userWorkspaceSettings: IUserWorkspaceSettings): ISettings {
+    const {
+        userId: _userId,
+        locale: _locale,
+        separators: _separators,
+        workspace: _workspace,
+        ...rest
+    } = userWorkspaceSettings;
+
+    return rest;
 }
 
 /**
@@ -112,8 +124,10 @@ export function* loadDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) 
     }
 
     return {
+        locale: settings.locale as ILocale,
+        separators: settings.separators,
         dateFilterConfig,
-        settings,
+        settings: stripUserAndWorkspaceProps(settings),
         colorPalette,
     } as DashboardConfig;
 }

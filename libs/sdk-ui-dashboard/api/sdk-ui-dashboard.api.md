@@ -20,6 +20,8 @@ import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { IInsight } from '@gooddata/sdk-model';
+import { ILocale } from '@gooddata/sdk-ui';
+import { ISeparators } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
@@ -60,6 +62,8 @@ export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD";
 
 // @internal
 export type DashboardConfig = {
+    locale?: ILocale;
+    separators?: ISeparators;
     settings?: ISettings;
     dateFilterConfig?: IDateFilterConfig;
     colorPalette?: IColorPalette;
