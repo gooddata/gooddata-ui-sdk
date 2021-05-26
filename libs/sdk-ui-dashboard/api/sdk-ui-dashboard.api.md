@@ -28,12 +28,12 @@ import { default as React_2 } from 'react';
 import { TypedUseSelectorHook } from 'react-redux';
 
 // @internal
-export const configSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../..").DashboardConfig, (res: import("./configState").ConfigState) => import("../..").DashboardConfig>;
+export const configSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, Required<import("../..").DashboardConfig>, (res: import("./configState").ConfigState) => Required<import("../..").DashboardConfig>>;
 
 // @internal (undocumented)
 export interface ConfigState {
     // (undocumented)
-    config?: DashboardConfig;
+    config?: ResolvedDashboardConfig;
 }
 
 // @internal (undocumented)
@@ -354,7 +354,7 @@ export type LoadingState = {
 };
 
 // @internal
-export const localeSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | undefined, (res: import("../..").DashboardConfig) => "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | undefined>;
+export const localeSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-ui").ILocale, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-ui").ILocale>;
 
 // @internal (undocumented)
 export type MenuButtonItem = {
@@ -367,10 +367,13 @@ export type MenuButtonItem = {
 export const NoTopBar: React_2.FC<ITopBarProps>;
 
 // @internal
-export const separatorsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators | undefined, (res: import("../..").DashboardConfig) => import("@gooddata/sdk-backend-spi").ISeparators | undefined>;
+export type ResolvedDashboardConfig = Required<DashboardConfig>;
 
 // @internal
-export const settingsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings | undefined, (res: import("../..").DashboardConfig) => import("@gooddata/sdk-backend-spi").ISettings | undefined>;
+export const separatorsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISeparators>;
+
+// @internal
+export const settingsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISettings>;
 
 // @internal (undocumented)
 export const TopBar: React_2.FC<ITopBarProps & IDefaultTopBarProps>;

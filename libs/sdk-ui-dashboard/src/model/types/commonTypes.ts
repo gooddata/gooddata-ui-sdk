@@ -37,6 +37,13 @@ export type DashboardConfig = {
 };
 
 /**
+ * Completely resolved dashboard config.
+ *
+ * @internal
+ */
+export type ResolvedDashboardConfig = Required<DashboardConfig>;
+
+/**
  * Values in this context will be available to all sagas.
  *
  * @internal

@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { DashboardConfig, DashboardContext } from "../../types/commonTypes";
+import { DashboardContext, ResolvedDashboardConfig } from "../../types/commonTypes";
 import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { LoadDashboard } from "../../commands/dashboard";
 import { all, call } from "redux-saga/effects";
@@ -90,5 +90,5 @@ export function* loadDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) 
         dateFilterConfig,
         settings: stripUserAndWorkspaceProps(settings),
         colorPalette,
-    } as DashboardConfig;
+    } as ResolvedDashboardConfig;
 }

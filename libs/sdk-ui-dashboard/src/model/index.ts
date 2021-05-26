@@ -57,6 +57,6 @@ export {
     LoadDashboard,
     DashboardCommandType,
 } from "./commands/dashboard";
-export { DashboardContext, DashboardConfig } from "./types/commonTypes";
+export { DashboardContext, DashboardConfig, ResolvedDashboardConfig } from "./types/commonTypes";
 
 export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
