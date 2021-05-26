@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { actionChannel, call, getContext, take } from "redux-saga/effects";
 import { DashboardCommands } from "../commands/dashboard";
-import { loadDashboardCommandHandler } from "./loadDashboardCommandHandler";
+import { loadDashboardCommandHandler } from "./loadDashboard/handler";
 import { DashboardContext } from "../types/commonTypes";
 
 /**

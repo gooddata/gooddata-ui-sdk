@@ -2,12 +2,13 @@
 
 import { IDashboard } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
-import { DashboardContext } from "../types/commonTypes";
+import { DashboardConfig, DashboardContext } from "../types/commonTypes";
+import { DateFilterConfigValidationResult } from "../_staging/dateFilterConfig/validation";
 
 /**
  * @internal
  */
-export type DashboardEventType = "GDC.DASHBOARD.EVT.LOADED";
+export type DashboardEventType = "GDC.DASHBOARD.EVT.LOADED" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
 
 /**
  * Base type for all dashboard events.
@@ -53,6 +54,11 @@ export interface DashboardLoaded extends IDashboardEvent {
          * Insights used on the dashboard.
          */
         insights: IInsight[];
+
+        /**
+         * Configuration
+         */
+        config: DashboardConfig;
     };
 }
 
@@ -61,19 +67,24 @@ export interface DashboardLoaded extends IDashboardEvent {
  * @param ctx
  * @param dashboard
  * @param insights
+ * @param correlationId
  *
  */
 export function dashboardLoaded(
     ctx: DashboardContext,
     dashboard: IDashboard,
     insights: IInsight[],
+    config: DashboardConfig,
+    correlationId?: string,
 ): DashboardLoaded {
     return {
         type: "GDC.DASHBOARD.EVT.LOADED",
         ctx,
+        correlationId,
         payload: {
             dashboard,
             insights,
+            config,
         },
     };
 }
@@ -85,4 +96,46 @@ export function dashboardLoaded(
 /**
  * @internal
  */
-export type DashboardEvents = DashboardLoaded;
+export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
+
+/**
+ * This event may occur while the dashboard is handling the Load Dashboard command and is loading and validating
+ * dashboard configuration from the backend.
+ *
+ * Part of that process is obtaining workspace's Date Filter configuration. If the date filter config stored in
+ * workspace has issues, then this event will occur.
+ *
+ * Note that this event is not a show stopper. The dashboard load will recover and fall back to a safe date
+ * filter configuration.
+ *
+ * @internal
+ */
+export interface DateFilterValidationFailed extends IDashboardEvent {
+    type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
+    payload: {
+        result: DateFilterValidationResult;
+    };
+}
+
+/**
+ * @internal
+ */
+export function dateFilterValidationFailed(
+    ctx: DashboardContext,
+    result: DateFilterValidationResult,
+    correlationId?: string,
+): DateFilterValidationFailed {
+    return {
+        type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED",
+        ctx,
+        correlationId,
+        payload: {
+            result,
+        },
+    };
+}
+
+/**
+ * @internal
+ */
+export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed;

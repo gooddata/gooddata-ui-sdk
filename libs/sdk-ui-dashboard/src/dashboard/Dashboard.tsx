@@ -15,6 +15,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { DashboardEventHandler } from "../model/events/eventHandler";
+import { DashboardConfig } from "../model/types/commonTypes";
 
 /**
  * @internal
@@ -42,7 +43,16 @@ export interface IDashboardProps {
     dashboardRef?: ObjRef;
 
     /**
+     * Configuration that can be used to modify dashboard features, capabilities and behavior.
+     *
+     * If not specified, then the dashboard will retrieve and use the essential configuration from the backend.
+     */
+    config?: DashboardConfig;
+
+    /**
      * Optionally specify event handlers to register at the dashboard creation time.
+     *
+     * TODO: this needs more attention.
      */
     eventHandlers?: DashboardEventHandler[];
 
@@ -128,7 +138,7 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 
     useEffect(() => {
         if (!loading && result === undefined) {
-            dispatch(loadDashboard());
+            dispatch(loadDashboard(props.config));
         }
     }, [loading, result]);
 
