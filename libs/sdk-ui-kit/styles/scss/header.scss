@@ -327,7 +327,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
             right: 11px;
             width: 12px;
             opacity: 0.5;
-            font-family: "Indigo";
+            font-family: $gd-font-indigo;
             text-align: center;
         }
     }
@@ -410,7 +410,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         width: 12px;
         opacity: 0.5;
         text-align: center;
-        font-family: "Indigo";
+        font-family: $gd-font-indigo;
         font-size: 18px;
         font-weight: 700;
     }

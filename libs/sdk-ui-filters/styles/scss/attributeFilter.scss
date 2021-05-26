@@ -83,7 +83,7 @@ $transition-length: 0.2s;
             color: $gd-color-state-blank;
             transition: $transition-length;
             margin-left: 0.5em;
-            font-family: "Indigo";
+            font-family: $gd-font-indigo;
             font-weight: normal;
             font-size: inherit;
         }

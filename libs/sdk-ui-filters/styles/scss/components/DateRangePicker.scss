@@ -127,7 +127,7 @@ $gd-day-picker-width: 268px;
             &::before {
                 display: block;
                 padding-top: 0.15em;
-                font-family: Indigo;
+                font-family: $gd-font-indigo;
                 font-size: 18px;
                 color: $gd-palette-primary-base;
             }
