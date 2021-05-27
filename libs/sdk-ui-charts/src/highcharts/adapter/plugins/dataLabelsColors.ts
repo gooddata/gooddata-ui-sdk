@@ -1,5 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import flatMap from "lodash/flatMap";
+// TODO remove this when IE11 support is dropped
+import "svg-classlist-polyfill";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     getChartType,
