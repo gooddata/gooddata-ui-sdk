@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IMetadataObject, IMetadataObjectBase, isMetadataObject } from "../types";
 
 /**
@@ -36,7 +36,8 @@ export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBas
  *
  * @public
  */
-export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> & IMeasureMetadataObjectBase & {id?: string};
+export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> &
+    IMeasureMetadataObjectBase & { id?: string };
 
 /**
  * Tests whether the provided object is of type {@link IMeasureMetadataObject}.
