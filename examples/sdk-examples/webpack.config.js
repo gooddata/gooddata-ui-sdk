@@ -194,7 +194,7 @@ module.exports = async (env, argv) => {
                         // Some npm modules no longer transpiled to ES5, which
                         // causes errors such in IE11.
                         const inclusionReg =
-                            /node_modules\/.*((lru-cache)|(react-intl)|(intl-messageformat))/;
+                            /node_modules\/.*((lru-cache)|(react-intl)|(intl-messageformat)|(yup)|highlight.js)/;
                         // On Windows, mPath use backslashes for folder separators. We need
                         // to convert these to forward slashes because our
                         // test regex, inclusionReg, contains one.

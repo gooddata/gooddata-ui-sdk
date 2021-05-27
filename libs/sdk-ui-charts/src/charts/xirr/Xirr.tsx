@@ -64,9 +64,12 @@ const WrappedXirr = withContexts(RenderXirr);
  * The "X" in the name means that the returns do not have to happen periodically (as in the standard IRR), but they can [happen at any day](https://en.wikipedia.org/wiki/Internal_rate_of_return#Exact_dates_of_cash_flows).
  * You must specify both the measure and date dimension.
  *
+ * @remarks For date parsing, we currently use the browser's Date constructor. There might be some differences
+ * between how browsers implement this, so for best results use the Day granularity if possible.
+ *
  * @beta
  */
-export const Xirr = (props: IXirrProps) => {
+export const Xirr = (props: IXirrProps): JSX.Element => {
     const [measure, attribute, filters] = useResolveValuesWithPlaceholders(
         [props.measure, props.attribute, props.filters],
         props.placeholdersResolutionContext,
