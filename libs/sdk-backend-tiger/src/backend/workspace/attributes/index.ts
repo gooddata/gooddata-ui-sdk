@@ -5,18 +5,28 @@ import {
     IElementsQueryFactory,
     IWorkspaceAttributesService,
     NotSupported,
+    IMetadataObject,
+    IDataSetMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerWorkspaceElements } from "./elements";
-import { ITigerClient, jsonApiHeaders, MetadataUtilities } from "@gooddata/api-client-tiger";
+import {
+    ITigerClient,
+    jsonApiHeaders,
+    MetadataUtilities,
+    JsonApiDatasetOutWithLinks,
+    JsonApiDatasetOutWithLinksTypeEnum,
+} from "@gooddata/api-client-tiger";
 import flatMap from "lodash/flatMap";
+import { invariant } from "ts-invariant";
+
 import {
     convertAttributesWithSideloadedLabels,
     convertAttributeWithSideloadedLabels,
     convertLabelWithSideloadedAttribute,
+    convertDatasetWithLinks,
 } from "../../../convertors/fromBackend/MetadataConverter";
-import { invariant } from "ts-invariant";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -57,6 +67,12 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
 
     getCommonAttributesBatch(): Promise<ObjRef[][]> {
         throw new NotSupported("not supported");
+    }
+
+    getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject> {
+        return this.authCall((client) => {
+            return loadAttributeDataset(client, this.workspace, ref);
+        });
     }
 }
 
@@ -115,4 +131,38 @@ function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAtt
     )
         .then(MetadataUtilities.mergeEntitiesResults)
         .then(convertAttributesWithSideloadedLabels);
+}
+
+function loadAttributeDataset(
+    client: ITigerClient,
+    workspace: string,
+    ref: ObjRef,
+): Promise<IDataSetMetadataObject> {
+    invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
+
+    return client.workspaceObjects
+        .getEntityAttributes(
+            {
+                workspaceId: workspace,
+                objectId: ref.identifier,
+            },
+            {
+                headers: jsonApiHeaders,
+                params: {
+                    include: "datasets",
+                },
+            },
+        )
+        .then((res) => {
+            // if this happens then its either bad query parameterization or the backend is hosed badly
+            invariant(
+                res.data.included && res.data.included.length > 0,
+                "server returned that attribute does not belong to any dataset",
+            );
+            const datasets = res.data.included.filter((include): include is JsonApiDatasetOutWithLinks => {
+                return include.type === JsonApiDatasetOutWithLinksTypeEnum.Dataset;
+            });
+
+            return convertDatasetWithLinks(datasets[0]);
+        });
 }

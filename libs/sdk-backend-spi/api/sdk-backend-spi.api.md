@@ -1640,6 +1640,7 @@ export interface IWidgetWithLayoutPath<TWidget = DashboardWidget> {
 export interface IWorkspaceAttributesService {
     elements(): IElementsQueryFactory;
     getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
+    getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
     getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;

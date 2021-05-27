@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IWorkspaceAttributesService,
@@ -8,6 +8,7 @@ import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     isCatalogAttribute,
+    IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 import { RecordingIndex } from "./types";
 import { RecordedElementQueryFactory } from "./elements";
@@ -88,5 +89,9 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
     public getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
         const loader = this.getAttribute.bind(this);
         return Promise.all(refs.map(loader));
+    }
+
+    public getAttributeDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
+        throw new NotSupported("not supported");
     }
 }

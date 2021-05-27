@@ -1,20 +1,25 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IElementsQueryFactory,
     IWorkspaceAttributesService,
     UnexpectedError,
+    IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata } from "@gooddata/api-model-bear";
 import { UriRef, ObjRef, uriRef } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { objRefToUri, objRefsToUris } from "../../../utils/api";
-import { BearWorkspaceElements } from "./elements";
 import {
     newAttributeDisplayFormMetadataObject,
     newAttributeMetadataObject,
 } from "@gooddata/sdk-backend-base";
+import invariant from "ts-invariant";
+
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { objRefToUri, objRefsToUris, getObjectIdFromUri } from "../../../utils/api";
+import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
+
+import { BearWorkspaceElements } from "./elements";
 
 export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -145,4 +150,19 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
                 .displayFormType(type),
         );
     };
+
+    public async getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject> {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
+        const objectId = getObjectIdFromUri(uri);
+
+        return this.authCall(async (sdk) => {
+            const usedBy = await sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
+                `/gdc/md/${this.workspace}/usedby2/${objectId}?types=dataSet`,
+            );
+
+            invariant(usedBy.entries.length > 0, "Attribute must have a dataset associated to it.");
+
+            return convertMetadataObjectXrefEntry("dataSet", usedBy.entries[0]);
+        });
+    }
 }
