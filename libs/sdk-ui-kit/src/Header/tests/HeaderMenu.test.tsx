@@ -8,7 +8,7 @@ import { IHeaderMenuItem } from "../typings";
 
 const sections: IHeaderMenuItem[][] = [
     [
-        { isActive: true, key: "dic", href: "http://yahoo.com" },
+        { isActive: true, key: "dic", href: "https://example.com" },
         { isActive: false, key: "account", href: "" },
         { isActive: false, key: "logout", href: "" },
     ],
@@ -27,7 +27,7 @@ describe("ReactHeaderMenu", () => {
         const headerMenu = mount(<Wrapped sections={sections} />);
 
         expect(headerMenu.find("li")).toHaveLength(3);
-        expect(headerMenu.find(".active").prop("href")).toEqual("http://yahoo.com");
+        expect(headerMenu.find(".active").prop("href")).toEqual("https://example.com");
     });
 
     it("should call click handler on menu item", () => {
