@@ -1,7 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IElementsQueryFactory } from "./elements";
-import { IAttributeDisplayFormMetadataObject, IAttributeMetadataObject } from "../fromModel/ldm/metadata";
+import {
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IMetadataObject,
+} from "../fromModel/ldm/metadata";
 
 /**
  * Service for querying additional attributes and attribute display forms data, and their elements.
@@ -64,4 +68,11 @@ export interface IWorkspaceAttributesService {
      * @returns promise returning batch of attribute references.
      */
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
+
+    /**
+     * Get information about the given attribute's dataset
+     * @param ref - ref of the attribute
+     * @returns promise of metadata object
+     */
+    getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
 }
