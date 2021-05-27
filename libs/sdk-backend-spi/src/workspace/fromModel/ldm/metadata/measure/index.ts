@@ -36,7 +36,7 @@ export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBas
  *
  * @public
  */
-export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> & IMeasureMetadataObjectBase;
+export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> & IMeasureMetadataObjectBase & {id?: string};
 
 /**
  * Tests whether the provided object is of type {@link IMeasureMetadataObject}.

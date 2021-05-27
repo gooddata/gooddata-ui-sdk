@@ -935,7 +935,9 @@ export interface IMeasureMetadataObjectBase {
 }
 
 // @public
-export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> & IMeasureMetadataObjectBase;
+export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> & IMeasureMetadataObjectBase & {
+    id?: string;
+};
 
 // @public (undocumented)
 export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIdentity {
