@@ -276,7 +276,7 @@ describe("withCaching", () => {
             backend
                 .organization(ORGANIZATION_ID)
                 .securitySettings()
-                .isUrlValid("https://google.com", "UI_EVENT");
+                .isUrlValid("https://example.com", "UI_EVENT");
 
             // now back to default options, will be new promise
             const second = backend

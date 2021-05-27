@@ -8,7 +8,7 @@ import { HeaderAccount } from "../HeaderAccount";
 import { IHeaderMenuItem } from "../typings";
 
 const menuItems: IHeaderMenuItem[] = [
-    { isActive: true, key: "gs.header.account", href: "http://yahoo.com" },
+    { isActive: true, key: "gs.header.account", href: "https://example.com" },
     { isActive: false, key: "gs.header.dic", href: "" },
     { isActive: false, key: "gs.header.logout", href: "" },
 ];
