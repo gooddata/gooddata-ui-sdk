@@ -103,7 +103,7 @@ const DropdownButton: React.FC<{
 }> = ({ isMobile, isOpen, title, subtitle }) => {
     return (
         <div
-            className={cx("gd-attribute-filter-button", {
+            className={cx("gd-attribute-filter-button", "s-attribute-filter-button", {
                 "is-active": isOpen,
                 "gd-attribute-filter-button-mobile": isMobile,
             })}

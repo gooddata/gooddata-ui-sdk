@@ -106,15 +106,15 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             {
                 closed: {},
                 opened: {
-                    clickSelector: ".s-product__wonderkid__explorer__touch_____3_",
+                    clickSelector: ".s-product__wonderkid__explorer__touch___3_",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 "select-all": {
-                    clickSelectors: [".s-product__wonderkid__explorer__touch_____3_", ".s-select_all"],
+                    clickSelectors: [".s-product__wonderkid__explorer__touch___3_", ".s-select_all"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 clear: {
-                    clickSelectors: [".s-product__wonderkid__explorer__touch_____3_", ".s-clear"],
+                    clickSelectors: [".s-product__wonderkid__explorer__touch___3_", ".s-clear"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
@@ -138,15 +138,15 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             {
                 closed: {},
                 opened: {
-                    clickSelector: ".s-product__all_except_wonderkid__expl_____3_",
+                    clickSelector: ".s-product__all_except_wonderkid__expl___3_",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 "select-all": {
-                    clickSelectors: [".s-product__all_except_wonderkid__expl_____3_", ".s-select_all"],
+                    clickSelectors: [".s-product__all_except_wonderkid__expl___3_", ".s-select_all"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 clear: {
-                    clickSelectors: [".s-product__all_except_wonderkid__expl_____3_", ".s-clear"],
+                    clickSelectors: [".s-product__all_except_wonderkid__expl___3_", ".s-clear"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
