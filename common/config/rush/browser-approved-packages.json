@@ -891,6 +891,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "svg-classlist-polyfill",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "svgo",
       "allowedCategories": [ "production" ]
     },
