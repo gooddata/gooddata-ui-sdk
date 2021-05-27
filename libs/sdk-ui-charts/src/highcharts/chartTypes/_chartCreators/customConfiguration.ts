@@ -1,13 +1,11 @@
 // (C) 2007-2021 GoodData Corporation
 import noop from "lodash/noop";
 import isString from "lodash/isString";
-import set from "lodash/set";
 import merge from "lodash/merge";
 import map from "lodash/map";
 import partial from "lodash/partial";
 import isEmpty from "lodash/isEmpty";
 import compact from "lodash/compact";
-import cloneDeep from "lodash/cloneDeep";
 import every from "lodash/every";
 import isNil from "lodash/isNil";
 import pickBy from "lodash/pickBy";
@@ -814,24 +812,49 @@ function getDataConfiguration(chartOptions: IChartOptions): HighchartsOptions {
 }
 
 function lineSeriesMapFn(seriesOrig: any) {
-    const series = cloneDeep(seriesOrig);
-    if (series.isDrillable) {
-        set(series, "marker.states.hover.fillColor", getLighterColor(series.color, HOVER_BRIGHTNESS));
-        set(series, "className", "gd-viz-tooltip-drilling-point");
-    } else {
-        set(series, "states.hover.halo.size", 0);
+    if (seriesOrig.isDrillable) {
+        return {
+            ...seriesOrig,
+            marker: {
+                ...seriesOrig?.marker,
+                states: {
+                    ...seriesOrig?.marker?.states,
+                    hover: {
+                        ...seriesOrig?.marker?.states?.hover,
+                        fillColor: getLighterColor(seriesOrig.color, HOVER_BRIGHTNESS),
+                    },
+                },
+            },
+        };
     }
 
-    return series;
+    return {
+        ...seriesOrig,
+        states: {
+            ...seriesOrig?.states,
+            hover: {
+                ...seriesOrig?.states?.hover,
+                halo: {
+                    ...seriesOrig?.states?.hover?.halo,
+                    size: 0,
+                },
+            },
+        },
+    };
 }
 
 function barSeriesMapFn(seriesOrig: any) {
-    const series = cloneDeep(seriesOrig);
-
-    set(series, "states.hover.brightness", HOVER_BRIGHTNESS);
-    set(series, "states.hover.enabled", series.isDrillable);
-
-    return series;
+    return {
+        ...seriesOrig,
+        states: {
+            ...seriesOrig?.states,
+            hover: {
+                ...seriesOrig?.states?.hover,
+                brightness: HOVER_BRIGHTNESS,
+                enabled: seriesOrig.isDrillable,
+            },
+        },
+    };
 }
 
 function getHeatMapHoverColor(config: any) {
@@ -867,14 +890,19 @@ function getHoverStyles({ type }: any, config: any) {
             seriesMapFn = barSeriesMapFn;
             break;
         case VisualizationTypes.HEATMAP:
-            seriesMapFn = (seriesOrig, config) => {
-                const series = cloneDeep(seriesOrig);
+            seriesMapFn = (series, config) => {
                 const color = getHeatMapHoverColor(config);
-
-                set(series, "states.hover.color", color);
-                set(series, "states.hover.enabled", series.isDrillable);
-
-                return series;
+                return {
+                    ...series,
+                    states: {
+                        ...series?.states,
+                        hover: {
+                            ...series?.states?.hover,
+                            color,
+                            enabled: series.isDrillable,
+                        },
+                    },
+                };
             };
             break;
 
@@ -893,26 +921,32 @@ function getHoverStyles({ type }: any, config: any) {
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
         case VisualizationTypes.TREEMAP:
-            seriesMapFn = (seriesOrig) => {
-                const series = cloneDeep(seriesOrig);
-
+            seriesMapFn = (series) => {
                 return {
                     ...series,
                     data: series.data.map((dataItemOrig: any) => {
-                        const dataItem = cloneDeep(dataItemOrig);
-                        const drilldown = dataItem?.drilldown;
+                        const drilldown = dataItemOrig?.drilldown;
+                        const pointHalo = !drilldown
+                            ? {
+                                  // see plugins/pointHalo.js
+                                  halo: {
+                                      ...dataItemOrig?.halo,
+                                      size: 0,
+                                  },
+                              }
+                            : {};
 
-                        set(
-                            dataItem,
-                            "states.hover.brightness",
-                            drilldown ? HOVER_BRIGHTNESS : MINIMUM_HC_SAFE_BRIGHTNESS,
-                        );
-
-                        if (!drilldown) {
-                            set(dataItem, "halo.size", 0); // see plugins/pointHalo.js
-                        }
-
-                        return dataItem;
+                        return {
+                            ...dataItemOrig,
+                            states: {
+                                ...dataItemOrig?.states,
+                                hover: {
+                                    ...dataItemOrig?.states?.hover,
+                                    brightness: drilldown ? HOVER_BRIGHTNESS : MINIMUM_HC_SAFE_BRIGHTNESS,
+                                },
+                            },
+                            ...pointHalo,
+                        };
                     }),
                 };
             };
