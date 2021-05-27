@@ -434,7 +434,7 @@ export class TableFacade {
          * Ensures correct autoResizeColumns
          */
         this.updateAutoResizedColumns(resizingConfig);
-        autoresizeAllColumns(this.columnApi, this.autoResizedColumns);
+        await autoresizeAllColumns(this.columnApi, this.autoResizedColumns);
     };
 
     private updateAutoResizedColumns = (resizingConfig: ColumnResizingConfig): void => {
