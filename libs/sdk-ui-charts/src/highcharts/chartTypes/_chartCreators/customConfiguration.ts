@@ -726,27 +726,28 @@ function getStackingConfiguration(
 
 function getSeries(series: any) {
     return series.map((seriesItem: any) => {
-        const item = cloneDeep(seriesItem);
-        // Escaping is handled by highcharts so we don't want to provide escaped input.
-        // With one exception, though. Highcharts supports defining styles via
-        // for example <b>...</b> and parses that from series name.
-        // So to avoid this parsing, escape only < and > to &lt; and &gt;
-        // which is understood by highcharts correctly
-        item.name = item.name && escapeAngleBrackets(item.name);
+        return {
+            ...seriesItem,
 
-        // Escape data items for pie chart
-        item.data = item.data.map((dataItem: any) => {
-            if (!dataItem) {
-                return dataItem;
-            }
+            // Escaping is handled by highcharts so we don't want to provide escaped input.
+            // With one exception, though. Highcharts supports defining styles via
+            // for example <b>...</b> and parses that from series name.
+            // So to avoid this parsing, escape only < and > to &lt; and &gt;
+            // which is understood by highcharts correctly
+            name: seriesItem?.name && escapeAngleBrackets(seriesItem?.name),
 
-            return {
-                ...dataItem,
-                name: escapeAngleBrackets(dataItem.name),
-            };
-        });
+            // Escape data items for pie chart
+            data: seriesItem?.data?.map((dataItem: any) => {
+                if (!dataItem) {
+                    return dataItem;
+                }
 
-        return item;
+                return {
+                    ...dataItem,
+                    name: escapeAngleBrackets(dataItem.name),
+                };
+            }),
+        };
     });
 }
 
