@@ -24,7 +24,7 @@ import { alertsSelector } from "../model/state/alerts/alertsSelectors";
 import { layoutSelector } from "../model/state/layout/layoutSelectors";
 import { filterContextSelector } from "../model/state/filterContext/filterContextSelectors";
 import { insightsSelector } from "../model/state/insights/insightsSelectors";
-import { EmptyDashboardError } from "@gooddata/sdk-ui-ext/src/dashboardView/EmptyDashboardError";
+import { EmptyDashboardError } from "@gooddata/sdk-ui-ext/esm/dashboardView/EmptyDashboardError";
 import {
     settingsSelector,
     colorPaletteSelector,
