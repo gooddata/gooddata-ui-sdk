@@ -1,6 +1,13 @@
 // (C) 2021 GoodData Corporation
 
 import { LoadDashboard, RenameDashboard, ResetDashboard, SaveDashboard, SaveDashboardAs } from "./dashboard";
+import {
+    AddAttributeFilter,
+    ChangeAttributeFilterSelection,
+    MoveAttributeFilter,
+    RemoveAttributeFilters,
+    SetAttributeFilterParent,
+} from "./filters";
 
 export { DashboardCommandType, IDashboardCommand } from "./base";
 export {
@@ -15,6 +22,20 @@ export {
     ResetDashboard,
     resetDashboard,
 } from "./dashboard";
+export {
+    AddAttributeFilter,
+    addAttributeFilter,
+    MoveAttributeFilter,
+    moveAttributeFilter,
+    RemoveAttributeFilters,
+    removeAttributeFilter,
+    ChangeAttributeFilterSelection,
+    AttributeFilterSelectionType,
+    resetAttributeFilterSelection,
+    changeAttributeFilterSelection,
+    SetAttributeFilterParent,
+    setAttributeFilterParent,
+} from "./filters";
 
 /**
  * @internal
@@ -24,4 +45,9 @@ export type DashboardCommands =
     | SaveDashboard
     | SaveDashboardAs
     | RenameDashboard
-    | ResetDashboard;
+    | ResetDashboard
+    | AddAttributeFilter
+    | RemoveAttributeFilters
+    | MoveAttributeFilter
+    | ChangeAttributeFilterSelection
+    | SetAttributeFilterParent;

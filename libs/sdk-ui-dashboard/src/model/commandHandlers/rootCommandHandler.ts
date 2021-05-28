@@ -38,6 +38,21 @@ export function* rootCommandHandler() {
             case "GDC.DASHBOARD.CMD.SAVEAS": {
                 break;
             }
+            case "GDC.DASHBOARD.CMD.AF.ADD": {
+                break;
+            }
+            case "GDC.DASHBOARD.CMD.AF.REMOVE": {
+                break;
+            }
+            case "GDC.DASHBOARD.CMD.AF.MOVE": {
+                break;
+            }
+            case "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION": {
+                break;
+            }
+            case "GDC.DASHBOARD.CMD.AF.SET_PARENT": {
+                break;
+            }
             default: {
                 // TODO: emit unhandled command event
                 break;

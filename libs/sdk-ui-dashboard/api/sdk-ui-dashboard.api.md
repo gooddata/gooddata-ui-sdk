@@ -10,6 +10,7 @@ import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
 import { Dispatch } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttributeElements } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
 import { ICatalogFact } from '@gooddata/sdk-backend-spi';
@@ -17,6 +18,7 @@ import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
+import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
@@ -39,6 +41,25 @@ import { default as React_2 } from 'react';
 import { TypedUseSelectorHook } from 'react-redux';
 
 // @internal (undocumented)
+export interface AddAttributeFilter extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly displayForm: ObjRef;
+        readonly index: number;
+        readonly parentFilter?: IDashboardAttributeFilterParent;
+        readonly initialSelection?: IAttributeElements;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.AF.ADD";
+}
+
+// @internal
+export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string): AddAttributeFilter;
+
+// @internal (undocumented)
+export type AttributeFilterSelectionType = "IN" | "NOT_IN";
+
+// @internal (undocumented)
 export interface CatalogState {
     // (undocumented)
     attributes?: ICatalogAttribute[];
@@ -49,6 +70,21 @@ export interface CatalogState {
     // (undocumented)
     measures?: ICatalogMeasure[];
 }
+
+// @internal (undocumented)
+export interface ChangeAttributeFilterSelection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly filterLocalId: string;
+        readonly elements: IAttributeElements;
+        readonly selectionType: AttributeFilterSelectionType;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION";
+}
+
+// @internal
+export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @internal (undocumented)
 export type CommandFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
@@ -99,10 +135,10 @@ export interface DashboardCommandRejected extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard;
+export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent;
 
 // @internal
-export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD" | "GDC.DASHBOARD.CMD.SAVE" | "GDC.DASHBOARD.CMD.SAVEAS" | "GDC.DASHBOARD.CMD.RESET" | "GDC.DASHBOARD.CMD.RENAME";
+export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD" | "GDC.DASHBOARD.CMD.SAVE" | "GDC.DASHBOARD.CMD.SAVEAS" | "GDC.DASHBOARD.CMD.RESET" | "GDC.DASHBOARD.CMD.RENAME" | "GDC.DASHBOARD.CMD.AF.ADD" | "GDC.DASHBOARD.CMD.AF.REMOVE" | "GDC.DASHBOARD.CMD.AF.MOVE" | "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION" | "GDC.DASHBOARD.CMD.AF.SET_PARENT";
 
 // @internal
 export type DashboardConfig = {
@@ -479,6 +515,20 @@ export type MenuButtonItem = {
 };
 
 // @internal (undocumented)
+export interface MoveAttributeFilter extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly filterLocalId: string;
+        readonly index: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.AF.MOVE";
+}
+
+// @internal
+export function moveAttributeFilter(filterLocalId: string, index: number, correlationId?: string): MoveAttributeFilter;
+
+// @internal (undocumented)
 export const NoTopBar: React_2.FC<ITopBarProps>;
 
 // @internal
@@ -488,6 +538,19 @@ export const permissionsSelector: import("@reduxjs/toolkit").OutputSelector<Dash
 export interface PermissionsState {
     // (undocumented)
     permissions?: IWorkspacePermissions;
+}
+
+// @internal
+export function removeAttributeFilter(filterLocalId: string, correlationId?: string): RemoveAttributeFilters;
+
+// @internal (undocumented)
+export interface RemoveAttributeFilters extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly filterLocalId: string[];
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.AF.REMOVE";
 }
 
 // @internal (undocumented)
@@ -502,6 +565,9 @@ export interface RenameDashboard extends IDashboardCommand {
 
 // @internal
 export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard;
+
+// @internal
+export function resetAttributeFilterSelection(filterLocalId: string, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @internal (undocumented)
 export interface ResetDashboard extends IDashboardCommand {
@@ -544,6 +610,20 @@ export function saveDashboardAs(identifier?: string, title?: string, correlation
 
 // @internal
 export const separatorsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISeparators>;
+
+// @internal (undocumented)
+export interface SetAttributeFilterParent extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly filterLocalId: string;
+        readonly parentFilter: IDashboardAttributeFilterParent;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.AF.SET_PARENT";
+}
+
+// @internal
+export function setAttributeFilterParent(filterLocalId: string, parentFilter: IDashboardAttributeFilterParent, correlationId?: string): SetAttributeFilterParent;
 
 // @internal
 export const settingsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISettings>;
