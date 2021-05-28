@@ -25,6 +25,13 @@ export interface IMeasureMetadataObjectBase {
 }
 
 /**
+ * @internal
+ */
+export interface IMetadataObjectDefinition
+    extends Partial<IMetadataObjectBase>,
+        Partial<Pick<IMetadataObject, "id">> {}
+
+/**
  * Measure metadata object
  *
  * @public
@@ -36,8 +43,7 @@ export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBas
  *
  * @public
  */
-export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> &
-    IMeasureMetadataObjectBase & { id?: string };
+export type IMeasureMetadataObjectDefinition = IMetadataObjectDefinition & IMeasureMetadataObjectBase;
 
 /**
  * Tests whether the provided object is of type {@link IMeasureMetadataObject}.
