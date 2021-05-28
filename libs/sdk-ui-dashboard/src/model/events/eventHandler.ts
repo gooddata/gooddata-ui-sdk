@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
-import { DashboardEvents, DashboardEventType } from "./dashboard";
+import { DashboardEventType } from "./base";
+import { DashboardEvents } from "./index";
 
 /**
  * Event handlers can be registered for a dashboard. All events that occur during dashboard processing will be

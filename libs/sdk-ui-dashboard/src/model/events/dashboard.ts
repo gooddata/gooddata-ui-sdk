@@ -4,33 +4,7 @@ import { IDashboard, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import { DashboardConfig, DashboardContext } from "../types/commonTypes";
 import { DateFilterConfigValidationResult } from "../_staging/dateFilterConfig/validation";
-
-/**
- * @internal
- */
-export type DashboardEventType = "GDC.DASHBOARD.EVT.LOADED" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
-
-/**
- * Base type for all dashboard events.
- *
- * @internal
- */
-export interface IDashboardEvent {
-    /**
-     * Event type. Always starts with "GDC.DASHBOARD.EVT".
-     */
-    readonly type: DashboardEventType;
-
-    /**
-     * If this event was triggered as part of a command processing, then the prop will contain command's correlation ID.
-     */
-    readonly correlationId?: string;
-
-    /**
-     * Dashboard context in which the event occurred.
-     */
-    readonly ctx: DashboardContext;
-}
+import { IDashboardEvent } from "./base";
 
 //
 //
@@ -43,43 +17,33 @@ export interface IDashboardEvent {
  * @internal
  */
 export interface DashboardLoaded extends IDashboardEvent {
-    type: "GDC.DASHBOARD.EVT.LOADED";
-    payload: {
+    readonly type: "GDC.DASHBOARD.EVT.D.LOADED";
+    readonly payload: {
         /**
          * Loaded dashboard.
          */
-        dashboard: IDashboard;
+        readonly dashboard: IDashboard;
 
         /**
          * Insights used on the dashboard.
          */
-        insights: IInsight[];
+        readonly insights: ReadonlyArray<IInsight>;
 
         /**
          * Configuration in effect for the dashboard. If the config was provided via props, then
          * that same config is sent here. If there was no config in props, then the dashboard component load resolved
          * all the config and includes it here.
          */
-        config: DashboardConfig;
+        readonly config: DashboardConfig;
 
         /**
          * Permissions in effect for the dashboard. If the permissions were provided via props, then those
          * same permissions are included here. Otherwise the dashboard will load the permissions and include it here.
          */
-        permissions: IWorkspacePermissions;
+        readonly permissions: IWorkspacePermissions;
     };
 }
 
-/**
- *
- * @param ctx
- * @param dashboard
- * @param insights
- * @param config
- * @param permissions
- * @param correlationId
- *
- */
 export function dashboardLoaded(
     ctx: DashboardContext,
     dashboard: IDashboard,
@@ -89,7 +53,7 @@ export function dashboardLoaded(
     correlationId?: string,
 ): DashboardLoaded {
     return {
-        type: "GDC.DASHBOARD.EVT.LOADED",
+        type: "GDC.DASHBOARD.EVT.D.LOADED",
         ctx,
         correlationId,
         payload: {
@@ -97,6 +61,151 @@ export function dashboardLoaded(
             insights,
             config,
             permissions,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * This event is emitted at the end of successful dashboard save command processing. At this point, the
+ * dashboard state is persisted on the backend.
+ *
+ * @internal
+ */
+export interface DashboardSaved extends IDashboardEvent {
+    readonly type: "GDC.DASHBOARD.EVT.D.SAVED";
+    readonly payload: {
+        /**
+         * Definition of the saved dashboard.
+         */
+        readonly dashboard: IDashboard;
+
+        /**
+         * Indicates whether this was the initial save and thus a new dashboard object was created or whether
+         * an existing dashboard was updated.
+         */
+        readonly newDashboard: boolean;
+    };
+}
+
+export function dashboardSaved(
+    ctx: DashboardContext,
+    dashboard: IDashboard,
+    newDashboard: boolean,
+    correlationId?: string,
+): DashboardSaved {
+    return {
+        type: "GDC.DASHBOARD.EVT.D.SAVED",
+        ctx,
+        correlationId,
+        payload: {
+            dashboard,
+            newDashboard,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * This event is emitted at the end of successful 'dashboard save as' command processing. At this point, a new
+ * dashboard exists on the backend.
+ *
+ * @internal
+ */
+export interface DashboardCopySaved extends IDashboardEvent {
+    readonly type: "GDC.DASHBOARD.EVT.D.COPY_SAVED";
+    readonly payload: {
+        /**
+         * Definition of the newly created dashboard copy.
+         */
+        readonly dashboard: IDashboard;
+    };
+}
+
+export function dashboardCopySaved(
+    ctx: DashboardContext,
+    dashboard: IDashboard,
+    correlationId?: string,
+): DashboardCopySaved {
+    return {
+        type: "GDC.DASHBOARD.EVT.D.COPY_SAVED",
+        ctx,
+        correlationId,
+        payload: {
+            dashboard,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * This event is emitted at the end of successful 'dashboard rename' command processing. At this point, only the
+ * in-memory title is changed and the changes are not saved on the backend.
+ *
+ * @internal
+ */
+export interface DashboardRenamed extends IDashboardEvent {
+    readonly type: "GDC.DASHBOARD.EVT.D.RENAMED";
+    readonly payload: {
+        /**
+         * The new title of the dashboard.
+         */
+        readonly newTitle: string;
+    };
+}
+
+export function dashboardRenamed(
+    ctx: DashboardContext,
+    newTitle: string,
+    correlationId?: string,
+): DashboardRenamed {
+    return {
+        type: "GDC.DASHBOARD.EVT.D.RENAMED",
+        ctx,
+        correlationId,
+        payload: {
+            newTitle,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * This event is emitted at the end of successful 'dashboard reset' command processing. At this point, the
+ * dashboard is reset to the state it was after initial load.
+ *
+ * @internal
+ */
+export interface DashboardWasReset extends IDashboardEvent {
+    readonly type: "GDC.DASHBOARD.EVT.D.RESET";
+    readonly payload: {
+        dashboard: IDashboard;
+    };
+}
+
+export function dashboardWasReset(
+    ctx: DashboardContext,
+    dashboard: IDashboard,
+    correlationId?: string,
+): DashboardWasReset {
+    return {
+        type: "GDC.DASHBOARD.EVT.D.RESET",
+        ctx,
+        correlationId,
+        payload: {
+            dashboard,
         },
     };
 }
@@ -123,15 +232,12 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
  * @internal
  */
 export interface DateFilterValidationFailed extends IDashboardEvent {
-    type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
-    payload: {
-        result: DateFilterValidationResult;
+    readonly type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
+    readonly payload: {
+        readonly result: DateFilterValidationResult;
     };
 }
 
-/**
- * @internal
- */
 export function dateFilterValidationFailed(
     ctx: DashboardContext,
     result: DateFilterValidationResult,
@@ -146,8 +252,3 @@ export function dateFilterValidationFailed(
         },
     };
 }
-
-/**
- * @internal
- */
-export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed;

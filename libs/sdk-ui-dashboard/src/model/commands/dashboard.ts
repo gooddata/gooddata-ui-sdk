@@ -22,11 +22,11 @@ export interface LoadDashboard extends IDashboardCommand {
  * the essential data from the backend and initializing the state of Dashboard to a point where the
  * dashboard can be rendered.
  *
- * @param config - configuration to use for for the Dashboard; you MAY NOT provide any configuration or MAY provide
- *  partial configuration. During the LoadDashboard processing the Dashboard component WILL resolve all the missing
- *  parts by reading them from the backend
- * @param permissions - permissions to use when determining whether the user is eligible for some actions with the
- *  dashboard; you MAY NOT provide any permissions (undefined) and the Dashboard component WILL load the permissions
+ * @param config - optionally specify configuration to use for for the Dashboard; you MAY provide partial configuration.
+ *  During the LoadDashboard processing the Dashboard component will resolve all the missing parts by reading them
+ *  from the backend.
+ * @param permissions - optionally specify permissions to use when determining whether the user is eligible for some
+ *  actions with the dashboard; if you do not specify permissions Dashboard component will load the permissions
  *  from the backend.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
@@ -66,10 +66,10 @@ export interface SaveDashboard extends IDashboardCommand {
  * Creates the SaveDashboard command. Dispatching this command will result in persisting all the accumulated
  * dashboard modification to backend.
  *
- * The command WILL NOT have any effect if dashboard is not initialized or is empty.
+ * The command will not have any effect if dashboard is not initialized or is empty.
  *
  * @param identifier - optionally specify identifier to set for the saved dashboard. If specified, the
- *  identifier WILL be used only during the initial save of a new dashboard. When the SaveDashboard is called
+ *  identifier will be used only during the initial save of a new dashboard. When the SaveDashboard is called
  *  of a dashboard that already exists on a backend, then the identifier will be ignored. If no identifier
  *  is specified for the initial save, then the identifier will be generated.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
@@ -104,7 +104,7 @@ export interface SaveDashboardAs extends IDashboardCommand {
 
 /**
  * Creates the SaveDashboardAs command. Dispatching this command will result in creation of a copy of the
- * current dashboard. The copy WILL reflect the current state of the dashboard including any modifications done
+ * current dashboard. The copy will reflect the current state of the dashboard including any modifications done
  * on top of the original dashboard.
  *
  * Upon success, a copy of the dashboard will be persisted on the backend. The context of the dashboard component
@@ -180,7 +180,7 @@ export interface ResetDashboard extends IDashboardCommand {
  * Creates the ResetDashboard command. Dispatching this command will result in dropping all in-memory modifications
  * of the dashboard and reverting to a state after the initial LoadCommand.
  *
- * Note: reset dashboard WILL NOT reload dashboard data from backend.
+ * Note: reset dashboard will not reload dashboard data from backend.
  *
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
