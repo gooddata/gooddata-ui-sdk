@@ -37,7 +37,10 @@ interface IDropdownState {
 }
 
 class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState> {
-    public static defaultProps: Partial<IDropdownProps> = {
+    public static defaultProps: Pick<
+        IDropdownProps,
+        "value" | "operator" | "displayTreatNullAsZeroOption" | "treatNullAsZeroValue"
+    > = {
         value: {},
         operator: "ALL",
         displayTreatNullAsZeroOption: false,

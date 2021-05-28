@@ -11,7 +11,7 @@ class WrappedHeaderAccount extends PureComponent<
     IHeaderAccountProps & WrappedComponentProps,
     IHeaderAccountState
 > {
-    static defaultProps: Partial<IHeaderAccountProps & WrappedComponentProps> = {
+    static defaultProps: Pick<IHeaderAccountProps, "className" | "items" | "userName"> = {
         className: "",
         items: [],
         userName: "",

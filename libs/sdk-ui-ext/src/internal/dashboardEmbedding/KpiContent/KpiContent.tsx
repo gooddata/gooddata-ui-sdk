@@ -30,7 +30,10 @@ export interface IKpiContentProps {
 }
 
 class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
-    static defaultProps: Partial<IKpiContentProps & WrappedComponentProps> = {
+    static defaultProps: Pick<
+        IKpiContentProps,
+        "isKpiValueClickDisabled" | "filters" | "isKpiUnderlineHiddenWhenClickable"
+    > = {
         isKpiValueClickDisabled: false,
         filters: [],
         isKpiUnderlineHiddenWhenClickable: false,

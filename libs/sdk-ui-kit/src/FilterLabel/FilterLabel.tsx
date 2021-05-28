@@ -8,11 +8,10 @@ class WrappedFilterLabel extends React.PureComponent<
     IFilterLabelProps & WrappedComponentProps,
     IFilterLabelState
 > {
-    static defaultProps: Partial<IFilterLabelProps & WrappedComponentProps> = {
+    static defaultProps: Pick<IFilterLabelProps, "isAllSelected" | "isDate" | "selection" | "noData"> = {
         isAllSelected: false,
         isDate: false,
         selection: "",
-        selectionSize: null,
         noData: false,
     };
     private readonly labelRef: RefObject<HTMLSpanElement>;

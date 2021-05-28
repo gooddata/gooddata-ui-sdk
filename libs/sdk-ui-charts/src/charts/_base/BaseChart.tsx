@@ -36,7 +36,10 @@ export interface IBaseChartProps extends ICoreChartProps {
 type Props = IBaseChartProps & ILoadingInjectedProps;
 
 class StatelessBaseChart extends React.Component<Props> {
-    public static defaultProps: Partial<Props> = {
+    public static defaultProps: Pick<
+        Partial<Props>,
+        keyof typeof defaultCoreChartProps | "onDataTooLarge" | "onLegendReady" | "config"
+    > = {
         ...defaultCoreChartProps,
         onDataTooLarge: noop,
         onLegendReady: noop,

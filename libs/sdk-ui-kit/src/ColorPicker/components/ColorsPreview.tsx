@@ -12,7 +12,7 @@ export interface IColorsPreviewProps {
 }
 
 export class ColorsPreview extends PureComponent<IColorsPreviewProps> {
-    static defaultProps: Partial<IColorsPreviewProps> = {
+    static defaultProps: Pick<IColorsPreviewProps, "currentTextLabel" | "draftTextLabel"> = {
         currentTextLabel: "current",
         draftTextLabel: "new",
     };

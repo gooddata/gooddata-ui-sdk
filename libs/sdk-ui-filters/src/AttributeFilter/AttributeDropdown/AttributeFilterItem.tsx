@@ -15,16 +15,10 @@ export interface IAttributeElement {
 }
 
 export interface IAttributeFilterItemProps {
-    classname?: string;
     item?: IAttributeElement;
 }
 
 export class AttributeFilterItem extends React.PureComponent<IAttributeFilterItemProps> {
-    public static defaultProps: Partial<IAttributeFilterItemProps> = {
-        item: null,
-        classname: "",
-    };
-
     public render(): React.ReactNode {
         const { item } = this.props;
 

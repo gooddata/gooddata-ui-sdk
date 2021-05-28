@@ -23,7 +23,7 @@ interface IMeasureNumberFormatDropdownOwnProps {
 type IMeasureNumberFormatDropdownProps = IMeasureNumberFormatDropdownOwnProps & WrappedComponentProps;
 
 export class PresetsDropdown extends React.PureComponent<IMeasureNumberFormatDropdownProps> {
-    public static defaultProps: Partial<IMeasureNumberFormatDropdownProps> = {
+    public static defaultProps: Pick<IMeasureNumberFormatDropdownProps, "positioning"> = {
         positioning: [
             { snapPoints: { parent: SnapPoint.BottomLeft, child: SnapPoint.TopLeft } },
             { snapPoints: { parent: SnapPoint.TopLeft, child: SnapPoint.BottomLeft } },
