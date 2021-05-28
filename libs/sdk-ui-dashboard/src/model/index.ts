@@ -53,13 +53,8 @@ export {
 export { DashboardEventHandler } from "./events/eventHandler";
 export { CatalogState } from "./state/catalog/catalogState";
 
-export {
-    IDashboardCommand,
-    loadDashboard,
-    DashboardCommands,
-    LoadDashboard,
-    DashboardCommandType,
-} from "./commands/dashboard";
 export { DashboardContext, DashboardConfig, ResolvedDashboardConfig } from "./types/commonTypes";
 
 export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
+
+export * from "./commands";

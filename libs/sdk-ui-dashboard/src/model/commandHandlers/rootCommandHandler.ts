@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { actionChannel, call, getContext, take } from "redux-saga/effects";
-import { DashboardCommands } from "../commands/dashboard";
 import { loadDashboardCommandHandler } from "./loadDashboard/handler";
 import { DashboardContext } from "../types/commonTypes";
+import { DashboardCommands } from "../commands";
 
 /**
  * Root command handler is the central point through which all command processing is done. The handler registers
@@ -26,10 +26,22 @@ export function* rootCommandHandler() {
                 yield call(loadDashboardCommandHandler, dashboardContext, action);
                 break;
             }
-            default:
-                ((x: never) => {
-                    throw new Error(`${x} was unhandled`);
-                })(action.type);
+            case "GDC.DASHBOARD.CMD.RENAME": {
+                break;
+            }
+            case "GDC.DASHBOARD.CMD.RESET": {
+                break;
+            }
+            case "GDC.DASHBOARD.CMD.SAVE": {
+                break;
+            }
+            case "GDC.DASHBOARD.CMD.SAVEAS": {
+                break;
+            }
+            default: {
+                // TODO: emit unhandled command event
+                break;
+            }
         }
     }
 }

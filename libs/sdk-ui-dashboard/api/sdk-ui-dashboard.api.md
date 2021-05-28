@@ -78,10 +78,10 @@ export const DashboardButtonBar: React_2.FC<IDashboardButtonBarProps & IDefaultB
 export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps>;
 
 // @internal (undocumented)
-export type DashboardCommands = LoadDashboard;
+export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard;
 
 // @internal
-export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD";
+export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD" | "GDC.DASHBOARD.CMD.SAVE" | "GDC.DASHBOARD.CMD.SAVEAS" | "GDC.DASHBOARD.CMD.RESET" | "GDC.DASHBOARD.CMD.RENAME";
 
 // @internal
 export type DashboardConfig = {
@@ -234,8 +234,8 @@ export interface IDashboardButtonBarProps {
 
 // @internal
 export interface IDashboardCommand {
-    correlationId?: string;
-    type: DashboardCommandType;
+    readonly correlationId?: string;
+    readonly type: DashboardCommandType;
 }
 
 // @internal
@@ -385,16 +385,16 @@ export interface LayoutState {
 // @internal
 export interface LoadDashboard extends IDashboardCommand {
     // (undocumented)
-    payload: {
-        config?: DashboardConfig;
-        permissions?: IWorkspacePermissions;
+    readonly payload: {
+        readonly config?: DashboardConfig;
+        readonly permissions?: IWorkspacePermissions;
     };
     // (undocumented)
-    type: "GDC.DASHBOARD.CMD.LOAD";
+    readonly type: "GDC.DASHBOARD.CMD.LOAD";
 }
 
 // @internal
-export function loadDashboard(config?: DashboardConfig, correlationId?: string): LoadDashboard;
+export function loadDashboard(config?: DashboardConfig, permissions?: IWorkspacePermissions, correlationId?: string): LoadDashboard;
 
 // @internal (undocumented)
 export const loadingSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;
@@ -428,8 +428,57 @@ export interface PermissionsState {
     permissions?: IWorkspacePermissions;
 }
 
+// @internal (undocumented)
+export interface RenameDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly newTitle: string;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.RENAME";
+}
+
+// @internal
+export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard;
+
+// @internal (undocumented)
+export interface ResetDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.RESET";
+}
+
+// @internal
+export function resetDashboard(correlationId?: string): ResetDashboard;
+
 // @internal
 export type ResolvedDashboardConfig = Required<DashboardConfig>;
+
+// @internal (undocumented)
+export interface SaveDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly identifier?: string;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.SAVE";
+}
+
+// @internal
+export function saveDashboard(identifier?: string, correlationId?: string): SaveDashboard;
+
+// @internal (undocumented)
+export interface SaveDashboardAs extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly identifier?: string;
+        readonly title?: string;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.SAVEAS";
+}
+
+// @internal
+export function saveDashboardAs(identifier?: string, title?: string, correlationId?: string): SaveDashboardAs;
 
 // @internal
 export const separatorsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISeparators>;
