@@ -2,6 +2,16 @@
 
 import { IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 import React from "react";
+import { DateFilter } from "@gooddata/sdk-ui-filters";
+import { dateFilterOptionToDashboardDateFilter } from "./converters";
+import {
+    selectEffectiveDateFilterTitle,
+    selectEffectiveDateFilterMode,
+    selectEffectiveDateFilterOptions,
+    selectEffectiveDateFilterAvailableGranularities,
+    useDashboardSelector,
+} from "../model";
+import { effectiveDateFilterOptionInfoSelector } from "./selectors";
 
 /**
  * Defines interface between filter bar and date filter implementation
@@ -20,7 +30,7 @@ export interface IDashboardDateFilterProps {
      *
      * @param filter - new date filter value.
      */
-    onFilterChanged: (filter: IDashboardDateFilter) => void;
+    onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
 }
 
 /**
@@ -30,10 +40,29 @@ export interface IDashboardDateFilterProps {
  *
  * @internal
  */
-export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = (
-    _props: IDashboardDateFilterProps,
-) => {
-    return null;
+export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = ({ onFilterChanged }) => {
+    const filterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
+    const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
+    const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
+    const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
+
+    const { dateFilterOption, excludeCurrentPeriod } = useDashboardSelector(
+        effectiveDateFilterOptionInfoSelector,
+    );
+
+    return (
+        <DateFilter
+            excludeCurrentPeriod={excludeCurrentPeriod}
+            selectedFilterOption={dateFilterOption}
+            dateFilterMode={dateFilterMode}
+            filterOptions={filterOptions}
+            availableGranularities={availableGranularities}
+            customFilterName={customFilterName}
+            onApply={(option, exclude) =>
+                onFilterChanged(dateFilterOptionToDashboardDateFilter(option, exclude))
+            }
+        />
+    );
 };
 
 /**
@@ -42,9 +71,7 @@ export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = (
  *
  * @internal
  */
-export const HiddenDashboardDateFilter: React.FC<IDashboardDateFilterProps> = (
-    _props: IDashboardDateFilterProps,
-) => {
+export const HiddenDashboardDateFilter: React.FC<IDashboardDateFilterProps> = (_props) => {
     return null;
 };
 

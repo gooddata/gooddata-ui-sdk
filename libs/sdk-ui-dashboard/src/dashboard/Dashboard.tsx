@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React, { useEffect } from "react";
-import { FilterBarComponent, IDefaultFilterBarProps } from "../filterBar";
+import { FilterBar, FilterBarComponent, IDefaultFilterBarProps } from "../filterBar";
 import { IDefaultTopBarProps, TopBarComponent } from "../topBar";
 import { Provider } from "react-redux";
 import {
@@ -9,10 +9,20 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../model/state/dashboardStore";
-import { InitialLoadCorrelationId, selectDashboardLoading } from "../model";
+import {
+    InitialLoadCorrelationId,
+    selectDashboardLoading,
+    selectFilterContextFiltersWithDefaultDateFilter,
+} from "../model";
 import { loadDashboard } from "../model/commands/dashboard";
-import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { changeAttributeFilterSelection, changeDateFilterSelection } from "../model/commands/filters";
+import {
+    IAnalyticalBackend,
+    isDashboardAttributeFilter,
+    isDashboardDateFilter,
+    IWorkspacePermissions,
+} from "@gooddata/sdk-backend-spi";
+import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 import {
     ErrorComponent as DefaultError,
     IErrorProps,
@@ -26,6 +36,7 @@ import {
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { DashboardConfig } from "../model/types/commonTypes";
 import { Layout, LayoutProps } from "../layout/Layout";
+import invariant from "ts-invariant";
 
 /**
  * @internal
@@ -171,11 +182,44 @@ export interface IDashboardProps {
 }
 
 const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const { dashboardRef, dashboardLayoutConfig, drillableItems, ErrorComponent, LoadingComponent } = props;
+    const {
+        dashboardRef,
+        dashboardLayoutConfig,
+        drillableItems,
+        filterBarConfig,
+        ErrorComponent,
+        LoadingComponent,
+    } = props;
     const customLayout = typeof props.children === "function" ? props.children?.(null) : props.children;
     const LayoutComponent = dashboardLayoutConfig?.Component ?? Layout;
+    const FilterBarComponent = filterBarConfig?.Component ?? FilterBar;
+
+    const filters = useDashboardSelector(selectFilterContextFiltersWithDefaultDateFilter);
+    const dispatch = useDashboardDispatch();
+
     return (
         <React.Fragment>
+            <FilterBarComponent
+                filters={filters}
+                onFilterChanged={(filter) => {
+                    if (isDashboardDateFilter(filter)) {
+                        const { type, granularity, from, to } = filter.dateFilter;
+                        dispatch(changeDateFilterSelection(type, granularity, from, to));
+                    } else if (isDashboardAttributeFilter(filter)) {
+                        const { attributeElements, displayForm, negativeSelection, localIdentifier } =
+                            filter.attributeFilter;
+                        dispatch(
+                            changeAttributeFilterSelection(
+                                localIdentifier ?? objRefToString(displayForm), // TODO is this ok?
+                                attributeElements,
+                                negativeSelection ? "NOT_IN" : "IN",
+                            ),
+                        );
+                    } else {
+                        invariant(false, "Unknown filter type");
+                    }
+                }}
+            />
             {customLayout ?? (
                 <LayoutComponent
                     dashboardRef={dashboardRef}

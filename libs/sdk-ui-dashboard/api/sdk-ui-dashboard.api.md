@@ -13,6 +13,7 @@ import { DateFilterType } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
 import { Dispatch } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
+import { FilterContextItem } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeElements } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
@@ -25,7 +26,6 @@ import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
-import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
 import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
@@ -33,6 +33,7 @@ import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDashboardViewProps } from '@gooddata/sdk-ui-ext';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
+import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDrillableItem } from '@gooddata/sdk-ui';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
@@ -295,7 +296,7 @@ export type CustomAttributeFilter = DashboardAttributeFilterComponent | ((filter
 export const Dashboard: React_2.FC<IDashboardProps>;
 
 // @internal
-export const DashboardAttributeFilter: React_2.FC<IDashboardAttributeFilter>;
+export const DashboardAttributeFilter: React_2.FC<IDashboardAttributeFilterProps>;
 
 // @internal
 export interface DashboardAttributeFilterAdded extends IDashboardEvent {
@@ -770,7 +771,7 @@ export interface IDashboardCommand {
 // @internal
 export interface IDashboardDateFilterProps {
     filter: IDashboardDateFilter;
-    onFilterChanged: (filter: IDashboardDateFilter) => void;
+    onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
 }
 
 // @internal
@@ -869,8 +870,8 @@ export interface IDefaultTopBarProps {
 
 // @internal (undocumented)
 export interface IFilterBarProps {
-    filters: IDashboardFilter[];
-    onFilterChanged: (filter: IDashboardFilter) => void;
+    filters: FilterContextItem[];
+    onFilterChanged: (filter: FilterContextItem | undefined) => void;
 }
 
 // @internal
@@ -1187,16 +1188,28 @@ export const selectDashboardLoading: import("@reduxjs/toolkit").OutputSelector<D
 export const selectDateFilterConfigOverrides: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined>;
 
 // @internal
+export const selectEffectiveDateFilterAvailableGranularities: import("@reduxjs/toolkit").OutputSelector<DashboardState, DateFilterGranularity[], (res: import("@gooddata/sdk-backend-spi").IDateFilterConfig) => DateFilterGranularity[]>;
+
+// @internal
 export const selectEffectiveDateFilterConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
 
 // @internal
 export const selectEffectiveDateFilterMode: import("@reduxjs/toolkit").OutputSelector<DashboardState, DashboardDateFilterConfigMode, (res: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => DashboardDateFilterConfigMode>;
 
 // @internal
+export const selectEffectiveDateFilterOptions: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDateFilterOptionsByType, (res: import("@gooddata/sdk-backend-spi").IDateFilterConfig) => IDateFilterOptionsByType>;
+
+// @internal
 export const selectEffectiveDateFilterTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => string | undefined>;
 
 // @internal
 export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IFilterContext, (res: import("./filterContextState").FilterContextState) => import("@gooddata/sdk-backend-spi").IFilterContext>;
+
+// @internal
+export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: import("@gooddata/sdk-backend-spi").IFilterContext) => FilterContextItem[]>;
+
+// @internal
+export const selectFilterContextFiltersWithDefaultDateFilter: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: FilterContextItem[]) => FilterContextItem[]>;
 
 // @internal
 export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];

@@ -1,9 +1,13 @@
 // (C) 2021 GoodData Corporation
 import React, { ComponentType } from "react";
-import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
-import { DashboardAttributeFilterComponent } from "./DashboardAttributeFilter";
-import { DashboardDateFilterComponent } from "./DashboardDateFilter";
-import { IDashboardFilter } from "@gooddata/sdk-ui-ext";
+import {
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    isDashboardAttributeFilter,
+} from "@gooddata/sdk-backend-spi";
+import { DashboardAttributeFilter, DashboardAttributeFilterComponent } from "./DashboardAttributeFilter";
+import { DashboardDateFilter, DashboardDateFilterComponent } from "./DashboardDateFilter";
+import { idRef, objRefToString } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -49,15 +53,15 @@ export interface IFilterBarProps {
     /**
      * Filters that are set for the dashboard.
      */
-    filters: IDashboardFilter[];
+    filters: FilterContextItem[];
 
     /**
      * When value of a filter that is part of the FilterBar changes, the filter bar MUST propagate the event
      * using this callback.
      *
-     * @param filter - filter that has changed
+     * @param filter - filter that has changed, undefined if All time filter was selected
      */
-    onFilterChanged: (filter: IDashboardFilter) => void;
+    onFilterChanged: (filter: FilterContextItem | undefined) => void;
 }
 
 /**
@@ -68,10 +72,33 @@ export type FilterBarComponent = ComponentType<IFilterBarProps>;
 /**
  * @internal
  */
-export const FilterBar: React.FC<IFilterBarProps & IDefaultFilterBarProps> = (
-    _props: IFilterBarProps & IDefaultFilterBarProps,
-) => {
-    return null;
+export const FilterBar: React.FC<IFilterBarProps & IDefaultFilterBarProps> = ({
+    filters,
+    onFilterChanged,
+}) => {
+    return (
+        <div>
+            {filters.map((filter, index) => {
+                if (isDashboardAttributeFilter(filter)) {
+                    return (
+                        <DashboardAttributeFilter
+                            key={objRefToString(filter.attributeFilter.displayForm)}
+                            filter={filter}
+                            onFilterChanged={onFilterChanged}
+                        />
+                    );
+                } else {
+                    return (
+                        <DashboardDateFilter
+                            key={objRefToString(filter.dateFilter.dataSet ?? idRef(`DATE_FILTER_${index}`))}
+                            filter={filter}
+                            onFilterChanged={onFilterChanged}
+                        />
+                    );
+                }
+            })}
+        </div>
+    );
 };
 
 /**

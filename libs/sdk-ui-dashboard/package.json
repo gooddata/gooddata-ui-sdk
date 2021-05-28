@@ -61,6 +61,7 @@
         "@gooddata/sdk-ui-ext": "^8.5.0-alpha.13",
         "@gooddata/sdk-ui-filters": "^8.5.0-alpha.13",
         "@reduxjs/toolkit": "^1.5.1",
+        "date-fns": "^2.8.1",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
         "react-intl": "^3.6.0",

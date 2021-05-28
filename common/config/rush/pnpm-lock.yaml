@@ -21452,7 +21452,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-FGLWFqHaRjLUB2DS82E2eGuM5u1tQdTKqMattZoiBzn+uKeYiWqPbOHLnDAjY5hVR/jq+JfMJ6hsT1Dv3jUZvA==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-TuwcbKdOvaofQ6zDvVoWwmEtIYs2M4NaHQwR3BKJRJbuSw1rEFkwgaraeeoJV+1amVt3zr1WKgDdeEIYkiuhpw==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
@@ -21473,6 +21473,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 4.22.0_316f1a4362085e72d65ffc324c1237ff
       '@typescript-eslint/parser': 4.22.0_eslint@7.25.0+typescript@4.0.2
       concurrently: 6.0.2
+      date-fns: 2.21.1
       dependency-cruiser: 9.26.0
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.6_4f82faf5e8cab057bc46d4d95079ec42
@@ -21598,7 +21599,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-QlY/h0Xyp2F6/V0sA/a3Jv72Kn4JTx4T3z1XHW+AeYo7rLy8IMMHJbn6/tF8+M6bjJdfYh9Z6tcAToSTgcMUWA==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-/oDf28wGwGOzxxd7wwVVT4MrXOtI0DmqCbEhkYC0HQTQ8w4/49lZTIM8WmSJuGosN+um3CqTjVOxap+6J3899g==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0

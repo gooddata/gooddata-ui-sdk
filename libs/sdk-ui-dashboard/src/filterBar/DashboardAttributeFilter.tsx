@@ -1,7 +1,13 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
 import React from "react";
+import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
+
+import {
+    attributeFilterToDashboardAttributeFilter,
+    dashboardAttributeFilterToAttributeFilter,
+} from "./converters";
 
 /**
  * Defines interface between filter bar and attribute filter implementation
@@ -30,10 +36,18 @@ export interface IDashboardAttributeFilterProps {
  *
  * @internal
  */
-export const DashboardAttributeFilter: React.FC<IDashboardAttributeFilter> = (
-    _props: IDashboardAttributeFilter,
-) => {
-    return null;
+export const DashboardAttributeFilter: React.FC<IDashboardAttributeFilterProps> = ({
+    filter,
+    onFilterChanged,
+}) => {
+    return (
+        <AttributeFilterButton
+            filter={dashboardAttributeFilterToAttributeFilter(filter)}
+            onApply={(filter) => {
+                onFilterChanged(attributeFilterToDashboardAttributeFilter(filter));
+            }}
+        />
+    );
 };
 
 /**
@@ -42,9 +56,7 @@ export const DashboardAttributeFilter: React.FC<IDashboardAttributeFilter> = (
  *
  * @internal
  */
-export const HiddenDashboardAttributeFilter: React.FC<IDashboardAttributeFilter> = (
-    _props: IDashboardAttributeFilter,
-) => {
+export const HiddenDashboardAttributeFilter: React.FC<IDashboardAttributeFilter> = (_props) => {
     return null;
 };
 

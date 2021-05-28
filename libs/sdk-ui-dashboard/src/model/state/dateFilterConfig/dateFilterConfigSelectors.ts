@@ -2,7 +2,9 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../dashboardStore";
 import invariant from "ts-invariant";
-import { DashboardDateFilterConfigMode } from "@gooddata/sdk-backend-spi";
+import { DashboardDateFilterConfigMode, DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
+import { convertDateFilterConfigToDateFilterOptions } from "./dateFilterConfigConverters";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -42,6 +44,34 @@ export const selectEffectiveDateFilterConfig = createSelector(selectSelf, (dateF
 
     return dateFilterConfigState.effectiveDateFilterConfig!;
 });
+
+/**
+ * Returns effective date filter options. This is created by merging the workspace-level
+ * date filter config and the dashboard-level date filter config.
+ *
+ * These are the date filter options that the DateFilter SHOULD use when rendering filtering presets.
+ *
+ * @internal
+ */
+export const selectEffectiveDateFilterOptions = createSelector(
+    selectEffectiveDateFilterConfig,
+    (effectiveDateFilterConfig): IDateFilterOptionsByType =>
+        convertDateFilterConfigToDateFilterOptions(effectiveDateFilterConfig),
+);
+
+/**
+ * Returns effective date filter options from. This is created by merging the workspace-level
+ * date filter config and the dashboard-level date filter config.
+ *
+ * These are the date filter options that the DateFilter SHOULD use when rendering filtering presets.
+ *
+ * @internal
+ */
+export const selectEffectiveDateFilterAvailableGranularities = createSelector(
+    selectEffectiveDateFilterConfig,
+    (effectiveDateFilterConfig): DateFilterGranularity[] =>
+        effectiveDateFilterConfig.relativeForm?.availableGranularities ?? [],
+);
 
 /**
  * Indicates whether the effective date filter is using dashboard-level overrides.
