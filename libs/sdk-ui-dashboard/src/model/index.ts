@@ -51,6 +51,7 @@ export {
     DateFilterValidationFailed,
 } from "./events/dashboard";
 export { DashboardEventHandler } from "./events/eventHandler";
+export { CatalogState } from "./state/catalog/catalogState";
 
 export {
     IDashboardCommand,

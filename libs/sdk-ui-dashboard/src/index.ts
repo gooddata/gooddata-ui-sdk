@@ -7,3 +7,4 @@ export * from "./dashboard";
 export * from "./filterBar";
 export * from "./topBar";
 export * from "./model";
+export * from "./layout";

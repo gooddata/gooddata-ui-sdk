@@ -13,9 +13,17 @@ import { loadingSelector } from "../model";
 import { loadDashboard } from "../model/commands/dashboard";
 import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    ErrorComponent as DefaultError,
+    IErrorProps,
+    LoadingComponent as DefaultLoading,
+    ILoadingProps,
+    useBackendStrict,
+    useWorkspaceStrict,
+} from "@gooddata/sdk-ui";
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { DashboardConfig } from "../model/types/commonTypes";
+import { Layout, LayoutProps } from "../layout/Layout";
 
 /**
  * @internal
@@ -40,7 +48,7 @@ export interface IDashboardProps {
     /**
      * Reference of the persisted dashboard to render.
      */
-    dashboardRef?: ObjRef;
+    dashboardRef: ObjRef;
 
     /**
      * Configuration that can be used to modify dashboard features, capabilities and behavior.
@@ -64,6 +72,22 @@ export interface IDashboardProps {
      * TODO: this needs more attention.
      */
     eventHandlers?: DashboardEventHandler[];
+
+    /**
+     * Component to render if embedding fails.
+     * This component is also used in all the individual widgets when they have some error occur.
+     *
+     * TODO do we need separate component for the dashboard as a whole and individual widgets?
+     */
+    ErrorComponent?: React.ComponentType<IErrorProps>;
+
+    /**
+     * Component to render while the dashboard or a widget is loading.
+     * This component is also used in all the individual widgets while they are loading.
+     *
+     * TODO do we need separate component for the dashboard as a whole and individual widgets?
+     */
+    LoadingComponent?: React.ComponentType<ILoadingProps>;
 
     /**
      * Optionally configure how the top bar looks and behaves.
@@ -117,14 +141,14 @@ export interface IDashboardProps {
          *
          * If you want to implement an ad-hoc dashboard layout yourself, you can provide children render function.
          */
-        Component?: any;
+        Component?: React.ComponentType<LayoutProps>;
 
         /**
          * Optionally specify props to customize the default implementation of Dashboard View.
          *
          * This has no effect if custom component is used.
          */
-        defaultComponentProps?: any;
+        defaultComponentProps?: LayoutProps;
     };
 
     /**
@@ -134,15 +158,28 @@ export interface IDashboardProps {
 }
 
 const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+    const { dashboardRef, dashboardLayoutConfig, config, ErrorComponent, LoadingComponent } = props;
+    const customLayout = typeof props.children === "function" ? props.children?.(null) : props.children;
+    const LayoutComponent = dashboardLayoutConfig?.Component ?? Layout;
     return (
         <React.Fragment>
-            {typeof props.children === "function" ? props.children?.(null) : props.children}
+            {customLayout ?? (
+                <LayoutComponent
+                    dashboardRef={dashboardRef}
+                    drillableItems={config?.drillableItems}
+                    transformLayout={dashboardLayoutConfig?.defaultComponentProps?.transformLayout}
+                    widgetRenderer={dashboardLayoutConfig?.defaultComponentProps?.widgetRenderer}
+                    ErrorComponent={ErrorComponent}
+                    LoadingComponent={LoadingComponent}
+                />
+            )}
         </React.Fragment>
     );
 };
 
 const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const dispatch = useDashboardDispatch();
+    const { ErrorComponent = DefaultError, LoadingComponent = DefaultLoading } = props;
     const { loading, error, result } = useDashboardSelector(loadingSelector);
 
     useEffect(() => {
@@ -151,16 +188,12 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
         }
     }, [loading, result]);
 
-    if (!loading && result === undefined) {
-        return <div>Initializing...</div>;
-    }
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     if (error) {
-        return <div>Error: {error.message}</div>;
+        return <ErrorComponent message={error.message} />;
+    }
+
+    if (loading || !result) {
+        return <LoadingComponent />;
     }
 
     return <DashboardInner {...props} />;

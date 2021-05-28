@@ -10,6 +10,10 @@ import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
 import { Dispatch } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
+import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
+import { ICatalogFact } from '@gooddata/sdk-backend-spi';
+import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
@@ -17,16 +21,34 @@ import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
+import { IDashboardViewProps } from '@gooddata/sdk-ui-ext';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
+import { IDrillableItem } from '@gooddata/sdk-ui';
+import { IErrorProps } from '@gooddata/sdk-ui';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
+import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
+import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { ISeparators } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-backend-spi';
+import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { TypedUseSelectorHook } from 'react-redux';
+
+// @internal (undocumented)
+export interface CatalogState {
+    // (undocumented)
+    attributes?: ICatalogAttribute[];
+    // (undocumented)
+    dateDatasets?: ICatalogDateDataset[];
+    // (undocumented)
+    facts?: ICatalogFact[];
+    // (undocumented)
+    measures?: ICatalogMeasure[];
+}
 
 // @internal
 export const configSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, Required<import("../..").DashboardConfig>, (res: import("./configState").ConfigState) => Required<import("../..").DashboardConfig>>;
@@ -68,13 +90,14 @@ export type DashboardConfig = {
     settings?: ISettings;
     dateFilterConfig?: IDateFilterConfig;
     colorPalette?: IColorPalette;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 };
 
 // @internal
 export type DashboardContext = {
     backend: IAnalyticalBackend;
     workspace: string;
-    dashboardRef?: ObjRef;
+    dashboardRef: ObjRef;
 };
 
 // @internal
@@ -125,7 +148,9 @@ export type DashboardState = {
     filterContext: FilterContextState;
     layout: LayoutState;
     dateFilterConfig: DateFilterConfigState;
+    catalog: CatalogState;
     insights: EntityState<IInsight>;
+    alerts: EntityState<IWidgetAlert>;
 };
 
 // @internal (undocumented)
@@ -241,15 +266,17 @@ export interface IDashboardProps {
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
     config?: DashboardConfig;
     dashboardLayoutConfig?: {
-        Component?: any;
-        defaultComponentProps?: any;
+        Component?: React_2.ComponentType<LayoutProps>;
+        defaultComponentProps?: LayoutProps;
     };
-    dashboardRef?: ObjRef;
+    dashboardRef: ObjRef;
+    ErrorComponent?: React_2.ComponentType<IErrorProps>;
     eventHandlers?: DashboardEventHandler[];
     filterBarConfig?: {
         Component?: FilterBarComponent;
         defaultComponentProps?: IDefaultFilterBarProps;
     };
+    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
     permissions?: IWorkspacePermissions;
     topBarConfig?: {
         Component?: TopBarComponent;
@@ -323,6 +350,27 @@ export const insightsSelector: (state: DashboardState) => import("@gooddata/sdk-
 export interface ITopBarProps {
     // (undocumented)
     title: string;
+}
+
+// @internal (undocumented)
+export const Layout: React_2.FC<LayoutProps>;
+
+// @internal (undocumented)
+export interface LayoutProps {
+    // (undocumented)
+    dashboardRef: ObjRef;
+    // (undocumented)
+    drillableItems?: IDashboardViewProps["drillableItems"];
+    // (undocumented)
+    ErrorComponent?: IDashboardViewProps["ErrorComponent"];
+    // (undocumented)
+    filters?: IDashboardViewProps["filters"];
+    // (undocumented)
+    LoadingComponent?: IDashboardViewProps["LoadingComponent"];
+    // (undocumented)
+    transformLayout?: IDashboardViewProps["transformLayout"];
+    // (undocumented)
+    widgetRenderer?: IDashboardViewProps["widgetRenderer"];
 }
 
 // @internal
