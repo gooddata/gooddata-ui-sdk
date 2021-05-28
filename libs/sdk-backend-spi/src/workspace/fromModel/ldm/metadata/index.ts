@@ -10,6 +10,7 @@ import { IFactMetadataObject, isFactMetadataObject } from "./fact";
 import {
     IMeasureMetadataObject,
     IMeasureMetadataObjectBase,
+    IMetadataObjectDefinition,
     IMeasureMetadataObjectDefinition,
     isMeasureMetadataObject,
     isMeasureMetadataObjectDefinition,
@@ -30,6 +31,7 @@ export {
     isFactMetadataObject,
     IMeasureMetadataObject,
     IMeasureMetadataObjectBase,
+    IMetadataObjectDefinition,
     isMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
     isMeasureMetadataObjectDefinition,

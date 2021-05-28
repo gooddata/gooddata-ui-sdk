@@ -99,7 +99,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                     workspaceId: this.workspace,
                     jsonApiMetricInDocument: {
                         data: {
-                            id: uuidv4(),
+                            id: measure.id || uuidv4(),
                             type: JsonApiMetricInTypeEnum.Metric,
                             attributes: metricAttributes,
                         },

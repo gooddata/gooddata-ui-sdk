@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IMetadataObject, IMetadataObjectBase, isMetadataObject } from "../types";
 
 /**
@@ -25,6 +25,13 @@ export interface IMeasureMetadataObjectBase {
 }
 
 /**
+ * @internal
+ */
+export interface IMetadataObjectDefinition
+    extends Partial<IMetadataObjectBase>,
+        Partial<Pick<IMetadataObject, "id">> {}
+
+/**
  * Measure metadata object
  *
  * @public
@@ -36,7 +43,7 @@ export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBas
  *
  * @public
  */
-export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> & IMeasureMetadataObjectBase;
+export type IMeasureMetadataObjectDefinition = IMetadataObjectDefinition & IMeasureMetadataObjectBase;
 
 /**
  * Tests whether the provided object is of type {@link IMeasureMetadataObject}.

@@ -935,7 +935,7 @@ export interface IMeasureMetadataObjectBase {
 }
 
 // @public
-export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> & IMeasureMetadataObjectBase;
+export type IMeasureMetadataObjectDefinition = IMetadataObjectDefinition & IMeasureMetadataObjectBase;
 
 // @public (undocumented)
 export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIdentity {
@@ -949,6 +949,10 @@ export interface IMetadataObjectBase {
     title: string;
     type: ObjectType;
     unlisted: boolean;
+}
+
+// @internal (undocumented)
+export interface IMetadataObjectDefinition extends Partial<IMetadataObjectBase>, Partial<Pick<IMetadataObject, "id">> {
 }
 
 // @internal (undocumented)
