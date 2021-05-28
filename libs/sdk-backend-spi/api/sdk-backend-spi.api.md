@@ -952,6 +952,10 @@ export interface IMetadataObjectBase {
 }
 
 // @internal (undocumented)
+export interface IMetadataObjectDefinition extends Partial<IMetadataObjectBase>, Partial<Pick<IMetadataObject, "id">> {
+}
+
+// @internal (undocumented)
 export interface IMetadataObjectIdentity {
     id: string;
     ref: ObjRef;
