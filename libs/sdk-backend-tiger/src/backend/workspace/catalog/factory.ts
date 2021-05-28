@@ -87,7 +87,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const loadersResults = await Promise.all(promises);
 
         const catalogItems: CatalogItem[] = sortBy(flatten<CatalogItem>(loadersResults), (item) =>
-            this.getCatalogItemId(item)?.toUpperCase(),
+            this.getCatalogItemSortingKey(item)?.toUpperCase(),
         );
 
         const groups = this.extractGroups(catalogItems);
@@ -95,12 +95,12 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         return new TigerWorkspaceCatalog(this.authCall, this.workspace, groups, catalogItems, this.options);
     };
 
-    private getCatalogItemId = (item: CatalogItem) => {
+    private getCatalogItemSortingKey = (item: CatalogItem) => {
         if (isCatalogAttribute(item)) {
-            return item.attribute.id;
+            return item.attribute.title;
         }
         if (isCatalogFact(item)) {
-            return item.fact.id;
+            return item.fact.title;
         }
         if (isCatalogMeasure(item)) {
             return item.measure.title;
