@@ -184,7 +184,7 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 
     useEffect(() => {
         if (!loading && result === undefined) {
-            dispatch(loadDashboard(props.config));
+            dispatch(loadDashboard(props.config, props.permissions));
         }
     }, [loading, result]);
 

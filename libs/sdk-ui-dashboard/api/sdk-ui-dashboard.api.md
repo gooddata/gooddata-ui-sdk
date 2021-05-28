@@ -50,6 +50,9 @@ export interface CatalogState {
     measures?: ICatalogMeasure[];
 }
 
+// @internal (undocumented)
+export type CommandFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
+
 // @internal
 export const configSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, Required<import("../..").DashboardConfig>, (res: import("./configState").ConfigState) => Required<import("../..").DashboardConfig>>;
 
@@ -77,11 +80,29 @@ export const DashboardButtonBar: React_2.FC<IDashboardButtonBarProps & IDefaultB
 // @internal (undocumented)
 export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps>;
 
-// @internal (undocumented)
-export type DashboardCommands = LoadDashboard;
+// @internal
+export interface DashboardCommandFailed extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly reason: CommandFailedErrorReason;
+        readonly message: string;
+        readonly error?: Error;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.COMMAND.FAILED";
+}
 
 // @internal
-export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD";
+export interface DashboardCommandRejected extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.COMMAND.REJECTED";
+}
+
+// @internal (undocumented)
+export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard;
+
+// @internal
+export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD" | "GDC.DASHBOARD.CMD.SAVE" | "GDC.DASHBOARD.CMD.SAVEAS" | "GDC.DASHBOARD.CMD.RESET" | "GDC.DASHBOARD.CMD.RENAME";
 
 // @internal
 export type DashboardConfig = {
@@ -101,6 +122,16 @@ export type DashboardContext = {
 };
 
 // @internal
+export interface DashboardCopySaved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly dashboard: IDashboard;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.D.COPY_SAVED";
+}
+
+// @internal
 export const DashboardDateFilter: React_2.FC<IDashboardDateFilterProps>;
 
 // @internal (undocumented)
@@ -116,22 +147,22 @@ export type DashboardEventHandler = {
 };
 
 // @internal (undocumented)
-export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed;
+export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.DASHBOARD.EVT.LOADED" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
+export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
 
 // @internal
 export interface DashboardLoaded extends IDashboardEvent {
     // (undocumented)
-    payload: {
-        dashboard: IDashboard;
-        insights: IInsight[];
-        config: DashboardConfig;
-        permissions: IWorkspacePermissions;
+    readonly payload: {
+        readonly dashboard: IDashboard;
+        readonly insights: ReadonlyArray<IInsight>;
+        readonly config: DashboardConfig;
+        readonly permissions: IWorkspacePermissions;
     };
     // (undocumented)
-    type: "GDC.DASHBOARD.EVT.LOADED";
+    readonly type: "GDC.DASHBOARD.EVT.D.LOADED";
 }
 
 // @internal
@@ -139,6 +170,27 @@ export const DashboardMenuButton: React_2.FC<IDashboardMenuButtonProps & IDefaul
 
 // @internal (undocumented)
 export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonProps>;
+
+// @internal
+export interface DashboardRenamed extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly newTitle: string;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.D.RENAMED";
+}
+
+// @internal
+export interface DashboardSaved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly dashboard: IDashboard;
+        readonly newDashboard: boolean;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.D.SAVED";
+}
 
 // @internal
 export type DashboardState = {
@@ -160,6 +212,16 @@ export const DashboardTitle: React_2.FC<IDashboardTitleProps>;
 export type DashboardTitleComponent = ComponentType<IDashboardTitleProps>;
 
 // @internal
+export interface DashboardWasReset extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        dashboard: IDashboard;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.D.RESET";
+}
+
+// @internal
 export const dateFilterConfigSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined>;
 
 // @internal (undocumented)
@@ -175,11 +237,11 @@ export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "C
 // @internal
 export interface DateFilterValidationFailed extends IDashboardEvent {
     // (undocumented)
-    payload: {
-        result: DateFilterValidationResult;
+    readonly payload: {
+        readonly result: DateFilterValidationResult;
     };
     // (undocumented)
-    type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
+    readonly type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
 }
 
 // @internal (undocumented)
@@ -234,8 +296,8 @@ export interface IDashboardButtonBarProps {
 
 // @internal
 export interface IDashboardCommand {
-    correlationId?: string;
-    type: DashboardCommandType;
+    readonly correlationId?: string;
+    readonly type: DashboardCommandType;
 }
 
 // @internal
@@ -385,16 +447,16 @@ export interface LayoutState {
 // @internal
 export interface LoadDashboard extends IDashboardCommand {
     // (undocumented)
-    payload: {
-        config?: DashboardConfig;
-        permissions?: IWorkspacePermissions;
+    readonly payload: {
+        readonly config?: DashboardConfig;
+        readonly permissions?: IWorkspacePermissions;
     };
     // (undocumented)
-    type: "GDC.DASHBOARD.CMD.LOAD";
+    readonly type: "GDC.DASHBOARD.CMD.LOAD";
 }
 
 // @internal
-export function loadDashboard(config?: DashboardConfig, correlationId?: string): LoadDashboard;
+export function loadDashboard(config?: DashboardConfig, permissions?: IWorkspacePermissions, correlationId?: string): LoadDashboard;
 
 // @internal (undocumented)
 export const loadingSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;
@@ -428,8 +490,57 @@ export interface PermissionsState {
     permissions?: IWorkspacePermissions;
 }
 
+// @internal (undocumented)
+export interface RenameDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly newTitle: string;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.RENAME";
+}
+
+// @internal
+export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard;
+
+// @internal (undocumented)
+export interface ResetDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.RESET";
+}
+
+// @internal
+export function resetDashboard(correlationId?: string): ResetDashboard;
+
 // @internal
 export type ResolvedDashboardConfig = Required<DashboardConfig>;
+
+// @internal (undocumented)
+export interface SaveDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly identifier?: string;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.SAVE";
+}
+
+// @internal
+export function saveDashboard(identifier?: string, correlationId?: string): SaveDashboard;
+
+// @internal (undocumented)
+export interface SaveDashboardAs extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly identifier?: string;
+        readonly title?: string;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.SAVEAS";
+}
+
+// @internal
+export function saveDashboardAs(identifier?: string, title?: string, correlationId?: string): SaveDashboardAs;
 
 // @internal
 export const separatorsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISeparators>;
