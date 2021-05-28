@@ -45,7 +45,7 @@ const HeaderIcon = () => {
 };
 
 export default class AggregationsSubMenu extends React.Component<IAggregationsSubMenuProps> {
-    public static defaultProps: Partial<IAggregationsSubMenuProps> = {
+    public static defaultProps: Pick<IAggregationsSubMenuProps, "isMenuOpened"> = {
         isMenuOpened: false,
     };
 

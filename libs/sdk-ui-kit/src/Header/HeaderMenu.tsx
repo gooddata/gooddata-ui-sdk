@@ -8,7 +8,7 @@ import cx from "classnames";
 import { IHeaderMenuProps, IHeaderMenuItem } from "./typings";
 
 class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponentProps> {
-    static defaultProps: Partial<IHeaderMenuProps & WrappedComponentProps> = {
+    static defaultProps: Pick<IHeaderMenuProps, "className" | "onMenuItemClick" | "sections"> = {
         className: "",
         onMenuItemClick: identity,
         sections: [],

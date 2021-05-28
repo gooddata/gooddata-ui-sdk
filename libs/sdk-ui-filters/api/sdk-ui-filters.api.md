@@ -46,7 +46,7 @@ export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFil
     // (undocumented)
     componentDidMount(): void;
     // (undocumented)
-    static defaultProps: Partial<IDateFilterProps>;
+    static defaultProps: Pick<IDateFilterProps, "dateFormat" | "isEditMode" | "locale" | "onCancel" | "onOpen" | "onClose">;
     // (undocumented)
     static getDerivedStateFromProps(nextProps: IDateFilterProps, prevState: IDateFilterState): IDateFilterState;
     // (undocumented)
@@ -371,8 +371,6 @@ export type IWarningMessage = {
 // @beta (undocumented)
 export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilterProps, IMeasureValueFilterState> {
     // (undocumented)
-    static defaultProps: Partial<IMeasureValueFilterProps>;
-    // (undocumented)
     render(): React_2.ReactNode;
     // (undocumented)
     state: IMeasureValueFilterState;
@@ -381,7 +379,7 @@ export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilte
 // @beta (undocumented)
 export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureValueFilterDropdownProps> {
     // (undocumented)
-    static defaultProps: Partial<IMeasureValueFilterDropdownProps>;
+    static defaultProps: Pick<IMeasureValueFilterDropdownProps, "displayTreatNullAsZeroOption" | "treatNullAsZeroDefaultValue" | "enableOperatorSelection">;
     // (undocumented)
     render(): React_2.ReactNode;
 }

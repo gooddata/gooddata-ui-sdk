@@ -337,7 +337,7 @@ export const ErrorCodes: {
 // @public
 export class ErrorComponent extends React_2.Component<IErrorProps> {
     // (undocumented)
-    static defaultProps: Partial<IErrorProps>;
+    static defaultProps: Pick<IErrorProps, "icon" | "className" | "height" | "style">;
     // (undocumented)
     render(): React_2.ReactNode;
 }
@@ -1308,7 +1308,7 @@ export const Kpi: React_2.ComponentType<IKpiProps>;
 // @public
 export class LoadingComponent extends React_2.Component<ILoadingProps> {
     // (undocumented)
-    static defaultProps: Partial<ILoadingProps>;
+    static defaultProps: Pick<ILoadingProps, "className" | "color" | "inline" | "speed" | "height" | "imageHeight">;
     // (undocumented)
     render(): React_2.ReactNode;
 }

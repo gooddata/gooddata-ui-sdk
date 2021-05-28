@@ -45,7 +45,17 @@ export interface IHeaderCellState {
 }
 
 export default class HeaderCell extends React.Component<IHeaderCellProps, IHeaderCellState> {
-    public static defaultProps: Partial<IHeaderCellProps> = {
+    public static defaultProps: Pick<
+        IHeaderCellProps,
+        | "sortDirection"
+        | "textAlign"
+        | "menuPosition"
+        | "defaultSortDirection"
+        | "menu"
+        | "enableSorting"
+        | "onMenuAggregationClick"
+        | "onSortClick"
+    > = {
         sortDirection: null,
         textAlign: ALIGN_LEFT,
         menuPosition: ALIGN_LEFT,

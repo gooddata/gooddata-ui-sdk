@@ -24,15 +24,16 @@ const baseAnimationDuration = 1.4;
  * @public
  */
 export class LoadingComponent extends React.Component<ILoadingProps> {
-    public static defaultProps: Partial<ILoadingProps> = {
+    public static defaultProps: Pick<
+        ILoadingProps,
+        "className" | "color" | "inline" | "speed" | "height" | "imageHeight"
+    > = {
         className: "s-loading",
         color: "var(--gd-palette-complementary-6, #94a1ad)",
         speed: 1,
         inline: false,
         height: "100%",
-        width: undefined,
         imageHeight: 8,
-        imageWidth: undefined,
     };
 
     public render(): React.ReactNode {

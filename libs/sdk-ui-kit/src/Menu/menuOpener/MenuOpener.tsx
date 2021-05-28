@@ -18,7 +18,10 @@ export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
 }
 
 export class MenuOpener extends React.Component<IMenuOpenerProps> {
-    public static defaultProps: Partial<IMenuOpenerProps> = {
+    public static defaultProps: Pick<
+        IMenuOpenerProps,
+        "openAction" | "alignment" | "spacing" | "offset" | "portalTarget"
+    > = {
         openAction: "hover",
 
         alignment: ["right", "bottom"],

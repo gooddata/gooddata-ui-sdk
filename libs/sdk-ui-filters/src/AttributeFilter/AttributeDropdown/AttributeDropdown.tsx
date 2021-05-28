@@ -81,7 +81,10 @@ export class AttributeDropdownCore extends React.PureComponent<
     IAttributeDropdownProps,
     IAttributeDropdownState
 > {
-    public static defaultProps: Partial<IAttributeDropdownProps> = {
+    public static defaultProps: Pick<
+        IAttributeDropdownProps,
+        "fullscreenOnMobile" | "isMobile" | "titleWithSelection" | "FilterLoading" | "isLoading"
+    > = {
         fullscreenOnMobile: false,
         isMobile: false,
         titleWithSelection: false,
