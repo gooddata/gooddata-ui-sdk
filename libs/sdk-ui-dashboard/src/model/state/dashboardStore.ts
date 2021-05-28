@@ -28,6 +28,10 @@ import { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState"
 import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
 import { PermissionsState } from "./permissions/permissionsState";
 import { permissionsSliceReducer } from "./permissions";
+import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import { alertsSliceReducer } from "./alerts/index";
+import { CatalogState } from "./catalog/catalogState";
+import { catalogSliceReducer } from "./catalog";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -44,7 +48,10 @@ export type DashboardState = {
     filterContext: FilterContextState;
     layout: LayoutState;
     dateFilterConfig: DateFilterConfigState;
+    catalog: CatalogState;
+    // Entities
     insights: EntityState<IInsight>;
+    alerts: EntityState<IWidgetAlert>;
 };
 
 /**
@@ -127,6 +134,8 @@ export function createDashboardStore(
             layout: layoutSliceReducer,
             dateFilterConfig: dateFilterConfigSliceReducer,
             insights: insightsSliceReducer,
+            alerts: alertsSliceReducer,
+            catalog: catalogSliceReducer,
         },
         middleware,
     });

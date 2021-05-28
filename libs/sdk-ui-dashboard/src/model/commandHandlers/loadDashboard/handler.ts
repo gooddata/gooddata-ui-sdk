@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { all, call, put } from "redux-saga/effects";
+import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { LoadDashboard } from "../../commands/dashboard";
 import { eventDispatcher } from "../../eventEmitter/eventDispatcher";
 import { dashboardLoaded } from "../../events/dashboard";
@@ -7,8 +7,8 @@ import { filterContextActions } from "../../state/filterContext";
 import { insightsActions } from "../../state/insights";
 import { layoutActions } from "../../state/layout";
 import { loadingActions } from "../../state/loading";
-import { DashboardContext, ResolvedDashboardConfig } from "../../types/commonTypes";
-import { IDashboardWithReferences, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import { DashboardContext } from "../../types/commonTypes";
+import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { loadDashboardConfig } from "./loadDashboardConfig";
 import { configActions } from "../../state/config";
 import { PromiseFnReturnType } from "../../types/sagas";
@@ -16,6 +16,10 @@ import { dateFilterConfigActions } from "../../state/dateFilterConfig";
 import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs";
 import { loadPermissions } from "./loadPermissions";
 import { permissionsActions } from "../../state/permissions";
+import { loadCatalog } from "./loadCatalog";
+import { loadDashboardAlerts } from "./loadDashboardAlerts";
+import { catalogActions } from "../../state/catalog/index";
+import { alertsActions } from "../../state/alerts/index";
 
 function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWithReferences> {
     const { backend, workspace, dashboardRef } = ctx;
@@ -30,14 +34,18 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
     try {
         yield put(loadingActions.setLoadingStart());
 
-        const [dashboardWithReferences, config, permissions]: [
+        const [dashboardWithReferences, config, permissions, catalog, alerts]: [
             PromiseFnReturnType<typeof loadDashboardFromBackend>,
-            ResolvedDashboardConfig,
-            IWorkspacePermissions,
+            SagaReturnType<typeof loadDashboardConfig>,
+            SagaReturnType<typeof loadPermissions>,
+            PromiseFnReturnType<typeof loadCatalog>,
+            PromiseFnReturnType<typeof loadDashboardAlerts>,
         ] = yield all([
             call(loadDashboardFromBackend, ctx),
             call(loadDashboardConfig, ctx, cmd),
             call(loadPermissions, ctx, cmd),
+            call(loadCatalog, ctx),
+            call(loadDashboardAlerts, ctx),
         ]);
 
         const { dashboard, references } = dashboardWithReferences;
@@ -51,6 +59,16 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
 
         yield put(configActions.setConfig(config));
         yield put(permissionsActions.setPermissions(permissions));
+
+        yield put(
+            catalogActions.setCatalogItems({
+                attributes: catalog.attributes(),
+                dateDatasets: catalog.dateDatasets(),
+                facts: catalog.facts(),
+                measures: catalog.measures(),
+            }),
+        );
+        yield put(alertsActions.setAlerts(alerts));
 
         yield put(filterContextActions.setFilterContext(dashboard.filterContext));
         yield put(layoutActions.setLayout(dashboard.layout));

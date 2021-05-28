@@ -56,3 +56,12 @@ export const localeSelector = createSelector(configSelector, (state) => {
 export const separatorsSelector = createSelector(configSelector, (state) => {
     return state.separators;
 });
+
+/**
+ * Returns the color palette for dashboard charts.
+ *
+ * @internal
+ */
+export const colorPaletteSelector = createSelector(configSelector, (state) => {
+    return state.colorPalette;
+});
