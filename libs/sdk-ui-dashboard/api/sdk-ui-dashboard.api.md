@@ -46,7 +46,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
     readonly payload: {
         readonly displayForm: ObjRef;
         readonly index: number;
-        readonly parentFilter?: IDashboardAttributeFilterParent;
+        readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
         readonly initialSelection?: IAttributeElements;
     };
     // (undocumented)
@@ -107,8 +107,62 @@ export const Dashboard: React_2.FC<IDashboardProps>;
 // @internal
 export const DashboardAttributeFilter: React_2.FC<IDashboardAttributeFilter>;
 
+// @internal
+export interface DashboardAttributeFilterAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly added: IDashboardAttributeFilter;
+        readonly index: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.AF.ADDED";
+}
+
 // @internal (undocumented)
 export type DashboardAttributeFilterComponent = React_2.ComponentType<IDashboardAttributeFilterProps>;
+
+// @internal
+export interface DashboardAttributeFilterMoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly moved: IDashboardAttributeFilter;
+        readonly fromIndex: number;
+        readonly toIndex: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.AF.MOVED";
+}
+
+// @internal
+export interface DashboardAttributeFilterParentChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly filter: IDashboardAttributeFilter;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.AF.PARENT_CHANGED";
+}
+
+// @internal
+export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly removed: IDashboardAttributeFilter;
+        readonly children?: ReadonlyArray<IDashboardAttributeFilter>;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.AF.REMOVED";
+}
+
+// @internal
+export interface DashboardAttributeFilterSelectionChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly filter: IDashboardAttributeFilter;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.AF.SELECTION_CHANGED";
+}
 
 // @internal (undocumented)
 export const DashboardButtonBar: React_2.FC<IDashboardButtonBarProps & IDefaultButtonBarProps>;
@@ -183,10 +237,20 @@ export type DashboardEventHandler = {
 };
 
 // @internal (undocumented)
-export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset;
+export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
+export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED" | "GDC.DASHBOARD.EVT.AF.ADDED" | "GDC.DASHBOARD.EVT.AF.REMOVED" | "GDC.DASHBOARD.EVT.AF.MOVED" | "GDC.DASHBOARD.EVT.AF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.PARENT_CHANGED" | "GDC.DASHBOARD.EVT.F.FILTER_CONTEXT_CHANGED";
+
+// @internal
+export interface DashboardFilterContextChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly filterContext: IFilterContext;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.F.FILTER_CONTEXT_CHANGED";
+}
 
 // @internal
 export interface DashboardLoaded extends IDashboardEvent {
@@ -616,7 +680,7 @@ export interface SetAttributeFilterParent extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly filterLocalId: string;
-        readonly parentFilter: IDashboardAttributeFilterParent;
+        readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
     };
     // (undocumented)
     readonly type: "GDC.DASHBOARD.CMD.AF.SET_PARENT";

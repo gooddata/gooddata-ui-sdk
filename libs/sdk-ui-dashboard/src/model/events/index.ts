@@ -8,6 +8,14 @@ import {
     DashboardWasReset,
 } from "./dashboard";
 import { DashboardCommandFailed, DashboardCommandRejected } from "./general";
+import {
+    DashboardAttributeFilterAdded,
+    DashboardAttributeFilterMoved,
+    DashboardAttributeFilterParentChanged,
+    DashboardAttributeFilterRemoved,
+    DashboardAttributeFilterSelectionChanged,
+    DashboardFilterContextChanged,
+} from "./filters";
 
 export { IDashboardEvent, DashboardEventType } from "./base";
 export {
@@ -21,6 +29,15 @@ export {
 } from "./dashboard";
 export { DashboardCommandRejected, DashboardCommandFailed, CommandFailedErrorReason } from "./general";
 
+export {
+    DashboardFilterContextChanged,
+    DashboardAttributeFilterParentChanged,
+    DashboardAttributeFilterRemoved,
+    DashboardAttributeFilterSelectionChanged,
+    DashboardAttributeFilterMoved,
+    DashboardAttributeFilterAdded,
+} from "./filters";
+
 /**
  * @internal
  */
@@ -32,4 +49,10 @@ export type DashboardEvents =
     | DashboardSaved
     | DashboardCopySaved
     | DashboardRenamed
-    | DashboardWasReset;
+    | DashboardWasReset
+    | DashboardAttributeFilterAdded
+    | DashboardAttributeFilterRemoved
+    | DashboardAttributeFilterMoved
+    | DashboardAttributeFilterSelectionChanged
+    | DashboardAttributeFilterParentChanged
+    | DashboardFilterContextChanged;
