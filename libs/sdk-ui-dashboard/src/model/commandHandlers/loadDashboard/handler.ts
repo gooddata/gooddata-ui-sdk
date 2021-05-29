@@ -20,6 +20,7 @@ import { loadCatalog } from "./loadCatalog";
 import { loadDashboardAlerts } from "./loadDashboardAlerts";
 import { catalogActions } from "../../state/catalog/index";
 import { alertsActions } from "../../state/alerts/index";
+import { batchActions } from "redux-batched-actions";
 
 function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWithReferences> {
     const { backend, workspace, dashboardRef } = ctx;
@@ -57,31 +58,30 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
             dashboard.dateFilterConfig,
         );
 
-        yield put(configActions.setConfig(config));
-        yield put(permissionsActions.setPermissions(permissions));
-
-        yield put(
-            catalogActions.setCatalogItems({
-                attributes: catalog.attributes(),
-                dateDatasets: catalog.dateDatasets(),
-                facts: catalog.facts(),
-                measures: catalog.measures(),
-            }),
+        const batch = batchActions(
+            [
+                configActions.setConfig(config),
+                permissionsActions.setPermissions(permissions),
+                catalogActions.setCatalogItems({
+                    attributes: catalog.attributes(),
+                    dateDatasets: catalog.dateDatasets(),
+                    facts: catalog.facts(),
+                    measures: catalog.measures(),
+                }),
+                alertsActions.setAlerts(alerts),
+                filterContextActions.setFilterContext(dashboard.filterContext),
+                layoutActions.setLayout(dashboard.layout),
+                dateFilterConfigActions.setDateFilterConfig({
+                    dateFilterConfig: dashboard.dateFilterConfig,
+                    effectiveDateFilterConfig: effectiveDateFilterConfig.config,
+                    isUsingDashboardOverrides: effectiveDateFilterConfig.source === "dashboard",
+                }),
+                insightsActions.setInsights(references.insights),
+            ],
+            "@@GDC.DASHBOARD.BATCH.LOAD",
         );
-        yield put(alertsActions.setAlerts(alerts));
 
-        yield put(filterContextActions.setFilterContext(dashboard.filterContext));
-        yield put(layoutActions.setLayout(dashboard.layout));
-        yield put(
-            dateFilterConfigActions.setDateFilterConfig({
-                dateFilterConfig: dashboard.dateFilterConfig,
-                effectiveDateFilterConfig: effectiveDateFilterConfig.config,
-                isUsingDashboardOverrides: effectiveDateFilterConfig.source === "dashboard",
-            }),
-        );
-
-        yield put(insightsActions.setInsights(references.insights));
-
+        yield put(batch);
         yield put(loadingActions.setLoadingSuccess());
 
         yield call(
@@ -89,6 +89,6 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
             dashboardLoaded(ctx, dashboard, references.insights, config, permissions),
         );
     } catch (e) {
-        yield put(loadingActions.setLoadingError(e));
+        yield put(loadingActions.setLoadingError(e.message));
     }
 }
