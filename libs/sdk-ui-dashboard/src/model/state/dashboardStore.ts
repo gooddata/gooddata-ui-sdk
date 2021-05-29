@@ -2,6 +2,7 @@
 import React from "react";
 import {
     AnyAction,
+    combineReducers,
     configureStore,
     Dispatch,
     EnhancedStore,
@@ -9,6 +10,7 @@ import {
     getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
+import { enableBatching } from "redux-batched-actions";
 import { createDispatchHook, createSelectorHook, TypedUseSelectorHook } from "react-redux";
 import { filterContextSliceReducer } from "./filterContext";
 import { layoutSliceReducer } from "./layout";
@@ -125,18 +127,20 @@ export function createDashboardStore(
         sagaMiddleware,
     ];
 
+    const rootReducer = combineReducers({
+        loading: loadingSliceReducer,
+        config: configSliceReducer,
+        permissions: permissionsSliceReducer,
+        filterContext: filterContextSliceReducer,
+        layout: layoutSliceReducer,
+        dateFilterConfig: dateFilterConfigSliceReducer,
+        insights: insightsSliceReducer,
+        alerts: alertsSliceReducer,
+        catalog: catalogSliceReducer,
+    });
+
     const store = configureStore({
-        reducer: {
-            loading: loadingSliceReducer,
-            config: configSliceReducer,
-            permissions: permissionsSliceReducer,
-            filterContext: filterContextSliceReducer,
-            layout: layoutSliceReducer,
-            dateFilterConfig: dateFilterConfigSliceReducer,
-            insights: insightsSliceReducer,
-            alerts: alertsSliceReducer,
-            catalog: catalogSliceReducer,
-        },
+        reducer: enableBatching(rootReducer),
         middleware,
     });
 
