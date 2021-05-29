@@ -1,7 +1,38 @@
 // (C) 2021 GoodData Corporation
-import { IDashboardAttributeFilter, IFilterContext } from "@gooddata/sdk-backend-spi";
+import { IDashboardAttributeFilter, IDashboardDateFilter, IFilterContext } from "@gooddata/sdk-backend-spi";
 import { IDashboardEvent } from "./base";
 import { DashboardContext } from "../types/commonTypes";
+
+/**
+ * This event is emitted after the dashboard's date filter selection is changed.
+ *
+ * @internal
+ */
+export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
+    readonly type: "GDC.DASHBOARD.EVT.DF.SELECTION_CHANGED";
+    readonly payload: {
+        readonly filter: IDashboardDateFilter;
+    };
+}
+
+export function dateFilterChanged(
+    ctx: DashboardContext,
+    filter: IDashboardDateFilter,
+    correlationId?: string,
+): DashboardDateFilterSelectionChanged {
+    return {
+        type: "GDC.DASHBOARD.EVT.DF.SELECTION_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+        },
+    };
+}
+
+//
+//
+//
 
 /**
  * This event is emitted after a new dashboard attribute filter is successfully added into dashboard's
@@ -218,8 +249,8 @@ export function attributeFilterParentChanged(
 //
 
 /**
- * This event is emitted after _any_ change to dashboard filters. The event describes
- * the new state of the entire filter context.
+ * This event is emitted after _any_ change to dashboard filters (be it date or attribute filter).
+ * The event describes the new state of the entire filter context.
  *
  * This is event is emitted as convenience - more granular events describe all the possible
  * changes to the dashboard filters and can be used to event source the state of filter context.

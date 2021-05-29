@@ -250,6 +250,16 @@ export const DashboardDateFilter: React_2.FC<IDashboardDateFilterProps>;
 export type DashboardDateFilterComponent = React_2.ComponentType<IDashboardDateFilterProps>;
 
 // @internal
+export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly filter: IDashboardDateFilter;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.DF.SELECTION_CHANGED";
+}
+
+// @internal
 export type DashboardDispatch = Dispatch<AnyAction>;
 
 // @internal
@@ -259,10 +269,10 @@ export type DashboardEventHandler = {
 };
 
 // @internal (undocumented)
-export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged;
+export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED" | "GDC.DASHBOARD.EVT.AF.ADDED" | "GDC.DASHBOARD.EVT.AF.REMOVED" | "GDC.DASHBOARD.EVT.AF.MOVED" | "GDC.DASHBOARD.EVT.AF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.PARENT_CHANGED" | "GDC.DASHBOARD.EVT.F.FILTER_CONTEXT_CHANGED";
+export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED" | "GDC.DASHBOARD.EVT.DF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.ADDED" | "GDC.DASHBOARD.EVT.AF.REMOVED" | "GDC.DASHBOARD.EVT.AF.MOVED" | "GDC.DASHBOARD.EVT.AF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.PARENT_CHANGED" | "GDC.DASHBOARD.EVT.F.FILTER_CONTEXT_CHANGED";
 
 // @internal
 export interface DashboardFilterContextChanged extends IDashboardEvent {

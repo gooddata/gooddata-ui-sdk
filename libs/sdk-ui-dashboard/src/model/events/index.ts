@@ -14,6 +14,7 @@ import {
     DashboardAttributeFilterParentChanged,
     DashboardAttributeFilterRemoved,
     DashboardAttributeFilterSelectionChanged,
+    DashboardDateFilterSelectionChanged,
     DashboardFilterContextChanged,
 } from "./filters";
 
@@ -30,6 +31,7 @@ export {
 export { DashboardCommandRejected, DashboardCommandFailed, CommandFailedErrorReason } from "./general";
 
 export {
+    DashboardDateFilterSelectionChanged,
     DashboardFilterContextChanged,
     DashboardAttributeFilterParentChanged,
     DashboardAttributeFilterRemoved,
@@ -50,6 +52,7 @@ export type DashboardEvents =
     | DashboardCopySaved
     | DashboardRenamed
     | DashboardWasReset
+    | DashboardDateFilterSelectionChanged
     | DashboardAttributeFilterAdded
     | DashboardAttributeFilterRemoved
     | DashboardAttributeFilterMoved
