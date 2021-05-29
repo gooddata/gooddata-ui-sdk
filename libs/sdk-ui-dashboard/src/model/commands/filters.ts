@@ -1,7 +1,116 @@
 // (C) 2021 GoodData Corporation
-import { IDashboardAttributeFilterParent } from "@gooddata/sdk-backend-spi";
+import {
+    DateFilterGranularity,
+    DateFilterType,
+    DateString,
+    IDashboardAttributeFilterParent,
+} from "@gooddata/sdk-backend-spi";
 import { IAttributeElements, ObjRef } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
+
+/**
+ * @internal
+ */
+export interface ChangeDateFilterSelection extends IDashboardCommand {
+    readonly type: "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION";
+    readonly payload: {
+        /**
+         * Indicates whether the filter should select absolute or relative values.
+         *
+         * -  Absolute values: `from` and `to` props should be exact dates on the defined granularity
+         * -  Relative values: `from` and `to` are offsets on the defined granularity
+         */
+        readonly type: DateFilterType;
+
+        /**
+         * Date filter granularity. For absolute dates this indicates what is the expected input format.
+         *
+         * -  Date = MM/DD/YYYY
+         * -  Month = MM/YYYY
+         * -  Year = YYYY
+         * -  Quarter = Q#/YYYY
+         * -  Week = WW/YYYY
+         */
+        readonly granularity: DateFilterGranularity;
+
+        /**
+         * The start date. If absolute date filter, then `from` is the formatted start date. If relative
+         * date filter, then `from` is offset from today.
+         *
+         * If not specified, then the start date is unbounded.
+         *
+         * @remarks see `granularity` prop for more on date format.
+         */
+        readonly from?: DateString | number;
+
+        /**
+         * The end date. If absolute date filter, then `to` is formatted end date. If relative date filter,
+         * then `to` is offset from today.
+         *
+         * If not specified, then the end date is current date.
+         *
+         * @remarks see `granularity` prop for more on date format
+         */
+        readonly to?: DateString | number;
+    };
+}
+
+/**
+ * Creates the ChangeDateFilterSelection command. Dispatching this command will result in change of dashboard's
+ * date filter.
+ *
+ * @param type - date filter type; absolute filters use exact start and end dates, while relative filters use offsets from today
+ * @param granularity - granularity on which the filter works; days, weeks, months, quarters or years.
+ * @param from - start date; if not specified, then the start date will be unbounded
+ * @param to - end date; if not specified, then the end date will be unbounded
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ * @remarks see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
+ *
+ * @internal
+ */
+export function changeDateFilterSelection(
+    type: DateFilterType,
+    granularity: DateFilterGranularity,
+    from?: DateString | number,
+    to?: DateString | number,
+    correlationId?: string,
+): ChangeDateFilterSelection {
+    return {
+        type: "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION",
+        correlationId,
+        payload: {
+            type,
+            granularity,
+            from,
+            to,
+        },
+    };
+}
+
+/**
+ * This convenience function will create ChangeDateFilterSelection configured so that the date filter will be
+ * unbounded - showing data for 'All Time'.
+ *
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @internal
+ */
+export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection {
+    return {
+        type: "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION",
+        correlationId,
+        payload: {
+            type: "relative",
+            granularity: "GDC.time.date",
+        },
+    };
+}
+
+//
+//
+//
 
 /**
  * @internal

@@ -4,6 +4,7 @@ import { LoadDashboard, RenameDashboard, ResetDashboard, SaveDashboard, SaveDash
 import {
     AddAttributeFilter,
     ChangeAttributeFilterSelection,
+    ChangeDateFilterSelection,
     MoveAttributeFilter,
     RemoveAttributeFilters,
     SetAttributeFilterParent,
@@ -23,6 +24,9 @@ export {
     resetDashboard,
 } from "./dashboard";
 export {
+    ChangeDateFilterSelection,
+    changeDateFilterSelection,
+    clearDateFilterSelection,
     AddAttributeFilter,
     addAttributeFilter,
     MoveAttributeFilter,
@@ -46,6 +50,7 @@ export type DashboardCommands =
     | SaveDashboardAs
     | RenameDashboard
     | ResetDashboard
+    | ChangeDateFilterSelection
     | AddAttributeFilter
     | RemoveAttributeFilters
     | MoveAttributeFilter

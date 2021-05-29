@@ -38,6 +38,9 @@ export function* rootCommandHandler() {
             case "GDC.DASHBOARD.CMD.SAVEAS": {
                 break;
             }
+            case "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION": {
+                break;
+            }
             case "GDC.DASHBOARD.CMD.AF.ADD": {
                 break;
             }

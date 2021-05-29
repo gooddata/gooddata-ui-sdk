@@ -7,6 +7,9 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
+import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
+import { DateFilterType } from '@gooddata/sdk-backend-spi';
+import { DateString } from '@gooddata/sdk-backend-spi';
 import { Dispatch } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -85,6 +88,25 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
 
 // @internal
 export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
+
+// @internal (undocumented)
+export interface ChangeDateFilterSelection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly type: DateFilterType;
+        readonly granularity: DateFilterGranularity;
+        readonly from?: DateString | number;
+        readonly to?: DateString | number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION";
+}
+
+// @internal
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, correlationId?: string): ChangeDateFilterSelection;
+
+// @internal
+export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection;
 
 // @internal (undocumented)
 export type CommandFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
@@ -189,10 +211,10 @@ export interface DashboardCommandRejected extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent;
+export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | ChangeDateFilterSelection | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent;
 
 // @internal
-export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD" | "GDC.DASHBOARD.CMD.SAVE" | "GDC.DASHBOARD.CMD.SAVEAS" | "GDC.DASHBOARD.CMD.RESET" | "GDC.DASHBOARD.CMD.RENAME" | "GDC.DASHBOARD.CMD.AF.ADD" | "GDC.DASHBOARD.CMD.AF.REMOVE" | "GDC.DASHBOARD.CMD.AF.MOVE" | "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION" | "GDC.DASHBOARD.CMD.AF.SET_PARENT";
+export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD" | "GDC.DASHBOARD.CMD.SAVE" | "GDC.DASHBOARD.CMD.SAVEAS" | "GDC.DASHBOARD.CMD.RESET" | "GDC.DASHBOARD.CMD.RENAME" | "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION" | "GDC.DASHBOARD.CMD.AF.ADD" | "GDC.DASHBOARD.CMD.AF.REMOVE" | "GDC.DASHBOARD.CMD.AF.MOVE" | "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION" | "GDC.DASHBOARD.CMD.AF.SET_PARENT";
 
 // @internal
 export type DashboardConfig = {
