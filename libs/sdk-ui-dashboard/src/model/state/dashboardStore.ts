@@ -118,9 +118,14 @@ export function createDashboardStore(
         ...getDefaultMiddleware({
             thunk: false,
             /*
-             * TODO: events that fly through contain dashboard context which has some non-serializable data
+             * All events that fly through the store have the dashboard context in the `ctx` prop. This is
+             * for the receiver of the event (who may be well off redux).
+             *
+             * Additionally, some events - namely those reporting on error scenarios may include the actual
+             * error instance in them.
              */
             serializableCheck: {
+                ignoredActions: ["GDC.DASHBOARD.EVT.COMMAND.FAILED"],
                 ignoredActionPaths: ["ctx"],
             },
         }),
