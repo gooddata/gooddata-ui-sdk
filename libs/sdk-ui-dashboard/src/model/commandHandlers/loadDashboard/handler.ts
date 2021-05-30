@@ -86,7 +86,7 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
         yield put(loadingActions.setLoadingSuccess());
 
         yield dispatchDashboardEvent(
-            dashboardLoaded(ctx, dashboard, references.insights, config, permissions),
+            dashboardLoaded(ctx, dashboard, references.insights, config, permissions, cmd.correlationId),
         );
     } catch (e) {
         yield put(loadingActions.setLoadingError(e.message));
