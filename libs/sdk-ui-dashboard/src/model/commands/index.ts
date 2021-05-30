@@ -68,8 +68,6 @@ export {
     UndoLayoutChanges,
     undoLayoutChanges,
     revertLastLayoutChange,
-    StashedDashboardItemsId,
-    DashboardItemDefinition,
     DashboardLayoutCommands,
     UndoPointSelector,
 } from "./layout";

@@ -28,6 +28,7 @@ import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
+import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDashboardViewProps } from '@gooddata/sdk-ui-ext';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
@@ -317,10 +318,10 @@ export type DashboardEventHandler = {
 };
 
 // @internal (undocumented)
-export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged;
+export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutChanged;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED" | "GDC.DASHBOARD.EVT.DF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.ADDED" | "GDC.DASHBOARD.EVT.AF.REMOVED" | "GDC.DASHBOARD.EVT.AF.MOVED" | "GDC.DASHBOARD.EVT.AF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.PARENT_CHANGED" | "GDC.DASHBOARD.EVT.F.FILTER_CONTEXT_CHANGED";
+export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED" | "GDC.DASHBOARD.EVT.DF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.ADDED" | "GDC.DASHBOARD.EVT.AF.REMOVED" | "GDC.DASHBOARD.EVT.AF.MOVED" | "GDC.DASHBOARD.EVT.AF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.PARENT_CHANGED" | "GDC.DASHBOARD.EVT.F.FILTER_CONTEXT_CHANGED" | "GDC.DASHBOARD.EVT.L.SECTION_ADDED" | "GDC.DASHBOARD.EVT.L.SECTION_MOVED" | "GDC.DASHBOARD.EVT.L.SECTION_REMOVED" | "GDC.DASHBOARD.EVT.L.SECTION_HEADER_CHANGED" | "GDC.DASHBOARD.EVT.L.ITEMS_ADDED" | "GDC.DASHBOARD.EVT.L.ITEM_MOVED" | "GDC.DASHBOARD.EVT.L.ITEM_REMOVED" | "GDC.DASHBOARD.EVT.L.LAYOUT_CHANGED";
 
 // @internal
 export interface DashboardFilterContextChanged extends IDashboardEvent {
@@ -335,8 +336,105 @@ export interface DashboardFilterContextChanged extends IDashboardEvent {
 // @internal
 export type DashboardItemDefinition = ExtendedDashboardItem | StashedDashboardItemsId;
 
+// @internal
+export interface DashboardLayoutChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly layout: IDashboardLayout<ExtendedDashboardItem>;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.L.LAYOUT_CHANGED";
+}
+
 // @internal (undocumented)
 export type DashboardLayoutCommands = AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | MoveSectionItem | RemoveSectionItem;
+
+// @internal
+export interface DashboardLayoutSectionAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly section: ExtendedDashboardLayoutSection;
+        readonly index: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_ADDED";
+}
+
+// @internal
+export interface DashboardLayoutSectionHeaderChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly newHeader: IDashboardLayoutSectionHeader;
+        readonly sectionIndex: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_HEADER_CHANGED";
+}
+
+// @internal
+export interface DashboardLayoutSectionItemMoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly item: ExtendedDashboardItem;
+        readonly fromSectionIndex: number;
+        readonly toSectionIndex: number;
+        readonly fromIndex: number;
+        readonly toIndex: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.L.ITEM_MOVED";
+}
+
+// @internal
+export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly item: ExtendedDashboardItem;
+        readonly itemIndex: number;
+        readonly section?: ExtendedDashboardLayoutSection;
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.L.ITEM_REMOVED";
+}
+
+// @internal
+export interface DashboardLayoutSectionItemsAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly sectionIndex: number;
+        readonly startIndex: number;
+        readonly itemsAdded: ReadonlyArray<ExtendedDashboardItem>;
+        readonly stashesUsed?: ReadonlyArray<StashedDashboardItemsId>;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.L.ITEMS_ADDED";
+}
+
+// @internal
+export interface DashboardLayoutSectionMoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly section: ExtendedDashboardLayoutSection;
+        readonly fromIndex: number;
+        readonly toIndex: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_MOVED";
+}
+
+// @internal
+export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly section: ExtendedDashboardLayoutSection;
+        readonly index: number;
+        readonly eagerRemoval?: boolean;
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_REMOVED";
+}
 
 // @internal
 export interface DashboardLoaded extends IDashboardEvent {
@@ -447,6 +545,9 @@ export const effectiveDateFilterModeSelector: import("@reduxjs/toolkit").OutputS
 
 // @internal
 export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget>;
+
+// @internal
+export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardItem>;
 
 // @internal
 export type ExtendedDashboardWidget = DashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;

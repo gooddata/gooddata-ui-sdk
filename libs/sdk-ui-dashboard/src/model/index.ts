@@ -50,6 +50,9 @@ export {
     ExtendedDashboardWidget,
     InsightPlaceholderWidget,
     KpiPlaceholderWidget,
+    DashboardItemDefinition,
+    StashedDashboardItemsId,
+    ExtendedDashboardLayoutSection,
 } from "./types/layoutTypes";
 export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
 

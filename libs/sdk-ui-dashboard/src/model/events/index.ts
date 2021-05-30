@@ -17,6 +17,16 @@ import {
     DashboardDateFilterSelectionChanged,
     DashboardFilterContextChanged,
 } from "./filters";
+import {
+    DashboardLayoutChanged,
+    DashboardLayoutSectionAdded,
+    DashboardLayoutSectionHeaderChanged,
+    DashboardLayoutSectionItemMoved,
+    DashboardLayoutSectionItemRemoved,
+    DashboardLayoutSectionItemsAdded,
+    DashboardLayoutSectionMoved,
+    DashboardLayoutSectionRemoved,
+} from "./layout";
 
 export { IDashboardEvent, DashboardEventType } from "./base";
 export {
@@ -40,6 +50,17 @@ export {
     DashboardAttributeFilterAdded,
 } from "./filters";
 
+export {
+    DashboardLayoutSectionAdded,
+    DashboardLayoutSectionMoved,
+    DashboardLayoutSectionRemoved,
+    DashboardLayoutSectionHeaderChanged,
+    DashboardLayoutSectionItemsAdded,
+    DashboardLayoutSectionItemMoved,
+    DashboardLayoutSectionItemRemoved,
+    DashboardLayoutChanged,
+} from "./layout";
+
 /**
  * @internal
  */
@@ -58,4 +79,12 @@ export type DashboardEvents =
     | DashboardAttributeFilterMoved
     | DashboardAttributeFilterSelectionChanged
     | DashboardAttributeFilterParentChanged
-    | DashboardFilterContextChanged;
+    | DashboardFilterContextChanged
+    | DashboardLayoutSectionAdded
+    | DashboardLayoutSectionMoved
+    | DashboardLayoutSectionRemoved
+    | DashboardLayoutSectionHeaderChanged
+    | DashboardLayoutSectionItemsAdded
+    | DashboardLayoutSectionItemMoved
+    | DashboardLayoutSectionItemRemoved
+    | DashboardLayoutChanged;

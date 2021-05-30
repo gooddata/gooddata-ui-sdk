@@ -1,24 +1,8 @@
 // (C) 2021 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
-import { ExtendedDashboardItem } from "../types/layoutTypes";
+import { DashboardItemDefinition, StashedDashboardItemsId } from "../types/layoutTypes";
 import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
-
-/**
- * Identifier of a stashed dashboard items. When removing one or more item, the caller may decide to 'stash' these items
- * under some identifier. This stashed items can then be used in subsequent command that places items on the layout by
- * providing the stash identifier.
- *
- * @internal
- */
-export type StashedDashboardItemsId = string;
-
-/**
- * Definition of items that may be placed into the dashboard sections.
- *
- * @internal
- */
-export type DashboardItemDefinition = ExtendedDashboardItem | StashedDashboardItemsId;
 
 /**
  * @internal
