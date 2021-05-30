@@ -45,6 +45,12 @@ export { insightsSelector } from "./state/insights/insightsSelectors";
 export { CatalogState } from "./state/catalog/catalogState";
 
 export { DashboardContext, DashboardConfig, ResolvedDashboardConfig } from "./types/commonTypes";
+export {
+    ExtendedDashboardItem,
+    ExtendedDashboardWidget,
+    InsightPlaceholderWidget,
+    KpiPlaceholderWidget,
+} from "./types/layoutTypes";
 export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
 
 export * from "./commands";

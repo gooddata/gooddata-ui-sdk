@@ -6,6 +6,7 @@ import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
  * @internal
  */
 export interface LayoutState {
+    // TODO: modify definition to use ExtendedDashboardWidget.. this will open editing use-cases
     layout?: IDashboardLayout;
 }
 

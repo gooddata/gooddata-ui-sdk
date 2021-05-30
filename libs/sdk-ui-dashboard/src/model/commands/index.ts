@@ -9,6 +9,16 @@ import {
     RemoveAttributeFilters,
     SetAttributeFilterParent,
 } from "./filters";
+import {
+    AddLayoutSection,
+    AddSectionItems,
+    ChangeLayoutSectionHeader,
+    MoveLayoutSection,
+    MoveSectionItem,
+    RemoveLayoutSection,
+    RemoveSectionItem,
+    UndoLayoutChanges,
+} from "./layout";
 
 export { DashboardCommandType, IDashboardCommand } from "./base";
 export {
@@ -40,6 +50,29 @@ export {
     SetAttributeFilterParent,
     setAttributeFilterParent,
 } from "./filters";
+export {
+    AddLayoutSection,
+    addLayoutSection,
+    MoveLayoutSection,
+    moveLayoutSection,
+    RemoveLayoutSection,
+    removeLayoutSection,
+    ChangeLayoutSectionHeader,
+    changeLayoutSectionHeader,
+    AddSectionItems,
+    addSectionItem,
+    MoveSectionItem,
+    moveSectionItem,
+    RemoveSectionItem,
+    eagerRemoveSectionItem,
+    UndoLayoutChanges,
+    undoLayoutChanges,
+    revertLastLayoutChange,
+    StashedDashboardItemsId,
+    DashboardItemDefinition,
+    DashboardLayoutCommands,
+    UndoPointSelector,
+} from "./layout";
 
 /**
  * @internal
@@ -55,4 +88,12 @@ export type DashboardCommands =
     | RemoveAttributeFilters
     | MoveAttributeFilter
     | ChangeAttributeFilterSelection
-    | SetAttributeFilterParent;
+    | SetAttributeFilterParent
+    | AddLayoutSection
+    | MoveLayoutSection
+    | RemoveLayoutSection
+    | ChangeLayoutSectionHeader
+    | AddSectionItems
+    | MoveSectionItem
+    | RemoveSectionItem
+    | UndoLayoutChanges;
