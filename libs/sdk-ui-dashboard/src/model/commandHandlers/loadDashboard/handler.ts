@@ -21,6 +21,7 @@ import { loadDashboardAlerts } from "./loadDashboardAlerts";
 import { catalogActions } from "../../state/catalog/index";
 import { alertsActions } from "../../state/alerts/index";
 import { batchActions } from "redux-batched-actions";
+import { internalErrorOccurred } from "../../events/general";
 
 function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWithReferences> {
     const { backend, workspace, dashboardRef } = ctx;
@@ -90,5 +91,14 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
         );
     } catch (e) {
         yield put(loadingActions.setLoadingError(e.message));
+        yield call(
+            eventDispatcher,
+            internalErrorOccurred(
+                ctx,
+                "An unexpected error has occurred while loading dashboard",
+                e,
+                cmd.correlationId,
+            ),
+        );
     }
 }
