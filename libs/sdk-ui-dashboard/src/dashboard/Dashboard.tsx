@@ -69,6 +69,9 @@ export interface IDashboardProps {
     /**
      * Optionally specify event handlers to register at the dashboard creation time.
      *
+     * Note: all events that will be emitted during the initial load processing will have the `initialLoad`
+     * correlationId.
+     *
      * TODO: this needs more attention.
      */
     eventHandlers?: DashboardEventHandler[];
@@ -184,7 +187,7 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 
     useEffect(() => {
         if (!loading && result === undefined) {
-            dispatch(loadDashboard(props.config, props.permissions));
+            dispatch(loadDashboard(props.config, props.permissions, "initialLoad"));
         }
     }, [loading, result]);
 
