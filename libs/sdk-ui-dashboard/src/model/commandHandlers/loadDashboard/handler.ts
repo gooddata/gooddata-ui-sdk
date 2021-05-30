@@ -9,12 +9,12 @@ import { layoutActions } from "../../state/layout";
 import { loadingActions } from "../../state/loading";
 import { DashboardContext } from "../../types/commonTypes";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { loadDashboardConfig } from "./loadDashboardConfig";
+import { resolveDashboardConfig } from "./resolveDashboardConfig";
 import { configActions } from "../../state/config";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { dateFilterConfigActions } from "../../state/dateFilterConfig";
 import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs";
-import { loadPermissions } from "./loadPermissions";
+import { resolvePermissions } from "./resolvePermissions";
 import { permissionsActions } from "../../state/permissions";
 import { loadCatalog } from "./loadCatalog";
 import { loadDashboardAlerts } from "./loadDashboardAlerts";
@@ -38,14 +38,14 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
 
         const [dashboardWithReferences, config, permissions, catalog, alerts]: [
             PromiseFnReturnType<typeof loadDashboardFromBackend>,
-            SagaReturnType<typeof loadDashboardConfig>,
-            SagaReturnType<typeof loadPermissions>,
+            SagaReturnType<typeof resolveDashboardConfig>,
+            SagaReturnType<typeof resolvePermissions>,
             PromiseFnReturnType<typeof loadCatalog>,
             PromiseFnReturnType<typeof loadDashboardAlerts>,
         ] = yield all([
             call(loadDashboardFromBackend, ctx),
-            call(loadDashboardConfig, ctx, cmd),
-            call(loadPermissions, ctx, cmd),
+            call(resolveDashboardConfig, ctx, cmd),
+            call(resolvePermissions, ctx, cmd),
             call(loadCatalog, ctx),
             call(loadDashboardAlerts, ctx),
         ]);

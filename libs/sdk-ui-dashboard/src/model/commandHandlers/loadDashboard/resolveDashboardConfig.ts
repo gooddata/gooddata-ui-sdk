@@ -106,7 +106,7 @@ function resolveColorPalette(ctx: DashboardContext, config: DashboardConfig): Pr
  * @param ctx
  * @param cmd
  */
-export function* loadDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) {
+export function* resolveDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) {
     const {
         payload: { config = {} },
     } = cmd;
