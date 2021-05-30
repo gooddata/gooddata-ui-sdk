@@ -4,8 +4,7 @@ import { DashboardContext } from "../../types/commonTypes";
 import { LoadDashboard } from "../../commands/dashboard";
 import { mergeDateFilterConfigs } from "../../_staging/dateFilterConfig/merge";
 import { validateDateFilterConfig } from "../../_staging/dateFilterConfig/validation";
-import { call } from "redux-saga/effects";
-import { eventDispatcher } from "../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { dateFilterValidationFailed } from "../../events/dashboard";
 
 export type DateFilterMergeResult = {
@@ -37,8 +36,7 @@ export function* mergeDateFilterConfigWithOverrides(
     const mergedConfigValidation = validateDateFilterConfig(mergedConfig, false);
 
     if (mergedConfigValidation !== "Valid") {
-        yield call(
-            eventDispatcher,
+        yield dispatchDashboardEvent(
             dateFilterValidationFailed(ctx, mergedConfigValidation, cmd.correlationId),
         );
 

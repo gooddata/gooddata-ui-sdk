@@ -3,7 +3,7 @@ import { actionChannel, call, getContext, take } from "redux-saga/effects";
 import { loadDashboardCommandHandler } from "./loadDashboard/handler";
 import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
-import { eventDispatcher } from "../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
 import { commandRejected, internalErrorOccurred } from "../events/general";
 
 const DefaultCommandHandlers = {
@@ -29,7 +29,7 @@ const DefaultCommandHandlers = {
 };
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
-    yield call(eventDispatcher, commandRejected(ctx, cmd.correlationId));
+    yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
 }
 
 /**
@@ -56,8 +56,7 @@ export function* rootCommandHandler() {
             // Errors during command handling should be caught and addressed in the handler, possibly with a
             // more meaningful error message. If the error bubbles up to here then there are holes in error
             // handling or something is seriously messed up.
-            yield call(
-                eventDispatcher,
+            yield dispatchDashboardEvent(
                 internalErrorOccurred(
                     dashboardContext,
                     `Internal error has occurred while handling ${action.type}`,

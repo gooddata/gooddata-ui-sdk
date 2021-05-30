@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { LoadDashboard } from "../../commands/dashboard";
-import { eventDispatcher } from "../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { dashboardLoaded } from "../../events/dashboard";
 import { filterContextActions } from "../../state/filterContext";
 import { insightsActions } from "../../state/insights";
@@ -85,14 +85,12 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
         yield put(batch);
         yield put(loadingActions.setLoadingSuccess());
 
-        yield call(
-            eventDispatcher,
+        yield dispatchDashboardEvent(
             dashboardLoaded(ctx, dashboard, references.insights, config, permissions),
         );
     } catch (e) {
         yield put(loadingActions.setLoadingError(e.message));
-        yield call(
-            eventDispatcher,
+        yield dispatchDashboardEvent(
             internalErrorOccurred(
                 ctx,
                 "An unexpected error has occurred while loading dashboard",
