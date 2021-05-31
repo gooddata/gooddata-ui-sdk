@@ -14,7 +14,7 @@ const selectSelf = createSelector(
  *
  * @internal
  */
-export const configSelector = createSelector(selectSelf, (configState) => {
+export const selectConfig = createSelector(selectSelf, (configState) => {
     invariant(configState.config, "attempting to access uninitialized filter context state");
 
     return configState.config!;
@@ -26,7 +26,7 @@ export const configSelector = createSelector(selectSelf, (configState) => {
  * Note: this configuration SHOULD be further augmented by the dashboard-level overrides to obtain
  * the effective date filter configuration.
  */
-export const dateFilterConfigSelector = createSelector(configSelector, (state) => {
+export const selectDateFilterConfig = createSelector(selectConfig, (state) => {
     return state.dateFilterConfig;
 });
 
@@ -35,7 +35,7 @@ export const dateFilterConfigSelector = createSelector(configSelector, (state) =
  *
  * @internal
  */
-export const settingsSelector = createSelector(configSelector, (state) => {
+export const selectSettings = createSelector(selectConfig, (state) => {
     return state.settings;
 });
 
@@ -44,7 +44,7 @@ export const settingsSelector = createSelector(configSelector, (state) => {
  *
  * @internal
  */
-export const localeSelector = createSelector(configSelector, (state) => {
+export const selectLocale = createSelector(selectConfig, (state) => {
     return state.locale;
 });
 
@@ -53,7 +53,7 @@ export const localeSelector = createSelector(configSelector, (state) => {
  *
  * @internal
  */
-export const separatorsSelector = createSelector(configSelector, (state) => {
+export const selectSeparators = createSelector(selectConfig, (state) => {
     return state.separators;
 });
 
@@ -62,6 +62,6 @@ export const separatorsSelector = createSelector(configSelector, (state) => {
  *
  * @internal
  */
-export const colorPaletteSelector = createSelector(configSelector, (state) => {
+export const selectColorPalette = createSelector(selectConfig, (state) => {
     return state.colorPalette;
 });

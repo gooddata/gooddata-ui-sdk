@@ -9,7 +9,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../model/state/dashboardStore";
-import { loadingSelector } from "../model";
+import { selectDashboardLoading } from "../model";
 import { loadDashboard } from "../model/commands/dashboard";
 import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -183,7 +183,7 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
 const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const dispatch = useDashboardDispatch();
     const { ErrorComponent = DefaultError, LoadingComponent = DefaultLoading } = props;
-    const { loading, error, result } = useDashboardSelector(loadingSelector);
+    const { loading, error, result } = useDashboardSelector(selectDashboardLoading);
 
     useEffect(() => {
         if (!loading && result === undefined) {

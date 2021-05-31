@@ -19,29 +19,24 @@ export {
     DashboardState,
 } from "./state/dashboardStore";
 
-export { loadingSelector } from "./state/loading/loadingSelectors";
+export { selectDashboardLoading } from "./state/loading/loadingSelectors";
 export { LoadingState } from "./state/loading/loadingState";
 export { ConfigState } from "./state/config/configState";
-export {
-    configSelector,
-    localeSelector,
-    separatorsSelector,
-    settingsSelector,
-} from "./state/config/configSelectors";
+export { selectConfig, selectLocale, selectSeparators, selectSettings } from "./state/config/configSelectors";
 export { PermissionsState } from "./state/permissions/permissionsState";
-export { permissionsSelector } from "./state/permissions/permissionsSelectors";
+export { selectPermissions } from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
-export { filterContextSelector } from "./state/filterContext/filterContextSelectors";
+export { selectFilterContext } from "./state/filterContext/filterContextSelectors";
 export { LayoutState } from "./state/layout/layoutState";
-export { layoutSelector } from "./state/layout/layoutSelectors";
+export { selectLayout } from "./state/layout/layoutSelectors";
 export { DateFilterConfigState } from "./state/dateFilterConfig/dateFilterConfigState";
 export {
-    dateFilterConfigSelector,
-    effectiveDateFilterConfigSelector,
-    effectiveDateFilterCustomTitleSelector,
-    effectiveDateFilterModeSelector,
+    selectDateFilterConfigOverrides,
+    selectEffectiveDateFilterConfig,
+    selectEffectiveDateFilterTitle,
+    selectEffectiveDateFilterMode,
 } from "./state/dateFilterConfig/dateFilterConfigSelectors";
-export { insightsSelector } from "./state/insights/insightsSelectors";
+export { selectInsights } from "./state/insights/insightsSelectors";
 export { CatalogState } from "./state/catalog/catalogState";
 
 export { DashboardContext, DashboardConfig, ResolvedDashboardConfig } from "./types/commonTypes";

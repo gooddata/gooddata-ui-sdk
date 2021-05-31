@@ -11,28 +11,28 @@ const selectSelf = createSelector(
 /**
  * @internal
  */
-export const attributesSelector = createSelector(selectSelf, (state) => {
+export const selectCatalogAttributes = createSelector(selectSelf, (state) => {
     return state.attributes ?? [];
 });
 
 /**
  * @internal
  */
-export const measuresSelector = createSelector(selectSelf, (state) => {
+export const selectCatalogMeasures = createSelector(selectSelf, (state) => {
     return state.measures ?? [];
 });
 
 /**
  * @internal
  */
-export const factsSelector = createSelector(selectSelf, (state) => {
+export const selectCatalogFacts = createSelector(selectSelf, (state) => {
     return state.facts ?? [];
 });
 
 /**
  * @internal
  */
-export const dateDatasetsSelector = createSelector(selectSelf, (state) => {
+export const selectCatalogDateDatasets = createSelector(selectSelf, (state) => {
     return state.dateDatasets ?? [];
 });
 
@@ -40,7 +40,7 @@ export const dateDatasetsSelector = createSelector(selectSelf, (state) => {
  * @internal
  */
 export const attributesWithDrillDownSelector = createSelector(
-    [attributesSelector, dateDatasetsSelector],
+    [selectCatalogAttributes, selectCatalogDateDatasets],
     (attributes = [], dateDatasets = []) => {
         const dateAttributes = flatMap(dateDatasets ?? [], (dd) => dd.dateAttributes);
         return [...attributes, ...dateAttributes].filter((attr) => attr.attribute.drillDownStep);
