@@ -104,7 +104,7 @@
     },
     {
       "name": "@gooddata/reference-workspace",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-backend-base",
@@ -116,7 +116,7 @@
     },
     {
       "name": "@gooddata/sdk-backend-mockingbird",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-backend-spi",

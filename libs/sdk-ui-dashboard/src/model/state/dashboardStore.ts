@@ -8,6 +8,7 @@ import {
     EnhancedStore,
     EntityState,
     getDefaultMiddleware,
+    Middleware,
 } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
@@ -95,7 +96,12 @@ export type DashboardStoreConfig = {
     sagaContext: DashboardContext;
 
     /**
-     *
+     * Optionally specify redux middleware to register into the store.
+     */
+    additionalMiddleware?: Middleware<any>;
+
+    /**
+     * Optionally specify event handlers to register during the initialization.
      */
     initialEventHandlers?: DashboardEventHandler[];
 };
@@ -129,6 +135,7 @@ export function createDashboardStore(
                 ignoredActionPaths: ["ctx"],
             },
         }),
+        ...(config.additionalMiddleware ? [config.additionalMiddleware] : []),
         sagaMiddleware,
     ];
 
