@@ -20,6 +20,8 @@ import {
     ILoadingProps,
     useBackendStrict,
     useWorkspaceStrict,
+    IDrillableItem,
+    IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { DashboardConfig } from "../model/types/commonTypes";
@@ -65,6 +67,14 @@ export interface IDashboardProps {
      * logged-in user.
      */
     permissions?: IWorkspacePermissions;
+
+    /**
+     * Configure drillability; e.g. which parts of the visualization can be interacted with.
+     * These are applied to all the widgets in the dashboard. If specified, these override any drills specified in the dashboards.
+     *
+     * TODO: do we need more sophisticated logic to specify drillability?
+     */
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 
     /**
      * Optionally specify event handlers to register at the dashboard creation time.
@@ -161,7 +171,7 @@ export interface IDashboardProps {
 }
 
 const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const { dashboardRef, dashboardLayoutConfig, config, ErrorComponent, LoadingComponent } = props;
+    const { dashboardRef, dashboardLayoutConfig, drillableItems, ErrorComponent, LoadingComponent } = props;
     const customLayout = typeof props.children === "function" ? props.children?.(null) : props.children;
     const LayoutComponent = dashboardLayoutConfig?.Component ?? Layout;
     return (
@@ -169,7 +179,7 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
             {customLayout ?? (
                 <LayoutComponent
                     dashboardRef={dashboardRef}
-                    drillableItems={config?.drillableItems}
+                    drillableItems={drillableItems}
                     transformLayout={dashboardLayoutConfig?.defaultComponentProps?.transformLayout}
                     widgetRenderer={dashboardLayoutConfig?.defaultComponentProps?.widgetRenderer}
                     ErrorComponent={ErrorComponent}

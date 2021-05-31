@@ -269,7 +269,6 @@ export type DashboardConfig = {
     settings?: ISettings;
     dateFilterConfig?: IDateFilterConfig;
     colorPalette?: IColorPalette;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 };
 
 // @internal
@@ -623,6 +622,7 @@ export interface IDashboardProps {
         defaultComponentProps?: LayoutProps;
     };
     dashboardRef: ObjRef;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
     eventHandlers?: DashboardEventHandler[];
     filterBarConfig?: {
