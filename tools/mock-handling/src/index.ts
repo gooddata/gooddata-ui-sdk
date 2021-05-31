@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import program from "commander";
 import ora from "ora";
@@ -23,6 +23,7 @@ import { discoverInsightRecordings } from "./recordings/insightsRepository";
 import { discoverCatalogRecordings } from "./recordings/catalogRepository";
 import { discoverVisClassesRecordings } from "./recordings/visClassesRepository";
 import { getOrInitBackend } from "./backend";
+import { discoverDashboardRecordings } from "./recordings/dashboardsRepository";
 
 program
     .version(pkg.version)
@@ -171,6 +172,7 @@ async function run() {
         ...(await discoverInsightRecordings(absoluteRecordingDir)),
         ...(await discoverCatalogRecordings(absoluteRecordingDir)),
         ...(await discoverVisClassesRecordings(absoluteRecordingDir)),
+        ...(await discoverDashboardRecordings(absoluteRecordingDir)),
     ];
 
     const incompleteRecordings = recordings.filter((e) => !e.isComplete());

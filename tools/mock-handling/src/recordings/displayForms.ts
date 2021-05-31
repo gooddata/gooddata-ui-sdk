@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
 import {
@@ -22,6 +22,7 @@ import { createUniqueVariableNameForIdentifier } from "../base/variableNaming";
 //
 
 export const DisplayFormsDefinition = "displayForms.json";
+export const DashboardsDefinition = "dashboards.json";
 const DisplayFormRequestFile = "request.json";
 const DisplayFormElements = "elements.json";
 const DisplayFormObj = "obj.json";

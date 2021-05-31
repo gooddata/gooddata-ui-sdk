@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import range from "lodash/range";
 import { IExecutionDefinition, IBucket } from "@gooddata/sdk-model";
 
@@ -41,6 +41,11 @@ export const RecordingFiles = {
          * Insight object file name.
          */
         Object: "obj.json",
+    },
+
+    Dashboards: {
+        Object: "obj.json",
+        Alerts: "alerts.json",
     },
 };
 
