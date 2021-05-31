@@ -77,6 +77,7 @@
     "visualizations.menu.aggregations.within-attribute": "在 {attributeName} 中",
     "apply": "应用",
     "cancel": "取消",
+    "loading": "正在加载...",
     "dateFilterDropdown.title": "日期范围",
     "dateFilterDropdown.buttonTitle": "日期范围",
     "dateFilterDropdown.setDefault": "为观看者设置默认日期筛选器：",

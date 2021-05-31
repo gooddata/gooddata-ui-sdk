@@ -181,7 +181,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(LIMIT);
     const [totalCount, setTotalCount] = useState(LIMIT);
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState(props.intl.formatMessage({ id: "loading" }));
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const dropdownRef = useRef<Dropdown>(null);
@@ -440,7 +440,11 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                             <DropdownButton
                                 isOpen={isDropdownOpen}
                                 isMobile={isMobile}
-                                title={props.title || title}
+                                title={
+                                    isLoading
+                                        ? props.intl.formatMessage({ id: "loading" })
+                                        : props.title || title
+                                }
                                 subtitle={getSubtitle()}
                             />
                         )}

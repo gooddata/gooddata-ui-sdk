@@ -77,6 +77,7 @@
     "visualizations.menu.aggregations.within-attribute": "à l'intérieur de {attributeName}",
     "apply": "Appliquer",
     "cancel": "Annuler",
+    "loading": "Chargement en cours…",
     "dateFilterDropdown.title": "Plage de dates",
     "dateFilterDropdown.buttonTitle": "Plage de dates",
     "dateFilterDropdown.setDefault": "Définissez le filtre de date par défaut pour les&nbsp;lecteurs :",
