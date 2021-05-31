@@ -17,6 +17,7 @@ import { ICatalogGroup } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
@@ -126,6 +127,7 @@ export function recordedBackend(index: RecordingIndex, config?: RecordedBackendC
 export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     globalSettings?: ISettings;
     globalPalette?: IColorPalette;
+    dateFilterConfig?: IDateFilterConfig;
     theme?: ITheme;
     useRefType?: RecordedRefType;
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;

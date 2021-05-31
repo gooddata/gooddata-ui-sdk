@@ -6,6 +6,7 @@ import {
     IAttributeElement,
     ICatalogGroup,
     IDashboardWithReferences,
+    IDateFilterConfig,
     ISettings,
     ITheme,
     IWidgetAlert,
@@ -33,6 +34,12 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Specify color palette to return
      */
     globalPalette?: IColorPalette;
+
+    /**
+     * Specify date filter config to return. If not specified, then the date filter config
+     * resolves empty result.
+     */
+    dateFilterConfig?: IDateFilterConfig;
 
     /**
      * Specify theme to return
