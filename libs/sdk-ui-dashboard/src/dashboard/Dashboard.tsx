@@ -9,7 +9,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../model/state/dashboardStore";
-import { selectDashboardLoading } from "../model";
+import { InitialLoadCorrelationId, selectDashboardLoading } from "../model";
 import { loadDashboard } from "../model/commands/dashboard";
 import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -197,7 +197,7 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 
     useEffect(() => {
         if (!loading && result === undefined) {
-            dispatch(loadDashboard(props.config, props.permissions, "initialLoad"));
+            dispatch(loadDashboard(props.config, props.permissions, InitialLoadCorrelationId));
         }
     }, [loading, result]);
 

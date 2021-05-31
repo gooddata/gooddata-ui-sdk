@@ -696,6 +696,9 @@ export interface IFilterBarProps {
     onFilterChanged: (filter: IDashboardFilter) => void;
 }
 
+// @internal
+export const InitialLoadCorrelationId = "initialLoad";
+
 // @internal (undocumented)
 export type InsightPlaceholderWidget = {
     readonly type: "insightPlaceholder";

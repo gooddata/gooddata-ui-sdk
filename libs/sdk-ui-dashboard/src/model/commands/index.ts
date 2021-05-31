@@ -23,6 +23,7 @@ import {
 
 export { DashboardCommandType, IDashboardCommand } from "./base";
 export {
+    InitialLoadCorrelationId,
     LoadDashboard,
     loadDashboard,
     SaveDashboardAs,

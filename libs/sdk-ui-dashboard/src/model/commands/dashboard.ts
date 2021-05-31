@@ -5,6 +5,13 @@ import { IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { IDashboardCommand } from "./base";
 
 /**
+ * The initial load of the dashboard will use this correlation id.
+ *
+ * @internal
+ */
+export const InitialLoadCorrelationId = "initialLoad";
+
+/**
  * Loads dashboard from analytical backend.
  *
  * @internal
