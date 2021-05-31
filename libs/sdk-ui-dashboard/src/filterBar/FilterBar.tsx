@@ -6,15 +6,26 @@ import {
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import { DashboardAttributeFilter, DashboardAttributeFilterComponent } from "./DashboardAttributeFilter";
-import { DashboardDateFilter, DashboardDateFilterComponent } from "./DashboardDateFilter";
+import {
+    DashboardDateFilter,
+    DashboardDateFilterComponent,
+    HiddenDashboardDateFilter,
+} from "./DashboardDateFilter";
 import { idRef, objRefToString } from "@gooddata/sdk-model";
+import {
+    selectEffectiveDateFilterAvailableGranularities,
+    selectEffectiveDateFilterMode,
+    selectEffectiveDateFilterOptions,
+    selectEffectiveDateFilterTitle,
+    useDashboardSelector,
+} from "../model";
 
 /**
  * @internal
  */
-export type CustomAttributeFilter =
-    | DashboardAttributeFilterComponent
-    | ((filter: IDashboardAttributeFilter) => DashboardAttributeFilterComponent | undefined);
+export type CustomAttributeFilterFactory = (
+    filter: IDashboardAttributeFilter,
+) => DashboardAttributeFilterComponent | undefined;
 
 /**
  * @internal
@@ -40,9 +51,15 @@ export interface IDefaultFilterBarProps {
          * -  If factory function is provided and it returns undefined, then the default implementation {@link DashboardAttributeFilter}.
          *    This is useful if you want to customize just one particular filter and keep all other filters the same.
          *
+         * @example
+         * Here is how to override the component for all filters:
+         * ```
+         * ComponentFactory: () => MyCustomComponent
+         * ```
+         *
          * @remarks If you want to hide some or all filters, you can use the {@link HiddenDashboardAttributeFilter} implementation.
          */
-        Component?: CustomAttributeFilter;
+        ComponentFactory?: CustomAttributeFilterFactory;
     };
 }
 
@@ -75,24 +92,44 @@ export type FilterBarComponent = ComponentType<IFilterBarProps>;
 export const FilterBar: React.FC<IFilterBarProps & IDefaultFilterBarProps> = ({
     filters,
     onFilterChanged,
+    attributeFilterConfig,
+    dateFilterConfig,
 }) => {
+    const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
+    const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
+    const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
+    const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
+
+    const DateFilter = dateFilterConfig?.Component ?? DashboardDateFilter;
+
     return (
         <div>
             {filters.map((filter, index) => {
                 if (isDashboardAttributeFilter(filter)) {
+                    const AttributeFilter =
+                        attributeFilterConfig?.ComponentFactory?.(filter) ?? DashboardAttributeFilter;
+
                     return (
-                        <DashboardAttributeFilter
+                        <AttributeFilter
                             key={objRefToString(filter.attributeFilter.displayForm)}
                             filter={filter}
                             onFilterChanged={onFilterChanged}
                         />
                     );
                 } else {
+                    const key = objRefToString(filter.dateFilter.dataSet ?? idRef(`DATE_FILTER_${index}`));
+                    if (dateFilterMode === "hidden") {
+                        return <HiddenDashboardDateFilter key={key} />;
+                    }
                     return (
-                        <DashboardDateFilter
-                            key={objRefToString(filter.dateFilter.dataSet ?? idRef(`DATE_FILTER_${index}`))}
+                        <DateFilter
+                            key={key}
                             filter={filter}
                             onFilterChanged={onFilterChanged}
+                            availableGranularities={availableGranularities}
+                            customFilterName={customFilterName}
+                            dateFilterOptions={dateFilterOptions}
+                            readonly={dateFilterMode === "readonly"}
                         />
                     );
                 }

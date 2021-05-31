@@ -4,7 +4,7 @@ export {
     HiddenFilterBar,
     IFilterBarProps,
     IDefaultFilterBarProps,
-    CustomAttributeFilter,
+    CustomAttributeFilterFactory,
     FilterBarComponent,
 } from "./FilterBar";
 export {

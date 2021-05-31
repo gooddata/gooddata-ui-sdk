@@ -4,7 +4,6 @@ import {
     IAllTimeDateFilterOption,
     IDashboardDateFilter,
     IRelativeDateFilterPreset,
-    isDashboardDateFilter,
     OptionType,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -15,11 +14,9 @@ import {
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
 } from "@gooddata/sdk-ui-filters";
-import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact";
 import flatten from "lodash/flatten";
 import values from "lodash/values";
-import { selectEffectiveDateFilterOptions, selectFilterContextFilters } from "../model";
 
 const VIRTUAL_PRESET_IDENTIFIER = "GDC__VIRTUAL_PRESET";
 
@@ -33,14 +30,6 @@ interface IDateFilterOptionInfo {
     dateFilterOption: DateFilterOption;
     excludeCurrentPeriod: boolean;
 }
-
-export const effectiveDateFilterOptionInfoSelector = createSelector(
-    [selectFilterContextFilters, selectEffectiveDateFilterOptions],
-    (filters, dateFilterOptions) => {
-        const dateFilter = filters.find(isDashboardDateFilter);
-        return matchDateFilterToDateFilterOption(dateFilter, dateFilterOptions);
-    },
-);
 
 /**
  * Tries to match a preset or a form with the provided value. Prioritizes presets over forms.

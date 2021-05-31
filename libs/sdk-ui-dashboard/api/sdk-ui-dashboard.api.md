@@ -290,7 +290,7 @@ export interface ConfigState {
 }
 
 // @internal (undocumented)
-export type CustomAttributeFilter = DashboardAttributeFilterComponent | ((filter: IDashboardAttributeFilter) => DashboardAttributeFilterComponent | undefined);
+export type CustomAttributeFilterFactory = (filter: IDashboardAttributeFilter) => DashboardAttributeFilterComponent | undefined;
 
 // @internal (undocumented)
 export const Dashboard: React_2.FC<IDashboardProps>;
@@ -743,7 +743,7 @@ export interface FilterContextState {
 export const HiddenDashboardAttributeFilter: React_2.FC<IDashboardAttributeFilter>;
 
 // @internal
-export const HiddenDashboardDateFilter: React_2.FC<IDashboardDateFilterProps>;
+export const HiddenDashboardDateFilter: React_2.FC;
 
 // @internal
 export const HiddenFilterBar: React_2.FC<IFilterBarProps>;
@@ -770,8 +770,12 @@ export interface IDashboardCommand {
 
 // @internal
 export interface IDashboardDateFilterProps {
+    availableGranularities: DateFilterGranularity[];
+    customFilterName?: string;
+    dateFilterOptions: IDateFilterOptionsByType;
     filter: IDashboardDateFilter;
     onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
+    readonly?: boolean;
 }
 
 // @internal
@@ -830,7 +834,7 @@ export interface IDefaultButtonBarProps {
 export interface IDefaultFilterBarProps {
     // (undocumented)
     attributeFilterConfig?: {
-        Component?: CustomAttributeFilter;
+        ComponentFactory?: CustomAttributeFilterFactory;
     };
     // (undocumented)
     dateFilterConfig?: {
