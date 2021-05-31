@@ -100,6 +100,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.account.id.name",
         "production": true,
         "ref": Object {
@@ -204,6 +205,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.owner.department",
         "production": true,
         "ref": Object {
@@ -255,6 +257,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.opportunitysnapshot.forecastcategory",
         "production": true,
         "ref": Object {
@@ -289,6 +292,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.isactive",
         "production": true,
         "ref": Object {
@@ -323,6 +327,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.isclosed",
         "production": true,
         "ref": Object {
@@ -357,6 +362,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.iswon",
         "production": true,
         "ref": Object {
@@ -425,6 +431,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.opportunitysnapshot.id",
         "production": true,
         "ref": Object {
@@ -476,6 +483,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.opportunity.id.name",
         "production": true,
         "ref": Object {
@@ -546,6 +554,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.product.id.name",
         "production": true,
         "ref": Object {
@@ -580,6 +589,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.owner.region",
         "production": true,
         "ref": Object {
@@ -614,6 +624,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.owner.id.name",
         "production": true,
         "ref": Object {
@@ -667,6 +678,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.name.stagename",
         "production": true,
         "ref": Object {
@@ -701,6 +713,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.status",
         "production": true,
         "ref": Object {
@@ -1415,6 +1428,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.account.id.name",
         "production": true,
         "ref": Object {
@@ -1449,6 +1463,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.id.subject",
         "production": true,
         "ref": Object {
@@ -1500,6 +1515,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.activitytype",
         "production": true,
         "ref": Object {
@@ -1587,6 +1603,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.owner.department",
         "production": true,
         "ref": Object {
@@ -1638,6 +1655,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.opportunitysnapshot.forecastcategory",
         "production": true,
         "ref": Object {
@@ -1672,6 +1690,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.isactive",
         "production": true,
         "ref": Object {
@@ -1706,6 +1725,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.isclosed",
         "production": true,
         "ref": Object {
@@ -1740,6 +1760,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.isclosed",
         "production": true,
         "ref": Object {
@@ -1774,6 +1795,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.istask",
         "production": true,
         "ref": Object {
@@ -1808,6 +1830,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.iswon",
         "production": true,
         "ref": Object {
@@ -1876,6 +1899,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.opportunitysnapshot.id",
         "production": true,
         "ref": Object {
@@ -1927,6 +1951,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.opportunity.id.name",
         "production": true,
         "ref": Object {
@@ -1961,6 +1986,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.priority",
         "production": true,
         "ref": Object {
@@ -2031,6 +2057,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.product.id.name",
         "production": true,
         "ref": Object {
@@ -2065,6 +2092,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.owner.region",
         "production": true,
         "ref": Object {
@@ -2099,6 +2127,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.owner.id.name",
         "production": true,
         "ref": Object {
@@ -2152,6 +2181,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stagehistory.id",
         "production": true,
         "ref": Object {
@@ -2186,6 +2216,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.name.stagename",
         "production": true,
         "ref": Object {
@@ -2220,6 +2251,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.status",
         "production": true,
         "ref": Object {
@@ -2254,6 +2286,7 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.status",
         "production": true,
         "ref": Object {
@@ -3326,6 +3359,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.account.id.name",
         "production": true,
         "ref": Object {
@@ -3360,6 +3394,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.id.subject",
         "production": true,
         "ref": Object {
@@ -3411,6 +3446,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.activitytype",
         "production": true,
         "ref": Object {
@@ -3498,6 +3534,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.owner.department",
         "production": true,
         "ref": Object {
@@ -3549,6 +3586,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.opportunitysnapshot.forecastcategory",
         "production": true,
         "ref": Object {
@@ -3583,6 +3621,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.isactive",
         "production": true,
         "ref": Object {
@@ -3617,6 +3656,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.isclosed",
         "production": true,
         "ref": Object {
@@ -3651,6 +3691,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.isclosed",
         "production": true,
         "ref": Object {
@@ -3685,6 +3726,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.istask",
         "production": true,
         "ref": Object {
@@ -3719,6 +3761,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.iswon",
         "production": true,
         "ref": Object {
@@ -3787,6 +3830,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.opportunitysnapshot.id",
         "production": true,
         "ref": Object {
@@ -3838,6 +3882,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.opportunity.id.name",
         "production": true,
         "ref": Object {
@@ -3872,6 +3917,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.priority",
         "production": true,
         "ref": Object {
@@ -3942,6 +3988,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.product.id.name",
         "production": true,
         "ref": Object {
@@ -3976,6 +4023,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.owner.region",
         "production": true,
         "ref": Object {
@@ -4010,6 +4058,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.owner.id.name",
         "production": true,
         "ref": Object {
@@ -4063,6 +4112,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stagehistory.id",
         "production": true,
         "ref": Object {
@@ -4097,6 +4147,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.name.stagename",
         "production": true,
         "ref": Object {
@@ -4131,6 +4182,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.activity.status",
         "production": true,
         "ref": Object {
@@ -4165,6 +4217,7 @@ BearWorkspaceCatalog {
         },
         "deprecated": false,
         "description": "",
+        "displayFormType": undefined,
         "id": "label.stage.status",
         "production": true,
         "ref": Object {

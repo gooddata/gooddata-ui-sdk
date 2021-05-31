@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
 import { uriRef, ObjectType } from "@gooddata/sdk-model";
 import { UnexpectedError, MetadataObject, IMetadataObject } from "@gooddata/sdk-backend-spi";
@@ -77,7 +77,10 @@ export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataO
         );
     } else if (GdcMetadata.isAttributeDisplayForm(obj)) {
         return newAttributeDisplayFormMetadataObject(ref, (a) =>
-            a.modify(commonModifications).attribute(uriRef(obj.content.formOf)),
+            a
+                .modify(commonModifications)
+                .attribute(uriRef(obj.content.formOf))
+                .displayFormType(obj.content.type),
         );
     } else if (GdcMetadata.isMetric(obj)) {
         return newMeasureMetadataObject(ref, (m) =>

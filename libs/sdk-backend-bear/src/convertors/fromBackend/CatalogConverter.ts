@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { uriRef, idRef, ObjRef } from "@gooddata/sdk-model";
 import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/api-model-bear";
 import { IDisplayFormByKey, IAttributeByKey } from "../../types/catalog";
@@ -38,10 +38,8 @@ const bearItemTypeByCatalogItemType: {
     measure: "metric",
 };
 
-export const convertItemType = (type: CompatibleCatalogItemType): GdcCatalog.CatalogItemType => {
-    const bearItemType = bearItemTypeByCatalogItemType[type];
-    return bearItemType;
-};
+export const convertItemType = (type: CompatibleCatalogItemType): GdcCatalog.CatalogItemType =>
+    bearItemTypeByCatalogItemType[type];
 
 const bearObjectMetaToBearRef = (obj: GdcMetadata.IObjectMeta): ObjRef => uriRef(obj.uri!);
 
@@ -84,7 +82,10 @@ const convertDisplayForm = (
     const ref = bearObjectMetaToBearRef(df.meta);
 
     return newAttributeDisplayFormMetadataObject(ref, (m) => {
-        return m.modify(commonMetadataModifications(df.meta)).attribute(attrRef);
+        return m
+            .modify(commonMetadataModifications(df.meta))
+            .attribute(attrRef)
+            .displayFormType(df.content.type);
     });
 };
 
@@ -203,21 +204,30 @@ export const convertWrappedAttribute = (attribute: GdcMetadata.IWrappedAttribute
             .displayForms(
                 displayForms.map((displayForm) =>
                     newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri!), (df) =>
-                        df.modify(commonMetadataModifications(displayForm.meta)).attribute(attrRef),
+                        df
+                            .modify(commonMetadataModifications(displayForm.meta))
+                            .attribute(attrRef)
+                            .displayFormType(displayForm.content.type),
                     ),
                 ),
             )
             .geoPinDisplayForms(
                 geoPinDisplayForms.map((geoDisplayForm) => {
                     return newAttributeDisplayFormMetadataObject(uriRef(geoDisplayForm.meta.uri!), (df) =>
-                        df.modify(commonMetadataModifications(geoDisplayForm.meta)).attribute(attrRef),
+                        df
+                            .modify(commonMetadataModifications(geoDisplayForm.meta))
+                            .attribute(attrRef)
+                            .displayFormType(geoDisplayForm.content.type),
                     );
                 }),
             );
 
         if (defaultDisplayForm) {
             result = result.defaultDisplayForm(uriRef(defaultDisplayForm.meta.uri!), (df) =>
-                df.modify(commonMetadataModifications(defaultDisplayForm.meta)).attribute(attrRef),
+                df
+                    .modify(commonMetadataModifications(defaultDisplayForm.meta))
+                    .attribute(attrRef)
+                    .displayFormType(defaultDisplayForm.content.type),
             );
         }
 
