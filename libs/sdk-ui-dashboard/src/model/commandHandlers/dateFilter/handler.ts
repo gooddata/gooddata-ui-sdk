@@ -8,18 +8,21 @@ export function* dateFilterChangeSelectionCommandHandler(
     _ctx: DashboardContext,
     cmd: ChangeDateFilterSelection,
 ) {
-    if (cmd.payload.type === "allTime") {
-        yield put(filterContextActions.removeDateFilter());
-    } else {
-        yield put(
-            filterContextActions.upsertDateFilter({
-                dateFilter: {
-                    granularity: cmd.payload.granularity,
-                    from: cmd.payload.from,
-                    to: cmd.payload.to,
-                    type: cmd.payload.type,
-                },
-            }),
-        );
-    }
+    const isAllTime =
+        cmd.payload.type === "relative" &&
+        cmd.payload.granularity === "GDC.time.date" &&
+        cmd.payload.from === undefined &&
+        cmd.payload.to === undefined;
+    yield put(
+        filterContextActions.upsertDateFilter(
+            isAllTime
+                ? { type: "allTime" }
+                : {
+                      type: cmd.payload.type,
+                      granularity: cmd.payload.granularity,
+                      from: cmd.payload.from,
+                      to: cmd.payload.to,
+                  },
+        ),
+    );
 }

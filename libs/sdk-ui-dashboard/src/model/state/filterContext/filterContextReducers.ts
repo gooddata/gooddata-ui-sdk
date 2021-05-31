@@ -3,6 +3,9 @@
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 import {
+    DateFilterGranularity,
+    DateFilterType,
+    DateString,
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
@@ -35,19 +38,43 @@ const setFilterContext: FilterContextReducer<PayloadAction<any>> = (state, actio
     };
 };
 
-const removeDateFilter: FilterContextReducer<PayloadAction<void>> = (state) => {
+const upsertDateFilter: FilterContextReducer<
+    PayloadAction<
+        | { readonly type: "allTime" }
+        | {
+              readonly type: DateFilterType;
+              readonly granularity: DateFilterGranularity;
+              readonly from?: DateString | number;
+              readonly to?: DateString | number;
+          }
+    >
+> = (state, action) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
     const existingFilterIndex = state.filterContext.filters.findIndex((item) => isDashboardDateFilter(item));
-    state.filterContext.filters.splice(existingFilterIndex, 1);
-};
-
-const upsertDateFilter: FilterContextReducer<PayloadAction<IDashboardDateFilter>> = (state, action) => {
-    invariant(state.filterContext, "Attempt to edit uninitialized filter context");
-    const existingFilterIndex = state.filterContext.filters.findIndex((item) => isDashboardDateFilter(item));
-    if (existingFilterIndex >= 0) {
-        state.filterContext.filters[existingFilterIndex] = action.payload;
+    if (action.payload.type === "allTime") {
+        if (existingFilterIndex >= 0) {
+            // if allTime remove the date filter altogether
+            state.filterContext.filters.splice(existingFilterIndex, 1);
+        }
+    } else if (existingFilterIndex >= 0) {
+        state.filterContext.filters[existingFilterIndex] = {
+            dateFilter: {
+                ...(state.filterContext.filters[existingFilterIndex] as IDashboardDateFilter),
+                granularity: action.payload.granularity,
+                type: action.payload.type,
+                from: action.payload.from,
+                to: action.payload.to,
+            },
+        };
     } else {
-        state.filterContext.filters.unshift(action.payload);
+        state.filterContext.filters.unshift({
+            dateFilter: {
+                granularity: action.payload.granularity,
+                type: action.payload.type,
+                from: action.payload.from,
+                to: action.payload.to,
+            },
+        });
     }
 };
 
@@ -81,5 +108,4 @@ export const filterContextReducers = {
     setFilterContext,
     updateAttributeFilterSelection,
     upsertDateFilter,
-    removeDateFilter,
 };

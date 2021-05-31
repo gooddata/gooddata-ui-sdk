@@ -11,7 +11,11 @@ import {
 } from "../model/state/dashboardStore";
 import { InitialLoadCorrelationId, selectDashboardLoading, selectFilterContextFilters } from "../model";
 import { loadDashboard } from "../model/commands/dashboard";
-import { changeAttributeFilterSelection, changeDateFilterSelection } from "../model/commands/filters";
+import {
+    changeAttributeFilterSelection,
+    changeDateFilterSelection,
+    clearDateFilterSelection,
+} from "../model/commands/filters";
 import {
     IAnalyticalBackend,
     isDashboardAttributeFilter,
@@ -200,7 +204,7 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
                 onFilterChanged={(filter) => {
                     if (!filter) {
                         // all time filter
-                        dispatch(changeDateFilterSelection("allTime", "GDC.time.date"));
+                        dispatch(clearDateFilterSelection());
                     } else if (isDashboardDateFilter(filter)) {
                         const { type, granularity, from, to } = filter.dateFilter;
                         dispatch(changeDateFilterSelection(type, granularity, from, to));

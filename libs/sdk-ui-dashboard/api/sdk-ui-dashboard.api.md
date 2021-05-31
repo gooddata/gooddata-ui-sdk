@@ -136,7 +136,7 @@ export function changeAttributeFilterSelection(filterLocalId: string, elements: 
 export interface ChangeDateFilterSelection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly type: DateFilterType | "allTime";
+        readonly type: DateFilterType;
         readonly granularity: DateFilterGranularity;
         readonly from?: DateString | number;
         readonly to?: DateString | number;
@@ -146,7 +146,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 }
 
 // @internal
-export function changeDateFilterSelection(type: DateFilterType | "allTime", granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, correlationId?: string): ChangeDateFilterSelection;
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, correlationId?: string): ChangeDateFilterSelection;
 
 // @internal (undocumented)
 export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
