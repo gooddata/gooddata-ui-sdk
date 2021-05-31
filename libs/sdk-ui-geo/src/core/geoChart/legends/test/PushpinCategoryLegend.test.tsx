@@ -63,6 +63,12 @@ describe("PushpinCategoryLegend", () => {
         expect(wrapper.find(PopUpLegend).exists()).toBe(true);
     });
 
+    it("should render PopUp legend component with correct maxRows prop when Size legend shown too", () => {
+        const wrapper = createComponent({ renderPopUp: true, hasSizeLegend: true, maxRows: 2 });
+        const popupLegend = wrapper.find(PopUpLegend);
+        expect(popupLegend.prop("maxRows")).toBe(1);
+    });
+
     it("should not render PopUp legend component if renderPopUp is false", () => {
         const wrapper = createComponent({ renderPopUp: false });
         expect(wrapper.find(PopUpLegend).exists()).toBe(false);

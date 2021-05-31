@@ -107,13 +107,14 @@ function GeoPopUpLegend(props: IPushpinCategoryLegendProps): JSX.Element {
         maxRows,
         customComponent,
         customComponentName,
+        hasSizeLegend,
     } = props;
 
     return (
         <PopUpLegend
             series={categoryItems}
             onLegendItemClick={onItemClick}
-            maxRows={maxRows}
+            maxRows={hasSizeLegend && maxRows ? maxRows - 1 : maxRows}
             name={name}
             containerId={containerId}
             customComponent={customComponent}
