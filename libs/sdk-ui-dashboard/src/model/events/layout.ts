@@ -249,6 +249,61 @@ export function layoutSectionItemsAdded(
 //
 
 /**
+ * This event is emitted when an item in a dashboard section is replaced.
+ * @internal
+ */
+export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
+    readonly type: "GDC.DASHBOARD.EVT.L.ITEM_REPLACED";
+    readonly payload: {
+        /**
+         * Index of section where the replacement happened.
+         */
+        readonly sectionIndex: number;
+
+        /**
+         * Index of item within the section that was replaced.
+         */
+        readonly itemIndex: number;
+
+        /**
+         * New item definition.
+         */
+        readonly item: ExtendedDashboardItem;
+
+        /**
+         * If the replacement specified to stash the old item, then the identifier of the
+         * stash is included here.
+         */
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+}
+
+export function layoutSectionItemReplaced(
+    ctx: DashboardContext,
+    sectionIndex: number,
+    itemIndex: number,
+    item: ExtendedDashboardItem,
+    stashIdentifier?: StashedDashboardItemsId,
+    correlationId?: string,
+): DashboardLayoutSectionItemReplaced {
+    return {
+        type: "GDC.DASHBOARD.EVT.L.ITEM_REPLACED",
+        ctx,
+        correlationId,
+        payload: {
+            sectionIndex,
+            itemIndex,
+            item,
+            stashIdentifier,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
  * This event is emitted when a dashboard item is moved between sections or within a section.
  *
  * @internal

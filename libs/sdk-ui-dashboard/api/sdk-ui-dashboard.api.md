@@ -318,10 +318,10 @@ export type DashboardEventHandler = {
 };
 
 // @internal (undocumented)
-export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutChanged;
+export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemReplaced | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutChanged;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED" | "GDC.DASHBOARD.EVT.DF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.ADDED" | "GDC.DASHBOARD.EVT.AF.REMOVED" | "GDC.DASHBOARD.EVT.AF.MOVED" | "GDC.DASHBOARD.EVT.AF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.PARENT_CHANGED" | "GDC.DASHBOARD.EVT.F.FILTER_CONTEXT_CHANGED" | "GDC.DASHBOARD.EVT.L.SECTION_ADDED" | "GDC.DASHBOARD.EVT.L.SECTION_MOVED" | "GDC.DASHBOARD.EVT.L.SECTION_REMOVED" | "GDC.DASHBOARD.EVT.L.SECTION_HEADER_CHANGED" | "GDC.DASHBOARD.EVT.L.ITEMS_ADDED" | "GDC.DASHBOARD.EVT.L.ITEM_MOVED" | "GDC.DASHBOARD.EVT.L.ITEM_REMOVED" | "GDC.DASHBOARD.EVT.L.LAYOUT_CHANGED";
+export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED" | "GDC.DASHBOARD.EVT.DF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.ADDED" | "GDC.DASHBOARD.EVT.AF.REMOVED" | "GDC.DASHBOARD.EVT.AF.MOVED" | "GDC.DASHBOARD.EVT.AF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.PARENT_CHANGED" | "GDC.DASHBOARD.EVT.F.FILTER_CONTEXT_CHANGED" | "GDC.DASHBOARD.EVT.L.SECTION_ADDED" | "GDC.DASHBOARD.EVT.L.SECTION_MOVED" | "GDC.DASHBOARD.EVT.L.SECTION_REMOVED" | "GDC.DASHBOARD.EVT.L.SECTION_HEADER_CHANGED" | "GDC.DASHBOARD.EVT.L.ITEMS_ADDED" | "GDC.DASHBOARD.EVT.L.ITEM_REPLACED" | "GDC.DASHBOARD.EVT.L.ITEM_MOVED" | "GDC.DASHBOARD.EVT.L.ITEM_REMOVED" | "GDC.DASHBOARD.EVT.L.LAYOUT_CHANGED";
 
 // @internal
 export interface DashboardFilterContextChanged extends IDashboardEvent {
@@ -396,6 +396,19 @@ export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
     };
     // (undocumented)
     readonly type: "GDC.DASHBOARD.EVT.L.ITEM_REMOVED";
+}
+
+// @internal
+export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly sectionIndex: number;
+        readonly itemIndex: number;
+        readonly item: ExtendedDashboardItem;
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.EVT.L.ITEM_REPLACED";
 }
 
 // @internal

@@ -23,6 +23,7 @@ import {
     DashboardLayoutSectionHeaderChanged,
     DashboardLayoutSectionItemMoved,
     DashboardLayoutSectionItemRemoved,
+    DashboardLayoutSectionItemReplaced,
     DashboardLayoutSectionItemsAdded,
     DashboardLayoutSectionMoved,
     DashboardLayoutSectionRemoved,
@@ -56,6 +57,7 @@ export {
     DashboardLayoutSectionRemoved,
     DashboardLayoutSectionHeaderChanged,
     DashboardLayoutSectionItemsAdded,
+    DashboardLayoutSectionItemReplaced,
     DashboardLayoutSectionItemMoved,
     DashboardLayoutSectionItemRemoved,
     DashboardLayoutChanged,
@@ -85,6 +87,7 @@ export type DashboardEvents =
     | DashboardLayoutSectionRemoved
     | DashboardLayoutSectionHeaderChanged
     | DashboardLayoutSectionItemsAdded
+    | DashboardLayoutSectionItemReplaced
     | DashboardLayoutSectionItemMoved
     | DashboardLayoutSectionItemRemoved
     | DashboardLayoutChanged;
