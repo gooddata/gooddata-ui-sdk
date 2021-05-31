@@ -451,6 +451,11 @@
     "BarChart.8086ff199b1654e2fc5dce880a1905d8": {
         "comment": "Auto-generated insight for test scenario BarChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend at bottom."
     },
+    "BarChart.814c2f71efef3eb850af9f0c1775c452": {
+        "comment": "Auto-generated insight for test scenario BarChart - viewBy with two dates.",
+        "scenarioName": "viewBy with two dates",
+        "visName": "BarChart"
+    },
     "BarChart.81f3e787650e2cefa13b7b9e4b250e53": {
         "comment": "Auto-generated insight for test scenario BarChart - 100x70 - without x axis, without y axis (very small container)."
     },
@@ -582,6 +587,11 @@
     },
     "BarChart.ef72a1f7abc66a45e4c93f31e54a4a70": {
         "comment": "Auto-generated insight for test scenario BarChart - legend position - disabled."
+    },
+    "BarChart.f3327518f0109d006f280c0aa9c4a9b6": {
+        "comment": "Auto-generated insight for test scenario BarChart - stackBy with one date.",
+        "scenarioName": "stackBy with one date",
+        "visName": "BarChart"
     },
     "BarChart.f4f634bd4229903b65279b296d646d5e": {
         "comment": "Auto-generated insight for test scenario BarChart - two measures with viewBy sorted by measure.",
@@ -1123,6 +1133,11 @@
     "ColumnChart.1122162ef5aff48d2bee3db8ce001cf3": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend."
     },
+    "ColumnChart.119f883472449535debcf3c6cdc965dd": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - viewBy with two dates.",
+        "scenarioName": "viewBy with two dates",
+        "visName": "ColumnChart"
+    },
     "ColumnChart.1cf2ebe39dafd517cc5faaed2c7767ff": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 610x154 - Force position RIGHT - legend at bottom."
     },
@@ -1352,6 +1367,11 @@
     },
     "ColumnChart.bb0f2f067498ae42d57659a2adcb35c7": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 610x154 - Force position RIGHT - auto legend."
+    },
+    "ColumnChart.bcd0c1be3886c60a08314785c690c56c": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - stackBy with one date.",
+        "scenarioName": "stackBy with one date",
+        "visName": "ColumnChart"
     },
     "ColumnChart.bdfda23ff21632259d6b7b692d7a4966": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."

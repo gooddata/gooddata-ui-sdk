@@ -12,7 +12,7 @@ import {
 } from "../../interfaces/Visualization";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
-import { ObjRef, uriRef } from "@gooddata/sdk-model";
+import { ObjRef, uriRef, idRef } from "@gooddata/sdk-model";
 
 export const dateDatasetRef: ObjRef = uriRef("data.dataset.1");
 
@@ -488,6 +488,25 @@ export const dateItem: IBucketItem = {
     attribute: "attr.datedataset",
     aggregation: null,
     showInPercent: null,
+    dateDatasetRef: idRef("ds1"),
+};
+
+export const dateItem2: IBucketItem = {
+    localIdentifier: "a2",
+    type: "date",
+    attribute: "attr.datedataset.2",
+    aggregation: null,
+    showInPercent: null,
+    dateDatasetRef: idRef("ds2"),
+};
+
+export const dateItem3: IBucketItem = {
+    localIdentifier: "a3",
+    type: "date",
+    attribute: "attr.datedataset.3",
+    aggregation: null,
+    showInPercent: null,
+    dateDatasetRef: idRef("ds3"),
 };
 
 export const overTimeComparisonDateItem: IBucketItem = {
@@ -1043,6 +1062,132 @@ export const twoMeasuresAndDateAsSecondViewByItemReferencePoint: IReferencePoint
         },
         {
             localIdentifier: "stack",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const threeDifferentDatesReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems,
+        },
+        {
+            localIdentifier: "rows",
+            items: [dateItem, dateItem2],
+        },
+        {
+            localIdentifier: "columns",
+            items: [dateItem3],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const threeDifferentDatesReferencePointChart: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems,
+        },
+        {
+            localIdentifier: "view",
+            items: [dateItem, dateItem2],
+        },
+        {
+            localIdentifier: "stack",
+            items: [dateItem3],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const twoIdenticalDatesInRows: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems,
+        },
+        {
+            localIdentifier: "rows",
+            items: [dateItem, dateItem],
+        },
+        {
+            localIdentifier: "columns",
+            items: [dateItem2],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const multipleDatesInRowsOnly: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems,
+        },
+        {
+            localIdentifier: "rows",
+            items: [dateItem, dateItem, dateItem2, dateItem3],
+        },
+        {
+            localIdentifier: "columns",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const threeDatesSameDimensionRowsReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems,
+        },
+        {
+            localIdentifier: "rows",
+            items: [dateItem, dateItem],
+        },
+        {
+            localIdentifier: "columns",
+            items: [dateItem2],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const multipleDatesNotAsFirstReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems,
+        },
+        {
+            localIdentifier: "rows",
+            items: [attributeItems[0], dateItem, dateItem2],
+        },
+        {
+            localIdentifier: "columns",
             items: [],
         },
     ],

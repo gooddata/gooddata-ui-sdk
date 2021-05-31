@@ -1,0 +1,228 @@
+[
+    {
+        "n2oMap": {
+            "a_closed.aag81lMifn6q": "a_closed.aag81lMifn6q",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy",
+            "m_m_acugFHNJgsBy_closed.year": "m_e40a8329_m_acugFHNJgsBy_closed.year"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_closed.aag81lMifn6q"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_acugFHNJgsBy"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "alias": "Won Last Year",
+                                "definition": {
+                                    "popMeasureDefinition": {
+                                        "measureIdentifier": "m_acugFHNJgsBy",
+                                        "popAttribute": { "identifier": "closed.year", "type": "attribute" }
+                                    }
+                                },
+                                "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                                "localIdentifier": "a_closed.aag81lMifn6q"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "stack"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_closed.aag81lMifn6q"] },
+                { "itemIdentifiers": ["measureGroup"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Won Last Year",
+                        "definition": {
+                            "popMeasureDefinition": {
+                                "measureIdentifier": "m_acugFHNJgsBy",
+                                "popAttribute": { "identifier": "closed.year", "type": "attribute" }
+                            }
+                        },
+                        "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "stackBy with one date",
+        "vis": "BarChart"
+    },
+    {
+        "n2oMap": {
+            "a_closed.aag81lMifn6q": "a_closed.aag81lMifn6q",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy",
+            "m_m_acugFHNJgsBy_closed.year": "m_e40a8329_m_acugFHNJgsBy_closed.year"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_closed.aag81lMifn6q"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_acugFHNJgsBy"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "alias": "Won Last Year",
+                                "definition": {
+                                    "popMeasureDefinition": {
+                                        "measureIdentifier": "m_acugFHNJgsBy",
+                                        "popAttribute": { "identifier": "closed.year", "type": "attribute" }
+                                    }
+                                },
+                                "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                                "localIdentifier": "a_closed.aag81lMifn6q"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "stack"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_closed.aag81lMifn6q"] },
+                { "itemIdentifiers": ["measureGroup"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Won Last Year",
+                        "definition": {
+                            "popMeasureDefinition": {
+                                "measureIdentifier": "m_acugFHNJgsBy",
+                                "popAttribute": { "identifier": "closed.year", "type": "attribute" }
+                            }
+                        },
+                        "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "stackBy with one date",
+        "vis": "ColumnChart"
+    }
+]

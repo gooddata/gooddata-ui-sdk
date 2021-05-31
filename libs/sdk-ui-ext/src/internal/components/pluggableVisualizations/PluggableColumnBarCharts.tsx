@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
 import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep";
 import {
     bucketIsEmpty,
     bucketsItems,
@@ -16,14 +17,21 @@ import {
     IDrillEventIntersectionElement,
 } from "@gooddata/sdk-ui";
 import { AXIS } from "../../constants/axis";
-import { BUCKETS } from "../../constants/bucket";
-import { MAX_CATEGORIES_COUNT, MAX_STACKS_COUNT } from "../../constants/uiConfig";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket";
+import {
+    COLUMN_BAR_CHART_UICONFIG,
+    COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES,
+    MAX_CATEGORIES_COUNT,
+    MAX_STACKS_COUNT,
+} from "../../constants/uiConfig";
 import { drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper";
 import {
+    IBucketItem,
     IDrillDownContext,
     IExtendedReferencePoint,
     IImplicitDrillDown,
     IReferencePoint,
+    IUiConfig,
     IVisConstruct,
 } from "../../interfaces/Visualization";
 import {
@@ -35,6 +43,7 @@ import {
     removeDivergentDateItems,
     isDateBucketItem,
     isNotDateBucketItem,
+    hasSameDateDimension,
 } from "../../utils/bucketHelper";
 import {
     getReferencePointWithSupportedProperties,
@@ -54,6 +63,13 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         // and will be updated in getExtendedReferencePoint
         this.axis = AXIS.DUAL;
         this.supportedPropertiesList = this.getSupportedPropertiesList();
+    }
+
+    public getUiConfig(): IUiConfig {
+        const config = this.isMultipleDatesEnabled()
+            ? COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES
+            : COLUMN_BAR_CHART_UICONFIG;
+        return cloneDeep(config);
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
@@ -113,6 +129,11 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
+        if (this.isMultipleDatesEnabled()) {
+            this.configureBucketsWithMultipleDates(extendedReferencePoint);
+            return;
+        }
+
         const buckets = extendedReferencePoint?.buckets ?? [];
         const measures = getFilteredMeasuresForStackedCharts(buckets);
         const dateItems = getDateItems(buckets);
@@ -158,6 +179,84 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
                 items: stacks,
             },
         ]);
+    }
+
+    private configureBucketsWithMultipleDates(extendedReferencePoint: IExtendedReferencePoint): void {
+        const buckets = extendedReferencePoint?.buckets ?? [];
+        const measures = getFilteredMeasuresForStackedCharts(buckets);
+        const [views, stacks] = this.getViewByAndStackByBucketItems(extendedReferencePoint);
+
+        set(extendedReferencePoint, BUCKETS, [
+            {
+                localIdentifier: BucketNames.MEASURES,
+                items: measures,
+            },
+            {
+                localIdentifier: BucketNames.VIEW,
+                items: views,
+            },
+            {
+                localIdentifier: BucketNames.STACK,
+                items: stacks,
+            },
+        ]);
+    }
+
+    private canPutAttributeToViewBy(
+        currentAttribute: IBucketItem,
+        firstAttribute: IBucketItem,
+        viewByCount: number,
+        viewByMaxItemCount: number,
+    ) {
+        const isFirstAttributeDate = isDateBucketItem(firstAttribute);
+        const isCurrentAttributeDate = isDateBucketItem(currentAttribute);
+        const sameDateDimension = hasSameDateDimension(firstAttribute, currentAttribute);
+
+        return (
+            (!isFirstAttributeDate || !isCurrentAttributeDate || sameDateDimension) &&
+            viewByCount < viewByMaxItemCount
+        );
+    }
+
+    private getViewByAndStackByBucketItems(extendedReferencePoint: IExtendedReferencePoint): IBucketItem[][] {
+        const buckets = extendedReferencePoint?.buckets ?? [];
+        const viewByMaxItemCount = this.getViewByMaxItemCount(extendedReferencePoint);
+        const stackByMaxItemCount = this.getStackByMaxItemCount(extendedReferencePoint);
+        const allAttributesWithoutStacks = getAllCategoriesAttributeItems(buckets);
+        const stacks: IBucketItem[] = getStackItems(buckets, [ATTRIBUTE, DATE]);
+
+        const [firstAttribute, ...remainingAttributes] = allAttributesWithoutStacks;
+
+        const views: IBucketItem[] = firstAttribute ? [firstAttribute] : [];
+        const possibleStacks: IBucketItem[] = [];
+
+        for (const currentAttribute of remainingAttributes) {
+            const canPutToViewBy = this.canPutAttributeToViewBy(
+                currentAttribute,
+                firstAttribute,
+                views.length,
+                viewByMaxItemCount,
+            );
+
+            if (canPutToViewBy) {
+                views.push(currentAttribute);
+            } else {
+                possibleStacks.push(currentAttribute);
+            }
+        }
+
+        const finalStacks = [...stacks, ...possibleStacks].slice(0, stackByMaxItemCount);
+        return [views, finalStacks];
+    }
+
+    private getViewByMaxItemCount(extendedReferencePoint: IExtendedReferencePoint): number {
+        return (
+            extendedReferencePoint.uiConfig?.buckets?.[BucketNames.VIEW]?.itemsLimit ?? MAX_CATEGORIES_COUNT
+        );
+    }
+
+    private getStackByMaxItemCount(extendedReferencePoint: IExtendedReferencePoint): number {
+        return extendedReferencePoint.uiConfig?.buckets?.[BucketNames.STACK]?.itemsLimit ?? MAX_STACKS_COUNT;
     }
 }
 

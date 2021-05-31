@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     modifyMeasure,
     newArithmeticMeasure,
@@ -6,6 +6,8 @@ import {
     newPreviousPeriodMeasure,
     ObjRef,
     modifySimpleMeasure,
+    IAttribute,
+    modifyAttribute,
 } from "@gooddata/sdk-model";
 import * as ReferenceLdm from "./full";
 
@@ -69,3 +71,9 @@ export const AmountWithRatio = modifySimpleMeasure(ReferenceLdm.Amount, (m) =>
 export const StageHistoryAttributeRef: ObjRef = {
     identifier: "attr.stagehistory.id",
 };
+/**
+ * Copy of ClosedYear attribute
+ */
+export const ModifiedClosedYear: IAttribute = modifyAttribute(ReferenceLdm.ClosedYear, (m) =>
+    m.localId("closed.second"),
+);
