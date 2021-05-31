@@ -20,7 +20,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
          * -  Absolute values: `from` and `to` props should be exact dates on the defined granularity
          * -  Relative values: `from` and `to` are offsets on the defined granularity
          */
-        readonly type: DateFilterType;
+        readonly type: DateFilterType | "allTime";
 
         /**
          * Date filter granularity. For absolute dates this indicates what is the expected input format.
@@ -70,7 +70,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
  * @internal
  */
 export function changeDateFilterSelection(
-    type: DateFilterType,
+    type: DateFilterType | "allTime",
     granularity: DateFilterGranularity,
     from?: DateString | number,
     to?: DateString | number,

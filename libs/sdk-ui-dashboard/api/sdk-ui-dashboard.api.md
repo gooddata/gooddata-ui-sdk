@@ -136,7 +136,7 @@ export function changeAttributeFilterSelection(filterLocalId: string, elements: 
 export interface ChangeDateFilterSelection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly type: DateFilterType;
+        readonly type: DateFilterType | "allTime";
         readonly granularity: DateFilterGranularity;
         readonly from?: DateString | number;
         readonly to?: DateString | number;
@@ -146,7 +146,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 }
 
 // @internal
-export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, correlationId?: string): ChangeDateFilterSelection;
+export function changeDateFilterSelection(type: DateFilterType | "allTime", granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, correlationId?: string): ChangeDateFilterSelection;
 
 // @internal (undocumented)
 export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
@@ -773,7 +773,7 @@ export interface IDashboardDateFilterProps {
     availableGranularities: DateFilterGranularity[];
     customFilterName?: string;
     dateFilterOptions: IDateFilterOptionsByType;
-    filter: IDashboardDateFilter;
+    filter: IDashboardDateFilter | undefined;
     onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
     readonly?: boolean;
 }
@@ -1211,9 +1211,6 @@ export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<Dash
 
 // @internal
 export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: import("@gooddata/sdk-backend-spi").IFilterContext) => FilterContextItem[]>;
-
-// @internal
-export const selectFilterContextFiltersWithDefaultDateFilter: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: FilterContextItem[]) => FilterContextItem[]>;
 
 // @internal
 export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];

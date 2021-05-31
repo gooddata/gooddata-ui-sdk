@@ -15,7 +15,7 @@ export interface IDashboardDateFilterProps {
     /**
      * Definition of filter to render.
      */
-    filter: IDashboardDateFilter;
+    filter: IDashboardDateFilter | undefined;
 
     /**
      * When the user interacts with the filter and changes its value, it MUST use this callback to propagate the

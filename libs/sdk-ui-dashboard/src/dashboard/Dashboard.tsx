@@ -9,11 +9,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../model/state/dashboardStore";
-import {
-    InitialLoadCorrelationId,
-    selectDashboardLoading,
-    selectFilterContextFiltersWithDefaultDateFilter,
-} from "../model";
+import { InitialLoadCorrelationId, selectDashboardLoading, selectFilterContextFilters } from "../model";
 import { loadDashboard } from "../model/commands/dashboard";
 import { changeAttributeFilterSelection, changeDateFilterSelection } from "../model/commands/filters";
 import {
@@ -22,7 +18,7 @@ import {
     isDashboardDateFilter,
     IWorkspacePermissions,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 import {
     ErrorComponent as DefaultError,
     IErrorProps,
@@ -194,7 +190,7 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const LayoutComponent = dashboardLayoutConfig?.Component ?? Layout;
     const FilterBarComponent = filterBarConfig?.Component ?? FilterBar;
 
-    const filters = useDashboardSelector(selectFilterContextFiltersWithDefaultDateFilter);
+    const filters = useDashboardSelector(selectFilterContextFilters);
     const dispatch = useDashboardDispatch();
 
     return (
@@ -202,15 +198,18 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
             <FilterBarComponent
                 filters={filters}
                 onFilterChanged={(filter) => {
-                    if (isDashboardDateFilter(filter)) {
+                    if (!filter) {
+                        // all time filter
+                        dispatch(changeDateFilterSelection("allTime", "GDC.time.date"));
+                    } else if (isDashboardDateFilter(filter)) {
                         const { type, granularity, from, to } = filter.dateFilter;
                         dispatch(changeDateFilterSelection(type, granularity, from, to));
                     } else if (isDashboardAttributeFilter(filter)) {
-                        const { attributeElements, displayForm, negativeSelection, localIdentifier } =
+                        const { attributeElements, negativeSelection, localIdentifier } =
                             filter.attributeFilter;
                         dispatch(
                             changeAttributeFilterSelection(
-                                localIdentifier ?? objRefToString(displayForm), // TODO is this ok?
+                                localIdentifier!,
                                 attributeElements,
                                 negativeSelection ? "NOT_IN" : "IN",
                             ),

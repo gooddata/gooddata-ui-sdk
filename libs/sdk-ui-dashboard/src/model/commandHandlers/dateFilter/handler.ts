@@ -8,14 +8,18 @@ export function* dateFilterChangeSelectionCommandHandler(
     _ctx: DashboardContext,
     cmd: ChangeDateFilterSelection,
 ) {
-    yield put(
-        filterContextActions.upsertDateFilter({
-            dateFilter: {
-                granularity: cmd.payload.granularity,
-                from: cmd.payload.from,
-                to: cmd.payload.to,
-                type: cmd.payload.type,
-            },
-        }),
-    );
+    if (cmd.payload.type === "allTime") {
+        yield put(filterContextActions.removeDateFilter());
+    } else {
+        yield put(
+            filterContextActions.upsertDateFilter({
+                dateFilter: {
+                    granularity: cmd.payload.granularity,
+                    from: cmd.payload.from,
+                    to: cmd.payload.to,
+                    type: cmd.payload.type,
+                },
+            }),
+        );
+    }
 }

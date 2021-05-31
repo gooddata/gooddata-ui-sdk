@@ -29,7 +29,6 @@ export { FilterContextState } from "./state/filterContext/filterContextState";
 export {
     selectFilterContext,
     selectFilterContextFilters,
-    selectFilterContextFiltersWithDefaultDateFilter,
 } from "./state/filterContext/filterContextSelectors";
 
 export { LayoutState } from "./state/layout/layoutState";

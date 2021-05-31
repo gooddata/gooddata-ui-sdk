@@ -1,17 +1,14 @@
 // (C) 2021 GoodData Corporation
 import React, { ComponentType } from "react";
+import partition from "lodash/partition";
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
-    isDashboardAttributeFilter,
+    isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
 import { DashboardAttributeFilter, DashboardAttributeFilterComponent } from "./DashboardAttributeFilter";
-import {
-    DashboardDateFilter,
-    DashboardDateFilterComponent,
-    HiddenDashboardDateFilter,
-} from "./DashboardDateFilter";
-import { idRef, objRefToString } from "@gooddata/sdk-model";
+import { DashboardDateFilter, DashboardDateFilterComponent } from "./DashboardDateFilter";
+import { objRefToString } from "@gooddata/sdk-model";
 import {
     selectEffectiveDateFilterAvailableGranularities,
     selectEffectiveDateFilterMode,
@@ -102,37 +99,29 @@ export const FilterBar: React.FC<IFilterBarProps & IDefaultFilterBarProps> = ({
 
     const DateFilter = dateFilterConfig?.Component ?? DashboardDateFilter;
 
+    const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
+
     return (
         <div>
-            {filters.map((filter, index) => {
-                if (isDashboardAttributeFilter(filter)) {
-                    const AttributeFilter =
-                        attributeFilterConfig?.ComponentFactory?.(filter) ?? DashboardAttributeFilter;
+            <DateFilter
+                filter={dateFilter}
+                onFilterChanged={onFilterChanged}
+                availableGranularities={availableGranularities}
+                customFilterName={customFilterName}
+                dateFilterOptions={dateFilterOptions}
+                readonly={dateFilterMode === "readonly"}
+            />
+            {attributeFilters.map((filter) => {
+                const AttributeFilter =
+                    attributeFilterConfig?.ComponentFactory?.(filter) ?? DashboardAttributeFilter;
 
-                    return (
-                        <AttributeFilter
-                            key={objRefToString(filter.attributeFilter.displayForm)}
-                            filter={filter}
-                            onFilterChanged={onFilterChanged}
-                        />
-                    );
-                } else {
-                    const key = objRefToString(filter.dateFilter.dataSet ?? idRef(`DATE_FILTER_${index}`));
-                    if (dateFilterMode === "hidden") {
-                        return <HiddenDashboardDateFilter key={key} />;
-                    }
-                    return (
-                        <DateFilter
-                            key={key}
-                            filter={filter}
-                            onFilterChanged={onFilterChanged}
-                            availableGranularities={availableGranularities}
-                            customFilterName={customFilterName}
-                            dateFilterOptions={dateFilterOptions}
-                            readonly={dateFilterMode === "readonly"}
-                        />
-                    );
-                }
+                return (
+                    <AttributeFilter
+                        key={objRefToString(filter.attributeFilter.displayForm)}
+                        filter={filter}
+                        onFilterChanged={onFilterChanged}
+                    />
+                );
             })}
         </div>
     );

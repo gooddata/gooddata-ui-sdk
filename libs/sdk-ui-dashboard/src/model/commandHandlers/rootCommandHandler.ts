@@ -6,6 +6,7 @@ import { DashboardCommands, IDashboardCommand } from "../commands";
 import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
 import { commandRejected, internalErrorOccurred } from "../events/general";
 import { dateFilterChangeSelectionCommandHandler } from "./dateFilter/handler";
+import { attributeFilterChangeSelectionCommandHandler } from "./attributeFilter/handler";
 
 const DefaultCommandHandlers = {
     "GDC.DASH/CMD.LOAD": loadDashboardCommandHandler,
@@ -17,7 +18,7 @@ const DefaultCommandHandlers = {
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD": unhandledCommand,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE": unhandledCommand,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE": unhandledCommand,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION": unhandledCommand,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION": attributeFilterChangeSelectionCommandHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT": unhandledCommand,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": unhandledCommand,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": unhandledCommand,
