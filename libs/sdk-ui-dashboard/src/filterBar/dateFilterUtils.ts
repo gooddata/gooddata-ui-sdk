@@ -52,12 +52,12 @@ export function matchDateFilterToDateFilterOption(
         return { dateFilterOption: matchingFilter, excludeCurrentPeriod: false };
     }
     // try matching the filter with excludeCurrentPeriod === true, but only for relativeFormPresets
-    if (dateFilter.dateFilter.type === "relative" && dateFilter.dateFilter.to === "-1") {
+    if (dateFilter.dateFilter.type === "relative" && dateFilter.dateFilter.to === -1) {
         const filterToMatch: IDashboardDateFilter = {
             dateFilter: {
                 ...dateFilter.dateFilter,
-                from: (Number.parseInt(dateFilter.dateFilter.from!.toString(), 10) + 1).toString(10),
-                to: "0",
+                from: (dateFilter.dateFilter.from! as number) + 1,
+                to: 0,
             },
         };
         const matchingFilter = findDateFilterOptionByValueAndType(
@@ -167,9 +167,9 @@ const filterMatchesData = (dateFilter: IDashboardDateFilter) => (filter: DateFil
         return (
             data.type === "relative" &&
             filter.from !== undefined &&
-            filter.from.toString() === data.from &&
+            filter.from.toString() === data.from?.toString() &&
             filter.to !== undefined &&
-            filter.to.toString() === data.to &&
+            filter.to.toString() === data.to?.toString() &&
             filter.granularity === data.granularity
         );
     }
