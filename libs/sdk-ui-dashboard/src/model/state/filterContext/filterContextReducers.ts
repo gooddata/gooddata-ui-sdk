@@ -1,7 +1,9 @@
 // (C) 2021 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
 import {
+    FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isDashboardAttributeFilter,
@@ -13,8 +15,24 @@ import { IAttributeElements } from "@gooddata/sdk-model";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 
+const generateFilterLocalIdentifier = (): string => uuidv4().replace(/-/g, "");
+
 const setFilterContext: FilterContextReducer<PayloadAction<any>> = (state, action) => {
-    state.filterContext = action.payload;
+    state.filterContext = {
+        ...action.payload,
+        // make sure attribute filters always have localId
+        filters: action.payload.filters?.map((filter: FilterContextItem) =>
+            isDashboardAttributeFilter(filter)
+                ? {
+                      attributeFilter: {
+                          ...filter.attributeFilter,
+                          localIdentifier:
+                              filter.attributeFilter.localIdentifier ?? generateFilterLocalIdentifier(),
+                      },
+                  }
+                : filter,
+        ),
+    };
 };
 
 const removeDateFilter: FilterContextReducer<PayloadAction<void>> = (state) => {
@@ -41,10 +59,11 @@ const updateAttributeFilterSelection: FilterContextReducer<
     }>
 > = (state, action) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
-    const existingFilterIndex = state.filterContext.filters.findIndex((item) => {
-        isDashboardAttributeFilter(item) &&
-            item.attributeFilter.localIdentifier === action.payload.filterLocalId;
-    });
+    const existingFilterIndex = state.filterContext.filters.findIndex(
+        (item) =>
+            isDashboardAttributeFilter(item) &&
+            item.attributeFilter.localIdentifier === action.payload.filterLocalId,
+    );
 
     invariant(existingFilterIndex >= 0, "Attempt to update non-existing filter");
 

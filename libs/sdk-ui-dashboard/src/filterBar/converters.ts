@@ -42,10 +42,12 @@ export function dashboardAttributeFilterToAttributeFilter(
  *
  * @internal
  * @param filter - filter to convert
+ * @param localIdentifier - localIdentifier of the filter
  * @returns converted filter
  */
 export function attributeFilterToDashboardAttributeFilter(
     filter: IAttributeFilter,
+    localIdentifier: string | undefined,
 ): IDashboardAttributeFilter {
     const attributeElements = filterAttributeElements(filter);
     const displayForm = filterObjRef(filter);
@@ -54,7 +56,8 @@ export function attributeFilterToDashboardAttributeFilter(
             attributeElements,
             displayForm,
             negativeSelection: isNegativeAttributeFilter(filter),
-            // TODO localId and filterElementsBy?
+            localIdentifier,
+            // TODO filterElementsBy?
         },
     };
 }

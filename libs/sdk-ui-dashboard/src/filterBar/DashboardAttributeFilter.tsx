@@ -43,8 +43,13 @@ export const DashboardAttributeFilter: React.FC<IDashboardAttributeFilterProps> 
     return (
         <AttributeFilterButton
             filter={dashboardAttributeFilterToAttributeFilter(filter)}
-            onApply={(filter) => {
-                onFilterChanged(attributeFilterToDashboardAttributeFilter(filter));
+            onApply={(newFilter) => {
+                onFilterChanged(
+                    attributeFilterToDashboardAttributeFilter(
+                        newFilter,
+                        filter.attributeFilter.localIdentifier,
+                    ),
+                );
             }}
         />
     );
