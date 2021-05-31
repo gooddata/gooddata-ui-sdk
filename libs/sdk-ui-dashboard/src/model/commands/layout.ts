@@ -8,7 +8,7 @@ import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
  * @internal
  */
 export interface AddLayoutSection extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.FL.ADD_SECTION";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION";
     readonly payload: {
         /**
          * Index where to place the new section
@@ -24,8 +24,6 @@ export interface AddLayoutSection extends IDashboardCommand {
 
         /**
          * Optionally specify one or more items to include in the newly created section.
-         *
-         *
          */
         readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
     };
@@ -52,7 +50,7 @@ export function addLayoutSection(
     correlationId?: string,
 ): AddLayoutSection {
     return {
-        type: "GDC.DASHBOARD.CMD.FL.ADD_SECTION",
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION",
         correlationId,
         payload: {
             index,
@@ -70,7 +68,7 @@ export function addLayoutSection(
  * @internal
  */
 export interface MoveLayoutSection extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.FL.MOVE_SECTION";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION";
     readonly payload: {
         /**
          * Index of the section to move.
@@ -105,7 +103,7 @@ export function moveLayoutSection(
     correlationId?: string,
 ): MoveLayoutSection {
     return {
-        type: "GDC.DASHBOARD.CMD.FL.MOVE_SECTION",
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION",
         correlationId,
         payload: {
             sectionIndex,
@@ -122,7 +120,7 @@ export function moveLayoutSection(
  * @internal
  */
 export interface RemoveLayoutSection extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.FL.REMOVE_SECTION";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION";
     readonly payload: {
         /**
          * Index of section to remove.
@@ -160,7 +158,7 @@ export function removeLayoutSection(
     correlationId?: string,
 ): RemoveLayoutSection {
     return {
-        type: "GDC.DASHBOARD.CMD.FL.REMOVE_SECTION",
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION",
         correlationId,
         payload: {
             index,
@@ -177,7 +175,7 @@ export function removeLayoutSection(
  * @internal
  */
 export interface ChangeLayoutSectionHeader extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.FL.CHANGE_SECTION_HEADER";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER";
     readonly payload: {
         /**
          * Index of section whose header to set.
@@ -219,7 +217,7 @@ export function changeLayoutSectionHeader(
     correlationId?: string,
 ): ChangeLayoutSectionHeader {
     return {
-        type: "GDC.DASHBOARD.CMD.FL.CHANGE_SECTION_HEADER",
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER",
         correlationId,
         payload: {
             index,
@@ -237,7 +235,7 @@ export function changeLayoutSectionHeader(
  * @internal
  */
 export interface AddSectionItems extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.FL.ADD_ITEMS";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS";
     readonly payload: {
         /**
          * Section to which the item should be added.
@@ -285,7 +283,7 @@ export function addSectionItem(
     correlationId?: string,
 ): AddSectionItems {
     return {
-        type: "GDC.DASHBOARD.CMD.FL.ADD_ITEMS",
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS",
         correlationId,
         payload: {
             sectionIndex,
@@ -303,7 +301,7 @@ export function addSectionItem(
  * @internal
  */
 export interface ReplaceSectionItem extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.FL.REPLACE_ITEM";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM";
     readonly payload: {
         /**
          * Index of section where the item to modify resides.
@@ -350,7 +348,7 @@ export function replaceSectionItem(
     correlationId?: string,
 ): ReplaceSectionItem {
     return {
-        type: "GDC.DASHBOARD.CMD.FL.REPLACE_ITEM",
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM",
         correlationId,
         payload: {
             sectionIndex,
@@ -369,7 +367,7 @@ export function replaceSectionItem(
  * @internal
  */
 export interface MoveSectionItem extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.FL.MOVE_ITEM";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM";
     readonly payload: {
         /**
          * Index of the section where the item to move is located.
@@ -423,7 +421,7 @@ export function moveSectionItem(
     correlationId?: string,
 ): MoveSectionItem {
     return {
-        type: "GDC.DASHBOARD.CMD.FL.MOVE_ITEM",
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM",
         correlationId,
         payload: {
             sectionIndex,
@@ -442,7 +440,7 @@ export function moveSectionItem(
  * @internal
  */
 export interface RemoveSectionItem extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.FL.REMOVE_ITEM";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM";
     readonly payload: {
         /**
          * Index of the section where the item to move is located.
@@ -498,7 +496,7 @@ export function eagerRemoveSectionItem(
     correlationId?: string,
 ): RemoveSectionItem {
     return {
-        type: "GDC.DASHBOARD.CMD.FL.REMOVE_ITEM",
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM",
         correlationId,
         payload: {
             sectionIndex,
@@ -543,7 +541,7 @@ export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayout
  * @internal
  */
 export interface UndoLayoutChanges extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.FL.UNDO";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
     readonly payload: {
         /**
          * Optionally specify a function that will be used to select a command up to which the undo should be done.
@@ -598,7 +596,7 @@ export function undoLayoutChanges(
     correlationId?: string,
 ): UndoLayoutChanges {
     return {
-        type: "GDC.DASHBOARD.CMD.FL.UNDO",
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO",
         correlationId,
         payload: {
             undoPointSelector,
@@ -626,7 +624,7 @@ export function undoLayoutChanges(
  */
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges {
     return {
-        type: "GDC.DASHBOARD.CMD.FL.UNDO",
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO",
         correlationId,
         payload: {
             redoable: false,

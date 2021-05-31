@@ -15,7 +15,7 @@ import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-b
  * @internal
  */
 export interface DashboardLayoutSectionAdded extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_ADDED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED";
     readonly payload: {
         /**
          * The new section.
@@ -38,7 +38,7 @@ export function layoutSectionAdded(
     correlationId?: string,
 ): DashboardLayoutSectionAdded {
     return {
-        type: "GDC.DASHBOARD.EVT.L.SECTION_ADDED",
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
         ctx,
         correlationId,
         payload: {
@@ -58,7 +58,7 @@ export function layoutSectionAdded(
  * @internal
  */
 export interface DashboardLayoutSectionMoved extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_MOVED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED";
     readonly payload: {
         readonly section: ExtendedDashboardLayoutSection;
         readonly fromIndex: number;
@@ -74,7 +74,7 @@ export function layoutSectionMoved(
     correlationId?: string,
 ): DashboardLayoutSectionMoved {
     return {
-        type: "GDC.DASHBOARD.EVT.L.SECTION_MOVED",
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
         ctx,
         correlationId,
         payload: {
@@ -99,7 +99,7 @@ export function layoutSectionMoved(
  * @internal
  */
 export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_REMOVED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED";
     readonly payload: {
         /**
          * Section that was removed.
@@ -135,7 +135,7 @@ export function layoutSectionRemoved(
     correlationId?: string,
 ): DashboardLayoutSectionRemoved {
     return {
-        type: "GDC.DASHBOARD.EVT.L.SECTION_REMOVED",
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
         ctx,
         correlationId,
         payload: {
@@ -157,7 +157,7 @@ export function layoutSectionRemoved(
  * @internal
  */
 export interface DashboardLayoutSectionHeaderChanged extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_HEADER_CHANGED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED";
     readonly payload: {
         /**
          * The new header of the section.
@@ -178,7 +178,7 @@ export function layoutSectionHeaderChanged(
     correlationId?: string,
 ): DashboardLayoutSectionHeaderChanged {
     return {
-        type: "GDC.DASHBOARD.EVT.L.SECTION_HEADER_CHANGED",
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
         ctx,
         correlationId,
         payload: {
@@ -198,7 +198,7 @@ export function layoutSectionHeaderChanged(
  * @internal
  */
 export interface DashboardLayoutSectionItemsAdded extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.L.ITEMS_ADDED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED";
     readonly payload: {
         /**
          * Index of the section to which the items were added.
@@ -232,7 +232,7 @@ export function layoutSectionItemsAdded(
     correlationId?: string,
 ): DashboardLayoutSectionItemsAdded {
     return {
-        type: "GDC.DASHBOARD.EVT.L.ITEMS_ADDED",
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
         ctx,
         correlationId,
         payload: {
@@ -253,7 +253,7 @@ export function layoutSectionItemsAdded(
  * @internal
  */
 export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.L.ITEM_REPLACED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED";
     readonly payload: {
         /**
          * Index of section where the replacement happened.
@@ -287,7 +287,7 @@ export function layoutSectionItemReplaced(
     correlationId?: string,
 ): DashboardLayoutSectionItemReplaced {
     return {
-        type: "GDC.DASHBOARD.EVT.L.ITEM_REPLACED",
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
         ctx,
         correlationId,
         payload: {
@@ -309,7 +309,7 @@ export function layoutSectionItemReplaced(
  * @internal
  */
 export interface DashboardLayoutSectionItemMoved extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.L.ITEM_MOVED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED";
     readonly payload: {
         /**
          * Item that was moved.
@@ -350,7 +350,7 @@ export function layoutSectionItemMoved(
     correlationId?: string,
 ): DashboardLayoutSectionItemMoved {
     return {
-        type: "GDC.DASHBOARD.EVT.L.ITEM_MOVED",
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
         ctx,
         correlationId,
         payload: {
@@ -373,7 +373,7 @@ export function layoutSectionItemMoved(
  * @internal
  */
 export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.L.ITEM_REMOVED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED";
     readonly payload: {
         /**
          * Item that was removed.
@@ -408,7 +408,7 @@ export function layoutSectionItemRemoved(
     correlationId?: string,
 ): DashboardLayoutSectionItemRemoved {
     return {
-        type: "GDC.DASHBOARD.EVT.L.ITEM_REMOVED",
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
         ctx,
         correlationId,
         payload: {
@@ -430,7 +430,7 @@ export function layoutSectionItemRemoved(
  * @internal
  */
 export interface DashboardLayoutChanged extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.L.LAYOUT_CHANGED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
     readonly payload: {
         /**
          * Layout after the change.

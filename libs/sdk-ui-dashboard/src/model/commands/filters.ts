@@ -12,7 +12,7 @@ import { IDashboardCommand } from "./base";
  * @internal
  */
 export interface ChangeDateFilterSelection extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION";
+    readonly type: "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION";
     readonly payload: {
         /**
          * Indicates whether the filter should select absolute or relative values.
@@ -77,7 +77,7 @@ export function changeDateFilterSelection(
     correlationId?: string,
 ): ChangeDateFilterSelection {
     return {
-        type: "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION",
+        type: "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
             type,
@@ -99,7 +99,7 @@ export function changeDateFilterSelection(
  */
 export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection {
     return {
-        type: "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION",
+        type: "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
             type: "relative",
@@ -116,7 +116,7 @@ export function clearDateFilterSelection(correlationId?: string): ChangeDateFilt
  * @internal
  */
 export interface AddAttributeFilter extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.AF.ADD";
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD";
     readonly payload: {
         readonly displayForm: ObjRef;
 
@@ -160,7 +160,7 @@ export function addAttributeFilter(
     correlationId?: string,
 ): AddAttributeFilter {
     return {
-        type: "GDC.DASHBOARD.CMD.AF.ADD",
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD",
         correlationId,
         payload: {
             displayForm,
@@ -177,7 +177,7 @@ export function addAttributeFilter(
  * @internal
  */
 export interface RemoveAttributeFilters extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.AF.REMOVE";
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE";
     readonly payload: {
         /**
          * XXX: we do not necessarily need to remove multiple filters atm, but this should
@@ -198,7 +198,7 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
  */
 export function removeAttributeFilter(filterLocalId: string, correlationId?: string): RemoveAttributeFilters {
     return {
-        type: "GDC.DASHBOARD.CMD.AF.REMOVE",
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE",
         correlationId,
         payload: {
             filterLocalId: [filterLocalId],
@@ -214,7 +214,7 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
  * @internal
  */
 export interface MoveAttributeFilter extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.AF.MOVE";
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE";
     readonly payload: {
         readonly filterLocalId: string;
         readonly index: number;
@@ -240,7 +240,7 @@ export function moveAttributeFilter(
     correlationId?: string,
 ): MoveAttributeFilter {
     return {
-        type: "GDC.DASHBOARD.CMD.AF.MOVE",
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE",
         correlationId,
         payload: {
             filterLocalId,
@@ -262,7 +262,7 @@ export type AttributeFilterSelectionType = "IN" | "NOT_IN";
  * @internal
  */
 export interface ChangeAttributeFilterSelection extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION";
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION";
     readonly payload: {
         readonly filterLocalId: string;
         readonly elements: IAttributeElements;
@@ -295,7 +295,7 @@ export function changeAttributeFilterSelection(
     correlationId?: string,
 ): ChangeAttributeFilterSelection {
     return {
-        type: "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION",
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
             filterLocalId,
@@ -322,7 +322,7 @@ export function resetAttributeFilterSelection(
     correlationId?: string,
 ): ChangeAttributeFilterSelection {
     return {
-        type: "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION",
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
             filterLocalId,
@@ -340,7 +340,7 @@ export function resetAttributeFilterSelection(
  * @internal
  */
 export interface SetAttributeFilterParent extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.AF.SET_PARENT";
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT";
     readonly payload: {
         readonly filterLocalId: string;
         readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
@@ -371,7 +371,7 @@ export function setAttributeFilterParent(
     correlationId?: string,
 ): SetAttributeFilterParent {
     return {
-        type: "GDC.DASHBOARD.CMD.AF.SET_PARENT",
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT",
         correlationId,
         payload: {
             filterLocalId,

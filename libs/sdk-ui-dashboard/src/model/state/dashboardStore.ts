@@ -125,7 +125,7 @@ export function createDashboardStore(
              * error instance in them.
              */
             serializableCheck: {
-                ignoredActions: ["GDC.DASHBOARD.EVT.COMMAND.FAILED"],
+                ignoredActions: ["GDC.DASH/EVT.COMMAND.FAILED"],
                 ignoredActionPaths: ["ctx"],
             },
         }),

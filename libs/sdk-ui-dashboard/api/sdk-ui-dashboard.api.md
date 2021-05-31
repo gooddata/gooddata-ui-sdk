@@ -57,7 +57,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
         readonly initialSelection?: IAttributeElements;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.AF.ADD";
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD";
 }
 
 // @internal
@@ -72,7 +72,7 @@ export interface AddLayoutSection extends IDashboardCommand {
         readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.FL.ADD_SECTION";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION";
 }
 
 // @internal
@@ -90,7 +90,7 @@ export interface AddSectionItems extends IDashboardCommand {
         readonly items: ReadonlyArray<DashboardItemDefinition>;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.FL.ADD_ITEMS";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS";
 }
 
 // @internal (undocumented)
@@ -117,7 +117,7 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
         readonly selectionType: AttributeFilterSelectionType;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION";
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION";
 }
 
 // @internal
@@ -133,7 +133,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
         readonly to?: DateString | number;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION";
+    readonly type: "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION";
 }
 
 // @internal
@@ -148,7 +148,7 @@ export interface ChangeLayoutSectionHeader extends IDashboardCommand {
         readonly merge?: boolean;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.FL.CHANGE_SECTION_HEADER";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER";
 }
 
 // @internal
@@ -186,7 +186,7 @@ export interface DashboardAttributeFilterAdded extends IDashboardEvent {
         readonly index: number;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.AF.ADDED";
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED";
 }
 
 // @internal (undocumented)
@@ -201,7 +201,7 @@ export interface DashboardAttributeFilterMoved extends IDashboardEvent {
         readonly toIndex: number;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.AF.MOVED";
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED";
 }
 
 // @internal
@@ -211,7 +211,7 @@ export interface DashboardAttributeFilterParentChanged extends IDashboardEvent {
         readonly filter: IDashboardAttributeFilter;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.AF.PARENT_CHANGED";
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED";
 }
 
 // @internal
@@ -222,7 +222,7 @@ export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
         readonly children?: ReadonlyArray<IDashboardAttributeFilter>;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.AF.REMOVED";
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED";
 }
 
 // @internal
@@ -232,7 +232,7 @@ export interface DashboardAttributeFilterSelectionChanged extends IDashboardEven
         readonly filter: IDashboardAttributeFilter;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.AF.SELECTION_CHANGED";
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
 }
 
 // @internal (undocumented)
@@ -250,20 +250,20 @@ export interface DashboardCommandFailed extends IDashboardEvent {
         readonly error?: Error;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.COMMAND.FAILED";
+    readonly type: "GDC.DASH/EVT.COMMAND.FAILED";
 }
 
 // @internal
 export interface DashboardCommandRejected extends IDashboardEvent {
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.COMMAND.REJECTED";
+    readonly type: "GDC.DASH/EVT.COMMAND.REJECTED";
 }
 
 // @internal (undocumented)
 export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | ChangeDateFilterSelection | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | ReplaceSectionItem | MoveSectionItem | RemoveSectionItem | UndoLayoutChanges;
 
 // @internal
-export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD" | "GDC.DASHBOARD.CMD.SAVE" | "GDC.DASHBOARD.CMD.SAVEAS" | "GDC.DASHBOARD.CMD.RESET" | "GDC.DASHBOARD.CMD.RENAME" | "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION" | "GDC.DASHBOARD.CMD.AF.ADD" | "GDC.DASHBOARD.CMD.AF.REMOVE" | "GDC.DASHBOARD.CMD.AF.MOVE" | "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION" | "GDC.DASHBOARD.CMD.AF.SET_PARENT" | "GDC.DASHBOARD.CMD.FL.ADD_SECTION" | "GDC.DASHBOARD.CMD.FL.MOVE_SECTION" | "GDC.DASHBOARD.CMD.FL.REMOVE_SECTION" | "GDC.DASHBOARD.CMD.FL.CHANGE_SECTION_HEADER" | "GDC.DASHBOARD.CMD.FL.ADD_ITEMS" | "GDC.DASHBOARD.CMD.FL.REPLACE_ITEM" | "GDC.DASHBOARD.CMD.FL.MOVE_ITEM" | "GDC.DASHBOARD.CMD.FL.REMOVE_ITEM" | "GDC.DASHBOARD.CMD.FL.UNDO";
+export type DashboardCommandType = "GDC.DASH/CMD.LOAD" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
 
 // @internal
 export type DashboardConfig = {
@@ -289,7 +289,7 @@ export interface DashboardCopySaved extends IDashboardEvent {
         readonly dashboard: IDashboard;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.D.COPY_SAVED";
+    readonly type: "GDC.DASH/EVT.COPY_SAVED";
 }
 
 // @internal
@@ -305,7 +305,7 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
         readonly filter: IDashboardDateFilter;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.DF.SELECTION_CHANGED";
+    readonly type: "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED";
 }
 
 // @internal
@@ -321,7 +321,7 @@ export type DashboardEventHandler = {
 export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemReplaced | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutChanged;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED" | "GDC.DASHBOARD.EVT.DF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.ADDED" | "GDC.DASHBOARD.EVT.AF.REMOVED" | "GDC.DASHBOARD.EVT.AF.MOVED" | "GDC.DASHBOARD.EVT.AF.SELECTION_CHANGED" | "GDC.DASHBOARD.EVT.AF.PARENT_CHANGED" | "GDC.DASHBOARD.EVT.F.FILTER_CONTEXT_CHANGED" | "GDC.DASHBOARD.EVT.L.SECTION_ADDED" | "GDC.DASHBOARD.EVT.L.SECTION_MOVED" | "GDC.DASHBOARD.EVT.L.SECTION_REMOVED" | "GDC.DASHBOARD.EVT.L.SECTION_HEADER_CHANGED" | "GDC.DASHBOARD.EVT.L.ITEMS_ADDED" | "GDC.DASHBOARD.EVT.L.ITEM_REPLACED" | "GDC.DASHBOARD.EVT.L.ITEM_MOVED" | "GDC.DASHBOARD.EVT.L.ITEM_REMOVED" | "GDC.DASHBOARD.EVT.L.LAYOUT_CHANGED";
+export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.COMMAND.REJECTED" | "GDC.DASH/EVT.LOADED" | "GDC.DASH/EVT.SAVED" | "GDC.DASH/EVT.COPY_SAVED" | "GDC.DASH/EVT.RENAMED" | "GDC.DASH/EVT.RESET" | "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED" | "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED" | "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
 
 // @internal
 export interface DashboardFilterContextChanged extends IDashboardEvent {
@@ -330,7 +330,7 @@ export interface DashboardFilterContextChanged extends IDashboardEvent {
         readonly filterContext: IFilterContext;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.F.FILTER_CONTEXT_CHANGED";
+    readonly type: "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED";
 }
 
 // @internal
@@ -343,7 +343,7 @@ export interface DashboardLayoutChanged extends IDashboardEvent {
         readonly layout: IDashboardLayout<ExtendedDashboardItem>;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.L.LAYOUT_CHANGED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
 }
 
 // @internal (undocumented)
@@ -357,7 +357,7 @@ export interface DashboardLayoutSectionAdded extends IDashboardEvent {
         readonly index: number;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_ADDED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED";
 }
 
 // @internal
@@ -368,7 +368,7 @@ export interface DashboardLayoutSectionHeaderChanged extends IDashboardEvent {
         readonly sectionIndex: number;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_HEADER_CHANGED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED";
 }
 
 // @internal
@@ -382,7 +382,7 @@ export interface DashboardLayoutSectionItemMoved extends IDashboardEvent {
         readonly toIndex: number;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.L.ITEM_MOVED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED";
 }
 
 // @internal
@@ -395,7 +395,7 @@ export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.L.ITEM_REMOVED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED";
 }
 
 // @internal
@@ -408,7 +408,7 @@ export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.L.ITEM_REPLACED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED";
 }
 
 // @internal
@@ -421,7 +421,7 @@ export interface DashboardLayoutSectionItemsAdded extends IDashboardEvent {
         readonly stashesUsed?: ReadonlyArray<StashedDashboardItemsId>;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.L.ITEMS_ADDED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED";
 }
 
 // @internal
@@ -433,7 +433,7 @@ export interface DashboardLayoutSectionMoved extends IDashboardEvent {
         readonly toIndex: number;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_MOVED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED";
 }
 
 // @internal
@@ -446,7 +446,7 @@ export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.L.SECTION_REMOVED";
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED";
 }
 
 // @internal
@@ -459,7 +459,7 @@ export interface DashboardLoaded extends IDashboardEvent {
         readonly permissions: IWorkspacePermissions;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.D.LOADED";
+    readonly type: "GDC.DASH/EVT.LOADED";
 }
 
 // @internal
@@ -475,7 +475,7 @@ export interface DashboardRenamed extends IDashboardEvent {
         readonly newTitle: string;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.D.RENAMED";
+    readonly type: "GDC.DASH/EVT.RENAMED";
 }
 
 // @internal
@@ -486,7 +486,7 @@ export interface DashboardSaved extends IDashboardEvent {
         readonly newDashboard: boolean;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.D.SAVED";
+    readonly type: "GDC.DASH/EVT.SAVED";
 }
 
 // @internal
@@ -515,7 +515,7 @@ export interface DashboardWasReset extends IDashboardEvent {
         dashboard: IDashboard;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.D.RESET";
+    readonly type: "GDC.DASH/EVT.RESET";
 }
 
 // @internal
@@ -538,7 +538,7 @@ export interface DateFilterValidationFailed extends IDashboardEvent {
         readonly result: DateFilterValidationResult;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
+    readonly type: "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED";
 }
 
 // @internal (undocumented)
@@ -771,7 +771,7 @@ export interface LoadDashboard extends IDashboardCommand {
         readonly permissions?: IWorkspacePermissions;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.LOAD";
+    readonly type: "GDC.DASH/CMD.LOAD";
 }
 
 // @internal
@@ -805,7 +805,7 @@ export interface MoveAttributeFilter extends IDashboardCommand {
         readonly index: number;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.AF.MOVE";
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE";
 }
 
 // @internal
@@ -819,7 +819,7 @@ export interface MoveLayoutSection extends IDashboardCommand {
         readonly toIndex: number;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.FL.MOVE_SECTION";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION";
 }
 
 // @internal
@@ -835,7 +835,7 @@ export interface MoveSectionItem extends IDashboardCommand {
         readonly toItemIndex: number;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.FL.MOVE_ITEM";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM";
 }
 
 // @internal
@@ -863,7 +863,7 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
         readonly filterLocalId: string[];
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.AF.REMOVE";
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE";
 }
 
 // @internal (undocumented)
@@ -874,7 +874,7 @@ export interface RemoveLayoutSection extends IDashboardCommand {
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.FL.REMOVE_SECTION";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION";
 }
 
 // @internal
@@ -890,7 +890,7 @@ export interface RemoveSectionItem extends IDashboardCommand {
         readonly eager?: boolean;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.FL.REMOVE_ITEM";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM";
 }
 
 // @internal (undocumented)
@@ -900,7 +900,7 @@ export interface RenameDashboard extends IDashboardCommand {
         readonly newTitle: string;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.RENAME";
+    readonly type: "GDC.DASH/CMD.RENAME";
 }
 
 // @internal
@@ -916,7 +916,7 @@ export interface ReplaceSectionItem extends IDashboardCommand {
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.FL.REPLACE_ITEM";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM";
 }
 
 // @internal
@@ -928,7 +928,7 @@ export function resetAttributeFilterSelection(filterLocalId: string, correlation
 // @internal (undocumented)
 export interface ResetDashboard extends IDashboardCommand {
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.RESET";
+    readonly type: "GDC.DASH/CMD.RESET";
 }
 
 // @internal
@@ -947,7 +947,7 @@ export interface SaveDashboard extends IDashboardCommand {
         readonly identifier?: string;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.SAVE";
+    readonly type: "GDC.DASH/CMD.SAVE";
 }
 
 // @internal
@@ -961,7 +961,7 @@ export interface SaveDashboardAs extends IDashboardCommand {
         readonly title?: string;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.SAVEAS";
+    readonly type: "GDC.DASH/CMD.SAVEAS";
 }
 
 // @internal
@@ -978,7 +978,7 @@ export interface SetAttributeFilterParent extends IDashboardCommand {
         readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.AF.SET_PARENT";
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT";
 }
 
 // @internal
@@ -1004,7 +1004,7 @@ export interface UndoLayoutChanges extends IDashboardCommand {
         readonly redoable?: boolean;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.FL.UNDO";
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
 }
 
 // @internal

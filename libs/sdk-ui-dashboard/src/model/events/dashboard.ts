@@ -17,7 +17,7 @@ import { IDashboardEvent } from "./base";
  * @internal
  */
 export interface DashboardLoaded extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.D.LOADED";
+    readonly type: "GDC.DASH/EVT.LOADED";
     readonly payload: {
         /**
          * Loaded dashboard.
@@ -53,7 +53,7 @@ export function dashboardLoaded(
     correlationId?: string,
 ): DashboardLoaded {
     return {
-        type: "GDC.DASHBOARD.EVT.D.LOADED",
+        type: "GDC.DASH/EVT.LOADED",
         ctx,
         correlationId,
         payload: {
@@ -76,7 +76,7 @@ export function dashboardLoaded(
  * @internal
  */
 export interface DashboardSaved extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.D.SAVED";
+    readonly type: "GDC.DASH/EVT.SAVED";
     readonly payload: {
         /**
          * Definition of the saved dashboard.
@@ -98,7 +98,7 @@ export function dashboardSaved(
     correlationId?: string,
 ): DashboardSaved {
     return {
-        type: "GDC.DASHBOARD.EVT.D.SAVED",
+        type: "GDC.DASH/EVT.SAVED",
         ctx,
         correlationId,
         payload: {
@@ -119,7 +119,7 @@ export function dashboardSaved(
  * @internal
  */
 export interface DashboardCopySaved extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.D.COPY_SAVED";
+    readonly type: "GDC.DASH/EVT.COPY_SAVED";
     readonly payload: {
         /**
          * Definition of the newly created dashboard copy.
@@ -134,7 +134,7 @@ export function dashboardCopySaved(
     correlationId?: string,
 ): DashboardCopySaved {
     return {
-        type: "GDC.DASHBOARD.EVT.D.COPY_SAVED",
+        type: "GDC.DASH/EVT.COPY_SAVED",
         ctx,
         correlationId,
         payload: {
@@ -154,7 +154,7 @@ export function dashboardCopySaved(
  * @internal
  */
 export interface DashboardRenamed extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.D.RENAMED";
+    readonly type: "GDC.DASH/EVT.RENAMED";
     readonly payload: {
         /**
          * The new title of the dashboard.
@@ -169,7 +169,7 @@ export function dashboardRenamed(
     correlationId?: string,
 ): DashboardRenamed {
     return {
-        type: "GDC.DASHBOARD.EVT.D.RENAMED",
+        type: "GDC.DASH/EVT.RENAMED",
         ctx,
         correlationId,
         payload: {
@@ -189,7 +189,7 @@ export function dashboardRenamed(
  * @internal
  */
 export interface DashboardWasReset extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.D.RESET";
+    readonly type: "GDC.DASH/EVT.RESET";
     readonly payload: {
         dashboard: IDashboard;
     };
@@ -201,7 +201,7 @@ export function dashboardWasReset(
     correlationId?: string,
 ): DashboardWasReset {
     return {
-        type: "GDC.DASHBOARD.EVT.D.RESET",
+        type: "GDC.DASH/EVT.RESET",
         ctx,
         correlationId,
         payload: {
@@ -232,7 +232,7 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
  * @internal
  */
 export interface DateFilterValidationFailed extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
+    readonly type: "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED";
     readonly payload: {
         readonly result: DateFilterValidationResult;
     };
@@ -244,7 +244,7 @@ export function dateFilterValidationFailed(
     correlationId?: string,
 ): DateFilterValidationFailed {
     return {
-        type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED",
+        type: "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED",
         ctx,
         correlationId,
         payload: {

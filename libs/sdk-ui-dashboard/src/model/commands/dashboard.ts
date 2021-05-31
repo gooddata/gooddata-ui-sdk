@@ -10,7 +10,7 @@ import { IDashboardCommand } from "./base";
  * @internal
  */
 export interface LoadDashboard extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.LOAD";
+    readonly type: "GDC.DASH/CMD.LOAD";
     readonly payload: {
         readonly config?: DashboardConfig;
         readonly permissions?: IWorkspacePermissions;
@@ -39,7 +39,7 @@ export function loadDashboard(
     correlationId?: string,
 ): LoadDashboard {
     return {
-        type: "GDC.DASHBOARD.CMD.LOAD",
+        type: "GDC.DASH/CMD.LOAD",
         correlationId,
         payload: {
             config,
@@ -56,7 +56,7 @@ export function loadDashboard(
  * @internal
  */
 export interface SaveDashboard extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.SAVE";
+    readonly type: "GDC.DASH/CMD.SAVE";
     readonly payload: {
         readonly identifier?: string;
     };
@@ -79,7 +79,7 @@ export interface SaveDashboard extends IDashboardCommand {
  */
 export function saveDashboard(identifier?: string, correlationId?: string): SaveDashboard {
     return {
-        type: "GDC.DASHBOARD.CMD.SAVE",
+        type: "GDC.DASH/CMD.SAVE",
         correlationId,
         payload: {
             identifier,
@@ -95,7 +95,7 @@ export function saveDashboard(identifier?: string, correlationId?: string): Save
  * @internal
  */
 export interface SaveDashboardAs extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.SAVEAS";
+    readonly type: "GDC.DASH/CMD.SAVEAS";
     readonly payload: {
         readonly identifier?: string;
         readonly title?: string;
@@ -123,7 +123,7 @@ export function saveDashboardAs(
     correlationId?: string,
 ): SaveDashboardAs {
     return {
-        type: "GDC.DASHBOARD.CMD.SAVEAS",
+        type: "GDC.DASH/CMD.SAVEAS",
         correlationId,
         payload: {
             identifier,
@@ -140,7 +140,7 @@ export function saveDashboardAs(
  * @internal
  */
 export interface RenameDashboard extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.RENAME";
+    readonly type: "GDC.DASH/CMD.RENAME";
     readonly payload: {
         readonly newTitle: string;
     };
@@ -157,7 +157,7 @@ export interface RenameDashboard extends IDashboardCommand {
  */
 export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard {
     return {
-        type: "GDC.DASHBOARD.CMD.RENAME",
+        type: "GDC.DASH/CMD.RENAME",
         correlationId,
         payload: {
             newTitle,
@@ -173,7 +173,7 @@ export function renameDashboard(newTitle: string, correlationId?: string): Renam
  * @internal
  */
 export interface ResetDashboard extends IDashboardCommand {
-    readonly type: "GDC.DASHBOARD.CMD.RESET";
+    readonly type: "GDC.DASH/CMD.RESET";
 }
 
 /**
@@ -189,7 +189,7 @@ export interface ResetDashboard extends IDashboardCommand {
  */
 export function resetDashboard(correlationId?: string): ResetDashboard {
     return {
-        type: "GDC.DASHBOARD.CMD.RESET",
+        type: "GDC.DASH/CMD.RESET",
         correlationId,
     };
 }

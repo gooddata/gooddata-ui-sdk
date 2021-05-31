@@ -7,25 +7,25 @@ import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
 import { commandRejected, internalErrorOccurred } from "../events/general";
 
 const DefaultCommandHandlers = {
-    "GDC.DASHBOARD.CMD.LOAD": loadDashboardCommandHandler,
-    "GDC.DASHBOARD.CMD.SAVE": unhandledCommand,
-    "GDC.DASHBOARD.CMD.SAVEAS": unhandledCommand,
-    "GDC.DASHBOARD.CMD.RESET": unhandledCommand,
-    "GDC.DASHBOARD.CMD.RENAME": unhandledCommand,
-    "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION": unhandledCommand,
-    "GDC.DASHBOARD.CMD.AF.ADD": unhandledCommand,
-    "GDC.DASHBOARD.CMD.AF.REMOVE": unhandledCommand,
-    "GDC.DASHBOARD.CMD.AF.MOVE": unhandledCommand,
-    "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION": unhandledCommand,
-    "GDC.DASHBOARD.CMD.AF.SET_PARENT": unhandledCommand,
-    "GDC.DASHBOARD.CMD.FL.ADD_SECTION": unhandledCommand,
-    "GDC.DASHBOARD.CMD.FL.MOVE_SECTION": unhandledCommand,
-    "GDC.DASHBOARD.CMD.FL.REMOVE_SECTION": unhandledCommand,
-    "GDC.DASHBOARD.CMD.FL.CHANGE_SECTION_HEADER": unhandledCommand,
-    "GDC.DASHBOARD.CMD.FL.ADD_ITEMS": unhandledCommand,
-    "GDC.DASHBOARD.CMD.FL.MOVE_ITEM": unhandledCommand,
-    "GDC.DASHBOARD.CMD.FL.REMOVE_ITEM": unhandledCommand,
-    "GDC.DASHBOARD.CMD.FL.UNDO": unhandledCommand,
+    "GDC.DASH/CMD.LOAD": loadDashboardCommandHandler,
+    "GDC.DASH/CMD.SAVE": unhandledCommand,
+    "GDC.DASH/CMD.SAVEAS": unhandledCommand,
+    "GDC.DASH/CMD.RESET": unhandledCommand,
+    "GDC.DASH/CMD.RENAME": unhandledCommand,
+    "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION": unhandledCommand,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD": unhandledCommand,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE": unhandledCommand,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE": unhandledCommand,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION": unhandledCommand,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT": unhandledCommand,
+    "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": unhandledCommand,
+    "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": unhandledCommand,
+    "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": unhandledCommand,
+    "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER": unhandledCommand,
+    "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS": unhandledCommand,
+    "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM": unhandledCommand,
+    "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM": unhandledCommand,
+    "GDC.DASH/CMD.FLUID_LAYOUT.UNDO": unhandledCommand,
 };
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
@@ -43,7 +43,7 @@ export function* rootCommandHandler() {
     // eslint-disable-next-line no-console
     console.debug("starting root command handler");
 
-    const commandChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.DASHBOARD.CMD"));
+    const commandChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.DASH/CMD"));
 
     while (true) {
         const action: DashboardCommands = yield take(commandChannel);

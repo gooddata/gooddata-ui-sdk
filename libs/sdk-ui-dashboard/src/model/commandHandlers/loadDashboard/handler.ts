@@ -79,7 +79,7 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
                 }),
                 insightsActions.setInsights(references.insights),
             ],
-            "@@GDC.DASHBOARD.BATCH.LOAD",
+            "@@GDC.DASH/BATCH.LOAD",
         );
 
         yield put(batch);
