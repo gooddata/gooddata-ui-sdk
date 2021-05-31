@@ -302,6 +302,72 @@ export function addSectionItem(
 /**
  * @internal
  */
+export interface ReplaceSectionItem extends IDashboardCommand {
+    readonly type: "GDC.DASHBOARD.CMD.FL.REPLACE_ITEM";
+    readonly payload: {
+        /**
+         * Index of section where the item to modify resides.
+         */
+        readonly sectionIndex: number;
+
+        /**
+         * Index of item within section that should be modified.
+         */
+        readonly itemIndex: number;
+
+        /**
+         * New item definition. This will replace the old
+         */
+        readonly item: DashboardItemDefinition;
+
+        /**
+         * Optionally specify identifier for stash where the old item should be stored.
+         *
+         * If no stashIdentifier provided, then the old item will be thrown away.
+         */
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+}
+
+/**
+ * Creates the ReplaceSectionItem command. Dispatching this command will result in replacement of particular dashboard
+ * item with a new item. By default the old item will be discarded, however you may specify to stash it for later use.
+ *
+ * @param sectionIndex - index of section where the item to replace resides
+ * @param itemIndex - index of item within the section
+ * @param item - new item definition
+ * @param stashIdentifier - optionally specify identifier of stash where the old item should be stored
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @internal
+ */
+export function replaceSectionItem(
+    sectionIndex: number,
+    itemIndex: number,
+    item: DashboardItemDefinition,
+    stashIdentifier?: StashedDashboardItemsId,
+    correlationId?: string,
+): ReplaceSectionItem {
+    return {
+        type: "GDC.DASHBOARD.CMD.FL.REPLACE_ITEM",
+        correlationId,
+        payload: {
+            sectionIndex,
+            itemIndex,
+            item,
+            stashIdentifier,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * @internal
+ */
 export interface MoveSectionItem extends IDashboardCommand {
     readonly type: "GDC.DASHBOARD.CMD.FL.MOVE_ITEM";
     readonly payload: {

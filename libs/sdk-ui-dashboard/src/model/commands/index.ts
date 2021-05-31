@@ -17,6 +17,7 @@ import {
     MoveSectionItem,
     RemoveLayoutSection,
     RemoveSectionItem,
+    ReplaceSectionItem,
     UndoLayoutChanges,
 } from "./layout";
 
@@ -61,6 +62,8 @@ export {
     changeLayoutSectionHeader,
     AddSectionItems,
     addSectionItem,
+    ReplaceSectionItem,
+    replaceSectionItem,
     MoveSectionItem,
     moveSectionItem,
     RemoveSectionItem,
@@ -92,6 +95,7 @@ export type DashboardCommands =
     | RemoveLayoutSection
     | ChangeLayoutSectionHeader
     | AddSectionItems
+    | ReplaceSectionItem
     | MoveSectionItem
     | RemoveSectionItem
     | UndoLayoutChanges;

@@ -260,10 +260,10 @@ export interface DashboardCommandRejected extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | ChangeDateFilterSelection | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | MoveSectionItem | RemoveSectionItem | UndoLayoutChanges;
+export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | ChangeDateFilterSelection | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | ReplaceSectionItem | MoveSectionItem | RemoveSectionItem | UndoLayoutChanges;
 
 // @internal
-export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD" | "GDC.DASHBOARD.CMD.SAVE" | "GDC.DASHBOARD.CMD.SAVEAS" | "GDC.DASHBOARD.CMD.RESET" | "GDC.DASHBOARD.CMD.RENAME" | "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION" | "GDC.DASHBOARD.CMD.AF.ADD" | "GDC.DASHBOARD.CMD.AF.REMOVE" | "GDC.DASHBOARD.CMD.AF.MOVE" | "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION" | "GDC.DASHBOARD.CMD.AF.SET_PARENT" | "GDC.DASHBOARD.CMD.FL.ADD_SECTION" | "GDC.DASHBOARD.CMD.FL.MOVE_SECTION" | "GDC.DASHBOARD.CMD.FL.REMOVE_SECTION" | "GDC.DASHBOARD.CMD.FL.CHANGE_SECTION_HEADER" | "GDC.DASHBOARD.CMD.FL.ADD_ITEMS" | "GDC.DASHBOARD.CMD.FL.MOVE_ITEM" | "GDC.DASHBOARD.CMD.FL.REMOVE_ITEM" | "GDC.DASHBOARD.CMD.FL.UNDO";
+export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD" | "GDC.DASHBOARD.CMD.SAVE" | "GDC.DASHBOARD.CMD.SAVEAS" | "GDC.DASHBOARD.CMD.RESET" | "GDC.DASHBOARD.CMD.RENAME" | "GDC.DASHBOARD.CMD.DF.CHANGE_SELECTION" | "GDC.DASHBOARD.CMD.AF.ADD" | "GDC.DASHBOARD.CMD.AF.REMOVE" | "GDC.DASHBOARD.CMD.AF.MOVE" | "GDC.DASHBOARD.CMD.AF.CHANGE_SELECTION" | "GDC.DASHBOARD.CMD.AF.SET_PARENT" | "GDC.DASHBOARD.CMD.FL.ADD_SECTION" | "GDC.DASHBOARD.CMD.FL.MOVE_SECTION" | "GDC.DASHBOARD.CMD.FL.REMOVE_SECTION" | "GDC.DASHBOARD.CMD.FL.CHANGE_SECTION_HEADER" | "GDC.DASHBOARD.CMD.FL.ADD_ITEMS" | "GDC.DASHBOARD.CMD.FL.REPLACE_ITEM" | "GDC.DASHBOARD.CMD.FL.MOVE_ITEM" | "GDC.DASHBOARD.CMD.FL.REMOVE_ITEM" | "GDC.DASHBOARD.CMD.FL.UNDO";
 
 // @internal
 export type DashboardConfig = {
@@ -892,6 +892,22 @@ export interface RenameDashboard extends IDashboardCommand {
 
 // @internal
 export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard;
+
+// @internal (undocumented)
+export interface ReplaceSectionItem extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly sectionIndex: number;
+        readonly itemIndex: number;
+        readonly item: DashboardItemDefinition;
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASHBOARD.CMD.FL.REPLACE_ITEM";
+}
+
+// @internal
+export function replaceSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): ReplaceSectionItem;
 
 // @internal
 export function resetAttributeFilterSelection(filterLocalId: string, correlationId?: string): ChangeAttributeFilterSelection;
