@@ -19,7 +19,7 @@ export type CommandFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
  * @internal
  */
 export interface DashboardCommandFailed extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.COMMAND.FAILED";
+    readonly type: "GDC.DASH/EVT.COMMAND.FAILED";
     readonly payload: {
         /**
          * Reason for the failure.
@@ -45,7 +45,7 @@ export function internalErrorOccurred(
     correlationId?: string,
 ): DashboardCommandFailed {
     return {
-        type: "GDC.DASHBOARD.EVT.COMMAND.FAILED",
+        type: "GDC.DASH/EVT.COMMAND.FAILED",
         ctx,
         correlationId,
         payload: {
@@ -62,7 +62,7 @@ export function invalidArgumentsProvided(
     correlationId?: string,
 ): DashboardCommandFailed {
     return {
-        type: "GDC.DASHBOARD.EVT.COMMAND.FAILED",
+        type: "GDC.DASH/EVT.COMMAND.FAILED",
         ctx,
         correlationId,
         payload: {
@@ -85,12 +85,12 @@ export function invalidArgumentsProvided(
  * @internal
  */
 export interface DashboardCommandRejected extends IDashboardEvent {
-    readonly type: "GDC.DASHBOARD.EVT.COMMAND.REJECTED";
+    readonly type: "GDC.DASH/EVT.COMMAND.REJECTED";
 }
 
 export function commandRejected(ctx: DashboardContext, correlationId?: string): DashboardCommandRejected {
     return {
-        type: "GDC.DASHBOARD.EVT.COMMAND.REJECTED",
+        type: "GDC.DASH/EVT.COMMAND.REJECTED",
         ctx,
         correlationId,
     };

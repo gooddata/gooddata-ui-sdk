@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { IAnalyticalBackend, IDateFilterConfig, ISeparators, ISettings } from "@gooddata/sdk-backend-spi";
 import { IColorPalette, ObjRef } from "@gooddata/sdk-model";
-import { IDrillableItem, IHeaderPredicate, ILocale } from "@gooddata/sdk-ui";
+import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys";
 import includes from "lodash/includes";
 
@@ -36,14 +36,6 @@ export type DashboardConfig = {
      * Color palette to pass down to charts.
      */
     colorPalette?: IColorPalette;
-
-    /**
-     * Configure drillability; e.g. which parts of the visualization can be interacted with.
-     * These are applied to all the widgets in the dashboard. If specified, these override any drills specified in the dashboards.
-     *
-     * TODO: do we need more sophisticated logic to specify drillability?
-     */
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 };
 
 /**
@@ -60,7 +52,6 @@ const RequiredConfigKeys: DashboardConfigKeys[] = [
     "separators",
     "colorPalette",
     "settings",
-    "drillableItems",
 ];
 
 /**

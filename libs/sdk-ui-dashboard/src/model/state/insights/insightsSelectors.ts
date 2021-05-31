@@ -9,4 +9,4 @@ const selectSelf = insightsAdapter.getSelectors((state: DashboardState) => state
  *
  * @internal
  */
-export const insightsSelector = selectSelf.selectAll;
+export const selectInsights = selectSelf.selectAll;

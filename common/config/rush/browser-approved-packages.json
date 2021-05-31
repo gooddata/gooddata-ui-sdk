@@ -843,6 +843,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "redux-batched-actions",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "redux-saga",
       "allowedCategories": [ "production" ]
     },

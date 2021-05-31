@@ -11,7 +11,7 @@ function loadPermissionsFromBackend(ctx: DashboardContext): Promise<IWorkspacePe
     return backend.workspace(workspace).permissions().getPermissionsForCurrentUser();
 }
 
-export function* loadPermissions(ctx: DashboardContext, cmd: LoadDashboard) {
+export function* resolvePermissions(ctx: DashboardContext, cmd: LoadDashboard) {
     const { permissions } = cmd.payload;
 
     if (permissions) {

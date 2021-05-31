@@ -16,13 +16,13 @@ const selectSelf = createSelector(
  * on top of the workspace-level date filter config. If the dashboard-level overrides are not specified, then
  * the workspace-level config should be taken as-is.
  *
- * @remarks See {@link effectiveDateFilterConfigSelector} - you can use this selector to obtain the effective
+ * @remarks See {@link selectEffectiveDateFilterConfig} - you can use this selector to obtain the effective
  *  date filter config that contains the final config obtained by merging the workspace-level config and the
  *  dashboard-level overrides.
  *
  * @internal
  */
-export const dateFilterConfigSelector = createSelector(selectSelf, (dateFilterConfigState) => {
+export const selectDateFilterConfigOverrides = createSelector(selectSelf, (dateFilterConfigState) => {
     return dateFilterConfigState.dateFilterConfig;
 });
 
@@ -34,7 +34,7 @@ export const dateFilterConfigSelector = createSelector(selectSelf, (dateFilterCo
  *
  * @internal
  */
-export const effectiveDateFilterConfigSelector = createSelector(selectSelf, (dateFilterConfigState) => {
+export const selectEffectiveDateFilterConfig = createSelector(selectSelf, (dateFilterConfigState) => {
     invariant(
         dateFilterConfigState.effectiveDateFilterConfig,
         "attempting to access uninitialized filter context state",
@@ -62,9 +62,9 @@ const effectiveDateFilterConfigIsUsingOverrides = createSelector(selectSelf, (da
  *
  * @internal
  */
-export const effectiveDateFilterCustomTitleSelector = createSelector(
+export const selectEffectiveDateFilterTitle = createSelector(
     effectiveDateFilterConfigIsUsingOverrides,
-    dateFilterConfigSelector,
+    selectDateFilterConfigOverrides,
     (isUsingOverrides, dashboardOverrides) => {
         if (!isUsingOverrides) {
             return undefined;
@@ -84,8 +84,8 @@ export const effectiveDateFilterCustomTitleSelector = createSelector(
  *
  * @internal
  */
-export const effectiveDateFilterModeSelector = createSelector(
-    dateFilterConfigSelector,
+export const selectEffectiveDateFilterMode = createSelector(
+    selectDateFilterConfigOverrides,
     (dashboardOverrides): DashboardDateFilterConfigMode => {
         return dashboardOverrides?.mode ?? "active";
     },

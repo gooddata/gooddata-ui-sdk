@@ -39,7 +39,7 @@ ready for controlled growth, the setup is as follows:
     The data types stored in the state are those that are defined on the @gooddata/sdk-backend-spi: IDashboard, IFilterContext,
     IDashboardLayout etc. The data obtained from analytical backend is stored in state as-is.
 
--   Commands are redux actions with a clear action type naming convention. They always start with `GDC.DASHBOARD.CMD.` and are followed
+-   Commands are redux actions with a clear action type naming convention. They always start with `GDC.DASH/CMD.` and are followed
     by some meaningful command name.
 -   Commands are created for all dashboard logic that should be publicly available
 
@@ -64,7 +64,7 @@ ready for controlled growth, the setup is as follows:
         about the dashboard or use command API to trigger some dashboard actions.
 
 -   Events are emitted during command processing to indicate either progress or end result of command processing. Events
-    are modeled as redux actions. They always start with `GDC.DASHBOARD.EVT.`
+    are modeled as redux actions. They always start with `GDC.DASH/EVT.`
 
     By convention events are named always with past tense verb - this is because they describe what has already happened.
 

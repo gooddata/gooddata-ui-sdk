@@ -7,9 +7,14 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
+import { DashboardWidget } from '@gooddata/sdk-backend-spi';
+import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
+import { DateFilterType } from '@gooddata/sdk-backend-spi';
+import { DateString } from '@gooddata/sdk-backend-spi';
 import { Dispatch } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttributeElements } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
 import { ICatalogFact } from '@gooddata/sdk-backend-spi';
@@ -17,10 +22,14 @@ import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
+import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
+import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
+import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
+import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDashboardViewProps } from '@gooddata/sdk-ui-ext';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDrillableItem } from '@gooddata/sdk-ui';
@@ -39,6 +48,55 @@ import { default as React_2 } from 'react';
 import { TypedUseSelectorHook } from 'react-redux';
 
 // @internal (undocumented)
+export interface AddAttributeFilter extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly displayForm: ObjRef;
+        readonly index: number;
+        readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
+        readonly initialSelection?: IAttributeElements;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD";
+}
+
+// @internal
+export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string): AddAttributeFilter;
+
+// @internal (undocumented)
+export interface AddLayoutSection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly index: number;
+        readonly initialHeader?: IDashboardLayoutSectionHeader;
+        readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION";
+}
+
+// @internal
+export function addLayoutSection(index: number, initialHeader?: IDashboardLayoutSectionHeader, initialItems?: DashboardItemDefinition[], correlationId?: string): AddLayoutSection;
+
+// @internal
+export function addSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, correlationId?: string): AddSectionItems;
+
+// @internal (undocumented)
+export interface AddSectionItems extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly sectionIndex: number;
+        readonly itemIndex: number;
+        readonly items: ReadonlyArray<DashboardItemDefinition>;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS";
+}
+
+// @internal (undocumented)
+export type AttributeFilterSelectionType = "IN" | "NOT_IN";
+
+// @internal (undocumented)
 export interface CatalogState {
     // (undocumented)
     attributes?: ICatalogAttribute[];
@@ -51,10 +109,56 @@ export interface CatalogState {
 }
 
 // @internal (undocumented)
-export type CommandFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
+export interface ChangeAttributeFilterSelection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly filterLocalId: string;
+        readonly elements: IAttributeElements;
+        readonly selectionType: AttributeFilterSelectionType;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION";
+}
 
 // @internal
-export const configSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, Required<import("../..").DashboardConfig>, (res: import("./configState").ConfigState) => Required<import("../..").DashboardConfig>>;
+export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
+
+// @internal (undocumented)
+export interface ChangeDateFilterSelection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly type: DateFilterType;
+        readonly granularity: DateFilterGranularity;
+        readonly from?: DateString | number;
+        readonly to?: DateString | number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION";
+}
+
+// @internal
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, correlationId?: string): ChangeDateFilterSelection;
+
+// @internal (undocumented)
+export interface ChangeLayoutSectionHeader extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly index: number;
+        readonly header: IDashboardLayoutSectionHeader;
+        readonly merge?: boolean;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER";
+}
+
+// @internal
+export function changeLayoutSectionHeader(index: number, header: IDashboardLayoutSectionHeader, merge?: boolean, correlationId?: string): ChangeLayoutSectionHeader;
+
+// @internal
+export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection;
+
+// @internal (undocumented)
+export type CommandFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 
 // @internal (undocumented)
 export interface ConfigState {
@@ -71,8 +175,62 @@ export const Dashboard: React_2.FC<IDashboardProps>;
 // @internal
 export const DashboardAttributeFilter: React_2.FC<IDashboardAttributeFilter>;
 
+// @internal
+export interface DashboardAttributeFilterAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly added: IDashboardAttributeFilter;
+        readonly index: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED";
+}
+
 // @internal (undocumented)
 export type DashboardAttributeFilterComponent = React_2.ComponentType<IDashboardAttributeFilterProps>;
+
+// @internal
+export interface DashboardAttributeFilterMoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly moved: IDashboardAttributeFilter;
+        readonly fromIndex: number;
+        readonly toIndex: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED";
+}
+
+// @internal
+export interface DashboardAttributeFilterParentChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly filter: IDashboardAttributeFilter;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED";
+}
+
+// @internal
+export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly removed: IDashboardAttributeFilter;
+        readonly children?: ReadonlyArray<IDashboardAttributeFilter>;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED";
+}
+
+// @internal
+export interface DashboardAttributeFilterSelectionChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly filter: IDashboardAttributeFilter;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
+}
 
 // @internal (undocumented)
 export const DashboardButtonBar: React_2.FC<IDashboardButtonBarProps & IDefaultButtonBarProps>;
@@ -89,20 +247,20 @@ export interface DashboardCommandFailed extends IDashboardEvent {
         readonly error?: Error;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.COMMAND.FAILED";
+    readonly type: "GDC.DASH/EVT.COMMAND.FAILED";
 }
 
 // @internal
 export interface DashboardCommandRejected extends IDashboardEvent {
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.COMMAND.REJECTED";
+    readonly type: "GDC.DASH/EVT.COMMAND.REJECTED";
 }
 
 // @internal (undocumented)
-export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard;
+export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | ChangeDateFilterSelection | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | ReplaceSectionItem | MoveSectionItem | RemoveSectionItem | UndoLayoutChanges;
 
 // @internal
-export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD" | "GDC.DASHBOARD.CMD.SAVE" | "GDC.DASHBOARD.CMD.SAVEAS" | "GDC.DASHBOARD.CMD.RESET" | "GDC.DASHBOARD.CMD.RENAME";
+export type DashboardCommandType = "GDC.DASH/CMD.LOAD" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
 
 // @internal
 export type DashboardConfig = {
@@ -111,7 +269,6 @@ export type DashboardConfig = {
     settings?: ISettings;
     dateFilterConfig?: IDateFilterConfig;
     colorPalette?: IColorPalette;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 };
 
 // @internal
@@ -128,7 +285,7 @@ export interface DashboardCopySaved extends IDashboardEvent {
         readonly dashboard: IDashboard;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.D.COPY_SAVED";
+    readonly type: "GDC.DASH/EVT.COPY_SAVED";
 }
 
 // @internal
@@ -136,6 +293,16 @@ export const DashboardDateFilter: React_2.FC<IDashboardDateFilterProps>;
 
 // @internal (undocumented)
 export type DashboardDateFilterComponent = React_2.ComponentType<IDashboardDateFilterProps>;
+
+// @internal
+export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly filter: IDashboardDateFilter;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED";
+}
 
 // @internal
 export type DashboardDispatch = Dispatch<AnyAction>;
@@ -147,10 +314,136 @@ export type DashboardEventHandler = {
 };
 
 // @internal (undocumented)
-export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset;
+export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemReplaced | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutChanged;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.DASHBOARD.EVT.COMMAND.FAILED" | "GDC.DASHBOARD.EVT.COMMAND.REJECTED" | "GDC.DASHBOARD.EVT.D.LOADED" | "GDC.DASHBOARD.EVT.D.SAVED" | "GDC.DASHBOARD.EVT.D.COPY_SAVED" | "GDC.DASHBOARD.EVT.D.RENAMED" | "GDC.DASHBOARD.EVT.D.RESET" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
+export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.COMMAND.REJECTED" | "GDC.DASH/EVT.LOADED" | "GDC.DASH/EVT.SAVED" | "GDC.DASH/EVT.COPY_SAVED" | "GDC.DASH/EVT.RENAMED" | "GDC.DASH/EVT.RESET" | "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED" | "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED" | "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
+
+// @internal
+export interface DashboardFilterContextChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly filterContext: IFilterContext;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED";
+}
+
+// @internal
+export type DashboardItemDefinition = ExtendedDashboardItem | StashedDashboardItemsId;
+
+// @internal
+export interface DashboardLayoutChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly layout: IDashboardLayout<ExtendedDashboardItem>;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
+}
+
+// @internal (undocumented)
+export type DashboardLayoutCommands = AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | MoveSectionItem | RemoveSectionItem;
+
+// @internal
+export interface DashboardLayoutSectionAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly section: ExtendedDashboardLayoutSection;
+        readonly index: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED";
+}
+
+// @internal
+export interface DashboardLayoutSectionHeaderChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly newHeader: IDashboardLayoutSectionHeader;
+        readonly sectionIndex: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED";
+}
+
+// @internal
+export interface DashboardLayoutSectionItemMoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly item: ExtendedDashboardItem;
+        readonly fromSectionIndex: number;
+        readonly toSectionIndex: number;
+        readonly fromIndex: number;
+        readonly toIndex: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED";
+}
+
+// @internal
+export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly item: ExtendedDashboardItem;
+        readonly itemIndex: number;
+        readonly section?: ExtendedDashboardLayoutSection;
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED";
+}
+
+// @internal
+export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly sectionIndex: number;
+        readonly itemIndex: number;
+        readonly item: ExtendedDashboardItem;
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED";
+}
+
+// @internal
+export interface DashboardLayoutSectionItemsAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly sectionIndex: number;
+        readonly startIndex: number;
+        readonly itemsAdded: ReadonlyArray<ExtendedDashboardItem>;
+        readonly stashesUsed?: ReadonlyArray<StashedDashboardItemsId>;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED";
+}
+
+// @internal
+export interface DashboardLayoutSectionMoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly section: ExtendedDashboardLayoutSection;
+        readonly fromIndex: number;
+        readonly toIndex: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED";
+}
+
+// @internal
+export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly section: ExtendedDashboardLayoutSection;
+        readonly index: number;
+        readonly eagerRemoval?: boolean;
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED";
+}
 
 // @internal
 export interface DashboardLoaded extends IDashboardEvent {
@@ -162,7 +455,7 @@ export interface DashboardLoaded extends IDashboardEvent {
         readonly permissions: IWorkspacePermissions;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.D.LOADED";
+    readonly type: "GDC.DASH/EVT.LOADED";
 }
 
 // @internal
@@ -178,7 +471,7 @@ export interface DashboardRenamed extends IDashboardEvent {
         readonly newTitle: string;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.D.RENAMED";
+    readonly type: "GDC.DASH/EVT.RENAMED";
 }
 
 // @internal
@@ -189,7 +482,7 @@ export interface DashboardSaved extends IDashboardEvent {
         readonly newDashboard: boolean;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.D.SAVED";
+    readonly type: "GDC.DASH/EVT.SAVED";
 }
 
 // @internal
@@ -218,11 +511,8 @@ export interface DashboardWasReset extends IDashboardEvent {
         dashboard: IDashboard;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.D.RESET";
+    readonly type: "GDC.DASH/EVT.RESET";
 }
-
-// @internal
-export const dateFilterConfigSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined>;
 
 // @internal (undocumented)
 export interface DateFilterConfigState {
@@ -241,29 +531,29 @@ export interface DateFilterValidationFailed extends IDashboardEvent {
         readonly result: DateFilterValidationResult;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
+    readonly type: "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED";
 }
 
 // @internal (undocumented)
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
 // @internal
-export const effectiveDateFilterConfigSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
+export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
 
 // @internal
-export const effectiveDateFilterCustomTitleSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => string | undefined>;
+export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget>;
 
 // @internal
-export const effectiveDateFilterModeSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, DashboardDateFilterConfigMode, (res: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => DashboardDateFilterConfigMode>;
+export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardItem>;
+
+// @internal
+export type ExtendedDashboardWidget = DashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
 
 // @internal (undocumented)
 export const FilterBar: React_2.FC<IFilterBarProps & IDefaultFilterBarProps>;
 
 // @internal (undocumented)
 export type FilterBarComponent = ComponentType<IFilterBarProps>;
-
-// @internal
-export const filterContextSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IFilterContext, (res: import("./filterContextState").FilterContextState) => import("@gooddata/sdk-backend-spi").IFilterContext>;
 
 // @internal (undocumented)
 export interface FilterContextState {
@@ -332,6 +622,7 @@ export interface IDashboardProps {
         defaultComponentProps?: LayoutProps;
     };
     dashboardRef: ObjRef;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
     eventHandlers?: DashboardEventHandler[];
     filterBarConfig?: {
@@ -406,13 +697,23 @@ export interface IFilterBarProps {
 }
 
 // @internal
-export const insightsSelector: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];
+export const InitialLoadCorrelationId = "initialLoad";
+
+// @internal (undocumented)
+export type InsightPlaceholderWidget = {
+    readonly type: "insightPlaceholder";
+};
 
 // @internal (undocumented)
 export interface ITopBarProps {
     // (undocumented)
     title: string;
 }
+
+// @internal (undocumented)
+export type KpiPlaceholderWidget = {
+    readonly type: "kpiPlaceholder";
+};
 
 // @internal (undocumented)
 export const Layout: React_2.FC<LayoutProps>;
@@ -435,9 +736,6 @@ export interface LayoutProps {
     widgetRenderer?: IDashboardViewProps["widgetRenderer"];
 }
 
-// @internal
-export const layoutSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>, (res: LayoutState) => import("@gooddata/sdk-backend-spi").IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>>;
-
 // @internal (undocumented)
 export interface LayoutState {
     // (undocumented)
@@ -452,14 +750,11 @@ export interface LoadDashboard extends IDashboardCommand {
         readonly permissions?: IWorkspacePermissions;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.LOAD";
+    readonly type: "GDC.DASH/CMD.LOAD";
 }
 
 // @internal
 export function loadDashboard(config?: DashboardConfig, permissions?: IWorkspacePermissions, correlationId?: string): LoadDashboard;
-
-// @internal (undocumented)
-export const loadingSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;
 
 // @internal (undocumented)
 export type LoadingState = {
@@ -467,9 +762,6 @@ export type LoadingState = {
     result?: boolean;
     error?: Error;
 };
-
-// @internal
-export const localeSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-ui").ILocale, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-ui").ILocale>;
 
 // @internal (undocumented)
 export type MenuButtonItem = {
@@ -479,15 +771,96 @@ export type MenuButtonItem = {
 };
 
 // @internal (undocumented)
-export const NoTopBar: React_2.FC<ITopBarProps>;
+export interface MoveAttributeFilter extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly filterLocalId: string;
+        readonly index: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE";
+}
 
 // @internal
-export const permissionsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IWorkspacePermissions, (res: import("./permissionsState").PermissionsState) => import("@gooddata/sdk-backend-spi").IWorkspacePermissions>;
+export function moveAttributeFilter(filterLocalId: string, index: number, correlationId?: string): MoveAttributeFilter;
+
+// @internal (undocumented)
+export interface MoveLayoutSection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly sectionIndex: number;
+        readonly toIndex: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION";
+}
+
+// @internal
+export function moveLayoutSection(sectionIndex: number, toIndex: number, correlationId?: string): MoveLayoutSection;
+
+// @internal (undocumented)
+export interface MoveSectionItem extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly sectionIndex: number;
+        readonly itemIndex: number;
+        readonly toSectionIndex: number;
+        readonly toItemIndex: number;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM";
+}
+
+// @internal
+export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
+
+// @internal (undocumented)
+export const NoTopBar: React_2.FC<ITopBarProps>;
 
 // @internal (undocumented)
 export interface PermissionsState {
     // (undocumented)
     permissions?: IWorkspacePermissions;
+}
+
+// @internal
+export function removeAttributeFilter(filterLocalId: string, correlationId?: string): RemoveAttributeFilters;
+
+// @internal (undocumented)
+export interface RemoveAttributeFilters extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly filterLocalId: string[];
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE";
+}
+
+// @internal (undocumented)
+export interface RemoveLayoutSection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly index: number;
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION";
+}
+
+// @internal
+export function removeLayoutSection(index: number, stashIdentifier: StashedDashboardItemsId, correlationId?: string): RemoveLayoutSection;
+
+// @internal (undocumented)
+export interface RemoveSectionItem extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly sectionIndex: number;
+        readonly itemIndex: number;
+        readonly stashIdentifier?: StashedDashboardItemsId;
+        readonly eager?: boolean;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM";
 }
 
 // @internal (undocumented)
@@ -497,16 +870,35 @@ export interface RenameDashboard extends IDashboardCommand {
         readonly newTitle: string;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.RENAME";
+    readonly type: "GDC.DASH/CMD.RENAME";
 }
 
 // @internal
 export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard;
 
 // @internal (undocumented)
+export interface ReplaceSectionItem extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly sectionIndex: number;
+        readonly itemIndex: number;
+        readonly item: DashboardItemDefinition;
+        readonly stashIdentifier?: StashedDashboardItemsId;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM";
+}
+
+// @internal
+export function replaceSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): ReplaceSectionItem;
+
+// @internal
+export function resetAttributeFilterSelection(filterLocalId: string, correlationId?: string): ChangeAttributeFilterSelection;
+
+// @internal (undocumented)
 export interface ResetDashboard extends IDashboardCommand {
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.RESET";
+    readonly type: "GDC.DASH/CMD.RESET";
 }
 
 // @internal
@@ -515,6 +907,9 @@ export function resetDashboard(correlationId?: string): ResetDashboard;
 // @internal
 export type ResolvedDashboardConfig = Required<DashboardConfig>;
 
+// @internal
+export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;
+
 // @internal (undocumented)
 export interface SaveDashboard extends IDashboardCommand {
     // (undocumented)
@@ -522,7 +917,7 @@ export interface SaveDashboard extends IDashboardCommand {
         readonly identifier?: string;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.SAVE";
+    readonly type: "GDC.DASH/CMD.SAVE";
 }
 
 // @internal
@@ -536,23 +931,90 @@ export interface SaveDashboardAs extends IDashboardCommand {
         readonly title?: string;
     };
     // (undocumented)
-    readonly type: "GDC.DASHBOARD.CMD.SAVEAS";
+    readonly type: "GDC.DASH/CMD.SAVEAS";
 }
 
 // @internal
 export function saveDashboardAs(identifier?: string, title?: string, correlationId?: string): SaveDashboardAs;
 
 // @internal
-export const separatorsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISeparators>;
+export const selectConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, Required<import("../..").DashboardConfig>, (res: import("./configState").ConfigState) => Required<import("../..").DashboardConfig>>;
+
+// @internal (undocumented)
+export const selectDashboardLoading: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;
 
 // @internal
-export const settingsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISettings>;
+export const selectDateFilterConfigOverrides: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined>;
+
+// @internal
+export const selectEffectiveDateFilterConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
+
+// @internal
+export const selectEffectiveDateFilterMode: import("@reduxjs/toolkit").OutputSelector<DashboardState, DashboardDateFilterConfigMode, (res: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => DashboardDateFilterConfigMode>;
+
+// @internal
+export const selectEffectiveDateFilterTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => string | undefined>;
+
+// @internal
+export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IFilterContext, (res: import("./filterContextState").FilterContextState) => import("@gooddata/sdk-backend-spi").IFilterContext>;
+
+// @internal
+export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];
+
+// @internal
+export const selectLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>, (res: LayoutState) => import("@gooddata/sdk-backend-spi").IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>>;
+
+// @internal
+export const selectLocale: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-ui").ILocale, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-ui").ILocale>;
+
+// @internal
+export const selectPermissions: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IWorkspacePermissions, (res: import("./permissionsState").PermissionsState) => import("@gooddata/sdk-backend-spi").IWorkspacePermissions>;
+
+// @internal
+export const selectSeparators: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISeparators>;
+
+// @internal
+export const selectSettings: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISettings>;
+
+// @internal (undocumented)
+export interface SetAttributeFilterParent extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly filterLocalId: string;
+        readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT";
+}
+
+// @internal
+export function setAttributeFilterParent(filterLocalId: string, parentFilter: IDashboardAttributeFilterParent, correlationId?: string): SetAttributeFilterParent;
+
+// @internal
+export type StashedDashboardItemsId = string;
 
 // @internal (undocumented)
 export const TopBar: React_2.FC<ITopBarProps & IDefaultTopBarProps>;
 
 // @internal (undocumented)
 export type TopBarComponent = ComponentType<ITopBarProps>;
+
+// @internal (undocumented)
+export interface UndoLayoutChanges extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly undoPointSelector?: UndoPointSelector;
+        readonly redoable?: boolean;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
+}
+
+// @internal
+export function undoLayoutChanges(undoPointSelector?: UndoPointSelector, redoable?: boolean, correlationId?: string): UndoLayoutChanges;
+
+// @internal
+export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayoutCommands>) => number;
 
 // @internal (undocumented)
 export const useDashboardDispatch: () => Dispatch<AnyAction>;

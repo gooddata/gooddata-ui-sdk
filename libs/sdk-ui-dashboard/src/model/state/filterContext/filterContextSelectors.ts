@@ -14,7 +14,7 @@ const selectSelf = createSelector(
  *
  * @internal
  */
-export const filterContextSelector = createSelector(selectSelf, (filterContextState) => {
+export const selectFilterContext = createSelector(selectSelf, (filterContextState) => {
     invariant(filterContextState.filterContext, "attempting to access uninitialized filter context state");
 
     return filterContextState.filterContext!;

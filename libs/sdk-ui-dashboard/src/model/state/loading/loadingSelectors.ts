@@ -11,4 +11,4 @@ const selectSelf = createSelector(
 /**
  * @internal
  */
-export const loadingSelector = selectSelf;
+export const selectDashboardLoading = selectSelf;

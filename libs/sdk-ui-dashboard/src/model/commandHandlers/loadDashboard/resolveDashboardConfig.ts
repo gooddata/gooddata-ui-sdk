@@ -15,7 +15,7 @@ import { LoadDashboard } from "../../commands/dashboard";
 import { all, call } from "redux-saga/effects";
 import { dateFilterValidationFailed } from "../../events/dashboard";
 import { defaultDateFilterConfig } from "../../_staging/dateFilterConfig/defaultConfig";
-import { eventDispatcher } from "../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { ILocale } from "@gooddata/sdk-ui";
@@ -56,13 +56,13 @@ function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig
     const result: PromiseFnReturnType<typeof loadDateFilterConfig> = yield call(loadDateFilterConfig, ctx);
 
     if ((result?.totalCount ?? 0) > 1) {
-        yield call(eventDispatcher, dateFilterValidationFailed(ctx, "TOO_MANY_CONFIGS", cmd.correlationId));
+        yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, "TOO_MANY_CONFIGS", cmd.correlationId));
     }
 
     const firstConfig = result?.items[0];
 
     if (!firstConfig) {
-        yield call(eventDispatcher, dateFilterValidationFailed(ctx, "NO_CONFIG", cmd.correlationId));
+        yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, "NO_CONFIG", cmd.correlationId));
     }
 
     return result?.items[0] ?? defaultDateFilterConfig;
@@ -106,7 +106,7 @@ function resolveColorPalette(ctx: DashboardContext, config: DashboardConfig): Pr
  * @param ctx
  * @param cmd
  */
-export function* loadDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) {
+export function* resolveDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) {
     const {
         payload: { config = {} },
     } = cmd;
@@ -139,7 +139,7 @@ export function* loadDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) 
     const [validDateFilterConfig, configValidation] = getValidDateFilterConfig(dateFilterConfig, settings);
 
     if (configValidation !== "Valid") {
-        yield call(eventDispatcher, dateFilterValidationFailed(ctx, configValidation, cmd.correlationId));
+        yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, configValidation, cmd.correlationId));
     }
 
     return {

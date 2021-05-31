@@ -20,16 +20,12 @@ import { DashboardRenderer } from "@gooddata/sdk-ui-ext/esm/dashboardView/Dashbo
 // Selectors
 import { useDashboardSelector } from "../model/state/dashboardStore";
 import { attributesWithDrillDownSelector } from "../model/state/catalog/catalogSelectors";
-import { alertsSelector } from "../model/state/alerts/alertsSelectors";
-import { layoutSelector } from "../model/state/layout/layoutSelectors";
-import { filterContextSelector } from "../model/state/filterContext/filterContextSelectors";
-import { insightsSelector } from "../model/state/insights/insightsSelectors";
+import { selectAlerts } from "../model/state/alerts/alertsSelectors";
+import { selectLayout } from "../model/state/layout/layoutSelectors";
+import { selectFilterContext } from "../model/state/filterContext/filterContextSelectors";
+import { selectInsights } from "../model/state/insights/insightsSelectors";
 import { EmptyDashboardError } from "@gooddata/sdk-ui-ext/esm/dashboardView/EmptyDashboardError";
-import {
-    settingsSelector,
-    colorPaletteSelector,
-    configSelector,
-} from "../model/state/config/configSelectors";
+import { selectSettings, selectColorPalette, selectConfig } from "../model/state/config/configSelectors";
 
 /**
  * @internal
@@ -58,14 +54,14 @@ export const Layout: React.FC<LayoutProps> = (props) => {
         transformLayout,
         widgetRenderer,
     } = props;
-    const config = useDashboardSelector(configSelector);
-    const settings = useDashboardSelector(settingsSelector);
-    const colorPalette = useDashboardSelector(colorPaletteSelector);
+    const config = useDashboardSelector(selectConfig);
+    const settings = useDashboardSelector(selectSettings);
+    const colorPalette = useDashboardSelector(selectColorPalette);
     const drillDownAttributes = useDashboardSelector(attributesWithDrillDownSelector);
-    const alerts = useDashboardSelector(alertsSelector);
-    const layout = useDashboardSelector(layoutSelector);
-    const filterContext = useDashboardSelector(filterContextSelector);
-    const insights = useDashboardSelector(insightsSelector);
+    const alerts = useDashboardSelector(selectAlerts);
+    const layout = useDashboardSelector(selectLayout);
+    const filterContext = useDashboardSelector(selectFilterContext);
+    const insights = useDashboardSelector(selectInsights);
 
     const getInsightByRef = (insightRef: ObjRef): IInsight | undefined => {
         return insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));

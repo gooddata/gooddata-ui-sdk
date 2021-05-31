@@ -9,4 +9,4 @@ const selectSelf = alertsAdapter.getSelectors((state: DashboardState) => state.a
  *
  * @internal
  */
-export const alertsSelector = selectSelf.selectAll;
+export const selectAlerts = selectSelf.selectAll;
