@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-05-25T09:54:23.078Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-05-31T16:27:09.245Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -4546,6 +4546,10 @@ const catalog = {
     groups: require("./metadata/catalog/groups.json"),
 };
 const visClasses = { items: require("./metadata/visClasses/items.json") };
+const dash_aaRaEZRWdRpQ = {
+    obj: require("./metadata/dashboards/aaRaEZRWdRpQ/obj.json"),
+    alerts: require("./metadata/dashboards/aaRaEZRWdRpQ/alerts.json"),
+};
 export const Recordings = {
     executions: {
         fp_00ab8c432637030b305313405b3f4efc,
@@ -5739,5 +5743,6 @@ export const Recordings = {
             i_Xirr_e5deb6dfe7ff06cdc5210a56fc84c841,
             i_Xirr_feb8ea5ece361cf1c5681654f085f9a5,
         },
+        dashboards: { dash_aaRaEZRWdRpQ },
     },
 };
