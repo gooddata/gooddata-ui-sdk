@@ -1,15 +1,17 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     CatalogItem,
     IAnalyticalBackendConfig,
     IAttributeDisplayFormMetadataObject,
     IAttributeElement,
     ICatalogGroup,
+    IDashboardWithReferences,
     ISettings,
     ITheme,
+    IWidgetAlert,
     ValidationContext,
 } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition, IInsight, IColorPalette, IVisualizationClass } from "@gooddata/sdk-model";
+import { IColorPalette, IExecutionDefinition, IInsight, IVisualizationClass } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -73,9 +75,10 @@ export type RecordingIndex = {
     };
     metadata?: {
         catalog?: CatalogRecording;
-        displayForms?: { [id: string]: DisplayFormRecording };
-        insights?: { [id: string]: InsightRecording };
+        displayForms?: Record<string, DisplayFormRecording>;
+        insights?: Record<string, InsightRecording>;
         visClasses?: VisClassesRecording;
+        dashboards?: Record<string, DashboardRecording>;
     };
 };
 
@@ -125,6 +128,14 @@ export type CatalogRecording = {
  */
 export type VisClassesRecording = {
     items: IVisualizationClass[];
+};
+
+/**
+ * @internal
+ */
+export type DashboardRecording = {
+    obj: IDashboardWithReferences;
+    alerts: IWidgetAlert[];
 };
 
 /**

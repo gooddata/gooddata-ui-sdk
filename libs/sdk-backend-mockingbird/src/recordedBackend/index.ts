@@ -43,6 +43,7 @@ import { RecordedCatalogFactory } from "./catalog";
 import { RecordedAttributes } from "./attributes";
 import { RecordedMeasures } from "./measures";
 import { RecordedFacts } from "./facts";
+import { RecordedDashboards } from "./dashboards";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -151,7 +152,7 @@ function recordedWorkspace(
             return new RecordedInsights(recordings, implConfig.useRefType ?? "uri");
         },
         dashboards(): IWorkspaceDashboardsService {
-            throw new NotSupported("not supported");
+            return new RecordedDashboards(this.workspace, recordings);
         },
         settings(): IWorkspaceSettingsService {
             return {
