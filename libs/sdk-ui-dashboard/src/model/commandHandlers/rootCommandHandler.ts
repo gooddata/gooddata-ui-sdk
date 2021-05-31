@@ -5,6 +5,7 @@ import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
 import { commandRejected, internalErrorOccurred } from "../events/general";
+import { dateFilterChangeSelectionCommandHandler } from "./dateFilter/handler";
 
 const DefaultCommandHandlers = {
     "GDC.DASH/CMD.LOAD": loadDashboardCommandHandler,
@@ -12,7 +13,7 @@ const DefaultCommandHandlers = {
     "GDC.DASH/CMD.SAVEAS": unhandledCommand,
     "GDC.DASH/CMD.RESET": unhandledCommand,
     "GDC.DASH/CMD.RENAME": unhandledCommand,
-    "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION": unhandledCommand,
+    "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION": dateFilterChangeSelectionCommandHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD": unhandledCommand,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE": unhandledCommand,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE": unhandledCommand,
