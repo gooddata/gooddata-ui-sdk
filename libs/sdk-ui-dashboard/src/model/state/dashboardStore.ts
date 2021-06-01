@@ -10,7 +10,7 @@ import {
     getDefaultMiddleware,
     Middleware,
 } from "@reduxjs/toolkit";
-import createSagaMiddleware from "redux-saga";
+import createSagaMiddleware, { Saga, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
 import { createDispatchHook, createSelectorHook, TypedUseSelectorHook } from "react-redux";
 import { filterContextSliceReducer } from "./filterContext";
@@ -35,6 +35,7 @@ import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { alertsSliceReducer } from "./alerts/index";
 import { CatalogState } from "./catalog/catalogState";
 import { catalogSliceReducer } from "./catalog";
+import { spawn } from "redux-saga/effects";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -106,14 +107,28 @@ export type DashboardStoreConfig = {
     initialEventHandlers?: DashboardEventHandler[];
 };
 
+function createRootSaga(eventEmitter: Saga, commandHandler: Saga) {
+    return function* () {
+        yield spawn(eventEmitter);
+        yield spawn(commandHandler);
+    };
+}
+
+/**
+ * Fully configured and initialized dashboard store realized by redux and with redux-sagas.
+ */
+export type ReduxedDashboardStore = {
+    store: DashboardStore;
+    registerEventHandler: (handler: DashboardEventHandler) => void;
+    rootSagaTask: Task;
+};
+
 /**
  * Creates a new store for a dashboard.
  *
  * @param config - runtime configuration to apply on the middlewares and the store
  */
-export function createDashboardStore(
-    config: DashboardStoreConfig,
-): [DashboardStore, (handler: DashboardEventHandler) => void] {
+export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashboardStore {
     const sagaMiddleware = createSagaMiddleware({
         context: {
             dashboardContext: config.sagaContext,
@@ -157,9 +172,12 @@ export function createDashboardStore(
     });
 
     const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers);
+    const rootSaga = createRootSaga(rootEventEmitter.eventEmitterSaga, rootCommandHandler as any);
+    const rootSagaTask = sagaMiddleware.run(rootSaga);
 
-    sagaMiddleware.run(rootEventEmitter.eventEmitterSaga);
-    sagaMiddleware.run(rootCommandHandler as any);
-
-    return [store, rootEventEmitter.registerHandler];
+    return {
+        store,
+        registerEventHandler: rootEventEmitter.registerHandler,
+        rootSagaTask,
+    };
 }
