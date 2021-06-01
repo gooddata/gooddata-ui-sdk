@@ -10,6 +10,13 @@ import {
     SetAttributeFilterParent,
 } from "./filters";
 import {
+    ChangeKpiWidgetComparison,
+    ChangeKpiWidgetFilterSettings,
+    ChangeKpiWidgetHeader,
+    ChangeKpiWidgetMeasure,
+    RefreshKpiWidget,
+} from "./kpi";
+import {
     AddLayoutSection,
     AddSectionItems,
     ChangeLayoutSectionHeader,
@@ -76,6 +83,20 @@ export {
     UndoPointSelector,
 } from "./layout";
 
+export {
+    ChangeKpiWidgetHeader,
+    changeKpiWidgetHeader,
+    ChangeKpiWidgetMeasure,
+    changeKpiWidgetMeasure,
+    ChangeKpiWidgetFilterSettings,
+    changeKpiWidgetFilterSettings,
+    ChangeKpiWidgetComparison,
+    changeKpiWidgetComparison,
+    RefreshKpiWidget,
+    refreshKpiWidget,
+    KpiWidgetComparison,
+} from "./kpi";
+
 /**
  * @internal
  */
@@ -99,4 +120,9 @@ export type DashboardCommands =
     | ReplaceSectionItem
     | MoveSectionItem
     | RemoveSectionItem
-    | UndoLayoutChanges;
+    | UndoLayoutChanges
+    | ChangeKpiWidgetHeader
+    | ChangeKpiWidgetMeasure
+    | ChangeKpiWidgetFilterSettings
+    | ChangeKpiWidgetComparison
+    | RefreshKpiWidget;
