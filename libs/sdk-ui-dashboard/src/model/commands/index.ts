@@ -10,6 +10,15 @@ import {
     SetAttributeFilterParent,
 } from "./filters";
 import {
+    ChangeInsightWidgetFilterSettings,
+    ChangeInsightWidgetHeader,
+    ChangeInsightWidgetInsight,
+    ChangeInsightWidgetVisProperties,
+    ModifyDrillsForInsightWidget,
+    RefreshInsightWidget,
+    RemoveDrillsForInsightWidget,
+} from "./insight";
+import {
     ChangeKpiWidgetComparison,
     ChangeKpiWidgetFilterSettings,
     ChangeKpiWidgetHeader,
@@ -97,6 +106,24 @@ export {
     KpiWidgetComparison,
 } from "./kpi";
 
+export {
+    ChangeInsightWidgetHeader,
+    changeInsightWidgetHeader,
+    ChangeInsightWidgetFilterSettings,
+    changeInsightWidgetFilterSettings,
+    ChangeInsightWidgetVisProperties,
+    changeInsightWidgetVisProperties,
+    ChangeInsightWidgetInsight,
+    changeInsightWidgetInsight,
+    ModifyDrillsForInsightWidget,
+    modifyDrillForInsightWidget,
+    RemoveDrillsForInsightWidget,
+    removeDrillForInsightWidget,
+    RemoveDrillsSelector,
+    RefreshInsightWidget,
+    refreshInsightWidget,
+} from "./insight";
+
 /**
  * @internal
  */
@@ -125,4 +152,11 @@ export type DashboardCommands =
     | ChangeKpiWidgetMeasure
     | ChangeKpiWidgetFilterSettings
     | ChangeKpiWidgetComparison
-    | RefreshKpiWidget;
+    | RefreshKpiWidget
+    | ChangeInsightWidgetHeader
+    | ChangeInsightWidgetFilterSettings
+    | ChangeInsightWidgetVisProperties
+    | ChangeInsightWidgetInsight
+    | ModifyDrillsForInsightWidget
+    | RemoveDrillsForInsightWidget
+    | RefreshInsightWidget;

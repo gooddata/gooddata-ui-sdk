@@ -42,6 +42,7 @@ import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
+import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
@@ -49,6 +50,7 @@ import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { TypedUseSelectorHook } from 'react-redux';
+import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @internal (undocumented)
 export interface AddAttributeFilter extends IDashboardCommand {
@@ -141,6 +143,63 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 
 // @internal
 export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, correlationId?: string): ChangeDateFilterSelection;
+
+// @internal (undocumented)
+export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly ref: ObjRef;
+        readonly settings: WidgetFilterSettings;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS";
+}
+
+// @internal
+export function changeInsightWidgetFilterSettings(ref: ObjRef, settings: WidgetFilterSettings, correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @internal (undocumented)
+export interface ChangeInsightWidgetHeader extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly ref: ObjRef;
+        readonly header: WidgetHeader;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER";
+}
+
+// @internal
+export function changeInsightWidgetHeader(ref: ObjRef, header: WidgetHeader, correlationId?: string): ChangeInsightWidgetHeader;
+
+// @internal
+export interface ChangeInsightWidgetInsight extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly ref: ObjRef;
+        readonly insightRef: ObjRef;
+        readonly visualizationProperties?: VisualizationProperties;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT";
+}
+
+// @internal
+export function changeInsightWidgetInsight(ref: ObjRef, insightRef: ObjRef, visualizationProperties?: VisualizationProperties, correlationId?: string): ChangeInsightWidgetInsight;
+
+// @internal (undocumented)
+export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly ref: ObjRef;
+        readonly properties: VisualizationProperties;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES";
+}
+
+// @internal
+export function changeInsightWidgetVisProperties(ref: ObjRef, properties: VisualizationProperties, correlationId?: string): ChangeInsightWidgetVisProperties;
 
 // @internal (undocumented)
 export interface ChangeKpiWidgetComparison extends IDashboardCommand {
@@ -316,10 +375,10 @@ export interface DashboardCommandRejected extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | ChangeDateFilterSelection | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | ReplaceSectionItem | MoveSectionItem | RemoveSectionItem | UndoLayoutChanges | ChangeKpiWidgetHeader | ChangeKpiWidgetMeasure | ChangeKpiWidgetFilterSettings | ChangeKpiWidgetComparison | RefreshKpiWidget;
+export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | ChangeDateFilterSelection | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | ReplaceSectionItem | MoveSectionItem | RemoveSectionItem | UndoLayoutChanges | ChangeKpiWidgetHeader | ChangeKpiWidgetMeasure | ChangeKpiWidgetFilterSettings | ChangeKpiWidgetComparison | RefreshKpiWidget | ChangeInsightWidgetHeader | ChangeInsightWidgetFilterSettings | ChangeInsightWidgetVisProperties | ChangeInsightWidgetInsight | ModifyDrillsForInsightWidget | RemoveDrillsForInsightWidget | RefreshInsightWidget;
 
 // @internal
-export type DashboardCommandType = "GDC.DASH/CMD.LOAD" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON" | "GDC.DASH/CMD.KPI_WIDGET.REFRESH" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES" | "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL" | "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH";
+export type DashboardCommandType = "GDC.DASH/CMD.LOAD" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON" | "GDC.DASH/CMD.KPI_WIDGET.REFRESH" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH";
 
 // @internal
 export type DashboardConfig = {
@@ -835,6 +894,20 @@ export type MenuButtonItem = {
     callback: () => void;
 };
 
+// @internal
+export function modifyDrillForInsightWidget(ref: ObjRef, drill: InsightDrillDefinition, correlationId?: string): ModifyDrillsForInsightWidget;
+
+// @internal (undocumented)
+export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly ref: ObjRef;
+        readonly drills: InsightDrillDefinition[];
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS";
+}
+
 // @internal (undocumented)
 export interface MoveAttributeFilter extends IDashboardCommand {
     // (undocumented)
@@ -889,6 +962,19 @@ export interface PermissionsState {
 }
 
 // @internal (undocumented)
+export interface RefreshInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly ref: ObjRef;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH";
+}
+
+// @internal
+export function refreshInsightWidget(ref: ObjRef, correlationId?: string): RefreshInsightWidget;
+
+// @internal (undocumented)
 export interface RefreshKpiWidget extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
@@ -913,6 +999,23 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
     // (undocumented)
     readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE";
 }
+
+// @internal
+export function removeDrillForInsightWidget(ref: ObjRef, measure: ObjRef, correlationId?: string): RemoveDrillsForInsightWidget;
+
+// @internal (undocumented)
+export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly ref: ObjRef;
+        readonly measures?: RemoveDrillsSelector;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS";
+}
+
+// @internal (undocumented)
+export type RemoveDrillsSelector = ObjRef[] | '*';
 
 // @internal (undocumented)
 export interface RemoveLayoutSection extends IDashboardCommand {
