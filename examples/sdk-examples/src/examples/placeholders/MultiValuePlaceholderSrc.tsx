@@ -15,13 +15,19 @@ const measuresPlaceholder = newPlaceholder<IMeasure[]>(allMeasures);
 
 const style = { height: 300 };
 const BarChartWithPlaceholder: React.FC = () => {
+    const [measures] = measuresPlaceholder.use();
+    const measuresCount = measures?.length ?? 0;
     return (
         <div style={style}>
-            <BarChart
-                // You can provide placeholder instead of the actual measures to any chart.
-                // Note that when the placeholder is holding multiple values, its values are flattened during the resolution.
-                measures={[measuresPlaceholder]}
-            />
+            {measuresCount < 1 ? (
+                <h4>Please select at least one measure.</h4>
+            ) : (
+                <BarChart
+                    // You can provide placeholder instead of the actual measures to any chart.
+                    // Note that when the placeholder is holding multiple values, its values are flattened during the resolution.
+                    measures={[measuresPlaceholder]}
+                />
+            )}
         </div>
     );
 };
