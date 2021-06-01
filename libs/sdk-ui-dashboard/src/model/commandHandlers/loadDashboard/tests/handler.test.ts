@@ -22,7 +22,7 @@ describe("load dashboard handler", () => {
         tester.dispatch(loadDashboard());
         await tester.waitFor("GDC.DASH/EVT.LOADED");
 
-        const config = selectConfig(tester.getState());
+        const config = selectConfig(tester.state());
 
         expect(config).toMatchSnapshot();
     });
@@ -33,8 +33,17 @@ describe("load dashboard handler", () => {
         tester.dispatch(loadDashboard());
         await tester.waitFor("GDC.DASH/EVT.LOADED");
 
-        const permissions = selectPermissions(tester.getState());
+        const permissions = selectPermissions(tester.state());
 
         expect(permissions).toMatchSnapshot();
+    });
+
+    it("should emit events in correct order and carry-over correlationId", async () => {
+        const tester = DashboardTester.forRecording(SimpleDashboardRecording);
+
+        tester.dispatch(loadDashboard(undefined, undefined, "testCorrelation"));
+        await tester.waitFor("GDC.DASH/EVT.LOADED");
+
+        expect(tester.emittedEventsDigest()).toMatchSnapshot();
     });
 });

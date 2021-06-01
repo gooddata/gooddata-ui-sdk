@@ -1,5 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`load dashboard handler should emit events in correct order and carry-over correlationId 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.LOADED",
+  },
+]
+`;
+
 exports[`load dashboard handler should resolve config if empty config provided 1`] = `
 Object {
   "colorPalette": Array [],

@@ -23,6 +23,7 @@ export class DashboardTester {
     protected readonly reduxedStore: ReduxedDashboardStore;
     private monitoredActions: Record<string, MonitoredAction> = {};
     private capturedActions: Array<PayloadAction<any>> = [];
+    private capturedEvents: Array<DashboardEvents> = [];
 
     protected constructor(ctx: DashboardContext) {
         // Middleware to store the actions and create promises
@@ -84,8 +85,8 @@ export class DashboardTester {
         monitoredAction.resolve(action);
     };
 
-    private eventHandler = (_evt: DashboardEvents): void => {
-        //
+    private eventHandler = (evt: DashboardEvents): void => {
+        this.capturedEvents.push(evt);
     };
 
     public static forRecording(identifier: Identifier): DashboardTester {
@@ -130,18 +131,44 @@ export class DashboardTester {
     }
 
     /**
+     * Returns all events that were emitted during execution. Events are a sub-type of actions - they are
+     * actions that are suitable for external consumption and describe what has happened in the dashboard.
+     *
+     * The events are accumulated during test run. You may reset them using `resetMonitors`
+     */
+    public emittedEvents(): ReadonlyArray<DashboardEvents> {
+        return this.capturedEvents.slice();
+    }
+
+    /**
+     * Returns digests of all events that were emitted during execution. Digest contains just the event
+     * type and the correlation id of the event. The payload is discarded.
+     *
+     * This is useful for snapshotting event sequence.
+     */
+    public emittedEventsDigest(): ReadonlyArray<{ type: string; correlationId?: string }> {
+        return this.capturedEvents.map((evt) => {
+            return {
+                type: evt.type,
+                correlationId: evt.correlationId,
+            };
+        });
+    }
+
+    /**
      * Resets internal state of the tester's monitors. The captured actions will be cleared up as part
      * of this.
      */
     public resetMonitors(): void {
         this.capturedActions = [];
+        this.capturedEvents = [];
         this.monitoredActions = {};
     }
 
     /**
      * Returns dashboard state.
      */
-    public getState(): DashboardState {
+    public state(): DashboardState {
         return this.reduxedStore.store.getState();
     }
 }
