@@ -2,13 +2,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IAnalyticalBackend, IAttributeElement, IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IAttributeElement,
+    IAttributeMetadataObject,
+    UnexpectedError,
+} from "@gooddata/sdk-backend-spi";
 import {
     filterAttributeElements,
     IAttributeFilter,
     isAttributeElementsByRef,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { AttributeDropdownBody } from "./AttributeDropdown/AttributeDropdownBody";
@@ -18,7 +24,14 @@ import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdown/AttributeDropdownList";
 import { mergeElementQueryResults } from "./AttributeDropdown/mergeElementQueryResults";
-import { IntlWrapper, useCancelablePromise, withContexts } from "@gooddata/sdk-ui";
+import {
+    IntlWrapper,
+    IPlaceholder,
+    useCancelablePromise,
+    useResolveValueWithPlaceholders,
+    ValuesOrPlaceholders,
+    withContexts,
+} from "@gooddata/sdk-ui";
 import MediaQuery from "react-responsive";
 import { MediaQueries } from "../constants";
 import {
@@ -28,9 +41,14 @@ import {
     getItemsTitles,
     getNoneTitleIntl,
     getObjRef,
+    getValidElementsFilters,
+    ILoadElementsResult,
+    isParentFilteringEnabled,
     updateSelectedOptionsWithData,
 } from "./utils/AttributeFilterUtils";
 import { stringUtils } from "@gooddata/util";
+import invariant from "ts-invariant";
+import stringify from "json-stable-stringify";
 
 /**
  * @public
@@ -53,13 +71,35 @@ export interface IAttributeFilterButtonOwnProps {
     /**
      * Specify an attribute filter that will be customized using this filter. The component will use content of the
      * filter and select the items that are already specified on the filter.
+     *
+     * Note: It's not possible to combine this property with "connectToPlaceholder" property. Either - provide a value, or a placeholder.
+     * The 'onApply' callback must be specified in order to handle filter changes.
      */
     filter?: IAttributeFilter;
 
     /**
+     * Specifies a parent attribute filter that will be used to reduce options for for current attribute filter.
+     */
+    parentFilters?: ValuesOrPlaceholders<IAttributeFilter>;
+
+    /**
+     * Specify {@link @gooddata/sdk-ui#IPlaceholder} to use to get and set the value of the attribute filter.
+     *
+     * Note: It's not possible to combine this property with "filter" property. Either - provide a value, or a placeholder.
+     * There is no need to specify 'onApply' callback if 'connectToPlaceholder' property is used as the value of the filter
+     * is set via this placeholder.
+     */
+    connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
+
+    /**
+     * Specify and parent filter attribute ref over which should be available options reduced.
+     */
+    parentFilterOverAttribute?: ObjRef;
+
+    /**
      * Specify identifier of attribute, for which you want to construct the filter.
      *
-     * Note: this is optional and deprecated. If you do not specify this, then you MUST specify the filter prop.
+     * Note: this is optional and deprecated. If you do not specify this, then you MUST specify the 'filter' prop or 'connectToPlaceholder' prop.
      *
      * @deprecated - use the filter prop instead
      */
@@ -76,13 +116,18 @@ export interface IAttributeFilterButtonOwnProps {
      *
      * @param filter - new value of the filter.
      */
-    onApply: (filter: IAttributeFilter, isInverted: boolean) => void;
+    onApply?: (filter: IAttributeFilter, isInverted: boolean) => void;
 
     /**
      * Optionally customize attribute filter with a callback function to trigger when an error occurs while
      * loading attribute elements.
      */
     onError?: (error: any) => void;
+
+    /**
+     * Optionally customize attribute filter with a component to be rendered if attribute elements loading fails
+     */
+    FilterError?: React.ComponentType<{ error?: any }>;
 }
 
 /**
@@ -119,6 +164,11 @@ const DropdownButton: React.FC<{
 const LIMIT = MAX_SELECTION_SIZE + 50;
 
 export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = (props) => {
+    invariant(
+        !(props.filter && props.connectToPlaceholder),
+        "It's not possible to combine 'filter' property with 'connectToPlaceholder' property. Either provide a value, or a placeholder.",
+    );
+
     const [validElements, setValidElements] = useState<IElementQueryResultWithEmptyItems>(null);
     const [selectedFilterOptions, setSelectedFilterOptions] = useState<Array<IAttributeElement>>([]);
     const [isInverted, setIsInverted] = useState(true);
@@ -131,22 +181,51 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(LIMIT);
     const [totalCount, setTotalCount] = useState(LIMIT);
-    const [filterOptions, setFilterOptions] = useState<Array<IAttributeElement>>([]);
     const [title, setTitle] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const dropdownRef = useRef<Dropdown>(null);
 
+    // TODO replace with non-conditional hook
+    const [placeholder, setPlaceholder] = props.connectToPlaceholder?.use() ?? [
+        undefined,
+        () => {
+            throw new UnexpectedError("No placeholder to be set with a filter value.");
+        },
+    ];
+
+    const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
+
     useEffect(() => {
         getElementTotalCount(
             props.workspace,
             getBackend(),
-            getObjRef(props.filter, props.identifier),
+            getObjRef(placeholder || props.filter, props.identifier),
             searchString,
         ).then((result) => {
             setTotalCount(result);
         });
     }, []);
+
+    useCancelablePromise(
+        {
+            promise: async () => getElements(validElements, offset, limit, loadElements, true),
+            onSuccess: (result) => {
+                setFirstLoad(false);
+                setIsLoading(false);
+                setSelectedFilterOptions(result.selectedOptions);
+                setValidElements(result.validOptions);
+                setTotalCount(result.totalCount);
+            },
+            onLoading: () => {
+                setIsLoading(true);
+            },
+            onError: (error) => {
+                setError(error);
+            },
+        },
+        [stringify(resolvedParentFilters)],
+    );
 
     useEffect(() => {
         setValidElements(null);
@@ -167,7 +246,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             promise: async () => {
                 const attributes = getBackend().workspace(props.workspace).attributes();
                 const displayForm = await attributes.getAttributeDisplayForm(
-                    getObjRef(props.filter, props.identifier),
+                    getObjRef(placeholder || props.filter, props.identifier),
                 );
                 const attribute = await attributes.getAttribute(displayForm.attribute);
 
@@ -187,22 +266,29 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         [],
     );
 
-    const loadElements = async (offset: number, limit: number) => {
+    const loadElements = async (offset: number, limit: number): Promise<ILoadElementsResult> => {
         const { workspace } = props;
 
         setIsLoading(true);
 
-        const newElements = await getBackend()
+        const preparedElementQuery = getBackend()
             .workspace(workspace)
             .attributes()
             .elements()
-            .forDisplayForm(getObjRef(props.filter, props.identifier))
+            .forDisplayForm(getObjRef(placeholder || props.filter, props.identifier))
             .withOptions({
                 ...(searchString ? { filter: searchString } : {}),
             })
             .withOffset(offset)
-            .withLimit(limit)
-            .query();
+            .withLimit(limit);
+
+        if (isParentFilteringEnabled(getBackend())) {
+            preparedElementQuery.withAttributeFilters(
+                getValidElementsFilters(resolvedParentFilters, props.parentFilterOverAttribute),
+            );
+        }
+
+        const newElements = await preparedElementQuery.query();
 
         const mergedValidElements = mergeElementQueryResults(validElements, newElements);
         const { items } = mergedValidElements;
@@ -210,15 +296,12 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         // make sure that selected items have both title and uri, otherwise selection in InvertableList won't work
         // TODO we could maybe use the InvertableList's getItemKey and just use title or uri for example
         const updatedSelectedItems = updateSelectedOptionsWithData(selectedFilterOptions, items);
-        const updatedPrevSelectedItems = updateSelectedOptionsWithData(prevSelectedFilterOptions, items);
 
-        setSelectedFilterOptions(updatedSelectedItems);
-        setPrevSelectedFilterOptions(updatedPrevSelectedItems);
-        setIsLoading(false);
-        setValidElements(searchString ? newElements : mergedValidElements);
-        setTotalCount(firstLoad ? items.length : totalCount);
-        setFirstLoad(false);
-        setFilterOptions(items as Array<IAttributeElement>);
+        return {
+            selectedOptions: updatedSelectedItems,
+            validOptions: searchString || resolvedParentFilters ? newElements : mergedValidElements,
+            totalCount: firstLoad ? items.length : totalCount,
+        };
     };
 
     /**
@@ -229,7 +312,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     };
 
     const getSubtitle = () => {
-        const displayForm = getObjRef(props.filter, props.identifier);
+        const displayForm = getObjRef(placeholder || props.filter, props.identifier);
         if (totalCount && displayForm) {
             const empty = isEmpty(selectedFilterOptions);
             const equal = isEqual(totalCount, selectedFilterOptions?.length);
@@ -262,19 +345,24 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     }, 250);
 
     const onApply = () => {
+        const currentFilter = placeholder || props.filter;
         const useUriElements =
-            props.filter && isAttributeElementsByRef(filterAttributeElements(props.filter));
+            currentFilter && isAttributeElementsByRef(filterAttributeElements(currentFilter));
 
         const filterFactory = isInverted ? newNegativeAttributeFilter : newPositiveAttributeFilter;
 
         const filter = filterFactory(
-            getObjRef(props.filter, props.identifier),
+            getObjRef(currentFilter, props.identifier),
             useUriElements
                 ? { uris: selectedFilterOptions.map((item) => item.uri) }
                 : { values: selectedFilterOptions.map((item) => item.title) },
         );
 
-        return props.onApply(filter, isInverted);
+        if (props.connectToPlaceholder) {
+            setPlaceholder(filter);
+        }
+
+        return props.onApply && props.onApply(filter, isInverted);
     };
 
     const onSelect = (selectedFilterOptions: IAttributeElement[], isInverted: boolean) => {
@@ -360,7 +448,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 }
                 body={
                     <AttributeDropdownBody
-                        items={filterOptions}
+                        items={validElements?.items ?? []}
                         totalCount={totalCount}
                         selectedItems={selectedFilterOptions}
                         isInverted={isInverted}
@@ -380,7 +468,13 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         );
     };
 
-    return <>{error ? <DefaultFilterError /> : <>{renderAttributeDropdown()}</>}</>;
+    const { FilterError } = props;
+
+    return error ? <FilterError error={error} /> : renderAttributeDropdown();
+};
+
+AttributeFilterButtonCore.defaultProps = {
+    FilterError: DefaultFilterError,
 };
 
 const IntlAttributeFilterButton = withContexts(injectIntl(AttributeFilterButtonCore));

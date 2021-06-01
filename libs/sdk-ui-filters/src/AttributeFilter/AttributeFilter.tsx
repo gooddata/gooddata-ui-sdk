@@ -3,28 +3,29 @@ import React from "react";
 import { injectIntl } from "react-intl";
 import MediaQuery from "react-responsive";
 import {
-    isPositiveAttributeFilter,
     filterAttributeElements,
-    isAttributeElementsByValue,
     IAttributeElements,
-    isAttributeElementsByRef,
     IAttributeFilter,
+    isAttributeElementsByRef,
+    isAttributeElementsByValue,
+    isPositiveAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
 
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
 import {
     defaultErrorHandler,
-    OnError,
-    IntlWrapper,
     IntlTranslationsProvider,
+    IntlWrapper,
     ITranslationsComponentProps,
+    OnError,
     withContexts,
 } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants";
-import { getObjRef } from "./utils/AttributeFilterUtils";
+import { getObjRef, getValidElementsFilters } from "./utils/AttributeFilterUtils";
 
 /**
  * @public
@@ -58,6 +59,16 @@ export interface IAttributeFilterProps {
      * filter and select the items that are already specified on the filter.
      */
     filter?: IAttributeFilter;
+
+    /**
+     * Specify a parent attribute filter that will be used to reduce options for available components options.
+     */
+    parentFilters?: IAttributeFilter[];
+
+    /**
+     * Specify and parent filter attribute ref over which should be available options reduced.
+     */
+    parentFilterOverAttribute?: ObjRef;
 
     /**
      * Specify function which will be called when user clicks 'Apply' button. The function will receive the current
@@ -131,10 +142,6 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         isLoading: false,
     };
 
-    private getBackend = () => {
-        return this.props.backend.withTelemetry("AttributeFilter", this.props);
-    };
-
     public componentDidMount(): void {
         this.loadAttributeTitle();
     }
@@ -147,6 +154,62 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
             this.loadAttributeTitle(true);
         }
     }
+
+    public render() {
+        const {
+            locale,
+            workspace,
+            backend,
+            FilterError,
+            titleWithSelection,
+            fullscreenOnMobile,
+            parentFilters,
+            parentFilterOverAttribute,
+        } = this.props;
+        const { error, isLoading } = this.state;
+        const { isInverted, selectedItems } = this.getInitialDropdownSelection();
+
+        return (
+            <IntlWrapper locale={locale}>
+                {error ? (
+                    <FilterError error={error} />
+                ) : (
+                    <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
+                        {(isMobile) => (
+                            <IntlTranslationsProvider>
+                                {(translationProps: ITranslationsComponentProps) => {
+                                    return (
+                                        <AttributeDropdown
+                                            titleWithSelection={titleWithSelection}
+                                            displayForm={getObjRef(this.props.filter, this.props.identifier)}
+                                            backend={backend}
+                                            workspace={workspace}
+                                            onApply={this.onApply}
+                                            title={this.props.title || this.state.title}
+                                            isInverted={isInverted}
+                                            selectedItems={selectedItems}
+                                            isLoading={isLoading}
+                                            translationProps={translationProps}
+                                            isMobile={isMobile}
+                                            fullscreenOnMobile={fullscreenOnMobile}
+                                            parentFilters={getValidElementsFilters(
+                                                parentFilters,
+                                                parentFilterOverAttribute,
+                                            )}
+                                        />
+                                    );
+                                }}
+                            </IntlTranslationsProvider>
+                        )}
+                    </MediaQuery>
+                )}
+            </IntlWrapper>
+        );
+    }
+
+    private getBackend = () => {
+        return this.props.backend.withTelemetry("AttributeFilter", this.props);
+    };
 
     private getSelectedItems = (elements: IAttributeElements): Array<Partial<IAttributeElement>> => {
         if (isAttributeElementsByValue(elements)) {
@@ -217,46 +280,6 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
 
         return this.props.onApply(filter);
     };
-
-    public render() {
-        const { locale, workspace, backend, FilterError, titleWithSelection, fullscreenOnMobile } =
-            this.props;
-        const { error, isLoading } = this.state;
-        const { isInverted, selectedItems } = this.getInitialDropdownSelection();
-
-        return (
-            <IntlWrapper locale={locale}>
-                {error ? (
-                    <FilterError error={error} />
-                ) : (
-                    <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
-                        {(isMobile) => (
-                            <IntlTranslationsProvider>
-                                {(translationProps: ITranslationsComponentProps) => {
-                                    return (
-                                        <AttributeDropdown
-                                            titleWithSelection={titleWithSelection}
-                                            displayForm={getObjRef(this.props.filter, this.props.identifier)}
-                                            backend={backend}
-                                            workspace={workspace}
-                                            onApply={this.onApply}
-                                            title={this.props.title || this.state.title}
-                                            isInverted={isInverted}
-                                            selectedItems={selectedItems}
-                                            isLoading={isLoading}
-                                            translationProps={translationProps}
-                                            isMobile={isMobile}
-                                            fullscreenOnMobile={fullscreenOnMobile}
-                                        />
-                                    );
-                                }}
-                            </IntlTranslationsProvider>
-                        )}
-                    </MediaQuery>
-                )}
-            </IntlWrapper>
-        );
-    }
 }
 
 /**

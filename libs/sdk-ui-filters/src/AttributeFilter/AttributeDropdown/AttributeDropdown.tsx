@@ -4,7 +4,11 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { stringUtils } from "@gooddata/util";
-import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IAttributeElement,
+    IElementsQueryAttributeFilter,
+} from "@gooddata/sdk-backend-spi";
 import { ITranslationsComponentProps } from "@gooddata/sdk-ui";
 import cx from "classnames";
 import debounce from "lodash/debounce";
@@ -13,14 +17,19 @@ import noop from "lodash/noop";
 import { AttributeDropdownBody } from "./AttributeDropdownBody";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdownList";
 import { mergeElementQueryResults } from "./mergeElementQueryResults";
-import { IElementQueryResultWithEmptyItems, AttributeListItem, isNonEmptyListItem } from "./types";
+import {
+    IElementQueryResultWithEmptyItems,
+    AttributeListItem,
+    isNonEmptyListItem,
+    EmptyListItem,
+} from "./types";
 
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import {
     getAllTitleIntl,
-    getElements,
     getElementTotalCount,
+    isParentFilteringEnabled,
     updateSelectedOptionsWithData,
 } from "../utils/AttributeFilterUtils";
 
@@ -51,6 +60,7 @@ export interface IAttributeDropdownOwnProps {
     FilterLoading?: React.ComponentType;
     isLoading?: boolean;
     translationProps: ITranslationsComponentProps;
+    parentFilters?: IElementsQueryAttributeFilter[];
 }
 
 type IAttributeDropdownProps = IAttributeDropdownOwnProps & WrappedComponentProps;
@@ -136,6 +146,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         const needsInvalidation =
             !areObjRefsEqual(this.props.displayForm, prevProps.displayForm) ||
             this.props.workspace !== prevProps.workspace ||
+            !isEqual(this.props.parentFilters, prevProps.parentFilters) ||
             this.state.searchString !== prevState.searchString;
 
         if (needsInvalidation) {
@@ -147,13 +158,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                     offset: 0,
                     limit: LIMIT,
                 },
-                () =>
-                    getElements(
-                        this.state.validElements,
-                        this.state.offset,
-                        this.state.limit,
-                        this.loadElements,
-                    ),
+                () => this.getElements(),
             );
         }
     }
@@ -168,6 +173,28 @@ export class AttributeDropdownCore extends React.PureComponent<
         );
     };
 
+    public getElements = async (): Promise<void> => {
+        const { offset, limit, validElements } = this.state;
+
+        const currentElements = validElements ? validElements.items : [];
+
+        const isQueryOutOfBounds = offset + limit > currentElements.length;
+        const isMissingDataInWindow = currentElements
+            .slice(offset, offset + limit)
+            .some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
+
+        const hasAllData =
+            validElements &&
+            currentElements.length === validElements.totalCount &&
+            !currentElements.some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
+
+        const needsLoading = !hasAllData && (isQueryOutOfBounds || isMissingDataInWindow);
+
+        if (needsLoading) {
+            this.loadElements(offset, limit);
+        }
+    };
+
     private onSearch = debounce((query: string) => {
         this.setState({ searchString: query });
     }, 250);
@@ -176,12 +203,12 @@ export class AttributeDropdownCore extends React.PureComponent<
         this.setState({ searchString: "" });
     };
 
-    private loadElements = async (offset: number, limit: number) => {
+    private loadElements = async (offset: number, limit: number): Promise<void> => {
         const { workspace, displayForm } = this.props;
 
         this.setState({ isLoading: true });
 
-        const newElements = await this.getBackend()
+        const preparedQuery = this.getBackend()
             .workspace(workspace)
             .attributes()
             .elements()
@@ -190,21 +217,23 @@ export class AttributeDropdownCore extends React.PureComponent<
                 ...(this.state.searchString ? { filter: this.state.searchString } : {}),
             })
             .withOffset(offset)
-            .withLimit(limit)
-            .query();
+            .withLimit(limit);
+
+        if (this.props.parentFilters && isParentFilteringEnabled(this.getBackend())) {
+            preparedQuery.withAttributeFilters(this.props.parentFilters);
+        }
+
+        const newElements = await preparedQuery.query();
+
+        const mergedValidElements = mergeElementQueryResults(this.state.validElements, newElements);
+        const { items } = mergedValidElements;
+
+        // make sure that selected items have both title and uri, otherwise selection in InvertableList won't work
+        // TODO we could maybe use the InvertableList's getItemKey and just use title or uri for example
+        const updatedSelectedItems = updateSelectedOptionsWithData(this.state.selectedItems, items);
+        const updatedPrevSelectedItems = updateSelectedOptionsWithData(this.state.prevSelectedItems, items);
 
         this.setState((state) => {
-            const mergedValidElements = mergeElementQueryResults(state.validElements, newElements);
-            const { items } = mergedValidElements;
-
-            // make sure that selected items have both title and uri, otherwise selection in InvertableList won't work
-            // TODO we could maybe use the InvertableList's getItemKey and just use title or uri for example
-            const updatedSelectedItems = updateSelectedOptionsWithData(this.state.selectedItems, items);
-            const updatedPrevSelectedItems = updateSelectedOptionsWithData(
-                this.state.prevSelectedItems,
-                items,
-            );
-
             return {
                 ...state,
                 selectedItems: updatedSelectedItems,
@@ -294,7 +323,7 @@ export class AttributeDropdownCore extends React.PureComponent<
 
     private onDropdownOpenStateChanged = (isOpen: boolean) => {
         if (isOpen) {
-            getElements(this.state.validElements, this.state.offset, this.state.limit, this.loadElements);
+            this.getElements();
         } else {
             this.clearSearchString();
             this.restoreSelection();
@@ -324,9 +353,7 @@ export class AttributeDropdownCore extends React.PureComponent<
     };
 
     private onRangeChange = (_searchString: string, from: number, to: number) => {
-        this.setState({ offset: from, limit: to - from }, () =>
-            getElements(this.state.validElements, this.state.offset, this.state.limit, this.loadElements),
-        );
+        this.setState({ offset: from, limit: to - from }, () => this.getElements());
     };
 
     private emptyValueItems(items: AttributeListItem[]): AttributeListItem[] {
