@@ -1,0 +1,44 @@
+// (C) 2019-2021 GoodData Corporation
+@import "variables";
+
+.dash-filters-wrapper {
+    position: relative;
+
+    .show-all {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+
+        @media #{$xsmall-only}, #{$small-only} {
+            display: none;
+        }
+    }
+}
+
+.dash-filters-visible {
+    overflow-y: hidden;
+    padding: 0 15px;
+    border-bottom: $nav-border;
+    border-bottom-color: var(--gd-dashboards-filterBar-borderColor, $gd-border-color);
+    background-color: $gd-dashboards-filterBar-backgroundColor;
+    transition: height $transition-length;
+}
+
+.dash-filters-all {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: $filter-bar-height;
+    background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/filter-bar-background.svg");
+    background-repeat: repeat;
+
+    .dash-filters-attribute {
+        position: relative;
+    }
+
+    @media #{$xsmall-only}, #{$small-only} {
+        flex-wrap: nowrap;
+    }
+}

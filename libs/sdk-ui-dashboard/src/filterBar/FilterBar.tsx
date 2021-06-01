@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React, { ComponentType } from "react";
+import Measure from "react-measure";
 import partition from "lodash/partition";
 import {
     FilterContextItem,
@@ -23,6 +24,8 @@ import {
 export type CustomAttributeFilterFactory = (
     filter: IDashboardAttributeFilter,
 ) => DashboardAttributeFilterComponent | undefined;
+
+const DEFAULT_FILTER_BAR_HEIGHT = 58;
 
 /**
  * @internal
@@ -101,28 +104,55 @@ export const FilterBar: React.FC<IFilterBarProps & IDefaultFilterBarProps> = ({
 
     const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
 
-    return (
-        <div>
-            <DateFilter
-                filter={dateFilter}
-                onFilterChanged={onFilterChanged}
-                availableGranularities={availableGranularities}
-                customFilterName={customFilterName}
-                dateFilterOptions={dateFilterOptions}
-                readonly={dateFilterMode === "readonly"}
-            />
-            {attributeFilters.map((filter) => {
-                const AttributeFilter =
-                    attributeFilterConfig?.ComponentFactory?.(filter) ?? DashboardAttributeFilter;
+    const onAttributeFilterBarHeightChange = (val: number) => {
+        // eslint-disable-next-line no-console
+        console.log("TODO on resize", val);
+    };
 
-                return (
-                    <AttributeFilter
-                        key={objRefToString(filter.attributeFilter.displayForm)}
-                        filter={filter}
-                        onFilterChanged={onFilterChanged}
-                    />
-                );
-            })}
+    const areAttributeFiltersShowingAll = false; // TODO
+    const attributeFilterBarHeight = 0; // TODO
+
+    const dashFiltersVisibleStyle = {
+        height: areAttributeFiltersShowingAll ? attributeFilterBarHeight : DEFAULT_FILTER_BAR_HEIGHT,
+    };
+
+    return (
+        <div className="dash-filters-wrapper">
+            <div className="dash-filters-visible" style={dashFiltersVisibleStyle}>
+                <Measure
+                    bounds
+                    onResize={(dimensions) => onAttributeFilterBarHeightChange(dimensions.bounds!.height)}
+                >
+                    {({ measureRef }) => (
+                        <div className="dash-filters-all" ref={measureRef}>
+                            <div className="dash-filters-date dash-filters-attribute">
+                                <DateFilter
+                                    filter={dateFilter}
+                                    onFilterChanged={onFilterChanged}
+                                    availableGranularities={availableGranularities}
+                                    customFilterName={customFilterName}
+                                    dateFilterOptions={dateFilterOptions}
+                                    readonly={dateFilterMode === "readonly"}
+                                />
+                            </div>
+                            {attributeFilters.map((filter) => {
+                                const AttributeFilter =
+                                    attributeFilterConfig?.ComponentFactory?.(filter) ??
+                                    DashboardAttributeFilter;
+
+                                return (
+                                    <div
+                                        className="dash-filters-notdate dash-filters-attribute"
+                                        key={objRefToString(filter.attributeFilter.displayForm)}
+                                    >
+                                        <AttributeFilter filter={filter} onFilterChanged={onFilterChanged} />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </Measure>
+            </div>
         </div>
     );
 };
