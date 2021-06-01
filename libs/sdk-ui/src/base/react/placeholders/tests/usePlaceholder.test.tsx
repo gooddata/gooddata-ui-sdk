@@ -18,7 +18,7 @@ const createComponent = (
     );
 
 interface IComponentWithUsePlaceholderHookProps {
-    placeholder: IPlaceholder<any>;
+    placeholder?: IPlaceholder<any>;
     onSetPlaceholder?: (currentValue: any) => any;
 }
 
@@ -86,5 +86,18 @@ describe("usePlaceholder", () => {
         expect(Component.find(ComponentWithResult).prop("result")).toEqual(undefined);
         Component.find(SetPlaceholderValueButton).simulate("click");
         expect(Component.find(ComponentWithResult).prop("result")).toEqual(measure);
+    });
+
+    it("should return undefined if no placeholder is provided", () => {
+        const Component = createComponent({ placeholder: undefined });
+
+        expect(Component.find(ComponentWithResult).prop("result")).toEqual(undefined);
+    });
+
+    it("should throw an error if no placeholder is provided when setting its value", () => {
+        const Component = createComponent({ placeholder: undefined, onSetPlaceholder: () => undefined });
+        const boom = () => Component.find(SetPlaceholderValueButton).simulate("click");
+
+        expect(boom).toThrowError();
     });
 });
