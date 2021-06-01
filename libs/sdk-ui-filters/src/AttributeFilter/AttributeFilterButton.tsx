@@ -237,10 +237,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         getElements(validElements, offset, limit, loadElements);
     }, [props.workspace, searchString]);
 
-    // useDeepEffect(() => {
-    //     getElements(validElements, offset, limit, loadElements, true);
-    // }, [resolvedParentFilters]);
-
     useEffect(() => {
         closeDropdown();
     }, [prevIsInverted, prevSelectedFilterOptions]);
