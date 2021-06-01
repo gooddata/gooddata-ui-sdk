@@ -16,6 +16,7 @@ export {
     RecordedBackendConfig,
     CatalogRecording,
     VisClassesRecording,
+    DashboardRecording,
     RecordedRefType,
     SecuritySettingsUrlValidator,
     SecuritySettingsOrganizationScope,

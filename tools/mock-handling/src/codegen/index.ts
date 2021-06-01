@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import * as fs from "fs";
 import * as path from "path";
@@ -23,6 +23,8 @@ import { generateConstantsForInsights } from "./insight";
 import { generateConstantsForCatalog } from "./catalog";
 import { generateConstantsForVisClasses } from "./visClasses";
 import groupBy from "lodash/groupBy";
+import { generateConstantsForDashboards } from "./dashboard";
+import { DashboardRecording } from "../recordings/dashboards";
 
 const FILE_DIRECTIVES = [
     "/* eslint-disable @typescript-eslint/no-var-requires */",
@@ -74,7 +76,8 @@ function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableSt
             ${input.catalog() !== null ? "catalog," : ""}
             ${input.visClasses() !== null ? "visClasses," : ""}
             displayForms: { ${recNameList(input.displayForms())} },
-            insights: { ${recNameList(input.insights())} }
+            insights: { ${recNameList(input.insights())} },
+            dashboards: { ${recNameList(input.dashboards())} }
         }
     `;
 
@@ -106,6 +109,7 @@ function transformToTypescript(
         sourceFile.addVariableStatements(generateConstantsForInsights(input.insights(), targetDir));
         sourceFile.addVariableStatements(generateConstantsForCatalog(input.catalog(), targetDir));
         sourceFile.addVariableStatements(generateConstantsForVisClasses(input.visClasses(), targetDir));
+        sourceFile.addVariableStatements(generateConstantsForDashboards(input.dashboards(), targetDir));
         sourceFile.addVariableStatement(generateIndexConst(input));
     }
 
@@ -121,6 +125,7 @@ type IndexGeneratorInput = {
     insights: () => InsightRecording[];
     catalog: () => CatalogRecording | null;
     visClasses: () => VisClassesRecording | null;
+    dashboards: () => DashboardRecording[];
 };
 
 function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
@@ -144,6 +149,9 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
             (categorized[RecordingType.VisClasses] &&
                 (categorized[RecordingType.VisClasses][0] as VisClassesRecording)) ||
             null,
+        dashboards: () => {
+            return (categorized[RecordingType.Dashboards] as DashboardRecording[]) || [];
+        },
     };
 }
 

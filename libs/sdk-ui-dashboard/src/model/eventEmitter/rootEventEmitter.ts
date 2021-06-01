@@ -26,19 +26,21 @@ export function createRootEventEmitter(initialHandlers: DashboardEventHandler[] 
             eventHandlers.push(handler);
         },
         eventEmitterSaga: function* () {
-            // eslint-disable-next-line no-console
-            console.debug("starting root event emitter");
-
             const eventChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.DASH/EVT"));
 
             while (true) {
                 const event: DashboardEvents = yield take(eventChannel);
 
-                eventHandlers.forEach((handler) => {
-                    if (handler.eval(event.type)) {
-                        handler.handler(event);
-                    }
-                });
+                try {
+                    eventHandlers.forEach((handler) => {
+                        if (handler.eval(event.type)) {
+                            handler.handler(event);
+                        }
+                    });
+                } catch (e) {
+                    // eslint-disable-next-line no-console
+                    console.error("Error has occurred while dispatching event", event, e);
+                }
             }
         },
     };

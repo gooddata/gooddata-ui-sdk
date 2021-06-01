@@ -34,6 +34,7 @@ import {
     ValidationContext,
     IOrganizationDescriptor,
     IOrganizations,
+    IDateFilterConfigsQueryResult,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
@@ -43,6 +44,8 @@ import { RecordedCatalogFactory } from "./catalog";
 import { RecordedAttributes } from "./attributes";
 import { RecordedMeasures } from "./measures";
 import { RecordedFacts } from "./facts";
+import { RecordedDashboards } from "./dashboards";
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -151,7 +154,7 @@ function recordedWorkspace(
             return new RecordedInsights(recordings, implConfig.useRefType ?? "uri");
         },
         dashboards(): IWorkspaceDashboardsService {
-            throw new NotSupported("not supported");
+            return new RecordedDashboards(this.workspace, recordings);
         },
         settings(): IWorkspaceSettingsService {
             return {
@@ -182,6 +185,9 @@ function recordedWorkspace(
                 },
             };
         },
+        dateFilterConfigs(): IDateFilterConfigsQuery {
+            return recordedDateFilterConfig(implConfig);
+        },
         catalog(): IWorkspaceCatalogFactory {
             return new RecordedCatalogFactory(workspace, recordings);
         },
@@ -192,9 +198,6 @@ function recordedWorkspace(
             return recordedPermissionsFactory();
         },
         users(): IWorkspaceUsersQuery {
-            throw new NotSupported("not supported");
-        },
-        dateFilterConfigs(): IDateFilterConfigsQuery {
             throw new NotSupported("not supported");
         },
     };
@@ -276,5 +279,21 @@ function recordedPermissionsFactory(): IWorkspacePermissionsService {
             canInviteUserToProject: true,
             canRefreshData: true,
         }),
+    };
+}
+
+function recordedDateFilterConfig(implConfig: RecordedBackendConfig): IDateFilterConfigsQuery {
+    return {
+        withLimit(_limit: number): IDateFilterConfigsQuery {
+            return this;
+        },
+        withOffset(_offset: number): IDateFilterConfigsQuery {
+            return this;
+        },
+        query(): Promise<IDateFilterConfigsQueryResult> {
+            const { dateFilterConfig } = implConfig;
+
+            return Promise.resolve(new InMemoryPaging(dateFilterConfig ? [dateFilterConfig] : []));
+        },
     };
 }

@@ -40,9 +40,6 @@ function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
  * prevent loss of commands.
  */
 export function* rootCommandHandler() {
-    // eslint-disable-next-line no-console
-    console.debug("starting root command handler");
-
     const commandChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.DASH/CMD"));
 
     while (true) {

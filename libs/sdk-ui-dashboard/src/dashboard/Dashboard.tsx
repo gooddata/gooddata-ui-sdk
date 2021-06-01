@@ -218,7 +218,7 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspaceStrict(props.workspace);
-    const [store] = createDashboardStore({
+    const dashboardStore = createDashboardStore({
         sagaContext: {
             backend,
             workspace,
@@ -228,7 +228,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     });
 
     return (
-        <Provider store={store} context={ReactDashboardContext}>
+        <Provider store={dashboardStore.store} context={ReactDashboardContext}>
             <DashboardLoading {...props} />
         </Provider>
     );

@@ -15,12 +15,15 @@ import { IAttributeElement } from '@gooddata/sdk-backend-spi';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { ICatalogGroup } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { ValidationContext } from '@gooddata/sdk-backend-spi';
 
 // @internal (undocumented)
@@ -36,6 +39,12 @@ export function compositeBackend(...components: CompositeBackendPart[]): IAnalyt
 export type CompositeBackendPart = {
     workspace: string;
     backend: IAnalyticalBackend;
+};
+
+// @internal (undocumented)
+export type DashboardRecording = {
+    obj: IDashboardWithReferences;
+    alerts: IWidgetAlert[];
 };
 
 // @internal (undocumented)
@@ -118,6 +127,7 @@ export function recordedBackend(index: RecordingIndex, config?: RecordedBackendC
 export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     globalSettings?: ISettings;
     globalPalette?: IColorPalette;
+    dateFilterConfig?: IDateFilterConfig;
     theme?: ITheme;
     useRefType?: RecordedRefType;
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
@@ -143,13 +153,10 @@ export type RecordingIndex = {
     };
     metadata?: {
         catalog?: CatalogRecording;
-        displayForms?: {
-            [id: string]: DisplayFormRecording;
-        };
-        insights?: {
-            [id: string]: InsightRecording;
-        };
+        displayForms?: Record<string, DisplayFormRecording>;
+        insights?: Record<string, InsightRecording>;
         visClasses?: VisClassesRecording;
+        dashboards?: Record<string, DashboardRecording>;
     };
 };
 
