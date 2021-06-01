@@ -30,9 +30,6 @@ function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWith
 }
 
 export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDashboard) {
-    // eslint-disable-next-line no-console
-    console.debug("handling load dashboard", cmd, "in context", ctx);
-
     try {
         yield put(loadingActions.setLoadingStart());
 
