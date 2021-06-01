@@ -21452,7 +21452,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-NxN08YY4dISzmHJWAApZ5iG3l1XWX9+zyJJgMPSX1SckDtnihYgfBQd+NOET2qhmqyNyvCLr6xI7Yw5aoxBe2A==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-2u4vndVcwEWc5xJPwJwu9ADPTB+NVcVsp6K80WYowJ04U60OT/tW9ftx1UDrgWJjqOuWI0A2QMHj6O+ahWFDQg==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0

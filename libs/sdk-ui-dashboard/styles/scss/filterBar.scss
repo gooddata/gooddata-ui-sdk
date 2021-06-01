@@ -42,3 +42,40 @@
         flex-wrap: nowrap;
     }
 }
+
+.button-filter-bar-show-all {
+    position: relative;
+    top: -2px;
+    height: 24px;
+    padding: 5px 24px;
+    border: $nav-border;
+    border-top: none;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-color: var(--gd-dashboards-filterBar-borderColor, $gd-border-color);
+    line-height: 12px;
+    white-space: nowrap;
+    text-align: left;
+    vertical-align: middle;
+    color: $button-normal-border-color;
+    background-color: $gd-dashboards-filterBar-backgroundColor;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+
+    &:hover {
+        .gd-button-text,
+        .gd-button-icon {
+            color: $gd-palette-primary-base;
+        }
+    }
+
+    .gd-button-text {
+        font-size: 10px;
+        line-height: inherit;
+    }
+
+    .gd-button-icon {
+        margin-left: 8px;
+        color: $gd-color-state-blank;
+    }
+}

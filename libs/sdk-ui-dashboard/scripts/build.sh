@@ -22,6 +22,12 @@ _common-build() {
     cp -rf dist/assets esm
 
     _build_styles
+
+    mkdir -p dist/localization/bundles
+    cp -rf src/localization/bundles dist/localization
+
+    mkdir -p esm/localization/bundles
+    cp -rf src/localization/bundles esm/localization
 }
 
 build() {

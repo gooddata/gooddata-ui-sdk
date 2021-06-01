@@ -1,0 +1,12 @@
+{
+    "filterBar.showAll": {
+        "value": "Show all",
+        "comment": "",
+        "limit": 0
+    },
+    "filterBar.showLess": {
+        "value": "Show less",
+        "comment": "",
+        "limit": 0
+    }
+}
