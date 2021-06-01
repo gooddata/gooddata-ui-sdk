@@ -2,6 +2,8 @@
 import { loadDashboard } from "../../../commands";
 import { DashboardTester, SimpleDashboardRecording } from "../../../tests/DashboardTester";
 import { DashboardLoaded } from "../../../events";
+import { selectConfig } from "../../../state/config/configSelectors";
+import { selectPermissions } from "../../../state/permissions/permissionsSelectors";
 
 describe("load dashboard handler", () => {
     it("should emit event for the loaded dashboard", async () => {
@@ -12,5 +14,27 @@ describe("load dashboard handler", () => {
 
         expect(event.type).toEqual("GDC.DASH/EVT.LOADED");
         expect(event.payload.dashboard.identifier).toEqual(SimpleDashboardRecording);
+    });
+
+    it("should resolve config if empty config provided", async () => {
+        const tester = DashboardTester.forRecording(SimpleDashboardRecording);
+
+        tester.dispatch(loadDashboard());
+        await tester.waitFor("GDC.DASH/EVT.LOADED");
+
+        const config = selectConfig(tester.getState());
+
+        expect(config).toMatchSnapshot();
+    });
+
+    it("should resolve permissions if none provided", async () => {
+        const tester = DashboardTester.forRecording(SimpleDashboardRecording);
+
+        tester.dispatch(loadDashboard());
+        await tester.waitFor("GDC.DASH/EVT.LOADED");
+
+        const permissions = selectPermissions(tester.getState());
+
+        expect(permissions).toMatchSnapshot();
     });
 });

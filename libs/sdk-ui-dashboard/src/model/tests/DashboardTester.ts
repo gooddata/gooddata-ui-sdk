@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { Identifier, idRef } from "@gooddata/sdk-model";
-import { createDashboardStore, ReduxedDashboardStore } from "../state/dashboardStore";
+import { createDashboardStore, DashboardState, ReduxedDashboardStore } from "../state/dashboardStore";
 import { DashboardContext } from "../types/commonTypes";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -84,9 +84,8 @@ export class DashboardTester {
         monitoredAction.resolve(action);
     };
 
-    private eventHandler = (evt: DashboardEvents): void => {
-        // eslint-disable-next-line no-console
-        console.log("handle event", evt.type);
+    private eventHandler = (_evt: DashboardEvents): void => {
+        //
     };
 
     public static forRecording(identifier: Identifier): DashboardTester {
@@ -123,8 +122,26 @@ export class DashboardTester {
         ]);
     }
 
+    /**
+     * Returns all actions that were dispatched since the tester was created or since it was last reset.
+     */
+    public dispatchedActions(): ReadonlyArray<PayloadAction<any>> {
+        return this.capturedActions.slice();
+    }
+
+    /**
+     * Resets internal state of the tester's monitors. The captured actions will be cleared up as part
+     * of this.
+     */
     public resetMonitors(): void {
         this.capturedActions = [];
         this.monitoredActions = {};
+    }
+
+    /**
+     * Returns dashboard state.
+     */
+    public getState(): DashboardState {
+        return this.reduxedStore.store.getState();
     }
 }
