@@ -1,16 +1,13 @@
 // (C) 2021 GoodData Corporation
-import React, { ComponentType, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import Measure from "react-measure";
+import React, { ComponentType } from "react";
 import partition from "lodash/partition";
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
-import { DashboardAttributeFilter, DashboardAttributeFilterComponent } from "./DashboardAttributeFilter";
-import { DashboardDateFilter, DashboardDateFilterComponent } from "./DashboardDateFilter";
 import { objRefToString } from "@gooddata/sdk-model";
+
 import {
     selectEffectiveDateFilterAvailableGranularities,
     selectEffectiveDateFilterMode,
@@ -18,7 +15,10 @@ import {
     selectEffectiveDateFilterTitle,
     useDashboardSelector,
 } from "../model";
-import { IntlWrapper } from "../localization/IntlWrapper";
+
+import { DashboardAttributeFilter, DashboardAttributeFilterComponent } from "./DashboardAttributeFilter";
+import { DashboardDateFilter, DashboardDateFilterComponent } from "./DashboardDateFilter";
+import { FilterBarContainer } from "./FilterBarContainer";
 
 /**
  * @internal
@@ -26,8 +26,6 @@ import { IntlWrapper } from "../localization/IntlWrapper";
 export type CustomAttributeFilterFactory = (
     filter: IDashboardAttributeFilter,
 ) => DashboardAttributeFilterComponent | undefined;
-
-const DEFAULT_FILTER_BAR_HEIGHT = 58;
 
 /**
  * @internal
@@ -88,33 +86,6 @@ export interface IFilterBarProps {
  */
 export type FilterBarComponent = ComponentType<IFilterBarProps>;
 
-const ShowAllFiltersButton: React.FC<{
-    isVisible: boolean;
-    isFilterBarExpanded: boolean;
-    onToggle: (isExpanded: boolean) => void;
-}> = ({ isVisible, isFilterBarExpanded, onToggle }) => {
-    if (!isVisible) {
-        return null;
-    }
-
-    const icon = isFilterBarExpanded ? "gd-icon-chevron-up" : "gd-icon-chevron-down";
-
-    return (
-        <div className="show-all">
-            <button
-                className="button-filter-bar-show-all"
-                tabIndex={-1}
-                onClick={() => onToggle(!isFilterBarExpanded)}
-            >
-                <span className="gd-button-text gd-label">
-                    <FormattedMessage id={isFilterBarExpanded ? "filterBar.showLess" : "filterBar.showAll"} />
-                    <i className={`gd-button-icon gd-icon ${icon}`} />
-                </span>
-            </button>
-        </div>
-    );
-};
-
 /**
  * @internal
  */
@@ -129,73 +100,36 @@ export const FilterBar: React.FC<IFilterBarProps & IDefaultFilterBarProps> = ({
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
 
-    const [filterBarHeight, setFilterBarHeight] = useState(DEFAULT_FILTER_BAR_HEIGHT);
-    const [filterBarExpanded, setFilterBarExpanded] = useState(false);
-
     const DateFilter = dateFilterConfig?.Component ?? DashboardDateFilter;
 
     const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
 
-    const onAttributeFilterBarHeightChange = (val: number) => {
-        if (val !== filterBarHeight) {
-            setFilterBarHeight(val);
-        }
-    };
-
-    const areFiltersHidden = Math.round(filterBarHeight) <= DEFAULT_FILTER_BAR_HEIGHT;
-
-    const dashFiltersVisibleStyle = {
-        height: filterBarExpanded ? filterBarHeight : DEFAULT_FILTER_BAR_HEIGHT,
-    };
-
     return (
-        <IntlWrapper>
-            <div className="dash-filters-wrapper">
-                <div className="dash-filters-visible" style={dashFiltersVisibleStyle}>
-                    <Measure
-                        bounds
-                        onResize={(dimensions) => onAttributeFilterBarHeightChange(dimensions.bounds!.height)}
-                    >
-                        {({ measureRef }) => (
-                            <div className="dash-filters-all" ref={measureRef}>
-                                <div className="dash-filters-date dash-filters-attribute">
-                                    <DateFilter
-                                        filter={dateFilter}
-                                        onFilterChanged={onFilterChanged}
-                                        availableGranularities={availableGranularities}
-                                        customFilterName={customFilterName}
-                                        dateFilterOptions={dateFilterOptions}
-                                        readonly={dateFilterMode === "readonly"}
-                                    />
-                                </div>
-                                {attributeFilters.map((filter) => {
-                                    const AttributeFilter =
-                                        attributeFilterConfig?.ComponentFactory?.(filter) ??
-                                        DashboardAttributeFilter;
-
-                                    return (
-                                        <div
-                                            className="dash-filters-notdate dash-filters-attribute"
-                                            key={objRefToString(filter.attributeFilter.displayForm)}
-                                        >
-                                            <AttributeFilter
-                                                filter={filter}
-                                                onFilterChanged={onFilterChanged}
-                                            />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        )}
-                    </Measure>
-                </div>
-                <ShowAllFiltersButton
-                    isFilterBarExpanded={filterBarExpanded}
-                    isVisible={!areFiltersHidden}
-                    onToggle={(isExpanded) => setFilterBarExpanded(isExpanded)}
+        <FilterBarContainer>
+            <div className="dash-filters-date dash-filters-attribute">
+                <DateFilter
+                    filter={dateFilter}
+                    onFilterChanged={onFilterChanged}
+                    availableGranularities={availableGranularities}
+                    customFilterName={customFilterName}
+                    dateFilterOptions={dateFilterOptions}
+                    readonly={dateFilterMode === "readonly"}
                 />
             </div>
-        </IntlWrapper>
+            {attributeFilters.map((filter) => {
+                const AttributeFilter =
+                    attributeFilterConfig?.ComponentFactory?.(filter) ?? DashboardAttributeFilter;
+
+                return (
+                    <div
+                        className="dash-filters-notdate dash-filters-attribute"
+                        key={objRefToString(filter.attributeFilter.displayForm)}
+                    >
+                        <AttributeFilter filter={filter} onFilterChanged={onFilterChanged} />
+                    </div>
+                );
+            })}
+        </FilterBarContainer>
     );
 };
 
