@@ -109,8 +109,13 @@ export type DashboardStoreConfig = {
 
 function createRootSaga(eventEmitter: Saga, commandHandler: Saga) {
     return function* () {
-        yield spawn(eventEmitter);
-        yield spawn(commandHandler);
+        try {
+            yield spawn(eventEmitter);
+            yield spawn(commandHandler);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error("Root saga failed", e);
+        }
     };
 }
 

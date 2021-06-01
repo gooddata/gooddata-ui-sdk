@@ -31,11 +31,16 @@ export function createRootEventEmitter(initialHandlers: DashboardEventHandler[] 
             while (true) {
                 const event: DashboardEvents = yield take(eventChannel);
 
-                eventHandlers.forEach((handler) => {
-                    if (handler.eval(event.type)) {
-                        handler.handler(event);
-                    }
-                });
+                try {
+                    eventHandlers.forEach((handler) => {
+                        if (handler.eval(event.type)) {
+                            handler.handler(event);
+                        }
+                    });
+                } catch (e) {
+                    // eslint-disable-next-line no-console
+                    console.error("Error has occurred while dispatching event", event, e);
+                }
             }
         },
     };
