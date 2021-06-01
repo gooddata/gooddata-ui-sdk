@@ -1,5 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
-import { useCallback } from "react";
+import { useCallback, useMemo, useRef } from "react";
+import stableStringify from "json-stable-stringify";
 import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
     IPlaceholder,
@@ -8,8 +9,10 @@ import {
     PlaceholdersValues,
     PlaceholderResolvedValue,
     PlaceholdersResolvedValues,
+    isPlaceholder,
 } from "./base";
 import { usePlaceholdersContext, PlaceholdersState } from "./context";
+import invariant from "ts-invariant";
 import {
     setPlaceholder,
     resolvePlaceholderValue,
@@ -20,20 +23,30 @@ import {
 /**
  * React hook to obtain/set placeholder value.
  * See {@link IPlaceholder}.
+ *
+ * Note: When placeholder is not provided, setting its value will result in the error.
+ *
  * @public
  */
 export function usePlaceholder<T extends IPlaceholder<any>>(
-    placeholder: T,
+    placeholder?: T,
 ): [
     PlaceholderValue<T> | undefined,
     (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void,
 ] {
     const { state, updateState } = usePlaceholdersContext();
-    const resolvedPlaceholderValue = resolvePlaceholderValue(placeholder, state);
+    const resolvedPlaceholderValue = isPlaceholder(placeholder)
+        ? resolvePlaceholderValue(placeholder, state)
+        : undefined;
 
     const setPlaceholderValue = useCallback(
         (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => {
             updateState((s): PlaceholdersState => {
+                invariant(
+                    isPlaceholder(placeholder),
+                    "usePlaceholder: Cannot set value of the placeholder - placeholder was not provided.",
+                );
+
                 const resoledPlaceholderValue = resolvePlaceholderValue(
                     placeholder,
                     s,
@@ -68,6 +81,8 @@ export function usePlaceholders<T extends IPlaceholder<any>[]>(
         resolvePlaceholderValue(placeholder, state),
     ) as PlaceholdersValues<T>;
 
+    const memoizedResolvedValues = useMultiValueMemoStringify(resolvedPlaceholderValues);
+
     const setPlaceholderValues = useCallback(
         (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => {
             updateState((s) => {
@@ -90,7 +105,7 @@ export function usePlaceholders<T extends IPlaceholder<any>[]>(
         [],
     );
 
-    return [resolvedPlaceholderValues, setPlaceholderValues];
+    return [memoizedResolvedValues, setPlaceholderValues];
 }
 
 /**
@@ -105,13 +120,14 @@ export function useComposedPlaceholder<
     TPlaceholder extends IComposedPlaceholder<any, any, TContext>,
 >(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder> {
     const { state } = usePlaceholdersContext();
-    const resolvedPlaceholderValue = resolveComposedPlaceholderValue(
+    const resolvedValue = resolveComposedPlaceholderValue(
         placeholder,
         state,
         resolutionContext,
     ) as PlaceholderResolvedValue<TPlaceholder>;
+    const memoizedResolvedValue = useMemoStringify(resolvedValue);
 
-    return resolvedPlaceholderValue;
+    return memoizedResolvedValue;
 }
 
 /**
@@ -126,7 +142,9 @@ export function useResolveValueWithPlaceholders<T, C>(
 ): PlaceholderResolvedValue<T> {
     const { state } = usePlaceholdersContext();
     const resolvedValue = resolveValueWithPlaceholders(value, state, resolutionContext);
-    return resolvedValue;
+    const memoizedResolvedValue = useMemoStringify(resolvedValue);
+
+    return memoizedResolvedValue;
 }
 
 /**
@@ -142,6 +160,57 @@ export function useResolveValuesWithPlaceholders<T extends any[], C>(
     const { state } = usePlaceholdersContext();
     const resolvedValues = values?.map((value) =>
         resolveValueWithPlaceholders(value, state, resolutionContext),
+    ) as PlaceholdersResolvedValues<T>;
+    const memoizedResolvedValues = useMultiValueMemoStringify(resolvedValues);
+
+    return memoizedResolvedValues;
+}
+
+/**
+ * Memoize value by its stringified value, to avoid new reference on each render.
+ *
+ * @param value - value to memoize
+ * @returns - memoized value
+ * @internal
+ */
+export function useMemoStringify<T>(value: T): T {
+    const memoizedValue = useMemo(() => {
+        return value;
+    }, [stableStringify(value)]);
+
+    return memoizedValue;
+}
+
+/**
+ * Memoize multiple values by their stringified value, to avoid new reference on each render.
+ *
+ * @param values - values to memoize
+ * @returns - memoized values
+ * @internal
+ */
+export function useMultiValueMemoStringify<T extends any[]>(values: T): T {
+    const prevValues = useRef(
+        values?.map((v) => ({
+            hash: stableStringify(v),
+            value: v,
+        })) ?? [],
     );
-    return resolvedValues as PlaceholdersResolvedValues<T>;
+
+    const memoizedValues = useMemo(() => {
+        return values?.map((val, idx) => {
+            const hash = stableStringify(val);
+            if (hash === prevValues.current[idx].hash) {
+                return prevValues.current[idx].value;
+            }
+
+            prevValues.current[idx] = {
+                hash,
+                value: val,
+            };
+
+            return val;
+        }) as T;
+    }, [stableStringify(values)]);
+
+    return memoizedValues;
 }

@@ -1541,7 +1541,7 @@ export function useInsightDataView(config: IUseInsightDataViewConfig, deps?: Rea
 export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: React.DependencyList, resetDeps: React.DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>): IUsePagedResourceResult<TItem>;
 
 // @public
-export function usePlaceholder<T extends IPlaceholder<any>>(placeholder: T): [
+export function usePlaceholder<T extends IPlaceholder<any>>(placeholder?: T): [
     PlaceholderValue<T> | undefined,
     (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
 ];
