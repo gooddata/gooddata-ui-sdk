@@ -24,7 +24,14 @@ describe("load dashboard handler", () => {
 
         const config = selectConfig(tester.state());
 
-        expect(config).toMatchSnapshot();
+        expect(config).toMatchSnapshot({
+            dateFilterConfig: {
+                absoluteForm: {
+                    from: expect.any(String),
+                    to: expect.any(String),
+                },
+            },
+        });
     });
 
     it("should resolve permissions if none provided", async () => {
