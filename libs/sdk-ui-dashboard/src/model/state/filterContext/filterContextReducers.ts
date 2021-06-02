@@ -139,9 +139,25 @@ const addAttributeFilter: FilterContextReducer<
     state.filterContext.filters.splice(action.payload.index, 0, filter);
 };
 
+const removeAttributeFilters: FilterContextReducer<
+    PayloadAction<{
+        readonly filterLocalIds: string[];
+    }>
+> = (state, action) => {
+    invariant(state.filterContext, "Attempt to edit uninitialized filter context");
+
+    state.filterContext.filters = state.filterContext.filters.filter((item) => {
+        if (isDashboardAttributeFilter(item)) {
+            return !action.payload.filterLocalIds.includes(item.attributeFilter.localIdentifier!);
+        }
+        return true;
+    });
+};
+
 export const filterContextReducers = {
     setFilterContext,
     addAttributeFilter,
+    removeAttributeFilters,
     updateAttributeFilterSelection,
     upsertDateFilter,
 };

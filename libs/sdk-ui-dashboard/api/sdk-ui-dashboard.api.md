@@ -1354,7 +1354,7 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
 export interface RemoveAttributeFilters extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly filterLocalId: string[];
+        readonly filterLocalIds: string[];
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE";

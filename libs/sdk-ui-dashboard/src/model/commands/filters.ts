@@ -191,7 +191,7 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
          * XXX: we do not necessarily need to remove multiple filters atm, but this should
          *  be very easy to do and adds some extra flexibility.
          */
-        readonly filterLocalId: string[];
+        readonly filterLocalIds: string[];
     };
 }
 
@@ -209,7 +209,7 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
         type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE",
         correlationId,
         payload: {
-            filterLocalId: [filterLocalId],
+            filterLocalIds: [filterLocalId],
         },
     };
 }
