@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Add useBackendStrict / useWorkspaceStrict hooks for better developer experience.",
+            "comment": "The useBackendStrict and useWorkspaceStrict hooks are added for better developer experience.",
             "type": "none"
         }
     ],
