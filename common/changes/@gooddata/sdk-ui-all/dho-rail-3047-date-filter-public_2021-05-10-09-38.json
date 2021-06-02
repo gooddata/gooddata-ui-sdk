@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "DateFilter is no longer in beta and is now considered stable",
+            "comment": "The DateFilter component is no longer in beta and is considered stable.",
             "type": "none"
         }
     ],

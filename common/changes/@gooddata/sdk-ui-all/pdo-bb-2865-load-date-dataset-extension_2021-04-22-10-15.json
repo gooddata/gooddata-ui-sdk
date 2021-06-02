@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Extend loadDateDateDataSets request payload with includeDateGranularities parameter.",
+            "comment": "The includeDateGranularities parameter is added to the loadDateDateDataSets request payload.",
             "type": "none"
         }
     ],

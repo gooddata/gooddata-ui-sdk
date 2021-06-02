@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-charts: Add responsive legend with pop-up",
+            "comment": "The option to make the legend appear as a popup if the visualization is rendered in a too small container is added.",
             "type": "none"
         }
     ],

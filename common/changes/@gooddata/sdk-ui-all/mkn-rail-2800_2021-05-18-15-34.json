@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Add placeholder support to all visualizations.",
+            "comment": "Visualization definition placeholders are added.",
             "type": "none"
         }
     ],

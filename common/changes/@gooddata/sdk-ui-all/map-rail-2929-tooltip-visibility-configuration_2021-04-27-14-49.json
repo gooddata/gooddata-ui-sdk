@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Introduced tooltip visibility configuration in chart configuration.",
+            "comment": "The option to disable tooltips in charts is added.",
             "type": "none"
         }
     ],

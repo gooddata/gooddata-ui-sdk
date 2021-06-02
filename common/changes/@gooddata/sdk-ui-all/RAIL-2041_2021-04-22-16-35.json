@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Execute components extended to support LoadingComponent / ErrorComponent",
+            "comment": "The Execute components are extended to support LoadingComponent and ErrorComponent.",
             "type": "none"
         }
     ],

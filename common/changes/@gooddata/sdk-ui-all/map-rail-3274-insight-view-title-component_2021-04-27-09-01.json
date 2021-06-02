@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "showTitle and onInsightLoaded properties introduced to InsightView component",
+            "comment": "The showTitle property and the onInsightLoaded property are added to the InsightView component.",
             "type": "none"
         }
     ],

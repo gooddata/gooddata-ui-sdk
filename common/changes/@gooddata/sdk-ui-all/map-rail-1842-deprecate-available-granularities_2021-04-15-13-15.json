@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "RelativeDateFilterForm availableGranularities deprecated, use availableGranularities in DateFilter instead. ",
+            "comment": "In the DateFilter component, the availableGranularities property of relativeForm is deprecated. Use availableGranularities instead.",
             "type": "none"
         }
     ],

@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "DashboardView layout customizations are working in Tiger now.",
+            "comment": "The layout customizations of the DashboardView component are supported in GoodData.CN.",
             "type": "none"
         }
     ],
