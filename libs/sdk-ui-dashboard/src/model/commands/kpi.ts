@@ -69,6 +69,12 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
          * Reference to the new measure to use instead of the old measure.
          */
         readonly measureRef: ObjRef;
+
+        /**
+         * Optionally specify the new header that should be used for the KPI widget with the
+         * changed measure.
+         */
+        readonly header?: WidgetHeader;
     };
 }
 
@@ -78,6 +84,7 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
  *
  * @param ref - reference of the KPI widget to modify
  * @param measureRef - reference of the measure to use
+ * @param header - optionally specify new header to use; if not provided the existing header will be reused
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -86,6 +93,7 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
 export function changeKpiWidgetMeasure(
     ref: ObjRef,
     measureRef: ObjRef,
+    header?: WidgetHeader,
     correlationId?: string,
 ): ChangeKpiWidgetMeasure {
     return {
@@ -94,6 +102,7 @@ export function changeKpiWidgetMeasure(
         payload: {
             ref,
             measureRef,
+            header,
         },
     };
 }
