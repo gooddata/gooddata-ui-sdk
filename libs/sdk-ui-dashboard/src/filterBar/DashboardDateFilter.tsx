@@ -1,10 +1,10 @@
 // (C) 2021 GoodData Corporation
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 import { DateFilter, IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 import { dateFilterOptionToDashboardDateFilter } from "./converters";
-import { matchDateFilterToDateFilterOption } from "./dateFilterUtils";
+import { matchDateFilterToDateFilterOptionWithPreference } from "./dateFilterUtils";
 
 /**
  * Defines interface between filter bar and date filter implementation
@@ -61,9 +61,11 @@ export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = ({
     dateFilterOptions,
     readonly,
 }) => {
+    const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
-        () => matchDateFilterToDateFilterOption(filter, dateFilterOptions),
-        [filter, dateFilterOptions],
+        () =>
+            matchDateFilterToDateFilterOptionWithPreference(filter, dateFilterOptions, lastSelectedOptionId),
+        [filter, dateFilterOptions, lastSelectedOptionId],
     );
 
     return (
@@ -74,9 +76,10 @@ export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = ({
             filterOptions={dateFilterOptions}
             availableGranularities={availableGranularities}
             customFilterName={customFilterName}
-            onApply={(option, exclude) =>
-                onFilterChanged(dateFilterOptionToDashboardDateFilter(option, exclude))
-            }
+            onApply={(option, exclude) => {
+                setLastSelectedOptionId(option.localIdentifier);
+                onFilterChanged(dateFilterOptionToDashboardDateFilter(option, exclude));
+            }}
         />
     );
 };

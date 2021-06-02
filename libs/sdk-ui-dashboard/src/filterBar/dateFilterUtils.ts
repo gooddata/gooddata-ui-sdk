@@ -32,8 +32,43 @@ interface IDateFilterOptionInfo {
 }
 
 /**
+ * Tries to match a preset or a form with the provided value. Prioritizes the provided option if possible.
+ *
+ * @remarks
+ * This is to handle cases when user picked a form and filled values that match an existing preset.
+ * In those cases we want to show the form as picked even though a preset would otherwise be preferred.
+ *
+ * @param dateFilter - value to match against
+ * @param availableOptions - date options available
+ * @param preferredOptionId - id of the option that should be matched first if possible
+ */
+export function matchDateFilterToDateFilterOptionWithPreference(
+    dateFilter: IDashboardDateFilter | undefined,
+    availableOptions: IDateFilterOptionsByType,
+    preferredOptionId: string | undefined,
+): IDateFilterOptionInfo {
+    const preferredOption = preferredOptionId
+        ? findDateFilterOptionById(preferredOptionId, availableOptions)
+        : undefined;
+
+    // we only really need to handle the cases when the selected option is a form
+    // other cases are correctly handled by the unbiased matching function
+    if (
+        dateFilter &&
+        (preferredOption?.type === "absoluteForm" || preferredOption?.type === "relativeForm")
+    ) {
+        if (canReconstructFormForStoredFilter(availableOptions, dateFilter)) {
+            return reconstructFormForStoredFilter(availableOptions, dateFilter);
+        }
+    }
+
+    return matchDateFilterToDateFilterOption(dateFilter, availableOptions);
+}
+
+/**
  * Tries to match a preset or a form with the provided value. Prioritizes presets over forms.
- * @param dateFilterValue Value to match against.
+ * @param dateFilterValue - value to match against
+ * @param availableOptions - date options available
  */
 export function matchDateFilterToDateFilterOption(
     dateFilter: IDashboardDateFilter | undefined,
@@ -119,6 +154,10 @@ function reconstructFormForStoredFilter(
 
 function isDateFilterOptionVisible(option: DateFilterOption | undefined) {
     return !!(option && option.visible);
+}
+
+function findDateFilterOptionById(id: string, dateFilterOptions: IDateFilterOptionsByType) {
+    return getDateFilterOptionsFlattened(dateFilterOptions).find((option) => option.localIdentifier === id);
 }
 
 function findDateFilterOptionByValue(
