@@ -49,6 +49,8 @@ export {
     StashedDashboardItemsId,
     ExtendedDashboardLayoutSection,
 } from "./types/layoutTypes";
+export { WidgetFilterSettings, WidgetHeader } from "./types/widgetTypes";
+
 export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
 
 export * from "./commands";

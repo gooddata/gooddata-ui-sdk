@@ -26,6 +26,18 @@ const DefaultCommandHandlers = {
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM": unhandledCommand,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM": unhandledCommand,
     "GDC.DASH/CMD.FLUID_LAYOUT.UNDO": unhandledCommand,
+    "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER": unhandledCommand,
+    "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE": unhandledCommand,
+    "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS": unhandledCommand,
+    "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON": unhandledCommand,
+    "GDC.DASH/CMD.KPI_WIDGET.REFRESH": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": unhandledCommand,
 };
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {

@@ -28,6 +28,13 @@ import {
     DashboardLayoutSectionMoved,
     DashboardLayoutSectionRemoved,
 } from "./layout";
+import {
+    DashboardKpiWidgetChanged,
+    DashboardKpiWidgetComparisonChanged,
+    DashboardKpiWidgetFilterSettingsChanged,
+    DashboardKpiWidgetHeaderChanged,
+    DashboardKpiWidgetMeasureChanged,
+} from "./kpi";
 
 export { IDashboardEvent, DashboardEventType } from "./base";
 export {
@@ -63,6 +70,14 @@ export {
     DashboardLayoutChanged,
 } from "./layout";
 
+export {
+    DashboardKpiWidgetHeaderChanged,
+    DashboardKpiWidgetMeasureChanged,
+    DashboardKpiWidgetFilterSettingsChanged,
+    DashboardKpiWidgetComparisonChanged,
+    DashboardKpiWidgetChanged,
+} from "./kpi";
+
 /**
  * @internal
  */
@@ -90,4 +105,9 @@ export type DashboardEvents =
     | DashboardLayoutSectionItemReplaced
     | DashboardLayoutSectionItemMoved
     | DashboardLayoutSectionItemRemoved
-    | DashboardLayoutChanged;
+    | DashboardLayoutChanged
+    | DashboardKpiWidgetHeaderChanged
+    | DashboardKpiWidgetMeasureChanged
+    | DashboardKpiWidgetFilterSettingsChanged
+    | DashboardKpiWidgetComparisonChanged
+    | DashboardKpiWidgetChanged;

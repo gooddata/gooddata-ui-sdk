@@ -10,6 +10,22 @@ import {
     SetAttributeFilterParent,
 } from "./filters";
 import {
+    ChangeInsightWidgetFilterSettings,
+    ChangeInsightWidgetHeader,
+    ChangeInsightWidgetInsight,
+    ChangeInsightWidgetVisProperties,
+    ModifyDrillsForInsightWidget,
+    RefreshInsightWidget,
+    RemoveDrillsForInsightWidget,
+} from "./insight";
+import {
+    ChangeKpiWidgetComparison,
+    ChangeKpiWidgetFilterSettings,
+    ChangeKpiWidgetHeader,
+    ChangeKpiWidgetMeasure,
+    RefreshKpiWidget,
+} from "./kpi";
+import {
     AddLayoutSection,
     AddSectionItems,
     ChangeLayoutSectionHeader,
@@ -76,6 +92,38 @@ export {
     UndoPointSelector,
 } from "./layout";
 
+export {
+    ChangeKpiWidgetHeader,
+    changeKpiWidgetHeader,
+    ChangeKpiWidgetMeasure,
+    changeKpiWidgetMeasure,
+    ChangeKpiWidgetFilterSettings,
+    changeKpiWidgetFilterSettings,
+    ChangeKpiWidgetComparison,
+    changeKpiWidgetComparison,
+    RefreshKpiWidget,
+    refreshKpiWidget,
+    KpiWidgetComparison,
+} from "./kpi";
+
+export {
+    ChangeInsightWidgetHeader,
+    changeInsightWidgetHeader,
+    ChangeInsightWidgetFilterSettings,
+    changeInsightWidgetFilterSettings,
+    ChangeInsightWidgetVisProperties,
+    changeInsightWidgetVisProperties,
+    ChangeInsightWidgetInsight,
+    changeInsightWidgetInsight,
+    ModifyDrillsForInsightWidget,
+    modifyDrillForInsightWidget,
+    RemoveDrillsForInsightWidget,
+    removeDrillForInsightWidget,
+    RemoveDrillsSelector,
+    RefreshInsightWidget,
+    refreshInsightWidget,
+} from "./insight";
+
 /**
  * @internal
  */
@@ -99,4 +147,16 @@ export type DashboardCommands =
     | ReplaceSectionItem
     | MoveSectionItem
     | RemoveSectionItem
-    | UndoLayoutChanges;
+    | UndoLayoutChanges
+    | ChangeKpiWidgetHeader
+    | ChangeKpiWidgetMeasure
+    | ChangeKpiWidgetFilterSettings
+    | ChangeKpiWidgetComparison
+    | RefreshKpiWidget
+    | ChangeInsightWidgetHeader
+    | ChangeInsightWidgetFilterSettings
+    | ChangeInsightWidgetVisProperties
+    | ChangeInsightWidgetInsight
+    | ModifyDrillsForInsightWidget
+    | RemoveDrillsForInsightWidget
+    | RefreshInsightWidget;

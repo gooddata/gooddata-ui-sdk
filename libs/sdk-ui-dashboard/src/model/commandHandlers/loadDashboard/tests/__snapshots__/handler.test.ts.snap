@@ -18,10 +18,10 @@ Object {
   "colorPalette": Array [],
   "dateFilterConfig": Object {
     "absoluteForm": Object {
-      "from": "2021-05-01",
+      "from": Any<String>,
       "localIdentifier": "ABSOLUTE_FORM",
       "name": "",
-      "to": "2021-06-01",
+      "to": Any<String>,
       "type": "absoluteForm",
       "visible": true,
     },
