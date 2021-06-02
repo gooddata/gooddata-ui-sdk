@@ -136,7 +136,11 @@ const addAttributeFilter: FilterContextReducer<
         },
     };
 
-    state.filterContext.filters.splice(action.payload.index, 0, filter);
+    if (action.payload.index === -1) {
+        state.filterContext.filters.push(filter);
+    } else {
+        state.filterContext.filters.splice(action.payload.index, 0, filter);
+    }
 };
 
 const removeAttributeFilters: FilterContextReducer<
@@ -154,10 +158,38 @@ const removeAttributeFilters: FilterContextReducer<
     });
 };
 
+const moveAttributeFilter: FilterContextReducer<
+    PayloadAction<{
+        readonly filterLocalId: string;
+        readonly index: number;
+    }>
+> = (state, action) => {
+    invariant(state.filterContext, "Attempt to edit uninitialized filter context");
+
+    const currentFilterIndex = state.filterContext.filters.findIndex(
+        (item) =>
+            isDashboardAttributeFilter(item) &&
+            item.attributeFilter.localIdentifier === action.payload.filterLocalId,
+    );
+
+    invariant(currentFilterIndex >= 0, "Attempt to move non-existing filter");
+
+    const filter = state.filterContext.filters[currentFilterIndex];
+
+    state.filterContext.filters.splice(currentFilterIndex, 1);
+
+    if (action.payload.index === -1) {
+        state.filterContext.filters.push(filter);
+    } else {
+        state.filterContext.filters.splice(action.payload.index, 0, filter);
+    }
+};
+
 export const filterContextReducers = {
     setFilterContext,
     addAttributeFilter,
     removeAttributeFilters,
+    moveAttributeFilter,
     updateAttributeFilterSelection,
     upsertDateFilter,
 };
