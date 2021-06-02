@@ -2,7 +2,11 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../dashboardStore";
 import invariant from "ts-invariant";
-import { FilterContextItem } from "@gooddata/sdk-backend-spi";
+import {
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    isDashboardAttributeFilter,
+} from "@gooddata/sdk-backend-spi";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -30,4 +34,15 @@ export const selectFilterContext = createSelector(selectSelf, (filterContextStat
 export const selectFilterContextFilters = createSelector(
     selectFilterContext,
     (filterContext): FilterContextItem[] => filterContext.filters,
+);
+
+/**
+ * This selector returns dashboard's filter context attribute filters. It is expected that the selector is called only after the filter
+ * context state is correctly initialized. Invocations before initialization lead to invariant errors.
+ *
+ * @internal
+ */
+export const selectFilterContextAttributeFilters = createSelector(
+    selectFilterContextFilters,
+    (filters): IDashboardAttributeFilter[] => filters.filter(isDashboardAttributeFilter),
 );

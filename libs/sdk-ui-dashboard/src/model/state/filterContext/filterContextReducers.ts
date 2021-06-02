@@ -185,11 +185,33 @@ const moveAttributeFilter: FilterContextReducer<
     }
 };
 
+const setAttributeFilterParent: FilterContextReducer<
+    PayloadAction<{
+        readonly filterLocalId: string;
+        readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
+    }>
+> = (state, action) => {
+    invariant(state.filterContext, "Attempt to edit uninitialized filter context");
+
+    const currentFilterIndex = state.filterContext.filters.findIndex(
+        (item) =>
+            isDashboardAttributeFilter(item) &&
+            item.attributeFilter.localIdentifier === action.payload.filterLocalId,
+    );
+
+    invariant(currentFilterIndex >= 0, "Attempt to set parent of a non-existing filter");
+
+    (
+        state.filterContext.filters[currentFilterIndex] as IDashboardAttributeFilter
+    ).attributeFilter.filterElementsBy = [...action.payload.parentFilters];
+};
+
 export const filterContextReducers = {
     setFilterContext,
     addAttributeFilter,
     removeAttributeFilters,
     moveAttributeFilter,
     updateAttributeFilterSelection,
+    setAttributeFilterParent,
     upsertDateFilter,
 };
