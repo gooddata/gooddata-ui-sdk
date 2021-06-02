@@ -137,6 +137,14 @@ export interface AddAttributeFilter extends IDashboardCommand {
          * XXX: not needed in the initial version; would be good for API completeness
          */
         readonly initialSelection?: IAttributeElements;
+
+        /**
+         * Optionally specify if the initial selection of attribute elements is a negative one:
+         * if true, the elements selected should NOT be included in teh results.
+         *
+         * XXX: not needed in the initial version; would be good for API completeness
+         */
+        readonly initialIsNegativeSelection?: boolean;
     };
 }
 

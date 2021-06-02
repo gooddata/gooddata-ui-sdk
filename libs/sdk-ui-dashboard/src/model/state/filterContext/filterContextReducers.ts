@@ -8,13 +8,14 @@ import {
     DateString,
     FilterContextItem,
     IDashboardAttributeFilter,
+    IDashboardAttributeFilterParent,
     IDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { FilterContextState } from "./filterContextState";
-import { IAttributeElements } from "@gooddata/sdk-model";
+import { attributeElementsIsEmpty, IAttributeElements, ObjRef } from "@gooddata/sdk-model";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 
@@ -109,8 +110,38 @@ const updateAttributeFilterSelection: FilterContextReducer<
     };
 };
 
+const addAttributeFilter: FilterContextReducer<
+    PayloadAction<{
+        readonly displayForm: ObjRef;
+        readonly index: number;
+        readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
+        readonly initialSelection?: IAttributeElements;
+        readonly initialIsNegativeSelection?: boolean;
+    }>
+> = (state, action) => {
+    invariant(state.filterContext, "Attempt to edit uninitialized filter context");
+
+    const hasSelection =
+        action.payload.initialSelection && !attributeElementsIsEmpty(action.payload.initialSelection);
+
+    const isNegative = action.payload.initialIsNegativeSelection || !hasSelection;
+
+    const filter: IDashboardAttributeFilter = {
+        attributeFilter: {
+            attributeElements: action.payload.initialSelection ?? { uris: [] },
+            displayForm: action.payload.displayForm,
+            negativeSelection: isNegative,
+            localIdentifier: generateFilterLocalIdentifier(),
+            filterElementsBy: action.payload.parentFilters ? [...action.payload.parentFilters] : undefined,
+        },
+    };
+
+    state.filterContext.filters.splice(action.payload.index, 0, filter);
+};
+
 export const filterContextReducers = {
     setFilterContext,
+    addAttributeFilter,
     updateAttributeFilterSelection,
     upsertDateFilter,
 };

@@ -79,6 +79,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
         readonly index: number;
         readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
         readonly initialSelection?: IAttributeElements;
+        readonly initialIsNegativeSelection?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD";
