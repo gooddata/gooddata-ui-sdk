@@ -13,6 +13,11 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 @import "~fixed-data-table-2/dist/fixed-data-table.css";
 
 $transition-length: 0.2s;
+$separator-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0 7 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4h2v2H0V4zm0-4h2v2H0V0zm5 4h2v2H5V4zm0-4h2v2H5V0zm0 8h2v2H5V8zM0 8h2v2H0V8zm0 4h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5-12h2v2H5v-2z' fill='%23B0BECA' fill-rule='evenodd'/%3E%3C/svg%3E%0A";
+$gd-dashboards-filterBar-filterButton-backgroundColor: var(
+    --gd-dashboards-filterBar-filterButton-backgroundColor,
+    "transparent"
+);
 
 .gd-attribute-filter {
     display: inline-block;
@@ -55,6 +60,46 @@ $transition-length: 0.2s;
     line-height: 16px;
     cursor: pointer;
     user-select: none;
+
+    &.disabled {
+        cursor: pointer;
+        user-select: auto;
+        pointer-events: none;
+
+        .button-subtitle::after {
+            content: none;
+        }
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        transition: all $transition-length;
+    }
+
+    &::before {
+        z-index: 1;
+        top: 8px;
+        left: -4px;
+        width: 7px;
+        height: 26px;
+        background: url($separator-icon) no-repeat;
+        opacity: 0;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 1px solid transparent;
+        background: $gd-dashboards-filterBar-filterButton-backgroundColor;
+        transform: translateZ(-1px);
+        border-radius: 3px;
+    }
 
     .button-content {
         position: relative;
@@ -167,6 +212,12 @@ $transition-length: 0.2s;
             &::after {
                 content: "\e613";
             }
+        }
+    }
+
+    &:hover {
+        &::after {
+            border-color: $gd-border-color;
         }
     }
 }
