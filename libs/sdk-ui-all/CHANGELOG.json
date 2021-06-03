@@ -2,6 +2,45 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.4.0",
+      "tag": "@gooddata/sdk-ui-all_v8.4.0",
+      "date": "Thu, 03 Jun 2021 09:24:58 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "The DateFilter component is no longer in beta and is considered stable."
+          },
+          {
+            "comment": "In the DateFilter component, the availableGranularities property of relativeForm is deprecated. Use availableGranularities instead."
+          },
+          {
+            "comment": "The option to disable tooltips in charts is added."
+          },
+          {
+            "comment": "The showTitle property and the onInsightLoaded property are added to the InsightView component."
+          },
+          {
+            "comment": "Visualization definition placeholders are added."
+          },
+          {
+            "comment": "The option to make the legend appear as a popup if the visualization is rendered in a too small container is added."
+          },
+          {
+            "comment": "The includeDateGranularities parameter is added to the loadDateDateDataSets request payload."
+          },
+          {
+            "comment": "The Execute components are extended to support LoadingComponent and ErrorComponent."
+          },
+          {
+            "comment": "The layout customizations of the DashboardView component are supported in GoodData.CN."
+          },
+          {
+            "comment": "The useBackendStrict and useWorkspaceStrict hooks are added for better developer experience."
+          }
+        ]
+      }
+    },
+    {
       "version": "8.3.1",
       "tag": "@gooddata/sdk-ui-all_v8.3.1",
       "date": "Fri, 14 May 2021 12:00:31 GMT",
