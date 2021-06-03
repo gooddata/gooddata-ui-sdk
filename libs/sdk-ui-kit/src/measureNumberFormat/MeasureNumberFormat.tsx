@@ -14,7 +14,7 @@ export const CUSTOM_FORMAT_PRESET_LOCAL_IDENTIFIER = "customFormat";
  * @internal
  */
 export interface IMeasureNumberFormatOwnProps {
-    toggleButton: React.ComponentType<IMeasureNumberFormatToggleButtonProps>;
+    toggleButton: React.ComponentType<IToggleButtonProps>;
     presets: ReadonlyArray<IFormatPreset>;
     separators: ISeparators;
     selectedFormat: string | null;
@@ -33,10 +33,6 @@ export type MeasureNumberFormatProps = IMeasureNumberFormatOwnProps & WrappedCom
 interface IMeasureNumberFormatState {
     showDropdown: boolean;
     showCustomFormatDialog: boolean;
-    selectedPreset: IFormatPreset;
-}
-
-interface IMeasureNumberFormatToggleButtonProps extends IToggleButtonProps {
     selectedPreset: IFormatPreset;
 }
 
