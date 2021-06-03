@@ -5,7 +5,9 @@ import invariant from "ts-invariant";
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
+    IDashboardDateFilter,
     isDashboardAttributeFilter,
+    isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
 
 const selectSelf = createSelector(
@@ -46,3 +48,13 @@ export const selectFilterContextAttributeFilters = createSelector(
     selectFilterContextFilters,
     (filters): IDashboardAttributeFilter[] => filters.filter(isDashboardAttributeFilter),
 );
+
+/**
+ * This selector returns dashboard's filter context date filter. It is expected that the selector is called only after the filter
+ * context state is correctly initialized. Invocations before initialization lead to invariant errors.
+ *
+ * @internal
+ */
+export const selectFilterContextDateFilter = createSelector(selectFilterContextFilters, (filters):
+    | IDashboardDateFilter
+    | undefined => filters.find(isDashboardDateFilter));

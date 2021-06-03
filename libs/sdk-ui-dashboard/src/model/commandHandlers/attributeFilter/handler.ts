@@ -1,7 +1,9 @@
 // (C) 2021 GoodData Corporation
-import { call, put, select } from "redux-saga/effects";
+import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
+import invariant from "ts-invariant";
+import compact from "lodash/compact";
 import {
     ChangeAttributeFilterSelection,
     AddAttributeFilter,
@@ -9,15 +11,52 @@ import {
     MoveAttributeFilter,
     SetAttributeFilterParent,
 } from "../../commands/filters";
-import { commandRejected } from "../../events/general";
+import { invalidArgumentsProvided } from "../../events/general";
+import {
+    attributeFilterAdded,
+    attributeFilterMoved,
+    attributeFilterParentChanged,
+    attributeFilterRemoved,
+    attributeFilterSelectionChanged,
+    filterContextChanged,
+} from "../../events/filters";
 import { filterContextActions } from "../../state/filterContext";
-import { selectFilterContextAttributeFilters } from "../../state/filterContext/filterContextSelectors";
+import {
+    selectFilterContext,
+    selectFilterContextAttributeFilters,
+} from "../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../types/commonTypes";
-import { PromiseFnReturnType } from "../../types/sagas";
 import { validateAttributeFilterParents } from "./parentFilterValidation";
+import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+
+function* getAttributeFilterById(filterLocalId: string): SagaIterator<IDashboardAttributeFilter | undefined> {
+    const allFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+        selectFilterContextAttributeFilters,
+    );
+
+    return allFilters.find((filter) => filter.attributeFilter.localIdentifier === filterLocalId);
+}
+
+function* getAttributeFilterIndexById(filterLocalId: string): SagaIterator<number> {
+    const allFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+        selectFilterContextAttributeFilters,
+    );
+
+    return allFilters.findIndex((filter) => filter.attributeFilter.localIdentifier === filterLocalId);
+}
+
+function* getAttributeFilterByDisplayForm(
+    displayForm: ObjRef,
+): SagaIterator<IDashboardAttributeFilter | undefined> {
+    const allFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+        selectFilterContextAttributeFilters,
+    );
+
+    return allFilters.find((filter) => areObjRefsEqual(filter.attributeFilter.displayForm, displayForm));
+}
 
 export function* attributeFilterChangeSelectionCommandHandler(
-    _ctx: DashboardContext,
+    ctx: DashboardContext,
     cmd: ChangeAttributeFilterSelection,
 ): SagaIterator<void> {
     const { elements, filterLocalId, selectionType } = cmd.payload;
@@ -28,10 +67,21 @@ export function* attributeFilterChangeSelectionCommandHandler(
             negativeSelection: selectionType === "NOT_IN",
         }),
     );
+
+    const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
+    const affectedFilter: SagaReturnType<typeof getAttributeFilterById> = yield call(
+        getAttributeFilterById,
+        cmd.payload.filterLocalId,
+    );
+
+    invariant(affectedFilter, "Inconsistent state in attributeFilterChangeSelectionCommandHandler");
+
+    yield put(attributeFilterSelectionChanged(ctx, affectedFilter, cmd.correlationId));
+    yield put(filterContextChanged(ctx, filterContext, cmd.correlationId));
 }
 
 export function* attributeFilterAddCommandHandler(
-    _ctx: DashboardContext,
+    ctx: DashboardContext,
     cmd: AddAttributeFilter,
 ): SagaIterator<void> {
     const { displayForm, index, initialIsNegativeSelection, initialSelection, parentFilters } = cmd.payload;
@@ -47,31 +97,83 @@ export function* attributeFilterAddCommandHandler(
             parentFilters,
         }),
     );
+
+    const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
+    const affectedFilter: SagaReturnType<typeof getAttributeFilterById> = yield call(
+        getAttributeFilterByDisplayForm,
+        cmd.payload.displayForm,
+    );
+
+    invariant(affectedFilter, "Inconsistent state in attributeFilterAddCommandHandler");
+
+    yield put(attributeFilterAdded(ctx, affectedFilter, cmd.payload.index, cmd.correlationId));
+    yield put(filterContextChanged(ctx, filterContext, cmd.correlationId));
 }
 
 export function* attributeFilterRemoveCommandHandler(
-    _ctx: DashboardContext,
+    ctx: DashboardContext,
     cmd: RemoveAttributeFilters,
 ): SagaIterator<void> {
     const { filterLocalIds } = cmd.payload;
-    yield put(
-        filterContextActions.removeAttributeFilters({
-            filterLocalIds,
-        }),
+    const affectedFilters: SagaReturnType<typeof getAttributeFilterById>[] = yield all(
+        filterLocalIds.map((id) => call(getAttributeFilterById, id)),
     );
+    invariant(
+        compact(affectedFilters).length === affectedFilters.length,
+        "Inconsistent state in attributeFilterRemoveCommandHandler",
+    );
+
+    yield put(filterContextActions.removeAttributeFilters({ filterLocalIds }));
+
+    yield all(
+        affectedFilters.map((filter) =>
+            put(
+                attributeFilterRemoved(
+                    ctx,
+                    filter!,
+                    [], // TODO children
+                    cmd.correlationId,
+                ),
+            ),
+        ),
+    );
+
+    const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
+    yield put(filterContextChanged(ctx, filterContext, cmd.correlationId));
 }
 
 export function* attributeFilterMoveCommandHandler(
-    _ctx: DashboardContext,
+    ctx: DashboardContext,
     cmd: MoveAttributeFilter,
 ): SagaIterator<void> {
     const { filterLocalId, index } = cmd.payload;
+    const originalIndex: SagaReturnType<typeof getAttributeFilterIndexById> = yield call(
+        getAttributeFilterIndexById,
+        filterLocalId,
+    );
+
     yield put(
         filterContextActions.moveAttributeFilter({
             filterLocalId,
             index,
         }),
     );
+
+    const finalIndex: SagaReturnType<typeof getAttributeFilterIndexById> = yield call(
+        getAttributeFilterIndexById,
+        filterLocalId,
+    );
+
+    const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
+    const affectedFilter: SagaReturnType<typeof getAttributeFilterById> = yield call(
+        getAttributeFilterById,
+        filterLocalId,
+    );
+
+    invariant(affectedFilter, "Inconsistent state in attributeFilterMoveCommandHandler");
+
+    yield put(attributeFilterMoved(ctx, affectedFilter, originalIndex, finalIndex, cmd.correlationId));
+    yield put(filterContextChanged(ctx, filterContext, cmd.correlationId));
 }
 
 export function* attributeFilterSetParentCommandHandler(
@@ -87,12 +189,16 @@ export function* attributeFilterSetParentCommandHandler(
     );
 
     if (!filter) {
-        // TODO specialized action here?
-        yield put(commandRejected(ctx, cmd.correlationId));
-        return;
+        return yield put(
+            invalidArgumentsProvided(
+                ctx,
+                `Filter with localId ${filterLocalId} was not found.`,
+                cmd.correlationId,
+            ),
+        );
     }
 
-    const validationResult: PromiseFnReturnType<typeof validateAttributeFilterParents> = yield call(
+    const validationResult: SagaReturnType<typeof validateAttributeFilterParents> = yield call(
         validateAttributeFilterParents,
         ctx,
         filter,
@@ -101,9 +207,13 @@ export function* attributeFilterSetParentCommandHandler(
     );
 
     if (validationResult !== "VALID") {
-        // TODO specialized action here?
-        yield put(commandRejected(ctx, cmd.correlationId));
-        return;
+        const message =
+            validationResult === "EXTRANEOUS_PARENT"
+                ? "Some of the parents provided cannot be used because filters for those are not in the filters collection. " +
+                  "Only existing filters can be used as parent filters."
+                : "Some of the parents provided cannot be used because the 'over' parameter is invalid for the target filter.";
+
+        return yield put(invalidArgumentsProvided(ctx, message, cmd.correlationId));
     }
 
     yield put(
@@ -112,4 +222,15 @@ export function* attributeFilterSetParentCommandHandler(
             parentFilters,
         }),
     );
+
+    const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
+    const affectedFilter: SagaReturnType<typeof getAttributeFilterById> = yield call(
+        getAttributeFilterById,
+        filterLocalId,
+    );
+
+    invariant(affectedFilter, "Inconsistent state in attributeFilterSetParentCommandHandler");
+
+    yield put(attributeFilterParentChanged(ctx, affectedFilter, cmd.correlationId));
+    yield put(filterContextChanged(ctx, filterContext, cmd.correlationId));
 }
