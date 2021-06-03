@@ -98,6 +98,9 @@ export const convertAttribute = (
     const defaultDisplayForm = displayForms[attribute.links.defaultDisplayForm];
     const attributeData = attributes[attribute.identifier];
     const geoPinDisplayForms = (attribute.links.geoPinDisplayForms ?? []).map((uri) => displayForms[uri]);
+    const attributeDisplayForms = attributeData.attribute.content.displayForms.map((displayForm) =>
+        convertDisplayForm(displayForm, attrRef),
+    );
     const groups = bearGroupableCatalogItemToTagRefs(attribute);
     const drillDownStep = attributeData.attribute.content.drillDownStepAttributeDF
         ? uriRef(attributeData.attribute.content.drillDownStepAttributeDF)
@@ -109,6 +112,7 @@ export const convertAttribute = (
                 return a.modify(commonCatalogItemModifications(attribute)).drillDownStep(drillDownStep);
             })
             .defaultDisplayForm(convertDisplayForm(defaultDisplayForm, attrRef))
+            .displayForms(attributeDisplayForms)
             .geoPinDisplayForms(geoPinDisplayForms.map((df) => convertDisplayForm(df, attrRef)))
             .groups(groups),
     );
