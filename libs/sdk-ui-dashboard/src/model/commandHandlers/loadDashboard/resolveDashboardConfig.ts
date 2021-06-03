@@ -12,6 +12,7 @@ import {
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 import { LoadDashboard } from "../../commands/dashboard";
+import { SagaIterator } from "redux-saga";
 import { all, call } from "redux-saga/effects";
 import { dateFilterValidationFailed } from "../../events/dashboard";
 import { defaultDateFilterConfig } from "../../_staging/dateFilterConfig/defaultConfig";
@@ -106,7 +107,10 @@ function resolveColorPalette(ctx: DashboardContext, config: DashboardConfig): Pr
  * @param ctx
  * @param cmd
  */
-export function* resolveDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) {
+export function* resolveDashboardConfig(
+    ctx: DashboardContext,
+    cmd: LoadDashboard,
+): SagaIterator<ResolvedDashboardConfig> {
     const {
         payload: { config = {} },
     } = cmd;
@@ -148,5 +152,7 @@ export function* resolveDashboardConfig(ctx: DashboardContext, cmd: LoadDashboar
         dateFilterConfig: validDateFilterConfig,
         settings: settings.settings,
         colorPalette,
+        mapboxToken: config.mapboxToken,
+        isReadOnly: config.isReadOnly ?? false,
     } as ResolvedDashboardConfig;
 }

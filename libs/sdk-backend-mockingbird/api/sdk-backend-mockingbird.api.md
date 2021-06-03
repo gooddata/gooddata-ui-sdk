@@ -22,6 +22,7 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
+import { IUser } from '@gooddata/sdk-backend-spi';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { ValidationContext } from '@gooddata/sdk-backend-spi';
@@ -132,6 +133,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     useRefType?: RecordedRefType;
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
     securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
+    user?: IUser;
 };
 
 // @internal

@@ -36,6 +36,10 @@ import { alertsSliceReducer } from "./alerts/index";
 import { CatalogState } from "./catalog/catalogState";
 import { catalogSliceReducer } from "./catalog";
 import { spawn } from "redux-saga/effects";
+import { UserState } from "./user/userState";
+import { userSliceReducer } from "./user";
+import { DashboardMetaState } from "./meta/metaState";
+import { metaSliceReducer } from "./meta/index";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -53,6 +57,8 @@ export type DashboardState = {
     layout: LayoutState;
     dateFilterConfig: DateFilterConfigState;
     catalog: CatalogState;
+    user: UserState;
+    meta: DashboardMetaState;
     // Entities
     insights: EntityState<IInsight>;
     alerts: EntityState<IWidgetAlert>;
@@ -125,6 +131,7 @@ function createRootSaga(eventEmitter: Saga, commandHandler: Saga) {
 export type ReduxedDashboardStore = {
     store: DashboardStore;
     registerEventHandler: (handler: DashboardEventHandler) => void;
+    unregisterEventHandler: (handler: DashboardEventHandler) => void;
     rootSagaTask: Task;
 };
 
@@ -169,6 +176,8 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         insights: insightsSliceReducer,
         alerts: alertsSliceReducer,
         catalog: catalogSliceReducer,
+        user: userSliceReducer,
+        meta: metaSliceReducer,
     });
 
     const store = configureStore({
@@ -183,6 +192,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
     return {
         store,
         registerEventHandler: rootEventEmitter.registerHandler,
+        unregisterEventHandler: rootEventEmitter.unregisterHandler,
         rootSagaTask,
     };
 }

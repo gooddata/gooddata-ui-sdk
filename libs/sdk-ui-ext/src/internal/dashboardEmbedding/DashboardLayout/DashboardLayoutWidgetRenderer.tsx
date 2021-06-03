@@ -3,9 +3,7 @@ import React, { CSSProperties } from "react";
 import cx from "classnames";
 import { IDashboardLayoutWidgetRenderProps } from "./interfaces";
 
-export function DashboardLayoutWidgetRenderer(
-    props: IDashboardLayoutWidgetRenderProps<unknown>,
-): JSX.Element {
+export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRenderProps<any>): JSX.Element {
     const {
         item,
         screen,

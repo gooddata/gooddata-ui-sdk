@@ -5,6 +5,7 @@ import { DashboardEvents } from "../events";
 
 export type EventEmitter = {
     registerHandler: (handler: DashboardEventHandler) => void;
+    unregisterHandler: (handler: DashboardEventHandler) => void;
     // TODO: type this
     eventEmitterSaga: any;
 };
@@ -19,11 +20,14 @@ export type EventEmitter = {
  * @param initialHandlers - event handlers to register at the time of creation
  */
 export function createRootEventEmitter(initialHandlers: DashboardEventHandler[] = []): EventEmitter {
-    const eventHandlers = initialHandlers;
+    let eventHandlers = initialHandlers;
 
     return {
         registerHandler: (handler: DashboardEventHandler) => {
             eventHandlers.push(handler);
+        },
+        unregisterHandler: (handler: DashboardEventHandler) => {
+            eventHandlers = eventHandlers.filter((h) => h !== handler);
         },
         eventEmitterSaga: function* () {
             const eventChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.DASH/EVT"));

@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { LoadDashboard } from "../../commands/dashboard";
 import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
@@ -22,6 +23,9 @@ import { catalogActions } from "../../state/catalog/index";
 import { alertsActions } from "../../state/alerts/index";
 import { batchActions } from "redux-batched-actions";
 import { internalErrorOccurred } from "../../events/general";
+import { loadUser } from "./loadUser";
+import { userActions } from "../../state/user";
+import { metaActions } from "../../state/meta";
 
 function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWithReferences> {
     const { backend, workspace, dashboardRef } = ctx;
@@ -29,22 +33,24 @@ function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWith
     return backend.workspace(workspace).dashboards().getDashboardWithReferences(dashboardRef!);
 }
 
-export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDashboard) {
+export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDashboard): SagaIterator<void> {
     try {
         yield put(loadingActions.setLoadingStart());
 
-        const [dashboardWithReferences, config, permissions, catalog, alerts]: [
+        const [dashboardWithReferences, config, permissions, catalog, alerts, user]: [
             PromiseFnReturnType<typeof loadDashboardFromBackend>,
             SagaReturnType<typeof resolveDashboardConfig>,
             SagaReturnType<typeof resolvePermissions>,
             PromiseFnReturnType<typeof loadCatalog>,
             PromiseFnReturnType<typeof loadDashboardAlerts>,
+            PromiseFnReturnType<typeof loadUser>,
         ] = yield all([
             call(loadDashboardFromBackend, ctx),
             call(resolveDashboardConfig, ctx, cmd),
             call(resolvePermissions, ctx, cmd),
             call(loadCatalog, ctx),
             call(loadDashboardAlerts, ctx),
+            call(loadUser, ctx),
         ]);
 
         const { dashboard, references } = dashboardWithReferences;
@@ -59,6 +65,7 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
         const batch = batchActions(
             [
                 configActions.setConfig(config),
+                userActions.setUser(user),
                 permissionsActions.setPermissions(permissions),
                 catalogActions.setCatalogItems({
                     attributes: catalog.attributes(),
@@ -75,6 +82,14 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
                     isUsingDashboardOverrides: effectiveDateFilterConfig.source === "dashboard",
                 }),
                 insightsActions.setInsights(references.insights),
+                metaActions.setMeta({
+                    ref: dashboard.ref,
+                    title: dashboard.title,
+                    updated: dashboard.updated,
+                    description: dashboard.description,
+                    created: dashboard.created,
+                    isLocked: dashboard.isLocked,
+                }),
             ],
             "@@GDC.DASH/BATCH.LOAD",
         );

@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { LoadDashboard } from "../../commands/dashboard";
 import { PromiseFnReturnType } from "../../types/sagas";
@@ -11,7 +12,10 @@ function loadPermissionsFromBackend(ctx: DashboardContext): Promise<IWorkspacePe
     return backend.workspace(workspace).permissions().getPermissionsForCurrentUser();
 }
 
-export function* resolvePermissions(ctx: DashboardContext, cmd: LoadDashboard) {
+export function* resolvePermissions(
+    ctx: DashboardContext,
+    cmd: LoadDashboard,
+): SagaIterator<IWorkspacePermissions> {
     const { permissions } = cmd.payload;
 
     if (permissions) {

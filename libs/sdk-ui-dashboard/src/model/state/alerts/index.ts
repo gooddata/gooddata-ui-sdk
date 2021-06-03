@@ -8,6 +8,9 @@ const alertsSlice = createSlice({
     initialState: alertsAdapter.getInitialState(),
     reducers: {
         setAlerts: alertsAdapter.setAll,
+        addAlert: alertsAdapter.addOne,
+        updateAlert: alertsAdapter.updateOne,
+        removeAlert: alertsAdapter.removeOne,
     },
 });
 

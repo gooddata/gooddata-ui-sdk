@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+import { SagaIterator } from "redux-saga";
 import { IDashboardDateFilterConfig, IDateFilterConfig } from "@gooddata/sdk-backend-spi";
 import { DashboardContext } from "../../types/commonTypes";
 import { LoadDashboard } from "../../commands/dashboard";
@@ -17,12 +18,12 @@ export function* mergeDateFilterConfigWithOverrides(
     cmd: LoadDashboard,
     config: IDateFilterConfig,
     dashboardOverrides?: IDashboardDateFilterConfig,
-) {
+): SagaIterator<DateFilterMergeResult> {
     if (!dashboardOverrides) {
         return {
             config,
             source: "workspace",
-        };
+        } as DateFilterMergeResult;
     }
 
     const mergedConfig = mergeDateFilterConfigs(config, dashboardOverrides);
