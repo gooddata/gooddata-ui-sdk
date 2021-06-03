@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+import { SagaIterator } from "redux-saga";
 import { actionChannel, call, getContext, take } from "redux-saga/effects";
 import { loadDashboardCommandHandler } from "./loadDashboard/handler";
 import { DashboardContext } from "../types/commonTypes";
@@ -7,6 +8,9 @@ import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
 import { commandRejected, internalErrorOccurred } from "../events/general";
 import { dateFilterChangeSelectionCommandHandler } from "./dateFilter/handler";
 import { attributeFilterChangeSelectionCommandHandler } from "./attributeFilter/handler";
+import { createDashboardAlertCommandHandler } from "./alerts/createAlertHandler";
+import { removeDashboardAlertCommandHandler } from "./alerts/removeAlertHandler";
+import { updateDashboardAlertCommandHandler } from "./alerts/updateAlertHandler";
 
 const DefaultCommandHandlers = {
     "GDC.DASH/CMD.LOAD": loadDashboardCommandHandler,
@@ -40,6 +44,9 @@ const DefaultCommandHandlers = {
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": unhandledCommand,
+    "GDC.DASH/CMD.ALERTS.CREATE": createDashboardAlertCommandHandler,
+    "GDC.DASH/CMD.ALERTS.UPDATE": updateDashboardAlertCommandHandler,
+    "GDC.DASH/CMD.ALERTS.REMOVE": removeDashboardAlertCommandHandler,
 };
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
@@ -53,7 +60,7 @@ function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
  * The commands are intended for serial processing, without any forking. A buffering action channel is in place to
  * prevent loss of commands.
  */
-export function* rootCommandHandler() {
+export function* rootCommandHandler(): SagaIterator<void> {
     const commandChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.DASH/CMD"));
 
     while (true) {

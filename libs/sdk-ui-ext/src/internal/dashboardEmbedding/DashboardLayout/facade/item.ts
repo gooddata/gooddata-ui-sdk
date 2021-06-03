@@ -18,6 +18,8 @@ import {
     IDashboardLayoutItem,
     ScreenSize,
     DashboardWidget,
+    isWidget,
+    isWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
@@ -102,10 +104,10 @@ export class DashboardLayoutItemFacade<TWidget> implements IDashboardLayoutItemF
     }
 
     public isWidgetItem(): this is DashboardLayoutItemFacade<IWidget> {
-        return isKpiWidget(this.widget());
+        return isWidget(this.widget());
     }
     public isWidgetDefinitionItem(): this is DashboardLayoutItemFacade<IWidgetDefinition> {
-        return isKpiWidget(this.widget());
+        return isWidgetDefinition(this.widget());
     }
     public isKpiWidgetItem(): this is DashboardLayoutItemFacade<IKpiWidget> {
         return isKpiWidget(this.widget());

@@ -11,7 +11,7 @@ import { IInsightDefinition, insightProperties, IColorPalette, insightTitle } fr
 
 import { IVisualization, IVisProps, FullVisualizationCatalog } from "../internal";
 import {
-    GoodDataSdkError,
+    OnError,
     fillMissingTitles,
     ignoreTitlesForSimpleMeasures,
     ILocale,
@@ -38,7 +38,7 @@ export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"
     locale: ILocale;
     settings: IUserWorkspaceSettings | undefined;
     colorPalette: IColorPalette | undefined;
-    onError?: (error: GoodDataSdkError | undefined) => void;
+    onError?: OnError;
     theme?: ITheme;
     isVisualisationLoading?: boolean;
 }

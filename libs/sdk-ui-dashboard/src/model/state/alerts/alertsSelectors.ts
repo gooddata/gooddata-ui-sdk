@@ -1,12 +1,18 @@
 // (C) 2021 GoodData Corporation
+import { createSelector } from "@reduxjs/toolkit";
 import { alertsAdapter } from "./alertsEntityAdapter";
 import { DashboardState } from "../dashboardStore";
 
-const selectSelf = alertsAdapter.getSelectors((state: DashboardState) => state.alerts);
+const selectSelf = createSelector(
+    (state: DashboardState) => state,
+    (state) => state.alerts,
+);
+
+const adapterSelectors = alertsAdapter.getSelectors(selectSelf);
 
 /**
  * Selects all alerts used on the dashboard.
  *
  * @internal
  */
-export const selectAlerts = selectSelf.selectAll;
+export const selectAlerts = adapterSelectors.selectAll;

@@ -150,7 +150,9 @@ Object {
     ],
     "selectedOption": "THIS_MONTH",
   },
+  "isReadOnly": false,
   "locale": "en-US",
+  "mapboxToken": undefined,
   "separators": Object {
     "decimal": ".",
     "thousand": ",",

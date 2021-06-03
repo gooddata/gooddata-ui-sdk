@@ -36,6 +36,21 @@ export type DashboardConfig = {
      * Color palette to pass down to charts.
      */
     colorPalette?: IColorPalette;
+
+    /**
+     * Token for Mapbox API. You need this to use GeoCharts in your dashboards.
+     *
+     * @remarks To create a Mapbox account and an access token, see [this guide](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/).
+     */
+    mapboxToken?: string;
+
+    /**
+     * If set to true, the dashboard will be embedded in a read-only mode disabling any user interaction
+     * that would alter any backend state (disabling creating/changing alerts, creating scheduled emails, etc.).
+     *
+     * Defaults to false i.e. NOT a read-only mode.
+     */
+    isReadOnly?: boolean;
 };
 
 /**

@@ -25,6 +25,8 @@ export const selectConfig = createSelector(selectSelf, (configState) => {
  *
  * Note: this configuration SHOULD be further augmented by the dashboard-level overrides to obtain
  * the effective date filter configuration.
+ *
+ * @internal
  */
 export const selectDateFilterConfig = createSelector(selectConfig, (state) => {
     return state.dateFilterConfig;
@@ -64,4 +66,23 @@ export const selectSeparators = createSelector(selectConfig, (state) => {
  */
 export const selectColorPalette = createSelector(selectConfig, (state) => {
     return state.colorPalette;
+});
+
+/**
+ * Returns Mapbox token.
+ *
+ * @internal
+ */
+export const selectMapboxToken = createSelector(selectConfig, (state) => {
+    return state.mapboxToken;
+});
+
+/**
+ * Returns whether the Dashboard is executed in read-only mode.
+ * Read-only mode disables any interactions that can alter the backend data.
+ *
+ * @internal
+ */
+export const selectIsReadOnly = createSelector(selectConfig, (state) => {
+    return state.isReadOnly;
 });

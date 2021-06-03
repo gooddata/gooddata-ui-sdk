@@ -22,7 +22,16 @@ export {
 export { selectDashboardLoading } from "./state/loading/loadingSelectors";
 export { LoadingState } from "./state/loading/loadingState";
 export { ConfigState } from "./state/config/configState";
-export { selectConfig, selectLocale, selectSeparators, selectSettings } from "./state/config/configSelectors";
+export {
+    selectConfig,
+    selectLocale,
+    selectSeparators,
+    selectSettings,
+    selectColorPalette,
+    selectDateFilterConfig,
+    selectIsReadOnly,
+    selectMapboxToken,
+} from "./state/config/configSelectors";
 export { PermissionsState } from "./state/permissions/permissionsState";
 export { selectPermissions } from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
@@ -44,6 +53,19 @@ export {
 } from "./state/dateFilterConfig/dateFilterConfigSelectors";
 export { selectInsights } from "./state/insights/insightsSelectors";
 export { CatalogState } from "./state/catalog/catalogState";
+export {
+    selectAttributesWithDrillDown,
+    selectCatalogAttributes,
+    selectCatalogDateDatasets,
+    selectCatalogFacts,
+    selectCatalogMeasures,
+} from "./state/catalog/catalogSelectors";
+export { AlertsState } from "./state/alerts/alertsState";
+export { selectAlerts } from "./state/alerts/alertsSelectors";
+export { UserState } from "./state/user/userState";
+export { selectUser } from "./state/user/userSelectors";
+export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
+export { selectDashboardRef } from "./state/meta/metaSelectors";
 
 export { DashboardContext, DashboardConfig, ResolvedDashboardConfig } from "./types/commonTypes";
 export {

@@ -35,8 +35,9 @@ import {
     IOrganizationDescriptor,
     IOrganizations,
     IDateFilterConfigsQueryResult,
+    IUser,
 } from "@gooddata/sdk-backend-spi";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { IColorPalette, idRef } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
 import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedInsights } from "./insights";
@@ -241,8 +242,17 @@ function recordedOrganizations(implConfig: RecordedBackendConfig): IOrganization
 // returns the same settings as the global ones
 function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
     return {
-        getUser() {
-            throw new NotSupported("not supported");
+        async getUser(): Promise<IUser> {
+            return (
+                implConfig.user ?? {
+                    login: USER_ID,
+                    ref: idRef(USER_ID),
+                    email: "",
+                    fullName: "",
+                    firstName: "",
+                    lastName: "",
+                }
+            );
         },
         settings(): IUserSettingsService {
             return {

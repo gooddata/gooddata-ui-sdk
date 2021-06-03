@@ -8,3 +8,5 @@ export * from "./filterBar";
 export * from "./topBar";
 export * from "./model";
 export * from "./layout";
+export * from "./kpi";
+export * from "./insight";

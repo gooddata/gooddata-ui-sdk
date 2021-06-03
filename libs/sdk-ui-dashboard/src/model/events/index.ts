@@ -44,6 +44,7 @@ import {
     DashboardInsightWidgetInsightSwitched,
     DashboardInsightWidgetVisPropertiesChanged,
 } from "./insight";
+import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertRemoved } from "./alerts";
 
 export { IDashboardEvent, DashboardEventType } from "./base";
 export {
@@ -96,6 +97,7 @@ export {
     DashboardInsightWidgetDrillsRemoved,
     DashboardInsightWidgetChanged,
 } from "./insight";
+export { DashboardAlertCreated, DashboardAlertRemoved, DashboardAlertUpdated } from "./alerts";
 
 /**
  * @internal
@@ -136,4 +138,7 @@ export type DashboardEvents =
     | DashboardInsightWidgetInsightSwitched
     | DashboardInsightWidgetDrillsModified
     | DashboardInsightWidgetDrillsRemoved
-    | DashboardInsightWidgetChanged;
+    | DashboardInsightWidgetChanged
+    | DashboardAlertCreated
+    | DashboardAlertRemoved
+    | DashboardAlertUpdated;

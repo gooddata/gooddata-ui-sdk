@@ -9,6 +9,7 @@ import {
     IDateFilterConfig,
     ISettings,
     ITheme,
+    IUser,
     IWidgetAlert,
     ValidationContext,
 } from "@gooddata/sdk-backend-spi";
@@ -71,6 +72,11 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * when this custom factory is not setup.
      */
     securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
+
+    /**
+     * Specify user to return.
+     */
+    user?: IUser;
 };
 
 /**

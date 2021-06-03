@@ -9,7 +9,12 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../model/state/dashboardStore";
-import { InitialLoadCorrelationId, selectDashboardLoading, selectFilterContextFilters } from "../model";
+import {
+    InitialLoadCorrelationId,
+    selectDashboardLoading,
+    selectLocale,
+    selectFilterContextFilters,
+} from "../model";
 import { loadDashboard } from "../model/commands/dashboard";
 import {
     changeAttributeFilterSelection,
@@ -25,19 +30,30 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import {
-    ErrorComponent as DefaultError,
     IErrorProps,
-    LoadingComponent as DefaultLoading,
     ILoadingProps,
     useBackendStrict,
     useWorkspaceStrict,
     IDrillableItem,
     IHeaderPredicate,
+    ErrorComponent as DefaultError,
+    LoadingComponent as DefaultLoading,
 } from "@gooddata/sdk-ui";
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { DashboardConfig } from "../model/types/commonTypes";
-import { Layout, LayoutProps } from "../layout/Layout";
 import invariant from "ts-invariant";
+import { DashboardEventsProvider } from "./DashboardEventsContext";
+import { DashboardComponentsProvider, useDashboardComponentsContext } from "./DashboardComponentsContext";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/esm/internal/utils/internalIntlProvider";
+import { DashboardInsightProps, DefaultDashboardInsight } from "../insight";
+import { DashboardKpiProps, DefaultDashboardKpi } from "../kpi";
+import {
+    DashboardWidgetProps,
+    DashboardLayoutProps,
+    DefaultDashboardLayout,
+    DefaultDashboardWidget,
+    DashboardLayout,
+} from "../layout";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -189,24 +205,70 @@ export interface IDashboardProps {
 
     /**
      * Optionally configure how the dashboard layout looks and behaves.
-     *
-     * TODO: flesh out interfaces & types; this is where existing stuff from DashboardView / DashboardLayout will
-     *  start connecting up.
      */
     dashboardLayoutConfig?: {
         /**
          * Specify component to use for rendering the layout.
-         *
-         * If you want to implement an ad-hoc dashboard layout yourself, you can provide children render function.
          */
-        Component?: React.ComponentType<LayoutProps>;
+        Component?: React.ComponentType<DashboardLayoutProps>;
 
         /**
          * Optionally specify props to customize the default implementation of Dashboard View.
          *
          * This has no effect if custom component is used.
          */
-        defaultComponentProps?: LayoutProps;
+        defaultComponentProps?: DashboardLayoutProps;
+    };
+
+    /**
+     * Optionally configure how the dashboard widget looks and behaves.
+     */
+    widgetConfig?: {
+        /**
+         * Specify component to use for rendering the widget.
+         */
+        Component?: React.ComponentType<DashboardWidgetProps>;
+
+        /**
+         * Optionally specify props to customize the default implementation of Dashboard View.
+         *
+         * This has no effect if custom component is used.
+         */
+        defaultComponentProps?: DashboardWidgetProps;
+
+        /**
+         * Insight config
+         */
+        insight?: {
+            /**
+             * Specify component to use for rendering the insight
+             */
+            Component?: React.ComponentType<DashboardInsightProps>;
+
+            /**
+             * Optionally specify props to customize the default implementation of Insight.
+             *
+             * This has no effect if custom component is used.
+             */
+            defaultComponentProps?: DashboardInsightProps;
+        };
+
+        /**
+         * Kpi config
+         */
+        kpi?: {
+            /**
+             * Specify component to use for rendering the insight
+             */
+            Component?: React.ComponentType<DashboardKpiProps>;
+
+            /**
+             * Optionally specify props to customize the default implementation of Insight.
+             *
+             * This has no effect if custom component is used.
+             */
+            defaultComponentProps?: DashboardKpiProps;
+        };
     };
 
     /**
@@ -216,41 +278,24 @@ export interface IDashboardProps {
 }
 
 const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const {
-        dashboardRef,
-        dashboardLayoutConfig,
-        drillableItems,
-        filterBarConfig,
-        ErrorComponent,
-        LoadingComponent,
-    } = props;
-    const customLayout = typeof props.children === "function" ? props.children?.(null) : props.children;
-    const LayoutComponent = dashboardLayoutConfig?.Component ?? Layout;
+    const { drillableItems, filterBarConfig } = props;
+    const locale = useDashboardSelector(selectLocale);
     const FilterBarComponent = filterBarConfig?.Component ?? FilterBar;
 
     const { filters, onFilterChanged } = useFilterBar();
 
     return (
-        <React.Fragment>
+        <InternalIntlWrapper locale={locale}>
             <FilterBarComponent filters={filters} onFilterChanged={onFilterChanged} />
-            {customLayout ?? (
-                <LayoutComponent
-                    dashboardRef={dashboardRef}
-                    drillableItems={drillableItems}
-                    transformLayout={dashboardLayoutConfig?.defaultComponentProps?.transformLayout}
-                    widgetRenderer={dashboardLayoutConfig?.defaultComponentProps?.widgetRenderer}
-                    ErrorComponent={ErrorComponent}
-                    LoadingComponent={LoadingComponent}
-                />
-            )}
-        </React.Fragment>
+            <DashboardLayout drillableItems={drillableItems} />
+        </InternalIntlWrapper>
     );
 };
 
 const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const dispatch = useDashboardDispatch();
-    const { ErrorComponent = DefaultError, LoadingComponent = DefaultLoading } = props;
     const { loading, error, result } = useDashboardSelector(selectDashboardLoading);
+    const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
     useEffect(() => {
         if (!loading && result === undefined) {
@@ -286,7 +331,21 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 
     return (
         <Provider store={dashboardStore.store} context={ReactDashboardContext}>
-            <DashboardLoading {...props} />
+            <DashboardEventsProvider
+                registerHandler={dashboardStore.registerEventHandler}
+                unregisterHandler={dashboardStore.unregisterEventHandler}
+            >
+                <DashboardComponentsProvider
+                    ErrorComponent={props.ErrorComponent ?? DefaultError}
+                    LoadingComponent={props.LoadingComponent ?? DefaultLoading}
+                    LayoutComponent={props.dashboardLayoutConfig?.Component ?? DefaultDashboardLayout}
+                    InsightComponent={props.widgetConfig?.insight?.Component ?? DefaultDashboardInsight}
+                    KpiComponent={props.widgetConfig?.kpi?.Component ?? DefaultDashboardKpi}
+                    WidgetComponent={props.widgetConfig?.Component ?? DefaultDashboardWidget}
+                >
+                    <DashboardLoading {...props} />
+                </DashboardComponentsProvider>
+            </DashboardEventsProvider>
         </Provider>
     );
 };

@@ -10,7 +10,7 @@ import { Dashboard } from "./dashboard";
 /**
  * Shows how to use built-in customization to influence placement of the menu
  */
-export function demonstrateCustomMenuPlacement() {
+export function demonstrateCustomMenuPlacement(): JSX.Element {
     return (
         <Dashboard
             topBarConfig={{
@@ -27,7 +27,7 @@ export function demonstrateCustomMenuPlacement() {
 /**
  * Shows how to use built-in customization to influence placement and add custom menu items
  */
-export function demonstrateCustomMenuPlacementAndItem() {
+export function demonstrateCustomMenuPlacementAndItem(): JSX.Element {
     const customItem: [number, MenuButtonItem] = [
         -1,
         {
@@ -65,7 +65,7 @@ const MyCustomAttrFilter: React.FC<IDashboardAttributeFilterProps> = (
 /**
  * Shows how to use built-in customization to have custom implementation of filter.
  */
-export function demonstrateCustomAttributeFilterImpl() {
+export function demonstrateCustomAttributeFilterImpl(): JSX.Element {
     return (
         <Dashboard
             filterBarConfig={{
@@ -82,7 +82,7 @@ export function demonstrateCustomAttributeFilterImpl() {
 /**
  * Shows how to add a completely custom dashboard rendering.
  */
-export function demonstrateCustomDashboardLayout() {
+export function demonstrateCustomDashboardLayout(): JSX.Element {
     return (
         <Dashboard>
             {(_dashboard: any) => {

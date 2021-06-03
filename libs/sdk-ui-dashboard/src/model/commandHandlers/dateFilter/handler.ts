@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+import { SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 import { ChangeDateFilterSelection } from "../../commands/filters";
 import { filterContextActions } from "../../state/filterContext";
@@ -7,7 +8,7 @@ import { DashboardContext } from "../../types/commonTypes";
 export function* dateFilterChangeSelectionCommandHandler(
     _ctx: DashboardContext,
     cmd: ChangeDateFilterSelection,
-) {
+): SagaIterator<void> {
     const isAllTime =
         cmd.payload.type === "relative" &&
         cmd.payload.granularity === "GDC.time.date" &&

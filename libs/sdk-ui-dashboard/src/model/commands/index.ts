@@ -36,6 +36,7 @@ import {
     ReplaceSectionItem,
     UndoLayoutChanges,
 } from "./layout";
+import { CreateAlert, RemoveAlert, UpdateAlert } from "./alerts";
 
 export { DashboardCommandType, IDashboardCommand } from "./base";
 export {
@@ -91,6 +92,7 @@ export {
     DashboardLayoutCommands,
     UndoPointSelector,
 } from "./layout";
+export { CreateAlert, createAlert, RemoveAlert, removeAlert, UpdateAlert, updateAlert } from "./alerts";
 
 export {
     ChangeKpiWidgetHeader,
@@ -159,4 +161,7 @@ export type DashboardCommands =
     | ChangeInsightWidgetInsight
     | ModifyDrillsForInsightWidget
     | RemoveDrillsForInsightWidget
-    | RefreshInsightWidget;
+    | RefreshInsightWidget
+    | CreateAlert
+    | UpdateAlert
+    | RemoveAlert;
