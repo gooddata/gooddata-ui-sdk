@@ -110,15 +110,18 @@ const updateAttributeFilterSelection: FilterContextReducer<
     };
 };
 
-const addAttributeFilter: FilterContextReducer<
-    PayloadAction<{
-        readonly displayForm: ObjRef;
-        readonly index: number;
-        readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
-        readonly initialSelection?: IAttributeElements;
-        readonly initialIsNegativeSelection?: boolean;
-    }>
-> = (state, action) => {
+export interface IAddAttributeFilterPayload {
+    readonly displayForm: ObjRef;
+    readonly index: number;
+    readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
+    readonly initialSelection?: IAttributeElements;
+    readonly initialIsNegativeSelection?: boolean;
+}
+
+const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilterPayload>> = (
+    state,
+    action,
+) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
 
     const hasSelection =
@@ -143,11 +146,14 @@ const addAttributeFilter: FilterContextReducer<
     }
 };
 
-const removeAttributeFilters: FilterContextReducer<
-    PayloadAction<{
-        readonly filterLocalIds: string[];
-    }>
-> = (state, action) => {
+export interface IRemoveAttributeFiltersPayload {
+    readonly filterLocalIds: string[];
+}
+
+const removeAttributeFilters: FilterContextReducer<PayloadAction<IRemoveAttributeFiltersPayload>> = (
+    state,
+    action,
+) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
 
     state.filterContext.filters = state.filterContext.filters.filter((item) => {
@@ -156,14 +162,19 @@ const removeAttributeFilters: FilterContextReducer<
         }
         return true;
     });
+
+    // TODO remove the removed filters from any filters that had those as parents
 };
 
-const moveAttributeFilter: FilterContextReducer<
-    PayloadAction<{
-        readonly filterLocalId: string;
-        readonly index: number;
-    }>
-> = (state, action) => {
+export interface IMoveAttributeFilterPayload {
+    readonly filterLocalId: string;
+    readonly index: number;
+}
+
+const moveAttributeFilter: FilterContextReducer<PayloadAction<IMoveAttributeFilterPayload>> = (
+    state,
+    action,
+) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
 
     const currentFilterIndex = state.filterContext.filters.findIndex(
@@ -185,12 +196,15 @@ const moveAttributeFilter: FilterContextReducer<
     }
 };
 
-const setAttributeFilterParent: FilterContextReducer<
-    PayloadAction<{
-        readonly filterLocalId: string;
-        readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
-    }>
-> = (state, action) => {
+export interface ISetAttributeFilterParentPayload {
+    readonly filterLocalId: string;
+    readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
+}
+
+const setAttributeFilterParent: FilterContextReducer<PayloadAction<ISetAttributeFilterParentPayload>> = (
+    state,
+    action,
+) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
 
     const currentFilterIndex = state.filterContext.filters.findIndex(
