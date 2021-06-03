@@ -35,6 +35,15 @@ import {
     DashboardKpiWidgetHeaderChanged,
     DashboardKpiWidgetMeasureChanged,
 } from "./kpi";
+import {
+    DashboardInsightWidgetChanged,
+    DashboardInsightWidgetDrillsModified,
+    DashboardInsightWidgetDrillsRemoved,
+    DashboardInsightWidgetFilterSettingsChanged,
+    DashboardInsightWidgetHeaderChanged,
+    DashboardInsightWidgetInsightSwitched,
+    DashboardInsightWidgetVisPropertiesChanged,
+} from "./insight";
 
 export { IDashboardEvent, DashboardEventType } from "./base";
 export {
@@ -78,6 +87,16 @@ export {
     DashboardKpiWidgetChanged,
 } from "./kpi";
 
+export {
+    DashboardInsightWidgetHeaderChanged,
+    DashboardInsightWidgetFilterSettingsChanged,
+    DashboardInsightWidgetVisPropertiesChanged,
+    DashboardInsightWidgetInsightSwitched,
+    DashboardInsightWidgetDrillsModified,
+    DashboardInsightWidgetDrillsRemoved,
+    DashboardInsightWidgetChanged,
+} from "./insight";
+
 /**
  * @internal
  */
@@ -110,4 +129,11 @@ export type DashboardEvents =
     | DashboardKpiWidgetMeasureChanged
     | DashboardKpiWidgetFilterSettingsChanged
     | DashboardKpiWidgetComparisonChanged
-    | DashboardKpiWidgetChanged;
+    | DashboardKpiWidgetChanged
+    | DashboardInsightWidgetHeaderChanged
+    | DashboardInsightWidgetFilterSettingsChanged
+    | DashboardInsightWidgetVisPropertiesChanged
+    | DashboardInsightWidgetInsightSwitched
+    | DashboardInsightWidgetDrillsModified
+    | DashboardInsightWidgetDrillsRemoved
+    | DashboardInsightWidgetChanged;
