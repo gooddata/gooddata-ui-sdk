@@ -15,6 +15,7 @@ export {
 } from "./DashboardAttributeFilter";
 export {
     IDashboardDateFilterProps,
+    IDashboardDateFilterConfig,
     DashboardDateFilterComponent,
     DashboardDateFilter,
     HiddenDashboardDateFilter,

@@ -25,7 +25,7 @@ import { IDashboard } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
-import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
+import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
@@ -694,7 +694,7 @@ export interface DashboardWasReset extends IDashboardEvent {
 
 // @internal (undocumented)
 export interface DateFilterConfigState {
-    dateFilterConfig?: IDashboardDateFilterConfig;
+    dateFilterConfig?: IDashboardDateFilterConfig_2;
     effectiveDateFilterConfig?: IDateFilterConfig;
     isUsingDashboardOverrides?: boolean;
 }
@@ -769,10 +769,15 @@ export interface IDashboardCommand {
 }
 
 // @internal
-export interface IDashboardDateFilterProps {
+export interface IDashboardDateFilterConfig {
     availableGranularities: DateFilterGranularity[];
     customFilterName?: string;
     dateFilterOptions: IDateFilterOptionsByType;
+}
+
+// @internal
+export interface IDashboardDateFilterProps {
+    config: IDashboardDateFilterConfig;
     filter: IDashboardDateFilter | undefined;
     onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
     readonly?: boolean;

@@ -17,7 +17,11 @@ import {
 } from "../model";
 
 import { DashboardAttributeFilter, DashboardAttributeFilterComponent } from "./DashboardAttributeFilter";
-import { DashboardDateFilter, DashboardDateFilterComponent } from "./DashboardDateFilter";
+import {
+    DashboardDateFilter,
+    DashboardDateFilterComponent,
+    IDashboardDateFilterConfig,
+} from "./DashboardDateFilter";
 import { FilterBarContainer } from "./FilterBarContainer";
 
 /**
@@ -104,15 +108,19 @@ export const FilterBar: React.FC<IFilterBarProps & IDefaultFilterBarProps> = ({
 
     const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
 
+    const dateFilterComponentConfig: IDashboardDateFilterConfig = {
+        availableGranularities,
+        dateFilterOptions,
+        customFilterName,
+    };
+
     return (
         <FilterBarContainer>
             <div className="dash-filters-date dash-filters-attribute">
                 <DateFilter
                     filter={dateFilter}
                     onFilterChanged={onFilterChanged}
-                    availableGranularities={availableGranularities}
-                    customFilterName={customFilterName}
-                    dateFilterOptions={dateFilterOptions}
+                    config={dateFilterComponentConfig}
                     readonly={dateFilterMode === "readonly"}
                 />
             </div>

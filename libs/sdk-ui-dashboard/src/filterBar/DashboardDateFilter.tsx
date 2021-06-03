@@ -4,7 +4,29 @@ import React, { useMemo, useState } from "react";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 import { DateFilter, IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 import { dateFilterOptionToDashboardDateFilter } from "./converters";
-import { matchDateFilterToDateFilterOptionWithPreference } from "./dateFilterUtils";
+import { matchDateFilterToDateFilterOptionWithPreference } from "../model/_staging/dateFilterConfig/dateFilterOptionMapping";
+
+/**
+ * Defines the configuration of the DateFilter component.
+ *
+ * @internal
+ */
+export interface IDashboardDateFilterConfig {
+    /**
+     * Granularities available in the Floating range form.
+     */
+    availableGranularities: DateFilterGranularity[];
+
+    /**
+     * A {@link @gooddata/sdk-ui-filters#IDateFilterOptionsByType} configuration of the Date Filter.
+     */
+    dateFilterOptions: IDateFilterOptionsByType;
+
+    /**
+     * Optionally specify custom filter name. Defaults to "Date range" (or its localized equivalent).
+     */
+    customFilterName?: string;
+}
 
 /**
  * Defines interface between filter bar and date filter implementation
@@ -26,19 +48,9 @@ export interface IDashboardDateFilterProps {
     onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
 
     /**
-     * Granularities available in the Floating range form.
+     * Additional DateFilter configuration.
      */
-    availableGranularities: DateFilterGranularity[];
-
-    /**
-     * A {@link @gooddata/sdk-ui-filters#IDateFilterOptionsByType} configuration of the Date Filter.
-     */
-    dateFilterOptions: IDateFilterOptionsByType;
-
-    /**
-     * Optionally specify custom filter name. Defaults to "Date range" (or its localized equivalent).
-     */
-    customFilterName?: string;
+    config: IDashboardDateFilterConfig;
 
     /**
      * Optionally specify whether the filter should be readonly.
@@ -56,16 +68,18 @@ export interface IDashboardDateFilterProps {
 export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = ({
     filter,
     onFilterChanged,
-    customFilterName,
-    availableGranularities,
-    dateFilterOptions,
+    config,
     readonly,
 }) => {
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
         () =>
-            matchDateFilterToDateFilterOptionWithPreference(filter, dateFilterOptions, lastSelectedOptionId),
-        [filter, dateFilterOptions, lastSelectedOptionId],
+            matchDateFilterToDateFilterOptionWithPreference(
+                filter,
+                config.dateFilterOptions,
+                lastSelectedOptionId,
+            ),
+        [filter, config.dateFilterOptions, lastSelectedOptionId],
     );
 
     return (
@@ -73,9 +87,9 @@ export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = ({
             excludeCurrentPeriod={excludeCurrentPeriod}
             selectedFilterOption={dateFilterOption}
             dateFilterMode={readonly ? "readonly" : "active"}
-            filterOptions={dateFilterOptions}
-            availableGranularities={availableGranularities}
-            customFilterName={customFilterName}
+            filterOptions={config.dateFilterOptions}
+            availableGranularities={config.availableGranularities}
+            customFilterName={config.customFilterName}
             onApply={(option, exclude) => {
                 setLastSelectedOptionId(option.localIdentifier);
                 onFilterChanged(dateFilterOptionToDashboardDateFilter(option, exclude));

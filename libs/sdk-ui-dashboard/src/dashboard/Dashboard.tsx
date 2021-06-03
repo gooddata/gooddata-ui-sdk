@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { FilterBar, FilterBarComponent, IDefaultFilterBarProps } from "../filterBar";
 import { IDefaultTopBarProps, TopBarComponent } from "../topBar";
 import { Provider } from "react-redux";
@@ -17,6 +17,7 @@ import {
     clearDateFilterSelection,
 } from "../model/commands/filters";
 import {
+    FilterContextItem,
     IAnalyticalBackend,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
@@ -37,6 +38,39 @@ import { DashboardEventHandler } from "../model/events/eventHandler";
 import { DashboardConfig } from "../model/types/commonTypes";
 import { Layout, LayoutProps } from "../layout/Layout";
 import invariant from "ts-invariant";
+
+const useFilterBar = (): {
+    filters: FilterContextItem[];
+    onFilterChanged: (filter: FilterContextItem | undefined) => void;
+} => {
+    const filters = useDashboardSelector(selectFilterContextFilters);
+    const dispatch = useDashboardDispatch();
+    const onFilterChanged = useCallback(
+        (filter: FilterContextItem | undefined) => {
+            if (!filter) {
+                // all time filter
+                dispatch(clearDateFilterSelection());
+            } else if (isDashboardDateFilter(filter)) {
+                const { type, granularity, from, to } = filter.dateFilter;
+                dispatch(changeDateFilterSelection(type, granularity, from, to));
+            } else if (isDashboardAttributeFilter(filter)) {
+                const { attributeElements, negativeSelection, localIdentifier } = filter.attributeFilter;
+                dispatch(
+                    changeAttributeFilterSelection(
+                        localIdentifier!,
+                        attributeElements,
+                        negativeSelection ? "NOT_IN" : "IN",
+                    ),
+                );
+            } else {
+                invariant(false, "Unknown filter type");
+            }
+        },
+        [dispatch],
+    );
+
+    return { filters, onFilterChanged };
+};
 
 /**
  * @internal
@@ -194,35 +228,11 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const LayoutComponent = dashboardLayoutConfig?.Component ?? Layout;
     const FilterBarComponent = filterBarConfig?.Component ?? FilterBar;
 
-    const filters = useDashboardSelector(selectFilterContextFilters);
-    const dispatch = useDashboardDispatch();
+    const { filters, onFilterChanged } = useFilterBar();
 
     return (
         <React.Fragment>
-            <FilterBarComponent
-                filters={filters}
-                onFilterChanged={(filter) => {
-                    if (!filter) {
-                        // all time filter
-                        dispatch(clearDateFilterSelection());
-                    } else if (isDashboardDateFilter(filter)) {
-                        const { type, granularity, from, to } = filter.dateFilter;
-                        dispatch(changeDateFilterSelection(type, granularity, from, to));
-                    } else if (isDashboardAttributeFilter(filter)) {
-                        const { attributeElements, negativeSelection, localIdentifier } =
-                            filter.attributeFilter;
-                        dispatch(
-                            changeAttributeFilterSelection(
-                                localIdentifier!,
-                                attributeElements,
-                                negativeSelection ? "NOT_IN" : "IN",
-                            ),
-                        );
-                    } else {
-                        invariant(false, "Unknown filter type");
-                    }
-                }}
-            />
+            <FilterBarComponent filters={filters} onFilterChanged={onFilterChanged} />
             {customLayout ?? (
                 <LayoutComponent
                     dashboardRef={dashboardRef}
