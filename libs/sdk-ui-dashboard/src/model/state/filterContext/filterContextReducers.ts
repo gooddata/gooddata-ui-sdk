@@ -38,17 +38,20 @@ const setFilterContext: FilterContextReducer<PayloadAction<any>> = (state, actio
     };
 };
 
-const upsertDateFilter: FilterContextReducer<
-    PayloadAction<
-        | { readonly type: "allTime" }
-        | {
-              readonly type: DateFilterType;
-              readonly granularity: DateFilterGranularity;
-              readonly from?: DateString | number;
-              readonly to?: DateString | number;
-          }
-    >
-> = (state, action) => {
+export interface IUpsertDateFilterAllTimePayload {
+    readonly type: "allTime";
+}
+
+export interface IUpsertDateFilterNonAllTimePayload {
+    readonly type: DateFilterType;
+    readonly granularity: DateFilterGranularity;
+    readonly from?: DateString | number;
+    readonly to?: DateString | number;
+}
+
+export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
+
+const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayload>> = (state, action) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
     const existingFilterIndex = state.filterContext.filters.findIndex((item) => isDashboardDateFilter(item));
     if (action.payload.type === "allTime") {
@@ -78,12 +81,14 @@ const upsertDateFilter: FilterContextReducer<
     }
 };
 
+export interface IUpdateAttributeFilterSelectionPayload {
+    readonly filterLocalId: string;
+    readonly elements: IAttributeElements;
+    readonly negativeSelection: boolean;
+}
+
 const updateAttributeFilterSelection: FilterContextReducer<
-    PayloadAction<{
-        readonly filterLocalId: string;
-        readonly elements: IAttributeElements;
-        readonly negativeSelection: boolean;
-    }>
+    PayloadAction<IUpdateAttributeFilterSelectionPayload>
 > = (state, action) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
     const existingFilterIndex = state.filterContext.filters.findIndex(
