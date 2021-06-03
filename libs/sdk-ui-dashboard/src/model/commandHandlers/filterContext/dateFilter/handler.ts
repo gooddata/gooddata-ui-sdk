@@ -1,14 +1,12 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
-import { ChangeDateFilterSelection } from "../../commands/filters";
-import { dateFilterChanged, filterContextChanged } from "../../events/filters";
-import { filterContextActions } from "../../state/filterContext";
-import {
-    selectFilterContext,
-    selectFilterContextDateFilter,
-} from "../../state/filterContext/filterContextSelectors";
-import { DashboardContext } from "../../types/commonTypes";
+import { call, put, select } from "redux-saga/effects";
+import { ChangeDateFilterSelection } from "../../../commands/filters";
+import { dateFilterChanged } from "../../../events/filters";
+import { filterContextActions } from "../../../state/filterContext";
+import { selectFilterContextDateFilter } from "../../../state/filterContext/filterContextSelectors";
+import { DashboardContext } from "../../../types/commonTypes";
+import { putCurrentFilterContextChanged } from "../common";
 
 export function* dateFilterChangeSelectionCommandHandler(
     ctx: DashboardContext,
@@ -45,6 +43,5 @@ export function* dateFilterChangeSelectionCommandHandler(
         ),
     );
 
-    const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
-    yield put(filterContextChanged(ctx, filterContext, cmd.correlationId));
+    yield call(putCurrentFilterContextChanged, ctx, cmd);
 }

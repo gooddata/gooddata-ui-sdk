@@ -6,14 +6,14 @@ import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
 import { commandRejected, internalErrorOccurred } from "../events/general";
-import { dateFilterChangeSelectionCommandHandler } from "./dateFilter/handler";
+import { dateFilterChangeSelectionCommandHandler } from "./filterContext/dateFilter/handler";
 import {
     attributeFilterChangeSelectionCommandHandler,
     attributeFilterAddCommandHandler,
     attributeFilterRemoveCommandHandler,
     attributeFilterMoveCommandHandler,
     attributeFilterSetParentCommandHandler,
-} from "./attributeFilter/handler";
+} from "./filterContext/attributeFilter/handler";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler";
 import { moveLayoutSectionHandler } from "./layout/moveLayoutSectionHandler";
 import { removeLayoutSectionHandler } from "./layout/removeLayoutSectionHandler";
