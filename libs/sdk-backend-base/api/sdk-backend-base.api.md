@@ -58,13 +58,17 @@ import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
+import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
+import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVariableMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IWidget } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
 import { KpiDrillDefinition } from '@gooddata/sdk-backend-spi';
 import { MeasureBuilder } from '@gooddata/sdk-model';
 import { MeasureModifications } from '@gooddata/sdk-model';
@@ -260,6 +264,12 @@ export class CatalogMeasureBuilder<T extends ICatalogMeasure = ICatalogMeasure> 
 }
 
 // @beta
+export type CommonSettingsWrapper = (settings: ISettings) => ISettings;
+
+// @beta
+export type CurrentUserSettingsWrapper = (settings: IUserWorkspaceSettings) => IUserWorkspaceSettings;
+
+// @beta
 export function customBackend(config: CustomBackendConfig): IAnalyticalBackend;
 
 // @beta (undocumented)
@@ -418,11 +428,23 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
     protected readonly wrapper: WorkspaceCatalogWrapper;
 }
 
+// @alpha (undocumented)
+export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSettingsService {
+    protected constructor(decorated: IWorkspaceSettingsService);
+    // (undocumented)
+    protected decorated: IWorkspaceSettingsService;
+    // (undocumented)
+    getSettings(): Promise<IWorkspaceSettings>;
+    // (undocumented)
+    getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+}
+
 // @alpha
 export type DecoratorFactories = {
     execution?: ExecutionDecoratorFactory;
     catalog?: CatalogDecoratorFactory;
     securitySettings?: SecuritySettingsDecoratorFactory;
+    workspaceSettings?: WorkspaceSettingsDecoratorFactory;
 };
 
 // @beta (undocumented)
@@ -762,6 +784,9 @@ export type ResultProviderContext = CustomCallContext & {
 // @alpha (undocumented)
 export type SecuritySettingsDecoratorFactory = (securitySettings: ISecuritySettingsService) => ISecuritySettingsService;
 
+// @beta
+export type SettingsWrapper = (settings: IWorkspaceSettings) => IWorkspaceSettings;
+
 // @beta (undocumented)
 export type TelemetryData = {
     componentName?: string;
@@ -804,6 +829,9 @@ export class WidgetBaseBuilder<T extends IWidget> extends Builder<T> implements 
 export function withCaching(realBackend: IAnalyticalBackend, config?: CachingConfiguration): IAnalyticalBackend;
 
 // @beta
+export function withCustomWorkspaceSettings(realBackend: IAnalyticalBackend, config: WorkspaceSettingsConfiguration): IAnalyticalBackend;
+
+// @beta
 export function withEventing(realBackend: IAnalyticalBackend, callbacks: AnalyticalBackendCallbacks): IAnalyticalBackend;
 
 // @beta
@@ -811,6 +839,16 @@ export function withNormalization(realBackend: IAnalyticalBackend, config?: Norm
 
 // @alpha (undocumented)
 export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspaceCatalog;
+
+// @beta
+export interface WorkspaceSettingsConfiguration {
+    commonSettingsWrapper?: CommonSettingsWrapper;
+    currentUserSettingsWrapper?: CurrentUserSettingsWrapper;
+    settingsWrapper?: SettingsWrapper;
+}
+
+// @alpha (undocumented)
+export type WorkspaceSettingsDecoratorFactory = (settings: IWorkspaceSettingsService) => IWorkspaceSettingsService;
 
 
 ```

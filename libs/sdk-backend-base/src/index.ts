@@ -10,6 +10,7 @@ export {
     CatalogDecoratorFactory,
     ExecutionDecoratorFactory,
     SecuritySettingsDecoratorFactory,
+    WorkspaceSettingsDecoratorFactory,
 } from "./decoratedBackend";
 
 export {
@@ -27,6 +28,8 @@ export {
 
 export { DecoratedSecuritySettingsService } from "./decoratedBackend/securitySettings";
 
+export { DecoratedWorkspaceSettingsService } from "./decoratedBackend/workspaceSettings";
+
 export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
 export {
     withCaching,
@@ -34,6 +37,13 @@ export {
     DefaultCachingConfiguration,
     CacheControl,
 } from "./cachingBackend";
+export {
+    withCustomWorkspaceSettings,
+    WorkspaceSettingsConfiguration,
+    SettingsWrapper,
+    CurrentUserSettingsWrapper,
+    CommonSettingsWrapper,
+} from "./workspaceSettingsBackend";
 export { withNormalization, NormalizationConfig, NormalizationWhenExecuteByRef } from "./normalizingBackend";
 export { Normalizer, Denormalizer, NormalizationState, LocalIdMap } from "./normalizingBackend/normalizer";
 
