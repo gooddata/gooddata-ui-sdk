@@ -77,6 +77,7 @@
     "visualizations.menu.aggregations.within-attribute": "{attributeName}内",
     "apply": "適用",
     "cancel": "キャンセル",
+    "loading": "読み込んでいます…",
     "dateFilterDropdown.title": "日付範囲",
     "dateFilterDropdown.buttonTitle": "日付範囲",
     "dateFilterDropdown.setDefault": "ビューア用に既定の日付フィルタを設定:",

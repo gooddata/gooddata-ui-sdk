@@ -4,7 +4,7 @@ export {
     HiddenFilterBar,
     IFilterBarProps,
     IDefaultFilterBarProps,
-    CustomAttributeFilter,
+    CustomAttributeFilterFactory,
     FilterBarComponent,
 } from "./FilterBar";
 export {
@@ -15,6 +15,7 @@ export {
 } from "./DashboardAttributeFilter";
 export {
     IDashboardDateFilterProps,
+    IDashboardDateFilterConfig,
     DashboardDateFilterComponent,
     DashboardDateFilter,
     HiddenDashboardDateFilter,

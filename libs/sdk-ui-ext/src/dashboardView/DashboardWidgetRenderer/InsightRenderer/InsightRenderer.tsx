@@ -92,6 +92,10 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
         setIsVisualizationLoading(isLoading);
+        // if starting loading dismiss any previous visualizationError as it is most likely obsolete
+        if (isLoading) {
+            setVisualizationError(null);
+        }
     }, []);
 
     const handleError = useCallback<OnError>(

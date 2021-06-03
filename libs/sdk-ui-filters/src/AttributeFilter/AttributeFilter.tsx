@@ -4,10 +4,8 @@ import { injectIntl } from "react-intl";
 import MediaQuery from "react-responsive";
 import {
     filterAttributeElements,
-    IAttributeElements,
-    IAttributeFilter,
     isAttributeElementsByRef,
-    isAttributeElementsByValue,
+    IAttributeFilter,
     isPositiveAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
@@ -25,7 +23,11 @@ import {
     withContexts,
 } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants";
-import { getObjRef, getValidElementsFilters } from "./utils/AttributeFilterUtils";
+import {
+    attributeElementsToAttributeElementArray,
+    getObjRef,
+    getValidElementsFilters,
+} from "./utils/AttributeFilterUtils";
 
 /**
  * @public
@@ -211,23 +213,6 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         return this.props.backend.withTelemetry("AttributeFilter", this.props);
     };
 
-    private getSelectedItems = (elements: IAttributeElements): Array<Partial<IAttributeElement>> => {
-        if (isAttributeElementsByValue(elements)) {
-            return elements.values.map(
-                (title): Partial<IAttributeElement> => ({
-                    title,
-                }),
-            );
-        } else if (isAttributeElementsByRef(elements)) {
-            return elements.uris.map(
-                (uri): Partial<IAttributeElement> => ({
-                    uri,
-                }),
-            );
-        }
-        return [];
-    };
-
     private getInitialDropdownSelection = () => {
         const { filter } = this.props;
         if (!filter) {
@@ -241,7 +226,7 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
 
         return {
             isInverted: !isPositiveAttributeFilter(filter),
-            selectedItems: this.getSelectedItems(elements),
+            selectedItems: attributeElementsToAttributeElementArray(elements),
         };
     };
 

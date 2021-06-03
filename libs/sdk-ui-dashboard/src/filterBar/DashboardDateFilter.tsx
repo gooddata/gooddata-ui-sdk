@@ -1,7 +1,32 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
-import React from "react";
+import React, { useMemo, useState } from "react";
+import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
+import { DateFilter, IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
+import { dateFilterOptionToDashboardDateFilter } from "./converters";
+import { matchDateFilterToDateFilterOptionWithPreference } from "../model/_staging/dateFilterConfig/dateFilterOptionMapping";
+
+/**
+ * Defines the configuration of the DateFilter component.
+ *
+ * @internal
+ */
+export interface IDashboardDateFilterConfig {
+    /**
+     * Granularities available in the Floating range form.
+     */
+    availableGranularities: DateFilterGranularity[];
+
+    /**
+     * A {@link @gooddata/sdk-ui-filters#IDateFilterOptionsByType} configuration of the Date Filter.
+     */
+    dateFilterOptions: IDateFilterOptionsByType;
+
+    /**
+     * Optionally specify custom filter name. Defaults to "Date range" (or its localized equivalent).
+     */
+    customFilterName?: string;
+}
 
 /**
  * Defines interface between filter bar and date filter implementation
@@ -12,7 +37,7 @@ export interface IDashboardDateFilterProps {
     /**
      * Definition of filter to render.
      */
-    filter: IDashboardDateFilter;
+    filter: IDashboardDateFilter | undefined;
 
     /**
      * When the user interacts with the filter and changes its value, it MUST use this callback to propagate the
@@ -20,7 +45,17 @@ export interface IDashboardDateFilterProps {
      *
      * @param filter - new date filter value.
      */
-    onFilterChanged: (filter: IDashboardDateFilter) => void;
+    onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
+
+    /**
+     * Additional DateFilter configuration.
+     */
+    config: IDashboardDateFilterConfig;
+
+    /**
+     * Optionally specify whether the filter should be readonly.
+     */
+    readonly?: boolean;
 }
 
 /**
@@ -30,10 +65,37 @@ export interface IDashboardDateFilterProps {
  *
  * @internal
  */
-export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = (
-    _props: IDashboardDateFilterProps,
-) => {
-    return null;
+export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = ({
+    filter,
+    onFilterChanged,
+    config,
+    readonly,
+}) => {
+    const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
+    const { dateFilterOption, excludeCurrentPeriod } = useMemo(
+        () =>
+            matchDateFilterToDateFilterOptionWithPreference(
+                filter,
+                config.dateFilterOptions,
+                lastSelectedOptionId,
+            ),
+        [filter, config.dateFilterOptions, lastSelectedOptionId],
+    );
+
+    return (
+        <DateFilter
+            excludeCurrentPeriod={excludeCurrentPeriod}
+            selectedFilterOption={dateFilterOption}
+            dateFilterMode={readonly ? "readonly" : "active"}
+            filterOptions={config.dateFilterOptions}
+            availableGranularities={config.availableGranularities}
+            customFilterName={config.customFilterName}
+            onApply={(option, exclude) => {
+                setLastSelectedOptionId(option.localIdentifier);
+                onFilterChanged(dateFilterOptionToDashboardDateFilter(option, exclude));
+            }}
+        />
+    );
 };
 
 /**
@@ -42,9 +104,7 @@ export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = (
  *
  * @internal
  */
-export const HiddenDashboardDateFilter: React.FC<IDashboardDateFilterProps> = (
-    _props: IDashboardDateFilterProps,
-) => {
+export const HiddenDashboardDateFilter: React.FC = (_props) => {
     return null;
 };
 

@@ -26,7 +26,11 @@ export { selectConfig, selectLocale, selectSeparators, selectSettings } from "./
 export { PermissionsState } from "./state/permissions/permissionsState";
 export { selectPermissions } from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
-export { selectFilterContext } from "./state/filterContext/filterContextSelectors";
+export {
+    selectFilterContext,
+    selectFilterContextFilters,
+} from "./state/filterContext/filterContextSelectors";
+
 export { LayoutState } from "./state/layout/layoutState";
 export { selectLayout } from "./state/layout/layoutSelectors";
 export { DateFilterConfigState } from "./state/dateFilterConfig/dateFilterConfigState";
@@ -35,6 +39,8 @@ export {
     selectEffectiveDateFilterConfig,
     selectEffectiveDateFilterTitle,
     selectEffectiveDateFilterMode,
+    selectEffectiveDateFilterOptions,
+    selectEffectiveDateFilterAvailableGranularities,
 } from "./state/dateFilterConfig/dateFilterConfigSelectors";
 export { selectInsights } from "./state/insights/insightsSelectors";
 export { CatalogState } from "./state/catalog/catalogState";

@@ -1,16 +1,35 @@
 // (C) 2021 GoodData Corporation
 import React, { ComponentType } from "react";
-import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
-import { DashboardAttributeFilterComponent } from "./DashboardAttributeFilter";
-import { DashboardDateFilterComponent } from "./DashboardDateFilter";
-import { IDashboardFilter } from "@gooddata/sdk-ui-ext";
+import partition from "lodash/partition";
+import {
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    isDashboardDateFilter,
+} from "@gooddata/sdk-backend-spi";
+import { objRefToString } from "@gooddata/sdk-model";
+
+import {
+    selectEffectiveDateFilterAvailableGranularities,
+    selectEffectiveDateFilterMode,
+    selectEffectiveDateFilterOptions,
+    selectEffectiveDateFilterTitle,
+    useDashboardSelector,
+} from "../model";
+
+import { DashboardAttributeFilter, DashboardAttributeFilterComponent } from "./DashboardAttributeFilter";
+import {
+    DashboardDateFilter,
+    DashboardDateFilterComponent,
+    IDashboardDateFilterConfig,
+} from "./DashboardDateFilter";
+import { FilterBarContainer } from "./FilterBarContainer";
 
 /**
  * @internal
  */
-export type CustomAttributeFilter =
-    | DashboardAttributeFilterComponent
-    | ((filter: IDashboardAttributeFilter) => DashboardAttributeFilterComponent | undefined);
+export type CustomAttributeFilterFactory = (
+    filter: IDashboardAttributeFilter,
+) => DashboardAttributeFilterComponent | undefined;
 
 /**
  * @internal
@@ -36,9 +55,15 @@ export interface IDefaultFilterBarProps {
          * -  If factory function is provided and it returns undefined, then the default implementation {@link DashboardAttributeFilter}.
          *    This is useful if you want to customize just one particular filter and keep all other filters the same.
          *
+         * @example
+         * Here is how to override the component for all filters:
+         * ```
+         * ComponentFactory: () => MyCustomComponent
+         * ```
+         *
          * @remarks If you want to hide some or all filters, you can use the {@link HiddenDashboardAttributeFilter} implementation.
          */
-        Component?: CustomAttributeFilter;
+        ComponentFactory?: CustomAttributeFilterFactory;
     };
 }
 
@@ -49,15 +74,15 @@ export interface IFilterBarProps {
     /**
      * Filters that are set for the dashboard.
      */
-    filters: IDashboardFilter[];
+    filters: FilterContextItem[];
 
     /**
      * When value of a filter that is part of the FilterBar changes, the filter bar MUST propagate the event
      * using this callback.
      *
-     * @param filter - filter that has changed
+     * @param filter - filter that has changed, undefined if All time filter was selected
      */
-    onFilterChanged: (filter: IDashboardFilter) => void;
+    onFilterChanged: (filter: FilterContextItem | undefined) => void;
 }
 
 /**
@@ -68,10 +93,52 @@ export type FilterBarComponent = ComponentType<IFilterBarProps>;
 /**
  * @internal
  */
-export const FilterBar: React.FC<IFilterBarProps & IDefaultFilterBarProps> = (
-    _props: IFilterBarProps & IDefaultFilterBarProps,
-) => {
-    return null;
+export const FilterBar: React.FC<IFilterBarProps & IDefaultFilterBarProps> = ({
+    filters,
+    onFilterChanged,
+    attributeFilterConfig,
+    dateFilterConfig,
+}) => {
+    const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
+    const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
+    const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
+    const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
+
+    const DateFilter = dateFilterConfig?.Component ?? DashboardDateFilter;
+
+    const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
+
+    const dateFilterComponentConfig: IDashboardDateFilterConfig = {
+        availableGranularities,
+        dateFilterOptions,
+        customFilterName,
+    };
+
+    return (
+        <FilterBarContainer>
+            <div className="dash-filters-date dash-filters-attribute">
+                <DateFilter
+                    filter={dateFilter}
+                    onFilterChanged={onFilterChanged}
+                    config={dateFilterComponentConfig}
+                    readonly={dateFilterMode === "readonly"}
+                />
+            </div>
+            {attributeFilters.map((filter) => {
+                const AttributeFilter =
+                    attributeFilterConfig?.ComponentFactory?.(filter) ?? DashboardAttributeFilter;
+
+                return (
+                    <div
+                        className="dash-filters-notdate dash-filters-attribute"
+                        key={objRefToString(filter.attributeFilter.displayForm)}
+                    >
+                        <AttributeFilter filter={filter} onFilterChanged={onFilterChanged} />
+                    </div>
+                );
+            })}
+        </FilterBarContainer>
+    );
 };
 
 /**

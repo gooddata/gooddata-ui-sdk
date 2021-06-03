@@ -19,6 +19,8 @@ import {
     IAttributeFilter,
     idRef,
     isAttributeElementsByRef,
+    IAttributeElements,
+    isAttributeElementsByValue,
     ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -32,6 +34,10 @@ export const getAllTitleIntl = (
         return intl.formatMessage({ id: "attrf.all" });
     }
     return intl.formatMessage({ id: "attrf.all_except" });
+};
+
+export const getLoadingTitleIntl = (intl: IntlShape): string => {
+    return intl.formatMessage({ id: "loading" });
 };
 
 export const getNoneTitleIntl = (intl: IntlShape): string => {
@@ -159,3 +165,22 @@ export const getValidElementsFilters = (
 export const isParentFilteringEnabled = (backend: IAnalyticalBackend): boolean => {
     return !!backend.capabilities.supportsElementsQueryParentFiltering;
 };
+
+export function attributeElementsToAttributeElementArray(
+    elements: IAttributeElements,
+): Array<Partial<IAttributeElement>> {
+    if (isAttributeElementsByValue(elements)) {
+        return elements.values.map(
+            (title): Partial<IAttributeElement> => ({
+                title,
+            }),
+        );
+    } else if (isAttributeElementsByRef(elements)) {
+        return elements.uris.map(
+            (uri): Partial<IAttributeElement> => ({
+                uri,
+            }),
+        );
+    }
+    return [];
+}

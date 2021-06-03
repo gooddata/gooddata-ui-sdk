@@ -390,6 +390,11 @@
         "comment": "",
         "limit": 0
     },
+    "loading": {
+        "value": "Loading…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
 
     "dateFilterDropdown.title": {
         "value": "Date range",

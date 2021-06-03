@@ -1,16 +1,33 @@
 #!/usr/bin/env bash
 
 _build_styles() {
-    echo
+    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
 }
 
 _clean() {
     rm -rf dist
     rm -rf esm
+    rm -rf styles/css
 }
 
 _common-build() {
+    mkdir -p dist
+    # first copy everything in the assets (in case there are non-SVG files)
+    cp -rf src/assets dist/
+    # then use svgo to optimize all the SVGs there
+    svgo -rqf src/assets dist/assets
+
+    mkdir -p esm
+    # copy optimized assets from dist, no need to run the optimization again
+    cp -rf dist/assets esm
+
     _build_styles
+
+    mkdir -p dist/localization/bundles
+    cp -rf src/localization/bundles dist/localization
+
+    mkdir -p esm/localization/bundles
+    cp -rf src/localization/bundles esm/localization
 }
 
 build() {
@@ -27,6 +44,11 @@ build-dev() {
 build-dev-watch() {
     _common-build
     tsc --watch -p tsconfig.dev.json
+    _build_styles
+}
+
+build-styles() {
+    rm -rf styles/css
     _build_styles
 }
 
