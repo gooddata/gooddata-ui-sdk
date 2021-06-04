@@ -25,7 +25,7 @@ import {
 } from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { validateAttributeFilterParents } from "./parentFilterValidation";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { putCurrentFilterContextChanged } from "../common";
 import partition from "lodash/partition";
 import { batchActions } from "redux-batched-actions";
@@ -104,7 +104,23 @@ export function* attributeFilterAddCommandHandler(
 ): SagaIterator<void> {
     const { displayForm, index, initialIsNegativeSelection, initialSelection, parentFilters } = cmd.payload;
 
-    // TODO: prevent adding filters for display forms already present. what about normalization of refs?
+    // TODO: what about normalization of refs?
+    const existingFilter: SagaReturnType<typeof getAttributeFilterByDisplayForm> = yield call(
+        getAttributeFilterByDisplayForm,
+        cmd.payload.displayForm,
+    );
+
+    if (existingFilter) {
+        return yield put(
+            invalidArgumentsProvided(
+                ctx,
+                `Filter for the displayForm ${objRefToString(
+                    displayForm,
+                )} already exists in the filter context.`,
+                cmd.correlationId,
+            ),
+        );
+    }
 
     yield put(
         filterContextActions.addAttributeFilter({
@@ -116,14 +132,14 @@ export function* attributeFilterAddCommandHandler(
         }),
     );
 
-    const affectedFilter: SagaReturnType<typeof getAttributeFilterById> = yield call(
+    const addedFilter: SagaReturnType<typeof getAttributeFilterByDisplayForm> = yield call(
         getAttributeFilterByDisplayForm,
         cmd.payload.displayForm,
     );
 
-    invariant(affectedFilter, "Inconsistent state in attributeFilterAddCommandHandler");
+    invariant(addedFilter, "Inconsistent state in attributeFilterAddCommandHandler");
 
-    yield put(attributeFilterAdded(ctx, affectedFilter, cmd.payload.index, cmd.correlationId));
+    yield put(attributeFilterAdded(ctx, addedFilter, cmd.payload.index, cmd.correlationId));
     yield call(putCurrentFilterContextChanged, ctx, cmd);
 }
 
@@ -253,7 +269,9 @@ export function* attributeFilterSetParentsCommandHandler(
 ): SagaIterator<void> {
     const { filterLocalId, parentFilters } = cmd.payload;
 
-    const allFilters: IDashboardAttributeFilter[] = yield select(selectFilterContextAttributeFilters);
+    const allFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+        selectFilterContextAttributeFilters,
+    );
 
     const filter = allFilters.find(
         (item) => item.attributeFilter.localIdentifier === cmd.payload.filterLocalId,
