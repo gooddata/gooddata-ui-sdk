@@ -40,6 +40,7 @@ export function* dateFilterChangeSelectionCommandHandler(
             ctx,
             // TODO we need to decide how to externally represent All Time date filter and unify this
             affectedFilter ?? { dateFilter: { granularity: "GDC.time.date", type: "relative" } },
+            cmd.correlationId,
         ),
     );
 
