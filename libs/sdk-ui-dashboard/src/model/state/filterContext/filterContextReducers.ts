@@ -153,35 +153,21 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
     }
 };
 
-export interface IRemoveAttributeFiltersPayload {
-    readonly filterLocalIds: string[];
+export interface IRemoveAttributeFilterPayload {
+    readonly filterLocalId: string;
 }
 
-const removeAttributeFilters: FilterContextReducer<PayloadAction<IRemoveAttributeFiltersPayload>> = (
+const removeAttributeFilter: FilterContextReducer<PayloadAction<IRemoveAttributeFilterPayload>> = (
     state,
     action,
 ) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
 
-    const { filterLocalIds } = action.payload;
+    const { filterLocalId } = action.payload;
 
-    state.filterContext.filters = state.filterContext.filters.filter((item) => {
-        if (isDashboardAttributeFilter(item)) {
-            return !action.payload.filterLocalIds.includes(item.attributeFilter.localIdentifier!);
-        }
-        return true;
-    });
-
-    // remove the removed filters from any filters that had those as parents
-    state.filterContext.filters.forEach((filter) => {
-        if (isDashboardDateFilter(filter) || !filter.attributeFilter.filterElementsBy) {
-            return;
-        }
-
-        filter.attributeFilter.filterElementsBy = filter.attributeFilter.filterElementsBy.filter(
-            (parent) => !filterLocalIds.includes(parent.filterLocalIdentifier),
-        );
-    });
+    state.filterContext.filters = state.filterContext.filters.filter(
+        (item) => isDashboardDateFilter(item) || item.attributeFilter.localIdentifier !== filterLocalId,
+    );
 };
 
 export interface IMoveAttributeFilterPayload {
@@ -214,12 +200,12 @@ const moveAttributeFilter: FilterContextReducer<PayloadAction<IMoveAttributeFilt
     }
 };
 
-export interface ISetAttributeFilterParentPayload {
+export interface ISetAttributeFilterParentsPayload {
     readonly filterLocalId: string;
     readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
 }
 
-const setAttributeFilterParent: FilterContextReducer<PayloadAction<ISetAttributeFilterParentPayload>> = (
+const setAttributeFilterParents: FilterContextReducer<PayloadAction<ISetAttributeFilterParentsPayload>> = (
     state,
     action,
 ) => {
@@ -241,9 +227,9 @@ const setAttributeFilterParent: FilterContextReducer<PayloadAction<ISetAttribute
 export const filterContextReducers = {
     setFilterContext,
     addAttributeFilter,
-    removeAttributeFilters,
+    removeAttributeFilter,
     moveAttributeFilter,
     updateAttributeFilterSelection,
-    setAttributeFilterParent,
+    setAttributeFilterParents,
     upsertDateFilter,
 };

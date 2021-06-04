@@ -3,7 +3,6 @@ import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
-import compact from "lodash/compact";
 import {
     ChangeAttributeFilterSelection,
     AddAttributeFilter,
@@ -25,6 +24,7 @@ import { DashboardContext } from "../../../types/commonTypes";
 import { validateAttributeFilterParents } from "./parentFilterValidation";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { putCurrentFilterContextChanged } from "../common";
+import partition from "lodash/partition";
 
 function* getAttributeFilterById(filterLocalId: string): SagaIterator<IDashboardAttributeFilter | undefined> {
     const allFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
@@ -110,28 +110,48 @@ export function* attributeFilterRemoveCommandHandler(
     cmd: RemoveAttributeFilters,
 ): SagaIterator<void> {
     const { filterLocalIds } = cmd.payload;
-    const affectedFilters: SagaReturnType<typeof getAttributeFilterById>[] = yield all(
-        filterLocalIds.map((id) => call(getAttributeFilterById, id)),
-    );
-    invariant(
-        compact(affectedFilters).length === affectedFilters.length,
-        "Inconsistent state in attributeFilterRemoveCommandHandler",
+
+    const allFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+        selectFilterContextAttributeFilters,
     );
 
-    yield put(filterContextActions.removeAttributeFilters({ filterLocalIds }));
+    const [removedFilters, survivingFilters] = partition(allFilters, (item) =>
+        filterLocalIds.includes(item.attributeFilter.localIdentifier!),
+    );
 
-    yield all(
-        affectedFilters.map((filter) =>
-            put(
-                attributeFilterRemoved(
-                    ctx,
-                    filter!,
-                    [], // TODO children
-                    cmd.correlationId,
+    for (const removedFilter of removedFilters) {
+        // remove filter from parents and keep track of the affected filters
+        const affectedChildren = survivingFilters.filter((item) =>
+            item.attributeFilter.filterElementsBy?.some((parent) =>
+                filterLocalIds.includes(parent.filterLocalIdentifier),
+            ),
+        );
+
+        yield all(
+            affectedChildren.map(({ attributeFilter }) =>
+                put(
+                    filterContextActions.setAttributeFilterParents({
+                        filterLocalId: attributeFilter.localIdentifier!,
+                        parentFilters: attributeFilter.filterElementsBy!.filter(
+                            (parent) =>
+                                parent.filterLocalIdentifier !==
+                                removedFilter?.attributeFilter.localIdentifier,
+                        ),
+                    }),
                 ),
             ),
-        ),
-    );
+        );
+
+        // remove filter itself
+        yield put(
+            filterContextActions.removeAttributeFilter({
+                filterLocalId: removedFilter.attributeFilter.localIdentifier!,
+            }),
+        );
+
+        // emit event
+        yield put(attributeFilterRemoved(ctx, removedFilter!, affectedChildren, cmd.correlationId));
+    }
 
     yield call(putCurrentFilterContextChanged, ctx, cmd);
 }
@@ -169,7 +189,7 @@ export function* attributeFilterMoveCommandHandler(
     yield call(putCurrentFilterContextChanged, ctx, cmd);
 }
 
-export function* attributeFilterSetParentCommandHandler(
+export function* attributeFilterSetParentsCommandHandler(
     ctx: DashboardContext,
     cmd: SetAttributeFilterParent,
 ): SagaIterator<void> {
@@ -210,7 +230,7 @@ export function* attributeFilterSetParentCommandHandler(
     }
 
     yield put(
-        filterContextActions.setAttributeFilterParent({
+        filterContextActions.setAttributeFilterParents({
             filterLocalId,
             parentFilters,
         }),

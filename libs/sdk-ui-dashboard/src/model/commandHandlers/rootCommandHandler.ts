@@ -12,7 +12,7 @@ import {
     attributeFilterAddCommandHandler,
     attributeFilterRemoveCommandHandler,
     attributeFilterMoveCommandHandler,
-    attributeFilterSetParentCommandHandler,
+    attributeFilterSetParentsCommandHandler,
 } from "./filterContext/attributeFilter/handler";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler";
 import { moveLayoutSectionHandler } from "./layout/moveLayoutSectionHandler";
@@ -38,7 +38,7 @@ const DefaultCommandHandlers = {
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE": attributeFilterRemoveCommandHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE": attributeFilterMoveCommandHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION": attributeFilterChangeSelectionCommandHandler,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT": attributeFilterSetParentCommandHandler,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT": attributeFilterSetParentsCommandHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": addLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": moveLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,
