@@ -164,7 +164,10 @@ function registerDrilldownHandler(configuration: any, chartOptions: any, drillCo
 
 export function handleChartLoad(chartType: ChartType) {
     return function (): void {
-        setupDrilldown(this, chartType);
+        if (!this.hasLoaded) {
+            // setup drill on initial render
+            setupDrilldown(this, chartType);
+        }
     };
 }
 
