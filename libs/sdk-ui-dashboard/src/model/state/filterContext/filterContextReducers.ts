@@ -54,29 +54,33 @@ export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsert
 
 const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayload>> = (state, action) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
+
     const existingFilterIndex = state.filterContext.filters.findIndex((item) => isDashboardDateFilter(item));
+
     if (action.payload.type === "allTime") {
         if (existingFilterIndex >= 0) {
             // if allTime remove the date filter altogether
             state.filterContext.filters.splice(existingFilterIndex, 1);
         }
     } else if (existingFilterIndex >= 0) {
+        const { type, granularity, from, to } = action.payload;
         state.filterContext.filters[existingFilterIndex] = {
             dateFilter: {
                 ...(state.filterContext.filters[existingFilterIndex] as IDashboardDateFilter),
-                granularity: action.payload.granularity,
-                type: action.payload.type,
-                from: action.payload.from,
-                to: action.payload.to,
+                granularity,
+                type,
+                from,
+                to,
             },
         };
     } else {
+        const { type, granularity, from, to } = action.payload;
         state.filterContext.filters.unshift({
             dateFilter: {
-                granularity: action.payload.granularity,
-                type: action.payload.type,
-                from: action.payload.from,
-                to: action.payload.to,
+                granularity,
+                type,
+                from,
+                to,
             },
         });
     }
@@ -92,10 +96,11 @@ const updateAttributeFilterSelection: FilterContextReducer<
     PayloadAction<IUpdateAttributeFilterSelectionPayload>
 > = (state, action) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
+
+    const { elements, filterLocalId, negativeSelection } = action.payload;
+
     const existingFilterIndex = state.filterContext.filters.findIndex(
-        (item) =>
-            isDashboardAttributeFilter(item) &&
-            item.attributeFilter.localIdentifier === action.payload.filterLocalId,
+        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
     invariant(existingFilterIndex >= 0, "Attempt to update non-existing filter");
@@ -104,8 +109,8 @@ const updateAttributeFilterSelection: FilterContextReducer<
         attributeFilter: {
             ...(state.filterContext.filters[existingFilterIndex] as IDashboardAttributeFilter)
                 .attributeFilter,
-            attributeElements: action.payload.elements,
-            negativeSelection: action.payload.negativeSelection,
+            attributeElements: elements,
+            negativeSelection,
         },
     };
 };
@@ -124,25 +129,27 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
 ) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
 
-    const hasSelection =
-        action.payload.initialSelection && !attributeElementsIsEmpty(action.payload.initialSelection);
+    const { displayForm, index, initialIsNegativeSelection, initialSelection, parentFilters } =
+        action.payload;
 
-    const isNegative = action.payload.initialIsNegativeSelection || !hasSelection;
+    const hasSelection = initialSelection && !attributeElementsIsEmpty(initialSelection);
+
+    const isNegative = initialIsNegativeSelection || !hasSelection;
 
     const filter: IDashboardAttributeFilter = {
         attributeFilter: {
-            attributeElements: action.payload.initialSelection ?? { uris: [] },
-            displayForm: action.payload.displayForm,
+            attributeElements: initialSelection ?? { uris: [] },
+            displayForm,
             negativeSelection: isNegative,
             localIdentifier: generateFilterLocalIdentifier(),
-            filterElementsBy: action.payload.parentFilters ? [...action.payload.parentFilters] : undefined,
+            filterElementsBy: parentFilters ? [...parentFilters] : undefined,
         },
     };
 
-    if (action.payload.index === -1) {
+    if (index === -1) {
         state.filterContext.filters.push(filter);
     } else {
-        state.filterContext.filters.splice(action.payload.index, 0, filter);
+        state.filterContext.filters.splice(index, 0, filter);
     }
 };
 
@@ -156,6 +163,8 @@ const removeAttributeFilters: FilterContextReducer<PayloadAction<IRemoveAttribut
 ) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
 
+    const { filterLocalIds } = action.payload;
+
     state.filterContext.filters = state.filterContext.filters.filter((item) => {
         if (isDashboardAttributeFilter(item)) {
             return !action.payload.filterLocalIds.includes(item.attributeFilter.localIdentifier!);
@@ -163,7 +172,16 @@ const removeAttributeFilters: FilterContextReducer<PayloadAction<IRemoveAttribut
         return true;
     });
 
-    // TODO remove the removed filters from any filters that had those as parents
+    // remove the removed filters from any filters that had those as parents
+    state.filterContext.filters.forEach((filter) => {
+        if (isDashboardDateFilter(filter) || !filter.attributeFilter.filterElementsBy) {
+            return;
+        }
+
+        filter.attributeFilter.filterElementsBy = filter.attributeFilter.filterElementsBy.filter(
+            (parent) => !filterLocalIds.includes(parent.filterLocalIdentifier),
+        );
+    });
 };
 
 export interface IMoveAttributeFilterPayload {
@@ -177,10 +195,10 @@ const moveAttributeFilter: FilterContextReducer<PayloadAction<IMoveAttributeFilt
 ) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
 
+    const { filterLocalId, index } = action.payload;
+
     const currentFilterIndex = state.filterContext.filters.findIndex(
-        (item) =>
-            isDashboardAttributeFilter(item) &&
-            item.attributeFilter.localIdentifier === action.payload.filterLocalId,
+        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
     invariant(currentFilterIndex >= 0, "Attempt to move non-existing filter");
@@ -189,10 +207,10 @@ const moveAttributeFilter: FilterContextReducer<PayloadAction<IMoveAttributeFilt
 
     state.filterContext.filters.splice(currentFilterIndex, 1);
 
-    if (action.payload.index === -1) {
+    if (index === -1) {
         state.filterContext.filters.push(filter);
     } else {
-        state.filterContext.filters.splice(action.payload.index, 0, filter);
+        state.filterContext.filters.splice(index, 0, filter);
     }
 };
 
@@ -207,17 +225,17 @@ const setAttributeFilterParent: FilterContextReducer<PayloadAction<ISetAttribute
 ) => {
     invariant(state.filterContext, "Attempt to edit uninitialized filter context");
 
+    const { filterLocalId, parentFilters } = action.payload;
+
     const currentFilterIndex = state.filterContext.filters.findIndex(
-        (item) =>
-            isDashboardAttributeFilter(item) &&
-            item.attributeFilter.localIdentifier === action.payload.filterLocalId,
+        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
     invariant(currentFilterIndex >= 0, "Attempt to set parent of a non-existing filter");
 
     (
         state.filterContext.filters[currentFilterIndex] as IDashboardAttributeFilter
-    ).attributeFilter.filterElementsBy = [...action.payload.parentFilters];
+    ).attributeFilter.filterElementsBy = [...parentFilters];
 };
 
 export const filterContextReducers = {
