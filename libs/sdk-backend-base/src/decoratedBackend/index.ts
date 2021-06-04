@@ -151,6 +151,12 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public settings(): IWorkspaceSettingsService {
+        const { workspaceSettings } = this.factories;
+
+        if (workspaceSettings) {
+            return workspaceSettings(this.decorated.settings());
+        }
+
         return this.decorated.settings();
     }
 
@@ -228,6 +234,13 @@ export type SecuritySettingsDecoratorFactory = (
 ) => ISecuritySettingsService;
 
 /**
+ * @alpha
+ */
+export type WorkspaceSettingsDecoratorFactory = (
+    settings: IWorkspaceSettingsService,
+) => IWorkspaceSettingsService;
+
+/**
  * Provides factory functions for the different decorators (currently only supports execution
  * decorator). Input to each factory function is the original implementation from the wrapped backend, output
  * is whatever decorateur sees fit.
@@ -238,6 +251,7 @@ export type DecoratorFactories = {
     execution?: ExecutionDecoratorFactory;
     catalog?: CatalogDecoratorFactory;
     securitySettings?: SecuritySettingsDecoratorFactory;
+    workspaceSettings?: WorkspaceSettingsDecoratorFactory;
 };
 
 /**

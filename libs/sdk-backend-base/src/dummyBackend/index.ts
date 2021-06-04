@@ -36,6 +36,8 @@ import {
     ValidationContext,
     IOrganizationDescriptor,
     IOrganizations,
+    IWorkspaceSettings,
+    IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -222,7 +224,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             throw new NotSupported("not supported");
         },
         settings(): IWorkspaceSettingsService {
-            throw new NotSupported("not supported");
+            return new DummyWorkspaceSettingsService(workspace);
         },
         insights(): IWorkspaceInsightsService {
             throw new NotSupported("not supported");
@@ -407,5 +409,28 @@ class DummyOrganization implements IOrganization {
                 return Promise.resolve(true);
             },
         };
+    }
+}
+
+class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
+    constructor(public readonly workspace: string) {}
+
+    getSettings(): Promise<IWorkspaceSettings> {
+        return Promise.resolve({
+            workspace: this.workspace,
+            testSetting: "test_value",
+        });
+    }
+    getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
+        return Promise.resolve({
+            workspace: this.workspace,
+            testSetting: "test_value",
+            userId: "test_user_id",
+            locale: "test_locale",
+            separators: {
+                thousand: ",",
+                decimal: ".",
+            },
+        });
     }
 }
