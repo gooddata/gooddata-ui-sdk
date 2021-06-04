@@ -6,14 +6,12 @@ import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
 import { commandRejected, internalErrorOccurred } from "../events/general";
-import { dateFilterChangeSelectionCommandHandler } from "./filterContext/dateFilter/handler";
-import {
-    attributeFilterChangeSelectionCommandHandler,
-    attributeFilterAddCommandHandler,
-    attributeFilterRemoveCommandHandler,
-    attributeFilterMoveCommandHandler,
-    attributeFilterSetParentsCommandHandler,
-} from "./filterContext/attributeFilter/handler";
+import { dateFilterChangeSelectionCommandHandler } from "./filterContext/dateFilter/dateFilterChangeSelectionCommandHandler";
+import { attributeFilterAddCommandHandler } from "./filterContext/attributeFilter/attributeFilterAddCommandHandler";
+import { attributeFilterRemoveCommandHandler } from "./filterContext/attributeFilter/attributeFilterRemoveCommandHandler";
+import { attributeFilterMoveCommandHandler } from "./filterContext/attributeFilter/attributeFilterMoveCommandHandler";
+import { attributeFilterChangeSelectionCommandHandler } from "./filterContext/attributeFilter/attributeFilterChangeSelectionCommandHandler";
+import { attributeFilterSetParentsCommandHandler } from "./filterContext/attributeFilter/attributeFilterSetParentsCommandHandler";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler";
 import { moveLayoutSectionHandler } from "./layout/moveLayoutSectionHandler";
 import { removeLayoutSectionHandler } from "./layout/removeLayoutSectionHandler";
