@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { actionChannel, call, getContext, take } from "redux-saga/effects";
-import { loadDashboardCommandHandler } from "./loadDashboard/handler";
+import { loadDashboardHandler } from "./dashboard/loadDashboardHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
@@ -21,7 +21,7 @@ import { removeSectionItemHandler } from "./layout/removeSectionItemHandler";
 import { undoLayoutChangesHandler } from "./layout/undoLayoutChangesHandler";
 
 const DefaultCommandHandlers = {
-    "GDC.DASH/CMD.LOAD": loadDashboardCommandHandler,
+    "GDC.DASH/CMD.LOAD": loadDashboardHandler,
     "GDC.DASH/CMD.SAVE": unhandledCommand,
     "GDC.DASH/CMD.SAVEAS": unhandledCommand,
     "GDC.DASH/CMD.RESET": unhandledCommand,

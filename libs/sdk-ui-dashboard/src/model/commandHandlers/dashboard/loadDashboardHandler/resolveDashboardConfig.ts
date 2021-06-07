@@ -4,24 +4,24 @@ import {
     DashboardContext,
     isResolvedConfig,
     ResolvedDashboardConfig,
-} from "../../types/commonTypes";
+} from "../../../types/commonTypes";
 import {
     IDateFilterConfigsQueryResult,
     ISeparators,
     ISettings,
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
-import { LoadDashboard } from "../../commands/dashboard";
+import { LoadDashboard } from "../../../commands/dashboard";
 import { SagaIterator } from "redux-saga";
 import { all, call } from "redux-saga/effects";
-import { dateFilterValidationFailed } from "../../events/dashboard";
-import { defaultDateFilterConfig } from "../../_staging/dateFilterConfig/defaultConfig";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
+import { dateFilterValidationFailed } from "../../../events/dashboard";
+import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig";
+import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
 import { IColorPalette } from "@gooddata/sdk-model";
-import { PromiseFnReturnType } from "../../types/sagas";
+import { PromiseFnReturnType } from "../../../types/sagas";
 import { ILocale } from "@gooddata/sdk-ui";
-import { getValidDateFilterConfig } from "../../_staging/dateFilterConfig/validation";
-import { stripUserAndWorkspaceProps } from "../../_staging/settings/conversion";
+import { getValidDateFilterConfig } from "../../../_staging/dateFilterConfig/validation";
+import { stripUserAndWorkspaceProps } from "../../../_staging/settings/conversion";
 
 function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
     const { backend, workspace } = ctx;
