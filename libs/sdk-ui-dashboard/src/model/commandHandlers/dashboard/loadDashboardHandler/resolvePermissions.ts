@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { LoadDashboard } from "../../commands/dashboard";
-import { PromiseFnReturnType } from "../../types/sagas";
+import { DashboardContext } from "../../../types/commonTypes";
+import { LoadDashboard } from "../../../commands/dashboard";
+import { PromiseFnReturnType } from "../../../types/sagas";
 import { call } from "redux-saga/effects";
 import { IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 

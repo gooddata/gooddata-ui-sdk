@@ -1,12 +1,12 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { IDashboardDateFilterConfig, IDateFilterConfig } from "@gooddata/sdk-backend-spi";
-import { DashboardContext } from "../../types/commonTypes";
-import { LoadDashboard } from "../../commands/dashboard";
-import { mergeDateFilterConfigs } from "../../_staging/dateFilterConfig/merge";
-import { validateDateFilterConfig } from "../../_staging/dateFilterConfig/validation";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
-import { dateFilterValidationFailed } from "../../events/dashboard";
+import { DashboardContext } from "../../../types/commonTypes";
+import { LoadDashboard } from "../../../commands/dashboard";
+import { mergeDateFilterConfigs } from "../../../_staging/dateFilterConfig/merge";
+import { validateDateFilterConfig } from "../../../_staging/dateFilterConfig/validation";
+import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
+import { dateFilterValidationFailed } from "../../../events/dashboard";
 
 export type DateFilterMergeResult = {
     config: IDateFilterConfig;

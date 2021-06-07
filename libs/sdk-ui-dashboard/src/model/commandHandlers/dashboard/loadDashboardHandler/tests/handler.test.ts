@@ -1,9 +1,9 @@
 // (C) 2021 GoodData Corporation
-import { loadDashboard } from "../../../commands";
-import { DashboardTester, SimpleDashboardRecording } from "../../../tests/DashboardTester";
-import { DashboardLoaded } from "../../../events";
-import { selectConfig } from "../../../state/config/configSelectors";
-import { selectPermissions } from "../../../state/permissions/permissionsSelectors";
+import { loadDashboard } from "../../../../commands";
+import { DashboardTester, SimpleDashboardRecording } from "../../../../tests/DashboardTester";
+import { DashboardLoaded } from "../../../../events";
+import { selectConfig } from "../../../../state/config/configSelectors";
+import { selectPermissions } from "../../../../state/permissions/permissionsSelectors";
 
 describe("load dashboard handler", () => {
     it("should emit event for the loaded dashboard", async () => {

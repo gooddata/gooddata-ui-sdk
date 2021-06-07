@@ -17,10 +17,7 @@ function updateAlert(ctx: DashboardContext, alert: IWidgetAlert): Promise<IWidge
     return backend.workspace(workspace).dashboards().updateWidgetAlert(alert);
 }
 
-export function* updateDashboardAlertCommandHandler(
-    ctx: DashboardContext,
-    cmd: UpdateAlert,
-): SagaIterator<void> {
+export function* updateDashboardAlertHandler(ctx: DashboardContext, cmd: UpdateAlert): SagaIterator<void> {
     // eslint-disable-next-line no-console
     console.debug("handling update alert", cmd, "in context", ctx);
 
