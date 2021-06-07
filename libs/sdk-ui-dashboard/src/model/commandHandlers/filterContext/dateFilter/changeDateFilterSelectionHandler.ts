@@ -8,7 +8,7 @@ import { selectFilterContextDateFilter } from "../../../state/filterContext/filt
 import { DashboardContext } from "../../../types/commonTypes";
 import { putCurrentFilterContextChanged } from "../common";
 
-export function* dateFilterChangeSelectionCommandHandler(
+export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,
     cmd: ChangeDateFilterSelection,
 ): SagaIterator<void> {

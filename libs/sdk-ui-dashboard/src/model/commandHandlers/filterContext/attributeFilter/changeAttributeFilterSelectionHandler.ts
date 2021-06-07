@@ -11,7 +11,7 @@ import { DashboardContext } from "../../../types/commonTypes";
 import { putCurrentFilterContextChanged } from "../common";
 import { getAttributeFilterById } from "./utils";
 
-export function* attributeFilterChangeSelectionCommandHandler(
+export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
     cmd: ChangeAttributeFilterSelection,
 ): SagaIterator<void> {

@@ -3,7 +3,7 @@ import { changeDateFilterSelection, clearDateFilterSelection, loadDashboard } fr
 import { DashboardTester, SimpleDashboardRecording } from "../../../../tests/DashboardTester";
 import { selectFilterContextDateFilter } from "../../../../state/filterContext/filterContextSelectors";
 
-describe("dateFilterChangeSelectionCommandHandler", () => {
+describe("changeDateFilterSelectionHandler", () => {
     async function getInitializedTester(): Promise<DashboardTester> {
         const tester = DashboardTester.forRecording(SimpleDashboardRecording);
 

@@ -13,7 +13,7 @@ import { selectFilterContextAttributeFilters } from "../../../state/filterContex
 import { DashboardContext } from "../../../types/commonTypes";
 import { putCurrentFilterContextChanged } from "../common";
 
-export function* attributeFilterRemoveCommandHandler(
+export function* removeAttributeFiltersHandler(
     ctx: DashboardContext,
     cmd: RemoveAttributeFilters,
 ): SagaIterator<void> {

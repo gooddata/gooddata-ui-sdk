@@ -13,7 +13,7 @@ import { validateAttributeFilterParents } from "./parentFilterValidation";
 import { putCurrentFilterContextChanged } from "../common";
 import { getAttributeFilterById } from "./utils";
 
-export function* attributeFilterSetParentsCommandHandler(
+export function* setAttributeFilterParentHandler(
     ctx: DashboardContext,
     cmd: SetAttributeFilterParent,
 ): SagaIterator<void> {

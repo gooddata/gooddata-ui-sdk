@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`dateFilterChangeSelectionCommandHandler should emit the appropriate events for changed date filter 1`] = `
+exports[`changeDateFilterSelectionHandler should emit the appropriate events for changed date filter 1`] = `
 Array [
   Object {
     "correlationId": "testCorrelation",
@@ -13,7 +13,7 @@ Array [
 ]
 `;
 
-exports[`dateFilterChangeSelectionCommandHandler should set the date filter in the state when a date filter is changed 1`] = `
+exports[`changeDateFilterSelectionHandler should set the date filter in the state when a date filter is changed 1`] = `
 Object {
   "dateFilter": Object {
     "from": -3,

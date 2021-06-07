@@ -12,7 +12,7 @@ import { DashboardContext } from "../../../types/commonTypes";
 import { putCurrentFilterContextChanged } from "../common";
 import { getAttributeFilterByDisplayForm } from "./utils";
 
-export function* attributeFilterAddCommandHandler(
+export function* addAttributeFilterHandler(
     ctx: DashboardContext,
     cmd: AddAttributeFilter,
 ): SagaIterator<void> {

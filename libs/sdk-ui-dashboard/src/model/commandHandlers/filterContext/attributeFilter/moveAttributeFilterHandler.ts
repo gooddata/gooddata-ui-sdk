@@ -10,7 +10,7 @@ import { DashboardContext } from "../../../types/commonTypes";
 import { putCurrentFilterContextChanged } from "../common";
 import { getAttributeFilterById, getAttributeFilterIndexById } from "./utils";
 
-export function* attributeFilterMoveCommandHandler(
+export function* moveAttributeFilterHandler(
     ctx: DashboardContext,
     cmd: MoveAttributeFilter,
 ): SagaIterator<void> {
