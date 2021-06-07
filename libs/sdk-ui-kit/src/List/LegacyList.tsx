@@ -43,7 +43,19 @@ export interface ILegacyListState {
  * @internal
  */
 export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
-    static defaultProps: Partial<ILegacyListProps> = {
+    static defaultProps: Pick<
+        ILegacyListProps,
+        | "className"
+        | "onScroll"
+        | "onScrollStart"
+        | "onSelect"
+        | "width"
+        | "height"
+        | "itemHeight"
+        | "itemHeightGetter"
+        | "compensateBorder"
+        | "scrollToSelected"
+    > = {
         className: "",
         onScroll: noop,
         onScrollStart: noop,

@@ -34,7 +34,7 @@ export class CustomFormatDialog extends React.PureComponent<
     ICustomFormatDialogProps,
     ICustomFormatDialogState
 > {
-    public static defaultProps: Partial<ICustomFormatDialogProps> = {
+    public static defaultProps: Pick<ICustomFormatDialogProps, "positioning"> = {
         positioning: [
             { snapPoints: { parent: SnapPoint.CenterRight, child: SnapPoint.CenterLeft } },
             { snapPoints: { parent: SnapPoint.TopRight, child: SnapPoint.TopLeft } },
