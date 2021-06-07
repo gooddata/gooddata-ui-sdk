@@ -1,14 +1,13 @@
-// (C) 2021 GoodData Corporation
-
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-04T13:41:41.488Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-07T09:28:33.785Z; */
 const df_label_product_id_name = require("./metadata/displayForms/label.product.id.name/elements.json");
 const df_label_owner_department = require("./metadata/displayForms/label.owner.department/elements.json");
 const df_label_owner_region = require("./metadata/displayForms/label.owner.region/elements.json");
 const df_label_stage_status = require("./metadata/displayForms/label.stage.status/elements.json");
 const df_label_opportunitysnapshot_forecastcategory = require("./metadata/displayForms/label.opportunitysnapshot.forecastcategory/elements.json");
 const df_label_stage_name_stagename = require("./metadata/displayForms/label.stage.name.stagename/elements.json");
+const df_label_activity_id_subject = require("./metadata/displayForms/label.activity.id.subject/elements.json");
 export const DataSamples = {
     Department: { DirectSales: df_label_owner_department[0], InsideSales: df_label_owner_department[1] },
     ForecastCategory: {
@@ -36,4 +35,16 @@ export const DataSamples = {
         ClosedLost: df_label_stage_name_stagename[7],
     },
     Status: { Lost: df_label_stage_status[0], Open: df_label_stage_status[1], Won: df_label_stage_status[2] },
+    Subject: {
+        EmailWith1000BulbsComOnApr2108: df_label_activity_id_subject[0],
+        EmailWith1000BulbsComOnDec1409: df_label_activity_id_subject[1],
+        EmailWith1000BulbsComOnDec2908: df_label_activity_id_subject[2],
+        EmailWith1000BulbsComOnFeb1009: df_label_activity_id_subject[3],
+        EmailWith1000BulbsComOnJan0610: df_label_activity_id_subject[4],
+        EmailWith1000BulbsComOnJan2909: df_label_activity_id_subject[5],
+        EmailWith1000BulbsComOnJul0308: df_label_activity_id_subject[6],
+        EmailWith1000BulbsComOnJul0610: df_label_activity_id_subject[7],
+        EmailWith1000BulbsComOnJul2410: df_label_activity_id_subject[8],
+        EmailWith1000BulbsComOnJun0110: df_label_activity_id_subject[9],
+    },
 };

@@ -1,8 +1,6 @@
-// (C) 2021 GoodData Corporation
-
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-04T13:41:41.488Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-07T09:28:33.785Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -1235,6 +1233,10 @@ const df_label_opportunitysnapshot_forecastcategory = {
 const df_label_stage_name_stagename = {
     elements: require("./metadata/displayForms/label.stage.name.stagename/elements.json"),
     obj: require("./metadata/displayForms/label.stage.name.stagename/obj.json"),
+};
+const df_label_activity_id_subject = {
+    elements: require("./metadata/displayForms/label.activity.id.subject/elements.json"),
+    obj: require("./metadata/displayForms/label.activity.id.subject/obj.json"),
 };
 const i_AreaChart_0229f24b92f336871eeb04e1e16c4e68 = {
     obj: require("./uiTestScenarios/insights/AreaChart.0229f24b92f336871eeb04e1e16c4e68/obj.json"),
@@ -4739,6 +4741,7 @@ export const Recordings = {
             df_label_stage_status,
             df_label_opportunitysnapshot_forecastcategory,
             df_label_stage_name_stagename,
+            df_label_activity_id_subject,
         },
         insights: {
             i_AreaChart_0229f24b92f336871eeb04e1e16c4e68,
