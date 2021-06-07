@@ -11,13 +11,13 @@ import {
     ILoadingInjectedProps,
     withEntireDataView,
 } from "@gooddata/sdk-ui";
-import { ICommonChartProps, ICoreChartProps } from "../../interfaces";
+import { ICoreChartProps } from "../../interfaces";
 import XirrTransformation from "./internal/XirrTransformation";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
 export class XirrStateless extends React.Component<Props> {
-    public static defaultProps: Partial<ICommonChartProps> = defaultCoreChartProps;
+    public static defaultProps = defaultCoreChartProps;
 
     private errorMap: IErrorDescriptors;
 
