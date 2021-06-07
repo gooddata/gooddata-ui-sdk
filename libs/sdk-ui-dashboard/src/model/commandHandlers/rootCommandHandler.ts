@@ -8,9 +8,9 @@ import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
 import { commandRejected, internalErrorOccurred } from "../events/general";
 import { dateFilterChangeSelectionCommandHandler } from "./dateFilter/handler";
 import { attributeFilterChangeSelectionCommandHandler } from "./attributeFilter/handler";
-import { createDashboardAlertCommandHandler } from "./alerts/createAlertHandler";
-import { removeDashboardAlertCommandHandler } from "./alerts/removeAlertHandler";
-import { updateDashboardAlertCommandHandler } from "./alerts/updateAlertHandler";
+import { createDashboardAlertHandler } from "./alerts/createAlertHandler";
+import { removeDashboardAlertHandler } from "./alerts/removeAlertHandler";
+import { updateDashboardAlertHandler } from "./alerts/updateAlertHandler";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler";
 import { moveLayoutSectionHandler } from "./layout/moveLayoutSectionHandler";
 import { removeLayoutSectionHandler } from "./layout/removeLayoutSectionHandler";
@@ -52,9 +52,9 @@ const DefaultCommandHandlers = {
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": unhandledCommand,
-    "GDC.DASH/CMD.ALERTS.CREATE": createDashboardAlertCommandHandler,
-    "GDC.DASH/CMD.ALERTS.UPDATE": updateDashboardAlertCommandHandler,
-    "GDC.DASH/CMD.ALERTS.REMOVE": removeDashboardAlertCommandHandler,
+    "GDC.DASH/CMD.ALERTS.CREATE": createDashboardAlertHandler,
+    "GDC.DASH/CMD.ALERTS.UPDATE": updateDashboardAlertHandler,
+    "GDC.DASH/CMD.ALERTS.REMOVE": removeDashboardAlertHandler,
 };
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {

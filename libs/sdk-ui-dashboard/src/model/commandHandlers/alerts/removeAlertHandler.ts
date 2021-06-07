@@ -16,10 +16,7 @@ function removeAlert(ctx: DashboardContext, alert: IWidgetAlert): Promise<void> 
     return backend.workspace(workspace).dashboards().deleteWidgetAlert(alert.ref);
 }
 
-export function* removeDashboardAlertCommandHandler(
-    ctx: DashboardContext,
-    cmd: RemoveAlert,
-): SagaIterator<void> {
+export function* removeDashboardAlertHandler(ctx: DashboardContext, cmd: RemoveAlert): SagaIterator<void> {
     // eslint-disable-next-line no-console
     console.debug("handling remove alert", cmd, "in context", ctx);
 
