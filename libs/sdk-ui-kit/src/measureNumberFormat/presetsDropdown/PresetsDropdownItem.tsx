@@ -15,7 +15,7 @@ interface IMeasureNumberFormatDropdownItemProps {
 }
 
 export class PresetsDropdownItem extends React.PureComponent<IMeasureNumberFormatDropdownItemProps> {
-    public static defaultProps: Pick<IMeasureNumberFormatDropdownItemProps, "isSelected"> = {
+    public static defaultProps: Partial<IMeasureNumberFormatDropdownItemProps> = {
         isSelected: false,
     };
 

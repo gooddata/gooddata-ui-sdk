@@ -11,13 +11,13 @@ import {
     ILoadingInjectedProps,
     withEntireDataView,
 } from "@gooddata/sdk-ui";
-import { ICoreChartProps } from "../../interfaces";
+import { ICommonChartProps, ICoreChartProps } from "../../interfaces";
 import HeadlineTransformation from "./internal/HeadlineTransformation";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
 export class HeadlineStateless extends React.Component<Props> {
-    public static defaultProps = defaultCoreChartProps;
+    public static defaultProps: Partial<ICommonChartProps> = defaultCoreChartProps;
 
     private errorMap: IErrorDescriptors;
 

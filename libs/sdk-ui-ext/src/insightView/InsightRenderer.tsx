@@ -60,10 +60,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
     private visualization: IVisualization | undefined;
     private containerRef = React.createRef<HTMLDivElement>();
 
-    public static defaultProps: Pick<
-        IInsightRendererProps,
-        "ErrorComponent" | "filters" | "drillableItems" | "LoadingComponent" | "pushData" | "locale"
-    > = {
+    public static defaultProps: Partial<IInsightRendererProps & WrappedComponentProps> = {
         ErrorComponent,
         filters: [],
         drillableItems: [],

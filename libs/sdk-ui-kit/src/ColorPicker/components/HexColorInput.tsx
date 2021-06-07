@@ -13,7 +13,7 @@ export interface IHexColorInputProps {
 }
 
 export class HexColorInput extends PureComponent<IHexColorInputProps> {
-    static defaultProps: Pick<IHexColorInputProps, "label" | "placeholder"> = {
+    static defaultProps: Partial<IHexColorInputProps> = {
         placeholder: "",
         label: "",
     };

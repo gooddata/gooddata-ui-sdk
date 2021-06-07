@@ -10,7 +10,7 @@ export type BubbleFocusTriggerProps = IBubbleTriggerProps;
  * @internal
  */
 export class BubbleFocusTrigger extends BubbleTrigger<BubbleFocusTriggerProps> {
-    static defaultProps: BubbleFocusTriggerProps = {
+    static defaultProps: Partial<BubbleFocusTriggerProps> = {
         tagName: "span",
         eventsOnBubble: true,
     };

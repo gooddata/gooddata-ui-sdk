@@ -63,15 +63,7 @@ export interface IShortenedTextState {
  * @internal
  */
 export class ShortenedText extends PureComponent<IShortenedTextProps, IShortenedTextState> {
-    static defaultProps: Pick<
-        IShortenedTextProps,
-        | "className"
-        | "tagName"
-        | "tooltipAlignPoints"
-        | "tooltipVisibleOnMouseOver"
-        | "getElement"
-        | "displayTooltip"
-    > = {
+    static defaultProps: Partial<IShortenedTextProps> = {
         className: "",
         tagName: "span",
         tooltipAlignPoints: [{ align: "cr cl" }],

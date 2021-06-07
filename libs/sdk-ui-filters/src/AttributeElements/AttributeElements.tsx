@@ -74,7 +74,7 @@ interface IAttributeElementsState {
 }
 
 class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
-    public static defaultProps: Pick<IAttributeElementsProps, "options" | "children" | "onError"> = {
+    public static defaultProps: Partial<IAttributeElementsProps> = {
         options: {},
         children: AttributeElementsDefaultChildren,
         onError: defaultErrorHandler,

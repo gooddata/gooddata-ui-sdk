@@ -29,10 +29,7 @@ export interface IXirrTransformationProps {
  * and drill events out of it.
  */
 class XirrTransformation extends React.Component<IXirrTransformationProps & WrappedComponentProps> {
-    public static defaultProps: Pick<
-        IXirrTransformationProps,
-        "config" | "drillableItems" | "onDrill" | "onAfterRender"
-    > = {
+    public static defaultProps: Partial<IXirrTransformationProps & WrappedComponentProps> = {
         config: {},
         drillableItems: [],
         onDrill: () => true,

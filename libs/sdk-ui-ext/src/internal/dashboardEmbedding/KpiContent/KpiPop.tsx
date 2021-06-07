@@ -32,10 +32,7 @@ export interface IKpiPopProps {
 }
 
 class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
-    static defaultProps: Pick<
-        IKpiPopProps,
-        "error" | "disabled" | "isLoading" | "previousPeriodName" | "clientWidth" | "clientHeight"
-    > = {
+    static defaultProps: Partial<IKpiPopProps & WrappedComponentProps> = {
         error: null,
         disabled: false,
         isLoading: false,

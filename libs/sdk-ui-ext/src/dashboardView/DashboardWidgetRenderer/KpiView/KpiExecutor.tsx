@@ -229,7 +229,6 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
                  */
                 (isAlertBroken ? new NoDataSdkError() : undefined)
             }
-            isLoading={false /* content is always loaded at this point */}
             isAlertLoading={false /* alerts are always loaded at this point */}
             isAlertExecutionLoading={alertStatus === "loading"}
             isAlertBroken={isAlertBroken}

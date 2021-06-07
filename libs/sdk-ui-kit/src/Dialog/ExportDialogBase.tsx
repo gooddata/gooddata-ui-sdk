@@ -10,7 +10,7 @@ import { ConfirmDialogBase } from "./ConfirmDialogBase";
  * @internal
  */
 export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
-    static defaultProps: IExportDialogBaseProps = {
+    static defaultProps: Partial<IExportDialogBaseProps> = {
         displayCloseButton: true,
         isPositive: true,
         isSubmitDisabled: false,

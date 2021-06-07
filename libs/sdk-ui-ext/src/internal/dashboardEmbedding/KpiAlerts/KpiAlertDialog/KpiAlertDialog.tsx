@@ -87,19 +87,7 @@ export class KpiAlertDialog extends Component<
     IKpiAlertDialogProps & WrappedComponentProps,
     IKpiAlertDialogState
 > {
-    static defaultProps: Pick<
-        IKpiAlertDialogProps,
-        | "isAlertLoading"
-        | "isKpiFormatLoading"
-        | "thresholdPlaceholder"
-        | "isDateFilterIgnored"
-        | "isThresholdRepresentingPercent"
-        | "filters"
-        | "isAlertDialogOpening"
-        | "alertDeletingStatus"
-        | "alertSavingStatus"
-        | "alertUpdatingStatus"
-    > = {
+    static defaultProps: Partial<IKpiAlertDialogProps & WrappedComponentProps> = {
         isAlertLoading: false,
         isKpiFormatLoading: false,
         thresholdPlaceholder: "",

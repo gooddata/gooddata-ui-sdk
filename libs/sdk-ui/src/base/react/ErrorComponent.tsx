@@ -56,9 +56,10 @@ export interface IErrorProps {
  * @public
  */
 export class ErrorComponent extends React.Component<IErrorProps> {
-    public static defaultProps: Pick<IErrorProps, "icon" | "className" | "height" | "style"> = {
+    public static defaultProps: Partial<IErrorProps> = {
         icon: "gd-icon-warning",
         className: "Error s-error",
+        width: undefined,
         height: "100%",
         style: {
             display: "flex",

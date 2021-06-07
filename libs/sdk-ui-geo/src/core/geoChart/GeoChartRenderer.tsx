@@ -56,10 +56,7 @@ export interface IGeoChartRendererProps extends WrappedComponentProps {
 }
 
 class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
-    public static defaultProps: Pick<
-        IGeoChartRendererProps,
-        "config" | "afterRender" | "onZoomChanged" | "onCenterPositionChanged"
-    > = {
+    public static defaultProps: Partial<IGeoChartRendererProps> = {
         config: {
             mapboxToken: "",
         },

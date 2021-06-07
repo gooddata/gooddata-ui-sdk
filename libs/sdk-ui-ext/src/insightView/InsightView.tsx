@@ -39,10 +39,7 @@ interface IInsightViewState {
 }
 
 class InsightViewCore extends React.Component<IInsightViewProps & WrappedComponentProps, IInsightViewState> {
-    public static defaultProps: Pick<
-        IInsightViewProps,
-        "ErrorComponent" | "filters" | "drillableItems" | "LoadingComponent" | "pushData" | "TitleComponent"
-    > = {
+    public static defaultProps: Partial<IInsightViewProps & WrappedComponentProps> = {
         ErrorComponent: DefaultError,
         filters: [],
         drillableItems: [],
