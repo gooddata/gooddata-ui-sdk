@@ -12,9 +12,9 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { RecordingIndex } from "./types";
 import { RecordedElementQueryFactory } from "./elements";
-import { isUriRef, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { identifierToRecording } from "./utils";
+import { ObjRef, areObjRefsEqual, objRefToString, isIdentifierRef } from "@gooddata/sdk-model";
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
+import values from "lodash/values";
 
 /**
  * @internal
@@ -26,32 +26,25 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         return new RecordedElementQueryFactory(this.recordings);
     }
 
-    public getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> {
+    public async getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> {
         if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
-            return Promise.reject(new UnexpectedResponseError("No displayForm recordings", 404, {}));
+            throw new UnexpectedResponseError("No displayForm recordings", 404, {});
         }
 
-        if (isUriRef(ref)) {
-            return Promise.reject(
-                new UnexpectedResponseError("Identifying displayForm by uri is not supported yet", 400, {}),
-            );
-        }
-
-        const recording =
-            this.recordings.metadata.displayForms["df_" + identifierToRecording(ref.identifier)];
+        const recording = values(this.recordings.metadata.displayForms).find((rec) =>
+            isIdentifierRef(ref) ? ref.identifier === rec.obj.id : ref.uri === rec.obj.uri,
+        );
 
         if (!recording) {
-            return Promise.reject(
-                new UnexpectedResponseError(`No element recordings for df ${ref.identifier}`, 404, {}),
-            );
+            throw new UnexpectedResponseError(`No element recordings for df ${objRefToString(ref)}`, 404, {});
         }
 
-        return Promise.resolve(recording.obj);
+        return recording.obj;
     }
 
-    public getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject> {
+    public async getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject> {
         if (!this.recordings.metadata || !this.recordings.metadata.catalog) {
-            return Promise.reject(new UnexpectedResponseError("No recordings", 404, {}));
+            throw new UnexpectedResponseError("No recordings", 404, {});
         }
 
         const recording = this.recordings.metadata.catalog.items
@@ -61,16 +54,12 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
             });
 
         if (!recording) {
-            return Promise.reject(
-                new UnexpectedResponseError(`No attribute recording ${JSON.stringify(ref)}`, 404, {}),
-            );
+            throw new UnexpectedResponseError(`No attribute recording ${objRefToString(ref)}`, 404, {});
         }
 
         const { title, uri, id, production, description } = recording.attribute;
-        return Promise.resolve(
-            newAttributeMetadataObject(ref, (a) =>
-                a.title(title).uri(uri).production(Boolean(production)).id(id).description(description),
-            ),
+        return newAttributeMetadataObject(ref, (a) =>
+            a.title(title).uri(uri).production(Boolean(production)).id(id).description(description),
         );
     }
 
