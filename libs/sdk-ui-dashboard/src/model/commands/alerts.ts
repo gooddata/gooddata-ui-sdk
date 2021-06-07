@@ -4,12 +4,12 @@ import { IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi"
 import { IDashboardCommand } from "./base";
 
 /**
- * Creates or updates Kpi alert.
+ * Creates Kpi alert.
  *
  * @internal
  */
 export interface CreateAlert extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ALERTS.CREATE";
+    readonly type: "GDC.DASH/CMD.ALERT.CREATE";
     readonly payload: {
         readonly alert: IWidgetAlertDefinition;
     };
@@ -26,7 +26,7 @@ export interface CreateAlert extends IDashboardCommand {
  */
 export function createAlert(alert: IWidgetAlertDefinition, correlationId?: string): CreateAlert {
     return {
-        type: "GDC.DASH/CMD.ALERTS.CREATE",
+        type: "GDC.DASH/CMD.ALERT.CREATE",
         correlationId,
         payload: {
             alert,
@@ -35,12 +35,12 @@ export function createAlert(alert: IWidgetAlertDefinition, correlationId?: strin
 }
 
 /**
- * Creates or updates Kpi alert.
+ *Updates Kpi alert.
  *
  * @internal
  */
 export interface UpdateAlert extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ALERTS.UPDATE";
+    readonly type: "GDC.DASH/CMD.ALERT.UPDATE";
     readonly payload: {
         readonly alert: IWidgetAlert;
     };
@@ -57,7 +57,7 @@ export interface UpdateAlert extends IDashboardCommand {
  */
 export function updateAlert(alert: IWidgetAlert, correlationId?: string): UpdateAlert {
     return {
-        type: "GDC.DASH/CMD.ALERTS.UPDATE",
+        type: "GDC.DASH/CMD.ALERT.UPDATE",
         correlationId,
         payload: {
             alert,
@@ -75,7 +75,7 @@ export function updateAlert(alert: IWidgetAlert, correlationId?: string): Update
  * @internal
  */
 export interface RemoveAlert extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ALERTS.REMOVE";
+    readonly type: "GDC.DASH/CMD.ALERT.REMOVE";
     readonly payload: {
         readonly alert: IWidgetAlert;
     };
@@ -92,7 +92,7 @@ export interface RemoveAlert extends IDashboardCommand {
  */
 export function removeAlert(alert: IWidgetAlert, correlationId?: string): RemoveAlert {
     return {
-        type: "GDC.DASH/CMD.ALERTS.REMOVE",
+        type: "GDC.DASH/CMD.ALERT.REMOVE",
         correlationId,
         payload: {
             alert,

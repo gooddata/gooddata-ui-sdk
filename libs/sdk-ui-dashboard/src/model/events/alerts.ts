@@ -9,7 +9,7 @@ import { IDashboardEvent } from "./base";
  * @internal
  */
 export interface DashboardAlertCreated extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ALERTS.CREATED";
+    readonly type: "GDC.DASH/EVT.ALERT.CREATED";
     readonly payload: {
         readonly alert: IWidgetAlert;
     };
@@ -21,7 +21,7 @@ export function alertCreated(
     correlationId?: string,
 ): DashboardAlertCreated {
     return {
-        type: "GDC.DASH/EVT.ALERTS.CREATED",
+        type: "GDC.DASH/EVT.ALERT.CREATED",
         ctx,
         correlationId,
         payload: {
@@ -40,7 +40,7 @@ export function alertCreated(
  * @internal
  */
 export interface DashboardAlertRemoved extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ALERTS.REMOVED";
+    readonly type: "GDC.DASH/EVT.ALERT.REMOVED";
     readonly payload: {
         readonly alert: IWidgetAlert;
     };
@@ -52,7 +52,7 @@ export function alertRemoved(
     correlationId?: string,
 ): DashboardAlertRemoved {
     return {
-        type: "GDC.DASH/EVT.ALERTS.REMOVED",
+        type: "GDC.DASH/EVT.ALERT.REMOVED",
         ctx,
         correlationId,
         payload: {
@@ -71,7 +71,7 @@ export function alertRemoved(
  * @internal
  */
 export interface DashboardAlertUpdated extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ALERTS.UPDATED";
+    readonly type: "GDC.DASH/EVT.ALERT.UPDATED";
     readonly payload: {
         readonly updated: IWidgetAlert;
     };
@@ -83,7 +83,7 @@ export function alertUpdated(
     correlationId?: string,
 ): DashboardAlertUpdated {
     return {
-        type: "GDC.DASH/EVT.ALERTS.UPDATED",
+        type: "GDC.DASH/EVT.ALERT.UPDATED",
         ctx,
         correlationId,
         payload: {

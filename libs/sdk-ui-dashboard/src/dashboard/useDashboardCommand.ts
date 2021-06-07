@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import { useDashboardDispatch } from "../model/state/dashboardStore";
-import { useDashboardEventsContext } from "../dashboard/DashboardEventsContext";
+import { useDashboardEventsContext } from "./DashboardEventsContext";
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { v4 as uuid } from "uuid";
 import { DashboardEventType, DashboardCommands, DashboardEvents } from "../model";
@@ -22,11 +22,9 @@ import { DashboardEventType, DashboardCommands, DashboardEvents } from "../model
 export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs extends any[]>(
     commandCreator: (...args: TArgs) => TCommand,
     eventHandlers: {
-        [eventType in DashboardEventType]?: <T extends Extract<DashboardEvents, { type: eventType }>>(
-            event: T,
-        ) => void;
+        [eventType in DashboardEventType]?: (event: Extract<DashboardEvents, { type: eventType }>) => void;
     },
-    onBeforeRun: () => void,
+    onBeforeRun: (command: TCommand) => void,
 ): ((...args: TArgs) => void) => {
     const dispatch = useDashboardDispatch();
     const { registerHandler, unregisterHandler } = useDashboardEventsContext();
@@ -67,7 +65,7 @@ export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs ex
             });
         }
 
-        onBeforeRun?.();
+        onBeforeRun?.(command);
         dispatch(command);
     };
 

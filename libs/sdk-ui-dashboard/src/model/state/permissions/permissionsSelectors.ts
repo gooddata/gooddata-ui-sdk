@@ -19,3 +19,12 @@ export const selectPermissions = createSelector(selectSelf, (filterContextState)
 
     return filterContextState.permissions!;
 });
+
+/**
+ * Returns whether the current user has permissions to list other users in the workspace.
+ *
+ * @internal
+ */
+export const selectCanListUsersInProject = createSelector(selectPermissions, (state) => {
+    return state?.canListUsersInProject;
+});

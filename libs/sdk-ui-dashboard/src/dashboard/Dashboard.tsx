@@ -54,6 +54,7 @@ import {
     DefaultDashboardWidget,
     DashboardLayout,
 } from "../layout";
+import { DefaultScheduledEmailDialog, ScheduledEmailDialogProps } from "../scheduledEmail";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -272,6 +273,23 @@ export interface IDashboardProps {
     };
 
     /**
+     * Optionally configure how the scheduled email dialog looks and behaves.
+     */
+    scheduledEmailDialogConfig?: {
+        /**
+         * Specify component to use for rendering the scheduled email dialog
+         */
+        Component?: React.ComponentType<ScheduledEmailDialogProps>;
+
+        /**
+         * Optionally specify props to customize the default implementation of scheduled email dialog.
+         *
+         * This has no effect if custom component is used.
+         */
+        defaultComponentProps?: ScheduledEmailDialogProps;
+    };
+
+    /**
      *
      */
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
@@ -342,6 +360,9 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                     InsightComponent={props.widgetConfig?.insight?.Component ?? DefaultDashboardInsight}
                     KpiComponent={props.widgetConfig?.kpi?.Component ?? DefaultDashboardKpi}
                     WidgetComponent={props.widgetConfig?.Component ?? DefaultDashboardWidget}
+                    ScheduledEmailDialogComponent={
+                        props.scheduledEmailDialogConfig?.Component ?? DefaultScheduledEmailDialog
+                    }
                 >
                     <DashboardLoading {...props} />
                 </DashboardComponentsProvider>

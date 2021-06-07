@@ -84,6 +84,7 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
                 insightsActions.setInsights(references.insights),
                 metaActions.setMeta({
                     ref: dashboard.ref,
+                    uri: dashboard.uri,
                     title: dashboard.title,
                     updated: dashboard.updated,
                     description: dashboard.description,

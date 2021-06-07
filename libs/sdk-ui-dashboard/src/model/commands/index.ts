@@ -37,6 +37,7 @@ import {
     UndoLayoutChanges,
 } from "./layout";
 import { CreateAlert, RemoveAlert, UpdateAlert } from "./alerts";
+import { CreateScheduledEmail } from "./scheduledEmail";
 
 export { DashboardCommandType, IDashboardCommand } from "./base";
 export {
@@ -93,7 +94,7 @@ export {
     UndoPointSelector,
 } from "./layout";
 export { CreateAlert, createAlert, RemoveAlert, removeAlert, UpdateAlert, updateAlert } from "./alerts";
-
+export { CreateScheduledEmail } from "./scheduledEmail";
 export {
     ChangeKpiWidgetHeader,
     changeKpiWidgetHeader,
@@ -164,4 +165,5 @@ export type DashboardCommands =
     | RefreshInsightWidget
     | CreateAlert
     | UpdateAlert
-    | RemoveAlert;
+    | RemoveAlert
+    | CreateScheduledEmail;

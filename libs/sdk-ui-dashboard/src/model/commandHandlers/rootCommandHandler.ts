@@ -8,9 +8,6 @@ import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
 import { commandRejected, internalErrorOccurred } from "../events/general";
 import { dateFilterChangeSelectionCommandHandler } from "./dateFilter/handler";
 import { attributeFilterChangeSelectionCommandHandler } from "./attributeFilter/handler";
-import { createDashboardAlertHandler } from "./alerts/createAlertHandler";
-import { removeDashboardAlertHandler } from "./alerts/removeAlertHandler";
-import { updateDashboardAlertHandler } from "./alerts/updateAlertHandler";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler";
 import { moveLayoutSectionHandler } from "./layout/moveLayoutSectionHandler";
 import { removeLayoutSectionHandler } from "./layout/removeLayoutSectionHandler";
@@ -19,6 +16,10 @@ import { addSectionItemsHandler } from "./layout/addSectionItemsHandler";
 import { moveSectionItemHandler } from "./layout/moveSectionItemHandler";
 import { removeSectionItemHandler } from "./layout/removeSectionItemHandler";
 import { undoLayoutChangesHandler } from "./layout/undoLayoutChangesHandler";
+import { createAlertHandler } from "./alerts/createAlertHandler";
+import { removeAlertHandler } from "./alerts/removeAlertHandler";
+import { updateAlertHandler } from "./alerts/updateAlertHandler";
+import { createScheduledEmailHandler } from "./scheduledEmail/createScheduledEmailHandler";
 
 const DefaultCommandHandlers = {
     "GDC.DASH/CMD.LOAD": loadDashboardHandler,
@@ -52,9 +53,10 @@ const DefaultCommandHandlers = {
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": unhandledCommand,
-    "GDC.DASH/CMD.ALERTS.CREATE": createDashboardAlertHandler,
-    "GDC.DASH/CMD.ALERTS.UPDATE": updateDashboardAlertHandler,
-    "GDC.DASH/CMD.ALERTS.REMOVE": removeDashboardAlertHandler,
+    "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
+    "GDC.DASH/CMD.ALERT.UPDATE": updateAlertHandler,
+    "GDC.DASH/CMD.ALERT.REMOVE": removeAlertHandler,
+    "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE": createScheduledEmailHandler,
 };
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
