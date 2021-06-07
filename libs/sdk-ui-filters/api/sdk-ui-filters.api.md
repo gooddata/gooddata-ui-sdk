@@ -391,7 +391,7 @@ export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilte
 // @beta (undocumented)
 export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureValueFilterDropdownProps> {
     // (undocumented)
-    static defaultProps: Partial<IMeasureValueFilterDropdownProps>;
+    static defaultProps: Pick<IMeasureValueFilterDropdownProps, "displayTreatNullAsZeroOption" | "treatNullAsZeroDefaultValue" | "enableOperatorSelection">;
     // (undocumented)
     render(): React_2.ReactNode;
 }
