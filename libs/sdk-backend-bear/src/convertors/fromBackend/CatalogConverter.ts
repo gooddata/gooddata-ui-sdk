@@ -151,6 +151,9 @@ const convertDateDataSetAttribute = (
     const attributeRef = bearObjectMetaToBearRef(attributeMeta);
     const displayFormRef = bearObjectMetaToBearRef(defaultDisplayFormMeta);
     const attributeData = attributeById[attributeMeta.identifier!];
+    const attributeDisplayForms = attributeData.attribute.content.displayForms.map((displayForm) =>
+        convertDisplayForm(displayForm, attributeRef),
+    );
     const drillDownStep = attributeData.attribute.content.drillDownStepAttributeDF
         ? uriRef(attributeData.attribute.content.drillDownStepAttributeDF)
         : undefined;
@@ -158,7 +161,10 @@ const convertDateDataSetAttribute = (
     return newCatalogDateAttribute((catalogDa) =>
         catalogDa
             .attribute(attributeRef, (a) =>
-                a.modify(commonMetadataModifications(attributeMeta)).drillDownStep(drillDownStep),
+                a
+                    .modify(commonMetadataModifications(attributeMeta))
+                    .drillDownStep(drillDownStep)
+                    .displayForms(attributeDisplayForms),
             )
             .defaultDisplayForm(displayFormRef, (df) =>
                 df.modify(commonMetadataModifications(defaultDisplayFormMeta)),
