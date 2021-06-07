@@ -31,7 +31,10 @@ export interface IStaticLegendProps {
  * @internal
  */
 export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
-    public static defaultProps: Partial<IStaticLegendProps> = {
+    public static defaultProps: Pick<
+        IStaticLegendProps,
+        "buttonOrientation" | "paginationHeight" | "onPageChanged"
+    > = {
         buttonOrientation: "upDown",
         paginationHeight: STATIC_PAGING_HEIGHT,
         onPageChanged: noop,
