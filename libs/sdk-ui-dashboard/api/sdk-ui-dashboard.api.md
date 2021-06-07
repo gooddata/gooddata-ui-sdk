@@ -437,7 +437,7 @@ export interface DashboardAttributeFilterSelectionChanged extends IDashboardEven
 export const DashboardButtonBar: React_2.FC<IDashboardButtonBarProps & IDefaultButtonBarProps>;
 
 // @internal (undocumented)
-export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps>;
+export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps & IDefaultButtonBarProps>;
 
 // @internal
 export interface DashboardCommandFailed extends IDashboardEvent {
@@ -863,7 +863,7 @@ export interface DashboardLoaded extends IDashboardEvent {
 export const DashboardMenuButton: React_2.FC<IDashboardMenuButtonProps & IDefaultMenuButtonProps>;
 
 // @internal (undocumented)
-export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonProps>;
+export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonProps & IDefaultMenuButtonProps>;
 
 // @internal (undocumented)
 export type DashboardMeta = Pick<IDashboard, "ref" | "title" | "description" | "created" | "updated" | "isLocked" | "uri">;
@@ -920,7 +920,7 @@ export type DashboardState = {
     alerts: EntityState<IWidgetAlert>;
 };
 
-// @internal (undocumented)
+// @internal
 export const DashboardTitle: React_2.FC<IDashboardTitleProps>;
 
 // @internal (undocumented)
@@ -1122,7 +1122,8 @@ export interface IDashboardProps {
 
 // @internal (undocumented)
 export interface IDashboardTitleProps {
-    onTitleClicked: () => void;
+    isEditEnabled?: boolean;
+    onTitleChanged?: (title: string) => void;
     title: string;
 }
 
@@ -1156,7 +1157,7 @@ export interface IDefaultFilterBarProps {
 export interface IDefaultMenuButtonProps {
     AdditionalMenuItems?: [number, MenuButtonItem][];
     ButtonComponent?: React_2.FC;
-    MenuItems?: MenuButtonItem[];
+    menuItems?: MenuButtonItem[];
 }
 
 // @internal
@@ -1197,7 +1198,25 @@ export type InsightPlaceholderWidget = {
 };
 
 // @internal (undocumented)
+export interface ITopBarMenuButtonConfig {
+    // (undocumented)
+    menuItems: MenuButtonItem[];
+}
+
+// @internal (undocumented)
 export interface ITopBarProps {
+    // (undocumented)
+    menuButtonConfig: ITopBarMenuButtonConfig;
+    // (undocumented)
+    titleConfig: ITopBarTitleConfig;
+}
+
+// @internal (undocumented)
+export interface ITopBarTitleConfig {
+    // (undocumented)
+    isEditEnabled?: boolean;
+    // (undocumented)
+    onTitleChanged?: (newTitle: string) => void;
     // (undocumented)
     title: string;
 }
@@ -1249,7 +1268,8 @@ export type LoadingState = {
 export type MenuButtonItem = {
     itemId: string;
     itemName: string;
-    callback: () => void;
+    callback?: () => void;
+    type?: "separator" | "header";
 };
 
 // @internal

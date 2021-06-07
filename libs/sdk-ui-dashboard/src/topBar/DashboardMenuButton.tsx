@@ -1,5 +1,7 @@
 // (C) 2021 GoodData Corporation
-import React, { ComponentType } from "react";
+import React, { ComponentType, useState } from "react";
+import { Placement } from "../model/types/topBarTypes";
+import { Button, SingleSelectListItem, ItemsWrapper, Overlay } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
@@ -15,7 +17,11 @@ export interface IDashboardMenuButtonProps {
 export type MenuButtonItem = {
     itemId: string;
     itemName: string;
-    callback: () => void;
+    callback?: () => void;
+    /**
+     * If type is not specified, then common menu button item rendered.
+     */
+    type?: "separator" | "header";
 };
 
 /**
@@ -31,7 +37,7 @@ export interface IDefaultMenuButtonProps {
      * Optionally specify custom items that will be in the menu. Using this setting fully overrides the
      * menu items. The default items will not be shown.
      */
-    MenuItems?: MenuButtonItem[];
+    menuItems?: MenuButtonItem[];
 
     /**
      * Optionally specify additional menu items to add on top of the default items.
@@ -49,12 +55,79 @@ export interface IDefaultMenuButtonProps {
  * @internal
  */
 export const DashboardMenuButton: React.FC<IDashboardMenuButtonProps & IDefaultMenuButtonProps> = (
-    _props: IDashboardMenuButtonProps & IDefaultMenuButtonProps,
+    props: IDashboardMenuButtonProps & IDefaultMenuButtonProps,
 ) => {
-    return null;
+    const [isOpen, setIsOpen] = useState(false);
+
+    const renderDefaultMenuItems = () => {
+        return props.menuItems?.map((menuItem) => {
+            return (
+                <SingleSelectListItem
+                    key={menuItem.itemId}
+                    title={menuItem.itemName}
+                    type={menuItem.type}
+                    onClick={menuItem.callback}
+                />
+            );
+        });
+    };
+
+    const renderAdditionalMenuItems = () => {
+        //todo add render logic according to indexes specified.
+        return props.AdditionalMenuItems?.map((item) => {
+            const menuItem = item[1];
+            return (
+                <SingleSelectListItem
+                    key={menuItem.itemId}
+                    title={menuItem.itemName}
+                    type={menuItem.type}
+                    onClick={menuItem.callback}
+                />
+            );
+        });
+    };
+
+    const onMenuButtonClick = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const renderMenuItems = () => {
+        return (
+            <Overlay
+                key={"topBarMenuButton"}
+                alignTo=".s-header-options-button"
+                alignPoints={[{ align: "br tr" }]}
+                className="gd-header-menu-overlay"
+                closeOnMouseDrag={true}
+                closeOnOutsideClick={true}
+                onClose={onMenuButtonClick}
+            >
+                <ItemsWrapper>
+                    {renderDefaultMenuItems()}
+                    {renderAdditionalMenuItems()}
+                </ItemsWrapper>
+            </Overlay>
+        );
+    };
+
+    return (
+        <>
+            <Button
+                onClick={onMenuButtonClick}
+                value="&#8943;"
+                className={"gd-button-primary dash-header-options-button s-header-options-button gd-button"}
+            />
+            {isOpen && renderMenuItems()}
+        </>
+    );
 };
 
 /**
  * @internal
  */
-export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonProps>;
+export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonProps & IDefaultMenuButtonProps>;
+
+export const defaultMenuButtonProps = {
+    Component: DashboardMenuButton,
+    placement: "right" as Placement,
+};
