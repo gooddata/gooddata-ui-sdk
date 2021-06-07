@@ -129,7 +129,7 @@ interface IDummyRowItemProps {
 }
 
 class DummyRowItem extends React.Component<IDummyRowItemProps> {
-    static defaultProps: Pick<IDummyRowItemProps, "isFirst" | "isLast" | "scrollToSelected"> = {
+    static defaultProps: Partial<IDummyRowItemProps> = {
         isFirst: false,
         isLast: false,
         scrollToSelected: false,
@@ -151,7 +151,7 @@ interface IItemProps {
 
 describe("List", () => {
     const renderList = (options: Partial<ILegacyListProps>): ReactWrapper<LegacyList> => {
-        return mount(<LegacyList {...(options as any)} />);
+        return mount(<LegacyList {...options} />);
     };
 
     const dataSource = createDummyDataSource<IItemProps>([

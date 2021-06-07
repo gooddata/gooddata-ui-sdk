@@ -26,13 +26,12 @@ export interface IKpiValueProps {
 const SMALLEST_HEIGHT = 54;
 
 class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
-    static defaultProps: Pick<IKpiValueProps, "error" | "value" | "isLoading" | "disableKpiDrillUnderline"> =
-        {
-            error: null,
-            value: "",
-            isLoading: false,
-            disableKpiDrillUnderline: false,
-        };
+    static defaultProps: Partial<IKpiValueProps & WrappedComponentProps> = {
+        error: null,
+        value: "",
+        isLoading: false,
+        disableKpiDrillUnderline: false,
+    };
 
     getKpiValueClassNames() {
         return cx("kpi-value", {

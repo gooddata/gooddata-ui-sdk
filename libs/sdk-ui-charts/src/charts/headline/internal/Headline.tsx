@@ -39,10 +39,7 @@ export interface IHeadlineVisualizationProps {
  * The React component that renders the Headline visualisation.
  */
 export default class Headline extends React.Component<IHeadlineVisualizationProps> {
-    public static defaultProps: Pick<
-        IHeadlineVisualizationProps,
-        "onDrill" | "onAfterRender" | "config" | "disableDrillUnderline"
-    > = {
+    public static defaultProps: Partial<IHeadlineVisualizationProps> = {
         onDrill: () => true,
         onAfterRender: noop,
         config: {},

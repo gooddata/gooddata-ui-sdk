@@ -12,7 +12,7 @@ import { Bubble, BubbleHoverTrigger } from "../Bubble";
  * @internal
  */
 export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
-    static defaultProps: IConfirmDialogBaseProps = {
+    static defaultProps: Partial<IConfirmDialogBaseProps> = {
         displayCloseButton: true,
         onCancel: noop,
         onSubmit: noop,

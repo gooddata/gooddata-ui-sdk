@@ -33,10 +33,7 @@ export interface IHeadlineTransformationProps {
  * and drill events out of it.
  */
 class HeadlineTransformation extends React.Component<IHeadlineTransformationProps & WrappedComponentProps> {
-    public static defaultProps: Pick<
-        IHeadlineTransformationProps,
-        "drillableItems" | "onDrill" | "onAfterRender"
-    > = {
+    public static defaultProps: Partial<IHeadlineTransformationProps & WrappedComponentProps> = {
         drillableItems: [],
         onDrill: () => true,
         onAfterRender: noop,

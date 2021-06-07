@@ -29,7 +29,7 @@ const shouldSubmitOnEnterPress = ({ target }: React.KeyboardEvent): boolean => {
  * @internal
  */
 export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
-    static defaultProps: IDialogBaseProps = {
+    static defaultProps: Partial<IDialogBaseProps> = {
         children: false,
         className: "",
         displayCloseButton: false,

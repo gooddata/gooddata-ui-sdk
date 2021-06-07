@@ -502,7 +502,7 @@ export function shouldShowFluid(documentObj: Document): boolean;
 // @internal (undocumented)
 export class StaticLegend extends React_2.PureComponent<IStaticLegendProps> {
     // (undocumented)
-    static defaultProps: Pick<IStaticLegendProps, "buttonOrientation" | "paginationHeight" | "onPageChanged">;
+    static defaultProps: Partial<IStaticLegendProps>;
     // (undocumented)
     render(): React_2.ReactNode;
     // (undocumented)

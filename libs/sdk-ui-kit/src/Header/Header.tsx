@@ -40,10 +40,7 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
 }
 
 class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, IAppHeaderState> {
-    public static defaultProps: Pick<
-        IAppHeaderProps,
-        "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups"
-    > = {
+    public static defaultProps: Partial<IAppHeaderProps> = {
         logoHref: "/",
         accountMenuItems: [],
         helpMenuItems: [],

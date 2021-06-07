@@ -77,10 +77,7 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
  * @public
  */
 export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilterState> {
-    public static defaultProps: Pick<
-        IDateFilterProps,
-        "dateFormat" | "isEditMode" | "locale" | "onCancel" | "onOpen" | "onClose"
-    > = {
+    public static defaultProps: Partial<IDateFilterProps> = {
         dateFormat: DEFAULT_DATE_FORMAT,
         isEditMode: false,
         locale: "en-US",

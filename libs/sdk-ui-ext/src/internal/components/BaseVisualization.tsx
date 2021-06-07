@@ -40,7 +40,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;
     projectId: string;
     insight: IInsightDefinition;
-    insightPropertiesMeta?: any;
+    insightPropertiesMeta: any;
     config?: IGdcConfig;
     visualizationClass: IVisualizationClass;
     environment?: VisualizationEnvironment;
@@ -48,14 +48,14 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     height?: number;
     locale?: ILocale;
     dateFormat?: string;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     totalsEditAllowed?: boolean;
     featureFlags?: ISettings;
     visualizationCatalog?: IVisualizationCatalog;
     newDerivedBucketItems?: IBucketItem[];
     referencePoint?: IReferencePoint;
     onError: OnError;
-    onExportReady?: OnExportReady;
+    onExportReady: OnExportReady;
     onLoadingChanged: OnLoadingChanged;
     isMdObjectValid?: boolean;
     configPanelClassName?: string;
@@ -68,18 +68,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
 }
 
 export class BaseVisualization extends React.PureComponent<IBaseVisualizationProps> {
-    public static defaultProps: Pick<
-        IBaseVisualizationProps,
-        | "visualizationCatalog"
-        | "newDerivedBucketItems"
-        | "referencePoint"
-        | "onExtendedReferencePointChanged"
-        | "onNewDerivedBucketItemsPlaced"
-        | "isMdObjectValid"
-        | "configPanelClassName"
-        | "featureFlags"
-        | "renderer"
-    > = {
+    public static defaultProps: Partial<IBaseVisualizationProps> = {
         visualizationCatalog: FullVisualizationCatalog,
         newDerivedBucketItems: [],
         referencePoint: null,

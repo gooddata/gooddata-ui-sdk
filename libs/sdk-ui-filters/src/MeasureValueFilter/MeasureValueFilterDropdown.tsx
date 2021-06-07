@@ -58,10 +58,7 @@ const getTreatNullAsZeroValue = (
  * @beta
  */
 export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValueFilterDropdownProps> {
-    public static defaultProps: Pick<
-        IMeasureValueFilterDropdownProps,
-        "displayTreatNullAsZeroOption" | "treatNullAsZeroDefaultValue" | "enableOperatorSelection"
-    > = {
+    public static defaultProps: Partial<IMeasureValueFilterDropdownProps> = {
         displayTreatNullAsZeroOption: false,
         treatNullAsZeroDefaultValue: false,
         enableOperatorSelection: true,

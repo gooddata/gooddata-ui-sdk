@@ -5,9 +5,9 @@ import { shallow, ShallowWrapper } from "enzyme";
 import GeoChartRenderer, { IGeoChartRendererProps } from "../GeoChartRenderer";
 
 function createComponent(customProps: Partial<IGeoChartRendererProps> = {}): ShallowWrapper {
-    const chartProps: IGeoChartRendererProps = {
+    const chartProps: Partial<IGeoChartRendererProps> = {
         ...customProps,
-    } as any;
+    };
     return shallow(<GeoChartRenderer {...chartProps} />, { disableLifecycleMethods: true });
 }
 

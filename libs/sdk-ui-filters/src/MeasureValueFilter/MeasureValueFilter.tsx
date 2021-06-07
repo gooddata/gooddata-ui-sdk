@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
+import noop from "lodash/noop";
 
 import { MeasureValueFilterDropdown } from "./MeasureValueFilterDropdown";
 import MeasureValueFilterButton from "./MeasureValueFilterButton";
@@ -28,6 +29,10 @@ export class MeasureValueFilter extends React.PureComponent<
     IMeasureValueFilterProps,
     IMeasureValueFilterState
 > {
+    public static defaultProps: Partial<IMeasureValueFilterProps> = {
+        onCancel: noop,
+    };
+
     public state: IMeasureValueFilterState = {
         displayDropdown: false,
     };
@@ -85,7 +90,7 @@ export class MeasureValueFilter extends React.PureComponent<
 
     private onCancel = () => {
         this.closeDropdown();
-        this.props.onCancel?.();
+        this.props.onCancel();
     };
 
     private closeDropdown = () => {

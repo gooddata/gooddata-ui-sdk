@@ -102,7 +102,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
     InnerComponent: React.ComponentClass<T & ILoadingInjectedProps>,
 ): React.ComponentClass<T> {
     class LoadingHOCWrapped extends React.Component<T & ILoadingInjectedProps, IDataViewLoadState> {
-        public static defaultProps = InnerComponent.defaultProps || {};
+        public static defaultProps: Partial<T & ILoadingInjectedProps> = InnerComponent.defaultProps || {};
 
         private hasUnmounted: boolean = false;
 

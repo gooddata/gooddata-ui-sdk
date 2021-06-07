@@ -9,7 +9,7 @@ import { GoodDataSdkError, isNoDataSdkError } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import React, { Component, MouseEvent } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, WrappedComponentProps } from "react-intl";
 
 import { DashboardItemKpi } from "../DashboardItem/DashboardItemKpi";
 import { IKpiResult, IKpiAlertResult, KpiAlertOperationStatus } from "../types";
@@ -79,19 +79,10 @@ interface IDashboardItemWithKpiAlertState {
 }
 
 export class DashboardItemWithKpiAlert extends Component<
-    IDashboardItemWithKpiAlertProps,
+    IDashboardItemWithKpiAlertProps & WrappedComponentProps,
     IDashboardItemWithKpiAlertState
 > {
-    static defaultProps: Pick<
-        IDashboardItemWithKpiAlertProps,
-        | "isAlertHighlighted"
-        | "filters"
-        | "alertDeletingStatus"
-        | "alertSavingStatus"
-        | "alertUpdatingStatus"
-        | "suppressAlertTriggered"
-        | "isReadOnlyMode"
-    > = {
+    static defaultProps: Partial<IDashboardItemWithKpiAlertProps & WrappedComponentProps> = {
         isAlertHighlighted: false,
         filters: [],
         alertDeletingStatus: "idle",

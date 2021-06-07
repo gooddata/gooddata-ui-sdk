@@ -164,22 +164,7 @@ const AGGRID_ON_RESIZE_TIMEOUT = 300;
  * @internal
  */
 export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, ICorePivotTableState> {
-    public static defaultProps: Pick<
-        ICorePivotTableProps,
-        | "locale"
-        | "drillableItems"
-        | "afterRender"
-        | "pushData"
-        | "onExportReady"
-        | "onLoadingChanged"
-        | "onError"
-        | "onDrill"
-        | "ErrorComponent"
-        | "LoadingComponent"
-        | "pageSize"
-        | "config"
-        | "onColumnResized"
-    > = {
+    public static defaultProps: Partial<ICorePivotTableProps> = {
         locale: "en-US",
         drillableItems: [],
         afterRender: noop,
