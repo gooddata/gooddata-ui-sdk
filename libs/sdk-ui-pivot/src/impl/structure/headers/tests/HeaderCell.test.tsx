@@ -1,19 +1,37 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { shallow, mount } from "enzyme";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 
 import HeaderCell from "../HeaderCell";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import { TableDescriptor } from "../../tableDescriptor";
 
 describe("HeaderCell renderer", () => {
+    const fixture = recordedDataFacade(
+        ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
+        DataViewFirstPage,
+    );
+    const tableDescriptor = TableDescriptor.for(fixture);
+    const getTableDescriptor = () => tableDescriptor;
+
     it("should render text for the cell", () => {
-        const component = shallow(<HeaderCell displayText="Header" />);
+        const component = shallow(
+            <HeaderCell displayText="Header" getTableDescriptor={getTableDescriptor} />,
+        );
         expect(component.text()).toEqual("Header");
     });
 
     describe("Sorting in HeaderCell", () => {
         it("should render default sorting", () => {
             const component = mount(
-                <HeaderCell displayText="Header" enableSorting={true} defaultSortDirection={"asc"} />,
+                <HeaderCell
+                    displayText="Header"
+                    enableSorting={true}
+                    defaultSortDirection={"asc"}
+                    getTableDescriptor={getTableDescriptor}
+                />,
             );
             const headerCellLabel = component.find(".s-header-cell-label");
             expect(headerCellLabel).toHaveLength(1);
@@ -32,6 +50,7 @@ describe("HeaderCell renderer", () => {
                     enableSorting={true}
                     defaultSortDirection={"asc"}
                     onSortClick={onSortClick}
+                    getTableDescriptor={getTableDescriptor}
                 />,
             );
             const cellLabel = component.find(".s-header-cell-label");
@@ -48,6 +67,7 @@ describe("HeaderCell renderer", () => {
                     enableSorting={true}
                     sortDirection={"asc"}
                     onSortClick={onSortClick}
+                    getTableDescriptor={getTableDescriptor}
                 />,
             );
             const cellLabel = component.find(".s-header-cell-label");
