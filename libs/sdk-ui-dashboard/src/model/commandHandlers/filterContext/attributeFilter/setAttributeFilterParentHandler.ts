@@ -9,7 +9,7 @@ import { attributeFilterParentChanged } from "../../../events/filters";
 import { filterContextActions } from "../../../state/filterContext";
 import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
-import { validateAttributeFilterParents } from "./parentFilterValidation";
+import { validateAttributeFilterParents } from "./validation/parentFiltersValidation";
 import { putCurrentFilterContextChanged } from "../common";
 import { getAttributeFilterById } from "./utils";
 

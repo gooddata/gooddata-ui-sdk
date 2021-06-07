@@ -2,7 +2,7 @@
 import differenceBy from "lodash/differenceBy";
 import { IDashboardAttributeFilter, IDashboardAttributeFilterParent } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../../types/commonTypes";
+import { DashboardContext } from "../../../../types/commonTypes";
 
 export type AttributeFilterParentsValidationResult = "VALID" | "EXTRANEOUS_PARENT" | "INVALID_CONNECTION";
 
