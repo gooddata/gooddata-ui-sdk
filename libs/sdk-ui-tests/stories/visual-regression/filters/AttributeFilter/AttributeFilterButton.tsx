@@ -7,7 +7,7 @@ import { FilterStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilter.css";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend";
 import { wrapWithTheme } from "../../themeWrapper";
 
@@ -21,7 +21,7 @@ storiesOf(`${FilterStories}/AttributeFilterButton`, module)
                 <AttributeFilterButton
                     backend={backend}
                     workspace={ReferenceWorkspaceId}
-                    filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
+                    filter={newNegativeAttributeFilter(ReferenceLdm.Product.Name, [])}
                     onApply={action("on-apply")}
                 />
             </div>,
@@ -45,7 +45,7 @@ storiesOf(`${FilterStories}/AttributeFilterButton`, module)
                     <AttributeFilterButton
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
-                        filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
+                        filter={newNegativeAttributeFilter(ReferenceLdm.Product.Name, [])}
                         onApply={action("on-apply")}
                     />
                 </div>,
