@@ -10,11 +10,10 @@ import {
 import ora from "ora";
 import { logError, logInfo, logWarn } from "../../cli/loggers";
 import { WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts";
-import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { ITigerClient, jsonApiHeaders, JsonApiWorkspaceOutList } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
 import open from "open";
-import { JsonApiWorkspaceOutList } from "@gooddata/api-client-tiger";
 
 /**
  * Tests if the provided tiger client can access the backend.

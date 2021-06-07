@@ -6,6 +6,8 @@ import {
     OnError,
     OnLoadingChanged,
     PlaceholdersProvider,
+    newComposedPlaceholder,
+    IPlaceholder,
 } from "@gooddata/sdk-ui";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
@@ -16,8 +18,6 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
-import { newComposedPlaceholder } from "@gooddata/sdk-ui";
-import { IPlaceholder } from "@gooddata/sdk-ui";
 
 const stateFilterPlaceholder = newPlaceholder<IAttributeFilter>(
     newPositiveAttributeFilter(attributeDisplayFormRef(Ldm.LocationState), {

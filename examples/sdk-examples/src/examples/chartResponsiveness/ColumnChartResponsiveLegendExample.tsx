@@ -1,7 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { ColumnChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { PositionType } from "@gooddata/sdk-ui-charts";
+import { ColumnChart, IChartConfig, PositionType } from "@gooddata/sdk-ui-charts";
 
 import { Ldm, LdmExt } from "../../ldm";
 

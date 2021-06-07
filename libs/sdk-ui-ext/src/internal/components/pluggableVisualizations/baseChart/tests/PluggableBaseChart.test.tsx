@@ -1,7 +1,13 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
-import { BucketNames, DefaultLocale, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    DefaultLocale,
+    ILocale,
+    VisualizationEnvironment,
+    IDrillEventIntersectionElement,
+} from "@gooddata/sdk-ui";
 import { IBaseChartProps } from "@gooddata/sdk-ui-charts";
 import { PluggableBaseChart } from "../PluggableBaseChart";
 import * as testMocks from "../../../../tests/mocks/testMocks";
@@ -11,7 +17,6 @@ import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartC
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, IAttribute, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { Region } from "@gooddata/reference-workspace/dist/ldm/full";
 import { createDrillEvent, insightDefinitionToInsight, createDrillDefinition } from "../../tests/testHelpers";
 import {

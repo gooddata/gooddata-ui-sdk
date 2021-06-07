@@ -3,8 +3,6 @@ import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogFactoryOptions,
     IWorkspaceCatalog,
-} from "@gooddata/sdk-backend-spi";
-import {
     CatalogItem,
     ICatalogGroup,
     isCatalogAttribute,

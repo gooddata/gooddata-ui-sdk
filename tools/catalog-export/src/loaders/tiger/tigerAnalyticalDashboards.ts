@@ -1,8 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 
 import { ObjectMeta } from "../../base/types";
-import { ITigerClient, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
-import { MetadataUtilities } from "@gooddata/api-client-tiger";
+import { ITigerClient, ValidateRelationsHeader, MetadataUtilities } from "@gooddata/api-client-tiger";
 
 /**
  * Load analytical dashboards that are stored in workspace metadata so that their links can be included

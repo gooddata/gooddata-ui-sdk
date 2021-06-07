@@ -14,10 +14,10 @@ import {
     measureLocalId,
     modifySimpleMeasure,
     ObjRefInScope,
+    filterMeasureRef,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
 import { convertMeasure } from "./MeasureConverter";
-import { filterMeasureRef } from "@gooddata/sdk-model";
 import { convertFilter, newFilterWithApplyOnResult } from "./FilterConverter";
 
 type ComputeRatioMeasureNumerators = Map<Identifier, IMeasure<IMeasureDefinition>>;

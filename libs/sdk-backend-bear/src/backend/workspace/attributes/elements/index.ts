@@ -5,13 +5,13 @@ import {
     IElementsQueryOptions,
     IElementsQueryResult,
     IAttributeElement,
+    IElementsQueryAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import { IMeasure, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { BearAuthenticatedCallGuard } from "../../../../types/auth";
 import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api";
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { LimitingAfmFactory } from "./limitingAfmFactory";
 

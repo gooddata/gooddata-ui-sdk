@@ -4,11 +4,10 @@ import cx from "classnames";
 import throttle from "lodash/throttle";
 import noop from "lodash/noop";
 import invariant from "ts-invariant";
-import { ContentRect } from "react-measure";
+import Measure, { ContentRect, MeasuredComponentProps } from "react-measure";
 import { v4 } from "uuid";
 
 import { WrappedComponentProps } from "react-intl";
-import Measure, { MeasuredComponentProps } from "react-measure";
 import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart";
 import GeoChartRenderer, { IGeoChartRendererProps } from "./GeoChartRenderer";
 import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer";

@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import { ErrorComponent, OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { IAttributeFilter } from "@gooddata/sdk-model";
+import {
+    IAttributeFilter,
+    newPositiveAttributeFilter,
+    attributeDisplayFormRef,
+    idRef,
+} from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
-import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
-import { attributeDisplayFormRef } from "@gooddata/sdk-model";
-import { idRef } from "@gooddata/sdk-model";
 
 export const AttributeParentChildFilterExample: React.FC = () => {
     const [filter, setFilter] = useState<IAttributeFilter>();

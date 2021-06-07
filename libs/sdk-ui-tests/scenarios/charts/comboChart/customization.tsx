@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
+import { scenariosFor, CustomizedScenario, UnboundVisProps } from "../../../src";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { dataPointCustomizer } from "../_infra/dataPointVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
@@ -10,7 +10,6 @@ import {
     ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
 } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
-import { CustomizedScenario, UnboundVisProps } from "../../../src";
 import { responsiveScenarios } from "../_infra/responsiveScenarios";
 import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
 

@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceCatalogWithAvailableItems } from "@gooddata/sdk-backend-spi";
 import {
+    IWorkspaceCatalogWithAvailableItems,
     CatalogItem,
     ICatalogGroup,
     isCatalogAttribute,

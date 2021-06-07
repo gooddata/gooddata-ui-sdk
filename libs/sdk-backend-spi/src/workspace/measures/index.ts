@@ -1,8 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IMeasureExpressionToken } from "../fromModel/ldm/measure";
-import { IMeasureMetadataObject } from "../fromModel/ldm/metadata";
-import { IMeasureMetadataObjectDefinition } from "../fromModel/ldm/metadata";
+import { IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "../fromModel/ldm/metadata";
 
 /**
  * Service for create, update or delete measures and querying additional measures data.

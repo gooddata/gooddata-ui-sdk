@@ -18,7 +18,19 @@ import {
     OverTimeComparisonTypes,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { ObjRef } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    bucketItems,
+    bucketsFind,
+    bucketsMeasures,
+    IBucket,
+    IInsightDefinition,
+    insightBuckets,
+    isSimpleMeasure,
+    ITotal,
+    IMeasure,
+    areObjRefsEqual,
+} from "@gooddata/sdk-model";
 
 import {
     DATE_DATASET_ATTRIBUTE,
@@ -38,18 +50,6 @@ import {
 } from "../interfaces/Visualization";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket";
 import { getTranslation } from "./translations";
-import {
-    bucketItems,
-    bucketsFind,
-    bucketsMeasures,
-    IBucket,
-    IInsightDefinition,
-    insightBuckets,
-    isSimpleMeasure,
-    ITotal,
-    IMeasure,
-    areObjRefsEqual,
-} from "@gooddata/sdk-model";
 
 export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
     return !!filter && (filter as IDateFilter).attribute === DATE_DATASET_ATTRIBUTE;
