@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { configure, getStorybook, raw } from "@storybook/react";
+import { configure, raw } from "@storybook/react";
 import * as fs from "fs";
 const OutputFilename = "backstop/stories.json";
 
@@ -20,11 +20,17 @@ const OutputFilename = "backstop/stories.json";
  */
 
 describe("story-extractor", () => {
-    function getAvailableStories() {
+    function getAvailableStories(onError) {
         const req = require.context("../stories/visual-regression", true, /\.tsx?$/);
 
         function loadStories() {
-            req.keys().forEach((filename) => req(filename));
+            req.keys().forEach((filename) => {
+                try {
+                    req(filename);
+                } catch (e) {
+                    onError(e);
+                }
+            });
         }
 
         configure(loadStories, module);
@@ -32,7 +38,17 @@ describe("story-extractor", () => {
     }
 
     it("dumps stories into a file", () => {
-        const stories = getAvailableStories();
+        const errors = [];
+        const onStoryError = (err) => {
+            // eslint-disable-next-line no-console
+            console.error(err);
+            errors.push(err);
+        };
+
+        const stories = getAvailableStories(onStoryError);
+
+        expect(errors.length).toEqual(0);
+
         const storyDump = [];
 
         stories.forEach((rawStory) => {
