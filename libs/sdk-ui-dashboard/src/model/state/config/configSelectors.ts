@@ -86,3 +86,34 @@ export const selectMapboxToken = createSelector(selectConfig, (state) => {
 export const selectIsReadOnly = createSelector(selectConfig, (state) => {
     return state.isReadOnly;
 });
+
+//
+// FEATURE FLAGS
+//
+
+/**
+ * Returns date format.
+ *
+ * @internal
+ */
+export const selectDateFormat = createSelector(selectConfig, (state) => {
+    return state.settings?.responsiveUiDateFormat;
+});
+
+/**
+ * Returns whether the current user can schedule emails.
+ *
+ * @internal
+ */
+export const selectEnableKPIDashboardSchedule = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKPIDashboardSchedule;
+});
+
+/**
+ * Returns whether the current user can share scheduled email to other recipients.
+ *
+ * @internal
+ */
+export const selectEnableKPIDashboardScheduleRecipients = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKPIDashboardScheduleRecipients;
+});

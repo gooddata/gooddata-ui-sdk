@@ -4,6 +4,7 @@ import { IErrorProps, ILoadingProps, UnexpectedSdkError } from "@gooddata/sdk-ui
 import { DashboardLayoutProps, DashboardWidgetProps } from "../layout/types";
 import { DashboardInsightProps } from "../insight/types";
 import { DashboardKpiProps } from "../kpi/types";
+import { ScheduledEmailDialogProps } from "../scheduledEmail/types";
 
 /**
  * @internal
@@ -15,6 +16,7 @@ interface IDashboardComponentsContext {
     WidgetComponent: React.ComponentType<DashboardWidgetProps>;
     InsightComponent: React.ComponentType<DashboardInsightProps>;
     KpiComponent: React.ComponentType<DashboardKpiProps>;
+    ScheduledEmailDialogComponent: React.ComponentType<ScheduledEmailDialogProps>;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -33,6 +35,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     InsightComponent: ThrowMissingComponentError("InsightComponent"),
     KpiComponent: ThrowMissingComponentError("KpiComponent"),
     WidgetComponent: ThrowMissingComponentError("WidgetComponent"),
+    ScheduledEmailDialogComponent: ThrowMissingComponentError("ScheduledEmailDialog"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

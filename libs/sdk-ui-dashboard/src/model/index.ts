@@ -31,9 +31,12 @@ export {
     selectDateFilterConfig,
     selectIsReadOnly,
     selectMapboxToken,
+    selectDateFormat,
+    selectEnableKPIDashboardSchedule,
+    selectEnableKPIDashboardScheduleRecipients,
 } from "./state/config/configSelectors";
 export { PermissionsState } from "./state/permissions/permissionsState";
-export { selectPermissions } from "./state/permissions/permissionsSelectors";
+export { selectPermissions, selectCanListUsersInProject } from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
 export {
     selectFilterContext,
@@ -65,7 +68,7 @@ export { selectAlerts } from "./state/alerts/alertsSelectors";
 export { UserState } from "./state/user/userState";
 export { selectUser } from "./state/user/userSelectors";
 export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
-export { selectDashboardRef } from "./state/meta/metaSelectors";
+export { selectDashboardRef, selectDashboardUriRef, selectDashboardTitle } from "./state/meta/metaSelectors";
 
 export { DashboardContext, DashboardConfig, ResolvedDashboardConfig } from "./types/commonTypes";
 export {

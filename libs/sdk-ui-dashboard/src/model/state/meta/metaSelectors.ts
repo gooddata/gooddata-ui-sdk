@@ -1,7 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../dashboardStore";
+import { uriRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+import { DashboardState } from "../dashboardStore";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -27,4 +28,31 @@ const selectDashboardMetadata = createSelector(selectSelf, (state) => {
  */
 export const selectDashboardRef = createSelector(selectDashboardMetadata, (state) => {
     return state.ref;
+});
+
+/**
+ * Returns current dashboard uri.
+ *
+ * @internal
+ */
+const selectDashboardUri = createSelector(selectDashboardMetadata, (state) => {
+    return state.uri;
+});
+
+/**
+ * Returns current dashboard uri ref.
+ *
+ * @internal
+ */
+export const selectDashboardUriRef = createSelector(selectDashboardUri, (uri) => {
+    return uriRef(uri);
+});
+
+/**
+ * Returns current dashboard title.
+ *
+ * @internal
+ */
+export const selectDashboardTitle = createSelector(selectDashboardMetadata, (state) => {
+    return state.title;
 });

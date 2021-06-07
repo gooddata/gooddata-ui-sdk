@@ -19,7 +19,7 @@ function createAlert(
     return backend.workspace(workspace).dashboards().createWidgetAlert(alert);
 }
 
-export function* createDashboardAlertHandler(ctx: DashboardContext, cmd: CreateAlert): SagaIterator<void> {
+export function* createAlertHandler(ctx: DashboardContext, cmd: CreateAlert): SagaIterator<void> {
     // eslint-disable-next-line no-console
     console.debug("handling create alert", cmd, "in context", ctx);
 

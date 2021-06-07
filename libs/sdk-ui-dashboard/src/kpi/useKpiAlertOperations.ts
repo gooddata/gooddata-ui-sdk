@@ -25,7 +25,7 @@ export const useKpiAlertOperations = (closeAlertDialog: () => void): UseKpiAlert
     const onCreateAlert = useDashboardCommand(
         createAlert,
         {
-            "GDC.DASH/EVT.ALERTS.CREATED": () => {
+            "GDC.DASH/EVT.ALERT.CREATED": () => {
                 setCreatingStatus("idle");
                 closeAlertDialog();
             },
@@ -39,7 +39,7 @@ export const useKpiAlertOperations = (closeAlertDialog: () => void): UseKpiAlert
     const onUpdateAlert = useDashboardCommand(
         updateAlert,
         {
-            "GDC.DASH/EVT.ALERTS.UPDATED": () => {
+            "GDC.DASH/EVT.ALERT.UPDATED": () => {
                 setUpdatingStatus("idle");
                 closeAlertDialog();
             },
@@ -53,7 +53,7 @@ export const useKpiAlertOperations = (closeAlertDialog: () => void): UseKpiAlert
     const onRemoveAlert = useDashboardCommand(
         removeAlert,
         {
-            "GDC.DASH/EVT.ALERTS.REMOVED": () => {
+            "GDC.DASH/EVT.ALERT.REMOVED": () => {
                 setRemovingStatus("idle");
                 closeAlertDialog();
             },
