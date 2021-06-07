@@ -11,6 +11,14 @@ import { attributeFilterChangeSelectionCommandHandler } from "./attributeFilter/
 import { createDashboardAlertCommandHandler } from "./alerts/createAlertHandler";
 import { removeDashboardAlertCommandHandler } from "./alerts/removeAlertHandler";
 import { updateDashboardAlertCommandHandler } from "./alerts/updateAlertHandler";
+import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler";
+import { moveLayoutSectionHandler } from "./layout/moveLayoutSectionHandler";
+import { removeLayoutSectionHandler } from "./layout/removeLayoutSectionHandler";
+import { changeLayoutSectionHeaderHandler } from "./layout/changeLayoutSectionHeaderHandler";
+import { addSectionItemsHandler } from "./layout/addSectionItemsHandler";
+import { moveSectionItemHandler } from "./layout/moveSectionItemHandler";
+import { removeSectionItemHandler } from "./layout/removeSectionItemHandler";
+import { undoLayoutChangesHandler } from "./layout/undoLayoutChangesHandler";
 
 const DefaultCommandHandlers = {
     "GDC.DASH/CMD.LOAD": loadDashboardCommandHandler,
@@ -24,14 +32,14 @@ const DefaultCommandHandlers = {
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE": unhandledCommand,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION": attributeFilterChangeSelectionCommandHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT": unhandledCommand,
-    "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": unhandledCommand,
-    "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": unhandledCommand,
-    "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": unhandledCommand,
-    "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER": unhandledCommand,
-    "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS": unhandledCommand,
-    "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM": unhandledCommand,
-    "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM": unhandledCommand,
-    "GDC.DASH/CMD.FLUID_LAYOUT.UNDO": unhandledCommand,
+    "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": addLayoutSectionHandler,
+    "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": moveLayoutSectionHandler,
+    "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,
+    "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER": changeLayoutSectionHeaderHandler,
+    "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS": addSectionItemsHandler,
+    "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM": moveSectionItemHandler,
+    "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM": removeSectionItemHandler,
+    "GDC.DASH/CMD.FLUID_LAYOUT.UNDO": undoLayoutChangesHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER": unhandledCommand,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE": unhandledCommand,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS": unhandledCommand,
