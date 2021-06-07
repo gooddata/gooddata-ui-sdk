@@ -17050,3 +17050,209 @@ Object {
   "themeIsLoading": undefined,
 }
 `;
+
+exports[`LineChart with with one measure and segment by date should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aag81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aag81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aag81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aag81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aag81lMifn6q",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with with one measure and segment by date should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`LineChart with with one measure and trend by date and segment by date should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aag81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aag81lMifn6q",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "closed.aag81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_closed.aag81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aag81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aag81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "closed.aag81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_closed.aag81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_closed.aag81lMifn6q",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aag81lMifn6q",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with with one measure and trend by date and segment by date should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;

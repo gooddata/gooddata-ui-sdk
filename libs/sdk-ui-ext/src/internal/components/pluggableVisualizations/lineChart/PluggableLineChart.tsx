@@ -6,7 +6,7 @@ import { AXIS, AXIS_NAME } from "../../../constants/axis";
 
 import { BUCKETS } from "../../../constants/bucket";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { DEFAULT_LINE_UICONFIG } from "../../../constants/uiConfig";
+import { DEFAULT_LINE_UICONFIG, LINE_UICONFIG_WITH_MULTIPLE_DATES } from "../../../constants/uiConfig";
 import {
     IBucketItem,
     IDrillDownContext,
@@ -14,6 +14,7 @@ import {
     IImplicitDrillDown,
     IReferencePoint,
     IVisConstruct,
+    IUiConfig,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
@@ -23,6 +24,7 @@ import {
     getAttributeItemsWithoutStacks,
     getDateItems,
     getFilteredMeasuresForStackedCharts,
+    getFistDateItem,
     getMeasureItems,
     getStackItems,
     isDateBucketItem,
@@ -61,14 +63,63 @@ export class PluggableLineChart extends PluggableBaseChart {
         return LINE_CHART_SUPPORTED_PROPERTIES[this.axis];
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
-        let newReferencePoint: IExtendedReferencePoint = {
-            ...clonedReferencePoint,
-            uiConfig: cloneDeep(DEFAULT_LINE_UICONFIG),
-        };
+    private configureBucketsWithMultipleDates(newReferencePoint: IExtendedReferencePoint): void {
+        const buckets = newReferencePoint?.buckets ?? [];
+        const measures = getMeasureItems(buckets);
+        const masterMeasures = filterOutDerivedMeasures(measures);
 
-        const buckets = clonedReferencePoint?.buckets ?? [];
+        let attributes: IBucketItem[] = [];
+        let stacks: IBucketItem[] = getStackItems(buckets);
+        const allAttributes = getAllAttributeItemsWithPreference(buckets, [
+            BucketNames.LOCATION,
+            BucketNames.TREND,
+            BucketNames.VIEW,
+            BucketNames.ATTRIBUTES,
+            BucketNames.SEGMENT,
+            BucketNames.STACK,
+            BucketNames.COLUMNS,
+        ]);
+
+        const firstDate = getFistDateItem(buckets);
+
+        if (firstDate) {
+            attributes = [firstDate];
+            const nextAttribute = allAttributes.find((attr) => attr !== firstDate);
+
+            if (masterMeasures.length <= 1 && nextAttribute) {
+                stacks = [nextAttribute];
+            }
+        } else {
+            if (masterMeasures.length <= 1 && allAttributes.length > 1) {
+                stacks = allAttributes.slice(1, 2);
+            }
+
+            attributes = getAttributeItemsWithoutStacks(buckets).slice(0, 1);
+        }
+
+        set(newReferencePoint, BUCKETS, [
+            {
+                localIdentifier: BucketNames.MEASURES,
+                items: getFilteredMeasuresForStackedCharts(buckets),
+            },
+            {
+                localIdentifier: BucketNames.TREND,
+                items: attributes,
+            },
+            {
+                localIdentifier: BucketNames.SEGMENT,
+                items: stacks,
+            },
+        ]);
+    }
+
+    protected configureBuckets(newReferencePoint: IExtendedReferencePoint): void {
+        if (this.isMultipleDatesEnabled()) {
+            this.configureBucketsWithMultipleDates(newReferencePoint);
+            return;
+        }
+
+        const buckets = newReferencePoint?.buckets ?? [];
         const measures = getMeasureItems(buckets);
         const masterMeasures = filterOutDerivedMeasures(measures);
         let attributes: IBucketItem[] = [];
@@ -116,6 +167,23 @@ export class PluggableLineChart extends PluggableBaseChart {
                 items: stacks,
             },
         ]);
+    }
+
+    public getUiConfig(): IUiConfig {
+        const config = this.isMultipleDatesEnabled()
+            ? LINE_UICONFIG_WITH_MULTIPLE_DATES
+            : DEFAULT_LINE_UICONFIG;
+        return cloneDeep(config);
+    }
+
+    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+        const clonedReferencePoint = cloneDeep(referencePoint);
+        let newReferencePoint: IExtendedReferencePoint = {
+            ...clonedReferencePoint,
+            uiConfig: this.getUiConfig(),
+        };
+
+        this.configureBuckets(newReferencePoint);
 
         newReferencePoint = setSecondaryMeasures(newReferencePoint, AXIS_NAME.SECONDARY_Y);
 

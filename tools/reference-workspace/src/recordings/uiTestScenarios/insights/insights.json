@@ -2406,6 +2406,11 @@
         "scenarioName": "themed",
         "visName": "LineChart"
     },
+    "LineChart.7d6477987530ba0d7978ee1dea3bde73": {
+        "comment": "Auto-generated insight for test scenario LineChart - with one measure and trend by date and segment by date.",
+        "scenarioName": "with one measure and trend by date and segment by date",
+        "visName": "LineChart"
+    },
     "LineChart.83c35a0ce951084aaacd1206df104c00": {
         "comment": "Auto-generated insight for test scenario LineChart - 650x90 - without x axis labels."
     },
@@ -2541,6 +2546,11 @@
     },
     "LineChart.f809a1202bf42b25e5fc39edaa64b2ba": {
         "comment": "Auto-generated insight for test scenario LineChart - 60x354 - without y axis labels."
+    },
+    "LineChart.fbc06303a4c4d293de075e38d9a4a3e9": {
+        "comment": "Auto-generated insight for test scenario LineChart - with one measure and segment by date.",
+        "scenarioName": "with one measure and segment by date",
+        "visName": "LineChart"
     },
     "PieChart.020d8df3a62b27299a0c5acad12f4fd1": {
         "comment": "Auto-generated insight for test scenario PieChart - legend position - single measure and viewBy - legend at bottom."

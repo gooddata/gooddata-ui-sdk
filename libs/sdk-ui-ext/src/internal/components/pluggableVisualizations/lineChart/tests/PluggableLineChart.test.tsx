@@ -1,6 +1,12 @@
 // (C) 2019 GoodData Corporation
 import noop from "lodash/noop";
-import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
+import {
+    IBucketOfFun,
+    IFilters,
+    IExtendedReferencePoint,
+    IReferencePoint,
+    IVisConstruct,
+} from "../../../../interfaces/Visualization";
 import { PluggableLineChart } from "../PluggableLineChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
@@ -35,7 +41,7 @@ jest.mock("react-dom", () => {
 });
 
 describe("PluggableLineChart", () => {
-    const defaultProps = {
+    const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
         element: "body",
         configPanelElement: null as string,
@@ -528,6 +534,208 @@ describe("PluggableLineChart", () => {
             // TODO avoid testing protected property
             expect((chart as any).supportedPropertiesList).toEqual(
                 LINE_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL],
+            );
+        });
+    });
+
+    describe("handling date items", () => {
+        describe("with multiple dates", () => {
+            const inputs: [string, IReferencePoint, Partial<IExtendedReferencePoint>][] = [
+                [
+                    "from table to line chart: date in rows only",
+                    referencePointMocks.dateAsFirstCategoryReferencePoint,
+                    {
+                        buckets: [
+                            referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[1].items.slice(
+                                    1,
+                                    2,
+                                ),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from table to line chart: two identical dates in rows",
+                    referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure,
+                    {
+                        buckets: [
+                            referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(
+                                    1,
+                                    2,
+                                ),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from table to line chart: multiple dates in rows but not first (date should get preference)",
+                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure,
+                    {
+                        buckets: [
+                            referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure
+                                .buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
+                                    1,
+                                    2,
+                                ),
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from table to line chart: multiple dates in rows but not first, more measures",
+                    referencePointMocks.multipleDatesNotAsFirstReferencePoint,
+                    {
+                        buckets: [
+                            referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
+                                    1,
+                                    2,
+                                ),
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from column to line chart: two dates",
+                    referencePointMocks.twoDatesInColumnChart,
+                    {
+                        buckets: [
+                            referencePointMocks.twoDatesInColumnChart.buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: referencePointMocks.twoDatesInColumnChart.buckets[1].items.slice(0, 1),
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: referencePointMocks.twoDatesInColumnChart.buckets[2].items.slice(0, 1),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from column to line chart: three dates",
+                    referencePointMocks.threeDatesInColumnChart,
+                    {
+                        buckets: [
+                            referencePointMocks.threeDatesInColumnChart.buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: referencePointMocks.threeDatesInColumnChart.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: referencePointMocks.threeDatesInColumnChart.buckets[1].items.slice(
+                                    1,
+                                    2,
+                                ),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from column to line chart: three dates and more than one measure",
+                    referencePointMocks.threeDifferentDatesReferencePointChart,
+                    {
+                        buckets: [
+                            referencePointMocks.threeDifferentDatesReferencePointChart.buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: referencePointMocks.threeDifferentDatesReferencePointChart.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: [],
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from column to line chart: first attribute is not date (date should get preference)",
+                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn,
+                    {
+                        buckets: [
+                            referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn
+                                .buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[1].items.slice(
+                                    1,
+                                    2,
+                                ),
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                        ],
+                    },
+                ],
+            ];
+            it.each(inputs)(
+                "should return correct extended reference (%s)",
+                async (
+                    _description,
+                    inputReferencePoint: IReferencePoint,
+                    expectedReferencePoint: Partial<IExtendedReferencePoint>,
+                ) => {
+                    const lineChart = createComponent({
+                        ...defaultProps,
+                        featureFlags: {
+                            enableMultipleDatesDEV: true,
+                        },
+                    });
+
+                    const referencePoint = await lineChart.getExtendedReferencePoint(inputReferencePoint);
+                    expect(referencePoint).toMatchObject(expectedReferencePoint);
+                },
             );
         });
     });

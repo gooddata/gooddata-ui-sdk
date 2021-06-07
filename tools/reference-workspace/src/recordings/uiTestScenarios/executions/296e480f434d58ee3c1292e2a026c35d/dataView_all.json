@@ -1,0 +1,103 @@
+{
+    "count": [7, 5],
+    "data": [
+        ["1081031.48", "3861837.64", "13948147.47", "48773.93", null],
+        ["562509.46", "2942390.48", "11471889.89", "38414558.12", "297315.8"],
+        ["1014309.99", "956716.41", "3246765.61", "20054994.02", "14375580.11"],
+        ["115576.02", "895523.67", "465046.12", "1751746.13", "1090472.61"],
+        [null, null, "8560", null, "18067.58"],
+        [null, null, null, null, null],
+        [null, null, null, null, "3644"]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2010"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2011"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2012",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2012"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2013",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2013"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2014",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2014"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2016",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2016"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2017",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2017"
+                    }
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "2008",
+                        "uri": "/gdc/md/referenceworkspace/obj/332/elements?id=2008"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2009",
+                        "uri": "/gdc/md/referenceworkspace/obj/332/elements?id=2009"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/332/elements?id=2010"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/332/elements?id=2011"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2012",
+                        "uri": "/gdc/md/referenceworkspace/obj/332/elements?id=2012"
+                    }
+                }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [7, 5]
+}
