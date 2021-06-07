@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import forEach from "lodash/forEach";
@@ -13,11 +13,11 @@ import { BUCKETS } from "../../constants/bucket";
 import {
     comparisonAndTrendingRecommendationEnabled,
     overTimeComparisonRecommendationEnabled,
-    hasNoStacks,
     hasNoMeasures,
     hasMoreThanOneMasterMeasure,
     percentRecommendationEnabled,
     previousPeriodRecommendationEnabled,
+    hasNoStacksWithDate,
 } from "./../bucketRules";
 
 import { setBucketTitles } from "./../bucketHelper";
@@ -73,8 +73,7 @@ export function setBaseChartUiConfig(
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
     const buckets = referencePointConfigured?.buckets ?? [];
-
-    const measuresCanAddItems = hasNoMeasures(buckets) || hasNoStacks(buckets);
+    const measuresCanAddItems = hasNoMeasures(buckets) || hasNoStacksWithDate(buckets);
     const stackCanAddItems = !hasMoreThanOneMasterMeasure(buckets, BucketNames.MEASURES);
 
     set(referencePointConfigured, [UICONFIG], setBucketTitles(referencePoint, visualizationType, intl));

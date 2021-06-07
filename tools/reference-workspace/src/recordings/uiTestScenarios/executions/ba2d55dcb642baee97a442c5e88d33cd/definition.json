@@ -1,0 +1,53 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                "localIdentifier": "a_closed.aag81lMifn6q"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                "localIdentifier": "a_closed.aag81lMifn6q_1"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [
+        { "itemIdentifiers": ["measureGroup"] },
+        { "itemIdentifiers": ["a_closed.aag81lMifn6q", "a_closed.aag81lMifn6q_1"] }
+    ],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "aangOxLSeztu", "type": "measure" } }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "acugFHNJgsBy", "type": "measure" } }
+                },
+                "localIdentifier": "m_acugFHNJgsBy"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "popAttribute": { "identifier": "closed.year", "type": "attribute" }
+                    }
+                },
+                "localIdentifier": "m_m_acugFHNJgsBy_closed.year"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

@@ -58,6 +58,16 @@ export const ColumnChartViewByDateAndPop = {
     viewBy: [ReferenceLdm.ClosedYear],
 };
 
+export const ColumnChartViewByTwoDates = {
+    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.WonPopClosedYear],
+    viewBy: [ReferenceLdm.ClosedYear, ReferenceLdmExt.ModifiedClosedYear],
+};
+
+export const ColumnChartStackByDate = {
+    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.WonPopClosedYear],
+    stackBy: ReferenceLdm.ClosedYear,
+};
+
 /*
  * TODO: - column chart used to have test for attribute with alias() - do we want to test this?
  *  - colum chart used to have test with small height - perhaps should add set of special stories to test this for
@@ -106,4 +116,6 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         measures: [ReferenceLdm.Amount_1.Sum],
         filters: [newMeasureValueFilter(ReferenceLdm.Amount_1.Sum, "GREATER_THAN", 5000000)],
         viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Opportunity.Name],
-    });
+    })
+    .addScenario("viewBy with two dates", ColumnChartViewByTwoDates)
+    .addScenario("stackBy with one date", ColumnChartStackByDate);

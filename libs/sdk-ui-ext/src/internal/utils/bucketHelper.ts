@@ -953,7 +953,7 @@ export const transformMeasureBuckets = (
     });
 };
 
-const hasSameDateDimension = (dateItem: IBucketItem, referenceDateItem: IBucketItem): boolean => {
+export const hasSameDateDimension = (dateItem: IBucketItem, referenceDateItem: IBucketItem): boolean => {
     if (isDateBucketItem(dateItem) && isDateBucketItem(referenceDateItem)) {
         return areObjRefsEqual(dateItem.dateDatasetRef, referenceDateItem.dateDatasetRef);
     }

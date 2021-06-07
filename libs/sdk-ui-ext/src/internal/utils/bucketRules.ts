@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import some from "lodash/some";
 import every from "lodash/every";
 import isEmpty from "lodash/isEmpty";
@@ -28,7 +28,7 @@ import {
     isRankingFilter,
 } from "./bucketHelper";
 
-import { FILTERS, GRANULARITY, ALL_TIME, METRIC } from "../constants/bucket";
+import { FILTERS, GRANULARITY, ALL_TIME, METRIC, ATTRIBUTE, DATE } from "../constants/bucket";
 
 export function hasOneMeasure(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.MEASURES) === 1;
@@ -152,6 +152,10 @@ function hasNoMeasureDateFilter(buckets: IBucketOfFun[]): boolean {
 
 export function hasNoStacks(buckets: IBucketOfFun[]): boolean {
     return getStackItems(buckets).length === 0;
+}
+
+export function hasNoStacksWithDate(buckets: IBucketOfFun[]): boolean {
+    return getStackItems(buckets, [ATTRIBUTE, DATE]).length === 0;
 }
 
 export function hasOneCategory(buckets: IBucketOfFun[]): boolean {

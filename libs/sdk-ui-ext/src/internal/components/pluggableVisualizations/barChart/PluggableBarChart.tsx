@@ -3,10 +3,8 @@ import React from "react";
 import { render } from "react-dom";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import cloneDeep from "lodash/cloneDeep";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
-import { COLUMN_BAR_CHART_UICONFIG } from "../../../constants/uiConfig";
-import { IVisConstruct, IUiConfig } from "../../../interfaces/Visualization";
+import { IVisConstruct } from "../../../interfaces/Visualization";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
@@ -20,10 +18,6 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             stackMeasures: false,
         };
         this.initializeProperties(props.visualizationProperties);
-    }
-
-    public getUiConfig(): IUiConfig {
-        return cloneDeep(COLUMN_BAR_CHART_UICONFIG);
     }
 
     public getSupportedPropertiesList(): string[] {

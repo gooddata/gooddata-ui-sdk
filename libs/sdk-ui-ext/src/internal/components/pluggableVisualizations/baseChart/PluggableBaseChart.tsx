@@ -444,6 +444,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
         return legendPosition === "auto" && isStacked(insight) ? "right" : legendPosition;
     }
+
+    protected isMultipleDatesEnabled(): boolean {
+        //this is development FF and will be removed in the end of dev cycle
+        return !!this.featureFlags["enableMultipleDatesDEV"];
+    }
 }
 
 function isStacked(insight: IInsightDefinition): boolean {

@@ -114,6 +114,16 @@ export const BarChartViewByDateAndPop = {
     viewBy: [ReferenceLdm.ClosedYear],
 };
 
+export const BarChartViewByTwoDates = {
+    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.WonPopClosedYear],
+    viewBy: [ReferenceLdm.ClosedYear, ReferenceLdmExt.ModifiedClosedYear],
+};
+
+export const BarChartStackByDate = {
+    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.WonPopClosedYear],
+    stackBy: ReferenceLdm.ClosedYear,
+};
+
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
@@ -150,4 +160,6 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
             ReferenceLdmExt.CalculatedWonLostRatio,
         ],
         viewBy: [ReferenceLdm.ClosedYear],
-    });
+    })
+    .addScenario("viewBy with two dates", BarChartViewByTwoDates)
+    .addScenario("stackBy with one date", BarChartStackByDate);

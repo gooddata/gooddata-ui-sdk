@@ -429,6 +429,35 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: BarChart - stackBy with one date 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": Array [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: BarChart - themed 1`] = `
 Object {
   "seriesDigest": Object {
@@ -678,6 +707,35 @@ Object {
       "2014",
       "2016",
       "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: BarChart - viewBy with two dates 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 7,
+    "attributes": 2,
+    "sliceNames": Array [
+      "2010 > 2010",
+      "2011 > 2011",
+      "2012 > 2012",
+      "2013 > 2013",
+      "2014 > 2014",
+      "2016 > 2016",
+      "2017 > 2017",
     ],
     "totals": 0,
   },
@@ -1624,6 +1682,35 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: ColumnChart - stackBy with one date 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": Array [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: ColumnChart - themed 1`] = `
 Object {
   "seriesDigest": Object {
@@ -1808,6 +1895,35 @@ Object {
       "2014",
       "2016",
       "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: ColumnChart - viewBy with two dates 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 7,
+    "attributes": 2,
+    "sliceNames": Array [
+      "2010 > 2010",
+      "2011 > 2011",
+      "2012 > 2012",
+      "2013 > 2013",
+      "2014 > 2014",
+      "2016 > 2016",
+      "2017 > 2017",
     ],
     "totals": 0,
   },

@@ -218,6 +218,8 @@ export interface IBucketUiConfig {
     subtitle?: string;
     icon?: string;
     allowsDuplicateItems?: boolean;
+
+    // allow more than one date item in the bucket, regardless of date dimension
     allowsDuplicateDates?: boolean;
     allowsReordering?: boolean;
     allowsSwapping?: boolean;
@@ -235,6 +237,9 @@ export interface IBucketUiConfig {
     allowShowOnSecondaryAxis?: boolean;
     allowSelectChartType?: boolean;
     allowOptionalStacking?: boolean;
+
+    // indicates that the visualization prefers date items in the bucket to have the same dimension
+    preferSynchronizedDates?: boolean;
 }
 
 export interface IBucketsUiConfig {
