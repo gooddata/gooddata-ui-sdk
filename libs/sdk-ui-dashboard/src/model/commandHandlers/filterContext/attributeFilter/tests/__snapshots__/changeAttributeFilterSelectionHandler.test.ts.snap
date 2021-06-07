@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`changeAttributeFilterSelectionHandler.test should emit the appropriate events for changed attribute filter selection 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED",
+  },
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+  },
+]
+`;
+
+exports[`changeAttributeFilterSelectionHandler.test should emit the appropriate events when trying to change a non-existent attribute filter 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`changeAttributeFilterSelectionHandler.test should set the attribute selection in state on changed attribute filter selection 1`] = `
+Object {
+  "attributeFilter": Object {
+    "attributeElements": Object {
+      "uris": Array [
+        "testing/uri",
+      ],
+    },
+    "displayForm": Object {
+      "uri": "/gdc/md/referenceworkspace/obj/1089",
+    },
+    "filterElementsBy": Array [],
+    "localIdentifier": Any<String>,
+    "negativeSelection": true,
+  },
+}
+`;
