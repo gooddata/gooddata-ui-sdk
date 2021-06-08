@@ -1,7 +1,8 @@
 // (C) 2021 GoodData Corporation
 import differenceBy from "lodash/differenceBy";
+import zip from "lodash/zip";
 import { IDashboardAttributeFilter, IDashboardAttributeFilterParent } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../../types/commonTypes";
 
 export type AttributeFilterParentsValidationResult = "VALID" | "EXTRANEOUS_PARENT" | "INVALID_CONNECTION";
@@ -9,7 +10,7 @@ export type AttributeFilterParentsValidationResult = "VALID" | "EXTRANEOUS_PAREN
 export async function validateAttributeFilterParents(
     ctx: DashboardContext,
     dashboardFilter: IDashboardAttributeFilter,
-    parents: ReadonlyArray<IDashboardAttributeFilterParent>,
+    parents: IDashboardAttributeFilterParent[],
     allFilters: IDashboardAttributeFilter[],
 ): Promise<AttributeFilterParentsValidationResult> {
     const allExceptValidated = allFilters.filter(
@@ -27,28 +28,35 @@ export async function validateAttributeFilterParents(
     }
 
     // then validate that the connecting attributes are valid
-    const validationVector = await Promise.all(
-        parents.map(async (parent) => {
-            const parentFilter = allExceptValidated.find(
-                (item) => item.attributeFilter.localIdentifier === parent.filterLocalIdentifier,
-            )!; // the ! is cool here, we validated that the parents are available in the code above
+    const parentValidationData = parents.map((parent) => {
+        const parentFilter = allExceptValidated.find(
+            (item) => item.attributeFilter.localIdentifier === parent.filterLocalIdentifier,
+        )!; // the ! is cool here, we validated that the parents are available in the code above
 
-            const connectingAttributeRefs = await ctx.backend
-                .workspace(ctx.workspace)
-                .attributes()
-                .getCommonAttributes([
-                    dashboardFilter.attributeFilter.displayForm,
-                    parentFilter.attributeFilter.displayForm,
-                ]);
+        return {
+            parentOverAttributes: parent.over.attributes,
+            displayFormsToGetAncestorsFor: [
+                dashboardFilter.attributeFilter.displayForm,
+                parentFilter.attributeFilter.displayForm,
+            ],
+        };
+    });
 
-            // connection is valid if all the over attributes are part of the connecting attributes set
-            const isValidConnection =
-                differenceBy(parent.over.attributes, connectingAttributeRefs, objRefToString).length === 0;
+    const commonAttributeResults = await ctx.backend
+        .workspace(ctx.workspace)
+        .attributes()
+        .getCommonAttributesBatch(parentValidationData.map((item) => item.displayFormsToGetAncestorsFor));
 
-            return isValidConnection;
-        }),
+    const validationPairs = zip(
+        parentValidationData.map((item) => item.parentOverAttributes),
+        commonAttributeResults,
+    ) as [ObjRef[], ObjRef[]][]; // we know the lengths match so we cast to get rid on the undefined in teh default typing
+
+    // connection is valid if all the over attributes are part of the connecting attributes set
+    const areAllConnectionsValid = validationPairs.every(
+        ([parentOverAttributes, connectingAttrs]) =>
+            differenceBy(parentOverAttributes, connectingAttrs, objRefToString).length === 0,
     );
 
-    const areAllValid = validationVector.every(Boolean);
-    return areAllValid ? "VALID" : "INVALID_CONNECTION";
+    return areAllConnectionsValid ? "VALID" : "INVALID_CONNECTION";
 }

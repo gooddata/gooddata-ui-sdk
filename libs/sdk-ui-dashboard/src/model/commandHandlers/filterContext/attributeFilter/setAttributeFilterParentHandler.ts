@@ -41,7 +41,7 @@ export function* setAttributeFilterParentHandler(
         validateAttributeFilterParents,
         ctx,
         filter,
-        cmd.payload.parentFilters,
+        [...cmd.payload.parentFilters],
         allFilters,
     );
 
