@@ -10,17 +10,18 @@ import {
     isCatalogAttribute,
     IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
-import { RecordingIndex } from "./types";
+import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedElementQueryFactory } from "./elements";
 import { ObjRef, areObjRefsEqual, objRefToString, isIdentifierRef } from "@gooddata/sdk-model";
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import values from "lodash/values";
+import { objRefsToStringKey } from "./utils";
 
 /**
  * @internal
  */
 export class RecordedAttributes implements IWorkspaceAttributesService {
-    constructor(private recordings: RecordingIndex) {}
+    constructor(private recordings: RecordingIndex, private config: RecordedBackendConfig) {}
 
     public elements(): IElementsQueryFactory {
         return new RecordedElementQueryFactory(this.recordings);
@@ -63,11 +64,19 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         );
     }
 
-    public getCommonAttributes(): Promise<ObjRef[]> {
-        throw new NotSupported("not supported");
+    public async getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {
+        const key = objRefsToStringKey(attributeRefs);
+        const response = this.config.getCommonAttributesResponses?.[key];
+
+        if (!response) {
+            throw new UnexpectedResponseError(`No common attributes response set for key ${key}`, 404, {});
+        }
+
+        return response;
     }
-    public getCommonAttributesBatch(): Promise<ObjRef[][]> {
-        throw new NotSupported("not supported");
+
+    public getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {
+        return Promise.all(attributesRefsBatch.map((refs) => this.getCommonAttributes(refs)));
     }
 
     public getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {

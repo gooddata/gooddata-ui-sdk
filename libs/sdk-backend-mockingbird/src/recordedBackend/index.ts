@@ -143,7 +143,7 @@ function recordedWorkspace(
             return new RecordedExecutionFactory(recordings, workspace, implConfig.useRefType ?? "uri");
         },
         attributes(): IWorkspaceAttributesService {
-            return new RecordedAttributes(recordings);
+            return new RecordedAttributes(recordings, implConfig);
         },
         measures(): IWorkspaceMeasuresService {
             return new RecordedMeasures();

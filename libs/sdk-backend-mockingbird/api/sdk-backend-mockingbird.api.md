@@ -25,6 +25,7 @@ import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IUser } from '@gooddata/sdk-backend-spi';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
+import { ObjRef } from '@gooddata/sdk-model';
 import { ValidationContext } from '@gooddata/sdk-backend-spi';
 
 // @internal (undocumented)
@@ -122,6 +123,9 @@ export type NamedDataView = {
 };
 
 // @internal
+export function objRefsToStringKey(refs: ObjRef[]): string;
+
+// @internal
 export function recordedBackend(index: RecordingIndex, config?: RecordedBackendConfig, capabilities?: IBackendCapabilities): IAnalyticalBackend;
 
 // @internal
@@ -134,6 +138,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
     securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
     user?: IUser;
+    getCommonAttributesResponses?: Record<string, ObjRef[]>;
 };
 
 // @internal
