@@ -1,7 +1,8 @@
 // (C) 2021 GoodData Corporation
 
 import { Identifier, idRef } from "@gooddata/sdk-model";
-import { createDashboardStore, DashboardState, ReduxedDashboardStore } from "../state/dashboardStore";
+import { createDashboardStore, ReduxedDashboardStore } from "../state/dashboardStore";
+import { DashboardState } from "../state/types";
 import { DashboardContext } from "../types/commonTypes";
 import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";

@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { insightsAdapter } from "./insightsEntityAdapter";
-import { DashboardState } from "../dashboardStore";
+import { DashboardState } from "../types";
 
 const selectSelf = insightsAdapter.getSelectors((state: DashboardState) => state.insights);
 
