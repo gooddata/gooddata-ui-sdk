@@ -13,7 +13,13 @@ import {
     IWidgetAlert,
     ValidationContext,
 } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IExecutionDefinition, IInsight, IVisualizationClass } from "@gooddata/sdk-model";
+import {
+    IColorPalette,
+    IExecutionDefinition,
+    IInsight,
+    IVisualizationClass,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -77,6 +83,11 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Specify user to return.
      */
     user?: IUser;
+
+    /**
+     * Specify responses to the getCommonAttributes calls. The key of the map MUST be created using the {@link objRefsToStringKey} function.
+     */
+    getCommonAttributesResponses?: Record<string, ObjRef[]>;
 };
 
 /**

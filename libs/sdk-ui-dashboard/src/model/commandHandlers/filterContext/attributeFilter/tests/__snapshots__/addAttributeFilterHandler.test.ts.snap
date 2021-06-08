@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addAttributeFilterHandler should emit the appropriate events for added attribute filter 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED",
+  },
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+  },
+]
+`;
+
+exports[`addAttributeFilterHandler should emit the appropriate events when trying to add a duplicate attribute filter 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`addAttributeFilterHandler should set the attribute filter in state when it is added 1`] = `
+Object {
+  "attributeFilter": Object {
+    "attributeElements": Object {
+      "uris": Array [],
+    },
+    "displayForm": Object {
+      "identifier": "label.product.id.name",
+      "type": "displayForm",
+    },
+    "filterElementsBy": undefined,
+    "localIdentifier": Any<String>,
+    "negativeSelection": true,
+  },
+}
+`;

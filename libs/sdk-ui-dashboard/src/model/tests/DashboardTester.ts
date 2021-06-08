@@ -1,9 +1,10 @@
 // (C) 2021 GoodData Corporation
 
 import { Identifier, idRef } from "@gooddata/sdk-model";
-import { createDashboardStore, DashboardState, ReduxedDashboardStore } from "../state/dashboardStore";
+import { createDashboardStore, ReduxedDashboardStore } from "../state/dashboardStore";
+import { DashboardState } from "../state/types";
 import { DashboardContext } from "../types/commonTypes";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DashboardEvents, DashboardEventType } from "../events";
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
@@ -89,9 +90,12 @@ export class DashboardTester {
         this.capturedEvents.push(evt);
     };
 
-    public static forRecording(identifier: Identifier): DashboardTester {
+    public static forRecording(
+        identifier: Identifier,
+        backendConfig?: RecordedBackendConfig,
+    ): DashboardTester {
         const ctx: DashboardContext = {
-            backend: recordedBackend(ReferenceRecordings.Recordings),
+            backend: recordedBackend(ReferenceRecordings.Recordings, backendConfig),
             workspace: "reference-workspace",
             dashboardRef: idRef(identifier),
         };

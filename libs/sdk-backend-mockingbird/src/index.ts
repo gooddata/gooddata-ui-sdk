@@ -41,3 +41,5 @@ export {
     LegacyRecordingIndex,
     LegacyWorkspaceRecordings,
 } from "./legacyRecordedBackend";
+
+export { objRefsToStringKey } from "./recordedBackend/utils";

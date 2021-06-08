@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`changeDateFilterSelectionHandler should emit the appropriate events for changed date filter 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED",
+  },
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+  },
+]
+`;
+
+exports[`changeDateFilterSelectionHandler should set the date filter in the state when a date filter is changed 1`] = `
+Object {
+  "dateFilter": Object {
+    "from": -3,
+    "granularity": "GDC.time.month",
+    "to": 0,
+    "type": "relative",
+  },
+}
+`;

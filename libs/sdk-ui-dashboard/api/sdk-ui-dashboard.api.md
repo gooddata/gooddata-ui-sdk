@@ -79,6 +79,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
         readonly index: number;
         readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
         readonly initialSelection?: IAttributeElements;
+        readonly initialIsNegativeSelection?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD";
@@ -1353,7 +1354,7 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
 export interface RemoveAttributeFilters extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly filterLocalId: string[];
+        readonly filterLocalIds: string[];
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE";

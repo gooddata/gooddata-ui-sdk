@@ -6,7 +6,6 @@ import {
     configureStore,
     Dispatch,
     EnhancedStore,
-    EntityState,
     getDefaultMiddleware,
     Middleware,
 } from "@reduxjs/toolkit";
@@ -16,53 +15,20 @@ import { createDispatchHook, createSelectorHook, TypedUseSelectorHook } from "re
 import { filterContextSliceReducer } from "./filterContext";
 import { layoutSliceReducer } from "./layout";
 import { loadingSliceReducer } from "./loading";
-import { IInsight } from "@gooddata/sdk-model";
-import { LoadingState } from "./loading/loadingState";
-import { FilterContextState } from "./filterContext/filterContextState";
-import { LayoutState } from "./layout/layoutState";
 import { insightsSliceReducer } from "./insights";
 import { createRootEventEmitter } from "../eventEmitter/rootEventEmitter";
 import { DashboardEventHandler } from "../events/eventHandler";
 import { rootCommandHandler } from "../commandHandlers/rootCommandHandler";
 import { DashboardContext } from "../types/commonTypes";
-import { ConfigState } from "./config/configState";
 import { configSliceReducer } from "./config";
-import { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
-import { PermissionsState } from "./permissions/permissionsState";
 import { permissionsSliceReducer } from "./permissions";
-import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { alertsSliceReducer } from "./alerts/index";
-import { CatalogState } from "./catalog/catalogState";
 import { catalogSliceReducer } from "./catalog";
 import { spawn } from "redux-saga/effects";
-import { UserState } from "./user/userState";
 import { userSliceReducer } from "./user";
-import { DashboardMetaState } from "./meta/metaState";
 import { metaSliceReducer } from "./meta/index";
-
-/**
- * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
- *  dynamically such thing is not possible. Beware.. even if we get the inference working, the api-extractor
- *  will have problems if just the type gets exported unless the value from which it is inferred is exported
- *  as well.
- *
- * @internal
- */
-export type DashboardState = {
-    loading: LoadingState;
-    config: ConfigState;
-    permissions: PermissionsState;
-    filterContext: FilterContextState;
-    layout: LayoutState;
-    dateFilterConfig: DateFilterConfigState;
-    catalog: CatalogState;
-    user: UserState;
-    meta: DashboardMetaState;
-    // Entities
-    insights: EntityState<IInsight>;
-    alerts: EntityState<IWidgetAlert>;
-};
+import { DashboardState } from "./types";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store

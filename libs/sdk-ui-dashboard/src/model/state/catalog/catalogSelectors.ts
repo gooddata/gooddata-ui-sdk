@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../dashboardStore";
+import { DashboardState } from "../types";
 import flatMap from "lodash/flatMap";
 
 const selectSelf = createSelector(

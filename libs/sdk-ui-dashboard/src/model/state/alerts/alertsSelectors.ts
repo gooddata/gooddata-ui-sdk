@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { alertsAdapter } from "./alertsEntityAdapter";
-import { DashboardState } from "../dashboardStore";
+import { DashboardState } from "../types";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

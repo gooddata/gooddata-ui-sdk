@@ -1,0 +1,10 @@
+{
+    "attribute": { "uri": "/gdc/md/referenceworkspace/obj/1070" },
+    "description": "",
+    "id": "label.activity.id.subject",
+    "isDefault": true,
+    "ref": { "uri": "/gdc/md/referenceworkspace/obj/1071" },
+    "title": "Subject",
+    "type": "displayForm",
+    "uri": "/gdc/md/referenceworkspace/obj/1071"
+}

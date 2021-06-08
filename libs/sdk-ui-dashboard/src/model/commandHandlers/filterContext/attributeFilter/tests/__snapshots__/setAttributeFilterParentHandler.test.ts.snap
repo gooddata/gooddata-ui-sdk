@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`setAttributeFilterParentHandler should emit the appropriate events for valid set attribute filter parent command 1`] = `
+Array [
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+  },
+]
+`;
+
+exports[`setAttributeFilterParentHandler should emit the appropriate events when trying to set parent of a non-existent attribute filter 1`] = `
+Array [
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`setAttributeFilterParentHandler should set the appropriate values in state for valid set attribute filter parent command 1`] = `
+Object {
+  "attributeFilter": Object {
+    "attributeElements": Object {
+      "uris": Array [
+        "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
+      ],
+    },
+    "displayForm": Object {
+      "uri": "/gdc/md/referenceworkspace/obj/1089",
+    },
+    "filterElementsBy": Array [
+      Object {
+        "filterLocalIdentifier": "10450fbbd67b4e42b3d1f58e038f2614",
+        "over": Object {
+          "attributes": Array [
+            Object {
+              "identifier": "parent",
+            },
+          ],
+        },
+      },
+    ],
+    "localIdentifier": "c474351d6e26495183447c9bd3a23ffd",
+    "negativeSelection": true,
+  },
+}
+`;

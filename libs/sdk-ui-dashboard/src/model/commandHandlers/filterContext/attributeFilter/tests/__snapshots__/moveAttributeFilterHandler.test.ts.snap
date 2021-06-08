@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`moveAttributeFilterHandler should emit the appropriate events for moved attribute filter 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED",
+  },
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+  },
+]
+`;
+
+exports[`moveAttributeFilterHandler should emit the appropriate events when trying to move a non-existent attribute filter 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`moveAttributeFilterHandler should emit the appropriate events when trying to move an attribute filter to an invalid index 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`moveAttributeFilterHandler should set the attribute selection in state on moved attribute filter 1`] = `
+Object {
+  "attributeFilter": Object {
+    "attributeElements": Object {
+      "uris": Array [],
+    },
+    "displayForm": Object {
+      "uri": "/gdc/md/referenceworkspace/obj/1071",
+    },
+    "filterElementsBy": Array [],
+    "localIdentifier": Any<String>,
+    "negativeSelection": true,
+  },
+}
+`;

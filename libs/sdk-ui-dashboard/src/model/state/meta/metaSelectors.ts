@@ -2,7 +2,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { uriRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { DashboardState } from "../dashboardStore";
+import { DashboardState } from "../types";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

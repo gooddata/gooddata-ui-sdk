@@ -6,8 +6,12 @@ import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
 import { commandRejected, internalErrorOccurred } from "../events/general";
-import { dateFilterChangeSelectionCommandHandler } from "./dateFilter/handler";
-import { attributeFilterChangeSelectionCommandHandler } from "./attributeFilter/handler";
+import { changeDateFilterSelectionHandler } from "./filterContext/dateFilter/changeDateFilterSelectionHandler";
+import { addAttributeFilterHandler } from "./filterContext/attributeFilter/addAttributeFilterHandler";
+import { removeAttributeFiltersHandler } from "./filterContext/attributeFilter/removeAttributeFiltersHandler";
+import { moveAttributeFilterHandler } from "./filterContext/attributeFilter/moveAttributeFilterHandler";
+import { changeAttributeFilterSelectionHandler } from "./filterContext/attributeFilter/changeAttributeFilterSelectionHandler";
+import { setAttributeFilterParentHandler } from "./filterContext/attributeFilter/setAttributeFilterParentHandler";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler";
 import { moveLayoutSectionHandler } from "./layout/moveLayoutSectionHandler";
 import { removeLayoutSectionHandler } from "./layout/removeLayoutSectionHandler";
@@ -27,12 +31,12 @@ const DefaultCommandHandlers = {
     "GDC.DASH/CMD.SAVEAS": unhandledCommand,
     "GDC.DASH/CMD.RESET": unhandledCommand,
     "GDC.DASH/CMD.RENAME": unhandledCommand,
-    "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION": dateFilterChangeSelectionCommandHandler,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD": unhandledCommand,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE": unhandledCommand,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE": unhandledCommand,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION": attributeFilterChangeSelectionCommandHandler,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT": unhandledCommand,
+    "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION": changeDateFilterSelectionHandler,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD": addAttributeFilterHandler,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE": removeAttributeFiltersHandler,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE": moveAttributeFilterHandler,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION": changeAttributeFilterSelectionHandler,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT": setAttributeFilterParentHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": addLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": moveLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,

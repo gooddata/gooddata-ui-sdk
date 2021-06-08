@@ -137,6 +137,14 @@ export interface AddAttributeFilter extends IDashboardCommand {
          * XXX: not needed in the initial version; would be good for API completeness
          */
         readonly initialSelection?: IAttributeElements;
+
+        /**
+         * Optionally specify if the initial selection of attribute elements is a negative one:
+         * if true, the elements selected should NOT be included in teh results.
+         *
+         * XXX: not needed in the initial version; would be good for API completeness
+         */
+        readonly initialIsNegativeSelection?: boolean;
     };
 }
 
@@ -183,7 +191,7 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
          * XXX: we do not necessarily need to remove multiple filters atm, but this should
          *  be very easy to do and adds some extra flexibility.
          */
-        readonly filterLocalId: string[];
+        readonly filterLocalIds: string[];
     };
 }
 
@@ -201,7 +209,7 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
         type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE",
         correlationId,
         payload: {
-            filterLocalId: [filterLocalId],
+            filterLocalIds: [filterLocalId],
         },
     };
 }
