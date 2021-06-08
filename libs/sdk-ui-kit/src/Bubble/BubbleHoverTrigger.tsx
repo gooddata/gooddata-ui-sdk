@@ -16,7 +16,7 @@ export interface IBubbleHoverTriggerProps extends IBubbleTriggerProps {
  * @internal
  */
 export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> {
-    public static defaultProps: Partial<IBubbleHoverTriggerProps> = {
+    public static defaultProps: IBubbleHoverTriggerProps = {
         showDelay: SHOW_DELAY,
         hideDelay: HIDE_DELAY,
         hoverHideDelay: 0,

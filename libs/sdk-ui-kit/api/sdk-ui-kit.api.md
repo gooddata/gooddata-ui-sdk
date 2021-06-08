@@ -26,7 +26,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onLogoClick" | "menuItemsGroups" | "accountMenuItems" | "helpMenuItems" | "badges" | "logoUrl" | "logoHref" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick">>;
+export const AppHeader: React_2.ComponentType<Pick<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -96,7 +96,7 @@ export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
 // @internal (undocumented)
 export class BubbleFocusTrigger extends BubbleTrigger<BubbleFocusTriggerProps> {
     // (undocumented)
-    static defaultProps: Partial<BubbleFocusTriggerProps>;
+    static defaultProps: BubbleFocusTriggerProps;
     // (undocumented)
     protected eventListeners(): any;
 }
@@ -109,7 +109,7 @@ export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> 
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
-    static defaultProps: Partial<IBubbleHoverTriggerProps>;
+    static defaultProps: IBubbleHoverTriggerProps;
     // (undocumented)
     protected eventListeners(): any;
     // (undocumented)
@@ -121,7 +121,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React_2.PureCo
     // (undocumented)
     protected changeBubbleVisibility(active: boolean): void;
     // (undocumented)
-    static defaultProps: Partial<IBubbleTriggerProps>;
+    static defaultProps: IBubbleTriggerProps;
     // (undocumented)
     protected eventListeners(): any;
     // (undocumented)
@@ -209,7 +209,7 @@ export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
 // @internal (undocumented)
 export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
     // (undocumented)
-    static defaultProps: Partial<IConfirmDialogBaseProps>;
+    static defaultProps: IConfirmDialogBaseProps;
     // (undocumented)
     render(): JSX.Element;
 }
@@ -344,13 +344,13 @@ export enum ENUM_KEY_CODE {
 // @internal (undocumented)
 export const ExportDialog: {
     (props: IExportDialogBaseProps): JSX.Element;
-    defaultProps: Partial<IExportDialogBaseProps>;
+    defaultProps: IExportDialogBaseProps;
 };
 
 // @internal (undocumented)
 export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
     // (undocumented)
-    static defaultProps: Partial<IExportDialogBaseProps>;
+    static defaultProps: IExportDialogBaseProps;
     // (undocumented)
     render(): JSX.Element;
     // (undocumented)
@@ -2124,7 +2124,7 @@ export interface InputWithNumberFormatState {
 }
 
 // @internal (undocumented)
-export const InsightListItem: React_2.ForwardRefExoticComponent<Pick<IInsightListItemProps & WrappedComponentProps<"intl">, "title" | "type" | "updated" | "width" | "onClick" | "isSelected" | "isLoading" | "isLocked" | "onDelete"> & {
+export const InsightListItem: React_2.ForwardRefExoticComponent<Pick<IInsightListItemProps & WrappedComponentProps<"intl">, "title" | "type" | "updated" | "width" | "isSelected" | "onClick" | "isLoading" | "isLocked" | "onDelete"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IInsightListItemProps & WrappedComponentProps<"intl">>;
@@ -2480,7 +2480,7 @@ export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
-    static defaultProps: Partial<ILegacyListProps>;
+    static defaultProps: Pick<ILegacyListProps, "className" | "onScroll" | "onScrollStart" | "onSelect" | "width" | "height" | "itemHeight" | "itemHeightGetter" | "compensateBorder" | "scrollToSelected">;
     // (undocumented)
     render(): JSX.Element;
     }
@@ -2724,7 +2724,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
     // (undocumented)
     componentDidUpdate(): void;
     // (undocumented)
-    static defaultProps: Partial<IShortenedTextProps>;
+    static defaultProps: Pick<IShortenedTextProps, "className" | "tagName" | "tooltipAlignPoints" | "tooltipVisibleOnMouseOver" | "getElement" | "displayTooltip">;
     // (undocumented)
     recomputeShortening(): void;
     // (undocumented)

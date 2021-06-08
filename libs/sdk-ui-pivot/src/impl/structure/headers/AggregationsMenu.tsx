@@ -3,7 +3,7 @@ import cx from "classnames";
 import React from "react";
 import { IntlShape } from "react-intl";
 import noop from "lodash/noop";
-import { attributeDescriptorLocalId, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import { attributeDescriptorLocalId, IAttributeDescriptor, ITheme } from "@gooddata/sdk-backend-spi";
 import {
     IExecutionDefinition,
     isMeasureValueFilter,
@@ -23,7 +23,6 @@ import {
     IOnOpenedChangeParams,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 
 import menuHelper from "./aggregationsMenuHelper";
 import AggregationsSubMenu from "./AggregationsSubMenu";

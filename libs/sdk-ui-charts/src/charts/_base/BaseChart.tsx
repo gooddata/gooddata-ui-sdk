@@ -23,7 +23,7 @@ import { ITheme } from "@gooddata/sdk-backend-spi";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 
 /**
- * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
+ * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disappear.
  *
  * @internal
  */
@@ -36,7 +36,10 @@ export interface IBaseChartProps extends ICoreChartProps {
 type Props = IBaseChartProps & ILoadingInjectedProps;
 
 class StatelessBaseChart extends React.Component<Props> {
-    public static defaultProps: Partial<Props> = {
+    public static defaultProps: Pick<
+        Partial<Props>,
+        keyof typeof defaultCoreChartProps | "onDataTooLarge" | "onLegendReady" | "config"
+    > = {
         ...defaultCoreChartProps,
         onDataTooLarge: noop,
         onLegendReady: noop,

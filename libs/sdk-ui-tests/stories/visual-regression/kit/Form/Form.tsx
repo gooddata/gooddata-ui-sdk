@@ -1,7 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { Input } from "@gooddata/sdk-ui-kit";
-import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
+import { Input, InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";

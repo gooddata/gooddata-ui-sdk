@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { IDataView, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { IDataView, IMeasureDescriptor, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 
 import { BucketNames, DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
@@ -60,7 +60,6 @@ import {
 } from "./chartTooltips";
 import { getDrillableSeries } from "./chartDrilling";
 import { assignYAxes, getXAxes, getYAxes } from "./chartAxes";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;

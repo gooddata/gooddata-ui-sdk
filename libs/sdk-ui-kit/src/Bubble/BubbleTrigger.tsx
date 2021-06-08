@@ -28,7 +28,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
     P,
     IBubbleTriggerState
 > {
-    public static defaultProps: Partial<IBubbleTriggerProps> = {
+    public static defaultProps: IBubbleTriggerProps = {
         className: "",
         children: false,
         eventsOnBubble: false,

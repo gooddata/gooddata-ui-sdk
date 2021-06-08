@@ -140,7 +140,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     private emailSubject: string;
     private emailBody: string;
 
-    static defaultProps: Partial<IScheduledMailDialogRendererProps> = {
+    static defaultProps: Pick<IScheduledMailDialogRendererProps, "dateFormat"> = {
         dateFormat: "MM/dd/yyyy",
     };
 

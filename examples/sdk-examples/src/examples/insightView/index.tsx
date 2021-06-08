@@ -39,7 +39,7 @@ import InsightViewGeoPushpinByIdentifierExampleSRC from "./InsightViewGeoPushpin
 import InsightViewBulletByIdentifierExampleSRC from "./InsightViewBulletByIdentifierExample?raw";
 import InsightViewWithTitleSRC from "./InsightViewWithTitleExample?raw";
 import InsightViewWithCustomTitleSRC from "./InsightViewWithCustomTitleExample?raw";
-import InsightViewWithGeneratedTitleExampleSRC from "./InsightViewWithCustomTitleExample?raw";
+import InsightViewWithGeneratedTitleExampleSRC from "./InsightViewWithGeneratedTitleExample?raw";
 
 import InsightViewColumnChartByIdentifierExampleSRCJS from "./InsightViewColumnChartByIdentifierExample?rawJS";
 import InsightViewComboChartByIdentifierExampleSRCJS from "./InsightViewComboChartByIdentifierExample?rawJS";

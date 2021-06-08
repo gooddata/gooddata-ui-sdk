@@ -11,7 +11,6 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import MomentLocaleUtils from "react-day-picker/moment";
-import DateUtils from "react-day-picker";
 import DayPicker from "react-day-picker";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 
@@ -212,7 +211,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
             return;
         }
 
-        if (DateUtils.DateUtils.isSameDay(this.state.selectedDate, newlySelectedDate)) {
+        if (DayPicker.DateUtils.isSameDay(this.state.selectedDate, newlySelectedDate)) {
             return;
         }
 

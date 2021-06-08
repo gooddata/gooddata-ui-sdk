@@ -7,10 +7,11 @@ import {
     IPositiveAttributeFilter,
     INegativeAttributeFilter,
     isPositiveAttributeFilter,
+    newPositiveAttributeFilter,
+    filterIsEmpty,
 } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
-import { newPositiveAttributeFilter, filterIsEmpty } from "@gooddata/sdk-model";
 
 interface IAttributeFilterExampleState {
     filters: Array<IPositiveAttributeFilter | INegativeAttributeFilter> | undefined;

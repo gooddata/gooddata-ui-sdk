@@ -51,13 +51,12 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
 
     public inputRef = React.createRef<HTMLDivElement>();
 
-    public static defaultProps: Partial<IDynamicSelectProps> = {
+    public static defaultProps: Pick<
+        IDynamicSelectProps,
+        "onChange" | "initialIsOpen" | "visibleItemsRange"
+    > = {
         onChange: noop,
         initialIsOpen: false,
-        placeholder: undefined,
-        value: undefined,
-        className: undefined,
-        style: undefined,
         visibleItemsRange: defaultVisibleItemsRange,
     };
 

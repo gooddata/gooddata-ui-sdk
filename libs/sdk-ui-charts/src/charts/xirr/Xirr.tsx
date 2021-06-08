@@ -15,6 +15,7 @@ import {
     AnyMeasure,
     BucketNames,
     Subtract,
+    useResolveValuesWithPlaceholders,
     ValueOrPlaceholder,
     ValuesOrPlaceholders,
     withContexts,
@@ -22,7 +23,6 @@ import {
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
 import { CoreXirr } from "./CoreXirr";
 import omit from "lodash/omit";
-import { useResolveValuesWithPlaceholders } from "@gooddata/sdk-ui";
 
 //
 // Public interface

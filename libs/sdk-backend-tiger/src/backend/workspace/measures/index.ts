@@ -3,6 +3,7 @@ import {
     IWorkspaceMeasuresService,
     IMeasureExpressionToken,
     IMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
     JsonApiAttributeOut,
@@ -13,7 +14,6 @@ import {
     jsonApiHeaders,
     JsonApiMetricInTypeEnum,
 } from "@gooddata/api-client-tiger";
-import { IMeasureMetadataObjectDefinition } from "@gooddata/sdk-backend-spi";
 import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";

@@ -29,7 +29,7 @@ export interface IColoredItemsListState {
 export type IColoredItemsListProps = IColoredItemsListOwnProps & WrappedComponentProps;
 
 class ColoredItemsList extends React.PureComponent<IColoredItemsListProps, IColoredItemsListState> {
-    public static defaultProps: Partial<IColoredItemsListProps> = {
+    public static defaultProps: Pick<IColoredItemsListProps, "disabled" | "isLoading"> = {
         disabled: false,
         isLoading: false,
     };
