@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
-import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
 import React from "react";
+import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
+import { IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
@@ -23,11 +24,20 @@ const scenarios = {
     },
 };
 
+// we do not have a proper factory function for ALL MVF, nor do we really need one
+// this to satisfy sdk-ui-tests tsconfig that is stricter than that of sdk-ui-filters
+const filter: IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: localIdRef("localIdentifier"),
+    },
+};
+
 storiesOf(`${FilterStories}/MeasureValueFilter`, module)
     .add("full-featured", () => {
         return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
                 <MeasureValueFilterDropdown
+                    filter={filter}
                     measureIdentifier="localIdentifier"
                     onApply={action("applyClick")}
                     onCancel={action("cancelClick")}
@@ -41,6 +51,7 @@ storiesOf(`${FilterStories}/MeasureValueFilter`, module)
         return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
                 <MeasureValueFilterDropdown
+                    filter={filter}
                     measureIdentifier="localIdentifier"
                     onApply={action("applyClick")}
                     onCancel={action("cancelClick")}
@@ -55,6 +66,7 @@ storiesOf(`${FilterStories}/MeasureValueFilter`, module)
         return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
                 <MeasureValueFilterDropdown
+                    filter={filter}
                     measureIdentifier="localIdentifier"
                     onApply={action("applyClick")}
                     onCancel={action("cancelClick")}
@@ -70,6 +82,7 @@ storiesOf(`${FilterStories}/MeasureValueFilter`, module)
         return withScreenshot(
             <div style={wrapperStyle} className="screenshot-target">
                 <MeasureValueFilterDropdown
+                    filter={filter}
                     measureIdentifier="localIdentifier"
                     onApply={action("applyClick")}
                     onCancel={action("cancelClick")}
@@ -83,6 +96,7 @@ storiesOf(`${FilterStories}/MeasureValueFilter`, module)
         return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
                 <MeasureValueFilterDropdown
+                    filter={filter}
                     measureIdentifier="localIdentifier"
                     onApply={action("applyClick")}
                     onCancel={action("cancelClick")}
