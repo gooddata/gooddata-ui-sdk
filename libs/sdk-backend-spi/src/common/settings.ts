@@ -80,6 +80,12 @@ export interface ISettings {
     enableMultipleDates?: boolean;
 
     /**
+     * Indicates whether alternative display form can be selected for attribute and multiple instances
+     * of the same attributes can be put into buckets
+     */
+    enableAlternativeDisplayFormSelection?: boolean;
+
+    /**
      * Indicates whether dashboard scheduled mails are enabled.
      */
     enableKPIDashboardSchedule?: boolean;
