@@ -35,7 +35,6 @@ describe("headlineUiConfigHelper", () => {
         });
 
         describe("'customError' property", () => {
-            // tslint:disable-next-line:max-line-length
             it("should set 'customError' property if there is a measure in 'secondary_measures' bucket, but 'measures' bucket is empty", () => {
                 const uiConfig = getHeadlineUiConfig(
                     referencePointMocks.headlineWithMeasureInSecondaryBucket,

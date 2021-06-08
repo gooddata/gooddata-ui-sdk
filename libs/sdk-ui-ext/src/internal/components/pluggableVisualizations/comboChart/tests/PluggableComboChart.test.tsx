@@ -149,7 +149,6 @@ describe("PluggableComboChart", () => {
             ]);
         });
 
-        // tslint:disable-next-line:max-line-length
         it("should place arithmetic measure with it's operands into primary measures bucket when there is already an empty secondary measures bucket", async () => {
             const combo = createComponent();
 

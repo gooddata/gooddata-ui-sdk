@@ -52,7 +52,6 @@ describe("AttributeDropdown", () => {
     afterEach(() => {
         // for some reason the document.body gets polluted and has to be cleared after every test
         // otherwise every subsequent test fails
-        // tslint:disable-next-line:no-inner-html
         document.body.innerHTML = "";
     });
 

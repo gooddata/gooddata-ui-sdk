@@ -84,7 +84,6 @@ export class List<T> extends Component<IListProps<T>> {
 
         const listHeight = height || currentItemsCount * itemHeight;
 
-        // tslint:disable-next-line max-line-length
         // compensates for https://github.com/facebook/fixed-data-table/blob/5373535d98b08b270edd84d7ce12833a4478c6b6/src/FixedDataTableNew.react.js#L872
         const compensatedListHeight = compensateBorder ? listHeight + BORDER_HEIGHT * 2 : listHeight;
         const classNames = cx("gd-list", className);

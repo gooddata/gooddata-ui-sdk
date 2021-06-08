@@ -131,7 +131,6 @@ describe("getColorMappingPredicate", () => {
             expect(predicate(uriBasedMeasure, context)).toEqual(true);
         });
 
-        // tslint:disable-next-line:max-line-length
         it("should not match predicate when measure local identifier does not match", () => {
             const predicate: IHeaderPredicate = getColorMappingPredicate("someOtherMeasure.localIdentifier");
 

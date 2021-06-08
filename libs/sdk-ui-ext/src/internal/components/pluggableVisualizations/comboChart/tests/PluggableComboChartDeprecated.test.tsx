@@ -29,7 +29,6 @@ describe("PluggableComboChartDeprecated", () => {
     });
 
     describe("Arithmetic measures", () => {
-        // tslint:disable-next-line:max-line-length
         it("should place arithmetic measure into primary measures bucket and it's operands into secondary measures bucket", async () => {
             const combo = createComponent();
 
@@ -56,7 +55,6 @@ describe("PluggableComboChartDeprecated", () => {
             ]);
         });
 
-        // tslint:disable-next-line:max-line-length
         it("should place arithmetic measure with it's operands into primary measures bucket when there is already an empty secondary measures bucket", async () => {
             const combo = createComponent();
 

@@ -512,7 +512,6 @@ describe("getDerivedTypesFromArithmeticMeasure", () => {
         ]);
     });
 
-    // tslint:disable-next-line:max-line-length
     it("should return array with SP when arithmetic measure has one SP derived measure in its ancestors and is in different bucket", () => {
         const buckets = [
             {
@@ -575,7 +574,6 @@ describe("getDerivedTypesFromArithmeticMeasure", () => {
         ]);
     });
 
-    // tslint:disable-next-line:max-line-length
     it("should return array with SP and PP when arithmetic measure has one SP and PP derived measure in its ancestors", () => {
         const buckets = [
             {
@@ -591,7 +589,6 @@ describe("getDerivedTypesFromArithmeticMeasure", () => {
         ]);
     });
 
-    // tslint:disable-next-line:max-line-length
     it("should return array with SP and PP when arithmetic measure has multiple SP and PP derived measures in its ancestors", () => {
         const arithmeticMeasure1 = {
             localIdentifier: "am1",
@@ -665,7 +662,6 @@ describe("getDerivedTypesFromArithmeticMeasure", () => {
         ]);
     });
 
-    // tslint:disable-next-line:max-line-length
     it("should return empty array when incomplete arithmetic measure does have any derived measure in its ancestors", () => {
         const arithmeticMeasure = {
             localIdentifier: "am",
@@ -681,7 +677,6 @@ describe("getDerivedTypesFromArithmeticMeasure", () => {
         expect(getDerivedTypesFromArithmeticMeasure(arithmeticMeasure, buckets)).toEqual([]);
     });
 
-    // tslint:disable-next-line:max-line-length
     it("should return empty array when cyclic arithmetic measure does have any derived measure in its ancestors", () => {
         const buckets = [
             {

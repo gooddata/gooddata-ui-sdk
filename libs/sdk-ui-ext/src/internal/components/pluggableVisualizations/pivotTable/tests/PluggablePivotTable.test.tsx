@@ -71,7 +71,6 @@ describe("PluggablePivotTable", () => {
     };
 
     function createComponent(props: IVisConstruct = defaultProps) {
-        // tslint:disable-next-line:no-inner-html
         document.body.innerHTML = '<div id="tableElement" />';
         return new PluggablePivotTable(props);
     }

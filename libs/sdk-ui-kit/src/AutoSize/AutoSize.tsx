@@ -1,5 +1,4 @@
 // (C) 2007-2020 GoodData Corporation
-// tslint:disable member-ordering
 import React, { Component, createRef } from "react";
 import throttle from "lodash/throttle";
 import { elementRegion } from "../utils/domUtilities";

@@ -117,7 +117,7 @@ export function hashCodeString(value: string): number {
     const chars: string[] = value.split("");
     const hashCode = chars.reduce((hashCode: number, char: string): number => {
         const charCode = char.charCodeAt(0);
-        return ((hashCode << 5) - hashCode + charCode) | 0; // tslint:disable-line:no-bitwise
+        return ((hashCode << 5) - hashCode + charCode) | 0;
     }, 0);
 
     return Math.abs(hashCode);

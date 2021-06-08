@@ -70,7 +70,6 @@ describe("DateRangePicker", () => {
         clickOn(getTenthOfMay(rendered));
 
         // Cannot test on exact match, because the dates are local.
-        // tslint:disable-next-line: max-line-length
         // See https://github.com/gpbl/react-day-picker/blob/b08661717076249f1b6c1085174bb1d92aad6b08/test/daypicker/events.js#L37-L54
         const from = onChange.mock.calls[0][0].from;
         expect(from.getFullYear()).toEqual(2019);
