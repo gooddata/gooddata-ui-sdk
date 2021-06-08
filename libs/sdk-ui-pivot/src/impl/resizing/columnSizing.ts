@@ -51,6 +51,8 @@ import { colMeasureLocalId } from "../structure/colAccessors";
 import { IGridRow } from "../data/resultTypes";
 import { isSomeTotal } from "../data/dataSourceUtils";
 import { TableDescriptor } from "../structure/tableDescriptor";
+import { ColumnResizingConfig } from "../privateTypes";
+import { DefaultColumnWidth } from "../../publicTypes";
 
 export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
@@ -687,6 +689,8 @@ interface CalculateColumnWidthsConfig {
     padding: number;
     separators: any;
     cache: Map<string, number>;
+    columnAutoresizeOption: DefaultColumnWidth;
+    clientWidth?: number;
 }
 
 export function getMaxWidth(
@@ -734,30 +738,35 @@ function valueFormatter(text: string, col: SeriesCol, separators: any) {
 function collectWidths(
     config: CalculateColumnWidthsConfig,
     row: IGridRow,
+    column: Column,
     maxWidths: Map<string, number>,
 ): void {
     const { context } = config;
-    config.columns.forEach((column: Column) => {
-        const col = config.tableDescriptor.getCol(column);
 
-        if (col && context) {
-            const text = row[col.id];
-            const formattedText = isSeriesCol(col) && valueFormatter(text, col, config.separators);
-            const textForCalculation = formattedText || text;
-            const maxWidth = col.id ? maxWidths.get(col.id) : undefined;
-            let possibleMaxWidth;
+    const col = config.tableDescriptor.getCol(column);
 
-            if (config.cache) {
-                possibleMaxWidth = getMaxWidthCached(context, textForCalculation, maxWidth, config.cache);
-            } else {
-                possibleMaxWidth = getMaxWidth(context, textForCalculation, false, maxWidth);
-            }
+    if (col && context) {
+        const text = row[col.id];
+        const formattedText = isSeriesCol(col) && valueFormatter(text, col, config.separators);
+        const textForCalculation = formattedText || text;
+        const maxWidth = col.id ? maxWidths.get(col.id) : undefined;
+        let possibleMaxWidth;
 
-            if (possibleMaxWidth) {
-                maxWidths.set(col.id, possibleMaxWidth);
-            }
+        if (config.cache) {
+            possibleMaxWidth = getMaxWidthCached(context, textForCalculation, maxWidth, config.cache);
+        } else {
+            possibleMaxWidth = getMaxWidth(context, textForCalculation, false, maxWidth);
         }
-    });
+
+        if (possibleMaxWidth) {
+            maxWidths.set(col.id, possibleMaxWidth);
+        }
+    }
+}
+
+function getColWidth(maxWidth: number | undefined, padding: number): number {
+    const newWidth = maxWidth ? Math.ceil(maxWidth + padding) : 0;
+    return Math.min(Math.max(MIN_WIDTH, newWidth), AUTO_SIZED_MAX_WIDTH);
 }
 
 export function getUpdatedColumnDefs(
@@ -765,56 +774,68 @@ export function getUpdatedColumnDefs(
     maxWidths: Map<string, number>,
     padding: number,
 ): ColDef[] {
-    return columns.map((column: Column) => {
+    return columns.reduce((updatedColumnDefs: ColDef[], column: Column) => {
         const colDef: ColDef = column.getColDef();
         const colId = agColId(colDef);
 
         if (colId) {
             const maxWidth = maxWidths.get(colId);
-            const newWidth = maxWidth ? Math.ceil(maxWidth + padding) : 0;
-
-            return {
-                ...colDef,
-                width: Math.min(Math.max(MIN_WIDTH, newWidth), AUTO_SIZED_MAX_WIDTH),
-            };
+            if (maxWidth) {
+                updatedColumnDefs.push({
+                    ...colDef,
+                    width: getColWidth(maxWidth, padding),
+                });
+            }
         }
 
-        return colDef;
-    });
+        return updatedColumnDefs;
+    }, []);
 }
+
+const shouldStopCalculation = (config: CalculateColumnWidthsConfig, calculatedColumnsTotalWidth: number) =>
+    config.columnAutoresizeOption === "viewport" &&
+    config.clientWidth &&
+    calculatedColumnsTotalWidth > config.clientWidth;
 
 function calculateColumnWidths(config: CalculateColumnWidthsConfig) {
     const { context } = config;
     const maxWidths = new Map<string, number>();
-
-    if (config.measureHeaders && context) {
-        context.font = config.headerFont;
-
-        config.columns.forEach((column: Column) => {
+    if (context) {
+        let calculatedColumnsTotalWidth = 0;
+        for (let i = 0; i < config.columns.length; i++) {
+            const column: Column = config.columns[i];
             const colDef: ColDef = column.getColDef();
             const colId = agColId(colDef);
             const maxWidth = colId ? maxWidths.get(colId) : undefined;
-            const possibleMaxWidth = getMaxWidth(context, colDef.headerName, !!colDef.sort, maxWidth);
-
-            if (colId && possibleMaxWidth) {
-                maxWidths.set(colId, possibleMaxWidth);
+            if (shouldStopCalculation(config, calculatedColumnsTotalWidth)) {
+                break;
             }
-        });
+            if (config.measureHeaders) {
+                context.font = config.headerFont;
+                const possibleMaxWidth = getMaxWidth(context, colDef.headerName, !!colDef.sort, maxWidth);
+
+                if (colId && possibleMaxWidth) {
+                    maxWidths.set(colId, possibleMaxWidth);
+                }
+            }
+            config.rowData.forEach((row: IGridRow) => {
+                if (context) {
+                    context.font = isSomeTotal(row.type) ? config.subtotalFont : config.rowFont;
+                    collectWidths(config, row, column, maxWidths);
+                }
+            });
+
+            config.totalData.forEach((row: IGridRow) => {
+                if (context) {
+                    context.font = config.totalFont;
+                    collectWidths(config, row, column, maxWidths);
+                }
+            });
+
+            const finalMaxWidth = colId ? maxWidths.get(colId) : undefined;
+            calculatedColumnsTotalWidth += getColWidth(finalMaxWidth, config.padding);
+        }
     }
-
-    config.rowData.forEach((row: IGridRow) => {
-        if (context) {
-            context.font = isSomeTotal(row.type) ? config.subtotalFont : config.rowFont;
-            collectWidths(config, row, maxWidths);
-        }
-    });
-
-    config.totalData.forEach((row: IGridRow) => {
-        if (context) {
-            context.font = config.totalFont;
-            collectWidths(config, row, maxWidths);
-        }
-    });
 
     return getUpdatedColumnDefs(config.columns, maxWidths, config.padding);
 }
@@ -872,7 +893,10 @@ function getTableFonts(containerRef: HTMLDivElement): {
 /**
  * Ag-Grid API set desired column sizes (it *mutates* pivot table columns data).
  */
-export async function autoresizeAllColumns(columnApi: ColumnApi | null, autoResizedColumns: IResizedColumns) {
+export async function autoresizeAllColumns(
+    columnApi: ColumnApi | null,
+    autoResizedColumns: IResizedColumns,
+): Promise<void> {
     if (columnApi) {
         const columns = columnApi.getPrimaryColumns();
 
@@ -880,7 +904,7 @@ export async function autoresizeAllColumns(columnApi: ColumnApi | null, autoResi
         // to async chunks to not block main thread until the whole resizing is completed.
         const chunks = chunk(columns, COLUMN_RESIZE_CHUNK_SIZE);
         for (const ch of chunks) {
-            await new Promise((resolve) => {
+            await new Promise<void>((resolve) => {
                 setTimeout(() => {
                     ch.forEach((column: Column) => {
                         const columnDef = column.getColDef();
@@ -888,6 +912,7 @@ export async function autoresizeAllColumns(columnApi: ColumnApi | null, autoResi
                         const autoResizedColumn = autoResizedColumns[colId];
 
                         if (colId && autoResizedColumn && autoResizedColumn.width) {
+                            // TODO https://jira.intgdc.com/browse/RAIL-3489 - After upgrade of aggrid to 23.1 or newer consider usage of columnApi.setColumnWidths with improved performance
                             columnApi.setColumnWidth(colId, autoResizedColumn.width);
                         }
                     });
@@ -908,13 +933,14 @@ export function getAutoResizedColumns(
     gridApi: GridApi | null,
     columnApi: ColumnApi | null,
     execution: IExecutionResult | null,
-    containerRef: HTMLDivElement | null,
+    resizingConfig: ColumnResizingConfig,
     options: {
         measureHeaders: boolean;
         padding: number;
         separators: any;
     },
 ): IResizedColumns {
+    const { containerRef, columnAutoresizeOption, clientWidth } = resizingConfig;
     if (tableDescriptor && gridApi && columnApi && execution && containerRef) {
         const columns = columnApi.getPrimaryColumns();
         const { headerFont, rowFont, subtotalFont, totalFont } = getTableFonts(containerRef);
@@ -930,13 +956,15 @@ export function getAutoResizedColumns(
             rowData,
             totalData,
             measureHeaders: options.measureHeaders,
-            headerFont: headerFont,
-            subtotalFont: subtotalFont,
-            totalFont: totalFont,
-            rowFont: rowFont,
+            headerFont,
+            subtotalFont,
+            totalFont,
+            rowFont,
             padding: options.padding,
             separators: options.separators,
             cache: new Map(),
+            columnAutoresizeOption,
+            clientWidth,
         });
         updatedColumDefs.forEach((columnDef: ColDef) => {
             if (agColId(columnDef) && columnDef.width !== undefined) {
@@ -950,3 +978,6 @@ export function getAutoResizedColumns(
     }
     return {};
 }
+
+export const isColumnAutoresizeEnabled = (columnAutoresizeOption: DefaultColumnWidth): boolean =>
+    columnAutoresizeOption === "viewport" || columnAutoresizeOption === "autoresizeAll";

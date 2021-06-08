@@ -43,7 +43,7 @@ export interface IMenu {
 /**
  * @public
  */
-export type DefaultColumnWidth = "viewport" | "unset" | "autoresizeAll";
+export type DefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
 
 /**
  * @public

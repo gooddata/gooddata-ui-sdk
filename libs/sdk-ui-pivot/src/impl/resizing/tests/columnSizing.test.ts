@@ -16,7 +16,6 @@ import {
     getUpdatedColumnDefs,
     IWeakMeasureColumnWidthItemsMap,
     MANUALLY_SIZED_MAX_WIDTH,
-    MIN_WIDTH as AG_GRID_COLUMN_SIZING_MIN_WIDTH,
     MIN_WIDTH,
     ResizedColumnsStore,
     SORT_ICON_WIDTH,
@@ -823,7 +822,7 @@ describe("ResizedColumnStore", () => {
             expect(getUpdatedColumnDefs(columns, maxWidths, padding)).toStrictEqual(correctColDefs);
         });
 
-        it("should return correct column definitions with calculated width and one column definition with min width", () => {
+        it("should return correct column definitions for columns with max width calculated and ignore unchanged columns", () => {
             const width = 100;
             const maxWidths: Map<string, number> = new Map();
             maxWidths.set("c_0", width);
@@ -845,11 +844,6 @@ describe("ResizedColumnStore", () => {
                     colId: "c_2",
                     field: "text3",
                     width: width + padding,
-                },
-                {
-                    colId: "c_3",
-                    field: "text4",
-                    width: AG_GRID_COLUMN_SIZING_MIN_WIDTH,
                 },
             ];
             expect(getUpdatedColumnDefs(newColumns, maxWidths, padding)).toStrictEqual(correctColDefs);

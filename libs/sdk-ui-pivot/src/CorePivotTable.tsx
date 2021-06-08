@@ -51,6 +51,7 @@ import {
 import { createGridOptions } from "./impl/gridOptions";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
 import { ICorePivotTableState, InternalTableState } from "./tableState";
+import { isColumnAutoresizeEnabled } from "./impl/resizing/columnSizing";
 
 const DEFAULT_COLUMN_WIDTH = 200;
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -942,7 +943,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     private isColumnAutoresizeEnabled = () => {
         const defaultWidth = this.getDefaultWidthFromProps(this.props);
-        return defaultWidth === "viewport" || defaultWidth === "autoresizeAll";
+        return isColumnAutoresizeEnabled(defaultWidth);
     };
 
     private isGrowToFitEnabled = (props: ICorePivotTableProps = this.props) => {
@@ -1062,7 +1063,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         return {
             defaultWidth: this.getDefaultWidth(),
             growToFit: this.isGrowToFitEnabled(),
-            columnAutoresizeEnabled: this.isColumnAutoresizeEnabled(),
+            columnAutoresizeOption: this.getDefaultWidthFromProps(this.props),
             widths: this.getColumnWidths(this.props),
 
             isAltKeyPressed: this.internal.isAltKeyPressed,

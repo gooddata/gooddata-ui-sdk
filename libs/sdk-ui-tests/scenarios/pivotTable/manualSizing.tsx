@@ -80,7 +80,7 @@ const withColumnAutoresize = scenariosFor<IPivotTableProps>("PivotTable", PivotT
     .addCustomizedScenarios(
         justManualResizing,
         copyWithModifiedProps((props) => {
-            props.config!.columnSizing!.defaultWidth = "viewport";
+            props.config!.columnSizing!.defaultWidth = "autoresizeAll";
 
             return props;
         }),
@@ -114,7 +114,7 @@ const withAllAutoresizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTa
         justManualResizing,
         copyWithModifiedProps((props) => {
             props.config!.columnSizing!.growToFit = true;
-            props.config!.columnSizing!.defaultWidth = "viewport";
+            props.config!.columnSizing!.defaultWidth = "autoresizeAll";
 
             return props;
         }),

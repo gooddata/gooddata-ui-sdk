@@ -3,7 +3,7 @@
 exports[`createPivotTableConfig should create valid config with auto-resize if feature flag on 1`] = `
 Object {
   "columnSizing": Object {
-    "defaultWidth": "viewport",
+    "defaultWidth": "autoresizeAll",
   },
   "menu": Object {
     "aggregations": true,
