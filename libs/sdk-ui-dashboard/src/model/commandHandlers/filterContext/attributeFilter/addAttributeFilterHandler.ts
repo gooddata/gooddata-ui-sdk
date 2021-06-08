@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import invariant from "ts-invariant";
 import { objRefToString } from "@gooddata/sdk-model";
@@ -8,11 +8,13 @@ import { AddAttributeFilter } from "../../../commands/filters";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterAdded } from "../../../events/filters";
 import { filterContextActions } from "../../../state/filterContext";
-import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
+import {
+    makeSelectFilterContextAttributeFilterByDisplayForm,
+    selectFilterContextAttributeFilters,
+} from "../../../state/filterContext/filterContextSelectors";
 
 import { DashboardContext } from "../../../types/commonTypes";
 import { putCurrentFilterContextChanged } from "../common";
-import { getAttributeFilterByDisplayForm } from "./utils";
 import { PromiseFnReturnType } from "../../../types/sagas";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation";
 
@@ -55,8 +57,9 @@ export function* addAttributeFilterHandler(
         }),
     );
 
-    const addedFilter: SagaReturnType<typeof getAttributeFilterByDisplayForm> = yield call(
-        getAttributeFilterByDisplayForm,
+    const selectAddedFilter = makeSelectFilterContextAttributeFilterByDisplayForm();
+    const addedFilter: ReturnType<typeof selectAddedFilter> = yield select(
+        selectAddedFilter,
         cmd.payload.displayForm,
     );
 

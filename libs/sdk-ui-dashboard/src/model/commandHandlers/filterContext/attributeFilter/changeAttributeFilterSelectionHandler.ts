@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { call, put, SagaReturnType } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import invariant from "ts-invariant";
 
@@ -9,7 +9,7 @@ import { ChangeAttributeFilterSelection } from "../../../commands/filters";
 import { filterContextActions } from "../../../state/filterContext";
 import { DashboardContext } from "../../../types/commonTypes";
 import { putCurrentFilterContextChanged } from "../common";
-import { getAttributeFilterById } from "./utils";
+import { makeSelectFilterContextAttributeFilterByLocalId } from "../../../state/filterContext/filterContextSelectors";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
@@ -17,10 +17,12 @@ export function* changeAttributeFilterSelectionHandler(
 ): SagaIterator<void> {
     const { elements, filterLocalId, selectionType } = cmd.payload;
 
+    const selectFilterByLocalId = makeSelectFilterContextAttributeFilterByLocalId();
+
     // validate filterLocalId
-    const affectedFilter: SagaReturnType<typeof getAttributeFilterById> = yield call(
-        getAttributeFilterById,
-        filterLocalId,
+    const affectedFilter: ReturnType<typeof selectFilterByLocalId> = yield select(
+        selectFilterByLocalId,
+        cmd.payload.filterLocalId,
     );
 
     if (!affectedFilter) {
@@ -41,8 +43,8 @@ export function* changeAttributeFilterSelectionHandler(
         }),
     );
 
-    const changedFilter: SagaReturnType<typeof getAttributeFilterById> = yield call(
-        getAttributeFilterById,
+    const changedFilter: ReturnType<typeof selectFilterByLocalId> = yield select(
+        selectFilterByLocalId,
         cmd.payload.filterLocalId,
     );
 

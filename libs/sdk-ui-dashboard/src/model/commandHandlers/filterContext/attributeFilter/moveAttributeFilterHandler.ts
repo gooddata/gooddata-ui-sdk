@@ -1,14 +1,17 @@
 // (C) 2021 GoodData Corporation
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { MoveAttributeFilter } from "../../../commands/filters";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterMoved } from "../../../events/filters";
 import { filterContextActions } from "../../../state/filterContext";
-import { selectFilterContextFilters } from "../../../state/filterContext/filterContextSelectors";
+import {
+    makeSelectFilterContextAttributeFilterByLocalId,
+    makeSelectFilterContextAttributeFilterIndexByLocalId,
+    selectFilterContextFilters,
+} from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { putCurrentFilterContextChanged } from "../common";
-import { getAttributeFilterById, getAttributeFilterIndexById } from "./utils";
 
 export function* moveAttributeFilterHandler(
     ctx: DashboardContext,
@@ -17,8 +20,10 @@ export function* moveAttributeFilterHandler(
     const { filterLocalId, index } = cmd.payload;
 
     // validate filterLocalId
-    const affectedFilter: SagaReturnType<typeof getAttributeFilterById> = yield call(
-        getAttributeFilterById,
+    const selectFilterByLocalId = makeSelectFilterContextAttributeFilterByLocalId();
+
+    const affectedFilter: ReturnType<typeof selectFilterByLocalId> = yield select(
+        selectFilterByLocalId,
         filterLocalId,
     );
 
@@ -49,8 +54,10 @@ export function* moveAttributeFilterHandler(
         );
     }
 
-    const originalIndex: SagaReturnType<typeof getAttributeFilterIndexById> = yield call(
-        getAttributeFilterIndexById,
+    const selectFilterIndexByLocalId = makeSelectFilterContextAttributeFilterIndexByLocalId();
+
+    const originalIndex: ReturnType<typeof selectFilterIndexByLocalId> = yield select(
+        selectFilterIndexByLocalId,
         filterLocalId,
     );
 
@@ -61,8 +68,8 @@ export function* moveAttributeFilterHandler(
         }),
     );
 
-    const finalIndex: SagaReturnType<typeof getAttributeFilterIndexById> = yield call(
-        getAttributeFilterIndexById,
+    const finalIndex: ReturnType<typeof selectFilterIndexByLocalId> = yield select(
+        selectFilterIndexByLocalId,
         filterLocalId,
     );
 

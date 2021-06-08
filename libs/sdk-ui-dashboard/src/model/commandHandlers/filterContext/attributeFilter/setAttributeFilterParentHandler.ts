@@ -7,11 +7,13 @@ import { SetAttributeFilterParent } from "../../../commands/filters";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterParentChanged } from "../../../events/filters";
 import { filterContextActions } from "../../../state/filterContext";
-import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
+import {
+    makeSelectFilterContextAttributeFilterByLocalId,
+    selectFilterContextAttributeFilters,
+} from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { validateAttributeFilterParents } from "./validation/parentFiltersValidation";
 import { putCurrentFilterContextChanged } from "../common";
-import { getAttributeFilterById } from "./utils";
 
 export function* setAttributeFilterParentHandler(
     ctx: DashboardContext,
@@ -23,11 +25,14 @@ export function* setAttributeFilterParentHandler(
         selectFilterContextAttributeFilters,
     );
 
-    const filter = allFilters.find(
-        (item) => item.attributeFilter.localIdentifier === cmd.payload.filterLocalId,
+    const selectFilterByLocalId = makeSelectFilterContextAttributeFilterByLocalId();
+
+    const affectedFilter: ReturnType<typeof selectFilterByLocalId> = yield select(
+        selectFilterByLocalId,
+        filterLocalId,
     );
 
-    if (!filter) {
+    if (!affectedFilter) {
         return yield put(
             invalidArgumentsProvided(
                 ctx,
@@ -40,8 +45,8 @@ export function* setAttributeFilterParentHandler(
     const validationResult: SagaReturnType<typeof validateAttributeFilterParents> = yield call(
         validateAttributeFilterParents,
         ctx,
-        filter,
-        [...cmd.payload.parentFilters],
+        affectedFilter,
+        [...parentFilters],
         allFilters,
     );
 
@@ -62,13 +67,13 @@ export function* setAttributeFilterParentHandler(
         }),
     );
 
-    const affectedFilter: SagaReturnType<typeof getAttributeFilterById> = yield call(
-        getAttributeFilterById,
+    const changedFilter: ReturnType<typeof selectFilterByLocalId> = yield select(
+        selectFilterByLocalId,
         filterLocalId,
     );
 
-    invariant(affectedFilter, "Inconsistent state in attributeFilterSetParentCommandHandler");
+    invariant(changedFilter, "Inconsistent state in attributeFilterSetParentCommandHandler");
 
-    yield put(attributeFilterParentChanged(ctx, affectedFilter, cmd.correlationId));
+    yield put(attributeFilterParentChanged(ctx, changedFilter, cmd.correlationId));
     yield call(putCurrentFilterContextChanged, ctx, cmd);
 }
