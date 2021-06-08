@@ -42,14 +42,13 @@ describe("uriMatch", () => {
         });
 
         describe("show in % ad-hoc measure headers", () => {
-            // tslint:disable-next-line:max-line-length
             it("should match when show in % ad-hoc measure matches uri used to define measure in afm", () => {
                 const predicate: IHeaderPredicate =
                     headerPredicateFactory.uriMatch("/uriBasedRatioMeasureUri");
 
                 expect(predicate(measureDescriptors.uriBasedRatioMeasure, context)).toBe(true);
             });
-            // tslint:disable-next-line:max-line-length
+
             it("should NOT match when show in % ad-hoc measure since identifier was used to define measure in afm and ad-hoc headers does not contain identifiers", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch(
                     "/identifierBasedRatioMeasureUri",
@@ -60,13 +59,12 @@ describe("uriMatch", () => {
         });
 
         describe("ad-hoc measure headers", () => {
-            // tslint:disable-next-line:max-line-length
             it("should NOT match when ad-hoc measure is created from identifier-based attribute matching uri since uri of attribute not available in execution response or afm", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/attributeUri");
 
                 expect(predicate(measureDescriptors.identifierBasedAdhocMeasure, context)).toBe(false);
             });
-            // tslint:disable-next-line:max-line-length
+
             it("should match when ad-hoc measure is created from uri-based attribute matching uri", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/attributeUri");
 
@@ -107,7 +105,7 @@ describe("uriMatch", () => {
 
                 expect(predicate(measureDescriptors.uriBasedPPRatioMeasure, context)).toBe(true);
             });
-            // tslint:disable-next-line:max-line-length
+
             it("should NOT match when identifier-based PP derived ratio measure uri matches header uri since measure was defined using identifier in afm and ratio measure headers does not contain uri", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch(
                     "/identifierBasedRatioMeasureUri",
@@ -122,7 +120,7 @@ describe("uriMatch", () => {
 
                 expect(predicate(measureDescriptors.uriBasedSPRatioMeasure, context)).toBe(true);
             });
-            // tslint:disable-next-line:max-line-length
+
             it("should NOT match when identifier-based SP derived ratio measure uri matches header uri since measure was defined using identifier in afm and ration measure headers does not contain uri", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch(
                     "/identifierBasedRatioMeasureUri",
@@ -210,7 +208,6 @@ describe("identifierMatch", () => {
         });
 
         describe("show in % ad-hoc measure headers", () => {
-            // tslint:disable-next-line:max-line-length
             it("should NOT match when show in % ad-hoc measure since uri was used to define measure in afm and ad-hoc headers does not contain uris", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
                     "uriBasedRatioMeasureIdentifier",
@@ -218,7 +215,7 @@ describe("identifierMatch", () => {
 
                 expect(predicate(measureDescriptors.uriBasedRatioMeasure, context)).toBe(false);
             });
-            // tslint:disable-next-line:max-line-length
+
             it("should match when show in % ad-hoc measure matches identifier used to define measure in afm", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
                     "identifierBasedRatioMeasureIdentifier",
@@ -229,14 +226,13 @@ describe("identifierMatch", () => {
         });
 
         describe("ad-hoc measure headers", () => {
-            // tslint:disable-next-line:max-line-length
             it("should NOT match when ad-hoc measure is created from uri-based attribute matching identifier since identifier of attribute not available in execution response or afm", () => {
                 const predicate: IHeaderPredicate =
                     headerPredicateFactory.identifierMatch("uriBasedMeasureIdentifier");
 
                 expect(predicate(measureDescriptors.uriBasedAdhocMeasure, context)).toBe(false);
             });
-            // tslint:disable-next-line:max-line-length
+
             it("should match when ad-hoc measure is created from identifier-based attribute matching identifier", () => {
                 const predicate: IHeaderPredicate =
                     headerPredicateFactory.identifierMatch("attributeIdentifier");
@@ -276,7 +272,6 @@ describe("identifierMatch", () => {
         });
 
         describe("derived show in % measure headers", () => {
-            // tslint:disable-next-line:max-line-length
             it("should NOT match when uri-based PP derived ratio measure identifier matches header identifier since measure was defined using uri in afm and ratio measure headers does not contain identifier", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
                     "uriBasedRatioMeasureIdentifier",
@@ -284,7 +279,7 @@ describe("identifierMatch", () => {
 
                 expect(predicate(measureDescriptors.uriBasedPPRatioMeasure, context)).toBe(false);
             });
-            // tslint:disable-next-line:max-line-length
+
             it("should match when identifier-based PP derived ratio measure identifier matches header identifier", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
                     "identifierBasedRatioMeasureIdentifier",
@@ -293,7 +288,6 @@ describe("identifierMatch", () => {
                 expect(predicate(measureDescriptors.identifierBasedPPRatioMeasure, context)).toBe(true);
             });
 
-            // tslint:disable-next-line:max-line-length
             it("should NOT match when uri-based SP derived ratio measure identifier matches header identifier since measure was defined using uri in afm and ratio measure headers does not contain identifier", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
                     "uriBasedRatioMeasureIdentifier",
@@ -301,7 +295,7 @@ describe("identifierMatch", () => {
 
                 expect(predicate(measureDescriptors.uriBasedSPRatioMeasure, context)).toBe(false);
             });
-            // tslint:disable-next-line:max-line-length
+
             it("should match when identifier-based SP derived ratio measure identifier matches header identifier", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
                     "identifierBasedRatioMeasureIdentifier",
@@ -312,14 +306,13 @@ describe("identifierMatch", () => {
         });
 
         describe("AM headers", () => {
-            // tslint:disable-next-line:max-line-length
             it("should NOT match when AM uri-based operand identifier matches header identifier since AMs are not supported", () => {
                 const predicate: IHeaderPredicate =
                     headerPredicateFactory.identifierMatch("uriBasedMeasureIdentifier");
 
                 expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(false);
             });
-            // tslint:disable-next-line:max-line-length
+
             it("should NOT match when AM identifier-based operand identifier matches header identifier since AMs are not supported", () => {
                 const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
                     "identifierBasedMeasureIdentifier",
@@ -371,13 +364,12 @@ describe("composedFromUri", () => {
     });
 
     describe("ad-hoc measure headers (not supported)", () => {
-        // tslint:disable-next-line:max-line-length
         it("should NOT match when ad-hoc measure is created from identifier-based attribute matching uri", () => {
             const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/attributeUri");
 
             expect(predicate(measureDescriptors.identifierBasedAdhocMeasure, context)).toBe(false);
         });
-        // tslint:disable-next-line:max-line-length
+
         it("should NOT match when ad-hoc measure is created from uri-based attribute matching uri", () => {
             const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/attributeUri");
 
@@ -424,7 +416,7 @@ describe("composedFromUri", () => {
 
             expect(predicate(measureDescriptors.arithmeticMeasureOf2ndOrder, context)).toBe(true);
         });
-        // tslint:disable-next-line:max-line-length
+
         it("should match when 2nd order AM identifier-based operand uri matches header uri", () => {
             const predicate: IHeaderPredicate =
                 headerPredicateFactory.composedFromUri("identifierBasedMeasureUri");
@@ -497,14 +489,13 @@ describe("composedFromIdentifier", () => {
     });
 
     describe("ad-hoc measure headers (not supported)", () => {
-        // tslint:disable-next-line:max-line-length
         it("should NOT match when ad-hoc measure is created from uri-based attribute matching identifier", () => {
             const predicate: IHeaderPredicate =
                 headerPredicateFactory.composedFromIdentifier("uriBasedIdentifier");
 
             expect(predicate(measureDescriptors.uriBasedAdhocMeasure, context)).toBe(false);
         });
-        // tslint:disable-next-line:max-line-length
+
         it("should NOT match when ad-hoc measure is created from identifier-based attribute matching identifier", () => {
             const predicate: IHeaderPredicate =
                 headerPredicateFactory.composedFromIdentifier("attributeIdentifier");
@@ -559,7 +550,7 @@ describe("composedFromIdentifier", () => {
 
             expect(predicate(measureDescriptors.arithmeticMeasureOf2ndOrder, context)).toBe(true);
         });
-        // tslint:disable-next-line:max-line-length
+
         it("should match when 2nd order AM identifier-based operand identifier matches header identifier", () => {
             const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
                 "identifierBasedMeasureIdentifier",

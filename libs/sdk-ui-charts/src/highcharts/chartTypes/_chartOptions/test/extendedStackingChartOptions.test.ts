@@ -226,9 +226,7 @@ describe("getDrillableSeriesWithParentAttribute", () => {
         ["parent attribute", [a0id]],
         ["child attribute", [a1id]],
         ["measure", [m0id]],
-        // tslint:disable-next-line:max-line-length
         ["parent and child attributes", [a0id, a1id]],
-        // tslint:disable-next-line:max-line-length
         ["parent attribute and measure", [a0id, m0id]],
     ])('should return 3 drill items with "%s" configured', (_desc: string, itemIds: string[]) => {
         const drillableItems = itemIds.map((id: string) => HeaderPredicates.identifierMatch(id));

@@ -153,7 +153,7 @@ describe("execution", () => {
                         tabularDataResult:
                             "/gdc/internal/projects/myFakeProjectId/experimental/executions/23452345",
                         extendedTabularDataResult:
-                            "/gdc/internal/projects/myFakeProjectId/experimental/executions/extendedResults/23452345", // tslint:disable-line:max-line-length
+                            "/gdc/internal/projects/myFakeProjectId/experimental/executions/extendedResults/23452345",
                     },
                 };
             });
@@ -226,7 +226,6 @@ describe("execution", () => {
                     });
 
                     fetchMock.mock(
-                        // tslint:disable-next-line:max-line-length
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/extendedResults\/23452345/,
                         {
                             status: 201,
@@ -236,7 +235,7 @@ describe("execution", () => {
                                         offset: 0,
                                         count: 1,
                                         total: 2,
-                                        next: "/gdc/internal/projects/myFakeProjectId/experimental/executions/extendedResults/2343434", // tslint:disable-line:max-line-length
+                                        next: "/gdc/internal/projects/myFakeProjectId/experimental/executions/extendedResults/2343434",
                                     },
                                     values: [[{ id: "1", name: "a" }, "2"]],
                                 },
@@ -245,7 +244,7 @@ describe("execution", () => {
                     );
 
                     fetchMock.mock(
-                        /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/extendedResults\/2343434/, // tslint:disable-line:max-line-length
+                        /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/extendedResults\/2343434/,
                         {
                             status: 201,
                             body: JSON.stringify({
@@ -558,7 +557,7 @@ describe("execution", () => {
                                                 ],
                                             },
                                         },
-                                        title: "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)", // tslint:disable-line:max-line-length
+                                        title: "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)",
                                         format: "#,##0",
                                     },
                                 },
@@ -721,10 +720,10 @@ describe("execution", () => {
                         expectColumns(
                             [
                                 mdEndpoint + "/1025",
-                                "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.b9f95d95adbeac03870b764f8b2c3402_filtered_sum", // tslint:disable-line:max-line-length
-                                "attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.a865b88e507b9390e2175b79e1d6252f_count", // tslint:disable-line:max-line-length
+                                "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.b9f95d95adbeac03870b764f8b2c3402_filtered_sum",
+                                "attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.a865b88e507b9390e2175b79e1d6252f_count",
                                 mdEndpoint + "/1556",
-                                "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.3812d81c1c1609700e47fc800e85bfac_filtered_base", // tslint:disable-line:max-line-length
+                                "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.3812d81c1c1609700e47fc800e85bfac_filtered_base",
                             ],
                             execConfig,
                         );
@@ -732,7 +731,7 @@ describe("execution", () => {
                         expectMetricDefinition(
                             {
                                 identifier:
-                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.b9f95d95adbeac03870b764f8b2c3402_filtered_sum", // tslint:disable-line:max-line-length
+                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.b9f95d95adbeac03870b764f8b2c3402_filtered_sum",
                                 expression:
                                     "SELECT SUM([" +
                                     mdEndpoint +
@@ -755,7 +754,7 @@ describe("execution", () => {
                         expectMetricDefinition(
                             {
                                 identifier:
-                                    "attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.a865b88e507b9390e2175b79e1d6252f_count", // tslint:disable-line:max-line-length
+                                    "attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.a865b88e507b9390e2175b79e1d6252f_count",
                                 expression: "SELECT COUNT([" + mdEndpoint + "/1244])",
                                 title: "Count of Activity",
                                 format: "#,##0.00",
@@ -766,7 +765,7 @@ describe("execution", () => {
                         expectMetricDefinition(
                             {
                                 identifier:
-                                    "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.3812d81c1c1609700e47fc800e85bfac_filtered_base", // tslint:disable-line:max-line-length
+                                    "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.3812d81c1c1609700e47fc800e85bfac_filtered_base",
                                 expression:
                                     "SELECT [" +
                                     mdEndpoint +
@@ -789,7 +788,7 @@ describe("execution", () => {
                                     "[" +
                                     mdEndpoint +
                                     "/969/elements?id=961046])",
-                                title: "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)", // tslint:disable-line:max-line-length
+                                title: "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)",
                                 format: "#,##0",
                             },
                             execConfig,
@@ -800,7 +799,7 @@ describe("execution", () => {
             it("handles empty filters", () => {
                 const mdObjWithoutFilters = cloneDeep(mdObj);
                 mdObjWithoutFilters.buckets[0].items[0].measure.definition.measureDefinition.filters[0].positiveAttributeFilter.in =
-                    []; // tslint:disable-line:max-line-length
+                    [];
                 return createExecution()
                     .mdToExecutionDefinitionsAndColumns(
                         "qamfsd9cw85e53mcqs74k8a0mwbf5gc2",
@@ -811,9 +810,9 @@ describe("execution", () => {
                             [
                                 mdEndpoint + "/1025",
                                 "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.7537800b1daf7582198e84ca6205d600_sum",
-                                "attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.a865b88e507b9390e2175b79e1d6252f_count", // tslint:disable-line:max-line-length
+                                "attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.a865b88e507b9390e2175b79e1d6252f_count",
                                 mdEndpoint + "/1556",
-                                "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.3812d81c1c1609700e47fc800e85bfac_filtered_base", // tslint:disable-line:max-line-length
+                                "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.3812d81c1c1609700e47fc800e85bfac_filtered_base",
                             ],
                             execConfig,
                         );
@@ -821,7 +820,7 @@ describe("execution", () => {
                         expectMetricDefinition(
                             {
                                 identifier:
-                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.7537800b1daf7582198e84ca6205d600_sum", // tslint:disable-line:max-line-length
+                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.7537800b1daf7582198e84ca6205d600_sum",
                                 expression: "SELECT SUM([" + mdEndpoint + "/1144])",
                                 title: "Sum of Amount",
                                 format: "#,##0.00",
@@ -832,7 +831,7 @@ describe("execution", () => {
                         expectMetricDefinition(
                             {
                                 identifier:
-                                    "attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.a865b88e507b9390e2175b79e1d6252f_count", // tslint:disable-line:max-line-length
+                                    "attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.a865b88e507b9390e2175b79e1d6252f_count",
                                 expression: "SELECT COUNT([" + mdEndpoint + "/1244])",
                                 title: "Count of Activity",
                                 format: "#,##0.00",
@@ -843,7 +842,7 @@ describe("execution", () => {
                         expectMetricDefinition(
                             {
                                 identifier:
-                                    "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.3812d81c1c1609700e47fc800e85bfac_filtered_base", // tslint:disable-line:max-line-length
+                                    "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.3812d81c1c1609700e47fc800e85bfac_filtered_base",
                                 expression:
                                     "SELECT [" +
                                     mdEndpoint +
@@ -859,8 +858,8 @@ describe("execution", () => {
                                     mdEndpoint +
                                     "/969/elements?id=961044],[" +
                                     mdEndpoint +
-                                    "/969/elements?id=961046])", // tslint:disable-line:max-line-length
-                                title: "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)", // tslint:disable-line:max-line-length
+                                    "/969/elements?id=961046])",
+                                title: "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)",
                                 format: "#,##0",
                             },
                             execConfig,
@@ -1023,7 +1022,7 @@ describe("execution", () => {
                         expectColumns(
                             [
                                 mdEndpoint + "/1027",
-                                "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.0eb685df0742b4e27091746615e06193_percent", // tslint:disable-line:max-line-length
+                                "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.0eb685df0742b4e27091746615e06193_percent",
                             ],
                             execConfig,
                         );
@@ -1032,7 +1031,7 @@ describe("execution", () => {
                             {
                                 title: "% # of Opportunities",
                                 identifier:
-                                    "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.0eb685df0742b4e27091746615e06193_percent", // tslint:disable-line:max-line-length
+                                    "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.0eb685df0742b4e27091746615e06193_percent",
                                 expression:
                                     "SELECT (SELECT [" +
                                     mdEndpoint +
@@ -1040,7 +1039,7 @@ describe("execution", () => {
                                     mdEndpoint +
                                     "/2825] BY ALL [" +
                                     mdEndpoint +
-                                    "/1027])", // tslint:disable-line:max-line-length
+                                    "/1027])",
                                 format: "#,##0.00%",
                             },
                             execConfig,
@@ -1081,7 +1080,7 @@ describe("execution", () => {
                         expectColumns(
                             [
                                 mdEndpoint + "/1027",
-                                "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.3124707f49557fe26b7eecfa3f61b021_percent", // tslint:disable-line:max-line-length
+                                "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.3124707f49557fe26b7eecfa3f61b021_percent",
                             ],
                             execConfig,
                         );
@@ -1090,7 +1089,7 @@ describe("execution", () => {
                             {
                                 title: "% Sum of Amount",
                                 identifier:
-                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.3124707f49557fe26b7eecfa3f61b021_percent", // tslint:disable-line:max-line-length
+                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.3124707f49557fe26b7eecfa3f61b021_percent",
                                 expression:
                                     "SELECT (SELECT SUM([" +
                                     mdEndpoint +
@@ -1098,7 +1097,7 @@ describe("execution", () => {
                                     mdEndpoint +
                                     "/1144]) BY ALL [" +
                                     mdEndpoint +
-                                    "/1027])", // tslint:disable-line:max-line-length
+                                    "/1027])",
                                 format: "#,##0.00%",
                             },
                             execConfig,
@@ -1149,7 +1148,7 @@ describe("execution", () => {
                         expectColumns(
                             [
                                 mdEndpoint + "/1027",
-                                "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1.generated.08fe4920a4353ed70cdb0cb255489611_filtered_percent", // tslint:disable-line:max-line-length
+                                "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1.generated.08fe4920a4353ed70cdb0cb255489611_filtered_percent",
                             ],
                             execConfig,
                         );
@@ -1158,7 +1157,7 @@ describe("execution", () => {
                             {
                                 title: "% Sum of Amount",
                                 identifier:
-                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1.generated.08fe4920a4353ed70cdb0cb255489611_filtered_percent", // tslint:disable-line:max-line-length
+                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1.generated.08fe4920a4353ed70cdb0cb255489611_filtered_percent",
                                 expression:
                                     "SELECT (" +
                                     "SELECT SUM([" +
@@ -1307,7 +1306,7 @@ describe("execution", () => {
                         expectColumns(
                             [
                                 mdEndpoint + "/1233",
-                                "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.0e380388838e2d867a3d11ea64e22573_pop", // tslint:disable-line:max-line-length
+                                "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.0e380388838e2d867a3d11ea64e22573_pop",
                                 mdEndpoint + "/2825",
                             ],
                             execConfig,
@@ -1317,7 +1316,7 @@ describe("execution", () => {
                             {
                                 title: "# of Opportunities - previous year",
                                 identifier:
-                                    "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.0e380388838e2d867a3d11ea64e22573_pop", // tslint:disable-line:max-line-length
+                                    "metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.0e380388838e2d867a3d11ea64e22573_pop",
                                 expression:
                                     "SELECT [" +
                                     mdEndpoint +
@@ -1384,13 +1383,13 @@ describe("execution", () => {
                         expectMetricDefinition(
                             {
                                 identifier:
-                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.00d7d51e0e86780bebfe65b025ed8f14_pop", // tslint:disable-line:max-line-length
+                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.00d7d51e0e86780bebfe65b025ed8f14_pop",
                                 expression:
                                     "SELECT (SELECT SUM([" +
                                     mdEndpoint +
                                     "/1144])) FOR PREVIOUS ([" +
                                     mdEndpoint +
-                                    "/1233])", // tslint:disable-line:max-line-length
+                                    "/1233])",
                                 title: "Sum of Amount - previous year",
                                 format: "#,##0.00",
                             },
@@ -1400,7 +1399,7 @@ describe("execution", () => {
                         expectMetricDefinition(
                             {
                                 identifier:
-                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.7537800b1daf7582198e84ca6205d600_sum", // tslint:disable-line:max-line-length
+                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.7537800b1daf7582198e84ca6205d600_sum",
                                 expression: "SELECT SUM([" + mdEndpoint + "/1144])",
                                 title: "Sum of Amount",
                                 format: "#,##0.00",
@@ -1456,7 +1455,7 @@ describe("execution", () => {
                             [
                                 mdEndpoint + "/1233",
                                 "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.985ea06c284684b6feb0b05a6d796034_pop",
-                                "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.93434aa1d9e8d4fe653757ba8c891025_percent", // tslint:disable-line:max-line-length
+                                "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.93434aa1d9e8d4fe653757ba8c891025_percent",
                             ],
                             execConfig,
                         );
@@ -1465,7 +1464,7 @@ describe("execution", () => {
                             {
                                 title: "% Sum of Amount - previous year",
                                 identifier:
-                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.985ea06c284684b6feb0b05a6d796034_pop", // tslint:disable-line:max-line-length
+                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.985ea06c284684b6feb0b05a6d796034_pop",
                                 expression:
                                     "SELECT (SELECT (SELECT SUM([" +
                                     mdEndpoint +
@@ -1475,7 +1474,7 @@ describe("execution", () => {
                                     mdEndpoint +
                                     "/1233])) FOR PREVIOUS ([" +
                                     mdEndpoint +
-                                    "/1233])", // tslint:disable-line:max-line-length
+                                    "/1233])",
                                 format: "#,##0.00%",
                             },
                             execConfig,
@@ -1485,7 +1484,7 @@ describe("execution", () => {
                             {
                                 title: "% Sum of Amount",
                                 identifier:
-                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.93434aa1d9e8d4fe653757ba8c891025_percent", // tslint:disable-line:max-line-length
+                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.93434aa1d9e8d4fe653757ba8c891025_percent",
                                 expression:
                                     "SELECT (SELECT SUM([" +
                                     mdEndpoint +
@@ -1493,7 +1492,7 @@ describe("execution", () => {
                                     mdEndpoint +
                                     "/1144]) BY ALL [" +
                                     mdEndpoint +
-                                    "/1233])", // tslint:disable-line:max-line-length
+                                    "/1233])",
                                 format: "#,##0.00%",
                             },
                             execConfig,

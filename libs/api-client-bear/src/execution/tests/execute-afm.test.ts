@@ -113,7 +113,6 @@ function getExecutionResponse(numOfDimensions: number = 2): GdcExecution.IExecut
     return {
         dimensions: Array(numOfDimensions).fill(dimension),
         links: {
-            // tslint:disable-next-line:max-line-length
             executionResult: `/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=${numOfDimensions}&limit=overridden&offset=overridden`,
         },
     };
@@ -134,12 +133,11 @@ const M1 = createMeasureHeaderItem("m1", 1);
 const M2 = createMeasureHeaderItem("m2", 2);
 const M3 = createMeasureHeaderItem("m3", 3);
 
-const fakeExecutionResultsUri = `/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=2&limit=${DEFAULT_TEST_LIMIT}%2C${DEFAULT_TEST_LIMIT}&offset=0%2C0`; // tslint:disable-line:max-line-length
+const fakeExecutionResultsUri = `/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=2&limit=${DEFAULT_TEST_LIMIT}%2C${DEFAULT_TEST_LIMIT}&offset=0%2C0`;
 const fakeExecuteAfmUri = "/gdc/app/projects/myFakeProjectId/executeAfm";
 
 describe("replaceLimitAndOffsetInUri", () => {
     it("should return correct results for 1 dimension", () => {
-        // tslint:disable-next-line:max-line-length
         const oldUri = `/gdc/app/projects/projectId/executionResults/123?dimensions=1&limit=${DEFAULT_TEST_LIMIT}&offset=0`;
         const limit = [5];
         const offset = [3];
@@ -150,7 +148,6 @@ describe("replaceLimitAndOffsetInUri", () => {
     });
 
     it("should return correct results for 2 dimensions", () => {
-        // tslint:disable-next-line:max-line-length
         const oldUri = `/gdc/app/projects/projectId/executionResults/123?dimensions=2&limit=${DEFAULT_TEST_LIMIT}%2C${DEFAULT_TEST_LIMIT}&offset=0%2C0`;
         const limit = [12, 12];
         const offset = [3, 9];

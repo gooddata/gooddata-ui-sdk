@@ -128,7 +128,6 @@ describe("getHeadlinesDimensions", () => {
 });
 
 describe("getPivotTableDimensions", () => {
-    // tslint:disable-next-line:max-line-length
     it("should return row attributes in the first dimensions, column attributes and measureGroup in second dimension", () => {
         const buckets = [
             {

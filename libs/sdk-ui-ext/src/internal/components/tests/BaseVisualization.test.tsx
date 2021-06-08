@@ -361,7 +361,6 @@ describe("BaseVisualization", () => {
         });
     });
 
-    // tslint:disable-next-line:max-line-length
     it("should call onExtendedReferencePointChanged", () => {
         const { component, tableConstructorCall } = getDummyComponent();
         const onExtendedReferencePointChanged = jest.fn();

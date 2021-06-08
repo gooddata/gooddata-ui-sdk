@@ -60,7 +60,7 @@ const factories = {
  * @param expected
  */
 const testModelNotation = (factoryNotation: string, expected: any) => {
-    // tslint:disable-next-line: function-constructor We need this to perform the test and since this is in test code this should be OK.
+    // We need this to perform the test and since this is in test code this should be OK.
     const f = new Function(
         "factories",
         `const {${Object.keys(factories).join(",")}} = factories;  return ${factoryNotation}`,

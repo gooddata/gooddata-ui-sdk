@@ -28,12 +28,10 @@ const AxisAlignmentMapping = {
 
 function chartConfigToControls(chartConfig: IChartConfig): any {
     const xaxis = chartConfig.xaxis ? { xaxis: axisNameAlignmentCorrection("x", chartConfig.xaxis) } : {};
-    // tslint:disable-next-line:variable-name
     const secondary_xaxis = chartConfig.secondary_xaxis
         ? { secondary_xaxis: axisNameAlignmentCorrection("x", chartConfig.secondary_xaxis) }
         : {};
     const yaxis = chartConfig.yaxis ? { yaxis: axisNameAlignmentCorrection("y", chartConfig.yaxis) } : {};
-    // tslint:disable-next-line:variable-name
     const secondary_yaxis = chartConfig.secondary_yaxis
         ? { secondary_yaxis: axisNameAlignmentCorrection("y", chartConfig.secondary_yaxis) }
         : {};

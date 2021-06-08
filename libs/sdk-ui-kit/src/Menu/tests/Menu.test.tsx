@@ -135,7 +135,6 @@ function snapshotComponentAndPortalTarget(Component: React.ReactElement<any>, po
     //   on one line.
     // - So we do this to have formatted final html in snapshot.
     const el = document.createElement("div");
-    // tslint:disable-next-line:no-inner-html
     el.innerHTML = wrapper.html();
 
     expect(el).toMatchSnapshot();

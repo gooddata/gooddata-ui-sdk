@@ -24,7 +24,6 @@ describe("sanitizeDomain", () => {
 });
 
 describe("sanitizeConfig", () => {
-    // tslint:disable-next-line:no-http-string
     const dirtyDomain = "http://example.com/";
     const sanitizedDomain = "https://example.com";
 

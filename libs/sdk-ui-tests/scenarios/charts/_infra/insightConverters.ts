@@ -29,7 +29,7 @@ function createColorMappingItems(
         const id = ids[idx];
 
         if (!id) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             console.warn(`For insight ${title} (${iid}): not all color mappings could be converted to vis properties format.
             Check test scenario definition - you likely have more mappings in the props than input to replaceColorMapping() converter.`);
 

@@ -163,7 +163,6 @@ export const simpleStackedBaseUiConfig: IUiConfig = {
         measures: {
             ...measuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
         },
@@ -479,7 +478,6 @@ export const multipleMeasuresAndCategoriesTreemapUiConfig: IUiConfig = {
             isShowInPercentEnabled: false,
             allowsReordering: false,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">view by</span>',
         },
@@ -550,7 +548,6 @@ export const oneMetricAndManyCategoriesBaseUiConfig: IUiConfig = {
         measures: {
             ...measuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
         },
@@ -600,7 +597,6 @@ export const oneMetricAndOneStackBarUiConfig: IUiConfig = {
         measures: {
             ...secondaryMeasuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
             title: "Measures",
@@ -682,7 +678,6 @@ export const oneMetricAndManyCategoriesLineUiConfig: IUiConfig = {
         measures: {
             ...secondaryMeasuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">segment by</span>',
             title: "Measures",
@@ -708,7 +703,6 @@ export const oneMetricAndManyCategoriesAreaUiConfig: IUiConfig = {
         measures: {
             ...measuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
             title: "Measures",
@@ -742,7 +736,6 @@ export const oneMetricManyCategoriesAreaUiConfig: IUiConfig = {
             ...measuresBase,
             canAddItems: false,
             isShowInPercentEnabled: true,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">view by</span>',
         },
@@ -775,7 +768,6 @@ export const oneMetricAndOneCategoryAndOneStackAreaUiConfig: IUiConfig = {
         measures: {
             ...measuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
         },
@@ -784,7 +776,6 @@ export const oneMetricAndOneCategoryAndOneStackAreaUiConfig: IUiConfig = {
             canAddItems: false,
             allowsReordering: true,
             itemsLimit: MAX_VIEW_COUNT,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional attribute, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
         },
@@ -834,7 +825,6 @@ export const dateAsFirstCategoryBaseUiConfig: IUiConfig = {
         measures: {
             ...measuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
         },
@@ -858,7 +848,6 @@ export const dateAsSecondCategoryLineUiConfig: IUiConfig = {
         measures: {
             ...secondaryMeasuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">segment by</span>',
         },
@@ -908,7 +897,6 @@ export const dateAsThirdCategoryAreaUiConfig: IUiConfig = {
             ...measuresBase,
             canAddItems: false,
             isShowInPercentEnabled: true,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">view by</span>',
         },
@@ -942,7 +930,6 @@ export const multipleAttributesBaseUiConfig: IUiConfig = {
         measures: {
             ...measuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
         },
@@ -964,7 +951,6 @@ export const oneMetricAndCategoryAndStackLineUiConfig: IUiConfig = {
         measures: {
             ...secondaryMeasuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">segment by</span>',
         },
@@ -989,7 +975,6 @@ export const oneStackAndNoCategoriesLineUiConfig: IUiConfig = {
         measures: {
             ...secondaryMeasuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">segment by</span>',
         },
@@ -1014,7 +999,6 @@ export const oneStackAndNoCategoriesAreaUiConfig: IUiConfig = {
         measures: {
             ...measuresBase,
             canAddItems: false,
-            // tslint:disable-next-line:max-line-length
             warningMessage:
                 'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
         },

@@ -277,7 +277,6 @@ describe("PluggableHeadline", () => {
             });
         });
 
-        // tslint:disable-next-line:max-line-length
         it("should return extended reference point without any derived measures or arithmetic measures created from derived measures within measures bucket if there is no date filter", async () => {
             const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
                 referencePointMocks.measureWithDerivedWithoutDateFilterRefPoint,
@@ -288,7 +287,6 @@ describe("PluggableHeadline", () => {
             });
         });
 
-        // tslint:disable-next-line:max-line-length
         it("should unset showInPercent flag from measure and remove attribute", async () => {
             const referencePoint: IReferencePoint = {
                 buckets: [
@@ -376,7 +374,6 @@ describe("PluggableHeadline", () => {
         });
 
         describe("known buckets", () => {
-            // tslint:disable-next-line:max-line-length
             it("should keep first bucket empty when primary measures bucket is empty and the second is not", async () => {
                 const headline = createComponent();
                 const referencePoint = cloneDeep(referencePointMocks.emptyReferencePoint);
@@ -437,7 +434,6 @@ describe("PluggableHeadline", () => {
                 expect(extendedReferencePoint.buckets).toEqual(referencePoint.buckets);
             });
 
-            // tslint:disable-next-line:max-line-length
             it("should place measures to primary and secondary buckets when primary source bucket contains 2 measures", async () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
@@ -468,7 +464,6 @@ describe("PluggableHeadline", () => {
                 ]);
             });
 
-            // tslint:disable-next-line:max-line-length
             it("should place measures to primary and secondary buckets when secondary source bucket contains 2 measures", async () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
@@ -501,7 +496,6 @@ describe("PluggableHeadline", () => {
         });
 
         describe("unknown buckets", () => {
-            // tslint:disable-next-line:max-line-length
             it("should place measures to primary and secondary buckets when first source bucket contains one measure", async () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
@@ -525,7 +519,6 @@ describe("PluggableHeadline", () => {
                 ]);
             });
 
-            // tslint:disable-next-line:max-line-length
             it("should place measures to primary and secondary buckets when source buckets contains one measure each", async () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
@@ -553,7 +546,6 @@ describe("PluggableHeadline", () => {
                 ]);
             });
 
-            // tslint:disable-next-line:max-line-length
             it("should place first two measures to primary and secondary buckets when first source buckets contains more measures", async () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
@@ -584,7 +576,6 @@ describe("PluggableHeadline", () => {
                 ]);
             });
 
-            // tslint:disable-next-line:max-line-length
             it("should place measures to primary and secondary buckets when second source bucket contains 2 measures", async () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
@@ -615,7 +606,6 @@ describe("PluggableHeadline", () => {
                 ]);
             });
 
-            // tslint:disable-next-line:max-line-length
             it("should place first two measures to primary and secondary buckets when second source bucket contains 3 measures", async () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
@@ -649,7 +639,6 @@ describe("PluggableHeadline", () => {
         });
 
         describe("mixed known and unknown buckets", () => {
-            // tslint:disable-next-line:max-line-length
             it("should put measures to primary and secondary buckets when one measure is in known and second in unknown bucket", async () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
@@ -681,7 +670,6 @@ describe("PluggableHeadline", () => {
                 ]);
             });
 
-            // tslint:disable-next-line:max-line-length
             it("should put measures to primary and secondary buckets when both measures are in known bucket, but empty unknown also present", async () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
@@ -852,7 +840,6 @@ describe("PluggableHeadline", () => {
                     });
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should place new derived bucket items before the master measure in the secondary bucket", async () => {
                     const headline = createComponent();
                     const referencePointWithDerivedItems = await headline.addNewDerivedBucketItems(
@@ -935,7 +922,6 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should put derived to primary and master to secondary bucket if both were in measures bucket", async () => {
                     const headline = createComponent();
                     const referencePoint = createReferencePointWithDateFilter([
@@ -961,7 +947,6 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should put derived to primary and master to secondary bucket if both were in secondary measures bucket", async () => {
                     const headline = createComponent();
                     const referencePoint = createReferencePointWithDateFilter([
@@ -991,7 +976,6 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should pick first derived and its master as primary and secondary measure when multiple measures present in measures bucket", async () => {
                     const headline = createComponent();
                     const referencePoint = createReferencePointWithDateFilter([
@@ -1019,7 +1003,6 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should pick first master and its derived as primary and secondary measure when multiple measures present in measures bucket", async () => {
                     const headline = createComponent();
                     const referencePoint = createReferencePointWithDateFilter([
@@ -1047,7 +1030,6 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should pick first master and its derived as primary and secondary measure when multiple measures present in measures and secondary measures bucket", async () => {
                     const headline = createComponent();
                     const referencePoint = createReferencePointWithDateFilter([
@@ -1077,7 +1059,6 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should pick first derived and its master as primary and secondary measure when multiple measures present in measures and secondary measures bucket", async () => {
                     const headline = createComponent();
                     const referencePoint = createReferencePointWithDateFilter([
@@ -1107,7 +1088,6 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should pick first master and its derived as primary and secondary measures when multiple master are in measures and multiple derived are in secondary measures bucket", async () => {
                     const headline = createComponent();
                     const referencePoint = createReferencePointWithDateFilter([
@@ -1140,7 +1120,6 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should pick first derived and its master as primary and secondary measures when multiple derived are in measures and multiple master are in secondary measures bucket", async () => {
                     const headline = createComponent();
                     const referencePoint = createReferencePointWithDateFilter([
@@ -1175,7 +1154,6 @@ describe("PluggableHeadline", () => {
             });
 
             describe("mixed known and unknown buckets", () => {
-                // tslint:disable-next-line:max-line-length
                 it("should remove derived measures when viewBy date is present but global date filter is missing", async () => {
                     const bucketsWithViewBy: IBucketOfFun[] = [
                         {
@@ -1216,7 +1194,6 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should use first master and its derived as primary and secondary measures when master found in known and derived in unknown bucket", async () => {
                     const headline = createComponent();
                     const referencePoint = createReferencePointWithDateFilter([
@@ -1249,7 +1226,6 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
 
-                // tslint:disable-next-line:max-line-length
                 it("should use first master and its derived as primary and secondary measures when found in unknown buckets", async () => {
                     const headline = createComponent();
                     const referencePoint = createReferencePointWithDateFilter([

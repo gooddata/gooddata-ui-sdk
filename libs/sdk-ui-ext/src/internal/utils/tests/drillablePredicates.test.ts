@@ -164,7 +164,6 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(composedFromIdentifierSpy).toBeCalledWith("bar");
     });
 
-    // tslint:disable-next-line:max-line-length
     it("should return deduplicated predicates when composed uris and identifiers provided", async () => {
         const data: IDrillableItemsCommandBody = {
             identifiers: [],

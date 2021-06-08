@@ -142,7 +142,6 @@ describe("headlineBucketHelper", () => {
             ]);
         });
 
-        // tslint:disable-next-line:max-line-length
         it("should map buckets when source bucket contains one measure in first bucket and several empty buckets", () => {
             const buckets = [
                 {
@@ -173,7 +172,6 @@ describe("headlineBucketHelper", () => {
             ]);
         });
 
-        // tslint:disable-next-line:max-line-length
         it("should map buckets when source buckets has different name and one has master and other has derived measure", () => {
             const buckets = [
                 {
@@ -285,7 +283,6 @@ describe("headlineBucketHelper", () => {
             expect(newReferencePoint).toEqual(null);
         });
 
-        // tslint:disable-next-line:max-line-length
         it("should not map buckets since first and second buckets are empty and some measure is present in third bucket", () => {
             const buckets = [
                 {
