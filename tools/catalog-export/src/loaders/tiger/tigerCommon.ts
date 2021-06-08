@@ -3,8 +3,10 @@ import {
     JsonApiDatasetOut,
     JsonApiLabelOut,
     JsonApiAttributeOutRelationships,
-    JsonApiLinkage,
+    JsonApiLabelLinkage,
+    DatasetReferenceIdentifier,
     JsonApiAttributeOutWithLinks,
+    JsonApiDatasetToOneLinkage,
 } from "@gooddata/api-client-tiger";
 import keyBy from "lodash/keyBy";
 import { Attribute, DisplayForm } from "../../base/types";
@@ -19,7 +21,7 @@ export function createLabelMap(included: any[] | undefined): LabelMap {
 
     const labels: JsonApiLabelOut[] = included
         .map((include) => {
-            if ((include as JsonApiLinkage).type !== "label") {
+            if ((include as JsonApiLabelLinkage).type !== "label") {
                 return null;
             }
 
@@ -37,7 +39,7 @@ export function createDatasetMap(included: any[] | undefined): DatasetMap {
 
     const datasets: JsonApiDatasetOut[] = included
         .map((include) => {
-            if ((include as JsonApiLinkage).type !== "dataset") {
+            if ((include as DatasetReferenceIdentifier).type !== "dataset") {
                 return null;
             }
 
@@ -56,8 +58,8 @@ export function getReferencedDataset(
         return;
     }
 
-    const datasetsRef: JsonApiLinkage = (relationships as JsonApiAttributeOutRelationships)?.dataset
-        ?.data as JsonApiLinkage;
+    const datasetsRef: JsonApiDatasetToOneLinkage = (relationships as JsonApiAttributeOutRelationships)
+        ?.dataset?.data as JsonApiDatasetToOneLinkage;
 
     if (!datasetsRef) {
         return;
@@ -67,7 +69,7 @@ export function getReferencedDataset(
 }
 
 export function convertLabels(attribute: JsonApiAttributeOutWithLinks, labelsMap: LabelMap): DisplayForm[] {
-    const labelsRefs = attribute.relationships?.labels?.data as JsonApiLinkage[];
+    const labelsRefs = attribute.relationships?.labels?.data as JsonApiLabelLinkage[];
     return labelsRefs
         .map((ref) => {
             const label = labelsMap[ref.id];
