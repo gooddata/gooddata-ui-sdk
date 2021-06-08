@@ -1212,6 +1212,7 @@ export interface ISettings {
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
     disableKpiDashboardHeadlineUnderline?: boolean;
+    enableAlternativeDisplayFormSelection?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;
     enableCustomColorPicker?: boolean;
