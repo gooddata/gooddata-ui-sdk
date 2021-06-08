@@ -10,7 +10,7 @@ import {
     JsonApiLabelOutDocument,
     JsonApiLabelOutWithLinks,
     JsonApiLabelOutWithLinksTypeEnum,
-    JsonApiLinkage,
+    JsonApiLabelLinkage,
     JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import keyBy from "lodash/keyBy";
@@ -68,7 +68,7 @@ function convertAttributeLabels(
     attribute: JsonApiAttributeOut | JsonApiAttributeOutWithLinks,
     labelsMap: Record<string, JsonApiLabelOutWithLinks>,
 ): IAttributeDisplayFormMetadataObject[] {
-    const labelsRefs = attribute.relationships?.labels?.data as JsonApiLinkage[];
+    const labelsRefs = attribute.relationships?.labels?.data as JsonApiLabelLinkage[];
 
     return labelsRefs
         .map((ref) => {
