@@ -298,22 +298,25 @@ export class PluggableAreaChart extends PluggableBaseChart {
             const isNextAttributeDate = isDateBucketItem(nextAttribute);
 
             if (masterMeasures.length <= 1 && nextAttribute && isNextAttributeDate) {
+                // put date attribute to stacks
                 stacks = [nextAttribute];
-            } else {
+            } else if (masterMeasures.length <= 1 && nextAttribute) {
+                // put non-date attribute to views
                 views = [...views, nextAttribute];
+                stacks = [];
+            } else {
                 stacks = [];
             }
         } else {
             // todo: check master measure and measure (unify them)
-            const isAllowMoreThanOneViewByAttribute = !stacks.length && measures.length <= 1;
-            if (isAllowMoreThanOneViewByAttribute) {
-                views = getAllCategoriesAttributeItems(buckets).slice(0, MAX_VIEW_COUNT);
+            if (masterMeasures.length <= 1 && allAttributes.length > 0 && !stacks.length) {
+                views = allAttributes.slice(0, MAX_VIEW_COUNT);
+            } else if (masterMeasures.length <= 1 && allAttributes.length) {
+                // have stacks, cut only one attribute in view
+                views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
             } else {
                 views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
-            }
-
-            if (masterMeasures.length <= 1 && views.length <= 1 && !stacks.length) {
-                stacks = allAttributes.slice(1, 2);
+                stacks = [];
             }
         }
 
