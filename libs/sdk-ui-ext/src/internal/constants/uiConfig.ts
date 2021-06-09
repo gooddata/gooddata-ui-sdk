@@ -304,6 +304,34 @@ export const DEFAULT_AREA_UICONFIG: IUiConfig = {
     },
 };
 
+export const AREA_UICONFIG_WITH_MULTIPLE_DATES: IUiConfig = {
+    buckets: {
+        measures: {
+            ...measuresBase,
+        },
+        view: {
+            ...viewBase,
+            allowsReordering: true,
+            itemsLimit: MAX_VIEW_COUNT,
+            allowsDuplicateDates: true,
+        },
+        stack: {
+            ...stackBaseWithDate,
+            itemsLimitByType: {
+                date: 1,
+            },
+            allowsDuplicateDates: true,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
+    ...enabledOpenAsReportConfig,
+    optionalStacking: {
+        supported: true,
+        stackMeasures: true,
+    },
+};
+
 export const DEFAULT_PIE_UICONFIG: IUiConfig = {
     buckets: {
         measures: {

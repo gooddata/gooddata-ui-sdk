@@ -9,7 +9,12 @@ import {
     AREA_CHART_SUPPORTED_PROPERTIES,
     OPTIONAL_STACKING_PROPERTIES,
 } from "../../../constants/supportedProperties";
-import { DEFAULT_AREA_UICONFIG, MAX_STACKS_COUNT, MAX_VIEW_COUNT } from "../../../constants/uiConfig";
+import {
+    AREA_UICONFIG_WITH_MULTIPLE_DATES,
+    DEFAULT_AREA_UICONFIG,
+    MAX_STACKS_COUNT,
+    MAX_VIEW_COUNT,
+} from "../../../constants/uiConfig";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -36,6 +41,9 @@ import {
     removeAllDerivedMeasures,
     sanitizeFilters,
     getMainDateItem,
+    getMeasureItems,
+    filterOutDerivedMeasures,
+    getFistDateItem,
 } from "../../../utils/bucketHelper";
 import {
     getReferencePointWithSupportedProperties,
@@ -66,7 +74,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     public getUiConfig(): IUiConfig {
-        return cloneDeep(DEFAULT_AREA_UICONFIG);
+        return cloneDeep(
+            this.isMultipleDatesEnabled() ? AREA_UICONFIG_WITH_MULTIPLE_DATES : DEFAULT_AREA_UICONFIG,
+        );
     }
 
     protected updateInstanceProperties(
@@ -111,7 +121,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
-        const { measures, views, stacks } = this.getBucketItems(extendedReferencePoint);
+        const { measures, views, stacks } = this.isMultipleDatesEnabled()
+            ? this.getBucketItemsWithMultipleDates(extendedReferencePoint)
+            : this.getBucketItems(extendedReferencePoint);
 
         set(extendedReferencePoint, BUCKETS, [
             {
@@ -223,6 +235,85 @@ export class PluggableAreaChart extends PluggableBaseChart {
             views = numOfAttributes > 1 ? [mainDateItem, ...extraViewItems] : [mainDateItem];
             if (!isAllowMoreThanOneViewByAttribute && measures.length <= 1) {
                 stacks = allAttributes.slice(0, MAX_STACKS_COUNT);
+            }
+        }
+
+        return {
+            measures,
+            views,
+            stacks,
+        };
+    }
+
+    private getBucketItemsWithMultipleDates(referencePoint: IReferencePoint) {
+        // const buckets = referencePoint?.buckets ?? [];
+        // const measures = getFilteredMeasuresForStackedCharts(buckets);
+        // const [mainDateItem] = getDateItems(buckets);
+        //
+        // let stacks: IBucketItem[] = this.filterStackItems(getStackItems(buckets));
+        // const isAllowMoreThanOneViewByAttribute = !stacks.length && measures.length <= 1;
+        // const numOfAttributes = isAllowMoreThanOneViewByAttribute ? MAX_VIEW_COUNT : 1;
+        // let views: IBucketItem[] = removeDivergentDateItems(
+        //     getAllCategoriesAttributeItems(buckets),
+        //     mainDateItem,
+        // ).slice(0, numOfAttributes);
+        // const hasDateItemInViewByBucket = views.some(isDateBucketItem);
+        //
+        // if (mainDateItem && !hasDateItemInViewByBucket) {
+        //     const allAttributes = this.getAllAttributesWithoutDate(buckets);
+        //     const extraViewItems = allAttributes.slice(0, numOfAttributes - 1);
+        //     views = numOfAttributes > 1 ? [mainDateItem, ...extraViewItems] : [mainDateItem];
+        //     if (!isAllowMoreThanOneViewByAttribute && measures.length <= 1) {
+        //         stacks = allAttributes.slice(0, MAX_STACKS_COUNT);
+        //     }
+        // }
+        //
+        // return {
+        //     measures,
+        //     views,
+        //     stacks,
+        // };
+
+        const buckets = referencePoint?.buckets ?? [];
+        const measures = getMeasureItems(buckets);
+        const masterMeasures = filterOutDerivedMeasures(measures);
+
+        let views: IBucketItem[] = [];
+        let stacks: IBucketItem[] = getStackItems(buckets);
+        const allAttributes = getAllAttributeItemsWithPreference(buckets, [
+            BucketNames.LOCATION,
+            BucketNames.TREND,
+            BucketNames.VIEW,
+            BucketNames.ATTRIBUTES,
+            BucketNames.SEGMENT,
+            BucketNames.STACK,
+            BucketNames.COLUMNS,
+        ]);
+
+        const firstDate = getFistDateItem(buckets);
+
+        if (firstDate) {
+            views = [firstDate];
+            const [nextAttribute] = allAttributes.filter((attr) => attr !== firstDate);
+            const isNextAttributeDate = isDateBucketItem(nextAttribute);
+
+            if (masterMeasures.length <= 1 && nextAttribute && isNextAttributeDate) {
+                stacks = [nextAttribute];
+            } else {
+                views = [...views, nextAttribute];
+                stacks = [];
+            }
+        } else {
+            // todo: check master measure and measure (unify them)
+            const isAllowMoreThanOneViewByAttribute = !stacks.length && measures.length <= 1;
+            if (isAllowMoreThanOneViewByAttribute) {
+                views = getAllCategoriesAttributeItems(buckets).slice(0, MAX_VIEW_COUNT);
+            } else {
+                views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
+            }
+
+            if (masterMeasures.length <= 1 && views.length <= 1 && !stacks.length) {
+                stacks = allAttributes.slice(1, 2);
             }
         }
 
