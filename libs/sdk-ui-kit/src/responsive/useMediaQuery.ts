@@ -31,7 +31,7 @@ export const useMediaQuery = (mediaQueryName: keyof IMediaQueries): boolean => {
 
     const smallRange: IMediaQueryRange = {
         lower: 0,
-        upper: breakpoints.xs,
+        upper: breakpoints.sm,
     };
 
     const mediumRange: IMediaQueryRange = {
@@ -54,12 +54,6 @@ export const useMediaQuery = (mediaQueryName: keyof IMediaQueries): boolean => {
         upper: breakpoints.xxl,
     };
 
-    const mobileRange = smallRange;
-    const notMobileRange: IMediaQueryRange = {
-        lower: mediumRange.lower,
-        upper: xxlargeRange.upper,
-    };
-
     const desktopRange: IMediaQueryRange = {
         lower: xlargeRange.lower,
         upper: xxlargeRange.upper,
@@ -69,13 +63,14 @@ export const useMediaQuery = (mediaQueryName: keyof IMediaQueries): boolean => {
         upper: largeRange.upper,
     };
 
-    const smallAndMediumRange: IMediaQueryRange = {
-        lower: 0,
-        upper: breakpoints.sm,
+    const mobileRange = smallRange;
+    const notMobileRange: IMediaQueryRange = {
+        lower: mediumRange.lower,
+        upper: xxlargeRange.upper,
     };
 
     const mediaQueries: IMediaQueries = {
-        "<sm": getQueryMatching(smallAndMediumRange),
+        "<sm": getQueryMatching(smallRange),
         ">=sm": getQueryMatchingOrGreater(smallRange),
         sm: getQueryMatching(smallRange),
         ">=md": getQueryMatchingOrGreater(mediumRange),
