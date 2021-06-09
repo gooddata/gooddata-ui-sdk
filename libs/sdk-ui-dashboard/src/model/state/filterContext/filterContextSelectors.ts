@@ -56,9 +56,10 @@ export const selectFilterContextAttributeFilters = createSelector(
  *
  * @internal
  */
-export const selectFilterContextDateFilter = createSelector(selectFilterContextFilters, (filters):
-    | IDashboardDateFilter
-    | undefined => filters.find(isDashboardDateFilter));
+export const selectFilterContextDateFilter = createSelector(
+    selectFilterContextFilters,
+    (filters): IDashboardDateFilter | undefined => filters.find(isDashboardDateFilter),
+);
 
 /**
  * Creates a selector for selecting attribute filter by its displayForm {@link @gooddata/sdk-model#ObjRef}.

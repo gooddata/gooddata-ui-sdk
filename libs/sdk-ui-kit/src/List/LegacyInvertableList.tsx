@@ -101,8 +101,9 @@ export class LegacyInvertableList<T> extends Component<
         isLoading: false,
         isLoadingClass: LoadingMessage,
         isMobile: false,
-        limitHitWarningClass:
-            injectIntl<"intl", ILimitHitWarningProps & WrappedComponentProps>(LimitHitWarning),
+        limitHitWarningClass: injectIntl<"intl", ILimitHitWarningProps & WrappedComponentProps>(
+            LimitHitWarning,
+        ),
         listItemClass: LegacyMultiSelectListItem,
         noItemsFound: false,
         noItemsFoundClass: injectIntl(NoItemsFound),
