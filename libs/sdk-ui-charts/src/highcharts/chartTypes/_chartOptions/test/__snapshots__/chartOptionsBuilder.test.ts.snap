@@ -226,3 +226,517 @@ Array [
   ],
 ]
 `;
+
+exports[`chartOptionsBuilder getSeries in use case of bubble should fill X, Y and Z with valid values when measure buckets are not empty 1`] = `
+Array [
+  Object {
+    "color": "rgb(20,178,226)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 33,
+        "z": 2424413.8,
+      },
+    ],
+    "legendIndex": 0,
+    "name": "Adam Bradley",
+    "seriesIndex": 0,
+  },
+  Object {
+    "color": "rgb(0,193,141)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 29,
+        "z": 1963436.86,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Alejandro Vabiano",
+    "seriesIndex": 1,
+  },
+  Object {
+    "color": "rgb(229,77,66)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 35,
+        "z": 2100205.16,
+      },
+    ],
+    "legendIndex": 2,
+    "name": "Alexsandr Fyodr",
+    "seriesIndex": 2,
+  },
+  Object {
+    "color": "rgb(241,134,0)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 30,
+        "z": 2364179.19,
+      },
+    ],
+    "legendIndex": 3,
+    "name": "Cory Owens",
+    "seriesIndex": 3,
+  },
+  Object {
+    "color": "rgb(171,85,163)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 30,
+        "z": 1776567.88,
+      },
+    ],
+    "legendIndex": 4,
+    "name": "Dale Perdadtin",
+    "seriesIndex": 4,
+  },
+  Object {
+    "color": "rgb(244,213,33)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 35,
+        "z": 2615259.07,
+      },
+    ],
+    "legendIndex": 5,
+    "name": "Dave Bostadt",
+    "seriesIndex": 5,
+  },
+  Object {
+    "color": "rgb(148,161,174)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 29,
+        "z": 1471667.02,
+      },
+    ],
+    "legendIndex": 6,
+    "name": "Ellen Jones",
+    "seriesIndex": 6,
+  },
+  Object {
+    "color": "rgb(107,191,216)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 31,
+        "z": 2161030.33,
+      },
+    ],
+    "legendIndex": 7,
+    "name": "Huey Jonas",
+    "seriesIndex": 7,
+  },
+  Object {
+    "color": "rgb(181,136,177)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 32,
+        "z": 2280481.04,
+      },
+    ],
+    "legendIndex": 8,
+    "name": "Jessica Traven",
+    "seriesIndex": 8,
+  },
+  Object {
+    "color": "rgb(238,135,128)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 26,
+        "z": 1769560.54,
+      },
+    ],
+    "legendIndex": 9,
+    "name": "John Jovi",
+    "seriesIndex": 9,
+  },
+  Object {
+    "color": "rgb(241,171,84)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 42,
+        "z": 2346482.16,
+      },
+    ],
+    "legendIndex": 10,
+    "name": "Jon Jons",
+    "seriesIndex": 10,
+  },
+  Object {
+    "color": "rgb(133,209,188)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 30,
+        "z": 1705084.84,
+      },
+    ],
+    "legendIndex": 11,
+    "name": "Lea Forbes",
+    "seriesIndex": 11,
+  },
+  Object {
+    "color": "rgb(41,117,170)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 30,
+        "z": 2345090.98,
+      },
+    ],
+    "legendIndex": 12,
+    "name": "Monique Babonas",
+    "seriesIndex": 12,
+  },
+  Object {
+    "color": "rgb(4,140,103)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 64,
+        "z": 131675.42,
+      },
+    ],
+    "legendIndex": 13,
+    "name": "Paul Gomez",
+    "seriesIndex": 13,
+  },
+  Object {
+    "color": "rgb(181,60,51)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 88,
+        "z": 1668600.86,
+      },
+    ],
+    "legendIndex": 14,
+    "name": "Paul Jacobs",
+    "seriesIndex": 14,
+  },
+  Object {
+    "color": "rgb(163,101,46)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 93,
+        "z": 1649882.14,
+      },
+    ],
+    "legendIndex": 15,
+    "name": "Ravi Deetri",
+    "seriesIndex": 15,
+  },
+  Object {
+    "color": "rgb(140,57,132)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 70,
+        "z": 1229206.9,
+      },
+    ],
+    "legendIndex": 16,
+    "name": "Thomas Gones",
+    "seriesIndex": 16,
+  },
+  Object {
+    "color": "rgb(136,219,244)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 71,
+        "z": 457045.18,
+      },
+    ],
+    "legendIndex": 17,
+    "name": "Tom Stickler",
+    "seriesIndex": 17,
+  },
+  Object {
+    "color": "rgb(189,234,222)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 60,
+        "z": 801178.61,
+      },
+    ],
+    "legendIndex": 18,
+    "name": "Trevor Deegan",
+    "seriesIndex": 18,
+  },
+  Object {
+    "color": "rgb(239,197,194)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 0,
+        "y": 60,
+        "z": 1065164.57,
+      },
+    ],
+    "legendIndex": 19,
+    "name": "Victor Crushetz",
+    "seriesIndex": 19,
+  },
+]
+`;
+
+exports[`chartOptionsBuilder getSeries in use case of bubble should update seriesIndex correctly when one of X, Y or Z has null data 1`] = `
+Array [
+  Object {
+    "color": "rgb(20,178,226)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 546,
+        "y": 30,
+        "z": 1776567.88,
+      },
+    ],
+    "legendIndex": 0,
+    "name": "Dale Perdadtin",
+    "seriesIndex": 4,
+  },
+  Object {
+    "color": "rgb(0,193,141)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 12,
+        "y": 35,
+        "z": 2615259.07,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Dave Bostadt",
+    "seriesIndex": 5,
+  },
+  Object {
+    "color": "rgb(229,77,66)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 199,
+        "y": 29,
+        "z": 1471667.02,
+      },
+    ],
+    "legendIndex": 2,
+    "name": "Ellen Jones",
+    "seriesIndex": 6,
+  },
+  Object {
+    "color": "rgb(241,134,0)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 475,
+        "y": 31,
+        "z": 2161030.33,
+      },
+    ],
+    "legendIndex": 3,
+    "name": "Huey Jonas",
+    "seriesIndex": 7,
+  },
+  Object {
+    "color": "rgb(171,85,163)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 245,
+        "y": 32,
+        "z": 2280481.04,
+      },
+    ],
+    "legendIndex": 4,
+    "name": "Jessica Traven",
+    "seriesIndex": 8,
+  },
+  Object {
+    "color": "rgb(244,213,33)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 347,
+        "y": 26,
+        "z": 1769560.54,
+      },
+    ],
+    "legendIndex": 5,
+    "name": "John Jovi",
+    "seriesIndex": 9,
+  },
+  Object {
+    "color": "rgb(148,161,174)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 345,
+        "y": 42,
+        "z": 2346482.16,
+      },
+    ],
+    "legendIndex": 6,
+    "name": "Jon Jons",
+    "seriesIndex": 10,
+  },
+  Object {
+    "color": "rgb(107,191,216)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 34,
+        "y": 30,
+        "z": 1705084.84,
+      },
+    ],
+    "legendIndex": 7,
+    "name": "Lea Forbes",
+    "seriesIndex": 11,
+  },
+  Object {
+    "color": "rgb(181,136,177)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 323,
+        "y": 30,
+        "z": 2345090.98,
+      },
+    ],
+    "legendIndex": 8,
+    "name": "Monique Babonas",
+    "seriesIndex": 12,
+  },
+  Object {
+    "color": "rgb(238,135,128)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 346,
+        "y": 64,
+        "z": 131675.42,
+      },
+    ],
+    "legendIndex": 9,
+    "name": "Paul Gomez",
+    "seriesIndex": 13,
+  },
+  Object {
+    "color": "rgb(241,171,84)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 457,
+        "y": 88,
+        "z": 1668600.86,
+      },
+    ],
+    "legendIndex": 10,
+    "name": "Paul Jacobs",
+    "seriesIndex": 14,
+  },
+  Object {
+    "color": "rgb(133,209,188)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 451,
+        "y": 93,
+        "z": 1649882.14,
+      },
+    ],
+    "legendIndex": 11,
+    "name": "Ravi Deetri",
+    "seriesIndex": 15,
+  },
+  Object {
+    "color": "rgb(41,117,170)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 232,
+        "y": 70,
+        "z": 1229206.9,
+      },
+    ],
+    "legendIndex": 12,
+    "name": "Thomas Gones",
+    "seriesIndex": 16,
+  },
+  Object {
+    "color": "rgb(4,140,103)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 311,
+        "y": 71,
+        "z": 457045.18,
+      },
+    ],
+    "legendIndex": 13,
+    "name": "Tom Stickler",
+    "seriesIndex": 17,
+  },
+  Object {
+    "color": "rgb(181,60,51)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 700,
+        "y": 60,
+        "z": 801178.61,
+      },
+    ],
+    "legendIndex": 14,
+    "name": "Trevor Deegan",
+    "seriesIndex": 18,
+  },
+  Object {
+    "color": "rgb(163,101,46)",
+    "data": Array [
+      Object {
+        "format": "$#,#00.00",
+        "x": 246,
+        "y": 60,
+        "z": 1065164.57,
+      },
+    ],
+    "legendIndex": 15,
+    "name": "Victor Crushetz",
+    "seriesIndex": 19,
+  },
+]
+`;

@@ -1,9 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { parseValue, unwrap } from "../_util/common";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
 import { bucketIsEmpty, IBucket, Identifier } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
-import { IPointData } from "../../typings/unsafe";
+import { IPointData, ISeriesItemConfig } from "../../typings/unsafe";
 import { DataValue, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
@@ -43,7 +43,7 @@ const getSeriesItemData = (
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     seriesIndex: number,
     measureBucketsLocalIdentifiers: Identifier[],
-) =>
+): IPointData =>
     seriesItem.map((pointValue: string) => {
         const value = parseValue(pointValue);
         const isTarget = isTargetSeries(seriesIndex, measureBucketsLocalIdentifiers);
@@ -124,7 +124,7 @@ export function getBulletChartSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     colorStrategy: IColorStrategy,
-): any {
+) {
     const occupiedMeasureBucketsLocalIdentifiers = getOccupiedMeasureBucketsLocalIdentifiers(dv);
     const executionResultData = dv.rawData().twoDimData();
 
@@ -136,11 +136,12 @@ export function getBulletChartSeries(
             occupiedMeasureBucketsLocalIdentifiers,
         );
 
-        const seriesItemConfig: IPointData = {
+        const seriesItemConfig: ISeriesItemConfig = {
             legendIndex: seriesIndex,
             data: seriesItemData,
             name: measureGroup.items[seriesIndex].measureHeaderItem.name,
             color: colorStrategy.getColorByIndex(seriesIndex),
+            seriesIndex,
         };
 
         return getSeries(seriesIndex, seriesItemConfig, occupiedMeasureBucketsLocalIdentifiers);

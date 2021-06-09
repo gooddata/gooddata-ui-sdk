@@ -65,6 +65,7 @@ export function getHeatmapSeries(
                 formatGD: unwrap(measureGroup.items[0]).format,
             },
             legendIndex: 0,
+            seriesIndex: 0,
         },
     ];
 }

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import {
     IMeasureDescriptor,
@@ -161,7 +161,7 @@ export function getTreemapStackedSeries(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
-): any[] {
+) {
     let data = [];
     if (viewByAttribute) {
         data = getTreemapStackedSeriesDataWithViewBy(
@@ -188,6 +188,7 @@ export function getTreemapStackedSeries(
             showInLegend: true,
             data,
             turboThreshold: 0,
+            seriesIndex: 0,
         },
     ];
 }

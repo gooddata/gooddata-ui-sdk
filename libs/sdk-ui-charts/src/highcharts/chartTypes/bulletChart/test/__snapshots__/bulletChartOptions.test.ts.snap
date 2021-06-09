@@ -19,6 +19,7 @@ Array [
     "maxPointWidth": 100,
     "name": "Won",
     "pointPadding": 0.1,
+    "seriesIndex": 0,
     "zIndex": 1,
   },
 ]
@@ -43,6 +44,7 @@ Array [
     "maxPointWidth": 75,
     "name": "Won",
     "pointPadding": 0.2,
+    "seriesIndex": 0,
     "zIndex": 1,
   },
   Object {
@@ -61,6 +63,7 @@ Array [
     "legendIndex": 1,
     "name": "Amount",
     "pointPadding": 0,
+    "seriesIndex": 1,
     "zIndex": 0,
   },
 ]
@@ -85,6 +88,7 @@ Array [
     "maxPointWidth": 75,
     "name": "Won",
     "pointPadding": 0.2,
+    "seriesIndex": 0,
     "zIndex": 1,
   },
   Object {
@@ -104,6 +108,7 @@ Array [
     "legendIndex": 1,
     "name": "Amount",
     "pointPadding": 0,
+    "seriesIndex": 1,
     "targetOptions": Object {
       "width": "100%",
     },
@@ -132,6 +137,7 @@ Array [
     "maxPointWidth": 75,
     "name": "Won",
     "pointPadding": 0.2,
+    "seriesIndex": 0,
     "zIndex": 1,
   },
   Object {
@@ -151,6 +157,7 @@ Array [
     "legendIndex": 1,
     "name": "Amount",
     "pointPadding": 0,
+    "seriesIndex": 1,
     "targetOptions": Object {
       "width": "100%",
     },
@@ -173,6 +180,7 @@ Array [
     "legendIndex": 2,
     "name": "Calculated 'Lost' measure",
     "pointPadding": 0,
+    "seriesIndex": 2,
     "zIndex": 0,
   },
 ]

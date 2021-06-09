@@ -27,6 +27,7 @@ import { IChartOptions, IUnsafeHighchartsTooltipPoint } from "../../../typings/u
 import { MeasureColorStrategy } from "../../_chartColoring/measure";
 import { HeatmapColorStrategy } from "../../heatmap/heatmapColoring";
 import { TreemapColorStrategy } from "../../treemap/treemapColoring";
+import { BubbleChartColorStrategy } from "../../bubbleChart/bubbleChartColoring";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { GRAY, TRANSPARENT } from "../../_util/color";
 import { getHeatmapSeries } from "../../heatmap/heatmapChartSeries";
@@ -747,6 +748,44 @@ describe("chartOptionsBuilder", () => {
             });
         });
 
+        describe("in use case of bubble", () => {
+            const type = "bubble";
+
+            it("should fill X, Y and Z with valid values when measure buckets are not empty", () => {
+                const dv = fixtures.bubbleChartWith2MetricsAndAttributeNoPrimaries;
+                const { measureGroup, stackByAttribute } = getMVS(dv);
+
+                const colorStrategy = new BubbleChartColorStrategy(
+                    DefaultColorPalette,
+                    undefined,
+                    null,
+                    stackByAttribute,
+                    dv,
+                );
+
+                const seriesData = getSeries(dv, measureGroup, null, stackByAttribute, type, colorStrategy);
+
+                expect(seriesData).toMatchSnapshot();
+            });
+
+            it("should update seriesIndex correctly when one of X, Y or Z has null data", () => {
+                const dv = fixtures.bubbleChartWith3MetricsAndAttributeNullsInData;
+                const { measureGroup, stackByAttribute } = getMVS(dv);
+
+                const colorStrategy = new BubbleChartColorStrategy(
+                    DefaultColorPalette,
+                    undefined,
+                    null,
+                    stackByAttribute,
+                    dv,
+                );
+
+                const seriesData = getSeries(dv, measureGroup, null, stackByAttribute, type, colorStrategy);
+
+                expect(seriesData).toMatchSnapshot();
+            });
+        });
+
         /*
          * This is just borderline ridiculous. _ALL_ the tests in this massive file work with recorded data.
          *
@@ -755,7 +794,6 @@ describe("chartOptionsBuilder", () => {
          * I'm not going to waste time with this.
          */
         /*
-        describe("in use case of bubble", () => {
             const dummyBucketItem = {
                 visualizationAttribute: {
                     localIdentifier: "abc",
@@ -821,62 +859,6 @@ describe("chartOptionsBuilder", () => {
                     },
                 },
             ];
-
-            it("should fill X, Y and Z with valid values when measure buckets are not empty", () => {
-                const executionResultData = [[1, 2, 3], [4, 5, 6]];
-
-                const mdObject = {
-                    visualizationClass: { uri: "abc" },
-                    buckets: [
-                        {
-                            localIdentifier: "measures",
-                            items: [dummyBucketItem],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [dummyBucketItem],
-                        },
-                        {
-                            localIdentifier: "tertiary_measures",
-                            items: [dummyBucketItem],
-                        },
-                    ],
-                };
-
-                const expectedSeries = [
-                    {
-                        name: "abc",
-                        color: "rgb(255,0,0)",
-                        legendIndex: 0,
-                        data: [{ x: 1, y: 2, z: 3, format: "#.##x" }],
-                    },
-                    {
-                        name: "def",
-                        color: undefined,
-                        legendIndex: 1,
-                        data: [{ x: 4, y: 5, z: 6, format: "#.##x" }],
-                    },
-                ];
-
-                const colorStrategy = new BubbleChartColorStrategy(
-                    colorPalette,
-                    undefined,
-                    null,
-                    stackByAttribute,
-                    dummyExecutionResponse,
-                    {},
-                );
-
-                const series = getBubbleChartSeries(
-                    executionResultData,
-                    dummyMeasureGroup,
-                    stackByAttribute,
-                    mdObject,
-                    colorStrategy,
-                );
-
-                expect(series).toEqual(expectedSeries);
-            });
 
             it("should fill X and Y with zeroes when X and Y measure buckets are empty", () => {
                 const executionResultData = [[3], [6]];
@@ -3274,6 +3256,7 @@ describe("chartOptionsBuilder", () => {
                             },
                             legendIndex: 0,
                             name: "Amount",
+                            seriesIndex: 0,
                             turboThreshold: 0,
                             yAxis: 0,
                             isDrillable: false,
