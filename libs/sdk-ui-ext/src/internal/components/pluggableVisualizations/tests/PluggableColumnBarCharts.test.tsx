@@ -462,6 +462,49 @@ describe("PluggableColumnBarCharts", () => {
                         ],
                     },
                 ],
+                [
+                    "from table to column chart: multiple measures and date in stack",
+                    referencePointMocks.multipleMeasureAndDateInRowsAndColumReferencePoint,
+                    {
+                        buckets: [
+                            referencePointMocks.multipleMeasureAndDateInRowsAndColumReferencePoint.buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: referencePointMocks.multipleMeasureAndDateInRowsAndColumReferencePoint
+                                    .buckets[1].items,
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: [],
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "Simulate adding pop measure:  With measure and derived measure and two date in view and date in stack",
+                    referencePointMocks.measureWithDerivedAsFirstWithDateInStackRefPoint,
+                    {
+                        buckets: [
+                            {
+                                localIdentifier: "measures",
+                                items: [
+                                    referencePointMocks.measureWithDerivedAsFirstWithDateInStackRefPoint
+                                        .buckets[0].items[1],
+                                ],
+                            },
+                            {
+                                localIdentifier: "view",
+                                items: referencePointMocks.measureWithDerivedAsFirstWithDateInStackRefPoint
+                                    .buckets[1].items,
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: referencePointMocks.measureWithDerivedAsFirstWithDateInStackRefPoint
+                                    .buckets[2].items,
+                            },
+                        ],
+                    },
+                ],
             ];
             it.each(inputs)(
                 "should return correct extended reference (%s)",
