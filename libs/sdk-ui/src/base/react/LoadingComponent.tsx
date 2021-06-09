@@ -1,5 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-import React from "react";
+// (C) 2007-2021 GoodData Corporation
+import React, { CSSProperties } from "react";
 
 /**
  * @public
@@ -40,14 +40,14 @@ export class LoadingComponent extends React.Component<ILoadingProps> {
         const duration = baseAnimationDuration / speed;
         const delay = duration / -5;
 
-        const dotStyles = {
+        const dotStyles: CSSProperties = {
             transformOrigin: "4px 4px",
             animation: `GDC-pop ${duration}s infinite`,
             animationDelay: `${delay * 2}s`,
             fill: color,
         };
 
-        const wrapperStyles = {
+        const wrapperStyles: CSSProperties = {
             textAlign: "center",
             display: inline ? "inline-flex" : "flex",
             verticalAlign: "middle",
@@ -58,31 +58,27 @@ export class LoadingComponent extends React.Component<ILoadingProps> {
             height,
             width,
         };
-        const svgStyles = {
+        const svgStyles: CSSProperties = {
             maxHeight: "100%",
             maxWidth: "100%",
             flex: "0 1 auto",
             width: imageWidth,
             height: imageHeight,
         };
-        const dot1Styles = dotStyles;
-        const dot2Styles = {
+        const dot1Styles: CSSProperties = dotStyles;
+        const dot2Styles: CSSProperties = {
             ...dotStyles,
             transformOrigin: "18px 4px",
             animationDelay: `${delay}s`,
         };
-        const dot3Styles = {
+        const dot3Styles: CSSProperties = {
             ...dotStyles,
             transformOrigin: "32px 4px",
             animationDelay: "0",
         };
 
         return (
-            <div
-                className={className}
-                // this is intentional. Typescript complains about exact matching of css string values to enum.
-                style={wrapperStyles as any}
-            >
+            <div className={className} style={wrapperStyles}>
                 <svg style={svgStyles} version="1.1" x="0px" y="0px" viewBox="0 0 36 8">
                     <style scoped={true}>{`
                         @keyframes GDC-pop {

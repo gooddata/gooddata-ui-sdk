@@ -250,9 +250,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
             <div className="insight-view-container">
                 {resolvedTitle && <TitleComponent title={resolvedTitle} />}
                 {(isDataLoading || isVisualizationLoading) && (
-                    <div className="insight-view-loader">
-                        <LoadingComponent />
-                    </div>
+                    <LoadingComponent className="insight-view-loader" />
                 )}
                 {error && !isDataLoading && (
                     <InsightError error={error} ErrorComponent={this.props.ErrorComponent} />
