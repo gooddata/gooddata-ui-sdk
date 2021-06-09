@@ -15,6 +15,15 @@ import { createElementCountResolver, ScreenshotReadyWrapper } from "../../../_in
 import { AmountMeasurePredicate } from "../../../../scenarios/_infra/predicates";
 
 const backend = StorybookBackend();
+const tableConfig: IPivotTableProps["config"] = {
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+    },
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+    },
+};
 
 const PivotTableTest = (config: Partial<IPivotTableProps> = {}) => (
     <div
@@ -34,16 +43,8 @@ const PivotTableTest = (config: Partial<IPivotTableProps> = {}) => (
             measures={PivotTableWithSingleMeasureAndTwoRowsAndCols.measures}
             rows={PivotTableWithSingleMeasureAndTwoRowsAndCols.rows}
             columns={PivotTableWithSingleMeasureAndTwoRowsAndCols.columns}
-            config={{
-                menu: {
-                    aggregations: true,
-                    aggregationsSubMenu: true,
-                },
-                columnSizing: {
-                    defaultWidth: "viewport",
-                },
-            }}
             onColumnResized={action("columnResized")}
+            config={tableConfig}
             {...config}
         />
     </div>
@@ -84,6 +85,44 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("drill underline style", (
             },
             "empty cell": {
                 hoverSelector: ".s-cell-3-2",
+                postInteractionWait: 1000,
+            },
+        },
+    ),
+);
+
+storiesOf(`${CustomStories}/Pivot Table`, module).add("auto-resizing of all columns", () =>
+    withMultipleScreenshots(
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <PivotTableTest />,
+        </ScreenshotReadyWrapper>,
+        {
+            "initial viewport": {},
+            "scrolled right": {
+                scrollToSelector: ".s-table-measure-column-header-index-9",
+                postInteractionWait: 1000,
+            },
+        },
+    ),
+);
+
+storiesOf(`${CustomStories}/Pivot Table`, module).add("auto-resizing of visible columns", () =>
+    withMultipleScreenshots(
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <PivotTableTest
+                config={{
+                    ...tableConfig,
+                    columnSizing: {
+                        defaultWidth: "viewport",
+                    },
+                }}
+            />
+            ,
+        </ScreenshotReadyWrapper>,
+        {
+            "initial viewport": {},
+            "scrolled right": {
+                scrollToSelector: ".s-table-measure-column-header-index-9",
                 postInteractionWait: 1000,
             },
         },

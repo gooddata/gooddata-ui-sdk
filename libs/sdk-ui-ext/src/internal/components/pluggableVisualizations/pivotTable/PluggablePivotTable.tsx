@@ -491,7 +491,7 @@ export function createPivotTableConfig(
     let columnSizing: Partial<IColumnSizing> = {};
     if (autoSize) {
         columnSizing = {
-            defaultWidth: "viewport",
+            defaultWidth: config.isExportMode ? "viewport" : "autoresizeAll",
         };
     }
     if (growToFit) {

@@ -81,9 +81,6 @@
     "AreaChart.472c7f31bc503ae4a5ca61406edc9826": {
         "comment": "Auto-generated insight for test scenario AreaChart - data labels - auto visibility."
     },
-    "AreaChart.47ac8718522b3c45d27375ae6114fc10": {
-        "comment": "Auto-generated insight for test scenario AreaChart - coloring - custom palette."
-    },
     "AreaChart.48a1821beab9eb4e440b5a5ae5815340": {
         "comment": "Auto-generated insight for test scenario AreaChart - legend position - legend on top."
     },
@@ -380,11 +377,6 @@
     },
     "BarChart.45dc006e5d9474b9bd4b3605ebd5ff1e": {
         "comment": "Auto-generated insight for test scenario BarChart - 650x90 - without x axis labels."
-    },
-    "BarChart.4770f3c99930a2ad9aa6781619f28843": {
-        "comment": "Auto-generated insight for test scenario BarChart - themed with popup legend.",
-        "scenarioName": "themed with popup legend",
-        "visName": "BarChart"
     },
     "BarChart.47e1dc7504aa5ccea58f059fa03d90a3": {
         "comment": "Auto-generated insight for test scenario BarChart - data labels - forced visible and german separators."
@@ -1213,11 +1205,6 @@
     },
     "ColumnChart.4cb4f154acf50903d4a60b0cd22613a0": {
         "comment": "Auto-generated insight for test scenario ColumnChart - dual axis with hidden right Y axis."
-    },
-    "ColumnChart.4dae9618d5e6146ba96491d97ed0a05d": {
-        "comment": "Auto-generated insight for test scenario ColumnChart - arithmetic measures.",
-        "scenarioName": "arithmetic measures",
-        "visName": "ColumnChart"
     },
     "ColumnChart.4e0e56523cb818fafe4fd84f892bd94f": {
         "comment": "Auto-generated insight for test scenario ColumnChart - single axis name customization - invisible."
@@ -2163,9 +2150,6 @@
     "Heatmap.035c68e0082fa6ffe0d0e5a08920afad": {
         "comment": "Auto-generated insight for test scenario Heatmap - assign color to measures."
     },
-    "Heatmap.05d47860ade6287dcb2179cb7b53d8ce": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on left."
-    },
     "Heatmap.0d92e621bf0cff8f0a0d7e941d01c2df": {
         "comment": "Auto-generated insight for test scenario Heatmap - measure and columns.",
         "scenarioName": "measure and columns",
@@ -2176,20 +2160,8 @@
         "scenarioName": "measure, rows and columns",
         "visName": "Heatmap"
     },
-    "Heatmap.1a5ac7249013363b03f2767d6b7bb4c3": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on top."
-    },
-    "Heatmap.1f42f9aff4954bde346ba4025db271d0": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
-    },
-    "Heatmap.212de77f1853ea012c572667c2dc9d23": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
-    },
     "Heatmap.2649e76eb41a09cc82f4240ee46099c9": {
         "comment": "Auto-generated insight for test scenario Heatmap - data labels - forced visible and german separators."
-    },
-    "Heatmap.2a0597255046fabca3b5857884b5cb9f": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on left."
     },
     "Heatmap.2a2d8ea6e07a1ff6fb192121091e1c7e": {
         "comment": "Auto-generated insight for test scenario Heatmap - legend position - legend on top."
@@ -2197,20 +2169,11 @@
     "Heatmap.3137935fdd1bbaa6f1b06c43058f8447": {
         "comment": "Auto-generated insight for test scenario Heatmap - 180x400 - Force position TOP, minimised variant - legend at bottom."
     },
-    "Heatmap.3338112eef4718bb43c490c90e0837b0": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
-    },
-    "Heatmap.36a4bdd68ae0274c11ceb7fc5b52ef5e": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend at bottom."
-    },
     "Heatmap.3785d25a2a1233f5690bc9bb9051e28e": {
         "comment": "Auto-generated insight for test scenario Heatmap - coloring - custom palette."
     },
     "Heatmap.3bacaddc6b5c8cf6eb1dfb98dbef9ec5": {
         "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - auto legend."
-    },
-    "Heatmap.3c1681db9876b995912befc9c99d2513": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x154 - Force position RIGHT - legend on left."
     },
     "Heatmap.40e3c62f627ed32f7cad2a66b1cc230a": {
         "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - invisible."
@@ -2220,37 +2183,13 @@
         "scenarioName": "measure only",
         "visName": "Heatmap"
     },
-    "Heatmap.4ae54e11b3a060e304587a89f9eeb6bf": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
-    },
-    "Heatmap.505ed70b748c93f1d9d42bb1ce7c3ec1": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x154 - Force position RIGHT - auto legend."
-    },
-    "Heatmap.55e063d499e8d4e4f72cebf56d5f771e": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on top."
-    },
-    "Heatmap.5acc4eec26f33f35dcc3fe2ecaacab70": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend at bottom."
-    },
-    "Heatmap.5b17377ba4bcb03ff309eb85a81f6c19": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
-    },
-    "Heatmap.5ce61203603b0ba9b10548f1cb99a19c": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - auto legend."
-    },
     "Heatmap.6826d528772239d85286067634e058c2": {
         "comment": "Auto-generated insight for test scenario Heatmap - legend position - legend at bottom."
-    },
-    "Heatmap.6a2bb657216fc9265517692cdc5ca1d9": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 440x154 - Force position TOP, max 1 row, Gradient legend normal - auto legend."
     },
     "Heatmap.6ac68ac043aad55e3db19d1689f602e7": {
         "comment": "Auto-generated insight for test scenario Heatmap - measure, rows and columns with null data points.",
         "scenarioName": "measure, rows and columns with null data points",
         "visName": "Heatmap"
-    },
-    "Heatmap.71192dc5aa785461bcb587db0fe69079": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
     },
     "Heatmap.75fef34ee9083fc510d4d5bd085f8b45": {
         "comment": "Auto-generated insight for test scenario Heatmap - legend position - legend on right."
@@ -2258,26 +2197,11 @@
     "Heatmap.7654db596ed899eb5729c112b8c8f9b2": {
         "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - middle."
     },
-    "Heatmap.7716238c703720ba331a5cf3a1ed126e": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
-    },
     "Heatmap.796c5a43d0842ef52a14deda5b505836": {
         "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - low."
     },
-    "Heatmap.79b39a9d082e9224bb72ed905a2e8be2": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on right."
-    },
     "Heatmap.7b010e8337b0bba7d873778265f54a0d": {
         "comment": "Auto-generated insight for test scenario Heatmap - data labels - auto visibility."
-    },
-    "Heatmap.7b07d2ce6637c18e3a1a161b4207226d": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
-    },
-    "Heatmap.7b20ab68cf658b55ba13b403f4e56da2": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - auto legend."
-    },
-    "Heatmap.81b6e3debe825a1eba748ddd31c32f18": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x154 - Force position RIGHT - legend on top."
     },
     "Heatmap.86de8be2c848fa2a3197e293c4c6a60a": {
         "comment": "Auto-generated insight for test scenario Heatmap - measure and rows.",
@@ -2290,26 +2214,14 @@
     "Heatmap.93245bbede9d790024b2f5aad922c336": {
         "comment": "Auto-generated insight for test scenario Heatmap - data labels - forced hidden."
     },
-    "Heatmap.95d5f6bd315c7f7fc4ef1e24b1be13cb": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on left."
-    },
     "Heatmap.969476ed922ff045694af9da1a875da6": {
         "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - legend on left."
     },
     "Heatmap.9824ef5804cfab871ba9215ae8884eb9": {
         "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - high."
     },
-    "Heatmap.9939eb3bf62ca218b4daf8e28bdc8574": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
-    },
     "Heatmap.9abe3c0b85046fb6e0c6e09d8899e9d8": {
         "comment": "Auto-generated insight for test scenario Heatmap - legend position - disabled."
-    },
-    "Heatmap.9f282baab7a78f849731cbf736f1191c": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
-    },
-    "Heatmap.a0bf2524ac7af0636f105db8bae99ed4": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend at bottom."
     },
     "Heatmap.a0c1614fad470143e430c56fd0c45267": {
         "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - legend on top."
@@ -2325,40 +2237,16 @@
     "Heatmap.a3070cf4085899df0b02bb9265ccadf2": {
         "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - legend at bottom."
     },
-    "Heatmap.a9d506f7ab82364cc84df26cff8da284": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left."
-    },
     "Heatmap.af6093abd513214ff6645f14f3db3b19": {
         "comment": "Auto-generated insight for test scenario Heatmap - themed with null values.",
         "scenarioName": "themed with null values",
         "visName": "Heatmap"
     },
-    "Heatmap.b2326835c1ae39cfb369fa4431b18d53": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend."
-    },
-    "Heatmap.b6aa1b59c5c1efaa195db7676d0d94ab": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top."
-    },
-    "Heatmap.bbc22916ea2a1a3da7fc111ddf21775c": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on top."
-    },
     "Heatmap.c6c2be21010fed976c107e2a32e2af73": {
         "comment": "Auto-generated insight for test scenario Heatmap - legend position - auto legend."
     },
-    "Heatmap.c76f98c9d07ca64041c2e49c108cbd85": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on right."
-    },
     "Heatmap.cc68ee3158b652e4bc319824183472eb": {
         "comment": "Auto-generated insight for test scenario Heatmap - data labels - forced visible."
-    },
-    "Heatmap.d1cf1c73ecfe91c99264821afa348a41": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x154 - Force position RIGHT - legend at bottom."
-    },
-    "Heatmap.d8aa1f81676788d800fd4678c6c5eab6": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right."
-    },
-    "Heatmap.e45ed81dfe76ee37a332f98574964c74": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x154 - Force position RIGHT - legend on right."
     },
     "Heatmap.e4fccda8ea7173ebd2eaa3ff1d162486": {
         "comment": "Auto-generated insight for test scenario Heatmap - 180x400 - Force position TOP, minimised variant - legend on left."
@@ -2369,29 +2257,8 @@
     "Heatmap.ee51505c9fb1b2676d4f1a480227e7e6": {
         "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - legend on right."
     },
-    "Heatmap.f0a708fb42453ae7103c962a85e610bf": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend at bottom."
-    },
-    "Heatmap.f0e1464fbd67cc86be016374746edabb": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom."
-    },
-    "Heatmap.f10dc98ead2fae4acd08a888f049d5e0": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - auto legend."
-    },
-    "Heatmap.f2fd34c006febdebe16bf5ef0e9f06aa": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on left."
-    },
-    "Heatmap.f58b121c4333269bf2fa058a8648e0c8": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on top."
-    },
     "Heatmap.f5efbdeba1dd7ed8bcdfc2197e5413eb": {
         "comment": "Auto-generated insight for test scenario Heatmap - 180x400 - Force position TOP, minimised variant - auto legend."
-    },
-    "Heatmap.fd17f7cbf408029974f69ac1ee6051ab": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right."
-    },
-    "Heatmap.fea3cd35f3498bfaee2743895f3cdd45": {
-        "comment": "Auto-generated insight for test scenario Heatmap - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on right."
     },
     "Heatmap.ffcd3ac6aceccfc4375f651dcc50da81": {
         "comment": "Auto-generated insight for test scenario Heatmap - 180x400 - Force position TOP, minimised variant - legend on top."
@@ -3101,9 +2968,6 @@
     },
     "PivotTable.c8594723bcb5c2379c569b7bed0bf517": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with attribute and metric column size."
-    },
-    "PivotTable.cb97200a62e20346dd6638cdda573c10": {
-        "comment": "Auto-generated insight for test scenario PivotTable - with autoresizeAll."
     },
     "PivotTable.cbb569e1acdc9d31ee6ff4868045b548": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr sorted by second measure.",

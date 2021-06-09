@@ -27,7 +27,7 @@ function createTestConfigAccessors(dv: DataViewFacade): TableConfigAccessors {
         getGroupRows: () => true,
         getMenuConfig: () => ({}),
         getResizingConfig: () => ({
-            columnAutoresizeEnabled: false,
+            columnAutoresizeOption: "unset",
             growToFit: false,
             clientWidth: 666,
             defaultWidth: 666,

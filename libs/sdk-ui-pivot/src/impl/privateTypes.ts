@@ -2,7 +2,7 @@
 import { IExecutionDefinition, ITotal, TotalType } from "@gooddata/sdk-model";
 import { ColumnWidthItem } from "../columnWidths";
 import { ISeparators } from "@gooddata/numberjs";
-import { ColumnResizedCallback, IMenu } from "../publicTypes";
+import { ColumnResizedCallback, DefaultColumnWidth, IMenu } from "../publicTypes";
 import { DataViewFacade, GoodDataSdkError, ILoadingState, IPushData, OnExportReady } from "@gooddata/sdk-ui";
 import { IScrollPosition } from "./stickyRowHandler";
 import {
@@ -95,7 +95,7 @@ export type TableMethods = TableDataCallbacks &
 export type ColumnResizingConfig = {
     defaultWidth: number;
     growToFit: boolean;
-    columnAutoresizeEnabled: boolean;
+    columnAutoresizeOption: DefaultColumnWidth;
     widths: ColumnWidthItem[] | undefined;
 
     clientWidth: number;

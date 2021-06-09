@@ -22,7 +22,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithSingleColumn,
         config: {
             columnSizing: {
-                defaultWidth: "viewport",
+                defaultWidth: "autoresizeAll",
             },
         },
     })
@@ -32,7 +32,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
             config: {
                 columnSizing: {
-                    defaultWidth: "viewport",
+                    defaultWidth: "autoresizeAll",
                 },
             },
             pageSize: 3,
@@ -43,7 +43,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,
         config: {
             columnSizing: {
-                defaultWidth: "viewport",
+                defaultWidth: "autoresizeAll",
             },
         },
     })
@@ -51,16 +51,8 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,
         config: {
             columnSizing: {
-                defaultWidth: "viewport",
-                growToFit: true,
-            },
-        },
-    })
-    .addScenario("with autoresizeAll", {
-        ...PivotTableWithTwoMeasuresAndSingleRowAttr,
-        config: {
-            columnSizing: {
                 defaultWidth: "autoresizeAll",
+                growToFit: true,
             },
         },
     })
@@ -68,7 +60,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
         config: {
             columnSizing: {
-                defaultWidth: "viewport",
+                defaultWidth: "autoresizeAll",
             },
         },
     })
@@ -76,7 +68,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
         config: {
             columnSizing: {
-                defaultWidth: "viewport",
+                defaultWidth: "autoresizeAll",
                 growToFit: true,
             },
         },

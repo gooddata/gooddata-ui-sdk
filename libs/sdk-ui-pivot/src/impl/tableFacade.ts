@@ -19,6 +19,7 @@ import {
     resizeWeakMeasureColumns,
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
+    isColumnAutoresizeEnabled,
 } from "./resizing/columnSizing";
 import { IResizedColumns, UIClick } from "../columnWidths";
 import { AgGridDatasource, createAgGridDatasource } from "./data/dataSource";
@@ -403,7 +404,10 @@ export class TableFacade {
             // after that we need to reset manually resized columns back to its manually set width by growToFit or by helper. See UT resetColumnsWidthToDefault for width priorities
             if (resizingConfig.growToFit) {
                 this.growToFit(resizingConfig);
-            } else if (resizingConfig.columnAutoresizeEnabled && this.shouldPerformAutoresize()) {
+            } else if (
+                isColumnAutoresizeEnabled(resizingConfig.columnAutoresizeOption) &&
+                this.shouldPerformAutoresize()
+            ) {
                 const columns = this.columnApi!.getAllColumns();
                 this.resetColumnsWidthToDefault(resizingConfig, columns);
             }
@@ -424,7 +428,10 @@ export class TableFacade {
 
         invariant(this.columnApi);
 
-        if (!this.shouldPerformAutoresize() || !resizingConfig.columnAutoresizeEnabled) {
+        if (
+            !this.shouldPerformAutoresize() ||
+            !isColumnAutoresizeEnabled(resizingConfig.columnAutoresizeOption)
+        ) {
             return Promise.resolve();
         }
 
@@ -452,7 +459,7 @@ export class TableFacade {
             gridApi,
             this.columnApi,
             this.currentResult,
-            resizingConfig.containerRef,
+            resizingConfig,
             {
                 measureHeaders: true,
                 padding: 2 * DEFAULT_AUTOSIZE_PADDING + HEADER_CELL_BORDER,
