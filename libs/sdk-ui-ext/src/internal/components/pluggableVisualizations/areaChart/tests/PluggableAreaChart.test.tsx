@@ -2,7 +2,14 @@
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 
-import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
+import {
+    IBucketOfFun,
+    IFilters,
+    IVisProps,
+    IVisConstruct,
+    IReferencePoint,
+    IExtendedReferencePoint,
+} from "../../../../interfaces/Visualization";
 import { PluggableAreaChart } from "../PluggableAreaChart";
 
 import * as testMocks from "../../../../tests/mocks/testMocks";
@@ -23,7 +30,7 @@ import {
 } from "./getInsightWithDrillDownAppliedMock";
 
 describe("PluggableAreaChart", () => {
-    const defaultProps = {
+    const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
         element: "body",
         configPanelElement: null as string,
@@ -120,6 +127,179 @@ describe("PluggableAreaChart", () => {
     });
 
     describe("handling date items", () => {
+        describe("with multiple dates", () => {
+            const inputs: [string, IReferencePoint, Partial<IExtendedReferencePoint>][] = [
+                [
+                    "from table to area chart: date in rows only",
+                    referencePointMocks.dateAsFirstCategoryReferencePoint,
+                    {
+                        buckets: [
+                            referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[1].items.slice(
+                                    0,
+                                    2,
+                                ),
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: [],
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from table to area chart: two identical dates in rows",
+                    referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure,
+                    {
+                        buckets: [
+                            referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(
+                                    1,
+                                    2,
+                                ),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from table to area chart: multiple dates in rows but not first (date should get preference, attribute should be put to view)",
+                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure,
+                    {
+                        buckets: [
+                            referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure
+                                .buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: [
+                                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure
+                                        .buckets[1].items[1],
+                                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure
+                                        .buckets[1].items[0],
+                                ],
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: [],
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from table to area chart: multiple dates in rows but not first, more measures",
+                    referencePointMocks.multipleDatesNotAsFirstReferencePoint,
+                    {
+                        buckets: [
+                            referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
+                                    1,
+                                    2,
+                                ),
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: [],
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from column to area chart: two dates",
+                    referencePointMocks.twoDatesInColumnChart,
+                    {
+                        buckets: [
+                            referencePointMocks.twoDatesInColumnChart.buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: referencePointMocks.twoDatesInColumnChart.buckets[1].items.slice(0, 1),
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: referencePointMocks.twoDatesInColumnChart.buckets[2].items.slice(0, 1),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from column to area chart: three dates",
+                    referencePointMocks.threeDatesInColumnChart,
+                    {
+                        buckets: [
+                            referencePointMocks.threeDatesInColumnChart.buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: referencePointMocks.threeDatesInColumnChart.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: referencePointMocks.threeDatesInColumnChart.buckets[1].items.slice(
+                                    1,
+                                    2,
+                                ),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from column to area chart: first attribute is not date (date should get preference)",
+                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn,
+                    {
+                        buckets: [
+                            referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn
+                                .buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: [
+                                    referencePointMocks
+                                        .multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn
+                                        .buckets[1].items[1],
+                                ],
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: referencePointMocks
+                                    .multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[2]
+                                    .items,
+                            },
+                        ],
+                    },
+                ],
+            ];
+            it.each(inputs)(
+                "should return correct extended reference (%s)",
+                async (
+                    _description,
+                    inputReferencePoint: IReferencePoint,
+                    expectedReferencePoint: Partial<IExtendedReferencePoint>,
+                ) => {
+                    const areaChart = createComponent({
+                        ...defaultProps,
+                        featureFlags: {
+                            enableMultipleDatesDEV: true,
+                        },
+                    });
+
+                    const referencePoint = await areaChart.getExtendedReferencePoint(inputReferencePoint);
+                    expect(referencePoint).toMatchObject(expectedReferencePoint);
+                },
+            );
+        });
+
         it("should allow only one date attribute when comming from stacked chart", async () => {
             const areaChart = createComponent();
             const referencePoint = referencePointMocks.dateAttributeOnViewAndStackReferencePoint;

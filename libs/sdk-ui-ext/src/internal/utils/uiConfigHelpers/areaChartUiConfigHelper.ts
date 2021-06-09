@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
@@ -9,7 +9,7 @@ import { IExtendedReferencePoint, IBucketOfFun, IUiConfig } from "../../interfac
 import { UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 
-import { hasNoStacks, getMasterMeasuresCount } from "../bucketRules";
+import { getMasterMeasuresCount, hasNoStacksWithDate } from "../bucketRules";
 
 import { getItemsCount, setBucketTitles } from "../bucketHelper";
 
@@ -70,7 +70,7 @@ export function setAreaChartUiConfig(
     const buckets = referencePointConfigured?.buckets ?? [];
     const categoriesCount = getItemsCount(buckets, BucketNames.VIEW);
     const measuresCount = getMasterMeasuresCount(buckets, BucketNames.MEASURES);
-    const isStackEmpty = hasNoStacks(buckets);
+    const isStackEmpty = hasNoStacksWithDate(buckets);
     const canAddMeasuresItems = !measuresCount || (categoriesCount <= 1 && isStackEmpty);
     const canAddViewItems = !categoriesCount || (measuresCount <= 1 && isStackEmpty);
     const canAddStackItems = categoriesCount <= 1 && measuresCount <= 1;

@@ -441,7 +441,7 @@ describe("PluggableColumnBarCharts", () => {
                     },
                 ],
                 [
-                    "from chart to column chart: multiple dates in rows but not first",
+                    "from chart to column chart: multiple dates in rows but not first (more measures)",
                     referencePointMocks.multipleDatesNotAsFirstReferencePoint,
                     {
                         buckets: [
@@ -455,7 +455,28 @@ describe("PluggableColumnBarCharts", () => {
                             },
                             {
                                 localIdentifier: "stack",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
+                                items: [],
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from chart to column chart: multiple dates in rows but not first (single measure)",
+                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure,
+                    {
+                        buckets: [
+                            referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure
+                                .buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
+                                    0,
+                                    2,
+                                ),
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
                                     2,
                                 ),
                             },

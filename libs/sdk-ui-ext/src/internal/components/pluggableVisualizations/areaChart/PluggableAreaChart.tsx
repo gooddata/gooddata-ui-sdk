@@ -4,12 +4,17 @@ import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import { render } from "react-dom";
 
-import { BUCKETS } from "../../../constants/bucket";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
 import {
     AREA_CHART_SUPPORTED_PROPERTIES,
     OPTIONAL_STACKING_PROPERTIES,
 } from "../../../constants/supportedProperties";
-import { DEFAULT_AREA_UICONFIG, MAX_STACKS_COUNT, MAX_VIEW_COUNT } from "../../../constants/uiConfig";
+import {
+    AREA_UICONFIG_WITH_MULTIPLE_DATES,
+    DEFAULT_AREA_UICONFIG,
+    MAX_STACKS_COUNT,
+    MAX_VIEW_COUNT,
+} from "../../../constants/uiConfig";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -36,6 +41,9 @@ import {
     removeAllDerivedMeasures,
     sanitizeFilters,
     getMainDateItem,
+    getMeasureItems,
+    filterOutDerivedMeasures,
+    getFistDateItem,
 } from "../../../utils/bucketHelper";
 import {
     getReferencePointWithSupportedProperties,
@@ -66,7 +74,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     public getUiConfig(): IUiConfig {
-        return cloneDeep(DEFAULT_AREA_UICONFIG);
+        return cloneDeep(
+            this.isMultipleDatesEnabled() ? AREA_UICONFIG_WITH_MULTIPLE_DATES : DEFAULT_AREA_UICONFIG,
+        );
     }
 
     protected updateInstanceProperties(
@@ -111,7 +121,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
-        const { measures, views, stacks } = this.getBucketItems(extendedReferencePoint);
+        const { measures, views, stacks } = this.isMultipleDatesEnabled()
+            ? this.getBucketItemsWithMultipleDates(extendedReferencePoint)
+            : this.getBucketItems(extendedReferencePoint);
 
         set(extendedReferencePoint, BUCKETS, [
             {
@@ -223,6 +235,58 @@ export class PluggableAreaChart extends PluggableBaseChart {
             views = numOfAttributes > 1 ? [mainDateItem, ...extraViewItems] : [mainDateItem];
             if (!isAllowMoreThanOneViewByAttribute && measures.length <= 1) {
                 stacks = allAttributes.slice(0, MAX_STACKS_COUNT);
+            }
+        }
+
+        return {
+            measures,
+            views,
+            stacks,
+        };
+    }
+
+    private getBucketItemsWithMultipleDates(referencePoint: IReferencePoint) {
+        const buckets = referencePoint?.buckets ?? [];
+        const measures = getMeasureItems(buckets);
+        const masterMeasures = filterOutDerivedMeasures(measures);
+
+        let views: IBucketItem[] = [];
+        let stacks: IBucketItem[] = getStackItems(buckets, [ATTRIBUTE, DATE]);
+        const allAttributes = getAllAttributeItemsWithPreference(buckets, [
+            BucketNames.LOCATION,
+            BucketNames.TREND,
+            BucketNames.VIEW,
+            BucketNames.ATTRIBUTES,
+            BucketNames.SEGMENT,
+            BucketNames.STACK,
+            BucketNames.COLUMNS,
+        ]);
+
+        const dateItem = getFistDateItem(buckets);
+        if (dateItem) {
+            // first available date is put to views (date has preference)
+            views = [dateItem];
+
+            const [nextAttribute] = allAttributes.filter((attribute) => attribute !== dateItem);
+            const isNextAttributeDate = isDateBucketItem(nextAttribute);
+            if (masterMeasures.length <= 1 && nextAttribute && isNextAttributeDate) {
+                // next attribute is date -> put to stacks
+                stacks = [nextAttribute];
+            } else if (masterMeasures.length <= 1 && nextAttribute && !stacks.length) {
+                // next attribute is not date and stacks are empty -> put to views
+                views = [...views, nextAttribute];
+            }
+        } else {
+            if (masterMeasures.length <= 1 && allAttributes.length > 0 && !stacks.length) {
+                // have more attributes and stacks empty -> fill views
+                views = allAttributes.slice(0, MAX_VIEW_COUNT);
+            } else if (masterMeasures.length <= 1 && allAttributes.length) {
+                // have more attributes and stacks non-empty -> keep only one attribute in view
+                views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
+            } else {
+                // more measures -> prefer measures
+                views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
+                stacks = [];
             }
         }
 
