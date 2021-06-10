@@ -214,7 +214,7 @@ export function isComparisonOverTimeAllowed(
     filters: IFilters,
     weekFiltersEnabled: boolean,
 ): boolean {
-    const rules = weekFiltersEnabled ? [hasNoStacks] : [hasNoStacks, hasNoWeekGranularity];
+    const rules = weekFiltersEnabled ? [hasNoStacksWithDate] : [hasNoStacksWithDate, hasNoWeekGranularity];
 
     return allRulesMet(rules, buckets, filters) && hasGlobalDateFilter(filters);
 }

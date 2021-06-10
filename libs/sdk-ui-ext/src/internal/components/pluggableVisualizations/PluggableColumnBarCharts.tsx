@@ -182,9 +182,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     }
 
     private configureBucketsWithMultipleDates(extendedReferencePoint: IExtendedReferencePoint): void {
-        const buckets = extendedReferencePoint?.buckets ?? [];
-        const measures = getFilteredMeasuresForStackedCharts(buckets);
-        const [views, stacks] = this.getViewByAndStackByBucketItems(extendedReferencePoint);
+        const { measures, views, stacks } = this.getMeasuresViewStackBucketItems(extendedReferencePoint);
 
         set(extendedReferencePoint, BUCKETS, [
             {
@@ -218,8 +216,13 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         );
     }
 
-    private getViewByAndStackByBucketItems(extendedReferencePoint: IExtendedReferencePoint): IBucketItem[][] {
+    private getMeasuresViewStackBucketItems(extendedReferencePoint: IExtendedReferencePoint): {
+        measures: IBucketItem[];
+        views: IBucketItem[];
+        stacks: IBucketItem[];
+    } {
         const buckets = extendedReferencePoint?.buckets ?? [];
+        const measures = getFilteredMeasuresForStackedCharts(buckets);
         const viewByMaxItemCount = this.getViewByMaxItemCount(extendedReferencePoint);
         const stackByMaxItemCount = this.getStackByMaxItemCount(extendedReferencePoint);
         const allAttributesWithoutStacks = getAllCategoriesAttributeItems(buckets);
@@ -245,8 +248,12 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
             }
         }
 
-        const finalStacks = [...stacks, ...possibleStacks].slice(0, stackByMaxItemCount);
-        return [views, finalStacks];
+        if (!stacks.length && measures.length <= 1) {
+            const finalStacks = [...stacks, ...possibleStacks].slice(0, stackByMaxItemCount);
+            return { measures, views, stacks: finalStacks };
+        }
+
+        return { measures, views, stacks };
     }
 
     private getViewByMaxItemCount(extendedReferencePoint: IExtendedReferencePoint): number {

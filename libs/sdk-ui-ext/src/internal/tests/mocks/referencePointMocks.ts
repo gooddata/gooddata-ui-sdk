@@ -859,6 +859,24 @@ export const measureWithDerivedAsFirstWithStackRefPoint: IReferencePoint = {
     filters: samePeriodPrevYearFiltersBucket,
 };
 
+export const measureWithDerivedAsFirstWithDateInStackRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [derivedMeasureItems[0], masterMeasureItems[0]],
+        },
+        {
+            localIdentifier: "view",
+            items: [dateItem, dateItem],
+        },
+        {
+            localIdentifier: "stack",
+            items: [dateItem2],
+        },
+    ],
+    filters: samePeriodPrevYearFiltersBucket,
+};
+
 export const samePeriodPreviousYearAndAttributesRefPoint: IReferencePoint = {
     buckets: [
         {
@@ -1075,7 +1093,7 @@ export const threeDifferentDatesReferencePoint: IReferencePoint = {
     buckets: [
         {
             localIdentifier: "measures",
-            items: masterMeasureItems,
+            items: masterMeasureItems.slice(0, 1),
         },
         {
             localIdentifier: "rows",
@@ -1117,7 +1135,7 @@ export const twoIdenticalDatesInRows: IReferencePoint = {
     buckets: [
         {
             localIdentifier: "measures",
-            items: masterMeasureItems,
+            items: masterMeasureItems.slice(0, 1),
         },
         {
             localIdentifier: "rows",
@@ -1138,7 +1156,7 @@ export const multipleDatesInRowsOnly: IReferencePoint = {
     buckets: [
         {
             localIdentifier: "measures",
-            items: masterMeasureItems,
+            items: masterMeasureItems.slice(0, 1),
         },
         {
             localIdentifier: "rows",
@@ -1180,7 +1198,7 @@ export const multipleDatesNotAsFirstReferencePoint: IReferencePoint = {
     buckets: [
         {
             localIdentifier: "measures",
-            items: masterMeasureItems,
+            items: masterMeasureItems.slice(0, 1),
         },
         {
             localIdentifier: "rows",
@@ -1189,6 +1207,27 @@ export const multipleDatesNotAsFirstReferencePoint: IReferencePoint = {
         {
             localIdentifier: "columns",
             items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const multipleMeasureAndDateInRowsAndColumReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "rows",
+            items: [dateItem],
+        },
+        {
+            localIdentifier: "columns",
+            items: [dateItem2],
         },
     ],
     filters: {
