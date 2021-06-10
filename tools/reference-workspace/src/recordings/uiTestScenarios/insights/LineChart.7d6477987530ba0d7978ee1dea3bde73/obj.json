@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_created.aag81lMifn6q"
+                        }
+                    }
+                ],
+                "localIdentifier": "trend"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_closed.aag81lMifn6q"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            }
+        ],
+        "filters": [],
+        "identifier": "LineChart.7d6477987530ba0d7978ee1dea3bde73",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "LineChart - with one measure and trend by date and segment by date",
+        "uri": "LineChart.7d6477987530ba0d7978ee1dea3bde73",
+        "visualizationUrl": "local:line"
+    }
+}

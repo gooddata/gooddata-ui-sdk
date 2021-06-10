@@ -1,0 +1,69 @@
+[
+    {
+        "n2oMap": { "a_created.aag81lMifn6q": "a_created.aag81lMifn6q", "m_aangOxLSeztu": "m_aangOxLSeztu" },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_created.aag81lMifn6q"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "trend" },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "created.aag81lMifn6q",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_created.aag81lMifn6q"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_created.aag81lMifn6q"] },
+                { "itemIdentifiers": ["measureGroup"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "with one measure and segment by date",
+        "vis": "LineChart"
+    }
+]

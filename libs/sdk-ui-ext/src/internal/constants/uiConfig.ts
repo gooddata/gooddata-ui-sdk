@@ -254,6 +254,33 @@ export const DEFAULT_LINE_UICONFIG: IUiConfig = {
     ],
 };
 
+export const LINE_UICONFIG_WITH_MULTIPLE_DATES: IUiConfig = {
+    buckets: {
+        measures: {
+            ...measuresBase,
+            isShowOnSecondaryAxisVisible: true,
+        },
+        trend: {
+            ...viewBase,
+            allowsDuplicateDates: true,
+        },
+        segment: {
+            ...stackBaseWithDate,
+            itemsLimitByType: {
+                date: 1,
+            },
+            allowsDuplicateDates: true,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
+    ...enabledOpenAsReportConfig,
+    supportedOverTimeComparisonTypes: [
+        OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
+        OverTimeComparisonTypes.PREVIOUS_PERIOD,
+    ],
+};
+
 export const DEFAULT_AREA_UICONFIG: IUiConfig = {
     buckets: {
         measures: {

@@ -581,6 +581,11 @@ export function getDateItems(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAttributeItemsWithoutStacks(buckets).filter(isDateBucketItem);
 }
 
+export function getFistDateItem(buckets: IBucketOfFun[]): IBucketItem | undefined {
+    const dateItems = getDateItems(buckets);
+    return dateItems[0];
+}
+
 export function getMainDateItem(dateItems: IBucketItem[]): IBucketItem {
     // first item for now, can be replaced by item matching the dimension of date filter in future
     return dateItems[0];

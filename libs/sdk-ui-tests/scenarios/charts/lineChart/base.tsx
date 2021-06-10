@@ -39,6 +39,17 @@ export const LineChartWithManyDataPoints = {
     trendBy: ReferenceLdm.Opportunity.Name,
 };
 
+export const LineChartWithSegmentByDate = {
+    measures: [ReferenceLdm.Amount],
+    segmentBy: ReferenceLdm.CreatedYear,
+};
+
+export const LineChartWithTrendByDateAndSegmentByDate = {
+    measures: [ReferenceLdm.Amount],
+    trendBy: ReferenceLdm.CreatedYear,
+    segmentBy: ReferenceLdm.ClosedYear,
+};
+
 export default scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
@@ -68,4 +79,9 @@ export default scenariosFor<ILineChartProps>("LineChart", LineChart)
         trendBy: ReferenceLdm.CreatedQuarterYear,
         segmentBy: ReferenceLdm.Region,
     })
-    .addScenario("arithmetic measures", LineChartWithArithmeticMeasuresAndViewBy);
+    .addScenario("arithmetic measures", LineChartWithArithmeticMeasuresAndViewBy)
+    .addScenario("with one measure and segment by date", LineChartWithSegmentByDate)
+    .addScenario(
+        "with one measure and trend by date and segment by date",
+        LineChartWithTrendByDateAndSegmentByDate,
+    );
