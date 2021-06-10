@@ -13,7 +13,7 @@ import { CatalogItem } from "../fromModel/ldm/catalog";
 import { IMetadataObject } from "../fromModel/ldm/metadata";
 
 /**
- * Additional options for the getVisualizationClasses function.
+ * Additional options for the {@link IWorkspaceInsightsService.getVisualizationClasses} function.
  *
  * @public
  */
@@ -122,14 +122,14 @@ export interface IWorkspaceInsightsService {
 export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag">;
 
 /**
- * List of currently supported types of references that can be retrieved using getReferencedObjects()
+ * List of currently supported types of references that can be retrieved using the {@link IWorkspaceInsightsService.getInsightReferencedObjects} function.
  * @public
  */
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
 
 /**
  * Contains information about objects that may be referenced by an insight. The contents of this object
- * depend on the insight and the types requested at the time of call to getReferencedObjects.
+ * depend on the insight and the types requested at the time of call to the {@link IWorkspaceInsightsService.getInsightReferencedObjects} function.
  *
  * @public
  */
@@ -149,7 +149,7 @@ export interface IInsightReferences {
 
 /**
  * Contains information about objects that may be referencing an insight. The contents of this object
- * depend on reference of the insight requested at the time of call to getObjectsReferencing.
+ * depend on reference of the insight requested at the time of call to the {@link IWorkspaceInsightsService.getInsightReferencingObjects} function.
  *
  * @public
  */

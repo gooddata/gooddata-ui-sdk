@@ -1278,7 +1278,7 @@ export function isMeasureMetadataObject(obj: unknown): obj is IMeasureMetadataOb
 // @public
 export function isMeasureMetadataObjectDefinition(obj: unknown): obj is IMeasureMetadataObjectDefinition;
 
-// @public (undocumented)
+// @public
 export function isMetadataObject(obj: unknown): obj is IMetadataObject;
 
 // @public
@@ -1886,7 +1886,7 @@ export class NotAuthenticated extends AnalyticalBackendError {
     authenticationFlow?: AuthenticationFlow;
 }
 
-// @public (undocumented)
+// @public
 export type NotAuthenticatedHandler = (context: IAuthenticationContext, error: NotAuthenticated) => void;
 
 // @public

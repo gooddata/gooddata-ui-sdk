@@ -71,6 +71,8 @@ export interface IMetadataObjectBase {
 export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIdentity {}
 
 /**
+ * Type guard checking whether input is an instance of {@link IMetadataObject}.
+ *
  * @public
  */
 export function isMetadataObject(obj: unknown): obj is IMetadataObject {

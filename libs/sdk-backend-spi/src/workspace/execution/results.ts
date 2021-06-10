@@ -4,7 +4,7 @@ import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**
- * Single calculated data value. The data value may be 'null' - the semantics here are same as with
+ * Single calculated data value. The data value may be `null` - the semantics here are same as with
  * SQL nulls. The calculated numeric value WILL be returned in string representation - this is to
  * prevent float number precision errors.
  *
@@ -273,7 +273,7 @@ export interface IResultTotalHeader {
  * Result headers provide metadata about data included in the data view. They are integral part of the data view
  * and are organized in per-dimension and per-dimension-item arrays.
  *
- * @remarks see IDataView for further detail on the organization.
+ * @remarks see {@link IDataView} for further detail on the organization.
  *
  * @public
  */

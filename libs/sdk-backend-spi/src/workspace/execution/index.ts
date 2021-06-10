@@ -31,7 +31,7 @@ export interface IExecutionFactory {
      * generated dimensions.
      *
      * @param def - execution definition
-     * @returns new prepareted execution
+     * @returns new prepared execution
      */
     forDefinition(def: IExecutionDefinition): IPreparedExecution;
 
@@ -40,8 +40,7 @@ export interface IExecutionFactory {
      * provided filters.
      *
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
-     * pre-filled dimensions greated using the `defaultDimensionsGenerator` provided by the
-     * `@gooddata/sdk-model` package.
+     * pre-filled dimensions created using the {@link @gooddata/sdk-model#defaultDimensionsGenerator}.
      *
      * @param items - list of attributes and measures, must not be empty
      * @param filters - list of filters, may not be provided
@@ -59,8 +58,7 @@ export interface IExecutionFactory {
      * prepared execution WILL have definition with attributes = [A1, A2, A3] and measures = [M1, M2, M3]
      *
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
-     * pre-filled dimensions greated using the `defaultDimensionsGenerator` provided by the
-     * `@gooddata/sdk-model` package.
+     * pre-filled dimensions created using the {@link @gooddata/sdk-model#defaultDimensionsGenerator}.
      *
      * @param buckets - list of buckets with attributes and measures, must be non empty, must have at least one attr or measure
      * @param filters - optional, may not be provided, may contain null or undefined values which must be ignored
@@ -76,8 +74,7 @@ export interface IExecutionFactory {
      * the insight.
      *
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
-     * pre-filled dimensions greated using the `defaultDimensionsGenerator` provided by the
-     * `@gooddata/sdk-model` package.
+     * pre-filled dimensions greated using the {@link @gooddata/sdk-model#defaultDimensionsGenerator}.
      *
      * @param insightDefinition - insight definition to create execution for, must have buckets which must have some attributes or measures in them
      * @param filters - optional, may not be provided, may contain null or undefined values which must be ignored
@@ -95,8 +92,7 @@ export interface IExecutionFactory {
      * If the backend does not support execution by reference, then it MUST fall back to freeform execution.
      *
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
-     * pre-filled dimensions created using the `defaultDimensionsGenerator` provided by the
-     * `@gooddata/sdk-model` package.
+     * pre-filled dimensions created using the {@link @gooddata/sdk-model#defaultDimensionsGenerator}.
      *
      * @param insight - saved insight
      * @param filters - optional list of filters to merge with filters already defined in the insight, may contain null or undefined values which must be ignored
@@ -262,7 +258,7 @@ export interface IExecutionResult {
  *
  * @remarks
  *
- * See also the `DataViewFacade`. This wrapper on top of this raw IDataView can be used to work
+ * See also the `{@link @gooddata/sdk-ui#DataViewFacade}`. This wrapper on top of this raw IDataView can be used to work
  * with the data in a way more convenient fashion.
  *
  * @public
@@ -326,9 +322,7 @@ export interface IDataView {
     readonly result: IExecutionResult;
 
     /**
-     * Result warnings.
-     *
-     * Backend MAY return warnings to indicate that the result is different compared to what the caller can expect.
+     * Result warnings. Backend MAY return warnings to indicate that the result is different compared to what the caller can expect.
      * For example, the caller executes a definition with particular filter,
      * but the backend determines that the filter has no effect on the computation.
      * Backend runs the execution and communicates by warning that the filter was useless.

@@ -43,9 +43,9 @@ export interface IElementsQueryOptions {
 
 /**
  * Attribute filter limiting the elements. To be able to filter elements, the current attribute
- * and the filter attribute must be connected in the data model. The property "overAttribute" identifies
+ * and the filter attribute must be connected in the data model. The property `overAttribute` identifies
  * the connecting table in the logical data model. For method providing all possible connecting attributes
- * see "getCommonAttributes"
+ * see {@link IWorkspaceAttributesService.getCommonAttributes}.
  *
  * @public
  */
