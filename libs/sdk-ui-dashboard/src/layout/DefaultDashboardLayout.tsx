@@ -23,7 +23,7 @@ import {
     validateDashboardLayoutWidgetSize,
 } from "@gooddata/sdk-ui-ext/esm/internal";
 import { EmptyDashboardError } from "@gooddata/sdk-ui-ext/esm/dashboardView/EmptyDashboardError";
-import { selectInsights, selectLayout, selectSettings, useDashboardSelector } from "../model";
+import { selectInsights, selectSettings, selectBasicLayout, useDashboardSelector } from "../model";
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget";
 import { useDashboardComponentsContext } from "../dashboard/DashboardComponentsContext";
 import { DashboardLayoutProps } from "./types";
@@ -41,7 +41,7 @@ export const DefaultDashboardLayout = ({
     onError,
     ErrorComponent: CustomError,
 }: DashboardLayoutProps): JSX.Element => {
-    const layout = useDashboardSelector(selectLayout);
+    const layout = useDashboardSelector(selectBasicLayout);
     const settings = useDashboardSelector(selectSettings);
     const insights = useDashboardSelector(selectInsights);
     const { ErrorComponent } = useDashboardComponentsContext({ ErrorComponent: CustomError });

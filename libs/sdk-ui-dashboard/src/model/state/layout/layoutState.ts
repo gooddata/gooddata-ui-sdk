@@ -2,13 +2,13 @@
 
 import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
 import { InitialUndoState, UndoEnhancedState } from "../_infra/undoEnhancer";
+import { ExtendedDashboardWidget } from "../../types/layoutTypes";
 
 /**
  * @internal
  */
 export interface LayoutState extends UndoEnhancedState {
-    // TODO: modify definition to use ExtendedDashboardWidget.. this will open editing use-cases
-    layout?: IDashboardLayout;
+    layout?: IDashboardLayout<ExtendedDashboardWidget>;
 }
 
 export const layoutInitialState: LayoutState = {

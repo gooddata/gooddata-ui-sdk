@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { DashboardWidget, IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-backend-spi";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * @internal
@@ -10,11 +11,31 @@ export type KpiPlaceholderWidget = {
 };
 
 /**
+ * Tests whether an object is a {@link KpiPlaceholderWidget}.
+ *
+ * @param obj - object to test
+ * @internal
+ */
+export function isKpiPlaceholderWidget(obj: unknown): obj is KpiPlaceholderWidget {
+    return !isEmpty(obj) && (obj as KpiPlaceholderWidget).type === "kpiPlaceholder";
+}
+
+/**
  * @internal
  */
 export type InsightPlaceholderWidget = {
     readonly type: "insightPlaceholder";
 };
+
+/**
+ * Tests whether an object is a {@link InsightPlaceholderWidget}.
+ *
+ * @param obj - object to test
+ * @internal
+ */
+export function isInsightPlaceholderWidget(obj: unknown): obj is InsightPlaceholderWidget {
+    return !isEmpty(obj) && (obj as InsightPlaceholderWidget).type === "insightPlaceholder";
+}
 
 /**
  * Extension of the default DashboardWidget type to also include view-only widget types for KPI placeholder

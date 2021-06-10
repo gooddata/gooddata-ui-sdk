@@ -1211,7 +1211,7 @@ export type KpiWidgetComparison = {
 // @internal (undocumented)
 export interface LayoutState extends UndoEnhancedState {
     // (undocumented)
-    layout?: IDashboardLayout;
+    layout?: IDashboardLayout<ExtendedDashboardWidget>;
 }
 
 // @internal
@@ -1497,6 +1497,9 @@ export const selectAlerts: (state: DashboardState) => import("@gooddata/sdk-back
 export const selectAttributesWithDrillDown: import("@reduxjs/toolkit").OutputSelector<DashboardState, (import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute)[], (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[]) => (import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute)[]>;
 
 // @internal
+export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>>;
+
+// @internal
 export const selectCanListUsersInProject: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("@gooddata/sdk-backend-spi").IWorkspacePermissions) => boolean>;
 
 // @internal (undocumented)
@@ -1572,7 +1575,7 @@ export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-mo
 export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: Required<import("../..").DashboardConfig>) => boolean>;
 
 // @internal
-export const selectLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>, (res: LayoutState) => import("@gooddata/sdk-backend-spi").IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>>;
+export const selectLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>>;
 
 // @internal
 export const selectLocale: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-ui").ILocale, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-ui").ILocale>;
