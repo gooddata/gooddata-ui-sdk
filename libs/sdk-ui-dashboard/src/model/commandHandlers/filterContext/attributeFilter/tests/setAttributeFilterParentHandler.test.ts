@@ -1,13 +1,14 @@
 // (C) 2021 GoodData Corporation
 import { RecordedBackendConfig, objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 import { loadDashboard, setAttributeFilterParent } from "../../../../commands";
-import { DashboardTester, SimpleDashboardRecording } from "../../../../tests/DashboardTester";
+import { DashboardTester } from "../../../../tests/DashboardTester";
 import { selectFilterContextAttributeFilters } from "../../../../state/filterContext/filterContextSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
+import { SimpleDashboardIdentifier } from "../../../../tests/Dashboard.fixtures";
 
 describe("setAttributeFilterParentHandler", () => {
     async function getInitializedTester(backendConfig?: RecordedBackendConfig): Promise<DashboardTester> {
-        const tester = DashboardTester.forRecording(SimpleDashboardRecording, backendConfig);
+        const tester = DashboardTester.forRecording(SimpleDashboardIdentifier, backendConfig);
 
         tester.dispatch(loadDashboard());
         await tester.waitFor("GDC.DASH/EVT.LOADED");

@@ -1,12 +1,13 @@
 // (C) 2021 GoodData Corporation
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { addAttributeFilter, loadDashboard } from "../../../../commands";
-import { DashboardTester, SimpleDashboardRecording } from "../../../../tests/DashboardTester";
+import { DashboardTester } from "../../../../tests/DashboardTester";
 import { selectFilterContextAttributeFilters } from "../../../../state/filterContext/filterContextSelectors";
+import { SimpleDashboardIdentifier } from "../../../../tests/Dashboard.fixtures";
 
 describe("addAttributeFilterHandler", () => {
     async function getInitializedTester(): Promise<DashboardTester> {
-        const tester = DashboardTester.forRecording(SimpleDashboardRecording);
+        const tester = DashboardTester.forRecording(SimpleDashboardIdentifier);
 
         tester.dispatch(loadDashboard());
         await tester.waitFor("GDC.DASH/EVT.LOADED");

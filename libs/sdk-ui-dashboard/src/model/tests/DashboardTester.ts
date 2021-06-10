@@ -11,8 +11,6 @@ import { Middleware, PayloadAction } from "@reduxjs/toolkit";
 import noop from "lodash/noop";
 import { DashboardCommandType } from "../commands";
 
-export const SimpleDashboardRecording = "aaRaEZRWdRpQ";
-
 type MonitoredAction = {
     calls: number;
     promise: Promise<PayloadAction<any>>;
