@@ -40,8 +40,8 @@ export {
 } from "./state/filterContext/filterContextSelectors";
 
 export { UndoEnhancedState, UndoEntry } from "./state/_infra/undoEnhancer";
-export { LayoutState } from "./state/layout/layoutState";
-export { selectLayout, selectBasicLayout } from "./state/layout/layoutSelectors";
+export { LayoutState, LayoutStash } from "./state/layout/layoutState";
+export { selectLayout, selectStash, selectBasicLayout } from "./state/layout/layoutSelectors";
 export { DateFilterConfigState } from "./state/dateFilterConfig/dateFilterConfigState";
 export {
     selectDateFilterConfigOverrides,

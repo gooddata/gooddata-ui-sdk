@@ -996,7 +996,7 @@ export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, 
 export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget>;
 
 // @internal
-export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardItem>;
+export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @internal
 export type ExtendedDashboardWidget = DashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
@@ -1209,9 +1209,14 @@ export type KpiWidgetComparison = {
 };
 
 // @internal (undocumented)
+export type LayoutStash = Record<string, IDashboardLayoutItem<ExtendedDashboardWidget>[]>;
+
+// @internal (undocumented)
 export interface LayoutState extends UndoEnhancedState {
     // (undocumented)
     layout?: IDashboardLayout<ExtendedDashboardWidget>;
+    // (undocumented)
+    stash: LayoutStash;
 }
 
 // @internal
@@ -1591,6 +1596,9 @@ export const selectSeparators: import("@reduxjs/toolkit").OutputSelector<Dashboa
 
 // @internal
 export const selectSettings: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISettings>;
+
+// @internal
+export const selectStash: import("@reduxjs/toolkit").OutputSelector<DashboardState, Record<string, IDashboardLayoutItem<import("../../types/layoutTypes").ExtendedDashboardWidget>[]>, (res: LayoutState) => Record<string, IDashboardLayoutItem<import("../../types/layoutTypes").ExtendedDashboardWidget>[]>>;
 
 // @internal
 export const selectUser: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IUser, (res: import("./userState").UserState) => import("@gooddata/sdk-backend-spi").IUser>;

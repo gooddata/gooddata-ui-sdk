@@ -12,6 +12,17 @@ const selectSelf = createSelector(
 );
 
 /**
+ * This select returns current layout's stash. This stash can contain items that were removed from the layout with the
+ * intent of further using the item elsewhere on the layout. The stash is a mapping of stashIdentifier to an array
+ * of stashed items. The stash identifiers and stash usage is fully under control of the user.
+ *
+ * @internal
+ */
+export const selectStash = createSelector(selectSelf, (layoutState: LayoutState) => {
+    return layoutState.stash;
+});
+
+/**
  * This selector returns dashboard's layout. It is expected that the selector is called only after the layout state
  * is correctly initialized. Invocations before initialization lead to invariant errors.
  *

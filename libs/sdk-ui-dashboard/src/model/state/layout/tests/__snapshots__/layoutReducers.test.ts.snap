@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`layout slice reducer should correctly handle remove section 1`] = `
+exports[`layout slice reducer should correctly handle remove section and create undo entry 1`] = `
 Object {
   "undoPointer": 0,
   "undoStack": Array [

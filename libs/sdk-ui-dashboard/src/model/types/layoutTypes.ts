@@ -63,6 +63,16 @@ export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget
 export type StashedDashboardItemsId = string;
 
 /**
+ * Tests whether object is an instance of {@link StashedDashboardItemsId};
+ *
+ * @param obj - object to test
+ * @internal
+ */
+export function isStashedDashboardItemsId(obj: unknown): obj is StashedDashboardItemsId {
+    return typeof obj === "string";
+}
+
+/**
  * Definition of items that may be placed into the dashboard sections.
  *
  * @internal
@@ -74,4 +84,4 @@ export type DashboardItemDefinition = ExtendedDashboardItem | StashedDashboardIt
  *
  * @internal
  */
-export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardItem>;
+export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;

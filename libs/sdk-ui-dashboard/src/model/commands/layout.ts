@@ -13,7 +13,8 @@ export interface AddLayoutSection extends IDashboardCommand {
         /**
          * Index where to place the new section
          *
-         * Index is zero-based and for convenience index -1 means place new section at the end
+         * Index is zero-based and for convenience index -1 means place new section at the end. 0 means place new
+         * section at the beginning. Both 0 and -1 and can be used when inserting the first section into and empty layout.
          */
         readonly index: number;
 
