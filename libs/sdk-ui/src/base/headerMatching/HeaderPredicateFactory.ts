@@ -308,6 +308,8 @@ export function composedFromIdentifier(identifier: string): IHeaderPredicate {
 }
 
 /**
+ * Set of factory functions to create the most commonly-used {@link IHeaderPredicate | HeaderPredicates}.
+ *
  * @public
  */
 export const HeaderPredicates = {

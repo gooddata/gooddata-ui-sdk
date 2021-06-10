@@ -122,6 +122,7 @@ const RenderKpi: React.FC<IKpiProps> = (props) => {
 //
 
 /**
+ * Props of the {@link Kpi} component.
  * @public
  */
 export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
@@ -177,7 +178,7 @@ export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
  *
  * Kpi component is useful for instance for embedding data values into text paragraphs.
  *
- * See also the Headline component for a more 'chart-like' variant.
+ * See also the {@link @gooddata/sdk-ui-charts#Headline} component for a more 'chart-like' variant.
  *
  * @public
  */

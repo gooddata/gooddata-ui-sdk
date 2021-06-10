@@ -6,13 +6,13 @@ import { UnexpectedSdkError } from "../errors/GoodDataSdkError";
 import { safeSerialize } from "./safeSerialize";
 
 /**
- * Indicates the current state of the promise inside useCancelablePromise hook
+ * Indicates the current state of the promise inside {@link useCancelablePromise} hook
  * @beta
  */
 export type UseCancelablePromiseStatus = "success" | "error" | "loading" | "pending";
 
 /**
- * Indicates pending state for useCancelablePromise hook
+ * Indicates pending state for {@link useCancelablePromise} hook
  * @beta
  */
 export type UseCancelablePromisePendingState = {
@@ -22,7 +22,7 @@ export type UseCancelablePromisePendingState = {
 };
 
 /**
- * Indicates loading state for useCancelablePromise hook
+ * Indicates loading state for {@link useCancelablePromise} hook
  * @beta
  */
 export type UseCancelablePromiseLoadingState = {
@@ -32,7 +32,7 @@ export type UseCancelablePromiseLoadingState = {
 };
 
 /**
- * Indicates error state for useCancelablePromise hook
+ * Indicates error state for {@link useCancelablePromise} hook
  * @beta
  */
 export type UseCancelablePromiseErrorState<TError> = {
@@ -42,7 +42,7 @@ export type UseCancelablePromiseErrorState<TError> = {
 };
 
 /**
- * Indicates success state for useCancelablePromise hook
+ * Indicates success state for {@link useCancelablePromise} hook
  * @beta
  */
 export type UseCancelablePromiseSuccessState<TResult> = {
@@ -52,7 +52,7 @@ export type UseCancelablePromiseSuccessState<TResult> = {
 };
 
 /**
- * Indicates the current state of useCancelablePromise hook
+ * Indicates the current state of {@link useCancelablePromise} hook
  * @beta
  */
 export type UseCancelablePromiseState<TResult, TError> =
@@ -62,7 +62,7 @@ export type UseCancelablePromiseState<TResult, TError> =
     | UseCancelablePromiseSuccessState<TResult>;
 
 /**
- * Callbacks for useCancelablePromise hook
+ * Callbacks for {@link useCancelablePromise} hook
  * @beta
  */
 export type UseCancelablePromiseCallbacks<TResult, TError> = {

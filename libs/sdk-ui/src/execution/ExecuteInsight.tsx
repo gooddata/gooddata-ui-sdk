@@ -10,6 +10,7 @@ import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces";
 import invariant from "ts-invariant";
 
 /**
+ * Props of the {@link ExecuteInsight} component.
  * @beta
  */
 export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsightProps> {

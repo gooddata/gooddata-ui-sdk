@@ -10,6 +10,7 @@ import { createExecution } from "./createExecution";
 import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces";
 
 /**
+ * Props of the {@link Execute} component.
  * @public
  */
 export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
@@ -80,7 +81,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     componentName?: string;
 
     /**
-     * Specifies whether `Execute` should trigger execution and loading right after it is
+     * Specifies whether {@link Execute} should trigger execution and loading right after it is
      * mounted. If not specified defaults to `true`.
      *
      * If set to `false`, then the {@link WithLoadingResult#reload} function needs to be called
@@ -89,7 +90,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     loadOnMount?: boolean;
 
     /**
-     * Specifies whether `Execute` should load all data from backend or just a particular window - specified by
+     * Specifies whether {@link Execute} should load all data from backend or just a particular window - specified by
      * offset and size of the window.
      *
      * If not specified, all data will be loaded.
@@ -216,12 +217,12 @@ const WrappedExecute = withContexts(
  * with the `DataAccess` infrastructure which exposes the underlying data as data series that can be
  * optionally sliced by additional attributes.
  *
- * Once the executor finishes, the `DataViewFacade.data()` method will expose the data as series and
+ * Once the executor finishes, the {@link DataViewFacade.data} method will expose the data as series and
  * slices according to the specification to the executor.
  * Note that if the resulting data is empty this will NOT throw a NoDataError. It is the responsibility
  * of the child component to handle that if they need to.
  *
- * @remarks see `IDataAccessMethods` for additional documentation
+ * @remarks see {@link IDataAccessMethods} for additional documentation
  * @public
  */
 export const Execute = (props: IExecuteProps) => {

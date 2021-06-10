@@ -103,7 +103,7 @@ export type IUsePlaceholderHook<T extends IPlaceholder<any>> = () => [
 ];
 
 /**
- * React hook to obtain {@link IComposedPlaceholder}  value.
+ * React hook to obtain {@link IComposedPlaceholder} value.
  * @public
  */
 export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any, any>> = (

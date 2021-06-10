@@ -1,6 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 
 /**
+ * Language codes that can be used with GoodData.
+ *
  * @public
  */
 export type ILocale =
@@ -15,6 +17,8 @@ export type ILocale =
     | "zh-Hans";
 
 /**
+ * Default value for {@link ILocale}.
+ *
  * @public
  */
 export const DefaultLocale: ILocale = "en-US";

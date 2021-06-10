@@ -2,6 +2,7 @@
 import React from "react";
 
 /**
+ * Props of the {@link LoadingComponent}.
  * @public
  */
 export interface ILoadingProps {
@@ -18,8 +19,8 @@ export interface ILoadingProps {
 const baseAnimationDuration = 1.4;
 
 /**
- * [LoadingComponent](http://sdk.gooddata.com/gooddata-ui/docs/loading_component.html)
- * is a component that renders a default loading indicator
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/loading_component.html | LoadingComponent }
+ * is a component that renders a default loading indicator.
  *
  * @public
  */

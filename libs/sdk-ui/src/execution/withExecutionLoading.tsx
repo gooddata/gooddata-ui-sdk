@@ -16,6 +16,7 @@ import {
 } from "../base";
 
 /**
+ * Structure specifying a particular portion of data.
  * @public
  */
 export type DataViewWindow = {

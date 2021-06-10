@@ -7,6 +7,7 @@ import isEqual from "lodash/isEqual";
 import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces";
 
 /**
+ * Props of the {@link RawExecute} component.
  * @public
  */
 export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
@@ -16,7 +17,7 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     execution: IPreparedExecution;
 
     /**
-     * Specifies whether `RawExecute` should load all data from backend or just a particular window - specified by
+     * Specifies whether {@link RawExecute} should load all data from backend or just a particular window - specified by
      * offset and size of the window.
      *
      * If not specified, all data will be loaded.
@@ -100,9 +101,9 @@ function exportTitle(props: IRawExecuteProps): string {
  * data from backends.
  *
  * The component accepts an instance of prepared execution and drives all the necessary
- * APIs and boilerplate needed to obtain a `DataViewFacade`.
- * Note that if the resulting data is empty this will NOT throw a NoDataError. It is the responsibility
- * of the child component to handle that if they need to.
+ * APIs and boilerplate needed to obtain a {@link DataViewFacade}.
+ * Note that if the resulting data is empty this will NOT throw a {@link @gooddata/sdk-backend-spi#NoDataError}.
+ * It is the responsibility of the child component to handle that if they need to.
  *
  * The rendering is delegated to a child component. This will be called every time the
  * state of the loading changes.

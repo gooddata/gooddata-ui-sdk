@@ -1,8 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
-
+// (C) 2019-2021 GoodData Corporation
 import { IColorPalette } from "@gooddata/sdk-model";
 
 /**
+ * Default value for {@link @gooddata/sdk-model#IColorPalette}.
  * @public
  */
 export const DefaultColorPalette: IColorPalette = [

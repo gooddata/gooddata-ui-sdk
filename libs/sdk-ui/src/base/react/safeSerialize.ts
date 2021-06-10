@@ -4,6 +4,8 @@
  * Safely serializes an object preventing errors that JSON.stringify might throw.
  *
  * @param obj - object to serialize
+ *
+ * @internal
  */
 export function safeSerialize(obj: unknown): string {
     try {
