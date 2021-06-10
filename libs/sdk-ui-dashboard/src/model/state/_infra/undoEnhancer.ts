@@ -71,20 +71,6 @@ export type UndoPayload = {
 };
 
 /**
- * Signature of reducer that is eligible for undo-decoration. The requirement is that the reducer is for state shape
- * that can hold the information necessary for undo.
- *
- * See {@link UndoEnhancedState} - this is the type that defines the enhancement of the state where the decorator
- * will keep the undo information.
- *
- * @internal
- */
-export type UndoableReducer<TState extends UndoEnhancedState, TPayload> = CaseReducer<
-    TState,
-    PayloadAction<TPayload>
->;
-
-/**
  * Signature of the reducer enhanced to with undo - the payload action requires additional `undo` part in the payload.
  *
  * @internal
@@ -102,7 +88,7 @@ export type UndoEnabledReducer<TState extends UndoEnhancedState, TPayload> = Cas
  * @param originalReducer - reducer to decorate
  */
 export const withUndo = <TState extends UndoEnhancedState, TPayload>(
-    originalReducer: UndoableReducer<TState, TPayload>,
+    originalReducer: CaseReducer<TState, PayloadAction<TPayload>>,
 ): UndoEnabledReducer<TState, UndoPayload & TPayload> => {
     const undoable = (state: Draft<TState>, action: PayloadAction<UndoPayload & TPayload>) => {
         const { undo } = action.payload;
