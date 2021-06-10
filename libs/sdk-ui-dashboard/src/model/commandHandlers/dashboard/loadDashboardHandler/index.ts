@@ -9,7 +9,7 @@ import { insightsActions } from "../../../state/insights";
 import { layoutActions } from "../../../state/layout";
 import { loadingActions } from "../../../state/loading";
 import { DashboardContext } from "../../../types/commonTypes";
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig";
 import { configActions } from "../../../state/config";
 import { PromiseFnReturnType } from "../../../types/sagas";
@@ -32,6 +32,11 @@ function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWith
 
     return backend.workspace(workspace).dashboards().getDashboardWithReferences(dashboardRef!);
 }
+
+const EmptyDashboardLayout: IDashboardLayout = {
+    type: "IDashboardLayout",
+    sections: [],
+};
 
 export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard): SagaIterator<void> {
     try {
@@ -75,7 +80,9 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
                 }),
                 alertsActions.setAlerts(alerts),
                 filterContextActions.setFilterContext(dashboard.filterContext),
-                layoutActions.setLayout(dashboard.layout),
+                // TODO: move code that catches errors in layout
+                // TODO: move code that validates and fixes widget sizes
+                layoutActions.setLayout(dashboard.layout ?? EmptyDashboardLayout),
                 dateFilterConfigActions.setDateFilterConfig({
                     dateFilterConfig: dashboard.dateFilterConfig,
                     effectiveDateFilterConfig: effectiveDateFilterConfig.config,
