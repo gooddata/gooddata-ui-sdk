@@ -66,6 +66,7 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnFiredDashboardViewDrillEvent } from '@gooddata/sdk-ui-ext';
 import { OnFiredDashboardViewDrillEvent as OnFiredDashboardViewDrillEvent_2 } from '@gooddata/sdk-ui-ext/esm';
+import { Patch } from 'immer';
 import { default as React_2 } from 'react';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
@@ -1208,7 +1209,7 @@ export type KpiWidgetComparison = {
 };
 
 // @internal (undocumented)
-export interface LayoutState {
+export interface LayoutState extends UndoEnhancedState {
     // (undocumented)
     layout?: IDashboardLayout;
 }
@@ -1389,7 +1390,7 @@ export interface RemoveLayoutSection extends IDashboardCommand {
 }
 
 // @internal
-export function removeLayoutSection(index: number, stashIdentifier: StashedDashboardItemsId, correlationId?: string): RemoveLayoutSection;
+export function removeLayoutSection(index: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveLayoutSection;
 
 // @internal (undocumented)
 export interface RemoveSectionItem extends IDashboardCommand {
@@ -1613,6 +1614,21 @@ export const TopBar: React_2.FC<ITopBarProps & IDefaultTopBarProps>;
 
 // @internal (undocumented)
 export type TopBarComponent = ComponentType<ITopBarProps>;
+
+// @internal
+export type UndoEnhancedState = {
+    _undo: {
+        undoPointer: number;
+        undoStack: UndoEntry[];
+    };
+};
+
+// @internal
+export type UndoEntry = {
+    cmd: IDashboardCommand;
+    undoPatches: Patch[];
+    redoPatches: Patch[];
+};
 
 // @internal (undocumented)
 export interface UndoLayoutChanges extends IDashboardCommand {

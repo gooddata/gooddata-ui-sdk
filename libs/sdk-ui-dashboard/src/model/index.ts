@@ -39,6 +39,7 @@ export {
     selectFilterContextFilters,
 } from "./state/filterContext/filterContextSelectors";
 
+export { UndoEnhancedState, UndoEntry } from "./state/_infra/undoEnhancer";
 export { LayoutState } from "./state/layout/layoutState";
 export { selectLayout } from "./state/layout/layoutSelectors";
 export { DateFilterConfigState } from "./state/dateFilterConfig/dateFilterConfigState";

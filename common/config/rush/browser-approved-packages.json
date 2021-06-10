@@ -623,6 +623,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "immer",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "inquirer",
       "allowedCategories": [ "tools" ]
     },
