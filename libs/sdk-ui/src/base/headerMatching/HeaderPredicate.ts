@@ -3,6 +3,8 @@ import { IMappingHeader } from "./MappingHeader";
 import { DataViewFacade } from "../results/facade";
 
 /**
+ * Additional data that describes the context in which the {@link IHeaderPredicate} match is being tested.
+ *
  * @public
  */
 export interface IHeaderPredicateContext {
@@ -10,12 +12,14 @@ export interface IHeaderPredicateContext {
 }
 
 /**
+ * A function called for {@link IMappingHeader} instances. When the function returns true, it means the IMappingHeader is matched.
+ * See {@link https://sdk.gooddata.com/gooddata-ui/docs/ht_create_predicates.html | documentation} for more information.
  * @public
  */
-
 export type IHeaderPredicate = (header: IMappingHeader, context: IHeaderPredicateContext) => boolean;
 
 /**
+ * Typeguard checking whether the object is an {@link IHeaderPredicate} instance.
  * @public
  */
 export function isHeaderPredicate(obj: unknown): obj is IHeaderPredicate {

@@ -29,6 +29,7 @@ const getCustomHeight = (clientHeight?: number) => {
 };
 
 /**
+ * Props of the {@link ErrorComponent}.
  * @public
  */
 export interface IErrorProps {
@@ -44,14 +45,14 @@ export interface IErrorProps {
      */
     height?: any;
     /**
-     * Size of the visualisation content when custom size layouting is enable.
+     * Size of the visualisation content when custom size layouting is enabled.
      */
     clientHeight?: any;
 }
 
 /**
- * [ErrorComponent](http://sdk.gooddata.com/gooddata-ui/docs/error_component.html)
- * is a component that renders a default error message
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/error_component.html | ErrorComponent}
+ * is a component that renders a default error message.
  *
  * @public
  */

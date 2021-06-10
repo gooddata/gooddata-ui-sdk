@@ -158,7 +158,7 @@ export type DataSeriesDescriptor = DataSeriesHeaders &
  * the measures (via inclusion of MeasureGroupIdentifier).
  *
  * For convenience, the data series is iterable over Data Points. You can use it either in for-of loop or
- * spread data series into an array of DataPoints.
+ * spread data series into an array of {@link DataPoint | DataPoints}.
  *
  * @public
  */

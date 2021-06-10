@@ -151,12 +151,15 @@ export interface IAnalyticalBackend {
 }
 
 /**
+ * Type of the function to be called when the Analytical Backend raises a {@link NotAuthenticated} error.
+ * See {@link IAuthenticationProvider.onNotAuthenticated} for more details.
+ *
  * @public
  */
 export type NotAuthenticatedHandler = (context: IAuthenticationContext, error: NotAuthenticated) => void;
 
 /**
- * Defines authentication provider to use when instance of IAnalyticalBackend discovers that
+ * Defines authentication provider to use when instance of {@link IAnalyticalBackend} discovers that
  * the current session is not authentication.
  *
  * @public
@@ -177,10 +180,10 @@ export interface IAuthenticationProvider {
     initializeClient?(client: any): void;
 
     /**
-     * Optionally specify function to call when the Analytical Backend raises a NotAuthenticated error.
+     * Optionally specify function to be called when the Analytical Backend raises a {@link NotAuthenticated} error.
      *
      * @param context - context in which the authentication is done
-     * @param error - an instance of NotAuthenticated error
+     * @param error - an instance of {@link NotAuthenticated} error
      */
     onNotAuthenticated?: NotAuthenticatedHandler;
 

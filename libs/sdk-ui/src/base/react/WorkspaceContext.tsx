@@ -7,6 +7,7 @@ const WorkspaceContext = React.createContext<string | undefined>(undefined);
 WorkspaceContext.displayName = "WorkspaceContext";
 
 /**
+ * Props of the {@link WorkspaceProvider} component.
  * @public
  */
 export interface IWorkspaceProviderProps {
@@ -26,11 +27,11 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
 };
 
 /**
- * Hook to get workspace instance provided to WorkspaceProvider.
+ * Hook to get workspace instance provided to {@link WorkspaceProvider}.
  * You can optionally set a workspace override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
  *
- * Note: For a better TypeScript experience without the hassle of undefined values, you can use the useWorkspaceStrict hook.
+ * Note: For a better TypeScript experience without the hassle of undefined values, you can use the {@link useWorkspaceStrict} hook.
  *
  * @example
  * ```
@@ -50,11 +51,11 @@ export const useWorkspace = (workspace?: string): string | undefined => {
 };
 
 /**
- * Hook to get workspace instance provided to WorkspaceProvider.
+ * Hook to get workspace instance provided to {@link WorkspaceProvider}.
  * You can optionally set a workspace override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
  *
- * Note: Note: If you do not provide a workspace identifier to WorkspaceProvider or as a parameter for this hook,
+ * Note: Note: If you do not provide a workspace identifier to {@link WorkspaceProvider} or as a parameter for this hook,
  * an invariant error is raised.
  *
  * @example

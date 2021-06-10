@@ -2,35 +2,39 @@
 import { ObjectType, ObjRef } from "@gooddata/sdk-model";
 
 /**
- * Token representing part of parsed MAQL measure expression
- * e.g. "SELECT [/gdc/md/projectId/obj/6273] WHERE [/gdc/md/projectId/obj/6307] = [/gdc/md/projectId/obj/6307/elements?id=5703453]"
- * could be represented as:
- *  \[
- *      \{
+ * Token representing part of parsed MAQL measure expression.
+ *
+ * @example
+ * ```ts
+ * // for example "SELECT [/gdc/md/projectId/obj/6273] WHERE [/gdc/md/projectId/obj/6307] = [/gdc/md/projectId/obj/6307/elements?id=5703453]"
+ * // could be represented as
+ * const expressionTokens = [
+ *      {
  *          "type": "text",
  *          "value": "SELECT "
- *      \},
- *      \{
+ *      },
+ *      {
  *          "type": "measure",
  *          "value": "Amount",
- *      \},
- *      \{
+ *      },
+ *      {
  *          "type": "text",
  *          "value": " WHERE "
- *      \},
- *      \{
+ *      },
+ *      {
  *          "type": "attribute",
  *          "value": "Status",
- *      \},
- *      \{
+ *      },
+ *      {
  *          "type": "text",
  *          "value": " = "
- *      \},
- *      \{
+ *      },
+ *      {
  *          "type": "attributeElement",
  *          "value": "Won",
- *      \}
- *  \]
+ *      }
+ *  ]
+ * ```
  *
  * @public
  */
@@ -40,7 +44,10 @@ export type IMeasureExpressionToken =
     | ITextExpressionToken;
 
 /**
- * Parsed maql token referencing metadata object
+ * Parsed {@link https://help.gooddata.com/pages/viewpage.action?pageId=86795279 | MAQL} token referencing a metadata object.
+ *
+ * @remarks
+ * See {@link IMeasureExpressionToken} for more information.
  *
  * @public
  */
@@ -62,7 +69,10 @@ export interface IObjectExpressionToken {
 }
 
 /**
- * Parsed maql token referencing attribute element
+ * Parsed {@link https://help.gooddata.com/pages/viewpage.action?pageId=86795279 | MAQL} token referencing an attribute element.
+ *
+ * @remarks
+ * See {@link IMeasureExpressionToken} for more information.
  *
  * @public
  */
@@ -84,7 +94,10 @@ export interface IAttributeElementExpressionToken {
 }
 
 /**
- * Parsed maql text
+ * Parsed {@link https://help.gooddata.com/pages/viewpage.action?pageId=86795279 | MAQL} text.
+ *
+ * @remarks
+ * See {@link IMeasureExpressionToken} for more information.
  *
  * @public
  */

@@ -35,6 +35,7 @@ PlaceholdersContext.displayName = "PlaceholdersContext";
 export const usePlaceholdersContext = (): IPlaceholdersContextState => useContext(PlaceholdersContext);
 
 /**
+ * Props of the {@link PlaceholdersProvider} component.
  * @public
  */
 export interface IPlaceholdersProviderProps {
@@ -43,6 +44,9 @@ export interface IPlaceholdersProviderProps {
 }
 
 /**
+ * Wraps component into a PlaceholdersContext consumer enabling the children of this to access the current
+ * placeholders state.
+ *
  * @public
  */
 export function PlaceholdersProvider(props: IPlaceholdersProviderProps): JSX.Element {

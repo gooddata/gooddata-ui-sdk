@@ -291,13 +291,13 @@ export class DataViewFacade {
     warnings(): IResultWarning[];
 }
 
-// @public (undocumented)
+// @public
 export type DataViewWindow = {
     offset: number[];
     size: number[];
 };
 
-// @public (undocumented)
+// @public
 export const DefaultColorPalette: IColorPalette;
 
 // @public
@@ -306,7 +306,7 @@ export const DefaultDataAccessConfig: DataAccessConfig;
 // @public
 export function defaultErrorHandler(error: unknown): void;
 
-// @public (undocumented)
+// @public
 export const DefaultLocale: ILocale;
 
 // @internal
@@ -409,7 +409,7 @@ export abstract class GoodDataSdkError extends Error {
 // @internal (undocumented)
 export function hasMappingHeaderLocalIdentifier(header: IMappingHeader): boolean;
 
-// @public (undocumented)
+// @public
 export const HeaderPredicates: {
     attributeItemNameMatch: typeof attributeItemNameMatch;
     composedFromIdentifier: typeof composedFromIdentifier;
@@ -476,7 +476,7 @@ export interface IAvailableDrillTargets {
     measures?: IAvailableDrillTargetMeasure[];
 }
 
-// @public (undocumented)
+// @public
 export interface IBackendProviderProps {
     backend: IAnalyticalBackend;
 }
@@ -772,7 +772,7 @@ export interface IErrorDescriptors {
     };
 }
 
-// @public (undocumented)
+// @public
 export interface IErrorProps {
     // (undocumented)
     className?: string;
@@ -800,7 +800,7 @@ export interface IExecuteErrorComponentProps {
     error: GoodDataSdkError;
 }
 
-// @beta (undocumented)
+// @beta
 export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsightProps> {
     backend?: IAnalyticalBackend;
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
@@ -821,7 +821,7 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
 // @public
 export type IExecuteLoadingComponent = ComponentType;
 
-// @public (undocumented)
+// @public
 export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     backend?: IAnalyticalBackend;
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
@@ -884,10 +884,10 @@ export interface IExtendedExportConfig extends IExportConfig {
 // @internal
 export function ignoreTitlesForSimpleMeasures<T extends IInsightDefinition>(insight: T): T;
 
-// @public (undocumented)
+// @public
 export type IHeaderPredicate = (header: IMappingHeader, context: IHeaderPredicateContext) => boolean;
 
-// @public (undocumented)
+// @public
 export interface IHeaderPredicateContext {
     // (undocumented)
     dv: DataViewFacade;
@@ -923,7 +923,7 @@ export interface IIntlWrapperProps {
     locale: string;
 }
 
-// @public (undocumented)
+// @public
 export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     backend?: IAnalyticalBackend;
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
@@ -947,7 +947,7 @@ export interface ILoadingInjectedProps {
     onNegativeValues(): void;
 }
 
-// @public (undocumented)
+// @public
 export interface ILoadingProps {
     // (undocumented)
     className?: string;
@@ -973,7 +973,7 @@ export interface ILoadingState {
     isLoading: boolean;
 }
 
-// @public (undocumented)
+// @public
 export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans";
 
 // @public
@@ -1018,7 +1018,7 @@ export interface IPlaceholderOptions<T> {
     validate?: (value?: T) => void;
 }
 
-// @public (undocumented)
+// @public
 export interface IPlaceholdersProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
@@ -1046,7 +1046,7 @@ export interface IPushData {
     propertiesMeta?: any;
 }
 
-// @public (undocumented)
+// @public
 export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
     ErrorComponent?: IExecuteErrorComponent;
@@ -1139,7 +1139,7 @@ export function isGeoTokenMissing(obj: unknown): obj is GeoTokenMissingSdkError;
 // @public
 export function isGoodDataSdkError(obj: unknown): obj is GoodDataSdkError;
 
-// @public (undocumented)
+// @public
 export function isHeaderPredicate(obj: unknown): obj is IHeaderPredicate;
 
 // @public
@@ -1297,7 +1297,7 @@ export interface IWithLoadingEvents<TProps> {
     onLoadingStart?: (props: TProps) => void;
 }
 
-// @public (undocumented)
+// @public
 export interface IWorkspaceProviderProps {
     workspace: string;
 }
@@ -1379,7 +1379,7 @@ export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
 // @public
 export type PlaceholderResolvedValue<T> = T extends Array<infer A> ? Flatten<PlaceholderResolvedValue<A>>[] : T extends IPlaceholder<infer B> ? B : T extends IComposedPlaceholder<infer C, any, any> ? C : T;
 
-// @public (undocumented)
+// @public
 export function PlaceholdersProvider(props: IPlaceholdersProviderProps): JSX.Element;
 
 // @public

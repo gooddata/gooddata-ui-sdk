@@ -4,7 +4,7 @@ import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "./useCanc
 import { UnexpectedSdkError } from "../errors/GoodDataSdkError";
 
 /**
- * Resolve status of multiple useCancelablePromise hooks.
+ * Resolve status of multiple {@link useCancelablePromise} hooks.
  *
  * This is useful for useCancelablePromise composition - when you want to wrap multiple useCancelablePromise hooks in another hook,
  * and keep the return value shape of the hook same as for useCancelablePromise.
@@ -40,7 +40,7 @@ export function resolveUseCancelablePromisesStatus(
 }
 
 /**
- * Resolve error of multiple useCancelablePromise hooks - gets first error in the sequence of cancelable promise states.
+ * Resolve error of multiple {@link useCancelablePromise} hooks - gets first error in the sequence of cancelable promise states.
  *
  * This is useful for useCancelablePromise composition - when you want to wrap multiple useCancelablePromise hooks in another hook,
  * and keep the return value shape of the hook same as for useCancelablePromise.
