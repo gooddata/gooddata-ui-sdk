@@ -154,7 +154,7 @@ export interface RemoveLayoutSection extends IDashboardCommand {
  */
 export function removeLayoutSection(
     index: number,
-    stashIdentifier: StashedDashboardItemsId,
+    stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
 ): RemoveLayoutSection {
     return {
