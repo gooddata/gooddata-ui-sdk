@@ -304,6 +304,11 @@ export function clearDateFilterSelection(correlationId?: string): ChangeDateFilt
 export type CommandFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 
 // @internal (undocumented)
+export type CommandProcessingMeta = {
+    readonly uuid: string;
+};
+
+// @internal (undocumented)
 export interface ConfigState {
     // (undocumented)
     config?: ResolvedDashboardConfig;
@@ -1039,6 +1044,7 @@ export interface IDashboardButtonBarProps {
 // @internal
 export interface IDashboardCommand {
     readonly correlationId?: string;
+    readonly meta?: CommandProcessingMeta;
     readonly type: DashboardCommandType;
 }
 
@@ -1649,14 +1655,13 @@ export interface UndoLayoutChanges extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly undoPointSelector?: UndoPointSelector;
-        readonly redoable?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
 }
 
 // @internal
-export function undoLayoutChanges(undoPointSelector?: UndoPointSelector, redoable?: boolean, correlationId?: string): UndoLayoutChanges;
+export function undoLayoutChanges(undoPointSelector?: UndoPointSelector, correlationId?: string): UndoLayoutChanges;
 
 // @internal
 export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayoutCommands>) => number;

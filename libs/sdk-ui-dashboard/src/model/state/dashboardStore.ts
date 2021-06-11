@@ -12,6 +12,7 @@ import {
 import createSagaMiddleware, { Saga, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
 import { createDispatchHook, createSelectorHook, TypedUseSelectorHook } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { filterContextSliceReducer } from "./filterContext";
 import { layoutSliceReducer } from "./layout";
 import { loadingSliceReducer } from "./loading";
@@ -102,6 +103,22 @@ export type ReduxedDashboardStore = {
 };
 
 /**
+ * This middleware ensures that actions which represent the dashboard commands are properly 'stamped' with
+ * essential metadata. For now this is just the unique identifier of the command. However going forward we may
+ * want to add timing info or other fancy stuff.
+ */
+const commandStampingMiddleware: Middleware = () => (next) => (action) => {
+    if (action.type.startsWith("GDC.DASH/CMD.")) {
+        // see: https://www.reddit.com/r/reactjs/comments/7cfgzr/redux_modifying_action_payload_in_middleware/dppknrh?utm_source=share&utm_medium=web2x&context=3
+        action.meta = {
+            uuid: uuidv4(),
+        };
+    }
+
+    return next(action);
+};
+
+/**
  * Creates a new store for a dashboard.
  *
  * @param config - runtime configuration to apply on the middlewares and the store
@@ -114,6 +131,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
     });
 
     const middleware = [
+        commandStampingMiddleware,
         ...getDefaultMiddleware({
             thunk: false,
             /*

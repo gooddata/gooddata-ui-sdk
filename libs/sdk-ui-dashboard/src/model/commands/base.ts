@@ -43,6 +43,16 @@ export type DashboardCommandType =
     | "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE";
 
 /**
+ * @internal
+ */
+export type CommandProcessingMeta = {
+    /**
+     * Unique identifier assigned at the time command was submitted for processing.
+     */
+    readonly uuid: string;
+};
+
+/**
  * Base type for all commands.
  *
  * Commands are dispatched using dispatcher obtained by useDashboardDispatcher(). All the dispatchers are 'contextual' -
@@ -64,4 +74,12 @@ export interface IDashboardCommand {
      * If the correlation ID is not specified, a random string will be assigned.
      */
     readonly correlationId?: string;
+
+    /**
+     * Metadata related to processing of the command by the dashboard component.
+     *
+     * Note: this metadata is added by the dashboard component. It will be added dynamically to command
+     * right after its dispatch.
+     */
+    readonly meta?: CommandProcessingMeta;
 }

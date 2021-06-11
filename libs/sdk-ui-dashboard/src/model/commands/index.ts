@@ -39,7 +39,7 @@ import {
 import { CreateAlert, RemoveAlert, UpdateAlert } from "./alerts";
 import { CreateScheduledEmail } from "./scheduledEmail";
 
-export { DashboardCommandType, IDashboardCommand } from "./base";
+export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
 export {
     InitialLoadCorrelationId,
     LoadDashboard,
