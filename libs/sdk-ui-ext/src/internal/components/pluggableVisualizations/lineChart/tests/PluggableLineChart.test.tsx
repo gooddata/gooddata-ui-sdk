@@ -626,10 +626,7 @@ describe("PluggableLineChart", () => {
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: [],
                             },
                         ],
                     },
