@@ -73,7 +73,8 @@ export function getDrillableSeries(
         isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByChildAttribute;
     const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
 
-    return series.map((seriesItem, seriesIndex) => {
+    return series.map((seriesItem) => {
+        const seriesIndex = seriesItem.seriesIndex;
         let isSeriesDrillable = false;
         let data =
             seriesItem.data &&

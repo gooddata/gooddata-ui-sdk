@@ -247,13 +247,16 @@ export interface ICategory {
 }
 
 export interface ISeriesItemConfig {
-    color: string;
     legendIndex: number;
-    data?: any;
+    seriesIndex: number;
+    color?: string;
+    data?: IPointData;
     name?: string;
     yAxis?: number;
     xAxis?: number;
     type?: string;
+    turboThreshold?: number;
+    dataLabels?: any;
 }
 
 export interface IAxis {

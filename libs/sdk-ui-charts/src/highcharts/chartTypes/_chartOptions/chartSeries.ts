@@ -97,7 +97,7 @@ function getDefaultSeries(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     colorStrategy: IColorStrategy,
-): any {
+): ISeriesItemConfig[] {
     return dv
         .rawData()
         .twoDimData()
@@ -116,6 +116,7 @@ function getDefaultSeries(
                 color: colorStrategy.getColorByIndex(seriesIndex),
                 legendIndex: seriesIndex,
                 data: seriesItemData,
+                seriesIndex,
             };
 
             if (stackByAttribute) {

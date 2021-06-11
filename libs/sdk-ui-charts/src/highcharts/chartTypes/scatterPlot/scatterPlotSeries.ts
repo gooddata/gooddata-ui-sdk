@@ -1,7 +1,7 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { ISeriesDataItem } from "../../typings/unsafe";
+import { IPointData, ISeriesItemConfig } from "../../typings/unsafe";
 import { parseValue } from "../_util/common";
 
 export function getScatterPlotSeries(
@@ -9,11 +9,11 @@ export function getScatterPlotSeries(
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
-): any[] {
+): ISeriesItemConfig[] {
     const primaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.MEASURES);
     const secondaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
 
-    const data: ISeriesDataItem[] = dv
+    const data: IPointData[] = dv
         .rawData()
         .twoDimData()
         .map((seriesItem: string[], seriesIndex: number) => {
@@ -34,6 +34,7 @@ export function getScatterPlotSeries(
             color: colorStrategy.getColorByIndex(0),
             legendIndex: 0,
             data,
+            seriesIndex: 0,
         },
     ];
 }
