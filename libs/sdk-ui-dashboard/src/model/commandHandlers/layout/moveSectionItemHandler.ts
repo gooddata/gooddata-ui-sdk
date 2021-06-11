@@ -35,7 +35,7 @@ export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionI
         return yield dispatchDashboardEvent(
             invalidArgumentsProvided(
                 ctx,
-                `Attempting to move non-existed item from index ${itemIndex}. There are only ${fromSection.items.length} items.`,
+                `Attempting to move non-existent item from index ${itemIndex}. There are only ${fromSection.items.length} items.`,
                 cmd.correlationId,
             ),
         );

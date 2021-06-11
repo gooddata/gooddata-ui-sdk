@@ -388,7 +388,7 @@ export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
         /**
          * If the removal was eager and removed the entire section, then that section is included here.
          *
-         * NOTE: the {@link DashboardLayoutSectionRemoved} will be fired at the occassion as well.
+         * NOTE: the {@link DashboardLayoutSectionRemoved} will be fired at the occasion as well.
          */
         readonly section?: ExtendedDashboardLayoutSection;
 

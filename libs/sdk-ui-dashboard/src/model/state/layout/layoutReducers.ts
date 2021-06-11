@@ -151,6 +151,33 @@ const moveSectionItem: LayoutReducer<MoveSectionItemActionPayload> = (state, act
 //
 //
 
+type RemoveSectionItemActionPayload = {
+    sectionIndex: number;
+    itemIndex: number;
+    stashIdentifier?: StashedDashboardItemsId;
+};
+
+const removeSectionItem: LayoutReducer<RemoveSectionItemActionPayload> = (state, action) => {
+    invariant(state.layout);
+
+    const { sectionIndex, itemIndex, stashIdentifier } = action.payload;
+    const section = state.layout.sections[sectionIndex];
+
+    invariant(section);
+
+    const item = removeArrayElement(section.items, itemIndex);
+
+    invariant(item);
+
+    if (stashIdentifier) {
+        state.stash[stashIdentifier] = [item];
+    }
+};
+
+//
+//
+//
+
 export const layoutReducers = {
     setLayout,
     addSection: withUndo(addSection),
@@ -159,4 +186,5 @@ export const layoutReducers = {
     changeSectionHeader,
     addSectionItems: withUndo(addSectionItems),
     moveSectionItem: withUndo(moveSectionItem),
+    removeSectionItem: withUndo(removeSectionItem),
 };
