@@ -33,14 +33,17 @@ import { IInsightViewProps } from "./types";
 /**
  * @internal
  */
-export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"> {
+export interface IInsightRendererProps
+    extends Omit<
+        IInsightViewProps,
+        "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle" | "afterRender"
+    > {
     insight: IInsightDefinition | undefined;
     locale: ILocale;
     settings: IUserWorkspaceSettings | undefined;
     colorPalette: IColorPalette | undefined;
     onError?: OnError;
     theme?: ITheme;
-    isVisualisationLoading?: boolean;
 }
 
 const getElementId = () => `gd-vis-${uuidv4()}`;
@@ -228,11 +231,13 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
 
     public render(): React.ReactNode {
         return (
+            // never ever dynamically change the props of this div, otherwise bad things will happen
+            // e.g. visualization being rendered multiple times, etc.
             <div
                 className="visualization-uri-root"
                 id={this.elementId}
                 ref={this.containerRef}
-                style={this.props.isVisualisationLoading ? null : visualizationUriRootStyle}
+                style={visualizationUriRootStyle}
             />
         );
     }
