@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_closed.aag81lMifn6q"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_created.aag81lMifn6q"
+                        }
+                    }
+                ],
+                "localIdentifier": "stack"
+            }
+        ],
+        "filters": [],
+        "identifier": "AreaChart.50a2a52ac1284faf25cf924faa1bb07a",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "AreaChart - with one measure and view by date and stack by date",
+        "uri": "AreaChart.50a2a52ac1284faf25cf924faa1bb07a",
+        "visualizationUrl": "local:area"
+    }
+}
