@@ -143,10 +143,11 @@ export class AttributeDropdownCore extends React.PureComponent<
     }
 
     public componentDidUpdate(prevProps: IAttributeDropdownProps, prevState: IAttributeDropdownState): void {
+        const parentFilterChanged = !isEqual(this.props.parentFilters, prevProps.parentFilters);
         const needsInvalidation =
             !areObjRefsEqual(this.props.displayForm, prevProps.displayForm) ||
             this.props.workspace !== prevProps.workspace ||
-            !isEqual(this.props.parentFilters, prevProps.parentFilters) ||
+            parentFilterChanged ||
             this.state.searchString !== prevState.searchString;
 
         if (needsInvalidation) {
@@ -158,19 +159,41 @@ export class AttributeDropdownCore extends React.PureComponent<
                     offset: 0,
                     limit: LIMIT,
                 },
-                () => this.getElements(),
+                () => {
+                    this.getElements();
+                    this.getElementTotalCount();
+                    this.restoreInitialSelection(parentFilterChanged);
+                },
+            );
+        }
+    }
+
+    public restoreInitialSelection(parentFilterChanged: boolean): void {
+        if (parentFilterChanged) {
+            this.setState(
+                {
+                    selectedItems: [],
+                    prevSelectedItems: [],
+                    isInverted: this.props.isInverted,
+                    prevIsInverted: this.props.isInverted,
+                },
+                () => this.onApplyButtonClicked(),
             );
         }
     }
 
     public getElementTotalCount = async (): Promise<void> => {
-        const { workspace, displayForm } = this.props;
+        const { workspace, displayForm, parentFilters } = this.props;
 
-        getElementTotalCount(workspace, this.getBackend(), displayForm, this.state.searchString).then(
-            (result) => {
-                this.setState({ totalCount: result });
-            },
-        );
+        getElementTotalCount(
+            workspace,
+            this.getBackend(),
+            displayForm,
+            this.state.searchString,
+            parentFilters,
+        ).then((result) => {
+            this.setState({ totalCount: result });
+        });
     };
 
     public getElements = async (): Promise<void> => {

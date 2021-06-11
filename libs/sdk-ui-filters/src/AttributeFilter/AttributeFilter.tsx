@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import React from "react";
+import React, { useEffect } from "react";
 import { injectIntl } from "react-intl";
 import MediaQuery from "react-responsive";
 import {
@@ -18,8 +18,13 @@ import {
     defaultErrorHandler,
     IntlTranslationsProvider,
     IntlWrapper,
+    IPlaceholder,
     ITranslationsComponentProps,
     OnError,
+    useCancelablePromise,
+    usePlaceholder,
+    useResolveValueWithPlaceholders,
+    ValuesOrPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants";
@@ -64,8 +69,19 @@ export interface IAttributeFilterProps {
 
     /**
      * Specify a parent attribute filter that will be used to reduce options for available components options.
+     *
+     * Parent filters MUST be defined by uris.
      */
-    parentFilters?: IAttributeFilter[];
+    parentFilters?: ValuesOrPlaceholders<IAttributeFilter>;
+
+    /**
+     * Specify {@link @gooddata/sdk-ui#IPlaceholder} to use to get and set the value of the attribute filter.
+     *
+     * Note: It's not possible to combine this property with "filter" property. Either - provide a value, or a placeholder.
+     * There is no need to specify 'onApply' callback if 'connectToPlaceholder' property is used as the value of the filter
+     * is set via this placeholder.
+     */
+    connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
 
     /**
      * Specify and parent filter attribute ref over which should be available options reduced.
@@ -118,104 +134,86 @@ export interface IAttributeFilterProps {
     FilterError?: React.ComponentType<{ error?: any }>;
 }
 
-interface IAttributeFilterState {
-    title: string;
-    isLoading: boolean;
-    error?: any;
-}
-
 const DefaultFilterError: React.FC = injectIntl(({ intl }) => {
     const text = intl.formatMessage({ id: "gs.filter.error" });
     return <div className="gd-message error s-button-error">{text}</div>;
 });
 
-class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
-    public static defaultProps = {
-        locale: "en-US",
-        FilterError: DefaultFilterError,
-        fullscreenOnMobile: false,
-        onError: defaultErrorHandler,
-        titleWithSelection: false,
+const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
+    const {
+        locale,
+        workspace,
+        backend,
+        FilterError,
+        title,
+        titleWithSelection,
+        fullscreenOnMobile,
+        identifier,
+        filter,
+        parentFilters,
+        connectToPlaceholder,
+        parentFilterOverAttribute,
+        onError,
+        onApply,
+    } = props;
+
+    const resolvedParentFilters = useResolveValueWithPlaceholders(parentFilters);
+    const [placeholder, setPlaceholder] = usePlaceholder(connectToPlaceholder);
+
+    const currentFilter = placeholder || filter;
+
+    const getBackend = () => {
+        return backend.withTelemetry("AttributeFilter", props);
     };
 
-    public state: IAttributeFilterState = {
-        title: "",
-        error: null,
-        isLoading: false,
-    };
+    // todo add dependencies on filter/placeholder??
+    const {
+        result: attributeTitle,
+        error: attributeError,
+        status: attributeStatus,
+    } = useCancelablePromise(
+        {
+            promise: async () => {
+                const attributes = getBackend().workspace(workspace).attributes();
+                const displayForm = await attributes.getAttributeDisplayForm(
+                    getObjRef(currentFilter, identifier),
+                );
+                const attribute = await attributes.getAttribute(displayForm.attribute);
 
-    public componentDidMount(): void {
-        this.loadAttributeTitle();
-    }
+                return attribute.title;
+            },
+        },
+        [identifier, workspace],
+    );
 
-    public componentDidUpdate(prevProps: IAttributeFilterProps): void {
-        const needsNewTitleLoad =
-            prevProps.identifier !== this.props.identifier || prevProps.workspace !== this.props.workspace;
+    const onFilterApply = (selectedItems: IAttributeElement[], isInverted: boolean) => {
+        const useUriElements =
+            currentFilter && isAttributeElementsByRef(filterAttributeElements(currentFilter));
 
-        if (needsNewTitleLoad) {
-            this.loadAttributeTitle(true);
-        }
-    }
+        const filterFactory = isInverted ? newNegativeAttributeFilter : newPositiveAttributeFilter;
 
-    public render() {
-        const {
-            locale,
-            workspace,
-            backend,
-            FilterError,
-            titleWithSelection,
-            fullscreenOnMobile,
-            parentFilters,
-            parentFilterOverAttribute,
-        } = this.props;
-        const { error, isLoading } = this.state;
-        const { isInverted, selectedItems } = this.getInitialDropdownSelection();
-
-        return (
-            <IntlWrapper locale={locale}>
-                {error ? (
-                    <FilterError error={error} />
-                ) : (
-                    <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
-                        {(isMobile) => (
-                            <IntlTranslationsProvider>
-                                {(translationProps: ITranslationsComponentProps) => {
-                                    return (
-                                        <AttributeDropdown
-                                            titleWithSelection={titleWithSelection}
-                                            displayForm={getObjRef(this.props.filter, this.props.identifier)}
-                                            backend={backend}
-                                            workspace={workspace}
-                                            onApply={this.onApply}
-                                            title={this.props.title || this.state.title}
-                                            isInverted={isInverted}
-                                            selectedItems={selectedItems}
-                                            isLoading={isLoading}
-                                            translationProps={translationProps}
-                                            isMobile={isMobile}
-                                            fullscreenOnMobile={fullscreenOnMobile}
-                                            parentFilters={getValidElementsFilters(
-                                                parentFilters,
-                                                parentFilterOverAttribute,
-                                            )}
-                                        />
-                                    );
-                                }}
-                            </IntlTranslationsProvider>
-                        )}
-                    </MediaQuery>
-                )}
-            </IntlWrapper>
+        const filter = filterFactory(
+            getObjRef(currentFilter, identifier),
+            useUriElements
+                ? { uris: selectedItems.map((item) => item.uri) }
+                : { values: selectedItems.map((item) => item.title) },
         );
-    }
 
-    private getBackend = () => {
-        return this.props.backend.withTelemetry("AttributeFilter", this.props);
+        if (connectToPlaceholder) {
+            setPlaceholder(filter);
+        }
+
+        return onApply(filter);
     };
 
-    private getInitialDropdownSelection = () => {
-        const { filter } = this.props;
-        if (!filter) {
+    useEffect(() => {
+        if (attributeError) {
+            onError(attributeError);
+        }
+    }, [attributeError]);
+
+    const getInitialDropdownSelection = () => {
+        if (!currentFilter) {
             return {
                 isInverted: true,
                 selectedItems: [],
@@ -230,42 +228,55 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         };
     };
 
-    private loadAttributeTitle = async (force = false) => {
-        if (!force && this.state.isLoading) {
-            return;
-        }
-        const { filter, identifier } = this.props;
-        this.setState({ error: null, isLoading: true });
+    const { selectedItems, isInverted } = getInitialDropdownSelection();
 
-        try {
-            const attributes = this.getBackend().workspace(this.props.workspace).attributes();
-            const displayForm = await attributes.getAttributeDisplayForm(getObjRef(filter, identifier));
-            const attribute = await attributes.getAttribute(displayForm.attribute);
+    return (
+        <IntlWrapper locale={locale}>
+            {attributeError ? (
+                <FilterError error={attributeError} />
+            ) : (
+                <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
+                    {(isMobile) => (
+                        <IntlTranslationsProvider>
+                            {(translationProps: ITranslationsComponentProps) => {
+                                return (
+                                    <AttributeDropdown
+                                        titleWithSelection={titleWithSelection}
+                                        displayForm={getObjRef(currentFilter, identifier)}
+                                        backend={backend}
+                                        workspace={workspace}
+                                        onApply={onFilterApply}
+                                        title={title || attributeTitle}
+                                        isInverted={isInverted}
+                                        selectedItems={selectedItems}
+                                        isLoading={
+                                            attributeStatus === "pending" || attributeStatus === "loading"
+                                        }
+                                        translationProps={translationProps}
+                                        isMobile={isMobile}
+                                        fullscreenOnMobile={fullscreenOnMobile}
+                                        parentFilters={getValidElementsFilters(
+                                            resolvedParentFilters,
+                                            parentFilterOverAttribute,
+                                        )}
+                                    />
+                                );
+                            }}
+                        </IntlTranslationsProvider>
+                    )}
+                </MediaQuery>
+            )}
+        </IntlWrapper>
+    );
+};
 
-            this.setState({ title: attribute.title, error: null, isLoading: false });
-        } catch (error) {
-            this.setState({ title: "", error, isLoading: false });
-
-            this.props.onError(error);
-        }
-    };
-
-    private onApply = (selectedItems: IAttributeElement[], isInverted: boolean) => {
-        const useUriElements =
-            this.props.filter && isAttributeElementsByRef(filterAttributeElements(this.props.filter));
-
-        const filterFactory = isInverted ? newNegativeAttributeFilter : newPositiveAttributeFilter;
-
-        const filter = filterFactory(
-            getObjRef(this.props.filter, this.props.identifier),
-            useUriElements
-                ? { uris: selectedItems.map((item) => item.uri) }
-                : { values: selectedItems.map((item) => item.title) },
-        );
-
-        return this.props.onApply(filter);
-    };
-}
+AttributeFilterCore.defaultProps = {
+    locale: "en-US",
+    FilterError: DefaultFilterError,
+    fullscreenOnMobile: false,
+    onError: defaultErrorHandler,
+    titleWithSelection: false,
+};
 
 /**
  * AttributeFilter is a component that renders a dropdown populated with attribute values
