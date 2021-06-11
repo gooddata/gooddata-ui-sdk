@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { CaseReducer, Draft, PayloadAction } from "@reduxjs/toolkit";
 import { LayoutState } from "./layoutState";
-import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 import { withUndo } from "../_infra/undoEnhancer";
 import {
@@ -94,6 +94,20 @@ const removeSection: LayoutReducer<RemoveSectionActionPayload> = (state, action)
 //
 //
 
+type ChangeSectionActionPayload = { index: number; header: IDashboardLayoutSectionHeader };
+
+const changeSectionHeader: LayoutReducer<ChangeSectionActionPayload> = (state, action) => {
+    invariant(state.layout);
+
+    const { index, header } = action.payload;
+
+    state.layout.sections[index].header = header;
+};
+
+//
+//
+//
+
 type AddSectionItemsActionPayload = {
     sectionIndex: number;
     itemIndex: number;
@@ -124,5 +138,6 @@ export const layoutReducers = {
     setLayout,
     addSection: withUndo(addSection),
     removeSection: withUndo(removeSection),
+    changeSectionHeader,
     addSectionItems: withUndo(addSectionItems),
 };
