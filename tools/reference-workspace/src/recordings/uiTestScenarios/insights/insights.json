@@ -84,6 +84,11 @@
     "AreaChart.48a1821beab9eb4e440b5a5ae5815340": {
         "comment": "Auto-generated insight for test scenario AreaChart - legend position - legend on top."
     },
+    "AreaChart.50a2a52ac1284faf25cf924faa1bb07a": {
+        "comment": "Auto-generated insight for test scenario AreaChart - with one measure and view by date and stack by date.",
+        "scenarioName": "with one measure and view by date and stack by date",
+        "visName": "AreaChart"
+    },
     "AreaChart.50f413bdfea27a250f7bb584fd2796ac": {
         "comment": "Auto-generated insight for test scenario AreaChart - data labels - forced visible."
     },
