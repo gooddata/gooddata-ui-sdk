@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
-import { DashboardItemDefinition, StashedDashboardItemsId } from "../types/layoutTypes";
+import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes";
 import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -16,7 +16,7 @@ export interface AddLayoutSection extends IDashboardCommand {
          * Index is zero-based and for convenience index -1 means place new section at the end. 0 means place new
          * section at the beginning. Both 0 and -1 and can be used when inserting the first section into and empty layout.
          */
-        readonly index: number;
+        readonly index: RelativeIndex;
 
         /**
          * Optionally specify the section header.
@@ -83,7 +83,7 @@ export interface MoveLayoutSection extends IDashboardCommand {
          *
          * Index is zero-based. For convenience index of -1 means moving the item to the end of the section list.
          */
-        readonly toIndex: number;
+        readonly toIndex: RelativeIndex;
     };
 }
 
@@ -128,7 +128,7 @@ export interface RemoveLayoutSection extends IDashboardCommand {
          *
          * Zero based. For convenience -1 can be used to remove the last section.
          */
-        readonly index: number;
+        readonly index: RelativeIndex;
 
         /**
          * Optionally specify stash identifier. If provided, the items from the removed section will not be
@@ -250,7 +250,7 @@ export interface AddSectionItems extends IDashboardCommand {
          *
          * Index is zero-based. For convenience, you may specify -1 to append the new item.
          */
-        readonly itemIndex: number;
+        readonly itemIndex: RelativeIndex;
 
         /**
          * Items to add. This item may be a placeholder for KPI or insight, an actual dashboard widget or a previously
@@ -389,7 +389,7 @@ export interface MoveSectionItem extends IDashboardCommand {
          *
          * Index is zero-based. For convenience you may specify -1 to move to last section.
          */
-        readonly toSectionIndex: number;
+        readonly toSectionIndex: RelativeIndex;
 
         /**
          * Index within the target section.
@@ -397,7 +397,7 @@ export interface MoveSectionItem extends IDashboardCommand {
          * Index is zero-based. For convenience you may specify -1 to append the item at the end of the target section's
          * items.
          */
-        readonly toItemIndex: number;
+        readonly toItemIndex: RelativeIndex;
     };
 }
 
@@ -453,9 +453,9 @@ export interface RemoveSectionItem extends IDashboardCommand {
         /**
          * Index of section item that should be moved.
          *
-         * Index is zero-based.
+         * Index is zero-based. For convenience you may use index of -1 to remove last item from section.
          */
-        readonly itemIndex: number;
+        readonly itemIndex: RelativeIndex;
 
         /**
          * Optionally specify stash identifier. If provided, the item will not be permanently removed but will be

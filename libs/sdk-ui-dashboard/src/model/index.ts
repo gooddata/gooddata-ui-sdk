@@ -76,6 +76,7 @@ export {
     DashboardItemDefinition,
     StashedDashboardItemsId,
     ExtendedDashboardLayoutSection,
+    RelativeIndex,
 } from "./types/layoutTypes";
 export { WidgetFilterSettings, WidgetHeader } from "./types/widgetTypes";
 

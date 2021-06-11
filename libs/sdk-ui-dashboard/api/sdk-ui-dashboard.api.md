@@ -93,7 +93,7 @@ export function addAttributeFilter(displayForm: ObjRef, index: number, correlati
 export interface AddLayoutSection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly index: number;
+        readonly index: RelativeIndex;
         readonly initialHeader?: IDashboardLayoutSectionHeader;
         readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
     };
@@ -112,7 +112,7 @@ export interface AddSectionItems extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly sectionIndex: number;
-        readonly itemIndex: number;
+        readonly itemIndex: RelativeIndex;
         readonly items: ReadonlyArray<DashboardItemDefinition>;
     };
     // (undocumented)
@@ -1280,7 +1280,7 @@ export interface MoveLayoutSection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly sectionIndex: number;
-        readonly toIndex: number;
+        readonly toIndex: RelativeIndex;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION";
@@ -1295,8 +1295,8 @@ export interface MoveSectionItem extends IDashboardCommand {
     readonly payload: {
         readonly sectionIndex: number;
         readonly itemIndex: number;
-        readonly toSectionIndex: number;
-        readonly toItemIndex: number;
+        readonly toSectionIndex: RelativeIndex;
+        readonly toItemIndex: RelativeIndex;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM";
@@ -1339,6 +1339,9 @@ export interface RefreshKpiWidget extends IDashboardCommand {
 
 // @internal
 export function refreshKpiWidget(ref: ObjRef, correlationId?: string): RefreshKpiWidget;
+
+// @internal
+export type RelativeIndex = number;
 
 // @internal
 export interface RemoveAlert extends IDashboardCommand {
@@ -1387,7 +1390,7 @@ export type RemoveDrillsSelector = ObjRef[] | "*";
 export interface RemoveLayoutSection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly index: number;
+        readonly index: RelativeIndex;
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)
@@ -1402,7 +1405,7 @@ export interface RemoveSectionItem extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly sectionIndex: number;
-        readonly itemIndex: number;
+        readonly itemIndex: RelativeIndex;
         readonly stashIdentifier?: StashedDashboardItemsId;
         readonly eager?: boolean;
     };
