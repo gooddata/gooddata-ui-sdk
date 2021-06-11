@@ -5,6 +5,7 @@ import { LayoutState } from "./layoutState";
 import invariant from "ts-invariant";
 import { IDashboardLayout, IDashboardLayoutItem } from "@gooddata/sdk-backend-spi";
 import { isInsightPlaceholderWidget, isKpiPlaceholderWidget } from "../../types/layoutTypes";
+import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -12,7 +13,7 @@ const selectSelf = createSelector(
 );
 
 /**
- * This select returns current layout's stash. This stash can contain items that were removed from the layout with the
+ * This selector returns current layout's stash. This stash can contain items that were removed from the layout with the
  * intent of further using the item elsewhere on the layout. The stash is a mapping of stashIdentifier to an array
  * of stashed items. The stash identifiers and stash usage is fully under control of the user.
  *
@@ -20,6 +21,15 @@ const selectSelf = createSelector(
  */
 export const selectStash = createSelector(selectSelf, (layoutState: LayoutState) => {
     return layoutState.stash;
+});
+
+/**
+ * This selector returns commands that impacted the layout and can now be undone.
+ *
+ * @internal
+ */
+export const selectUndoableLayoutCommands = createSelector(selectSelf, (layoutState: LayoutState) => {
+    return createUndoableCommandsMapping(layoutState);
 });
 
 /**

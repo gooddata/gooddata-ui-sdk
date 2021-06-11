@@ -722,7 +722,7 @@ export const DashboardLayout: (props: DashboardLayoutProps) => JSX.Element;
 export interface DashboardLayoutChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly layout: IDashboardLayout<ExtendedDashboardItem>;
+        readonly layout: IDashboardLayout<ExtendedDashboardWidget>;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
@@ -1215,10 +1215,10 @@ export type KpiWidgetComparison = {
 };
 
 // @internal (undocumented)
-export type LayoutStash = Record<string, IDashboardLayoutItem<ExtendedDashboardWidget>[]>;
+export type LayoutStash = Record<string, ExtendedDashboardItem[]>;
 
 // @internal (undocumented)
-export interface LayoutState extends UndoEnhancedState {
+export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> {
     // (undocumented)
     layout?: IDashboardLayout<ExtendedDashboardWidget>;
     // (undocumented)
@@ -1607,7 +1607,7 @@ export const selectSeparators: import("@reduxjs/toolkit").OutputSelector<Dashboa
 export const selectSettings: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISettings>;
 
 // @internal
-export const selectStash: import("@reduxjs/toolkit").OutputSelector<DashboardState, Record<string, IDashboardLayoutItem<import("../../types/layoutTypes").ExtendedDashboardWidget>[]>, (res: LayoutState) => Record<string, IDashboardLayoutItem<import("../../types/layoutTypes").ExtendedDashboardWidget>[]>>;
+export const selectStash: import("@reduxjs/toolkit").OutputSelector<DashboardState, Record<string, import("../../types/layoutTypes").ExtendedDashboardItem[]>, (res: LayoutState) => Record<string, import("../../types/layoutTypes").ExtendedDashboardItem[]>>;
 
 // @internal
 export const selectUser: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IUser, (res: import("./userState").UserState) => import("@gooddata/sdk-backend-spi").IUser>;
@@ -1636,16 +1636,16 @@ export const TopBar: React_2.FC<ITopBarProps & IDefaultTopBarProps>;
 export type TopBarComponent = ComponentType<ITopBarProps>;
 
 // @internal
-export type UndoEnhancedState = {
+export type UndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> = {
     _undo: {
         undoPointer: number;
-        undoStack: UndoEntry[];
+        undoStack: UndoEntry<T>[];
     };
 };
 
 // @internal
-export type UndoEntry = {
-    cmd: IDashboardCommand;
+export type UndoEntry<T extends IDashboardCommand = IDashboardCommand> = {
+    cmd: T;
     undoPatches: Patch[];
     redoPatches: Patch[];
 };

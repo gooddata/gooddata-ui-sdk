@@ -3,7 +3,7 @@ import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { LayoutState } from "./layoutState";
 import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
-import { withUndo } from "../_infra/undoEnhancer";
+import { undoReducer, withUndo } from "../_infra/undoEnhancer";
 import {
     ExtendedDashboardItem,
     ExtendedDashboardLayoutSection,
@@ -218,9 +218,10 @@ export const layoutReducers = {
     addSection: withUndo(addSection),
     removeSection: withUndo(removeSection),
     moveSection: withUndo(moveSection),
-    changeSectionHeader,
+    changeSectionHeader: withUndo(changeSectionHeader),
     addSectionItems: withUndo(addSectionItems),
     moveSectionItem: withUndo(moveSectionItem),
     removeSectionItem: withUndo(removeSectionItem),
     replaceSectionItem: withUndo(replaceSectionItem),
+    undoLayout: undoReducer,
 };

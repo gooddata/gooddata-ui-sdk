@@ -36,6 +36,9 @@ export function* changeLayoutSectionHeaderHandler(
         layoutActions.changeSectionHeader({
             index,
             header: newHeader,
+            undo: {
+                cmd,
+            },
         }),
     );
 

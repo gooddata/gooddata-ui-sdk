@@ -4,10 +4,10 @@ import { SimpleDashboardLayout } from "../../../tests/Dashboard.fixtures";
 import { LayoutState } from "../layoutState";
 import { InitialUndoState } from "../../_infra/undoEnhancer";
 import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
-import produce from "immer";
 import { layoutReducers } from "../layoutReducers";
 import { removeLayoutSection } from "../../../commands";
 import { layoutActions } from "../index";
+import { produce } from "immer";
 
 describe("layout slice reducer", () => {
     function createLayoutSliceInitialState(layout?: IDashboardLayout): LayoutState {
@@ -29,7 +29,7 @@ describe("layout slice reducer", () => {
                 undo: { cmd: removeLayoutSection(0, undefined, "correlation") },
             });
 
-            return layoutReducers.removeSection(draft, removeAction);
+            return layoutReducers.removeSection(draft, removeAction) as any;
         });
 
         expect(newState.layout!.sections).toEqual([]);
@@ -46,7 +46,7 @@ describe("layout slice reducer", () => {
                 undo: { cmd: removeLayoutSection(0, "testStash", "correlation") },
             });
 
-            return layoutReducers.removeSection(draft, removeAction);
+            return layoutReducers.removeSection(draft, removeAction) as any;
         });
 
         expect(newState.layout!.sections).toEqual([]);

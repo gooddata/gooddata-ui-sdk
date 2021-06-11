@@ -3,6 +3,7 @@
 import {
     ExtendedDashboardItem,
     ExtendedDashboardLayoutSection,
+    ExtendedDashboardWidget,
     StashedDashboardItemsId,
 } from "../types/layoutTypes";
 import { DashboardContext } from "../types/commonTypes";
@@ -435,6 +436,21 @@ export interface DashboardLayoutChanged extends IDashboardEvent {
         /**
          * Layout after the change.
          */
-        readonly layout: IDashboardLayout<ExtendedDashboardItem>;
+        readonly layout: IDashboardLayout<ExtendedDashboardWidget>;
+    };
+}
+
+export function layoutChanged(
+    ctx: DashboardContext,
+    layout: IDashboardLayout<ExtendedDashboardWidget>,
+    correlationId?: string,
+): DashboardLayoutChanged {
+    return {
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            layout,
+        },
     };
 }

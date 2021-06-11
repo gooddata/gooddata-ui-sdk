@@ -529,10 +529,12 @@ export type DashboardLayoutCommands =
 //
 
 /**
- * The undo point selector function will be called during layout undo processing to determine at which
- * command should the undo stop.
+ * The undo point selector function will be called during layout undo processing to determine up to (and including)
+ * which command should the undo be done. Commands are sorted in the list in reversed chronological order -
+ * last command processed command is at index 0, command before that at index 1 etc.
  *
- * The function receives list of commands in the order they were submitted and processed. The
+ * The function must return index of command up to (and including) which the undo should be done. It is not possible
+ * to undo just some command randomly.
  *
  * @internal
  */
@@ -567,13 +569,6 @@ export interface UndoLayoutChanges extends IDashboardCommand {
          *    the correlationId and if so undo up to and including that command.
          */
         readonly undoPointSelector?: UndoPointSelector;
-
-        /**
-         * Indicates whether the undone commands can be re-done or not.
-         *
-         * If not provided, the default is false = redo is not possible.
-         */
-        readonly redoable?: boolean;
     };
 }
 
@@ -585,7 +580,6 @@ export interface UndoLayoutChanges extends IDashboardCommand {
  * up to which command should the undo go.
  *
  * @param undoPointSelector - optionally specify function to determine up to which command to undo; if not provided the very last command will be undone
- * @param redoable - optionally indicate whether the undone command(s) can be redone - whether they should be kept in history or not; default is false
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -593,7 +587,6 @@ export interface UndoLayoutChanges extends IDashboardCommand {
  */
 export function undoLayoutChanges(
     undoPointSelector?: UndoPointSelector,
-    redoable?: boolean,
     correlationId?: string,
 ): UndoLayoutChanges {
     return {
@@ -601,7 +594,6 @@ export function undoLayoutChanges(
         correlationId,
         payload: {
             undoPointSelector,
-            redoable,
         },
     };
 }
@@ -627,8 +619,6 @@ export function revertLastLayoutChange(correlationId?: string): UndoLayoutChange
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO",
         correlationId,
-        payload: {
-            redoable: false,
-        },
+        payload: {},
     };
 }
