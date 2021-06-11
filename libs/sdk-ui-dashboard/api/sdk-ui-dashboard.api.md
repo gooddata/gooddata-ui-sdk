@@ -1432,7 +1432,7 @@ export interface ReplaceSectionItem extends IDashboardCommand {
     readonly payload: {
         readonly sectionIndex: number;
         readonly itemIndex: number;
-        readonly item: DashboardItemDefinition;
+        readonly items: ReadonlyArray<DashboardItemDefinition>;
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)
