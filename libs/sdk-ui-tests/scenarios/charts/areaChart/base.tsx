@@ -46,6 +46,12 @@ export const AreaChartWithLotArithmeticMeasuresAndViewBy = {
     viewBy: ReferenceLdm.CreatedQuarterYear,
 };
 
+export const AreaChartWithViewByDateAndStackByDate = {
+    measures: [ReferenceLdm.Amount],
+    viewBy: [ReferenceLdm.ClosedYear],
+    stackBy: ReferenceLdm.CreatedYear,
+};
+
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
@@ -77,4 +83,8 @@ export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
             ReferenceLdmExt.CalculatedWonLostRatio,
         ],
         viewBy: [ReferenceLdm.Product.Name],
-    });
+    })
+    .addScenario(
+        "with one measure and view by date and stack by date",
+        AreaChartWithViewByDateAndStackByDate,
+    );

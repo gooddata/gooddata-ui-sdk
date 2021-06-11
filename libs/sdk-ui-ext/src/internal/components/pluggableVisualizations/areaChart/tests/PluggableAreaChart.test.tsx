@@ -268,14 +268,13 @@ describe("PluggableAreaChart", () => {
                                     referencePointMocks
                                         .multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn
                                         .buckets[1].items[1],
-                                    referencePointMocks
-                                        .multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn
-                                        .buckets[1].items[0],
                                 ],
                             },
                             {
                                 localIdentifier: "stack",
-                                items: [],
+                                items: referencePointMocks
+                                    .multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[2]
+                                    .items,
                             },
                         ],
                     },

@@ -275,10 +275,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
                 stacks = [nextAttribute];
             } else if (masterMeasures.length <= 1 && nextAttribute) {
                 // put non-date attribute to views
-                views = [...views, nextAttribute];
-                stacks = [];
-            } else {
-                stacks = [];
+                if (!stacks.length) {
+                    views = [...views, nextAttribute];
+                }
             }
         } else {
             // todo: check master measure and measure (unify them)
