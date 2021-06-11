@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { CaseReducer, Draft, PayloadAction } from "@reduxjs/toolkit";
+import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { LayoutState } from "./layoutState";
 import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
@@ -10,35 +10,9 @@ import {
     RelativeIndex,
     StashedDashboardItemsId,
 } from "../../types/layoutTypes";
-import { WritableDraft } from "immer/dist/types/types-external";
+import { addArrayElements, moveArrayElement, removeArrayElement } from "./arrayOps";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
-
-//
-//
-//
-
-function addArrayElements<T>(arr: WritableDraft<T[]>, index: RelativeIndex, items: Draft<T[]>) {
-    if (index === 0) {
-        arr.unshift(...items);
-    } else if (index === -1) {
-        arr.push(...items);
-    } else {
-        arr.splice(index, 0, ...items);
-    }
-}
-
-function removeArrayElement<T>(arr: WritableDraft<T[]>, index: RelativeIndex): Draft<T> | undefined {
-    if (index === 0) {
-        return arr.shift();
-    } else if (index === -1) {
-        return arr.pop();
-    } else {
-        const element = arr.splice(index, 1);
-
-        return element[0];
-    }
-}
 
 //
 //
@@ -108,6 +82,20 @@ const changeSectionHeader: LayoutReducer<ChangeSectionActionPayload> = (state, a
 //
 //
 
+type MoveSectionActionPayload = { sectionIndex: number; toIndex: RelativeIndex };
+
+const moveSection: LayoutReducer<MoveSectionActionPayload> = (state, action) => {
+    invariant(state.layout);
+
+    const { sectionIndex, toIndex } = action.payload;
+
+    moveArrayElement(state.layout.sections, sectionIndex, toIndex);
+};
+
+//
+//
+//
+
 type AddSectionItemsActionPayload = {
     sectionIndex: number;
     itemIndex: number;
@@ -138,6 +126,7 @@ export const layoutReducers = {
     setLayout,
     addSection: withUndo(addSection),
     removeSection: withUndo(removeSection),
+    moveSection: withUndo(moveSection),
     changeSectionHeader,
     addSectionItems: withUndo(addSectionItems),
 };
