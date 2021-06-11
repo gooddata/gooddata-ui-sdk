@@ -9,6 +9,7 @@ import { put, select } from "redux-saga/effects";
 import { layoutActions } from "../../state/layout";
 import { layoutSectionRemoved } from "../../events/layout";
 import isEmpty from "lodash/isEmpty";
+import { validateSectionExists } from "./validation/layoutValidation";
 
 export function* removeLayoutSectionHandler(
     ctx: DashboardContext,
@@ -27,11 +28,11 @@ export function* removeLayoutSectionHandler(
         );
     }
 
-    if (index >= layout.sections.length) {
+    if (!validateSectionExists(layout, index)) {
         return yield dispatchDashboardEvent(
             invalidArgumentsProvided(
                 ctx,
-                `Attempting to remove layout section at index ${index} while the layout has ${layout.sections.length} sections.`,
+                `Attempting to remove non-existing layout section at index ${index}.`,
                 cmd.correlationId,
             ),
         );

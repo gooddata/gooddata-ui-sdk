@@ -7,60 +7,13 @@ import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
-import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
-import {
-    DashboardItemDefinition,
-    ExtendedDashboardLayoutSection,
-    ExtendedDashboardWidget,
-    isStashedDashboardItemsId,
-    StashedDashboardItemsId,
-} from "../../types/layoutTypes";
+import { ExtendedDashboardLayoutSection, isStashedDashboardItemsId } from "../../types/layoutTypes";
 import isEmpty from "lodash/isEmpty";
-import { LayoutStash } from "../../state/layout/layoutState";
 import flatMap from "lodash/flatMap";
 import { layoutActions } from "../../state/layout";
 import { layoutSectionAdded } from "../../events/layout";
-
-function validateSectionPlacement(layout: IDashboardLayout<ExtendedDashboardWidget>, index: number) {
-    if (index === -1) {
-        return true;
-    }
-
-    if (isEmpty(layout.sections) && !index) {
-        return true;
-    }
-
-    return index < layout.sections.length;
-}
-
-type StashValidationResult = {
-    existing: StashedDashboardItemsId[];
-    missing: StashedDashboardItemsId[];
-};
-
-function validateStashIdentifiers(
-    stash: LayoutStash,
-    items: ReadonlyArray<DashboardItemDefinition>,
-): StashValidationResult {
-    const result: StashValidationResult = {
-        missing: [],
-        existing: [],
-    };
-
-    items.forEach((item) => {
-        if (!isStashedDashboardItemsId(item)) {
-            return;
-        }
-
-        if (stash[item] !== undefined) {
-            result.existing.push(item);
-        } else {
-            result.missing.push(item);
-        }
-    });
-
-    return result;
-}
+import { validateSectionPlacement } from "./validation/layoutValidation";
+import { validateStashIdentifiers } from "./validation/stashValidation";
 
 // TODO: this needs to handle calculation of the date dataset to use for the items
 export function* addLayoutSectionHandler(ctx: DashboardContext, cmd: AddLayoutSection): SagaIterator<void> {

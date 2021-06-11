@@ -1,12 +1,44 @@
 // (C) 2021 GoodData Corporation
-import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { CaseReducer, Draft, PayloadAction } from "@reduxjs/toolkit";
 import { LayoutState } from "./layoutState";
 import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 import { withUndo } from "../_infra/undoEnhancer";
-import { ExtendedDashboardLayoutSection, StashedDashboardItemsId } from "../../types/layoutTypes";
+import {
+    ExtendedDashboardItem,
+    ExtendedDashboardLayoutSection,
+    RelativeIndex,
+    StashedDashboardItemsId,
+} from "../../types/layoutTypes";
+import { WritableDraft } from "immer/dist/types/types-external";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
+
+//
+//
+//
+
+function addArrayElements<T>(arr: WritableDraft<T[]>, index: RelativeIndex, items: Draft<T[]>) {
+    if (index === 0) {
+        arr.unshift(...items);
+    } else if (index === -1) {
+        arr.push(...items);
+    } else {
+        arr.splice(index, 0, ...items);
+    }
+}
+
+function removeArrayElement<T>(arr: WritableDraft<T[]>, index: RelativeIndex): Draft<T> | undefined {
+    if (index === 0) {
+        return arr.shift();
+    } else if (index === -1) {
+        return arr.pop();
+    } else {
+        const element = arr.splice(index, 1);
+
+        return element[0];
+    }
+}
 
 //
 //
@@ -22,7 +54,7 @@ const setLayout: LayoutReducer<IDashboardLayout> = (state, action) => {
 
 type AddSectionActionPayload = {
     section: ExtendedDashboardLayoutSection;
-    index: number;
+    index: RelativeIndex;
     usedStashes: StashedDashboardItemsId[];
 };
 
@@ -31,13 +63,7 @@ const addSection: LayoutReducer<AddSectionActionPayload> = (state, action) => {
 
     const { index, section, usedStashes } = action.payload;
 
-    if (index === 0) {
-        state.layout.sections.unshift(section);
-    } else if (index === -1) {
-        state.layout.sections.push(section);
-    } else {
-        state.layout.sections.splice(index, 0, section);
-    }
+    addArrayElements(state.layout.sections, index, [section]);
 
     usedStashes.forEach((stashIdentifier) => {
         delete state.stash[stashIdentifier];
@@ -48,7 +74,7 @@ const addSection: LayoutReducer<AddSectionActionPayload> = (state, action) => {
 //
 //
 
-type RemoveSectionActionPayload = { index: number; stashIdentifier?: StashedDashboardItemsId };
+type RemoveSectionActionPayload = { index: RelativeIndex; stashIdentifier?: StashedDashboardItemsId };
 
 const removeSection: LayoutReducer<RemoveSectionActionPayload> = (state, action) => {
     invariant(state.layout);
@@ -61,7 +87,33 @@ const removeSection: LayoutReducer<RemoveSectionActionPayload> = (state, action)
         state.stash[stashIdentifier] = items;
     }
 
-    state.layout.sections.splice(action.payload.index, 1);
+    removeArrayElement(state.layout.sections, index);
+};
+
+//
+//
+//
+
+type AddSectionItemsActionPayload = {
+    sectionIndex: number;
+    itemIndex: number;
+    items: ExtendedDashboardItem[];
+    usedStashes: StashedDashboardItemsId[];
+};
+
+const addSectionItems: LayoutReducer<AddSectionItemsActionPayload> = (state, action) => {
+    invariant(state.layout);
+
+    const { sectionIndex, itemIndex, items, usedStashes } = action.payload;
+    const section = state.layout.sections[sectionIndex];
+
+    invariant(section);
+
+    addArrayElements(section.items, itemIndex, items);
+
+    usedStashes.forEach((stashIdentifier) => {
+        delete state.stash[stashIdentifier];
+    });
 };
 
 //
@@ -72,4 +124,5 @@ export const layoutReducers = {
     setLayout,
     addSection: withUndo(addSection),
     removeSection: withUndo(removeSection),
+    addSectionItems: withUndo(addSectionItems),
 };
