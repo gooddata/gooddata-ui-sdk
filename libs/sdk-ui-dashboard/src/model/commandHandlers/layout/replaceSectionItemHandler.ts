@@ -8,10 +8,8 @@ import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation";
 import { layoutActions } from "../../state/layout";
-import { validateStashIdentifiers } from "./validation/stashValidation";
+import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
-import flatMap from "lodash/flatMap";
-import { isStashedDashboardItemsId } from "../../types/layoutTypes";
 
 // TODO: this needs to handle calculation of the date dataset to use for the item
 export function* replaceSectionItemHandler(
@@ -44,7 +42,7 @@ export function* replaceSectionItemHandler(
         );
     }
 
-    const stashValidationResult = validateStashIdentifiers(stash, items);
+    const stashValidationResult = validateAndResolveStashedItems(stash, items);
 
     if (!isEmpty(stashValidationResult.missing)) {
         return yield dispatchDashboardEvent(
@@ -58,19 +56,11 @@ export function* replaceSectionItemHandler(
         );
     }
 
-    const newItems = flatMap(items, (item) => {
-        if (isStashedDashboardItemsId(item)) {
-            return stash[item];
-        }
-
-        return item;
-    });
-
     yield put(
         layoutActions.replaceSectionItem({
             sectionIndex,
             itemIndex,
-            newItems,
+            newItems: stashValidationResult.resolved,
             stashIdentifier,
             usedStashes: stashValidationResult.existing,
             undo: {

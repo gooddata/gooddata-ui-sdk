@@ -7,10 +7,9 @@ import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation";
-import { ExtendedDashboardLayoutSection, isStashedDashboardItemsId } from "../../types/layoutTypes";
-import { validateStashIdentifiers } from "./validation/stashValidation";
+import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
+import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
-import flatMap from "lodash/flatMap";
 import { layoutActions } from "../../state/layout";
 import { layoutSectionItemsAdded } from "../../events/layout";
 
@@ -43,7 +42,7 @@ export function* addSectionItemsHandler(ctx: DashboardContext, cmd: AddSectionIt
         );
     }
 
-    const stashValidationResult = validateStashIdentifiers(stash, items);
+    const stashValidationResult = validateAndResolveStashedItems(stash, items);
 
     if (!isEmpty(stashValidationResult.missing)) {
         return yield dispatchDashboardEvent(
@@ -57,19 +56,11 @@ export function* addSectionItemsHandler(ctx: DashboardContext, cmd: AddSectionIt
         );
     }
 
-    const itemsToAdd = flatMap(items, (item) => {
-        if (isStashedDashboardItemsId(item)) {
-            return stash[item];
-        }
-
-        return item;
-    });
-
     yield put(
         layoutActions.addSectionItems({
             sectionIndex,
             itemIndex,
-            items: itemsToAdd,
+            items: stashValidationResult.resolved,
             usedStashes: stashValidationResult.existing,
             undo: {
                 cmd,
@@ -82,7 +73,7 @@ export function* addSectionItemsHandler(ctx: DashboardContext, cmd: AddSectionIt
             ctx,
             sectionIndex,
             itemIndex < 0 ? section.items.length : itemIndex,
-            itemsToAdd,
+            stashValidationResult.resolved,
             stashValidationResult.existing,
             cmd.correlationId,
         ),

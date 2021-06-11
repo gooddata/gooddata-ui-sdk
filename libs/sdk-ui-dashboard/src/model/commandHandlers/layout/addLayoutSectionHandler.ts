@@ -7,13 +7,12 @@ import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
-import { ExtendedDashboardLayoutSection, isStashedDashboardItemsId } from "../../types/layoutTypes";
+import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
 import isEmpty from "lodash/isEmpty";
-import flatMap from "lodash/flatMap";
 import { layoutActions } from "../../state/layout";
 import { layoutSectionAdded } from "../../events/layout";
 import { validateSectionPlacement } from "./validation/layoutValidation";
-import { validateStashIdentifiers } from "./validation/stashValidation";
+import { validateAndResolveStashedItems } from "./validation/stashValidation";
 
 // TODO: this needs to handle calculation of the date dataset to use for the items
 export function* addLayoutSectionHandler(ctx: DashboardContext, cmd: AddLayoutSection): SagaIterator<void> {
@@ -34,7 +33,7 @@ export function* addLayoutSectionHandler(ctx: DashboardContext, cmd: AddLayoutSe
         );
     }
 
-    const stashValidationResult = validateStashIdentifiers(stash, initialItems);
+    const stashValidationResult = validateAndResolveStashedItems(stash, initialItems);
 
     if (!isEmpty(stashValidationResult.missing)) {
         return yield dispatchDashboardEvent(
@@ -51,13 +50,7 @@ export function* addLayoutSectionHandler(ctx: DashboardContext, cmd: AddLayoutSe
     const section: ExtendedDashboardLayoutSection = {
         type: "IDashboardLayoutSection",
         header: initialHeader,
-        items: flatMap(initialItems, (item) => {
-            if (isStashedDashboardItemsId(item)) {
-                return stash[item];
-            }
-
-            return item;
-        }),
+        items: stashValidationResult.resolved,
     };
 
     yield put(
