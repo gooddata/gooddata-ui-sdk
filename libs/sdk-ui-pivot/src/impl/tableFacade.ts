@@ -460,6 +460,7 @@ export class TableFacade {
             this.columnApi,
             this.currentResult,
             resizingConfig,
+            this.resizedColumnsStore,
             {
                 measureHeaders: true,
                 padding: 2 * DEFAULT_AUTOSIZE_PADDING + HEADER_CELL_BORDER,
