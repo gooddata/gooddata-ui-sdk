@@ -22,7 +22,7 @@ export function validateSectionExists(
     layout: IDashboardLayout<ExtendedDashboardWidget>,
     index: number,
 ): boolean {
-    return index < layout.sections.length;
+    return index > -1 && index < layout.sections.length;
 }
 
 export function validateItemPlacement(section: ExtendedDashboardLayoutSection, index: number): boolean {
@@ -35,4 +35,8 @@ export function validateItemPlacement(section: ExtendedDashboardLayoutSection, i
     }
 
     return index < section.items.length;
+}
+
+export function validateItemExists(section: ExtendedDashboardLayoutSection, index: number): boolean {
+    return index > -1 && index < section.items.length;
 }

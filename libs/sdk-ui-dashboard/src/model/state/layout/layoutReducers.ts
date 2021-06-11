@@ -122,6 +122,35 @@ const addSectionItems: LayoutReducer<AddSectionItemsActionPayload> = (state, act
 //
 //
 
+type MoveSectionItemActionPayload = {
+    sectionIndex: number;
+    itemIndex: number;
+    toSectionIndex: number;
+    toItemIndex: number;
+};
+
+const moveSectionItem: LayoutReducer<MoveSectionItemActionPayload> = (state, action) => {
+    invariant(state.layout);
+
+    const { sectionIndex, itemIndex, toSectionIndex, toItemIndex } = action.payload;
+    const fromSection = state.layout.sections[sectionIndex];
+    const toSection =
+        state.layout.sections[toSectionIndex < 0 ? state.layout.sections.length - 1 : toSectionIndex];
+
+    invariant(fromSection);
+    invariant(toSection);
+
+    const item = removeArrayElement(fromSection.items, itemIndex);
+
+    invariant(item);
+
+    addArrayElements(toSection.items, toItemIndex, [item]);
+};
+
+//
+//
+//
+
 export const layoutReducers = {
     setLayout,
     addSection: withUndo(addSection),
@@ -129,4 +158,5 @@ export const layoutReducers = {
     moveSection: withUndo(moveSection),
     changeSectionHeader,
     addSectionItems: withUndo(addSectionItems),
+    moveSectionItem: withUndo(moveSectionItem),
 };
