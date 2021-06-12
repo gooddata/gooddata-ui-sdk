@@ -10,10 +10,10 @@ import { DashboardRecording } from "./dashboards";
 function createRecording(
     directory: string,
     dashboard: string,
-    _dashboardRecordingMeta: any,
+    dashboardRecordingMeta: any,
 ): IRecording | null {
     try {
-        return new DashboardRecording(directory, dashboard);
+        return new DashboardRecording(directory, dashboard, dashboardRecordingMeta);
     } catch (e) {
         logWarn(
             `An error has occurred while loading dashboard recording from directory ${directory} and dashboard ${dashboard}: ${e} - the recording will not be included in further processing.`,
@@ -28,8 +28,8 @@ function loadRecordings(recordingDefinition: string): IRecording[] {
     const requestedDashboards = readJsonSync(recordingDefinition);
 
     return Object.entries(requestedDashboards)
-        .map(([displayForm, dashboardRecordingMeta]) =>
-            createRecording(directory, displayForm, dashboardRecordingMeta),
+        .map(([dashboard, dashboardRecordingMeta]) =>
+            createRecording(directory, dashboard, dashboardRecordingMeta),
         )
         .filter(isNonNullRecording);
 }

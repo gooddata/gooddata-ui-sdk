@@ -7,17 +7,15 @@ import path from "path";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming";
 import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
 import { RecordingFiles } from "../interface";
-
-//
-// internal constants & types
-//
+import { DataRecorderError } from "../base/types";
+import { logError } from "../cli/loggers";
 
 //
 // Public API
 //
 
 export type DashboardRecordingSpec = {
-    additionalFilterContexts?: string[];
+    offline?: boolean;
 };
 
 export class DashboardRecording implements IRecording {
@@ -25,13 +23,16 @@ export class DashboardRecording implements IRecording {
     private readonly dashboardId: string;
     private readonly objFile: string;
     private readonly alertsFile: string;
+    private readonly spec: DashboardRecordingSpec;
 
-    constructor(rootDir: string, id: string) {
+    constructor(rootDir: string, id: string, spec: DashboardRecordingSpec) {
         this.directory = path.join(rootDir, id);
         this.dashboardId = id;
 
         this.objFile = path.join(this.directory, RecordingFiles.Dashboards.Object);
         this.alertsFile = path.join(this.directory, RecordingFiles.Dashboards.Alerts);
+
+        this.spec = spec;
     }
 
     public getRecordingType(): RecordingType {
@@ -58,15 +59,23 @@ export class DashboardRecording implements IRecording {
         workspace: string,
         newWorkspaceId?: string,
     ): Promise<void> {
+        if (this.spec.offline) {
+            logError(
+                `An offline recording for dashboard with id ${this.dashboardId} does not contain all necessary files. Please check that ${this.objFile} and ${this.alertsFile} exist.`,
+            );
+
+            throw new DataRecorderError(
+                `Incomplete recording for 'offline' dashboard ${this.dashboardId}.`,
+                1,
+            );
+        }
+
         const ref = idRef(this.dashboardId);
-        const dashboardWithReferences = await backend
-            .workspace(workspace)
-            .dashboards()
-            .getDashboardWithReferences(ref);
-        const alerts = await backend
-            .workspace(workspace)
-            .dashboards()
-            .getDashboardWidgetAlertsForCurrentUser(ref);
+
+        const [dashboardWithReferences, alerts] = await Promise.all([
+            backend.workspace(workspace).dashboards().getDashboardWithReferences(ref),
+            backend.workspace(workspace).dashboards().getDashboardWidgetAlertsForCurrentUser(ref),
+        ]);
 
         if (!fs.existsSync(this.directory)) {
             fs.mkdirSync(this.directory, { recursive: true });
