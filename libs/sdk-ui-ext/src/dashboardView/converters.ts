@@ -2,6 +2,7 @@
 import {
     FilterContextItem,
     IFilterContext,
+    IFilterContextDefinition,
     isDashboardAttributeFilter,
     ITempFilterContext,
     IWidgetDefinition,
@@ -23,7 +24,7 @@ import { IDashboardFilter } from "./types";
  * @internal
  */
 export function filterContextToFiltersForWidget(
-    filterContext: IFilterContext | ITempFilterContext | undefined,
+    filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined,
     widget: IWidgetDefinition,
 ): IDashboardFilter[] {
     if (!filterContext) {
