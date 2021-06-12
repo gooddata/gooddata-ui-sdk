@@ -39,7 +39,6 @@ import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDrillableItem } from '@gooddata/sdk-ui';
 import { IErrorProps } from '@gooddata/sdk-ui';
-import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
@@ -527,7 +526,7 @@ export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.C
 export interface DashboardFilterContextChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly filterContext: IFilterContext;
+        readonly filterContext: IFilterContextDefinition;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED";
@@ -1015,7 +1014,7 @@ export type FilterBarComponent = ComponentType<IFilterBarProps>;
 // @internal (undocumented)
 export interface FilterContextState {
     // (undocumented)
-    filterContext?: IFilterContext;
+    filterContext?: IFilterContextDefinition;
 }
 
 // @internal
@@ -1577,10 +1576,10 @@ export const selectEnableKPIDashboardSchedule: import("@reduxjs/toolkit").Output
 export const selectEnableKPIDashboardScheduleRecipients: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: Required<import("../..").DashboardConfig>) => boolean | undefined>;
 
 // @internal
-export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IFilterContext, (res: import("./filterContextState").FilterContextState) => import("@gooddata/sdk-backend-spi").IFilterContext>;
+export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IFilterContextDefinition, (res: import("./filterContextState").FilterContextState) => import("@gooddata/sdk-backend-spi").IFilterContextDefinition>;
 
 // @internal
-export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: import("@gooddata/sdk-backend-spi").IFilterContext) => FilterContextItem[]>;
+export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: import("@gooddata/sdk-backend-spi").IFilterContextDefinition) => FilterContextItem[]>;
 
 // @internal
 export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];

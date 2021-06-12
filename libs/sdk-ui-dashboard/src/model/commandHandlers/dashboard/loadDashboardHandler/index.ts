@@ -26,6 +26,7 @@ import { internalErrorOccurred } from "../../../events/general";
 import { loadUser } from "./loadUser";
 import { userActions } from "../../../state/user";
 import { metaActions } from "../../../state/meta";
+import { dashboardFilterContextDefinition } from "../../../_staging/dashboard/dashboardFilterContext";
 
 function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWithReferences> {
     const { backend, workspace, dashboardRef } = ctx;
@@ -67,6 +68,11 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
             dashboard.dateFilterConfig,
         );
 
+        const filterContextDefinition = dashboardFilterContextDefinition(
+            dashboard,
+            effectiveDateFilterConfig.config,
+        );
+
         const batch = batchActions(
             [
                 configActions.setConfig(config),
@@ -79,7 +85,7 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
                     measures: catalog.measures(),
                 }),
                 alertsActions.setAlerts(alerts),
-                filterContextActions.setFilterContext(dashboard.filterContext),
+                filterContextActions.setFilterContext(filterContextDefinition),
                 // TODO: move code that catches errors in layout
                 // TODO: move code that validates and fixes widget sizes
                 layoutActions.setLayout(dashboard.layout ?? EmptyDashboardLayout),

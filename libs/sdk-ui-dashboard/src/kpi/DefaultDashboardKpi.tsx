@@ -10,6 +10,7 @@ import {
     selectIsReadOnly,
     selectFilterContext,
     selectSettings,
+    selectDashboardRef,
 } from "../model";
 import { KpiExecutor } from "./KpiExecutor";
 import { DashboardKpiProps } from "./types";
@@ -39,7 +40,7 @@ export const DefaultDashboardKpi: React.FC<DashboardKpiProps> = ({
     const backend = useBackendStrict(customBackend);
     const workspace = useWorkspaceStrict(customWorkspace);
 
-    const dashboardRef = useDashboardSelector(selectFilterContext);
+    const dashboardRef = useDashboardSelector(selectDashboardRef);
     const filterContext = useDashboardSelector(selectFilterContext);
     const settings = useDashboardSelector(selectSettings);
     const separators = useDashboardSelector(selectSeparators);
