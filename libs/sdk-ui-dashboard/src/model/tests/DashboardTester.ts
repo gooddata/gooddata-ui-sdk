@@ -102,7 +102,31 @@ export class DashboardTester {
     }
 
     public dispatch(action: PayloadAction<any>): void {
+        /*
+         * Clearing monitored actions is essential to allow sane usage in tests that need fire a command and wait
+         * for the same type of event multiple times. Monitored actions is what is used to wait in the `waitFor`
+         * method. Without the clearning, the second `waitFor` would bail out immediately and return the very first
+         * captured event.
+         */
+        this.monitoredActions = {};
         this.reduxedStore.store.dispatch(action);
+    }
+
+    /**
+     * Convenience function that combines both {@link dispatch} and {@link waitFor}.
+     *
+     * @param action - action (typically a command) to dispatch
+     * @param actionType - type of action (typically an event type) to wait for
+     * @param timeout - timeout after which the wait fails, default is 1000
+     */
+    public dispatchAndWaitFor(
+        action: PayloadAction<any>,
+        actionType: DashboardEventType | DashboardCommandType | string,
+        timeout: number = 1000,
+    ): Promise<any> {
+        this.dispatch(action);
+
+        return this.waitFor(actionType, timeout);
     }
 
     /**
