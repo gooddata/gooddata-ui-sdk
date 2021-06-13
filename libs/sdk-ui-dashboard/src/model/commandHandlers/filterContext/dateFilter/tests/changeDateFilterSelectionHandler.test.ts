@@ -1,47 +1,34 @@
 // (C) 2021 GoodData Corporation
-import { changeDateFilterSelection, clearDateFilterSelection, loadDashboard } from "../../../../commands";
-import { DashboardTester } from "../../../../tests/DashboardTester";
+import { changeDateFilterSelection, clearDateFilterSelection } from "../../../../commands";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { selectFilterContextDateFilter } from "../../../../state/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/Dashboard.fixtures";
 
 describe("changeDateFilterSelectionHandler", () => {
-    async function getInitializedTester(): Promise<DashboardTester> {
-        const tester = DashboardTester.forRecording(SimpleDashboardIdentifier);
-
-        tester.dispatch(loadDashboard());
-        await tester.waitFor("GDC.DASH/EVT.LOADED");
-        tester.resetMonitors();
-
-        return tester;
-    }
+    let Tester: DashboardTester;
+    beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
 
     it("should emit the appropriate events for changed date filter", async () => {
-        const tester = await getInitializedTester();
+        Tester.dispatch(changeDateFilterSelection("relative", "GDC.time.month", -3, 0, "testCorrelation"));
+        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
 
-        tester.dispatch(changeDateFilterSelection("relative", "GDC.time.month", -3, 0, "testCorrelation"));
-        await tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
-
-        expect(tester.emittedEventsDigest()).toMatchSnapshot();
+        expect(Tester.emittedEventsDigest()).toMatchSnapshot();
     });
 
     it("should set the date filter in the state when a date filter is changed", async () => {
-        const tester = await getInitializedTester();
+        Tester.dispatch(changeDateFilterSelection("relative", "GDC.time.month", -3, 0));
+        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
 
-        tester.dispatch(changeDateFilterSelection("relative", "GDC.time.month", -3, 0));
-        await tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
-
-        expect(selectFilterContextDateFilter(tester.state())).toMatchSnapshot();
+        expect(selectFilterContextDateFilter(Tester.state())).toMatchSnapshot();
     });
 
     it("should clear the date filter in the state when a date filter is cleared", async () => {
-        const tester = await getInitializedTester();
+        Tester.dispatch(changeDateFilterSelection("relative", "GDC.time.month", -3, 0));
+        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
 
-        tester.dispatch(changeDateFilterSelection("relative", "GDC.time.month", -3, 0));
-        await tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        Tester.dispatch(clearDateFilterSelection());
+        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
 
-        tester.dispatch(clearDateFilterSelection());
-        await tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
-
-        expect(selectFilterContextDateFilter(tester.state())).toBeUndefined();
+        expect(selectFilterContextDateFilter(Tester.state())).toBeUndefined();
     });
 });
