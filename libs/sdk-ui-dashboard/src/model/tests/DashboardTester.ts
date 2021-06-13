@@ -195,6 +195,9 @@ export class DashboardTester {
  * Obvious warning: beforeAll creates one instance for all tests and is therefore not safe when some tests do modifications of
  * the dashboard. Use beforeEach in that case.
  *
+ * Note: before sending the instance of dashboard tester, the function will ensure all the event monitors are reset so
+ * that the captured events related to load do not interfere with the test itself.
+ *
  * @param onLoaded - function to call when the dashboard is successfully loaded
  * @param identifier - identifier of the dashboard to load
  * @param loadCommand - optionally customize the load command to use
@@ -214,6 +217,7 @@ export function preloadedTesterFactory(
         tester
             .waitFor("GDC.DASH/EVT.LOADED")
             .then(() => {
+                tester.resetMonitors();
                 onLoaded(tester);
                 done();
             })

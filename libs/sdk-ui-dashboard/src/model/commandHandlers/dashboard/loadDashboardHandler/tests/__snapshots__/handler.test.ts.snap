@@ -1,19 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`load dashboard handler should emit events in correct order and carry-over correlationId 1`] = `
-Array [
-  Object {
-    "correlationId": "testCorrelation",
-    "type": "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED",
-  },
-  Object {
-    "correlationId": "testCorrelation",
-    "type": "GDC.DASH/EVT.LOADED",
-  },
-]
+exports[`load dashboard handler for an empty dashboard should add default filter context for an empty dashboard 1`] = `
+Object {
+  "description": "",
+  "filters": Array [
+    Object {
+      "dateFilter": Object {
+        "from": 0,
+        "granularity": "GDC.time.month",
+        "to": 0,
+        "type": "relative",
+      },
+    },
+  ],
+  "title": "filterContext",
+}
 `;
 
-exports[`load dashboard handler should resolve config if empty config provided 1`] = `
+exports[`load dashboard handler for an empty dashboard should add default layout for an empty dashboard 1`] = `
+Object {
+  "sections": Array [],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`load dashboard handler for any dashboard should resolve config props that can be obtained from backend 1`] = `
 Object {
   "colorPalette": Array [],
   "dateFilterConfig": Object {
@@ -150,7 +161,7 @@ Object {
     ],
     "selectedOption": "THIS_MONTH",
   },
-  "isReadOnly": false,
+  "isReadOnly": undefined,
   "locale": "en-US",
   "mapboxToken": undefined,
   "separators": Object {
@@ -161,7 +172,7 @@ Object {
 }
 `;
 
-exports[`load dashboard handler should resolve permissions if none provided 1`] = `
+exports[`load dashboard handler for any dashboard should resolve permissions if none provided 1`] = `
 Object {
   "canAccessWorkbench": true,
   "canCreateAnalyticalDashboard": true,
@@ -181,4 +192,17 @@ Object {
   "canRefreshData": true,
   "canUploadNonProductionCSV": true,
 }
+`;
+
+exports[`load dashboard handler should emit events in correct order and carry-over correlationId 1`] = `
+Array [
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.LOADED",
+  },
+]
 `;
