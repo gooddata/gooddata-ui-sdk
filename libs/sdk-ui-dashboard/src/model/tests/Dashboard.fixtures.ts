@@ -40,3 +40,5 @@ export const TestInsightPlaceholderItem: IDashboardLayoutItem<InsightPlaceholder
         },
     },
 };
+
+export const TestCorrelation = "testCorrelationId";
