@@ -146,13 +146,15 @@ export function* resolveDashboardConfig(
         yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, configValidation, cmd.correlationId));
     }
 
-    return {
+    const resolvedConfig: ResolvedDashboardConfig = {
         locale: settings.locale as ILocale,
         separators: settings.separators,
         dateFilterConfig: validDateFilterConfig,
         settings: settings.settings,
         colorPalette,
         mapboxToken: config.mapboxToken,
-        isReadOnly: config.isReadOnly ?? false,
-    } as ResolvedDashboardConfig;
+        isReadOnly: config.isReadOnly,
+    };
+
+    return resolvedConfig;
 }

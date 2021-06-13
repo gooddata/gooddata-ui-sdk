@@ -1460,7 +1460,7 @@ export interface ResetDashboard extends IDashboardCommand {
 export function resetDashboard(correlationId?: string): ResetDashboard;
 
 // @internal
-export type ResolvedDashboardConfig = Required<DashboardConfig>;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "isReadOnly"> & DashboardConfig;
 
 // @internal
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;
@@ -1528,10 +1528,10 @@ export const selectCatalogFacts: import("@reduxjs/toolkit").OutputSelector<Dashb
 export const selectCatalogMeasures: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ICatalogMeasure[], (res: import("./catalogState").CatalogState) => import("@gooddata/sdk-backend-spi").ICatalogMeasure[]>;
 
 // @internal
-export const selectColorPalette: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").IColorPalette, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-model").IColorPalette>;
+export const selectColorPalette: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").IColorPalette, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-model").IColorPalette>;
 
 // @internal
-export const selectConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, Required<import("../..").DashboardConfig>, (res: import("./configState").ConfigState) => Required<import("../..").DashboardConfig>>;
+export const selectConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../..").ResolvedDashboardConfig, (res: import("./configState").ConfigState) => import("../..").ResolvedDashboardConfig>;
 
 // @internal (undocumented)
 export const selectDashboardLoading: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;
@@ -1546,13 +1546,13 @@ export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<Das
 export const selectDashboardUriRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").UriRef, (res: string) => import("@gooddata/sdk-model").UriRef>;
 
 // @internal
-export const selectDateFilterConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
+export const selectDateFilterConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
 
 // @internal
 export const selectDateFilterConfigOverrides: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined>;
 
 // @internal
-export const selectDateFormat: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res: Required<import("../..").DashboardConfig>) => string | undefined>;
+export const selectDateFormat: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res: import("../..").ResolvedDashboardConfig) => string | undefined>;
 
 // @internal
 export const selectEffectiveDateFilterAvailableGranularities: import("@reduxjs/toolkit").OutputSelector<DashboardState, DateFilterGranularity[], (res: import("@gooddata/sdk-backend-spi").IDateFilterConfig) => DateFilterGranularity[]>;
@@ -1570,10 +1570,10 @@ export const selectEffectiveDateFilterOptions: import("@reduxjs/toolkit").Output
 export const selectEffectiveDateFilterTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => string | undefined>;
 
 // @internal
-export const selectEnableKPIDashboardSchedule: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: Required<import("../..").DashboardConfig>) => boolean | undefined>;
+export const selectEnableKPIDashboardSchedule: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;
 
 // @internal
-export const selectEnableKPIDashboardScheduleRecipients: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: Required<import("../..").DashboardConfig>) => boolean | undefined>;
+export const selectEnableKPIDashboardScheduleRecipients: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;
 
 // @internal
 export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IFilterContextDefinition, (res: import("./filterContextState").FilterContextState) => import("@gooddata/sdk-backend-spi").IFilterContextDefinition>;
@@ -1585,25 +1585,25 @@ export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelect
 export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];
 
 // @internal
-export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: Required<import("../..").DashboardConfig>) => boolean>;
+export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;
 
 // @internal
 export const selectLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>>;
 
 // @internal
-export const selectLocale: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-ui").ILocale, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-ui").ILocale>;
+export const selectLocale: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-ui").ILocale, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-ui").ILocale>;
 
 // @internal
-export const selectMapboxToken: import("@reduxjs/toolkit").OutputSelector<DashboardState, string, (res: Required<import("../..").DashboardConfig>) => string>;
+export const selectMapboxToken: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res: import("../..").ResolvedDashboardConfig) => string | undefined>;
 
 // @internal
 export const selectPermissions: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IWorkspacePermissions, (res: import("./permissionsState").PermissionsState) => import("@gooddata/sdk-backend-spi").IWorkspacePermissions>;
 
 // @internal
-export const selectSeparators: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISeparators>;
+export const selectSeparators: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").ISeparators>;
 
 // @internal
-export const selectSettings: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISettings>;
+export const selectSettings: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").ISettings>;
 
 // @internal
 export const selectStash: import("@reduxjs/toolkit").OutputSelector<DashboardState, Record<string, import("../../types/layoutTypes").ExtendedDashboardItem[]>, (res: LayoutState) => Record<string, import("../../types/layoutTypes").ExtendedDashboardItem[]>>;
