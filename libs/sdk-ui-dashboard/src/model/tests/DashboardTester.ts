@@ -9,7 +9,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DashboardEvents, DashboardEventType } from "../events";
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
 import noop from "lodash/noop";
-import { DashboardCommandType } from "../commands";
+import { DashboardCommandType, LoadDashboard, loadDashboard } from "../commands";
 
 type MonitoredAction = {
     calls: number;
@@ -173,4 +173,52 @@ export class DashboardTester {
     public state(): DashboardState {
         return this.reduxedStore.store.getState();
     }
+}
+
+/**
+ * This factory will return a function that can be integrated into jest's `beforeAll` or `beforeEach` statements. That returned
+ * function will drive initialization of the dashboard tester and will tell jest it's `done` or it will `fail`.
+ *
+ * When successfully loaded, the returned function will call both the `onLoaded` callback and jest's `done` callback.
+ *
+ * An example usage:
+ *
+ * ```
+ *    let Tester: DashboardTester;
+ *    beforeAll(preloadedTesterFactory((tester) => Tester = tester, SimpleDashboardIdentifier));
+ *
+ *    it("should do xyz", () => {
+ *
+ *    })
+ * ```
+ *
+ * Obvious warning: beforeAll creates one instance for all tests and is therefore not safe when some tests do modifications of
+ * the dashboard. Use beforeEach in that case.
+ *
+ * @param onLoaded - function to call when the dashboard is successfully loaded
+ * @param identifier - identifier of the dashboard to load
+ * @param loadCommand - optionally customize the load command to use
+ * @param backendConfig - optionally customize the recorded backend configuration
+ */
+export function preloadedTesterFactory(
+    onLoaded: (tester: DashboardTester) => void,
+    identifier: Identifier,
+    loadCommand: LoadDashboard = loadDashboard(),
+    backendConfig?: RecordedBackendConfig,
+) {
+    return (done: jest.DoneCallback): void => {
+        const tester = DashboardTester.forRecording(identifier, backendConfig);
+
+        tester.dispatch(loadCommand);
+
+        tester
+            .waitFor("GDC.DASH/EVT.LOADED")
+            .then(() => {
+                onLoaded(tester);
+                done();
+            })
+            .catch((err) => {
+                done.fail(`DashboardTester failed to load dashboard: ${err.message}`);
+            });
+    };
 }
