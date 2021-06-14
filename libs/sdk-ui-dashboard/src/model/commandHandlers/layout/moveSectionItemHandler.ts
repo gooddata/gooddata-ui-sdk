@@ -67,6 +67,24 @@ export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionI
         );
     }
 
+    let targetItemIndex = 0;
+
+    if (sectionIndex === targetSectionIndex) {
+        targetItemIndex = resolveRelativeIndex(targetSection.items, toItemIndex);
+
+        if (itemIndex === targetItemIndex) {
+            return yield dispatchDashboardEvent(
+                invalidArgumentsProvided(
+                    ctx,
+                    `Attempting to move item to a same place where it already resides ${toItemIndex}.`,
+                    cmd.correlationId,
+                ),
+            );
+        }
+    } else {
+        targetItemIndex = resolveIndexOfNewItem(targetSection.items, toItemIndex);
+    }
+
     yield put(
         layoutActions.moveSectionItem({
             sectionIndex,
@@ -78,8 +96,6 @@ export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionI
             },
         }),
     );
-
-    const targetItemIndex = resolveIndexOfNewItem(targetSection.items, toItemIndex);
 
     yield dispatchDashboardEvent(
         layoutSectionItemMoved(
