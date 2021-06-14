@@ -140,10 +140,10 @@ export interface AbstractMeasureValueFilter {
     applyOnResult?: boolean;
     /**
      *
-     * @type {Array<AfmObjectIdentifier>}
+     * @type {Array<Identifier>}
      * @memberof AbstractMeasureValueFilter
      */
-    dimensionality?: Array<AfmObjectIdentifier>;
+    dimensionality?: Array<Identifier>;
 }
 /**
  *
@@ -153,10 +153,10 @@ export interface AbstractMeasureValueFilter {
 export interface AbstractMeasureValueFilterAllOf {
     /**
      *
-     * @type {Array<AfmObjectIdentifier>}
+     * @type {Array<Identifier>}
      * @memberof AbstractMeasureValueFilterAllOf
      */
-    dimensionality?: Array<AfmObjectIdentifier>;
+    dimensionality?: Array<Identifier>;
 }
 /**
  *
@@ -544,10 +544,10 @@ export interface CommonMeasureValueFilter {
     applyOnResult?: boolean;
     /**
      *
-     * @type {Array<AfmObjectIdentifier>}
+     * @type {Array<Identifier>}
      * @memberof CommonMeasureValueFilter
      */
-    dimensionality?: Array<AfmObjectIdentifier>;
+    dimensionality?: Array<Identifier>;
     /**
      *
      * @type {Identifier}
@@ -607,10 +607,10 @@ export interface ComparisonMeasureValueFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {Array<AfmObjectIdentifier>}
+     * @type {Array<Identifier>}
      * @memberof ComparisonMeasureValueFilterBody
      */
-    dimensionality?: Array<AfmObjectIdentifier>;
+    dimensionality?: Array<Identifier>;
     /**
      *
      * @type {Identifier}
@@ -1479,10 +1479,10 @@ export interface RangeMeasureValueFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {Array<AfmObjectIdentifier>}
+     * @type {Array<Identifier>}
      * @memberof RangeMeasureValueFilterBody
      */
-    dimensionality?: Array<AfmObjectIdentifier>;
+    dimensionality?: Array<Identifier>;
     /**
      *
      * @type {Identifier}
@@ -1586,10 +1586,10 @@ export interface RankingFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {Array<AfmObjectIdentifier>}
+     * @type {Array<Identifier>}
      * @memberof RankingFilterBody
      */
-    dimensionality?: Array<AfmObjectIdentifier>;
+    dimensionality?: Array<Identifier>;
     /**
      *
      * @type {Array<Identifier>}

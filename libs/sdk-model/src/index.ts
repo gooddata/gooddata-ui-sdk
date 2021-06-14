@@ -264,12 +264,14 @@ export { bucketItemLocalId } from "./execution/buckets/bucketItem";
 
 export {
     IExecutionDefinition,
+    IExecutionConfig,
     DimensionGenerator,
     defWithFilters,
     defFingerprint,
     defSetDimensions,
     defSetSorts,
     defTotals,
+    defSetExecConfig,
     IPostProcessing,
     defSetPostProcessing,
 } from "./execution/executionDefinition";
@@ -282,6 +284,7 @@ export {
     defWithSorting,
     defWithPostProcessing,
     defWithDateFormat,
+    defWithExecConfig,
     defaultDimensionsGenerator,
     emptyDef,
 } from "./execution/executionDefinition/factory";

@@ -208,9 +208,11 @@
                         "description": "Specifies percentage of source table data scanned during the computation.",
                         "required": false,
                         "schema": {
-                            "type": "integer",
-                            "minimum": 1,
-                            "maximum": 99
+                            "type": "number",
+                            "minimum": 0,
+                            "exclusiveMinimum": true,
+                            "maximum": 100,
+                            "exclusiveMaximum": true
                         }
                     },
                     {
@@ -695,7 +697,7 @@
                             "dimensionality": {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/AfmObjectIdentifier"
+                                    "$ref": "#/components/schemas/Identifier"
                                 }
                             }
                         }
@@ -1147,10 +1149,12 @@
                 "description": "Various setting affecting the process of ADM execution or its result",
                 "properties": {
                     "dataSamplingPercentage": {
-                        "type": "integer",
+                        "type": "number",
                         "description": "Specifies percentage of source table data scanned during the computation. Only \"center of star\" (and not e.g. dimension) tables are subject to data sampling. Note that this option is available only for specific data sources.",
-                        "minimum": 1,
-                        "maximum": 99
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "maximum": 100,
+                        "exclusiveMaximum": true
                     }
                 }
             },

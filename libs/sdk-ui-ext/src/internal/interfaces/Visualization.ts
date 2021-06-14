@@ -10,6 +10,7 @@ import {
     ITotal,
     ObjRef,
     VisualizationProperties,
+    IExecutionConfig,
 } from "@gooddata/sdk-model";
 import {
     ChartType,
@@ -63,6 +64,7 @@ export interface IVisProps {
     locale?: ILocale;
     dateFormat?: string;
     config?: IGdcConfig;
+    executionConfig?: IExecutionConfig;
     theme?: ITheme;
 
     /*

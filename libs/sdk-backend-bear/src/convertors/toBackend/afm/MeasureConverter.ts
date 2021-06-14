@@ -39,6 +39,16 @@ export function convertMeasure(measure: IMeasure): GdcExecuteAFM.IMeasure {
     };
 }
 
+export function convertAggregation(
+    aggregation?: MeasureAggregation,
+): GdcExecuteAFM.SimpleMeasureAggregation | undefined {
+    if (aggregation === "approximate_count") {
+        // Bear doesn't support approximate_count so transparently fallback to exact count.
+        return "count";
+    }
+    return aggregation;
+}
+
 function convertMeasureDefinition(definition: IMeasureDefinitionType): GdcExecuteAFM.MeasureDefinition {
     if (isMeasureDefinition(definition)) {
         return convertSimpleMeasureDefinition(definition);
@@ -77,16 +87,6 @@ function convertSimpleMeasureDefinition(
             ...computeRatioProp,
         },
     };
-}
-
-function convertAggregation(
-    aggregation?: MeasureAggregation,
-): GdcExecuteAFM.SimpleMeasureAggregation | undefined {
-    if (aggregation === "approximate_count") {
-        // Bear doesn't support approximate_count so transparently fallback to exact count.
-        return "count";
-    }
-    return aggregation;
 }
 
 function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): GdcExecuteAFM.IPopMeasureDefinition {

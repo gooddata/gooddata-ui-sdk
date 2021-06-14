@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import {
     IMeasureDefinitionType,
@@ -30,6 +30,7 @@ import {
 import isEmpty from "lodash/isEmpty";
 import { toBearRef } from "./ObjRefConverter";
 import { convertFilter } from "./FilterConverter";
+import { convertAggregation } from "./afm/MeasureConverter";
 
 const convertPreviousPeriodDataSet = (
     dataSet: IPreviousPeriodDateDataSet,
@@ -83,7 +84,7 @@ const convertSimpleMeasureDefinition = (
         throw new Error("Measure has neither uri nor identifier.");
     }
 
-    const aggregation = measureAggregation(measure);
+    const aggregation = convertAggregation(measureAggregation(measure));
     const computeRatio = measureDoesComputeRatio(measure);
     const filters = (measureFilters(measure) || []).map(convertFilter);
 

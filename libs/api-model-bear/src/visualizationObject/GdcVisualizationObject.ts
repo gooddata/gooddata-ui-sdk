@@ -8,15 +8,7 @@ import isEmpty from "lodash/isEmpty";
 export namespace GdcVisualizationObject {
     export type SortDirection = "asc" | "desc";
     export type Identifier = string;
-    export type MeasureAggregation =
-        | "sum"
-        | "count"
-        | "approximate_count"
-        | "avg"
-        | "min"
-        | "max"
-        | "median"
-        | "runsum";
+    export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
     export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
     export type VisualizationType =
         | "table"

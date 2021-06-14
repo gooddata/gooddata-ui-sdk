@@ -5,11 +5,13 @@ import {
     defFingerprint,
     defWithDimensions,
     defWithSorting,
+    defWithExecConfig,
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
     ISortItem,
     defWithDateFormat,
+    IExecutionConfig,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { TigerExecutionResult } from "./executionResult";
@@ -66,6 +68,10 @@ export class TigerPreparedExecution implements IPreparedExecution {
         }
 
         return this._fingerprint;
+    }
+
+    public withExecConfig(config: IExecutionConfig): IPreparedExecution {
+        return this.executionFactory.forDefinition(defWithExecConfig(this.definition, config));
     }
 
     public equals(other: IPreparedExecution): boolean {
