@@ -3,7 +3,13 @@ import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import { PluggableBulletChart } from "../PluggableBulletChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import { IBucketOfFun, IFilters, IReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization";
+import {
+    IBucketOfFun,
+    IExtendedReferencePoint,
+    IFilters,
+    IReferencePoint,
+    IVisConstruct,
+} from "../../../../interfaces/Visualization";
 import { DEFAULT_BULLET_CHART_CONFIG } from "../../../../constants/uiConfig";
 import { OverTimeComparisonTypes, BucketNames, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -17,6 +23,7 @@ import {
     expectedInsightDefDepartment,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock";
+import { attributeItems, dateItem, masterMeasureItems } from "../../../../tests/mocks/referencePointMocks";
 
 const defaultProps: IVisConstruct = {
     backend: dummyBackend(),
@@ -233,6 +240,141 @@ describe("PluggableBulletChart", () => {
     });
 
     describe("handling date items", () => {
+        describe("with multiple dates", () => {
+            const inputs: [string, IReferencePoint, Partial<IExtendedReferencePoint>][] = [
+                [
+                    "from table to bullet chart: two same dates in view by (should ignore date with different date dimension)",
+                    referencePointMocks.twoIdenticalDatesInRowsAndColumns,
+                    {
+                        buckets: [
+                            {
+                                localIdentifier: "measures",
+                                items: masterMeasureItems.slice(0, 1),
+                            },
+                            {
+                                localIdentifier: "secondary_measures",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "tertiary_measures",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "view",
+                                items: [dateItem, dateItem],
+                            },
+                        ],
+                        filters: {
+                            localIdentifier: "filters",
+                            items: [],
+                        },
+                    },
+                ],
+                [
+                    "from table to bullet chart: one date in view by (view by should not contain dates with different date dimensions)",
+                    referencePointMocks.threeDifferentDatesReferencePoint,
+                    {
+                        buckets: [
+                            {
+                                localIdentifier: "measures",
+                                items: masterMeasureItems.slice(0, 1),
+                            },
+                            {
+                                localIdentifier: "secondary_measures",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "tertiary_measures",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "view",
+                                items: [dateItem],
+                            },
+                        ],
+                        filters: {
+                            localIdentifier: "filters",
+                            items: [],
+                        },
+                    },
+                ],
+                [
+                    "from table to bullet chart: max two dates in view by",
+                    referencePointMocks.threeIdenticalDatesInRowsAndColumns,
+                    {
+                        buckets: [
+                            {
+                                localIdentifier: "measures",
+                                items: masterMeasureItems.slice(0, 1),
+                            },
+                            {
+                                localIdentifier: "secondary_measures",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "tertiary_measures",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "view",
+                                items: [dateItem, dateItem],
+                            },
+                        ],
+                        filters: {
+                            localIdentifier: "filters",
+                            items: [],
+                        },
+                    },
+                ],
+                [
+                    "from table to bullet chart: attribute and date in view by",
+                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn,
+                    {
+                        buckets: [
+                            {
+                                localIdentifier: "measures",
+                                items: masterMeasureItems.slice(0, 1),
+                            },
+                            {
+                                localIdentifier: "secondary_measures",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "tertiary_measures",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "view",
+                                items: [attributeItems[0], dateItem],
+                            },
+                        ],
+                        filters: {
+                            localIdentifier: "filters",
+                            items: [],
+                        },
+                    },
+                ],
+            ];
+            it.each(inputs)(
+                "should return correct extended reference (%s)",
+                async (
+                    _description,
+                    inputReferencePoint: IReferencePoint,
+                    expectedReferencePoint: Partial<IExtendedReferencePoint>,
+                ) => {
+                    const chart = createComponent({
+                        ...defaultProps,
+                        featureFlags: {
+                            enableMultipleDatesDEV: true,
+                        },
+                    });
+
+                    const referencePoint = await chart.getExtendedReferencePoint(inputReferencePoint);
+                    expect(referencePoint).toMatchObject(expectedReferencePoint);
+                },
+            );
+        });
+
         it("should keep Date items with the same dimension", async () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {
