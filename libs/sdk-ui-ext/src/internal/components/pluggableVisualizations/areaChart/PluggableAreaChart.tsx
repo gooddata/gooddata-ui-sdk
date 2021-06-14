@@ -262,31 +262,29 @@ export class PluggableAreaChart extends PluggableBaseChart {
             BucketNames.COLUMNS,
         ]);
 
-        const firstDate = getFistDateItem(buckets);
+        const dateItem = getFistDateItem(buckets);
+        if (dateItem) {
+            // first available date is put to views (date has preference)
+            views = [dateItem];
 
-        if (firstDate) {
-            views = [firstDate];
-            const [nextAttribute] = allAttributes.filter((attr) => attr !== firstDate);
-
+            const [nextAttribute] = allAttributes.filter((attr) => attr !== dateItem);
             const isNextAttributeDate = isDateBucketItem(nextAttribute);
-
             if (masterMeasures.length <= 1 && nextAttribute && isNextAttributeDate) {
-                // put date attribute to stacks
+                // next attribute is date -> put to stacks
                 stacks = [nextAttribute];
-            } else if (masterMeasures.length <= 1 && nextAttribute) {
-                // put non-date attribute to views
-                if (!stacks.length) {
-                    views = [...views, nextAttribute];
-                }
+            } else if (masterMeasures.length <= 1 && nextAttribute && !stacks.length) {
+                // next attribute is not date and stacks are empty -> put to views
+                views = [...views, nextAttribute];
             }
         } else {
-            // todo: check master measure and measure (unify them)
             if (masterMeasures.length <= 1 && allAttributes.length > 0 && !stacks.length) {
+                // have more attributes and stacks empty -> fill views
                 views = allAttributes.slice(0, MAX_VIEW_COUNT);
             } else if (masterMeasures.length <= 1 && allAttributes.length) {
-                // have stacks, cut only one attribute in view
+                // have more attributes and stacks non-empty -> keep only one attribute in view
                 views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
             } else {
+                // more measures -> prefer measures
                 views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
                 stacks = [];
             }
