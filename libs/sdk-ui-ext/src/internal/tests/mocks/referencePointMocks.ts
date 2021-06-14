@@ -1282,7 +1282,7 @@ export const multipleDatesNotAsFirstReferencePoint: IReferencePoint = {
     buckets: [
         {
             localIdentifier: "measures",
-            items: masterMeasureItems.slice(0, 1),
+            items: masterMeasureItems,
         },
         {
             localIdentifier: "rows",

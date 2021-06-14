@@ -264,6 +264,37 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: AreaChart - with one measure and view by date and stack by date 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 7,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": Array [
+      "2010 > Amount",
+      "2011 > Amount",
+      "2012 > Amount",
+      "2013 > Amount",
+      "2014 > Amount",
+      "2016 > Amount",
+      "2017 > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 5,
+    "attributes": 1,
+    "sliceNames": Array [
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: BarChart - arithmetic measures 1`] = `
 Object {
   "seriesDigest": Object {
