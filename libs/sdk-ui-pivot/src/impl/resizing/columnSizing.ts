@@ -797,7 +797,10 @@ const shouldStopCalculation = (config: CalculateColumnWidthsConfig, calculatedCo
     config.clientWidth &&
     calculatedColumnsTotalWidth > config.clientWidth;
 
-function calculateColumnWidths(config: CalculateColumnWidthsConfig) {
+function calculateColumnWidths(
+    config: CalculateColumnWidthsConfig,
+    resizedColumnsStore: ResizedColumnsStore,
+) {
     const { context } = config;
     const maxWidths = new Map<string, number>();
     if (context) {
@@ -831,9 +834,15 @@ function calculateColumnWidths(config: CalculateColumnWidthsConfig) {
                     collectWidths(config, row, column, maxWidths);
                 }
             });
+            if (config.columnAutoresizeOption === "viewport") {
+                const finalMaxWidth = colId ? maxWidths.get(colId) : undefined;
 
-            const finalMaxWidth = colId ? maxWidths.get(colId) : undefined;
-            calculatedColumnsTotalWidth += getColWidth(finalMaxWidth, config.padding);
+                const manuallyResizedColumn = resizedColumnsStore.getManuallyResizedColumn(column);
+                // total width used for stoping calculation should prefer manual width over autowidth
+                calculatedColumnsTotalWidth += manuallyResizedColumn
+                    ? manuallyResizedColumn.width
+                    : getColWidth(finalMaxWidth, config.padding);
+            }
         }
     }
 
@@ -934,6 +943,7 @@ export function getAutoResizedColumns(
     columnApi: ColumnApi | null,
     execution: IExecutionResult | null,
     resizingConfig: ColumnResizingConfig,
+    resizedColumnsStore: ResizedColumnsStore,
     options: {
         measureHeaders: boolean;
         padding: number;
@@ -949,23 +959,26 @@ export function getAutoResizedColumns(
         const rowData = getDisplayedRowData(gridApi);
         const totalData = getDisplayedTotalData(gridApi);
         const autoResizedColumns = {};
-        const updatedColumDefs = calculateColumnWidths({
-            tableDescriptor,
-            context,
-            columns,
-            rowData,
-            totalData,
-            measureHeaders: options.measureHeaders,
-            headerFont,
-            subtotalFont,
-            totalFont,
-            rowFont,
-            padding: options.padding,
-            separators: options.separators,
-            cache: new Map(),
-            columnAutoresizeOption,
-            clientWidth,
-        });
+        const updatedColumDefs = calculateColumnWidths(
+            {
+                tableDescriptor,
+                context,
+                columns,
+                rowData,
+                totalData,
+                measureHeaders: options.measureHeaders,
+                headerFont,
+                subtotalFont,
+                totalFont,
+                rowFont,
+                padding: options.padding,
+                separators: options.separators,
+                cache: new Map(),
+                columnAutoresizeOption,
+                clientWidth,
+            },
+            resizedColumnsStore,
+        );
         updatedColumDefs.forEach((columnDef: ColDef) => {
             if (agColId(columnDef) && columnDef.width !== undefined) {
                 autoResizedColumns[agColId(columnDef)] = {

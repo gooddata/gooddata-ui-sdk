@@ -1,8 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
 import { storiesOf } from "@storybook/react";
 import React from "react";
-import { PivotTable, IPivotTableProps } from "@gooddata/sdk-ui-pivot";
-import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "../../../../scenarios/pivotTable/base";
+import {
+    PivotTable,
+    IPivotTableProps,
+    newWidthForAttributeColumn,
+    newWidthForAllColumnsForMeasure,
+} from "@gooddata/sdk-ui-pivot";
+import {
+    PivotTableWithSingleMeasureAndTwoRowsAndCols,
+    PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+} from "../../../../scenarios/pivotTable/base";
 import { withScreenshot, withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 import { CustomStories } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
@@ -127,4 +135,42 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("auto-resizing of visible 
             },
         },
     ),
+);
+
+storiesOf(`${CustomStories}/Pivot Table`, module).add(
+    "auto-resizing of visible columns with some of them manually shrinked",
+    () =>
+        withMultipleScreenshots(
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                <PivotTableTest
+                    measures={PivotTableWithTwoMeasuresAndTwoRowsAndCols.measures}
+                    rows={PivotTableWithTwoMeasuresAndTwoRowsAndCols.rows}
+                    columns={PivotTableWithTwoMeasuresAndTwoRowsAndCols.columns}
+                    config={{
+                        ...tableConfig,
+                        columnSizing: {
+                            defaultWidth: "viewport",
+                            columnWidths: [
+                                newWidthForAttributeColumn(
+                                    PivotTableWithTwoMeasuresAndTwoRowsAndCols.rows[0],
+                                    61,
+                                ),
+                                newWidthForAttributeColumn(
+                                    PivotTableWithTwoMeasuresAndTwoRowsAndCols.rows[1],
+                                    61,
+                                ),
+                                newWidthForAllColumnsForMeasure(
+                                    PivotTableWithTwoMeasuresAndTwoRowsAndCols.measures[0],
+                                    61,
+                                ),
+                            ],
+                        },
+                    }}
+                />
+                ,
+            </ScreenshotReadyWrapper>,
+            {
+                "initial viewport": {},
+            },
+        ),
 );
