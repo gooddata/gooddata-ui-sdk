@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add section items handler for dashboard with existing sections should emit events correctly 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
+  },
+]
+`;

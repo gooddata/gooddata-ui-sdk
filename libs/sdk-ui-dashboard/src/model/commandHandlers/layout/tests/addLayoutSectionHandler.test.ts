@@ -7,6 +7,7 @@ import {
     TestCorrelation,
     TestInsightPlaceholderItem,
     TestKpiPlaceholderItem,
+    TestStash,
 } from "../../../tests/Dashboard.fixtures";
 import { addLayoutSection, undoLayoutChanges } from "../../../commands";
 import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionAdded } from "../../../events";
@@ -79,6 +80,16 @@ describe("add layout section handler", () => {
         it("should fail if bad section placement index is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
                 addLayoutSection(1, undefined, undefined, TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if bad stash identifier is provided", async () => {
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, undefined, [TestStash], TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
