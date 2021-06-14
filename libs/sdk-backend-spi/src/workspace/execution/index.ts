@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IAttributeOrMeasure,
     IBucket,
@@ -9,6 +9,7 @@ import {
     DimensionGenerator,
     IInsight,
     INullableFilter,
+    IExecutionConfig,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "./export";
 import { DataValue, IDimensionDescriptor, IResultHeader, IResultWarning } from "./results";
@@ -166,6 +167,12 @@ export interface IPreparedExecution {
      * definition underlying this instance of Prepared Execution.
      */
     fingerprint(): string;
+
+    /**
+     * Additional execution configuration
+     */
+
+    withExecConfig(config: IExecutionConfig): IPreparedExecution;
 }
 
 /**

@@ -30,6 +30,8 @@ import {
     ObjRef,
     uriRef,
     defWithDateFormat,
+    IExecutionConfig,
+    defWithExecConfig,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {
@@ -43,6 +45,7 @@ import { Denormalizer, NormalizationState, AbstractExecutionFactory } from "@goo
 import flatMap from "lodash/flatMap";
 import isEqual from "lodash/isEqual";
 import values from "lodash/values";
+import isEmpty from "lodash/isEmpty";
 
 //
 //
@@ -114,6 +117,14 @@ function recordedPreparedExecution(
         },
         withDateFormat(dateFormat: string): IPreparedExecution {
             return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
+        },
+        withExecConfig(config: IExecutionConfig): IPreparedExecution {
+            invariant(
+                !isEmpty(config.dataSamplingPercentage),
+                "Backend does not support data sampling, result will be not affected",
+            );
+
+            return executionFactory.forDefinition(defWithExecConfig(definition, config));
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {

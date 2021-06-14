@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { attributeLocalId, isAttribute } from "../attribute";
 import {
     IDimension,
@@ -18,8 +18,10 @@ import {
     defSetPostProcessing,
     defSetSorts,
     defWithFilters,
+    defSetExecConfig,
     DimensionGenerator,
     IExecutionDefinition,
+    IExecutionConfig,
     IPostProcessing,
 } from "./index";
 import isEmpty from "lodash/isEmpty";
@@ -156,6 +158,24 @@ export function newDefForInsight(
  */
 export function defWithSorting(definition: IExecutionDefinition, sorts: ISortItem[]): IExecutionDefinition {
     return defSetSorts(definition, sorts);
+}
+
+/**
+ * Changes additional execution configuration in the definition.
+ * Any additional execution configuration settings accumulated so far WILL be wiped out.
+ *
+ * This function MUST be used to implement IPreparedExecution.withExecConfig();
+ *
+ * @param definition - definition to alter with sorting
+ * @param config - configuration
+ * @returns new execution with the updated sorts
+ * @public
+ */
+export function defWithExecConfig(
+    definition: IExecutionDefinition,
+    config: IExecutionConfig,
+): IExecutionDefinition {
+    return defSetExecConfig(definition, config);
 }
 
 /**

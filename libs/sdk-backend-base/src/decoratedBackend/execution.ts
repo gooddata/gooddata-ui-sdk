@@ -21,6 +21,7 @@ import {
     ISortItem,
     IInsight,
     INullableFilter,
+    IExecutionConfig,
 } from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
@@ -112,6 +113,10 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
 
     public withDateFormat(dateFormat: string): IPreparedExecution {
         return this.createNew(this.decorated.withDateFormat(dateFormat));
+    }
+
+    public withExecConfig(config: IExecutionConfig): IPreparedExecution {
+        return this.createNew(this.decorated.withExecConfig(config));
     }
 
     /**
