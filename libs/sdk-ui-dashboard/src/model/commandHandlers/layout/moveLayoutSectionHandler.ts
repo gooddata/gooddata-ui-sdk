@@ -35,6 +35,18 @@ export function* moveLayoutSectionHandler(ctx: DashboardContext, cmd: MoveLayout
         );
     }
 
+    const absoluteIndex = resolveRelativeIndex(layout.sections, toIndex);
+
+    if (sectionIndex === absoluteIndex) {
+        return yield dispatchDashboardEvent(
+            invalidArgumentsProvided(
+                ctx,
+                `Attempting to move section to a same index where it already resides ${sectionIndex}.`,
+                cmd.correlationId,
+            ),
+        );
+    }
+
     yield put(
         layoutActions.moveSection({
             sectionIndex,
@@ -46,7 +58,6 @@ export function* moveLayoutSectionHandler(ctx: DashboardContext, cmd: MoveLayout
     );
 
     const section = layout.sections[sectionIndex];
-    const absoluteIndex = resolveRelativeIndex(layout.sections, toIndex);
 
     yield dispatchDashboardEvent(
         layoutSectionMoved(ctx, section, sectionIndex, absoluteIndex, cmd.correlationId),
