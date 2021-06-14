@@ -245,26 +245,42 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         const { error, isDataLoading, isVisualizationLoading } = this.state;
 
         const resolvedTitle = this.resolveInsightTitle(this.state.insight);
+        const isLoadingShown = isDataLoading || isVisualizationLoading;
 
         return (
             <div className="insight-view-container">
                 {resolvedTitle && <TitleComponent title={resolvedTitle} />}
-                {(isDataLoading || isVisualizationLoading) && (
-                    <LoadingComponent className="insight-view-loader" />
-                )}
+                {isLoadingShown && <LoadingComponent className="insight-view-loader" />}
                 {error && !isDataLoading && (
                     <InsightError error={error} ErrorComponent={this.props.ErrorComponent} />
                 )}
-                <InsightRenderer
-                    {...this.props}
-                    colorPalette={this.props.colorPalette ?? this.state.colorPalette}
-                    insight={this.state.insight}
-                    locale={this.props.locale || (this.state.settings?.locale as ILocale) || DefaultLocale}
-                    settings={this.state.settings}
-                    onLoadingChanged={this.handleLoadingChanged}
-                    onError={this.handleError}
-                    isVisualisationLoading={isVisualizationLoading || isDataLoading}
-                />
+                <div
+                    className="insight-view-visualization"
+                    // make the visualization div 0 height so that the loading component can take up the whole area
+                    style={isLoadingShown ? { height: 0 } : undefined}
+                >
+                    <InsightRenderer
+                        insight={this.state.insight}
+                        workspace={this.props.workspace}
+                        backend={this.props.backend}
+                        colorPalette={this.props.colorPalette ?? this.state.colorPalette}
+                        config={this.props.config}
+                        drillableItems={this.props.drillableItems}
+                        executeByReference={this.props.executeByReference}
+                        filters={this.props.filters}
+                        locale={
+                            this.props.locale || (this.state.settings?.locale as ILocale) || DefaultLocale
+                        }
+                        settings={this.state.settings}
+                        ErrorComponent={this.props.ErrorComponent}
+                        LoadingComponent={this.props.LoadingComponent}
+                        onDrill={this.props.onDrill}
+                        onError={this.handleError}
+                        onExportReady={this.props.onExportReady}
+                        onLoadingChanged={this.handleLoadingChanged}
+                        pushData={this.props.pushData}
+                    />
+                </div>
             </div>
         );
     }
