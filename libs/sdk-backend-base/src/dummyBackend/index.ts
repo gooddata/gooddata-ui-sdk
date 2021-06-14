@@ -43,9 +43,11 @@ import {
     defFingerprint,
     defWithDimensions,
     defWithSorting,
+    defWithExecConfig,
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
+    IExecutionConfig,
     ISortItem,
     ObjRef,
     defWithDateFormat,
@@ -341,6 +343,9 @@ function dummyPreparedExecution(
         },
         equals(other: IPreparedExecution): boolean {
             return isEqual(this.definition, other.definition);
+        },
+        withExecConfig(config: IExecutionConfig): IPreparedExecution {
+            return executionFactory.forDefinition(defWithExecConfig(definition, config));
         },
     };
 }

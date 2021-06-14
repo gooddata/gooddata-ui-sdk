@@ -141,6 +141,11 @@ export interface ISettings {
      */
     enableKPIDashboardDrillToURL?: boolean;
 
+    /**
+     * Indicates whether backend supports data sampling.
+     */
+    enableDataSampling?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

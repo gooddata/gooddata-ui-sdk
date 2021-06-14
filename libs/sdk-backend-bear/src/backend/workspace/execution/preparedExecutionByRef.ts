@@ -1,6 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { IExecutionFactory, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import invariant from "ts-invariant";
 import {
     defFingerprint,
     defWithDimensions,
@@ -12,9 +13,12 @@ import {
     IInsight,
     insightRef,
     ISortItem,
+    IExecutionConfig,
     defWithDateFormat,
+    defWithExecConfig,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
+import isEmpty from "lodash/isEmpty";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { BearExecutionResult } from "./executionResult";
@@ -80,6 +84,14 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
 
     public withDateFormat(dateFormat: string): IPreparedExecution {
         return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
+    }
+
+    public withExecConfig(config: IExecutionConfig): IPreparedExecution {
+        invariant(
+            !isEmpty(config.dataSamplingPercentage),
+            "Backend does not support data sampling, result will be not affected",
+        );
+        return this.executionFactory.forDefinition(defWithExecConfig(this.definition, config));
     }
 
     public fingerprint(): string {

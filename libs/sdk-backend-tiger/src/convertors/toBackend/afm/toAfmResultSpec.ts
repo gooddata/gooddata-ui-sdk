@@ -42,5 +42,8 @@ export function toAfmExecution(def: IExecutionDefinition): AfmExecution {
         execution: {
             ...convertAFM(def),
         },
+        settings: {
+            ...def.executionConfig,
+        },
     };
 }
