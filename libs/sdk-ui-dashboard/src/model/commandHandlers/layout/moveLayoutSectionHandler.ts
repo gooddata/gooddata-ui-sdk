@@ -9,6 +9,7 @@ import { put, select } from "redux-saga/effects";
 import { validateSectionExists, validateSectionPlacement } from "./validation/layoutValidation";
 import { layoutActions } from "../../state/layout";
 import { layoutSectionMoved } from "../../events/layout";
+import { resolveRelativeIndex } from "../../utils/arrayOps";
 
 export function* moveLayoutSectionHandler(ctx: DashboardContext, cmd: MoveLayoutSection): SagaIterator<void> {
     const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
@@ -45,7 +46,7 @@ export function* moveLayoutSectionHandler(ctx: DashboardContext, cmd: MoveLayout
     );
 
     const section = layout.sections[sectionIndex];
-    const absoluteIndex = toIndex < 0 ? layout.sections.length - 1 : toIndex;
+    const absoluteIndex = resolveRelativeIndex(layout.sections, toIndex);
 
     yield dispatchDashboardEvent(
         layoutSectionMoved(ctx, section, sectionIndex, absoluteIndex, cmd.correlationId),

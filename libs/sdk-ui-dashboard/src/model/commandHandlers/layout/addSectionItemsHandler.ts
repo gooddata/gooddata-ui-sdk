@@ -12,6 +12,7 @@ import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
 import { layoutSectionItemsAdded } from "../../events/layout";
+import { resolveIndexOfNewItem } from "../../utils/arrayOps";
 
 // TODO: this needs to handle calculation of the date dataset to use for the items
 export function* addSectionItemsHandler(ctx: DashboardContext, cmd: AddSectionItems): SagaIterator<void> {
@@ -72,7 +73,7 @@ export function* addSectionItemsHandler(ctx: DashboardContext, cmd: AddSectionIt
         layoutSectionItemsAdded(
             ctx,
             sectionIndex,
-            itemIndex < 0 ? section.items.length : itemIndex,
+            resolveIndexOfNewItem(section.items, itemIndex),
             stashValidationResult.resolved,
             stashValidationResult.existing,
             cmd.correlationId,

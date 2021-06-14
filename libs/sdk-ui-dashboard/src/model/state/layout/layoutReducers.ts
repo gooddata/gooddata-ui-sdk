@@ -10,7 +10,7 @@ import {
     RelativeIndex,
     StashedDashboardItemsId,
 } from "../../types/layoutTypes";
-import { addArrayElements, moveArrayElement, removeArrayElement } from "./arrayOps";
+import { addArrayElements, moveArrayElement, removeArrayElement } from "../../utils/arrayOps";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 
@@ -126,7 +126,7 @@ type MoveSectionItemActionPayload = {
     sectionIndex: number;
     itemIndex: number;
     toSectionIndex: number;
-    toItemIndex: number;
+    toItemIndex: RelativeIndex;
 };
 
 const moveSectionItem: LayoutReducer<MoveSectionItemActionPayload> = (state, action) => {
@@ -134,8 +134,7 @@ const moveSectionItem: LayoutReducer<MoveSectionItemActionPayload> = (state, act
 
     const { sectionIndex, itemIndex, toSectionIndex, toItemIndex } = action.payload;
     const fromSection = state.layout.sections[sectionIndex];
-    const toSection =
-        state.layout.sections[toSectionIndex < 0 ? state.layout.sections.length - 1 : toSectionIndex];
+    const toSection = state.layout.sections[toSectionIndex];
 
     invariant(fromSection);
     invariant(toSection);

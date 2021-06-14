@@ -13,6 +13,7 @@ import { layoutActions } from "../../state/layout";
 import { layoutSectionAdded } from "../../events/layout";
 import { validateSectionPlacement } from "./validation/layoutValidation";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
+import { resolveIndexOfNewItem } from "../../utils/arrayOps";
 
 // TODO: this needs to handle calculation of the date dataset to use for the items
 export function* addLayoutSectionHandler(ctx: DashboardContext, cmd: AddLayoutSection): SagaIterator<void> {
@@ -65,6 +66,6 @@ export function* addLayoutSectionHandler(ctx: DashboardContext, cmd: AddLayoutSe
     );
 
     yield dispatchDashboardEvent(
-        layoutSectionAdded(ctx, section, index === -1 ? layout.sections.length : index, cmd.correlationId),
+        layoutSectionAdded(ctx, section, resolveIndexOfNewItem(layout.sections, index), cmd.correlationId),
     );
 }

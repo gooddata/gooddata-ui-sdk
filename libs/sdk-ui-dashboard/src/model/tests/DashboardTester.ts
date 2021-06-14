@@ -88,6 +88,17 @@ export class DashboardTester {
         this.capturedEvents.push(evt);
     };
 
+    private commandFailedRejectsWaitFor = () => {
+        const commandFailed = this.getOrCreateMonitoredAction("GDC.DASH/EVT.COMMAND.FAILED");
+
+        return commandFailed.promise.then((evt) => {
+            // eslint-disable-next-line no-console
+            console.error(`Command processing failed: ${evt.payload.reason} - ${evt.payload.message}`);
+
+            throw evt.payload.error;
+        });
+    };
+
     public static forRecording(
         identifier: Identifier,
         backendConfig?: RecordedBackendConfig,
@@ -139,8 +150,11 @@ export class DashboardTester {
         actionType: DashboardEventType | DashboardCommandType | string,
         timeout: number = 1000,
     ): Promise<any> {
+        const includeErrorHandler = actionType !== "GDC.DASH/EVT.COMMAND.FAILED";
+
         return Promise.race([
             this.getOrCreateMonitoredAction(actionType).promise,
+            ...(includeErrorHandler ? [this.commandFailedRejectsWaitFor()] : []),
             new Promise((_, reject) => {
                 setTimeout(() => {
                     reject(new Error(`Wait for action '${actionType}' timed out after ${timeout}ms`));

@@ -14,6 +14,7 @@ import {
 } from "./validation/layoutValidation";
 import { layoutActions } from "../../state/layout";
 import { layoutSectionItemMoved } from "../../events/layout";
+import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps";
 
 export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionItem): SagaIterator<void> {
     const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
@@ -53,7 +54,8 @@ export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionI
         );
     }
 
-    const targetSection = layout.sections[toSectionIndex];
+    const targetSectionIndex = resolveRelativeIndex(layout.sections, toSectionIndex);
+    const targetSection = layout.sections[targetSectionIndex];
 
     if (!validateItemPlacement(targetSection, toItemIndex)) {
         return yield dispatchDashboardEvent(
@@ -69,7 +71,7 @@ export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionI
         layoutActions.moveSectionItem({
             sectionIndex,
             itemIndex,
-            toSectionIndex,
+            toSectionIndex: targetSectionIndex,
             toItemIndex,
             undo: {
                 cmd,
@@ -77,8 +79,7 @@ export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionI
         }),
     );
 
-    const targetSectionIndex = toSectionIndex < 0 ? layout.sections.length - 1 : toSectionIndex;
-    const targetItemIndex = toItemIndex < 0 ? targetSection.items.length : toItemIndex;
+    const targetItemIndex = resolveIndexOfNewItem(targetSection.items, toItemIndex);
 
     yield dispatchDashboardEvent(
         layoutSectionItemMoved(

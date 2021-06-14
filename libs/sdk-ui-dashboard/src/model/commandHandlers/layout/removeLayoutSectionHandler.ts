@@ -10,6 +10,7 @@ import { layoutActions } from "../../state/layout";
 import { layoutSectionRemoved } from "../../events/layout";
 import isEmpty from "lodash/isEmpty";
 import { validateSectionExists } from "./validation/layoutValidation";
+import { resolveRelativeIndex } from "../../utils/arrayOps";
 
 export function* removeLayoutSectionHandler(
     ctx: DashboardContext,
@@ -38,7 +39,7 @@ export function* removeLayoutSectionHandler(
         );
     }
 
-    const absoluteIndex = index < 0 ? layout.sections.length - 1 : index;
+    const absoluteIndex = resolveRelativeIndex(layout.sections, index);
     const section = layout.sections[absoluteIndex];
 
     yield put(

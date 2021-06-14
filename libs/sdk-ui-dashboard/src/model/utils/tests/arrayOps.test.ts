@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import produce from "immer";
-import { moveArrayElement } from "./arrayOps";
+import { moveArrayElement } from "../arrayOps";
 
 describe("array operations", () => {
     describe("move element", () => {
