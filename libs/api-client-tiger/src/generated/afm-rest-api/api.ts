@@ -1,5 +1,3 @@
-// (C) 2021 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -176,6 +174,12 @@ export interface AfmExecution {
      * @memberof AfmExecution
      */
     resultSpec: ResultSpec;
+    /**
+     *
+     * @type {ExecutionSettings}
+     * @memberof AfmExecution
+     */
+    settings?: ExecutionSettings;
 }
 /**
  *
@@ -920,6 +924,19 @@ export interface ExecutionResultPaging {
      * @memberof ExecutionResultPaging
      */
     total: Array<number>;
+}
+/**
+ * Various setting affecting the process of ADM execution or its result
+ * @export
+ * @interface ExecutionSettings
+ */
+export interface ExecutionSettings {
+    /**
+     * Specifies percentage of source table data scanned during the computation. Only \"center of star\" (and not e.g. dimension) tables are subject to data sampling. Note that this option is available only for specific data sources.
+     * @type {number}
+     * @memberof ExecutionSettings
+     */
+    dataSamplingPercentage?: number;
 }
 /**
  * @type FilterDefinition
@@ -1840,6 +1857,7 @@ export interface SimpleMeasureDefinitionMeasure {
 export enum SimpleMeasureDefinitionMeasureAggregationEnum {
     SUM = "SUM",
     COUNT = "COUNT",
+    APPROXIMATECOUNT = "APPROXIMATE_COUNT",
     AVG = "AVG",
     MIN = "MIN",
     MAX = "MAX",
@@ -2168,6 +2186,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
          * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
+         * @param {number} [dataSamplingPercentage] Specifies percentage of source table data scanned during the computation.
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2182,6 +2201,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
                 patternFilter?: string;
                 offset?: number;
                 limit?: number;
+                dataSamplingPercentage?: number;
                 skipCache?: boolean;
             },
             options: any = {},
@@ -2195,6 +2215,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
                 patternFilter,
                 offset,
                 limit,
+                dataSamplingPercentage,
                 skipCache,
             } = params;
             // verify required parameter 'workspaceId' is not null or undefined
@@ -2281,6 +2302,14 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
                 }
             }
 
+            if (dataSamplingPercentage !== undefined) {
+                if (typeof dataSamplingPercentage === "object") {
+                    addFlattenedObjectTo(dataSamplingPercentage, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["dataSamplingPercentage"] = dataSamplingPercentage;
+                }
+            }
+
             if (skipCache !== undefined && skipCache !== null) {
                 localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
             }
@@ -2315,6 +2344,7 @@ export const ElementsControllerApiFp = function (configuration?: Configuration) 
          * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
+         * @param {number} [dataSamplingPercentage] Specifies percentage of source table data scanned during the computation.
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2329,6 +2359,7 @@ export const ElementsControllerApiFp = function (configuration?: Configuration) 
                 patternFilter?: string;
                 offset?: number;
                 limit?: number;
+                dataSamplingPercentage?: number;
                 skipCache?: boolean;
             },
             options: any = {},
@@ -2368,6 +2399,7 @@ export const ElementsControllerApiFactory = function (
          * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
+         * @param {number} [dataSamplingPercentage] Specifies percentage of source table data scanned during the computation.
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2382,6 +2414,7 @@ export const ElementsControllerApiFactory = function (
                 patternFilter?: string;
                 offset?: number;
                 limit?: number;
+                dataSamplingPercentage?: number;
                 skipCache?: boolean;
             },
             options?: any,
@@ -2411,6 +2444,7 @@ export interface ElementsControllerApiInterface {
      * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
      * @param {number} [offset] Request page with this offset.
      * @param {number} [limit] Return only this number of items.
+     * @param {number} [dataSamplingPercentage] Specifies percentage of source table data scanned during the computation.
      * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2426,6 +2460,7 @@ export interface ElementsControllerApiInterface {
             patternFilter?: string;
             offset?: number;
             limit?: number;
+            dataSamplingPercentage?: number;
             skipCache?: boolean;
         },
         options?: any,
@@ -2450,6 +2485,7 @@ export class ElementsControllerApi extends BaseAPI implements ElementsController
      * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
      * @param {number} [offset] Request page with this offset.
      * @param {number} [limit] Return only this number of items.
+     * @param {number} [dataSamplingPercentage] Specifies percentage of source table data scanned during the computation.
      * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2465,6 +2501,7 @@ export class ElementsControllerApi extends BaseAPI implements ElementsController
             patternFilter?: string;
             offset?: number;
             limit?: number;
+            dataSamplingPercentage?: number;
             skipCache?: boolean;
         },
         options?: any,
