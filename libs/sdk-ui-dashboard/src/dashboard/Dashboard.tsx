@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React, { useCallback, useEffect } from "react";
 import { FilterBar, FilterBarComponent, IDefaultFilterBarProps } from "../filterBar";
-import { IDefaultTopBarProps, TopBarComponent } from "../topBar";
+import { IDefaultTopBarProps, MenuButtonItem, TopBar, TopBarComponent } from "../topBar";
 import { Provider } from "react-redux";
 import {
     createDashboardStore,
@@ -14,6 +14,8 @@ import {
     selectDashboardLoading,
     selectLocale,
     selectFilterContextFilters,
+    renameDashboard,
+    selectDashboardTitle,
 } from "../model";
 import { loadDashboard } from "../model/commands/dashboard";
 import {
@@ -87,6 +89,23 @@ const useFilterBar = (): {
     );
 
     return { filters, onFilterChanged };
+};
+
+const useTopBar = () => {
+    const dispatch = useDashboardDispatch();
+    const title = useDashboardSelector(selectDashboardTitle);
+
+    const onTitleChanged = useCallback(
+        (title: string) => {
+            dispatch(renameDashboard(title));
+        },
+        [dispatch],
+    );
+
+    return {
+        title,
+        onTitleChanged,
+    };
 };
 
 /**
@@ -295,15 +314,37 @@ export interface IDashboardProps {
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
 }
 
+const menuItems: MenuButtonItem[] = [
+    {
+        itemId: "save-as-new",
+        itemName: "Save as new",
+        // This will be replaced with actual call
+        callback: () => {},
+    },
+    {
+        itemId: "sep-1",
+        itemName: "Separator",
+        type: "separator",
+    },
+    {
+        itemId: "delete",
+        itemName: "Delete",
+        // This will be replaced with actual call
+        callback: () => {},
+    },
+];
+
 const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const { drillableItems, filterBarConfig } = props;
+    const { drillableItems, filterBarConfig, topBarConfig } = props;
     const locale = useDashboardSelector(selectLocale);
     const FilterBarComponent = filterBarConfig?.Component ?? FilterBar;
+    const TopBarComponent = topBarConfig?.Component ?? TopBar;
 
     const { filters, onFilterChanged } = useFilterBar();
-
+    const { title, onTitleChanged } = useTopBar();
     return (
         <InternalIntlWrapper locale={locale}>
+            <TopBarComponent titleConfig={{ title, onTitleChanged }} menuButtonConfig={{ menuItems }} />
             <FilterBarComponent filters={filters} onFilterChanged={onFilterChanged} />
             <DashboardLayout drillableItems={drillableItems} />
         </InternalIntlWrapper>

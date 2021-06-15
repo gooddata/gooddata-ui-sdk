@@ -1,8 +1,20 @@
 // (C) 2021 GoodData Corporation
 import React, { ComponentType } from "react";
-import { DashboardTitleComponent } from "./DashboardTitle";
-import { DashboardMenuButtonComponent, IDefaultMenuButtonProps } from "./DashboardMenuButton";
-import { DashboardButtonBarComponent, IDefaultButtonBarProps } from "./DashboardButtonBar";
+import { DashboardTitle, DashboardTitleComponent, defaultTitleComponentProps } from "./DashboardTitle";
+import {
+    DashboardMenuButton,
+    DashboardMenuButtonComponent,
+    defaultMenuButtonProps,
+    IDefaultMenuButtonProps,
+    MenuButtonItem,
+} from "./DashboardMenuButton";
+import {
+    DashboardButtonBar,
+    DashboardButtonBarComponent,
+    defaultDashboardButtonBarProps,
+    IDefaultButtonBarProps,
+} from "./DashboardButtonBar";
+import { IntlWrapper } from "../localization/IntlWrapper";
 
 /**
  * Props to configure the default top bar implementation.
@@ -101,17 +113,74 @@ export interface IDefaultTopBarProps {
 /**
  * @internal
  */
-export interface ITopBarProps {
+export interface ITopBarTitleConfig {
     title: string;
+    onTitleChanged?: (newTitle: string) => void;
 }
 
 /**
  * @internal
  */
-export const TopBar: React.FC<ITopBarProps & IDefaultTopBarProps> = (
-    _props: ITopBarProps & IDefaultTopBarProps,
+export interface ITopBarMenuButtonConfig {
+    menuItems: MenuButtonItem[];
+}
+
+/**
+ * @internal
+ */
+export interface ITopBarProps {
+    titleConfig: ITopBarTitleConfig;
+    menuButtonConfig: ITopBarMenuButtonConfig;
+}
+
+const TopBarCore: React.FC<ITopBarProps & IDefaultTopBarProps> = (
+    props: ITopBarProps & IDefaultTopBarProps,
 ) => {
-    return null;
+    const { titleConfig, buttonBarConfig, menuButtonConfig } = props;
+
+    const renderTitle = (): React.ReactNode => {
+        const { onTitleChanged, Component } = titleConfig;
+        const TitleComponent = Component || DashboardTitle;
+
+        return (
+            <div className="dash-title-wrapper">
+                <TitleComponent title={props.titleConfig?.title} onTitleChanged={onTitleChanged} />
+            </div>
+        );
+    };
+
+    const renderButtonBar = (): React.ReactNode => {
+        const Component: DashboardButtonBarComponent = buttonBarConfig?.Component || DashboardButtonBar;
+
+        return <Component onButtonClicked={() => {}} onButtonHover={() => {}} />;
+    };
+
+    const renderMenuButton = (): React.ReactNode => {
+        const Component: DashboardMenuButtonComponent = menuButtonConfig?.Component || DashboardMenuButton;
+        const { menuItems } = menuButtonConfig;
+        return <Component onMenuItemClicked={() => {}} onMenuItemHover={() => {}} menuItems={menuItems} />;
+    };
+
+    return (
+        <div className={"dash-header"}>
+            <div className={"dash-header-inner"}>
+                {renderTitle()}
+                {renderButtonBar()}
+            </div>
+            {renderMenuButton()}
+        </div>
+    );
+};
+
+/**
+ * @internal
+ */
+export const TopBar: React.FC<ITopBarProps & IDefaultTopBarProps> = (props) => {
+    return (
+        <IntlWrapper>
+            <TopBarCore {...props} />
+        </IntlWrapper>
+    );
 };
 
 /**
@@ -125,3 +194,9 @@ export const NoTopBar: React.FC<ITopBarProps> = (_props: ITopBarProps) => {
  * @internal
  */
 export type TopBarComponent = ComponentType<ITopBarProps>;
+
+export const defaultTopBarProps: IDefaultTopBarProps = {
+    titleConfig: defaultTitleComponentProps,
+    buttonBarConfig: defaultDashboardButtonBarProps,
+    menuButtonConfig: defaultMenuButtonProps,
+};

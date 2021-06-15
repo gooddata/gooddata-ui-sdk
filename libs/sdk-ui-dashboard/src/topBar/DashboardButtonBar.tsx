@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React, { ComponentType } from "react";
+import { Placement } from "../model/types/topBarTypes";
 
 /**
  * Defines contract for button bar that can be placed
@@ -28,4 +29,9 @@ export const DashboardButtonBar: React.FC<IDashboardButtonBarProps & IDefaultBut
 /**
  * @internal
  */
-export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps>;
+export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps & IDefaultButtonBarProps>;
+
+export const defaultDashboardButtonBarProps = {
+    Component: DashboardButtonBar,
+    placement: "right" as Placement,
+};

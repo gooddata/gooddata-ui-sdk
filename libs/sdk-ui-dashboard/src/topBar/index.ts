@@ -1,5 +1,13 @@
 // (C) 2021 GoodData Corporation
-export { TopBar, NoTopBar, ITopBarProps, IDefaultTopBarProps, TopBarComponent } from "./TopBar";
+export {
+    TopBar,
+    NoTopBar,
+    ITopBarProps,
+    IDefaultTopBarProps,
+    TopBarComponent,
+    ITopBarTitleConfig,
+    ITopBarMenuButtonConfig,
+} from "./TopBar";
 
 export { IDashboardTitleProps, DashboardTitle, DashboardTitleComponent } from "./DashboardTitle";
 export {

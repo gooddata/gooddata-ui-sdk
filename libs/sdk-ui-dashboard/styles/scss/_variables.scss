@@ -8,3 +8,34 @@ $gd-dashboards-filterBar-backgroundColor: var(--gd-dashboards-filterBar-backgrou
 
 $nav-border-size: 1px;
 $nav-border: $nav-border-size solid $gd-border-color;
+$default-gd-color-text: #464e56;
+$gd-color-text: var(--gd-palette-complementary-8, $default-gd-color-text);
+
+$gd-dashboards-title-color: var(--gd-dashboards-title-color, $gd-color-text);
+$default-button-normal-active-border-color: #b1c1d1;
+$editable-label-border: var(
+    --gd-palette-complementary-4,
+    transparentize($default-button-normal-active-border-color, 0.5)
+);
+
+$sidebar-transition-length: 0.5s;
+
+$default-gd-color-white: #fff;
+$gd-color-white: var(--gd-palette-complementary-0, $default-gd-color-white);
+$gd-dashboards-title-backgroundColor: var(--gd-dashboards-title-backgroundColor, $gd-color-white);
+
+$default-gd-border-color: #dde4eb;
+$gd-border-color: var(--gd-palette-complementary-3, $default-gd-border-color);
+
+$default-gd-color-state-blank: #94a1ad;
+$gd-color-state-blank: var(--gd-palette-complementary-6, $default-gd-color-state-blank);
+
+$screen: "only screen";
+$xsmall-breakpoint: 320px;
+
+$xsmall-range: (0, $xsmall-breakpoint);
+$small-range: ($xsmall-breakpoint + 1px, $small-breakpoint);
+$medium-range: ($small-breakpoint + 1px, $medium-breakpoint);
+
+$xsmall-only: "#{$screen} and (max-width: #{upper-bound($xsmall-range)})";
+$medium-up: "#{$screen} and (min-width:#{lower-bound($medium-range)})";

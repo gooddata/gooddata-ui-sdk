@@ -1,0 +1,136 @@
+@import "variables";
+
+.dash-header-wrapper {
+    z-index: 100;
+    transition: left $sidebar-transition-length;
+
+    .is-dashboard-loading & {
+        z-index: 0;
+        animation-delay: 1s;
+        animation-duration: $sidebar-transition-length;
+        animation-fill-mode: forwards;
+        opacity: 0;
+    }
+
+    @media #{$medium-up} {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+}
+
+.dash-header {
+    @include clearfix();
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    border-bottom: $nav-border;
+    border-bottom-color: var(--gd-dashboards-title-borderColor, $gd-border-color);
+    background: $gd-dashboards-title-backgroundColor;
+
+    .dash-control-buttons {
+        flex: 0 0 auto;
+        margin-left: 20px;
+        text-align: right;
+
+        .cancel-button {
+            margin-right: 10px;
+        }
+    }
+}
+
+.dash-control-buttons {
+    flex: 0 0 auto;
+    margin: 0 10px 0 20px;
+    text-align: right;
+}
+
+.dash-header-inner {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    overflow: hidden;
+}
+
+.dash-title-wrapper {
+    display: block;
+    flex: 1 1 auto;
+    overflow: hidden;
+    margin-left: 15px;
+}
+
+.dash-title {
+    overflow: hidden;
+    width: auto;
+    height: 40px;
+    max-width: 100%;
+    padding: 4px 16px 2px 8px;
+    border: 1px solid transparent;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 32px;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    color: $gd-dashboards-title-color;
+
+    &,
+    textarea {
+        white-space: nowrap;
+
+        &::placeholder {
+            color: var(--gd-palette-complementary-6, inherit);
+        }
+    }
+
+    &.editable {
+        min-width: 76px;
+    }
+
+    &.editable:hover,
+    &.is-editing {
+        border-color: $editable-label-border;
+    }
+
+    &.placeholder {
+        color: $gd-color-state-blank;
+    }
+}
+
+.dash-header-options-button {
+    flex: 0 0 auto;
+    text-align: center;
+
+    @media #{$xsmall-only}, #{$small-only} {
+        width: 45px;
+        align-self: stretch;
+        padding: 0;
+        border-radius: 0;
+        border-width: 0 0 0 1px;
+        font-size: 20px;
+        background: $gd-dashboards-title-backgroundColor;
+        border-color: var(--gd-dashboards-title-borderColor, $gd-border-color);
+
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    @media #{$medium-up} {
+        margin-right: 10px;
+    }
+}
+
+.overlay-wrapper {
+    @media #{$medium-up} {
+        z-index: initial;
+        &.gd-header-menu-overlay {
+            z-index: 5001;
+        }
+    }
+}
