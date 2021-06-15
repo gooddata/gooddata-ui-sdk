@@ -164,6 +164,34 @@ export class DashboardTester {
     }
 
     /**
+     * Wait for all of the listed actions to occur. The wait is bounded by a timeout that is 1s by default.
+     *
+     * This is useful when testing commands that emit multiple events and you need to verify that all of the
+     * events happened. This function does not care about the order in which the events occurred. If you then
+     * need to verify the order, use {@link emittedEvents} or {@link emittedEventsDigest}.
+     *
+     * @param actionTypes - action types to wait for
+     * @param timeout - timeout after which the wait fails
+     */
+    public waitForAll(
+        actionTypes: ReadonlyArray<DashboardEventType | DashboardCommandType | string>,
+        timeout: number = 1000,
+    ): Promise<any> {
+        return Promise.race([
+            Promise.all(actionTypes.map((actionType) => this.getOrCreateMonitoredAction(actionType).promise)),
+            new Promise((_, reject) => {
+                setTimeout(() => {
+                    reject(
+                        new Error(
+                            `Wait for all actions '${actionTypes.join(", ")}' timed out after ${timeout}ms`,
+                        ),
+                    );
+                }, timeout);
+            }),
+        ]);
+    }
+
+    /**
      * Returns all actions that were dispatched since the tester was created or since it was last reset.
      */
     public dispatchedActions(): ReadonlyArray<PayloadAction<any>> {

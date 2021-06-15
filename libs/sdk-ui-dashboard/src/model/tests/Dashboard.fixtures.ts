@@ -20,7 +20,7 @@ export const SimpleDashboardLayout = SimpleDashboardWithReferences.dashboard.lay
 export const ComplexDashboardIdentifier = "aeis6NlXcL7X";
 export const ComplexDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
     .dash_aeis6NlXcL7X.obj as IDashboardWithReferences;
-export const ComplexDashboardLayoput = ComplexDashboardWithReferences.dashboard.layout!;
+export const ComplexDashboardLayout = ComplexDashboardWithReferences.dashboard.layout!;
 
 export const EmptyDashboardIdentifier = "emptyDashboard";
 export const EmptyDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
