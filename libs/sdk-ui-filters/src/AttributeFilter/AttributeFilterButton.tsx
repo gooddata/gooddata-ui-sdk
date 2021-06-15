@@ -79,7 +79,7 @@ export interface IAttributeFilterButtonOwnProps {
     /**
      * Specifies a parent attribute filter that will be used to reduce options for for current attribute filter.
      *
-     * Parent filters MUST be defined by uris.
+     * Parent filters elements must contain their URIs due to current backend limitations.
      */
     parentFilters?: ValuesOrPlaceholders<IAttributeFilter>;
 

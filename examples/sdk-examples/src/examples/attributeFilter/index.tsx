@@ -110,7 +110,7 @@ export const AttributeFilter = (): JSX.Element => (
 
         <p>
             <strong>
-                ParentFilter property MUST be a filter defined by uris because of backend limitations.
+                Current limitation is that the parent filter must specify attribute elements using their URIs.
             </strong>
         </p>
 
@@ -131,7 +131,7 @@ export const AttributeFilter = (): JSX.Element => (
 
         <p>
             <strong>
-                ParentFilter property MUST be a filter defined by uris because of backend limitations.
+                Current limitation is that the parent filter must specify attribute elements using their URIs.
             </strong>
         </p>
 
@@ -158,7 +158,7 @@ export const AttributeFilter = (): JSX.Element => (
 
         <p>
             <strong>
-                ParentFilter property MUST be a filter defined by uris because of backend limitations.
+                Current limitation is that the parent filter must specify attribute elements using their URIs.
             </strong>
         </p>
 

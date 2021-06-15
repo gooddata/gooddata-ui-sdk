@@ -70,7 +70,7 @@ export interface IAttributeFilterProps {
     /**
      * Specify a parent attribute filter that will be used to reduce options for available components options.
      *
-     * Parent filters MUST be defined by uris.
+     * Parent filters elements must contain their URIs due to current backend limitations.
      */
     parentFilters?: ValuesOrPlaceholders<IAttributeFilter>;
 
