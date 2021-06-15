@@ -133,7 +133,6 @@ export interface IAttributeFilterButtonOwnProps {
     }>;
     // @deprecated
     identifier?: string;
-    // (undocumented)
     locale?: string;
     onApply?: (filter: IAttributeFilter, isInverted: boolean) => void;
     onError?: (error: any) => void;

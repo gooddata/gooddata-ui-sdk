@@ -33,6 +33,7 @@ import {
     getObjRef,
     getValidElementsFilters,
 } from "./utils/AttributeFilterUtils";
+import invariant from "ts-invariant";
 
 /**
  * @public
@@ -140,33 +141,37 @@ const DefaultFilterError: React.FC = injectIntl(({ intl }) => {
 });
 
 const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
+    invariant(
+        !(props.filter && props.connectToPlaceholder),
+        "It's not possible to combine 'filter' property with 'connectToPlaceholder' property. Either provide a value, or a placeholder.",
+    );
+
     const {
         locale,
         workspace,
         backend,
-        FilterError,
+        FilterError = DefaultFilterError,
         title,
-        titleWithSelection,
-        fullscreenOnMobile,
+        titleWithSelection = false,
+        fullscreenOnMobile = false,
         identifier,
         filter,
         parentFilters,
         connectToPlaceholder,
         parentFilterOverAttribute,
-        onError,
+        onError = defaultErrorHandler,
         onApply,
     } = props;
 
     const resolvedParentFilters = useResolveValueWithPlaceholders(parentFilters);
-    const [placeholder, setPlaceholder] = usePlaceholder(connectToPlaceholder);
+    const [resolvedPlaceholder, setPlaceholderValue] = usePlaceholder(connectToPlaceholder);
 
-    const currentFilter = placeholder || filter;
+    const currentFilter = resolvedPlaceholder || filter;
 
     const getBackend = () => {
         return backend.withTelemetry("AttributeFilter", props);
     };
 
-    // todo add dependencies on filter/placeholder??
     const {
         result: attributeTitle,
         error: attributeError,
@@ -200,7 +205,7 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
         );
 
         if (connectToPlaceholder) {
-            setPlaceholder(filter);
+            setPlaceholderValue(filter);
         }
 
         return onApply(filter);
@@ -268,14 +273,6 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
             )}
         </IntlWrapper>
     );
-};
-
-AttributeFilterCore.defaultProps = {
-    locale: "en-US",
-    FilterError: DefaultFilterError,
-    fullscreenOnMobile: false,
-    onError: defaultErrorHandler,
-    titleWithSelection: false,
 };
 
 /**

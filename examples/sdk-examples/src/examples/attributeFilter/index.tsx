@@ -18,7 +18,7 @@ import AttributeFilterExampleSRC from "./AttributeFilterExample?raw";
 import AttributeFilterButtonExampleSRC from "./AttributeFilterButtonExample?raw";
 import AttributeParentChildFilterExampleSRC from "./AttributeParentChildFilterExample?raw";
 import AttributeParentChildFilterButtonExampleSRC from "./AttributeParentChildFilterButtonExample?raw";
-import AttributeParentChildFilterButtonWithPlaceholderSRC from "./AttributeParentChildFilterButtonWithPlaceholderExample?raw";
+import AttributeParentChildFilterButtonWithPlaceholderExampleSRC from "./AttributeParentChildFilterButtonWithPlaceholderExample?raw";
 
 import AttributeFilterComponentExampleSRCJS from "./AttributeFilterComponentExample?rawJS";
 import AttributeElementsExampleSRCJS from "./AttributeElementsExample?rawJS";
@@ -26,7 +26,7 @@ import AttributeFilterExampleSRCJS from "./AttributeFilterExample?rawJS";
 import AttributeFilterButtonExampleSRCJS from "./AttributeFilterButtonExample?rawJS";
 import AttributeParentChildFilterExampleSRCJS from "./AttributeParentChildFilterExample?rawJS";
 import AttributeParentChildFilterButtonExampleSRCJS from "./AttributeParentChildFilterButtonExample?rawJS";
-import AttributeParentChildFilterButtonWithPlaceholderSRCJS from "./AttributeParentChildFilterButtonWithPlaceholderExample?rawJS";
+import AttributeParentChildFilterButtonWithPlaceholderExampleSRCJS from "./AttributeParentChildFilterButtonWithPlaceholderExample?rawJS";
 
 export const AttributeFilter = (): JSX.Element => (
     <div>
@@ -164,8 +164,8 @@ export const AttributeFilter = (): JSX.Element => (
 
         <ExampleWithSource
             for={AttributeParentChildFilterButtonWithPlaceholderExample}
-            source={AttributeParentChildFilterButtonWithPlaceholderSRC}
-            sourceJS={AttributeParentChildFilterButtonWithPlaceholderSRCJS}
+            source={AttributeParentChildFilterButtonWithPlaceholderExampleSRC}
+            sourceJS={AttributeParentChildFilterButtonWithPlaceholderExampleSRCJS}
         />
     </div>
 );

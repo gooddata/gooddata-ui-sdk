@@ -161,8 +161,15 @@ export class AttributeDropdownCore extends React.PureComponent<
                 },
                 () => {
                     this.getElements();
-                    this.getElementTotalCount();
                     this.restoreInitialSelection(parentFilterChanged);
+                    this.getElementTotalCount().then((totalCount) => {
+                        this.setState((state) => {
+                            return {
+                                ...state,
+                                totalCount,
+                            };
+                        });
+                    });
                 },
             );
         }
@@ -182,18 +189,16 @@ export class AttributeDropdownCore extends React.PureComponent<
         }
     }
 
-    public getElementTotalCount = async (): Promise<void> => {
+    public getElementTotalCount = async (): Promise<number> => {
         const { workspace, displayForm, parentFilters } = this.props;
 
-        getElementTotalCount(
+        return getElementTotalCount(
             workspace,
             this.getBackend(),
             displayForm,
             this.state.searchString,
             parentFilters,
-        ).then((result) => {
-            this.setState({ totalCount: result });
-        });
+        );
     };
 
     public getElements = async (): Promise<void> => {

@@ -6,6 +6,7 @@ import {
     newPlaceholder,
     OnError,
     OnLoadingChanged,
+    PlaceholdersProvider,
 } from "@gooddata/sdk-ui";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
@@ -13,19 +14,18 @@ import {
     attributeDisplayFormRef,
     IAttributeFilter,
     idRef,
-    newPositiveAttributeFilter,
+    newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
-import { PlaceholdersProvider } from "@gooddata/sdk-ui";
 
 const stateFilterPlaceholder = newPlaceholder<IAttributeFilter>(
-    newPositiveAttributeFilter(attributeDisplayFormRef(Ldm.LocationState), {
-        uris: ["/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116"],
+    newNegativeAttributeFilter(attributeDisplayFormRef(Ldm.LocationState), {
+        uris: [],
     }),
 );
 
 const cityFilterPlaceholder = newPlaceholder<IAttributeFilter>(
-    newPositiveAttributeFilter(attributeDisplayFormRef(Ldm.LocationCity), {
+    newNegativeAttributeFilter(attributeDisplayFormRef(Ldm.LocationCity), {
         uris: [],
     }),
 );
@@ -38,7 +38,7 @@ const composedLocationFilterPlaceholder = newComposedPlaceholder<IPlaceholder<IA
 const AttributeParentChildFilterButtonWithPlaceholder: React.FC = () => {
     const onError: OnError = (...params) => {
         // eslint-disable-next-line no-console
-        console.info("AttributeFilterExample error found", ...params);
+        console.info("AttributeFilterExample error", ...params);
     };
 
     const onLoadingChanged: OnLoadingChanged = (...params) => {

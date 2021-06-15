@@ -7,16 +7,16 @@ import {
     attributeDisplayFormRef,
     IAttributeFilter,
     idRef,
-    newPositiveAttributeFilter,
+    newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
 
 export const AttributeParentChildFilterExample: React.FC = () => {
     const [filter, setFilter] = useState<IAttributeFilter>(
-        newPositiveAttributeFilter(attributeDisplayFormRef(Ldm.LocationCity), { uris: [] }),
+        newNegativeAttributeFilter(attributeDisplayFormRef(Ldm.LocationCity), { uris: [] }),
     );
     const [parentFilter, setParentFilter] = useState<IAttributeFilter>(
-        newPositiveAttributeFilter(attributeDisplayFormRef(Ldm.LocationState), {
+        newNegativeAttributeFilter(attributeDisplayFormRef(Ldm.LocationState), {
             uris: [],
         }),
     );

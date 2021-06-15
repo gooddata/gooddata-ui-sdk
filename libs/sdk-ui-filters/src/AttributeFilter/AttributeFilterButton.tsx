@@ -112,7 +112,7 @@ export interface IAttributeFilterButtonOwnProps {
     title?: string;
 
     /**
-     *
+     * Locale to use for localization of appearing texts.
      */
     locale?: string;
     /**
@@ -187,32 +187,37 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         "It's not possible to combine 'filter' property with 'connectToPlaceholder' property. Either provide a value, or a placeholder.",
     );
 
-    const [placeholder, setPlaceholder] = usePlaceholder(props.connectToPlaceholder);
+    const [resolvedPlaceholder, setPlaceholderValue] = usePlaceholder(props.connectToPlaceholder);
+
+    const currentFilter = resolvedPlaceholder || props.filter;
 
     const getInitialSelectedOptions = (): IAttributeElement[] =>
         // the as any cast is ok here, the data will get fixed once the element load completes
         // this serves only to have some initial state here so that when full element data is loaded
         // it automatically sets the props.filter.elements as selected
-        placeholder || props.filter
-            ? (attributeElementsToAttributeElementArray(
-                  filterAttributeElements(placeholder || props.filter),
-              ) as any)
+        currentFilter
+            ? (attributeElementsToAttributeElementArray(filterAttributeElements(currentFilter)) as any)
             : [];
 
     const getInitialIsInverted = (): boolean =>
-        placeholder || props.filter ? isNegativeAttributeFilter(placeholder || props.filter) : true;
+        currentFilter ? isNegativeAttributeFilter(currentFilter) : true;
 
-    const [state, setState] = useState<IAttributeFilterButtonState>({
-        selectedFilterOptions: getInitialSelectedOptions(),
-        isInverted: getInitialIsInverted(),
-        prevSelectedFilterOptions: getInitialSelectedOptions(),
-        prevIsInverted: getInitialIsInverted(),
-        firstLoad: true,
-        searchString: "",
-        offset: 0,
-        limit: LIMIT,
-        isDropdownOpen: false,
-        prevValidOptions: null,
+    const [state, setState] = useState<IAttributeFilterButtonState>(() => {
+        const initialSelection = getInitialSelectedOptions();
+        const initialIsInverted = getInitialIsInverted();
+
+        return {
+            selectedFilterOptions: initialSelection,
+            isInverted: initialIsInverted,
+            prevSelectedFilterOptions: initialSelection,
+            prevIsInverted: initialIsInverted,
+            firstLoad: true,
+            searchString: "",
+            offset: 0,
+            limit: LIMIT,
+            isDropdownOpen: false,
+            prevValidOptions: null,
+        };
     });
 
     const dropdownRef = useRef<Dropdown>(null);
@@ -240,12 +245,11 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         };
 
         if (parentFilterChanged) {
-            const emptyFilter = createFilter(placeholder || props.filter, true);
+            const emptyFilter = createFilter(currentFilter, true);
             if (props.connectToPlaceholder) {
-                setPlaceholder(emptyFilter);
+                setPlaceholderValue(emptyFilter);
             }
-            props.onApply &&
-                props.onApply(emptyFilter, isNegativeAttributeFilter(placeholder || props.filter));
+            props.onApply && props.onApply(emptyFilter, isNegativeAttributeFilter(currentFilter));
             setState((state) => {
                 return {
                     ...state,
@@ -280,7 +284,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     useEffect(() => {
         invalidate();
-    }, [state.searchString, props.workspace]);
+    }, [state.searchString, props.workspace, props.backend]);
 
     const {
         error: attributeError,
@@ -291,7 +295,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             promise: async () => {
                 const attributes = getBackend().workspace(props.workspace).attributes();
                 const displayForm = await attributes.getAttributeDisplayForm(
-                    getObjRef(placeholder || props.filter, props.identifier),
+                    getObjRef(currentFilter, props.identifier),
                 );
                 const attribute = await attributes.getAttribute(displayForm.attribute);
 
@@ -314,7 +318,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             .workspace(workspace)
             .attributes()
             .elements()
-            .forDisplayForm(getObjRef(placeholder || props.filter, props.identifier))
+            .forDisplayForm(getObjRef(currentFilter, props.identifier))
             .withOptions({
                 ...(!isEmpty(state.searchString) ? { filter: state.searchString } : {}),
             })
@@ -377,7 +381,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             return getLoadingTitleIntl(props.intl);
         }
 
-        const displayForm = getObjRef(placeholder || props.filter, props.identifier);
+        const displayForm = getObjRef(currentFilter, props.identifier);
         if (elementsResult && elementsResult.totalCount && displayForm) {
             const empty = isEmpty(state.selectedFilterOptions);
             const equal = isEqual(elementsResult.totalCount, state.selectedFilterOptions?.length);
@@ -427,17 +431,15 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     };
 
     const onApply = () => {
-        const currentFilter = placeholder || props.filter;
-
         const filter = createFilter(currentFilter);
 
         if (props.connectToPlaceholder) {
-            setPlaceholder(filter);
+            setPlaceholderValue(filter);
         }
 
         closeDropdown();
 
-        return props.onApply && props.onApply(filter, state.isInverted);
+        return props.onApply?.(filter, state.isInverted);
     };
 
     const onSelect = (selectedFilterOptions: IAttributeElement[], isInverted: boolean) => {
@@ -558,7 +560,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     const { FilterError } = props;
 
     return elementsError || attributeError ? (
-        <FilterError error={stringify(elementsError) || stringify(attributeError)} />
+        <FilterError error={elementsError?.message ?? attributeError?.message ?? "Unknown error"} />
     ) : (
         renderAttributeDropdown()
     );
@@ -575,7 +577,7 @@ const IntlAttributeFilterButton = withContexts(injectIntl(AttributeFilterButtonC
  */
 export const AttributeFilterButton: React.FC<IAttributeFilterButtonOwnProps> = (props) => {
     return (
-        <IntlWrapper locale={props.locale || "en-US"}>
+        <IntlWrapper locale={props.locale}>
             <IntlAttributeFilterButton {...props} />
         </IntlWrapper>
     );
