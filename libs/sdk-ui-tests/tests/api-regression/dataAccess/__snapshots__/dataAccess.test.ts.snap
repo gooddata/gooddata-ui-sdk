@@ -3988,6 +3988,49 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: Treemap - with one measure and view by date and segment by date 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 23,
+    "attributes": 2,
+    "sliceNames": Array [
+      "2010 > 2010",
+      "2010 > 2009",
+      "2010 > 2008",
+      "2010 > 2011",
+      "2011 > 2011",
+      "2011 > 2010",
+      "2011 > 2009",
+      "2011 > 2008",
+      "2011 > 2012",
+      "2012 > 2011",
+      "2012 > 2012",
+      "2012 > 2010",
+      "2012 > 2008",
+      "2012 > 2009",
+      "2013 > 2011",
+      "2013 > 2012",
+      "2013 > 2009",
+      "2013 > 2010",
+      "2013 > 2008",
+      "2014 > 2012",
+      "2014 > 2010",
+      "2016 > 2010",
+      "2017 > 2012",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: Xirr - correct config 1`] = `
 Object {
   "seriesDigest": Object {

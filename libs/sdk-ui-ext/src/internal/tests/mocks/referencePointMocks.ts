@@ -1425,6 +1425,27 @@ export const threeDatesInColumnChart: IReferencePoint = {
     },
 };
 
+export const onlyStackColumnChart: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: [],
+        },
+        {
+            localIdentifier: "stack",
+            items: [dateItem],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
 export const multipleDatesInRowsOnly: IReferencePoint = {
     buckets: [
         {

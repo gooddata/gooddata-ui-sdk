@@ -8839,3 +8839,135 @@ Object {
   "themeIsLoading": undefined,
 }
 `;
+
+exports[`Treemap with with one measure and view by date and segment by date should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "closed.aag81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_closed.aag81lMifn6q",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aag81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aag81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "closed.aag81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_closed.aag81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aag81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aag81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_closed.aag81lMifn6q",
+        "a_created.aag81lMifn6q",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_closed.aag81lMifn6q",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Treemap with with one measure and view by date and segment by date should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;

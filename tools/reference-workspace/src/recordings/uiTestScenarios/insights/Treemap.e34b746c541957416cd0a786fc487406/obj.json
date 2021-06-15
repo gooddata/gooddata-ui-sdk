@@ -1,0 +1,58 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_closed.aag81lMifn6q"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_created.aag81lMifn6q"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            }
+        ],
+        "filters": [],
+        "identifier": "Treemap.e34b746c541957416cd0a786fc487406",
+        "properties": { "controls": {} },
+        "sorts": [
+            { "attributeSortItem": { "attributeIdentifier": "a_closed.aag81lMifn6q", "direction": "asc" } },
+            {
+                "measureSortItem": {
+                    "direction": "desc",
+                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
+                }
+            }
+        ],
+        "title": "Treemap - with one measure and view by date and segment by date",
+        "uri": "Treemap.e34b746c541957416cd0a786fc487406",
+        "visualizationUrl": "local:treemap"
+    }
+}

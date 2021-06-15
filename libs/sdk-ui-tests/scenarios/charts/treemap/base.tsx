@@ -16,6 +16,12 @@ export const TreemapWithMeasureViewByAndSegmentBy = {
     segmentBy: ReferenceLdm.Region,
 };
 
+export const TreemapWithViewByDateAndStackByDate = {
+    measures: [ReferenceLdm.Amount],
+    viewBy: ReferenceLdm.ClosedYear,
+    segmentBy: ReferenceLdm.CreatedYear,
+};
+
 export default scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
@@ -46,4 +52,8 @@ export default scenariosFor<ITreemapProps>("Treemap", Treemap)
         measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
         segmentBy: ReferenceLdm.Product.Name,
     })
-    .addScenario("arithmetic measures and segment", TreemapWithArithmeticMeasuresAndSegment);
+    .addScenario("arithmetic measures and segment", TreemapWithArithmeticMeasuresAndSegment)
+    .addScenario(
+        "with one measure and view by date and segment by date",
+        TreemapWithViewByDateAndStackByDate,
+    );

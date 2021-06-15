@@ -3316,6 +3316,11 @@
     "Treemap.e2ea22d6d58d86e131619506784141f5": {
         "comment": "Auto-generated insight for test scenario Treemap - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right."
     },
+    "Treemap.e34b746c541957416cd0a786fc487406": {
+        "comment": "Auto-generated insight for test scenario Treemap - with one measure and view by date and segment by date.",
+        "scenarioName": "with one measure and view by date and segment by date",
+        "visName": "Treemap"
+    },
     "Treemap.eb6fa806d3f977e0a1431a0e08496c8b": {
         "comment": "Auto-generated insight for test scenario Treemap - single measure.",
         "scenarioName": "single measure",

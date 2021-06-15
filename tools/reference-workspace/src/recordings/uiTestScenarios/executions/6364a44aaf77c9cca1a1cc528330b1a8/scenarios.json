@@ -1,0 +1,102 @@
+[
+    {
+        "n2oMap": {
+            "a_closed.aag81lMifn6q": "a_closed.aag81lMifn6q",
+            "a_created.aag81lMifn6q": "a_created.aag81lMifn6q",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_closed.aag81lMifn6q"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_created.aag81lMifn6q"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                                "localIdentifier": "a_closed.aag81lMifn6q"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "created.aag81lMifn6q",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_created.aag81lMifn6q"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_closed.aag81lMifn6q", "a_created.aag81lMifn6q"] },
+                { "itemIdentifiers": ["measureGroup"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [
+                {
+                    "attributeSortItem": {
+                        "attributeIdentifier": "a_closed.aag81lMifn6q",
+                        "direction": "asc"
+                    }
+                },
+                {
+                    "measureSortItem": {
+                        "direction": "desc",
+                        "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
+                    }
+                }
+            ],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "with one measure and view by date and segment by date",
+        "vis": "Treemap"
+    }
+]
