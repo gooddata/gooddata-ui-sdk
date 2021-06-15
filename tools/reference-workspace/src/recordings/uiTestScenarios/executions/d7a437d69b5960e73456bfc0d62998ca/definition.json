@@ -1,0 +1,53 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                "localIdentifier": "a_closed.aag81lMifn6q"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                "localIdentifier": "a_closed.aag81lMifn6q_1"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [
+        { "itemIdentifiers": ["measureGroup"] },
+        { "itemIdentifiers": ["a_closed.aag81lMifn6q", "a_closed.aag81lMifn6q_1"] }
+    ],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "acugFHNJgsBy", "type": "measure" } }
+                },
+                "localIdentifier": "m_acugFHNJgsBy"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "aangOxLSeztu", "type": "measure" } }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                        "operator": "difference"
+                    }
+                },
+                "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

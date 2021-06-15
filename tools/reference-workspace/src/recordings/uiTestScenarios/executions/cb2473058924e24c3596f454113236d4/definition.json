@@ -1,0 +1,34 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                "localIdentifier": "a_closed.aag81lMifn6q"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                "localIdentifier": "a_closed.aag81lMifn6q_1"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [
+        { "itemIdentifiers": ["measureGroup"] },
+        { "itemIdentifiers": ["a_closed.aag81lMifn6q", "a_closed.aag81lMifn6q_1"] }
+    ],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "acugFHNJgsBy", "type": "measure" } }
+                },
+                "localIdentifier": "m_acugFHNJgsBy"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

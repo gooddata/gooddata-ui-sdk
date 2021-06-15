@@ -1,0 +1,77 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Calculated 'Lost' measure",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                    "operator": "difference"
+                                }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                        }
+                    }
+                ],
+                "localIdentifier": "tertiary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_closed.aag81lMifn6q"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "closed.second"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "BulletChart.3017659d87c5c1e545a734e70c83784b",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "BulletChart - primary, target and comparative measures with two viewBy dates",
+        "uri": "BulletChart.3017659d87c5c1e545a734e70c83784b",
+        "visualizationUrl": "local:bullet"
+    }
+}
