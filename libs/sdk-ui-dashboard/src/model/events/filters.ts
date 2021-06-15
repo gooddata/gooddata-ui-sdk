@@ -1,5 +1,9 @@
 // (C) 2021 GoodData Corporation
-import { IDashboardAttributeFilter, IDashboardDateFilter, IFilterContext } from "@gooddata/sdk-backend-spi";
+import {
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IFilterContextDefinition,
+} from "@gooddata/sdk-backend-spi";
 import { IDashboardEvent } from "./base";
 import { DashboardContext } from "../types/commonTypes";
 
@@ -260,13 +264,13 @@ export function attributeFilterParentChanged(
 export interface DashboardFilterContextChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED";
     readonly payload: {
-        readonly filterContext: IFilterContext;
+        readonly filterContext: IFilterContextDefinition;
     };
 }
 
 export function filterContextChanged(
     ctx: DashboardContext,
-    filterContext: IFilterContext,
+    filterContext: IFilterContextDefinition,
     correlationId?: string,
 ): DashboardFilterContextChanged {
     return {

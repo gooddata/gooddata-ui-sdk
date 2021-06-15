@@ -54,11 +54,18 @@ export type DashboardConfig = {
 };
 
 /**
- * Completely resolved dashboard config.
+ * Dashboard configuration resolved using the config passed in via props and any essential data retrieved from
+ * backend.
+ *
+ * Note: the resolved config may still contain some undefined properties:
+ *
+ * -  `mapboxToken` - has to be provided by the context
+ * -  `isReadOnly` - is purely choice of context in which the dashboard is used
  *
  * @internal
  */
-export type ResolvedDashboardConfig = Required<DashboardConfig>;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "isReadOnly"> &
+    DashboardConfig;
 
 type DashboardConfigKeys = keyof DashboardConfig;
 const RequiredConfigKeys: DashboardConfigKeys[] = [

@@ -10,6 +10,7 @@ import {
     IDashboardAttributeFilter,
     IDashboardAttributeFilterParent,
     IDashboardDateFilter,
+    IFilterContextDefinition,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
@@ -21,7 +22,7 @@ type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>
 
 const generateFilterLocalIdentifier = (): string => uuidv4().replace(/-/g, "");
 
-const setFilterContext: FilterContextReducer<PayloadAction<any>> = (state, action) => {
+const setFilterContext: FilterContextReducer<PayloadAction<IFilterContextDefinition>> = (state, action) => {
     state.filterContext = {
         ...action.payload,
         // make sure attribute filters always have localId

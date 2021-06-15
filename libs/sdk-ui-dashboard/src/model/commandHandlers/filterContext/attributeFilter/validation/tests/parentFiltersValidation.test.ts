@@ -8,7 +8,7 @@ import {
     validateAttributeFilterParents,
 } from "../parentFiltersValidation";
 import { DashboardContext } from "../../../../../types/commonTypes";
-import { SimpleDashboardRecording } from "../../../../../tests/DashboardTester";
+import { SimpleDashboardIdentifier } from "../../../../../tests/Dashboard.fixtures";
 
 describe("validateAttributeFilterParents", () => {
     function getAttributeFilter(displayFormId: string): IDashboardAttributeFilter {
@@ -25,7 +25,7 @@ describe("validateAttributeFilterParents", () => {
     it("should reject when there are some parents that are not present in the filters", async () => {
         const ctx: DashboardContext = {
             backend: recordedBackend(ReferenceRecordings.Recordings),
-            dashboardRef: idRef(SimpleDashboardRecording),
+            dashboardRef: idRef(SimpleDashboardIdentifier),
             workspace: "referenceworkspace",
         };
 
@@ -59,7 +59,7 @@ describe("validateAttributeFilterParents", () => {
                     [objRefsToStringKey([idRef("df1"), idRef("df2")])]: [idRef("parent")],
                 },
             }),
-            dashboardRef: idRef(SimpleDashboardRecording),
+            dashboardRef: idRef(SimpleDashboardIdentifier),
             workspace: "referenceworkspace",
         };
 
@@ -90,7 +90,7 @@ describe("validateAttributeFilterParents", () => {
                     ],
                 },
             }),
-            dashboardRef: idRef(SimpleDashboardRecording),
+            dashboardRef: idRef(SimpleDashboardIdentifier),
             workspace: "referenceworkspace",
         };
 

@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-11T13:19:58.406Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-14T12:03:33.484Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -434,6 +434,12 @@ const fp_8021c0f5930706b8d810493c31c87cc2 = {
     dataView_all: require("./uiTestScenarios/executions/8021c0f5930706b8d810493c31c87cc2/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/8021c0f5930706b8d810493c31c87cc2/scenarios.json"),
 };
+const fp_80b28287b6a50975efcefbf9ea196df8 = {
+    definition: require("./uiTestScenarios/executions/80b28287b6a50975efcefbf9ea196df8/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/80b28287b6a50975efcefbf9ea196df8/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/80b28287b6a50975efcefbf9ea196df8/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/80b28287b6a50975efcefbf9ea196df8/scenarios.json"),
+};
 const fp_80ed1ce6ca8c223ae8485dbee0ac9e01 = {
     definition: require("./uiTestScenarios/executions/80ed1ce6ca8c223ae8485dbee0ac9e01/definition.json"),
     executionResult: require("./uiTestScenarios/executions/80ed1ce6ca8c223ae8485dbee0ac9e01/executionResult.json"),
@@ -841,12 +847,6 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
 };
-const fp_80b28287b6a50975efcefbf9ea196df8 = {
-    definition: require("./uiTestScenarios/executions/80b28287b6a50975efcefbf9ea196df8/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/80b28287b6a50975efcefbf9ea196df8/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/80b28287b6a50975efcefbf9ea196df8/dataView_all.json"),
-    scenarios: require("./uiTestScenarios/executions/80b28287b6a50975efcefbf9ea196df8/scenarios.json"),
-};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -1180,6 +1180,10 @@ export const Scenarios = {
             execution: fp_26fd9091c57168bd61fd53e79fc03a2a,
         },
         SingleMeasureWithViewBy: { scenarioIndex: 0, execution: fp_3a10af340782b53c003532ddce4c9fa4 },
+        WithOneMeasureAndViewByDateAndStackByDate: {
+            scenarioIndex: 0,
+            execution: fp_80b28287b6a50975efcefbf9ea196df8,
+        },
         SingleMeasure: { scenarioIndex: 0, execution: fp_8fd2ba0d6bd20ffd209f30f0993ae84b },
         ArithmeticMeasures: { scenarioIndex: 0, execution: fp_976f41c7d204044c04ac4f238d218fb1 },
         TwoMeasuresWithUndefinedValues: { scenarioIndex: 0, execution: fp_ac099a9ee360b0e2b3df44daaced8f4f },
@@ -1190,10 +1194,6 @@ export const Scenarios = {
             execution: fp_e1030dca208f6b7b3ac060bfdb341df6,
         },
         SingleMeasureWithTwoViewBy: { scenarioIndex: 1, execution: fp_e1030dca208f6b7b3ac060bfdb341df6 },
-        WithOneMeasureAndViewByDateAndStackByDate: {
-            scenarioIndex: 0,
-            execution: fp_80b28287b6a50975efcefbf9ea196df8,
-        },
     },
     DonutChart: {
         SingleMeasureWithViewBy: { scenarioIndex: 5, execution: fp_3a10af340782b53c003532ddce4c9fa4 },
@@ -4496,6 +4496,14 @@ const dash_aaRaEZRWdRpQ = {
     obj: require("./metadata/dashboards/aaRaEZRWdRpQ/obj.json"),
     alerts: require("./metadata/dashboards/aaRaEZRWdRpQ/alerts.json"),
 };
+const dash_emptyDashboard = {
+    obj: require("./metadata/dashboards/emptyDashboard/obj.json"),
+    alerts: require("./metadata/dashboards/emptyDashboard/alerts.json"),
+};
+const dash_aeis6NlXcL7X = {
+    obj: require("./metadata/dashboards/aeis6NlXcL7X/obj.json"),
+    alerts: require("./metadata/dashboards/aeis6NlXcL7X/alerts.json"),
+};
 export const Recordings = {
     executions: {
         fp_00ab8c432637030b305313405b3f4efc,
@@ -4571,6 +4579,7 @@ export const Recordings = {
         fp_7bdc89bb282cb904a5436295a5896b0f,
         fp_7e15456580c6145227d0b8937148e673,
         fp_8021c0f5930706b8d810493c31c87cc2,
+        fp_80b28287b6a50975efcefbf9ea196df8,
         fp_80ed1ce6ca8c223ae8485dbee0ac9e01,
         fp_82bd7f82bdceb6623e77d63b8404484c,
         fp_838e0851ff5ef527ce59485ad88e91d4,
@@ -4639,7 +4648,6 @@ export const Recordings = {
         fp_fd4473fef32dc8b57cdba96564af53e1,
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_ff74085f6f31c71f4797251924d3205d,
-        fp_80b28287b6a50975efcefbf9ea196df8,
     },
     metadata: {
         catalog,
@@ -5659,6 +5667,6 @@ export const Recordings = {
             i_Xirr_e5deb6dfe7ff06cdc5210a56fc84c841,
             i_Xirr_feb8ea5ece361cf1c5681654f085f9a5,
         },
-        dashboards: { dash_aaRaEZRWdRpQ },
+        dashboards: { dash_aaRaEZRWdRpQ, dash_emptyDashboard, dash_aeis6NlXcL7X },
     },
 };

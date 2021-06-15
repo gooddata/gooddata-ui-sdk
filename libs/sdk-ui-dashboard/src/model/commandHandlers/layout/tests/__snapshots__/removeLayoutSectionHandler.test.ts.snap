@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remove layout section handler for any dashboard should emit the correct events 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
+  },
+]
+`;

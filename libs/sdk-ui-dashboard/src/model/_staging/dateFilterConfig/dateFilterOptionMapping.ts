@@ -114,6 +114,27 @@ export function matchDateFilterToDateFilterOption(
     return createVirtualPresetForStoredFilter(dateFilter);
 }
 
+/**
+ * Flattens the provided date filter options. The flattening maintains a stable, predefined order in which
+ * the options should be rendered by the date filter component.
+ *
+ * @param dateFilterOptions - available options to flatten
+ */
+export function flattenDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): DateFilterOption[] {
+    const relativePresets = flatten(
+        values(dateFilterOptions.relativePreset) as IRelativeDateFilterPreset[][],
+    );
+    // the order is significant here
+    // the first visible filter is selected for new dashboards if none is specified in config
+    return compact([
+        dateFilterOptions.allTime,
+        ...(dateFilterOptions.absolutePreset || []),
+        ...relativePresets,
+        dateFilterOptions.absoluteForm,
+        dateFilterOptions.relativeForm,
+    ]);
+}
+
 function canReconstructFormForStoredFilter(
     options: IDateFilterOptionsByType,
     dateFilter: IDashboardDateFilter,
@@ -157,14 +178,14 @@ function isDateFilterOptionVisible(option: DateFilterOption | undefined) {
 }
 
 function findDateFilterOptionById(id: string, dateFilterOptions: IDateFilterOptionsByType) {
-    return getDateFilterOptionsFlattened(dateFilterOptions).find((option) => option.localIdentifier === id);
+    return flattenDateFilterOptions(dateFilterOptions).find((option) => option.localIdentifier === id);
 }
 
 function findDateFilterOptionByValue(
     dateFilter: IDashboardDateFilter,
     dateFilterOptions: IDateFilterOptionsByType,
 ) {
-    return getDateFilterOptionsFlattened(dateFilterOptions).find(filterMatchesData(dateFilter));
+    return flattenDateFilterOptions(dateFilterOptions).find(filterMatchesData(dateFilter));
 }
 
 function findDateFilterOptionByValueAndType(
@@ -172,24 +193,9 @@ function findDateFilterOptionByValueAndType(
     dateFilterOptions: IDateFilterOptionsByType,
     type: OptionType,
 ) {
-    return getDateFilterOptionsFlattened(dateFilterOptions)
+    return flattenDateFilterOptions(dateFilterOptions)
         .filter((option) => option.type === type)
         .find(filterMatchesData(dateFilter));
-}
-
-function getDateFilterOptionsFlattened(dateFilterOptions: IDateFilterOptionsByType) {
-    const relativePresets = flatten(
-        values(dateFilterOptions.relativePreset) as IRelativeDateFilterPreset[][],
-    );
-    // the order is significant here
-    // the first visible filter is selected for new dashboards if none is specified in config
-    return compact([
-        dateFilterOptions.allTime,
-        ...(dateFilterOptions.absolutePreset || []),
-        ...relativePresets,
-        dateFilterOptions.absoluteForm,
-        dateFilterOptions.relativeForm,
-    ]);
 }
 
 const filterMatchesData = (dateFilter: IDashboardDateFilter) => (filter: DateFilterOption) => {

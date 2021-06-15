@@ -1,43 +1,33 @@
 // (C) 2021 GoodData Corporation
-import { loadDashboard, moveAttributeFilter } from "../../../../commands";
-import { DashboardTester, SimpleDashboardRecording } from "../../../../tests/DashboardTester";
+import { moveAttributeFilter } from "../../../../commands";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { selectFilterContextAttributeFilters } from "../../../../state/filterContext/filterContextSelectors";
+import { SimpleDashboardIdentifier } from "../../../../tests/Dashboard.fixtures";
 
 describe("moveAttributeFilterHandler", () => {
-    async function getInitializedTester(): Promise<DashboardTester> {
-        const tester = DashboardTester.forRecording(SimpleDashboardRecording);
-
-        tester.dispatch(loadDashboard());
-        await tester.waitFor("GDC.DASH/EVT.LOADED");
-        tester.resetMonitors();
-
-        return tester;
-    }
+    let Tester: DashboardTester;
+    beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
 
     it("should emit the appropriate events for moved attribute filter", async () => {
-        const tester = await getInitializedTester();
-
-        const firstFilterLocalId = selectFilterContextAttributeFilters(tester.state())[0].attributeFilter
+        const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
             .localIdentifier!;
 
-        tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1, "testCorrelation"));
+        Tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1, "testCorrelation"));
 
-        await tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
 
-        expect(tester.emittedEventsDigest()).toMatchSnapshot();
+        expect(Tester.emittedEventsDigest()).toMatchSnapshot();
     });
 
     it("should set the attribute selection in state on moved attribute filter", async () => {
-        const tester = await getInitializedTester();
-
-        const firstFilterLocalId = selectFilterContextAttributeFilters(tester.state())[0].attributeFilter
+        const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
             .localIdentifier!;
 
-        tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1, "testCorrelation"));
+        Tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1, "testCorrelation"));
 
-        await tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
 
-        expect(selectFilterContextAttributeFilters(tester.state())[0]).toMatchSnapshot({
+        expect(selectFilterContextAttributeFilters(Tester.state())[0]).toMatchSnapshot({
             attributeFilter: {
                 localIdentifier: expect.any(String),
             },
@@ -45,37 +35,31 @@ describe("moveAttributeFilterHandler", () => {
     });
 
     it("should emit the appropriate events when trying to move a non-existent attribute filter", async () => {
-        const tester = await getInitializedTester();
+        Tester.dispatch(moveAttributeFilter("NON EXISTENT LOCAL ID", 1, "testCorrelation"));
 
-        tester.dispatch(moveAttributeFilter("NON EXISTENT LOCAL ID", 1, "testCorrelation"));
+        await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
 
-        await tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
-
-        expect(tester.emittedEventsDigest()).toMatchSnapshot();
+        expect(Tester.emittedEventsDigest()).toMatchSnapshot();
     });
 
     it("should NOT alter the attribute filter state when trying to move a non-existent attribute filter", async () => {
-        const tester = await getInitializedTester();
+        const originalFilters = selectFilterContextAttributeFilters(Tester.state());
 
-        const originalFilters = selectFilterContextAttributeFilters(tester.state());
+        Tester.dispatch(moveAttributeFilter("NON EXISTENT LOCAL ID", 1, "testCorrelation"));
 
-        tester.dispatch(moveAttributeFilter("NON EXISTENT LOCAL ID", 1, "testCorrelation"));
+        await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
 
-        await tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
-
-        expect(selectFilterContextAttributeFilters(tester.state())).toEqual(originalFilters);
+        expect(selectFilterContextAttributeFilters(Tester.state())).toEqual(originalFilters);
     });
 
     it("should emit the appropriate events when trying to move an attribute filter to an invalid index", async () => {
-        const tester = await getInitializedTester();
-
-        const firstFilterLocalId = selectFilterContextAttributeFilters(tester.state())[0].attributeFilter
+        const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
             .localIdentifier!;
 
-        tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1000, "testCorrelation"));
+        Tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1000, "testCorrelation"));
 
-        await tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
+        await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
 
-        expect(tester.emittedEventsDigest()).toMatchSnapshot();
+        expect(Tester.emittedEventsDigest()).toMatchSnapshot();
     });
 });

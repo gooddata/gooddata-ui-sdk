@@ -5,6 +5,7 @@ import {
     IFilterContext,
     ITempFilterContext,
     IKpiWidget,
+    IFilterContextDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
@@ -33,7 +34,7 @@ import { backendInvariant, workspaceInvariant } from "../utils";
 
 interface IUseKpiDataConfig {
     kpiWidget?: IKpiWidget;
-    filterContext?: IFilterContext | ITempFilterContext;
+    filterContext?: IFilterContextDefinition | IFilterContext | ITempFilterContext;
     filters?: FilterContextItem[];
     backend?: IAnalyticalBackend;
     workspace?: string;

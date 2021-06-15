@@ -22,8 +22,16 @@ import {
     RelativeDateFilterOption,
     AbsoluteDateFilterOption,
 } from "@gooddata/sdk-ui-filters";
-import { PLATFORM_DATE_FORMAT } from "@gooddata/sdk-ui-ext/esm/internal";
 
+// TODO: this import was coming from internal/esm and was wrecking tests
+const PLATFORM_DATE_FORMAT = "yyyy-MM-dd";
+
+/**
+ * Converts date filter config - as stored on the backend - into the date filter options that are aimed for
+ * consumption by the actual date filtering view components.
+ *
+ * @param config - date filter config from backend
+ */
 export function convertDateFilterConfigToDateFilterOptions(
     config: IDateFilterConfig,
 ): IDateFilterOptionsByType {

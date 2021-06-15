@@ -39,7 +39,6 @@ import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDrillableItem } from '@gooddata/sdk-ui';
 import { IErrorProps } from '@gooddata/sdk-ui';
-import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
@@ -66,6 +65,7 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnFiredDashboardViewDrillEvent } from '@gooddata/sdk-ui-ext';
 import { OnFiredDashboardViewDrillEvent as OnFiredDashboardViewDrillEvent_2 } from '@gooddata/sdk-ui-ext/esm';
+import { Patch } from 'immer';
 import { default as React_2 } from 'react';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
@@ -92,7 +92,7 @@ export function addAttributeFilter(displayForm: ObjRef, index: number, correlati
 export interface AddLayoutSection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly index: number;
+        readonly index: RelativeIndex;
         readonly initialHeader?: IDashboardLayoutSectionHeader;
         readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
     };
@@ -111,7 +111,7 @@ export interface AddSectionItems extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly sectionIndex: number;
-        readonly itemIndex: number;
+        readonly itemIndex: RelativeIndex;
         readonly items: ReadonlyArray<DashboardItemDefinition>;
     };
     // (undocumented)
@@ -301,6 +301,11 @@ export function clearDateFilterSelection(correlationId?: string): ChangeDateFilt
 
 // @internal (undocumented)
 export type CommandFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
+
+// @internal (undocumented)
+export type CommandProcessingMeta = {
+    readonly uuid: string;
+};
 
 // @internal (undocumented)
 export interface ConfigState {
@@ -521,7 +526,7 @@ export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.C
 export interface DashboardFilterContextChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly filterContext: IFilterContext;
+        readonly filterContext: IFilterContextDefinition;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED";
@@ -716,7 +721,7 @@ export const DashboardLayout: (props: DashboardLayoutProps) => JSX.Element;
 export interface DashboardLayoutChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly layout: IDashboardLayout<ExtendedDashboardItem>;
+        readonly layout: IDashboardLayout<ExtendedDashboardWidget>;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
@@ -995,7 +1000,7 @@ export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, 
 export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget>;
 
 // @internal
-export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardItem>;
+export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @internal
 export type ExtendedDashboardWidget = DashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
@@ -1009,7 +1014,7 @@ export type FilterBarComponent = ComponentType<IFilterBarProps>;
 // @internal (undocumented)
 export interface FilterContextState {
     // (undocumented)
-    filterContext?: IFilterContext;
+    filterContext?: IFilterContextDefinition;
 }
 
 // @internal
@@ -1038,6 +1043,7 @@ export interface IDashboardButtonBarProps {
 // @internal
 export interface IDashboardCommand {
     readonly correlationId?: string;
+    readonly meta?: CommandProcessingMeta;
     readonly type: DashboardCommandType;
 }
 
@@ -1208,9 +1214,14 @@ export type KpiWidgetComparison = {
 };
 
 // @internal (undocumented)
-export interface LayoutState {
+export type LayoutStash = Record<string, ExtendedDashboardItem[]>;
+
+// @internal (undocumented)
+export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> {
     // (undocumented)
-    layout?: IDashboardLayout;
+    layout?: IDashboardLayout<ExtendedDashboardWidget>;
+    // (undocumented)
+    stash: LayoutStash;
 }
 
 // @internal
@@ -1274,7 +1285,7 @@ export interface MoveLayoutSection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly sectionIndex: number;
-        readonly toIndex: number;
+        readonly toIndex: RelativeIndex;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION";
@@ -1289,8 +1300,8 @@ export interface MoveSectionItem extends IDashboardCommand {
     readonly payload: {
         readonly sectionIndex: number;
         readonly itemIndex: number;
-        readonly toSectionIndex: number;
-        readonly toItemIndex: number;
+        readonly toSectionIndex: RelativeIndex;
+        readonly toItemIndex: RelativeIndex;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM";
@@ -1333,6 +1344,9 @@ export interface RefreshKpiWidget extends IDashboardCommand {
 
 // @internal
 export function refreshKpiWidget(ref: ObjRef, correlationId?: string): RefreshKpiWidget;
+
+// @internal
+export type RelativeIndex = number;
 
 // @internal
 export interface RemoveAlert extends IDashboardCommand {
@@ -1381,7 +1395,7 @@ export type RemoveDrillsSelector = ObjRef[] | "*";
 export interface RemoveLayoutSection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly index: number;
+        readonly index: RelativeIndex;
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)
@@ -1389,14 +1403,14 @@ export interface RemoveLayoutSection extends IDashboardCommand {
 }
 
 // @internal
-export function removeLayoutSection(index: number, stashIdentifier: StashedDashboardItemsId, correlationId?: string): RemoveLayoutSection;
+export function removeLayoutSection(index: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveLayoutSection;
 
 // @internal (undocumented)
 export interface RemoveSectionItem extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly sectionIndex: number;
-        readonly itemIndex: number;
+        readonly itemIndex: RelativeIndex;
         readonly stashIdentifier?: StashedDashboardItemsId;
         readonly eager?: boolean;
     };
@@ -1423,7 +1437,7 @@ export interface ReplaceSectionItem extends IDashboardCommand {
     readonly payload: {
         readonly sectionIndex: number;
         readonly itemIndex: number;
-        readonly item: DashboardItemDefinition;
+        readonly items: ReadonlyArray<DashboardItemDefinition>;
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)
@@ -1446,7 +1460,7 @@ export interface ResetDashboard extends IDashboardCommand {
 export function resetDashboard(correlationId?: string): ResetDashboard;
 
 // @internal
-export type ResolvedDashboardConfig = Required<DashboardConfig>;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "isReadOnly"> & DashboardConfig;
 
 // @internal
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;
@@ -1496,6 +1510,9 @@ export const selectAlerts: (state: DashboardState) => import("@gooddata/sdk-back
 export const selectAttributesWithDrillDown: import("@reduxjs/toolkit").OutputSelector<DashboardState, (import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute)[], (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[]) => (import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute)[]>;
 
 // @internal
+export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>>;
+
+// @internal
 export const selectCanListUsersInProject: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("@gooddata/sdk-backend-spi").IWorkspacePermissions) => boolean>;
 
 // @internal (undocumented)
@@ -1511,10 +1528,10 @@ export const selectCatalogFacts: import("@reduxjs/toolkit").OutputSelector<Dashb
 export const selectCatalogMeasures: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ICatalogMeasure[], (res: import("./catalogState").CatalogState) => import("@gooddata/sdk-backend-spi").ICatalogMeasure[]>;
 
 // @internal
-export const selectColorPalette: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").IColorPalette, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-model").IColorPalette>;
+export const selectColorPalette: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").IColorPalette, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-model").IColorPalette>;
 
 // @internal
-export const selectConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, Required<import("../..").DashboardConfig>, (res: import("./configState").ConfigState) => Required<import("../..").DashboardConfig>>;
+export const selectConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../..").ResolvedDashboardConfig, (res: import("./configState").ConfigState) => import("../..").ResolvedDashboardConfig>;
 
 // @internal (undocumented)
 export const selectDashboardLoading: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;
@@ -1529,13 +1546,13 @@ export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<Das
 export const selectDashboardUriRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").UriRef, (res: string) => import("@gooddata/sdk-model").UriRef>;
 
 // @internal
-export const selectDateFilterConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
+export const selectDateFilterConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
 
 // @internal
 export const selectDateFilterConfigOverrides: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined>;
 
 // @internal
-export const selectDateFormat: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res: Required<import("../..").DashboardConfig>) => string | undefined>;
+export const selectDateFormat: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res: import("../..").ResolvedDashboardConfig) => string | undefined>;
 
 // @internal
 export const selectEffectiveDateFilterAvailableGranularities: import("@reduxjs/toolkit").OutputSelector<DashboardState, DateFilterGranularity[], (res: import("@gooddata/sdk-backend-spi").IDateFilterConfig) => DateFilterGranularity[]>;
@@ -1553,40 +1570,43 @@ export const selectEffectiveDateFilterOptions: import("@reduxjs/toolkit").Output
 export const selectEffectiveDateFilterTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => string | undefined>;
 
 // @internal
-export const selectEnableKPIDashboardSchedule: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: Required<import("../..").DashboardConfig>) => boolean | undefined>;
+export const selectEnableKPIDashboardSchedule: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;
 
 // @internal
-export const selectEnableKPIDashboardScheduleRecipients: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: Required<import("../..").DashboardConfig>) => boolean | undefined>;
+export const selectEnableKPIDashboardScheduleRecipients: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;
 
 // @internal
-export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IFilterContext, (res: import("./filterContextState").FilterContextState) => import("@gooddata/sdk-backend-spi").IFilterContext>;
+export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IFilterContextDefinition, (res: import("./filterContextState").FilterContextState) => import("@gooddata/sdk-backend-spi").IFilterContextDefinition>;
 
 // @internal
-export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: import("@gooddata/sdk-backend-spi").IFilterContext) => FilterContextItem[]>;
+export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: import("@gooddata/sdk-backend-spi").IFilterContextDefinition) => FilterContextItem[]>;
 
 // @internal
 export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];
 
 // @internal
-export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: Required<import("../..").DashboardConfig>) => boolean>;
+export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;
 
 // @internal
-export const selectLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>, (res: LayoutState) => import("@gooddata/sdk-backend-spi").IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>>;
+export const selectLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>>;
 
 // @internal
-export const selectLocale: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-ui").ILocale, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-ui").ILocale>;
+export const selectLocale: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-ui").ILocale, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-ui").ILocale>;
 
 // @internal
-export const selectMapboxToken: import("@reduxjs/toolkit").OutputSelector<DashboardState, string, (res: Required<import("../..").DashboardConfig>) => string>;
+export const selectMapboxToken: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res: import("../..").ResolvedDashboardConfig) => string | undefined>;
 
 // @internal
 export const selectPermissions: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IWorkspacePermissions, (res: import("./permissionsState").PermissionsState) => import("@gooddata/sdk-backend-spi").IWorkspacePermissions>;
 
 // @internal
-export const selectSeparators: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISeparators>;
+export const selectSeparators: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").ISeparators>;
 
 // @internal
-export const selectSettings: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: Required<import("../..").DashboardConfig>) => import("@gooddata/sdk-backend-spi").ISettings>;
+export const selectSettings: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").ISettings>;
+
+// @internal
+export const selectStash: import("@reduxjs/toolkit").OutputSelector<DashboardState, Record<string, import("../../types/layoutTypes").ExtendedDashboardItem[]>, (res: LayoutState) => Record<string, import("../../types/layoutTypes").ExtendedDashboardItem[]>>;
 
 // @internal
 export const selectUser: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IUser, (res: import("./userState").UserState) => import("@gooddata/sdk-backend-spi").IUser>;
@@ -1614,19 +1634,33 @@ export const TopBar: React_2.FC<ITopBarProps & IDefaultTopBarProps>;
 // @internal (undocumented)
 export type TopBarComponent = ComponentType<ITopBarProps>;
 
+// @internal
+export type UndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> = {
+    _undo: {
+        undoPointer: number;
+        undoStack: UndoEntry<T>[];
+    };
+};
+
+// @internal
+export type UndoEntry<T extends IDashboardCommand = IDashboardCommand> = {
+    cmd: T;
+    undoPatches: Patch[];
+    redoPatches: Patch[];
+};
+
 // @internal (undocumented)
 export interface UndoLayoutChanges extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly undoPointSelector?: UndoPointSelector;
-        readonly redoable?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
 }
 
 // @internal
-export function undoLayoutChanges(undoPointSelector?: UndoPointSelector, redoable?: boolean, correlationId?: string): UndoLayoutChanges;
+export function undoLayoutChanges(undoPointSelector?: UndoPointSelector, correlationId?: string): UndoLayoutChanges;
 
 // @internal
 export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayoutCommands>) => number;

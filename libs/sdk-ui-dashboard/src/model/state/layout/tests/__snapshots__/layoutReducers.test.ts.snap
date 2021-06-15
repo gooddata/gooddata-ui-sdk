@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`layout slice reducer should correctly handle remove section and create undo entry 1`] = `
+Object {
+  "undoPointer": 0,
+  "undoStack": Array [
+    Object {
+      "cmd": Object {
+        "correlationId": "correlation",
+        "payload": Object {
+          "index": 0,
+          "stashIdentifier": undefined,
+        },
+        "type": "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION",
+      },
+      "redoPatches": Array [
+        Object {
+          "op": "replace",
+          "path": Array [
+            "layout",
+            "sections",
+            "length",
+          ],
+          "value": 0,
+        },
+      ],
+      "undoPatches": Array [
+        Object {
+          "op": "add",
+          "path": Array [
+            "layout",
+            "sections",
+            0,
+          ],
+          "value": Object {
+            "items": Array [
+              Object {
+                "size": Object {
+                  "xl": Object {
+                    "gridWidth": 12,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": Object {
+                  "dateDataSet": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/557",
+                  },
+                  "description": "",
+                  "drills": Array [],
+                  "identifier": "abpwk9TZbHkH",
+                  "ignoreDashboardFilters": Array [],
+                  "insight": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1311",
+                  },
+                  "properties": Object {},
+                  "ref": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1312",
+                  },
+                  "title": "test insight",
+                  "type": "insight",
+                  "uri": "/gdc/md/referenceworkspace/obj/1312",
+                },
+              },
+              Object {
+                "size": Object {
+                  "xl": Object {
+                    "gridWidth": 12,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": Object {
+                  "dateDataSet": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/557",
+                  },
+                  "description": "",
+                  "drills": Array [],
+                  "identifier": "acMpe9e1gOEC",
+                  "ignoreDashboardFilters": Array [],
+                  "insight": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1308",
+                  },
+                  "properties": Object {},
+                  "ref": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1310",
+                  },
+                  "title": "Simple Sorted Table",
+                  "type": "insight",
+                  "uri": "/gdc/md/referenceworkspace/obj/1310",
+                },
+              },
+              Object {
+                "size": Object {
+                  "xl": Object {
+                    "gridWidth": 4,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": Object {
+                  "dateDataSet": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/557",
+                  },
+                  "description": "",
+                  "drills": Array [],
+                  "identifier": "acrpg7NRgQub",
+                  "ignoreDashboardFilters": Array [],
+                  "insight": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1308",
+                  },
+                  "properties": Object {},
+                  "ref": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1309",
+                  },
+                  "title": "Simple Sorted Table",
+                  "type": "insight",
+                  "uri": "/gdc/md/referenceworkspace/obj/1309",
+                },
+              },
+              Object {
+                "size": Object {
+                  "xl": Object {
+                    "gridWidth": 6,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": Object {
+                  "dateDataSet": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/392",
+                  },
+                  "description": "",
+                  "drills": Array [
+                    Object {
+                      "origin": Object {
+                        "measure": Object {
+                          "localIdentifier": "1efdcdfefecb465fb6bee274df905f35",
+                        },
+                        "type": "drillFromMeasure",
+                      },
+                      "target": Object {
+                        "uri": "/gdc/md/referenceworkspace/obj/1284",
+                      },
+                      "transition": "pop-up",
+                      "type": "drillToInsight",
+                    },
+                  ],
+                  "identifier": "aadaJHsFexBu",
+                  "ignoreDashboardFilters": Array [],
+                  "insight": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1297",
+                  },
+                  "properties": Object {},
+                  "ref": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1302",
+                  },
+                  "title": "Test insight",
+                  "type": "insight",
+                  "uri": "/gdc/md/referenceworkspace/obj/1302",
+                },
+              },
+            ],
+            "type": "IDashboardLayoutSection",
+          },
+        },
+      ],
+    },
+  ],
+}
+`;

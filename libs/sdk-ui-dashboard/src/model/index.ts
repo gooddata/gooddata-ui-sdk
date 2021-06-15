@@ -39,8 +39,9 @@ export {
     selectFilterContextFilters,
 } from "./state/filterContext/filterContextSelectors";
 
-export { LayoutState } from "./state/layout/layoutState";
-export { selectLayout } from "./state/layout/layoutSelectors";
+export { UndoEnhancedState, UndoEntry } from "./state/_infra/undoEnhancer";
+export { LayoutState, LayoutStash } from "./state/layout/layoutState";
+export { selectLayout, selectStash, selectBasicLayout } from "./state/layout/layoutSelectors";
 export { DateFilterConfigState } from "./state/dateFilterConfig/dateFilterConfigState";
 export {
     selectDateFilterConfigOverrides,
@@ -75,6 +76,7 @@ export {
     DashboardItemDefinition,
     StashedDashboardItemsId,
     ExtendedDashboardLayoutSection,
+    RelativeIndex,
 } from "./types/layoutTypes";
 export { WidgetFilterSettings, WidgetHeader } from "./types/widgetTypes";
 

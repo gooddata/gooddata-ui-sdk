@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
-import { DashboardItemDefinition, StashedDashboardItemsId } from "../types/layoutTypes";
+import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes";
 import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -13,9 +13,10 @@ export interface AddLayoutSection extends IDashboardCommand {
         /**
          * Index where to place the new section
          *
-         * Index is zero-based and for convenience index -1 means place new section at the end
+         * Index is zero-based and for convenience index -1 means place new section at the end. 0 means place new
+         * section at the beginning. Both 0 and -1 and can be used when inserting the first section into and empty layout.
          */
-        readonly index: number;
+        readonly index: RelativeIndex;
 
         /**
          * Optionally specify the section header.
@@ -82,7 +83,7 @@ export interface MoveLayoutSection extends IDashboardCommand {
          *
          * Index is zero-based. For convenience index of -1 means moving the item to the end of the section list.
          */
-        readonly toIndex: number;
+        readonly toIndex: RelativeIndex;
     };
 }
 
@@ -127,7 +128,7 @@ export interface RemoveLayoutSection extends IDashboardCommand {
          *
          * Zero based. For convenience -1 can be used to remove the last section.
          */
-        readonly index: number;
+        readonly index: RelativeIndex;
 
         /**
          * Optionally specify stash identifier. If provided, the items from the removed section will not be
@@ -154,7 +155,7 @@ export interface RemoveLayoutSection extends IDashboardCommand {
  */
 export function removeLayoutSection(
     index: number,
-    stashIdentifier: StashedDashboardItemsId,
+    stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
 ): RemoveLayoutSection {
     return {
@@ -249,7 +250,7 @@ export interface AddSectionItems extends IDashboardCommand {
          *
          * Index is zero-based. For convenience, you may specify -1 to append the new item.
          */
-        readonly itemIndex: number;
+        readonly itemIndex: RelativeIndex;
 
         /**
          * Items to add. This item may be a placeholder for KPI or insight, an actual dashboard widget or a previously
@@ -314,9 +315,9 @@ export interface ReplaceSectionItem extends IDashboardCommand {
         readonly itemIndex: number;
 
         /**
-         * New item definition. This will replace the old
+         * New item definitions. One or more items that will replace the old one.
          */
-        readonly item: DashboardItemDefinition;
+        readonly items: ReadonlyArray<DashboardItemDefinition>;
 
         /**
          * Optionally specify identifier for stash where the old item should be stored.
@@ -353,7 +354,7 @@ export function replaceSectionItem(
         payload: {
             sectionIndex,
             itemIndex,
-            item,
+            items: [item],
             stashIdentifier,
         },
     };
@@ -388,7 +389,7 @@ export interface MoveSectionItem extends IDashboardCommand {
          *
          * Index is zero-based. For convenience you may specify -1 to move to last section.
          */
-        readonly toSectionIndex: number;
+        readonly toSectionIndex: RelativeIndex;
 
         /**
          * Index within the target section.
@@ -396,7 +397,7 @@ export interface MoveSectionItem extends IDashboardCommand {
          * Index is zero-based. For convenience you may specify -1 to append the item at the end of the target section's
          * items.
          */
-        readonly toItemIndex: number;
+        readonly toItemIndex: RelativeIndex;
     };
 }
 
@@ -452,9 +453,9 @@ export interface RemoveSectionItem extends IDashboardCommand {
         /**
          * Index of section item that should be moved.
          *
-         * Index is zero-based.
+         * Index is zero-based. For convenience you may use index of -1 to remove last item from section.
          */
-        readonly itemIndex: number;
+        readonly itemIndex: RelativeIndex;
 
         /**
          * Optionally specify stash identifier. If provided, the item will not be permanently removed but will be
@@ -528,10 +529,12 @@ export type DashboardLayoutCommands =
 //
 
 /**
- * The undo point selector function will be called during layout undo processing to determine at which
- * command should the undo stop.
+ * The undo point selector function will be called during layout undo processing to determine up to (and including)
+ * which command should the undo be done. Commands are sorted in the list in reversed chronological order -
+ * last command processed command is at index 0, command before that at index 1 etc.
  *
- * The function receives list of commands in the order they were submitted and processed. The
+ * The function must return index of command up to (and including) which the undo should be done. It is not possible
+ * to undo just some command randomly.
  *
  * @internal
  */
@@ -566,13 +569,6 @@ export interface UndoLayoutChanges extends IDashboardCommand {
          *    the correlationId and if so undo up to and including that command.
          */
         readonly undoPointSelector?: UndoPointSelector;
-
-        /**
-         * Indicates whether the undone commands can be re-done or not.
-         *
-         * If not provided, the default is false = redo is not possible.
-         */
-        readonly redoable?: boolean;
     };
 }
 
@@ -584,7 +580,6 @@ export interface UndoLayoutChanges extends IDashboardCommand {
  * up to which command should the undo go.
  *
  * @param undoPointSelector - optionally specify function to determine up to which command to undo; if not provided the very last command will be undone
- * @param redoable - optionally indicate whether the undone command(s) can be redone - whether they should be kept in history or not; default is false
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -592,7 +587,6 @@ export interface UndoLayoutChanges extends IDashboardCommand {
  */
 export function undoLayoutChanges(
     undoPointSelector?: UndoPointSelector,
-    redoable?: boolean,
     correlationId?: string,
 ): UndoLayoutChanges {
     return {
@@ -600,7 +594,6 @@ export function undoLayoutChanges(
         correlationId,
         payload: {
             undoPointSelector,
-            redoable,
         },
     };
 }
@@ -626,8 +619,6 @@ export function revertLastLayoutChange(correlationId?: string): UndoLayoutChange
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO",
         correlationId,
-        payload: {
-            redoable: false,
-        },
+        payload: {},
     };
 }
