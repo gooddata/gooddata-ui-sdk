@@ -13,45 +13,39 @@ export interface IDashboardTitleProps {
     title: string;
 
     /**
-     * Callback that the component calls when title edit enabled the title is changed. If not set, title
-     * taken as non-editable.
+     * Callback that the component calls when title edit enabled the title is changed. If no set,
+     * the title is considered non-editable
      */
     onTitleChanged?: (title: string) => void;
-
-    /**
-     * Indicates if title edit is enabled.
-     */
-    isEditEnabled?: boolean;
 }
+
+const DashboardEditableTitle: React.FC<{
+    title: string;
+    onTitleChanged: (title: string) => void;
+}> = (props) => {
+    const { title, onTitleChanged } = props;
+    return (
+        <EditableLabel
+            value={title}
+            onSubmit={onTitleChanged!}
+            className={"s-gd-dashboard-title dash-title editable"}
+        >
+            {title}
+        </EditableLabel>
+    );
+};
 
 /**
  * @internal
  */
 export const DashboardTitleCore: React.FC<IDashboardTitleProps> = (props: IDashboardTitleProps) => {
-    const { title, isEditEnabled, onTitleChanged } = props;
+    const { title, onTitleChanged } = props;
 
-    const renderEditableTitle = () => {
-        // if onTitleChanged callback not set, dashboard is not editable.
-        if (!isEditEnabled || !onTitleChanged) {
-            return null;
-        }
-
-        return (
-            <EditableLabel
-                value={title}
-                onSubmit={onTitleChanged}
-                className={"s-gd-dashboard-title dash-title editable"}
-            >
-                {title}
-            </EditableLabel>
-        );
-    };
-
-    const renderStaticTitle = () => {
-        return <div className={"s-gd-dashboard-title dash-title static"}>{title}</div>;
-    };
-
-    return isEditEnabled ? renderEditableTitle() : renderStaticTitle();
+    return onTitleChanged ? (
+        <DashboardEditableTitle title={title} onTitleChanged={onTitleChanged} />
+    ) : (
+        <div className={"s-gd-dashboard-title dash-title static"}>{title}</div>
+    );
 };
 
 /**

@@ -1122,7 +1122,6 @@ export interface IDashboardProps {
 
 // @internal (undocumented)
 export interface IDashboardTitleProps {
-    isEditEnabled?: boolean;
     onTitleChanged?: (title: string) => void;
     title: string;
 }
@@ -1213,8 +1212,6 @@ export interface ITopBarProps {
 
 // @internal (undocumented)
 export interface ITopBarTitleConfig {
-    // (undocumented)
-    isEditEnabled?: boolean;
     // (undocumented)
     onTitleChanged?: (newTitle: string) => void;
     // (undocumented)

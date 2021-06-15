@@ -115,7 +115,6 @@ export interface IDefaultTopBarProps {
  */
 export interface ITopBarTitleConfig {
     title: string;
-    isEditEnabled?: boolean;
     onTitleChanged?: (newTitle: string) => void;
 }
 
@@ -140,16 +139,12 @@ const TopBarCore: React.FC<ITopBarProps & IDefaultTopBarProps> = (
     const { titleConfig, buttonBarConfig, menuButtonConfig } = props;
 
     const renderTitle = (): React.ReactNode => {
-        const { onTitleChanged, isEditEnabled, Component } = titleConfig;
+        const { onTitleChanged, Component } = titleConfig;
         const TitleComponent = Component || DashboardTitle;
 
         return (
             <div className="dash-title-wrapper">
-                <TitleComponent
-                    title={props.titleConfig?.title}
-                    onTitleChanged={onTitleChanged}
-                    isEditEnabled={isEditEnabled}
-                />
+                <TitleComponent title={props.titleConfig?.title} onTitleChanged={onTitleChanged} />
             </div>
         );
     };
