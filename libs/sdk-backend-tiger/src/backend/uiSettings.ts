@@ -29,6 +29,10 @@ export const DefaultUiSettings: ISettings = {
     enableAdCatalogRefresh: true,
     enableAdRankingFilter: true,
     enableMultipleDates: true,
+    /**
+     * Development feature flag. We will unify it with "enableMultipleDates" in ONE-5058.
+     */
+    enableMultipleDatesDEV: false,
     enableDomainHomepage: true,
     enableKPIDashboardDependentFilters: false,
     enableKDWidgetCustomHeight: true,
