@@ -14,9 +14,10 @@ import {
 } from "../../../state/filterContext/filterContextSelectors";
 
 import { DashboardContext } from "../../../types/commonTypes";
-import { putCurrentFilterContextChanged } from "../common";
+import { dispatchFilterContextChanged } from "../common";
 import { PromiseFnReturnType } from "../../../types/sagas";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation";
+import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
 
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,
@@ -36,14 +37,10 @@ export function* addAttributeFilterHandler(
     );
 
     if (!canBeAdded) {
-        return yield put(
-            invalidArgumentsProvided(
-                ctx,
-                `Filter for the displayForm ${objRefToString(
-                    displayForm,
-                )} already exists in the filter context.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Filter for the displayForm ${objRefToString(displayForm)} already exists in the filter context.`,
+            cmd.correlationId,
         );
     }
 
@@ -65,6 +62,8 @@ export function* addAttributeFilterHandler(
 
     invariant(addedFilter, "Inconsistent state in attributeFilterAddCommandHandler");
 
-    yield put(attributeFilterAdded(ctx, addedFilter, cmd.payload.index, cmd.correlationId));
-    yield call(putCurrentFilterContextChanged, ctx, cmd);
+    yield dispatchDashboardEvent(
+        attributeFilterAdded(ctx, addedFilter, cmd.payload.index, cmd.correlationId),
+    );
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }

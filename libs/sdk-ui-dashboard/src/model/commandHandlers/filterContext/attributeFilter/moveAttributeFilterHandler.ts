@@ -11,7 +11,8 @@ import {
     selectFilterContextFilters,
 } from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
-import { putCurrentFilterContextChanged } from "../common";
+import { dispatchFilterContextChanged } from "../common";
+import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
 
 export function* moveAttributeFilterHandler(
     ctx: DashboardContext,
@@ -28,12 +29,10 @@ export function* moveAttributeFilterHandler(
     );
 
     if (!affectedFilter) {
-        return yield put(
-            invalidArgumentsProvided(
-                ctx,
-                `Filter with filterLocalId ${filterLocalId} not found.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Filter with filterLocalId ${filterLocalId} not found.`,
+            cmd.correlationId,
         );
     }
 
@@ -45,12 +44,10 @@ export function* moveAttributeFilterHandler(
     const maximalTargetIndex = allFilters.length - 1;
 
     if (index > maximalTargetIndex || index < -1) {
-        return yield put(
-            invalidArgumentsProvided(
-                ctx,
-                `Invalid index (${index}) provided, it must be between -1 and ${maximalTargetIndex}`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Invalid index (${index}) provided, it must be between -1 and ${maximalTargetIndex}`,
+            cmd.correlationId,
         );
     }
 
@@ -73,6 +70,8 @@ export function* moveAttributeFilterHandler(
         filterLocalId,
     );
 
-    yield put(attributeFilterMoved(ctx, affectedFilter, originalIndex, finalIndex, cmd.correlationId));
-    yield call(putCurrentFilterContextChanged, ctx, cmd);
+    yield dispatchDashboardEvent(
+        attributeFilterMoved(ctx, affectedFilter, originalIndex, finalIndex, cmd.correlationId),
+    );
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }

@@ -47,7 +47,7 @@ import {
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
 
-export { IDashboardEvent, DashboardEventType } from "./base";
+export { IDashboardEvent, DashboardEventType, isDashboardEvent } from "./base";
 export {
     DateFilterValidationFailed,
     DateFilterValidationResult,
@@ -57,7 +57,12 @@ export {
     DashboardRenamed,
     DashboardWasReset,
 } from "./dashboard";
-export { DashboardCommandRejected, DashboardCommandFailed, CommandFailedErrorReason } from "./general";
+export {
+    DashboardCommandRejected,
+    DashboardCommandFailed,
+    CommandFailedErrorReason,
+    isDashboardCommandFailed,
+} from "./general";
 
 export {
     DashboardDateFilterSelectionChanged,

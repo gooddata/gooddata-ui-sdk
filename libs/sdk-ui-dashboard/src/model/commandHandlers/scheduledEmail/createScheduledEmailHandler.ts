@@ -40,13 +40,11 @@ export function* createScheduledEmailHandler(
 
         yield dispatchDashboardEvent(scheduledEmailCreated(ctx, scheduledEmail, cmd.correlationId));
     } catch (e) {
-        yield dispatchDashboardEvent(
-            internalErrorOccurred(
-                ctx,
-                "An unexpected error has occurred while creating scheduled email",
-                e,
-                cmd.correlationId,
-            ),
+        throw internalErrorOccurred(
+            ctx,
+            "An unexpected error has occurred while creating scheduled email",
+            e,
+            cmd.correlationId,
         );
     }
 }

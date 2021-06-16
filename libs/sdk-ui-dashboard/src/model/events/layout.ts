@@ -269,7 +269,7 @@ export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
         /**
          * New item definition.
          */
-        readonly item: ExtendedDashboardItem;
+        readonly items: ReadonlyArray<ExtendedDashboardItem>;
 
         /**
          * Item that was replaced
@@ -288,7 +288,7 @@ export function layoutSectionItemReplaced(
     ctx: DashboardContext,
     sectionIndex: number,
     itemIndex: number,
-    item: ExtendedDashboardItem,
+    items: ExtendedDashboardItem[],
     previousItem: ExtendedDashboardItem,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
@@ -300,7 +300,7 @@ export function layoutSectionItemReplaced(
         payload: {
             sectionIndex,
             itemIndex,
-            item,
+            items,
             previousItem,
             stashIdentifier,
         },

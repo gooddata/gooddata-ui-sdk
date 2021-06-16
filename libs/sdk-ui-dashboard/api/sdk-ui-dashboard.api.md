@@ -1197,6 +1197,12 @@ export type InsightPlaceholderWidget = {
     readonly type: "insightPlaceholder";
 };
 
+// @internal
+export function isDashboardCommandFailed(obj: unknown): obj is DashboardCommandFailed;
+
+// @internal
+export function isDashboardEvent(obj: unknown): obj is IDashboardEvent;
+
 // @internal (undocumented)
 export interface ITopBarMenuButtonConfig {
     // (undocumented)

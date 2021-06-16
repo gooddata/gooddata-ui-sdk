@@ -11,7 +11,8 @@ import { attributeFilterRemoved } from "../../../events/filters";
 import { filterContextActions } from "../../../state/filterContext";
 import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
-import { putCurrentFilterContextChanged } from "../common";
+import { dispatchFilterContextChanged } from "../common";
+import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
 
 export function* removeAttributeFiltersHandler(
     ctx: DashboardContext,
@@ -33,12 +34,10 @@ export function* removeAttributeFiltersHandler(
     );
 
     if (invalidLocalIds.length) {
-        return yield put(
-            invalidArgumentsProvided(
-                ctx,
-                `Invalid filterLocalIds provided. These ids were not found: ${invalidLocalIds.join(", ")}.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Invalid filterLocalIds provided. These ids were not found: ${invalidLocalIds.join(", ")}.`,
+            cmd.correlationId,
         );
     }
 
@@ -67,8 +66,10 @@ export function* removeAttributeFiltersHandler(
         ]);
 
         yield put(batch);
-        yield put(attributeFilterRemoved(ctx, removedFilter!, affectedChildren, cmd.correlationId));
+        yield dispatchDashboardEvent(
+            attributeFilterRemoved(ctx, removedFilter!, affectedChildren, cmd.correlationId),
+        );
     }
 
-    yield call(putCurrentFilterContextChanged, ctx, cmd);
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }
