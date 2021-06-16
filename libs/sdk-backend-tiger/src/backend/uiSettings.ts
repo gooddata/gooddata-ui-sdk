@@ -35,8 +35,6 @@ export const DefaultUiSettings: ISettings = {
     enableSectionHeaders: true,
     enableKPIDashboardSaveAsNew: true,
     enableEmbedButtonInKD: true,
-    enableApproxCount: true,
-    enableDataSampling: true,
 
     // pivot table specific
     enableTableColumnsManualResizing: true,
