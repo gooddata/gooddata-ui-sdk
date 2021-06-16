@@ -315,9 +315,9 @@ export interface ReplaceSectionItem extends IDashboardCommand {
         readonly itemIndex: number;
 
         /**
-         * New item definitions. One or more items that will replace the old one.
+         * New item definition.
          */
-        readonly items: ReadonlyArray<DashboardItemDefinition>;
+        readonly item: DashboardItemDefinition;
 
         /**
          * Optionally specify identifier for stash where the old item should be stored.
@@ -354,7 +354,7 @@ export function replaceSectionItem(
         payload: {
             sectionIndex,
             itemIndex,
-            items: [item],
+            item,
             stashIdentifier,
         },
     };
