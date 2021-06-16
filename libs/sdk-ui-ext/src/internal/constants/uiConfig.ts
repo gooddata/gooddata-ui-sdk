@@ -311,6 +311,9 @@ export const AREA_UICONFIG_WITH_MULTIPLE_DATES: IUiConfig = {
         },
         view: {
             ...viewBase,
+            itemsLimitByType: {
+                date: 2,
+            },
             allowsReordering: true,
             itemsLimit: MAX_VIEW_COUNT,
             allowsDuplicateDates: true,
