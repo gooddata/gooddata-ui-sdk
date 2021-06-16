@@ -203,8 +203,16 @@ const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (stat
 
     addArrayElements(section.items, itemIndex, newItems);
 
-    usedStashes.forEach((stashIdentifier) => {
-        delete state.stash[stashIdentifier];
+    usedStashes.forEach((usedStash) => {
+        /*
+         * It is a valid case that the new item is taken from a stash and the replaced item is then
+         * used to replace the same stash.
+         */
+        if (stashIdentifier !== undefined && usedStash === stashIdentifier) {
+            return;
+        }
+
+        delete state.stash[usedStash];
     });
 };
 

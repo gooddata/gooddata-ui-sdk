@@ -802,6 +802,7 @@ export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
         readonly sectionIndex: number;
         readonly itemIndex: number;
         readonly item: ExtendedDashboardItem;
+        readonly previousItem: ExtendedDashboardItem;
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)
@@ -1454,7 +1455,7 @@ export interface ReplaceSectionItem extends IDashboardCommand {
     readonly payload: {
         readonly sectionIndex: number;
         readonly itemIndex: number;
-        readonly items: ReadonlyArray<DashboardItemDefinition>;
+        readonly item: DashboardItemDefinition;
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
     // (undocumented)

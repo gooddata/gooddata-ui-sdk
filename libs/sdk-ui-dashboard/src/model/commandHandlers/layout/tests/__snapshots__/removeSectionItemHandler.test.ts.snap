@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remove layout section item handler for dashboard with existing sections should emit correct events during eager removal 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
+  },
+]
+`;

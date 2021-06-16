@@ -24,6 +24,7 @@ import { createAlertHandler } from "./alerts/createAlertHandler";
 import { removeAlertHandler } from "./alerts/removeAlertHandler";
 import { updateAlertHandler } from "./alerts/updateAlertHandler";
 import { createScheduledEmailHandler } from "./scheduledEmail/createScheduledEmailHandler";
+import { replaceSectionItemHandler } from "./layout/replaceSectionItemHandler";
 
 const DefaultCommandHandlers = {
     "GDC.DASH/CMD.LOAD": loadDashboardHandler,
@@ -44,6 +45,7 @@ const DefaultCommandHandlers = {
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS": addSectionItemsHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM": moveSectionItemHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM": removeSectionItemHandler,
+    "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM": replaceSectionItemHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.UNDO": undoLayoutChangesHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER": unhandledCommand,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE": unhandledCommand,

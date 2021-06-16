@@ -315,9 +315,9 @@ export interface ReplaceSectionItem extends IDashboardCommand {
         readonly itemIndex: number;
 
         /**
-         * New item definitions. One or more items that will replace the old one.
+         * New item definition.
          */
-        readonly items: ReadonlyArray<DashboardItemDefinition>;
+        readonly item: DashboardItemDefinition;
 
         /**
          * Optionally specify identifier for stash where the old item should be stored.
@@ -354,7 +354,7 @@ export function replaceSectionItem(
         payload: {
             sectionIndex,
             itemIndex,
-            items: [item],
+            item,
             stashIdentifier,
         },
     };
@@ -473,6 +473,39 @@ export interface RemoveSectionItem extends IDashboardCommand {
          * Default is false. Meaning an empty section will be left.
          */
         readonly eager?: boolean;
+    };
+}
+
+/**
+ * Creates the RemoveSectionItem command. Dispatching this command will result in removal
+ * of the item from a section. If the removed item was last in the section, the section will be left on the layout
+ * and will contain no items.
+ *
+ * You may optionally specify the stashIdentifier in order to stash the removed item for later resurrection.
+ *
+ * @param sectionIndex - index of section from which to remove the item
+ * @param itemIndex - index of item to remove
+ * @param stashIdentifier - stash identifier to store the removed item under; if not specified the item will be removed
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @internal
+ */
+export function removeSectionItem(
+    sectionIndex: number,
+    itemIndex: number,
+    stashIdentifier?: StashedDashboardItemsId,
+    correlationId?: string,
+): RemoveSectionItem {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM",
+        correlationId,
+        payload: {
+            sectionIndex,
+            itemIndex,
+            stashIdentifier,
+            eager: false,
+        },
     };
 }
 

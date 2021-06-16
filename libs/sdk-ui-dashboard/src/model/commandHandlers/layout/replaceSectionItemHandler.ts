@@ -3,13 +3,15 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { ReplaceSectionItem } from "../../commands";
 import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
-import { commandRejected, invalidArgumentsProvided } from "../../events/general";
+import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation";
 import { layoutActions } from "../../state/layout";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
+import { layoutSectionItemReplaced } from "../../events/layout";
+import { isStashedDashboardItemsId } from "../../types/layoutTypes";
 
 // TODO: this needs to handle calculation of the date dataset to use for the item
 export function* replaceSectionItemHandler(
@@ -18,7 +20,7 @@ export function* replaceSectionItemHandler(
 ): SagaIterator<void> {
     const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
     const stash: ReturnType<typeof selectStash> = yield select(selectStash);
-    const { sectionIndex, itemIndex, items, stashIdentifier } = cmd.payload;
+    const { sectionIndex, itemIndex, item, stashIdentifier } = cmd.payload;
 
     if (!validateSectionExists(layout, sectionIndex)) {
         return yield dispatchDashboardEvent(
@@ -42,7 +44,7 @@ export function* replaceSectionItemHandler(
         );
     }
 
-    const stashValidationResult = validateAndResolveStashedItems(stash, items);
+    const stashValidationResult = validateAndResolveStashedItems(stash, [item]);
 
     if (!isEmpty(stashValidationResult.missing)) {
         return yield dispatchDashboardEvent(
@@ -55,6 +57,9 @@ export function* replaceSectionItemHandler(
             ),
         );
     }
+
+    const newItem = isStashedDashboardItemsId(item) ? stashValidationResult.resolved[0] : item;
+    const itemToReplace = fromSection.items[itemIndex];
 
     yield put(
         layoutActions.replaceSectionItem({
@@ -69,5 +74,15 @@ export function* replaceSectionItemHandler(
         }),
     );
 
-    yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
+    yield dispatchDashboardEvent(
+        layoutSectionItemReplaced(
+            ctx,
+            sectionIndex,
+            itemIndex,
+            newItem,
+            itemToReplace,
+            stashIdentifier,
+            cmd.correlationId,
+        ),
+    );
 }

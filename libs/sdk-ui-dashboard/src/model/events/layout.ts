@@ -272,6 +272,11 @@ export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
         readonly item: ExtendedDashboardItem;
 
         /**
+         * Item that was replaced
+         */
+        readonly previousItem: ExtendedDashboardItem;
+
+        /**
          * If the replacement specified to stash the old item, then the identifier of the
          * stash is included here.
          */
@@ -284,6 +289,7 @@ export function layoutSectionItemReplaced(
     sectionIndex: number,
     itemIndex: number,
     item: ExtendedDashboardItem,
+    previousItem: ExtendedDashboardItem,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
 ): DashboardLayoutSectionItemReplaced {
@@ -295,6 +301,7 @@ export function layoutSectionItemReplaced(
             sectionIndex,
             itemIndex,
             item,
+            previousItem,
             stashIdentifier,
         },
     };
