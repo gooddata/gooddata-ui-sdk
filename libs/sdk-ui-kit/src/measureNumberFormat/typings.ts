@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import React from "react";
 
 /**
@@ -27,6 +27,7 @@ export interface IToggleButtonProps {
     text: string;
     isOpened: boolean;
     toggleDropdown: (e: React.SyntheticEvent) => void;
+    selectedPreset: IFormatPreset;
 }
 
 /**

@@ -81,6 +81,7 @@ class WrappedMeasureNumberFormat extends React.PureComponent<
                     text={buttonText}
                     isOpened={showDropdown || showCustomFormatDialog}
                     toggleDropdown={this.toggleDropdownOpened}
+                    selectedPreset={selectedPreset}
                 />
                 {showDropdown && (
                     <PresetsDropdown

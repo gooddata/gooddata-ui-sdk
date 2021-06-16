@@ -2432,6 +2432,8 @@ export interface IToggleButtonProps {
     // (undocumented)
     isOpened: boolean;
     // (undocumented)
+    selectedPreset: IFormatPreset;
+    // (undocumented)
     text: string;
     // (undocumented)
     toggleDropdown: (e: React_2.SyntheticEvent) => void;
