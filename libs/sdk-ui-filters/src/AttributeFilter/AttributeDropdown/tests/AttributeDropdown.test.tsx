@@ -3,7 +3,7 @@ import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
 import React from "react";
 import { mount } from "enzyme";
-import { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { DropdownButton } from "@gooddata/sdk-ui-kit";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import noop from "lodash/noop";
 import { IntlWrapper } from "@gooddata/sdk-ui";

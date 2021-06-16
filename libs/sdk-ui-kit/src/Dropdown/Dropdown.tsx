@@ -81,6 +81,11 @@ export interface IDropdownProps {
 
     overlayPositionType?: OverlayPositionType;
     overlayZIndex?: number;
+
+    /**
+     * Should the dropdown body be fullscreen on smaller screens? Defaults to true.
+     */
+    fullscreenOnMobile?: boolean;
 }
 
 /**
@@ -117,6 +122,8 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         renderButton,
 
         onOpenStateChanged,
+
+        fullscreenOnMobile = true,
     } = props;
     const [{ isOpen, dropdownId }, setState] = useState<IDropdownState>({
         isOpen: !!openOnInit,
@@ -169,7 +176,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
 
     const renderDropdown =
         isOpen &&
-        (isMobileDevice ? (
+        (fullscreenOnMobile && isMobileDevice ? (
             <FullScreenOverlay alignTo="body" alignPoints={MOBILE_DROPDOWN_ALIGN_POINTS}>
                 <div className="gd-mobile-dropdown-overlay overlay gd-flex-row-container">
                     <div className="gd-mobile-dropdown-header gd-flex-item">
