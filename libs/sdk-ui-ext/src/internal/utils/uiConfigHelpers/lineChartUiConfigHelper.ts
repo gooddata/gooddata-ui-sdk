@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import forEach from "lodash/forEach";
@@ -10,7 +10,7 @@ import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { UICONFIG, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 
-import { hasNoStacks, hasNoMeasures, hasOneMeasure, hasSomeSegmentByItems } from "./../bucketRules";
+import { hasNoMeasures, hasOneMeasure, hasSomeSegmentByItems, hasNoStacksWithDate } from "./../bucketRules";
 
 import { setBucketTitles } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
@@ -59,7 +59,7 @@ export function setLineChartUiConfig(
     const referencePointConfigured = cloneDeep(referencePoint);
     const buckets = referencePointConfigured?.buckets ?? [];
 
-    const measuresCanAddItems = hasNoMeasures(buckets) || hasNoStacks(buckets);
+    const measuresCanAddItems = hasNoMeasures(buckets) || hasNoStacksWithDate(buckets);
     const segmentCanAddItems =
         hasSomeSegmentByItems(buckets) || hasNoMeasures(buckets) || hasOneMeasure(buckets);
 
