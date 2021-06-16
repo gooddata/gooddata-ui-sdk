@@ -2,7 +2,7 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 import {
     IAnalyticalBackend,
@@ -102,14 +102,6 @@ export class AttributeDropdownCore extends React.PureComponent<
         isLoading: false,
     };
 
-    private dropdownRef = React.createRef<Dropdown>();
-
-    private MediaQuery?: ({
-        children,
-    }: {
-        children: (isMobile: boolean) => React.ReactNode;
-    }) => React.ReactNode;
-
     private getBackend = () => {
         return this.props.backend.withTelemetry("AttributeFilter", this.props);
     };
@@ -138,8 +130,6 @@ export class AttributeDropdownCore extends React.PureComponent<
 
             items: [],
         };
-
-        this.createMediaQuery(props.fullscreenOnMobile);
     }
 
     public componentDidUpdate(prevProps: IAttributeDropdownProps, prevState: IAttributeDropdownState): void {
@@ -303,7 +293,7 @@ export class AttributeDropdownCore extends React.PureComponent<
     };
 
     public render(): React.ReactNode {
-        const { FilterLoading } = this.props;
+        const { FilterLoading, fullscreenOnMobile } = this.props;
         const customizedTitle = this.getTitle();
         const classes = cx(
             "gd-attribute-filter",
@@ -314,20 +304,15 @@ export class AttributeDropdownCore extends React.PureComponent<
             <FilterLoading />
         ) : (
             <Dropdown
-                button={<DropdownButton value={customizedTitle} />}
-                ref={this.dropdownRef}
-                body={this.renderDropdownBody()}
+                renderButton={({ toggleDropdown, isOpen }) => (
+                    <DropdownButton isOpen={isOpen} value={customizedTitle} onClick={toggleDropdown} />
+                )}
+                renderBody={({ closeDropdown }) => this.renderDropdownBody(closeDropdown)}
                 className={classes}
-                MediaQuery={this.MediaQuery}
+                fullscreenOnMobile={fullscreenOnMobile}
                 onOpenStateChanged={this.onDropdownOpenStateChanged}
             />
         );
-    }
-
-    private createMediaQuery(fullscreenOnMobile: boolean) {
-        this.MediaQuery = fullscreenOnMobile
-            ? undefined
-            : ({ children }: { children: (isMobile: boolean) => React.ReactNode }) => children(false);
     }
 
     private backupSelection = (callback: () => any = noop) => {
@@ -358,19 +343,9 @@ export class AttributeDropdownCore extends React.PureComponent<
         }
     };
 
-    private closeDropdown = () => {
-        if (this.dropdownRef.current) {
-            this.dropdownRef.current.closeDropdown();
-        }
-    };
-
-    private onApplyButtonClicked = () => {
+    private onApplyButtonClicked = (callback: () => void = noop) => {
         this.props.onApply(this.state.selectedItems.filter(isNonEmptyListItem), this.state.isInverted);
-        this.backupSelection(this.closeDropdown);
-    };
-
-    private onCloseButtonClicked = () => {
-        this.closeDropdown();
+        this.backupSelection(callback);
     };
 
     private onSelect = (selectedItems: IAttributeElement[], isInverted: boolean) => {
@@ -399,7 +374,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         return items;
     }
 
-    private renderDropdownBody() {
+    private renderDropdownBody(closeDropdown: () => void) {
         const { selectedItems, isInverted, error, isLoading, validElements, searchString, totalCount } =
             this.state;
 
@@ -419,8 +394,8 @@ export class AttributeDropdownCore extends React.PureComponent<
                 onSearch={this.onSearch}
                 searchString={searchString}
                 onSelect={this.onSelect}
-                onApplyButtonClicked={this.onApplyButtonClicked}
-                onCloseButtonClicked={this.onCloseButtonClicked}
+                onApplyButtonClicked={() => this.onApplyButtonClicked(closeDropdown)}
+                onCloseButtonClicked={() => closeDropdown()}
             />
         );
     }

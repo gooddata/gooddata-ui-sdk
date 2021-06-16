@@ -944,6 +944,7 @@ export interface IDropdownProps {
     closeOnOutsideClick?: boolean;
     // (undocumented)
     closeOnParentScroll?: boolean;
+    fullscreenOnMobile?: boolean;
     // (undocumented)
     ignoreClicksOnByClass?: string[];
     // (undocumented)
