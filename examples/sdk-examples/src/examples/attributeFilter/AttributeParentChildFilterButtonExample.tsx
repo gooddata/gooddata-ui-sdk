@@ -7,13 +7,21 @@ import {
     attributeDisplayFormRef,
     IAttributeFilter,
     idRef,
-    newPositiveAttributeFilter,
+    newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
 
 export const AttributeParentChildFilterButtonExample: React.FC = () => {
-    const [filter, setFilter] = useState<IAttributeFilter>();
-    const [parentFilter, setParentFilter] = useState<IAttributeFilter>();
+    const [filter, setFilter] = useState<IAttributeFilter>(
+        newNegativeAttributeFilter(attributeDisplayFormRef(Ldm.LocationCity), {
+            uris: [],
+        }),
+    );
+    const [parentFilter, setParentFilter] = useState<IAttributeFilter>(
+        newNegativeAttributeFilter(attributeDisplayFormRef(Ldm.LocationState), {
+            uris: [],
+        }),
+    );
     const [error, setError] = useState<any>();
 
     const onError: OnError = (...params) => {
@@ -30,16 +38,9 @@ export const AttributeParentChildFilterButtonExample: React.FC = () => {
     return (
         <div className="s-attribute-filter">
             <div style={{ display: "flex" }}>
+                <AttributeFilterButton filter={parentFilter} onApply={setParentFilter} />
                 <AttributeFilterButton
-                    filter={newPositiveAttributeFilter(attributeDisplayFormRef(Ldm.LocationState), {
-                        uris: [],
-                    })}
-                    onApply={setParentFilter}
-                />
-                <AttributeFilterButton
-                    filter={newPositiveAttributeFilter(attributeDisplayFormRef(Ldm.LocationCity), {
-                        uris: [],
-                    })}
+                    filter={filter}
                     parentFilters={parentFilter ? [parentFilter] : []}
                     parentFilterOverAttribute={idRef(LdmExt.locationIdAttributeIdentifier)}
                     onApply={setFilter}

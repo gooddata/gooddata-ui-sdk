@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Parent-child filtering support was added to AttributeFilter and AttributeFilterButton components.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "martin.plavek@gooddata.com"
+}

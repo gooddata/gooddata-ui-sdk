@@ -10,7 +10,7 @@ import AttributeFilterExample from "./AttributeFilterExample";
 import AttributeFilterButtonExample from "./AttributeFilterButtonExample";
 import { AttributeParentChildFilterExample } from "./AttributeParentChildFilterExample";
 import { AttributeParentChildFilterButtonExample } from "./AttributeParentChildFilterButtonExample";
-import { AttributeParentChildFilterButtonWithPlaceholder } from "./AttributeParentChildFilterButtonWithPlaceholder";
+import { AttributeParentChildFilterButtonWithPlaceholderExample } from "./AttributeParentChildFilterButtonWithPlaceholderExample";
 
 import AttributeFilterComponentExampleSRC from "./AttributeFilterComponentExample?raw";
 import AttributeElementsExampleSRC from "./AttributeElementsExample?raw";
@@ -18,7 +18,7 @@ import AttributeFilterExampleSRC from "./AttributeFilterExample?raw";
 import AttributeFilterButtonExampleSRC from "./AttributeFilterButtonExample?raw";
 import AttributeParentChildFilterExampleSRC from "./AttributeParentChildFilterExample?raw";
 import AttributeParentChildFilterButtonExampleSRC from "./AttributeParentChildFilterButtonExample?raw";
-import AttributeParentChildFilterButtonWithPlaceholderSRC from "./AttributeParentChildFilterButtonWithPlaceholder?raw";
+import AttributeParentChildFilterButtonWithPlaceholderExampleSRC from "./AttributeParentChildFilterButtonWithPlaceholderExample?raw";
 
 import AttributeFilterComponentExampleSRCJS from "./AttributeFilterComponentExample?rawJS";
 import AttributeElementsExampleSRCJS from "./AttributeElementsExample?rawJS";
@@ -26,7 +26,7 @@ import AttributeFilterExampleSRCJS from "./AttributeFilterExample?rawJS";
 import AttributeFilterButtonExampleSRCJS from "./AttributeFilterButtonExample?rawJS";
 import AttributeParentChildFilterExampleSRCJS from "./AttributeParentChildFilterExample?rawJS";
 import AttributeParentChildFilterButtonExampleSRCJS from "./AttributeParentChildFilterButtonExample?rawJS";
-import AttributeParentChildFilterButtonWithPlaceholderSRCJS from "./AttributeParentChildFilterButtonWithPlaceholder?rawJS";
+import AttributeParentChildFilterButtonWithPlaceholderExampleSRCJS from "./AttributeParentChildFilterButtonWithPlaceholderExample?rawJS";
 
 export const AttributeFilter = (): JSX.Element => (
     <div>
@@ -103,6 +103,17 @@ export const AttributeFilter = (): JSX.Element => (
             reduced via parentFilterOverAttribute property to create parent-child dependency between filters.
         </p>
 
+        <p>
+            Parent child dependency between filters can be implemented via placeholders. See{" "}
+            <i>Parent-Child AttributeFilterButton with placeholders</i> below.
+        </p>
+
+        <p>
+            <strong>
+                Current limitation is that the parent filter must specify attribute elements using their URIs.
+            </strong>
+        </p>
+
         <ExampleWithSource
             for={AttributeParentChildFilterExample}
             source={AttributeParentChildFilterExampleSRC}
@@ -116,6 +127,12 @@ export const AttributeFilter = (): JSX.Element => (
         <p>
             Pass parent filter via parentFilters property and attribute over which should be the child filter
             reduced via parentFilterOverAttribute property to create parent-child dependency between filters.
+        </p>
+
+        <p>
+            <strong>
+                Current limitation is that the parent filter must specify attribute elements using their URIs.
+            </strong>
         </p>
 
         <ExampleWithSource
@@ -134,12 +151,21 @@ export const AttributeFilter = (): JSX.Element => (
             between filters.
         </p>
 
-        <p>Dependency implemented via Placeholders.</p>
+        <p>
+            Dependency between parent filter and child filter is implemented via Placeholders and there is
+            preselect value for parent filter demonstrated in this example.
+        </p>
+
+        <p>
+            <strong>
+                Current limitation is that the parent filter must specify attribute elements using their URIs.
+            </strong>
+        </p>
 
         <ExampleWithSource
-            for={AttributeParentChildFilterButtonWithPlaceholder}
-            source={AttributeParentChildFilterButtonWithPlaceholderSRC}
-            sourceJS={AttributeParentChildFilterButtonWithPlaceholderSRCJS}
+            for={AttributeParentChildFilterButtonWithPlaceholderExample}
+            source={AttributeParentChildFilterButtonWithPlaceholderExampleSRC}
+            sourceJS={AttributeParentChildFilterButtonWithPlaceholderExampleSRCJS}
         />
     </div>
 );

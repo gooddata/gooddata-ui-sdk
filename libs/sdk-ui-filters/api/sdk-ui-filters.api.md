@@ -133,6 +133,7 @@ export interface IAttributeFilterButtonOwnProps {
     }>;
     // @deprecated
     identifier?: string;
+    locale?: string;
     onApply?: (filter: IAttributeFilter, isInverted: boolean) => void;
     onError?: (error: any) => void;
     parentFilterOverAttribute?: ObjRef;
@@ -147,6 +148,7 @@ export type IAttributeFilterButtonProps = IAttributeFilterButtonOwnProps & Wrapp
 // @public (undocumented)
 export interface IAttributeFilterProps {
     backend?: IAnalyticalBackend;
+    connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     filter?: IAttributeFilter;
     FilterError?: React_2.ComponentType<{
         error?: any;
@@ -159,7 +161,7 @@ export interface IAttributeFilterProps {
     onApply: (filter: IAttributeFilter) => void;
     onError?: OnError;
     parentFilterOverAttribute?: ObjRef;
-    parentFilters?: IAttributeFilter[];
+    parentFilters?: ValuesOrPlaceholders<IAttributeFilter>;
     title?: string;
     titleWithSelection?: boolean;
     workspace?: string;

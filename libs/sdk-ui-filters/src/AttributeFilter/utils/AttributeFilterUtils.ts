@@ -16,10 +16,10 @@ import {
     filterAttributeElements,
     filterIsEmpty,
     filterObjRef,
+    IAttributeElements,
     IAttributeFilter,
     idRef,
     isAttributeElementsByRef,
-    IAttributeElements,
     isAttributeElementsByValue,
     ObjRef,
 } from "@gooddata/sdk-model";
@@ -73,6 +73,7 @@ export const getElementTotalCount = async (
     backend: IAnalyticalBackend,
     objRef: ObjRef,
     searchString: string,
+    parentFilters: IElementsQueryAttributeFilter[],
 ): Promise<number> => {
     const elements = await backend
         .workspace(workspace)
@@ -82,6 +83,7 @@ export const getElementTotalCount = async (
         .withOptions({
             ...(searchString ? { filter: searchString } : {}),
         })
+        .withAttributeFilters(parentFilters)
         .query();
 
     return elements.totalCount;
@@ -91,7 +93,6 @@ export const getElementTotalCount = async (
  * @internal
  */
 export interface ILoadElementsResult {
-    selectedOptions: Array<IAttributeElement>;
     validOptions: IElementQueryResultWithEmptyItems;
     totalCount: number;
 }
@@ -119,6 +120,10 @@ export const getElements = async (
     if (needsLoading || force) {
         return loadElements(offset, limit);
     }
+    return {
+        validOptions: validElements,
+        totalCount: validElements.totalCount,
+    };
 };
 
 export const getObjRef = (filter: IAttributeFilter, identifier: string): ObjRef => {
@@ -160,6 +165,12 @@ export const getValidElementsFilters = (
                 overAttribute: overAttribute,
             };
         });
+};
+
+export const isParentFiltersElementsByRef = (parentFilters: IAttributeFilter[]): boolean => {
+    return parentFilters?.every((parentFilter) =>
+        isAttributeElementsByRef(filterAttributeElements(parentFilter)),
+    );
 };
 
 export const isParentFilteringEnabled = (backend: IAnalyticalBackend): boolean => {
