@@ -1,0 +1,51 @@
+{
+    "count": [1, 3],
+    "data": [["9459230.78", "20528222.66", "8323300.01"]],
+    "headerItems": [
+        [[{ "measureHeaderItem": { "name": "Won", "order": 0 } }]],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2010"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2011"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2012",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2012"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2010"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2011"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2012",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2012"
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [1, 3]
+}

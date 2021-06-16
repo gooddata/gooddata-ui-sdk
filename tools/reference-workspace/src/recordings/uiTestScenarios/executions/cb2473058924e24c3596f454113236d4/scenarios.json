@@ -1,0 +1,83 @@
+[
+    {
+        "n2oMap": {
+            "a_closed.aag81lMifn6q": "a_closed.aag81lMifn6q",
+            "a_closed.aag81lMifn6q_1": "closed.second",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_closed.aag81lMifn6q"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "closed.second"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_acugFHNJgsBy"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "secondary_measures" },
+                { "items": [], "localIdentifier": "tertiary_measures" },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                                "localIdentifier": "a_closed.aag81lMifn6q"
+                            }
+                        },
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                                "localIdentifier": "closed.second"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_closed.aag81lMifn6q", "closed.second"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "primary with two viewBy dates",
+        "vis": "BulletChart"
+    }
+]

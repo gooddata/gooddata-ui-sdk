@@ -627,6 +627,38 @@ export const DEFAULT_BULLET_CHART_CONFIG: IUiConfig = {
     ],
 };
 
+export const BULLET_CHART_CONFIG_MULTIPLE_DATES: IUiConfig = {
+    ...defaultRootUiConfigProperties,
+    buckets: {
+        [BucketNames.MEASURES]: {
+            ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.MEASURES],
+        },
+        [BucketNames.SECONDARY_MEASURES]: {
+            ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.SECONDARY_MEASURES],
+        },
+        [BucketNames.TERTIARY_MEASURES]: {
+            ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.TERTIARY_MEASURES],
+        },
+        [BucketNames.VIEW]: {
+            ...viewBase,
+            allowsReordering: true,
+            allowsSwapping: true,
+            canAddItems: true,
+            itemsLimit: 2,
+            itemsLimitByType: {
+                date: 2,
+            },
+            allowsDuplicateDates: true,
+            preferSynchronizedDates: true,
+        },
+        ...defaultFilters,
+    },
+    supportedOverTimeComparisonTypes: [
+        OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
+        OverTimeComparisonTypes.PREVIOUS_PERIOD,
+    ],
+};
+
 const geoMeasuresBase = {
     ...measuresBase,
     allowsReordering: false,

@@ -1,0 +1,47 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "secondary_measures" },
+            { "items": [], "localIdentifier": "tertiary_measures" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_closed.aag81lMifn6q"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "closed.second"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "BulletChart.392661a3a1625d09d4110a58c5c6e1c7",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "BulletChart - primary with two viewBy dates",
+        "uri": "BulletChart.392661a3a1625d09d4110a58c5c6e1c7",
+        "visualizationUrl": "local:bullet"
+    }
+}

@@ -890,6 +890,11 @@
     "BulletChart.2b7793fcbe30f835e0299d52daa1889b": {
         "comment": "Auto-generated insight for test scenario BulletChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom."
     },
+    "BulletChart.3017659d87c5c1e545a734e70c83784b": {
+        "comment": "Auto-generated insight for test scenario BulletChart - primary, target and comparative measures with two viewBy dates.",
+        "scenarioName": "primary, target and comparative measures with two viewBy dates",
+        "visName": "BulletChart"
+    },
     "BulletChart.30cff9724e53d90b37c5c27119cb0f3b": {
         "comment": "Auto-generated insight for test scenario BulletChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
     },
@@ -906,6 +911,11 @@
     },
     "BulletChart.35b589c35e0704e8d8ffdf3dc4f529f5": {
         "comment": "Auto-generated insight for test scenario BulletChart - data labels - forced visible and german separators."
+    },
+    "BulletChart.392661a3a1625d09d4110a58c5c6e1c7": {
+        "comment": "Auto-generated insight for test scenario BulletChart - primary with two viewBy dates.",
+        "scenarioName": "primary with two viewBy dates",
+        "visName": "BulletChart"
     },
     "BulletChart.395cec4a19597bbe67c174f809ee5f6c": {
         "comment": "Auto-generated insight for test scenario BulletChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."

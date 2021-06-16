@@ -1126,6 +1126,29 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: BulletChart - primary with two viewBy dates 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Won",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 3,
+    "attributes": 2,
+    "sliceNames": Array [
+      "2010 > 2010",
+      "2011 > 2011",
+      "2012 > 2012",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: BulletChart - primary, target and comparative measures 1`] = `
 Object {
   "seriesDigest": Object {
@@ -1175,6 +1198,35 @@ Object {
       "PhoenixSoft > West Coast",
       "WonderKid > East Coast",
       "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: BulletChart - primary, target and comparative measures with two viewBy dates 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": Array [
+      " > Won",
+      " > Amount",
+      " > Calculated 'Lost' measure",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 7,
+    "attributes": 2,
+    "sliceNames": Array [
+      "2010 > 2010",
+      "2011 > 2011",
+      "2012 > 2012",
+      "2013 > 2013",
+      "2014 > 2014",
+      "2016 > 2016",
+      "2017 > 2017",
     ],
     "totals": 0,
   },

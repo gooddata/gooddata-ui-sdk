@@ -19,6 +19,18 @@ export const BulletChartWithAllMeasuresAndTwoViewBy = {
     viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
 };
 
+export const BulletChartWithPrimaryMeasureAndTwoViewByDates = {
+    primaryMeasure: ReferenceLdm.Won,
+    viewBy: [ReferenceLdm.ClosedYear, ReferenceLdmExt.ModifiedClosedYear],
+};
+
+export const BulletChartWithAllMeasuresMeasuresAndTwoViewByDates = {
+    primaryMeasure: ReferenceLdm.Won,
+    targetMeasure: ReferenceLdm.Amount,
+    comparativeMeasure: ReferenceLdmExt.CalculatedLost,
+    viewBy: [ReferenceLdm.ClosedYear, ReferenceLdmExt.ModifiedClosedYear],
+};
+
 export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("primary measure", {
@@ -50,4 +62,9 @@ export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .addScenario(
         "primary, target and comparative measures with two viewBy",
         BulletChartWithAllMeasuresAndTwoViewBy,
+    )
+    .addScenario("primary with two viewBy dates", BulletChartWithPrimaryMeasureAndTwoViewByDates)
+    .addScenario(
+        "primary, target and comparative measures with two viewBy dates",
+        BulletChartWithAllMeasuresMeasuresAndTwoViewByDates,
     );

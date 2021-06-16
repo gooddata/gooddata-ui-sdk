@@ -13,6 +13,7 @@ import {
     IImplicitDrillDown,
     IDrillDownContext,
     InvalidBucketsSdkError,
+    IUiConfig,
 } from "../../../interfaces/Visualization";
 
 import {
@@ -27,7 +28,7 @@ import {
 import { BUCKETS } from "../../../constants/bucket";
 import { removeSort } from "../../../utils/sort";
 import { getBulletChartUiConfig } from "../../../utils/uiConfigHelpers/bulletChartUiConfigHelper";
-import { DEFAULT_BULLET_CHART_CONFIG } from "../../../constants/uiConfig";
+import { BULLET_CHART_CONFIG_MULTIPLE_DATES, DEFAULT_BULLET_CHART_CONFIG } from "../../../constants/uiConfig";
 import { BULLET_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BulletChartConfigurationPanel from "../../configurationPanels/BulletChartConfigurationPanel";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
@@ -47,12 +48,18 @@ export class PluggableBulletChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
+    public getUiConfig(): IUiConfig {
+        return cloneDeep(
+            this.isMultipleDatesEnabled() ? BULLET_CHART_CONFIG_MULTIPLE_DATES : DEFAULT_BULLET_CHART_CONFIG,
+        );
+    }
+
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
-            uiConfig: cloneDeep(DEFAULT_BULLET_CHART_CONFIG),
+            uiConfig: this.getUiConfig(),
         };
 
         let buckets = transformBuckets(newReferencePoint.buckets);
