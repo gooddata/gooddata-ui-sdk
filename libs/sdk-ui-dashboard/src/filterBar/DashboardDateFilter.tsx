@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 import { DateFilter, IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
-import { dateFilterOptionToDashboardDateFilter } from "./converters";
+import { dateFilterOptionToDashboardDateFilter } from "../model/_staging/dashboard/dashboardFilterConverter";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../model/_staging/dateFilterConfig/dateFilterOptionMapping";
 
 /**
