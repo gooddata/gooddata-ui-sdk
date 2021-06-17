@@ -12,6 +12,7 @@ import {
 import {
     AREA_UICONFIG_WITH_MULTIPLE_DATES,
     DEFAULT_AREA_UICONFIG,
+    MAX_CATEGORIES_COUNT,
     MAX_STACKS_COUNT,
     MAX_VIEW_COUNT,
 } from "../../../constants/uiConfig";
@@ -43,7 +44,7 @@ import {
     getMainDateItem,
     getMeasureItems,
     filterOutDerivedMeasures,
-    getFistDateItem,
+    getFistDateItemWithMultipleDates,
 } from "../../../utils/bucketHelper";
 import {
     getReferencePointWithSupportedProperties,
@@ -245,10 +246,15 @@ export class PluggableAreaChart extends PluggableBaseChart {
         };
     }
 
-    private getBucketItemsWithMultipleDates(referencePoint: IReferencePoint) {
+    private getViewByMaxItemCount(referencePoint: IExtendedReferencePoint): number {
+        return referencePoint.uiConfig?.buckets?.[BucketNames.VIEW]?.itemsLimit ?? MAX_CATEGORIES_COUNT;
+    }
+
+    private getBucketItemsWithMultipleDates(referencePoint: IExtendedReferencePoint) {
         const buckets = referencePoint?.buckets ?? [];
         const measures = getMeasureItems(buckets);
         const masterMeasures = filterOutDerivedMeasures(measures);
+        const viewByMaxItemCount = this.getViewByMaxItemCount(referencePoint);
 
         let views: IBucketItem[] = [];
         let stacks: IBucketItem[] = getStackItems(buckets, [ATTRIBUTE, DATE]);
@@ -259,32 +265,37 @@ export class PluggableAreaChart extends PluggableBaseChart {
             BucketNames.ATTRIBUTES,
             BucketNames.SEGMENT,
             BucketNames.STACK,
-            BucketNames.COLUMNS,
-        ]);
+        ]).filter((attribute) => !stacks.includes(attribute));
 
-        const dateItem = getFistDateItem(buckets);
-        if (dateItem) {
-            // first available date is put to views (date has preference)
-            views = [dateItem];
+        const firstDateItemInViews = getFistDateItemWithMultipleDates(buckets);
 
-            const [nextAttribute] = allAttributes.filter((attribute) => attribute !== dateItem);
-            const isNextAttributeDate = isDateBucketItem(nextAttribute);
-            if (masterMeasures.length <= 1 && nextAttribute && isNextAttributeDate) {
-                // next attribute is date -> put to stacks
-                stacks = [nextAttribute];
-            } else if (masterMeasures.length <= 1 && nextAttribute && !stacks.length) {
-                // next attribute is not date and stacks are empty -> put to views
-                views = [...views, nextAttribute];
+        if (firstDateItemInViews) {
+            views = [firstDateItemInViews];
+
+            const [nextAttribute] = allAttributes.filter((attribute) => attribute !== firstDateItemInViews);
+
+            if (masterMeasures.length <= 1 && nextAttribute && !stacks.length) {
+                const isNextAttributeDate = isDateBucketItem(nextAttribute);
+
+                if (!isNextAttributeDate) {
+                    stacks = [nextAttribute];
+                    views = [...views];
+                } else {
+                    views = [...views, nextAttribute].slice(0, viewByMaxItemCount);
+                }
             }
         } else {
             if (masterMeasures.length <= 1 && allAttributes.length > 0 && !stacks.length) {
                 // have more attributes and stacks empty -> fill views
-                views = allAttributes.slice(0, MAX_VIEW_COUNT);
+                views = allAttributes.slice(0, viewByMaxItemCount);
             } else if (masterMeasures.length <= 1 && allAttributes.length) {
                 // have more attributes and stacks non-empty -> keep only one attribute in view
                 views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
-            } else {
+            } else if (masterMeasures.length <= 1) {
                 // more measures -> prefer measures
+                views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
+            } else {
+                // more measures -> prefer measures and clear stack
                 views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
                 stacks = [];
             }

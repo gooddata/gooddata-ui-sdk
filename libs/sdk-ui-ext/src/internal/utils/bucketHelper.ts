@@ -537,9 +537,12 @@ export function getAttributeItems(buckets: IBucketOfFun[]): IBucketItem[] {
     ]);
 }
 
-export function getAttributeItemsWithoutStacks(buckets: IBucketOfFun[]): IBucketItem[] {
+export function getAttributeItemsWithoutStacks(
+    buckets: IBucketOfFun[],
+    itemTypes: string[] = [ATTRIBUTE],
+): IBucketItem[] {
     return getAttributeItems(buckets).filter((attribute) => {
-        return !includes(getStackItems(buckets), attribute);
+        return !includes(getStackItems(buckets, itemTypes), attribute);
     });
 }
 
@@ -581,6 +584,14 @@ export function getDateItems(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAttributeItemsWithoutStacks(buckets).filter(isDateBucketItem);
 }
 
+export function getDateItemsWithMultipleDates(buckets: IBucketOfFun[]): IBucketItem[] {
+    return getAttributeItemsWithoutStacks(buckets, [ATTRIBUTE, DATE]).filter(isDateBucketItem);
+}
+
+export function getFistDateItemWithMultipleDates(buckets: IBucketOfFun[]): IBucketItem | undefined {
+    const dateItems = getDateItemsWithMultipleDates(buckets);
+    return dateItems[0];
+}
 export function getFistDateItem(buckets: IBucketOfFun[]): IBucketItem | undefined {
     const dateItems = getDateItems(buckets);
     return dateItems[0];
