@@ -5,6 +5,7 @@ import {
     ComplexDashboardIdentifier,
     SimpleDashboardIdentifier,
     TestCorrelation,
+    TestInsightItem,
     TestInsightPlaceholderItem,
     TestKpiPlaceholderItem,
     TestStash,
@@ -12,11 +13,38 @@ import {
 import { DashboardCommandFailed, DashboardLayoutSectionItemsAdded } from "../../../events";
 import { addSectionItem, undoLayoutChanges } from "../../../commands";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
+import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
 
 describe("add section items handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier, undefined, {
+                useRefType: "id",
+            }),
+        );
+
+        it("should load and add insight when adding insight widget", async () => {
+            const event: DashboardLayoutSectionItemsAdded = await Tester.dispatchAndWaitFor(
+                addSectionItem(0, 0, TestInsightItem, TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
+            );
+
+            expect(event.payload.itemsAdded).toEqual([TestInsightItem]);
+            const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
+            expect(insight).toBeDefined();
+        });
+
+        it("should not undo loaded insight", async () => {
+            await Tester.dispatchAndWaitFor(
+                addSectionItem(0, 0, TestInsightItem, TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
+            );
+            await Tester.dispatchAndWaitFor(undoLayoutChanges(), "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED");
+
+            const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
+            expect(insight).toBeDefined();
+        });
 
         it("should fail if bad section is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(

@@ -8,6 +8,7 @@ const insightsSlice = createSlice({
     initialState: insightsAdapter.getInitialState(),
     reducers: {
         setInsights: insightsAdapter.setAll,
+        addInsights: insightsAdapter.addMany,
     },
 });
 

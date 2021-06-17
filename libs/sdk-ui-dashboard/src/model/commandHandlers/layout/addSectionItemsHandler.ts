@@ -5,7 +5,7 @@ import { AddSectionItems } from "../../commands";
 import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation";
 import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
@@ -13,12 +13,18 @@ import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
 import { layoutSectionItemsAdded } from "../../events/layout";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps";
+import { selectInsightRefs } from "../../state/insights/insightsSelectors";
+import { PromiseFnReturnType } from "../../types/sagas";
+import { loadInsightsForDashboardItems } from "./common/loadMissingInsights";
+import { batchActions } from "redux-batched-actions";
+import { insightsActions } from "../../state/insights";
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;
     readonly cmd: AddSectionItems;
     readonly layout: ReturnType<typeof selectLayout>;
     readonly stash: ReturnType<typeof selectStash>;
+    readonly insightRefs: ReturnType<typeof selectInsightRefs>;
 };
 
 function validateAndResolve(commandCtx: AddSectionItemsContext) {
@@ -74,21 +80,32 @@ export function* addSectionItemsHandler(ctx: DashboardContext, cmd: AddSectionIt
         cmd,
         layout: yield select(selectLayout),
         stash: yield select(selectStash),
+        insightRefs: yield select(selectInsightRefs),
     };
 
     const { stashValidationResult, section } = validateAndResolve(commandCtx);
     const { itemIndex, sectionIndex } = cmd.payload;
 
+    const insightsToAdd: PromiseFnReturnType<typeof loadInsightsForDashboardItems> = yield call(
+        loadInsightsForDashboardItems,
+        ctx,
+        commandCtx.insightRefs,
+        stashValidationResult.resolved,
+    );
+
     yield put(
-        layoutActions.addSectionItems({
-            sectionIndex,
-            itemIndex,
-            items: stashValidationResult.resolved,
-            usedStashes: stashValidationResult.existing,
-            undo: {
-                cmd,
-            },
-        }),
+        batchActions([
+            insightsActions.addInsights(insightsToAdd),
+            layoutActions.addSectionItems({
+                sectionIndex,
+                itemIndex,
+                items: stashValidationResult.resolved,
+                usedStashes: stashValidationResult.existing,
+                undo: {
+                    cmd,
+                },
+            }),
+        ]),
     );
 
     yield dispatchDashboardEvent(
