@@ -5,7 +5,7 @@ import {
     IFilterContextDefinition,
     isTempFilterContext,
 } from "@gooddata/sdk-backend-spi";
-import { createDefaultFilterContext } from "../filterContext/defaultFilterContext";
+import { createDefaultFilterContext } from "./defaultFilterContext";
 
 /**
  * Given a dashboard, this function will inspect its filter context and always return an instance of IFilterContextDefinition to use.
