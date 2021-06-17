@@ -78,6 +78,9 @@ const BAR_COLUMN_TOOLTIP_LEFT_OFFSET = 5;
 const HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET = 16;
 const MIN_RANGE = 2;
 
+// custom limit to hide data labels to improve performance
+const HEATMAP_DATA_LABELS_LIMIT = 150;
+
 // in viewport <= 480, tooltip width is equal to chart container width
 const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 
@@ -571,6 +574,10 @@ function getTreemapLabelsConfiguration(
     }
 }
 
+function shouldDisableHeatmapDataLabels(series: ISeriesItem[]): boolean {
+    return series.some((item) => item.data.length >= HEATMAP_DATA_LABELS_LIMIT);
+}
+
 function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
     const { stacking, yAxes = [], type } = chartOptions;
 
@@ -603,6 +610,10 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
     // see https://github.com/highcharts/highcharts/issues/15145
     const dataLabelsBugWorkaround = stackMeasuresToPercent && canStackInPercent ? { inside: true } : {};
 
+    // only applied to heatmap chart
+    const areHeatmapDataLabelsDisabled = shouldDisableHeatmapDataLabels(series);
+    const heatmapLabelsConfig = areHeatmapDataLabelsDisabled ? { enabled: false } : labelsConfig;
+
     return {
         plotOptions: {
             gdcOptions: {
@@ -628,7 +639,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
                 dataLabels: {
                     formatter: labelFormatterHeatmap,
                     config: chartConfig,
-                    ...labelsConfig,
+                    ...heatmapLabelsConfig,
                 },
             },
             treemap: {
