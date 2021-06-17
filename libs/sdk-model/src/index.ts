@@ -41,6 +41,8 @@ export {
     isLocalIdRef,
     areObjRefsEqual,
     isObjRef,
+    serializeObjRef,
+    deserializeObjRef,
 } from "./objRef";
 
 export {

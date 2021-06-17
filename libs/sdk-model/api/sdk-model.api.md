@@ -243,6 +243,9 @@ export function defWithPostProcessing(definition: IExecutionDefinition, postProc
 export function defWithSorting(definition: IExecutionDefinition, sorts: ISortItem[]): IExecutionDefinition;
 
 // @public
+export function deserializeObjRef(val: string): ObjRef | ObjRefInScope;
+
+// @public
 export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
 
 // @public
@@ -1244,6 +1247,9 @@ export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelative
 
 // @public (undocumented)
 export type RgbType = "rgb";
+
+// @public
+export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string;
 
 // @public
 export type SortDirection = "asc" | "desc";
