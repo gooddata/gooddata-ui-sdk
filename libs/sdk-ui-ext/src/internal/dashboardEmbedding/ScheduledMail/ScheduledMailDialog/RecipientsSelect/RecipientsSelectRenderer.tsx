@@ -323,7 +323,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
         if (isExternalUser && isEmail(email)) {
             return (
                 // This class is necessary for testcafes
-                <div className="s-gd-recipient-option-item">
+                <div className="s-gd-recipient-option-item s-recipient-not-in-workspace-warning">
                     <Message type="warning" contrast={true}>
                         <FormattedHTMLMessage id="options.menu.schedule.email.recipient.warning.belong.workspace" />
                     </Message>
