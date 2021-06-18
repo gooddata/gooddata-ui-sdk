@@ -20,22 +20,18 @@ export function* removeLayoutSectionHandler(
     const { index, stashIdentifier } = cmd.payload;
 
     if (isEmpty(layout.sections)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to remove a section from an empty layout.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to remove a section from an empty layout.`,
+            cmd.correlationId,
         );
     }
 
     if (!validateSectionExists(layout, index)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to remove non-existing layout section at index ${index}.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to remove non-existing layout section at index ${index}.`,
+            cmd.correlationId,
         );
     }
 

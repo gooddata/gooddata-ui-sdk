@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
 import { DashboardContext } from "../types/commonTypes";
 
 /**
@@ -66,4 +67,14 @@ export interface IDashboardEvent {
      * Dashboard context in which the event occurred.
      */
     readonly ctx: DashboardContext;
+}
+
+/**
+ * Tests whether object is an instance of {@link IDashboardEvent}.
+ *
+ * @param obj - object to test
+ * @internal
+ */
+export function isDashboardEvent(obj: unknown): obj is IDashboardEvent {
+    return !isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("GDC.DASH/EVT");
 }

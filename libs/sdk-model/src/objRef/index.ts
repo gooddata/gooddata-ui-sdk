@@ -2,6 +2,7 @@
 
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
+import stringify from "json-stable-stringify";
 
 /**
  * Type for all identifiers.
@@ -162,6 +163,40 @@ export function objRefToString(objRef: ObjRef | ObjRefInScope): string {
     }
 
     return objRef.localIdentifier;
+}
+
+/**
+ * Serializes an instance of ObjRef to a string representation. This is suitable when ObjRef needs to be used
+ * as a key in dictionaries/objects.
+ *
+ * Note: there is no loss of information and the serialized value is guaranteed to be stable, meaning same ObjRef
+ * will always serialize the same.
+ *
+ * @param objRef - ref to serialize
+ * @remarks see {@link deserializeObjRef}
+ * @public
+ */
+export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string {
+    return stringify(objRef, { space: 0 });
+}
+
+/**
+ * Deserializes an ObjRef from its pure string representation. The function will throw an error if the input
+ * is not a valid, serialized ObjRef.
+ *
+ * @param val - string representation of ObjRef
+ * @remarks see {@link serializeObjRef}
+ * @public
+ */
+export function deserializeObjRef(val: string): ObjRef | ObjRefInScope {
+    const obj: unknown = JSON.parse(val);
+
+    invariant(
+        isObjRef(obj) || isLocalIdRef(obj),
+        `Attempting to deserialize ObjRef but the input is invalid: '${val}'`,
+    );
+
+    return obj;
 }
 
 /**

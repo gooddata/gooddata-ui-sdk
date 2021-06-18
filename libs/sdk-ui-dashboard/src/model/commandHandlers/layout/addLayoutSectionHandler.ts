@@ -3,50 +3,81 @@
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { AddLayoutSection } from "../../commands";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
 import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
-import { layoutSectionAdded } from "../../events/layout";
+import { DashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/layout";
 import { validateSectionPlacement } from "./validation/layoutValidation";
-import { validateAndResolveStashedItems } from "./validation/stashValidation";
+import { StashValidationResult, validateAndResolveStashedItems } from "./validation/stashValidation";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps";
+import { loadInsightsForDashboardItems } from "./common/loadMissingInsights";
+import { selectInsightRefs } from "../../state/insights/insightsSelectors";
+import { PromiseFnReturnType } from "../../types/sagas";
+import { batchActions } from "redux-batched-actions";
+import { insightsActions } from "../../state/insights";
 
-// TODO: this needs to handle calculation of the date dataset to use for the items
-export function* addLayoutSectionHandler(ctx: DashboardContext, cmd: AddLayoutSection): SagaIterator<void> {
-    const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
-    const stash: ReturnType<typeof selectStash> = yield select(selectStash);
+type AddLayoutSectionContext = {
+    readonly ctx: DashboardContext;
+    readonly cmd: AddLayoutSection;
+    readonly layout: ReturnType<typeof selectLayout>;
+    readonly stash: ReturnType<typeof selectStash>;
+    readonly insightRefs: ReturnType<typeof selectInsightRefs>;
+};
 
+function validateAndResolve(commandCtx: AddLayoutSectionContext): StashValidationResult {
     const {
-        payload: { index, initialHeader, initialItems = [] },
-    } = cmd;
+        ctx,
+        layout,
+        stash,
+        cmd: {
+            payload: { index, initialItems = [] },
+            correlationId,
+        },
+    } = commandCtx;
 
     if (!validateSectionPlacement(layout, index)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to insert new section at wrong index ${index}. There are currently ${layout.sections.length} sections.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to insert new section at wrong index ${index}. There are currently ${layout.sections.length} sections.`,
+            correlationId,
         );
     }
 
     const stashValidationResult = validateAndResolveStashedItems(stash, initialItems);
 
     if (!isEmpty(stashValidationResult.missing)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
-                    ", ",
-                )}`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
+                ", ",
+            )}`,
+            correlationId,
         );
     }
+
+    return stashValidationResult;
+}
+
+// TODO: this needs to handle calculation of the date dataset to use for the items
+export function* addLayoutSectionHandler(
+    ctx: DashboardContext,
+    cmd: AddLayoutSection,
+): SagaIterator<DashboardLayoutSectionAdded> {
+    const commandCtx: AddLayoutSectionContext = {
+        ctx,
+        cmd,
+        layout: yield select(selectLayout),
+        stash: yield select(selectStash),
+        insightRefs: yield select(selectInsightRefs),
+    };
+
+    const stashValidationResult = validateAndResolve(commandCtx);
+    const {
+        payload: { index, initialHeader },
+    } = cmd;
 
     const section: ExtendedDashboardLayoutSection = {
         type: "IDashboardLayoutSection",
@@ -54,18 +85,31 @@ export function* addLayoutSectionHandler(ctx: DashboardContext, cmd: AddLayoutSe
         items: stashValidationResult.resolved,
     };
 
-    yield put(
-        layoutActions.addSection({
-            section,
-            usedStashes: stashValidationResult.existing,
-            index,
-            undo: {
-                cmd,
-            },
-        }),
+    const insightsToAdd: PromiseFnReturnType<typeof loadInsightsForDashboardItems> = yield call(
+        loadInsightsForDashboardItems,
+        ctx,
+        commandCtx.insightRefs,
+        stashValidationResult.resolved,
     );
 
-    yield dispatchDashboardEvent(
-        layoutSectionAdded(ctx, section, resolveIndexOfNewItem(layout.sections, index), cmd.correlationId),
+    yield put(
+        batchActions([
+            insightsActions.addInsights(insightsToAdd),
+            layoutActions.addSection({
+                section,
+                usedStashes: stashValidationResult.existing,
+                index,
+                undo: {
+                    cmd,
+                },
+            }),
+        ]),
+    );
+
+    return layoutSectionAdded(
+        ctx,
+        section,
+        resolveIndexOfNewItem(commandCtx.layout.sections, index),
+        cmd.correlationId,
     );
 }

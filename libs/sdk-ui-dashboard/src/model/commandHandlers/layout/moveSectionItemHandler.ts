@@ -16,41 +16,47 @@ import { layoutActions } from "../../state/layout";
 import { layoutSectionItemMoved } from "../../events/layout";
 import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps";
 
-export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionItem): SagaIterator<void> {
-    const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
-    const { itemIndex, sectionIndex, toSectionIndex, toItemIndex } = cmd.payload;
+type MoveSectionItemContext = {
+    readonly ctx: DashboardContext;
+    readonly cmd: MoveSectionItem;
+    readonly layout: ReturnType<typeof selectLayout>;
+};
+
+function validateAndResolve(commandCtx: MoveSectionItemContext) {
+    const {
+        ctx,
+        layout,
+        cmd: {
+            payload: { sectionIndex, toSectionIndex, itemIndex, toItemIndex },
+            correlationId,
+        },
+    } = commandCtx;
 
     if (!validateSectionExists(layout, sectionIndex)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to move item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to move item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
+            correlationId,
         );
     }
 
     const fromSection = layout.sections[sectionIndex];
 
     if (!validateItemExists(fromSection, itemIndex)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to move non-existent item from index ${itemIndex}. There are only ${fromSection.items.length} items.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to move non-existent item from index ${itemIndex}. There are only ${fromSection.items.length} items.`,
+            correlationId,
         );
     }
 
     const itemToMove = fromSection.items[itemIndex];
 
     if (!validateSectionPlacement(layout, toSectionIndex)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to move item to a wrong section at index ${toSectionIndex}. There are currently ${layout.sections.length} sections.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to move item to a wrong section at index ${toSectionIndex}. There are currently ${layout.sections.length} sections.`,
+            correlationId,
         );
     }
 
@@ -58,12 +64,10 @@ export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionI
     const targetSection = layout.sections[targetSectionIndex];
 
     if (!validateItemPlacement(targetSection, toItemIndex)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to move item to a wrong location at index ${toItemIndex}. Target section has ${targetSection.items.length} items.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to move item to a wrong location at index ${toItemIndex}. Target section has ${targetSection.items.length} items.`,
+            correlationId,
         );
     }
 
@@ -73,24 +77,39 @@ export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionI
         targetItemIndex = resolveRelativeIndex(targetSection.items, toItemIndex);
 
         if (itemIndex === targetItemIndex) {
-            return yield dispatchDashboardEvent(
-                invalidArgumentsProvided(
-                    ctx,
-                    `Attempting to move item to a same place where it already resides ${toItemIndex}.`,
-                    cmd.correlationId,
-                ),
+            throw invalidArgumentsProvided(
+                ctx,
+                `Attempting to move item to a same place where it already resides ${toItemIndex}.`,
+                correlationId,
             );
         }
     } else {
         targetItemIndex = resolveIndexOfNewItem(targetSection.items, toItemIndex);
     }
 
+    return {
+        targetSectionIndex,
+        targetItemIndex,
+        itemToMove,
+    };
+}
+
+export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionItem): SagaIterator<void> {
+    const commandCtx: MoveSectionItemContext = {
+        ctx,
+        cmd,
+        layout: yield select(selectLayout),
+    };
+
+    const { targetSectionIndex, targetItemIndex, itemToMove } = validateAndResolve(commandCtx);
+    const { itemIndex, sectionIndex } = cmd.payload;
+
     yield put(
         layoutActions.moveSectionItem({
             sectionIndex,
             itemIndex,
             toSectionIndex: targetSectionIndex,
-            toItemIndex,
+            toItemIndex: targetItemIndex,
             undo: {
                 cmd,
             },

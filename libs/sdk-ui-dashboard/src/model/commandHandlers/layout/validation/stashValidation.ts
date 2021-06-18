@@ -8,7 +8,7 @@ import {
 } from "../../../types/layoutTypes";
 import { LayoutStash } from "../../../state/layout/layoutState";
 
-type StashValidationResult = {
+export type StashValidationResult = {
     existing: StashedDashboardItemsId[];
     missing: StashedDashboardItemsId[];
     resolved: ExtendedDashboardItem[];

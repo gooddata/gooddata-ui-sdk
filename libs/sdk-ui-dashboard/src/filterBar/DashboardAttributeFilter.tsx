@@ -7,7 +7,7 @@ import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import {
     attributeFilterToDashboardAttributeFilter,
     dashboardAttributeFilterToAttributeFilter,
-} from "./converters";
+} from "../model/_staging/dashboard/dashboardFilterConverter";
 
 /**
  * Defines interface between filter bar and attribute filter implementation

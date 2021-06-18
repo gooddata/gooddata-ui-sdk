@@ -5,6 +5,7 @@ import {
     EmptyDashboardIdentifier,
     SimpleDashboardIdentifier,
     TestCorrelation,
+    TestInsightItem,
     TestInsightPlaceholderItem,
     TestKpiPlaceholderItem,
     TestStash,
@@ -12,11 +13,16 @@ import {
 import { addLayoutSection, undoLayoutChanges } from "../../../commands";
 import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionAdded } from "../../../events";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
+import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), EmptyDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => (Tester = tester), EmptyDashboardIdentifier, undefined, {
+                useRefType: "id",
+            }),
+        );
 
         it("should add a new empty section at relative index 0", async () => {
             const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
@@ -64,6 +70,17 @@ describe("add layout section handler", () => {
             expect(layout.sections[0]).toEqual(event.payload.section);
         });
 
+        it("should load and add insight when adding new section insight widget", async () => {
+            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, {}, [TestInsightItem], TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            expect(event.payload.section.items).toEqual([TestInsightItem]);
+            const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
+            expect(insight).toBeDefined();
+        });
+
         it("should be undoable and revert to empty layout", async () => {
             await Tester.dispatchAndWaitFor(addLayoutSection(0), "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED");
 
@@ -75,6 +92,18 @@ describe("add layout section handler", () => {
 
             const layout = selectLayout(Tester.state());
             expect(layout.sections).toEqual([]);
+        });
+
+        it("should not remove loaded insight during layouting undo", async () => {
+            await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, {}, [TestInsightItem], TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            await Tester.dispatchAndWaitFor(undoLayoutChanges(), "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED");
+
+            const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
+            expect(insight).toBeDefined();
         });
 
         it("should fail if bad section placement index is provided", async () => {

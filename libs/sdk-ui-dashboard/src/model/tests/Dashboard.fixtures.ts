@@ -1,7 +1,8 @@
 // (C) 2021 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IDashboardLayoutItem, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayoutItem, IDashboardWithReferences, IInsightWidget } from "@gooddata/sdk-backend-spi";
+import { idRef, insightId } from "@gooddata/sdk-model";
 import { InsightPlaceholderWidget, KpiPlaceholderWidget } from "../types/layoutTypes";
 
 export const SimpleDashboardIdentifier = "aaRaEZRWdRpQ";
@@ -47,6 +48,31 @@ export const TestInsightPlaceholderWidget: InsightPlaceholderWidget = {
 export const TestInsightPlaceholderItem: IDashboardLayoutItem<InsightPlaceholderWidget> = {
     type: "IDashboardLayoutItem",
     widget: TestInsightPlaceholderWidget,
+    size: {
+        xl: {
+            gridWidth: 2,
+        },
+    },
+};
+
+export const TestInsightItem: IDashboardLayoutItem<IInsightWidget> = {
+    type: "IDashboardLayoutItem",
+    widget: {
+        type: "insight",
+        insight: idRef(
+            insightId(
+                ReferenceRecordings.Insights.PivotTable.SingleMeasureWithTwoRowAndTwoColumnAttributes.obj,
+            ),
+            "insight",
+        ),
+        ref: idRef("newWidget"),
+        uri: "newWidgetUri",
+        identifier: "newWidgetIdentifier",
+        ignoreDashboardFilters: [],
+        drills: [],
+        title: "Test Insight Item",
+        description: "",
+    },
     size: {
         xl: {
             gridWidth: 2,

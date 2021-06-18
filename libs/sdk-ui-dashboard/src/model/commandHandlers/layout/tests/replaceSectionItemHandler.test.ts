@@ -68,7 +68,7 @@ describe("replace section item handler", () => {
             );
 
             expect(event.payload.previousItem).toEqual(SecondSectionFirstItem);
-            expect(event.payload.item).toEqual(TestKpiPlaceholderItem);
+            expect(event.payload.items).toEqual([TestKpiPlaceholderItem]);
             const section = selectLayout(Tester.state()).sections[1];
             expect(section.items).toEqual([TestKpiPlaceholderItem, SecondSectionSecondItem]);
         });
@@ -80,7 +80,7 @@ describe("replace section item handler", () => {
             );
 
             expect(event.payload.previousItem).toEqual(ThirdSectionFirstItem);
-            expect(event.payload.item).toEqual(TestKpiPlaceholderItem);
+            expect(event.payload.items).toEqual([TestKpiPlaceholderItem]);
             const section = selectLayout(Tester.state()).sections[2];
             expect(section.items).toEqual([TestKpiPlaceholderItem]);
         });
@@ -111,7 +111,7 @@ describe("replace section item handler", () => {
             );
 
             expect(event.payload.previousItem).toEqual(SecondSectionSecondItem);
-            expect(event.payload.item).toEqual(SecondSectionFirstItem);
+            expect(event.payload.items).toEqual([SecondSectionFirstItem]);
             const section = selectLayout(Tester.state()).sections[1];
             expect(section.items).toEqual([TestKpiPlaceholderItem, SecondSectionFirstItem]);
         });
@@ -127,7 +127,7 @@ describe("replace section item handler", () => {
             );
 
             expect(event.payload.stashIdentifier).toEqual(TestStash);
-            expect(event.payload.item).toEqual(SecondSectionFirstItem);
+            expect(event.payload.items).toEqual([SecondSectionFirstItem]);
             const stash = selectStash(Tester.state());
             expect(stash[TestStash]).toEqual([SecondSectionSecondItem]);
         });

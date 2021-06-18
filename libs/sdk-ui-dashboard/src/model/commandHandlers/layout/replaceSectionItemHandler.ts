@@ -11,55 +11,74 @@ import { layoutActions } from "../../state/layout";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
 import { layoutSectionItemReplaced } from "../../events/layout";
-import { isStashedDashboardItemsId } from "../../types/layoutTypes";
 
-// TODO: this needs to handle calculation of the date dataset to use for the item
-export function* replaceSectionItemHandler(
-    ctx: DashboardContext,
-    cmd: ReplaceSectionItem,
-): SagaIterator<void> {
-    const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
-    const stash: ReturnType<typeof selectStash> = yield select(selectStash);
-    const { sectionIndex, itemIndex, item, stashIdentifier } = cmd.payload;
+type ReplaceSectionItemContext = {
+    ctx: DashboardContext;
+    cmd: ReplaceSectionItem;
+    layout: ReturnType<typeof selectLayout>;
+    stash: ReturnType<typeof selectStash>;
+};
+
+function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
+    const {
+        ctx,
+        cmd: {
+            payload: { sectionIndex, itemIndex, item },
+            correlationId,
+        },
+        layout,
+        stash,
+    } = commandCtx;
 
     if (!validateSectionExists(layout, sectionIndex)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to replace item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to replace item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
+            correlationId,
         );
     }
 
     const fromSection = layout.sections[sectionIndex];
 
     if (!validateItemExists(fromSection, itemIndex)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to replace non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to replace non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
+            correlationId,
         );
     }
 
     const stashValidationResult = validateAndResolveStashedItems(stash, [item]);
 
     if (!isEmpty(stashValidationResult.missing)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
-                    ", ",
-                )}`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
+                ", ",
+            )}`,
+            correlationId,
         );
     }
 
-    const newItem = isStashedDashboardItemsId(item) ? stashValidationResult.resolved[0] : item;
-    const itemToReplace = fromSection.items[itemIndex];
+    return {
+        itemToReplace: fromSection.items[itemIndex],
+        stashValidationResult,
+    };
+}
+
+// TODO: this needs to handle calculation of the date dataset to use for the item
+export function* replaceSectionItemHandler(
+    ctx: DashboardContext,
+    cmd: ReplaceSectionItem,
+): SagaIterator<void> {
+    const commandCtx: ReplaceSectionItemContext = {
+        ctx,
+        cmd,
+        layout: yield select(selectLayout),
+        stash: yield select(selectStash),
+    };
+    const { itemToReplace, stashValidationResult } = validateAndResolve(commandCtx);
+    const { sectionIndex, itemIndex, stashIdentifier } = cmd.payload;
 
     yield put(
         layoutActions.replaceSectionItem({
@@ -79,7 +98,7 @@ export function* replaceSectionItemHandler(
             ctx,
             sectionIndex,
             itemIndex,
-            newItem,
+            stashValidationResult.resolved,
             itemToReplace,
             stashIdentifier,
             cmd.correlationId,

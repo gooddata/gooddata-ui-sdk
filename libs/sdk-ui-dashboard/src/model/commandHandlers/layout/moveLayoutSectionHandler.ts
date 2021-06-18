@@ -11,41 +11,62 @@ import { layoutActions } from "../../state/layout";
 import { layoutSectionMoved } from "../../events/layout";
 import { resolveRelativeIndex } from "../../utils/arrayOps";
 
-export function* moveLayoutSectionHandler(ctx: DashboardContext, cmd: MoveLayoutSection): SagaIterator<void> {
-    const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
-    const { sectionIndex, toIndex } = cmd.payload;
+type MoveLayoutSectionContext = {
+    readonly ctx: DashboardContext;
+    readonly cmd: MoveLayoutSection;
+    readonly layout: ReturnType<typeof selectLayout>;
+};
+
+function validateAndResolve(commandCtx: MoveLayoutSectionContext) {
+    const {
+        ctx,
+        cmd: {
+            payload: { sectionIndex, toIndex },
+            correlationId,
+        },
+        layout,
+    } = commandCtx;
 
     if (!validateSectionExists(layout, sectionIndex)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to move non-existent section from index ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to move non-existent section from index ${sectionIndex}. There are only ${layout.sections.length} sections.`,
+            correlationId,
         );
     }
 
     if (!validateSectionPlacement(layout, toIndex)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to move section to a wrong index ${toIndex}. There are currently ${layout.sections.length} sections.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to move section to a wrong index ${toIndex}. There are currently ${layout.sections.length} sections.`,
+            correlationId,
         );
     }
 
     const absoluteIndex = resolveRelativeIndex(layout.sections, toIndex);
 
     if (sectionIndex === absoluteIndex) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to move section to a same index where it already resides ${sectionIndex}.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to move section to a same index where it already resides ${sectionIndex}.`,
+            correlationId,
         );
     }
+
+    return {
+        absoluteIndex,
+    };
+}
+
+export function* moveLayoutSectionHandler(ctx: DashboardContext, cmd: MoveLayoutSection): SagaIterator<void> {
+    const commandCtx: MoveLayoutSectionContext = {
+        ctx,
+        cmd,
+        layout: yield select(selectLayout),
+    };
+
+    const { absoluteIndex } = validateAndResolve(commandCtx);
+    const { sectionIndex, toIndex } = cmd.payload;
 
     yield put(
         layoutActions.moveSection({
@@ -57,7 +78,7 @@ export function* moveLayoutSectionHandler(ctx: DashboardContext, cmd: MoveLayout
         }),
     );
 
-    const section = layout.sections[sectionIndex];
+    const section = commandCtx.layout.sections[sectionIndex];
 
     yield dispatchDashboardEvent(
         layoutSectionMoved(ctx, section, sectionIndex, absoluteIndex, cmd.correlationId),

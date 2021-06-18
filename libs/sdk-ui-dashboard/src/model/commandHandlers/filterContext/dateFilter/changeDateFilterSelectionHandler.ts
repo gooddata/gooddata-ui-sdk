@@ -6,7 +6,8 @@ import { dateFilterChanged } from "../../../events/filters";
 import { filterContextActions } from "../../../state/filterContext";
 import { selectFilterContextDateFilter } from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
-import { putCurrentFilterContextChanged } from "../common";
+import { dispatchFilterContextChanged } from "../common";
+import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,
@@ -35,7 +36,7 @@ export function* changeDateFilterSelectionHandler(
         selectFilterContextDateFilter,
     );
 
-    yield put(
+    yield dispatchDashboardEvent(
         dateFilterChanged(
             ctx,
             // TODO we need to decide how to externally represent All Time date filter and unify this
@@ -44,5 +45,5 @@ export function* changeDateFilterSelectionHandler(
         ),
     );
 
-    yield call(putCurrentFilterContextChanged, ctx, cmd);
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }

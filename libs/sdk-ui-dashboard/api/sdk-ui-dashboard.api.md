@@ -801,7 +801,7 @@ export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
     readonly payload: {
         readonly sectionIndex: number;
         readonly itemIndex: number;
-        readonly item: ExtendedDashboardItem;
+        readonly items: ReadonlyArray<ExtendedDashboardItem>;
         readonly previousItem: ExtendedDashboardItem;
         readonly stashIdentifier?: StashedDashboardItemsId;
     };
@@ -1196,6 +1196,12 @@ export const InitialLoadCorrelationId = "initialLoad";
 export type InsightPlaceholderWidget = {
     readonly type: "insightPlaceholder";
 };
+
+// @internal
+export function isDashboardCommandFailed(obj: unknown): obj is DashboardCommandFailed;
+
+// @internal
+export function isDashboardEvent(obj: unknown): obj is IDashboardEvent;
 
 // @internal (undocumented)
 export interface ITopBarMenuButtonConfig {
@@ -1600,7 +1606,16 @@ export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<Dash
 export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: import("@gooddata/sdk-backend-spi").IFilterContextDefinition) => FilterContextItem[]>;
 
 // @internal
+export const selectInsightByRef: ((ref: ObjRef) => import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").IInsight | undefined, (res: DashboardState) => import("@gooddata/sdk-model").IInsight | undefined>) & import("lodash").MemoizedFunction;
+
+// @internal
+export const selectInsightRefs: import("@reduxjs/toolkit").OutputSelector<DashboardState, ObjRef[], (res: import("@gooddata/sdk-model").IInsight[]) => ObjRef[]>;
+
+// @internal
 export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];
+
+// @internal
+export const selectInsightsById: (state: DashboardState) => import("@reduxjs/toolkit").Dictionary<import("@gooddata/sdk-model").IInsight>;
 
 // @internal
 export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;

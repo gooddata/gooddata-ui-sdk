@@ -8,8 +8,9 @@ import { attributeFilterSelectionChanged } from "../../../events/filters";
 import { ChangeAttributeFilterSelection } from "../../../commands/filters";
 import { filterContextActions } from "../../../state/filterContext";
 import { DashboardContext } from "../../../types/commonTypes";
-import { putCurrentFilterContextChanged } from "../common";
+import { dispatchFilterContextChanged } from "../common";
 import { makeSelectFilterContextAttributeFilterByLocalId } from "../../../state/filterContext/filterContextSelectors";
+import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
@@ -26,12 +27,10 @@ export function* changeAttributeFilterSelectionHandler(
     );
 
     if (!affectedFilter) {
-        return yield put(
-            invalidArgumentsProvided(
-                ctx,
-                `Filter with filterLocalId ${filterLocalId} not found.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Filter with filterLocalId ${filterLocalId} not found.`,
+            cmd.correlationId,
         );
     }
 
@@ -50,6 +49,6 @@ export function* changeAttributeFilterSelectionHandler(
 
     invariant(changedFilter, "Inconsistent state in attributeFilterChangeSelectionCommandHandler");
 
-    yield put(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
-    yield call(putCurrentFilterContextChanged, ctx, cmd);
+    yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }

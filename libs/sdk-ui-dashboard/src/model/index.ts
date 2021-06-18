@@ -51,7 +51,12 @@ export {
     selectEffectiveDateFilterOptions,
     selectEffectiveDateFilterAvailableGranularities,
 } from "./state/dateFilterConfig/dateFilterConfigSelectors";
-export { selectInsights } from "./state/insights/insightsSelectors";
+export {
+    selectInsights,
+    selectInsightRefs,
+    selectInsightsById,
+    selectInsightByRef,
+} from "./state/insights/insightsSelectors";
 export { CatalogState } from "./state/catalog/catalogState";
 export {
     selectAttributesWithDrillDown,

@@ -2,6 +2,7 @@
 
 import { IDashboardEvent } from "./base";
 import { DashboardContext } from "../types/commonTypes";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * @internal
@@ -70,6 +71,16 @@ export function invalidArgumentsProvided(
             message,
         },
     };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardCommandFailed}.
+ *
+ * @param obj - object to test
+ * @internal
+ */
+export function isDashboardCommandFailed(obj: unknown): obj is DashboardCommandFailed {
+    return !isEmpty(obj) && (obj as DashboardCommandFailed).type === "GDC.DASH/EVT.COMMAND.FAILED";
 }
 
 //

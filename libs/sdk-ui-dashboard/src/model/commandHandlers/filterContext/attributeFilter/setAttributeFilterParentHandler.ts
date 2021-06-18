@@ -13,7 +13,8 @@ import {
 } from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { validateAttributeFilterParents } from "./validation/parentFiltersValidation";
-import { putCurrentFilterContextChanged } from "../common";
+import { dispatchFilterContextChanged } from "../common";
+import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
 
 export function* setAttributeFilterParentHandler(
     ctx: DashboardContext,
@@ -33,12 +34,10 @@ export function* setAttributeFilterParentHandler(
     );
 
     if (!affectedFilter) {
-        return yield put(
-            invalidArgumentsProvided(
-                ctx,
-                `Filter with localId ${filterLocalId} was not found.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Filter with localId ${filterLocalId} was not found.`,
+            cmd.correlationId,
         );
     }
 
@@ -57,7 +56,7 @@ export function* setAttributeFilterParentHandler(
                   "Only existing filters can be used as parent filters."
                 : "Some of the parents provided cannot be used because the 'over' parameter is invalid for the target filter.";
 
-        return yield put(invalidArgumentsProvided(ctx, message, cmd.correlationId));
+        throw invalidArgumentsProvided(ctx, message, cmd.correlationId);
     }
 
     yield put(
@@ -74,6 +73,6 @@ export function* setAttributeFilterParentHandler(
 
     invariant(changedFilter, "Inconsistent state in attributeFilterSetParentCommandHandler");
 
-    yield put(attributeFilterParentChanged(ctx, changedFilter, cmd.correlationId));
-    yield call(putCurrentFilterContextChanged, ctx, cmd);
+    yield dispatchDashboardEvent(attributeFilterParentChanged(ctx, changedFilter, cmd.correlationId));
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }

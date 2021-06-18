@@ -26,12 +26,10 @@ export function* undoLayoutChangesHandler(ctx: DashboardContext, cmd: UndoLayout
     const undoUpToIncludingCmd = undoPointSelector(undoableCommands.map((entry) => entry.cmd));
 
     if (undoUpToIncludingCmd < 0 || undoUpToIncludingCmd >= undoableCommands.length) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Undo point selector returned result out of bounds. Undoable commands: ${undoableCommands.length}. Got index: ${undoUpToIncludingCmd}`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Undo point selector returned result out of bounds. Undoable commands: ${undoableCommands.length}. Got index: ${undoUpToIncludingCmd}`,
+            cmd.correlationId,
         );
     }
 

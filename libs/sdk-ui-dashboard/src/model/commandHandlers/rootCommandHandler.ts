@@ -5,7 +5,7 @@ import { loadDashboardHandler } from "./dashboard/loadDashboardHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
-import { commandRejected, internalErrorOccurred } from "../events/general";
+import { commandRejected, internalErrorOccurred, isDashboardCommandFailed } from "../events/general";
 import { changeDateFilterSelectionHandler } from "./filterContext/dateFilter/changeDateFilterSelectionHandler";
 import { addAttributeFilterHandler } from "./filterContext/attributeFilter/addAttributeFilterHandler";
 import { removeAttributeFiltersHandler } from "./filterContext/attributeFilter/removeAttributeFiltersHandler";
@@ -25,6 +25,7 @@ import { removeAlertHandler } from "./alerts/removeAlertHandler";
 import { updateAlertHandler } from "./alerts/updateAlertHandler";
 import { createScheduledEmailHandler } from "./scheduledEmail/createScheduledEmailHandler";
 import { replaceSectionItemHandler } from "./layout/replaceSectionItemHandler";
+import { isDashboardEvent } from "../events/base";
 
 const DefaultCommandHandlers = {
     "GDC.DASH/CMD.LOAD": loadDashboardHandler,
@@ -85,19 +86,27 @@ export function* rootCommandHandler(): SagaIterator<void> {
         const commandHandler = DefaultCommandHandlers[action.type] ?? unhandledCommand;
 
         try {
-            yield call(commandHandler, dashboardContext, action);
+            const result = yield call(commandHandler, dashboardContext, action);
+
+            if (isDashboardEvent(result)) {
+                yield dispatchDashboardEvent(result);
+            }
         } catch (e) {
-            // Errors during command handling should be caught and addressed in the handler, possibly with a
-            // more meaningful error message. If the error bubbles up to here then there are holes in error
-            // handling or something is seriously messed up.
-            yield dispatchDashboardEvent(
-                internalErrorOccurred(
-                    dashboardContext,
-                    `Internal error has occurred while handling ${action.type}`,
-                    e,
-                    action.correlationId,
-                ),
-            );
+            if (isDashboardCommandFailed(e)) {
+                yield dispatchDashboardEvent(e);
+            } else {
+                // Errors during command handling should be caught and addressed in the handler, possibly with a
+                // more meaningful error message. If the error bubbles up to here then there are holes in error
+                // handling or something is seriously messed up.
+                yield dispatchDashboardEvent(
+                    internalErrorOccurred(
+                        dashboardContext,
+                        `Internal error has occurred while handling ${action.type}`,
+                        e,
+                        action.correlationId,
+                    ),
+                );
+            }
         }
     }
 }

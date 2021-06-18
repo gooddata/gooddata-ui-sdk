@@ -20,12 +20,10 @@ export function* changeLayoutSectionHeaderHandler(
     const { index, header, merge: mergeHeaders } = cmd.payload;
 
     if (!validateSectionExists(layout, index)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to modify header of non-existent section at ${index}. There are currently ${layout.sections.length} sections.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to modify header of non-existent section at ${index}. There are currently ${layout.sections.length} sections.`,
+            cmd.correlationId,
         );
     }
 

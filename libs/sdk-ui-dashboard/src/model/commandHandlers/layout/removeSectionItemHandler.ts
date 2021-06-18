@@ -11,33 +11,56 @@ import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/lay
 import { layoutActions } from "../../state/layout";
 import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
 
-export function* removeSectionItemHandler(ctx: DashboardContext, cmd: RemoveSectionItem): SagaIterator<void> {
-    const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
-    const { sectionIndex, itemIndex, eager, stashIdentifier } = cmd.payload;
+type RemoveSectionItemContext = {
+    readonly ctx: DashboardContext;
+    readonly cmd: RemoveSectionItem;
+    readonly layout: ReturnType<typeof selectLayout>;
+};
+
+function validateAndResolve(commandCtx: RemoveSectionItemContext) {
+    const {
+        ctx,
+        cmd: {
+            payload: { sectionIndex, itemIndex },
+            correlationId,
+        },
+        layout,
+    } = commandCtx;
 
     if (!validateSectionExists(layout, sectionIndex)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to remove item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to remove item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
+            correlationId,
         );
     }
 
     const fromSection = layout.sections[sectionIndex];
 
     if (!validateItemExists(fromSection, itemIndex)) {
-        return yield dispatchDashboardEvent(
-            invalidArgumentsProvided(
-                ctx,
-                `Attempting to remove non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
-                cmd.correlationId,
-            ),
+        throw invalidArgumentsProvided(
+            ctx,
+            `Attempting to remove non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
+            correlationId,
         );
     }
 
     const itemToRemove = fromSection.items[itemIndex];
+
+    return {
+        fromSection,
+        itemToRemove,
+    };
+}
+
+export function* removeSectionItemHandler(ctx: DashboardContext, cmd: RemoveSectionItem): SagaIterator<void> {
+    const commandCtx: RemoveSectionItemContext = {
+        ctx,
+        cmd,
+        layout: yield select(selectLayout),
+    };
+    const { fromSection, itemToRemove } = validateAndResolve(commandCtx);
+    const { sectionIndex, itemIndex, eager, stashIdentifier } = cmd.payload;
 
     if (eager && fromSection.items.length === 1) {
         yield put(
