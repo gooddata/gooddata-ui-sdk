@@ -74,11 +74,8 @@ describe("TimePicker", () => {
                 });
                 openTimePicker(component);
 
-                const dropdownBody: ReactWrapper<
-                    PropsWithChildren<IDropdownProps>,
-                    never,
-                    unknown
-                > = component.find(Dropdown);
+                const dropdownBody: ReactWrapper<PropsWithChildren<IDropdownProps>, never, unknown> =
+                    component.find(Dropdown);
                 const dropdownBodyProps = dropdownBody.props();
                 expect(dropdownBodyProps.overlayPositionType).toBe(overlayPositionType);
                 expect(dropdownBodyProps.overlayZIndex).toBe(overlayZIndex);

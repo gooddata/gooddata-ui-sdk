@@ -58,9 +58,21 @@ export interface IMeasureTitle {
 /**
  * Simple measures created from facts can use these types of aggregations.
  *
+ * Note the special approximate_count aggregation. It translates to corresponding SQL function on backend if the
+ * underlying data source supports it. Otherwise the backend should fall back to classic exact count. Some backends
+ * are oblivious to this functionality completely - for them it's ok to perform the fallback already in SDK backend.
+ *
  * @public
  */
-export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+export type MeasureAggregation =
+    | "sum"
+    | "count"
+    | "approximate_count"
+    | "avg"
+    | "min"
+    | "max"
+    | "median"
+    | "runsum";
 
 /**
  * Simple measures are defined from existing MAQL measures or logical data model facts. Measures created

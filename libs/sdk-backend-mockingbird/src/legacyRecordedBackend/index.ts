@@ -46,9 +46,13 @@ import {
     ISortItem,
     uriRef,
     defWithDateFormat,
+    IExecutionConfig,
+    defWithExecConfig,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import isEqual from "lodash/isEqual";
+import isEmpty from "lodash/isEmpty";
+import invariant from "ts-invariant";
 import isAttributeHeader = GdcExecution.isAttributeHeader;
 
 const defaultConfig = { hostname: "test" };
@@ -341,6 +345,13 @@ function recordedPreparedExecution(
         },
         withDateFormat(dateFormat: string): IPreparedExecution {
             return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
+        },
+        withExecConfig(config: IExecutionConfig): IPreparedExecution {
+            invariant(
+                !isEmpty(config.dataSamplingPercentage),
+                "Backend does not support data sampling, result will be not affected",
+            );
+            return executionFactory.forDefinition(defWithExecConfig(definition, config));
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {

@@ -77,10 +77,8 @@ export type MetadataGetEntitiesResult =
  *
  * @internal
  */
-export type MetadataGetEntitiesFn<
-    T extends MetadataGetEntitiesResult,
-    P extends MetadataGetEntitiesParams,
-> = (params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
+export type MetadataGetEntitiesFn<T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams> =
+    (params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
 
 /**
  * Tiger metadata utility functions

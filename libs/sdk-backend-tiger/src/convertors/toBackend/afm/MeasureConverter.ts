@@ -84,6 +84,9 @@ function convertAggregation(
     if (aggregation === "count") {
         return SimpleMeasureDefinitionMeasureAggregationEnum.COUNT;
     }
+    if (aggregation === "approximate_count") {
+        return SimpleMeasureDefinitionMeasureAggregationEnum.APPROXIMATECOUNT;
+    }
     if (aggregation === "max") {
         return SimpleMeasureDefinitionMeasureAggregationEnum.MAX;
     }

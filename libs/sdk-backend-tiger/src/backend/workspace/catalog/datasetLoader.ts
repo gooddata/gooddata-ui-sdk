@@ -3,9 +3,9 @@
 import {
     JsonApiAttributeOutList,
     ITigerClient,
-    JsonApiLinkage,
     JsonApiLabelOutWithLinks,
     JsonApiAttributeOutWithLinks,
+    JsonApiLabelLinkage,
     JsonApiDatasetOutWithLinks,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
@@ -17,7 +17,11 @@ import {
     convertDateDataset,
 } from "../../../convertors/fromBackend/CatalogConverter";
 
-function lookupRelatedObject(included: JsonApiLinkage[] | undefined, id: string, type: string) {
+function lookupRelatedObject(
+    included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,
+    id: string,
+    type: string,
+) {
     if (!included) {
         return;
     }
@@ -27,9 +31,9 @@ function lookupRelatedObject(included: JsonApiLinkage[] | undefined, id: string,
 
 function getAttributeLabels(
     attribute: JsonApiAttributeOutWithLinks,
-    included: JsonApiLinkage[] | undefined,
+    included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,
 ): JsonApiLabelOutWithLinks[] {
-    const labelsRefs = attribute.relationships?.labels?.data as JsonApiLinkage[];
+    const labelsRefs = attribute.relationships?.labels?.data as JsonApiLabelLinkage[];
     const allLabels: JsonApiLabelOutWithLinks[] = labelsRefs
         .map((ref) => {
             const obj = lookupRelatedObject(included, ref.id, ref.type);
@@ -72,7 +76,7 @@ type DatasetWithAttributes = {
 
 function identifyDateDatasets(
     dateAttributes: JsonApiAttributeOutWithLinks[],
-    included: JsonApiLinkage[] | undefined,
+    included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,
 ) {
     const datasets: { [id: string]: DatasetWithAttributes } = {};
 

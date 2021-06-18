@@ -6,6 +6,7 @@ import {
     insightProperties,
     IVisualizationClass,
     visClassUrl,
+    IExecutionConfig,
 } from "@gooddata/sdk-model";
 import React from "react";
 import { render } from "react-dom";
@@ -42,6 +43,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     insight: IInsightDefinition;
     insightPropertiesMeta?: any;
     config?: IGdcConfig;
+    executionConfig?: IExecutionConfig;
     visualizationClass: IVisualizationClass;
     environment?: VisualizationEnvironment;
     width?: number;
@@ -231,6 +233,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 },
                 config: this.props.config,
                 theme: this.props.theme,
+                executionConfig: this.props.executionConfig,
             },
             this.props.insight,
             this.props.insightPropertiesMeta,

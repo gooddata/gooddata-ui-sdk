@@ -122,6 +122,11 @@ export interface ISettings {
     enableEmbedButtonInKD?: boolean;
 
     /**
+     * Indicates whether the approximate variant of count is available in AD.
+     */
+    enableApproxCount?: boolean;
+
+    /**
      * Indicates whether the drill to dashboard is enabled.
      */
     enableKPIDashboardDrillToDashboard?: boolean;
@@ -135,6 +140,11 @@ export interface ISettings {
      * Indicates whether the drill to url is enabled.
      */
     enableKPIDashboardDrillToURL?: boolean;
+
+    /**
+     * Indicates whether backend supports data sampling.
+     */
+    enableDataSampling?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

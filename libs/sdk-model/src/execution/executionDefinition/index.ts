@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isString from "lodash/isString";
 import SparkMD5 from "spark-md5";
@@ -12,7 +12,7 @@ import { IFilter, INullableFilter } from "../filter";
 import { mergeFilters } from "../filter/filterMerge";
 import { IMeasure } from "../measure";
 import { measureFingerprint } from "../measure/fingerprint";
-import { attributeFingerprint, sortFingerprint } from "./fingerprints";
+import { attributeFingerprint, dataSamplingFingerprint, sortFingerprint } from "./fingerprints";
 import { dimensionFingerprint } from "../base/fingerprint";
 import { filterFingerprint } from "../filter/fingerprint";
 
@@ -27,6 +27,18 @@ export interface IPostProcessing {
      * Format to be applied to the dates in an AFM execution response.
      */
     readonly dateFormat?: string;
+}
+
+/**
+ * Contains any configiration that should be part of execution
+ *
+ * @public
+ */
+export interface IExecutionConfig {
+    /**
+     * Data sampling is only available in Tiger for specific databases
+     */
+    dataSamplingPercentage?: number;
 }
 
 /**
@@ -84,6 +96,11 @@ export interface IExecutionDefinition {
      * and before they are passed to the user.
      */
     readonly postProcessing?: IPostProcessing;
+
+    /**
+     * additional configuration of the execution
+     */
+    readonly executionConfig?: IExecutionConfig;
 }
 
 /**
@@ -131,6 +148,23 @@ export function defSetSorts(def: IExecutionDefinition, sortBy: ISortItem[] = [])
     return {
         ...def,
         sortBy,
+    };
+}
+
+/**
+ * Creates new execution definition by merging new exection configuration into an existing definition.
+ *
+ * @param def - existing definition
+ * @param config - execution configuration
+ * @returns always new instance
+ * @public
+ */
+export function defSetExecConfig(def: IExecutionDefinition, config: IExecutionConfig): IExecutionDefinition {
+    invariant(def, "execution definition to set execution config in must be defined");
+
+    return {
+        ...def,
+        executionConfig: config,
     };
 }
 
@@ -239,6 +273,7 @@ export function defFingerprint(def: IExecutionDefinition): string {
     def.filters.map(filterFingerprint).filter(isString).forEach(hashFun);
     def.sortBy.map(sortFingerprint).forEach(hashFun);
     def.dimensions.map(dimensionFingerprint).forEach(hashFun);
+    hashFun(dataSamplingFingerprint(def.executionConfig?.dataSamplingPercentage));
 
     return hasher.end();
 }
