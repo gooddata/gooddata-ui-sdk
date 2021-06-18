@@ -663,30 +663,10 @@ describe("PluggableLineChart", () => {
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.threeDatesInColumnChart.buckets[1].items.slice(
-                                    1,
-                                    2,
-                                ),
-                            },
-                        ],
-                    },
-                ],
-                [
-                    "from column to line chart: three dates and more than one measure",
-                    referencePointMocks.threeDifferentDatesReferencePointChart,
-                    {
-                        buckets: [
-                            referencePointMocks.threeDifferentDatesReferencePointChart.buckets[0],
-                            {
-                                localIdentifier: "trend",
-                                items: referencePointMocks.threeDifferentDatesReferencePointChart.buckets[1].items.slice(
+                                items: referencePointMocks.threeDatesInColumnChart.buckets[2].items.slice(
                                     0,
                                     1,
                                 ),
-                            },
-                            {
-                                localIdentifier: "segment",
-                                items: [],
                             },
                         ],
                     },
@@ -707,7 +687,54 @@ describe("PluggableLineChart", () => {
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[1].items.slice(
+                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[2].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from column to line chart: date should be moved to segment by (should not prioritize dates in stacks)",
+                    referencePointMocks.twoAttributesInViewAndOneDateInColumnsReferencePoint,
+                    {
+                        buckets: [
+                            referencePointMocks.twoAttributesInViewAndOneDateInColumnsReferencePoint
+                                .buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: referencePointMocks.twoAttributesInViewAndOneDateInColumnsReferencePoint.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: referencePointMocks.twoAttributesInViewAndOneDateInColumnsReferencePoint.buckets[2].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from column to line chart: attribute should be moved to segment by",
+                    referencePointMocks.datesInViewByAndAttributeInStackBy,
+                    {
+                        buckets: [
+                            referencePointMocks.datesInViewByAndAttributeInStackBy.buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: referencePointMocks.datesInViewByAndAttributeInStackBy.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: referencePointMocks.datesInViewByAndAttributeInStackBy.buckets[2].items.slice(
                                     0,
                                     1,
                                 ),
