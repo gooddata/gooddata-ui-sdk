@@ -108,7 +108,7 @@ function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDa
             const labels = getAttributeLabels(attribute, attributes.included);
             const defaultLabel = labels[0];
 
-            return convertDateAttribute(attribute, defaultLabel);
+            return convertDateAttribute(attribute, defaultLabel, labels);
         });
 
         return convertDateDataset(dd.dataset, catalogDateAttributes);
