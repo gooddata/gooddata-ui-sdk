@@ -27,6 +27,7 @@ import { IFilter } from '@gooddata/sdk-model';
 import { IGeoConfig } from '@gooddata/sdk-ui-geo';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
+import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IInsightWidget } from '@gooddata/sdk-backend-spi';
 import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { IKpiWidget } from '@gooddata/sdk-backend-spi';
@@ -43,6 +44,7 @@ import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/sdk-backend-spi';
+import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IWidget } from '@gooddata/sdk-backend-spi';
@@ -59,6 +61,7 @@ import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { VisType } from '@gooddata/sdk-ui';
+import { WidgetType } from '@gooddata/sdk-backend-spi';
 
 // @beta
 export function clearDashboardViewCaches(): void;
@@ -473,6 +476,9 @@ export interface IWidgetPredicates {
     isWidgetWithRef: (ref: ObjRef) => boolean;
 }
 
+// @internal (undocumented)
+export type MeasurableWidgetContent = IInsightDefinition | ILegacyKpi;
+
 // @beta
 export function mergeFiltersWithDashboard(dashboard: IDashboard | undefined, additionalFilters: Array<IDashboardFilter | FilterContextItem>): FilterContextItem[];
 
@@ -490,6 +496,12 @@ export function useDashboardPdfExporter({ backend, workspace, onError, onCancel,
 
 // @beta
 export function useDashboardWidgetExecution({ dashboard, widget: widgetRef, filters, backend, workspace, }: IUseDashboardWidgetExecutionConfig): UseCancelablePromiseState<IPreparedExecution, GoodDataSdkError>;
+
+// @internal (undocumented)
+export function validateDashboardLayoutWidgetSize(currentWidth: number, currentHeight: number | undefined, widgetType: WidgetType, widgetContent: MeasurableWidgetContent, settings: ISettings): {
+    validWidth: number;
+    validHeight: number;
+};
 
 
 ```

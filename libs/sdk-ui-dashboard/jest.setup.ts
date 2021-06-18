@@ -8,4 +8,16 @@ const Adapter = require("enzyme-adapter-react-16");
 
 enzyme.configure({ adapter: new Adapter() });
 
+/*
+ * this is needed as soon as code imports from the sdk-ui-ext index. that in turn imports a lot of stuff and eventualluy
+ * also the geo chart with mapbox. mapbox loading requires this function which is not yet implemented in jsdom
+ *
+ * see: https://github.com/jsdom/jsdom/issues/1721
+ */
+function noop() {}
+if (typeof window.URL.createObjectURL === "undefined") {
+    Object.defineProperty(window.URL, "createObjectURL", { value: noop });
+}
+//
+
 raf.polyfill();
