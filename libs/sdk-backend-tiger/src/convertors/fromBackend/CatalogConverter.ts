@@ -18,6 +18,7 @@ import {
     newCatalogMeasure,
 } from "@gooddata/sdk-backend-base";
 import {
+    IAttributeDisplayFormMetadataObject,
     ICatalogAttribute,
     ICatalogDateAttribute,
     ICatalogDateDataset,
@@ -37,6 +38,13 @@ const commonGroupableCatalogItemModifications =
         return builder.groups(tags);
     };
 
+const tigerLabelToDisplayFormMd = (label: JsonApiLabelOutWithLinks): IAttributeDisplayFormMetadataObject => {
+    return newAttributeDisplayFormMetadataObject(
+        idRef(label.id, "displayForm"),
+        commonMetadataObjectModifications(label),
+    );
+};
+
 export const convertAttribute = (
     attribute: JsonApiAttributeOutWithLinks,
     defaultLabel: JsonApiLabelOutWithLinks,
@@ -49,12 +57,7 @@ export const convertAttribute = (
             commonMetadataObjectModifications(label),
         );
     });
-    const displayForms = allLabels.map((label) => {
-        return newAttributeDisplayFormMetadataObject(
-            idRef(label.id, "displayForm"),
-            commonMetadataObjectModifications(label),
-        );
-    });
+    const displayForms = allLabels.map(tigerLabelToDisplayFormMd);
 
     return newCatalogAttribute((catalogA) =>
         catalogA
@@ -97,12 +100,15 @@ export const convertFact = (fact: JsonApiFactOutWithLinks): ICatalogFact => {
 export const convertDateAttribute = (
     attribute: JsonApiAttributeOutWithLinks,
     label: JsonApiLabelOutWithLinks,
+    allLabels: JsonApiLabelOutWithLinks[],
 ): ICatalogDateAttribute => {
+    const displayForms = allLabels.map(tigerLabelToDisplayFormMd);
+
     return newCatalogDateAttribute((dateAttribute) => {
         return dateAttribute
             .granularity(toSdkGranularity(attribute.attributes!.granularity!))
             .attribute(idRef(attribute.id, "attribute"), (a) =>
-                a.modify(commonMetadataObjectModifications(attribute)),
+                a.modify(commonMetadataObjectModifications(attribute)).displayForms(displayForms),
             )
             .defaultDisplayForm(idRef(label.id, "displayForm"), (df) =>
                 df.modify(commonMetadataObjectModifications(label)),
