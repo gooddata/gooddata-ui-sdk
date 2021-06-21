@@ -1,0 +1,53 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "closed.year",
+                            "name": "Year (Closed)",
+                            "uri": "/gdc/md/referenceworkspace/obj/497"
+                        },
+                        "identifier": "closed.aag81lMifn6q",
+                        "localIdentifier": "a_closed.aag81lMifn6q",
+                        "name": "Year (Closed)",
+                        "uri": "/gdc/md/referenceworkspace/obj/515"
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "created.year",
+                            "name": "Year (Created)",
+                            "uri": "/gdc/md/referenceworkspace/obj/332"
+                        },
+                        "identifier": "created.aag81lMifn6q",
+                        "localIdentifier": "a_created.aag81lMifn6q",
+                        "name": "Year (Created)",
+                        "uri": "/gdc/md/referenceworkspace/obj/350"
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

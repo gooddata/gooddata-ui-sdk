@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-15T11:51:41.220Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-15T12:51:23.524Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -859,6 +859,12 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
 };
+const fp_6364a44aaf77c9cca1a1cc528330b1a8 = {
+    definition: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/scenarios.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -1180,6 +1186,10 @@ export const Scenarios = {
         SingleMeasureViewByAndSegment: { scenarioIndex: 0, execution: fp_ec4ab5aacbca8cd180d2bc8115d8cfb7 },
         Themed: { scenarioIndex: 1, execution: fp_ec4ab5aacbca8cd180d2bc8115d8cfb7 },
         SingleMeasureAndSegment: { scenarioIndex: 0, execution: fp_fd4473fef32dc8b57cdba96564af53e1 },
+        WithOneMeasureAndViewByDateAndSegmentByDate: {
+            scenarioIndex: 0,
+            execution: fp_6364a44aaf77c9cca1a1cc528330b1a8,
+        },
     },
     Execute: {
         TwoUnscopedSeries: { scenarioIndex: 0, execution: fp_17bdc7cd45b303fc54f97cde57ba1816 },
@@ -4269,6 +4279,9 @@ const i_Treemap_e22929d80f9738bd61f8c3029c2dbe40 = {
 const i_Treemap_e2ea22d6d58d86e131619506784141f5 = {
     obj: require("./uiTestScenarios/insights/Treemap.e2ea22d6d58d86e131619506784141f5/obj.json"),
 };
+const i_Treemap_e34b746c541957416cd0a786fc487406 = {
+    obj: require("./uiTestScenarios/insights/Treemap.e34b746c541957416cd0a786fc487406/obj.json"),
+};
 const i_Treemap_eb6fa806d3f977e0a1431a0e08496c8b = {
     obj: require("./uiTestScenarios/insights/Treemap.eb6fa806d3f977e0a1431a0e08496c8b/obj.json"),
 };
@@ -4502,6 +4515,7 @@ export const Insights = {
         SingleMeasureAndViewBy: i_Treemap_a4b3fe5274381f1bccef0a263c76ed73,
         TwoMeasuresAndSegmentBy: i_Treemap_c6ed6c7634de5031d49fef78fe53e725,
         TwoMeasures: i_Treemap_d06c0a43d15c546922eb0bfeb6e4fd4b,
+        WithOneMeasureAndViewByDateAndSegmentByDate: i_Treemap_e34b746c541957416cd0a786fc487406,
         SingleMeasure: i_Treemap_eb6fa806d3f977e0a1431a0e08496c8b,
         SingleMeasureAndViewByFilteredToOneElement: i_Treemap_f92fe7048e24a76694640e2707aea183,
     },
@@ -4675,6 +4689,7 @@ export const Recordings = {
         fp_fd4473fef32dc8b57cdba96564af53e1,
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_ff74085f6f31c71f4797251924d3205d,
+        fp_6364a44aaf77c9cca1a1cc528330b1a8,
     },
     metadata: {
         catalog,
@@ -5684,6 +5699,7 @@ export const Recordings = {
             i_Treemap_ddcd7728c84d2ba4f19ecda25b3cdf87,
             i_Treemap_e22929d80f9738bd61f8c3029c2dbe40,
             i_Treemap_e2ea22d6d58d86e131619506784141f5,
+            i_Treemap_e34b746c541957416cd0a786fc487406,
             i_Treemap_eb6fa806d3f977e0a1431a0e08496c8b,
             i_Treemap_ec38c7cbd881537b4008e39258c0a530,
             i_Treemap_ed2a979f8bb02d9d8dab06b8464c0c29,

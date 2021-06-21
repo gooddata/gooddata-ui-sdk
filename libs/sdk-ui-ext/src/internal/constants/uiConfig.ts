@@ -396,43 +396,6 @@ export const DEFAULT_TREEMAP_UICONFIG: IUiConfig = {
     ...defaultRootUiConfigProperties,
 };
 
-export const TREEMAP_UICONFIG_WITH_MULTIPLE_MEASURES: IUiConfig = {
-    buckets: {
-        measures: {
-            ...measuresBase,
-        },
-        view: {
-            ...viewBase,
-            itemsLimit: 0,
-        },
-        segment: {
-            ...stackBase,
-        },
-        ...defaultFilters,
-    },
-    ...defaultRootUiConfigProperties,
-};
-
-export const TREEMAP_UICONFIG_WITH_ONE_MEASURE: IUiConfig = {
-    buckets: {
-        measures: {
-            ...measuresBase,
-            itemsLimit: DEFAULT_TREEMAP_MEASURES_COUNT,
-            allowsReordering: false,
-            canAddItems: false,
-            isShowInPercentEnabled: true,
-        },
-        view: {
-            ...viewBase,
-        },
-        segment: {
-            ...stackBase,
-        },
-        ...defaultFilters,
-    },
-    ...defaultRootUiConfigProperties,
-};
-
 export const DEFAULT_TABLE_UICONFIG: IUiConfig = {
     buckets: {
         measures: {
@@ -698,3 +661,55 @@ export const GEO_PUSHPIN_CHART_UICONFIG: IUiConfig = {
     ...defaultRootUiConfigProperties,
     ...enabledNoMetricConfig,
 };
+
+export function getTreemapUiConfig(
+    allowsMultipleDates: boolean,
+    hasNonStackAttributes: boolean,
+    hasMultipleMeasures: boolean,
+): IUiConfig {
+    const measuresConfig = hasNonStackAttributes
+        ? {
+              itemsLimit: DEFAULT_TREEMAP_MEASURES_COUNT,
+              allowsReordering: false,
+              canAddItems: false,
+              isShowInPercentEnabled: true,
+          }
+        : {};
+
+    const viewsConfig =
+        !hasNonStackAttributes && hasMultipleMeasures
+            ? {
+                  itemsLimit: 0,
+              }
+            : {};
+
+    const multipleDatesConfig = allowsMultipleDates
+        ? {
+              itemsLimitByType: {
+                  date: 1,
+              },
+              allowsDuplicateDates: true,
+          }
+        : {};
+    const segmentBase = allowsMultipleDates ? stackBaseWithDate : stackBase;
+
+    return {
+        buckets: {
+            measures: {
+                ...measuresBase,
+                ...measuresConfig,
+            },
+            view: {
+                ...viewBase,
+                ...viewsConfig,
+                ...multipleDatesConfig,
+            },
+            segment: {
+                ...segmentBase,
+                ...multipleDatesConfig,
+            },
+            ...defaultFilters,
+        },
+        ...defaultRootUiConfigProperties,
+    };
+}
