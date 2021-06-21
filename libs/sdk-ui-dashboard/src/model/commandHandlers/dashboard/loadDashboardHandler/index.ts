@@ -27,6 +27,7 @@ import { loadUser } from "./loadUser";
 import { userActions } from "../../../state/user";
 import { metaActions } from "../../../state/meta";
 import { dashboardFilterContextDefinition } from "../../../_staging/dashboard/dashboardFilterContext";
+import { dashboardLayoutSanitize } from "../../../_staging/dashboard/dashboardLayout";
 
 function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWithReferences> {
     const { backend, workspace, dashboardRef } = ctx;
@@ -73,6 +74,12 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
             effectiveDateFilterConfig.config,
         );
 
+        const dashboardLayout = dashboardLayoutSanitize(
+            dashboard.layout ?? EmptyDashboardLayout,
+            references.insights,
+            config.settings,
+        );
+
         const batch = batchActions(
             [
                 configActions.setConfig(config),
@@ -88,7 +95,7 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
                 filterContextActions.setFilterContext(filterContextDefinition),
                 // TODO: move code that catches errors in layout
                 // TODO: move code that validates and fixes widget sizes
-                layoutActions.setLayout(dashboard.layout ?? EmptyDashboardLayout),
+                layoutActions.setLayout(dashboardLayout),
                 dateFilterConfigActions.setDateFilterConfig({
                     dateFilterConfig: dashboard.dateFilterConfig,
                     effectiveDateFilterConfig: effectiveDateFilterConfig.config,

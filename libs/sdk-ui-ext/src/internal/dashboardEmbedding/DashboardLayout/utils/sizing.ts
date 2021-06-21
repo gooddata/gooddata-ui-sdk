@@ -437,7 +437,10 @@ export function getDashboardLayoutItemMaxGridWidth(
     return DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT - gridRowWidth;
 }
 
-type MeasurableWidgetContent = IInsightDefinition | ILegacyKpi;
+/**
+ * @internal
+ */
+export type MeasurableWidgetContent = IInsightDefinition | ILegacyKpi;
 
 const getSizeInfo = (
     settings: ISettings,
@@ -581,6 +584,9 @@ function removeGridHeightFromItemSize<TWidget>(item: IDashboardLayoutItem<TWidge
     };
 }
 
+/**
+ * @internal
+ */
 export function validateDashboardLayoutWidgetSize(
     currentWidth: number,
     currentHeight: number | undefined,
