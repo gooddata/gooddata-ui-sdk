@@ -227,7 +227,7 @@ export function overTimeComparisonRecommendationEnabled(
         noDerivedMeasurePresent,
         hasOneMeasure,
         hasFirstDate,
-        hasNoStacks,
+        hasNoStacksWithDate,
         hasOneCategory,
         hasNoMeasureDateFilter,
     ];
