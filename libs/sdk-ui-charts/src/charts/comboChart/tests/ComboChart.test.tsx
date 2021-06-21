@@ -6,7 +6,7 @@ import { IChartConfig } from "../../../interfaces";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { CoreComboChart } from "../CoreComboChart";
-import { IMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
+import { IMeasure, measureLocalId, modifyMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
 
 // need to turn off ratio in the ReferenceLdmExt.AmountWithRatio
 describe("ComboChart", () => {
@@ -89,7 +89,11 @@ describe("ComboChart", () => {
         it("should ignore computeRatio when dual axis is OFF and # of measures > 1", () => {
             const wrapper = renderChart(
                 [ReferenceLdmExt.AmountWithRatio],
-                [ReferenceLdmExt.AmountWithRatio],
+                [
+                    modifyMeasure(ReferenceLdmExt.AmountWithRatio, (m) =>
+                        m.localId(`${measureLocalId(ReferenceLdmExt.AmountWithRatio)}_1`),
+                    ),
+                ],
                 {
                     ...config,
                     dualAxis: false,
@@ -98,7 +102,9 @@ describe("ComboChart", () => {
             const execution = wrapper.find(CoreComboChart).prop("execution");
             const expectedMeasures = [
                 modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, (m) => m.noRatio()),
-                modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, (m) => m.noRatio()),
+                modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, (m) =>
+                    m.noRatio().localId(`${measureLocalId(ReferenceLdmExt.AmountWithRatio)}_1`),
+                ),
             ];
 
             expect(execution.definition.measures).toEqual(expectedMeasures);
