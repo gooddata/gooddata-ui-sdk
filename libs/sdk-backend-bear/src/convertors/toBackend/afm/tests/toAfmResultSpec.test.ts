@@ -44,7 +44,7 @@ describe("converts execution definition to AFM Execution", () => {
             defSetDimensions(
                 newDefForBuckets("test workspace", [
                     newBucket("mixedBucket1", ReferenceLdm.Activity.Default, ReferenceLdm.Won),
-                    newBucket("measureBucket1", ReferenceLdm.Won),
+                    newBucket("measureBucket1", ReferenceLdm.WinRate),
                     newBucket("attributeBucket1", ReferenceLdm.Account.Name),
                 ]),
                 newTwoDimensional(
