@@ -24,6 +24,7 @@ import {
 } from "./index";
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
+import { defValidate } from "./validation";
 
 /**
  * Creates new, empty execution definition for the provided workspace.
@@ -70,6 +71,8 @@ export function newDefForItems(
         measures: items.filter(isMeasure),
     };
 
+    defValidate(def);
+
     return defWithFilters(def, filters);
 }
 
@@ -105,6 +108,8 @@ export function newDefForBuckets(
         measures: bucketsMeasures(buckets),
     };
 
+    defValidate(def);
+
     return defWithFilters(def, filters);
 }
 
@@ -138,6 +143,9 @@ export function newDefForInsight(
     invariant(insight, "insight to create exec def from must be specified");
 
     const def = newDefForBuckets(workspace, insightBuckets(insight));
+
+    defValidate(def);
+
     const extraFilters = filters ? filters : [];
     const filteredDef = defWithFilters(def, [...insightFilters(insight), ...extraFilters]);
 
