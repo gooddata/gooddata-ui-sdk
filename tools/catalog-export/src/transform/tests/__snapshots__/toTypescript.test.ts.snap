@@ -45,11 +45,6 @@ export const $MenuItemSales = { /**
     Sum: newMeasure(idRef('fact.salesdetailfact.menuitemsales', \\"fact\\"), m => m.aggregation('sum')),/** 
     * Fact Title: $ Menu Item Sales  
     * Fact ID: fact.salesdetailfact.menuitemsales
-     * Fact Aggregation: count
-    */
-    Count: newMeasure(idRef('fact.salesdetailfact.menuitemsales', \\"fact\\"), m => m.aggregation('count')),/** 
-    * Fact Title: $ Menu Item Sales  
-    * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: avg
     */
     Avg: newMeasure(idRef('fact.salesdetailfact.menuitemsales', \\"fact\\"), m => m.aggregation('avg')),/** 
@@ -83,11 +78,6 @@ export const Cost = { /**
      * Fact Aggregation: sum
     */
     Sum: newMeasure(idRef('fact.restaurantcostsfact.cost', \\"fact\\"), m => m.aggregation('sum')),/** 
-    * Fact Title: Cost  
-    * Fact ID: fact.restaurantcostsfact.cost
-     * Fact Aggregation: count
-    */
-    Count: newMeasure(idRef('fact.restaurantcostsfact.cost', \\"fact\\"), m => m.aggregation('count')),/** 
     * Fact Title: Cost  
     * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: avg
