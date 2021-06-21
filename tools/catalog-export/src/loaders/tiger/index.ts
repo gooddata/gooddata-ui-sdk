@@ -92,7 +92,7 @@ async function getTigerClient(hostname: string): Promise<ITigerClient> {
 
             logInfo(
                 "2. Once you are on your Tiger installation's home page, please " +
-                    "follow the guide at https://docs-dev.anywhere.gooddata.com/docs/administration/auth/user-token/#generate-the-api-token " +
+                    "follow the guide at https://www.gooddata.com/developers/cloud-native/doc/1.2/administration/auth/user-token/#generate-the-api-token " +
                     "to create a new token (using the Developer Tools way).",
             );
 
