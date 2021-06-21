@@ -13,6 +13,12 @@ import ThemeProviderExampleSrcJS from "./ThemedComponentsExample?rawJS";
 
 export const ThemedComponents: React.FC = () => (
     <div>
+        <style jsx>{`
+            /* since the theme is applied to the whole page, we override the color of p tags to retain readability */
+            :global(p) {
+                color: rgb(70, 78, 86);
+            }
+        `}</style>
         <h1>Custom Themed components</h1>
         <p>
             These examples show how to use ThemeProvider component to theme the UI components which support
