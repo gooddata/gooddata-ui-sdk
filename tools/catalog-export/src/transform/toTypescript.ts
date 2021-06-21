@@ -8,6 +8,7 @@ import {
     VariableDeclarationKind,
     VariableStatementStructure,
 } from "ts-morph";
+import { MeasureAggregation } from "@gooddata/sdk-model";
 import { Attribute, DateDataSet, DisplayForm, Fact, Metric, WorkspaceMetadata } from "../base/types";
 import { createUniqueVariableName, TakenNamesSet } from "./titles";
 
@@ -25,7 +26,8 @@ const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU
 const INSIGHT_MAP_VARNAME = "Insights";
 const ANALYTICAL_DASHBOARD_MAP_VARNAME = "Dashboards";
 const DATE_DATASETS_MAP_VARNAME = "DateDatasets";
-const FACT_AGGREGATIONS = ["sum", "count", "avg", "min", "max", "median", "runsum"];
+// "count" aggregation is not allowed for Facts, so do not generate code for that
+const FACT_AGGREGATIONS: MeasureAggregation[] = ["sum", "avg", "min", "max", "median", "runsum"];
 
 //
 // Variable naming support & strategies

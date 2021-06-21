@@ -28,7 +28,7 @@ jq --arg version ${VERSION} -n '{version: $version}' > $VERSION_FILE
 
 if [ $VERSION != "Next" ]
 then
-    cat ${APIDOCS_VERSION_LIST} | jq --arg version ${VERSION} 'if index( [$version] ) == null then . += [$version] else . end' $APIDOCS_VERSION_LIST > temp && mv temp $APIDOCS_VERSION_LIST  
+    cat ${APIDOCS_VERSION_LIST} | jq --arg version ${VERSION} 'if index( [$version] ) == null then . += [$version] else . end' $APIDOCS_VERSION_LIST > temp && mv temp $APIDOCS_VERSION_LIST
 fi
 
 cp ${ROOT_DIR}/libs/*/temp/*.api.json "${APIDOC_INPUT_DIR}"
@@ -40,7 +40,7 @@ for filename in $APIDOC_INPUT_DIR/*; do
      FILE_NAME_WITHOUT_EXTENSION=${FILE_NAME%.*}
      IFS='.' read -ra FILE_NAME_ARRAY <<< "$FILE_NAME_WITHOUT_EXTENSION"
      LIB=${FILE_NAME_ARRAY[0]}
-     LIBS_TO_BE_REMOVED=("sdk-ui-kit" "sdk-backend-base" "sdk-backend-bear" "sdk-backend-tiger" "api-model-bear" "api-client-tiger" "api-client-bear" "sdk-backend-mockingbird" "sdk-embedding" "sdk-ui-ext" "sdk-ui-all")
+     LIBS_TO_BE_REMOVED=("sdk-ui-kit" "sdk-backend-base" "sdk-backend-bear" "sdk-backend-tiger" "api-model-bear" "api-client-tiger" "api-client-bear" "sdk-backend-mockingbird" "sdk-embedding" "sdk-ui-ext" "sdk-ui-all" "sdk-ui-dashboard")
 
     if [[ " ${LIBS_TO_BE_REMOVED[@]} " =~ " ${LIB} " ]]
     then
@@ -71,9 +71,9 @@ for filename in $APIDOC_DIR_DOCS/*; do
     fi
 
     if [[ ${#FILE_NAME_ARRAY[@]} -eq 2 ]]
-    then 
+    then
         cat $SIDEBAR | jq --arg FIELD ${FILE_NAME_ARRAY[0]} 'if .Docs | has($FIELD) | not then .Docs += {($FIELD): [($FIELD)]} else . end' $SIDEBAR > temp && mv temp $SIDEBAR
-        cat $SIDEBAR | jq --arg FIELD ${FILE_NAME_ARRAY[0]} --arg FIELD_DATA $FILE_NAME_WITHOUT_EXTENSION 'if .Docs[$FIELD] | index( [$FIELD_DATA] ) == null then .Docs[$FIELD] += [$FIELD_DATA] else . end' $SIDEBAR > temp && mv temp $SIDEBAR    
+        cat $SIDEBAR | jq --arg FIELD ${FILE_NAME_ARRAY[0]} --arg FIELD_DATA $FILE_NAME_WITHOUT_EXTENSION 'if .Docs[$FIELD] | index( [$FIELD_DATA] ) == null then .Docs[$FIELD] += [$FIELD_DATA] else . end' $SIDEBAR > temp && mv temp $SIDEBAR
     fi
 
      if [[ ${#FILE_NAME_ARRAY[@]} -eq 1 ]]
@@ -92,6 +92,6 @@ done
 
 cd "${APIDOC_DIR_VERSIONED}/website" && yarn install && yarn build
 cd "${APIDOC_DIR_VERSIONED}/website" && mv build/* ../
-cd "${APIDOC_DIR_VERSIONED}" && shopt -s extglob 
+cd "${APIDOC_DIR_VERSIONED}" && shopt -s extglob
 cd "${APIDOC_DIR_VERSIONED}" && rm -rf !(gooddata-ui-apidocs)
 cd "${APIDOC_DIR_VERSIONED}" && mv gooddata-ui-apidocs/* . && rm -rf gooddata-ui-apidocs

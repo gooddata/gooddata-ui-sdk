@@ -1,7 +1,6 @@
-// (C) 2020 GoodData Corporation
-
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-11-20T08:05:53.360Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-21T15:11:23.718Z; */
+// @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
     newMeasure,
@@ -245,11 +244,6 @@ export const ActivityDate = {
     /**
      * Fact Title: Activity (Date)
      * Fact ID: dt.activity.activity
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("count")),
-    /**
-     * Fact Title: Activity (Date)
-     * Fact ID: dt.activity.activity
      * Fact Aggregation: avg
      */ Avg: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("avg")),
     /**
@@ -287,11 +281,6 @@ export const Amount_1 = {
     /**
      * Fact Title: Amount
      * Fact ID: fact.opportunitysnapshot.amount
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("count")),
-    /**
-     * Fact Title: Amount
-     * Fact ID: fact.opportunitysnapshot.amount
      * Fact Aggregation: avg
      */ Avg: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("avg")),
     /**
@@ -326,13 +315,6 @@ export const DaysToClose = {
      * Fact Aggregation: sum
      */
     Sum: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Days to Close
-     * Fact ID: fact.opportunitysnapshot.daystoclose
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) =>
-        m.aggregation("count"),
-    ),
     /**
      * Fact Title: Days to Close
      * Fact ID: fact.opportunitysnapshot.daystoclose
@@ -377,11 +359,6 @@ export const Duration = {
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("count")),
-    /**
-     * Fact Title: Duration
-     * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: avg
      */ Avg: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("avg")),
     /**
@@ -416,11 +393,6 @@ export const OppCloseDate = {
      * Fact Aggregation: sum
      */
     Sum: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: dt.opportunitysnapshot.closedate
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Opp. Close (Date)
      * Fact ID: dt.opportunitysnapshot.closedate
@@ -461,11 +433,6 @@ export const OppCreatedDate = {
     /**
      * Fact Title: Opp. Created (Date)
      * Fact ID: dt.opportunity.oppcreated
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("count")),
-    /**
-     * Fact Title: Opp. Created (Date)
-     * Fact ID: dt.opportunity.oppcreated
      * Fact Aggregation: avg
      */ Avg: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("avg")),
     /**
@@ -500,13 +467,6 @@ export const OppSnapshotDate = {
      * Fact Aggregation: sum
      */
     Sum: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: dt.opportunitysnapshot.snapshotdate
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) =>
-        m.aggregation("count"),
-    ),
     /**
      * Fact Title: Opp. Snapshot (Date)
      * Fact ID: dt.opportunitysnapshot.snapshotdate
@@ -551,13 +511,6 @@ export const Probability_1 = {
     /**
      * Fact Title: Probability
      * Fact ID: fact.opportunitysnapshot.probability
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) =>
-        m.aggregation("count"),
-    ),
-    /**
-     * Fact Title: Probability
-     * Fact ID: fact.opportunitysnapshot.probability
      * Fact Aggregation: avg
      */ Avg: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) => m.aggregation("avg")),
     /**
@@ -599,11 +552,6 @@ export const TimelineDate = {
     /**
      * Fact Title: Timeline (Date)
      * Fact ID: dt.timeline.timeline
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("count")),
-    /**
-     * Fact Title: Timeline (Date)
-     * Fact ID: dt.timeline.timeline
      * Fact Aggregation: avg
      */ Avg: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("avg")),
     /**
@@ -638,11 +586,6 @@ export const Velocity = {
      * Fact Aggregation: sum
      */
     Sum: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Velocity
-     * Fact ID: fact.stagehistory.velocity
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
@@ -1839,9 +1782,7 @@ export const TimelineDate_1 = {
      * Display Form ID: timeline.date.eddmmyyyy
      */ DdMmYyyy_1: newAttribute("timeline.date.eddmmyyyy"),
 };
-/**
- * Available Date Data Sets
- */
+/** Available Date Data Sets */
 export const DateDatasets = {
     /**
      * Date Data Set Title: Date (Created)
@@ -3348,4 +3289,39 @@ export const Insights = {
      * Insight Title: test insight
      * Insight ID: abkBnI1zd28W
      */ TestInsight_2: "abkBnI1zd28W",
+    /**
+     * Insight Title: table with multiple measures
+     * Insight ID: aegg7T2lgUh7
+     */ TableWithMultipleMeasures: "aegg7T2lgUh7",
+};
+export const Dashboards = {
+    /**
+     * Dashboard Title: simple dashboard
+     * Dashboard ID: aaRaEZRWdRpQ
+     */
+    SimpleDashboard: "aaRaEZRWdRpQ",
+    /**
+     * Dashboard Title: test
+     * Dashboard ID: aba3ZlEEgNsV
+     */ Test_3: "aba3ZlEEgNsV",
+    /**
+     * Dashboard Title: Kpi Export Test secure
+     * Dashboard ID: aaM7WfnqiukA
+     */ KpiExportTestSecure: "aaM7WfnqiukA",
+    /**
+     * Dashboard Title: Kpi Export Test secure 2
+     * Dashboard ID: adO7HK4vfVnf
+     */ KpiExportTestSecure2: "adO7HK4vfVnf",
+    /**
+     * Dashboard Title: test2
+     * Dashboard ID: acXeSCq5c0R7
+     */ Test2_1: "acXeSCq5c0R7",
+    /**
+     * Dashboard Title: test3
+     * Dashboard ID: afLe7WFTeYmc
+     */ Test3: "afLe7WFTeYmc",
+    /**
+     * Dashboard Title: Dashboard With 3 Sections
+     * Dashboard ID: aeis6NlXcL7X
+     */ DashboardWith3Sections: "aeis6NlXcL7X",
 };
