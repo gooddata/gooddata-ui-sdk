@@ -1,7 +1,6 @@
-// (C) 2020 GoodData Corporation
-
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-11-20T08:11:25.058Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-21T15:13:14.446Z; */
+// @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
     newMeasure,
@@ -618,11 +617,6 @@ export const $MenuItemSales = {
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.salesdetailfact.menuitemsales", "fact"), (m) => m.aggregation("count")),
-    /**
-     * Fact Title: $ Menu Item Sales
-     * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: avg
      */ Avg: newMeasure(idRef("fact.salesdetailfact.menuitemsales", "fact"), (m) => m.aggregation("avg")),
     /**
@@ -664,11 +658,6 @@ export const Cost = {
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.restaurantcostsfact.cost", "fact"), (m) => m.aggregation("count")),
-    /**
-     * Fact Title: Cost
-     * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: avg
      */ Avg: newMeasure(idRef("fact.restaurantcostsfact.cost", "fact"), (m) => m.aggregation("avg")),
     /**
@@ -706,11 +695,6 @@ export const Density = {
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.uscities.density", "fact"), (m) => m.aggregation("count")),
-    /**
-     * Fact Title: Density
-     * Fact ID: fact.uscities.density
      * Fact Aggregation: avg
      */ Avg: newMeasure(idRef("fact.uscities.density", "fact"), (m) => m.aggregation("avg")),
     /**
@@ -745,13 +729,6 @@ export const MenuItemQuantity = {
      * Fact Aggregation: sum
      */
     Sum: newMeasure(idRef("fact.salesdetailfact.menuitemquantity", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Menu Item Quantity
-     * Fact ID: fact.salesdetailfact.menuitemquantity
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.salesdetailfact.menuitemquantity", "fact"), (m) =>
-        m.aggregation("count"),
-    ),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
@@ -796,11 +773,6 @@ export const Population = {
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.uscities.population", "fact"), (m) => m.aggregation("count")),
-    /**
-     * Fact Title: Population
-     * Fact ID: fact.uscities.population
      * Fact Aggregation: avg
      */ Avg: newMeasure(idRef("fact.uscities.population", "fact"), (m) => m.aggregation("avg")),
     /**
@@ -835,13 +807,6 @@ export const ScheduledCost = {
      * Fact Aggregation: sum
      */
     Sum: newMeasure(idRef("fact.restaurantcostsfact.scheduledcost", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Scheduled Cost
-     * Fact ID: fact.restaurantcostsfact.scheduledcost
-     * Fact Aggregation: count
-     */ Count: newMeasure(idRef("fact.restaurantcostsfact.scheduledcost", "fact"), (m) =>
-        m.aggregation("count"),
-    ),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
@@ -2510,9 +2475,7 @@ export const Date4Date = {
      * Display Form ID: date_4.date.eddmmyyyy
      */ DdMmYyyy_1: newAttribute("date_4.date.eddmmyyyy"),
 };
-/**
- * Available Date Data Sets
- */
+/** Available Date Data Sets */
 export const DateDatasets = {
     /**
      * Date Data Set Title: Date (Date)
@@ -4618,9 +4581,9 @@ export const Insights = {
      * Insight ID: aa0wmZDugnUX
      */ TestPzb: "aa0wmZDugnUX",
     /**
-     * Insight Title: # Checks viewed by City stacked by Location
+     * Insight Title: New Name of This Insight
      * Insight ID: aby6oS6DbpFX
-     */ NrChecksViewedByCityStackedByLocation: "aby6oS6DbpFX",
+     */ NewNameOfThisInsight: "aby6oS6DbpFX",
     /**
      * Insight Title: Kyle's Insight
      * Insight ID: aazlme4wcy3O
@@ -4937,4 +4900,111 @@ export const Insights = {
      * Insight Title: # Checks viewed by City stacked by Location - Table
      * Insight ID: aaJlFFkiaChA
      */ NrChecksViewedByCityStackedByLocationTable: "aaJlFFkiaChA",
+    /**
+     * Insight Title: DashboardEmbedding Insight
+     * Insight ID: abcolHjKeIB4
+     */ DashboardEmbeddingInsight: "abcolHjKeIB4",
+    /**
+     * Insight Title: Table applied measure format
+     * Insight ID: aajIe1OvcX5N
+     */ TableAppliedMeasureFormat: "aajIe1OvcX5N",
+    /**
+     * Insight Title: Column has measure format
+     * Insight ID: aafIHIqgireP
+     */ ColumnHasMeasureFormat: "aafIHIqgireP",
+    /**
+     * Insight Title: Example for Zach
+     * Insight ID: adLqfV3peeRI
+     */ ExampleForZach: "adLqfV3peeRI",
+    /**
+     * Insight Title: Seznam Příklad #1
+     * Insight ID: adotZaCGaEeP
+     */ SeznamPKladNr1: "adotZaCGaEeP",
+    /**
+     * Insight Title: sdfg
+     * Insight ID: ajhtO3DggLVY
+     */ Sdfg: "ajhtO3DggLVY",
+    /**
+     * Insight Title: Example #1
+     * Insight ID: adRuvTAwaTcq
+     */ ExampleNr1: "adRuvTAwaTcq",
+    /**
+     * Insight Title: New Table report Labor Costs Vs Scheduled Costs test
+     * Insight ID: abg18hRDbYS9
+     */ NewTableReportLaborCostsVsScheduledCostsTest: "abg18hRDbYS9",
+    /**
+     * Insight Title: My Insight
+     * Insight ID: afStbARxcOjh
+     */ MyInsight: "afStbARxcOjh",
+};
+export const Dashboards = {
+    /**
+     * Dashboard Title: KPIs
+     * Dashboard ID: afMA17GSbk31
+     */
+    KPIs: "afMA17GSbk31",
+    /**
+     * Dashboard Title: Store management KPIs
+     * Dashboard ID: abBJlnxrfEWH
+     */ StoreManagementKPIs: "abBJlnxrfEWH",
+    /**
+     * Dashboard Title: Untitled
+     * Dashboard ID: aa58UihrdgMg
+     */ Untitled: "aa58UihrdgMg",
+    /**
+     * Dashboard Title: KPIs Drill
+     * Dashboard ID: aby7cMBNeo0Y
+     */ KPIsDrill: "aby7cMBNeo0Y",
+    /**
+     * Dashboard Title: KPIs Embedded in React Native App
+     * Dashboard ID: abKH4eEFdBWS
+     */ KPIsEmbeddedInReactNativeApp: "abKH4eEFdBWS",
+    /**
+     * Dashboard Title: KPIs Underlined
+     * Dashboard ID: abTIt0ngdlUH
+     */ KPIsUnderlined: "abTIt0ngdlUH",
+    /**
+     * Dashboard Title: Untitled
+     * Dashboard ID: abpB9XpmbvjA
+     */ Untitled_1: "abpB9XpmbvjA",
+    /**
+     * Dashboard Title: KPIs Drill #2 - From
+     * Dashboard ID: abVweo3WfQgQ
+     */ KPIsDrillNr2From: "abVweo3WfQgQ",
+    /**
+     * Dashboard Title: KPIs Drill #2 - To
+     * Dashboard ID: aeRv67kib7Cg
+     */ KPIsDrillNr2To: "aeRv67kib7Cg",
+    /**
+     * Dashboard Title: Filter
+     * Dashboard ID: aaZ5WGrqfHsr
+     */ Filter: "aaZ5WGrqfHsr",
+    /**
+     * Dashboard Title: Dependent Filters
+     * Dashboard ID: aaBLkHnSfrBI
+     */ DependentFilters: "aaBLkHnSfrBI",
+    /**
+     * Dashboard Title: bar chart
+     * Dashboard ID: abHCFBGphqKh
+     */ BarChart_1: "abHCFBGphqKh",
+    /**
+     * Dashboard Title: DashboardEmbedding
+     * Dashboard ID: aeO5PVgShc0T
+     */ DashboardEmbedding: "aeO5PVgShc0T",
+    /**
+     * Dashboard Title: DashboardEmbedding-geo
+     * Dashboard ID: adsENtJ9e8ov
+     */ DashboardEmbeddingGeo: "adsENtJ9e8ov",
+    /**
+     * Dashboard Title: Untitled
+     * Dashboard ID: aesp8GtihI8o
+     */ Untitled_2: "aesp8GtihI8o",
+    /**
+     * Dashboard Title: Tu
+     * Dashboard ID: afGV15Ieg0Vr
+     */ Tu: "afGV15Ieg0Vr",
+    /**
+     * Dashboard Title: Untitled
+     * Dashboard ID: agAs5ICLaHEh
+     */ Untitled_3: "agAs5ICLaHEh",
 };
