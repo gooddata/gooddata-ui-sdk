@@ -1131,6 +1131,27 @@ export const twoAttributesAndDateInRowsAndOneDateInColumnsReferencePoint: IRefer
     },
 };
 
+export const twoAttributesInViewAndOneDateInColumnsReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: [attributeItems[0], attributeItems[1]],
+        },
+        {
+            localIdentifier: "stack",
+            items: [{ ...dateItem2 }],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
 export const threeDatesInColumnsReferencePoint: IReferencePoint = {
     buckets: [
         {
@@ -1207,6 +1228,27 @@ export const dateAndAttributeInViewByAndEmptyStackBy: IReferencePoint = {
         {
             localIdentifier: "stack",
             items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const datesInViewByAndAttributeInStackBy: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: [{ ...dateItem }, { ...dateItem }],
+        },
+        {
+            localIdentifier: "stack",
+            items: [attributeItems[0]],
         },
     ],
     filters: {
@@ -1516,7 +1558,7 @@ export const multipleDatesNotAsFirstReferencePoint: IReferencePoint = {
             items: masterMeasureItems,
         },
         {
-            localIdentifier: "rows",
+            localIdentifier: "attribute",
             items: [attributeItems[0], dateItem, dateItem2],
         },
         {

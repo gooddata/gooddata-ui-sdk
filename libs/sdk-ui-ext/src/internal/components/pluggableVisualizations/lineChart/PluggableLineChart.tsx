@@ -4,7 +4,7 @@ import React from "react";
 import { render } from "react-dom";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 
-import { BUCKETS } from "../../../constants/bucket";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { DEFAULT_LINE_UICONFIG, LINE_UICONFIG_WITH_MULTIPLE_DATES } from "../../../constants/uiConfig";
 import {
@@ -24,7 +24,7 @@ import {
     getAttributeItemsWithoutStacks,
     getDateItems,
     getFilteredMeasuresForStackedCharts,
-    getFistDateItem,
+    getFistDateItemWithMultipleDates,
     getMeasureItems,
     getStackItems,
     isDateBucketItem,
@@ -69,7 +69,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         const masterMeasures = filterOutDerivedMeasures(measures);
 
         let attributes: IBucketItem[] = [];
-        let stacks: IBucketItem[] = getStackItems(buckets);
+        let stacks: IBucketItem[] = getStackItems(buckets, [ATTRIBUTE, DATE]);
         const allAttributes = getAllAttributeItemsWithPreference(buckets, [
             BucketNames.LOCATION,
             BucketNames.TREND,
@@ -77,20 +77,19 @@ export class PluggableLineChart extends PluggableBaseChart {
             BucketNames.ATTRIBUTES,
             BucketNames.SEGMENT,
             BucketNames.STACK,
-            BucketNames.COLUMNS,
         ]);
 
-        const firstDate = getFistDateItem(buckets);
+        const firstDateItemInViews = getFistDateItemWithMultipleDates(buckets);
 
-        if (firstDate) {
-            attributes = [firstDate];
-            const nextAttribute = allAttributes.find((attr) => attr !== firstDate);
+        if (firstDateItemInViews) {
+            attributes = [firstDateItemInViews];
+            const nextAttribute = allAttributes.find((attr) => attr !== firstDateItemInViews);
 
-            if (masterMeasures.length <= 1 && nextAttribute) {
+            if (masterMeasures.length <= 1 && nextAttribute && !stacks.length) {
                 stacks = [nextAttribute];
             }
         } else {
-            if (masterMeasures.length <= 1 && allAttributes.length > 1) {
+            if (masterMeasures.length <= 1 && allAttributes.length > 1 && !stacks.length) {
                 stacks = allAttributes.slice(1, 2);
             }
 
