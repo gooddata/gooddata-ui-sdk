@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import range from "lodash/range";
@@ -1176,6 +1176,83 @@ describe("execution", () => {
                                     "BY ALL [" +
                                     mdEndpoint +
                                     "/1027] " +
+                                    "WHERE [" +
+                                    mdEndpoint +
+                                    "/42] " +
+                                    "IN ([" +
+                                    mdEndpoint +
+                                    "/42/elements?id=61527])" +
+                                    ")",
+                                format: "#,##0.00%",
+                            },
+                            execConfig,
+                        );
+                    });
+            });
+
+            it("for generated measure with attribute filters without BY ALL expression", () => {
+                const mdObjContributionCloned = cloneDeep(mdObjContribution);
+                mdObjContributionCloned.buckets[0] = {
+                    localIdentifier: "measures",
+                    items: [
+                        {
+                            measure: {
+                                localIdentifier: "m1",
+                                definition: {
+                                    measureDefinition: {
+                                        item: {
+                                            uri: mdEndpoint + "/1",
+                                        },
+                                        computeRatio: true,
+                                        aggregation: "sum",
+                                        filters: [
+                                            {
+                                                positiveAttributeFilter: {
+                                                    displayForm: {
+                                                        uri: mdEndpoint + "/43",
+                                                    },
+                                                    in: [mdEndpoint + "/42/elements?id=61527"],
+                                                },
+                                            },
+                                        ],
+                                    },
+                                },
+                                title: "% Sum of Amount",
+                                format: "#,##0.00",
+                            },
+                        },
+                    ],
+                };
+                const missingAttr = "/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1029";
+                mdObjContributionCloned.buckets[1].items[0].visualizationAttribute.displayForm.uri =
+                    missingAttr;
+
+                return createExecution()
+                    .mdToExecutionDefinitionsAndColumns(
+                        "qamfsd9cw85e53mcqs74k8a0mwbf5gc2",
+                        mdObjContributionCloned,
+                    )
+                    .then((execConfig: any) => {
+                        expectMetricDefinition(
+                            {
+                                title: "% Sum of Amount",
+                                identifier:
+                                    "fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1.generated.e37e27d5a6d61fe71d56d7ae7a7655ac_filtered_percent",
+                                expression:
+                                    "SELECT (" +
+                                    "SELECT SUM([" +
+                                    mdEndpoint +
+                                    "/1]) " +
+                                    "WHERE [" +
+                                    mdEndpoint +
+                                    "/42] " +
+                                    "IN ([" +
+                                    mdEndpoint +
+                                    "/42/elements?id=61527])" +
+                                    ") / (" +
+                                    "SELECT SUM([" +
+                                    mdEndpoint +
+                                    "/1]) " +
                                     "WHERE [" +
                                     mdEndpoint +
                                     "/42] " +
