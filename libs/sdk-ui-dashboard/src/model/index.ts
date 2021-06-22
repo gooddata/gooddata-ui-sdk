@@ -25,6 +25,7 @@ export {
     selectSettings,
     selectColorPalette,
     selectDateFilterConfig,
+    selectObjectAvailabilityConfig,
     selectIsReadOnly,
     selectMapboxToken,
     selectDateFormat,
@@ -72,7 +73,12 @@ export { selectUser } from "./state/user/userSelectors";
 export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
 export { selectDashboardRef, selectDashboardUriRef, selectDashboardTitle } from "./state/meta/metaSelectors";
 
-export { DashboardContext, DashboardConfig, ResolvedDashboardConfig } from "./types/commonTypes";
+export {
+    DashboardContext,
+    ObjectAvailabilityConfig,
+    DashboardConfig,
+    ResolvedDashboardConfig,
+} from "./types/commonTypes";
 export {
     ExtendedDashboardItem,
     ExtendedDashboardWidget,

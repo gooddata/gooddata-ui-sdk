@@ -69,6 +69,17 @@ export const selectColorPalette = createSelector(selectConfig, (state) => {
 });
 
 /**
+ * Returns the object availability configuration for this dashboard. Only objects that match the availability
+ * criteria can appear in selections where user has pick an object to use for some purpose (for instance metric for
+ * KPI or date dataset to filter by).
+ *
+ * @internal
+ */
+export const selectObjectAvailabilityConfig = createSelector(selectConfig, (state) => {
+    return state.objectAvailability;
+});
+
+/**
  * Returns Mapbox token.
  *
  * @internal

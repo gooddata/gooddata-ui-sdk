@@ -470,6 +470,7 @@ export type DashboardConfig = {
     settings?: ISettings;
     dateFilterConfig?: IDateFilterConfig;
     colorPalette?: IColorPalette;
+    objectAvailability?: ObjectAvailabilityConfig;
     mapboxToken?: string;
     isReadOnly?: boolean;
 };
@@ -1337,6 +1338,12 @@ export function moveSectionItem(sectionIndex: number, itemIndex: number, toSecti
 // @internal (undocumented)
 export const NoTopBar: React_2.FC<ITopBarProps>;
 
+// @internal
+export type ObjectAvailabilityConfig = {
+    excludeObjectsWithTags?: string[];
+    includeObjectsWithTags?: string[];
+};
+
 // @internal (undocumented)
 export interface PermissionsState {
     // (undocumented)
@@ -1484,7 +1491,7 @@ export interface ResetDashboard extends IDashboardCommand {
 export function resetDashboard(correlationId?: string): ResetDashboard;
 
 // @internal
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "isReadOnly"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "objectAvailability" | "mapboxToken" | "isReadOnly"> & DashboardConfig;
 
 // @internal
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;
@@ -1628,6 +1635,9 @@ export const selectLocale: import("@reduxjs/toolkit").OutputSelector<DashboardSt
 
 // @internal
 export const selectMapboxToken: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res: import("../..").ResolvedDashboardConfig) => string | undefined>;
+
+// @internal
+export const selectObjectAvailabilityConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../..").ObjectAvailabilityConfig | undefined, (res: import("../..").ResolvedDashboardConfig) => import("../..").ObjectAvailabilityConfig | undefined>;
 
 // @internal
 export const selectPermissions: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IWorkspacePermissions, (res: import("./permissionsState").PermissionsState) => import("@gooddata/sdk-backend-spi").IWorkspacePermissions>;

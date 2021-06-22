@@ -164,6 +164,7 @@ Object {
   "isReadOnly": undefined,
   "locale": "en-US",
   "mapboxToken": undefined,
+  "objectAvailability": undefined,
   "separators": Object {
     "decimal": ".",
     "thousand": ",",
