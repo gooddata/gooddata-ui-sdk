@@ -742,6 +742,23 @@ describe("PluggableLineChart", () => {
                         ],
                     },
                 ],
+                [
+                    "from column to line chart: date should not duplicate in view by",
+                    referencePointMocks.onlyStackColumnChart,
+                    {
+                        buckets: [
+                            referencePointMocks.onlyStackColumnChart.buckets[0],
+                            {
+                                localIdentifier: "trend",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "segment",
+                                items: referencePointMocks.onlyStackColumnChart.buckets[2].items.slice(0, 1),
+                            },
+                        ],
+                    },
+                ],
             ];
             it.each(inputs)(
                 "should return correct extended reference (%s)",

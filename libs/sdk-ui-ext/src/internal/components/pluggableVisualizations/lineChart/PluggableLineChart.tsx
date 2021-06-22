@@ -93,7 +93,7 @@ export class PluggableLineChart extends PluggableBaseChart {
                 stacks = allAttributes.slice(1, 2);
             }
 
-            attributes = getAttributeItemsWithoutStacks(buckets).slice(0, 1);
+            attributes = getAttributeItemsWithoutStacks(buckets, [ATTRIBUTE, DATE]).slice(0, 1);
         }
 
         set(newReferencePoint, BUCKETS, [
