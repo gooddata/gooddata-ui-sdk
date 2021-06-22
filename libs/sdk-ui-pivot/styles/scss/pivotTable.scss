@@ -267,6 +267,7 @@ $subtotal-odd-background-color: var(
                 .ag-cell {
                     background-color: $custom-background-color;
                     border-top-color: $custom-background-color;
+                    pointer-events: all;
 
                     // stylelint-disable-next-line max-nesting-depth
                     &.gd-hidden-sticky-column {
@@ -274,6 +275,7 @@ $subtotal-odd-background-color: var(
                         border-top-color: transparent;
                         // stylelint-disable-next-line declaration-no-important
                         background-color: transparent !important; // TODO: remove !important after IE11 deprecation
+                        pointer-events: none;
                     }
 
                     // stylelint-disable-next-line max-nesting-depth
