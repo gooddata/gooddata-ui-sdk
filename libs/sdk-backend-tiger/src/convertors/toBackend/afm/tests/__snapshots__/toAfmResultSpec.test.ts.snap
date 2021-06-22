@@ -96,6 +96,7 @@ Object {
     "dimensions": Array [],
     "grandTotals": Array [],
   },
+  "settings": Object {},
 }
 `;
 
@@ -111,6 +112,7 @@ Object {
     "dimensions": Array [],
     "grandTotals": Array [],
   },
+  "settings": Object {},
 }
 `;
 
@@ -146,6 +148,7 @@ Object {
     "dimensions": Array [],
     "grandTotals": Array [],
   },
+  "settings": Object {},
 }
 `;
 
@@ -168,6 +171,7 @@ Object {
     ],
     "grandTotals": Array [],
   },
+  "settings": Object {},
 }
 `;
 
@@ -183,6 +187,7 @@ Object {
     "dimensions": Array [],
     "grandTotals": Array [],
   },
+  "settings": Object {},
 }
 `;
 
@@ -198,5 +203,6 @@ Object {
     "dimensions": Array [],
     "grandTotals": Array [],
   },
+  "settings": Object {},
 }
 `;

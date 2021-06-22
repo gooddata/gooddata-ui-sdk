@@ -13,6 +13,7 @@ import { IBucket } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
+import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
@@ -1019,6 +1020,7 @@ export interface IPreparedExecution {
     fingerprint(): string;
     withDateFormat(dateFormat: string): IPreparedExecution;
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
+    withExecConfig(config: IExecutionConfig): IPreparedExecution;
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
 
@@ -1213,9 +1215,11 @@ export interface ISettings {
     ADMeasureValueFilterNullAsZeroOption?: string;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
+    enableApproxCount?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;
     enableCustomColorPicker?: boolean;
+    enableDataSampling?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableKDWidgetCustomHeight?: boolean;

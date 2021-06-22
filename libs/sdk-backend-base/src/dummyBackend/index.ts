@@ -46,11 +46,13 @@ import {
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
+    IExecutionConfig,
     ISortItem,
     ObjRef,
     defWithDateFormat,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
+import isEmpty from "lodash/isEmpty";
 import { AbstractExecutionFactory } from "../toolkit/execution";
 
 /**
@@ -341,6 +343,13 @@ function dummyPreparedExecution(
         },
         equals(other: IPreparedExecution): boolean {
             return isEqual(this.definition, other.definition);
+        },
+        withExecConfig(config: IExecutionConfig): IPreparedExecution {
+            if (!isEmpty(config?.dataSamplingPercentage)) {
+                // eslint-disable-next-line no-console
+                console.warn("Backend does not support data sampling, result will be not affected");
+            }
+            return executionFactory.forDefinition(definition);
         },
     };
 }

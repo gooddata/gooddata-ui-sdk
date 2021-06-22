@@ -219,6 +219,9 @@ export function defFingerprint(def: IExecutionDefinition): string;
 export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
 
 // @public
+export function defSetExecConfig(def: IExecutionDefinition, config: IExecutionConfig): IExecutionDefinition;
+
+// @public
 export function defSetPostProcessing(def: IExecutionDefinition, postProcessing: IPostProcessing): IExecutionDefinition;
 
 // @public
@@ -232,6 +235,9 @@ export function defWithDateFormat(definition: IExecutionDefinition, dateFormat: 
 
 // @public
 export function defWithDimensions(definition: IExecutionDefinition, ...dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
+
+// @public
+export function defWithExecConfig(definition: IExecutionDefinition, config: IExecutionConfig): IExecutionDefinition;
 
 // @public
 export function defWithFilters(def: IExecutionDefinition, filters?: INullableFilter[]): IExecutionDefinition;
@@ -448,10 +454,16 @@ export const idMatchMeasure: (id: string) => MeasurePredicate;
 export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef;
 
 // @public
+export interface IExecutionConfig {
+    dataSamplingPercentage?: number;
+}
+
+// @public
 export interface IExecutionDefinition {
     readonly attributes: IAttribute[];
     readonly buckets: IBucket[];
     readonly dimensions: IDimension[];
+    readonly executionConfig?: IExecutionConfig;
     readonly filters: IFilter[];
     readonly measures: IMeasure[];
     readonly postProcessing?: IPostProcessing;
@@ -952,7 +964,7 @@ export type LocalIdRef = {
 export function localIdRef(localIdentifier: Identifier): LocalIdRef;
 
 // @public
-export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+export type MeasureAggregation = "sum" | "count" | "approximate_count" | "avg" | "min" | "max" | "median" | "runsum";
 
 // @public
 export function measureAggregation(measure: IMeasure): MeasureAggregation | undefined;

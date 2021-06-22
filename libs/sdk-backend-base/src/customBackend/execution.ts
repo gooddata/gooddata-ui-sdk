@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { AbstractExecutionFactory } from "../toolkit/execution";
 import {
@@ -10,6 +10,8 @@ import {
     defWithDimensions,
     defWithSorting,
     defWithDateFormat,
+    defWithExecConfig,
+    IExecutionConfig,
 } from "@gooddata/sdk-model";
 import {
     IDimensionDescriptor,
@@ -86,6 +88,10 @@ class CustomPreparedExecution implements IPreparedExecution {
 
     public withDateFormat = (dateFormat: string): IPreparedExecution => {
         return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
+    };
+
+    public withExecConfig = (config: IExecutionConfig): IPreparedExecution => {
+        return this.executionFactory.forDefinition(defWithExecConfig(this.definition, config));
     };
 
     public equals = (other: IPreparedExecution): boolean => {

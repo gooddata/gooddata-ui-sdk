@@ -32,6 +32,7 @@ import { IDataSetMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-backend-spi';
+import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
@@ -372,6 +373,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     withDateFormat(dateFormat: string): IPreparedExecution;
     // (undocumented)
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
+    // (undocumented)
+    withExecConfig(config: IExecutionConfig): IPreparedExecution;
     // (undocumented)
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
