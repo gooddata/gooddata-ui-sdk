@@ -159,7 +159,7 @@ export function hasNoStacksWithDate(buckets: IBucketOfFun[]): boolean {
 }
 
 export function hasOneCategory(buckets: IBucketOfFun[]): boolean {
-    return getAttributeItemsWithoutStacks(buckets).length === 1;
+    return getAttributeItemsWithoutStacks(buckets, [ATTRIBUTE, DATE]).length === 1;
 }
 
 function isShowPercentageUnselected(buckets: IBucketOfFun[]): boolean {
