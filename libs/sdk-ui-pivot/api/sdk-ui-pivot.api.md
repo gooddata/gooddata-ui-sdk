@@ -41,6 +41,9 @@ export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
 // @public (undocumented)
 export type DefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
 
+// @public
+export type DrillableItemDecorator = (value: string | undefined) => string;
+
 // @public (undocumented)
 export interface IAbsoluteColumnWidth {
     // (undocumented)
@@ -123,6 +126,7 @@ export interface IMenu {
 // @public (undocumented)
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     config?: IPivotTableConfig;
+    drillableItemDecorator?: DrillableItemDecorator;
     onColumnResized?: ColumnResizedCallback;
     pageSize?: number;
 }

@@ -9,6 +9,7 @@ import {
     DEFAULT_ROW_FONT,
     DEFAULT_SUBTOTAL_FONT,
     DEFAULT_TOTAL_FONT,
+    DRILLABLE_CELL_CLASS,
     HEADER_LABEL_CLASS,
     ROW_SUBTOTAL_CLASS,
     ROW_TOTAL_CLASS,
@@ -52,7 +53,14 @@ import { IGridRow } from "../data/resultTypes";
 import { isSomeTotal } from "../data/dataSourceUtils";
 import { TableDescriptor } from "../structure/tableDescriptor";
 import { ColumnResizingConfig } from "../privateTypes";
-import { DefaultColumnWidth } from "../../publicTypes";
+import { DefaultColumnWidth, DrillableItemDecorator } from "../../publicTypes";
+import { isCellDrillable } from "../drilling/cellDrillabilityPredicate";
+import {
+    convertDrillableItemsToPredicates,
+    DataViewFacade,
+    IDrillableItem,
+    IHeaderPredicate,
+} from "@gooddata/sdk-ui";
 
 export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
@@ -686,11 +694,15 @@ interface CalculateColumnWidthsConfig {
     subtotalFont: string;
     totalFont: string;
     rowFont: string;
+    drillableCellFont: string;
     padding: number;
     separators: any;
     cache: Map<string, number>;
     columnAutoresizeOption: DefaultColumnWidth;
     clientWidth?: number;
+    dv: DataViewFacade;
+    drillableItems: (IDrillableItem | IHeaderPredicate)[] | undefined;
+    drillableItemDecorator: DrillableItemDecorator;
 }
 
 export function getMaxWidth(
@@ -729,9 +741,21 @@ export function getMaxWidthCached(
     return maxWidth === undefined || width > maxWidth ? width : undefined;
 }
 
-function valueFormatter(text: string, col: SeriesCol, separators: any) {
+function valueFormatter(
+    text: string,
+    col: SeriesCol,
+    separators: any,
+    isDrillable: boolean,
+    drillableItemDecorator: DrillableItemDecorator,
+) {
     return text !== undefined
-        ? getMeasureCellFormattedValue(text, col.seriesDescriptor.measureFormat(), separators)
+        ? getMeasureCellFormattedValue(
+              text,
+              col.seriesDescriptor.measureFormat(),
+              separators,
+              isDrillable,
+              drillableItemDecorator,
+          )
         : null;
 }
 
@@ -740,14 +764,17 @@ function collectWidths(
     row: IGridRow,
     column: Column,
     maxWidths: Map<string, number>,
+    isDrillable: boolean,
 ): void {
-    const { context } = config;
+    const { context, drillableItemDecorator } = config;
 
     const col = config.tableDescriptor.getCol(column);
 
     if (col && context) {
         const text = row[col.id];
-        const formattedText = isSeriesCol(col) && valueFormatter(text, col, config.separators);
+        const formattedText = isSeriesCol(col)
+            ? valueFormatter(text, col, config.separators, isDrillable, drillableItemDecorator)
+            : drillableItemDecorator(text);
         const textForCalculation = formattedText || text;
         const maxWidth = col.id ? maxWidths.get(col.id) : undefined;
         let possibleMaxWidth;
@@ -823,15 +850,23 @@ function calculateColumnWidths(
             }
             config.rowData.forEach((row: IGridRow) => {
                 if (context) {
-                    context.font = isSomeTotal(row.type) ? config.subtotalFont : config.rowFont;
-                    collectWidths(config, row, column, maxWidths);
+                    const drillablePredicates = convertDrillableItemsToPredicates(config.drillableItems!);
+                    const dv = config.dv;
+                    const col = config.tableDescriptor.getCol(column);
+                    const isDrillable = isCellDrillable(col, row, dv, drillablePredicates);
+                    context.font = isSomeTotal(row.type)
+                        ? config.subtotalFont
+                        : isDrillable
+                        ? config.drillableCellFont
+                        : config.rowFont;
+                    collectWidths(config, row, column, maxWidths, isDrillable);
                 }
             });
 
             config.totalData.forEach((row: IGridRow) => {
                 if (context) {
                     context.font = config.totalFont;
-                    collectWidths(config, row, column, maxWidths);
+                    collectWidths(config, row, column, maxWidths, false);
                 }
             });
             if (config.columnAutoresizeOption === "viewport") {
@@ -886,6 +921,7 @@ function getTableFont(containerRef: HTMLDivElement, className: string, defaultFo
 function getTableFonts(containerRef: HTMLDivElement): {
     headerFont: string;
     rowFont: string;
+    drillableCellFont: string;
     subtotalFont: string;
     totalFont: string;
 } {
@@ -894,9 +930,10 @@ function getTableFonts(containerRef: HTMLDivElement): {
      */
     const headerFont = getTableFont(containerRef, HEADER_LABEL_CLASS, DEFAULT_HEADER_FONT);
     const rowFont = getTableFont(containerRef, VALUE_CLASS, DEFAULT_ROW_FONT);
+    const drillableCellFont = getTableFont(containerRef, DRILLABLE_CELL_CLASS, DEFAULT_ROW_FONT);
     const subtotalFont = getTableFont(containerRef, ROW_SUBTOTAL_CLASS, DEFAULT_SUBTOTAL_FONT);
     const totalFont = getTableFont(containerRef, ROW_TOTAL_CLASS, DEFAULT_TOTAL_FONT);
-    return { headerFont, rowFont, subtotalFont, totalFont };
+    return { headerFont, rowFont, drillableCellFont, subtotalFont, totalFont };
 }
 
 /**
@@ -944,6 +981,9 @@ export function getAutoResizedColumns(
     execution: IExecutionResult | null,
     resizingConfig: ColumnResizingConfig,
     resizedColumnsStore: ResizedColumnsStore,
+    dv: DataViewFacade,
+    drillableItems: (IDrillableItem | IHeaderPredicate)[] | undefined,
+    drillableItemDecorator: DrillableItemDecorator,
     options: {
         measureHeaders: boolean;
         padding: number;
@@ -953,7 +993,8 @@ export function getAutoResizedColumns(
     const { containerRef, columnAutoresizeOption, clientWidth } = resizingConfig;
     if (tableDescriptor && gridApi && columnApi && execution && containerRef) {
         const columns = columnApi.getPrimaryColumns();
-        const { headerFont, rowFont, subtotalFont, totalFont } = getTableFonts(containerRef);
+        const { headerFont, rowFont, drillableCellFont, subtotalFont, totalFont } =
+            getTableFonts(containerRef);
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
         const rowData = getDisplayedRowData(gridApi);
@@ -971,11 +1012,15 @@ export function getAutoResizedColumns(
                 subtotalFont,
                 totalFont,
                 rowFont,
+                drillableCellFont,
                 padding: options.padding,
                 separators: options.separators,
                 cache: new Map(),
                 columnAutoresizeOption,
                 clientWidth,
+                dv,
+                drillableItems,
+                drillableItemDecorator,
             },
             resizedColumnsStore,
         );

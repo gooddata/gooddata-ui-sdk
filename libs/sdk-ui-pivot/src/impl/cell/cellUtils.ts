@@ -3,6 +3,7 @@ import cx from "classnames";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
 import { DataValue } from "@gooddata/sdk-backend-spi";
+import { DrillableItemDecorator } from "../../publicTypes";
 
 export interface ITableCellStyle {
     backgroundColor?: string;
@@ -34,11 +35,14 @@ export function getMeasureCellFormattedValue(
     value: DataValue,
     format: string,
     separators: ISeparators | undefined,
+    isDrillable: boolean,
+    drillableItemDecorator?: DrillableItemDecorator,
 ): string {
     const formattedNumber = getFormattedNumber(value, format, separators);
     const { label } = colors2Object(formattedNumber);
 
-    return label === "" ? "–" : label;
+    const formattedValue = label === "" ? "–" : label;
+    return isDrillable && drillableItemDecorator ? drillableItemDecorator(formattedValue) : formattedValue;
 }
 
 export function getMeasureCellStyle(

@@ -10,6 +10,9 @@ import { invariant } from "ts-invariant";
 import { isSeriesCol } from "./tableDescriptorTypes";
 import { cellClassFactory } from "../cell/cellClass";
 import { createCellRenderer } from "../cell/cellRenderer";
+import { isCellDrillable } from "../drilling/cellDrillabilityPredicate";
+import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
+import { IGridRow } from "../data/resultTypes";
 
 export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const cellRenderer = createCellRenderer();
@@ -28,8 +31,19 @@ export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePi
             }
             return 1;
         },
-        valueFormatter: (params) => {
-            return params.value === undefined ? null : params.value;
+        valueFormatter: (params: ValueFormatterParams) => {
+            const colDesc = table.tableDescriptor.getCol(params.colDef);
+            const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
+            const dv = table.getDrillDataContext();
+            const row: IGridRow = params.data;
+            const drillCheck = colDesc && row && row[colDesc.id];
+            const isDrillable = drillCheck ? isCellDrillable(colDesc, row, dv, drillablePredicates) : false;
+
+            return params.value === undefined
+                ? null
+                : isDrillable && props.drillableItemDecorator
+                ? props.drillableItemDecorator(params.value)
+                : params.value;
         },
         cellRenderer,
     };
@@ -62,11 +76,18 @@ export function measureColumnTemplate(table: TableFacade, props: Readonly<ICoreP
 
             invariant(isSeriesCol(colDesc));
 
+            const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
+            const dv = table.getDrillDataContext();
+            const row: IGridRow = params.data;
+            const hasDrillableHeader = isCellDrillable(colDesc, row, dv, drillablePredicates);
+
             return params.value !== undefined
                 ? getMeasureCellFormattedValue(
                       params.value,
                       colDesc.seriesDescriptor.measureFormat(),
                       separators,
+                      hasDrillableHeader,
+                      props.drillableItemDecorator,
                   )
                 : (null as any);
         },

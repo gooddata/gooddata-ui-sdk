@@ -15,6 +15,7 @@ export {
     ICorePivotTableProps,
     ColumnResizedCallback,
     IMenu,
+    DrillableItemDecorator,
 } from "./publicTypes";
 
 export {
