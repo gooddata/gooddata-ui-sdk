@@ -107,7 +107,7 @@
       "commandKind": "global",
       "name": "build-docs",
       "summary": "Builds API documentation for the entire SDK.",
-      "shellCommand": "bash common/scripts/build-docs.sh",
+      "shellCommand": "node common/scripts/build-docs.js",
       "safeForSimultaneousRushProcesses": true
     },
     {
