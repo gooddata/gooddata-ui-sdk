@@ -1488,6 +1488,27 @@ export const onlyStackColumnChart: IReferencePoint = {
     },
 };
 
+export const onlyStackTreemapMultipleMeasures: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems,
+        },
+        {
+            localIdentifier: "view",
+            items: [],
+        },
+        {
+            localIdentifier: "segment",
+            items: [dateItem],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
 export const multipleDatesInRowsOnly: IReferencePoint = {
     buckets: [
         {

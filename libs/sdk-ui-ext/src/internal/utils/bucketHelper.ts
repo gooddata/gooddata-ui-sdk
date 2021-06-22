@@ -710,7 +710,7 @@ export function hasDerivedBucketItems(masterBucketItem: IBucketItem, buckets: IB
 }
 
 export function getFilteredMeasuresForStackedCharts(buckets: IBucketOfFun[]): IBucketItem[] {
-    const hasStacks = getStackItems(buckets).length > 0;
+    const hasStacks = getStackItems(buckets, [ATTRIBUTE, DATE]).length > 0;
     if (hasStacks) {
         const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, 1);
         return getMeasureItems(limitedBuckets);
