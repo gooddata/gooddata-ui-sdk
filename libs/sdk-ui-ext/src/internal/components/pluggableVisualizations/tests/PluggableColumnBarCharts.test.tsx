@@ -502,6 +502,29 @@ describe("PluggableColumnBarCharts", () => {
                     },
                 ],
                 [
+                    "from treemap to column chart: multiple measures and date in stack: should limit measures to one",
+                    referencePointMocks.onlyStackTreemapMultipleMeasures,
+                    {
+                        buckets: [
+                            {
+                                localIdentifier: "measures",
+                                items: referencePointMocks.onlyStackTreemapMultipleMeasures.buckets[0].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "view",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: referencePointMocks.onlyStackTreemapMultipleMeasures.buckets[2].items,
+                            },
+                        ],
+                    },
+                ],
+                [
                     "Simulate adding pop measure:  With measure and derived measure and two date in view and date in stack",
                     referencePointMocks.measureWithDerivedAsFirstWithDateInStackRefPoint,
                     {
