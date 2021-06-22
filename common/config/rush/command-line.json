@@ -235,6 +235,15 @@
    * For example, you might define a "--production" parameter for the "rush build" command.
    */
   "parameters": [
+    {
+      "parameterKind": "string",
+      "longName": "--version",
+      "shortName": "-v",
+      "description": "Which version to create (e.g. 8.4.0 or Next for a prerelease version). This is case sensitive.",
+      "associatedCommands": ["build-docs"],
+      "required": false,
+      "argumentName": "VERSION"
+    }
     // {
     //   /**
     //    * (Required) Determines the type of custom parameter.

@@ -1,6 +1,24 @@
 #!/bin/bash
-echo "Please input documentation version (ex. 8.4.0 or 'Next' for prerelease documentation):"
-read VERSION
+# parse cli arguments
+while [[ $# -gt 0 ]]; do
+  key="$1"
+
+  case $key in
+    -v|--version)
+      VERSION="$2"
+      shift # past argument
+      shift # past value
+      ;;
+  esac
+done
+
+# if no version was provided via the command line, ask for it interactivelly
+if [ -z "$VERSION" ]
+then
+    echo "Please input documentation version (ex. 8.4.0 or 'Next' for prerelease documentation):"
+    read VERSION
+fi
+
 echo "Start creating docs v${VERSION}"
 
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
