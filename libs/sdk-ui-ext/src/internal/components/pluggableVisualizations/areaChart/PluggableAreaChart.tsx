@@ -44,7 +44,6 @@ import {
     getMainDateItem,
     getMeasureItems,
     filterOutDerivedMeasures,
-    getFistDateItemWithMultipleDates,
 } from "../../../utils/bucketHelper";
 import {
     getReferencePointWithSupportedProperties,
@@ -258,6 +257,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
 
         let views: IBucketItem[] = [];
         let stacks: IBucketItem[] = getStackItems(buckets, [ATTRIBUTE, DATE]);
+
         const allAttributes = getAllAttributeItemsWithPreference(buckets, [
             BucketNames.LOCATION,
             BucketNames.TREND,
@@ -267,38 +267,19 @@ export class PluggableAreaChart extends PluggableBaseChart {
             BucketNames.STACK,
         ]).filter((attribute) => !stacks.includes(attribute));
 
-        const firstDateItemInViews = getFistDateItemWithMultipleDates(buckets);
-
-        if (firstDateItemInViews) {
-            views = [firstDateItemInViews];
-
-            const [nextAttribute] = allAttributes.filter((attribute) => attribute !== firstDateItemInViews);
-
-            if (masterMeasures.length <= 1 && nextAttribute && !stacks.length) {
-                const isNextAttributeDate = isDateBucketItem(nextAttribute);
-
-                if (!isNextAttributeDate) {
-                    stacks = [nextAttribute];
-                    views = [...views];
-                } else {
-                    views = [...views, nextAttribute].slice(0, viewByMaxItemCount);
-                }
-            }
+        if (masterMeasures.length <= 1 && allAttributes.length > 0 && !stacks.length) {
+            // have more attributes and stacks empty -> fill views
+            views = allAttributes.slice(0, viewByMaxItemCount);
+        } else if (masterMeasures.length <= 1 && allAttributes.length) {
+            // have more attributes and stacks non-empty -> keep only one attribute in view
+            views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
+        } else if (masterMeasures.length <= 1) {
+            // more measures -> prefer measures
+            views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
         } else {
-            if (masterMeasures.length <= 1 && allAttributes.length > 0 && !stacks.length) {
-                // have more attributes and stacks empty -> fill views
-                views = allAttributes.slice(0, viewByMaxItemCount);
-            } else if (masterMeasures.length <= 1 && allAttributes.length) {
-                // have more attributes and stacks non-empty -> keep only one attribute in view
-                views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
-            } else if (masterMeasures.length <= 1) {
-                // more measures -> prefer measures
-                views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
-            } else {
-                // more measures -> prefer measures and clear stack
-                views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
-                stacks = [];
-            }
+            // more measures -> prefer measures and clear stack
+            views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
+            stacks = [];
         }
 
         return {
