@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import SparkMD5 from "spark-md5";
 import invariant from "ts-invariant";
 import cloneDeep from "lodash/cloneDeep";
@@ -178,9 +178,10 @@ function getPercentMetricExpression(category: any, attributesMap: any, measure: 
         map(getMeasureFilters(measure), partial(getFilterExpression, attributesMap)),
         (e) => !!e,
     );
+    const byAllExpression = attributeUri ? ` BY ALL [${attributeUri}]` : "";
     const whereExpression = notEmpty(...whereFilters) ? ` WHERE ${whereFilters.join(" AND ")}` : "";
 
-    return `SELECT (${metricExpressionWithoutFilters}${whereExpression}) / (${metricExpressionWithoutFilters} BY ALL [${attributeUri}]${whereExpression})`;
+    return `SELECT (${metricExpressionWithoutFilters}${whereExpression}) / (${metricExpressionWithoutFilters}${byAllExpression}${whereExpression})`;
 }
 
 function getPoPExpression(attributeUri: string, metricExpression: string) {
