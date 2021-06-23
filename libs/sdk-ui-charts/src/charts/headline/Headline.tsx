@@ -3,13 +3,12 @@ import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     BucketNames,
     Subtract,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
     withContexts,
+    MeasureOrPlaceholder,
+    NullableFiltersOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
 import { CoreHeadline } from "./CoreHeadline";
@@ -27,18 +26,18 @@ export interface IHeadlineBucketProps {
     /**
      * Specify the measure whose value will be shown as the headline.
      */
-    primaryMeasure: ValueOrPlaceholder<AnyMeasure>;
+    primaryMeasure: MeasureOrPlaceholder;
 
     /**
      * Optionally specify secondary measure whose value will be shown for comparison with the primary measure.
      * The change in percent between the two values will also be calculated and displayed.
      */
-    secondaryMeasure?: ValueOrPlaceholder<AnyMeasure>;
+    secondaryMeasure?: MeasureOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

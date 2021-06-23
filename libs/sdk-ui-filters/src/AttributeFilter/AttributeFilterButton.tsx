@@ -25,7 +25,7 @@ import {
     useCancelablePromise,
     usePlaceholder,
     useResolveValueWithPlaceholders,
-    ValuesOrPlaceholders,
+    AttributeFiltersOrPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
 import MediaQuery from "react-responsive";
@@ -83,7 +83,7 @@ export interface IAttributeFilterButtonOwnProps {
      *
      * Parent filters elements must contain their URIs due to current backend limitations.
      */
-    parentFilters?: ValuesOrPlaceholders<IAttributeFilter>;
+    parentFilters?: AttributeFiltersOrPlaceholders;
 
     /**
      * Specify {@link @gooddata/sdk-ui#IPlaceholder} to use to get and set the value of the attribute filter.

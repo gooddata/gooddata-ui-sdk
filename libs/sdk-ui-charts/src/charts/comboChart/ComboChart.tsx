@@ -10,10 +10,12 @@ import {
     newBucket,
 } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     BucketNames,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    MeasuresOrPlaceholders,
+    AttributeOrPlaceholder,
+    AttributesOrPlaceholders,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 import { defaultDimensions } from "../_commons/dimensions";
@@ -92,12 +94,12 @@ export interface IComboChartBucketProps {
     /**
      * Optionally specify primary measures to render using the primary chart type.
      */
-    primaryMeasures?: ValuesOrPlaceholders<AnyMeasure>;
+    primaryMeasures?: MeasuresOrPlaceholders;
 
     /**
      * Optionally specify secondary measures to render using the secondary chart type.
      */
-    secondaryMeasures?: ValuesOrPlaceholders<AnyMeasure>;
+    secondaryMeasures?: MeasuresOrPlaceholders;
 
     /**
      * Optionally specify one or two attributes to use for slicing the measure values along the
@@ -107,17 +109,17 @@ export interface IComboChartBucketProps {
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute there will be a point/column/area indicating the respective slice's value.
      */
-    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
+    viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

@@ -1,12 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
-import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     BucketNames,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    AttributesMeasuresOrPlaceholders,
+    AttributeOrPlaceholder,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -55,23 +56,23 @@ export interface IFunnelChartBucketProps {
      *
      * If you specify multiple measures, then those calculate measure values will be charted into a funnel.
      */
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    measures: AttributesMeasuresOrPlaceholders;
 
     /**
      * Optionally specify attribute that will be used to slice the single measure into multiple pieces that
      * will be charted into a funnel.
      */
-    viewBy?: ValueOrPlaceholder<IAttribute>;
+    viewBy?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

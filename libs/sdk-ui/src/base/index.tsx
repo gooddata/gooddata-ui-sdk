@@ -92,8 +92,26 @@ export {
     ComposedPlaceholderResolutionContext,
     IUseComposedPlaceholderHook,
     UnionToIntersection,
+    ValueOrMultiValuePlaceholder,
 } from "./react/placeholders/base";
 export { IPlaceholderOptions, newComposedPlaceholder, newPlaceholder } from "./react/placeholders/factory";
+export {
+    AttributeFilterOrPlaceholder,
+    AttributeFiltersOrPlaceholders,
+    AttributeMeasureOrPlaceholder,
+    AttributeOrPlaceholder,
+    AttributesMeasuresOrPlaceholders,
+    AttributesOrPlaceholders,
+    FilterOrMultiValuePlaceholder,
+    FilterOrPlaceholder,
+    FiltersOrPlaceholders,
+    MeasureOrPlaceholder,
+    MeasuresOrPlaceholders,
+    NullableFilterOrPlaceholder,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
+    TotalsOrPlaceholders,
+} from "./react/placeholders/aliases";
 export {
     usePlaceholder,
     usePlaceholders,

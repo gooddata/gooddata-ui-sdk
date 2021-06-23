@@ -12,11 +12,12 @@ import {
     newBucket,
 } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     BucketNames,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    AttributeMeasureOrPlaceholder,
+    AttributeOrPlaceholder,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { heatmapDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -63,27 +64,27 @@ export interface IHeatmapBucketProps {
     /**
      * Specify measure whose values will be charted on the heatmap.
      */
-    measure: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    measure: AttributeMeasureOrPlaceholder;
 
     /**
      * Optionally specify attribute, whose values will be used to create rows in the heatmap.
      */
-    rows?: ValueOrPlaceholder<IAttribute>;
+    rows?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify attribute, whose values will be used to create columns in the heatmap.
      */
-    columns?: ValueOrPlaceholder<IAttribute>;
+    columns?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

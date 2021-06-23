@@ -9,11 +9,13 @@ import {
     newBucket,
 } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     BucketNames,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    SortsOrPlaceholders,
+    AttributeMeasureOrPlaceholder,
+    AttributeOrPlaceholder,
+    AttributesOrPlaceholders,
+    NullableFiltersOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { truncate } from "../_commons/truncate";
@@ -91,18 +93,18 @@ export interface IBulletChartBucketProps {
     /**
      * Specify primary measure. This will be charted as the primary bar.
      */
-    primaryMeasure: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    primaryMeasure: AttributeMeasureOrPlaceholder;
 
     /**
      * Optionally specify measure which contains the target/goal value. The value will be charted as the thick
      * line to reach.
      */
-    targetMeasure?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    targetMeasure?: AttributeMeasureOrPlaceholder;
 
     /**
      * Optionally specify measure to use for comparison. This will be charted as the secondary bar.
      */
-    comparativeMeasure?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    comparativeMeasure?: AttributeMeasureOrPlaceholder;
 
     /**
      * Optionally specify one or two attributes to use for slicing the measures.
@@ -111,17 +113,17 @@ export interface IBulletChartBucketProps {
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute, there will be a bullet.
      */
-    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
+    viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

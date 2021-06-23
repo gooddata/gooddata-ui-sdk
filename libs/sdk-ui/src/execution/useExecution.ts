@@ -1,12 +1,14 @@
 // (C) 2019-2021 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IAttribute, ITotal, INullableFilter, ISortItem } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     useBackend,
     useResolveValuesWithPlaceholders,
     useWorkspace,
-    ValuesOrPlaceholders,
+    AttributesMeasuresOrPlaceholders,
+    AttributesOrPlaceholders,
+    TotalsOrPlaceholders,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
 } from "../base";
 import { createExecution } from "./createExecution";
 
@@ -18,27 +20,27 @@ export interface IUseExecutionConfig {
      * Data series will be built using the provided measures that are optionally further scoped for
      * elements of the specified attributes.
      */
-    seriesBy: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    seriesBy: AttributesMeasuresOrPlaceholders;
 
     /**
      * Optionally slice all data series by elements of these attributes.
      */
-    slicesBy?: ValuesOrPlaceholders<IAttribute>;
+    slicesBy?: AttributesOrPlaceholders;
 
     /**
      * Optionally include these totals among the data slices.
      */
-    totals?: ValuesOrPlaceholders<ITotal>;
+    totals?: TotalsOrPlaceholders;
 
     /**
      * Optional filters to apply on server side.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optional sorting to apply on server side.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

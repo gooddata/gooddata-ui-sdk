@@ -2,11 +2,12 @@
 import React from "react";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     BucketNames,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
+    AttributeOrPlaceholder,
+    AttributesMeasuresOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -57,23 +58,23 @@ export interface IPieChartBucketProps {
      * If you specify multiple measures, then there will be a pie slice for each measure value. You may not
      * specify the viewBy in this case.
      */
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    measures: AttributesMeasuresOrPlaceholders;
 
     /**
      * Optionally specify viewBy attribute that will be used to create the pie slices. There will be a slice
      * for each value of the attribute.
      */
-    viewBy?: ValueOrPlaceholder<IAttribute>;
+    viewBy?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

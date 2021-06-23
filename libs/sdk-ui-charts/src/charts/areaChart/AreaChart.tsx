@@ -11,11 +11,13 @@ import {
 import { truncate } from "../_commons/truncate";
 import { IBucketChartProps, IChartConfig, ViewByAttributesLimit } from "../../interfaces";
 import {
-    AnyMeasure,
     BucketNames,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    AttributesMeasuresOrPlaceholders,
+    AttributeOrPlaceholder,
+    AttributesOrPlaceholders,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
@@ -146,7 +148,7 @@ export interface IAreaChartBucketProps {
      * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
      * attribute elements will be charted.
      */
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    measures: AttributesMeasuresOrPlaceholders;
 
     /**
      * Optionally specify attributes to slice and optionally stack the area chart.
@@ -163,7 +165,7 @@ export interface IAreaChartBucketProps {
      * stackBy attribute. In either case, as soon as the area chart is stacked, only the first measure will be
      * calculated and charted.
      */
-    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
+    viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
      * Optionally specify attribute to stack by. This is only applicable if you specify at most single viewBy
@@ -172,17 +174,17 @@ export interface IAreaChartBucketProps {
      * Note: stacking area chart using attribute elements means only a single measure can be charted. The component
      * will take the first measure.
      */
-    stackBy?: ValueOrPlaceholder<IAttribute>;
+    stackBy?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

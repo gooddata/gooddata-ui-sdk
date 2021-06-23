@@ -5,15 +5,16 @@ import {
     IAttribute,
     IAttributeOrMeasure,
     IFilter,
-    INullableFilter,
     ISortItem,
     newBucket,
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    ValuesOrPlaceholders,
-    ValueOrPlaceholder,
-    AnyMeasure,
+    AttributesMeasuresOrPlaceholders,
+    AttributeOrPlaceholder,
+    AttributesOrPlaceholders,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
@@ -73,7 +74,7 @@ export interface IBarChartBucketProps {
      * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
      * attribute elements will be charted.
      */
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    measures: AttributesMeasuresOrPlaceholders;
 
     /**
      * Optionally specify one or two attributes to slice the measures along the Y axis.
@@ -82,22 +83,22 @@ export interface IBarChartBucketProps {
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute there will be a bar indicating the respective slice's value.
      */
-    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
+    viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
      * Optionally specify attribute to stack the bars by.
      */
-    stackBy?: ValueOrPlaceholder<IAttribute>;
+    stackBy?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

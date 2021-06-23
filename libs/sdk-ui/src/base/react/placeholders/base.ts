@@ -273,7 +273,7 @@ export type ValueOrPlaceholder<T> = T | AnyPlaceholderOf<T>;
  *
  * @public
  */
-export type ValuesOrPlaceholders<T> = AnyArrayOf<ValueOrPlaceholder<T> | AnyPlaceholderOf<AnyArrayOf<T>>>;
+export type ValuesOrPlaceholders<T> = AnyArrayOf<ValueOrMultiValuePlaceholder<T>>;
 
 /**
  * Generate union of measures from union of measure definitions.
@@ -292,3 +292,8 @@ export type MeasureOf<T extends IMeasureDefinitionType> = T extends any ? IMeasu
  * @public
  */
 export type AnyMeasure = IMeasure | MeasureOf<IMeasureDefinitionType>;
+
+/**
+ * @public
+ */
+export type ValueOrMultiValuePlaceholder<T> = ValueOrPlaceholder<T> | AnyPlaceholderOf<T[]>;

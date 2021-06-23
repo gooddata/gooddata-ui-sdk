@@ -2,11 +2,12 @@
 import React from "react";
 import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     BucketNames,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
     useResolveValuesWithPlaceholders,
+    MeasureOrPlaceholder,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
+    AttributeOrPlaceholder,
 } from "@gooddata/sdk-ui";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -52,27 +53,27 @@ export interface IScatterPlotBucketProps {
     /**
      * Optionally specify measure which will be used to position data points on the X axis.
      */
-    xAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
+    xAxisMeasure?: MeasureOrPlaceholder;
 
     /**
      * Optionally specify measure which will be used to position data points on the Y axis.
      */
-    yAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
+    yAxisMeasure?: MeasureOrPlaceholder;
 
     /**
      * Optionally specify attribute whose values will be used to create data points.
      */
-    attribute?: ValueOrPlaceholder<IAttribute>;
+    attribute?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

@@ -4,7 +4,8 @@
 
 ```ts
 
-import { AnyMeasure } from '@gooddata/sdk-ui';
+import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
+import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { ContentRect } from 'react-measure';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -18,17 +19,15 @@ import { IDrillConfig } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { ILoadingInjectedProps } from '@gooddata/sdk-ui';
-import { INullableFilter } from '@gooddata/sdk-model';
 import { IPushpinCategoryLegendItem } from '@gooddata/sdk-ui-vis-commons';
 import { ISeparators } from '@gooddata/sdk-ui';
-import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
+import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { PositionType } from '@gooddata/sdk-ui-vis-commons';
 import { default as React_2 } from 'react';
-import { ValueOrPlaceholder } from '@gooddata/sdk-ui';
-import { ValuesOrPlaceholders } from '@gooddata/sdk-ui';
+import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public (undocumented)
@@ -254,22 +253,22 @@ export interface IGeoPointsConfig {
 export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizationCallbacks {
     backend?: IAnalyticalBackend;
     // (undocumented)
-    color?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    color?: AttributeMeasureOrPlaceholder;
     // (undocumented)
     config?: IGeoConfig;
     // (undocumented)
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
     // (undocumented)
-    location: ValueOrPlaceholder<IAttribute>;
+    location: AttributeOrPlaceholder;
     onCenterPositionChanged?: CenterPositionChangedCallback;
     onZoomChanged?: ZoomChangedCallback;
     placeholdersResolutionContext?: any;
     // (undocumented)
-    segmentBy?: ValueOrPlaceholder<IAttribute>;
+    segmentBy?: AttributeOrPlaceholder;
     // (undocumented)
-    size?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    size?: AttributeMeasureOrPlaceholder;
     // (undocumented)
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
     workspace?: string;
 }
 

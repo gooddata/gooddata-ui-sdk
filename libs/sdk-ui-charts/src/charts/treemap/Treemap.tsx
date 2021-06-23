@@ -14,11 +14,11 @@ import {
     newMeasureSort,
 } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     BucketNames,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    AttributesMeasuresOrPlaceholders,
+    AttributeOrPlaceholder,
+    NullableFiltersOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { treemapDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -65,7 +65,7 @@ export interface ITreemapBucketProps {
     /**
      * Specify one or more measures whose values will be used to create the treemap rectangles.
      */
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    measures: AttributesMeasuresOrPlaceholders;
 
     /**
      * Optionally specify an attribute whose values will be used to slice the measure. Treemap will chart one
@@ -74,19 +74,19 @@ export interface ITreemapBucketProps {
      *
      * Note: treemap only supports viewBy only when `measures` contains a single measure.
      */
-    viewBy?: ValueOrPlaceholder<IAttribute>;
+    viewBy?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify an attribute, whose values will be used to segment the rectangles created for
      * the measures or the combination of measure and viewBy attribute values. Segmenting essentially adds
      * another level into the hierarchy.
      */
-    segmentBy?: ValueOrPlaceholder<IAttribute>;
+    segmentBy?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.
