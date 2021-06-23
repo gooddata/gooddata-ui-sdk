@@ -10,6 +10,8 @@ import { DashboardEvents, DashboardEventType } from "../events";
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
 import noop from "lodash/noop";
 import { DashboardCommandType, LoadDashboard, loadDashboard } from "../commands";
+import { IDashboardQuery } from "../queries";
+import { QueryEnvelope, QueryEnvelopeActionTypeName } from "../state/_infra/queryProcessing";
 
 type MonitoredAction = {
     calls: number;
@@ -138,6 +140,32 @@ export class DashboardTester {
         this.dispatch(action);
 
         return this.waitFor(actionType, timeout);
+    }
+
+    /**
+     * Starts a dashboard query.
+     *
+     * @param action - query action
+     */
+    public query<TResult>(action: IDashboardQuery<TResult>): Promise<TResult> {
+        const partialEnvelope = {
+            onSuccess: noop,
+            onError: noop,
+        };
+
+        const promise = new Promise<TResult>((resolve, reject) => {
+            partialEnvelope.onSuccess = resolve;
+            partialEnvelope.onError = reject;
+        });
+
+        const envelope: QueryEnvelope = {
+            type: QueryEnvelopeActionTypeName,
+            query: action,
+            ...partialEnvelope,
+        };
+
+        this.reduxedStore.store.dispatch(envelope);
+        return promise;
     }
 
     /**
