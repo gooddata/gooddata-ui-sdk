@@ -605,12 +605,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                         totalCount={totalCount || LIMIT}
                         selectedItems={state.selectedFilterOptions}
                         isInverted={state.isInverted}
-                        isLoading={
-                            elementsStatus === "pending" ||
-                            elementsStatus === "loading" ||
-                            totalCountStatus === "pending" ||
-                            totalCountStatus === "loading"
-                        }
+                        isLoading={isElementsLoading() || isTotalCountLoading()}
                         searchString={state.searchString}
                         onSearch={onSearch}
                         onSelect={onSelect}
