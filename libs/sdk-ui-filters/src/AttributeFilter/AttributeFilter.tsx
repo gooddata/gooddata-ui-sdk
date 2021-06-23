@@ -225,10 +225,10 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
             };
         }
 
-        const elements = filterAttributeElements(filter);
+        const elements = filterAttributeElements(currentFilter);
 
         return {
-            isInverted: !isPositiveAttributeFilter(filter),
+            isInverted: !isPositiveAttributeFilter(currentFilter),
             selectedItems: attributeElementsToAttributeElementArray(elements),
         };
     };

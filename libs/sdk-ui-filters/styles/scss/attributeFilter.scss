@@ -52,6 +52,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 .gd-attribute-filter-button {
     @include gd-font-base;
 
+    max-width: 185px;
     position: relative;
     height: 41px;
     margin: 7px 11px 7px 0;
@@ -116,78 +117,6 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         }
     }
 
-    .button-title,
-    .button-subtitle {
-        white-space: nowrap;
-        max-width: 100%;
-
-        &::after {
-            content: "\e612";
-            display: none;
-            vertical-align: top;
-            color: $gd-color-state-blank;
-            transition: $transition-length;
-            margin-left: 0.5em;
-            font-family: $gd-font-indigo;
-            font-weight: normal;
-            font-size: inherit;
-        }
-
-        &:only-child::after {
-            display: inline-block;
-        }
-    }
-
-    .button-title {
-        overflow: hidden;
-        color: $gd-color-link;
-
-        .gd-bubble-trigger,
-        .shortened {
-            display: inline-flex;
-        }
-
-        .shortened {
-            max-width: 100%;
-        }
-
-        .overlay & {
-            flex: 0 0 auto;
-            color: $gd-color-label;
-            max-width: 100%;
-            margin-right: 5px;
-
-            &::after {
-                content: ":";
-            }
-        }
-    }
-
-    .button-subtitle {
-        display: inline-flex;
-        overflow: hidden;
-        color: $gd-color-dark;
-        font-weight: bold;
-        text-overflow: ellipsis;
-
-        .overlay & {
-            flex: 1 1 auto;
-            max-width: none;
-
-            &::after {
-                position: absolute;
-                top: 50%;
-                right: -20px;
-                transform: translateY(-50%);
-                font-size: 18px;
-            }
-        }
-
-        &::after {
-            display: inline-block;
-        }
-    }
-
     &:active,
     &.is-active {
         &::after {
@@ -220,6 +149,101 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
             border-color: $gd-border-color;
         }
     }
+}
+
+.button-title {
+    overflow: hidden;
+    color: $gd-color-link;
+
+    .gd-bubble-trigger,
+    .shortened {
+        display: inline-flex;
+    }
+
+    .shortened {
+        max-width: 100%;
+    }
+
+    .overlay & {
+        flex: 0 0 auto;
+        max-width: 100%;
+        margin-right: 5px;
+        color: $gd-color-label;
+
+        &::after {
+            content: ":";
+        }
+    }
+}
+
+.button-title,
+.button-subtitle {
+    max-width: 100%;
+    white-space: nowrap;
+
+    &::after {
+        content: "\e612";
+        display: none;
+        margin-left: 0.5em;
+        font-family: "Indigo", sans-serif;
+        font-weight: normal;
+        font-size: inherit;
+        vertical-align: top;
+        color: $gd-color-state-blank;
+        transition: $transition-length;
+    }
+
+    &:only-child::after {
+        display: inline-block;
+    }
+
+    .drag-preview &::after {
+        display: none;
+    }
+}
+
+.button-subtitle {
+    display: inline-flex;
+    overflow: hidden;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    color: $gd-color-dark;
+
+    .overlay & {
+        flex: 1 1 auto;
+        max-width: none;
+
+        &::after {
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            font-size: 18px;
+            transform: translateY(-50%);
+        }
+    }
+
+    &::after {
+        display: inline-block;
+    }
+}
+
+.button-selected-items {
+    display: inline-block;
+    flex: 0 1 auto;
+    overflow: hidden;
+    max-width: 120px;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+
+    .overlay & {
+        max-width: none;
+    }
+}
+
+.button-selected-items-count {
+    display: inline-block;
+    flex: 0 0 auto;
+    vertical-align: bottom;
 }
 
 // remove button in mobile

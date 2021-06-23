@@ -40,6 +40,10 @@ export const getLoadingTitleIntl = (intl: IntlShape): string => {
     return intl.formatMessage({ id: "loading" });
 };
 
+export const getFilteringTitleIntl = (intl: IntlShape): string => {
+    return intl.formatMessage({ id: "filtering" });
+};
+
 export const getNoneTitleIntl = (intl: IntlShape): string => {
     return intl.formatMessage({ id: "gs.filterLabel.none" });
 };

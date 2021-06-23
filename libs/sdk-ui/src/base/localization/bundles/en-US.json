@@ -395,7 +395,11 @@
         "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
-
+    "filtering": {
+        "value": "Filtering…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
     "dateFilterDropdown.title": {
         "value": "Date range",
         "comment": "",

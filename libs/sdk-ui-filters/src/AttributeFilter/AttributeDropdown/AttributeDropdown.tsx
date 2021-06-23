@@ -161,7 +161,6 @@ export class AttributeDropdownCore extends React.PureComponent<
                 },
                 () => {
                     this.getElements();
-                    this.restoreInitialSelection(parentFilterChanged);
                     this.getElementTotalCount().then((totalCount) => {
                         this.setState((state) => {
                             return {
@@ -171,20 +170,6 @@ export class AttributeDropdownCore extends React.PureComponent<
                         });
                     });
                 },
-            );
-        }
-    }
-
-    public restoreInitialSelection(parentFilterChanged: boolean): void {
-        if (parentFilterChanged) {
-            this.setState(
-                {
-                    selectedItems: [],
-                    prevSelectedItems: [],
-                    isInverted: this.props.isInverted,
-                    prevIsInverted: this.props.isInverted,
-                },
-                () => this.onApplyButtonClicked(),
             );
         }
     }

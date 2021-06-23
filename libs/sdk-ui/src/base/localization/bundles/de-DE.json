@@ -78,6 +78,7 @@
     "apply": "Übernehmen",
     "cancel": "Abbrechen",
     "loading": "Lädt…",
+    "filtering": "Wird gefiltert…",
     "dateFilterDropdown.title": "Datumsbereich",
     "dateFilterDropdown.buttonTitle": "Datumsbereich",
     "dateFilterDropdown.setDefault": "Standarddatumsfilter festlegen für&nbsp;Betrachter:",
