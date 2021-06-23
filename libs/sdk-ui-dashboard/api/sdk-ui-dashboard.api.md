@@ -920,6 +920,9 @@ export type DashboardState = {
     meta: DashboardMetaState;
     insights: EntityState<IInsight>;
     alerts: EntityState<IWidgetAlert>;
+    _queryCache: {
+        [queryName: string]: any;
+    };
 };
 
 // @internal

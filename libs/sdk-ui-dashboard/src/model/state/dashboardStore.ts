@@ -30,6 +30,8 @@ import { spawn } from "redux-saga/effects";
 import { userSliceReducer } from "./user";
 import { metaSliceReducer } from "./meta/index";
 import { DashboardState } from "./types";
+import { AllQueryServices } from "../queries";
+import { createQueryProcessingComponents } from "./_infra/queryProcessing";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -80,11 +82,12 @@ export type DashboardStoreConfig = {
     initialEventHandlers?: DashboardEventHandler[];
 };
 
-function createRootSaga(eventEmitter: Saga, commandHandler: Saga) {
+function createRootSaga(eventEmitter: Saga, commandHandler: Saga, queryProcessor: Saga) {
     return function* () {
         try {
             yield spawn(eventEmitter);
             yield spawn(commandHandler);
+            yield spawn(queryProcessor);
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error("Root saga failed", e);
@@ -124,6 +127,7 @@ const commandStampingMiddleware: Middleware = () => (next) => (action) => {
  * @param config - runtime configuration to apply on the middlewares and the store
  */
 export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashboardStore {
+    const queryProcessing = createQueryProcessingComponents(AllQueryServices);
     const sagaMiddleware = createSagaMiddleware({
         context: {
             dashboardContext: config.sagaContext,
@@ -142,7 +146,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
              * error instance in them.
              */
             serializableCheck: {
-                ignoredActions: ["GDC.DASH/EVT.COMMAND.FAILED"],
+                ignoredActions: ["GDC.DASH/EVT.COMMAND.FAILED", "@@QUERY.ENVELOPE"],
                 ignoredActionPaths: ["ctx"],
             },
         }),
@@ -162,6 +166,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         catalog: catalogSliceReducer,
         user: userSliceReducer,
         meta: metaSliceReducer,
+        _queryCache: queryProcessing.queryCacheReducer,
     });
 
     const store = configureStore({
@@ -170,7 +175,11 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
     });
 
     const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers);
-    const rootSaga = createRootSaga(rootEventEmitter.eventEmitterSaga, rootCommandHandler as any);
+    const rootSaga = createRootSaga(
+        rootEventEmitter.eventEmitterSaga,
+        rootCommandHandler as any,
+        queryProcessing.rootQueryProcessor,
+    );
     const rootSagaTask = sagaMiddleware.run(rootSaga);
 
     return {

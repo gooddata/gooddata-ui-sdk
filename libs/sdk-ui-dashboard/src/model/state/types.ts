@@ -33,4 +33,13 @@ export type DashboardState = {
     // Entities
     insights: EntityState<IInsight>;
     alerts: EntityState<IWidgetAlert>;
+
+    /**
+     * Part of state where the different dashboard component queries may cache their results.
+     *
+     * @internal
+     */
+    _queryCache: {
+        [queryName: string]: any;
+    };
 };
