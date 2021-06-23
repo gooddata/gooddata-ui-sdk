@@ -181,7 +181,7 @@ const DropdownButton: React.FC<{
         const displayItemCount = roundedWidth < element.scrollWidth;
 
         setDisplayItemCount(displayItemCount);
-    });
+    }, [subtitleText, subtitleItemCount]);
 
     return (
         <div
@@ -337,7 +337,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     } = useCancelablePromise<IAttributeMetadataObject>(
         {
             promise: async () => {
-                console.log(currentFilter);
                 const attributes = getBackend().workspace(props.workspace).attributes();
                 const displayForm = await attributes.getAttributeDisplayForm(
                     getObjRef(currentFilter, props.identifier),
