@@ -78,6 +78,7 @@
     "apply": "Toepassen",
     "cancel": "Annuleren",
     "loading": "Laden…",
+    "filtering": "Filteren…",
     "dateFilterDropdown.title": "Datumbereik",
     "dateFilterDropdown.buttonTitle": "Datumbereik",
     "dateFilterDropdown.setDefault": "Standaarddatumfilter instellen voor&nbsp;Kijkers:",

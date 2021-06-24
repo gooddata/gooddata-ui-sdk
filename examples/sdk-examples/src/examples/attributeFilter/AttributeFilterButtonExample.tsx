@@ -1,14 +1,14 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { ErrorComponent, OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { LineChart } from "@gooddata/sdk-ui-charts";
 import {
-    IAttributeFilter,
-    IPositiveAttributeFilter,
-    INegativeAttributeFilter,
-    isPositiveAttributeFilter,
-    newPositiveAttributeFilter,
     filterIsEmpty,
+    IAttributeFilter,
+    INegativeAttributeFilter,
+    IPositiveAttributeFilter,
+    isPositiveAttributeFilter,
+    newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
@@ -89,27 +89,23 @@ export class AttributeFilterButtonExample extends Component<unknown, IAttributeF
     }
 
     public render(): React.ReactNode {
-        const { filters, error } = this.state;
+        const { filters } = this.state;
 
         return (
             <div className="s-attribute-filter">
                 <AttributeFilterButton
-                    filter={newPositiveAttributeFilter(Ldm.LocationResort, [])}
+                    filter={newNegativeAttributeFilter(Ldm.LocationResort, [])}
                     onApply={this.onApply}
                     onError={this.onError}
                 />
                 <div style={{ height: 300 }} className="s-line-chart">
-                    {error ? (
-                        <ErrorComponent message={error} />
-                    ) : (
-                        <LineChart
-                            measures={[LdmExt.TotalSales2]}
-                            trendBy={Ldm.LocationResort}
-                            filters={filters}
-                            onLoadingChanged={this.onLoadingChanged}
-                            onError={this.onError}
-                        />
-                    )}
+                    <LineChart
+                        measures={[LdmExt.TotalSales2]}
+                        trendBy={Ldm.LocationResort}
+                        filters={filters}
+                        onLoadingChanged={this.onLoadingChanged}
+                        onError={this.onError}
+                    />
                 </div>
             </div>
         );

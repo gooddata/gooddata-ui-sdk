@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { useState } from "react";
-import { ErrorComponent, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import {
@@ -22,10 +22,8 @@ export const AttributeParentChildFilterButtonExample: React.FC = () => {
             uris: [],
         }),
     );
-    const [error, setError] = useState<any>();
 
     const onError: OnError = (...params) => {
-        setError(params);
         // eslint-disable-next-line no-console
         console.info("AttributeFilterExample onLoadingChanged", ...params);
     };
@@ -47,17 +45,13 @@ export const AttributeParentChildFilterButtonExample: React.FC = () => {
                 />
             </div>
             <div style={{ height: 300 }} className="s-line-chart">
-                {error ? (
-                    <ErrorComponent message={error} />
-                ) : (
-                    <BarChart
-                        measures={[LdmExt.TotalSales2]}
-                        viewBy={Ldm.LocationCity}
-                        filters={[filter, parentFilter]}
-                        onLoadingChanged={onLoadingChanged}
-                        onError={onError}
-                    />
-                )}
+                <BarChart
+                    measures={[LdmExt.TotalSales2]}
+                    viewBy={Ldm.LocationCity}
+                    filters={[filter, parentFilter]}
+                    onLoadingChanged={onLoadingChanged}
+                    onError={onError}
+                />
             </div>
         </div>
     );

@@ -34,6 +34,8 @@ import {
     attributeElementsToAttributeElementArray,
     getAllTitleIntl,
     getElements,
+    getElementTotalCount,
+    getFilteringTitleIntl,
     getItemsTitles,
     getLoadingTitleIntl,
     getNoneTitleIntl,
@@ -162,8 +164,25 @@ const DropdownButton: React.FC<{
     isMobile?: boolean;
     isOpen?: boolean;
     title: string;
-    subtitle: string;
-}> = ({ isMobile, isOpen, title, subtitle }) => {
+    subtitleText: string;
+    subtitleItemCount: number;
+}> = ({ isMobile, isOpen, title, subtitleItemCount, subtitleText }) => {
+    const subtitleSelectedItemsRef = useRef(null);
+    const [displayItemCount, setDisplayItemCount] = useState(false);
+
+    useEffect(() => {
+        const element = subtitleSelectedItemsRef.current;
+
+        if (!element) {
+            return;
+        }
+
+        const roundedWidth = Math.ceil(element.getBoundingClientRect().width);
+        const displayItemCount = roundedWidth < element.scrollWidth;
+
+        setDisplayItemCount(displayItemCount);
+    }, [subtitleText, subtitleItemCount]);
+
     return (
         <div
             className={cx("gd-attribute-filter-button", "s-attribute-filter-button", {
@@ -173,7 +192,14 @@ const DropdownButton: React.FC<{
         >
             <div className="button-content">
                 <div className="button-title">{title}</div>
-                <div className="button-subtitle">{subtitle}</div>
+                <div className="button-subtitle">
+                    <span className="button-selected-items" ref={subtitleSelectedItemsRef}>
+                        {subtitleText}
+                    </span>
+                    {displayItemCount && (
+                        <span className="button-selected-items-count">{`(${subtitleItemCount})`}</span>
+                    )}
+                </div>
             </div>
         </div>
     );
@@ -221,7 +247,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     });
 
     const dropdownRef = useRef<Dropdown>(null);
-
     const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
 
     const {
@@ -234,7 +259,26 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 return getElements(state.prevValidOptions, state.offset, state.limit, loadElements, false);
             },
         },
-        [state.offset, state.limit, state.prevValidOptions],
+        [state.prevValidOptions],
+    );
+
+    const {
+        error: totalCountError,
+        result: totalCount,
+        status: totalCountStatus,
+    } = useCancelablePromise<number>(
+        {
+            promise: async () => {
+                return getElementTotalCount(
+                    props.workspace,
+                    props.backend,
+                    getObjRef(currentFilter, props.identifier),
+                    state.searchString,
+                    getValidElementsFilters(resolvedParentFilters, props.parentFilterOverAttribute),
+                );
+            },
+        },
+        [props.backend, props.workspace, props.identifier, stringify(resolvedParentFilters)],
     );
 
     const invalidate = (parentFilterChanged = false) => {
@@ -275,8 +319,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     ...state,
                     selectedFilterOptions: [],
                     prevSelectedFilterOptions: [],
-                    isInverted: getInitialIsInverted(),
-                    prevIsInverted: getInitialIsInverted(),
+                    isInverted: true,
+                    prevIsInverted: true,
                 };
             });
         }
@@ -284,7 +328,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     useEffect(() => {
         invalidate();
-    }, [state.searchString, props.workspace, props.backend]);
+    }, [props.workspace, props.backend, state.searchString]);
 
     const {
         error: attributeError,
@@ -302,7 +346,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 return attribute;
             },
         },
-        [],
+        [currentFilter],
     );
 
     useEffect(() => {
@@ -311,9 +355,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         }
     }, [attributeError, elementsError]);
 
-    const loadElements = async (offset: number, limit: number): Promise<ILoadElementsResult> => {
+    const prepareElementsQuery = (offset: number, limit: number) => {
         const { workspace } = props;
-
         const preparedElementQuery = getBackend()
             .workspace(workspace)
             .attributes()
@@ -337,6 +380,12 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 );
             }
         }
+
+        return preparedElementQuery;
+    };
+
+    const loadElements = async (offset: number, limit: number): Promise<ILoadElementsResult> => {
+        const preparedElementQuery = prepareElementsQuery(offset, limit);
 
         const newElements = await preparedElementQuery.query();
 
@@ -365,7 +414,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
         return {
             validOptions: validOptions,
-            totalCount: state.firstLoad ? items.length : elementsResult?.totalCount || LIMIT,
+            totalCount: state.firstLoad ? items.length : totalCount || LIMIT,
         };
     };
 
@@ -376,19 +425,35 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         return props.backend.withTelemetry("AttributeFilter", props);
     };
 
+    const isElementsLoading = () => {
+        return elementsStatus === "pending" || elementsStatus === "loading";
+    };
+
+    const isTotalCountLoading = () => {
+        return totalCountStatus === "pending" || totalCountStatus === "loading";
+    };
+
     const getSubtitle = () => {
-        if (elementsStatus === "pending" || elementsStatus === "loading") {
+        if (isElementsLoading() && !state.firstLoad && props.parentFilters) {
+            return getFilteringTitleIntl(props.intl);
+        }
+
+        if (isTotalCountLoading() && state.firstLoad) {
             return getLoadingTitleIntl(props.intl);
         }
 
         const displayForm = getObjRef(currentFilter, props.identifier);
-        if (elementsResult && elementsResult.totalCount && displayForm) {
+        if (elementsResult && totalCount && displayForm) {
             const empty = isEmpty(state.selectedFilterOptions);
-            const equal = isEqual(elementsResult.totalCount, state.selectedFilterOptions?.length);
+            const equal = isEqual(totalCount, state.selectedFilterOptions?.length);
             const getAllPartIntl = getAllTitleIntl(props.intl, state.isInverted, empty, equal);
 
+            if (!elementsResult.totalCount && state.searchString) {
+                return getNoneTitleIntl(props.intl);
+            }
+
             if (empty) {
-                return state.isInverted ? `${getAllPartIntl}` : `${getNoneTitleIntl(props.intl)}`;
+                return !state.isInverted ? `${getNoneTitleIntl(props.intl)}` : `${getAllPartIntl}`;
             }
 
             if (equal) {
@@ -399,9 +464,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 ? `${getAllPartIntl} ${getItemsTitles(state.selectedFilterOptions)}`
                 : `${getItemsTitles(state.selectedFilterOptions)}`;
 
-            return `${stringUtils.shortenText(fullTitle, { maxLength: 35 })} (${
-                state.selectedFilterOptions.length
-            })`;
+            return `${stringUtils.shortenText(fullTitle, { maxLength: 35 })}`;
         }
         return "";
     };
@@ -530,7 +593,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                                         ? getLoadingTitleIntl(props.intl)
                                         : props.title || attribute.title
                                 }
-                                subtitle={getSubtitle()}
+                                subtitleText={getSubtitle()}
+                                subtitleItemCount={state.selectedFilterOptions.length}
                             />
                         )}
                     </MediaQuery>
@@ -538,10 +602,10 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 body={
                     <AttributeDropdownBody
                         items={elementsResult?.validOptions?.items ?? []}
-                        totalCount={elementsResult?.totalCount || LIMIT}
+                        totalCount={totalCount || LIMIT}
                         selectedItems={state.selectedFilterOptions}
                         isInverted={state.isInverted}
-                        isLoading={elementsStatus === "pending" || elementsStatus === "loading"}
+                        isLoading={isElementsLoading() || isTotalCountLoading()}
                         searchString={state.searchString}
                         onSearch={onSearch}
                         onSelect={onSelect}
@@ -559,8 +623,15 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const { FilterError } = props;
 
-    return elementsError || attributeError ? (
-        <FilterError error={elementsError?.message ?? attributeError?.message ?? "Unknown error"} />
+    return elementsError || attributeError || totalCountError ? (
+        <FilterError
+            error={
+                elementsError?.message ??
+                attributeError?.message ??
+                totalCountError?.message ??
+                "Unknown error"
+            }
+        />
     ) : (
         renderAttributeDropdown()
     );

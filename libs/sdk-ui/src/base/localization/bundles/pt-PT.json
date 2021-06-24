@@ -78,6 +78,7 @@
     "apply": "Aplicar",
     "cancel": "Cancelar",
     "loading": "A carregar…",
+    "filtering": "A filtrar…",
     "dateFilterDropdown.title": "Intervalo de datas",
     "dateFilterDropdown.buttonTitle": "Intervalo de datas",
     "dateFilterDropdown.setDefault": "Predefinir filtro de data para&nbsp;Os Visualizadores:",

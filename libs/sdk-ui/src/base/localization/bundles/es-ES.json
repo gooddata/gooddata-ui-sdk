@@ -78,6 +78,7 @@
     "apply": "Aplicar",
     "cancel": "Cancelar",
     "loading": "Cargando…",
+    "filtering": "Filtrando…",
     "dateFilterDropdown.title": "Rango de fechas",
     "dateFilterDropdown.buttonTitle": "Rango de fechas",
     "dateFilterDropdown.setDefault": "Establecer filtro de fecha predeterminado para&nbsp;lectores:",
