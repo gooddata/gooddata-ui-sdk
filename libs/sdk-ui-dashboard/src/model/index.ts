@@ -95,4 +95,5 @@ export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/va
 
 export * from "./commands";
 export * from "./events";
+export * from "./queries";
 export { DashboardEventHandler } from "./events/eventHandler";

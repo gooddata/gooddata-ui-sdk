@@ -7,7 +7,14 @@ import {
     DashboardRenamed,
     DashboardWasReset,
 } from "./dashboard";
-import { DashboardCommandFailed, DashboardCommandRejected } from "./general";
+import {
+    DashboardCommandFailed,
+    DashboardCommandRejected,
+    DashboardQueryCompleted,
+    DashboardQueryFailed,
+    DashboardQueryRejected,
+    DashboardQueryStarted,
+} from "./general";
 import {
     DashboardAttributeFilterAdded,
     DashboardAttributeFilterMoved,
@@ -60,8 +67,13 @@ export {
 export {
     DashboardCommandRejected,
     DashboardCommandFailed,
-    CommandFailedErrorReason,
+    ActionFailedErrorReason,
     isDashboardCommandFailed,
+    DashboardQueryRejected,
+    DashboardQueryFailed,
+    DashboardQueryStarted,
+    DashboardQueryCompleted,
+    isDashboardQueryFailed,
 } from "./general";
 
 export {
@@ -114,6 +126,10 @@ export type DashboardEvents =
     | DateFilterValidationFailed
     | DashboardCommandFailed
     | DashboardCommandRejected
+    | DashboardQueryFailed
+    | DashboardQueryRejected
+    | DashboardQueryStarted
+    | DashboardQueryCompleted<any, any>
     | DashboardSaved
     | DashboardCopySaved
     | DashboardRenamed

@@ -30,8 +30,12 @@ import { spawn } from "redux-saga/effects";
 import { userSliceReducer } from "./user";
 import { metaSliceReducer } from "./meta/index";
 import { DashboardState } from "./types";
-import { AllQueryServices } from "../queries";
-import { createQueryProcessingComponents } from "./_infra/queryProcessing";
+import { AllQueryServices } from "../queryServices";
+import { createQueryProcessingModule } from "./_infra/queryProcessing";
+import { IDashboardQueryService } from "./_infra/queryService";
+import values from "lodash/values";
+import merge from "lodash/merge";
+import keyBy from "lodash/keyBy";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -80,6 +84,12 @@ export type DashboardStoreConfig = {
      * Optionally specify event handlers to register during the initialization.
      */
     initialEventHandlers?: DashboardEventHandler[];
+
+    /**
+     * Optionally specify query service implementations. These will be used to override the default implementations
+     * and add new services.
+     */
+    queryServices?: IDashboardQueryService<any, any>[];
 };
 
 function createRootSaga(eventEmitter: Saga, commandHandler: Saga, queryProcessor: Saga) {
@@ -121,13 +131,28 @@ const commandStampingMiddleware: Middleware = () => (next) => (action) => {
     return next(action);
 };
 
+function mergeQueryServices(
+    original: IDashboardQueryService<any, any>[],
+    extras: IDashboardQueryService<any, any>[] = [],
+): IDashboardQueryService<any, any>[] {
+    return values(
+        merge(
+            {},
+            keyBy(original, (service) => service.name),
+            keyBy(extras, (service) => service.name),
+        ),
+    );
+}
+
 /**
  * Creates a new store for a dashboard.
  *
  * @param config - runtime configuration to apply on the middlewares and the store
  */
 export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashboardStore {
-    const queryProcessing = createQueryProcessingComponents(AllQueryServices);
+    const queryProcessing = createQueryProcessingModule(
+        mergeQueryServices(AllQueryServices, config.queryServices),
+    );
     const sagaMiddleware = createSagaMiddleware({
         context: {
             dashboardContext: config.sagaContext,
@@ -146,7 +171,11 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
              * error instance in them.
              */
             serializableCheck: {
-                ignoredActions: ["GDC.DASH/EVT.COMMAND.FAILED", "@@QUERY.ENVELOPE"],
+                ignoredActions: [
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                    "GDC.DASH/EVT.QUERY.FAILED",
+                    "@@QUERY.ENVELOPE",
+                ],
                 ignoredActionPaths: ["ctx"],
             },
         }),

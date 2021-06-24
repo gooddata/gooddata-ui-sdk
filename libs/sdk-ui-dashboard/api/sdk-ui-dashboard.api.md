@@ -72,6 +72,9 @@ import { TypedUseSelectorHook } from 'react-redux';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @internal (undocumented)
+export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
+
+// @internal (undocumented)
 export interface AddAttributeFilter extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
@@ -300,9 +303,6 @@ export function changeLayoutSectionHeader(index: number, header: IDashboardLayou
 export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection;
 
 // @internal (undocumented)
-export type CommandFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
-
-// @internal (undocumented)
 export type CommandProcessingMeta = {
     readonly uuid: string;
 };
@@ -443,7 +443,7 @@ export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps
 export interface DashboardCommandFailed extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly reason: CommandFailedErrorReason;
+        readonly reason: ActionFailedErrorReason;
         readonly message: string;
         readonly error?: Error;
     };
@@ -518,10 +518,10 @@ export type DashboardEventHandler = {
 };
 
 // @internal (undocumented)
-export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemReplaced | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutChanged | DashboardKpiWidgetHeaderChanged | DashboardKpiWidgetMeasureChanged | DashboardKpiWidgetFilterSettingsChanged | DashboardKpiWidgetComparisonChanged | DashboardKpiWidgetChanged | DashboardInsightWidgetHeaderChanged | DashboardInsightWidgetFilterSettingsChanged | DashboardInsightWidgetVisPropertiesChanged | DashboardInsightWidgetInsightSwitched | DashboardInsightWidgetDrillsModified | DashboardInsightWidgetDrillsRemoved | DashboardInsightWidgetChanged | DashboardAlertCreated | DashboardAlertRemoved | DashboardAlertUpdated | DashboardScheduledEmailCreated;
+export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardQueryFailed | DashboardQueryRejected | DashboardQueryStarted | DashboardQueryCompleted<any, any> | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemReplaced | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutChanged | DashboardKpiWidgetHeaderChanged | DashboardKpiWidgetMeasureChanged | DashboardKpiWidgetFilterSettingsChanged | DashboardKpiWidgetComparisonChanged | DashboardKpiWidgetChanged | DashboardInsightWidgetHeaderChanged | DashboardInsightWidgetFilterSettingsChanged | DashboardInsightWidgetVisPropertiesChanged | DashboardInsightWidgetInsightSwitched | DashboardInsightWidgetDrillsModified | DashboardInsightWidgetDrillsRemoved | DashboardInsightWidgetChanged | DashboardAlertCreated | DashboardAlertRemoved | DashboardAlertUpdated | DashboardScheduledEmailCreated;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.COMMAND.REJECTED" | "GDC.DASH/EVT.LOADED" | "GDC.DASH/EVT.SAVED" | "GDC.DASH/EVT.COPY_SAVED" | "GDC.DASH/EVT.RENAMED" | "GDC.DASH/EVT.RESET" | "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED" | "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED" | "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.ALERT.CREATED" | "GDC.DASH/EVT.ALERT.UPDATED" | "GDC.DASH/EVT.ALERT.REMOVED" | "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED";
+export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.COMMAND.REJECTED" | "GDC.DASH/EVT.QUERY.FAILED" | "GDC.DASH/EVT.QUERY.REJECTED" | "GDC.DASH/EVT.QUERY.STARTED" | "GDC.DASH/EVT.QUERY.COMPLETED" | "GDC.DASH/EVT.LOADED" | "GDC.DASH/EVT.SAVED" | "GDC.DASH/EVT.COPY_SAVED" | "GDC.DASH/EVT.RENAMED" | "GDC.DASH/EVT.RESET" | "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED" | "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED" | "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.ALERT.CREATED" | "GDC.DASH/EVT.ALERT.UPDATED" | "GDC.DASH/EVT.ALERT.REMOVED" | "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED";
 
 // @internal
 export interface DashboardFilterContextChanged extends IDashboardEvent {
@@ -876,6 +876,47 @@ export interface DashboardMetaState {
     meta?: DashboardMeta;
 }
 
+// @internal (undocumented)
+export type DashboardQueries = QueryDateDatasetsForInsight;
+
+// @internal
+export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>, TResult> extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly query: TQuery;
+        readonly result: TResult;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.QUERY.COMPLETED";
+}
+
+// @internal
+export interface DashboardQueryFailed extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly reason: ActionFailedErrorReason;
+        readonly message: string;
+        readonly error?: Error;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.QUERY.FAILED";
+}
+
+// @internal
+export interface DashboardQueryRejected extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.QUERY.REJECTED";
+}
+
+// @internal
+export interface DashboardQueryStarted extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.QUERY.STARTED";
+}
+
+// @internal (undocumented)
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
+
 // @internal
 export interface DashboardRenamed extends IDashboardEvent {
     // (undocumented)
@@ -959,6 +1000,11 @@ export interface DashboardWidgetProps {
 
 // @internal (undocumented)
 export const DashboardWidgetRenderer: React_2.FC<IDashboardWidgetRendererProps>;
+
+// @internal (undocumented)
+export type DateDatasetsForInsight = {
+    data: any;
+};
 
 // @internal (undocumented)
 export interface DateFilterConfigState {
@@ -1125,6 +1171,12 @@ export interface IDashboardProps {
     workspace?: string;
 }
 
+// @internal
+export interface IDashboardQuery<_TResult = any> {
+    readonly correlationId?: string;
+    readonly type: DashboardQueryType;
+}
+
 // @internal (undocumented)
 export interface IDashboardTitleProps {
     onTitleChanged?: (title: string) => void;
@@ -1206,6 +1258,9 @@ export function isDashboardCommandFailed(obj: unknown): obj is DashboardCommandF
 
 // @internal
 export function isDashboardEvent(obj: unknown): obj is IDashboardEvent;
+
+// @internal
+export function isDashboardQueryFailed(obj: unknown): obj is DashboardQueryFailed;
 
 // @internal (undocumented)
 export interface ITopBarMenuButtonConfig {
@@ -1352,6 +1407,19 @@ export interface PermissionsState {
     // (undocumented)
     permissions?: IWorkspacePermissions;
 }
+
+// @internal
+export interface QueryDateDatasetsForInsight extends IDashboardQuery<DateDatasetsForInsight> {
+    // (undocumented)
+    payload: {
+        insightRef: ObjRef;
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
+}
+
+// @internal
+export function queryDateDatasetsForInsight(insightRef: ObjRef, correlationId?: string): QueryDateDatasetsForInsight;
 
 // @internal (undocumented)
 export interface RefreshInsightWidget extends IDashboardCommand {

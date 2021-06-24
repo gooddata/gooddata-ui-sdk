@@ -149,6 +149,7 @@ export class DashboardTester {
      */
     public query<TResult>(action: IDashboardQuery<TResult>): Promise<TResult> {
         const partialEnvelope = {
+            onStart: noop,
             onSuccess: noop,
             onError: noop,
         };
