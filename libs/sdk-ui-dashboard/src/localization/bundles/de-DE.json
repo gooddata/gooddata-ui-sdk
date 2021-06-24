@@ -1,4 +1,6 @@
 {
     "filterBar.showAll": "Alle anzeigen",
-    "filterBar.showLess": "Weniger anzeigen"
+    "filterBar.showLess": "Weniger anzeigen",
+    "options.menu.export.PDF": "Nach PFD exportieren",
+    "options.menu.schedule.email": "E-Mailing planen"
 }

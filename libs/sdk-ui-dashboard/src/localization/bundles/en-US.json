@@ -8,5 +8,15 @@
         "value": "Show less",
         "comment": "",
         "limit": 0
+    },
+    "options.menu.export.PDF": {
+        "value": "Export to PDF",
+        "comment": "Export whole KPI dashboard to PDF",
+        "limit": 0
+    },
+    "options.menu.schedule.email": {
+        "value": "Schedule emailing",
+        "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
+        "limit": 0
     }
 }

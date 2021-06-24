@@ -3,6 +3,8 @@ import React, { ComponentType, useState } from "react";
 import { Placement } from "../model/types/topBarTypes";
 import { Button, SingleSelectListItem, ItemsWrapper, Overlay } from "@gooddata/sdk-ui-kit";
 
+import { useIntl } from "react-intl";
+
 /**
  * @internal
  */
@@ -17,7 +19,7 @@ export interface IDashboardMenuButtonProps {
 export type MenuButtonItem = {
     itemId: string;
     itemName: string;
-    callback?: () => void;
+    callback?: (...params: any) => void;
     /**
      * If type is not specified, then common menu button item rendered.
      */
@@ -58,13 +60,13 @@ export const DashboardMenuButton: React.FC<IDashboardMenuButtonProps & IDefaultM
     props: IDashboardMenuButtonProps & IDefaultMenuButtonProps,
 ) => {
     const [isOpen, setIsOpen] = useState(false);
-
+    const intl = useIntl();
     const renderDefaultMenuItems = () => {
         return props.menuItems?.map((menuItem) => {
             return (
                 <SingleSelectListItem
                     key={menuItem.itemId}
-                    title={menuItem.itemName}
+                    title={intl.formatMessage({ id: menuItem.itemName })}
                     type={menuItem.type}
                     onClick={menuItem.callback}
                 />

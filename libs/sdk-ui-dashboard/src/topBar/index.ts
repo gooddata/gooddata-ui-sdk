@@ -7,6 +7,7 @@ export {
     TopBarComponent,
     ITopBarTitleConfig,
     ITopBarMenuButtonConfig,
+    IDefaultMenuButtonCallbackProps,
 } from "./TopBar";
 
 export { IDashboardTitleProps, DashboardTitle, DashboardTitleComponent } from "./DashboardTitle";

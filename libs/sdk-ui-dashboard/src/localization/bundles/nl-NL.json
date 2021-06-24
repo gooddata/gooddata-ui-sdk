@@ -1,4 +1,6 @@
 {
     "filterBar.showAll": "Alle tonen",
-    "filterBar.showLess": "Minder weergeven"
+    "filterBar.showLess": "Minder weergeven",
+    "options.menu.export.PDF": "Exporteren naar PDF",
+    "options.menu.schedule.email": "E-mail plannen"
 }

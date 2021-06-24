@@ -107,6 +107,13 @@ export interface IDefaultTopBarProps {
          * These will have no effect if using custom MenuButton implementation.
          */
         defaultComponentProps?: IDefaultMenuButtonProps;
+
+        /**
+         * Optionally provide props to customize default menu button items in {@link DashboardMenuButton}.
+         *
+         * These will have no effect if using custom MenuButton implementation.
+         */
+        defaultComponentCallbackProps?: IDefaultMenuButtonCallbackProps;
     };
 }
 
@@ -121,6 +128,14 @@ export interface ITopBarTitleConfig {
 /**
  * @internal
  */
+export interface IDefaultMenuButtonCallbackProps {
+    onExportToPdfCallback?: () => void;
+    onScheduleEmailingCallback?: (isDialogOpen: boolean) => void;
+}
+
+/**
+ * @internal
+ */
 export interface ITopBarMenuButtonConfig {
     menuItems: MenuButtonItem[];
 }
@@ -130,44 +145,70 @@ export interface ITopBarMenuButtonConfig {
  */
 export interface ITopBarProps {
     titleConfig: ITopBarTitleConfig;
-    menuButtonConfig: ITopBarMenuButtonConfig;
 }
+
+const TopBarTitle: React.FC<ITopBarTitleConfig & { Component?: DashboardTitleComponent }> = (props) => {
+    const { Component, ...titleProps } = props;
+
+    const Title = Component || DashboardTitle;
+
+    return (
+        <div className="dash-title-wrapper">
+            <Title {...titleProps} />
+        </div>
+    );
+};
+
+const TopBarButtonBar: React.FC<{ Component?: DashboardButtonBarComponent }> = (props) => {
+    const ButtonBar = props.Component || DashboardButtonBar;
+
+    return <ButtonBar onButtonClicked={() => {}} onButtonHover={() => {}} />;
+};
+
+const TopBarMenuButton: React.FC<
+    IDefaultMenuButtonCallbackProps & { Component?: DashboardMenuButtonComponent }
+> = (props) => {
+    const MenuButton = props.Component || DashboardMenuButton;
+
+    const defaultMenuItems: MenuButtonItem[] = [
+        {
+            itemId: "export-to-pdf",
+            itemName: "options.menu.export.PDF",
+            // This will be replaced with actual call
+            callback: props.onExportToPdfCallback,
+        },
+        {
+            itemId: "schedule-emailing",
+            itemName: "options.menu.schedule.email",
+            // This will be replaced with actual call
+            callback: props.onScheduleEmailingCallback,
+        },
+    ];
+
+    return (
+        <MenuButton
+            onMenuItemClicked={() => {}}
+            onMenuItemHover={() => {}}
+            menuItems={defaultMenuItems.filter((item) => item.callback)}
+        />
+    );
+};
 
 const TopBarCore: React.FC<ITopBarProps & IDefaultTopBarProps> = (
     props: ITopBarProps & IDefaultTopBarProps,
 ) => {
     const { titleConfig, buttonBarConfig, menuButtonConfig } = props;
 
-    const renderTitle = (): React.ReactNode => {
-        const { onTitleChanged, Component } = titleConfig;
-        const TitleComponent = Component || DashboardTitle;
-
-        return (
-            <div className="dash-title-wrapper">
-                <TitleComponent title={props.titleConfig?.title} onTitleChanged={onTitleChanged} />
-            </div>
-        );
-    };
-
-    const renderButtonBar = (): React.ReactNode => {
-        const Component: DashboardButtonBarComponent = buttonBarConfig?.Component || DashboardButtonBar;
-
-        return <Component onButtonClicked={() => {}} onButtonHover={() => {}} />;
-    };
-
-    const renderMenuButton = (): React.ReactNode => {
-        const Component: DashboardMenuButtonComponent = menuButtonConfig?.Component || DashboardMenuButton;
-        const { menuItems } = menuButtonConfig;
-        return <Component onMenuItemClicked={() => {}} onMenuItemHover={() => {}} menuItems={menuItems} />;
-    };
-
     return (
         <div className={"dash-header"}>
             <div className={"dash-header-inner"}>
-                {renderTitle()}
-                {renderButtonBar()}
+                <TopBarTitle {...titleConfig} />
+                <TopBarButtonBar Component={buttonBarConfig?.Component} />
             </div>
-            {renderMenuButton()}
+            <TopBarMenuButton
+                Component={menuButtonConfig?.Component}
+                {...menuButtonConfig?.defaultComponentCallbackProps}
+            />
         </div>
     );
 };

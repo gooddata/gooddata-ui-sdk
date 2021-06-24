@@ -1,4 +1,6 @@
 {
     "filterBar.showAll": "Afficher tout",
-    "filterBar.showLess": "Montrer moins"
+    "filterBar.showLess": "Montrer moins",
+    "options.menu.export.PDF": "Exporter vers PDF",
+    "options.menu.schedule.email": "Programmer l'envoi d'e-mails"
 }

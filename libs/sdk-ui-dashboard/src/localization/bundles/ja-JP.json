@@ -1,4 +1,6 @@
 {
     "filterBar.showAll": "すべて表示",
-    "filterBar.showLess": "簡易表示"
+    "filterBar.showLess": "簡易表示",
+    "options.menu.export.PDF": "PDF にエクスポート",
+    "options.menu.schedule.email": "メール送信をスケジュール"
 }

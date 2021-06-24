@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FilterBar, FilterBarComponent, IDefaultFilterBarProps } from "../filterBar";
-import { IDefaultTopBarProps, MenuButtonItem, TopBar, TopBarComponent } from "../topBar";
+import { IDefaultTopBarProps, TopBar, TopBarComponent } from "../topBar";
 import { Provider } from "react-redux";
 import {
     createDashboardStore,
@@ -11,11 +11,11 @@ import {
 } from "../model/state/dashboardStore";
 import {
     InitialLoadCorrelationId,
-    selectDashboardLoading,
-    selectLocale,
-    selectFilterContextFilters,
     renameDashboard,
+    selectDashboardLoading,
     selectDashboardTitle,
+    selectFilterContextFilters,
+    selectLocale,
 } from "../model";
 import { loadDashboard } from "../model/commands/dashboard";
 import {
@@ -32,14 +32,14 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import {
+    ErrorComponent as DefaultError,
+    IDrillableItem,
     IErrorProps,
+    IHeaderPredicate,
     ILoadingProps,
+    LoadingComponent as DefaultLoading,
     useBackendStrict,
     useWorkspaceStrict,
-    IDrillableItem,
-    IHeaderPredicate,
-    ErrorComponent as DefaultError,
-    LoadingComponent as DefaultLoading,
 } from "@gooddata/sdk-ui";
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { DashboardConfig } from "../model/types/commonTypes";
@@ -50,13 +50,14 @@ import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/esm/internal/utils/int
 import { DashboardInsightProps, DefaultDashboardInsight } from "../insight";
 import { DashboardKpiProps, DefaultDashboardKpi } from "../kpi";
 import {
-    DashboardWidgetProps,
+    DashboardLayout,
     DashboardLayoutProps,
+    DashboardWidgetProps,
     DefaultDashboardLayout,
     DefaultDashboardWidget,
-    DashboardLayout,
 } from "../layout";
 import { DefaultScheduledEmailDialog, ScheduledEmailDialogProps } from "../scheduledEmail";
+import { IDefaultMenuButtonCallbackProps } from "../topBar/TopBar";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -314,37 +315,38 @@ export interface IDashboardProps {
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
 }
 
-const menuItems: MenuButtonItem[] = [
-    {
-        itemId: "save-as-new",
-        itemName: "Save as new",
-        // This will be replaced with actual call
-        callback: () => {},
-    },
-    {
-        itemId: "sep-1",
-        itemName: "Separator",
-        type: "separator",
-    },
-    {
-        itemId: "delete",
-        itemName: "Delete",
-        // This will be replaced with actual call
-        callback: () => {},
-    },
-];
-
 const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const { drillableItems, filterBarConfig, topBarConfig } = props;
     const locale = useDashboardSelector(selectLocale);
     const FilterBarComponent = filterBarConfig?.Component ?? FilterBar;
     const TopBarComponent = topBarConfig?.Component ?? TopBar;
-
+    const { ScheduledEmailDialogComponent } = useDashboardComponentsContext();
     const { filters, onFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
+
+    const [isScheduleEmailingDialogOpen, setIsScheduleEmailingDialogOpen] = useState(false);
+
+    const defaultOnScheduleEmailing = (isDialogOpen: boolean) => {
+        setIsScheduleEmailingDialogOpen(isDialogOpen);
+    };
+
+    const menuButtonCallbacks: IDefaultMenuButtonCallbackProps = {
+        onScheduleEmailingCallback: defaultOnScheduleEmailing,
+    };
+
+    const onCancel = (): void => {
+        setIsScheduleEmailingDialogOpen(false);
+    };
+
     return (
         <InternalIntlWrapper locale={locale}>
-            <TopBarComponent titleConfig={{ title, onTitleChanged }} menuButtonConfig={{ menuItems }} />
+            {isScheduleEmailingDialogOpen && (
+                <ScheduledEmailDialogComponent isVisible={isScheduleEmailingDialogOpen} onCancel={onCancel} />
+            )}
+            <TopBarComponent
+                titleConfig={{ title, onTitleChanged }}
+                menuButtonConfig={{ defaultComponentCallbackProps: menuButtonCallbacks }}
+            />
             <FilterBarComponent filters={filters} onFilterChanged={onFilterChanged} />
             <DashboardLayout drillableItems={drillableItems} />
         </InternalIntlWrapper>

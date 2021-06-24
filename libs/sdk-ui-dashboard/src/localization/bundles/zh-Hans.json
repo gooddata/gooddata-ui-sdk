@@ -1,4 +1,6 @@
 {
     "filterBar.showAll": "显示全部",
-    "filterBar.showLess": "显示更少"
+    "filterBar.showLess": "显示更少",
+    "options.menu.export.PDF": "导出为 PDF",
+    "options.menu.schedule.email": "安排电子邮件发送"
 }
