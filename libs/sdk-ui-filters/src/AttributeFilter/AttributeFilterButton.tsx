@@ -623,7 +623,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const { FilterError } = props;
 
-    return elementsError || attributeError ? (
+    return elementsError || attributeError || totalCountError ? (
         <FilterError
             error={
                 elementsError?.message ??
