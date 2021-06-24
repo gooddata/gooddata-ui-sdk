@@ -31,11 +31,9 @@ describe("load dashboard handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
         beforeAll(
-            preloadedTesterFactory(
-                (tester) => (Tester = tester),
-                SimpleDashboardIdentifier,
-                loadDashboard(undefined, undefined, "testCorrelation"),
-            ),
+            preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier, {
+                loadCommand: loadDashboard(undefined, undefined, "testCorrelation"),
+            }),
         );
 
         it("should resolve config props that can be obtained from backend", () => {

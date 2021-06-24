@@ -12,6 +12,7 @@ import noop from "lodash/noop";
 import { DashboardCommandType, LoadDashboard, loadDashboard } from "../commands";
 import { IDashboardQuery } from "../queries";
 import { QueryEnvelope, QueryEnvelopeActionTypeName } from "../state/_infra/queryProcessing";
+import { IDashboardQueryService } from "../state/_infra/queryService";
 
 type MonitoredAction = {
     calls: number;
@@ -26,7 +27,7 @@ export class DashboardTester {
     private capturedActions: Array<PayloadAction<any>> = [];
     private capturedEvents: Array<DashboardEvents> = [];
 
-    protected constructor(ctx: DashboardContext) {
+    protected constructor(ctx: DashboardContext, queryServices: IDashboardQueryService<any, any>[]) {
         // Middleware to store the actions and create promises
         const testerMiddleware: Middleware = () => (next) => (action) => {
             if (action.type.startsWith("@@redux/")) {
@@ -47,6 +48,7 @@ export class DashboardTester {
                     handler: this.eventHandler,
                 },
             ],
+            queryServices,
         });
     }
 
@@ -101,8 +103,19 @@ export class DashboardTester {
         });
     };
 
+    /**
+     * Creates an instance of DashboardTester set up to run tests on top of a dashboard with the provided
+     * identifier. The dashboard will be loaded from recorded backend, from its reference workspace.
+     *
+     * You may additionally influence how the different query services behave (typically to stub/mock the service)
+     *
+     * @param identifier
+     * @param queryServices
+     * @param backendConfig
+     */
     public static forRecording(
         identifier: Identifier,
+        queryServices: IDashboardQueryService<any, any>[] = [],
         backendConfig?: RecordedBackendConfig,
     ): DashboardTester {
         const ctx: DashboardContext = {
@@ -111,7 +124,7 @@ export class DashboardTester {
             dashboardRef: idRef(identifier),
         };
 
-        return new DashboardTester(ctx);
+        return new DashboardTester(ctx, queryServices);
     }
 
     public dispatch(action: PayloadAction<any>): void {
@@ -270,6 +283,31 @@ export class DashboardTester {
     }
 }
 
+export type PreloadedTesterOptions = {
+    /**
+     * Customize the load command.
+     *
+     * Default is plain command created by `loadDashboard()`.
+     */
+    loadCommand?: LoadDashboard;
+
+    /**
+     * Customize recorded backend configuration.
+     *
+     * Default is no customization.
+     */
+    backendConfig?: RecordedBackendConfig;
+
+    /**
+     * Customize implementations of query services to use for the component.
+     *
+     * Default is no customization, meaning default implementations will be used. Note that with default
+     * implementations you may encounter runtime errors as they want to use SPI methods that are not implemented
+     * on the recorded analytical backend.
+     */
+    queryServices?: IDashboardQueryService<any, any>[];
+};
+
 /**
  * This factory will return a function that can be integrated into jest's `beforeAll` or `beforeEach` statements. That returned
  * function will drive initialization of the dashboard tester and will tell jest it's `done` or it will `fail`.
@@ -295,17 +333,17 @@ export class DashboardTester {
  *
  * @param onLoaded - function to call when the dashboard is successfully loaded
  * @param identifier - identifier of the dashboard to load
- * @param loadCommand - optionally customize the load command to use
- * @param backendConfig - optionally customize the recorded backend configuration
+ * @param options - options influencing how the tester is created
  */
 export function preloadedTesterFactory(
     onLoaded: (tester: DashboardTester) => void,
     identifier: Identifier,
-    loadCommand: LoadDashboard = loadDashboard(),
-    backendConfig?: RecordedBackendConfig,
+    options: PreloadedTesterOptions = {},
 ) {
+    const { loadCommand = loadDashboard(), queryServices, backendConfig } = options;
+
     return (done: jest.DoneCallback): void => {
-        const tester = DashboardTester.forRecording(identifier, backendConfig);
+        const tester = DashboardTester.forRecording(identifier, queryServices, backendConfig);
 
         tester.dispatch(loadCommand);
 
