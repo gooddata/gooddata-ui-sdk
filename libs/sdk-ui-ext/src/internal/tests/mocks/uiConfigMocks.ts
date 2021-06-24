@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     MAX_METRICS_COUNT,
     DEFAULT_PIE_METRICS_COUNT,
@@ -164,7 +164,7 @@ export const simpleStackedBaseUiConfig: IUiConfig = {
             ...measuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>',
         },
         view: {
             ...viewBase,
@@ -479,7 +479,33 @@ export const multipleMeasuresAndCategoriesTreemapUiConfig: IUiConfig = {
             allowsReordering: false,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">view by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>',
+        },
+        view: {
+            ...viewBase,
+        },
+        segment: {
+            ...stackBase,
+            title: "Segment by",
+        },
+        filters: {
+            ...filtersBase,
+        },
+    },
+    ...defaultUiConfigNoRecommendations,
+    openAsReport: disabledOpenAsReportConfig,
+};
+
+export const multipleMeasuresAndCategoriesTreemapUiConfigWithDate: IUiConfig = {
+    buckets: {
+        measures: {
+            ...measuresBase,
+            itemsLimit: DEFAULT_TREEMAP_MEASURES_COUNT,
+            isShowInPercentEnabled: false,
+            allowsReordering: false,
+            canAddItems: false,
+            warningMessage:
+                'To add additional measure, remove <span class="date-field-icon" /> from <span class="stack-by">view by</span>',
         },
         view: {
             ...viewBase,
@@ -549,7 +575,7 @@ export const oneMetricAndManyCategoriesBaseUiConfig: IUiConfig = {
             ...measuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>',
         },
         view: {
             ...viewBase,
@@ -598,7 +624,7 @@ export const oneMetricAndOneStackBarUiConfig: IUiConfig = {
             ...secondaryMeasuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>',
             title: "Measures",
         },
         view: {
@@ -679,7 +705,7 @@ export const oneMetricAndManyCategoriesLineUiConfig: IUiConfig = {
             ...secondaryMeasuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">segment by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>',
             title: "Measures",
         },
         trend: {
@@ -704,7 +730,7 @@ export const oneMetricAndManyCategoriesAreaUiConfig: IUiConfig = {
             ...measuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>',
             title: "Measures",
         },
         view: {
@@ -737,7 +763,7 @@ export const oneMetricManyCategoriesAreaUiConfig: IUiConfig = {
             canAddItems: false,
             isShowInPercentEnabled: true,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">view by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>',
         },
         view: {
             ...viewBase,
@@ -769,7 +795,7 @@ export const oneMetricAndOneCategoryAndOneStackAreaUiConfig: IUiConfig = {
             ...measuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>',
         },
         view: {
             ...viewBase,
@@ -777,7 +803,7 @@ export const oneMetricAndOneCategoryAndOneStackAreaUiConfig: IUiConfig = {
             allowsReordering: true,
             itemsLimit: MAX_VIEW_COUNT,
             warningMessage:
-                'To add additional attribute, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
+                'To add additional attribute, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>',
         },
         stack: {
             ...stackBase,
@@ -826,7 +852,7 @@ export const dateAsFirstCategoryBaseUiConfig: IUiConfig = {
             ...measuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>',
         },
         view: {
             ...viewBase,
@@ -849,7 +875,7 @@ export const dateAsSecondCategoryLineUiConfig: IUiConfig = {
             ...secondaryMeasuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">segment by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>',
         },
         trend: {
             ...viewBase,
@@ -898,7 +924,7 @@ export const dateAsThirdCategoryAreaUiConfig: IUiConfig = {
             canAddItems: false,
             isShowInPercentEnabled: true,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">view by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> or <span class="date-field-icon" /> from <span class="stack-by">view by</span>',
         },
         view: {
             ...viewBase,
@@ -931,7 +957,7 @@ export const multipleAttributesBaseUiConfig: IUiConfig = {
             ...measuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>',
         },
         view: {
             ...viewBase,
@@ -952,7 +978,7 @@ export const oneMetricAndCategoryAndStackLineUiConfig: IUiConfig = {
             ...secondaryMeasuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">segment by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>',
         },
         trend: {
             ...viewBase,
@@ -976,7 +1002,7 @@ export const oneStackAndNoCategoriesLineUiConfig: IUiConfig = {
             ...secondaryMeasuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">segment by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>',
         },
         trend: {
             ...viewBase,
@@ -1000,7 +1026,7 @@ export const oneStackAndNoCategoriesAreaUiConfig: IUiConfig = {
             ...measuresBase,
             canAddItems: false,
             warningMessage:
-                'To add additional measure, remove <span class="attr-field-icon"></span> from <span class="stack-by">stack by</span>',
+                'To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>',
         },
         view: {
             ...viewBase,

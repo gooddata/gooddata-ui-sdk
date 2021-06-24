@@ -1,9 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { getTranslation } from "../translations";
-
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 
 import { UICONFIG, SUPPORTED_COMPARISON_TYPES } from "../../constants/uiConfig";
@@ -11,6 +9,7 @@ import { BUCKETS } from "../../constants/bucket";
 
 import { getMeasureItems } from "../bucketHelper";
 import { IntlShape } from "react-intl";
+import { getTranslation } from "../translations";
 
 export function setColumnBarChartUiConfig(
     referencePoint: IExtendedReferencePoint,

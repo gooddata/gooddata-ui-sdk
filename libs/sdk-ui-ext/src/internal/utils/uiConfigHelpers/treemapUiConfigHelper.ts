@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import forEach from "lodash/forEach";
@@ -8,20 +8,22 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 
 import { UICONFIG } from "../../constants/uiConfig";
-import { BUCKETS } from "../../constants/bucket";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket";
 
 import { hasMoreThanOneMasterMeasure, hasNoMeasures, hasOneCategory } from "../bucketRules";
 
-import { setBucketTitles } from "../bucketHelper";
+import { getViewItems, setBucketTitles } from "../bucketHelper";
 import { getTranslation } from "../translations";
 
 import treemapMeasuresIcon from "../../assets/treemap/bucket-title-measures.svg";
 import treemapViewIcon from "../../assets/treemap/bucket-title-view.svg";
 import treemapSegmentIcon from "../../assets/treemap/bucket-title-segment.svg";
+import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper";
 
 function setTreemapBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {
-    const buckets = referencePoint?.buckets;
+    const buckets = referencePoint?.buckets || [];
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
+    const viewItems = getViewItems(buckets, [ATTRIBUTE, DATE]);
 
     forEach(buckets, (bucket) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
@@ -33,21 +35,24 @@ function setTreemapBucketWarningMessages(referencePoint: IExtendedReferencePoint
         }
 
         if (!bucketUiConfig?.canAddItems) {
-            let warningMessageId;
+            let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessageId = "dashboard.bucket.metric_view_by_warning";
+                warningMessage = getBucketItemsWarningMessage(
+                    "dashboard.bucket.metric_view_by_warning",
+                    intl,
+                    viewItems,
+                );
             }
 
             if (bucket.localIdentifier === BucketNames.VIEW) {
-                warningMessageId = "dashboard.bucket.category_category_by_warning";
+                warningMessage = getTranslation("dashboard.bucket.category_category_by_warning", intl);
             }
 
             if (bucket.localIdentifier === BucketNames.SEGMENT) {
-                warningMessageId = "dashboard.bucket.category_segment_by_warning";
+                warningMessage = getTranslation("dashboard.bucket.category_segment_by_warning", intl);
             }
 
-            if (warningMessageId) {
-                const warningMessage = getTranslation(warningMessageId, intl);
+            if (warningMessage) {
                 set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
             }
         }
