@@ -239,6 +239,52 @@ describe("PluggableAreaChart", () => {
                     },
                 ],
                 [
+                    "from table to area chart: multiple measures and date in columns",
+                    referencePointMocks.dateInColumnsAndMultipleMeasuresTable,
+                    {
+                        buckets: [
+                            referencePointMocks.dateInColumnsAndMultipleMeasuresTable.buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: [
+                                    referencePointMocks.dateInColumnsAndMultipleMeasuresTable.buckets[2]
+                                        .items[0],
+                                ],
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: [],
+                            },
+                        ],
+                    },
+                ],
+                [
+                    "from treemap to area chart: multiple measures and date in segment",
+                    referencePointMocks.dateInColumnsAndMultipleMeasuresTreemap,
+                    {
+                        buckets: [
+                            {
+                                localIdentifier: "measures",
+                                items: referencePointMocks.dateInColumnsAndMultipleMeasuresTreemap.buckets[0].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "view",
+                                items: [],
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: [
+                                    referencePointMocks.dateInColumnsAndMultipleMeasuresTreemap.buckets[2]
+                                        .items[0],
+                                ],
+                            },
+                        ],
+                    },
+                ],
+                [
                     "from colum chart to area chart: att1 and date1 in viewBy and date2 in stackBy",
                     referencePointMocks.attributeAndDateInViewByAndDateInStackByReferencePoint,
                     {

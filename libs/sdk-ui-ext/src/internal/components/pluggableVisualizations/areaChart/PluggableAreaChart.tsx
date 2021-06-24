@@ -42,8 +42,6 @@ import {
     removeAllDerivedMeasures,
     sanitizeFilters,
     getMainDateItem,
-    getMeasureItems,
-    filterOutDerivedMeasures,
 } from "../../../utils/bucketHelper";
 import {
     getReferencePointWithSupportedProperties,
@@ -251,14 +249,11 @@ export class PluggableAreaChart extends PluggableBaseChart {
 
     private getBucketItemsWithMultipleDates(referencePoint: IExtendedReferencePoint) {
         const buckets = referencePoint?.buckets ?? [];
-        const measures = getMeasureItems(buckets);
-        const masterMeasures = filterOutDerivedMeasures(measures);
+        const measures = getFilteredMeasuresForStackedCharts(buckets);
         const viewByMaxItemCount = this.getViewByMaxItemCount(referencePoint);
+        const stacks: IBucketItem[] = getStackItems(buckets, [ATTRIBUTE, DATE]);
 
-        let views: IBucketItem[] = [];
-        let stacks: IBucketItem[] = getStackItems(buckets, [ATTRIBUTE, DATE]);
-
-        const allAttributes = getAllAttributeItemsWithPreference(buckets, [
+        const allAttributesWithoutStacks = getAllAttributeItemsWithPreference(buckets, [
             BucketNames.LOCATION,
             BucketNames.TREND,
             BucketNames.VIEW,
@@ -267,20 +262,8 @@ export class PluggableAreaChart extends PluggableBaseChart {
             BucketNames.STACK,
         ]).filter((attribute) => !stacks.includes(attribute));
 
-        if (masterMeasures.length <= 1 && allAttributes.length > 0 && !stacks.length) {
-            // have more attributes and stacks empty -> fill views
-            views = allAttributes.slice(0, viewByMaxItemCount);
-        } else if (masterMeasures.length <= 1 && allAttributes.length) {
-            // have more attributes and stacks non-empty -> keep only one attribute in view
-            views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
-        } else if (masterMeasures.length <= 1) {
-            // more measures -> prefer measures
-            views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
-        } else {
-            // more measures -> prefer measures and clear stack
-            views = getAllCategoriesAttributeItems(buckets).slice(0, 1);
-            stacks = [];
-        }
+        const maxViews = stacks.length ? 1 : viewByMaxItemCount;
+        const views = allAttributesWithoutStacks.slice(0, maxViews);
 
         return {
             measures,

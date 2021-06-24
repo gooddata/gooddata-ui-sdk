@@ -1236,6 +1236,48 @@ export const dateAndAttributeInViewByAndEmptyStackBy: IReferencePoint = {
     },
 };
 
+export const dateInColumnsAndMultipleMeasuresTable: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems,
+        },
+        {
+            localIdentifier: "attributes",
+            items: [],
+        },
+        {
+            localIdentifier: "columns",
+            items: [dateItem],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const dateInColumnsAndMultipleMeasuresTreemap: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems,
+        },
+        {
+            localIdentifier: "view",
+            items: [],
+        },
+        {
+            localIdentifier: "segment",
+            items: [dateItem],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
 export const datesInViewByAndAttributeInStackBy: IReferencePoint = {
     buckets: [
         {
