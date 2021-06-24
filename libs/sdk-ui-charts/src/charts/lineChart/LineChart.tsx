@@ -9,11 +9,12 @@ import {
     newBucket,
 } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
+    AttributeOrPlaceholder,
+    AttributesMeasuresOrPlaceholders,
     BucketNames,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
 
 import { stackedChartDimensions } from "../_commons/dimensions";
@@ -66,28 +67,28 @@ export interface ILineChartBucketProps {
      *
      * If you specify two or more measures, values of each measure will have their own line.
      */
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    measures: AttributesMeasuresOrPlaceholders;
 
     /**
      * Optionally specify single attribute whose values will be used to slice the lines along the X axis.
      */
-    trendBy?: ValueOrPlaceholder<IAttribute>;
+    trendBy?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify single attribute whose values will be used to segment the measure values. The line
      * chart will display one line per measure values pertaining to the segmentBy attribute values.
      */
-    segmentBy?: ValueOrPlaceholder<IAttribute>;
+    segmentBy?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

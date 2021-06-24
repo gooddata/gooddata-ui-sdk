@@ -4,6 +4,7 @@
 
 ```ts
 
+import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
@@ -27,7 +28,6 @@ import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { RelativeGranularityOffset } from '@gooddata/sdk-backend-spi';
-import { ValuesOrPlaceholders } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public
@@ -137,7 +137,7 @@ export interface IAttributeFilterButtonOwnProps {
     onApply?: (filter: IAttributeFilter, isInverted: boolean) => void;
     onError?: (error: any) => void;
     parentFilterOverAttribute?: ObjRef;
-    parentFilters?: ValuesOrPlaceholders<IAttributeFilter>;
+    parentFilters?: AttributeFiltersOrPlaceholders;
     title?: string;
     workspace?: string;
 }
@@ -161,7 +161,7 @@ export interface IAttributeFilterProps {
     onApply: (filter: IAttributeFilter) => void;
     onError?: OnError;
     parentFilterOverAttribute?: ObjRef;
-    parentFilters?: ValuesOrPlaceholders<IAttributeFilter>;
+    parentFilters?: AttributeFiltersOrPlaceholders;
     title?: string;
     titleWithSelection?: boolean;
     workspace?: string;

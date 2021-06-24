@@ -1,12 +1,15 @@
 // (C) 2007-2021 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution, ITheme } from "@gooddata/sdk-backend-spi";
-import { IAttribute, INullableFilter, ISortItem, ITotal, TotalType } from "@gooddata/sdk-model";
+import { TotalType } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     IVisualizationCallbacks,
     IVisualizationProps,
-    ValuesOrPlaceholders,
+    AttributesMeasuresOrPlaceholders,
+    TotalsOrPlaceholders,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
+    AttributesOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
 import { ColumnWidthItem } from "./columnWidths";
@@ -133,7 +136,7 @@ export interface IPivotTableBucketProps {
     /**
      * Optionally specify measures to create table columns from.
      */
-    measures?: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    measures?: AttributesMeasuresOrPlaceholders;
 
     /**
      * Optionally specify one or more attributes to create table columns from. There will be a column for each
@@ -142,12 +145,12 @@ export interface IPivotTableBucketProps {
      * Note: you can specify column attributes in conjunction with one or more measures. In that case the table
      * will contain column for each combination of attribute values & measures.
      */
-    columns?: ValuesOrPlaceholders<IAttribute>;
+    columns?: AttributesOrPlaceholders;
 
     /**
      * Optionally specify attributes, whose elements will be used to populate table rows.
      */
-    rows?: ValuesOrPlaceholders<IAttribute>;
+    rows?: AttributesOrPlaceholders;
 
     /**
      * Optionally specify what totals should be calculated and included in the table.
@@ -156,17 +159,17 @@ export interface IPivotTableBucketProps {
      * Also note: the table will only include subtotals when in grouping mode and the grouping is effective = table
      * is sorted by the first row attribute.
      */
-    totals?: ValuesOrPlaceholders<ITotal>;
+    totals?: TotalsOrPlaceholders;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

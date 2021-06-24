@@ -4,23 +4,23 @@
 
 ```ts
 
-import { AnyMeasure } from '@gooddata/sdk-ui';
+import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
+import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
-import { INullableFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
-import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-backend-spi';
-import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
+import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
+import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
+import { TotalsOrPlaceholders } from '@gooddata/sdk-ui';
 import { TotalType } from '@gooddata/sdk-model';
-import { ValuesOrPlaceholders } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public (undocumented)
@@ -129,13 +129,13 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
 
 // @public (undocumented)
 export interface IPivotTableBucketProps {
-    columns?: ValuesOrPlaceholders<IAttribute>;
-    filters?: ValuesOrPlaceholders<INullableFilter>;
-    measures?: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    columns?: AttributesOrPlaceholders;
+    filters?: NullableFiltersOrPlaceholders;
+    measures?: AttributesMeasuresOrPlaceholders;
     placeholdersResolutionContext?: any;
-    rows?: ValuesOrPlaceholders<IAttribute>;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    totals?: ValuesOrPlaceholders<ITotal>;
+    rows?: AttributesOrPlaceholders;
+    sortBy?: SortsOrPlaceholders;
+    totals?: TotalsOrPlaceholders;
 }
 
 // @public (undocumented)

@@ -10,11 +10,13 @@ import {
 } from "@gooddata/sdk-model";
 import { truncate } from "../_commons/truncate";
 import {
-    AnyMeasure,
     BucketNames,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    AttributeOrPlaceholder,
+    AttributesOrPlaceholders,
+    AttributesMeasuresOrPlaceholders,
+    FiltersOrPlaceholders,
+    SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
@@ -72,7 +74,7 @@ export interface IColumnChartBucketProps {
      * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
      * attribute elements will be charted.
      */
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    measures: AttributesMeasuresOrPlaceholders;
 
     /**
      * Optionally specify one or two attributes to slice the measures along the X axis.
@@ -81,22 +83,22 @@ export interface IColumnChartBucketProps {
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute there will be a column indicating the respective slice's value.
      */
-    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
+    viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
      * Optionally specify attribute to stack the bars by.
      */
-    stackBy?: ValueOrPlaceholder<IAttribute>;
+    stackBy?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<IFilter>;
+    filters?: FiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

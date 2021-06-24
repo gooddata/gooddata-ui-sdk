@@ -4,26 +4,28 @@
 
 ```ts
 
-import { AnyMeasure } from '@gooddata/sdk-ui';
+import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
+import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
+import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
+import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
+import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
-import { IAttribute } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
-import { IFilter } from '@gooddata/sdk-model';
-import { INullableFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISettings } from '@gooddata/sdk-backend-spi';
-import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
+import { MeasureOrPlaceholder } from '@gooddata/sdk-ui';
+import { MeasuresOrPlaceholders } from '@gooddata/sdk-ui';
+import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
-import { ValueOrPlaceholder } from '@gooddata/sdk-ui';
-import { ValuesOrPlaceholders } from '@gooddata/sdk-ui';
+import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
 
 // @public
@@ -78,12 +80,12 @@ export const Heatmap: (props: IHeatmapProps) => JSX.Element;
 
 // @public (undocumented)
 export interface IAreaChartBucketProps {
-    filters?: ValuesOrPlaceholders<INullableFilter>;
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    filters?: NullableFiltersOrPlaceholders;
+    measures: AttributesMeasuresOrPlaceholders;
     placeholdersResolutionContext?: any;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    stackBy?: ValueOrPlaceholder<IAttribute>;
-    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
+    sortBy?: SortsOrPlaceholders;
+    stackBy?: AttributeOrPlaceholder;
+    viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 }
 
 // @public (undocumented)
@@ -109,12 +111,12 @@ export interface IAxisNameConfig {
 
 // @public (undocumented)
 export interface IBarChartBucketProps {
-    filters?: ValuesOrPlaceholders<INullableFilter>;
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    filters?: NullableFiltersOrPlaceholders;
+    measures: AttributesMeasuresOrPlaceholders;
     placeholdersResolutionContext?: any;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    stackBy?: ValueOrPlaceholder<IAttribute>;
-    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
+    sortBy?: SortsOrPlaceholders;
+    stackBy?: AttributeOrPlaceholder;
+    viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 }
 
 // @public (undocumented)
@@ -133,13 +135,13 @@ export interface IBaseChartProps extends ICoreChartProps {
 
 // @public (undocumented)
 export interface IBubbleChartBucketProps {
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
-    size?: ValueOrPlaceholder<AnyMeasure>;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    viewBy?: ValueOrPlaceholder<IAttribute>;
-    xAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
-    yAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
+    size?: MeasureOrPlaceholder;
+    sortBy?: SortsOrPlaceholders;
+    viewBy?: AttributeOrPlaceholder;
+    xAxisMeasure?: MeasureOrPlaceholder;
+    yAxisMeasure?: MeasureOrPlaceholder;
 }
 
 // @public (undocumented)
@@ -154,13 +156,13 @@ export interface IBucketChartProps extends ICommonChartProps {
 
 // @public (undocumented)
 export interface IBulletChartBucketProps {
-    comparativeMeasure?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    comparativeMeasure?: AttributeMeasureOrPlaceholder;
+    filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
-    primaryMeasure: ValueOrPlaceholder<IAttribute | AnyMeasure>;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    targetMeasure?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
-    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
+    primaryMeasure: AttributeMeasureOrPlaceholder;
+    sortBy?: SortsOrPlaceholders;
+    targetMeasure?: AttributeMeasureOrPlaceholder;
+    viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 }
 
 // @public (undocumented)
@@ -226,12 +228,12 @@ export { IColorMapping }
 
 // @public (undocumented)
 export interface IColumnChartBucketProps {
-    filters?: ValuesOrPlaceholders<IFilter>;
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    filters?: FiltersOrPlaceholders;
+    measures: AttributesMeasuresOrPlaceholders;
     placeholdersResolutionContext?: any;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    stackBy?: ValueOrPlaceholder<IAttribute>;
-    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
+    sortBy?: SortsOrPlaceholders;
+    stackBy?: AttributeOrPlaceholder;
+    viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 }
 
 // @public (undocumented)
@@ -240,12 +242,12 @@ export interface IColumnChartProps extends IBucketChartProps, IColumnChartBucket
 
 // @public (undocumented)
 export interface IComboChartBucketProps {
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
-    primaryMeasures?: ValuesOrPlaceholders<AnyMeasure>;
-    secondaryMeasures?: ValuesOrPlaceholders<AnyMeasure>;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
+    primaryMeasures?: MeasuresOrPlaceholders;
+    secondaryMeasures?: MeasuresOrPlaceholders;
+    sortBy?: SortsOrPlaceholders;
+    viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 }
 
 // @public (undocumented)
@@ -284,11 +286,11 @@ export type IDataPointsVisible = boolean | "auto";
 
 // @public (undocumented)
 export interface IDonutChartBucketProps {
-    filters?: ValuesOrPlaceholders<INullableFilter>;
-    measures: ValueOrPlaceholder<IAttribute | AnyMeasure> | ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    filters?: NullableFiltersOrPlaceholders;
+    measures: AttributeMeasureOrPlaceholder | AttributesMeasuresOrPlaceholders;
     placeholdersResolutionContext?: any;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    viewBy?: ValueOrPlaceholder<IAttribute>;
+    sortBy?: SortsOrPlaceholders;
+    viewBy?: AttributeOrPlaceholder;
 }
 
 // @public (undocumented)
@@ -297,11 +299,11 @@ export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketPr
 
 // @public (undocumented)
 export interface IFunnelChartBucketProps {
-    filters?: ValuesOrPlaceholders<INullableFilter>;
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    filters?: NullableFiltersOrPlaceholders;
+    measures: AttributesMeasuresOrPlaceholders;
     placeholdersResolutionContext?: any;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    viewBy?: ValueOrPlaceholder<IAttribute>;
+    sortBy?: SortsOrPlaceholders;
+    viewBy?: AttributeOrPlaceholder;
 }
 
 // @public (undocumented)
@@ -316,10 +318,10 @@ export interface IGridConfig {
 
 // @public (undocumented)
 export interface IHeadlineBucketProps {
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
-    primaryMeasure: ValueOrPlaceholder<AnyMeasure>;
-    secondaryMeasure?: ValueOrPlaceholder<AnyMeasure>;
+    primaryMeasure: MeasureOrPlaceholder;
+    secondaryMeasure?: MeasureOrPlaceholder;
 }
 
 // @public (undocumented)
@@ -328,12 +330,12 @@ export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps 
 
 // @public (undocumented)
 export interface IHeatmapBucketProps {
-    columns?: ValueOrPlaceholder<IAttribute>;
-    filters?: ValuesOrPlaceholders<INullableFilter>;
-    measure: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    columns?: AttributeOrPlaceholder;
+    filters?: NullableFiltersOrPlaceholders;
+    measure: AttributeMeasureOrPlaceholder;
     placeholdersResolutionContext?: any;
-    rows?: ValueOrPlaceholder<IAttribute>;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    rows?: AttributeOrPlaceholder;
+    sortBy?: SortsOrPlaceholders;
 }
 
 // @public (undocumented)
@@ -365,12 +367,12 @@ export interface ILegendItem {
 
 // @public (undocumented)
 export interface ILineChartBucketProps {
-    filters?: ValuesOrPlaceholders<INullableFilter>;
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    filters?: NullableFiltersOrPlaceholders;
+    measures: AttributesMeasuresOrPlaceholders;
     placeholdersResolutionContext?: any;
-    segmentBy?: ValueOrPlaceholder<IAttribute>;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    trendBy?: ValueOrPlaceholder<IAttribute>;
+    segmentBy?: AttributeOrPlaceholder;
+    sortBy?: SortsOrPlaceholders;
+    trendBy?: AttributeOrPlaceholder;
 }
 
 // @public (undocumented)
@@ -379,11 +381,11 @@ export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProp
 
 // @public (undocumented)
 export interface IPieChartBucketProps {
-    filters?: ValuesOrPlaceholders<INullableFilter>;
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    filters?: NullableFiltersOrPlaceholders;
+    measures: AttributesMeasuresOrPlaceholders;
     placeholdersResolutionContext?: any;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    viewBy?: ValueOrPlaceholder<IAttribute>;
+    sortBy?: SortsOrPlaceholders;
+    viewBy?: AttributeOrPlaceholder;
 }
 
 // @public (undocumented)
@@ -404,12 +406,12 @@ export const isBulletChart: import("lodash/fp").LodashIsEqual1x1;
 
 // @public (undocumented)
 export interface IScatterPlotBucketProps {
-    attribute?: ValueOrPlaceholder<IAttribute>;
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    attribute?: AttributeOrPlaceholder;
+    filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    xAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
-    yAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
+    sortBy?: SortsOrPlaceholders;
+    xAxisMeasure?: MeasureOrPlaceholder;
+    yAxisMeasure?: MeasureOrPlaceholder;
 }
 
 // @public (undocumented)
@@ -450,11 +452,11 @@ export interface ITooltipConfig {
 
 // @public (undocumented)
 export interface ITreemapBucketProps {
-    filters?: ValuesOrPlaceholders<INullableFilter>;
-    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    filters?: NullableFiltersOrPlaceholders;
+    measures: AttributesMeasuresOrPlaceholders;
     placeholdersResolutionContext?: any;
-    segmentBy?: ValueOrPlaceholder<IAttribute>;
-    viewBy?: ValueOrPlaceholder<IAttribute>;
+    segmentBy?: AttributeOrPlaceholder;
+    viewBy?: AttributeOrPlaceholder;
 }
 
 // @public (undocumented)
@@ -463,9 +465,9 @@ export interface ITreemapProps extends IBucketChartProps, ITreemapBucketProps {
 
 // @beta (undocumented)
 export interface IXirrBucketProps {
-    attribute?: ValueOrPlaceholder<IAttribute>;
-    filters?: ValuesOrPlaceholders<INullableFilter>;
-    measure: ValueOrPlaceholder<AnyMeasure>;
+    attribute?: AttributeOrPlaceholder;
+    filters?: NullableFiltersOrPlaceholders;
+    measure: MeasureOrPlaceholder;
     placeholdersResolutionContext?: any;
 }
 

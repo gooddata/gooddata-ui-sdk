@@ -12,12 +12,12 @@ import {
     newDimension,
 } from "@gooddata/sdk-model";
 import {
-    AnyMeasure,
     BucketNames,
     Subtract,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    MeasureOrPlaceholder,
+    AttributeOrPlaceholder,
+    NullableFiltersOrPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
@@ -36,15 +36,15 @@ export interface IXirrBucketProps {
      * The measure to calculate the Internal Rate of Return for.
      * For the result to make sense, the measure should start with a negative value at some point in time (the investment) followed by other values (the returns).
      */
-    measure: ValueOrPlaceholder<AnyMeasure>;
+    measure: MeasureOrPlaceholder;
     /**
      * The date dimension to use for the computation. This allows you to set the granularity (day, month, etc.) for the IRR calculation.
      */
-    attribute?: ValueOrPlaceholder<IAttribute>;
+    attribute?: AttributeOrPlaceholder;
     /**
      * Optionally specify filters to apply on the data to compute with.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

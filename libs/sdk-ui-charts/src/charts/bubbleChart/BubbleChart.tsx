@@ -3,11 +3,12 @@ import React from "react";
 import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import { IBucketChartProps } from "../../interfaces";
 import {
-    AnyMeasure,
     BucketNames,
     useResolveValuesWithPlaceholders,
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
+    MeasureOrPlaceholder,
+    AttributeOrPlaceholder,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { CoreBubbleChart } from "./CoreBubbleChart";
@@ -53,32 +54,32 @@ export interface IBubbleChartBucketProps {
     /**
      * Optionally specify measure which will be used to position bubbles on the X axis.
      */
-    xAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
+    xAxisMeasure?: MeasureOrPlaceholder;
 
     /**
      * Optionally specify measure which will be used to position bubbles on the Y axis
      */
-    yAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
+    yAxisMeasure?: MeasureOrPlaceholder;
 
     /**
      * Optionally specify measure which will be used to determine the size of each bubble.
      */
-    size?: ValueOrPlaceholder<AnyMeasure>;
+    size?: MeasureOrPlaceholder;
 
     /**
      * Optionally specify attribute whose values will be used to create the bubbles.
      */
-    viewBy?: ValueOrPlaceholder<IAttribute>;
+    viewBy?: AttributeOrPlaceholder;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Optional resolution context for composed placeholders.

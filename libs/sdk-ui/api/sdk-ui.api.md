@@ -8,13 +8,16 @@ import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-backend-spi';
 import { DependencyList } from 'react';
+import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDescriptor } from '@gooddata/sdk-backend-spi';
+import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDateFilter } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-backend-spi';
 import { IDimensionItemDescriptor } from '@gooddata/sdk-backend-spi';
@@ -22,15 +25,22 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
+import { IFilter } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDefinitionType } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-backend-spi';
+import { IMeasureFilter } from '@gooddata/sdk-model';
 import { IMeasureGroupDescriptor } from '@gooddata/sdk-backend-spi';
+import { IMeasureValueFilter } from '@gooddata/sdk-model';
+import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
+import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
+import { IRankingFilter } from '@gooddata/sdk-model';
+import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IResultAttributeHeader } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
 import { IResultMeasureHeader } from '@gooddata/sdk-backend-spi';
@@ -68,7 +78,25 @@ export class ArithmeticMeasureTitleFactory {
 export type ArrayOf<T> = T extends any ? T[] : never;
 
 // @public
+export type AttributeFilterOrPlaceholder = ValueOrPlaceholder<IAttributeFilter> | ValueOrPlaceholder<IPositiveAttributeFilter> | ValueOrPlaceholder<INegativeAttributeFilter>;
+
+// @public
+export type AttributeFiltersOrPlaceholders = Array<ValueOrMultiValuePlaceholder<IAttributeFilter> | ValueOrMultiValuePlaceholder<IPositiveAttributeFilter> | ValueOrMultiValuePlaceholder<INegativeAttributeFilter>>;
+
+// @public
 export function attributeItemNameMatch(name: string): IHeaderPredicate;
+
+// @public
+export type AttributeMeasureOrPlaceholder = ValueOrPlaceholder<IAttribute | AnyMeasure> | ValueOrPlaceholder<IAttribute> | ValueOrPlaceholder<AnyMeasure>;
+
+// @public
+export type AttributeOrPlaceholder = ValueOrPlaceholder<IAttribute>;
+
+// @public
+export type AttributesMeasuresOrPlaceholders = Array<ValueOrMultiValuePlaceholder<IAttribute | AnyMeasure> | ValueOrMultiValuePlaceholder<IAttribute> | ValueOrMultiValuePlaceholder<AnyMeasure>>;
+
+// @public
+export type AttributesOrPlaceholders = ValuesOrPlaceholders<IAttribute>;
 
 // @public
 export const BackendProvider: React_2.FC<IBackendProviderProps>;
@@ -350,6 +378,15 @@ export const ExecuteInsight: React_2.ComponentType<IExecuteInsightProps>;
 
 // @internal
 export function fillMissingTitles<T extends IInsightDefinition>(insight: T, locale: ILocale, maxArithmeticMeasureTitleLength?: number): T;
+
+// @public (undocumented)
+export type FilterOrMultiValuePlaceholder = ValueOrMultiValuePlaceholder<IFilter> | ValueOrMultiValuePlaceholder<IDateFilter> | ValueOrMultiValuePlaceholder<IMeasureFilter> | ValueOrMultiValuePlaceholder<IAttributeFilter> | ValueOrMultiValuePlaceholder<IAbsoluteDateFilter> | ValueOrMultiValuePlaceholder<IRelativeDateFilter> | ValueOrMultiValuePlaceholder<IPositiveAttributeFilter> | ValueOrMultiValuePlaceholder<INegativeAttributeFilter> | ValueOrMultiValuePlaceholder<IMeasureValueFilter> | ValueOrMultiValuePlaceholder<IRankingFilter>;
+
+// @public
+export type FilterOrPlaceholder = ValueOrPlaceholder<IFilter> | ValueOrPlaceholder<IDateFilter> | ValueOrPlaceholder<IMeasureFilter> | ValueOrPlaceholder<IAttributeFilter> | ValueOrPlaceholder<IAbsoluteDateFilter> | ValueOrPlaceholder<IRelativeDateFilter> | ValueOrPlaceholder<IPositiveAttributeFilter> | ValueOrPlaceholder<INegativeAttributeFilter> | ValueOrPlaceholder<IMeasureValueFilter> | ValueOrPlaceholder<IRankingFilter>;
+
+// @public
+export type FiltersOrPlaceholders = Array<FilterOrMultiValuePlaceholder>;
 
 // @internal
 export function fireDrillEvent(drillEventFunction: IDrillEventCallback, drillEventData: IDrillEvent, target: EventTarget): void;
@@ -828,14 +865,14 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     componentName?: string;
     ErrorComponent?: IExecuteErrorComponent;
     exportTitle?: string;
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
     LoadingComponent?: IExecuteLoadingComponent;
     loadOnMount?: boolean;
     placeholdersResolutionContext?: any;
-    seriesBy: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
-    slicesBy?: ValuesOrPlaceholders<IAttribute>;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    totals?: ValuesOrPlaceholders<ITotal>;
+    seriesBy: AttributesMeasuresOrPlaceholders;
+    slicesBy?: AttributesOrPlaceholders;
+    sortBy?: SortsOrPlaceholders;
+    totals?: TotalsOrPlaceholders;
     window?: DataViewWindow;
     workspace?: string;
 }
@@ -843,12 +880,12 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
 // @beta (undocumented)
 export interface IExecutionConfiguration {
     componentName?: string;
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
-    seriesBy: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
-    slicesBy?: ValuesOrPlaceholders<IAttribute>;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    totals?: ValuesOrPlaceholders<ITotal>;
+    seriesBy: AttributesMeasuresOrPlaceholders;
+    slicesBy?: AttributesOrPlaceholders;
+    sortBy?: SortsOrPlaceholders;
+    totals?: TotalsOrPlaceholders;
 }
 
 // @alpha
@@ -1198,12 +1235,12 @@ export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any,
 export interface IUseExecutionConfig {
     backend?: IAnalyticalBackend;
     componentName?: string;
-    filters?: ValuesOrPlaceholders<INullableFilter>;
+    filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
-    seriesBy: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
-    slicesBy?: ValuesOrPlaceholders<IAttribute>;
-    sortBy?: ValuesOrPlaceholders<ISortItem>;
-    totals?: ValuesOrPlaceholders<ITotal>;
+    seriesBy: AttributesMeasuresOrPlaceholders;
+    slicesBy?: AttributesOrPlaceholders;
+    sortBy?: SortsOrPlaceholders;
+    totals?: TotalsOrPlaceholders;
     workspace?: string;
 }
 
@@ -1322,6 +1359,12 @@ export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T>;
 // @public
 export type MeasureOf<T extends IMeasureDefinitionType> = T extends any ? IMeasure<T> : never;
 
+// @public
+export type MeasureOrPlaceholder = ValueOrPlaceholder<AnyMeasure>;
+
+// @public
+export type MeasuresOrPlaceholders = ValuesOrPlaceholders<AnyMeasure>;
+
 // @internal (undocumented)
 export const messagesMap: {
     [locale: string]: ITranslations;
@@ -1350,6 +1393,12 @@ export class NoDataSdkError extends GoodDataSdkError {
 export class NotFoundSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
+
+// @public
+export type NullableFilterOrPlaceholder = FilterOrPlaceholder | ValueOrPlaceholder<INullableFilter> | ValueOrPlaceholder<IFilter | null> | ValueOrPlaceholder<IDateFilter | null> | ValueOrPlaceholder<IMeasureFilter | null> | ValueOrPlaceholder<IAttributeFilter | null> | ValueOrPlaceholder<IAbsoluteDateFilter | null> | ValueOrPlaceholder<IRelativeDateFilter | null> | ValueOrPlaceholder<IPositiveAttributeFilter | null> | ValueOrPlaceholder<INegativeAttributeFilter | null> | ValueOrPlaceholder<IMeasureValueFilter | null> | ValueOrPlaceholder<IRankingFilter | null>;
+
+// @public
+export type NullableFiltersOrPlaceholders = Array<FilterOrMultiValuePlaceholder | ValueOrMultiValuePlaceholder<INullableFilter> | ValueOrMultiValuePlaceholder<IFilter | null> | ValueOrMultiValuePlaceholder<IDateFilter | null> | ValueOrMultiValuePlaceholder<IMeasureFilter | null> | ValueOrMultiValuePlaceholder<IAttributeFilter | null> | ValueOrMultiValuePlaceholder<IAbsoluteDateFilter | null> | ValueOrMultiValuePlaceholder<IRelativeDateFilter | null> | ValueOrMultiValuePlaceholder<IPositiveAttributeFilter | null> | ValueOrMultiValuePlaceholder<INegativeAttributeFilter | null> | ValueOrMultiValuePlaceholder<IMeasureValueFilter | null> | ValueOrMultiValuePlaceholder<IRankingFilter | null>>;
 
 // @public (undocumented)
 export type OnError = (error: GoodDataSdkError) => void;
@@ -1414,6 +1463,9 @@ export function resolveUseCancelablePromisesStatus(cancelablePromisesStates: Use
 // @public (undocumented)
 export type SdkErrorType = keyof typeof ErrorCodes;
 
+// @public
+export type SortsOrPlaceholders = ValuesOrPlaceholders<ISortItem>;
+
 // @internal (undocumented)
 export type Subtract<T, K> = Pick<T, Exclude<keyof T, keyof K>>;
 
@@ -1422,6 +1474,9 @@ export type TableElementType = "cell";
 
 // @public (undocumented)
 export type TableType = "table";
+
+// @public
+export type TotalsOrPlaceholders = ValuesOrPlaceholders<ITotal>;
 
 // @internal (undocumented)
 export class TranslationsProvider extends React_2.PureComponent<ITranslationsProviderProps> {
@@ -1564,11 +1619,14 @@ export const useWorkspaceStrict: (workspace?: string | undefined, context?: stri
 // @public (undocumented)
 export type ValueFormatter = (value: DataValue, format: string) => string;
 
+// @public (undocumented)
+export type ValueOrMultiValuePlaceholder<T> = ValueOrPlaceholder<T> | AnyPlaceholderOf<T[]>;
+
 // @public
 export type ValueOrPlaceholder<T> = T | AnyPlaceholderOf<T>;
 
 // @public
-export type ValuesOrPlaceholders<T> = AnyArrayOf<ValueOrPlaceholder<T> | AnyPlaceholderOf<AnyArrayOf<T>>>;
+export type ValuesOrPlaceholders<T> = AnyArrayOf<ValueOrMultiValuePlaceholder<T>>;
 
 // @public (undocumented)
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType | "pushpin";
