@@ -32,6 +32,7 @@ import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeCon
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter";
 import { InvariantError } from "ts-invariant";
 import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter";
+import { filterMeasuresForAvailabilityQuery } from "./availableItemsQueryUtils";
 
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {
     attribute: AfmValidObjectsQueryTypesEnum.Attributes,
@@ -137,7 +138,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             ? [...insightMeasures(insight), ...insightAttributes(insight), ...insightFilters(insight)]
             : items;
         const attributes = relevantItems.filter(isAttribute);
-        const measures = relevantItems.filter(isMeasure);
+        const measures = filterMeasuresForAvailabilityQuery(relevantItems.filter(isMeasure));
         const filters = relevantItems.filter(isFilter);
 
         const { filters: afmFilters, auxMeasures } = convertAfmFilters(attributes, measures, filters);
