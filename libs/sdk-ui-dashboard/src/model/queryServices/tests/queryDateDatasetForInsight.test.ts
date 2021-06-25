@@ -2,7 +2,7 @@
 import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester";
 import { EmptyDashboardIdentifier, TestCorrelation } from "../../tests/Dashboard.fixtures";
 import { idRef } from "@gooddata/sdk-model";
-import { DateDatasetsForInsight, queryDateDatasetsForInsight } from "../../queries/insights";
+import { InsightDateDatasets, queryDateDatasetsForInsight } from "../../queries/insights";
 import { createSliceNameForQueryCache } from "../../state/_infra/queryService";
 
 describe("query date dataset for insight", () => {
@@ -15,16 +15,14 @@ describe("query date dataset for insight", () => {
     });
 
     it("should do work when query action is dispatched", async () => {
-        const result = await Tester.query<DateDatasetsForInsight>(
-            queryDateDatasetsForInsight(idRef("blabla")),
-        );
+        const result = await Tester.query<InsightDateDatasets>(queryDateDatasetsForInsight(idRef("blabla")));
 
         expect(result.data).toEqual("some dummy data");
         expect(Tester.state()._queryCache[cacheName]).toMatchSnapshot();
     });
 
     it("should emit the right events", async () => {
-        await Tester.query<DateDatasetsForInsight>(
+        await Tester.query<InsightDateDatasets>(
             queryDateDatasetsForInsight(idRef("blabla"), TestCorrelation),
         );
 

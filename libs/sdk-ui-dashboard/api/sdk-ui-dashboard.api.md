@@ -19,6 +19,7 @@ import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAttributeElements } from '@gooddata/sdk-model';
+import { IAttributeMetadataObject } from '@gooddata/sdk-backend-spi';
 import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateAttribute } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
@@ -879,7 +880,7 @@ export interface DashboardMetaState {
 }
 
 // @internal (undocumented)
-export type DashboardQueries = QueryDateDatasetsForInsight;
+export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta;
 
 // @internal
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>, TResult> extends IDashboardEvent {
@@ -917,7 +918,7 @@ export interface DashboardQueryStarted extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
 
 // @internal
 export interface DashboardRenamed extends IDashboardEvent {
@@ -1002,11 +1003,6 @@ export interface DashboardWidgetProps {
 
 // @internal (undocumented)
 export const DashboardWidgetRenderer: React_2.FC<IDashboardWidgetRendererProps>;
-
-// @internal (undocumented)
-export type DateDatasetsForInsight = {
-    data: any;
-};
 
 // @internal (undocumented)
 export interface DateFilterConfigState {
@@ -1251,6 +1247,17 @@ export interface IFilterBarProps {
 export const InitialLoadCorrelationId = "initialLoad";
 
 // @internal (undocumented)
+export type InsightAttributesMeta = {
+    displayForms: Record<string, IAttributeDisplayFormMetadataObject>;
+    attributes: Record<string, IAttributeMetadataObject>;
+};
+
+// @internal (undocumented)
+export type InsightDateDatasets = {
+    data: any;
+};
+
+// @internal (undocumented)
 export type InsightPlaceholderWidget = {
     readonly type: "insightPlaceholder";
 };
@@ -1411,17 +1418,30 @@ export interface PermissionsState {
 }
 
 // @internal
-export interface QueryDateDatasetsForInsight extends IDashboardQuery<DateDatasetsForInsight> {
+export function queryDateDatasetsForInsight(insightRef: ObjRef, correlationId?: string): QueryInsightDateDatasets;
+
+// @internal
+export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
     // (undocumented)
-    payload: {
-        insightRef: ObjRef;
+    readonly payload: {
+        readonly insightRef: ObjRef;
     };
     // (undocumented)
-    type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
+    readonly type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
 }
 
 // @internal
-export function queryDateDatasetsForInsight(insightRef: ObjRef, correlationId?: string): QueryDateDatasetsForInsight;
+export function queryInsightAttributesMeta(insightRef: ObjRef, correlationId?: string): QueryInsightAttributesMeta;
+
+// @internal
+export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDatasets> {
+    // (undocumented)
+    readonly payload: {
+        readonly insightRef: ObjRef;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
+}
 
 // @internal (undocumented)
 export interface RefreshInsightWidget extends IDashboardCommand {
@@ -1655,14 +1675,14 @@ export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<Das
 // @internal
 export const selectDashboardUriRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").UriRef, (res: string) => import("@gooddata/sdk-model").UriRef>;
 
-// @internal (undocumented)
-export const selectDateDatasetsForInsight: (query: QueryDateDatasetsForInsight) => import("@reduxjs/toolkit").OutputSelector<import("..").DashboardState, {
+// @internal
+export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => import("@reduxjs/toolkit").OutputSelector<import("..").DashboardState, {
     status: "error" | "loading" | "success";
-    result?: DateDatasetsForInsight | undefined;
+    result?: InsightDateDatasets | undefined;
     error?: string | undefined;
 } | undefined, (res: import("..").DashboardState) => {
     status: "error" | "loading" | "success";
-    result?: DateDatasetsForInsight | undefined;
+    result?: InsightDateDatasets | undefined;
     error?: string | undefined;
 } | undefined>;
 
@@ -1701,6 +1721,17 @@ export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<Dash
 
 // @internal
 export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: import("@gooddata/sdk-backend-spi").IFilterContextDefinition) => FilterContextItem[]>;
+
+// @internal
+export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => import("@reduxjs/toolkit").OutputSelector<import("..").DashboardState, {
+    status: "error" | "loading" | "success";
+    result?: InsightAttributesMeta | undefined;
+    error?: string | undefined;
+} | undefined, (res: import("..").DashboardState) => {
+    status: "error" | "loading" | "success";
+    result?: InsightAttributesMeta | undefined;
+    error?: string | undefined;
+} | undefined>;
 
 // @internal
 export const selectInsightByRef: ((ref: ObjRef) => import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").IInsight | undefined, (res: DashboardState) => import("@gooddata/sdk-model").IInsight | undefined>) & import("lodash").MemoizedFunction;

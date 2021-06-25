@@ -21,7 +21,6 @@ export interface CreateAlert extends IDashboardCommand {
  * @param alert - specify alert to create.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
-
  * @internal
  */
 export function createAlert(alert: IWidgetAlertDefinition, correlationId?: string): CreateAlert {

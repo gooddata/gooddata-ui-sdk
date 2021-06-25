@@ -1,6 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { QueryDateDatasetsForInsightService } from "./queryDateDatasetForInsight";
+import { QueryDateDatasetsForInsightService } from "./queryInsightDateDatasets";
+import { QueryInsightAttributesMetaService } from "./queryInsightAttributesMeta";
 
-export { QueryDateDatasetsForInsightService } from "../queryServices/queryDateDatasetForInsight";
-
-export const AllQueryServices = [QueryDateDatasetsForInsightService];
+export const AllQueryServices = [QueryDateDatasetsForInsightService, QueryInsightAttributesMetaService];
