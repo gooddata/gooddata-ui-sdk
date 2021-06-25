@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const fs = require("fs");
-const readline = require("readline");
 const path = require("path");
 const util = require("util");
 const child_process = require("child_process");
@@ -32,35 +31,37 @@ const libsToBeRemoved = [
 function main() {
     // parse arguments
     let version = "";
+    let help = false;
     let index = 2;
     while (index < process.argv.length) {
         if (process.argv[index] === "-v" || process.argv[index] === "--version") {
             version = process.argv[index + 1];
             index += 2;
         }
+        if (process.argv[index] === "-h" || process.argv[index] === "--help") {
+            help = true;
+            index += 1;
+        }
     }
 
-    const onSuccess = () => process.exit(0);
-
-    if (version) {
-        buildVersion(version, onSuccess);
-    } else {
-        // if no version could be obtained from arguments, ask for it interactively
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout,
-        });
-
-        rl.question(
-            "Please input documentation version (ex. 8.4.0 or 'Next' for prerelease documentation):",
-            (name) => buildVersion(name, () => rl.close())
-        );
-
-        rl.on("close", onSuccess);
+    if (help) {
+        printUsage();
+        process.exit(0);
     }
+
+    if (!version) {
+        printUsage();
+        process.exit(1);
+    }
+
+    buildVersion(version, () => process.exit(0));
 }
 
 main();
+
+function printUsage() {
+    console.log("Usage: node build-docs.js -v VERSION [-h|--help]");
+}
 
 function writeJson(where, obj) {
     return writeFile(where, JSON.stringify(obj));
@@ -90,7 +91,6 @@ function runCommand(command, argv, cwd) {
         proc.on("error", (err) => reject(err));
     });
 }
-
 
 async function buildVersion(versionName, onSuccess) {
     const dir = __dirname;

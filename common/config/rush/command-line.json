@@ -241,7 +241,7 @@
       "shortName": "-v",
       "description": "Which version to create (e.g. 8.4.0 or Next for a prerelease version). This is case sensitive.",
       "associatedCommands": ["build-docs"],
-      "required": false,
+      "required": true,
       "argumentName": "VERSION"
     }
     // {
