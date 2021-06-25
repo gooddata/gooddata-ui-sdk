@@ -65,6 +65,8 @@ export {
     selectCatalogDateDatasets,
     selectCatalogFacts,
     selectCatalogMeasures,
+    selectAllCatalogAttributesMap,
+    selectAllCatalogDisplayFormsMap,
 } from "./state/catalog/catalogSelectors";
 export { AlertsState } from "./state/alerts/alertsState";
 export { selectAlerts } from "./state/alerts/alertsSelectors";

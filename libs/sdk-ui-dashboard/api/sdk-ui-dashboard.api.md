@@ -17,8 +17,10 @@ import { EntityState } from '@reduxjs/toolkit';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAttributeElements } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
+import { ICatalogDateAttribute } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
 import { ICatalogFact } from '@gooddata/sdk-backend-spi';
 import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
@@ -1608,8 +1610,14 @@ export interface ScheduledEmailDialogProps {
 // @internal
 export const selectAlerts: (state: DashboardState) => import("@gooddata/sdk-backend-spi").IWidgetAlert[];
 
+// @internal
+export const selectAllCatalogAttributesMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, Record<string, ICatalogAttribute | ICatalogDateAttribute>, (res1: ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[]) => Record<string, ICatalogAttribute | ICatalogDateAttribute>>;
+
+// @internal
+export const selectAllCatalogDisplayFormsMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, Record<string, IAttributeDisplayFormMetadataObject>, (res1: ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[]) => Record<string, IAttributeDisplayFormMetadataObject>>;
+
 // @internal (undocumented)
-export const selectAttributesWithDrillDown: import("@reduxjs/toolkit").OutputSelector<DashboardState, (import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute)[], (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[]) => (import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute)[]>;
+export const selectAttributesWithDrillDown: import("@reduxjs/toolkit").OutputSelector<DashboardState, (ICatalogAttribute | ICatalogDateAttribute)[], (res1: ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[]) => (ICatalogAttribute | ICatalogDateAttribute)[]>;
 
 // @internal
 export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>>;
@@ -1618,7 +1626,7 @@ export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<Dashbo
 export const selectCanListUsersInProject: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("@gooddata/sdk-backend-spi").IWorkspacePermissions) => boolean>;
 
 // @internal (undocumented)
-export const selectCatalogAttributes: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ICatalogAttribute[], (res: import("./catalogState").CatalogState) => import("@gooddata/sdk-backend-spi").ICatalogAttribute[]>;
+export const selectCatalogAttributes: import("@reduxjs/toolkit").OutputSelector<DashboardState, ICatalogAttribute[], (res: import("./catalogState").CatalogState) => ICatalogAttribute[]>;
 
 // @internal (undocumented)
 export const selectCatalogDateDatasets: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ICatalogDateDataset[], (res: import("./catalogState").CatalogState) => import("@gooddata/sdk-backend-spi").ICatalogDateDataset[]>;
