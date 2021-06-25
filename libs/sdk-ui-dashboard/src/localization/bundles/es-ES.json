@@ -2,5 +2,7 @@
     "filterBar.showAll": "Mostrar todo",
     "filterBar.showLess": "Mostrar menos",
     "options.menu.export.PDF": "Exportar a PDF",
-    "options.menu.schedule.email": "Programar el envío de correos"
+    "options.menu.schedule.email": "Programar el envío de correos",
+    "dialogs.schedule.email.submit.success": "¡Hecho! Su panel se ha configurado para el envío de correos.",
+    "dialogs.schedule.email.submit.error": "Error al programar el panel. Inténtelo de nuevo más tarde."
 }

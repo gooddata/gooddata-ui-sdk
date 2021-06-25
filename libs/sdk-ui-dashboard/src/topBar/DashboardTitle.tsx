@@ -27,7 +27,7 @@ const DashboardEditableTitle: React.FC<{
     return (
         <EditableLabel
             value={title}
-            onSubmit={onTitleChanged!}
+            onSubmit={onTitleChanged}
             className={"s-gd-dashboard-title dash-title editable"}
         >
             {title}

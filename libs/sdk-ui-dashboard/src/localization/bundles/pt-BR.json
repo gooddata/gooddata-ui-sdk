@@ -2,5 +2,7 @@
     "filterBar.showAll": "Exibir tudo",
     "filterBar.showLess": "Exibir menos",
     "options.menu.export.PDF": "Exportar para PDF",
-    "options.menu.schedule.email": "Agendar envio por e-mail"
+    "options.menu.schedule.email": "Agendar envio por e-mail",
+    "dialogs.schedule.email.submit.success": "Sucesso! Seu painel está agendado para envio por e-mail.",
+    "dialogs.schedule.email.submit.error": "Erro ao agendar o painel. Tente novamente mais tarde."
 }

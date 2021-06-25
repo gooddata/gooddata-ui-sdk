@@ -2,5 +2,7 @@
     "filterBar.showAll": "Afficher tout",
     "filterBar.showLess": "Montrer moins",
     "options.menu.export.PDF": "Exporter vers PDF",
-    "options.menu.schedule.email": "Programmer l'envoi d'e-mails"
+    "options.menu.schedule.email": "Programmer l'envoi d'e-mails",
+    "dialogs.schedule.email.submit.success": "Le tableau de bord est programmé pour envoyer des e-mails.",
+    "dialogs.schedule.email.submit.error": "Échec de la programmation du tableau de bord. Réessayez plus tard."
 }
