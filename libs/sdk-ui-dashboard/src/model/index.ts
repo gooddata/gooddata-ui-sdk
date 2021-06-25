@@ -75,6 +75,8 @@ export { selectUser } from "./state/user/userSelectors";
 export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
 export { selectDashboardRef, selectDashboardUriRef, selectDashboardTitle } from "./state/meta/metaSelectors";
 
+export { selectDateDatasetsForInsight } from "./queryServices/queryDateDatasetForInsight";
+
 export {
     DashboardContext,
     ObjectAvailabilityConfig,

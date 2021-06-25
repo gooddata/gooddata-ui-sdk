@@ -13,6 +13,19 @@ export const QueryDateDatasetsForInsightService = createCachedQueryService(
     (query: QueryDateDatasetsForInsight) => serializeObjRef(query.payload.insightRef),
 );
 
+/**
+ * Selector that will return date datasets for insight. The input to the selector is the dashboard query that is used
+ * to obtain and cache the data.
+ *
+ * This selector will return undefined if the query to obtain the data for particular insight was not yet fired or
+ * processed. Otherwise will return object containing `status` of the data retrieval; if the `status` is
+ * `'success'` then the `result` prop will contain the data.
+ *
+ * @remarks see {@link QueryDateDatasetsForInsight}
+ * @internal
+ */
+export const selectDateDatasetsForInsight = QueryDateDatasetsForInsightService.cache!.selectQueryResult;
+
 //
 // Query implementation
 //

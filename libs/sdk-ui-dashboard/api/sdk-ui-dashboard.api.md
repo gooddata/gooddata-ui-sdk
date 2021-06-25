@@ -1655,6 +1655,17 @@ export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<Das
 // @internal
 export const selectDashboardUriRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").UriRef, (res: string) => import("@gooddata/sdk-model").UriRef>;
 
+// @internal (undocumented)
+export const selectDateDatasetsForInsight: (query: QueryDateDatasetsForInsight) => import("@reduxjs/toolkit").OutputSelector<import("..").DashboardState, {
+    status: "error" | "loading" | "success";
+    result?: DateDatasetsForInsight | undefined;
+    error?: string | undefined;
+} | undefined, (res: import("..").DashboardState) => {
+    status: "error" | "loading" | "success";
+    result?: DateDatasetsForInsight | undefined;
+    error?: string | undefined;
+} | undefined>;
+
 // @internal
 export const selectDateFilterConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
 
