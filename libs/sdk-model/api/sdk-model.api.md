@@ -605,6 +605,16 @@ export class InsightDefinitionBuilder {
 }
 
 // @public
+export type InsightDisplayFormUsage = {
+    inAttributes: ObjRef[];
+    inFilters: ObjRef[];
+    inMeasureFilters: ObjRef[];
+};
+
+// @public
+export function insightDisplayFormUsage<T extends IInsightDefinition>(insight: T): InsightDisplayFormUsage;
+
+// @public
 export function insightFilters(insight: IInsightDefinition): IFilter[];
 
 // @public

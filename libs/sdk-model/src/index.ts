@@ -337,6 +337,8 @@ export {
     insightSetSorts,
     insightModifyItems,
     insightReduceItems,
+    InsightDisplayFormUsage,
+    insightDisplayFormUsage,
     visClassUrl,
     visClassId,
     visClassUri,

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`insightDisplayFormusage should return object with empty lists for empty insight 1`] = `
+Object {
+  "inAttributes": Array [],
+  "inFilters": Array [],
+  "inMeasureFilters": Array [],
+}
+`;

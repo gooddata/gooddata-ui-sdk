@@ -1,47 +1,51 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
+    attributeDisplayFormRef,
+    IAttributeOrMeasure,
     IFilter,
+    insightDisplayFormUsage,
+    ISortItem,
     ITotal,
+    modifySimpleMeasure,
     newAttributeLocator,
     newAttributeSort,
     newMeasureSort,
+    newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newTotal,
-    ISortItem,
-    IAttributeOrMeasure,
 } from "../..";
 import { newInsight } from "../../../__mocks__/insights";
-import { Account, Activity, Velocity, Won, ActivityType } from "../../../__mocks__/model";
-import { IAttribute, AttributePredicate, isAttribute } from "../../execution/attribute";
-import { IBucket, newBucket, BucketItemModifications, BucketItemReducer } from "../../execution/buckets";
+import { Account, Activity, ActivityType, Velocity, Won } from "../../../__mocks__/model";
+import { AttributePredicate, IAttribute, isAttribute } from "../../execution/attribute";
+import { BucketItemModifications, BucketItemReducer, IBucket, newBucket } from "../../execution/buckets";
 import { IMeasure, isMeasure, MeasurePredicate } from "../../execution/measure";
 import {
+    IInsight,
     insightAttributes,
     insightBucket,
     insightBuckets,
+    insightCreated,
+    insightFilters,
     insightHasAttributes,
     insightHasDataDefined,
     insightHasMeasures,
-    insightMeasures,
     insightId,
-    insightUri,
     insightIsLocked,
-    insightCreated,
-    insightUpdated,
-    insightFilters,
+    insightItems,
+    insightMeasures,
+    insightModifyItems,
     insightProperties,
+    insightReduceItems,
+    insightSetBuckets,
     insightSetFilters,
     insightSetProperties,
     insightSetSorts,
     insightSorts,
     insightTotals,
-    insightItems,
+    insightUpdated,
+    insightUri,
     VisualizationProperties,
-    insightSetBuckets,
-    IInsight,
-    insightModifyItems,
-    insightReduceItems,
 } from "../index";
 
 const MixedBucket = newBucket("bucket1", Account.Name, Won);
@@ -577,5 +581,85 @@ describe("insightReduceItems", () => {
         const modifiedInsight: IInsight = insightReduceItems(insightWithSomeBuckets, modifications);
         expect(modifiedInsight).not.toBe(insightWithSomeBuckets);
         expect(modifiedInsight.insight.buckets[0].items.length).toBe(1);
+    });
+});
+
+describe("insightDisplayFormusage", () => {
+    it("should return object with empty lists for empty insight", () => {
+        expect(insightDisplayFormUsage(EmptyInsight)).toMatchSnapshot();
+    });
+
+    it("should return refs in the same order as they appear in the insight", () => {
+        const result = insightDisplayFormUsage(InsightWithThreeBuckets);
+
+        expect(result.inAttributes).toEqual([
+            attributeDisplayFormRef(Activity.Subject),
+            attributeDisplayFormRef(Account.Name),
+        ]);
+    });
+
+    it("should return refs when attribute filter inside measure", () => {
+        const filteredMeasure1 = modifySimpleMeasure(Won, (m) =>
+            m.filters(newPositiveAttributeFilter(Account.Name, [])),
+        );
+        const filteredMeasure2 = modifySimpleMeasure(Velocity.Sum, (m) =>
+            m.filters(newNegativeAttributeFilter(Activity.Subject, [])),
+        );
+        const insight = newInsight(VisClassId, (m) =>
+            m.buckets([newBucket("testBucket", filteredMeasure1, filteredMeasure2)]),
+        );
+        const result = insightDisplayFormUsage(insight);
+
+        expect(result.inMeasureFilters).toEqual([
+            attributeDisplayFormRef(Account.Name),
+            attributeDisplayFormRef(Activity.Subject),
+        ]);
+    });
+
+    it("should return refs from insights attribute filters", () => {
+        const insight = newInsight(VisClassId, (m) =>
+            m.filters([
+                newNegativeAttributeFilter(Activity.Subject, []),
+                newPositiveAttributeFilter(Account.Name, []),
+            ]),
+        );
+
+        const result = insightDisplayFormUsage(insight);
+        expect(result.inFilters).toEqual([
+            attributeDisplayFormRef(Activity.Subject),
+            attributeDisplayFormRef(Account.Name),
+        ]);
+    });
+
+    it("should only return unique refs", () => {
+        const filteredMeasure1 = modifySimpleMeasure(Won, (m) =>
+            m.filters(newPositiveAttributeFilter(Account.Name, [])),
+        );
+        const filteredMeasure2 = modifySimpleMeasure(Velocity.Sum, (m) =>
+            m.filters(newNegativeAttributeFilter(Account.Name, [])),
+        );
+
+        const insight = newInsight(VisClassId, (m) =>
+            m
+                .filters([
+                    newNegativeAttributeFilter(Activity.Subject, []),
+                    newPositiveAttributeFilter(Activity.Subject, []),
+                ])
+                .buckets([
+                    newBucket(
+                        "testBucket",
+                        filteredMeasure1,
+                        filteredMeasure2,
+                        Activity.Subject,
+                        Activity.Subject,
+                    ),
+                ]),
+        );
+
+        const result = insightDisplayFormUsage(insight);
+
+        expect(result.inFilters).toEqual([attributeDisplayFormRef(Activity.Subject)]);
+        expect(result.inAttributes).toEqual([attributeDisplayFormRef(Activity.Subject)]);
+        expect(result.inMeasureFilters).toEqual([attributeDisplayFormRef(Account.Name)]);
     });
 });

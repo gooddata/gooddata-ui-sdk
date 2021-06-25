@@ -1,18 +1,24 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import intersection from "lodash/intersection";
-import { SortEntityIds, sortEntityIds, ISortItem } from "../execution/base/sort";
+import { ISortItem, sortEntityIds, SortEntityIds } from "../execution/base/sort";
 import {
     anyBucket,
+    BucketItemModifications,
+    BucketItemReducer,
     BucketPredicate,
     IAttributeOrMeasure,
     IBucket,
-    BucketItemModifications,
-    BucketItemReducer,
 } from "../execution/buckets";
-import { IFilter } from "../execution/filter";
-import { IMeasure, measureLocalId, MeasurePredicate, anyMeasure } from "../execution/measure";
-import { attributeLocalId, IAttribute, AttributePredicate, anyAttribute } from "../execution/attribute";
+import { filterObjRef, IFilter, isAttributeFilter } from "../execution/filter";
+import { anyMeasure, IMeasure, measureFilters, measureLocalId, MeasurePredicate } from "../execution/measure";
+import {
+    anyAttribute,
+    attributeDisplayFormRef,
+    attributeLocalId,
+    AttributePredicate,
+    IAttribute,
+} from "../execution/attribute";
 import { ITotal } from "../execution/base/totals";
 import {
     bucketsAttributes,
@@ -20,14 +26,16 @@ import {
     bucketsFind,
     bucketsItems,
     bucketsMeasures,
-    bucketsTotals,
     bucketsModifyItem,
     bucketsReduceItem,
+    bucketsTotals,
 } from "../execution/buckets/bucketArray";
 import invariant from "ts-invariant";
 import { IColor } from "../colors";
 import identity from "lodash/identity";
-import { ObjRef } from "../objRef";
+import { ObjRef, serializeObjRef } from "../objRef";
+import flatMap from "lodash/flatMap";
+import uniqBy from "lodash/uniqBy";
 
 /**
  * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
@@ -654,13 +662,68 @@ export function insightReduceItems<T extends IInsightDefinition>(
     reducer: BucketItemReducer = identity,
 ): T {
     invariant(insight, "insight must be specified");
+
     const buckets: IBucket[] = insightBuckets(insight);
+
     return {
         insight: {
             ...insight.insight,
             buckets: bucketsReduceItem(buckets, reducer),
         },
     } as T;
+}
+
+/**
+ * Contains breakdown of what display forms are used in an insight.
+ *
+ * @public
+ */
+export type InsightDisplayFormUsage = {
+    /**
+     * References to display forms used for slicing and dicing the results.
+     */
+    inAttributes: ObjRef[];
+
+    /**
+     * References to display forms used to filter the entire insight.
+     */
+    inFilters: ObjRef[];
+
+    /**
+     * References to display forms used to filter particular measures.
+     */
+    inMeasureFilters: ObjRef[];
+};
+
+/**
+ * Gets references to all display forms used by the insight. The display forms may be used for slicing or dicing the
+ * data, for filtering the entire insight or for filtering just some measures.
+ *
+ * @param insight - insight to get the display form usage from
+ * @public
+ */
+export function insightDisplayFormUsage<T extends IInsightDefinition>(insight: T): InsightDisplayFormUsage {
+    invariant(insight, "insight must be specified");
+
+    return {
+        inAttributes: uniqBy(insightAttributes(insight).map(attributeDisplayFormRef), serializeObjRef),
+        inFilters: uniqBy(
+            insightFilters(insight)
+                .filter(isAttributeFilter)
+                .map((attributeFilter) => filterObjRef(attributeFilter)),
+            serializeObjRef,
+        ),
+        inMeasureFilters: uniqBy(
+            flatMap(insightMeasures(insight), (measure) => {
+                const filters = measureFilters(measure) ?? [];
+
+                return filters
+                    .filter(isAttributeFilter)
+                    .map((attributeFilter) => filterObjRef(attributeFilter));
+            }),
+            serializeObjRef,
+        ),
+    };
 }
 
 //
