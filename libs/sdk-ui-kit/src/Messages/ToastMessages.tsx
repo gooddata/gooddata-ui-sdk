@@ -3,7 +3,7 @@ import { ToastMessageContext } from "./ToastMessageContext";
 import { Messages } from "./Messages";
 
 /**
- * @public
+ * @internal
  */
 export const ToastMessages: React.FC = () => {
     const { messages, removeMessage } = useContext(ToastMessageContext);

@@ -1532,6 +1532,7 @@ export interface ScheduledEmailDialogProps {
     onCancel?: () => void;
     onError?: (error: GoodDataSdkError) => void;
     onSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
+    onSuccess?: (scheduledMail: IScheduledMail) => void;
 }
 
 // @internal

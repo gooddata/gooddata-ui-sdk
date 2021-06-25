@@ -6,12 +6,12 @@ import { ToastMessageContext } from "./ToastMessageContext";
 import { MessageType } from "./typings";
 
 /**
- * @public
+ * @internal
  */
 export type AddMessageType = (message: MessageDescriptor) => void;
 
 /**
- * @public
+ * @internal
  */
 export interface UseToastMessageType {
     addSuccess: AddMessageType;
@@ -21,7 +21,7 @@ export interface UseToastMessageType {
 }
 
 /**
- * @public
+ * @internal
  */
 export const useToastMessage = (): UseToastMessageType => {
     const { addMessage } = useContext(ToastMessageContext);

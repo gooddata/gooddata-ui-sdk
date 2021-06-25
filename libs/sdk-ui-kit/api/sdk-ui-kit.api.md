@@ -18,7 +18,7 @@ import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
-// @public (undocumented)
+// @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor) => void;
 
 // @internal (undocumented)
@@ -2830,10 +2830,10 @@ export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
     render(): React_2.ReactNode;
 }
 
-// @public (undocumented)
+// @internal (undocumented)
 export const ToastMessageContext: React_2.Context<ToastMessageContextType>;
 
-// @public (undocumented)
+// @internal (undocumented)
 export const ToastMessageContextProvider: React_2.FC;
 
 // @public (undocumented)
@@ -2846,7 +2846,7 @@ export interface ToastMessageContextType {
     removeMessage: (id: string) => void;
 }
 
-// @public (undocumented)
+// @internal (undocumented)
 export const ToastMessages: React_2.FC;
 
 // @internal (undocumented)
@@ -2864,10 +2864,10 @@ export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
 
-// @public (undocumented)
+// @internal (undocumented)
 export const useToastMessage: () => UseToastMessageType;
 
-// @public (undocumented)
+// @internal (undocumented)
 export interface UseToastMessageType {
     // (undocumented)
     addError: AddMessageType;

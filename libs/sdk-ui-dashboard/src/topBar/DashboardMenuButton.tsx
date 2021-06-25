@@ -63,12 +63,16 @@ export const DashboardMenuButton: React.FC<IDashboardMenuButtonProps & IDefaultM
     const intl = useIntl();
     const renderDefaultMenuItems = () => {
         return props.menuItems?.map((menuItem) => {
+            function onClick(...params: any) {
+                setIsOpen(false);
+                menuItem.callback?.(params);
+            }
             return (
                 <SingleSelectListItem
                     key={menuItem.itemId}
                     title={intl.formatMessage({ id: menuItem.itemName })}
                     type={menuItem.type}
-                    onClick={menuItem.callback}
+                    onClick={onClick}
                 />
             );
         });

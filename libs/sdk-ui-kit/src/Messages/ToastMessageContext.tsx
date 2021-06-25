@@ -16,7 +16,7 @@ export interface ToastMessageContextType {
 }
 
 /**
- * @public
+ * @internal
  */
 export const ToastMessageContext = createContext<ToastMessageContextType>({
     messages: [],
@@ -31,7 +31,7 @@ export const ToastMessageContext = createContext<ToastMessageContextType>({
 let idCounter = 0;
 
 /**
- * @public
+ * @internal
  */
 export const ToastMessageContextProvider: React.FC = ({ children }) => {
     const [messages, setMessages] = useState<IMessage[]>([]);

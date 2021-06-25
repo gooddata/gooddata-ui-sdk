@@ -26,6 +26,7 @@ import {
 import {
     FilterContextItem,
     IAnalyticalBackend,
+    IScheduledMail,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     IWorkspacePermissions,
@@ -58,7 +59,8 @@ import {
 } from "../layout";
 import { DefaultScheduledEmailDialog, ScheduledEmailDialogProps } from "../scheduledEmail";
 import { IDefaultMenuButtonCallbackProps } from "../topBar/TopBar";
-import { ToastMessageContextProvider, useToastMessage, ToastMessages } from "@gooddata/sdk-ui-kit";
+import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { IntlWrapper } from "../localization/IntlWrapper";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -337,29 +339,31 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
         onScheduleEmailingCallback: defaultOnScheduleEmailing,
     };
 
-    const onScheduleEmailingError = () => {
-        console.log("Logging error");
-        addError({ id: "dialogs.schedule.email.submit.error" });
-    };
-
-    const onScheduleEmailingSuccess = () => {
-        console.log("Logging success");
-        addSuccess({ id: "dialogs.schedule.email.submit.success" });
-    };
-
-    const onScheduleEmailingCancel = function () {
+    function onScheduleEmailingError() {
         setIsScheduleEmailingDialogOpen(false);
-    };
+        addError({ id: "dialogs.schedule.email.submit.error" });
+    }
+
+    function onScheduleEmailingSuccess(_scheduledMail: IScheduledMail) {
+        setIsScheduleEmailingDialogOpen(false);
+        addSuccess({ id: "dialogs.schedule.email.submit.success" });
+    }
+
+    function onScheduleEmailingCancel() {
+        setIsScheduleEmailingDialogOpen(false);
+    }
+
+    const locale = useDashboardSelector(selectLocale);
 
     return (
-        <>
+        <InternalIntlWrapper locale={locale}>
             <ToastMessages />
             {isScheduleEmailingDialogOpen && (
                 <ScheduledEmailDialogComponent
                     isVisible={isScheduleEmailingDialogOpen}
                     onCancel={onScheduleEmailingCancel}
                     onError={onScheduleEmailingError}
-                    onSubmit={onScheduleEmailingSuccess}
+                    onSuccess={onScheduleEmailingSuccess}
                 />
             )}
             <TopBarComponent
@@ -368,7 +372,7 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
             />
             <FilterBarComponent filters={filters} onFilterChanged={onFilterChanged} />
             <DashboardLayout drillableItems={drillableItems} />
-        </>
+        </InternalIntlWrapper>
     );
 };
 
@@ -376,9 +380,9 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const locale = useDashboardSelector(selectLocale);
 
     return (
-        <InternalIntlWrapper locale={locale}>
+        <IntlWrapper locale={locale}>
             <DashboardInnerCore {...props} />
-        </InternalIntlWrapper>
+        </IntlWrapper>
     );
 };
 

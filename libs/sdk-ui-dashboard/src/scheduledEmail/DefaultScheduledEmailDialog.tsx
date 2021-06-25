@@ -9,7 +9,7 @@ import { ScheduledEmailDialogProps } from "./types";
  * @internal
  */
 export const DefaultScheduledEmailDialog: React.FC<ScheduledEmailDialogProps> = (props) => {
-    const { onSubmit, onCancel, onError, isVisible } = props;
+    const { onSubmit, onCancel, onError, isVisible, onSuccess } = props;
 
     const {
         currentUser,
@@ -21,7 +21,7 @@ export const DefaultScheduledEmailDialog: React.FC<ScheduledEmailDialogProps> = 
         dateFormat,
         enableKPIDashboardSchedule,
         enableKPIDashboardScheduleRecipients,
-    } = useScheduledEmail({ onSubmit });
+    } = useScheduledEmail({ onSubmit, onSubmitSuccess: onSuccess });
 
     // trigger the invariant only if the user tries to open the dialog
     if (isVisible) {
