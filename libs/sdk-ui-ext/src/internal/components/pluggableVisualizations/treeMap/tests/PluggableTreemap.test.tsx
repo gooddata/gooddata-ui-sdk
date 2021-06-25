@@ -163,7 +163,7 @@ describe("PluggableTreemap", () => {
         expect(extendedReferencePoint).toEqual({
             buckets: expectedBuckets,
             filters: expectedFilters,
-            uiConfig: uiConfigMocks.multipleMeasuresAndCategoriesTreemapUiConfig,
+            uiConfig: uiConfigMocks.multipleMeasuresAndCategoriesTreemapUiConfigWithDate,
             properties: {},
         });
     });

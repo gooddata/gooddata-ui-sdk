@@ -8,21 +8,23 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 
 import { UICONFIG, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
-import { BUCKETS } from "../../constants/bucket";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket";
 
 import { hasNoMeasures, hasOneMeasure, hasSomeSegmentByItems, hasNoStacksWithDate } from "./../bucketRules";
 
-import { setBucketTitles } from "./../bucketHelper";
+import { getStackItems, setBucketTitles } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
 
 import lineMeasuresIcon from "../../assets/line/bucket-title-measures.svg";
 import lineTrendIcon from "../../assets/line/bucket-title-trend.svg";
 import lineSegmentIcon from "../../assets/line/bucket-title-segment.svg";
 import { hasColorMapping } from "../propertiesHelper";
+import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper";
 
 function setLineChartBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {
-    const buckets = referencePoint?.buckets;
+    const buckets = referencePoint?.buckets || [];
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
+    const stackItems = getStackItems(buckets, [ATTRIBUTE, DATE]);
 
     forEach(buckets, (bucket) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
@@ -34,15 +36,18 @@ function setLineChartBucketWarningMessages(referencePoint: IExtendedReferencePoi
         }
 
         if (!bucketUiConfig?.canAddItems) {
-            let warningMessageId;
+            let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessageId = "dashboard.bucket.metric_segment_by_warning";
+                warningMessage = getBucketItemsWarningMessage(
+                    "dashboard.bucket.metric_segment_by_warning",
+                    intl,
+                    stackItems,
+                );
             } else if (bucket.localIdentifier === BucketNames.SEGMENT) {
-                warningMessageId = "dashboard.bucket.category_segment_by_warning";
+                warningMessage = getTranslation("dashboard.bucket.category_segment_by_warning", intl);
             }
 
-            if (warningMessageId) {
-                const warningMessage = getTranslation(warningMessageId, intl);
+            if (warningMessage) {
                 set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
             }
         }

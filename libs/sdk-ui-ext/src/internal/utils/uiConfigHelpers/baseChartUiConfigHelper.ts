@@ -5,10 +5,15 @@ import forEach from "lodash/forEach";
 import { IntlShape } from "react-intl";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint, IBucketOfFun, IUiConfig } from "../../interfaces/Visualization";
+import {
+    IExtendedReferencePoint,
+    IBucketOfFun,
+    IUiConfig,
+    IBucketItem,
+} from "../../interfaces/Visualization";
 
 import { UICONFIG, RECOMMENDATIONS, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
-import { BUCKETS } from "../../constants/bucket";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket";
 
 import {
     comparisonAndTrendingRecommendationEnabled,
@@ -20,7 +25,7 @@ import {
     hasNoStacksWithDate,
 } from "./../bucketRules";
 
-import { setBucketTitles } from "./../bucketHelper";
+import { getStackItems, isDateBucketItem, setBucketTitles } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
 import { hasColorMapping } from "./../propertiesHelper";
 
@@ -38,6 +43,7 @@ function setBaseChartBucketWarningMessages(
 ): IUiConfig {
     const buckets = referencePoint?.buckets ?? [];
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
+    const stackItems = getStackItems(buckets, [ATTRIBUTE, DATE]);
 
     forEach(buckets, (bucket: IBucketOfFun) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
@@ -49,15 +55,18 @@ function setBaseChartBucketWarningMessages(
         }
 
         if (!bucketUiConfig?.canAddItems) {
-            let warningMessageId;
+            let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessageId = "dashboard.bucket.metric_stack_by_warning";
+                warningMessage = getBucketItemsWarningMessage(
+                    "dashboard.bucket.metric_stack_by_warning",
+                    intl,
+                    stackItems,
+                );
             } else if (bucket.localIdentifier === BucketNames.STACK) {
-                warningMessageId = "dashboard.bucket.category_stack_by_warning";
+                warningMessage = getTranslation("dashboard.bucket.category_stack_by_warning", intl);
             }
 
-            if (warningMessageId) {
-                const warningMessage = getTranslation(warningMessageId, intl);
+            if (warningMessage) {
                 set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
             }
         }
@@ -155,4 +164,30 @@ export function setBaseChartUiConfigRecommendations(
         return newReferencePoint;
     }
     return referencePoint;
+}
+
+function getBucketItemsIcons(bucket: IBucketItem[], intl: IntlShape): string {
+    const attributeUsed = bucket.find((x) => !isDateBucketItem(x));
+    const dateUsed = bucket.find((x) => isDateBucketItem(x));
+    const orString = intl.formatMessage({ id: "or" });
+
+    if (attributeUsed && dateUsed) {
+        return `<span class="attr-field-icon" /> ${orString} <span class="date-field-icon" />`;
+    } else if (attributeUsed) {
+        return '<span class="attr-field-icon" />';
+    } else {
+        return '<span class="date-field-icon" />';
+    }
+}
+
+export function getBucketItemsWarningMessage(
+    messageId: string,
+    intl: IntlShape,
+    bucketItems: IBucketItem[],
+): string {
+    const icons = getBucketItemsIcons(bucketItems, intl);
+
+    return getTranslation(messageId, intl, {
+        icons,
+    });
 }

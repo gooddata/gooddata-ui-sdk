@@ -529,6 +529,12 @@ export function getStackItems(buckets: IBucketOfFun[], itemTypes: string[] = [AT
     return preferredStacks?.items ?? [];
 }
 
+export function getViewItems(buckets: IBucketOfFun[], itemTypes: string[] = [ATTRIBUTE]): IBucketItem[] {
+    const preferredStacks = getPreferredBucket(buckets, [BucketNames.VIEW], itemTypes);
+
+    return preferredStacks?.items ?? [];
+}
+
 export function getAttributeItems(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAllAttributeItemsWithPreference(buckets, [
         BucketNames.LOCATION,
