@@ -54,6 +54,7 @@ import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
+import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
 import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
@@ -1248,13 +1249,20 @@ export const InitialLoadCorrelationId = "initialLoad";
 
 // @internal (undocumented)
 export type InsightAttributesMeta = {
+    usage: InsightDisplayFormUsage;
     displayForms: Record<string, IAttributeDisplayFormMetadataObject>;
     attributes: Record<string, IAttributeMetadataObject>;
 };
 
-// @internal (undocumented)
+// @internal
 export type InsightDateDatasets = {
-    data: any;
+    readonly dateDatasets: ReadonlyArray<ICatalogDateDataset>;
+    readonly dateDatasetsOrdered: ReadonlyArray<ICatalogDateDataset>;
+    readonly usedInDateFilters: ReadonlyArray<ICatalogDateDataset>;
+    readonly usedInAttributes: ReadonlyArray<ICatalogDateDataset | undefined>;
+    readonly usedInAttributeFilters: ReadonlyArray<ICatalogDateDataset | undefined>;
+    readonly mostImportantFromInsight: ICatalogDateDataset | undefined;
+    readonly dateDatasetDisplayNames: Record<string, string>;
 };
 
 // @internal (undocumented)
@@ -1584,7 +1592,7 @@ export interface ResetDashboard extends IDashboardCommand {
 export function resetDashboard(correlationId?: string): ResetDashboard;
 
 // @internal
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "objectAvailability" | "mapboxToken" | "isReadOnly"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;
 
 // @internal
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;
@@ -1746,7 +1754,7 @@ export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-mo
 export const selectInsightsById: (state: DashboardState) => import("@reduxjs/toolkit").Dictionary<import("@gooddata/sdk-model").IInsight>;
 
 // @internal
-export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;
+export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("../..").ResolvedDashboardConfig) => boolean>;
 
 // @internal
 export const selectLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>>;
@@ -1758,7 +1766,7 @@ export const selectLocale: import("@reduxjs/toolkit").OutputSelector<DashboardSt
 export const selectMapboxToken: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res: import("../..").ResolvedDashboardConfig) => string | undefined>;
 
 // @internal
-export const selectObjectAvailabilityConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../..").ObjectAvailabilityConfig | undefined, (res: import("../..").ResolvedDashboardConfig) => import("../..").ObjectAvailabilityConfig | undefined>;
+export const selectObjectAvailabilityConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../..").ObjectAvailabilityConfig, (res: import("../..").ResolvedDashboardConfig) => import("../..").ObjectAvailabilityConfig>;
 
 // @internal
 export const selectPermissions: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IWorkspacePermissions, (res: import("./permissionsState").PermissionsState) => import("@gooddata/sdk-backend-spi").IWorkspacePermissions>;
