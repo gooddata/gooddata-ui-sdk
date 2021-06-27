@@ -161,10 +161,10 @@ Object {
     ],
     "selectedOption": "THIS_MONTH",
   },
-  "isReadOnly": undefined,
+  "isReadOnly": false,
   "locale": "en-US",
   "mapboxToken": undefined,
-  "objectAvailability": undefined,
+  "objectAvailability": Object {},
   "separators": Object {
     "decimal": ".",
     "thousand": ",",

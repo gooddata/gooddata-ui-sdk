@@ -95,11 +95,7 @@ export type DashboardConfig = {
  *
  * @internal
  */
-export type ResolvedDashboardConfig = Omit<
-    Required<DashboardConfig>,
-    "objectAvailability" | "mapboxToken" | "isReadOnly"
-> &
-    DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;
 
 type DashboardConfigKeys = keyof DashboardConfig;
 const RequiredConfigKeys: DashboardConfigKeys[] = [
