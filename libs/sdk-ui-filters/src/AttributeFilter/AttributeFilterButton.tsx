@@ -20,12 +20,12 @@ import isEqual from "lodash/isEqual";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdown/AttributeDropdownList";
 import { mergeElementQueryResults } from "./AttributeDropdown/mergeElementQueryResults";
 import {
+    AttributeFiltersOrPlaceholders,
     IntlWrapper,
     IPlaceholder,
     useCancelablePromise,
     usePlaceholder,
     useResolveValueWithPlaceholders,
-    AttributeFiltersOrPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
 import MediaQuery from "react-responsive";
@@ -40,16 +40,19 @@ import {
     getLoadingTitleIntl,
     getNoneTitleIntl,
     getObjRef,
+    getParentFilterTitles,
     getValidElementsFilters,
     ILoadElementsResult,
     isParentFilteringEnabled,
     isParentFiltersElementsByRef,
+    showAllFilteredMessage,
     updateSelectedOptionsWithData,
 } from "./utils/AttributeFilterUtils";
 import { stringUtils } from "@gooddata/util";
 import invariant from "ts-invariant";
 import stringify from "json-stable-stringify";
 import { IElementQueryResultWithEmptyItems } from "./AttributeDropdown/types";
+import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdown/AttributeDropdownAllFilteredOutBody";
 
 /**
  * @public
@@ -213,6 +216,11 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         "It's not possible to combine 'filter' property with 'connectToPlaceholder' property. Either provide a value, or a placeholder.",
     );
 
+    invariant(
+        !(props.filter && !props.onApply),
+        "It's not possible to use 'filter' property without 'onApply' property. Either provide 'onApply' callback or use placeholders.",
+    );
+
     const [resolvedPlaceholder, setPlaceholderValue] = usePlaceholder(props.connectToPlaceholder);
 
     const currentFilter = resolvedPlaceholder || props.filter;
@@ -279,6 +287,17 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             },
         },
         [props.backend, props.workspace, props.identifier, stringify(resolvedParentFilters)],
+    );
+
+    const {
+        error: parentFilterTitlesError,
+        result: parentFilterTitles,
+        status: parentFilterTitlesStatus,
+    } = useCancelablePromise<string[]>(
+        {
+            promise: async () => getParentFilterTitles(resolvedParentFilters, getBackend(), props.workspace),
+        },
+        [props.backend, props.workspace, stringify(resolvedParentFilters)],
     );
 
     const invalidate = (parentFilterChanged = false) => {
@@ -433,6 +452,10 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         return totalCountStatus === "pending" || totalCountStatus === "loading";
     };
 
+    const isParentFilterTitlesLoading = () => {
+        return parentFilterTitlesStatus === "pending" || parentFilterTitlesStatus === "loading";
+    };
+
     const getSubtitle = () => {
         if (isElementsLoading() && !state.firstLoad && props.parentFilters) {
             return getFilteringTitleIntl(props.intl);
@@ -440,6 +463,16 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
         if (isTotalCountLoading() && state.firstLoad) {
             return getLoadingTitleIntl(props.intl);
+        }
+
+        if (
+            showAllFilteredMessage(
+                isElementsLoading(),
+                resolvedParentFilters,
+                elementsResult?.validOptions.items,
+            )
+        ) {
+            return getAllTitleIntl(props.intl, true, true, true);
         }
 
         const displayForm = getObjRef(currentFilter, props.identifier);
@@ -600,20 +633,34 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     </MediaQuery>
                 }
                 body={
-                    <AttributeDropdownBody
-                        items={elementsResult?.validOptions?.items ?? []}
-                        totalCount={totalCount || LIMIT}
-                        selectedItems={state.selectedFilterOptions}
-                        isInverted={state.isInverted}
-                        isLoading={isElementsLoading() || isTotalCountLoading()}
-                        searchString={state.searchString}
-                        onSearch={onSearch}
-                        onSelect={onSelect}
-                        onRangeChange={onRangeChange}
-                        onApplyButtonClicked={onApplyButtonClicked}
-                        onCloseButtonClicked={onCloseButtonClicked}
-                        applyDisabled={isEmpty(state.selectedFilterOptions) && !state.isInverted}
-                    />
+                    showAllFilteredMessage(
+                        isElementsLoading(),
+                        resolvedParentFilters,
+                        elementsResult?.validOptions?.items ?? [],
+                    ) ? (
+                        <AttributeDropdownAllFilteredOutBody
+                            parentFilterTitles={parentFilterTitles}
+                            onApplyButtonClick={onApplyButtonClicked}
+                            onCancelButtonClick={onCloseButtonClicked}
+                        />
+                    ) : (
+                        <AttributeDropdownBody
+                            items={elementsResult?.validOptions?.items ?? []}
+                            totalCount={totalCount || LIMIT}
+                            selectedItems={state.selectedFilterOptions}
+                            isInverted={state.isInverted}
+                            isLoading={
+                                isElementsLoading() || isTotalCountLoading() || isParentFilterTitlesLoading()
+                            }
+                            searchString={state.searchString}
+                            onSearch={onSearch}
+                            onSelect={onSelect}
+                            onRangeChange={onRangeChange}
+                            onApplyButtonClicked={onApplyButtonClicked}
+                            onCloseButtonClicked={onCloseButtonClicked}
+                            applyDisabled={isEmpty(state.selectedFilterOptions) && !state.isInverted}
+                        />
+                    )
                 }
                 ref={dropdownRef}
                 onOpenStateChanged={onDropdownOpenStateChanged}
@@ -623,12 +670,13 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const { FilterError } = props;
 
-    return elementsError || attributeError || totalCountError ? (
+    return elementsError || attributeError || totalCountError || parentFilterTitlesError ? (
         <FilterError
             error={
                 elementsError?.message ??
                 attributeError?.message ??
                 totalCountError?.message ??
+                parentFilterTitlesError?.message ??
                 "Unknown error"
             }
         />

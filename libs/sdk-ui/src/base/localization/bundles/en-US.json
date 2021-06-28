@@ -1075,5 +1075,15 @@
         "value": "If multiple items have the same value, the filter shows all items with this value. The insight may then display more items than the number set.",
         "comment": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter.",
         "limit": 0
+    },
+    "attributesDropdown.allItemsFiltered": {
+        "value": "All items are filtered out",
+        "comment": "This message is displayed when there are no items available because they were filtered out by parent filters",
+        "limit": 0
+    },
+    "attributesDropdown.itemsFiltered.tooltip": {
+        "value": "Items are filtered by: <strong>{filters}</strong>",
+        "comment": "Do not translate HTML markup enclosed in <> and {filters} placeholder as it will be replaced by list of filter names.",
+        "limit": 0
     }
 }
