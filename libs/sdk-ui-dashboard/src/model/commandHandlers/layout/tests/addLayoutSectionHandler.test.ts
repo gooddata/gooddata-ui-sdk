@@ -19,8 +19,10 @@ describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => (Tester = tester), EmptyDashboardIdentifier, undefined, {
-                useRefType: "id",
+            preloadedTesterFactory((tester) => (Tester = tester), EmptyDashboardIdentifier, {
+                backendConfig: {
+                    useRefType: "id",
+                },
             }),
         );
 

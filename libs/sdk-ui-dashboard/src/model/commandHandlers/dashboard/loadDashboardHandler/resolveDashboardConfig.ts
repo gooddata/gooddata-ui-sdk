@@ -152,8 +152,9 @@ export function* resolveDashboardConfig(
         dateFilterConfig: validDateFilterConfig,
         settings: settings.settings,
         colorPalette,
+        objectAvailability: config.objectAvailability ?? {},
         mapboxToken: config.mapboxToken,
-        isReadOnly: config.isReadOnly,
+        isReadOnly: config.isReadOnly ?? false,
     };
 
     return resolvedConfig;

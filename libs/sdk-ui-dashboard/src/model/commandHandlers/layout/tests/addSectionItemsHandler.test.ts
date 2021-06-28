@@ -19,8 +19,10 @@ describe("add section items handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier, undefined, {
-                useRefType: "id",
+            preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier, {
+                backendConfig: {
+                    useRefType: "id",
+                },
             }),
         );
 

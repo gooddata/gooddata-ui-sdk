@@ -25,6 +25,7 @@ export {
     selectSettings,
     selectColorPalette,
     selectDateFilterConfig,
+    selectObjectAvailabilityConfig,
     selectIsReadOnly,
     selectMapboxToken,
     selectDateFormat,
@@ -64,6 +65,8 @@ export {
     selectCatalogDateDatasets,
     selectCatalogFacts,
     selectCatalogMeasures,
+    selectAllCatalogAttributesMap,
+    selectAllCatalogDisplayFormsMap,
 } from "./state/catalog/catalogSelectors";
 export { AlertsState } from "./state/alerts/alertsState";
 export { selectAlerts } from "./state/alerts/alertsSelectors";
@@ -72,7 +75,15 @@ export { selectUser } from "./state/user/userSelectors";
 export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
 export { selectDashboardRef, selectDashboardUriRef, selectDashboardTitle } from "./state/meta/metaSelectors";
 
-export { DashboardContext, DashboardConfig, ResolvedDashboardConfig } from "./types/commonTypes";
+export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";
+export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta";
+
+export {
+    DashboardContext,
+    ObjectAvailabilityConfig,
+    DashboardConfig,
+    ResolvedDashboardConfig,
+} from "./types/commonTypes";
 export {
     ExtendedDashboardItem,
     ExtendedDashboardWidget,
@@ -89,4 +100,5 @@ export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/va
 
 export * from "./commands";
 export * from "./events";
+export * from "./queries";
 export { DashboardEventHandler } from "./events/eventHandler";

@@ -6,6 +6,31 @@ import keys from "lodash/keys";
 import includes from "lodash/includes";
 
 /**
+ * Dashboard component may offer users to pick objects to use on the dashboard - for instance selecting a metric
+ * to use on KPI, selecting an attribute or a date dataset to filter by.
+ *
+ * The object availability configuration can be used to filter objects that the user can pick.
+ *
+ * By default, all objects
+ *
+ * @internal
+ */
+export type ObjectAvailabilityConfig = {
+    /**
+     * Specify tags to exclude objects by. If any of these tags appears on an object, then it will be not
+     * available for use.
+     */
+    excludeObjectsWithTags?: string[];
+
+    /**
+     * Specify tags to include objects by. This option does not make sense on its own - as all objects are
+     * included by default. However it can be used in conjunction with {@link ObjectAvailabilityConfig.excludeObjectsWithTags} - a wide
+     * range of objects may be excluded at first and then a subset will be cherry-picked using this prop.
+     */
+    includeObjectsWithTags?: string[];
+};
+
+/**
  * Dashboard configuration can influence the available features, look and feel and behavior of the dashboard.
  *
  * @internal
@@ -38,6 +63,12 @@ export type DashboardConfig = {
     colorPalette?: IColorPalette;
 
     /**
+     * Optionally specify exclusion and inclusion criteria for objects that should be available during the
+     * different object selections (e.g. selecting metric for KPI, attributes to filter by, date data sets to use for filtering).
+     */
+    objectAvailability?: ObjectAvailabilityConfig;
+
+    /**
      * Token for Mapbox API. You need this to use GeoCharts in your dashboards.
      *
      * @remarks To create a Mapbox account and an access token, see [this guide](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/).
@@ -64,8 +95,7 @@ export type DashboardConfig = {
  *
  * @internal
  */
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "isReadOnly"> &
-    DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;
 
 type DashboardConfigKeys = keyof DashboardConfig;
 const RequiredConfigKeys: DashboardConfigKeys[] = [

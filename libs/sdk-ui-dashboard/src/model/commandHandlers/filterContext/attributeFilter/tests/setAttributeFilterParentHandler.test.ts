@@ -19,12 +19,9 @@ const BackendConfig = {
 describe("setAttributeFilterParentHandler", () => {
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory(
-            (tester) => (Tester = tester),
-            SimpleDashboardIdentifier,
-            undefined,
-            BackendConfig,
-        ),
+        preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier, {
+            backendConfig: BackendConfig,
+        }),
     );
 
     it("should emit the appropriate events for valid set attribute filter parent command", async () => {
