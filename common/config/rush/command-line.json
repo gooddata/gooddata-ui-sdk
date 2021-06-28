@@ -112,6 +112,13 @@
     },
     {
       "commandKind": "global",
+      "name": "start-docs",
+      "summary": "Builds API documentation for the entire SDK and runs it",
+      "shellCommand": "node common/scripts/build-docs.js -d",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "populate-ref",
       "summary": "Makes projects populate reference workspace with recording definitions or recordings themselves.",
       "shellCommand": "bash common/scripts/populate-ref.sh",
