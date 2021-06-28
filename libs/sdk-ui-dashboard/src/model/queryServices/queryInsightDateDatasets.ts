@@ -49,7 +49,7 @@ export const QueryDateDatasetsForInsightService = createCachedQueryService(
  * @remarks see {@link QueryInsightDateDatasets}
  * @internal
  */
-export const selectDateDatasetsForInsight = QueryDateDatasetsForInsightService.cache!.selectQueryResult;
+export const selectDateDatasetsForInsight = QueryDateDatasetsForInsightService.cache.selectQueryResult;
 
 //
 // Query implementation
@@ -202,8 +202,11 @@ function* lookupDatasetsUsedInAttributesAndFilters(insight: IInsight, datasets: 
 
 function* lookupDatasetsInInsight(insight: IInsight) {
     /*
-     * XXX: still contemplating here that looking up against catalog date datasets is unnecessary as
-     * the available date datasets should contain all the valid choices
+     * TODO: need to investigate whether the catalogDateDatasets are needed here. the theory is, loading available
+     *  date datasets using catalog _likely_ gives everything this code should ever need. The query processor
+     *  does the call to load available date datasets first.. so then instead of selecting the whole catalog from
+     *  state this generator could receive date datasets as an argument. Note that KD used to get all date datasets
+     *  from catalog so this matches the previous behavior.
      */
 
     const catalogDateDatasets: ReturnType<typeof selectCatalogDateDatasets> = yield select(

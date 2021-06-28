@@ -43,7 +43,7 @@ export const QueryInsightAttributesMetaService = createCachedQueryService(
  * @remarks see {@link QueryInsightAttributesMeta}
  * @internal
  */
-export const selectInsightAttributesMeta = QueryInsightAttributesMetaService.cache!.selectQueryResult;
+export const selectInsightAttributesMeta = QueryInsightAttributesMetaService.cache.selectQueryResult;
 
 //
 // Query implementation

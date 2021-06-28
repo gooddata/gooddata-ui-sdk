@@ -273,7 +273,7 @@ export function createCachedQueryService<TQuery extends IDashboardQuery<TResult>
     queryName: DashboardQueryType,
     generator: (ctx: DashboardContext, query: TQuery) => SagaIterator<TResult>,
     queryToCacheKey: (query: TQuery) => EntityId,
-): IDashboardQueryService<TQuery, TResult> {
+): Required<IDashboardQueryService<TQuery, TResult>> {
     const queryCache = createQueryCacheSlice<TQuery, TResult>(queryName, queryToCacheKey);
 
     function* generatorWithQueryCache(ctx: DashboardContext, query: TQuery): SagaIterator<TResult> {
