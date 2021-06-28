@@ -199,3 +199,40 @@ export function attributeElementsToAttributeElementArray(
     }
     return [];
 }
+
+export async function getFilterAttributeTitle(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    filter: IAttributeFilter,
+): Promise<string> {
+    const attributes = backend.workspace(workspace).attributes();
+    const displayForm = await attributes.getAttributeDisplayForm(getObjRef(filter, null));
+    const attribute = await attributes.getAttribute(displayForm.attribute);
+
+    return attribute.title;
+}
+
+export function showAllFilteredMessage(
+    isElementsLoading: boolean,
+    parentFilters: IAttributeFilter[],
+    items: AttributeListItem[],
+): boolean {
+    if (!parentFilters) {
+        return false;
+    }
+    const parentFiltersEmpty = parentFilters.every((filter) => filterIsEmpty(filter));
+    return !isElementsLoading && !parentFiltersEmpty && !items?.length;
+}
+
+export function getParentFilterTitles(
+    filters: IAttributeFilter[],
+    backend: IAnalyticalBackend,
+    workspace: string,
+): Promise<string[]> {
+    if (filters) {
+        const promises = filters.map<Promise<string>>((parentFilter) =>
+            getFilterAttributeTitle(backend, workspace, parentFilter),
+        );
+        return Promise.all(promises);
+    }
+}

@@ -158,7 +158,7 @@ export interface IAttributeFilterProps {
     // @deprecated
     identifier?: string;
     locale?: string;
-    onApply: (filter: IAttributeFilter) => void;
+    onApply?: (filter: IAttributeFilter) => void;
     onError?: OnError;
     parentFilterOverAttribute?: ObjRef;
     parentFilters?: AttributeFiltersOrPlaceholders;
