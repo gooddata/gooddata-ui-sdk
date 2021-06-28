@@ -69,6 +69,7 @@ export const DashboardMenuButton: React.FC<IDashboardMenuButtonProps & IDefaultM
             }
             return (
                 <SingleSelectListItem
+                    className="gd-menu-item"
                     key={menuItem.itemId}
                     title={intl.formatMessage({ id: menuItem.itemName })}
                     type={menuItem.type}
@@ -84,6 +85,7 @@ export const DashboardMenuButton: React.FC<IDashboardMenuButtonProps & IDefaultM
             const menuItem = item[1];
             return (
                 <SingleSelectListItem
+                    className="gd-menu-item"
                     key={menuItem.itemId}
                     title={menuItem.itemName}
                     type={menuItem.type}
@@ -108,7 +110,7 @@ export const DashboardMenuButton: React.FC<IDashboardMenuButtonProps & IDefaultM
                 closeOnOutsideClick={true}
                 onClose={onMenuButtonClick}
             >
-                <ItemsWrapper>
+                <ItemsWrapper smallItemsSpacing>
                     {renderDefaultMenuItems()}
                     {renderAdditionalMenuItems()}
                 </ItemsWrapper>

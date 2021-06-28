@@ -393,7 +393,9 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
 
     return (
         <IntlWrapper locale={locale}>
-            <DashboardInnerCore {...props} />
+            <div className="gd-dashboards-root">
+                <DashboardInnerCore {...props} />
+            </div>
         </IntlWrapper>
     );
 };

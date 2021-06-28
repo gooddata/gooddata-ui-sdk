@@ -69,6 +69,7 @@
         "immer": "^9.0.3",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
+        "normalize.css": "^8.0.1",
         "react-intl": "^3.6.0",
         "react-measure": "^2.3.0",
         "react-redux": "^7.2.4",

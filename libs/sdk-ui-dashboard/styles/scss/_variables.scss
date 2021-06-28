@@ -2,6 +2,8 @@
 @import "~@gooddata/sdk-ui-ext/styles/internal/scss/variables";
 @import "~@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
 
+$gd-dashboards-content-backgroundColor: var(--gd-dashboards-content-backgroundColor, $gd-color-white);
+
 $filter-bar-height: 55px;
 
 $gd-dashboards-filterBar-backgroundColor: var(--gd-dashboards-filterBar-backgroundColor, $gd-color-white);
