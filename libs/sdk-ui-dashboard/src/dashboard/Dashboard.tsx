@@ -61,6 +61,7 @@ import { DefaultScheduledEmailDialog, ScheduledEmailDialogProps } from "../sched
 import { IDefaultMenuButtonCallbackProps } from "../topBar/TopBar";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { IntlWrapper } from "../localization/IntlWrapper";
+import { useDashboardPdfExporter } from "./useDashboardPdfExporter";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -319,24 +320,35 @@ export interface IDashboardProps {
 }
 
 const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const { drillableItems, filterBarConfig, topBarConfig } = props;
+    const { drillableItems, filterBarConfig, topBarConfig, dashboardRef, backend, workspace } = props;
 
     const FilterBarComponent = filterBarConfig?.Component ?? FilterBar;
     const TopBarComponent = topBarConfig?.Component ?? TopBar;
     const { ScheduledEmailDialogComponent } = useDashboardComponentsContext();
     const { filters, onFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
+    const { addSuccess, addError } = useToastMessage();
 
     const [isScheduleEmailingDialogOpen, setIsScheduleEmailingDialogOpen] = useState(false);
-
-    const { addSuccess, addError } = useToastMessage();
+    const { exportDashboard } = useDashboardPdfExporter({
+        backend,
+        workspace,
+        onError: () => {
+            addError({ id: "options.menu.export.PDF.error" });
+        },
+    });
 
     const defaultOnScheduleEmailing = (isDialogOpen: boolean) => {
         setIsScheduleEmailingDialogOpen(isDialogOpen);
     };
 
+    const defaultOnExportToPdf = () => {
+        exportDashboard(dashboardRef, filters);
+    };
+
     const menuButtonCallbacks: IDefaultMenuButtonCallbackProps = {
         onScheduleEmailingCallback: defaultOnScheduleEmailing,
+        onExportToPdfCallback: defaultOnExportToPdf,
     };
 
     function onScheduleEmailingError() {
