@@ -1,6 +1,11 @@
 // (C) 2019-2021 GoodData Corporation
 import { UriRef } from "@gooddata/sdk-model";
-import { FilterContextItem, IScheduledMailDefinition, IUser } from "@gooddata/sdk-backend-spi";
+import {
+    FilterContextItem,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    IUser,
+} from "@gooddata/sdk-backend-spi";
 import { ILocale, GoodDataSdkError } from "@gooddata/sdk-ui";
 import { CommandProcessingStatus } from "../dashboard/useDashboardCommandProcessing";
 
@@ -90,4 +95,9 @@ export interface ScheduledEmailDialogProps {
      * Callback to be called, when error occurs.
      */
     onError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Callback to be called, when scheduling finishes successfully.
+     */
+    onSuccess?: (scheduledMail: IScheduledMail) => void;
 }

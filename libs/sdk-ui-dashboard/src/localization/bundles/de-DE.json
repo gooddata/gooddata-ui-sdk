@@ -1,4 +1,8 @@
 {
     "filterBar.showAll": "Alle anzeigen",
-    "filterBar.showLess": "Weniger anzeigen"
+    "filterBar.showLess": "Weniger anzeigen",
+    "options.menu.export.PDF": "Nach PFD exportieren",
+    "options.menu.schedule.email": "E-Mailing planen",
+    "dialogs.schedule.email.submit.success": "Erfolgreich! Ihr Dashboard ist jetzt für E-Mails eingerichtet.",
+    "dialogs.schedule.email.submit.error": "Fehler! E-Mails für das Dashboard konnten nicht eingerichtet werden. Bitte später erneut versuchen."
 }

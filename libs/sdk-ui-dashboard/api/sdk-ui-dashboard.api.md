@@ -1154,6 +1154,14 @@ export interface IDefaultFilterBarProps {
 }
 
 // @internal (undocumented)
+export interface IDefaultMenuButtonCallbackProps {
+    // (undocumented)
+    onExportToPdfCallback?: () => void;
+    // (undocumented)
+    onScheduleEmailingCallback?: (isDialogOpen: boolean) => void;
+}
+
+// @internal (undocumented)
 export interface IDefaultMenuButtonProps {
     AdditionalMenuItems?: [number, MenuButtonItem][];
     ButtonComponent?: React_2.FC;
@@ -1174,6 +1182,7 @@ export interface IDefaultTopBarProps {
         placement?: "left" | "right";
         order?: number;
         defaultComponentProps?: IDefaultMenuButtonProps;
+        defaultComponentCallbackProps?: IDefaultMenuButtonCallbackProps;
     };
     // (undocumented)
     titleConfig?: {
@@ -1211,8 +1220,6 @@ export interface ITopBarMenuButtonConfig {
 
 // @internal (undocumented)
 export interface ITopBarProps {
-    // (undocumented)
-    menuButtonConfig: ITopBarMenuButtonConfig;
     // (undocumented)
     titleConfig: ITopBarTitleConfig;
 }
@@ -1272,7 +1279,7 @@ export type LoadingState = {
 export type MenuButtonItem = {
     itemId: string;
     itemName: string;
-    callback?: () => void;
+    callback?: (...params: any) => void;
     type?: "separator" | "header";
 };
 
@@ -1525,6 +1532,7 @@ export interface ScheduledEmailDialogProps {
     onCancel?: () => void;
     onError?: (error: GoodDataSdkError) => void;
     onSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
+    onSuccess?: (scheduledMail: IScheduledMail) => void;
 }
 
 // @internal

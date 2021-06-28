@@ -8,5 +8,25 @@
         "value": "Show less",
         "comment": "",
         "limit": 0
+    },
+    "options.menu.export.PDF": {
+        "value": "Export to PDF",
+        "comment": "Export whole KPI dashboard to PDF",
+        "limit": 0
+    },
+    "options.menu.schedule.email": {
+        "value": "Schedule emailing",
+        "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
+        "limit": 0
+    },
+    "dialogs.schedule.email.submit.success": {
+        "value": "Success! Your dashboard is scheduled for emailing.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.email.submit.error": {
+        "value": "Failed to schedule the dashboard. Try again later.",
+        "comment": "",
+        "limit": 0
     }
 }

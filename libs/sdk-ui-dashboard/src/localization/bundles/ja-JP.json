@@ -1,4 +1,8 @@
 {
     "filterBar.showAll": "すべて表示",
-    "filterBar.showLess": "簡易表示"
+    "filterBar.showLess": "簡易表示",
+    "options.menu.export.PDF": "PDF にエクスポート",
+    "options.menu.schedule.email": "メール送信をスケジュール",
+    "dialogs.schedule.email.submit.success": "成功！あなたのダッシュボードでメール送信がスケジュールされました。",
+    "dialogs.schedule.email.submit.error": "ダッシュボードのスケジュールに失敗。後で再試行してください。"
 }

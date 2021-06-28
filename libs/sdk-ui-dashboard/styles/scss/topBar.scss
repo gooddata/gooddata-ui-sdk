@@ -127,10 +127,5 @@
 }
 
 .overlay-wrapper {
-    @media #{$medium-up} {
-        z-index: initial;
-        &.gd-header-menu-overlay {
-            z-index: 5001;
-        }
-    }
+    z-index: 5001;
 }

@@ -1,4 +1,8 @@
 {
     "filterBar.showAll": "Mostrar tudo",
-    "filterBar.showLess": "Mostrar menos"
+    "filterBar.showLess": "Mostrar menos",
+    "options.menu.export.PDF": "Exportar para PDF",
+    "options.menu.schedule.email": "Agenda envio de e-mail",
+    "dialogs.schedule.email.submit.success": "Êxito! O seu dashboard está agendado para envio de e-mail.",
+    "dialogs.schedule.email.submit.error": "Não foi possível agendar o dashboard. Tente mais tarde."
 }

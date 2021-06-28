@@ -12,10 +12,14 @@ import { ISeparators } from '@gooddata/sdk-ui';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
+import { MessageDescriptor } from 'react-intl';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { WrappedComponentProps } from 'react-intl';
+
+// @internal (undocumented)
+export type AddMessageType = (message: MessageDescriptor) => void;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -1852,6 +1856,9 @@ export interface IMessagesState {
     shouldShowMore: boolean;
 }
 
+// @public (undocumented)
+export type IMessageWithoutId = Omit<IMessage, "id">;
+
 // @internal (undocumented)
 export interface IMultiSelectListProps<T> {
     // (undocumented)
@@ -2824,6 +2831,25 @@ export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
 }
 
 // @internal (undocumented)
+export const ToastMessageContext: React_2.Context<ToastMessageContextType>;
+
+// @internal (undocumented)
+export const ToastMessageContextProvider: React_2.FC;
+
+// @public (undocumented)
+export interface ToastMessageContextType {
+    // (undocumented)
+    addMessage: (message: IMessageWithoutId) => void;
+    // (undocumented)
+    messages: IMessage[];
+    // (undocumented)
+    removeMessage: (id: string) => void;
+}
+
+// @internal (undocumented)
+export const ToastMessages: React_2.FC;
+
+// @internal (undocumented)
 export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
@@ -2837,6 +2863,21 @@ export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
+
+// @internal (undocumented)
+export const useToastMessage: () => UseToastMessageType;
+
+// @internal (undocumented)
+export interface UseToastMessageType {
+    // (undocumented)
+    addError: AddMessageType;
+    // (undocumented)
+    addProgress: AddMessageType;
+    // (undocumented)
+    addSuccess: AddMessageType;
+    // (undocumented)
+    addWarning: AddMessageType;
+}
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Pick<IWorkspacePickerHomeFooterProps, "className" | "onClick" | "href">>;
