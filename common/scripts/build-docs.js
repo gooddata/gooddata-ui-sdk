@@ -32,6 +32,7 @@ function main() {
     // parse arguments
     let version = "";
     let help = false;
+    let dev = false;
     let index = 2;
     while (index < process.argv.length) {
         if (process.argv[index] === "-v" || process.argv[index] === "--version") {
@@ -42,6 +43,10 @@ function main() {
             help = true;
             index += 1;
         }
+        if (process.argv[index] === "-d" || process.argv[index] === "--dev") {
+            dev = true;
+            index += 1;
+        }
     }
 
     if (help) {
@@ -49,18 +54,23 @@ function main() {
         process.exit(0);
     }
 
+    // always use the Next version for dev
+    if (dev) {
+        version = "Next";
+    }
+
     if (!version) {
         printUsage();
         process.exit(1);
     }
 
-    buildVersion(version, () => process.exit(0));
+    buildVersion(version, dev, () => process.exit(0));
 }
 
 main();
 
 function printUsage() {
-    console.log("Usage: node build-docs.js -v VERSION [-h|--help]");
+    console.log("Usage: node build-docs.js -v VERSION [-h|--help] [-d|--dev]");
 }
 
 function writeJson(where, obj) {
@@ -92,7 +102,7 @@ function runCommand(command, argv, cwd) {
     });
 }
 
-async function buildVersion(versionName, onSuccess) {
+async function buildVersion(versionName, dev, onSuccess) {
     const dir = __dirname;
     const rootDir = path.resolve(dir, "../..");
 
@@ -109,6 +119,18 @@ async function buildVersion(versionName, onSuccess) {
 
     const sidebar = path.resolve(apiDocDirVersionedWebsite, "sidebars.json");
     const versionFile = path.resolve(apiDocDirVersionedWebsite, "version.json");
+
+    // make sure to discard all the changes in the apidocs repo version subdirectory in dev mode on Control-C
+    if (dev) {
+        process.on("SIGINT", async function () {
+            console.log(`Reverting apidocs v${versionName} to original state`);
+            // first restore the git state in the v${versionName} dir
+            child_process.execSync(`git restore -s@ -SW -- ./v${versionName}`, { cwd: apiDocDir });
+            // then delete all the untracked files there
+            child_process.execSync(`git clean -f -- ./v${versionName}`, { cwd: apiDocDir });
+            process.exit();
+        });
+    }
 
     // clean the version folder and init it with a template
     await rmdir(apiDocDirVersioned, { recursive: true });
@@ -221,24 +243,29 @@ async function buildVersion(versionName, onSuccess) {
     console.log("Running yarn install");
     await runCommand("yarn", ["install"], apiDocDirVersionedWebsite);
 
-    console.log("Running yarn build");
-    await runCommand("yarn", ["build"], apiDocDirVersionedWebsite);
+    if (dev) {
+        console.log("Running yarn start");
+        await runCommand("yarn", ["start"], apiDocDirVersionedWebsite);
+    } else {
+        console.log("Running yarn build");
+        await runCommand("yarn", ["build"], apiDocDirVersionedWebsite);
 
-    console.log("Moving the build outputs to appropriate place for gh-pages");
-    await runCommand(
-        "bash",
-        [
-            "-c",
-            `
+        console.log("Moving the build outputs to appropriate place for gh-pages");
+        await runCommand(
+            "bash",
+            [
+                "-c",
+                `
 mv website/build/gooddata-ui-apidocs gooddata-ui-apidocs
 shopt -s extglob
 rm -rf !(gooddata-ui-apidocs)
 mv gooddata-ui-apidocs/* .
 rm -rf gooddata-ui-apidocs
 `,
-        ],
-        apiDocDirVersioned
-    );
+            ],
+            apiDocDirVersioned
+        );
 
-    onSuccess();
+        onSuccess();
+    }
 }
