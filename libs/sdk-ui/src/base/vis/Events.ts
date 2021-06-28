@@ -82,6 +82,8 @@ export interface IAvailableDrillTargetMeasure {
  */
 export interface IAvailableDrillTargetAttribute {
     attribute: IAttributeDescriptor;
+    // TODO feel free to rename it - it is the list of attributes, which will be in intersection for given available attribute - used for target URI's params customization in KD config panel of drill to URI
+    attributesToHere: IAttributeDescriptor[];
 }
 
 /*

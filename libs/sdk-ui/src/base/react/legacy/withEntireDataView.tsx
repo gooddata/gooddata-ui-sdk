@@ -13,7 +13,7 @@ import {
     isNoDataError,
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
-import { defFingerprint } from "@gooddata/sdk-model";
+import { areObjRefsEqual, defFingerprint } from "@gooddata/sdk-model";
 import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import noop from "lodash/noop";
@@ -22,7 +22,9 @@ import flatMap from "lodash/fp/flatMap";
 import filter from "lodash/fp/filter";
 import flow from "lodash/fp/flow";
 import uniqBy from "lodash/fp/uniqBy";
+import flatten from "lodash/flatten";
 import {
+    IAvailableDrillTargetAttribute,
     IAvailableDrillTargetMeasure,
     IAvailableDrillTargets,
     IExportFunction,
@@ -200,6 +202,37 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onError(new NegativeValuesSdkError());
         }
 
+        // attributesTOHere are attributes from the same dimension as availableFromAttribute and are on the left side from him in array
+        private getAttributesToHere(
+            fromAttribute: IAttributeDescriptor,
+            attributes: IAttributeDescriptor[],
+        ): IAvailableDrillTargetAttribute {
+            const indexOfFromAttribute = attributes.findIndex((a) =>
+                areObjRefsEqual(a.attributeHeader.ref, fromAttribute.attributeHeader.ref),
+            );
+            return {
+                attribute: fromAttribute,
+                attributesToHere: attributes.slice(0, indexOfFromAttribute + 1), // needs to include fromAttribute itself too
+            };
+        }
+
+        private getAvailableDrillAttributes(dv: DataViewFacade): IAvailableDrillTargetAttribute[] {
+            return flatten(
+                dv
+                    .meta()
+                    .dimensions()
+                    .map((_dimension, index) => {
+                        // split all attributes by dimension and handle each independently
+                        return dv
+                            .meta()
+                            .attributeDescriptorsForDim(index)
+                            .map((attribute, _index, attributes) =>
+                                this.getAttributesToHere(attribute, attributes),
+                            );
+                    }),
+            );
+        }
+
         private getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
             const attributes = uniqBy(
                 (attributeDescriptor) => attributeDescriptor.attributeHeader.formOf.identifier,
@@ -215,10 +248,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                             attributes,
                         }),
                     ),
-                attributes: dv
-                    .meta()
-                    .attributeDescriptors()
-                    .map((attribute) => ({ attribute })),
+                attributes: this.getAvailableDrillAttributes(dv),
             };
         }
 
@@ -249,6 +279,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                         attributes: attributeDescriptors,
                     }),
                 ),
+                // TODO fix getting full attributes info from execution
                 attributes: attributeDescriptors.map((attribute) => ({ attribute })),
             };
         }
