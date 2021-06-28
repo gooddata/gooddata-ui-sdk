@@ -1,3 +1,4 @@
+// (C) 2021 GoodData Corporation
 import React, { createContext, useState } from "react";
 import { IMessage } from "./typings";
 
