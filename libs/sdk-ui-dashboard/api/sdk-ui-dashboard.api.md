@@ -1218,7 +1218,7 @@ export interface IDefaultMenuButtonCallbackProps {
 
 // @internal (undocumented)
 export interface IDefaultMenuButtonProps {
-    AdditionalMenuItems?: [number, MenuButtonItem][];
+    additionalMenuItems?: [number, MenuButtonItem][];
     ButtonComponent?: React_2.FC;
     menuItems?: MenuButtonItem[];
 }

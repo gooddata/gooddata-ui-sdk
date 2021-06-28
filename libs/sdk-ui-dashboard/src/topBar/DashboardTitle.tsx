@@ -64,5 +64,5 @@ export type DashboardTitleComponent = ComponentType<IDashboardTitleProps>;
 
 export const defaultTitleComponentProps = {
     Component: DashboardTitle,
-    placement: "right" as Placement,
+    placement: "left" as Placement,
 };

@@ -2326,6 +2326,8 @@ export interface IShortenedTextState {
 // @internal (undocumented)
 export interface ISingleSelectListItemProps {
     // (undocumented)
+    className?: string;
+    // (undocumented)
     icon?: string;
     // (undocumented)
     isSelected?: boolean;

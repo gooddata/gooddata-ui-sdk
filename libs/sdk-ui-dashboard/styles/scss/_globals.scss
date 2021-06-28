@@ -22,3 +22,13 @@ body {
 a:hover {
     cursor: pointer;
 }
+
+// normalize.css no longer makes these changes, so add them explicitly here
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-weight: inherit;
+    outline: 0;
+}

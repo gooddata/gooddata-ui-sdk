@@ -707,6 +707,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "normalize.css",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "npm-run-all",
       "allowedCategories": [ "examples" ]
     },

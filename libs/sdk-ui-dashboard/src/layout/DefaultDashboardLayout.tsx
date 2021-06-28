@@ -85,7 +85,6 @@ export const DefaultDashboardLayout = ({
                     />
                 );
             }}
-            className="gd-dashboards-root"
             // When section headers are enabled, use default DashboardLayout sectionHeaderRenderer.
             // When turned off, render nothing.
             sectionHeaderRenderer={settings.enableSectionHeaders ? undefined : () => <React.Fragment />}

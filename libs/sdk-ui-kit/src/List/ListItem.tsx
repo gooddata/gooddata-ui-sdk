@@ -19,6 +19,7 @@ export interface ISingleSelectListItemProps {
     title?: string;
     icon?: string;
     type?: SingleSelectListItemType;
+    className?: string;
 
     isSelected?: boolean;
 
@@ -81,10 +82,10 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     }
 
     private getClassNames = () => {
-        const { title, isSelected } = this.props;
+        const { title, isSelected, className } = this.props;
         const generatedSeleniumClass = `s-${stringUtils.simplifyText(title)}`;
 
-        return cx("gd-list-item", generatedSeleniumClass, { "is-selected": isSelected });
+        return cx("gd-list-item", className, generatedSeleniumClass, { "is-selected": isSelected });
     };
 
     private renderTitle = () => {
