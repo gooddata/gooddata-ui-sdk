@@ -45,7 +45,7 @@ export function demonstrateCustomMenuPlacementAndItem(): JSX.Element {
                     menuButtonConfig: {
                         placement: "left",
                         defaultComponentProps: {
-                            AdditionalMenuItems: [customItem],
+                            additionalMenuItems: [customItem],
                         },
                     },
                 },

@@ -47,7 +47,7 @@ export interface IDefaultMenuButtonProps {
      * If specified, this should be a list of tuples: index to add item at, the menu item to add. If you want
      * to add item at the end of the list, use index `-1`.
      */
-    AdditionalMenuItems?: [number, MenuButtonItem][];
+    additionalMenuItems?: [number, MenuButtonItem][];
 }
 
 /**
@@ -80,7 +80,7 @@ export const DashboardMenuButton: React.FC<IDashboardMenuButtonProps & IDefaultM
 
     const renderAdditionalMenuItems = () => {
         //todo add render logic according to indexes specified.
-        return props.AdditionalMenuItems?.map((item) => {
+        return props.additionalMenuItems?.map((item) => {
             const menuItem = item[1];
             return (
                 <SingleSelectListItem

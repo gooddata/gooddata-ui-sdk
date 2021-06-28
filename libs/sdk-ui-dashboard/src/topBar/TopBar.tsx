@@ -31,14 +31,14 @@ export interface IDefaultTopBarProps {
         Component?: DashboardTitleComponent;
 
         /**
-         * Optionally specify where the topbar places the menu button.
+         * Optionally specify where the topbar places the title.
          *
-         * Default: right.
+         * Default: left.
          */
         placement?: "left" | "right";
 
         /**
-         * Optionally specify order of the menu button in case multiple components of the top bar are placed
+         * Optionally specify order of the title in case multiple components of the top bar are placed
          * on the same side (e.g. if two components are placed on the right, this prop will influence which
          * of the two components is the rightmost)
          */
@@ -54,14 +54,14 @@ export interface IDefaultTopBarProps {
         Component?: DashboardButtonBarComponent;
 
         /**
-         * Optionally specify where the topbar places the menu button.
+         * Optionally specify where the topbar places the button bar.
          *
          * Default: right.
          */
         placement?: "left" | "right";
 
         /**
-         * Optionally specify order of the menu button in case multiple components of the top bar are placed
+         * Optionally specify order of the button bar in case multiple components of the top bar are placed
          * on the same side (e.g. if two components are placed on the right, this prop will influence which
          * of the two components is the rightmost)
          */
