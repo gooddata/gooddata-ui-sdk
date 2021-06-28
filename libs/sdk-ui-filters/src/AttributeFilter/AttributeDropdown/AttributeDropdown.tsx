@@ -148,6 +148,10 @@ export class AttributeDropdownCore extends React.PureComponent<
                     isLoading: false,
                     offset: 0,
                     limit: LIMIT,
+                    selectedItems: parentFilterChanged ? [] : this.state.selectedItems,
+                    prevSelectedItems: parentFilterChanged ? [] : this.state.selectedItems,
+                    isInverted: parentFilterChanged ? true : this.state.isInverted,
+                    prevIsInverted: parentFilterChanged ? true : this.state.prevIsInverted,
                 },
                 () => {
                     this.getElements();
@@ -159,6 +163,8 @@ export class AttributeDropdownCore extends React.PureComponent<
                             };
                         });
                     });
+                    // calling onApply to get the values changed in parent component
+                    parentFilterChanged && this.onApplyButtonClicked();
                 },
             );
         }
