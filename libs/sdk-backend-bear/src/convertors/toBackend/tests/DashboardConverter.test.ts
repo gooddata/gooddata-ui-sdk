@@ -1,6 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 
-import { convertDashboard, convertFilterContext, convertWidget } from "../DashboardConverter";
+import { convertDashboard, convertDrill, convertFilterContext, convertWidget } from "../DashboardConverter";
 import {
     emptyDashboard,
     dashboardWithFilterContext,
@@ -14,6 +14,8 @@ import {
     widgetKpi,
     widgetKpiWithDrilling,
     dashboardWithLayoutAndCustomGridHeight,
+    drillToDashboardWithDrillFromMeasure,
+    drillToDashboardWithDrillFromAttribute,
 } from "./DashboardConverter.fixtures";
 
 describe("dashboard converter", () => {
@@ -80,6 +82,18 @@ describe("dashboard converter", () => {
         it("should convert temp filter context", () => {
             const convertedDashboard = convertFilterContext(dashboardTempFilterContext);
             expect(convertedDashboard).toMatchSnapshot();
+        });
+    });
+
+    describe("convert drill", () => {
+        it("should convert drill to dashboard with drill from measure", () => {
+            const convertedDrill = convertDrill(drillToDashboardWithDrillFromMeasure);
+            expect(convertedDrill).toMatchSnapshot();
+        });
+
+        it("should convert drill to dashboard with drill from attribute", () => {
+            const convertedDrill = convertDrill(drillToDashboardWithDrillFromAttribute);
+            expect(convertedDrill).toMatchSnapshot();
         });
     });
 });

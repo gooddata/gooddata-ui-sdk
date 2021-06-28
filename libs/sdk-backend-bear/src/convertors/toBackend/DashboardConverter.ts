@@ -45,6 +45,8 @@ import {
     ScreenSize,
     IDashboardLayout,
     NotSupported,
+    isDrillFromAttribute,
+    isDrillFromMeasure,
 } from "@gooddata/sdk-backend-spi";
 import {
     GdcDashboardLayout,
@@ -335,19 +337,30 @@ export function convertDrill(
         return kpiDrill;
     }
 
-    const {
-        origin: { measure },
-    } = drill;
-    const drillFromMeasure = {
-        drillFromMeasure: {
-            localIdentifier: refToLocalId(measure),
-        },
-    };
+    const { origin } = drill;
+    let drillFrom: GdcVisualizationWidget.DrillFromType;
+    if (isDrillFromMeasure(origin)) {
+        const { measure } = origin;
+        drillFrom = {
+            drillFromMeasure: {
+                localIdentifier: refToLocalId(measure),
+            },
+        };
+    } else if (isDrillFromAttribute(origin)) {
+        const { attribute } = origin;
+        drillFrom = {
+            drillFromAttribute: {
+                localIdentifier: refToLocalId(attribute),
+            },
+        };
+    } else {
+        throw new UnexpectedError("Unable to convert unknown drill origin!");
+    }
 
     if (isDrillToDashboard(drill)) {
         const drillToDashboard: GdcVisualizationWidget.IDrillToDashboard = {
             drillToDashboard: {
-                from: drillFromMeasure,
+                from: drillFrom,
                 target: "in-place",
                 toDashboard: drill.target !== undefined ? refToIdentifier(drill.target) : undefined,
             },
@@ -357,7 +370,7 @@ export function convertDrill(
     } else if (isDrillToInsight(drill)) {
         const drillToInsight: GdcVisualizationWidget.IDrillToVisualization = {
             drillToVisualization: {
-                from: drillFromMeasure,
+                from: drillFrom,
                 target: "pop-up",
                 toVisualization: {
                     uri: refToUri(drill.target),
@@ -369,7 +382,7 @@ export function convertDrill(
     } else if (isDrillToCustomUrl(drill)) {
         const drillToCustomUrl: GdcVisualizationWidget.IDrillToCustomUrl = {
             drillToCustomUrl: {
-                from: drillFromMeasure,
+                from: drillFrom,
                 target: "new-window",
                 customUrl: drill.target.url,
             },
@@ -378,7 +391,7 @@ export function convertDrill(
     } else if (isDrillToAttributeUrl(drill)) {
         const drillToAttributeUrl: GdcVisualizationWidget.IDrillToAttributeUrl = {
             drillToAttributeUrl: {
-                from: drillFromMeasure,
+                from: drillFrom,
                 target: "new-window",
                 drillToAttributeDisplayForm: { uri: refToUri(drill.target.hyperlinkDisplayForm) },
                 insightAttributeDisplayForm: { uri: refToUri(drill.target.displayForm) },

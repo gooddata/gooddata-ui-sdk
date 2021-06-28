@@ -349,6 +349,34 @@ Object {
 }
 `;
 
+exports[`dashboard converter convert drill should convert drill to dashboard with drill from attribute 1`] = `
+Object {
+  "drillToDashboard": Object {
+    "from": Object {
+      "drillFromAttribute": Object {
+        "localIdentifier": "attributeLocalIdentifier",
+      },
+    },
+    "target": "in-place",
+    "toDashboard": "someDashboardId",
+  },
+}
+`;
+
+exports[`dashboard converter convert drill should convert drill to dashboard with drill from measure 1`] = `
+Object {
+  "drillToDashboard": Object {
+    "from": Object {
+      "drillFromMeasure": Object {
+        "localIdentifier": "measureLocalIdentifier",
+      },
+    },
+    "target": "in-place",
+    "toDashboard": "someDashboardId",
+  },
+}
+`;
+
 exports[`dashboard converter convert filter context should convert filter context 1`] = `
 Object {
   "filterContext": Object {

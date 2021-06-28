@@ -2,11 +2,12 @@
 import {
     IDashboard,
     IDashboardLayoutItem,
+    IDrillToDashboard,
     IFilterContext,
     ITempFilterContext,
     IWidget,
 } from "@gooddata/sdk-backend-spi";
-import { uriRef } from "@gooddata/sdk-model";
+import { idRef, localIdRef, uriRef } from "@gooddata/sdk-model";
 
 const createObjectMeta = (id: string) => {
     const uri = `/gdc/md/obj/${id}`;
@@ -298,4 +299,24 @@ export const dashboardWithLayoutAndCustomGridHeight: IDashboard = {
             },
         ],
     },
+};
+
+export const drillToDashboardWithDrillFromMeasure: IDrillToDashboard = {
+    type: "drillToDashboard",
+    origin: {
+        type: "drillFromMeasure",
+        measure: localIdRef("measureLocalIdentifier"),
+    },
+    transition: "in-place",
+    target: idRef("someDashboardId"),
+};
+
+export const drillToDashboardWithDrillFromAttribute: IDrillToDashboard = {
+    type: "drillToDashboard",
+    origin: {
+        type: "drillFromAttribute",
+        attribute: localIdRef("attributeLocalIdentifier"),
+    },
+    transition: "in-place",
+    target: idRef("someDashboardId"),
 };

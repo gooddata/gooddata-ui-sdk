@@ -29,13 +29,13 @@ export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
  * Drill origin type
  * @alpha
  */
-export type DrillOriginType = "drillFromMeasure";
+export type DrillOriginType = "drillFromMeasure" | "drillFromAttribute";
 
 /**
  * Drill origin
  * @alpha
  */
-export type DrillOrigin = IDrillFromMeasure;
+export type DrillOrigin = IDrillFromMeasure | IDrillFromAttribute;
 
 /**
  * Drill transition
@@ -112,6 +112,38 @@ export interface IDrillFromMeasure extends IDrillOrigin {
      * Measure object ref
      */
     measure: ObjRefInScope;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDrillFromMeasure}.
+ * @alpha
+ */
+export function isDrillFromMeasure(obj: DrillOrigin): obj is IDrillFromMeasure {
+    return !isEmpty(obj) && (obj as IDrillFromMeasure).type === "drillFromMeasure";
+}
+
+/**
+ * Drill from attribute
+ * @alpha
+ */
+export interface IDrillFromAttribute extends IDrillOrigin {
+    /**
+     * Drill origin type
+     */
+    type: "drillFromAttribute";
+
+    /**
+     * Attribute object ref
+     */
+    attribute: ObjRefInScope;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDrillFromAttribute}.
+ * @alpha
+ */
+export function isDrillFromAttribute(obj: DrillOrigin): obj is IDrillFromAttribute {
+    return !isEmpty(obj) && (obj as IDrillFromAttribute).type === "drillFromAttribute";
 }
 
 /**

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`convert drill definition should convert drill to dashboard with drill from attribute 1`] = `
+Object {
+  "origin": Object {
+    "attribute": Object {
+      "localIdentifier": "attributeLocalIdentifier",
+    },
+    "type": "drillFromAttribute",
+  },
+  "target": Object {
+    "identifier": "dashboardId",
+  },
+  "transition": "in-place",
+  "type": "drillToDashboard",
+}
+`;
+
+exports[`convert drill definition should convert drill to dashboard with drill from measure 1`] = `
+Object {
+  "origin": Object {
+    "measure": Object {
+      "localIdentifier": "measureLocalIdentifier",
+    },
+    "type": "drillFromMeasure",
+  },
+  "target": Object {
+    "identifier": "dashboardId",
+  },
+  "transition": "in-place",
+  "type": "drillToDashboard",
+}
+`;
+
+exports[`convert drill origin should convert drill from attribute 1`] = `
+Object {
+  "attribute": Object {
+    "localIdentifier": "attributeLocalIdentifier",
+  },
+  "type": "drillFromAttribute",
+}
+`;
+
+exports[`convert drill origin should convert drill from measure 1`] = `
+Object {
+  "measure": Object {
+    "localIdentifier": "measureLocalIdentifier",
+  },
+  "type": "drillFromMeasure",
+}
+`;
