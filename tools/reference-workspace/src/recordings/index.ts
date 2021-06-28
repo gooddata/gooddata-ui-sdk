@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-15T12:51:23.524Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-28T16:01:41.632Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -366,6 +366,12 @@ const fp_61ebe709fdca90022779fb43924ab885 = {
     executionResult: require("./uiTestScenarios/executions/61ebe709fdca90022779fb43924ab885/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/61ebe709fdca90022779fb43924ab885/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/61ebe709fdca90022779fb43924ab885/scenarios.json"),
+};
+const fp_6364a44aaf77c9cca1a1cc528330b1a8 = {
+    definition: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/scenarios.json"),
 };
 const fp_6550dac795fa5f759240fa22351d815a = {
     definition: require("./uiTestScenarios/executions/6550dac795fa5f759240fa22351d815a/definition.json"),
@@ -859,12 +865,6 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
 };
-const fp_6364a44aaf77c9cca1a1cc528330b1a8 = {
-    definition: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/dataView_all.json"),
-    scenarios: require("./uiTestScenarios/executions/6364a44aaf77c9cca1a1cc528330b1a8/scenarios.json"),
-};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -1176,6 +1176,10 @@ export const Scenarios = {
         ArithmeticMeasuresAndSegment: { scenarioIndex: 0, execution: fp_179f06a3a73ef41de634960f77cded42 },
         SingleMeasureAndViewBy: { scenarioIndex: 9, execution: fp_3a10af340782b53c003532ddce4c9fa4 },
         SingleMeasure: { scenarioIndex: 6, execution: fp_46588b57054306cfdb4d67c9ce0f0362 },
+        WithOneMeasureAndViewByDateAndSegmentByDate: {
+            scenarioIndex: 0,
+            execution: fp_6364a44aaf77c9cca1a1cc528330b1a8,
+        },
         SingleMeasureAndViewByFilteredToOneElement: {
             scenarioIndex: 0,
             execution: fp_7018149bcff18c2592e72bd9d07049ff,
@@ -1186,10 +1190,6 @@ export const Scenarios = {
         SingleMeasureViewByAndSegment: { scenarioIndex: 0, execution: fp_ec4ab5aacbca8cd180d2bc8115d8cfb7 },
         Themed: { scenarioIndex: 1, execution: fp_ec4ab5aacbca8cd180d2bc8115d8cfb7 },
         SingleMeasureAndSegment: { scenarioIndex: 0, execution: fp_fd4473fef32dc8b57cdba96564af53e1 },
-        WithOneMeasureAndViewByDateAndSegmentByDate: {
-            scenarioIndex: 0,
-            execution: fp_6364a44aaf77c9cca1a1cc528330b1a8,
-        },
     },
     Execute: {
         TwoUnscopedSeries: { scenarioIndex: 0, execution: fp_17bdc7cd45b303fc54f97cde57ba1816 },
@@ -4606,6 +4606,7 @@ export const Recordings = {
         fp_5d664cbf7af114e5b2b8565c6a69f561,
         fp_5fdca130c618fc4efcbbbad2e3473c0c,
         fp_61ebe709fdca90022779fb43924ab885,
+        fp_6364a44aaf77c9cca1a1cc528330b1a8,
         fp_6550dac795fa5f759240fa22351d815a,
         fp_66b87907b416d4f35f2134fea32cd87f,
         fp_6d28d90e10aa4f3a42d6a1e396dfe2cb,
@@ -4689,7 +4690,6 @@ export const Recordings = {
         fp_fd4473fef32dc8b57cdba96564af53e1,
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_ff74085f6f31c71f4797251924d3205d,
-        fp_6364a44aaf77c9cca1a1cc528330b1a8,
     },
     metadata: {
         catalog,
