@@ -276,6 +276,63 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     }
 }
 
+.gd-attribute-filter-dropdown-all-items-filtered {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: $gd-color-state-blank;
+    cursor: default;
+
+    .gd-filtered-message {
+        margin-left: -20px;
+
+        .gd-icon-circle-question {
+            position: absolute;
+            top: 22px;
+            padding: 5px;
+
+            @media #{$xsmall-only}, #{$small-only} {
+                top: 60px;
+            }
+        }
+    }
+}
+
+.gd-attribute-filter-dropdown-bubble {
+    max-width: 200px;
+}
+
+.attributevalues-list {
+    .loading-mask {
+        flex: 1 0 auto;
+        min-height: 52px;
+    }
+
+    .gd-list-item {
+        &:hover {
+            background-color: $is-focused-background;
+
+            &.is-selected {
+                color: $gd-color-text;
+                background-color: $is-focused-background;
+            }
+
+            .input-label-text {
+                color: var(--gd-palette-complementary-9, inherit);
+            }
+        }
+
+        &.is-selected {
+            font-weight: bold;
+            color: $gd-color-text;
+        }
+    }
+}
+
+.gd-filtered-message:hover {
+    color: $gd-color-text;
+}
+
 /* hide IE10+ eraser */
 ::-ms-clear {
     display: none;
