@@ -2,7 +2,7 @@
 import React from "react";
 import { FilterContextItem, IAnalyticalBackend, IKpiWidget, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { IErrorProps, ILoadingProps, IDrillableItem, IHeaderPredicate, OnError } from "@gooddata/sdk-ui";
-import { OnFiredDashboardViewDrillEvent, IDashboardFilter } from "@gooddata/sdk-ui-ext/esm";
+import { OnFiredDashboardViewDrillEvent, IDashboardFilter } from "@gooddata/sdk-ui-ext";
 
 /**
  * @internal

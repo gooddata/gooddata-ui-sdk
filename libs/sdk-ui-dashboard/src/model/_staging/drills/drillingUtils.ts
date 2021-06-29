@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import compact from "lodash/compact";
 import { DrillDefinition, ICatalogAttribute, ICatalogDateAttribute } from "@gooddata/sdk-backend-spi";
-import { isLocalIdRef, isIdentifierRef, isUriRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { isLocalIdRef, isIdentifierRef, isUriRef, areObjRefsEqual, localIdRef } from "@gooddata/sdk-model";
 import { HeaderPredicates, IAvailableDrillTargetAttribute, IHeaderPredicate } from "@gooddata/sdk-ui";
 import { IDrillDownDefinition } from "@gooddata/sdk-ui-ext";
 
@@ -47,6 +47,7 @@ function insightDrillDownImplicitDrills(
         return {
             drillDefinition: {
                 type: "drillDown",
+                origin: localIdRef(drill.attribute.attributeHeader.localIdentifier),
                 target: matchingCatalogAttribute!.attribute.drillDownStep!,
             },
             predicates: [
@@ -69,9 +70,13 @@ export function getImplicitDrillsWithPredicates(
     insightWidgetDrills: DrillDefinition[],
     possibleDrills: IAvailableDrillTargetAttribute[],
     attributesWithDrillDown: Array<ICatalogAttribute | ICatalogDateAttribute>,
+    disableWidgetDrills?: boolean,
 ): IImplicitDrillWithPredicates[] {
-    const insightImplicitDrills = insightWidgetImplicitDrills(insightWidgetDrills);
-    const drillDownImplicitDrills = insightDrillDownImplicitDrills(possibleDrills, attributesWithDrillDown);
+    let drills = insightDrillDownImplicitDrills(possibleDrills, attributesWithDrillDown);
 
-    return [...insightImplicitDrills, ...drillDownImplicitDrills];
+    if (!disableWidgetDrills) {
+        drills = [...drills, ...insightWidgetImplicitDrills(insightWidgetDrills)];
+    }
+
+    return drills;
 }

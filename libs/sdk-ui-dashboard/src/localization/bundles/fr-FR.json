@@ -4,5 +4,9 @@
     "options.menu.export.PDF": "Exporter vers PDF",
     "options.menu.schedule.email": "Programmer l'envoi d'e-mails",
     "dialogs.schedule.email.submit.success": "Le tableau de bord est programmé pour envoyer des e-mails.",
-    "dialogs.schedule.email.submit.error": "Échec de la programmation du tableau de bord. Réessayez plus tard."
+    "dialogs.schedule.email.submit.error": "Échec de la programmation du tableau de bord. Réessayez plus tard.",
+    "drill_modal_picker.drill-down": "Exploration descendante",
+    "drill_modal_picker.drill-into": "Explorer",
+    "drill_modal_picker.more.details": "Plus de détails",
+    "drillModal.backToTop": "Haut de page"
 }

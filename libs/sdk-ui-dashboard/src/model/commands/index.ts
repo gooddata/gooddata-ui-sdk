@@ -38,6 +38,15 @@ import {
 } from "./layout";
 import { CreateAlert, RemoveAlert, UpdateAlert } from "./alerts";
 import { CreateScheduledEmail } from "./scheduledEmail";
+import {
+    Drill,
+    DrillDown,
+    DrillToAttributeUrl,
+    DrillToCustomUrl,
+    DrillToDashboard,
+    DrillToInsight,
+    DrillToLegacyDashboard,
+} from "./drill";
 
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
 export {
@@ -95,6 +104,22 @@ export {
 } from "./layout";
 export { CreateAlert, createAlert, RemoveAlert, removeAlert, UpdateAlert, updateAlert } from "./alerts";
 export { CreateScheduledEmail } from "./scheduledEmail";
+export {
+    Drill,
+    DrillDown,
+    DrillToAttributeUrl,
+    DrillToCustomUrl,
+    DrillToDashboard,
+    DrillToInsight,
+    DrillToLegacyDashboard,
+    drill,
+    drillDown,
+    drillToAttributeUrl,
+    drillToCustomUrl,
+    drillToDashboard,
+    drillToInsight,
+    drillToLegacyDashboard,
+} from "./drill";
 export {
     ChangeKpiWidgetHeader,
     changeKpiWidgetHeader,
@@ -166,4 +191,11 @@ export type DashboardCommands =
     | CreateAlert
     | UpdateAlert
     | RemoveAlert
-    | CreateScheduledEmail;
+    | CreateScheduledEmail
+    | Drill
+    | DrillDown
+    | DrillToAttributeUrl
+    | DrillToCustomUrl
+    | DrillToDashboard
+    | DrillToInsight
+    | DrillToLegacyDashboard;

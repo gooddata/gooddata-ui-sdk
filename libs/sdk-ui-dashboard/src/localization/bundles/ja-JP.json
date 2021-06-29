@@ -4,5 +4,9 @@
     "options.menu.export.PDF": "PDF にエクスポート",
     "options.menu.schedule.email": "メール送信をスケジュール",
     "dialogs.schedule.email.submit.success": "成功！あなたのダッシュボードでメール送信がスケジュールされました。",
-    "dialogs.schedule.email.submit.error": "ダッシュボードのスケジュールに失敗。後で再試行してください。"
+    "dialogs.schedule.email.submit.error": "ダッシュボードのスケジュールに失敗。後で再試行してください。",
+    "drill_modal_picker.drill-down": "ドリルダウン",
+    "drill_modal_picker.drill-into": "ドリル",
+    "drill_modal_picker.more.details": "詳細",
+    "drillModal.backToTop": "トップに戻る"
 }

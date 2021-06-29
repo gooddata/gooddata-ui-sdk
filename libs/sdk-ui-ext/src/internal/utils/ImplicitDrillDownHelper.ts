@@ -1,12 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
+import { IDrillDownDefinition } from "../interfaces/Visualization";
 
-import { IImplicitDrillDown } from "../interfaces/Visualization";
-
-export function drillDownFromAttributeLocalId(drillDefinition: IImplicitDrillDown): string {
-    return drillDefinition.implicitDrillDown.from.drillFromAttribute.localIdentifier;
+export function drillDownFromAttributeLocalId(drillDefinition: IDrillDownDefinition): string {
+    return drillDefinition.origin.localIdentifier;
 }
 
-export function drillDownDisplayForm(drillDefinition: IImplicitDrillDown): ObjRef {
-    return drillDefinition.implicitDrillDown.drillDownStep.drillToAttribute.attributeDisplayForm;
+export function drillDownDisplayForm(drillDefinition: IDrillDownDefinition): ObjRef {
+    return drillDefinition.target;
 }

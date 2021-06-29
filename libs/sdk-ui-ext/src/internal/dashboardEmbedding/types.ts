@@ -1,5 +1,4 @@
 // (C) 2007-2021 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
 import { DrillDefinition, IMeasureDescriptor, ISeparators } from "@gooddata/sdk-backend-spi";
 import {
     IAbsoluteDateFilter,
@@ -9,6 +8,7 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 import { IDrillEvent, ILocale, OnFiredDrillEvent } from "@gooddata/sdk-ui";
+import { IDrillDownDefinition } from "../interfaces/Visualization";
 
 export interface IKpiResult {
     measureFormat: string;
@@ -33,23 +33,6 @@ export type IDashboardFilter =
     | IRelativeDateFilter
     | IPositiveAttributeFilter
     | INegativeAttributeFilter;
-
-/**
- * Information about the DrillDown interaction - the attribute that is next in the drill down hierarchy.
- * @beta
- */
-export interface IDrillDownDefinition {
-    type: "drillDown";
-    target: ObjRef;
-}
-
-/**
- * Type-guard testing whether the provided object is an instance of {@link IDrillDownDefinition}.
- * @beta
- */
-export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition {
-    return !isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
-}
 
 /**
  * A {@link @gooddata/sdk-ui#IDrillEvent} with added information about the drill event specific to the DashboardView context.

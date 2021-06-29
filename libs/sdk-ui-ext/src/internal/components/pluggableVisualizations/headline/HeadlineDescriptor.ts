@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
-import { IInsightDefinition } from "@gooddata/sdk-model";
-
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { ISettings } from "@gooddata/sdk-backend-spi";
 import {
     IVisualizationSizeInfo,
     IVisualizationDescriptor,
@@ -9,7 +9,6 @@ import {
 import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggableHeadline } from "./PluggableHeadline";
 import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants";
-import { ISettings } from "@gooddata/sdk-backend-spi";
 
 const hasSecondaryMeasure = (insight: IInsightDefinition) =>
     insight.insight.buckets.filter((bucket) => bucket.items.length > 0).length > 1;
@@ -57,5 +56,9 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
             return DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT;
         }
         return MAX_VISUALIZATION_HEIGHT;
+    }
+
+    public applyDrillDown(insight: IInsight): IInsight {
+        return insight;
     }
 }

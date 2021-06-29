@@ -4,5 +4,9 @@
     "options.menu.export.PDF": "Exportar para PDF",
     "options.menu.schedule.email": "Agendar envio por e-mail",
     "dialogs.schedule.email.submit.success": "Sucesso! Seu painel está agendado para envio por e-mail.",
-    "dialogs.schedule.email.submit.error": "Erro ao agendar o painel. Tente novamente mais tarde."
+    "dialogs.schedule.email.submit.error": "Erro ao agendar o painel. Tente novamente mais tarde.",
+    "drill_modal_picker.drill-down": "Detalhamento aprofundado",
+    "drill_modal_picker.drill-into": "Detalhar",
+    "drill_modal_picker.more.details": "Mais detalhes",
+    "drillModal.backToTop": "Voltar ao início"
 }

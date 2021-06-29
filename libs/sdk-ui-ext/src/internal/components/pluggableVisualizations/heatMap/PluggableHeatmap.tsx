@@ -14,9 +14,9 @@ import { DEFAULT_HEATMAP_UICONFIG } from "../../../constants/uiConfig";
 import {
     IDrillDownContext,
     IExtendedReferencePoint,
-    IImplicitDrillDown,
     IReferencePoint,
     IVisConstruct,
+    IDrillDownDefinition,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
@@ -40,7 +40,6 @@ import includes from "lodash/includes";
 import set from "lodash/set";
 import tail from "lodash/tail";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 
@@ -113,7 +112,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    private addFilters(source: IInsight, drillConfig: IImplicitDrillDown, event: IDrillEvent) {
+    private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
         const cutIntersection = (event.drillContext.intersection || []).filter(
             (i) =>

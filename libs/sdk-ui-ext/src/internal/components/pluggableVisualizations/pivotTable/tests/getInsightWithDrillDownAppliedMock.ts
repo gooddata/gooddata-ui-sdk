@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import {
     bucketSetTotals,
@@ -6,6 +6,7 @@ import {
     IInsight,
     IInsightDefinition,
     ISortItem,
+    localIdRef,
     modifyAttribute,
     newAttribute,
     newAttributeSort,
@@ -15,12 +16,12 @@ import {
     newTotal,
     uriRef,
 } from "@gooddata/sdk-model";
-import { IImplicitDrillDown, IVisualizationProperties } from "../../../..";
 import { Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/ldm/full";
 import { newWidthForAllMeasureColumns, newWidthForAttributeColumn } from "@gooddata/sdk-ui-pivot";
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IDrillEventIntersectionElement, IDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import { ReferenceData } from "@gooddata/reference-workspace";
+import { IVisualizationProperties, IDrillDownDefinition } from "../../../../interfaces/Visualization";
 
 const properties: IVisualizationProperties = {
     controls: {
@@ -87,15 +88,10 @@ const sourceInsightWithTotals: IInsight = {
 };
 
 const implicitTargetDF = uriRef("implicitDrillDown-target-uri");
-const drillConfig: IImplicitDrillDown = {
-    implicitDrillDown: {
-        from: { drillFromAttribute: { localIdentifier: Status.attribute.localIdentifier } },
-        drillDownStep: {
-            drillToAttribute: {
-                attributeDisplayForm: implicitTargetDF,
-            },
-        },
-    },
+const drillConfig: IDrillDownDefinition = {
+    type: "drillDown",
+    origin: localIdRef(Status.attribute.localIdentifier),
+    target: implicitTargetDF,
 };
 
 const measureHeader: IMeasureDescriptor = {

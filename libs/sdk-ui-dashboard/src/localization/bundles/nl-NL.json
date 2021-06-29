@@ -4,5 +4,9 @@
     "options.menu.export.PDF": "Exporteren naar PDF",
     "options.menu.schedule.email": "E-mail plannen",
     "dialogs.schedule.email.submit.success": "Gelukt! Uw dashboard is ingesteld om te mailen.",
-    "dialogs.schedule.email.submit.error": "Inplannen van dashboard mislukt. Probeer het later opnieuw."
+    "dialogs.schedule.email.submit.error": "Inplannen van dashboard mislukt. Probeer het later opnieuw.",
+    "drill_modal_picker.drill-down": "Zoomen",
+    "drill_modal_picker.drill-into": "Inzoomen op",
+    "drill_modal_picker.more.details": "Meer details",
+    "drillModal.backToTop": "Terug naar boven"
 }

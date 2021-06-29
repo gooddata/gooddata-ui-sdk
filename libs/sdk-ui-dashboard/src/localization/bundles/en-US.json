@@ -33,5 +33,25 @@
         "value": "Failed to schedule the dashboard. Try again later.",
         "comment": "",
         "limit": 0
+    },
+    "drill_modal_picker.drill-down": {
+        "value": "Drill down",
+        "comment": "Title of widget interactions",
+        "limit": 0
+    },
+    "drill_modal_picker.drill-into": {
+        "value": "Drill into",
+        "comment": "Title of widget interactions",
+        "limit": 0
+    },
+    "drill_modal_picker.more.details": {
+        "value": "More details",
+        "comment": "",
+        "limit": 0
+    },
+    "drillModal.backToTop": {
+        "value": "Back to top",
+        "comment": "",
+        "limit": 0
     }
 }

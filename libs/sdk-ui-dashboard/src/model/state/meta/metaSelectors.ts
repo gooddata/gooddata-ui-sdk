@@ -31,6 +31,15 @@ export const selectDashboardRef = createSelector(selectDashboardMetadata, (state
 });
 
 /**
+ * Returns current dashboard identifier.
+ *
+ * @internal
+ */
+export const selectDashboardId = createSelector(selectDashboardMetadata, (state) => {
+    return state.identifier;
+});
+
+/**
  * Returns current dashboard uri.
  *
  * @internal

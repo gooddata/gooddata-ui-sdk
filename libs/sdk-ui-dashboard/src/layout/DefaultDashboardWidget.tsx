@@ -94,7 +94,7 @@ export const DefaultDashboardWidget = (props: DashboardWidgetProps): JSX.Element
                                             <DashboardInsight
                                                 clientHeight={contentRect.client?.height}
                                                 insight={insight!}
-                                                insightWidget={widget}
+                                                widget={widget}
                                                 drillableItems={drillableItems}
                                                 onDrill={onDrill}
                                                 onError={onError}

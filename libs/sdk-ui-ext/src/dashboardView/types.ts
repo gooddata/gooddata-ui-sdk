@@ -43,8 +43,6 @@ export {
     IDashboardFilter,
     OnFiredDashboardViewDrillEvent,
     IDashboardDrillEvent,
-    IDrillDownDefinition,
-    isDrillDownDefinition,
     IDashboardViewConfig,
 } from "../internal";
 

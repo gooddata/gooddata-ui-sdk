@@ -1,0 +1,94 @@
+// (C) 2020-2021 GoodData Corporation
+@import "variables";
+
+.gd-drill-modal-picker-overlay-mask {
+    position: absolute;
+    z-index: 5002;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.gd-drill-modal-picker-dropdown {
+    overflow: hidden;
+    max-width: 170px;
+    width: $gd-configuration-panel-inner-width;
+    background-color: var(--gd-palette-complementary-0, #fff);
+    border-radius: 3px;
+    border: 1px solid var(--gd-palette-complementary-3, $default-button-normal-border-color);
+    box-shadow: $bubble-boxShadow;
+    $item-padding-side: 12px;
+    $item-height: 27px;
+
+    .gd-drill-modal-picker-title {
+        font-weight: 400;
+        font-size: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 10px 10px 0 10px;
+        line-height: 16px;
+        white-space: nowrap;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        text-transform: uppercase;
+    }
+
+    .gd-drill-modal-picker-body {
+        max-height: 160px;
+        overflow-y: auto;
+        padding: 0 0 10px 0;
+    }
+
+    .gd-drill-modal-picker-list-item {
+        display: flex;
+        align-items: center;
+        height: $item-height;
+        padding: 0 10px;
+        cursor: pointer;
+        text-decoration: none;
+
+        .gd-drill-modal-picker-selector-list & {
+            padding: 4px 10px;
+        }
+
+        span {
+            font-family: $gd-font-primary;
+            font-size: 12px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            color: var(--gd-palette-complementary-8, #464e56);
+        }
+
+        .gd-drill-modal-picker-icon-wrapper {
+            height: 100%;
+        }
+
+        svg {
+            margin-left: 4px;
+            margin-right: 4px;
+            width: 12px;
+            height: 100%;
+        }
+
+        &:hover,
+        &:focus {
+            background: var(--gd-palette-complementary-2, #ebeff4);
+            span {
+                color: var(--gd-palette-complementary-9);
+            }
+        }
+    }
+}
+
+.gd-drill-to-url-modal-picker {
+    padding: 2px 0 0 10px;
+}
+
+.gd-drill-modal-wrapper-mask {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}

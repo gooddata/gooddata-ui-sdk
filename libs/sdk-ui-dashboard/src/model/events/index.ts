@@ -53,6 +53,15 @@ import {
 } from "./insight";
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
+import {
+    DashboardDrillDownTriggered,
+    DashboardDrillToAttributeUrlTriggered,
+    DashboardDrillToCustomUrlTriggered,
+    DashboardDrillToDashboardTriggered,
+    DashboardDrillToInsightTriggered,
+    DashboardDrillToLegacyDashboardTriggered,
+    DashboardDrillTriggered,
+} from "./drill";
 
 export { IDashboardEvent, DashboardEventType, isDashboardEvent } from "./base";
 export {
@@ -117,6 +126,22 @@ export {
 } from "./insight";
 export { DashboardAlertCreated, DashboardAlertRemoved, DashboardAlertUpdated } from "./alerts";
 export { DashboardScheduledEmailCreated } from "./scheduledEmail";
+export {
+    DashboardDrillDownTriggered,
+    DashboardDrillToAttributeUrlTriggered,
+    DashboardDrillToCustomUrlTriggered,
+    DashboardDrillToDashboardTriggered,
+    DashboardDrillToInsightTriggered,
+    DashboardDrillToLegacyDashboardTriggered,
+    DashboardDrillTriggered,
+    drillDownTriggered,
+    drillToAttributeUrlTriggered,
+    drillToCustomUrlTriggered,
+    drillToDashboardTriggered,
+    drillToInsightTriggered,
+    drillToLegacyDashboardTriggered,
+    drillTriggered,
+} from "./drill";
 
 /**
  * @internal
@@ -165,4 +190,11 @@ export type DashboardEvents =
     | DashboardAlertCreated
     | DashboardAlertRemoved
     | DashboardAlertUpdated
-    | DashboardScheduledEmailCreated;
+    | DashboardScheduledEmailCreated
+    | DashboardDrillDownTriggered
+    | DashboardDrillToAttributeUrlTriggered
+    | DashboardDrillToCustomUrlTriggered
+    | DashboardDrillToDashboardTriggered
+    | DashboardDrillToInsightTriggered
+    | DashboardDrillToLegacyDashboardTriggered
+    | DashboardDrillTriggered;

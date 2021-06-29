@@ -27,9 +27,9 @@ export const useDashboardCommandProcessing = <
     commandCreator: (...args: TCommandCreatorArgs) => TCommand;
     successEvent: TSuccessEventType;
     errorEvent: TErrorEventType;
-    onSuccess: (event: Extract<DashboardEvents, { type: TSuccessEventType }>) => void;
-    onError: (event: Extract<DashboardEvents, { type: TErrorEventType }>) => void;
-    onBeforeRun: (command: TCommand) => void;
+    onSuccess?: (event: Extract<DashboardEvents, { type: TSuccessEventType }>) => void;
+    onError?: (event: Extract<DashboardEvents, { type: TErrorEventType }>) => void;
+    onBeforeRun?: (command: TCommand) => void;
 }): {
     run: (...args: TCommandCreatorArgs) => void;
     status?: CommandProcessingStatus;

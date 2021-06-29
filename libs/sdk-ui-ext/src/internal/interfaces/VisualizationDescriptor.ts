@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { ISettings } from "@gooddata/sdk-backend-spi";
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IFluidLayoutDescriptor } from "./LayoutDescriptor";
-import { IVisConstruct, IVisualization } from "./Visualization";
+import { IDrillDownContext, IVisConstruct, IVisualization } from "./Visualization";
 
 /**
  * Factories that create a new instance of pluggable visualization.
@@ -60,4 +60,17 @@ export interface IVisualizationDescriptor {
         layoutDescriptor: IFluidLayoutDescriptor,
         settings: ISettings,
     ): IVisualizationSizeInfo;
+
+    /**
+     * Modifies buckets and filters of the insight according to the particular drill down context.
+     *
+     * The exact contract depends on individual {@link @gooddata/sdk-model#IInsight} type, but generally it should replace
+     * the drilled attribute with the Drill Down target target attribute and include the filters from the
+     * drill event into the returned {@link @gooddata/sdk-model#IInsight}.
+     *
+     * @param insight {@link @gooddata/sdk-model#IInsight} to be used for the the drill down application
+     * @param drillDownContext drill down configuration used to properly create the result
+     * @returns {@link @gooddata/sdk-model#IInsight} with modified buckets and filters according to the provided drill down context.
+     */
+    applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight;
 }

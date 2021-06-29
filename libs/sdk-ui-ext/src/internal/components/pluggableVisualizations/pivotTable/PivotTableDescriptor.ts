@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, insightSanitize } from "@gooddata/sdk-model";
 
 import {
     IVisualizationSizeInfo,
@@ -9,6 +9,12 @@ import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggablePivotTable } from "./PluggablePivotTable";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import { ISettings } from "@gooddata/sdk-backend-spi";
+import { IDrillDownContext } from "../../../interfaces/Visualization";
+import {
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    sanitizeTableProperties,
+} from "../drillDownUtil";
 
 export class PivotTableDescriptor extends BaseChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -32,5 +38,17 @@ export class PivotTableDescriptor extends BaseChartDescriptor {
                 max: this.getMaxHeight(settings.enableKDWidgetCustomHeight),
             },
         };
+    }
+
+    public applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight {
+        const drillDownInsight = modifyBucketsAttributesForDrillDown(
+            insight,
+            drillDownContext.drillDefinition,
+        );
+        const drillDownInsightWithFilters = addIntersectionFiltersToInsight(
+            drillDownInsight,
+            drillDownContext.event.drillContext.intersection,
+        );
+        return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }
 }

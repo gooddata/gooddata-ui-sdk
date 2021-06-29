@@ -107,7 +107,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRendererProps> = 
                                             <DashboardInsight
                                                 clientHeight={contentRect.client?.height}
                                                 insight={insight!}
-                                                insightWidget={widget}
+                                                widget={widget}
                                                 drillableItems={drillableItems}
                                                 onDrill={onDrill}
                                                 onError={onError}
