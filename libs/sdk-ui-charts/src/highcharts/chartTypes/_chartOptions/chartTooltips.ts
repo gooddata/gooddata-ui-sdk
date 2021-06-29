@@ -46,11 +46,34 @@ function isPointOnOppositeAxis(point: IUnsafeHighchartsTooltipPoint): boolean {
     return point.series?.yAxis.opposite ?? false;
 }
 
+function getMeasureTextData(measure: IMeasureDescriptor, formattedValue: string) {
+    if (measure) {
+        return [[customEscape(measure.measureHeaderItem.name), formattedValue]];
+    }
+    return [];
+}
+
+function getTextDataWithStackByAttribute(
+    measure: IMeasureDescriptor,
+    formattedValue: string,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    point: IUnsafeHighchartsTooltipPoint,
+) {
+    const textData = getMeasureTextData(measure, formattedValue);
+    textData.unshift([
+        customEscape(stackByAttribute.formOf.name),
+        customEscape(customEscape(point.series.name)),
+    ]);
+    return textData;
+}
+
 export function buildTooltipFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     config: IChartConfig = {},
     isDualAxis: boolean = false,
+    measure?: IMeasureDescriptor,
+    stackByAttribute?: IUnwrappedAttributeHeadersWithItems,
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
 
@@ -67,8 +90,11 @@ export function buildTooltipFactory(
             separators,
             percentageValue,
         );
+        let textData = [[customEscape(point.series.name), formattedValue]];
 
-        const textData = [[customEscape(point.series.name), formattedValue]];
+        if (stackByAttribute) {
+            textData = getTextDataWithStackByAttribute(measure, formattedValue, stackByAttribute, point);
+        }
 
         if (viewByAttribute) {
             // For some reason, highcharts ommit categories for pie charts with attribute. Use point.name instead.
@@ -92,6 +118,8 @@ export function buildTooltipForTwoAttributesFactory(
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
     isDualAxis: boolean = false,
+    measure?: IMeasureDescriptor,
+    stackByAttribute?: IUnwrappedAttributeHeadersWithItems,
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
 
@@ -110,8 +138,11 @@ export function buildTooltipForTwoAttributesFactory(
             separators,
             percentageValue,
         );
+        let textData = [[customEscape(point.series.name), formattedValue]];
 
-        const textData = [[customEscape(point.series.name), formattedValue]];
+        if (stackByAttribute) {
+            textData = getTextDataWithStackByAttribute(measure, formattedValue, stackByAttribute, point);
+        }
 
         if (category) {
             if (viewByAttribute) {
@@ -247,6 +278,7 @@ export function getTooltipFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    measure: IMeasureDescriptor,
     config: IChartConfig = {},
     isDualAxis: boolean = false,
 ): ITooltipFactory {
@@ -260,7 +292,9 @@ export function getTooltipFactory(
             viewByParentAttribute,
             config,
             isDualAxis,
+            measure,
+            stackByAttribute,
         );
     }
-    return buildTooltipFactory(viewByAttribute, type, config, isDualAxis);
+    return buildTooltipFactory(viewByAttribute, type, config, isDualAxis, measure, stackByAttribute);
 }

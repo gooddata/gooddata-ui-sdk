@@ -569,12 +569,25 @@ export function getChartOptions(
     }
 
     const isDualAxis = yAxes.length === 2;
+    let measure: IMeasureDescriptor;
+
+    /**
+     * Because of the problem described in TNT-16, we decided to change the visual of the tooltip.
+     * If the visualization contains stack by attribute, it is possible to have just one measure.
+     * Therefore the first measure from measureGroup is used.
+     */
+    if (!dv.def().isBucketEmpty(BucketNames.MEASURES)) {
+        measure = {
+            ...measureGroup.items[0],
+        };
+    }
 
     const tooltipFactory: ITooltipFactory = getTooltipFactory(
         isViewByTwoAttributes,
         viewByAttribute,
         viewByParentAttribute,
         stackByAttribute,
+        measure,
         config,
         isDualAxis,
     );
