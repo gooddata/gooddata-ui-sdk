@@ -34,6 +34,8 @@ import {
     updateSelectedOptionsWithData,
 } from "../utils/AttributeFilterUtils";
 import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdownAllFilteredOutBody";
+import MediaQuery from "react-responsive";
+import { MediaQueries } from "../../constants";
 
 const LIMIT = MAX_SELECTION_SIZE + 50;
 
@@ -382,11 +384,16 @@ export class AttributeDropdownCore extends React.PureComponent<
         );
 
         return !isEmpty(this.props.parentFilterTitles) && isAllFiltered ? (
-            <AttributeDropdownAllFilteredOutBody
-                parentFilterTitles={this.props.parentFilterTitles}
-                onApplyButtonClick={() => this.onApplyButtonClicked(closeDropdown)}
-                onCancelButtonClick={() => closeDropdown()}
-            />
+            <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
+                {(isMobile) => (
+                    <AttributeDropdownAllFilteredOutBody
+                        parentFilterTitles={this.props.parentFilterTitles}
+                        onApplyButtonClick={() => this.onApplyButtonClicked(closeDropdown)}
+                        onCancelButtonClick={() => closeDropdown()}
+                        isMobile={isMobile}
+                    />
+                )}
+            </MediaQuery>
         ) : (
             <AttributeDropdownBody
                 error={error}

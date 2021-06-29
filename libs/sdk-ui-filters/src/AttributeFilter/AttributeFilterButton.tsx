@@ -151,6 +151,7 @@ interface IAttributeFilterButtonState {
     limit: number;
     isDropdownOpen: boolean;
     prevValidOptions: IElementQueryResultWithEmptyItems;
+    isAllFiltered: boolean;
 }
 
 /**
@@ -251,6 +252,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             limit: LIMIT,
             isDropdownOpen: false,
             prevValidOptions: null,
+            isAllFiltered: false,
         };
     });
 
@@ -299,6 +301,22 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         },
         [props.backend, props.workspace, stringify(resolvedParentFilters)],
     );
+
+    useEffect(() => {
+        const isAllFiltered = showAllFilteredMessage(
+            isElementsLoading(),
+            resolvedParentFilters,
+            elementsResult?.validOptions.items,
+        );
+        if (state.isAllFiltered !== isAllFiltered) {
+            setState((prevState) => {
+                return {
+                    ...prevState,
+                    isAllFiltered,
+                };
+            });
+        }
+    }, [elementsStatus, stringify(resolvedParentFilters), elementsResult]);
 
     const invalidate = (parentFilterChanged = false) => {
         const nullStateValues = {
@@ -465,13 +483,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             return getLoadingTitleIntl(props.intl);
         }
 
-        if (
-            showAllFilteredMessage(
-                isElementsLoading(),
-                resolvedParentFilters,
-                elementsResult?.validOptions.items,
-            )
-        ) {
+        if (state.isAllFiltered) {
             return getAllTitleIntl(props.intl, true, true, true);
         }
 
@@ -633,16 +645,17 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     </MediaQuery>
                 }
                 body={
-                    showAllFilteredMessage(
-                        isElementsLoading(),
-                        resolvedParentFilters,
-                        elementsResult?.validOptions?.items ?? [],
-                    ) ? (
-                        <AttributeDropdownAllFilteredOutBody
-                            parentFilterTitles={parentFilterTitles}
-                            onApplyButtonClick={onApplyButtonClicked}
-                            onCancelButtonClick={onCloseButtonClicked}
-                        />
+                    state.isAllFiltered ? (
+                        <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
+                            {(isMobile) => (
+                                <AttributeDropdownAllFilteredOutBody
+                                    parentFilterTitles={parentFilterTitles}
+                                    onApplyButtonClick={onApplyButtonClicked}
+                                    onCancelButtonClick={onCloseButtonClicked}
+                                    isMobile={isMobile}
+                                />
+                            )}
+                        </MediaQuery>
                     ) : (
                         <AttributeDropdownBody
                             items={elementsResult?.validOptions?.items ?? []}
