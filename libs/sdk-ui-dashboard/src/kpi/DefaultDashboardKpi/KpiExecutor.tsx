@@ -35,11 +35,10 @@ import {
     OnError,
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
-import { OnFiredDashboardViewDrillEvent, IDashboardFilter } from "@gooddata/sdk-ui-ext";
 import {
     filterContextItemsToFiltersForWidget,
     filterContextToFiltersForWidget,
-} from "@gooddata/sdk-ui-ext/esm/dashboardView/converters";
+} from "../../converters/filterConverters";
 import {
     DashboardItemHeadline,
     DashboardItemWithKpiAlert,
@@ -53,8 +52,9 @@ import {
 import { KpiRenderer } from "./KpiRenderer";
 import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
 import { useKpiAlertOperations } from "./useKpiAlertOperations";
-import { selectPermissions, selectSettings, selectUser, useDashboardSelector } from "../model";
-import { useDashboardComponentsContext } from "../dashboard/DashboardComponentsContext";
+import { selectPermissions, selectSettings, selectUser, useDashboardSelector } from "../../model";
+import { useDashboardComponentsContext } from "../../dashboard/DashboardComponentsContext";
+import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../types";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;

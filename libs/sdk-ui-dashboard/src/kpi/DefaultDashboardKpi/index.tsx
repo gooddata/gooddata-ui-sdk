@@ -2,8 +2,8 @@
 import React from "react";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
-import { useKpiData } from "@gooddata/sdk-ui-ext/esm/dashboardView/hooks/internal";
-import { useDashboardComponentsContext } from "../dashboard/DashboardComponentsContext";
+import { useKpiData } from "./useKpiData";
+import { useDashboardComponentsContext } from "../../dashboard/DashboardComponentsContext";
 import {
     useDashboardSelector,
     selectSeparators,
@@ -11,9 +11,9 @@ import {
     selectFilterContext,
     selectSettings,
     selectDashboardRef,
-} from "../model";
+} from "../../model";
 import { KpiExecutor } from "./KpiExecutor";
-import { DashboardKpiProps } from "./types";
+import { DashboardKpiProps } from "../types";
 
 /**
  * @internal

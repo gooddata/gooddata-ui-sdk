@@ -11,7 +11,7 @@ import {
 } from "@gooddata/sdk-ui-ext/esm/internal";
 
 import { useBrokenAlertFiltersMeta } from "./useBrokenAlertFiltersMeta";
-import { useDashboardSelector, selectCatalogDateDatasets } from "../model";
+import { useDashboardSelector, selectCatalogDateDatasets } from "../../model";
 
 interface IKpiAlertDialogWrapperProps
     extends WrappedComponentProps,

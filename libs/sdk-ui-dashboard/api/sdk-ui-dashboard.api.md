@@ -16,6 +16,7 @@ import { DrillDefinition } from '@gooddata/sdk-backend-spi';
 import { EntityState } from '@reduxjs/toolkit';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
+import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAttributeElements } from '@gooddata/sdk-model';
@@ -31,8 +32,7 @@ import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-backend-spi';
-import { IDashboardDrillEvent } from '@gooddata/sdk-ui-ext';
-import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
+import { IDashboardDrillEvent as IDashboardDrillEvent_2 } from '@gooddata/sdk-ui-ext';
 import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
@@ -41,7 +41,8 @@ import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDrillableItem } from '@gooddata/sdk-ui';
-import { IDrillDownDefinition } from '@gooddata/sdk-ui-ext';
+import { IDrillDownDefinition as IDrillDownDefinition_2 } from '@gooddata/sdk-ui-ext';
+import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillToAttributeUrl } from '@gooddata/sdk-backend-spi';
 import { IDrillToCustomUrl } from '@gooddata/sdk-backend-spi';
 import { IDrillToDashboard } from '@gooddata/sdk-backend-spi';
@@ -62,8 +63,11 @@ import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
 import { IListedDashboard } from '@gooddata/sdk-backend-spi';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
+import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
+import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
+import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/sdk-backend-spi';
@@ -76,7 +80,7 @@ import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
-import { OnFiredDashboardViewDrillEvent } from '@gooddata/sdk-ui-ext';
+import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { Patch } from 'immer';
 import { default as React_2 } from 'react';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
@@ -530,14 +534,14 @@ export interface DashboardDrillContext {
 }
 
 // @internal (undocumented)
-export type DashboardDrillDefinition = DrillDefinition | IDrillDownDefinition;
+export type DashboardDrillDefinition = DrillDefinition | IDrillDownDefinition_2;
 
 // @internal
 export interface DashboardDrillDownTriggered extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly drillDefinition: IDrillDownDefinition;
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillDefinition: IDrillDownDefinition_2;
+        readonly drillEvent: IDashboardDrillEvent_2;
         readonly insight: IInsight;
     };
     // (undocumented)
@@ -548,7 +552,7 @@ export interface DashboardDrillDownTriggered extends IDashboardEvent {
 export interface DashboardDrillToAttributeUrlTriggered extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
         readonly drillDefinition: IDrillToAttributeUrl;
         readonly url: string;
     };
@@ -560,7 +564,7 @@ export interface DashboardDrillToAttributeUrlTriggered extends IDashboardEvent {
 export interface DashboardDrillToCustomUrlTriggered extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
         readonly drillDefinition: IDrillToCustomUrl;
         readonly url: string;
     };
@@ -573,7 +577,7 @@ export interface DashboardDrillToDashboardTriggered extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
         readonly filters: IFilter[];
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
         readonly drillDefinition: IDrillToDashboard;
     };
     // (undocumented)
@@ -585,7 +589,7 @@ export interface DashboardDrillToInsightTriggered extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
         readonly drillDefinition: IDrillToInsight;
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
         readonly insight: IInsight;
     };
     // (undocumented)
@@ -597,7 +601,7 @@ export interface DashboardDrillToLegacyDashboardTriggered extends IDashboardEven
     // (undocumented)
     readonly payload: {
         readonly drillDefinition: IDrillToLegacyDashboard;
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.TRIGGERED";
@@ -607,7 +611,7 @@ export interface DashboardDrillToLegacyDashboardTriggered extends IDashboardEven
 export interface DashboardDrillTriggered extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
         readonly drillContext: DashboardDrillContext;
     };
     // (undocumented)
@@ -1162,7 +1166,7 @@ export const DefaultScheduledEmailDialog: React_2.FC<ScheduledEmailDialogProps>;
 export interface Drill extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
         readonly drillContext: DashboardDrillContext;
     };
     // (undocumented)
@@ -1170,32 +1174,32 @@ export interface Drill extends IDashboardCommand {
 }
 
 // @internal
-export function drill(drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): Drill;
+export function drill(drillEvent: IDashboardDrillEvent_2, drillContext: DashboardDrillContext, correlationId?: string): Drill;
 
 // @internal
 export interface DrillDown extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly insight: IInsight;
-        readonly drillDefinition: IDrillDownDefinition;
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillDefinition: IDrillDownDefinition_2;
+        readonly drillEvent: IDashboardDrillEvent_2;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_DOWN";
 }
 
 // @internal
-export function drillDown(insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillDown;
+export function drillDown(insight: IInsight, drillDefinition: IDrillDownDefinition_2, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DrillDown;
 
 // @internal (undocumented)
-export function drillDownTriggered(ctx: DashboardContext, insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillDownTriggered;
+export function drillDownTriggered(ctx: DashboardContext, insight: IInsight, drillDefinition: IDrillDownDefinition_2, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DashboardDrillDownTriggered;
 
 // @internal (undocumented)
 export interface DrillStep {
     // (undocumented)
-    drillDefinition: IDrillToInsight | IDrillDownDefinition;
+    drillDefinition: IDrillToInsight | IDrillDownDefinition_2;
     // (undocumented)
-    drillEvent: IDashboardDrillEvent;
+    drillEvent: IDashboardDrillEvent_2;
     // (undocumented)
     insight: IInsight;
 }
@@ -1205,88 +1209,88 @@ export interface DrillToAttributeUrl extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly drillDefinition: IDrillToAttributeUrl;
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL";
 }
 
 // @internal
-export function drillToAttributeUrl(drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToAttributeUrl;
+export function drillToAttributeUrl(drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DrillToAttributeUrl;
 
 // @internal (undocumented)
-export function drillToAttributeUrlTriggered(ctx: DashboardContext, url: string, drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToAttributeUrlTriggered;
+export function drillToAttributeUrlTriggered(ctx: DashboardContext, url: string, drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DashboardDrillToAttributeUrlTriggered;
 
 // @internal
 export interface DrillToCustomUrl extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly drillDefinition: IDrillToCustomUrl;
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL";
 }
 
 // @internal
-export function drillToCustomUrl(drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToCustomUrl;
+export function drillToCustomUrl(drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DrillToCustomUrl;
 
 // @internal (undocumented)
-export function drillToCustomUrlTriggered(ctx: DashboardContext, url: string, drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToCustomUrlTriggered;
+export function drillToCustomUrlTriggered(ctx: DashboardContext, url: string, drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DashboardDrillToCustomUrlTriggered;
 
 // @internal
 export interface DrillToDashboard extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly drillDefinition: IDrillToDashboard;
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD";
 }
 
 // @internal
-export function drillToDashboard(drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToDashboard;
+export function drillToDashboard(drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DrillToDashboard;
 
 // @internal (undocumented)
-export function drillToDashboardTriggered(ctx: DashboardContext, filters: IFilter[], drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToDashboardTriggered;
+export function drillToDashboardTriggered(ctx: DashboardContext, filters: IFilter[], drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DashboardDrillToDashboardTriggered;
 
 // @internal
 export interface DrillToInsight extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly drillDefinition: IDrillToInsight;
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT";
 }
 
 // @internal
-export function drillToInsight(drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToInsight;
+export function drillToInsight(drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DrillToInsight;
 
 // @internal (undocumented)
-export function drillToInsightTriggered(ctx: DashboardContext, insight: IInsight, drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToInsightTriggered;
+export function drillToInsightTriggered(ctx: DashboardContext, insight: IInsight, drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DashboardDrillToInsightTriggered;
 
 // @internal
 export interface DrillToLegacyDashboard extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly drillDefinition: IDrillToLegacyDashboard;
-        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillEvent: IDashboardDrillEvent_2;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD";
 }
 
 // @internal
-export function drillToLegacyDashboard(drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToLegacyDashboard;
+export function drillToLegacyDashboard(drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DrillToLegacyDashboard;
 
 // @internal (undocumented)
-export function drillToLegacyDashboardTriggered(ctx: DashboardContext, drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToLegacyDashboardTriggered;
+export function drillToLegacyDashboardTriggered(ctx: DashboardContext, drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent_2, correlationId?: string): DashboardDrillToLegacyDashboardTriggered;
 
 // @internal (undocumented)
-export function drillTriggered(ctx: DashboardContext, drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): DashboardDrillTriggered;
+export function drillTriggered(ctx: DashboardContext, drillEvent: IDashboardDrillEvent_2, drillContext: DashboardDrillContext, correlationId?: string): DashboardDrillTriggered;
 
 // @internal
 export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
@@ -1357,12 +1361,21 @@ export interface IDashboardDateFilterProps {
     readonly?: boolean;
 }
 
+// @beta
+export interface IDashboardDrillEvent extends IDrillEvent {
+    drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
+    widgetRef?: ObjRef;
+}
+
 // @internal
 export interface IDashboardEvent {
     readonly correlationId?: string;
     readonly ctx: DashboardContext;
     readonly type: DashboardEventType;
 }
+
+// @beta
+export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
 
 // @internal (undocumented)
 export interface IDashboardMenuButtonProps {
@@ -1492,6 +1505,14 @@ export interface IDefaultTopBarProps {
         placement?: "left" | "right";
         order?: number;
     };
+}
+
+// @beta
+export interface IDrillDownDefinition {
+    // (undocumented)
+    target: ObjRef;
+    // (undocumented)
+    type: "drillDown";
 }
 
 // @internal (undocumented)
@@ -1674,42 +1695,45 @@ export type ObjectAvailabilityConfig = {
 };
 
 // @internal (undocumented)
-export type OnDashboardDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
+export type OnDashboardDrill = (drillEvent: IDashboardDrillEvent_2, drillContext: DashboardDrillContext) => void;
 
 // @internal (undocumented)
 export type OnDrillDown = (context: {
-    drillDefinition: IDrillDownDefinition;
-    drillEvent: IDashboardDrillEvent;
+    drillDefinition: IDrillDownDefinition_2;
+    drillEvent: IDashboardDrillEvent_2;
     insight: IInsight;
 }) => void;
 
 // @internal (undocumented)
 export type OnDrillToAttributeUrl = (context: {
     drillDefinition: IDrillToAttributeUrl;
-    drillEvent: IDashboardDrillEvent;
+    drillEvent: IDashboardDrillEvent_2;
     url: string;
 }) => void;
 
 // @internal (undocumented)
 export type OnDrillToCustomUrl = (context: {
     drillDefinition: IDrillToCustomUrl;
-    drillEvent: IDashboardDrillEvent;
+    drillEvent: IDashboardDrillEvent_2;
     url: string;
 }) => void;
 
 // @internal (undocumented)
 export type OnDrillToDashboard = (context: {
     drillDefinition: IDrillToDashboard;
-    drillEvent: IDashboardDrillEvent;
+    drillEvent: IDashboardDrillEvent_2;
     filters: IFilter[];
 }) => void;
 
 // @internal (undocumented)
 export type OnDrillToInsight = (context: {
     drillDefinition: IDrillToInsight;
-    drillEvent: IDashboardDrillEvent;
+    drillEvent: IDashboardDrillEvent_2;
     insight: IInsight;
 }) => void;
+
+// @beta
+export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
 
 // @internal (undocumented)
 export interface PermissionsState {

@@ -18,11 +18,11 @@ import {
     DashboardItemHeadline,
     DashboardItemVisualization,
 } from "@gooddata/sdk-ui-ext/esm/internal";
-import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "@gooddata/sdk-ui-ext";
 import { DashboardKpi } from "../kpi";
 import { DashboardInsight } from "../insight";
 import { getVisTypeCssClass } from "./utils";
 import { selectAlerts, selectInsights, useDashboardSelector } from "../model";
+import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../types";
 
 const dashboardStyle: CSSProperties = { height: "100%", width: "100%" };
 
