@@ -204,7 +204,7 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
         status: parentFilterTitlesStatus,
     } = useCancelablePromise<string[]>(
         {
-            promise: async () => getParentFilterTitles(resolvedParentFilters, getBackend(), props.workspace),
+            promise: () => getParentFilterTitles(resolvedParentFilters ?? [], getBackend(), props.workspace),
         },
         [props.backend, props.workspace, stringify(resolvedParentFilters)],
     );
