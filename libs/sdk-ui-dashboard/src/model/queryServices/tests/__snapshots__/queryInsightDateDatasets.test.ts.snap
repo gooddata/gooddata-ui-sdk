@@ -1,8 +1,56 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`query insight date datasets should return date datasets for insight with date attributes in buckets 1`] = `
+exports[`query insight date datasets for datasets obtained from catalog should order date datasets by relevance and title if tied 1`] = `
+Array [
+  "Date (Activity)",
+  "Date (Timeline)",
+]
+`;
+
+exports[`query insight date datasets for datasets obtained from catalog should order date datasets by relevance and title if tied 2`] = `
+Object {
+  "Date (Activity)": "Activity",
+  "Date (Timeline)": "Timeline",
+}
+`;
+
+exports[`query insight date datasets for datasets obtained from catalog should order date datasets by relevance desc 1`] = `
+Array [
+  "Date (Timeline)",
+  "Date (Activity)",
+]
+`;
+
+exports[`query insight date datasets for datasets obtained from catalog should order date datasets by relevance desc 2`] = `
+Object {
+  "Date (Activity)": "Activity",
+  "Date (Timeline)": "Timeline",
+}
+`;
+
+exports[`query insight date datasets for insights that reference dates should return date datasets for insight with date attributes in buckets 1`] = `
 Array [
   "Date (Closed)",
   "Date (Created)",
 ]
+`;
+
+exports[`query insight date datasets for insights that reference dates should return date datasets for insight with date attributes in buckets 2`] = `
+Array [
+  "Date (Activity)",
+  "Date (Closed)",
+  "Date (Created)",
+  "Date (Snapshot)",
+  "Date (Timeline)",
+]
+`;
+
+exports[`query insight date datasets for insights that reference dates should return date datasets for insight with date attributes in buckets 3`] = `
+Object {
+  "Date (Activity)": "Activity",
+  "Date (Closed)": "Closed",
+  "Date (Created)": "Created",
+  "Date (Snapshot)": "Snapshot",
+  "Date (Timeline)": "Timeline",
+}
 `;

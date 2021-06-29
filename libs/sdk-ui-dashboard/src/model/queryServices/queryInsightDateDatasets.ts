@@ -32,6 +32,7 @@ import { selectCatalogDateDatasets } from "../state/catalog/catalogSelectors";
 import uniqBy from "lodash/uniqBy";
 import fromPairs from "lodash/fromPairs";
 import { newDisplayFormMap } from "../state/_infra/objRefMap";
+import compact from "lodash/compact";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
@@ -198,8 +199,8 @@ function* lookupDatasetsUsedInAttributesAndFilters(insight: IInsight, datasets: 
     };
 
     return {
-        usedInAttributes: inAttributes.map(datasetLookup),
-        usedInAttributeFilters: inFilters.map(datasetLookup),
+        usedInAttributes: compact(inAttributes.map(datasetLookup)),
+        usedInAttributeFilters: compact(inFilters.map(datasetLookup)),
     };
 }
 
