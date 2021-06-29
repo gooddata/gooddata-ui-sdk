@@ -297,7 +297,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         status: parentFilterTitlesStatus,
     } = useCancelablePromise<string[]>(
         {
-            promise: async () => getParentFilterTitles(resolvedParentFilters, getBackend(), props.workspace),
+            promise: () => getParentFilterTitles(resolvedParentFilters ?? [], getBackend(), props.workspace),
         },
         [props.backend, props.workspace, stringify(resolvedParentFilters)],
     );

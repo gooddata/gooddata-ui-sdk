@@ -229,10 +229,8 @@ export function getParentFilterTitles(
     backend: IAnalyticalBackend,
     workspace: string,
 ): Promise<string[]> {
-    if (filters) {
-        const promises = filters.map<Promise<string>>((parentFilter) =>
-            getFilterAttributeTitle(backend, workspace, parentFilter),
-        );
-        return Promise.all(promises);
-    }
+    const promises = filters.map<Promise<string>>((parentFilter) =>
+        getFilterAttributeTitle(backend, workspace, parentFilter),
+    );
+    return Promise.all(promises);
 }
