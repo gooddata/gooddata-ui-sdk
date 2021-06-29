@@ -160,14 +160,15 @@ export class AttributeDropdownCore extends React.PureComponent<
                 },
                 () => {
                     this.getElements();
-                    this.getElementTotalCount().then((totalCount) => {
-                        this.setState((state) => {
-                            return {
-                                ...state,
-                                totalCount,
-                            };
+                    parentFilterChanged &&
+                        this.getElementTotalCount().then((totalCount) => {
+                            this.setState((state) => {
+                                return {
+                                    ...state,
+                                    totalCount,
+                                };
+                            });
                         });
-                    });
                     // calling onApply to get the values changed in parent component
                     parentFilterChanged && this.onApplyButtonClicked();
                 },
@@ -379,7 +380,7 @@ export class AttributeDropdownCore extends React.PureComponent<
 
         const isAllFiltered = showAllFilteredMessage(
             this.state.isLoading,
-            this.props.parentFilters.map((filter) => filter.attributeFilter),
+            this.props.parentFilters?.map((filter) => filter.attributeFilter),
             validElements?.items,
         );
 
