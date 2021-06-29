@@ -13,7 +13,11 @@ import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAttributeElement } from '@gooddata/sdk-backend-spi';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
+import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
+import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
+import { ICatalogFact } from '@gooddata/sdk-backend-spi';
 import { ICatalogGroup } from '@gooddata/sdk-backend-spi';
+import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -139,6 +143,12 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
     user?: IUser;
     getCommonAttributesResponses?: Record<string, ObjRef[]>;
+    catalogAvailability?: {
+        availableAttributes?: (attributes: ICatalogAttribute[]) => ICatalogAttribute[];
+        availableMeasures?: (measures: ICatalogMeasure[]) => ICatalogMeasure[];
+        availableFacts?: (facts: ICatalogFact[]) => ICatalogFact[];
+        availableDateDatasets?: (datasets: ICatalogDateDataset[]) => ICatalogDateDataset[];
+    };
 };
 
 // @internal

@@ -190,7 +190,7 @@ function recordedWorkspace(
             return recordedDateFilterConfig(implConfig);
         },
         catalog(): IWorkspaceCatalogFactory {
-            return new RecordedCatalogFactory(workspace, recordings);
+            return new RecordedCatalogFactory(workspace, recordings, implConfig);
         },
         datasets(): IWorkspaceDatasetsService {
             throw new NotSupported("not supported");
