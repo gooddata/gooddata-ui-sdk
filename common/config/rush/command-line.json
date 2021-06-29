@@ -107,7 +107,14 @@
       "commandKind": "global",
       "name": "build-docs",
       "summary": "Builds API documentation for the entire SDK.",
-      "shellCommand": "bash common/scripts/build-docs.sh",
+      "shellCommand": "node common/scripts/build-docs.js",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "start-docs",
+      "summary": "Builds API documentation for the entire SDK and runs it",
+      "shellCommand": "node common/scripts/build-docs.js -d",
       "safeForSimultaneousRushProcesses": true
     },
     {
@@ -241,7 +248,7 @@
       "shortName": "-v",
       "description": "Which version to create (e.g. 8.4.0 or Next for a prerelease version). This is case sensitive.",
       "associatedCommands": ["build-docs"],
-      "required": false,
+      "required": true,
       "argumentName": "VERSION"
     }
     // {
