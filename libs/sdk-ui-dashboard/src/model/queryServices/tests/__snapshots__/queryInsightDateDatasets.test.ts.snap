@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`query insight date datasets should return date datasets for insight with date attributes in buckets 1`] = `
+Array [
+  "Date (Closed)",
+  "Date (Created)",
+]
+`;
