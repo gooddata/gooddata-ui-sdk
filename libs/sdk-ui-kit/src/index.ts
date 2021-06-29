@@ -1,5 +1,11 @@
 // (C) 2020-2021 GoodData Corporation
 /**
+ * This package provides various UI components used to build GoodData applications (such as buttons, icons, and so on).
+ *
+ * @remarks
+ * These components are all marked as internal, and we do not recommend using them directly outside of GoodData
+ * because their API can change at any time.
+ *
  * @packageDocumentation
  */
 export * from "./typings/utilities";

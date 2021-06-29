@@ -1,5 +1,12 @@
 // (C) 2007-2021 GoodData Corporation
 /**
+ * This package provides TypeScript definitions for the types of the REST API requests and responses on the GoodData platform.
+ * It also provides functions that operate on those objects directly.
+ *
+ * @remarks
+ * This is a companion package of `@gooddata/api-client-bear` that implements the actual client and uses
+ * the types and functions implemented here. You should almost never need to use this package directly.
+ *
  * @packageDocumentation
  */
 export { GdcExecuteAFM } from "./executeAfm/GdcExecuteAFM";

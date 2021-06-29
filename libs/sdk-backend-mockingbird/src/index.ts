@@ -1,5 +1,11 @@
 // (C) 2019-2021 GoodData Corporation
 /**
+ * This package provides a mock Analytical Backend implementation used mainly for testing.
+ *
+ * @remarks
+ * For the GoodData platform version, see `@gooddata/sdk-backend-bear`.
+ * For the GoodData.CN version, see `@gooddata/sdk-backend-tiger`.
+ *
  * @packageDocumentation
  */
 import { dummyBackend, dummyBackendEmptyData, dummyDataView } from "@gooddata/sdk-backend-base";

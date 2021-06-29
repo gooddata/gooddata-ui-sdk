@@ -1,6 +1,6 @@
 # GoodData Embedding APIs
 
-This package defines APIs for embedding and interfacing with the embedded GoodData applications - KPI Dashboards and
+This package defines APIs for embedding and interfacing with the embedded GoodData applications - KPI Dashboards/Dashboards and
 Analytical Designer.
 
 ## License

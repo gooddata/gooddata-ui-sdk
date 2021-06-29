@@ -1,5 +1,12 @@
 // (C) 2019-2021 GoodData Corporation
 /**
+ * This package provides foundational reusable code useful for building new or decorating existing Analytical Backend implementations.
+ *
+ * @remarks
+ * The package includes several composable backend decorators and metadata object builders.
+ * You can use them to either build your own Analytical Backend implementation or enhance existing
+ * implementations (by adding caching, for example).
+ *
  * @packageDocumentation
  */
 export { dummyBackend, dummyBackendEmptyData, dummyDataView, DummyBackendConfig } from "./dummyBackend";
