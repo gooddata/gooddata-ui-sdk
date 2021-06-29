@@ -1,5 +1,11 @@
 // (C) 2019-2021 GoodData Corporation
 /**
+ * This package provides several React components related to filters.
+ *
+ * @remarks
+ * These include attribute filters, measure value filters, ranking filters, and date filters and utilities
+ * to work with those. You can use them to quickly add filtering to your application.
+ *
  * @packageDocumentation
  */
 export { AttributeElements, IAttributeElementsProps } from "./AttributeElements/AttributeElements";

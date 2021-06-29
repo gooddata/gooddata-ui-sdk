@@ -1,6 +1,12 @@
 // (C) 2019-2021 GoodData Corporation
 
 /**
+ * This package provides the components that you can use to visualize location-based data.
+ *
+ * @remarks
+ * Currently, only the GeoPushpinChart component is available. Use this component to visualize data bound
+ * to a single location (not an area).
+ *
  * @packageDocumentation
  */
 
