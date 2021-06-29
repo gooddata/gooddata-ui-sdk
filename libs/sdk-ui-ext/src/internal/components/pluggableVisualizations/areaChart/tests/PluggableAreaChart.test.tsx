@@ -386,7 +386,7 @@ describe("PluggableAreaChart", () => {
                     const areaChart = createComponent({
                         ...defaultProps,
                         featureFlags: {
-                            enableMultipleDatesDEV: true,
+                            enableMultipleDates: true,
                         },
                     });
 

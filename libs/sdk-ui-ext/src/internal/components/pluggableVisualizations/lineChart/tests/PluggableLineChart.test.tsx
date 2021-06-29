@@ -770,7 +770,7 @@ describe("PluggableLineChart", () => {
                     const lineChart = createComponent({
                         ...defaultProps,
                         featureFlags: {
-                            enableMultipleDatesDEV: true,
+                            enableMultipleDates: true,
                         },
                     });
 
