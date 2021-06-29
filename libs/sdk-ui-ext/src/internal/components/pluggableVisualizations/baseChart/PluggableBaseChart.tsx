@@ -455,7 +455,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
     protected isMultipleDatesEnabled(): boolean {
         //this is development FF and will be removed in the end of dev cycle
-        return !!this.featureFlags["enableMultipleDatesDEV"];
+        return !!this.featureFlags["enableMultipleDates"];
     }
 }
 

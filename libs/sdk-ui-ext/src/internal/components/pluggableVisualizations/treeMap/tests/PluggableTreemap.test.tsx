@@ -526,7 +526,7 @@ describe("PluggableTreemap", () => {
                     const chart = createComponent({
                         ...defaultProps,
                         featureFlags: {
-                            enableMultipleDatesDEV: true,
+                            enableMultipleDates: true,
                         },
                     });
 

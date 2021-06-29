@@ -560,7 +560,7 @@ describe("PluggableColumnBarCharts", () => {
                     const columnChart = createComponent({
                         ...defaultProps,
                         featureFlags: {
-                            enableMultipleDatesDEV: true,
+                            enableMultipleDates: true,
                         },
                     });
 

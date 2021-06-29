@@ -365,7 +365,7 @@ describe("PluggableBulletChart", () => {
                     const chart = createComponent({
                         ...defaultProps,
                         featureFlags: {
-                            enableMultipleDatesDEV: true,
+                            enableMultipleDates: true,
                         },
                     });
 
