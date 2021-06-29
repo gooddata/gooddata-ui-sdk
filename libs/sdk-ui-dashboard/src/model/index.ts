@@ -14,6 +14,7 @@
 
 export { useDashboardSelector, useDashboardDispatch, DashboardDispatch } from "./state/dashboardStore";
 export { DashboardState } from "./state/types";
+export { ObjRefMap, ObjRefMapConfig } from "./state/_infra/objRefMap";
 
 export { selectDashboardLoading } from "./state/loading/loadingSelectors";
 export { LoadingState } from "./state/loading/loadingState";

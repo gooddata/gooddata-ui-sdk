@@ -2,13 +2,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import flatMap from "lodash/flatMap";
-import keyBy from "lodash/keyBy";
-import { serializeObjRef } from "@gooddata/sdk-model";
-import {
-    IAttributeDisplayFormMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-} from "@gooddata/sdk-backend-spi";
+import { newCatalogAttributeMap, newDisplayFormMap } from "../_infra/objRefMap";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -72,12 +66,8 @@ export const selectAllCatalogDisplayFormsMap = createSelector(
         const dateDisplayForms = flatMap(dateDatasets, (d) =>
             flatMap(d.dateAttributes, (a) => a.attribute.displayForms),
         );
-        const result: Record<string, IAttributeDisplayFormMetadataObject> = keyBy(
-            [...nonDateDisplayForms, ...dateDisplayForms],
-            (df) => serializeObjRef(df.ref),
-        );
 
-        return result;
+        return newDisplayFormMap([...nonDateDisplayForms, ...dateDisplayForms], false);
     },
 );
 
@@ -92,11 +82,7 @@ export const selectAllCatalogAttributesMap = createSelector(
     [selectCatalogAttributes, selectCatalogDateDatasets],
     (attributes, dateDatasets) => {
         const dateAttributes = flatMap(dateDatasets, (d) => d.dateAttributes);
-        const result: Record<string, ICatalogAttribute | ICatalogDateAttribute> = keyBy(
-            [...attributes, ...dateAttributes],
-            (a) => serializeObjRef(a.attribute.ref),
-        );
 
-        return result;
+        return newCatalogAttributeMap([...attributes, ...dateAttributes], false);
     },
 );
