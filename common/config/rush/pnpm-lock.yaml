@@ -15674,6 +15674,7 @@ packages:
   /querystring/0.2.0:
     resolution: {integrity: sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=}
     engines: {node: '>=0.4.x'}
+    deprecated: The
     dev: false
 
   /querystring/0.2.1:
@@ -21939,7 +21940,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-Fa2mUhmjaLOE0Tgbrl+5KI16VRN+DcQGv1Cg+6aGtI1URSzMuYuk8RfEA72Vblc0TwGMh+SkM5WlQZ/XLdf5sw==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-A04RpHStGV/viI1J5jBKckGgATeiTjwqcEpC788n64pU/yACGHO/MDDQwcecNqU0SJsoG2UCYKYkT9wjBsd/gw==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
@@ -21958,6 +21959,7 @@ packages:
       '@types/react-dom': 16.9.13
       '@types/react-measure': 2.0.5
       '@types/react-redux': 7.1.16
+      '@types/react-select': 3.1.2
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.26.1_7bd7a7858841324c95046422bb20bae5
       '@typescript-eslint/parser': 4.26.1_eslint@7.28.0+typescript@4.0.2
@@ -21992,6 +21994,7 @@ packages:
       react-intl: 3.12.1_react@16.14.0
       react-measure: 2.5.2_react-dom@16.14.0+react@16.14.0
       react-redux: 7.2.4_react-dom@16.14.0+react@16.14.0
+      react-select: 3.2.0_react-dom@16.14.0+react@16.14.0
       redux-batched-actions: 0.5.0
       redux-saga: 1.1.3
       svgo: 2.3.0

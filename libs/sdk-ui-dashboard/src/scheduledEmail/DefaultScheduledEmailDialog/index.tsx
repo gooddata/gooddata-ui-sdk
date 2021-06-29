@@ -1,9 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
 import React from "react";
 import invariant from "ts-invariant";
-import { ScheduledMailDialogRenderer } from "@gooddata/sdk-ui-ext/esm/internal";
-import { useScheduledEmail } from "./useScheduledEmail";
-import { ScheduledEmailDialogProps } from "./types";
+import { ScheduledMailDialogRenderer } from "./ScheduledMailDialogRenderer/ScheduledMailDialogRenderer";
+import { useScheduledEmail } from "../useScheduledEmail";
+import { ScheduledEmailDialogProps } from "../types";
 
 /**
  * @internal
