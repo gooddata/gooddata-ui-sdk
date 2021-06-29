@@ -1,3 +1,4 @@
+// (C) 2021 GoodData Corporation
 import React from "react";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
