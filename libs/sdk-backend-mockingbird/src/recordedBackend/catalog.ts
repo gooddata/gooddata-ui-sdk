@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IWorkspaceCatalogFactoryOptions,
     IWorkspaceCatalog,
@@ -37,48 +37,49 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
         },
     ) {}
 
-    public forDataset(dataset: ObjRef): IWorkspaceCatalogFactory {
+    public forDataset = (dataset: ObjRef): IWorkspaceCatalogFactory => {
         return this.withOptions({
             dataset,
         });
-    }
+    };
 
-    public forTypes(types: CatalogItemType[]): IWorkspaceCatalogFactory {
+    public forTypes = (types: CatalogItemType[]): IWorkspaceCatalogFactory => {
         return this.withOptions({
             types,
         });
-    }
+    };
 
     // include and exclude tags do not work yet
-    public includeTags(tags: ObjRef[]): IWorkspaceCatalogFactory {
+    public includeTags = (tags: ObjRef[]): IWorkspaceCatalogFactory => {
         return this.withOptions({
             includeTags: tags,
         });
-    }
+    };
 
-    public excludeTags(tags: ObjRef[]): IWorkspaceCatalogFactory {
+    public excludeTags = (tags: ObjRef[]): IWorkspaceCatalogFactory => {
         return this.withOptions({
             excludeTags: tags,
         });
-    }
+    };
 
-    public withOptions(options: Partial<IWorkspaceCatalogFactoryOptions>): IWorkspaceCatalogFactory {
+    public withOptions = (options: Partial<IWorkspaceCatalogFactoryOptions>): IWorkspaceCatalogFactory => {
         const newOptions = {
             ...this.options,
             ...options,
         };
         return new RecordedCatalogFactory(this.workspace, this.recordings, newOptions);
-    }
+    };
 
-    public async load(): Promise<IWorkspaceCatalog> {
+    public load = (): Promise<IWorkspaceCatalog> => {
         const catalog = this.recordings.metadata?.catalog;
         if (!(catalog?.items && catalog?.groups)) {
             throw new UnexpectedResponseError("No catalog recording", 404, {});
         }
 
         const typeFilteredItems = catalog.items.filter((item) => this.options.types.includes(item.type));
-        return new RecordedCatalog(this.workspace, catalog.groups, typeFilteredItems);
-    }
+
+        return Promise.resolve(new RecordedCatalog(this.workspace, catalog.groups, typeFilteredItems));
+    };
 }
 
 class RecordedCatalogBase {
@@ -131,54 +132,54 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
         },
     ) {}
 
-    public forDataset(dataset: ObjRef): IWorkspaceCatalogAvailableItemsFactory {
+    public forDataset = (dataset: ObjRef): IWorkspaceCatalogAvailableItemsFactory => {
         return this.withOptions({
             dataset,
         });
-    }
+    };
 
-    public forTypes(types: CatalogItemType[]): IWorkspaceCatalogAvailableItemsFactory {
+    public forTypes = (types: CatalogItemType[]): IWorkspaceCatalogAvailableItemsFactory => {
         return this.withOptions({
             types,
         });
-    }
+    };
 
     // include and exclude tags do not work yet
-    public includeTags(tags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory {
+    public includeTags = (tags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory => {
         return this.withOptions({
             includeTags: tags,
         });
-    }
+    };
 
-    public excludeTags(tags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory {
+    public excludeTags = (tags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory => {
         return this.withOptions({
             excludeTags: tags,
         });
-    }
+    };
 
-    public withOptions(
+    public withOptions = (
         options: Partial<IWorkspaceCatalogFactoryOptions>,
-    ): IWorkspaceCatalogAvailableItemsFactory {
+    ): IWorkspaceCatalogAvailableItemsFactory => {
         const newOptions = {
             ...this.options,
             ...options,
         };
         return new RecordedAvailableCatalogFactory(this.workspace, this.groups, this.items, newOptions);
-    }
+    };
 
-    public forItems(_items: IAttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory {
+    public forItems = (_items: IAttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory => {
         // availability not implemented yet
         return this;
-    }
+    };
 
-    public forInsight(_insight: IInsightDefinition): IWorkspaceCatalogAvailableItemsFactory {
+    public forInsight = (_insight: IInsightDefinition): IWorkspaceCatalogAvailableItemsFactory => {
         // availability not implemented yet
         return this;
-    }
+    };
 
-    public async load(): Promise<IWorkspaceCatalogWithAvailableItems> {
-        return new RecordedAvailableCatalog(this.workspace, this.groups, this.items);
-    }
+    public load = (): Promise<IWorkspaceCatalogWithAvailableItems> => {
+        return Promise.resolve(new RecordedAvailableCatalog(this.workspace, this.groups, this.items));
+    };
 }
 
 class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspaceCatalogWithAvailableItems {
