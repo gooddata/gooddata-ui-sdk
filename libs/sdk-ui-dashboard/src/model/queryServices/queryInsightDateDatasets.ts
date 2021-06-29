@@ -31,6 +31,7 @@ import { invariant } from "ts-invariant";
 import { selectCatalogDateDatasets } from "../state/catalog/catalogSelectors";
 import uniqBy from "lodash/uniqBy";
 import fromPairs from "lodash/fromPairs";
+import { newDisplayFormMap } from "../state/_infra/objRefMap";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
@@ -179,8 +180,10 @@ function* lookupDatasetsUsedInAttributesAndFilters(insight: IInsight, datasets: 
         displayForms,
     } = insightAttributes;
 
+    const displayFormsMap = newDisplayFormMap(displayForms, false);
+
     const datasetLookup: (ref: ObjRef) => ICatalogDateDataset | undefined = (ref) => {
-        const displayForm = displayForms[serializeObjRef(ref)];
+        const displayForm = displayFormsMap.get(ref);
 
         // if this bombs then the query insight attributes is messed up as it does not include display forms meta
         // for some display form used in the insight

@@ -141,15 +141,14 @@ export type InsightAttributesMeta = {
     usage: InsightDisplayFormUsage;
 
     /**
-     * Mapping of (serialized) display form ref to metadata about the display form. The insight uses these
-     * display forms for slicing, dicing and filtering the results.
+     * List of metadata objects describing display forms used by the insight.
      */
-    displayForms: Record<string, IAttributeDisplayFormMetadataObject>;
+    displayForms: ReadonlyArray<IAttributeDisplayFormMetadataObject>;
 
     /**
-     * Mapping of (serialized) attribute ref to metadata about the attribute.
+     * List of attributes to which the used display forms belong.
      */
-    attributes: Record<string, IAttributeMetadataObject>;
+    attributes: ReadonlyArray<IAttributeMetadataObject>;
 };
 
 /**
