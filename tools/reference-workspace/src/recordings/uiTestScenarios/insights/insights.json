@@ -2925,6 +2925,11 @@
     "PivotTable.858b41e93656429bf2ac89f87cece314": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with custom metric column size."
     },
+    "PivotTable.900afab80fb4183b8ae26f67ed50d283": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with date filter.",
+        "scenarioName": "with date filter",
+        "visName": "PivotTable"
+    },
     "PivotTable.93eeaa75bbc82826b65d9e41973c4d6d": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with two row and one column attributes.",
         "scenarioName": "two measures with two row and one column attributes",

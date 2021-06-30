@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-28T16:01:41.632Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-30T14:23:56.013Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -865,6 +865,17 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
 };
+const fp_882ad12a1a17ce93368a6b15ae6d6ff4 = {
+    definition: require("./uiTestScenarios/executions/882ad12a1a17ce93368a6b15ae6d6ff4/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/882ad12a1a17ce93368a6b15ae6d6ff4/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/882ad12a1a17ce93368a6b15ae6d6ff4/dataView_o0_0s100_1000.json"),
+    scenarios: require("./uiTestScenarios/executions/882ad12a1a17ce93368a6b15ae6d6ff4/scenarios.json"),
+};
+const fp_c1ed8778da15e48fba8dbb2c00576c77 = {
+    definition: require("./uiTestScenarios/executions/c1ed8778da15e48fba8dbb2c00576c77/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/c1ed8778da15e48fba8dbb2c00576c77/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/c1ed8778da15e48fba8dbb2c00576c77/dataView_o0_0s100_1000.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -998,6 +1009,7 @@ export const Scenarios = {
             scenarioIndex: 0,
             execution: fp_fde7a6a9ba205f28ce4a5391836f1153,
         },
+        WithDateFilter: { scenarioIndex: 0, execution: fp_882ad12a1a17ce93368a6b15ae6d6ff4 },
     },
     BarChart: {
         TwoMeasuresWithTwoViewBy: { scenarioIndex: 0, execution: fp_036a8d52f628b2c9847579f40be9afed },
@@ -3952,6 +3964,9 @@ const i_PivotTable_8159de7b843c478cd0a1fda6037fbc0c = {
 const i_PivotTable_858b41e93656429bf2ac89f87cece314 = {
     obj: require("./uiTestScenarios/insights/PivotTable.858b41e93656429bf2ac89f87cece314/obj.json"),
 };
+const i_PivotTable_900afab80fb4183b8ae26f67ed50d283 = {
+    obj: require("./uiTestScenarios/insights/PivotTable.900afab80fb4183b8ae26f67ed50d283/obj.json"),
+};
 const i_PivotTable_93eeaa75bbc82826b65d9e41973c4d6d = {
     obj: require("./uiTestScenarios/insights/PivotTable.93eeaa75bbc82826b65d9e41973c4d6d/obj.json"),
 };
@@ -4479,6 +4494,7 @@ export const Insights = {
         Themed: i_PivotTable_6505c191912087a7187a8365369df497,
         WithAttributesWithoutMeasures: i_PivotTable_71f688d207f32bba1f14f6979254eab5,
         TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: i_PivotTable_7c6250794e56a964bf62ae1f4db62e48,
+        WithDateFilter: i_PivotTable_900afab80fb4183b8ae26f67ed50d283,
         TwoMeasuresWithTwoRowAndOneColumnAttributes: i_PivotTable_93eeaa75bbc82826b65d9e41973c4d6d,
         TwoMeasuresAndSingleGrandTotalForOne: i_PivotTable_94483039e1f85a9338af24a89dd91aa8,
         SingleMeasureAndSingleGrandTotal: i_PivotTable_95bb1982199a1ef75802a93cf1317d57,
@@ -4690,6 +4706,8 @@ export const Recordings = {
         fp_fd4473fef32dc8b57cdba96564af53e1,
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_ff74085f6f31c71f4797251924d3205d,
+        fp_882ad12a1a17ce93368a6b15ae6d6ff4,
+        fp_c1ed8778da15e48fba8dbb2c00576c77,
     },
     metadata: {
         catalog,
@@ -5590,6 +5608,7 @@ export const Recordings = {
             i_PivotTable_7ed44fbdacb32c831096274a514d13e1,
             i_PivotTable_8159de7b843c478cd0a1fda6037fbc0c,
             i_PivotTable_858b41e93656429bf2ac89f87cece314,
+            i_PivotTable_900afab80fb4183b8ae26f67ed50d283,
             i_PivotTable_93eeaa75bbc82826b65d9e41973c4d6d,
             i_PivotTable_94483039e1f85a9338af24a89dd91aa8,
             i_PivotTable_95bb1982199a1ef75802a93cf1317d57,
