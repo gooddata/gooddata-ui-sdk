@@ -1,5 +1,4 @@
 // (C) 2021 GoodData Corporation
-import { IDashboardDrillEvent, IDrillDownDefinition } from "@gooddata/sdk-ui-ext";
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
 import { IFilter, IInsight } from "@gooddata/sdk-model";
@@ -11,6 +10,7 @@ import {
     IDrillToCustomUrl,
     IDrillToLegacyDashboard,
 } from "@gooddata/sdk-backend-spi";
+import { IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
 
 /**
  * This event is emitted after the drill is triggered.

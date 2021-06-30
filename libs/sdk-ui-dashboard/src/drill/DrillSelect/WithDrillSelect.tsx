@@ -2,7 +2,6 @@
 import React, { useState, useCallback, useRef } from "react";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
-import { IDashboardDrillEvent, isDrillDownDefinition } from "@gooddata/sdk-ui-ext";
 import { DrillSelectDropdown } from "./DrillSelectDropdown";
 import {
     DashboardDrillDefinition,
@@ -31,6 +30,7 @@ import { useDrillToDashboard } from "../hooks/useDrillToDashboard";
 import { useDrillToAttributeUrl } from "../hooks/useDrillToAttributeUrl";
 import { useDrillToCustomUrl } from "../hooks/useDrillToCustomUrl";
 import { DashboardCommandFailed } from "../../model";
+import { IDashboardDrillEvent, isDrillDownDefinition } from "../../types";
 
 /**
  * @internal

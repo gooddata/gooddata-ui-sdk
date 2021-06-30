@@ -2,7 +2,6 @@
 import { IAvailableDrillTargets, IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
 import { IFilter, IInsight, ObjRef } from "@gooddata/sdk-model";
-import { IDashboardDrillEvent, IDrillDownDefinition } from "@gooddata/sdk-ui-ext";
 import {
     DrillDefinition,
     IDrillToAttributeUrl,
@@ -14,6 +13,7 @@ import {
     IDrillToInsight,
     IDrillToDashboard,
 } from "@gooddata/sdk-backend-spi";
+import { IDashboardDrillEvent, IDrillDownDefinition } from "../types";
 
 /**
  * @internal

@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
-
+import isEmpty from "lodash/isEmpty";
 import { DrillDefinition } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { LocalIdRef, ObjRef } from "@gooddata/sdk-model";
 import {
     IAbsoluteDateFilter,
     IRelativeDateFilter,
@@ -19,15 +19,6 @@ export type IDashboardFilter =
     | IRelativeDateFilter
     | IPositiveAttributeFilter
     | INegativeAttributeFilter;
-
-/**
- * Information about the DrillDown interaction - the attribute that is next in the drill down hierarchy.
- * @beta
- */
-export interface IDrillDownDefinition {
-    type: "drillDown";
-    target: ObjRef;
-}
 
 /**
  * A {@link @gooddata/sdk-ui#IDrillEvent} with added information about the drill event specific to the DashboardView context.
@@ -50,3 +41,39 @@ export interface IDashboardDrillEvent extends IDrillEvent {
  * @beta
  */
 export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
+
+/**
+ * Implicit drill down context
+ *
+ * @alpha
+ */
+export interface IDrillDownContext {
+    drillDefinition: IDrillDownDefinition;
+    event: IDrillEvent;
+}
+
+/**
+ * Information about the DrillDown interaction - the attribute that is next in the drill down hierarchy.
+ * @beta
+ */
+export interface IDrillDownDefinition {
+    type: "drillDown";
+
+    /**
+     * Local identifier of the attribute that triggered the drill down.
+     */
+    origin: LocalIdRef;
+
+    /**
+     * Target attribute display form for drill down.
+     */
+    target: ObjRef;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDrillDownDefinition}.
+ * @beta
+ */
+export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition {
+    return !isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
+}

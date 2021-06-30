@@ -13,10 +13,10 @@ import {
     IDrillableItem,
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
-import { IDashboardDrillEvent } from "@gooddata/sdk-ui-ext";
 import { useDashboardSelector, selectAttributesWithDrillDown } from "../model";
 import { getImplicitDrillsWithPredicates } from "../model/_staging/drills/drillingUtils";
 import { OnDashboardDrill } from "../drill/interfaces";
+import { IDashboardDrillEvent } from "../types";
 
 /**
  * @internal

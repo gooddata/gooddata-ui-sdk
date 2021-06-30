@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { DashboardDrillContext, DashboardDrillDefinition } from "../interfaces";
-import { IDashboardDrillEvent } from "@gooddata/sdk-ui-ext";
+import { IDashboardDrillEvent } from "../../types";
 
 /**
  * These types are also used as s-classes for testing e.g. .s-drill-to-dashboard

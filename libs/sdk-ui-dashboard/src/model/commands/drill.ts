@@ -1,6 +1,5 @@
 // (C) 2021 GoodData Corporation
 import { IDashboardCommand } from "./base";
-import { IDashboardDrillEvent, IDrillDownDefinition } from "@gooddata/sdk-ui-ext";
 import {
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
@@ -10,6 +9,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { DashboardDrillContext } from "../../drill/interfaces";
 import { IInsight } from "@gooddata/sdk-model";
+import { IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
 
 /**
  * Performs drill.
