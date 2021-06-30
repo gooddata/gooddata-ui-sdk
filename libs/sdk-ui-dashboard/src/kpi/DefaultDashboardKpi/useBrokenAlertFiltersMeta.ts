@@ -19,7 +19,7 @@ import {
     IAttributeFilterMetaCollection,
     IBrokenAlertFilterBasicInfo,
     isBrokenAlertAttributeFilterInfo,
-} from "@gooddata/sdk-ui-ext/esm/internal";
+} from "./KpiAlerts";
 
 export interface IBrokenAlertFiltersMeta {
     attributeFiltersMeta: IAttributeFilterMetaCollection;

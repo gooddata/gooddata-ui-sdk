@@ -39,22 +39,20 @@ import {
     filterContextItemsToFiltersForWidget,
     filterContextToFiltersForWidget,
 } from "../../converters/filterConverters";
-import {
-    DashboardItemHeadline,
-    DashboardItemWithKpiAlert,
-    evaluateAlertTriggered,
-    getBrokenAlertFiltersBasicInfo,
-    IKpiAlertResult,
-    IKpiResult,
-    dashboardFilterToFilterContextItem,
-    stripDateDatasets,
-} from "@gooddata/sdk-ui-ext/esm/internal";
 import { KpiRenderer } from "./KpiRenderer";
 import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
 import { useKpiAlertOperations } from "./useKpiAlertOperations";
 import { selectPermissions, selectSettings, selectUser, useDashboardSelector } from "../../model";
 import { useDashboardComponentsContext } from "../../dashboard/DashboardComponentsContext";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../types";
+import { IKpiAlertResult, IKpiResult } from "./types";
+import {
+    DashboardItemWithKpiAlert,
+    evaluateAlertTriggered,
+    getBrokenAlertFiltersBasicInfo,
+} from "./KpiAlerts";
+import { DashboardItemHeadline } from "../../layout/DashboardItem";
+import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;

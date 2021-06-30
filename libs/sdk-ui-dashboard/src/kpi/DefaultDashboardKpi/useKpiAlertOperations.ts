@@ -1,9 +1,9 @@
 // (C) 2020-2021 GoodData Corporation
 import { useState } from "react";
 import { IWidgetAlertDefinition, IWidgetAlert } from "@gooddata/sdk-backend-spi";
-import { KpiAlertOperationStatus } from "@gooddata/sdk-ui-ext/esm/internal";
 import { useDashboardCommand } from "../../dashboard/useDashboardCommand";
 import { createAlert, updateAlert, removeAlert } from "../../model";
+import { KpiAlertOperationStatus } from "./types";
 
 /**
  * @internal

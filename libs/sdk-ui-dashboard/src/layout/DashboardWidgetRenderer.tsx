@@ -13,16 +13,12 @@ import {
     isInsightWidget,
 } from "@gooddata/sdk-backend-spi";
 import { IDrillableItem, IHeaderPredicate, OnError, VisType } from "@gooddata/sdk-ui";
-import {
-    DashboardItem,
-    DashboardItemHeadline,
-    DashboardItemVisualization,
-} from "@gooddata/sdk-ui-ext/esm/internal";
 import { DashboardKpi } from "../kpi";
 import { DashboardInsight } from "../insight";
 import { getVisTypeCssClass } from "./utils";
 import { selectAlerts, selectInsights, useDashboardSelector } from "../model";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../types";
+import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "./DashboardItem";
 
 const dashboardStyle: CSSProperties = { height: "100%", width: "100%" };
 

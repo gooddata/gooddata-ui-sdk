@@ -9,9 +9,9 @@ import { drillToDashboardTriggered } from "../../events/drill";
 import { selectFilterContext } from "../../state/filterContext/filterContextSelectors";
 import { selectWidgetByRef } from "../../state/layout/layoutSelectors";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
-import { filterContextToFiltersForWidget } from "@gooddata/sdk-ui-ext/dist/dashboardView/converters";
-import { IDashboardFilter } from "@gooddata/sdk-ui-ext";
 import { PromiseFnReturnType } from "../../types/sagas";
+import { IDashboardFilter } from "../../../types";
+import { filterContextToFiltersForWidget } from "../../../converters/filterConverters";
 import {
     DrillEventIntersectionElementHeader,
     IDrillEventIntersectionElement,
@@ -90,7 +90,7 @@ function filterIntersection(
 export function convertIntersectionToAttributeFilters(
     intersection: IDrillEventIntersectionElement[],
     dateDataSetsAttributesRefs: ObjRef[],
-) {
+): IAttributeFilter[] {
     return intersection
         .map((i) => i.header)
         .filter((i: DrillEventIntersectionElementHeader) => filterIntersection(i, dateDataSetsAttributesRefs))

@@ -12,3 +12,5 @@ export interface IKpiAlertResult {
     measureFormat: string;
     measureResult: number;
 }
+
+export type KpiAlertOperationStatus = "idle" | "inProgress" | "error";
