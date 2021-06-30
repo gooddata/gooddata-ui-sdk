@@ -2,8 +2,7 @@
 import React from "react";
 import { IntlProvider } from "react-intl";
 import merge from "lodash/merge";
-import { DefaultLocale } from "@gooddata/sdk-ui";
-import { translations as sdkUiExtTranslations } from "@gooddata/sdk-ui-ext/dist/internal";
+import { DefaultLocale, messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";
 
 import enUS from "./bundles/en-US.json";
@@ -33,8 +32,8 @@ const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } =
  */
 export const translations = merge(
     {},
-    // we also need the sdk-ui-ext translations
-    sdkUiExtTranslations,
+    // we also need the sdk-ui translations
+    sdkUiTranslations,
     sdkUiDashboardTranslations,
 );
 
