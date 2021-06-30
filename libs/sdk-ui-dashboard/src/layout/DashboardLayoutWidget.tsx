@@ -13,15 +13,16 @@ import {
     DashboardWidget,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IInsight, areObjRefsEqual } from "@gooddata/sdk-model";
-import {
-    getDashboardLayoutWidgetDefaultHeight,
-    getDashboardLayoutItemHeight,
-    getDashboardLayoutItemHeightForRatioAndScreen,
-    IDashboardLayoutWidgetRenderer,
-} from "@gooddata/sdk-ui-ext/esm/internal";
+
 import { IDashboardWidgetRendererProps } from "./DashboardWidgetRenderer";
 import { selectInsights, selectSettings, useDashboardSelector } from "../model";
 import { DashboardWidget as RenderDashboardWidget } from "./DashboardWidget";
+import {
+    getDashboardLayoutItemHeight,
+    getDashboardLayoutItemHeightForRatioAndScreen,
+    getDashboardLayoutWidgetDefaultHeight,
+    IDashboardLayoutWidgetRenderer,
+} from "./DefaultDashboardLayoutRenderer";
 
 /**
  * @internal

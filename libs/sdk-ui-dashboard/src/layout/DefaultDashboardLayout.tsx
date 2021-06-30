@@ -15,18 +15,19 @@ import {
     areObjRefsEqual,
     objRefToString,
 } from "@gooddata/sdk-model";
+
+import { EmptyDashboardError } from "./EmptyDashboardError";
+import { selectInsights, selectSettings, selectBasicLayout, useDashboardSelector } from "../model";
+import { DashboardLayoutWidget } from "./DashboardLayoutWidget";
+import { useDashboardComponentsContext } from "../dashboard/DashboardComponentsContext";
+import { DashboardLayoutProps } from "./types";
 import {
     DashboardLayout,
     DashboardLayoutBuilder,
     DashboardLayoutItemModifications,
     DashboardLayoutItemsSelector,
     validateDashboardLayoutWidgetSize,
-} from "@gooddata/sdk-ui-ext/esm/internal";
-import { EmptyDashboardError } from "./EmptyDashboardError";
-import { selectInsights, selectSettings, selectBasicLayout, useDashboardSelector } from "../model";
-import { DashboardLayoutWidget } from "./DashboardLayoutWidget";
-import { useDashboardComponentsContext } from "../dashboard/DashboardComponentsContext";
-import { DashboardLayoutProps } from "./types";
+} from "./DefaultDashboardLayoutRenderer";
 
 const selectAllItemsWithInsights: DashboardLayoutItemsSelector = (items) =>
     items.filter((item) => item.isInsightWidgetItem());

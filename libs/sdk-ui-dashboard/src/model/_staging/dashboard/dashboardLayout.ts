@@ -10,10 +10,13 @@ import {
     WidgetType,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight, insightRef, serializeObjRef } from "@gooddata/sdk-model";
-import { MeasurableWidgetContent, validateDashboardLayoutWidgetSize } from "@gooddata/sdk-ui-ext";
 import compact from "lodash/compact";
 import keyBy from "lodash/keyBy";
 import { InvariantError } from "ts-invariant";
+import {
+    MeasurableWidgetContent,
+    validateDashboardLayoutWidgetSize,
+} from "../../../layout/DefaultDashboardLayoutRenderer";
 
 function extractContentFromWidget(
     widget: DashboardWidget,

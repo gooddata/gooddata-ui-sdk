@@ -21940,7 +21940,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-jnWtt/uE/idOj14eOeHMg4eLlVKy2hZFqh8qzKkjO9+KM0LqQifhw3sgnkJ0mXibUZ2bGDSq6TawTps7SJcupQ==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-mxls/hNZ3nbTTIk//ba3w881R38huvPsZ60qdxfG28mfE8pk12M7/vJtnP2Y9WbnL/6bGfJAdBB8Kvy4UWpnnw==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
@@ -21994,6 +21994,7 @@ packages:
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
+      react-grid-system: 7.2.0_react@16.14.0
       react-intl: 3.12.1_react@16.14.0
       react-measure: 2.5.2_react-dom@16.14.0+react@16.14.0
       react-redux: 7.2.4_react-dom@16.14.0+react@16.14.0
