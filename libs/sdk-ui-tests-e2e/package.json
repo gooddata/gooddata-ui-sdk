@@ -8,7 +8,8 @@
         "directory": "libs/sdk-ui-tests-e2e"
     },
     "author": "GoodData Corporation",
-    "license": "MIT",
+    "license": "LicenseRef-LICENSE",
+    "private": true,
     "main": "dist/index.js",
     "module": "esm/index.js",
     "browser": "dist/index.js",
