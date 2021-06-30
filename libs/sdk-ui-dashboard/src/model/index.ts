@@ -18,6 +18,8 @@ export { ObjRefMap, ObjRefMapConfig } from "./state/_infra/objRefMap";
 
 export { selectDashboardLoading } from "./state/loading/loadingSelectors";
 export { LoadingState } from "./state/loading/loadingState";
+export { BackendCapabilitiesState } from "./state/backendCapabilities/backendCapabilitiesState";
+export { selectBackendCapabilities } from "./state/backendCapabilities/backendCapabilitiesSelectors";
 export { ConfigState } from "./state/config/configState";
 export {
     selectConfig,

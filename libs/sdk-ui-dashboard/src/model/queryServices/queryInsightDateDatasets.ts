@@ -33,6 +33,7 @@ import uniqBy from "lodash/uniqBy";
 import fromPairs from "lodash/fromPairs";
 import { newDisplayFormMap } from "../state/_infra/objRefMap";
 import compact from "lodash/compact";
+import { selectBackendCapabilities } from "../state/backendCapabilities/backendCapabilitiesSelectors";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
@@ -181,7 +182,10 @@ function* lookupDatasetsUsedInAttributesAndFilters(insight: IInsight, datasets: 
         displayForms,
     } = insightAttributes;
 
-    const displayFormsMap = newDisplayFormMap(displayForms, false);
+    const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
+        selectBackendCapabilities,
+    );
+    const displayFormsMap = newDisplayFormMap(displayForms, capabilities.hasTypeScopedIdentifiers);
 
     const datasetLookup: (ref: ObjRef) => ICatalogDateDataset | undefined = (ref) => {
         const displayForm = displayFormsMap.get(ref);

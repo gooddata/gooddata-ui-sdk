@@ -107,20 +107,22 @@ export class ObjRefMap<T> {
         return this.items[Symbol.iterator]();
     }
 
-    public clear(): void {
-        this.items = [];
-        this.itemsByIdentifier = {};
-        this.itemsByUri = {};
-        this.size = 0;
-    }
-
     public entries(): IterableIterator<[ObjRef, T]> {
         return this.items[Symbol.iterator]();
     }
 
     public get(key: ObjRef): T | undefined {
         if (isIdentifierRef(key)) {
-            return this.itemsByIdentifier[this.idRefToKey(key.identifier, key.type)];
+            const strictMatch = this.itemsByIdentifier[this.idRefToKey(key.identifier, key.type)];
+
+            if (!strictMatch && !key.type && this.config.strictTypeCheck) {
+                // eslint-disable-next-line no-console
+                console.warn(
+                    "You are working with an analytical backend which can only match entities by idRefs that contain both identifier and type. However, while trying to find match an object by ref your code supplied just the identifier without type.",
+                );
+            }
+
+            return strictMatch;
         }
 
         return this.itemsByUri[key.uri];
@@ -149,7 +151,7 @@ const metadataObjectExtractors = {
  */
 export function newCatalogAttributeMap(
     items: ReadonlyArray<ICatalogAttribute | ICatalogDateAttribute>,
-    strictTypeCheck: boolean,
+    strictTypeCheck: boolean = false,
 ): ObjRefMap<ICatalogAttribute | ICatalogDateAttribute> {
     const map = new ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>({
         type: "attribute",
@@ -170,7 +172,7 @@ export function newCatalogAttributeMap(
  */
 export function newDisplayFormMap(
     items: ReadonlyArray<IAttributeDisplayFormMetadataObject>,
-    strictTypeCheck: boolean,
+    strictTypeCheck: boolean = false,
 ): ObjRefMap<IAttributeDisplayFormMetadataObject> {
     const map = new ObjRefMap<IAttributeDisplayFormMetadataObject>({
         type: "displayForm",
@@ -189,7 +191,7 @@ export function newDisplayFormMap(
  */
 export function newAttributeMap(
     items: IAttributeMetadataObject[],
-    strictTypeCheck: boolean,
+    strictTypeCheck: boolean = false,
 ): ObjRefMap<IAttributeMetadataObject> {
     const map = new ObjRefMap<IAttributeMetadataObject>({
         type: "attribute",

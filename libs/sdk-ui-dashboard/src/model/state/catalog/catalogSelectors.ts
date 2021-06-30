@@ -3,6 +3,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import flatMap from "lodash/flatMap";
 import { newCatalogAttributeMap, newDisplayFormMap } from "../_infra/objRefMap";
+import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -60,14 +61,17 @@ export const selectAttributesWithDrillDown = createSelector(
  * @internal
  */
 export const selectAllCatalogDisplayFormsMap = createSelector(
-    [selectCatalogAttributes, selectCatalogDateDatasets],
-    (attributes, dateDatasets) => {
+    [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
+    (attributes, dateDatasets, capabilities) => {
         const nonDateDisplayForms = flatMap(attributes, (a) => a.displayForms);
         const dateDisplayForms = flatMap(dateDatasets, (d) =>
             flatMap(d.dateAttributes, (a) => a.attribute.displayForms),
         );
 
-        return newDisplayFormMap([...nonDateDisplayForms, ...dateDisplayForms], false);
+        return newDisplayFormMap(
+            [...nonDateDisplayForms, ...dateDisplayForms],
+            capabilities.hasTypeScopedIdentifiers,
+        );
     },
 );
 
@@ -79,10 +83,13 @@ export const selectAllCatalogDisplayFormsMap = createSelector(
  * @internal
  */
 export const selectAllCatalogAttributesMap = createSelector(
-    [selectCatalogAttributes, selectCatalogDateDatasets],
-    (attributes, dateDatasets) => {
+    [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
+    (attributes, dateDatasets, capabilities) => {
         const dateAttributes = flatMap(dateDatasets, (d) => d.dateAttributes);
 
-        return newCatalogAttributeMap([...attributes, ...dateAttributes], false);
+        return newCatalogAttributeMap(
+            [...attributes, ...dateAttributes],
+            capabilities.hasTypeScopedIdentifiers,
+        );
     },
 );

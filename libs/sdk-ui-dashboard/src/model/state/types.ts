@@ -11,6 +11,7 @@ import { IListedDashboard, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { CatalogState } from "./catalog/catalogState";
 import { UserState } from "./user/userState";
 import { DashboardMetaState } from "./meta/metaState";
+import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -22,6 +23,7 @@ import { DashboardMetaState } from "./meta/metaState";
  */
 export type DashboardState = {
     loading: LoadingState;
+    backendCapabilities: BackendCapabilitiesState;
     config: ConfigState;
     permissions: PermissionsState;
     filterContext: FilterContextState;

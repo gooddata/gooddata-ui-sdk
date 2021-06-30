@@ -30,6 +30,7 @@ import { dashboardFilterContextDefinition } from "../../../_staging/dashboard/da
 import { dashboardLayoutSanitize } from "../../../_staging/dashboard/dashboardLayout";
 import { loadDashboardList } from "./loadDashboardList";
 import { listedDashboardsActions } from "../../../state/listedDashboards";
+import { backendCapabilitiesActions } from "../../../state/backendCapabilities";
 
 function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWithReferences> {
     const { backend, workspace, dashboardRef } = ctx;
@@ -43,6 +44,7 @@ const EmptyDashboardLayout: IDashboardLayout = {
 };
 
 export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard): SagaIterator<void> {
+    const { backend } = ctx;
     try {
         yield put(loadingActions.setLoadingStart());
 
@@ -86,6 +88,7 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
 
         const batch = batchActions(
             [
+                backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
                 configActions.setConfig(config),
                 userActions.setUser(user),
                 permissionsActions.setPermissions(permissions),
@@ -98,7 +101,6 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
                 alertsActions.setAlerts(alerts),
                 filterContextActions.setFilterContext(filterContextDefinition),
                 // TODO: move code that catches errors in layout
-                // TODO: move code that validates and fixes widget sizes
                 layoutActions.setLayout(dashboardLayout),
                 dateFilterConfigActions.setDateFilterConfig({
                     dateFilterConfig: dashboard.dateFilterConfig,
