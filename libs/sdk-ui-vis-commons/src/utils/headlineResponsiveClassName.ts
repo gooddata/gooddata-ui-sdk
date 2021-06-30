@@ -9,13 +9,13 @@ const RESPONSIVE_SHORTENED_LABEL = "gd-shortened-label";
  * @internal
  * Provides responsive class for headline/kpi component based on its width and state of secondary item
  */
-export const getHeadlineResponsiveClassName = (width: number, isShorttened?: boolean): string => {
+export const getHeadlineResponsiveClassName = (width: number | undefined, isShortened?: boolean): string => {
     if (!width) {
         return "";
     }
     if (width < SMALL_COMPARE_SECTION_THRESHOLD) {
-        return isShorttened ? RESPONSIVE_SHORTENED_LABEL : RESPONSIVE_SMALL;
+        return isShortened ? RESPONSIVE_SHORTENED_LABEL : RESPONSIVE_SMALL;
     }
 
-    return isShorttened ? RESPONSIVE_MEDIUM : RESPONSIVE_LARGE;
+    return isShortened ? RESPONSIVE_MEDIUM : RESPONSIVE_LARGE;
 };

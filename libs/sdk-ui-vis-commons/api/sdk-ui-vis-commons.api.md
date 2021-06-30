@@ -112,7 +112,7 @@ export function getColorMappingPredicate(testValue: string): IHeaderPredicate;
 export function getColorPaletteFromColors(colors: string[]): IColorPalette;
 
 // @internal
-export const getHeadlineResponsiveClassName: (width: number, isShorttened?: boolean | undefined) => string;
+export const getHeadlineResponsiveClassName: (width: number | undefined, isShortened?: boolean | undefined) => string;
 
 // @internal (undocumented)
 export function getLegendDetails(legendPosition: PositionType, responsive: boolean | "autoPositionWithPopup", options: ILegendDetailOptions): ILegendDetails | null;
