@@ -284,6 +284,7 @@ export interface IBackendCapabilities {
     canExportXlsx?: boolean;
     canSortData?: boolean;
     canTransformExistingResult?: boolean;
+    hasTypeScopedIdentifiers?: boolean;
     maxDimensions?: number;
     supportsCsvUploader?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
