@@ -21,11 +21,11 @@ import {
     IBucketOfFun,
     IDrillDownContext,
     IExtendedReferencePoint,
-    IImplicitDrillDown,
     IReferencePoint,
     IUiConfig,
     IVisConstruct,
     IVisProps,
+    IDrillDownDefinition,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
@@ -143,7 +143,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return AREA_CHART_SUPPORTED_PROPERTIES;
     }
 
-    private addFilters(source: IInsight, drillConfig: IImplicitDrillDown, event: IDrillEvent) {
+    private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
         return addIntersectionFiltersToInsight(source, cutIntersection);
     }

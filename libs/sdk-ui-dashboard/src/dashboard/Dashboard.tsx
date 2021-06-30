@@ -29,6 +29,7 @@ import {
     IScheduledMail,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    ITheme,
     IWorkspacePermissions,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -42,13 +43,15 @@ import {
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
+import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
+import { defaultDashboardThemeModifier } from "@gooddata/sdk-ui-ext";
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { DashboardConfig } from "../model/types/commonTypes";
 import invariant from "ts-invariant";
 import { DashboardEventsProvider } from "./DashboardEventsContext";
 import { DashboardComponentsProvider, useDashboardComponentsContext } from "./DashboardComponentsContext";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/esm/internal/utils/internalIntlProvider";
-import { DashboardInsightProps, DefaultDashboardInsight } from "../insight";
+import { DashboardInsightProps, DefaultDashboardInsightWithDrillDialog } from "../insight";
 import { DashboardKpiProps, DefaultDashboardKpi } from "../kpi";
 import {
     DashboardLayout,
@@ -317,6 +320,22 @@ export interface IDashboardProps {
      *
      */
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
+
+    /**
+     * Theme to use.
+     *
+     * Note: the theme can come either from this property or from ThemeContext or from the dashboard.
+     * If you do not specify theme here, it will be taken from an existing ThemeContext or if there is no ThemeContext,
+     * it will be loaded for the dashboard.
+     */
+    theme?: ITheme;
+
+    /**
+     * If provided it is called with loaded theme to allow its modification according to the app needs.
+     * This is only applied to themes loaded from the backend, it is NOT applied to themes provided using
+     * the "theme" prop.
+     */
+    themeModifier?: (theme: ITheme) => ITheme;
 }
 
 const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) => {
@@ -440,24 +459,32 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     return (
         <Provider store={dashboardStore.store} context={ReactDashboardContext}>
             <ToastMessageContextProvider>
-                <DashboardEventsProvider
-                    registerHandler={dashboardStore.registerEventHandler}
-                    unregisterHandler={dashboardStore.unregisterEventHandler}
+                <ThemeProvider
+                    theme={props.theme}
+                    modifier={props.themeModifier ?? defaultDashboardThemeModifier}
                 >
-                    <DashboardComponentsProvider
-                        ErrorComponent={props.ErrorComponent ?? DefaultError}
-                        LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                        LayoutComponent={props.dashboardLayoutConfig?.Component ?? DefaultDashboardLayout}
-                        InsightComponent={props.widgetConfig?.insight?.Component ?? DefaultDashboardInsight}
-                        KpiComponent={props.widgetConfig?.kpi?.Component ?? DefaultDashboardKpi}
-                        WidgetComponent={props.widgetConfig?.Component ?? DefaultDashboardWidget}
-                        ScheduledEmailDialogComponent={
-                            props.scheduledEmailDialogConfig?.Component ?? DefaultScheduledEmailDialog
-                        }
+                    <DashboardEventsProvider
+                        registerHandler={dashboardStore.registerEventHandler}
+                        unregisterHandler={dashboardStore.unregisterEventHandler}
                     >
-                        <DashboardLoading {...props} />
-                    </DashboardComponentsProvider>
-                </DashboardEventsProvider>
+                        <DashboardComponentsProvider
+                            ErrorComponent={props.ErrorComponent ?? DefaultError}
+                            LoadingComponent={props.LoadingComponent ?? DefaultLoading}
+                            LayoutComponent={props.dashboardLayoutConfig?.Component ?? DefaultDashboardLayout}
+                            InsightComponent={
+                                props.widgetConfig?.insight?.Component ??
+                                DefaultDashboardInsightWithDrillDialog
+                            }
+                            KpiComponent={props.widgetConfig?.kpi?.Component ?? DefaultDashboardKpi}
+                            WidgetComponent={props.widgetConfig?.Component ?? DefaultDashboardWidget}
+                            ScheduledEmailDialogComponent={
+                                props.scheduledEmailDialogConfig?.Component ?? DefaultScheduledEmailDialog
+                            }
+                        >
+                            <DashboardLoading {...props} />
+                        </DashboardComponentsProvider>
+                    </DashboardEventsProvider>
+                </ThemeProvider>
             </ToastMessageContextProvider>
         </Provider>
     );

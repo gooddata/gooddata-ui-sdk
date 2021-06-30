@@ -1,20 +1,13 @@
-// (C) 2020 GoodData Corporation
-import { IImplicitDrillDown } from "../../../interfaces/Visualization";
+// (C) 2020-2021 GoodData Corporation
 import { IDrillEvent, IDrillEventIntersectionElement, VisType } from "@gooddata/sdk-ui";
-import { IAttribute, IInsight, IInsightDefinition, uriRef } from "@gooddata/sdk-model";
+import { IAttribute, IInsight, IInsightDefinition, localIdRef, uriRef } from "@gooddata/sdk-model";
+import { IDrillDownDefinition } from "../../../interfaces/Visualization";
 
-export function createDrillDefinition(fromAttribute: IAttribute, targetUri: string): IImplicitDrillDown {
+export function createDrillDefinition(fromAttribute: IAttribute, targetUri: string): IDrillDownDefinition {
     return {
-        implicitDrillDown: {
-            from: {
-                drillFromAttribute: { localIdentifier: fromAttribute.attribute.localIdentifier },
-            },
-            drillDownStep: {
-                drillToAttribute: {
-                    attributeDisplayForm: uriRef(targetUri),
-                },
-            },
-        },
+        type: "drillDown",
+        origin: localIdRef(fromAttribute.attribute.localIdentifier),
+        target: uriRef(targetUri),
     };
 }
 

@@ -4,13 +4,13 @@ import isEmpty from "lodash/isEmpty";
 import { IAnalyticalBackend, IExecutionFactory, ISettings, ITheme } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
-    Identifier,
     IInsight,
     IInsightDefinition,
     ITotal,
     ObjRef,
     VisualizationProperties,
     IExecutionConfig,
+    LocalIdRef,
 } from "@gooddata/sdk-model";
 import {
     ChartType,
@@ -482,45 +482,37 @@ export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError {
 }
 
 /**
- * Source implicit drill down attribute local Identifier
- *
- * @alpha
- */
-export interface IDrillFromAttribute {
-    drillFromAttribute: {
-        localIdentifier: Identifier;
-    };
-}
-
-/**
- * Target implicit drill down attribute display form
- *
- * @alpha
- */
-export interface IDrillToAttribute {
-    drillToAttribute: {
-        attributeDisplayForm: ObjRef;
-    };
-}
-
-/**
- * Implicit drill down definition
- *
- * @alpha
- */
-export interface IImplicitDrillDown {
-    implicitDrillDown: {
-        from: IDrillFromAttribute;
-        drillDownStep: IDrillToAttribute;
-    };
-}
-
-/**
  * Implicit drill down context
  *
  * @alpha
  */
 export interface IDrillDownContext {
-    drillDefinition: IImplicitDrillDown;
+    drillDefinition: IDrillDownDefinition;
     event: IDrillEvent;
+}
+
+/**
+ * Information about the DrillDown interaction - the attribute that is next in the drill down hierarchy.
+ * @beta
+ */
+export interface IDrillDownDefinition {
+    type: "drillDown";
+
+    /**
+     * Local identifier of the attribute that triggered the drill down.
+     */
+    origin: LocalIdRef;
+
+    /**
+     * Target attribute display form for drill down.
+     */
+    target: ObjRef;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDrillDownDefinition}.
+ * @beta
+ */
+export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition {
+    return !isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
 }

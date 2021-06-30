@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 
 import {
     IVisualizationDescriptor,
@@ -15,6 +15,8 @@ import {
     MIDDLE_VISUALIZATION_HEIGHT,
 } from "../constants";
 import { ISettings } from "@gooddata/sdk-backend-spi";
+import { IDrillDownContext } from "../../../interfaces/Visualization";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 
 export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
     public abstract getFactory(): PluggableVisualizationFactory;
@@ -57,5 +59,11 @@ export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
         }
         return MAX_VISUALIZATION_HEIGHT;
+    }
+
+    public applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight {
+        const intersection = drillDownContext.event.drillContext.intersection;
+        const withFilters = addIntersectionFiltersToInsight(insight, intersection);
+        return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 }

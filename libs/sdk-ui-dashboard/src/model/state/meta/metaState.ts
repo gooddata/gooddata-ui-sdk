@@ -7,7 +7,7 @@ import { IDashboard } from "@gooddata/sdk-backend-spi";
  */
 export type DashboardMeta = Pick<
     IDashboard,
-    "ref" | "title" | "description" | "created" | "updated" | "isLocked" | "uri"
+    "ref" | "title" | "description" | "created" | "updated" | "isLocked" | "uri" | "identifier"
 >;
 
 /**

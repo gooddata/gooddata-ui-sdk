@@ -4,5 +4,9 @@
     "options.menu.export.PDF": "导出为 PDF",
     "options.menu.schedule.email": "安排电子邮件发送",
     "dialogs.schedule.email.submit.success": "成功！您的控制面板已计划发送电子邮件。",
-    "dialogs.schedule.email.submit.error": "计划控制面板失败，请稍后重试。"
+    "dialogs.schedule.email.submit.error": "计划控制面板失败，请稍后重试。",
+    "drill_modal_picker.drill-down": "深入查看",
+    "drill_modal_picker.drill-into": "深入了解",
+    "drill_modal_picker.more.details": "更多详情",
+    "drillModal.backToTop": "返回顶部"
 }

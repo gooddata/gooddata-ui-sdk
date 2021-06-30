@@ -31,8 +31,8 @@ import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-backend-spi';
+import { IDashboardDrillEvent } from '@gooddata/sdk-ui-ext';
 import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
-import { IDashboardFilter as IDashboardFilter_2 } from '@gooddata/sdk-ui-ext/esm';
 import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
@@ -41,7 +41,14 @@ import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDrillableItem } from '@gooddata/sdk-ui';
+import { IDrillDownDefinition } from '@gooddata/sdk-ui-ext';
+import { IDrillToAttributeUrl } from '@gooddata/sdk-backend-spi';
+import { IDrillToCustomUrl } from '@gooddata/sdk-backend-spi';
+import { IDrillToDashboard } from '@gooddata/sdk-backend-spi';
+import { IDrillToInsight } from '@gooddata/sdk-backend-spi';
+import { IDrillToLegacyDashboard } from '@gooddata/sdk-backend-spi';
 import { IErrorProps } from '@gooddata/sdk-ui';
+import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
@@ -52,6 +59,7 @@ import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpi } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
+import { IListedDashboard } from '@gooddata/sdk-backend-spi';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
@@ -60,6 +68,7 @@ import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-backend-spi';
+import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IUser } from '@gooddata/sdk-backend-spi';
 import { IWidget } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
@@ -68,7 +77,6 @@ import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnFiredDashboardViewDrillEvent } from '@gooddata/sdk-ui-ext';
-import { OnFiredDashboardViewDrillEvent as OnFiredDashboardViewDrillEvent_2 } from '@gooddata/sdk-ui-ext/esm';
 import { Patch } from 'immer';
 import { default as React_2 } from 'react';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
@@ -462,10 +470,10 @@ export interface DashboardCommandRejected extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | ChangeDateFilterSelection | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | ReplaceSectionItem | MoveSectionItem | RemoveSectionItem | UndoLayoutChanges | ChangeKpiWidgetHeader | ChangeKpiWidgetMeasure | ChangeKpiWidgetFilterSettings | ChangeKpiWidgetComparison | RefreshKpiWidget | ChangeInsightWidgetHeader | ChangeInsightWidgetFilterSettings | ChangeInsightWidgetVisProperties | ChangeInsightWidgetInsight | ModifyDrillsForInsightWidget | RemoveDrillsForInsightWidget | RefreshInsightWidget | CreateAlert | UpdateAlert | RemoveAlert | CreateScheduledEmail;
+export type DashboardCommands = LoadDashboard | SaveDashboard | SaveDashboardAs | RenameDashboard | ResetDashboard | ChangeDateFilterSelection | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | ChangeAttributeFilterSelection | SetAttributeFilterParent | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | ReplaceSectionItem | MoveSectionItem | RemoveSectionItem | UndoLayoutChanges | ChangeKpiWidgetHeader | ChangeKpiWidgetMeasure | ChangeKpiWidgetFilterSettings | ChangeKpiWidgetComparison | RefreshKpiWidget | ChangeInsightWidgetHeader | ChangeInsightWidgetFilterSettings | ChangeInsightWidgetVisProperties | ChangeInsightWidgetInsight | ModifyDrillsForInsightWidget | RemoveDrillsForInsightWidget | RefreshInsightWidget | CreateAlert | UpdateAlert | RemoveAlert | CreateScheduledEmail | Drill | DrillDown | DrillToAttributeUrl | DrillToCustomUrl | DrillToDashboard | DrillToInsight | DrillToLegacyDashboard;
 
 // @internal
-export type DashboardCommandType = "GDC.DASH/CMD.LOAD" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON" | "GDC.DASH/CMD.KPI_WIDGET.REFRESH" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH" | "GDC.DASH/CMD.ALERT.CREATE" | "GDC.DASH/CMD.ALERT.UPDATE" | "GDC.DASH/CMD.ALERT.REMOVE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE";
+export type DashboardCommandType = "GDC.DASH/CMD.LOAD" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON" | "GDC.DASH/CMD.KPI_WIDGET.REFRESH" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH" | "GDC.DASH/CMD.ALERT.CREATE" | "GDC.DASH/CMD.ALERT.UPDATE" | "GDC.DASH/CMD.ALERT.REMOVE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE" | "GDC.DASH/CMD.DRILL" | "GDC.DASH/CMD.DRILL.DRILL_DOWN" | "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT" | "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD";
 
 // @internal
 export type DashboardConfig = {
@@ -515,6 +523,97 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
 // @internal
 export type DashboardDispatch = Dispatch<AnyAction>;
 
+// @internal (undocumented)
+export interface DashboardDrillContext {
+    insight?: IInsight;
+    widget?: IInsightWidget;
+}
+
+// @internal (undocumented)
+export type DashboardDrillDefinition = DrillDefinition | IDrillDownDefinition;
+
+// @internal
+export interface DashboardDrillDownTriggered extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly drillDefinition: IDrillDownDefinition;
+        readonly drillEvent: IDashboardDrillEvent;
+        readonly insight: IInsight;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_DOWN.TRIGGERED";
+}
+
+// @internal
+export interface DashboardDrillToAttributeUrlTriggered extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillDefinition: IDrillToAttributeUrl;
+        readonly url: string;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.TRIGGERED";
+}
+
+// @internal
+export interface DashboardDrillToCustomUrlTriggered extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillDefinition: IDrillToCustomUrl;
+        readonly url: string;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.TRIGGERED";
+}
+
+// @internal
+export interface DashboardDrillToDashboardTriggered extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly filters: IFilter[];
+        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillDefinition: IDrillToDashboard;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.TRIGGERED";
+}
+
+// @internal
+export interface DashboardDrillToInsightTriggered extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly drillDefinition: IDrillToInsight;
+        readonly drillEvent: IDashboardDrillEvent;
+        readonly insight: IInsight;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.TRIGGERED";
+}
+
+// @internal
+export interface DashboardDrillToLegacyDashboardTriggered extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly drillDefinition: IDrillToLegacyDashboard;
+        readonly drillEvent: IDashboardDrillEvent;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.TRIGGERED";
+}
+
+// @internal
+export interface DashboardDrillTriggered extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillContext: DashboardDrillContext;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.TRIGGERED";
+}
+
 // @internal
 export type DashboardEventHandler = {
     eval: (type: DashboardEventType) => boolean;
@@ -522,10 +621,10 @@ export type DashboardEventHandler = {
 };
 
 // @internal (undocumented)
-export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardQueryFailed | DashboardQueryRejected | DashboardQueryStarted | DashboardQueryCompleted<any, any> | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemReplaced | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutChanged | DashboardKpiWidgetHeaderChanged | DashboardKpiWidgetMeasureChanged | DashboardKpiWidgetFilterSettingsChanged | DashboardKpiWidgetComparisonChanged | DashboardKpiWidgetChanged | DashboardInsightWidgetHeaderChanged | DashboardInsightWidgetFilterSettingsChanged | DashboardInsightWidgetVisPropertiesChanged | DashboardInsightWidgetInsightSwitched | DashboardInsightWidgetDrillsModified | DashboardInsightWidgetDrillsRemoved | DashboardInsightWidgetChanged | DashboardAlertCreated | DashboardAlertRemoved | DashboardAlertUpdated | DashboardScheduledEmailCreated;
+export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed | DashboardCommandFailed | DashboardCommandRejected | DashboardQueryFailed | DashboardQueryRejected | DashboardQueryStarted | DashboardQueryCompleted<any, any> | DashboardSaved | DashboardCopySaved | DashboardRenamed | DashboardWasReset | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemReplaced | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutChanged | DashboardKpiWidgetHeaderChanged | DashboardKpiWidgetMeasureChanged | DashboardKpiWidgetFilterSettingsChanged | DashboardKpiWidgetComparisonChanged | DashboardKpiWidgetChanged | DashboardInsightWidgetHeaderChanged | DashboardInsightWidgetFilterSettingsChanged | DashboardInsightWidgetVisPropertiesChanged | DashboardInsightWidgetInsightSwitched | DashboardInsightWidgetDrillsModified | DashboardInsightWidgetDrillsRemoved | DashboardInsightWidgetChanged | DashboardAlertCreated | DashboardAlertRemoved | DashboardAlertUpdated | DashboardScheduledEmailCreated | DashboardDrillDownTriggered | DashboardDrillToAttributeUrlTriggered | DashboardDrillToCustomUrlTriggered | DashboardDrillToDashboardTriggered | DashboardDrillToInsightTriggered | DashboardDrillToLegacyDashboardTriggered | DashboardDrillTriggered;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.COMMAND.REJECTED" | "GDC.DASH/EVT.QUERY.FAILED" | "GDC.DASH/EVT.QUERY.REJECTED" | "GDC.DASH/EVT.QUERY.STARTED" | "GDC.DASH/EVT.QUERY.COMPLETED" | "GDC.DASH/EVT.LOADED" | "GDC.DASH/EVT.SAVED" | "GDC.DASH/EVT.COPY_SAVED" | "GDC.DASH/EVT.RENAMED" | "GDC.DASH/EVT.RESET" | "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED" | "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED" | "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.ALERT.CREATED" | "GDC.DASH/EVT.ALERT.UPDATED" | "GDC.DASH/EVT.ALERT.REMOVED" | "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED";
+export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.COMMAND.REJECTED" | "GDC.DASH/EVT.QUERY.FAILED" | "GDC.DASH/EVT.QUERY.REJECTED" | "GDC.DASH/EVT.QUERY.STARTED" | "GDC.DASH/EVT.QUERY.COMPLETED" | "GDC.DASH/EVT.LOADED" | "GDC.DASH/EVT.SAVED" | "GDC.DASH/EVT.COPY_SAVED" | "GDC.DASH/EVT.RENAMED" | "GDC.DASH/EVT.RESET" | "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED" | "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED" | "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.ALERT.CREATED" | "GDC.DASH/EVT.ALERT.UPDATED" | "GDC.DASH/EVT.ALERT.REMOVED" | "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED" | "GDC.DASH/EVT.DRILL.TRIGGERED" | "GDC.DASH/EVT.DRILL.DRILL_DOWN.TRIGGERED" | "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.TRIGGERED" | "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.TRIGGERED" | "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.TRIGGERED" | "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.TRIGGERED" | "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.TRIGGERED";
 
 // @internal
 export interface DashboardFilterContextChanged extends IDashboardEvent {
@@ -547,6 +646,8 @@ export interface DashboardInsightProps {
     // (undocumented)
     clientHeight?: number;
     // (undocumented)
+    disableWidgetImplicitDrills?: boolean;
+    // (undocumented)
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     // (undocumented)
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
@@ -555,13 +656,23 @@ export interface DashboardInsightProps {
     // (undocumented)
     insight: IInsight;
     // (undocumented)
-    insightWidget: IInsightWidget;
-    // (undocumented)
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
     // (undocumented)
-    onDrill?: OnFiredDashboardViewDrillEvent;
+    onDrill?: OnDashboardDrill;
+    // (undocumented)
+    onDrillDown?: OnDrillDown;
+    // (undocumented)
+    onDrillToAttributeUrl?: OnDrillToAttributeUrl;
+    // (undocumented)
+    onDrillToCustomUrl?: OnDrillToCustomUrl;
+    // (undocumented)
+    onDrillToDashboard?: OnDrillToDashboard;
+    // (undocumented)
+    onDrillToInsight?: OnDrillToInsight;
     // (undocumented)
     onError?: OnError;
+    // (undocumented)
+    widget: IInsightWidget;
     // (undocumented)
     workspace?: string;
 }
@@ -658,9 +769,9 @@ export interface DashboardKpiProps {
     filters?: FilterContextItem[];
     kpiWidget: IKpiWidget;
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
-    onDrill?: OnFiredDashboardViewDrillEvent_2;
+    onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
-    onFiltersChange?: (filters: IDashboardFilter_2[]) => void;
+    onFiltersChange?: (filters: IDashboardFilter[]) => void;
     workspace?: string;
 }
 
@@ -872,7 +983,7 @@ export const DashboardMenuButton: React_2.FC<IDashboardMenuButtonProps & IDefaul
 export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonProps & IDefaultMenuButtonProps>;
 
 // @internal (undocumented)
-export type DashboardMeta = Pick<IDashboard, "ref" | "title" | "description" | "created" | "updated" | "isLocked" | "uri">;
+export type DashboardMeta = Pick<IDashboard, "ref" | "title" | "description" | "created" | "updated" | "isLocked" | "uri" | "identifier">;
 
 // @internal (undocumented)
 export interface DashboardMetaState {
@@ -965,6 +1076,7 @@ export type DashboardState = {
     meta: DashboardMetaState;
     insights: EntityState<IInsight>;
     alerts: EntityState<IWidgetAlert>;
+    listedDashboards: EntityState<IListedDashboard>;
     _queryCache: {
         [queryName: string]: any;
     };
@@ -1032,6 +1144,9 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
 export const DefaultDashboardInsight: React_2.FC<DashboardInsightProps>;
 
 // @internal (undocumented)
+export const DefaultDashboardInsightWithDrillDialog: (props: DashboardInsightProps) => JSX.Element;
+
+// @internal (undocumented)
 export const DefaultDashboardKpi: React_2.FC<DashboardKpiProps>;
 
 // @internal (undocumented)
@@ -1042,6 +1157,136 @@ export const DefaultDashboardWidget: (props: DashboardWidgetProps) => JSX.Elemen
 
 // @internal (undocumented)
 export const DefaultScheduledEmailDialog: React_2.FC<ScheduledEmailDialogProps>;
+
+// @internal
+export interface Drill extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly drillEvent: IDashboardDrillEvent;
+        readonly drillContext: DashboardDrillContext;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL";
+}
+
+// @internal
+export function drill(drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): Drill;
+
+// @internal
+export interface DrillDown extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly insight: IInsight;
+        readonly drillDefinition: IDrillDownDefinition;
+        readonly drillEvent: IDashboardDrillEvent;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_DOWN";
+}
+
+// @internal
+export function drillDown(insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillDown;
+
+// @internal (undocumented)
+export function drillDownTriggered(ctx: DashboardContext, insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillDownTriggered;
+
+// @internal (undocumented)
+export interface DrillStep {
+    // (undocumented)
+    drillDefinition: IDrillToInsight | IDrillDownDefinition;
+    // (undocumented)
+    drillEvent: IDashboardDrillEvent;
+    // (undocumented)
+    insight: IInsight;
+}
+
+// @internal
+export interface DrillToAttributeUrl extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly drillDefinition: IDrillToAttributeUrl;
+        readonly drillEvent: IDashboardDrillEvent;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL";
+}
+
+// @internal
+export function drillToAttributeUrl(drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToAttributeUrl;
+
+// @internal (undocumented)
+export function drillToAttributeUrlTriggered(ctx: DashboardContext, url: string, drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToAttributeUrlTriggered;
+
+// @internal
+export interface DrillToCustomUrl extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly drillDefinition: IDrillToCustomUrl;
+        readonly drillEvent: IDashboardDrillEvent;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL";
+}
+
+// @internal
+export function drillToCustomUrl(drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToCustomUrl;
+
+// @internal (undocumented)
+export function drillToCustomUrlTriggered(ctx: DashboardContext, url: string, drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToCustomUrlTriggered;
+
+// @internal
+export interface DrillToDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly drillDefinition: IDrillToDashboard;
+        readonly drillEvent: IDashboardDrillEvent;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD";
+}
+
+// @internal
+export function drillToDashboard(drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToDashboard;
+
+// @internal (undocumented)
+export function drillToDashboardTriggered(ctx: DashboardContext, filters: IFilter[], drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToDashboardTriggered;
+
+// @internal
+export interface DrillToInsight extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly drillDefinition: IDrillToInsight;
+        readonly drillEvent: IDashboardDrillEvent;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT";
+}
+
+// @internal
+export function drillToInsight(drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToInsight;
+
+// @internal (undocumented)
+export function drillToInsightTriggered(ctx: DashboardContext, insight: IInsight, drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToInsightTriggered;
+
+// @internal
+export interface DrillToLegacyDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: {
+        readonly drillDefinition: IDrillToLegacyDashboard;
+        readonly drillEvent: IDashboardDrillEvent;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD";
+}
+
+// @internal
+export function drillToLegacyDashboard(drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToLegacyDashboard;
+
+// @internal (undocumented)
+export function drillToLegacyDashboardTriggered(ctx: DashboardContext, drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToLegacyDashboardTriggered;
+
+// @internal (undocumented)
+export function drillTriggered(ctx: DashboardContext, drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): DashboardDrillTriggered;
 
 // @internal
 export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
@@ -1151,6 +1396,8 @@ export interface IDashboardProps {
         Component?: React_2.ComponentType<ScheduledEmailDialogProps>;
         defaultComponentProps?: ScheduledEmailDialogProps;
     };
+    theme?: ITheme;
+    themeModifier?: (theme: ITheme) => ITheme;
     topBarConfig?: {
         Component?: TopBarComponent;
         defaultComponentProps?: IDefaultTopBarProps;
@@ -1427,6 +1674,44 @@ export type ObjectAvailabilityConfig = {
 };
 
 // @internal (undocumented)
+export type OnDashboardDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
+
+// @internal (undocumented)
+export type OnDrillDown = (context: {
+    drillDefinition: IDrillDownDefinition;
+    drillEvent: IDashboardDrillEvent;
+    insight: IInsight;
+}) => void;
+
+// @internal (undocumented)
+export type OnDrillToAttributeUrl = (context: {
+    drillDefinition: IDrillToAttributeUrl;
+    drillEvent: IDashboardDrillEvent;
+    url: string;
+}) => void;
+
+// @internal (undocumented)
+export type OnDrillToCustomUrl = (context: {
+    drillDefinition: IDrillToCustomUrl;
+    drillEvent: IDashboardDrillEvent;
+    url: string;
+}) => void;
+
+// @internal (undocumented)
+export type OnDrillToDashboard = (context: {
+    drillDefinition: IDrillToDashboard;
+    drillEvent: IDashboardDrillEvent;
+    filters: IFilter[];
+}) => void;
+
+// @internal (undocumented)
+export type OnDrillToInsight = (context: {
+    drillDefinition: IDrillToInsight;
+    drillEvent: IDashboardDrillEvent;
+    insight: IInsight;
+}) => void;
+
+// @internal (undocumented)
 export interface PermissionsState {
     // (undocumented)
     permissions?: IWorkspacePermissions;
@@ -1653,7 +1938,7 @@ export const selectAllCatalogAttributesMap: import("@reduxjs/toolkit").OutputSel
 export const selectAllCatalogDisplayFormsMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, Record<string, IAttributeDisplayFormMetadataObject>, (res1: ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[]) => Record<string, IAttributeDisplayFormMetadataObject>>;
 
 // @internal (undocumented)
-export const selectAttributesWithDrillDown: import("@reduxjs/toolkit").OutputSelector<DashboardState, (ICatalogAttribute | ICatalogDateAttribute)[], (res1: ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[]) => (ICatalogAttribute | ICatalogDateAttribute)[]>;
+export const selectAttributesWithDrillDown: import("@reduxjs/toolkit").OutputSelector<DashboardState, (ICatalogAttribute | ICatalogDateAttribute)[], (res1: ICatalogAttribute[], res2: ICatalogDateAttribute[]) => (ICatalogAttribute | ICatalogDateAttribute)[]>;
 
 // @internal
 export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>>;
@@ -1683,10 +1968,10 @@ export const selectConfig: import("@reduxjs/toolkit").OutputSelector<DashboardSt
 export const selectDashboardLoading: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;
 
 // @internal
-export const selectDashboardRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").ObjRef, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "ref" | "description" | "uri" | "updated" | "created" | "isLocked">) => import("@gooddata/sdk-model").ObjRef>;
+export const selectDashboardRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").ObjRef, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "ref" | "description" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => import("@gooddata/sdk-model").ObjRef>;
 
 // @internal
-export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "ref" | "description" | "uri" | "updated" | "created" | "isLocked">) => string>;
+export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "ref" | "description" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => string>;
 
 // @internal
 export const selectDashboardUriRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").UriRef, (res: string) => import("@gooddata/sdk-model").UriRef>;
@@ -1734,6 +2019,12 @@ export const selectEnableKPIDashboardScheduleRecipients: import("@reduxjs/toolki
 
 // @internal
 export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IFilterContextDefinition, (res: import("./filterContextState").FilterContextState) => import("@gooddata/sdk-backend-spi").IFilterContextDefinition>;
+
+// @internal
+export const selectFilterContextAttributeFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem[]) => IDashboardAttributeFilter[]>;
+
+// @internal
+export const selectFilterContextDateFilter: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardDateFilter | undefined, (res: FilterContextItem[]) => IDashboardDateFilter | undefined>;
 
 // @internal
 export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: import("@gooddata/sdk-backend-spi").IFilterContextDefinition) => FilterContextItem[]>;
@@ -1790,6 +2081,9 @@ export const selectStash: import("@reduxjs/toolkit").OutputSelector<DashboardSta
 
 // @internal
 export const selectUser: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IUser, (res: import("./userState").UserState) => import("@gooddata/sdk-backend-spi").IUser>;
+
+// @internal
+export const selectWidgetByRef: ((ref: ObjRef | undefined) => import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IKpiWidgetDefinition | import("@gooddata/sdk-backend-spi").IInsightWidgetDefinition | undefined, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => import("@gooddata/sdk-backend-spi").IKpiWidgetDefinition | import("@gooddata/sdk-backend-spi").IInsightWidgetDefinition | undefined>) & import("lodash").MemoizedFunction;
 
 // @internal (undocumented)
 export interface SetAttributeFilterParent extends IDashboardCommand {
@@ -1865,6 +2159,102 @@ export const useDashboardDispatch: () => Dispatch<AnyAction>;
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;
 
 // @internal (undocumented)
+export const useDrill: ({ onSuccess, onError, onBeforeRun }: UseDrillProps) => {
+    run: (drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, drillContext: import("..").DashboardDrillContext, correlationId?: string | undefined) => void;
+    status?: "error" | "running" | "success" | undefined;
+};
+
+// @internal (undocumented)
+export const useDrillDown: ({ onSuccess, onError, onBeforeRun }: UseDrillDownProps) => {
+    run: (insight: import("@gooddata/sdk-model").IInsight, drillDefinition: import("@gooddata/sdk-ui-ext").IDrillDownDefinition, drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: "error" | "running" | "success" | undefined;
+};
+
+// @internal (undocumented)
+export interface UseDrillDownProps {
+    // (undocumented)
+    onBeforeRun?: () => void;
+    // (undocumented)
+    onError?: (event: DashboardCommandFailed) => void;
+    // (undocumented)
+    onSuccess?: (event: DashboardDrillDownTriggered) => void;
+}
+
+// @internal (undocumented)
+export interface UseDrillProps {
+    // (undocumented)
+    onBeforeRun?: () => void;
+    // (undocumented)
+    onError?: (event: DashboardCommandFailed) => void;
+    // (undocumented)
+    onSuccess?: (event: DashboardDrillTriggered) => void;
+}
+
+// @internal (undocumented)
+export const useDrillToAttributeUrl: ({ onSuccess, onError, onBeforeRun }: UseDrillToAttributeUrlProps) => {
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToAttributeUrl, drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: "error" | "running" | "success" | undefined;
+};
+
+// @internal (undocumented)
+export interface UseDrillToAttributeUrlProps {
+    // (undocumented)
+    onBeforeRun?: () => void;
+    // (undocumented)
+    onError?: (event: DashboardCommandFailed) => void;
+    // (undocumented)
+    onSuccess?: (event: DashboardDrillToAttributeUrlTriggered) => void;
+}
+
+// @internal (undocumented)
+export const useDrillToCustomUrl: ({ onSuccess, onError, onBeforeRun }: UseDrillToCustomUrlProps) => {
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToCustomUrl, drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: "error" | "running" | "success" | undefined;
+};
+
+// @internal (undocumented)
+export interface UseDrillToCustomUrlProps {
+    // (undocumented)
+    onBeforeRun?: () => void;
+    // (undocumented)
+    onError?: (event: DashboardCommandFailed) => void;
+    // (undocumented)
+    onSuccess?: (event: DashboardDrillToCustomUrlTriggered) => void;
+}
+
+// @internal (undocumented)
+export const useDrillToDashboard: ({ onSuccess, onError, onBeforeRun }: UseDrillToDashboardProps) => {
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToDashboard, drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: "error" | "running" | "success" | undefined;
+};
+
+// @internal (undocumented)
+export interface UseDrillToDashboardProps {
+    // (undocumented)
+    onBeforeRun?: () => void;
+    // (undocumented)
+    onError?: (event: DashboardCommandFailed) => void;
+    // (undocumented)
+    onSuccess?: (event: DashboardDrillToDashboardTriggered) => void;
+}
+
+// @internal (undocumented)
+export const useDrillToInsight: ({ onSuccess, onError, onBeforeRun }: UseDrillToInsightProps) => {
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToInsight, drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: "error" | "running" | "success" | undefined;
+};
+
+// @internal (undocumented)
+export interface UseDrillToInsightProps {
+    // (undocumented)
+    onBeforeRun?: () => void;
+    // (undocumented)
+    onError?: (event: DashboardCommandFailed) => void;
+    // (undocumented)
+    onSuccess?: (event: DashboardDrillToInsightTriggered) => void;
+}
+
+// @internal (undocumented)
 export interface UserState {
     // (undocumented)
     user?: IUser;
@@ -1879,6 +2269,23 @@ export type WidgetFilterSettings = {
 // @internal (undocumented)
 export type WidgetHeader = {
     title?: string;
+};
+
+// @internal (undocumented)
+export function WithDrillSelect({ children, insight, onDrillDown, onDrillToInsight, onDrillToDashboard, onDrillToAttributeUrl, onDrillToCustomUrl, onError, }: WithDrillSelectProps): JSX.Element;
+
+// @internal (undocumented)
+export type WithDrillSelectProps = {
+    insight: IInsight;
+    onDrillDown?: OnDrillDown;
+    onDrillToInsight?: OnDrillToInsight;
+    onDrillToDashboard?: OnDrillToDashboard;
+    onDrillToAttributeUrl?: OnDrillToAttributeUrl;
+    onDrillToCustomUrl?: OnDrillToCustomUrl;
+    onError?: (error: any) => void;
+    children: (props: {
+        onDrill: OnDashboardDrill;
+    }) => JSX.Element;
 };
 
 

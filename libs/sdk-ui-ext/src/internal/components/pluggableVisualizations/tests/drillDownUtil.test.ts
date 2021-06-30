@@ -1,12 +1,12 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
-import { newAttribute, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
-import { IImplicitDrillDown } from "../../..";
+import { localIdRef, newAttribute, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
 import { reverseAndTrimIntersection, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 import { Account, Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/ldm/full";
 import { insightDefinitionToInsight } from "./testHelpers";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { reverseAndTrimIntersectionMock } from "./reverseAndTrimIntersectionMock";
+import { IDrillDownDefinition } from "../../../interfaces/Visualization";
 
 describe("drillDownUtil", () => {
     describe("modifyBucketsAttributesForDrillDown", () => {
@@ -17,15 +17,10 @@ describe("drillDownUtil", () => {
                     .buckets([newBucket("measure", Won), newBucket("attribute", Region, Department, Status)]);
             });
 
-            const drillConfig: IImplicitDrillDown = {
-                implicitDrillDown: {
-                    from: { drillFromAttribute: { localIdentifier: Department.attribute.localIdentifier } },
-                    drillDownStep: {
-                        drillToAttribute: {
-                            attributeDisplayForm: Account.Default.attribute.displayForm,
-                        },
-                    },
-                },
+            const drillConfig: IDrillDownDefinition = {
+                type: "drillDown",
+                origin: localIdRef(Department.attribute.localIdentifier),
+                target: Account.Default.attribute.displayForm,
             };
 
             const sourceInsight = insightDefinitionToInsight(source, "uri", "id");
@@ -55,15 +50,10 @@ describe("drillDownUtil", () => {
                     .buckets([newBucket("measure", Won), newBucket("attribute", Region, Department)]);
             });
 
-            const drillConfig: IImplicitDrillDown = {
-                implicitDrillDown: {
-                    from: { drillFromAttribute: { localIdentifier: Region.attribute.localIdentifier } },
-                    drillDownStep: {
-                        drillToAttribute: {
-                            attributeDisplayForm: Department.attribute.displayForm,
-                        },
-                    },
-                },
+            const drillConfig: IDrillDownDefinition = {
+                type: "drillDown",
+                origin: localIdRef(Region.attribute.localIdentifier),
+                target: Department.attribute.displayForm,
             };
 
             const sourceInsight = insightDefinitionToInsight(source, "uri", "id");

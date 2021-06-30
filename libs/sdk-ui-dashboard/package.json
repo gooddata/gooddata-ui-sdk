@@ -62,6 +62,7 @@
         "@gooddata/sdk-ui-ext": "^8.6.0-alpha.3",
         "@gooddata/sdk-ui-filters": "^8.6.0-alpha.3",
         "@gooddata/sdk-ui-kit": "^8.6.0-alpha.3",
+        "@gooddata/sdk-ui-theme-provider": "^8.6.0-alpha.3",
         "@gooddata/util": "^8.6.0-alpha.3",
         "@reduxjs/toolkit": "^1.5.1",
         "classnames": "^2.3.1",

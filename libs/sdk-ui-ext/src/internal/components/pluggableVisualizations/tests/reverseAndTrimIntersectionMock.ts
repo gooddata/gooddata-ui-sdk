@@ -1,19 +1,15 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { Department, Region, Won } from "@gooddata/reference-workspace/dist/ldm/full";
-import { IImplicitDrillDown } from "../../..";
 import { ReferenceData } from "@gooddata/reference-workspace";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { IDrillDownDefinition } from "../../../interfaces/Visualization";
+import { localIdRef } from "@gooddata/sdk-model";
 
-const drillConfigRegion: IImplicitDrillDown = {
-    implicitDrillDown: {
-        from: { drillFromAttribute: { localIdentifier: Region.attribute.localIdentifier } },
-        drillDownStep: {
-            drillToAttribute: {
-                attributeDisplayForm: Department.attribute.displayForm,
-            },
-        },
-    },
+const drillConfigRegion: IDrillDownDefinition = {
+    type: "drillDown",
+    origin: localIdRef(Region.attribute.localIdentifier),
+    target: Department.attribute.displayForm,
 };
 
 const regionUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1024";

@@ -46,10 +46,16 @@ export const selectCatalogDateDatasets = createSelector(selectSelf, (state) => {
 /**
  * @internal
  */
+export const selectCatalogDateAttributes = createSelector(selectCatalogDateDatasets, (dateDatasets) => {
+    return flatMap(dateDatasets, (dd) => dd.dateAttributes);
+});
+
+/**
+ * @internal
+ */
 export const selectAttributesWithDrillDown = createSelector(
-    [selectCatalogAttributes, selectCatalogDateDatasets],
-    (attributes = [], dateDatasets = []) => {
-        const dateAttributes = flatMap(dateDatasets ?? [], (dd) => dd.dateAttributes);
+    [selectCatalogAttributes, selectCatalogDateAttributes],
+    (attributes = [], dateAttributes = []) => {
         return [...attributes, ...dateAttributes].filter((attr) => attr.attribute.drillDownStep);
     },
 );

@@ -4,5 +4,9 @@
     "options.menu.export.PDF": "Nach PFD exportieren",
     "options.menu.schedule.email": "E-Mailing planen",
     "dialogs.schedule.email.submit.success": "Erfolgreich! Ihr Dashboard ist jetzt für E-Mails eingerichtet.",
-    "dialogs.schedule.email.submit.error": "Fehler! E-Mails für das Dashboard konnten nicht eingerichtet werden. Bitte später erneut versuchen."
+    "dialogs.schedule.email.submit.error": "Fehler! E-Mails für das Dashboard konnten nicht eingerichtet werden. Bitte später erneut versuchen.",
+    "drill_modal_picker.drill-down": "Drill-Down",
+    "drill_modal_picker.drill-into": "Verfeinern von",
+    "drill_modal_picker.more.details": "Mehr Infos",
+    "drillModal.backToTop": "Nach oben"
 }

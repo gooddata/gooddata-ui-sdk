@@ -4,5 +4,9 @@
     "options.menu.export.PDF": "Exportar a PDF",
     "options.menu.schedule.email": "Programar el envío de correos",
     "dialogs.schedule.email.submit.success": "¡Hecho! Su panel se ha configurado para el envío de correos.",
-    "dialogs.schedule.email.submit.error": "Error al programar el panel. Inténtelo de nuevo más tarde."
+    "dialogs.schedule.email.submit.error": "Error al programar el panel. Inténtelo de nuevo más tarde.",
+    "drill_modal_picker.drill-down": "Exploración vertical",
+    "drill_modal_picker.drill-into": "Explorar hasta",
+    "drill_modal_picker.more.details": "Más detalles",
+    "drillModal.backToTop": "Volver al principio"
 }

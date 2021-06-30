@@ -51,6 +51,7 @@ import { IWidget } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { IWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { KpiWidgetBuilder } from '@gooddata/sdk-backend-base';
+import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
@@ -391,7 +392,7 @@ export type IDashboardWidgetRenderProps = {
 
 // @beta
 export interface IDrillDownDefinition {
-    // (undocumented)
+    origin: LocalIdRef;
     target: ObjRef;
     // (undocumented)
     type: "drillDown";

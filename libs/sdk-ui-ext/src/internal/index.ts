@@ -21,9 +21,6 @@ export {
     IVisualizationOptions,
     ConfigPanelClassName,
     IGdcConfig,
-    IDrillFromAttribute,
-    IDrillToAttribute,
-    IImplicitDrillDown,
     PluggableVisualizationErrorCodes,
     InvalidBucketsSdkError,
     EmptyAfmSdkError,
@@ -42,6 +39,8 @@ export {
     IAttributeFilter,
     IDateFilter,
     IDrillDownContext,
+    IDrillDownDefinition,
+    isDrillDownDefinition,
 } from "./interfaces/Visualization";
 
 export { isDateFilter, isMeasureValueFilter, isAttributeFilter, isRankingFilter } from "./utils/bucketHelper";

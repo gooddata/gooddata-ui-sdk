@@ -4,5 +4,9 @@
     "options.menu.export.PDF": "Exportar para PDF",
     "options.menu.schedule.email": "Agenda envio de e-mail",
     "dialogs.schedule.email.submit.success": "Êxito! O seu dashboard está agendado para envio de e-mail.",
-    "dialogs.schedule.email.submit.error": "Não foi possível agendar o dashboard. Tente mais tarde."
+    "dialogs.schedule.email.submit.error": "Não foi possível agendar o dashboard. Tente mais tarde.",
+    "drill_modal_picker.drill-down": "Exploração descendente",
+    "drill_modal_picker.drill-into": "Aprofundar",
+    "drill_modal_picker.more.details": "Mais informações",
+    "drillModal.backToTop": "Regressar ao início"
 }

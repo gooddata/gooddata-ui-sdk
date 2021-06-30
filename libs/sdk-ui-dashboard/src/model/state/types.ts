@@ -7,7 +7,7 @@ import { LayoutState } from "./layout/layoutState";
 import { ConfigState } from "./config/configState";
 import { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 import { PermissionsState } from "./permissions/permissionsState";
-import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import { IListedDashboard, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { CatalogState } from "./catalog/catalogState";
 import { UserState } from "./user/userState";
 import { DashboardMetaState } from "./meta/metaState";
@@ -33,6 +33,7 @@ export type DashboardState = {
     // Entities
     insights: EntityState<IInsight>;
     alerts: EntityState<IWidgetAlert>;
+    listedDashboards: EntityState<IListedDashboard>;
 
     /**
      * Part of state where the different dashboard component queries may cache their results.

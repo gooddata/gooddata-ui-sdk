@@ -24,11 +24,11 @@ import { DashboardContext } from "../types/commonTypes";
 import { configSliceReducer } from "./config";
 import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
 import { permissionsSliceReducer } from "./permissions";
-import { alertsSliceReducer } from "./alerts/index";
+import { alertsSliceReducer } from "./alerts";
 import { catalogSliceReducer } from "./catalog";
 import { spawn } from "redux-saga/effects";
 import { userSliceReducer } from "./user";
-import { metaSliceReducer } from "./meta/index";
+import { metaSliceReducer } from "./meta";
 import { DashboardState } from "./types";
 import { AllQueryServices } from "../queryServices";
 import { createQueryProcessingModule } from "./_infra/queryProcessing";
@@ -36,6 +36,7 @@ import { IDashboardQueryService } from "./_infra/queryService";
 import values from "lodash/values";
 import merge from "lodash/merge";
 import keyBy from "lodash/keyBy";
+import { listedDashboardsSliceReducer } from "./listedDashboards";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -175,6 +176,19 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                     "GDC.DASH/EVT.COMMAND.FAILED",
                     "GDC.DASH/EVT.QUERY.FAILED",
                     "@@QUERY.ENVELOPE",
+                    // Drill commands & events contain non-serializable dataView
+                    "GDC.DASH/CMD.DRILL",
+                    "GDC.DASH/EVT.DRILL.TRIGGERED",
+                    "GDC.DASH/CMD.DRILL.DRILL_DOWN",
+                    "GDC.DASH/EVT.DRILL.DRILL_DOWN.TRIGGERED",
+                    "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT",
+                    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.TRIGGERED",
+                    "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD",
+                    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.TRIGGERED",
+                    "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL",
+                    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.TRIGGERED",
+                    "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL",
+                    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.TRIGGERED",
                 ],
                 ignoredActionPaths: ["ctx"],
             },
@@ -195,6 +209,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         catalog: catalogSliceReducer,
         user: userSliceReducer,
         meta: metaSliceReducer,
+        listedDashboards: listedDashboardsSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
     });
 

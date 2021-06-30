@@ -28,6 +28,8 @@ import { userActions } from "../../../state/user";
 import { metaActions } from "../../../state/meta";
 import { dashboardFilterContextDefinition } from "../../../_staging/dashboard/dashboardFilterContext";
 import { dashboardLayoutSanitize } from "../../../_staging/dashboard/dashboardLayout";
+import { loadDashboardList } from "./loadDashboardList";
+import { listedDashboardsActions } from "../../../state/listedDashboards";
 
 function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWithReferences> {
     const { backend, workspace, dashboardRef } = ctx;
@@ -44,13 +46,14 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
     try {
         yield put(loadingActions.setLoadingStart());
 
-        const [dashboardWithReferences, config, permissions, catalog, alerts, user]: [
+        const [dashboardWithReferences, config, permissions, catalog, alerts, user, listedDashboards]: [
             PromiseFnReturnType<typeof loadDashboardFromBackend>,
             SagaReturnType<typeof resolveDashboardConfig>,
             SagaReturnType<typeof resolvePermissions>,
             PromiseFnReturnType<typeof loadCatalog>,
             PromiseFnReturnType<typeof loadDashboardAlerts>,
             PromiseFnReturnType<typeof loadUser>,
+            PromiseFnReturnType<typeof loadDashboardList>,
         ] = yield all([
             call(loadDashboardFromBackend, ctx),
             call(resolveDashboardConfig, ctx, cmd),
@@ -58,6 +61,7 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
             call(loadCatalog, ctx),
             call(loadDashboardAlerts, ctx),
             call(loadUser, ctx),
+            call(loadDashboardList, ctx),
         ]);
 
         const { dashboard, references } = dashboardWithReferences;
@@ -105,12 +109,14 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
                 metaActions.setMeta({
                     ref: dashboard.ref,
                     uri: dashboard.uri,
+                    identifier: dashboard.identifier,
                     title: dashboard.title,
                     updated: dashboard.updated,
                     description: dashboard.description,
                     created: dashboard.created,
                     isLocked: dashboard.isLocked,
                 }),
+                listedDashboardsActions.setListedDashboards(listedDashboards),
             ],
             "@@GDC.DASH/BATCH.LOAD",
         );

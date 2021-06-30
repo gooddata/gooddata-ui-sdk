@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import {
     areObjRefsEqual,
     attributeLocalId,
@@ -18,7 +18,6 @@ import {
     newPositiveAttributeFilter,
     VisualizationProperties,
 } from "@gooddata/sdk-model";
-import { IImplicitDrillDown } from "../../interfaces/Visualization";
 import {
     getIntersectionPartAfter,
     IDrillEventIntersectionElement,
@@ -26,9 +25,10 @@ import {
 } from "@gooddata/sdk-ui";
 import { drillDownDisplayForm, drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper";
 import { ColumnWidthItem, isAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { IDrillDownDefinition } from "../../interfaces/Visualization";
 
 function matchesDrillDownTargetAttribute(
-    drillDefinition: IImplicitDrillDown,
+    drillDefinition: IDrillDownDefinition,
     attribute: IAttribute,
 ): boolean {
     return attributeLocalId(attribute) === drillDownFromAttributeLocalId(drillDefinition);
@@ -40,7 +40,7 @@ enum ENUM_PROPERTIES_TYPE {
 
 export function modifyBucketsAttributesForDrillDown(
     insight: IInsight,
-    drillDefinition: IImplicitDrillDown,
+    drillDefinition: IDrillDownDefinition,
 ): IInsight {
     const removedLeftAttributes = insightReduceItems(
         insight,
@@ -131,7 +131,7 @@ export function convertIntersectionToFilters(intersections: IDrillEventIntersect
 }
 
 export function reverseAndTrimIntersection(
-    drillConfig: IImplicitDrillDown,
+    drillConfig: IDrillDownDefinition,
     intersection?: IDrillEventIntersectionElement[],
 ): IDrillEventIntersectionElement[] {
     if (!intersection || intersection.length === 0) {

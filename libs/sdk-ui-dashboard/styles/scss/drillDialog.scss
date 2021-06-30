@@ -1,0 +1,145 @@
+// (C) 2007-2021 GoodData Corporation
+@import "variables";
+
+$header-height: 38px;
+$dialog-padding: 20px;
+$light-color: $gd-color-white;
+$border-color: #dde4eb;
+
+.gd-dialog.gd-drill-modal-dialog {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-width: 100vw;
+    // "(1vw + 1vh - 1vmin)" is substitute for vmax that is unsupported by MSIE11
+    width: calc(100vw - 10 * (1vw + 1vh - 1vmin));
+    height: calc(100vh - 10 * (1vw + 1vh - 1vmin));
+    padding: $dialog-padding;
+    background-color: $light-color;
+
+    @media #{$small-only} {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: auto;
+        height: auto;
+        border-radius: 0;
+    }
+}
+
+.gd-drill-modal-dialog-header {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    height: $header-height;
+    margin: 0 0 $dialog-padding;
+    background-color: $light-color;
+
+    .gd-drill-reset-button {
+        margin: 0 10px 0 0;
+    }
+
+    .gd-drill-title {
+        font-weight: 400;
+        font-size: 17px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0 20px 0 0;
+        padding: 4px;
+        line-height: 23px;
+        white-space: nowrap;
+    }
+
+    .gd-drill-close-button {
+        top: -5px;
+        right: -5px;
+
+        .gd-drill-modal-dialog & {
+            position: absolute;
+        }
+    }
+}
+
+.gd-drill-modal-dialog-content {
+    background-color: $light-color;
+    position: absolute;
+    top: $header-height + 2 * $dialog-padding;
+    right: $dialog-padding;
+    bottom: $dialog-padding;
+    left: $dialog-padding;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .gd-drill-modal-dialog-content-base {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .gd-base-visualization {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+
+        .headline {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            // override theming
+            .headline-primary-item {
+                color: $gd-color-dark;
+            }
+            .headline-secondary-item {
+                border-left-color: transparentize($default-gd-color-disabled, 0.5);
+            }
+            .headline-compare-section,
+            .headline-compare-section-item,
+            .headline-value--empty {
+                color: $gd-color-state-blank;
+            }
+        }
+    }
+
+    .gd-loading-equalizer-wrap,
+    .gd-drill-modal-error {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: $light-color;
+    }
+
+    $modal-loading-z-index: 3;
+    .gd-loading-equalizer-wrap {
+        z-index: $modal-loading-z-index;
+
+        .gd-loading-equalizer {
+            margin: auto 0;
+        }
+    }
+
+    .gd-drill-modal-error {
+        position: absolute;
+        z-index: $modal-loading-z-index + 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .info-label {
+        height: auto;
+    }
+}
+
+// drill charts are rendered in overlay with modal=true which has 5000, have tooltips above
+// !important is necessary because z-index have been added to the element by Highcharts in
+// https://github.com/highcharts/highcharts/commit/48a82ce80ba946839e3a1280e63ca02ab1f88ec0
+/* stylelint-disable declaration-no-important */
+.highcharts-tooltip-container {
+    z-index: 5001 !important;
+}
