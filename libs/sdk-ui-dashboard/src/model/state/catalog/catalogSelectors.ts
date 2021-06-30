@@ -2,8 +2,12 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import flatMap from "lodash/flatMap";
-import { newCatalogAttributeMap, newDisplayFormMap } from "../_infra/objRefMap";
+import { newCatalogAttributeMap, newCatalogDateDatasetMap, newDisplayFormMap } from "../_infra/objRefMap";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
+import {
+    CatalogDateAttributeWithDataset,
+    newCatalogDateAttributeWithDatasetMap,
+} from "../../_staging/catalog/dateAttributeWithDatasetMap";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -56,7 +60,17 @@ export const selectAttributesWithDrillDown = createSelector(
 );
 
 /**
- * Selects all display forms in the catalog as a mapping of (serialized) ref to display form metadata object.
+ * Selects all date datasets in the catalog as a mapping of obj ref to date dataset.
+ */
+export const selectAllCatalogDateDatasetsMap = createSelector(
+    [selectCatalogDateDatasets, selectBackendCapabilities],
+    (dateDatasets, capabilities) => {
+        return newCatalogDateDatasetMap(dateDatasets, capabilities.hasTypeScopedIdentifiers);
+    },
+);
+
+/**
+ * Selects all display forms in the catalog as a mapping of obj ref to display form
  *
  * @internal
  */
@@ -76,7 +90,7 @@ export const selectAllCatalogDisplayFormsMap = createSelector(
 );
 
 /**
- * Selects all attributes in the catalog as a mapping of (serialized) ref to catalog's attribute object. The mapping
+ * Selects all attributes in the catalog as a mapping of ref to catalog's attribute object. The mapping
  * will include both 'normal' attributes and attributes from date datasets.
  *
  * @remarks see `isCatalogAttribute` guard; this can be used to determine type of attribute
@@ -89,6 +103,32 @@ export const selectAllCatalogAttributesMap = createSelector(
 
         return newCatalogAttributeMap(
             [...attributes, ...dateAttributes],
+            capabilities.hasTypeScopedIdentifiers,
+        );
+    },
+);
+
+/**
+ * Selects lookup mapping between date dataset attributes and date datasets. The entry in lookup contains both the date dataset attribute
+ * and the date dataset to which it belongs. The lookup is indexed by the date dataset attribute and entries can be obtained using
+ * attribute refs.
+ *
+ * @internal
+ */
+export const selectCatalogDateAttributeToDataset = createSelector(
+    [selectCatalogDateDatasets, selectBackendCapabilities],
+    (dateDatasets, capabilities) => {
+        const attributesWithDatasets: CatalogDateAttributeWithDataset[] = flatMap(dateDatasets, (dataset) =>
+            dataset.dateAttributes.map((attribute) => {
+                return {
+                    attribute,
+                    dataset,
+                };
+            }),
+        );
+
+        return newCatalogDateAttributeWithDatasetMap(
+            attributesWithDatasets,
             capabilities.hasTypeScopedIdentifiers,
         );
     },

@@ -53,6 +53,14 @@ export const PivotTableWithRowAndColumnAttributes = recordedInsight(
     ReferenceRecordings.Insights.PivotTable.SingleMeasureWithTwoRowAndTwoColumnAttributes,
 );
 
+export const PivotTableWithDateFilter = recordedInsight(
+    ReferenceRecordings.Insights.PivotTable.WithDateFilter,
+);
+
+export const PivotTableWithTwoSameDates = recordedInsight(
+    ReferenceRecordings.Insights.PivotTable.WithTwoSameDates,
+);
+
 export const TreemapWithSingleMeasureAndViewByFilteredToOneElement = recordedInsight(
     ReferenceRecordings.Insights.Treemap.SingleMeasureAndViewByFilteredToOneElement,
 );

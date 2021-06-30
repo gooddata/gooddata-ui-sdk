@@ -2,7 +2,6 @@
 import { DashboardContext } from "../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import {
-    areObjRefsEqual,
     filterObjRef,
     idRef,
     IInsight,
@@ -28,12 +27,16 @@ import { invalidQueryArguments } from "../events/general";
 import { ICatalogDateDataset, isCatalogDateDataset } from "@gooddata/sdk-backend-spi";
 import { query } from "../state/_infra/queryCall";
 import { invariant } from "ts-invariant";
-import { selectCatalogDateDatasets } from "../state/catalog/catalogSelectors";
+import {
+    selectAllCatalogDateDatasetsMap,
+    selectCatalogDateAttributeToDataset,
+} from "../state/catalog/catalogSelectors";
 import uniqBy from "lodash/uniqBy";
 import fromPairs from "lodash/fromPairs";
-import { newDisplayFormMap } from "../state/_infra/objRefMap";
+import { newDisplayFormMap, ObjRefMap } from "../state/_infra/objRefMap";
 import compact from "lodash/compact";
 import { selectBackendCapabilities } from "../state/backendCapabilities/backendCapabilitiesSelectors";
+import { CatalogDateAttributeWithDataset } from "../_staging/catalog/dateAttributeWithDatasetMap";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
@@ -146,13 +149,13 @@ function* loadDateDatasetsForInsight(ctx: DashboardContext, insight: IInsight) {
  */
 function lookupDatasetsUsedInDateFilters(
     insight: IInsight,
-    datasets: ICatalogDateDataset[],
+    datasets: ObjRefMap<ICatalogDateDataset>,
 ): ReadonlyArray<ICatalogDateDataset> {
     const dateFilters = insightFilters(insight).filter(isDateFilter);
 
     return dateFilters.map((filter) => {
         const datasetRef = filterObjRef(filter);
-        const dateDataset = datasets.find((dataset) => areObjRefsEqual(datasetRef, dataset.dataSet.ref));
+        const dateDataset = datasets.get(datasetRef);
 
         // if this happens then either component is using wrong catalog or metadata is inconsistent (and insight thus un-renderable)
         invariant(dateDataset, `cannot find metadata for date dataset ${objRefToString(datasetRef)}`);
@@ -170,9 +173,12 @@ function lookupDatasetsUsedInDateFilters(
  * this cannot be used because the code cannot expect that the insights only use date dataset's default display forms.
  *
  * @param insight - insight work with
- * @param datasets - cataloged date datasets
+ * @param attributeToDataset - lookup table of date attributes to datasets
  */
-function* lookupDatasetsUsedInAttributesAndFilters(insight: IInsight, datasets: ICatalogDateDataset[]) {
+function* lookupDatasetsUsedInAttributesAndFilters(
+    insight: IInsight,
+    attributeToDataset: ObjRefMap<CatalogDateAttributeWithDataset>,
+) {
     const insightAttributes: InsightAttributesMeta = yield call(
         query,
         queryInsightAttributesMeta(insightRef(insight)),
@@ -195,11 +201,8 @@ function* lookupDatasetsUsedInAttributesAndFilters(insight: IInsight, datasets: 
         invariant(displayForm);
 
         const attributeRef = displayForm.attribute;
-        return datasets.find((dataset) => {
-            return dataset.dateAttributes.find((attribute) => {
-                return areObjRefsEqual(attribute.attribute.ref, attributeRef);
-            });
-        });
+
+        return attributeToDataset.get(attributeRef)?.dataset;
     };
 
     return {
@@ -217,13 +220,16 @@ function* lookupDatasetsInInsight(insight: IInsight) {
      *  from catalog so this matches the previous behavior.
      */
 
-    const catalogDateDatasets: ReturnType<typeof selectCatalogDateDatasets> = yield select(
-        selectCatalogDateDatasets,
+    const catalogDateDatasets: ReturnType<typeof selectAllCatalogDateDatasetsMap> = yield select(
+        selectAllCatalogDateDatasetsMap,
     );
+
+    const catalogDateAttributeToDatasets: ReturnType<typeof selectCatalogDateAttributeToDataset> =
+        yield select(selectCatalogDateAttributeToDataset);
 
     const usedInDateFilters = lookupDatasetsUsedInDateFilters(insight, catalogDateDatasets);
     const usedInAttributesAndFilters: SagaReturnType<typeof lookupDatasetsUsedInAttributesAndFilters> =
-        yield call(lookupDatasetsUsedInAttributesAndFilters, insight, catalogDateDatasets);
+        yield call(lookupDatasetsUsedInAttributesAndFilters, insight, catalogDateAttributeToDatasets);
     const { usedInAttributes, usedInAttributeFilters } = usedInAttributesAndFilters;
 
     return {

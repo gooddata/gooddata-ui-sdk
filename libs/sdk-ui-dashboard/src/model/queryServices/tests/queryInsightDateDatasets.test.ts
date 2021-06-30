@@ -3,13 +3,14 @@ import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTe
 import {
     createTestInsightItem,
     EmptyDashboardIdentifier,
+    PivotTableWithDateFilter,
     PivotTableWithRowAndColumnAttributes,
     TestSectionHeader,
     TreemapWithOneMeasureAndViewByDateAndSegmentByDate,
 } from "../../tests/Dashboard.fixtures";
 import { addLayoutSection, loadDashboard } from "../../commands";
 import { InsightDateDatasets, queryDateDatasetsForInsight } from "../../queries";
-import { insightRef } from "@gooddata/sdk-model";
+import { IInsight, insightRef } from "@gooddata/sdk-model";
 import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
 import includes from "lodash/includes";
 import { invariant } from "ts-invariant";
@@ -21,18 +22,20 @@ function datasetsDigest(
 }
 
 describe("query insight date datasets", () => {
+    async function addTestSection(tester: DashboardTester, insight: IInsight) {
+        await tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+        await tester.dispatchAndWaitFor(
+            addLayoutSection(-1, TestSectionHeader, [createTestInsightItem(insight)]),
+            "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+        );
+    }
+
     describe("for insights that reference dates", () => {
         let Tester: DashboardTester;
         beforeEach(preloadedTesterFactory((tester) => (Tester = tester), EmptyDashboardIdentifier));
 
         it("should return date datasets for insight with date attributes in buckets", async () => {
-            await Tester.dispatchAndWaitFor(
-                addLayoutSection(-1, TestSectionHeader, [
-                    createTestInsightItem(TreemapWithOneMeasureAndViewByDateAndSegmentByDate),
-                ]),
-                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
-            );
-
+            await addTestSection(Tester, TreemapWithOneMeasureAndViewByDateAndSegmentByDate);
             const result: InsightDateDatasets = await Tester.query(
                 queryDateDatasetsForInsight(insightRef(TreemapWithOneMeasureAndViewByDateAndSegmentByDate)),
             );
@@ -41,6 +44,21 @@ describe("query insight date datasets", () => {
             expect(result.usedInDateFilters).toEqual([]);
             expect(result.usedInAttributeFilters).toEqual([]);
             expect(result.mostImportantFromInsight).toEqual(result.usedInAttributes[0]);
+
+            expect(datasetsDigest(result.dateDatasetsOrdered)).toMatchSnapshot();
+            expect(result.dateDatasetDisplayNames).toMatchSnapshot();
+        });
+
+        it("should return date datasets for insight with date filter", async () => {
+            await addTestSection(Tester, PivotTableWithDateFilter);
+            const result: InsightDateDatasets = await Tester.query(
+                queryDateDatasetsForInsight(insightRef(PivotTableWithDateFilter)),
+            );
+
+            expect(datasetsDigest(result.usedInDateFilters)).toMatchSnapshot();
+            expect(result.usedInAttributes).toEqual([]);
+            expect(result.usedInAttributeFilters).toEqual([]);
+            expect(result.mostImportantFromInsight).toEqual(result.usedInDateFilters[0]);
 
             expect(datasetsDigest(result.dateDatasetsOrdered)).toMatchSnapshot();
             expect(result.dateDatasetDisplayNames).toMatchSnapshot();
@@ -82,16 +100,6 @@ describe("query insight date datasets", () => {
             return available;
         };
 
-        async function addTestSection(tester: DashboardTester) {
-            await tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
-            await tester.dispatchAndWaitFor(
-                addLayoutSection(-1, TestSectionHeader, [
-                    createTestInsightItem(PivotTableWithRowAndColumnAttributes),
-                ]),
-                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
-            );
-        }
-
         it("should order date datasets by relevance desc", async () => {
             const Tester = DashboardTester.forRecording(EmptyDashboardIdentifier, [], {
                 catalogAvailability: {
@@ -99,7 +107,7 @@ describe("query insight date datasets", () => {
                 },
             });
 
-            await addTestSection(Tester);
+            await addTestSection(Tester, PivotTableWithRowAndColumnAttributes);
 
             const result: InsightDateDatasets = await Tester.query(
                 queryDateDatasetsForInsight(insightRef(PivotTableWithRowAndColumnAttributes)),
@@ -122,7 +130,7 @@ describe("query insight date datasets", () => {
                 },
             });
 
-            await addTestSection(Tester);
+            await addTestSection(Tester, PivotTableWithRowAndColumnAttributes);
 
             const result: InsightDateDatasets = await Tester.query(
                 queryDateDatasetsForInsight(insightRef(PivotTableWithRowAndColumnAttributes)),

@@ -107,6 +107,7 @@ export {
 export { WidgetFilterSettings, WidgetHeader } from "./types/widgetTypes";
 
 export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
+export { CatalogDateAttributeWithDataset } from "./_staging/catalog/dateAttributeWithDatasetMap";
 
 export * from "./commands";
 export * from "./events";

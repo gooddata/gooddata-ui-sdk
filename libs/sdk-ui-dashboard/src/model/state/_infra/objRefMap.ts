@@ -4,6 +4,7 @@ import {
     IAttributeMetadataObject,
     ICatalogAttribute,
     ICatalogDateAttribute,
+    ICatalogDateDataset,
     IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 // (C) 2021 GoodData Corporation
@@ -142,6 +143,27 @@ const metadataObjectExtractors = {
     uriExtract: (i: IMetadataObject) => i.uri,
     refExtract: (i: IMetadataObject) => i.ref,
 };
+
+/**
+ * Creates {@link ObjRefMap} for catalog date datasets. Either normal attributes or catalog date attributes.
+ *
+ * @param items - items to add into mapping
+ * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ */
+export function newCatalogDateDatasetMap(
+    items: ReadonlyArray<ICatalogDateDataset>,
+    strictTypeCheck: boolean = false,
+): ObjRefMap<ICatalogDateDataset> {
+    const map = new ObjRefMap<ICatalogDateDataset>({
+        type: "attribute",
+        strictTypeCheck,
+        idExtract: (i) => i.dataSet.id,
+        uriExtract: (i) => i.dataSet.uri,
+        refExtract: (i) => i.dataSet.ref,
+    });
+
+    return map.fromItems(items);
+}
 
 /**
  * Creates {@link ObjRefMap} for catalog attribute items. Either normal attributes or catalog date attributes.
