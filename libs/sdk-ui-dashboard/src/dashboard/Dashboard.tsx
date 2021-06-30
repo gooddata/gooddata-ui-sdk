@@ -44,13 +44,12 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
-import { defaultDashboardThemeModifier } from "@gooddata/sdk-ui-ext";
+import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { DashboardConfig } from "../model/types/commonTypes";
 import invariant from "ts-invariant";
 import { DashboardEventsProvider } from "./DashboardEventsContext";
 import { DashboardComponentsProvider, useDashboardComponentsContext } from "./DashboardComponentsContext";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/esm/internal/utils/internalIntlProvider";
 import { DashboardInsightProps, DefaultDashboardInsightWithDrillDialog } from "../insight";
 import { DashboardKpiProps, DefaultDashboardKpi } from "../kpi";
 import {
@@ -384,10 +383,8 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
         setIsScheduleEmailingDialogOpen(false);
     }
 
-    const locale = useDashboardSelector(selectLocale);
-
     return (
-        <InternalIntlWrapper locale={locale}>
+        <>
             <ToastMessages />
             {isScheduleEmailingDialogOpen && (
                 <ScheduledEmailDialogComponent
@@ -403,7 +400,7 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
             />
             <FilterBarComponent filters={filters} onFilterChanged={onFilterChanged} />
             <DashboardLayout drillableItems={drillableItems} />
-        </InternalIntlWrapper>
+        </>
     );
 };
 

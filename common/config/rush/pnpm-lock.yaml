@@ -15674,6 +15674,7 @@ packages:
   /querystring/0.2.0:
     resolution: {integrity: sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=}
     engines: {node: '>=0.4.x'}
+    deprecated: The
     dev: false
 
   /querystring/0.2.1:
@@ -21939,12 +21940,13 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-Fa2mUhmjaLOE0Tgbrl+5KI16VRN+DcQGv1Cg+6aGtI1URSzMuYuk8RfEA72Vblc0TwGMh+SkM5WlQZ/XLdf5sw==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-mxls/hNZ3nbTTIk//ba3w881R38huvPsZ60qdxfG28mfE8pk12M7/vJtnP2Y9WbnL/6bGfJAdBB8Kvy4UWpnnw==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
+      '@gooddata/numberjs': 3.2.5
       '@microsoft/api-documenter': 7.13.16
       '@microsoft/api-extractor': 7.8.1
       '@reduxjs/toolkit': 1.6.0_react-redux@7.2.4+react@16.14.0
@@ -21958,6 +21960,9 @@ packages:
       '@types/react-dom': 16.9.13
       '@types/react-measure': 2.0.5
       '@types/react-redux': 7.1.16
+      '@types/react-select': 3.1.2
+      '@types/react-transition-group': 2.9.2
+      '@types/react-truncate': 2.3.3
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.26.1_7bd7a7858841324c95046422bb20bae5
       '@typescript-eslint/parser': 4.26.1_eslint@7.28.0+typescript@4.0.2
@@ -21989,9 +21994,13 @@ packages:
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
+      react-grid-system: 7.2.0_react@16.14.0
       react-intl: 3.12.1_react@16.14.0
       react-measure: 2.5.2_react-dom@16.14.0+react@16.14.0
       react-redux: 7.2.4_react-dom@16.14.0+react@16.14.0
+      react-select: 3.2.0_react-dom@16.14.0+react@16.14.0
+      react-transition-group: 2.9.0_react-dom@16.14.0+react@16.14.0
+      react-truncate: 2.4.0_react@16.14.0
       redux-batched-actions: 0.5.0
       redux-saga: 1.1.3
       svgo: 2.3.0
@@ -22004,6 +22013,7 @@ packages:
       - bufferutil
       - canvas
       - eslint-config-prettier
+      - prop-types
       - react-native
       - redux
       - supports-color

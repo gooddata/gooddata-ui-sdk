@@ -6,10 +6,10 @@ import { DashboardInsightProps } from "./types";
 import last from "lodash/last";
 import { DefaultDashboardInsightWithDrillSelect } from "./DefaultDashboardInsightWithDrillSelect";
 import { getDrillDownAttributeTitle } from "../drill/utils/drillDownUtils";
-import { isDrillDownDefinition, IDrillDownDefinition } from "@gooddata/sdk-ui-ext";
 import { useDashboardSelector } from "../model/state/dashboardStore";
 import { selectLocale, selectWidgetByRef } from "../model";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
+import { IDrillDownDefinition, isDrillDownDefinition } from "../types";
 
 /**
  * @internal

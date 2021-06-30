@@ -16,6 +16,7 @@ import { DrillDefinition } from '@gooddata/sdk-backend-spi';
 import { EntityState } from '@reduxjs/toolkit';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
+import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAttributeElements } from '@gooddata/sdk-model';
@@ -31,8 +32,6 @@ import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-backend-spi';
-import { IDashboardDrillEvent } from '@gooddata/sdk-ui-ext';
-import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
 import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
@@ -41,7 +40,7 @@ import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDrillableItem } from '@gooddata/sdk-ui';
-import { IDrillDownDefinition } from '@gooddata/sdk-ui-ext';
+import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillToAttributeUrl } from '@gooddata/sdk-backend-spi';
 import { IDrillToCustomUrl } from '@gooddata/sdk-backend-spi';
 import { IDrillToDashboard } from '@gooddata/sdk-backend-spi';
@@ -62,8 +61,11 @@ import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
 import { IListedDashboard } from '@gooddata/sdk-backend-spi';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
+import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
+import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
+import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/sdk-backend-spi';
@@ -74,9 +76,10 @@ import { IWidget } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
+import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
-import { OnFiredDashboardViewDrillEvent } from '@gooddata/sdk-ui-ext';
+import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { Patch } from 'immer';
 import { default as React_2 } from 'react';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
@@ -1357,12 +1360,21 @@ export interface IDashboardDateFilterProps {
     readonly?: boolean;
 }
 
+// @beta
+export interface IDashboardDrillEvent extends IDrillEvent {
+    drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
+    widgetRef?: ObjRef;
+}
+
 // @internal
 export interface IDashboardEvent {
     readonly correlationId?: string;
     readonly ctx: DashboardContext;
     readonly type: DashboardEventType;
 }
+
+// @beta
+export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
 
 // @internal (undocumented)
 export interface IDashboardMenuButtonProps {
@@ -1494,6 +1506,22 @@ export interface IDefaultTopBarProps {
     };
 }
 
+// @alpha
+export interface IDrillDownContext {
+    // (undocumented)
+    drillDefinition: IDrillDownDefinition;
+    // (undocumented)
+    event: IDrillEvent;
+}
+
+// @beta
+export interface IDrillDownDefinition {
+    origin: LocalIdRef;
+    target: ObjRef;
+    // (undocumented)
+    type: "drillDown";
+}
+
 // @internal (undocumented)
 export interface IFilterBarProps {
     filters: FilterContextItem[];
@@ -1534,6 +1562,9 @@ export function isDashboardEvent(obj: unknown): obj is IDashboardEvent;
 
 // @internal
 export function isDashboardQueryFailed(obj: unknown): obj is DashboardQueryFailed;
+
+// @beta
+export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
 
 // @internal (undocumented)
 export interface ITopBarMenuButtonConfig {
@@ -1710,6 +1741,9 @@ export type OnDrillToInsight = (context: {
     drillEvent: IDashboardDrillEvent;
     insight: IInsight;
 }) => void;
+
+// @beta
+export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
 
 // @internal (undocumented)
 export interface PermissionsState {
@@ -1968,10 +2002,10 @@ export const selectConfig: import("@reduxjs/toolkit").OutputSelector<DashboardSt
 export const selectDashboardLoading: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;
 
 // @internal
-export const selectDashboardRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").ObjRef, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "ref" | "description" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => import("@gooddata/sdk-model").ObjRef>;
+export const selectDashboardRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").ObjRef, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "ref" | "description" | "uri" | "updated" | "identifier" | "created" | "isLocked">) => import("@gooddata/sdk-model").ObjRef>;
 
 // @internal
-export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "ref" | "description" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => string>;
+export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "ref" | "description" | "uri" | "updated" | "identifier" | "created" | "isLocked">) => string>;
 
 // @internal
 export const selectDashboardUriRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").UriRef, (res: string) => import("@gooddata/sdk-model").UriRef>;
@@ -2160,13 +2194,13 @@ export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;
 
 // @internal (undocumented)
 export const useDrill: ({ onSuccess, onError, onBeforeRun }: UseDrillProps) => {
-    run: (drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, drillContext: import("..").DashboardDrillContext, correlationId?: string | undefined) => void;
+    run: (drillEvent: import("../..").IDashboardDrillEvent, drillContext: import("..").DashboardDrillContext, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
 // @internal (undocumented)
 export const useDrillDown: ({ onSuccess, onError, onBeforeRun }: UseDrillDownProps) => {
-    run: (insight: import("@gooddata/sdk-model").IInsight, drillDefinition: import("@gooddata/sdk-ui-ext").IDrillDownDefinition, drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (insight: import("@gooddata/sdk-model").IInsight, drillDefinition: import("../..").IDrillDownDefinition, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2192,7 +2226,7 @@ export interface UseDrillProps {
 
 // @internal (undocumented)
 export const useDrillToAttributeUrl: ({ onSuccess, onError, onBeforeRun }: UseDrillToAttributeUrlProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToAttributeUrl, drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToAttributeUrl, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2208,7 +2242,7 @@ export interface UseDrillToAttributeUrlProps {
 
 // @internal (undocumented)
 export const useDrillToCustomUrl: ({ onSuccess, onError, onBeforeRun }: UseDrillToCustomUrlProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToCustomUrl, drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToCustomUrl, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2224,7 +2258,7 @@ export interface UseDrillToCustomUrlProps {
 
 // @internal (undocumented)
 export const useDrillToDashboard: ({ onSuccess, onError, onBeforeRun }: UseDrillToDashboardProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToDashboard, drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToDashboard, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2240,7 +2274,7 @@ export interface UseDrillToDashboardProps {
 
 // @internal (undocumented)
 export const useDrillToInsight: ({ onSuccess, onError, onBeforeRun }: UseDrillToInsightProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToInsight, drillEvent: import("@gooddata/sdk-ui-ext").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToInsight, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 

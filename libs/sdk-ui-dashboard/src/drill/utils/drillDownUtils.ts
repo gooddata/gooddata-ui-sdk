@@ -1,9 +1,9 @@
 // (C) 2020-2021 GoodData Corporation
 
 import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
-import { IDrillDownDefinition } from "@gooddata/sdk-ui-ext";
+import { IDrillDownDefinition } from "../../types";
 
-export function getDrillDownAttributeTitle(drill: IDrillDownDefinition, drillEvent: IDrillEvent) {
+export function getDrillDownAttributeTitle(drill: IDrillDownDefinition, drillEvent: IDrillEvent): string {
     return (drillEvent.drillContext.intersection || [])
         .map((intersectionElement) => intersectionElement.header)
         .filter(isDrillIntersectionAttributeItem)

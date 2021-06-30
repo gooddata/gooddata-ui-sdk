@@ -2,9 +2,9 @@
 
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { ObjRef } from "@gooddata/sdk-model";
-import { IDrillDownDefinition } from "@gooddata/sdk-ui-ext";
 
 import { IDefinitionValidationData, IDrillConfigItemBase } from "../../interfaces";
+import { IDrillDownDefinition } from "../../../types";
 
 import { DrillItem } from "./DrilItem";
 

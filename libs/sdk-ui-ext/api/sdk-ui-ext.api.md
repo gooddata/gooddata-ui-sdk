@@ -46,6 +46,7 @@ import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
+import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IWidget } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
@@ -63,6 +64,7 @@ import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { VisType } from '@gooddata/sdk-ui';
 import { WidgetType } from '@gooddata/sdk-backend-spi';
+import { WrappedComponentProps } from 'react-intl';
 
 // @beta
 export function clearDashboardViewCaches(): void;
@@ -398,6 +400,34 @@ export interface IDrillDownDefinition {
     type: "drillDown";
 }
 
+// @internal (undocumented)
+export interface IInsightErrorProps {
+    // (undocumented)
+    clientHeight?: number;
+    // (undocumented)
+    error: GoodDataSdkError;
+    // (undocumented)
+    ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    // (undocumented)
+    height?: number | string | null;
+}
+
+// @internal (undocumented)
+export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle" | "afterRender"> {
+    // (undocumented)
+    colorPalette: IColorPalette | undefined;
+    // (undocumented)
+    insight: IInsightDefinition | undefined;
+    // (undocumented)
+    locale: ILocale;
+    // (undocumented)
+    onError?: OnError;
+    // (undocumented)
+    settings: IUserWorkspaceSettings | undefined;
+    // (undocumented)
+    theme?: ITheme;
+}
+
 // @public (undocumented)
 export interface IInsightTitleProps {
     // (undocumented)
@@ -420,6 +450,19 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     showTitle?: boolean | string | ((insight: IInsight) => string | undefined);
     TitleComponent?: React_2.ComponentType<IInsightTitleProps>;
     workspace?: string;
+}
+
+// @internal (undocumented)
+export const InsightError: React_2.ForwardRefExoticComponent<Pick<IInsightErrorProps & WrappedComponentProps<"intl">, "error" | "height" | "clientHeight" | "ErrorComponent"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
+    WrappedComponent: React_2.ComponentType<IInsightErrorProps & WrappedComponentProps<"intl">>;
+};
+
+// @internal
+export class InsightRenderer extends React_2.Component<IInsightRendererProps> {
+    // (undocumented)
+    render(): React_2.ReactNode;
 }
 
 // @public

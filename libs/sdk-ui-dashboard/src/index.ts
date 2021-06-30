@@ -12,3 +12,4 @@ export * from "./kpi";
 export * from "./insight";
 export * from "./scheduledEmail";
 export * from "./drill";
+export * from "./types";

@@ -7,7 +7,7 @@ import { DrillToVisualizationItem } from "./DrillToVisualizationItem";
 import { DrillToDashboardItem } from "./DrillToDashboardItem";
 import { DrillToUrlItem } from "./DrillToUrlItem";
 import { DrillDownItem } from "./DrillDownItem";
-import { isDrillDownDefinition } from "@gooddata/sdk-ui-ext";
+import { isDrillDownDefinition } from "../../../types";
 
 export class DrillConfigFactory {
     public static Create(drillData: DashboardDrillDefinition): any {

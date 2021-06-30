@@ -25,7 +25,8 @@
             "@gooddata/sdk-ui": ["sdk-ui/src"],
             "@gooddata/sdk-ui-ext": ["sdk-ui-ext/src"],
             "@gooddata/sdk-ui-filters": ["sdk-ui-filters/src"],
-            "@gooddata/sdk-ui-kit": ["sdk-ui-kit/src"]
+            "@gooddata/sdk-ui-kit": ["sdk-ui-kit/src"],
+            "@gooddata/sdk-ui-theme-provider": ["sdk-ui-theme-provider/src"]
         }
     },
     "compileOnSave": false,

@@ -9,7 +9,10 @@ import {
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import React, { useMemo } from "react";
 
-interface IInsightErrorProps {
+/**
+ * @internal
+ */
+export interface IInsightErrorProps {
     error: GoodDataSdkError;
     ErrorComponent?: React.ComponentType<IErrorProps>;
     height?: number | string | null;
@@ -32,4 +35,7 @@ const InsightErrorCore: React.FC<IInsightErrorProps & WrappedComponentProps> = (
     return <ErrorComponent {...errorProps} height={height} clientHeight={clientHeight} />;
 };
 
+/**
+ * @internal
+ */
 export const InsightError = injectIntl(InsightErrorCore);

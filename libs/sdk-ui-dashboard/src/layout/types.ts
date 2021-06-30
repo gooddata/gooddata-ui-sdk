@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import { FilterContextItem, IWidget, ScreenSize } from "@gooddata/sdk-backend-spi";
 import { IDrillableItem, IErrorProps, IHeaderPredicate, OnError } from "@gooddata/sdk-ui";
-import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "@gooddata/sdk-ui-ext";
+import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../types";
 
 /**
  * @internal

@@ -10,8 +10,7 @@ import {
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { InsightRenderer } from "@gooddata/sdk-ui-ext/esm/insightView/InsightRenderer";
-import { InsightError } from "@gooddata/sdk-ui-ext/esm/insightView/InsightError";
+import { InsightError, InsightRenderer } from "@gooddata/sdk-ui-ext";
 import { useDashboardComponentsContext } from "../dashboard/DashboardComponentsContext";
 import {
     useDashboardSelector,

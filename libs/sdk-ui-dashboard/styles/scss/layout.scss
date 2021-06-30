@@ -1,0 +1,223 @@
+// (C) 2007-2019 GoodData Corporation
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@import "~@gooddata/sdk-ui-kit/styles/scss/typo";
+
+$gd-dashboards-section-title-color: var(--gd-dashboards-section-title-color, $gd-color-text);
+$gd-dashboards-section-title-lineColor: var(--gd-dashboards-section-title-lineColor, $gd-border-color);
+$gd-dashboards-section-description-color: var(
+    --gd-dashboards-section-description-color,
+    $gd-color-state-blank
+);
+
+.gd-fluidlayout-container {
+    width: 100%;
+
+    .visualization {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+    }
+
+    .dash-item {
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+        min-height: inherit;
+        flex-direction: column;
+    }
+}
+
+.gd-fluidlayout-layout {
+    width: 100%;
+}
+
+.gd-fluidlayout-column-container {
+    width: 100%;
+    height: 100%;
+
+    @media #{$xsmall-only} {
+        flex-direction: column;
+
+        &::after {
+            content: "";
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            left: 10px;
+            height: 0;
+            border-bottom: 1px dashed $gd-color-disabled;
+        }
+    }
+}
+
+.gd-fluidlayout-column-container.custom-height {
+    .kpi {
+        min-height: 100%;
+    }
+
+    .gd-visualization-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.gd-fluidlayout-row {
+    position: relative;
+}
+
+.gd-fluidlayout-row-debug {
+    background-color: #fff;
+
+    &:nth-of-type(even) {
+        color: #f2f2f2;
+    }
+}
+
+.gd-fluid-layout-row-header {
+    padding-right: 20px;
+    padding-left: 20px;
+    text-align: center;
+
+    .gd-fluid-layout-row-header-container {
+        margin-top: 16px;
+    }
+
+    @media #{$medium-up} {
+        padding-right: 0;
+        padding-left: 0;
+        text-align: left;
+    }
+
+    .gd-row-header-view {
+        .title {
+            padding: 3px 5px;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+
+        .description {
+            padding: 4px 5px 2px;
+        }
+    }
+
+    .gd-row-header-title-wrapper {
+        display: flex;
+
+        h2 {
+            color: $gd-dashboards-section-title-color;
+        }
+
+        &::before,
+        &::after {
+            content: "";
+            position: relative;
+            top: 16px;
+            flex: 1 1 auto;
+            height: 0;
+            border-top: 1px solid $gd-dashboards-section-title-lineColor;
+        }
+
+        &::before {
+            margin-right: 20px;
+        }
+
+        &::after {
+            margin-left: 20px;
+        }
+
+        @media #{$medium-up} {
+            &::before {
+                display: none;
+            }
+        }
+    }
+
+    .gd-row-header-description-wrapper {
+        overflow: hidden;
+    }
+
+    .title-align-center {
+        @media #{$medium-up} {
+            text-align: center;
+
+            &::before {
+                display: block;
+            }
+        }
+    }
+
+    .title-align-right {
+        @media #{$medium-up} {
+            text-align: right;
+
+            &::before {
+                display: block;
+            }
+
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    .title,
+    .gd-row-header-view .description {
+        @media #{$medium-up} {
+            max-width: 95%;
+        }
+    }
+
+    .title {
+        @include gd-heading-2;
+
+        flex: 0 1 auto;
+        overflow: hidden;
+        color: $gd-dashboards-section-title-color;
+    }
+
+    .description {
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        color: $gd-dashboards-section-description-color;
+
+        &.collapsible {
+            cursor: pointer;
+        }
+
+        &:hover {
+            .more-link {
+                color: $gd-color-link;
+            }
+
+            .underline {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .more-link {
+        display: inline-block;
+        color: $gd-color-state-blank;
+
+        &::before {
+            vertical-align: top;
+            margin-left: 0.5em;
+            margin-right: 0.1em;
+            font-family: $gd-font-indigo;
+        }
+
+        &.active::before {
+            content: "\E612";
+        }
+
+        &.passive::before {
+            content: "\E613";
+        }
+    }
+
+    .underline {
+        text-decoration: underline;
+    }
+}
