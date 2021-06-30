@@ -22,7 +22,7 @@ import {
     DashboardLayoutItemsSelector,
     validateDashboardLayoutWidgetSize,
 } from "@gooddata/sdk-ui-ext/esm/internal";
-import { EmptyDashboardError } from "@gooddata/sdk-ui-ext/esm/dashboardView/EmptyDashboardError";
+import { EmptyDashboardError } from "./EmptyDashboardError";
 import { selectInsights, selectSettings, selectBasicLayout, useDashboardSelector } from "../model";
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget";
 import { useDashboardComponentsContext } from "../dashboard/DashboardComponentsContext";

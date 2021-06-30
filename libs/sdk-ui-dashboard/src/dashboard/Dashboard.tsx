@@ -44,7 +44,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
-import { defaultDashboardThemeModifier } from "@gooddata/sdk-ui-ext";
+import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { DashboardConfig } from "../model/types/commonTypes";
 import invariant from "ts-invariant";
