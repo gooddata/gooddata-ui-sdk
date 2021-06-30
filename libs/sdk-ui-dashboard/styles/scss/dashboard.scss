@@ -1,8 +1,337 @@
-// (C) 2021 GoodData Corporation
-@import "variables";
+// (C) 2007-2020 GoodData Corporation
+@import "./variables";
+@import "./layout";
+@import "./kpi";
+@import "./kpi_alert_dialog";
+@import "./scheduled_mail";
+@import "./scheduled_mail_recipients";
+@import "./item-states";
 
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {
     background: $gd-dashboards-content-backgroundColor;
     font-family: $gd-font-primary;
+}
+
+.dash-item {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: stretch;
+    min-height: $item-min-height;
+    padding: $item-outer-padding;
+    // Grid definition
+
+    @media #{$small-up} {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    @media #{$medium-up} {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    @media #{$large-up} {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    @media #{$xxlarge-up} {
+        flex: 0 0 percentage(1/6);
+        max-width: percentage(1/6);
+    }
+
+    @media #{$xsmall-only}, #{$small-only} {
+        flex-direction: column;
+
+        &::after {
+            content: "";
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            left: 10px;
+            height: 0;
+            border-bottom: 1px dashed $gd-color-disabled;
+        }
+
+        &:last-child::after {
+            display: none;
+        }
+    }
+
+    &.layout-xl {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    &.type-visualization {
+        .viz-line-family-chart {
+            width: 100%;
+            min-width: 0;
+        }
+    }
+
+    &:hover {
+        a.kpi-link {
+            .kpi-value {
+                color: var(
+                    --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
+                    var(--gd-palette-complementary-9, $default-gd-color-link)
+                );
+            }
+            .kpi-value.is-empty-value {
+                color: var(
+                    --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
+                    var(--gd-palette-complementary-6, inherit)
+                );
+            }
+        }
+    }
+
+    .is-alert-highlighted {
+        &,
+        &:hover {
+            &::before {
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: $gd-palette-primary-dimmed;
+                // in animations
+                // stylelint-disable-next-line no-unknown-animations
+                animation-name: alert-highlighted;
+                animation-duration: 0.3s;
+                animation-iteration-count: 1;
+            }
+        }
+
+        &.is-alert-triggered,
+        &.is-alert-broken {
+            &,
+            &:hover {
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    background-color: $gd-palette-warning-dimmed;
+                }
+            }
+        }
+    }
+}
+
+.dash-item-content-wrapper,
+.dash-item-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-width: 99.999%; /* 100% has issue in IE (wrong kpi width) */
+}
+
+.dash-item-content {
+    position: relative;
+    padding: $item-inner-padding;
+    border-width: $gd-dashboards-content-widget-borderWidth;
+    border-style: solid;
+    border-color: $gd-dashboards-content-widget-borderColor;
+    border-radius: $gd-dashboards-content-widget-borderRadius;
+    box-shadow: $gd-dashboards-content-widget-dropShadow;
+    line-height: 0;
+    background-color: $gd-color-white;
+    transition: $transition-length;
+
+    @media #{$xsmall-only}, #{$small-only} {
+        padding: 5px;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 50%;
+        bottom: 50%;
+        left: 50%;
+        display: block;
+        border-radius: inherit;
+    }
+}
+
+.type-kpi,
+.viz-type-headline {
+    .dash-item-action-alert,
+    .dash-item-action-placeholder {
+        top: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-kpiWidget-borderWidth});
+        right: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-kpiWidget-borderWidth});
+    }
+
+    .dash-item-content {
+        border-width: $gd-dashboards-content-kpiWidget-borderWidth;
+        border-style: solid;
+        border-color: $gd-dashboards-content-kpiWidget-borderColor;
+        border-radius: $gd-dashboards-content-kpiWidget-borderRadius;
+        background-color: $gd-dashboards-content-kpiWidget-backgroundColor;
+        box-shadow: $gd-dashboards-content-kpiWidget-dropShadow;
+    }
+
+    .item-headline {
+        text-align: $gd-dashboards-content-kpiWidget-title-textAlign;
+        color: $gd-dashboards-content-kpiWidget-title-color;
+    }
+}
+
+.item-headline-outer {
+    position: relative;
+    z-index: 1;
+    height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2 + 2; // relate SD-956: please update HEADLINE_OUTER_HEIGHT in widgetHeightUtil.ts when height is changed
+    margin-top: 10px;
+    line-height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2;
+
+    @media #{$xsmall-only}, #{$small-only} {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .visualization & {
+        margin-bottom: 10px;
+    }
+}
+
+.item-headline {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2;
+    font-size: 17px;
+    line-height: $item-headline-lineHeight;
+    vertical-align: middle;
+    text-align: $gd-dashboards-content-widget-title-textAlign;
+    color: $gd-dashboards-content-widget-title-color;
+}
+
+.item-headline-inner {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.viz-zoom-out {
+    position: absolute;
+    top: -85px;
+    right: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    cursor: pointer;
+    transition: $transition-length;
+    border-radius: 50%;
+    background-color: $button-grey-background;
+
+    @media #{$xsmall-only}, #{$small-only} {
+        top: -73px;
+    }
+}
+
+// in dashboard view we need to tweak the positioning a bit as there is no options button
+.gd-dashboard-view-widget {
+    .gd-bubble-trigger-zoom-out {
+        top: -12px;
+        right: 0;
+    }
+    .viz-zoom-out {
+        top: 0;
+        left: 0;
+        cursor: pointer;
+    }
+}
+
+.dash-item-action {
+    position: absolute;
+    z-index: 2;
+    top: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth});
+    right: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth});
+    width: $item-action-width;
+    height: 36px;
+    line-height: 36px;
+    color: $gd-color-text-light;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 18px;
+    text-align: center;
+
+    &.disabled {
+        cursor: auto;
+    }
+}
+
+.is-desktop {
+    .dash-item-action-alert:not(.disabled):hover,
+    .dash-item-action-options:not(.disabled):hover,
+    .dash-item-action-widget-options-active {
+        color: $gd-color-text-light;
+        background-color: var(--gd-palette-complementary-7, $gd-color-text-dimmed);
+    }
+}
+
+.is-mobile {
+    .dash-item-action-alert:not(.disabled),
+    .dash-item-action-options:not(.disabled) {
+        color: $gd-color-link;
+        background: none;
+    }
+
+    .dash-item-action-alert.disabled,
+    .dash-item-action-options.disabled {
+        background-color: transparent;
+    }
+
+    .dash-item-action-widget-options:not(.disabled) {
+        color: $gd-color-label;
+        background-color: $is-focused-background;
+    }
+
+    .dash-item-action-widget-options-active:not(.disabled) {
+        background-color: $gd-color-text-dimmed;
+    }
+}
+
+.dash-item-action.dash-item-action-alert,
+.dash-item-action.dash-item-action-options {
+    display: none;
+    color: $gd-color-label;
+    background-color: $is-focused-background;
+    transition: $transition-length;
+
+    .is-mobile & {
+        display: block;
+    }
+
+    &:hover:not(.disabled) {
+        color: var(--gd-palette-complementary-0, inherit);
+        background-color: var(--gd-palette-complementary-7, inherit);
+    }
+}
+
+.dash-item-action.dash-item-action-alert {
+    &.disabled {
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/alert-bell-na.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 16px;
+    }
+
+    .has-set-alert &,
+    .is-alert-dialog &,
+    .dash-item-content:hover & {
+        display: block;
+    }
+}
+
+.dash-item-action-options {
+    .dash-item-content:not(.is-alert-dialog):hover & {
+        display: block;
+    }
 }
