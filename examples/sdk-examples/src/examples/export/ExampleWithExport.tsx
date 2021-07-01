@@ -79,10 +79,9 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
             format: "xlsx",
             title: "CustomName",
             mergeHeaders,
+            includeFilterContext,
+            showFilters: includeFilterContext && !!filters?.length,
         };
-        if (includeFilterContext && filters) {
-            exportConfig.showFilters = true;
-        }
         setState((oldState) => ({ ...oldState, showExportDialog: false, exportConfig }));
     };
 
