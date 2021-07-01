@@ -23,7 +23,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     display: inline-block;
 
     &-overlay {
-        padding: 8px 4px 4px 4px;
+        padding: 16px 8px 8px 8px;
         max-width: 245px;
         // TODO: Importing Messages doesn't work. Error styles are termporarily hardcoded here
         .gd-message {
