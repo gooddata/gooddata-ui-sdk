@@ -143,7 +143,7 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
                         // IE shows an unnecessary scrollbar when the list has only one item
                         // this means we have to explicitly disallow that
                         // we also cannot use className prop because react-window sets overflow using style
-                        style={items.length === 1 ? { overflowY: "hidden" } : undefined}
+                        style={items.length === 1 ? { overflow: "hidden" } : undefined}
                     >
                         {Option}
                     </List>
