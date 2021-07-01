@@ -153,7 +153,6 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         public UNSAFE_componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
             //  we need strict equality here in case only the buckets changed (not measures or attributes)
             if (!this.props.execution.equals(nextProps.execution)) {
-                console.log("next props execution", nextProps.execution);
                 this.initDataLoading(nextProps.execution);
             }
         }
