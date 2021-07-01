@@ -4,7 +4,11 @@ import {
     IAnalyticalBackendConfig,
     IAttributeDisplayFormMetadataObject,
     IAttributeElement,
+    ICatalogAttribute,
+    ICatalogDateDataset,
+    ICatalogFact,
     ICatalogGroup,
+    ICatalogMeasure,
     IDashboardWithReferences,
     IDateFilterConfig,
     ISettings,
@@ -88,6 +92,16 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Specify responses to the getCommonAttributes calls. The key of the map MUST be created using the {@link objRefsToStringKey} function.
      */
     getCommonAttributesResponses?: Record<string, ObjRef[]>;
+
+    /**
+     * Optionally specify functions to apply on different types of catalog items when determining item availability.
+     */
+    catalogAvailability?: {
+        availableAttributes?: (attributes: ICatalogAttribute[]) => ICatalogAttribute[];
+        availableMeasures?: (measures: ICatalogMeasure[]) => ICatalogMeasure[];
+        availableFacts?: (facts: ICatalogFact[]) => ICatalogFact[];
+        availableDateDatasets?: (datasets: ICatalogDateDataset[]) => ICatalogDateDataset[];
+    };
 };
 
 /**

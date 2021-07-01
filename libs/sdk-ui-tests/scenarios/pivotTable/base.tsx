@@ -5,7 +5,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames";
 import { requestPages } from "@gooddata/mock-handling";
-import { IAttribute, modifyAttribute } from "@gooddata/sdk-model";
+import { IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 export const PivotTableWithSingleColumn = {
     columns: [ReferenceLdm.Product.Name],
@@ -122,4 +122,14 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario("empty values", PivotTableWithSingleMeasureAndTwoRowsAndCols)
     .addScenario("arithmetic measures", PivotTableWithArithmeticMeasures)
     .addScenario("with attributes without measures", PivotTableWithAttributesWithoutMeasures)
-    .addScenario("with two same dates", PivotTableWithTwoSameDate);
+    .addScenario("with two same dates", PivotTableWithTwoSameDate)
+    .addScenario(
+        "with date filter",
+        {
+            ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+            filters: [
+                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Activity.ref, "2021-01-01", "2021-02-01"),
+            ],
+        },
+        (m) => m.withTests("api"),
+    );

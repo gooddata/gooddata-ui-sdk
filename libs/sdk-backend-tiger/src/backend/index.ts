@@ -42,6 +42,7 @@ import { createDefaultDateFormatter } from "../convertors/fromBackend/dateFormat
 import { TigerOrganization, TigerOrganizations } from "./organization";
 
 const CAPABILITIES: IBackendCapabilities = {
+    hasTypeScopedIdentifiers: true,
     canCalculateGrandTotals: true,
     canCalculateSubTotals: false,
     canCalculateNativeTotals: false,

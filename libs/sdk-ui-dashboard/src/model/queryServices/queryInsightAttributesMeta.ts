@@ -23,8 +23,9 @@ import {
     ICatalogAttribute,
     ICatalogDateAttribute,
 } from "@gooddata/sdk-backend-spi";
-import keyBy from "lodash/keyBy";
 import { invariant } from "ts-invariant";
+import { ObjRefMap } from "../state/_infra/objRefMap";
+import uniqBy from "lodash/uniqBy";
 
 export const QueryInsightAttributesMetaService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META",
@@ -52,18 +53,18 @@ export const selectInsightAttributesMeta = QueryInsightAttributesMetaService.cac
 async function loadDisplayFormsAndAttributes(ctx: DashboardContext, displayFormRefs: ObjRef[]) {
     const { backend, workspace } = ctx;
 
-    const displayForms = await backend
+    const loadedDisplayForms = await backend
         .workspace(workspace)
         .attributes()
         .getAttributeDisplayForms(displayFormRefs);
-    const attributes = await backend
+    const loadedAttributes = await backend
         .workspace(workspace)
         .attributes()
-        .getAttributes(displayForms.map((df) => df.attribute));
+        .getAttributes(loadedDisplayForms.map((df) => df.attribute));
 
     return {
-        loadedDisplayForms: keyBy(displayForms, (df) => serializeObjRef(df.ref)),
-        loadedAttributes: keyBy(attributes, (a) => serializeObjRef(a.ref)),
+        loadedDisplayForms,
+        loadedAttributes,
     };
 }
 
@@ -79,17 +80,17 @@ async function loadDisplayFormsAndAttributes(ctx: DashboardContext, displayFormR
 async function createInsightAttributesMeta(
     ctx: DashboardContext,
     usage: InsightDisplayFormUsage,
-    catalogDisplayForms: Record<string, IAttributeDisplayFormMetadataObject>,
-    catalogAttributes: Record<string, ICatalogAttribute | ICatalogDateAttribute>,
+    catalogDisplayForms: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+    catalogAttributes: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
 ): Promise<InsightAttributesMeta> {
     const allUsedRefs = [...usage.inAttributes, ...usage.inFilters, ...usage.inMeasureFilters];
     const displayFormsFromCatalog: IAttributeDisplayFormMetadataObject[] = [];
     const missingDisplayForms: ObjRef[] = [];
 
     allUsedRefs.forEach((ref) => {
-        const catalogDisplayForm = catalogDisplayForms[serializeObjRef(ref)];
+        const catalogDisplayForm = catalogDisplayForms.get(ref);
 
-        if (!catalogDisplayForm) {
+        if (catalogDisplayForm) {
             displayFormsFromCatalog.push(catalogDisplayForm);
         } else {
             missingDisplayForms.push(ref);
@@ -97,7 +98,7 @@ async function createInsightAttributesMeta(
     });
 
     const attributesFromCatalog: IAttributeMetadataObject[] = displayFormsFromCatalog.map((df) => {
-        const catalogAttribute = catalogAttributes[serializeObjRef(df.attribute)];
+        const catalogAttribute = catalogAttributes.get(df.attribute);
 
         // if this bombs there must be something seriously wrong because it means a display form is in catalog
         // but the attribute to which it belongs is not. such a thing can only happen if something is messing
@@ -112,17 +113,15 @@ async function createInsightAttributesMeta(
         missingDisplayForms,
     );
 
-    return {
+    const result: InsightAttributesMeta = {
         usage,
-        attributes: {
-            ...keyBy(attributesFromCatalog, (a) => serializeObjRef(a.ref)),
-            ...loadedAttributes,
-        },
-        displayForms: {
-            ...keyBy(displayFormsFromCatalog, (df) => serializeObjRef(df.ref)),
-            ...loadedDisplayForms,
-        },
+        attributes: uniqBy([...attributesFromCatalog, ...loadedAttributes], (a) => serializeObjRef(a.ref)),
+        displayForms: uniqBy([...displayFormsFromCatalog, ...loadedDisplayForms], (df) =>
+            serializeObjRef(df.ref),
+        ),
     };
+
+    return result;
 }
 
 function* queryService(

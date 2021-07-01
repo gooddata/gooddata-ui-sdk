@@ -2,13 +2,12 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import flatMap from "lodash/flatMap";
-import keyBy from "lodash/keyBy";
-import { serializeObjRef } from "@gooddata/sdk-model";
+import { newCatalogAttributeMap, newCatalogDateDatasetMap, newDisplayFormMap } from "../_infra/objRefMap";
+import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
 import {
-    IAttributeDisplayFormMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-} from "@gooddata/sdk-backend-spi";
+    CatalogDateAttributeWithDataset,
+    newCatalogDateAttributeWithDatasetMap,
+} from "../../_staging/catalog/dateAttributeWithDatasetMap";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -61,42 +60,76 @@ export const selectAttributesWithDrillDown = createSelector(
 );
 
 /**
- * Selects all display forms in the catalog as a mapping of (serialized) ref to display form metadata object.
- *
- * @internal
+ * Selects all date datasets in the catalog as a mapping of obj ref to date dataset.
  */
-export const selectAllCatalogDisplayFormsMap = createSelector(
-    [selectCatalogAttributes, selectCatalogDateDatasets],
-    (attributes, dateDatasets) => {
-        const nonDateDisplayForms = flatMap(attributes, (a) => a.displayForms);
-        const dateDisplayForms = flatMap(dateDatasets, (d) =>
-            flatMap(d.dateAttributes, (a) => a.attribute.displayForms),
-        );
-        const result: Record<string, IAttributeDisplayFormMetadataObject> = keyBy(
-            [...nonDateDisplayForms, ...dateDisplayForms],
-            (df) => serializeObjRef(df.ref),
-        );
-
-        return result;
+export const selectAllCatalogDateDatasetsMap = createSelector(
+    [selectCatalogDateDatasets, selectBackendCapabilities],
+    (dateDatasets, capabilities) => {
+        return newCatalogDateDatasetMap(dateDatasets, capabilities.hasTypeScopedIdentifiers);
     },
 );
 
 /**
- * Selects all attributes in the catalog as a mapping of (serialized) ref to catalog's attribute object. The mapping
+ * Selects all display forms in the catalog as a mapping of obj ref to display form
+ *
+ * @internal
+ */
+export const selectAllCatalogDisplayFormsMap = createSelector(
+    [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
+    (attributes, dateDatasets, capabilities) => {
+        const nonDateDisplayForms = flatMap(attributes, (a) => a.displayForms);
+        const dateDisplayForms = flatMap(dateDatasets, (d) =>
+            flatMap(d.dateAttributes, (a) => a.attribute.displayForms),
+        );
+
+        return newDisplayFormMap(
+            [...nonDateDisplayForms, ...dateDisplayForms],
+            capabilities.hasTypeScopedIdentifiers,
+        );
+    },
+);
+
+/**
+ * Selects all attributes in the catalog as a mapping of ref to catalog's attribute object. The mapping
  * will include both 'normal' attributes and attributes from date datasets.
  *
  * @remarks see `isCatalogAttribute` guard; this can be used to determine type of attribute
  * @internal
  */
 export const selectAllCatalogAttributesMap = createSelector(
-    [selectCatalogAttributes, selectCatalogDateDatasets],
-    (attributes, dateDatasets) => {
+    [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
+    (attributes, dateDatasets, capabilities) => {
         const dateAttributes = flatMap(dateDatasets, (d) => d.dateAttributes);
-        const result: Record<string, ICatalogAttribute | ICatalogDateAttribute> = keyBy(
+
+        return newCatalogAttributeMap(
             [...attributes, ...dateAttributes],
-            (a) => serializeObjRef(a.attribute.ref),
+            capabilities.hasTypeScopedIdentifiers,
+        );
+    },
+);
+
+/**
+ * Selects lookup mapping between date dataset attributes and date datasets. The entry in lookup contains both the date dataset attribute
+ * and the date dataset to which it belongs. The lookup is indexed by the date dataset attribute and entries can be obtained using
+ * attribute refs.
+ *
+ * @internal
+ */
+export const selectCatalogDateAttributeToDataset = createSelector(
+    [selectCatalogDateDatasets, selectBackendCapabilities],
+    (dateDatasets, capabilities) => {
+        const attributesWithDatasets: CatalogDateAttributeWithDataset[] = flatMap(dateDatasets, (dataset) =>
+            dataset.dateAttributes.map((attribute) => {
+                return {
+                    attribute,
+                    dataset,
+                };
+            }),
         );
 
-        return result;
+        return newCatalogDateAttributeWithDatasetMap(
+            attributesWithDatasets,
+            capabilities.hasTypeScopedIdentifiers,
+        );
     },
 );

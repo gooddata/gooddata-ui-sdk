@@ -37,6 +37,7 @@ import values from "lodash/values";
 import merge from "lodash/merge";
 import keyBy from "lodash/keyBy";
 import { listedDashboardsSliceReducer } from "./listedDashboards";
+import { backendCapabilitiesSliceReducer } from "./backendCapabilities";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -199,6 +200,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
 
     const rootReducer = combineReducers({
         loading: loadingSliceReducer,
+        backendCapabilities: backendCapabilitiesSliceReducer,
         config: configSliceReducer,
         permissions: permissionsSliceReducer,
         filterContext: filterContextSliceReducer,
