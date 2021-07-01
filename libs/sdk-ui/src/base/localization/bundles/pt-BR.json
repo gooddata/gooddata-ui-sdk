@@ -214,5 +214,6 @@
     "rankingFilter.preview.bottom_with_attribute": "{value} últimos de <strong>{attribute}</strong> com base em <strong>{measure}</strong>",
     "rankingFilter.valueTooltip": "Se vários itens tiverem o mesmo valor, o filtro mostrará todos os itens com esse valor. O insight poderá então exibir mais itens do que o número definido.",
     "attributesDropdown.allItemsFiltered": "Todos os itens estão filtrados",
-    "attributesDropdown.itemsFiltered.tooltip": "Os itens estão filtrados por: <strong>{filters}</strong>"
+    "attributesDropdown.itemsFiltered.tooltip": "Os itens estão filtrados por: <strong>{filters}</strong>",
+    "attributesDropdown.itemsFiltered": "Os itens estão filtrados"
 }

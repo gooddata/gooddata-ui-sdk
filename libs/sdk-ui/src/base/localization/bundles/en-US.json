@@ -1085,5 +1085,10 @@
         "value": "Items are filtered by: <strong>{filters}</strong>",
         "comment": "Do not translate HTML markup enclosed in <> and {filters} placeholder as it will be replaced by list of filter names.",
         "limit": 0
+    },
+    "attributesDropdown.itemsFiltered": {
+        "value": "Items are filtered",
+        "comment": "This message is displayed when attribute elements are being filtered out by parent filters",
+        "limit": 0
     }
 }

@@ -31,6 +31,7 @@ import {
     getElementTotalCount,
     isParentFilteringEnabled,
     showAllFilteredMessage,
+    showItemsFilteredMessage,
     updateSelectedOptionsWithData,
 } from "../utils/AttributeFilterUtils";
 import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdownAllFilteredOutBody";
@@ -384,6 +385,11 @@ export class AttributeDropdownCore extends React.PureComponent<
             validElements?.items,
         );
 
+        const isItemsFiltered = showItemsFilteredMessage(
+            this.state.isLoading,
+            this.props.parentFilters?.map((filter) => filter.attributeFilter),
+        );
+
         return !isEmpty(this.props.parentFilterTitles) && isAllFiltered ? (
             <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
                 {(isMobile) => (
@@ -410,6 +416,8 @@ export class AttributeDropdownCore extends React.PureComponent<
                 onSelect={this.onSelect}
                 onApplyButtonClicked={() => this.onApplyButtonClicked(closeDropdown)}
                 onCloseButtonClicked={() => closeDropdown()}
+                parentFilterTitles={this.props.parentFilterTitles}
+                showItemsFilteredMessage={isItemsFiltered}
             />
         );
     }
