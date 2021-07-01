@@ -356,6 +356,18 @@ export interface CreateScheduledEmail extends IDashboardCommand {
 export type CustomAttributeFilterFactory = (filter: IDashboardAttributeFilter) => DashboardAttributeFilterComponent | undefined;
 
 // @internal (undocumented)
+export type CustomButtonBarComponent = ComponentType<IButtonBarCoreProps>;
+
+// @internal (undocumented)
+export type CustomMenuButtonComponent = ComponentType<IMenuButtonCoreProps>;
+
+// @internal (undocumented)
+export type CustomTitleComponent = ComponentType<ITitleCoreProps>;
+
+// @internal (undocumented)
+export type CustomTopBarComponent = ComponentType<ITopBarCoreProps>;
+
+// @internal (undocumented)
 export const Dashboard: React_2.FC<IDashboardProps>;
 
 // @internal
@@ -447,12 +459,6 @@ export interface DashboardAttributeFilterSelectionChanged extends IDashboardEven
     // (undocumented)
     readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
 }
-
-// @internal (undocumented)
-export const DashboardButtonBar: React_2.FC<IDashboardButtonBarProps & IDefaultButtonBarProps>;
-
-// @internal (undocumented)
-export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps & IDefaultButtonBarProps>;
 
 // @internal
 export interface DashboardCommandFailed extends IDashboardEvent {
@@ -979,12 +985,6 @@ export interface DashboardLoaded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.LOADED";
 }
 
-// @internal
-export const DashboardMenuButton: React_2.FC<IDashboardMenuButtonProps & IDefaultMenuButtonProps>;
-
-// @internal (undocumented)
-export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonProps & IDefaultMenuButtonProps>;
-
 // @internal (undocumented)
 export type DashboardMeta = Pick<IDashboard, "ref" | "title" | "description" | "created" | "updated" | "isLocked" | "uri" | "identifier">;
 
@@ -1086,12 +1086,6 @@ export type DashboardState = {
 };
 
 // @internal
-export const DashboardTitle: React_2.FC<IDashboardTitleProps>;
-
-// @internal (undocumented)
-export type DashboardTitleComponent = ComponentType<IDashboardTitleProps>;
-
-// @internal
 export interface DashboardWasReset extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
@@ -1144,6 +1138,9 @@ export interface DateFilterValidationFailed extends IDashboardEvent {
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
 // @internal (undocumented)
+export const DefaultButtonBar: React_2.FC<IButtonBarCoreProps>;
+
+// @internal (undocumented)
 export const DefaultDashboardInsight: React_2.FC<DashboardInsightProps>;
 
 // @internal (undocumented)
@@ -1158,8 +1155,17 @@ export const DefaultDashboardLayout: ({ onFiltersChange, drillableItems, onDrill
 // @internal (undocumented)
 export const DefaultDashboardWidget: (props: DashboardWidgetProps) => JSX.Element;
 
+// @internal
+export const DefaultMenuButton: React_2.FC<IDefaultMenuButtonComponentProps>;
+
 // @internal (undocumented)
 export const DefaultScheduledEmailDialog: React_2.FC<ScheduledEmailDialogProps>;
+
+// @internal
+export const DefaultTitle: React_2.FC<IDefaultTitleProps>;
+
+// @internal (undocumented)
+export const DefaultTopBar: React_2.FC<IDefaultTopBarProps>;
 
 // @internal
 export interface Drill extends IDashboardCommand {
@@ -1325,17 +1331,13 @@ export const HiddenDashboardDateFilter: React_2.FC;
 export const HiddenFilterBar: React_2.FC<IFilterBarProps>;
 
 // @internal
-export interface IDashboardAttributeFilterProps {
-    filter: IDashboardAttributeFilter;
-    onFilterChanged: (filter: IDashboardAttributeFilter) => void;
+export interface IButtonBarCoreProps {
 }
 
 // @internal
-export interface IDashboardButtonBarProps {
-    // (undocumented)
-    onButtonClicked: (buttonId: string) => void;
-    // (undocumented)
-    onButtonHover: (buttonId: string) => void;
+export interface IDashboardAttributeFilterProps {
+    filter: IDashboardAttributeFilter;
+    onFilterChanged: (filter: IDashboardAttributeFilter) => void;
 }
 
 // @internal
@@ -1377,14 +1379,6 @@ export interface IDashboardEvent {
 export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
 
 // @internal (undocumented)
-export interface IDashboardMenuButtonProps {
-    // (undocumented)
-    onMenuItemClicked: (itemId: string) => void;
-    // (undocumented)
-    onMenuItemHover: (itemId: string) => void;
-}
-
-// @internal (undocumented)
 export interface IDashboardProps {
     backend?: IAnalyticalBackend;
     // (undocumented)
@@ -1411,8 +1405,8 @@ export interface IDashboardProps {
     theme?: ITheme;
     themeModifier?: (theme: ITheme) => ITheme;
     topBarConfig?: {
-        Component?: TopBarComponent;
-        defaultComponentProps?: IDefaultTopBarProps;
+        Component?: CustomTopBarComponent;
+        defaultComponentProps?: Omit<IDefaultTopBarProps, keyof ITopBarCoreProps>;
     };
     widgetConfig?: {
         Component?: React_2.ComponentType<DashboardWidgetProps>;
@@ -1436,12 +1430,6 @@ export interface IDashboardQuery<_TResult = any> {
 }
 
 // @internal (undocumented)
-export interface IDashboardTitleProps {
-    onTitleChanged?: (title: string) => void;
-    title: string;
-}
-
-// @internal (undocumented)
 export type IDashboardWidgetRendererProps = {
     widget?: IWidget;
     screen: ScreenSize;
@@ -1451,8 +1439,8 @@ export type IDashboardWidgetRendererProps = {
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
 };
 
-// @internal (undocumented)
-export interface IDefaultButtonBarProps {
+// @internal
+export interface IDefaultButtonBarProps extends IButtonBarCoreProps {
 }
 
 // @internal (undocumented)
@@ -1467,40 +1455,43 @@ export interface IDefaultFilterBarProps {
     };
 }
 
-// @internal (undocumented)
-export interface IDefaultMenuButtonCallbackProps {
+// @internal
+export interface IDefaultMenuButtonComponentCallbacks {
     // (undocumented)
     onExportToPdfCallback?: () => void;
     // (undocumented)
-    onScheduleEmailingCallback?: (isDialogOpen: boolean) => void;
-}
-
-// @internal (undocumented)
-export interface IDefaultMenuButtonProps {
-    additionalMenuItems?: [number, MenuButtonItem][];
-    ButtonComponent?: React_2.FC;
-    menuItems?: MenuButtonItem[];
+    onScheduleEmailingCallback?: () => void;
 }
 
 // @internal
-export interface IDefaultTopBarProps {
+export interface IDefaultMenuButtonComponentProps extends IMenuButtonCoreProps, IDefaultMenuButtonComponentCallbacks {
+    additionalMenuItems?: [number, IMenuButtonItem][];
+    ButtonComponent?: React.FC;
+    menuItems?: IMenuButtonItem[];
+}
+
+// @internal
+export interface IDefaultTitleProps extends ITitleCoreProps {
+}
+
+// @internal
+export interface IDefaultTopBarProps extends ITopBarCoreProps {
     // (undocumented)
     buttonBarConfig?: {
-        Component?: DashboardButtonBarComponent;
+        Component?: CustomButtonBarComponent;
         placement?: "left" | "right";
         order?: number;
-        defaultComponentProps?: IDefaultButtonBarProps;
     };
     menuButtonConfig?: {
-        Component?: DashboardMenuButtonComponent;
+        Component?: CustomMenuButtonComponent;
         placement?: "left" | "right";
         order?: number;
-        defaultComponentProps?: IDefaultMenuButtonProps;
-        defaultComponentCallbackProps?: IDefaultMenuButtonCallbackProps;
+        defaultComponentProps?: IDefaultMenuButtonComponentProps;
+        defaultComponentCallbackProps?: IDefaultMenuButtonComponentCallbacks;
     };
     // (undocumented)
     titleConfig?: {
-        Component?: DashboardTitleComponent;
+        Component?: CustomTitleComponent;
         placement?: "left" | "right";
         order?: number;
     };
@@ -1526,6 +1517,21 @@ export interface IDrillDownDefinition {
 export interface IFilterBarProps {
     filters: FilterContextItem[];
     onFilterChanged: (filter: FilterContextItem | undefined) => void;
+}
+
+// @internal
+export interface IMenuButtonCoreProps {
+}
+
+// @internal (undocumented)
+export interface IMenuButtonItem {
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    itemName: string;
+    // (undocumented)
+    onClick?: () => void;
+    type?: "separator" | "header";
 }
 
 // @internal
@@ -1566,24 +1572,22 @@ export function isDashboardQueryFailed(obj: unknown): obj is DashboardQueryFaile
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
 
-// @internal (undocumented)
-export interface ITopBarMenuButtonConfig {
-    // (undocumented)
-    menuItems: MenuButtonItem[];
+// @internal
+export interface ITitleCoreProps extends ITitleProps {
 }
 
-// @internal (undocumented)
-export interface ITopBarProps {
-    // (undocumented)
-    titleConfig: ITopBarTitleConfig;
-}
-
-// @internal (undocumented)
-export interface ITopBarTitleConfig {
+// @internal
+export interface ITitleProps {
     // (undocumented)
     onTitleChanged?: (newTitle: string) => void;
     // (undocumented)
     title: string;
+}
+
+// @internal
+export interface ITopBarCoreProps {
+    // (undocumented)
+    titleProps: ITitleProps;
 }
 
 // @internal (undocumented)
@@ -1627,14 +1631,6 @@ export type LoadingState = {
     loading: boolean;
     result?: boolean;
     error?: Error;
-};
-
-// @internal (undocumented)
-export type MenuButtonItem = {
-    itemId: string;
-    itemName: string;
-    callback?: (...params: any) => void;
-    type?: "separator" | "header";
 };
 
 // @internal
@@ -1696,7 +1692,7 @@ export interface MoveSectionItem extends IDashboardCommand {
 export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
 
 // @internal (undocumented)
-export const NoTopBar: React_2.FC<ITopBarProps>;
+export const NoTopBar: React_2.FC<ITopBarCoreProps>;
 
 // @internal
 export type ObjectAvailabilityConfig = {
@@ -2135,12 +2131,6 @@ export function setAttributeFilterParent(filterLocalId: string, parentFilter: ID
 
 // @internal
 export type StashedDashboardItemsId = string;
-
-// @internal (undocumented)
-export const TopBar: React_2.FC<ITopBarProps & IDefaultTopBarProps>;
-
-// @internal (undocumented)
-export type TopBarComponent = ComponentType<ITopBarProps>;
 
 // @internal
 export type UndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> = {
