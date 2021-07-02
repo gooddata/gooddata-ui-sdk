@@ -163,6 +163,7 @@ export {
     DrillType,
     IDrill,
     IDrillFromMeasure,
+    IDrillFromAttribute,
     IDrillOrigin,
     IDrillToDashboard,
     IDrillToInsight,
@@ -177,6 +178,8 @@ export {
     IDrillTarget,
     IDrillToAttributeUrlTarget,
     IDrillToCustomUrlTarget,
+    isDrillFromAttribute,
+    isDrillFromMeasure,
 } from "./workspace/dashboards/drills";
 export {
     IDashboard,

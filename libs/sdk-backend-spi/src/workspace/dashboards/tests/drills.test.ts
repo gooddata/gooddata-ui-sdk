@@ -1,8 +1,20 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
-import { isDrillToLegacyDashboard, isDrillToDashboard, isDrillToInsight } from "../drills";
-import { drillToLegacyDashboard, drillToDashboard, drillToInsight } from "./drills.fixtures";
+import {
+    isDrillToLegacyDashboard,
+    isDrillToDashboard,
+    isDrillToInsight,
+    isDrillFromMeasure,
+    isDrillFromAttribute,
+} from "../drills";
+import {
+    drillToLegacyDashboard,
+    drillToDashboard,
+    drillToInsight,
+    drillFromMeasure,
+    drillFromAttribute,
+} from "./drills.fixtures";
 
 describe("dashboard drills type guards", () => {
     describe("isDrillToLegacyDashboard", () => {
@@ -41,6 +53,30 @@ describe("dashboard drills type guards", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isDrillToInsight(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isDrillFromMeasure", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "drill from measure", drillFromMeasure],
+            [false, "drill from attribute", drillFromAttribute],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isDrillFromMeasure(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isDrillFromAttribute", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "drill from measure", drillFromMeasure],
+            [true, "drill from attribute", drillFromAttribute],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isDrillFromAttribute(input)).toBe(expectedResult);
         });
     });
 });

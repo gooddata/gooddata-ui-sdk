@@ -1,6 +1,13 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
-import { IDrillToLegacyDashboard, IDrillToDashboard, IDrillToInsight } from "../drills";
+import { localIdRef } from "@gooddata/sdk-model";
+import {
+    IDrillToLegacyDashboard,
+    IDrillToDashboard,
+    IDrillToInsight,
+    IDrillFromMeasure,
+    IDrillFromAttribute,
+} from "../drills";
 
 export const drillToLegacyDashboard: IDrillToLegacyDashboard = {
     type: "drillToLegacyDashboard",
@@ -43,4 +50,14 @@ export const drillToInsight: IDrillToInsight = {
         uri: "/targetUri",
     },
     transition: "pop-up",
+};
+
+export const drillFromMeasure: IDrillFromMeasure = {
+    type: "drillFromMeasure",
+    measure: localIdRef("measureLocalIdentifier"),
+};
+
+export const drillFromAttribute: IDrillFromAttribute = {
+    type: "drillFromAttribute",
+    attribute: localIdRef("attributeLocalIdentifier"),
 };
