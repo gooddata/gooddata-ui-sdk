@@ -42,6 +42,7 @@ import {
 } from "../chartTooltips";
 import { getDrillableSeries } from "../chartDrilling";
 import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess";
+import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);
@@ -2658,7 +2659,9 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should assign correct tooltip function", () => {
-                const { viewByAttribute } = getMVS(fixtures.barChartWithStackByAndViewByAttributes);
+                const { viewByAttribute, stackByAttribute } = getMVS(
+                    fixtures.barChartWithStackByAndViewByAttributes,
+                );
                 const pointData: IUnsafeHighchartsTooltipPoint = {
                     y: 1,
                     format: "# ###",
@@ -2670,11 +2673,16 @@ describe("chartOptionsBuilder", () => {
                         name: "series",
                     },
                 };
+                let measure: IMeasureDescriptor;
                 const tooltip = chartOptions.actions.tooltip(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(
-                    pointData,
-                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
-                );
+                const expectedTooltip = buildTooltipFactory(
+                    viewByAttribute,
+                    "column",
+                    {},
+                    false,
+                    measure,
+                    stackByAttribute,
+                )(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
                 expect(tooltip).toBe(expectedTooltip);
             });
         });
