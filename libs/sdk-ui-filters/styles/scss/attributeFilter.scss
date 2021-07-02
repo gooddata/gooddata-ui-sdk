@@ -24,7 +24,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 
     &-overlay {
         padding: 16px 8px 8px 8px;
-
+        max-width: 245px;
         // TODO: Importing Messages doesn't work. Error styles are termporarily hardcoded here
         .gd-message {
             position: relative;
@@ -331,6 +331,45 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 
 .gd-filtered-message:hover {
     color: $gd-color-text;
+}
+
+.gd-attribute-filter-dropdown-items-filtered {
+    position: relative;
+    margin-top: 10px;
+    padding: 0 10px;
+    cursor: default;
+
+    &::before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        display: block;
+        width: calc(100% - 20px);
+        height: 10px;
+        border-radius: 50%;
+        box-shadow: 0 -2px 4px 0 $gd-border-color;
+    }
+
+    .gd-filtered-message {
+        position: relative;
+        z-index: 2;
+        padding: 6px 5px;
+        color: $gd-color-state-blank;
+        background: $gd-color-white;
+        font-size: 12px;
+
+        .gd-icon-circle-question {
+            position: absolute;
+            top: 1px;
+            padding: 5px;
+        }
+
+        @media #{$xsmall-only}, #{$small-only} {
+            font-size: 14px;
+            background: var(--gd-palette-complementary-0, #f8fafb);
+        }
+    }
 }
 
 /* hide IE10+ eraser */

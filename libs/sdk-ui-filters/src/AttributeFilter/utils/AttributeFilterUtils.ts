@@ -224,6 +224,17 @@ export function showAllFilteredMessage(
     return !isElementsLoading && !parentFiltersEmpty && !items?.length;
 }
 
+export function showItemsFilteredMessage(
+    isElementsLoading: boolean,
+    parentFilters: IAttributeFilter[],
+): boolean {
+    if (!parentFilters) {
+        return false;
+    }
+    const parentFiltersNotEmpty = parentFilters.some((filter) => !filterIsEmpty(filter));
+    return !isElementsLoading && parentFiltersNotEmpty;
+}
+
 export function getParentFilterTitles(
     filters: IAttributeFilter[],
     backend: IAnalyticalBackend,

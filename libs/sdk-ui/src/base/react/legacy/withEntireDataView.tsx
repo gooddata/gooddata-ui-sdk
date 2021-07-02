@@ -261,6 +261,9 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
             try {
                 const executionResult = await execution.execute();
+                if (this.lastInitRequestFingerprint !== defFingerprint(execution.definition)) {
+                    return;
+                }
 
                 if (this.hasUnmounted) {
                     return;
@@ -306,6 +309,10 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     pushData({ dataView, availableDrillTargets });
                 }
             } catch (error) {
+                if (this.lastInitRequestFingerprint !== defFingerprint(execution.definition)) {
+                    return;
+                }
+
                 if (this.hasUnmounted) {
                     return;
                 }

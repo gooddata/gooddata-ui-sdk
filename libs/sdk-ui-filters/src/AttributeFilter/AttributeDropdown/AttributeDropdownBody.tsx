@@ -5,6 +5,7 @@ import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 import { AttributeDropdownList } from "./AttributeDropdownList";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
 import { AttributeListItem } from "./types";
+import { AttributeDropdownItemsFilteredBody } from "./AttributeDropdownItemsFilteredBody";
 
 interface IAttributeDropdownBodyProps {
     items: AttributeListItem[];
@@ -23,6 +24,8 @@ interface IAttributeDropdownBodyProps {
     onRangeChange: (searchString: string, from: number, to: number) => void;
     onApplyButtonClicked: () => void;
     onCloseButtonClicked: () => void;
+    parentFilterTitles?: string[];
+    showItemsFilteredMessage?: boolean;
 }
 
 export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
@@ -39,6 +42,8 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
     onSelect,
     onApplyButtonClicked,
     onCloseButtonClicked,
+    parentFilterTitles,
+    showItemsFilteredMessage,
 }) => {
     return (
         <div className="gd-attribute-filter-overlay">
@@ -53,6 +58,10 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
                 onSearch={onSearch}
                 searchString={searchString}
                 onSelect={onSelect}
+            />
+            <AttributeDropdownItemsFilteredBody
+                parentFilterTitles={parentFilterTitles}
+                showItemsFilteredMessage={showItemsFilteredMessage}
             />
             <AttributeDropdownButtons
                 applyDisabled={applyDisabled}
