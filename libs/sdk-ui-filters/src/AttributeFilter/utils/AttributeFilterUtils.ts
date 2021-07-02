@@ -79,16 +79,21 @@ export const getElementTotalCount = async (
     searchString: string,
     parentFilters: IElementsQueryAttributeFilter[],
 ): Promise<number> => {
-    const elements = await backend
+    let elementsLoader = backend
         .workspace(workspace)
         .attributes()
         .elements()
         .forDisplayForm(objRef)
         .withOptions({
             ...(searchString ? { filter: searchString } : {}),
-        })
-        .withAttributeFilters(parentFilters)
-        .query();
+        });
+
+    // only set the parent filters if needed to avoid errors on backends that do not support this feature
+    if (parentFilters?.length > 0) {
+        elementsLoader = elementsLoader.withAttributeFilters(parentFilters);
+    }
+
+    const elements = await elementsLoader.query();
 
     return elements.totalCount;
 };
