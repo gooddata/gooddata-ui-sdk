@@ -621,6 +621,14 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         isOpen ? onDropdownOpen() : onDropdownClosed();
     };
 
+    const getNumberOfSelectedItems = () => {
+        if (state.isInverted) {
+            return totalCount - state.selectedFilterOptions.length;
+        }
+
+        return state.selectedFilterOptions.length;
+    };
+
     const renderAttributeDropdown = () => {
         return (
             <Dropdown
@@ -679,7 +687,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                             onRangeChange={onRangeChange}
                             onApplyButtonClicked={onApplyButtonClicked}
                             onCloseButtonClicked={onCloseButtonClicked}
-                            applyDisabled={isEmpty(state.selectedFilterOptions) && !state.isInverted}
+                            applyDisabled={getNumberOfSelectedItems() === 0}
                             parentFilterTitles={parentFilterTitles}
                             showItemsFilteredMessage={showItemsFilteredMessage(
                                 isElementsLoading(),
