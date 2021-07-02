@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 import {
@@ -18,10 +18,10 @@ import { AttributeDropdownBody } from "./AttributeDropdownBody";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdownList";
 import { mergeElementQueryResults } from "./mergeElementQueryResults";
 import {
-    IElementQueryResultWithEmptyItems,
     AttributeListItem,
-    isNonEmptyListItem,
     EmptyListItem,
+    IElementQueryResultWithEmptyItems,
+    isNonEmptyListItem,
 } from "./types";
 
 import isEmpty from "lodash/isEmpty";
@@ -30,8 +30,13 @@ import {
     getAllTitleIntl,
     getElementTotalCount,
     isParentFilteringEnabled,
+    showAllFilteredMessage,
+    showItemsFilteredMessage,
     updateSelectedOptionsWithData,
 } from "../utils/AttributeFilterUtils";
+import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdownAllFilteredOutBody";
+import MediaQuery from "react-responsive";
+import { MediaQueries } from "../../constants";
 
 const LIMIT = MAX_SELECTION_SIZE + 50;
 
@@ -61,6 +66,7 @@ export interface IAttributeDropdownOwnProps {
     isLoading?: boolean;
     translationProps: ITranslationsComponentProps;
     parentFilters?: IElementsQueryAttributeFilter[];
+    parentFilterTitles?: string[];
 }
 
 type IAttributeDropdownProps = IAttributeDropdownOwnProps & WrappedComponentProps;
@@ -148,17 +154,24 @@ export class AttributeDropdownCore extends React.PureComponent<
                     isLoading: false,
                     offset: 0,
                     limit: LIMIT,
+                    selectedItems: parentFilterChanged ? [] : this.state.selectedItems,
+                    prevSelectedItems: parentFilterChanged ? [] : this.state.selectedItems,
+                    isInverted: parentFilterChanged ? true : this.state.isInverted,
+                    prevIsInverted: parentFilterChanged ? true : this.state.prevIsInverted,
                 },
                 () => {
                     this.getElements();
-                    this.getElementTotalCount().then((totalCount) => {
-                        this.setState((state) => {
-                            return {
-                                ...state,
-                                totalCount,
-                            };
+                    parentFilterChanged &&
+                        this.getElementTotalCount().then((totalCount) => {
+                            this.setState((state) => {
+                                return {
+                                    ...state,
+                                    totalCount,
+                                };
+                            });
                         });
-                    });
+                    // calling onApply to get the values changed in parent component
+                    parentFilterChanged && this.onApplyButtonClicked();
                 },
             );
         }
@@ -366,7 +379,29 @@ export class AttributeDropdownCore extends React.PureComponent<
         const shouldDisableApplyButton = error || isLoading || (validElements && !validElements.items.length);
         const hasTriedToLoadData = validElements && validElements.items;
 
-        return (
+        const isAllFiltered = showAllFilteredMessage(
+            this.state.isLoading,
+            this.props.parentFilters?.map((filter) => filter.attributeFilter),
+            validElements?.items,
+        );
+
+        const isItemsFiltered = showItemsFilteredMessage(
+            this.state.isLoading,
+            this.props.parentFilters?.map((filter) => filter.attributeFilter),
+        );
+
+        return !isEmpty(this.props.parentFilterTitles) && isAllFiltered ? (
+            <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
+                {(isMobile) => (
+                    <AttributeDropdownAllFilteredOutBody
+                        parentFilterTitles={this.props.parentFilterTitles}
+                        onApplyButtonClick={() => this.onApplyButtonClicked(closeDropdown)}
+                        onCancelButtonClick={() => closeDropdown()}
+                        isMobile={isMobile}
+                    />
+                )}
+            </MediaQuery>
+        ) : (
             <AttributeDropdownBody
                 error={error}
                 isLoading={!hasTriedToLoadData && isLoading}
@@ -381,6 +416,8 @@ export class AttributeDropdownCore extends React.PureComponent<
                 onSelect={this.onSelect}
                 onApplyButtonClicked={() => this.onApplyButtonClicked(closeDropdown)}
                 onCloseButtonClicked={() => closeDropdown()}
+                parentFilterTitles={this.props.parentFilterTitles}
+                showItemsFilteredMessage={isItemsFiltered}
             />
         );
     }

@@ -15,6 +15,17 @@ import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
 import { LdmModule } from "./ldm";
 
 /**
+ * This package provides low-level functions for communication with the GoodData platform.
+ *
+ * @remarks
+ * The package is used by `@gooddata/sdk-backend-bear`, which you should use instead of directly using `@gooddata/api-client-bear` whenever possible.
+ *
+ * For the similar package for GoodData.CN, see `@gooddata/api-client-tiger`.
+ *
+ * @packageDocumentation
+ */
+
+/**
  * # JS SDK
  * Here is a set of functions that mostly are a thin wrapper over the [GoodData API](https://developer.gooddata.com/api).
  * Before calling any of those functions, you need to authenticate with a valid GoodData

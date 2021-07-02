@@ -79,16 +79,21 @@ export const getElementTotalCount = async (
     searchString: string,
     parentFilters: IElementsQueryAttributeFilter[],
 ): Promise<number> => {
-    const elements = await backend
+    let elementsLoader = backend
         .workspace(workspace)
         .attributes()
         .elements()
         .forDisplayForm(objRef)
         .withOptions({
             ...(searchString ? { filter: searchString } : {}),
-        })
-        .withAttributeFilters(parentFilters)
-        .query();
+        });
+
+    // only set the parent filters if needed to avoid errors on backends that do not support this feature
+    if (parentFilters?.length > 0) {
+        elementsLoader = elementsLoader.withAttributeFilters(parentFilters);
+    }
+
+    const elements = await elementsLoader.query();
 
     return elements.totalCount;
 };
@@ -198,4 +203,50 @@ export function attributeElementsToAttributeElementArray(
         );
     }
     return [];
+}
+
+export async function getFilterAttributeTitle(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    filter: IAttributeFilter,
+): Promise<string> {
+    const attributes = backend.workspace(workspace).attributes();
+    const displayForm = await attributes.getAttributeDisplayForm(getObjRef(filter, null));
+    const attribute = await attributes.getAttribute(displayForm.attribute);
+
+    return attribute.title;
+}
+
+export function showAllFilteredMessage(
+    isElementsLoading: boolean,
+    parentFilters: IAttributeFilter[],
+    items: AttributeListItem[],
+): boolean {
+    if (!parentFilters) {
+        return false;
+    }
+    const parentFiltersEmpty = parentFilters.every((filter) => filterIsEmpty(filter));
+    return !isElementsLoading && !parentFiltersEmpty && !items?.length;
+}
+
+export function showItemsFilteredMessage(
+    isElementsLoading: boolean,
+    parentFilters: IAttributeFilter[],
+): boolean {
+    if (!parentFilters) {
+        return false;
+    }
+    const parentFiltersNotEmpty = parentFilters.some((filter) => !filterIsEmpty(filter));
+    return !isElementsLoading && parentFiltersNotEmpty;
+}
+
+export function getParentFilterTitles(
+    filters: IAttributeFilter[],
+    backend: IAnalyticalBackend,
+    workspace: string,
+): Promise<string[]> {
+    const promises = filters.map<Promise<string>>((parentFilter) =>
+        getFilterAttributeTitle(backend, workspace, parentFilter),
+    );
+    return Promise.all(promises);
 }

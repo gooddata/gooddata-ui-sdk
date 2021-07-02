@@ -312,8 +312,12 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                     alert,
                 };
 
+                const className = userWorkspaceSettings.enableKDWidgetCustomHeight
+                    ? "custom-height"
+                    : undefined;
+
                 return (
-                    <DefaultWidgetRenderer {...renderProps} {...computedRenderProps}>
+                    <DefaultWidgetRenderer {...renderProps} {...computedRenderProps} className={className}>
                         {widgetRenderer ? widgetRenderer(customWidgetRendererProps) : renderedWidget}
                     </DefaultWidgetRenderer>
                 );

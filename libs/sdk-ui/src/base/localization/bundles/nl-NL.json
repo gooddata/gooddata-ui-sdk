@@ -212,5 +212,8 @@
     "rankingFilter.preview.bottom_without_attribute": "Onder {value} van <strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "Boven {value} van <strong>{attribute}</strong> gebaseerd op <strong>{measure}</strong>",
     "rankingFilter.preview.bottom_with_attribute": "Onder {value} van <strong>{attribute}</strong> gebaseerd op <strong>{measure}</strong>",
-    "rankingFilter.valueTooltip": "Als meerdere items dezelfde waarde hebben, toont het filter alle items met deze waarde. Het inzicht geeft dan mogelijk meer items weer dan het ingestelde aantal."
+    "rankingFilter.valueTooltip": "Als meerdere items dezelfde waarde hebben, toont het filter alle items met deze waarde. Het inzicht geeft dan mogelijk meer items weer dan het ingestelde aantal.",
+    "attributesDropdown.allItemsFiltered": "Alle items zijn uitgefilterd",
+    "attributesDropdown.itemsFiltered.tooltip": "Items zijn gefilterd op: <strong>{filters}</strong> ",
+    "attributesDropdown.itemsFiltered": "Items zijn gefilterd"
 }

@@ -4,8 +4,8 @@ import { injectIntl } from "react-intl";
 import MediaQuery from "react-responsive";
 import {
     filterAttributeElements,
-    isAttributeElementsByRef,
     IAttributeFilter,
+    isAttributeElementsByRef,
     isPositiveAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
@@ -31,9 +31,11 @@ import { MediaQueries } from "../constants";
 import {
     attributeElementsToAttributeElementArray,
     getObjRef,
+    getParentFilterTitles,
     getValidElementsFilters,
 } from "./utils/AttributeFilterUtils";
 import invariant from "ts-invariant";
+import stringify from "json-stable-stringify";
 
 /**
  * @public
@@ -95,7 +97,7 @@ export interface IAttributeFilterProps {
      *
      * @param filter - new value of the filter.
      */
-    onApply: (filter: IAttributeFilter) => void;
+    onApply?: (filter: IAttributeFilter) => void;
 
     /**
      * Optionally specify title for the attribute filter. By default, the attribute name will be used.
@@ -146,6 +148,11 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
         "It's not possible to combine 'filter' property with 'connectToPlaceholder' property. Either provide a value, or a placeholder.",
     );
 
+    invariant(
+        !(props.filter && !props.onApply),
+        "It's not possible to use 'filter' property without 'onApply' property. Either provide 'onApply' callback or use placeholders.",
+    );
+
     const {
         locale,
         workspace,
@@ -191,6 +198,17 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
         [identifier, workspace],
     );
 
+    const {
+        error: parentFilterTitlesError,
+        result: parentFilterTitles,
+        status: parentFilterTitlesStatus,
+    } = useCancelablePromise<string[]>(
+        {
+            promise: () => getParentFilterTitles(resolvedParentFilters ?? [], getBackend(), props.workspace),
+        },
+        [props.backend, props.workspace, stringify(resolvedParentFilters)],
+    );
+
     const onFilterApply = (selectedItems: IAttributeElement[], isInverted: boolean) => {
         const useUriElements =
             currentFilter && isAttributeElementsByRef(filterAttributeElements(currentFilter));
@@ -208,14 +226,14 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
             setPlaceholderValue(filter);
         }
 
-        return onApply(filter);
+        return onApply?.(filter);
     };
 
     useEffect(() => {
-        if (attributeError) {
-            onError(attributeError);
+        if (attributeError || parentFilterTitlesError) {
+            onError(attributeError || parentFilterTitlesError);
         }
-    }, [attributeError]);
+    }, [attributeError, parentFilterTitlesError]);
 
     const getInitialDropdownSelection = () => {
         if (!currentFilter) {
@@ -237,8 +255,8 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
 
     return (
         <IntlWrapper locale={locale}>
-            {attributeError ? (
-                <FilterError error={attributeError} />
+            {attributeError || parentFilterTitlesError ? (
+                <FilterError error={attributeError || parentFilterTitlesError} />
             ) : (
                 <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
                     {(isMobile) => (
@@ -255,7 +273,10 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
                                         isInverted={isInverted}
                                         selectedItems={selectedItems}
                                         isLoading={
-                                            attributeStatus === "pending" || attributeStatus === "loading"
+                                            attributeStatus === "pending" ||
+                                            attributeStatus === "loading" ||
+                                            parentFilterTitlesStatus == "pending" ||
+                                            parentFilterTitlesStatus === "loading"
                                         }
                                         translationProps={translationProps}
                                         isMobile={isMobile}
@@ -264,6 +285,7 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
                                             resolvedParentFilters,
                                             parentFilterOverAttribute,
                                         )}
+                                        parentFilterTitles={parentFilterTitles}
                                     />
                                 );
                             }}

@@ -1,5 +1,14 @@
 // (C) 2019-2021 GoodData Corporation
 /**
+ * This package provides the Analytical Backend implementation for GoodData.CN.
+ *
+ * @remarks
+ * You can use this package to communicate with GoodData.CN in a convenient way without concerning yourself
+ * with low-level details. The functionality includes but is not limited to:
+ * getting and creating metadata objects, running executions, getting settings, getting available workspaces, and more.
+ *
+ * For the similar package for the GoodData platform, see `@gooddata/sdk-backend-bear`.
+ *
  * @packageDocumentation
  */
 import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
