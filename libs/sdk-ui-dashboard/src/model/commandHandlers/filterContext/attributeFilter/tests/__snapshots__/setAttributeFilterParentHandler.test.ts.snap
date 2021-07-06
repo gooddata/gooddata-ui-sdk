@@ -4,11 +4,11 @@ exports[`setAttributeFilterParentHandler should emit the appropriate events for 
 Array [
   Object {
     "correlationId": undefined,
-    "type": "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",
   },
   Object {
     "correlationId": undefined,
-    "type": "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;

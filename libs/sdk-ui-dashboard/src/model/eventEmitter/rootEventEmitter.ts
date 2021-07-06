@@ -1,13 +1,14 @@
 // (C) 2021 GoodData Corporation
+import { SagaIterator } from "redux-saga";
 import { actionChannel, take } from "redux-saga/effects";
 import { DashboardEventHandler } from "../events/eventHandler";
 import { DashboardEvents } from "../events";
+import { DashboardCommands } from "../commands";
 
 export type EventEmitter = {
     registerHandler: (handler: DashboardEventHandler) => void;
     unregisterHandler: (handler: DashboardEventHandler) => void;
-    // TODO: type this
-    eventEmitterSaga: any;
+    eventEmitterSaga: () => SagaIterator<void>;
 };
 
 /**
@@ -18,8 +19,12 @@ export type EventEmitter = {
  * `eventEmitterContext` field of the saga context - this way other sagas can get hold of it.
  *
  * @param initialHandlers - event handlers to register at the time of creation
+ * @param dispatch - callback to dispatch dashboard commands
  */
-export function createRootEventEmitter(initialHandlers: DashboardEventHandler[] = []): EventEmitter {
+export function createRootEventEmitter(
+    initialHandlers: DashboardEventHandler[] = [],
+    dispatch: (command: DashboardCommands) => void,
+): EventEmitter {
     let eventHandlers = initialHandlers;
 
     return {
@@ -37,8 +42,8 @@ export function createRootEventEmitter(initialHandlers: DashboardEventHandler[] 
 
                 try {
                     eventHandlers.forEach((handler) => {
-                        if (handler.eval(event.type)) {
-                            handler.handler(event);
+                        if (handler.eval(event)) {
+                            handler.handler(event, dispatch);
                         }
                     });
                 } catch (e) {

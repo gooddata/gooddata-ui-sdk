@@ -810,7 +810,11 @@ export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter;
 export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
 // @public
-export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter;
+export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: {
+        granularity: "ALL_TIME_GRANULARITY";
+    };
+};
 
 // @public
 export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMeasureDefinition>;

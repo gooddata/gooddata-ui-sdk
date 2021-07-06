@@ -4,11 +4,11 @@ exports[`removeAttributeFilterHandler should emit the appropriate events for rem
 Array [
   Object {
     "correlationId": "testCorrelation",
-    "type": "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED",
   },
   Object {
     "correlationId": "testCorrelation",
-    "type": "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;

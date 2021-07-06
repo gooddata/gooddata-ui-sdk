@@ -28,6 +28,7 @@ export {
     IWorkspaceSettings,
     IUserWorkspaceSettings,
     ISeparators,
+    PlatformEdition,
 } from "./common/settings";
 
 export { IUserService, IUser, userFullName } from "./user";

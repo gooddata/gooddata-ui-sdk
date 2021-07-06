@@ -12,11 +12,19 @@
 }
 
 // stylelint-disable-next-line
+html,
 body {
     position: relative;
     margin: 0;
     padding: 0;
     line-height: 1.5;
+    height: 100%;
+    overflow: hidden;
+}
+
+.root {
+    overflow: auto;
+    height: 100%;
 }
 
 a:hover {

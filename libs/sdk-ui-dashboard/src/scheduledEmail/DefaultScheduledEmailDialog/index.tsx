@@ -17,7 +17,7 @@ export const DefaultScheduledEmailDialog: React.FC<ScheduledEmailDialogProps> = 
         dashboardTitle,
         handleCreateScheduledEmail,
         locale,
-        canListUsersInProject,
+        canListUsersInWorkspace,
         dateFormat,
         enableKPIDashboardSchedule,
         enableKPIDashboardScheduleRecipients,
@@ -38,7 +38,7 @@ export const DefaultScheduledEmailDialog: React.FC<ScheduledEmailDialogProps> = 
     return (
         <ScheduledMailDialogRenderer
             locale={locale}
-            canListUsersInProject={canListUsersInProject}
+            canListUsersInProject={canListUsersInWorkspace}
             enableKPIDashboardScheduleRecipients={enableKPIDashboardScheduleRecipients}
             dateFormat={dateFormat}
             currentUser={currentUser}

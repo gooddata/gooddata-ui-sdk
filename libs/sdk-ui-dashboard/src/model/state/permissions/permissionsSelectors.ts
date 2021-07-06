@@ -25,6 +25,15 @@ export const selectPermissions = createSelector(selectSelf, (filterContextState)
  *
  * @internal
  */
-export const selectCanListUsersInProject = createSelector(selectPermissions, (state) => {
+export const selectCanListUsersInWorkspace = createSelector(selectPermissions, (state) => {
     return state?.canListUsersInProject;
+});
+
+/**
+ * Returns whether the current user has permissions to manage current workspace.
+ *
+ * @internal
+ */
+export const selectCanManageWorkspace = createSelector(selectPermissions, (state) => {
+    return state?.canManageProject;
 });

@@ -175,7 +175,7 @@ export function* getInsightIdentifiersReplacements(
     widgetRef: ObjRef,
     ctx: DashboardContext,
 ) {
-    const { workspace } = ctx;
+    const { workspace, clientId, dataProductId } = ctx;
     const dashboardId: ReturnType<typeof selectDashboardId> = yield select(selectDashboardId);
     const widget: IInsightWidget = yield select(selectWidgetByRef(widgetRef));
     const insight: ReturnType<ReturnType<typeof selectInsightByRef>> = yield select(
@@ -185,9 +185,8 @@ export function* getInsightIdentifiersReplacements(
     const replacements = [
         createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.PROJECT_ID, workspace),
         createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.DASHBOARD_ID, dashboardId),
-        // TODO: RAIL-3533 fetch from bootstrap resource
-        // createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.CLIENT_ID, clientId),
-        // createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.DATA_PRODUCT_ID, dataProductId),
+        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.CLIENT_ID, clientId),
+        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.DATA_PRODUCT_ID, dataProductId),
         createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.INSIGHT_ID, insightId(insight!)),
     ];
 

@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import { ISettings, IWorkspacePermissions, PlatformEdition } from "@gooddata/sdk-backend-spi";
 
 export const getHelpMenuFeatureFlagsMock = (
     enableUniversityHelpMenuItem: boolean,
@@ -16,7 +16,7 @@ export const getAccountMenuFeatureFlagsMock = (
     enableDataSection: boolean,
     hidePixelPerfectExperience: boolean,
     analyticalDesigner: boolean,
-    platformEdition: string,
+    platformEdition: PlatformEdition,
 ): ISettings => {
     return {
         enableCsvUploader,

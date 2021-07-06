@@ -11,7 +11,7 @@ import {
     selectFilterContextFilters,
     selectDateFormat,
     selectEnableKPIDashboardScheduleRecipients,
-    selectCanListUsersInProject,
+    selectCanListUsersInWorkspace,
     selectEnableKPIDashboardSchedule,
 } from "../model";
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail";
@@ -50,7 +50,7 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): ScheduledEmail
     const enableKPIDashboardScheduleRecipients = useDashboardSelector(
         selectEnableKPIDashboardScheduleRecipients,
     );
-    const canListUsersInProject = useDashboardSelector(selectCanListUsersInProject);
+    const canListUsersInWorkspace = useDashboardSelector(selectCanListUsersInWorkspace);
     const enableKPIDashboardSchedule = useDashboardSelector(selectEnableKPIDashboardSchedule);
 
     const scheduledEmailCreator = useCreateScheduledEmail({
@@ -71,7 +71,7 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): ScheduledEmail
     return {
         dashboardRef: dashboardUriRef,
         dashboardTitle,
-        canListUsersInProject,
+        canListUsersInWorkspace,
         enableKPIDashboardSchedule,
         enableKPIDashboardScheduleRecipients,
         dateFormat,

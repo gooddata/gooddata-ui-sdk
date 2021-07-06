@@ -43,7 +43,7 @@ describe("ScheduledMailDialogRenderer", () => {
             },
             dateFormat: "MM/dd/yyyy",
             enableKPIDashboardScheduleRecipients: true,
-            canListUsersInProject: true,
+            canListUsersInWorkspace: true,
             locale: "en-US",
             workspace: "project",
             ...customProps,

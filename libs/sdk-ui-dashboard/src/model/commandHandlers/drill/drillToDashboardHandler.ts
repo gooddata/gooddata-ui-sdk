@@ -1,15 +1,13 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { select, call } from "redux-saga/effects";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { DashboardContext } from "../../types/commonTypes";
 import { internalErrorOccurred } from "../../events/general";
 import { DrillToDashboard } from "../../commands/drill";
-import { drillToDashboardTriggered } from "../../events/drill";
+import { DashboardDrillToDashboardTriggered, drillToDashboardTriggered } from "../../events/drill";
 import { selectFilterContext } from "../../state/filterContext/filterContextSelectors";
 import { selectWidgetByRef } from "../../state/layout/layoutSelectors";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
-import { PromiseFnReturnType } from "../../types/sagas";
 import { IDashboardFilter } from "../../../types";
 import { filterContextToFiltersForWidget } from "../../../converters/filterConverters";
 import {
@@ -18,10 +16,22 @@ import {
     IDrillIntersectionAttributeItem,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { areObjRefsEqual, IAttributeFilter, newPositiveAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    filterObjRef,
+    IAttributeFilter,
+    newPositiveAttributeFilter,
+    ObjRef,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import { selectCatalogDateAttributes } from "../../state/catalog/catalogSelectors";
+import uniqBy from "lodash/uniqBy";
+import flow from "lodash/flow";
 
-export function* drillToDashboardHandler(ctx: DashboardContext, cmd: DrillToDashboard): SagaIterator<void> {
+export function* drillToDashboardHandler(
+    ctx: DashboardContext,
+    cmd: DrillToDashboard,
+): SagaIterator<DashboardDrillToDashboardTriggered> {
     // eslint-disable-next-line no-console
     console.debug("handling drill to dashboard", cmd, "in context", ctx);
 
@@ -37,30 +47,36 @@ export function* drillToDashboardHandler(ctx: DashboardContext, cmd: DrillToDash
             cmd.payload.drillEvent.drillContext.intersection!,
             dateAttributes.map((dA) => dA.attribute.ref),
         );
-        const filters: PromiseFnReturnType<typeof getResolvedFiltersForWidget> = yield call(
+
+        const uniqueFilters = uniqBy(
+            [
+                // Drill filters has higher priority than the widget filters
+                ...drillFilters,
+                ...widgetFilters,
+            ],
+            flow(filterObjRef, objRefToString),
+        );
+
+        const resolvedFilters: IDashboardFilter[] = yield call(
             getResolvedFiltersForWidget,
             ctx,
             widget,
-            [...widgetFilters, ...drillFilters],
+            uniqueFilters,
         );
 
-        yield dispatchDashboardEvent(
-            drillToDashboardTriggered(
-                ctx,
-                filters,
-                cmd.payload.drillDefinition,
-                cmd.payload.drillEvent,
-                cmd.correlationId,
-            ),
+        return drillToDashboardTriggered(
+            ctx,
+            resolvedFilters,
+            cmd.payload.drillDefinition,
+            cmd.payload.drillEvent,
+            cmd.correlationId,
         );
     } catch (e) {
-        yield dispatchDashboardEvent(
-            internalErrorOccurred(
-                ctx,
-                "An unexpected error has occurred while drilling to dashboard",
-                e,
-                cmd.correlationId,
-            ),
+        throw internalErrorOccurred(
+            ctx,
+            "An unexpected error has occurred while drilling to dashboard",
+            e,
+            cmd.correlationId,
         );
     }
 }

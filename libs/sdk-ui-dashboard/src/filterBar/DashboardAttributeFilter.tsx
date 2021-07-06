@@ -42,6 +42,8 @@ export const DashboardAttributeFilter: React.FC<IDashboardAttributeFilterProps> 
 }) => {
     return (
         <AttributeFilterButton
+            // TODO: RAIL-3533 - button is not updated after attribute filter elements change
+            key={JSON.stringify(filter)}
             filter={dashboardAttributeFilterToAttributeFilter(filter)}
             onApply={(newFilter) => {
                 onFilterChanged(
