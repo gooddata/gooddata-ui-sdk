@@ -4,11 +4,11 @@ exports[`changeDateFilterSelectionHandler should emit the appropriate events for
 Array [
   Object {
     "correlationId": "testCorrelation",
-    "type": "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED",
   },
   Object {
     "correlationId": "testCorrelation",
-    "type": "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;

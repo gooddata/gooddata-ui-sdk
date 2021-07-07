@@ -155,6 +155,7 @@ export function* resolveDashboardConfig(
         objectAvailability: config.objectAvailability ?? {},
         mapboxToken: config.mapboxToken,
         isReadOnly: config.isReadOnly ?? false,
+        isEmbedded: config.isEmbedded ?? false,
     };
 
     return resolvedConfig;

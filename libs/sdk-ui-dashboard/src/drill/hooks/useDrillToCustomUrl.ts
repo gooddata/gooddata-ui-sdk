@@ -15,7 +15,7 @@ export interface UseDrillToCustomUrlProps {
 /**
  * @internal
  */
-export const useDrillToCustomUrl = ({ onSuccess, onError, onBeforeRun }: UseDrillToCustomUrlProps) => {
+export const useDrillToCustomUrl = ({ onSuccess, onError, onBeforeRun }: UseDrillToCustomUrlProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: drillToCustomUrl,
         successEvent: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.TRIGGERED",

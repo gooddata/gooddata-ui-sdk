@@ -29,9 +29,9 @@ export interface ScheduledEmailProps {
     dashboardTitle: string;
 
     /**
-     * Has user permissions to list users in the project?
+     * Has user permissions to list users in the workspace?
      */
-    canListUsersInProject?: boolean;
+    canListUsersInWorkspace?: boolean;
 
     /**
      * Is user able to create scheduled emails?

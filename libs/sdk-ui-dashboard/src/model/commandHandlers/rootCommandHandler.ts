@@ -32,21 +32,26 @@ import { drillToInsightHandler } from "./drill/drillToInsightHandler";
 import { drillToCustomUrlHandler } from "./drill/drillToCustomUrlHandler";
 import { drillToAttributeUrlHandler } from "./drill/drillToAttributeUrlHandler";
 import { drillToDashboardHandler } from "./drill/drillToDashboardHandler";
+import { changeFilterContextSelectionHandler } from "./filterContext/changeFilterContextSelectionHandler";
+import { drillToLegacyDashboardHandler } from "./drill/drillToLegacyDashboardHandler";
+import { logUserInteractionHandler } from "./logUserInteraction/logUserInteractionHandler";
 
 const DefaultCommandHandlers: {
-    [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any>;
+    [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
 } = {
     "GDC.DASH/CMD.LOAD": loadDashboardHandler,
     "GDC.DASH/CMD.SAVE": unhandledCommand,
     "GDC.DASH/CMD.SAVEAS": unhandledCommand,
     "GDC.DASH/CMD.RESET": unhandledCommand,
     "GDC.DASH/CMD.RENAME": unhandledCommand,
-    "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION": changeDateFilterSelectionHandler,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD": addAttributeFilterHandler,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE": removeAttributeFiltersHandler,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE": moveAttributeFilterHandler,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION": changeAttributeFilterSelectionHandler,
-    "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT": setAttributeFilterParentHandler,
+    "GDC.DASH/CMD.LOG_USER_INTERACTION": logUserInteractionHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION": changeFilterContextSelectionHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION": changeDateFilterSelectionHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD": addAttributeFilterHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE": removeAttributeFiltersHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE": moveAttributeFilterHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION": changeAttributeFilterSelectionHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENT": setAttributeFilterParentHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": addLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": moveLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,
@@ -78,6 +83,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD": drillToDashboardHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL": drillToAttributeUrlHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL": drillToCustomUrlHandler,
+    "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD": drillToLegacyDashboardHandler,
 };
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {

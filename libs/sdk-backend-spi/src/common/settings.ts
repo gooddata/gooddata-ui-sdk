@@ -146,8 +146,25 @@ export interface ISettings {
      */
     enableDataSampling?: boolean;
 
+    /**
+     * Indicates current platform edition.
+     */
+    platformEdition?: PlatformEdition;
+
+    /**
+     * Indicates whether the company logo should be visible in the embedded dashboard.
+     */
+    enableCompanyLogoInEmbeddedUI?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
+
+/**
+ * Indicates current platform edition.
+ *
+ * @public
+ */
+export type PlatformEdition = "free" | "growth" | "enterprise";
 
 /**
  * Settings for regional number formatting

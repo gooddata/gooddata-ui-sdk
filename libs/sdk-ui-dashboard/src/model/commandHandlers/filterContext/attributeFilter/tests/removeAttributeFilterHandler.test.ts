@@ -14,7 +14,7 @@ describe("removeAttributeFilterHandler", () => {
 
         Tester.dispatch(removeAttributeFilter(firstFilterLocalId, "testCorrelation"));
 
-        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
         expect(Tester.emittedEventsDigest()).toMatchSnapshot();
     });
@@ -25,7 +25,7 @@ describe("removeAttributeFilterHandler", () => {
 
         Tester.dispatch(removeAttributeFilter(firstFilterLocalId, "testCorrelation"));
 
-        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
         expect(selectFilterContextAttributeFilters(Tester.state()).length).toEqual(1);
         expect(

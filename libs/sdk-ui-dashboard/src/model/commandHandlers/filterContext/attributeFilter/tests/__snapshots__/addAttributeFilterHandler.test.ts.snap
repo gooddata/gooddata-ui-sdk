@@ -4,11 +4,11 @@ exports[`addAttributeFilterHandler should emit the appropriate events for added 
 Array [
   Object {
     "correlationId": "testCorrelation",
-    "type": "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
   },
   Object {
     "correlationId": "testCorrelation",
-    "type": "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;

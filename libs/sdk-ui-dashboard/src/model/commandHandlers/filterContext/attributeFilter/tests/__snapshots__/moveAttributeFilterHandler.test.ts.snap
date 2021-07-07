@@ -4,11 +4,11 @@ exports[`moveAttributeFilterHandler should emit the appropriate events for moved
 Array [
   Object {
     "correlationId": "testCorrelation",
-    "type": "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED",
   },
   Object {
     "correlationId": "testCorrelation",
-    "type": "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;

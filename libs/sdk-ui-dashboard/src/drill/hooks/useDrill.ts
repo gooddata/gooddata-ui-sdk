@@ -15,7 +15,7 @@ export interface UseDrillProps {
 /**
  * @internal
  */
-export const useDrill = ({ onSuccess, onError, onBeforeRun }: UseDrillProps) => {
+export const useDrill = ({ onSuccess, onError, onBeforeRun }: UseDrillProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: drill,
         successEvent: "GDC.DASH/EVT.DRILL.TRIGGERED",

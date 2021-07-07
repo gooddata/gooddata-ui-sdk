@@ -22,6 +22,7 @@ import { useDashboardSelector } from "../../model/state/dashboardStore";
 import { selectListedDashboards } from "../../model/state/listedDashboards/listedDashboardsSelectors";
 import { dashboardMatch } from "../utils/dashboardPredicate";
 import { selectDashboardTitle, selectInsights } from "../../model";
+import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants/zIndex";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;
@@ -57,8 +58,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) =
                 closeOnOutsideClick={true}
                 closeOnEscape={true}
                 alignTo={`.${dropDownAnchorClass}`}
-                // TODO: RAIL-3533 - Move z-index constants to centralized place
-                zIndex={5003}
+                zIndex={DRILL_SELECT_DROPDOWN_Z_INDEX}
                 onClose={onClose}
             >
                 <DrillSelectListBody items={drillSelectItems} onSelect={onSelect} />

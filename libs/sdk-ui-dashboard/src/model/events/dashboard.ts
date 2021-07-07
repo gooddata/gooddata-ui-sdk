@@ -232,7 +232,7 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
  * @internal
  */
 export interface DateFilterValidationFailed extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED";
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED";
     readonly payload: {
         readonly result: DateFilterValidationResult;
     };
@@ -244,7 +244,7 @@ export function dateFilterValidationFailed(
     correlationId?: string,
 ): DateFilterValidationFailed {
     return {
-        type: "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED",
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
         ctx,
         correlationId,
         payload: {

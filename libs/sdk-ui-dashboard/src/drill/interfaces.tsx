@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import { IAvailableDrillTargets, IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
-import { IFilter, IInsight, ObjRef } from "@gooddata/sdk-model";
+import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import {
     DrillDefinition,
     IDrillToAttributeUrl,
@@ -13,7 +13,7 @@ import {
     IDrillToInsight,
     IDrillToDashboard,
 } from "@gooddata/sdk-backend-spi";
-import { IDashboardDrillEvent, IDrillDownDefinition } from "../types";
+import { IDashboardDrillEvent, IDrillDownDefinition, IDashboardFilter } from "../types";
 
 /**
  * @internal
@@ -52,7 +52,7 @@ export type OnDrillToInsight = (context: {
 export type OnDrillToDashboard = (context: {
     drillDefinition: IDrillToDashboard;
     drillEvent: IDashboardDrillEvent;
-    filters: IFilter[];
+    filters: IDashboardFilter[];
 }) => void;
 
 /**

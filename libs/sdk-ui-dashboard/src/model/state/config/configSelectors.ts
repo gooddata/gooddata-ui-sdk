@@ -98,6 +98,16 @@ export const selectIsReadOnly = createSelector(selectConfig, (state) => {
     return state.isReadOnly;
 });
 
+/**
+ * Returns whether the Dashboard is executed in embedded context.
+ * In embedded mode, some interactions may be disabled.
+ *
+ * @internal
+ */
+export const selectIsEmbedded = createSelector(selectConfig, (state) => {
+    return state.isEmbedded;
+});
+
 //
 // FEATURE FLAGS
 //
@@ -127,4 +137,22 @@ export const selectEnableKPIDashboardSchedule = createSelector(selectConfig, (st
  */
 export const selectEnableKPIDashboardScheduleRecipients = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardScheduleRecipients;
+});
+
+/**
+ * Returns current platform edition.
+ *
+ * @internal
+ */
+export const selectPlatformEdition = createSelector(selectConfig, (state) => {
+    return state.settings?.platformEdition ?? "enterprise";
+});
+
+/**
+ * Returns whether comapny logo should be visible in embedded dashboard.
+ *
+ * @internal
+ */
+export const selectEnableCompanyLogoInEmbeddedUI = createSelector(selectConfig, (state) => {
+    return state.settings?.enableCompanyLogoInEmbeddedUI ?? false;
 });

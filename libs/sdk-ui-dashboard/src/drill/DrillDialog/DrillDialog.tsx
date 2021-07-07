@@ -2,9 +2,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { Button, Bubble, BubbleHoverTrigger, ShortenedText } from "@gooddata/sdk-ui-kit";
-
-// TODO: RAIL-3533
-// import PoweredByGDLogo from "../../PoweredByGDLogo";
+import { PoweredByGDLogo } from "../PoweredByGDLogo";
 
 export interface DrillDialogProps {
     title: string;
@@ -68,7 +66,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             <div className="gd-drill-modal-dialog-content visualization">
                 <div className="gd-drill-modal-dialog-content-base">{children}</div>
             </div>
-            {/* TODO: RAIL-3533 <PoweredByGDLogo isSmall={true} /> */}
+            <PoweredByGDLogo isSmall />
         </div>
     );
 };

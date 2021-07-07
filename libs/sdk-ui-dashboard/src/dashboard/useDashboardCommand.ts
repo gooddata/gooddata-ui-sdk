@@ -43,7 +43,7 @@ export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs ex
 
         const dashboardEventHandlers = Object.keys(eventHandlers).map((eventType) => {
             const dashboardEventHandler: DashboardEventHandler = {
-                eval: (eT) => eT === eventType,
+                eval: (eT) => eT.type === eventType,
                 handler: (event) => {
                     if (event.correlationId === correlationId) {
                         unregisterHandlers();

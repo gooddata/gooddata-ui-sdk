@@ -21,7 +21,7 @@ describe("changeAttributeFilterSelectionHandler.test", () => {
             ),
         );
 
-        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
         expect(Tester.emittedEventsDigest()).toMatchSnapshot();
     });
@@ -39,7 +39,7 @@ describe("changeAttributeFilterSelectionHandler.test", () => {
             ),
         );
 
-        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
         expect(selectFilterContextAttributeFilters(Tester.state())[0]).toMatchSnapshot({
             attributeFilter: {

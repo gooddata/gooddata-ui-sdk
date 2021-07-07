@@ -8,6 +8,7 @@ import {
     MoveAttributeFilter,
     RemoveAttributeFilters,
     SetAttributeFilterParent,
+    ChangeFilterContextSelection,
 } from "./filters";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -47,6 +48,7 @@ import {
     DrillToInsight,
     DrillToLegacyDashboard,
 } from "./drill";
+import { LogUserInteraction } from "./logUserInteraction";
 
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
 export {
@@ -78,6 +80,11 @@ export {
     changeAttributeFilterSelection,
     SetAttributeFilterParent,
     setAttributeFilterParent,
+    AttributeFilterSelection,
+    ChangeFilterContextSelection,
+    DateFilterSelection,
+    changeFilterContextSelection,
+    FilterContextSelection,
 } from "./filters";
 export {
     AddLayoutSection,
@@ -152,15 +159,19 @@ export {
     refreshInsightWidget,
 } from "./insight";
 
+export { LogUserInteraction, UserInteraction, logUserInteraction } from "./logUserInteraction";
+
 /**
  * @internal
  */
 export type DashboardCommands =
+    | LogUserInteraction
     | LoadDashboard
     | SaveDashboard
     | SaveDashboardAs
     | RenameDashboard
     | ResetDashboard
+    | ChangeFilterContextSelection
     | ChangeDateFilterSelection
     | AddAttributeFilter
     | RemoveAttributeFilters

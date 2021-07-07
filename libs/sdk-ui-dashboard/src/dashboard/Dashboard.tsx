@@ -146,6 +146,26 @@ export interface IDashboardProps {
     dashboardRef: ObjRef;
 
     /**
+     * Data product identifier.
+     * This property is required, if the current backend implementation allows usage of data product identifier
+     * and data product identifier is set (workspace is provisioned via LCM).
+     *
+     * It's used to resolve drill to custom url data product identifier parameter.
+     * For more details, see: {@link https://help.gooddata.com/pages/viewpage.action?pageId=86794855}
+     */
+    dataProductId?: string;
+
+    /**
+     * Client identifier.
+     * This property is required, if current backend implementation allows usage of client identifier
+     * and client identifier is set (workspace is provisioned via LCM).
+     *
+     * It's used to resolve drill to custom url client identifier parameter.
+     * For more details, see: {@link https://help.gooddata.com/pages/viewpage.action?pageId=86794855}
+     */
+    clientId?: string;
+
+    /**
      * Configuration that can be used to modify dashboard features, capabilities and behavior.
      *
      * If not specified, then the dashboard will retrieve and use the essential configuration from the backend.
@@ -459,6 +479,8 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             backend,
             workspace,
             dashboardRef: props.dashboardRef,
+            clientId: props.clientId,
+            dataProductId: props.dataProductId,
         },
         initialEventHandlers: props.eventHandlers,
     });

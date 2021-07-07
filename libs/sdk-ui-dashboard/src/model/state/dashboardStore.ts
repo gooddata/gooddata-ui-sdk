@@ -190,6 +190,8 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                     "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.TRIGGERED",
                     "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL",
                     "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.TRIGGERED",
+                    "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD",
+                    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.TRIGGERED",
                 ],
                 ignoredActionPaths: ["ctx"],
             },
@@ -220,7 +222,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         middleware,
     });
 
-    const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers);
+    const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers, store.dispatch);
     const rootSaga = createRootSaga(
         rootEventEmitter.eventEmitterSaga,
         rootCommandHandler as any,

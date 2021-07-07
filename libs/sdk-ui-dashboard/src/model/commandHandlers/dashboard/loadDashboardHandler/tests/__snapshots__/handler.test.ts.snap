@@ -161,6 +161,7 @@ Object {
     ],
     "selectedOption": "THIS_MONTH",
   },
+  "isEmbedded": false,
   "isReadOnly": false,
   "locale": "en-US",
   "mapboxToken": undefined,
@@ -199,7 +200,7 @@ exports[`load dashboard handler should emit events in correct order and carry-ov
 Array [
   Object {
     "correlationId": undefined,
-    "type": "GDC.DASH/EVT.DATE_FILTER.VALIDATION.FAILED",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
   },
   Object {
     "correlationId": undefined,

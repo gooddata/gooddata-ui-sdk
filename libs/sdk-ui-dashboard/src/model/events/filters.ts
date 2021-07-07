@@ -13,7 +13,7 @@ import { DashboardContext } from "../types/commonTypes";
  * @internal
  */
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED";
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
     readonly payload: {
         readonly filter: IDashboardDateFilter;
     };
@@ -25,7 +25,7 @@ export function dateFilterChanged(
     correlationId?: string,
 ): DashboardDateFilterSelectionChanged {
     return {
-        type: "GDC.DASH/EVT.DATE_FILTER.SELECTION_CHANGED",
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED",
         ctx,
         correlationId,
         payload: {
@@ -47,7 +47,7 @@ export function dateFilterChanged(
  * @internal
  */
 export interface DashboardAttributeFilterAdded extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED";
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED";
     readonly payload: {
         /**
          * Definition of the created attribute filter. The filter's local identifier can be used in subsequent
@@ -69,7 +69,7 @@ export function attributeFilterAdded(
     correlationId?: string,
 ): DashboardAttributeFilterAdded {
     return {
-        type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.ADDED",
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
         ctx,
         correlationId,
         payload: {
@@ -92,7 +92,7 @@ export function attributeFilterAdded(
  * @internal
  */
 export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED";
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED";
     readonly payload: {
         /**
          * The dashboard attribute filter that has been removed.
@@ -117,7 +117,7 @@ export function attributeFilterRemoved(
     correlationId?: string,
 ): DashboardAttributeFilterRemoved {
     return {
-        type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.REMOVED",
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED",
         ctx,
         correlationId,
         payload: {
@@ -138,7 +138,7 @@ export function attributeFilterRemoved(
  * @internal
  */
 export interface DashboardAttributeFilterMoved extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED";
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED";
     readonly payload: {
         /**
          * Definition of the dashboard attribute filter that was moved.
@@ -165,7 +165,7 @@ export function attributeFilterMoved(
     correlationId?: string,
 ): DashboardAttributeFilterMoved {
     return {
-        type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.MOVED",
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED",
         ctx,
         correlationId,
         payload: {
@@ -186,7 +186,7 @@ export function attributeFilterMoved(
  * @internal
  */
 export interface DashboardAttributeFilterSelectionChanged extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
     readonly payload: {
         /**
          * The update definition of the dashboard attribute filter.
@@ -203,7 +203,7 @@ export function attributeFilterSelectionChanged(
     correlationId?: string,
 ): DashboardAttributeFilterSelectionChanged {
     return {
-        type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.SELECTION_CHANGED",
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED",
         ctx,
         correlationId,
         payload: {
@@ -222,7 +222,7 @@ export function attributeFilterSelectionChanged(
  * @internal
  */
 export interface DashboardAttributeFilterParentChanged extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED";
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED";
     readonly payload: {
         /**
          * The updated definition of the dashboard attribute filter.
@@ -239,7 +239,7 @@ export function attributeFilterParentChanged(
     correlationId?: string,
 ): DashboardAttributeFilterParentChanged {
     return {
-        type: "GDC.DASH/EVT.ATTRIBUTE_FILTER.PARENT_CHANGED",
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",
         ctx,
         correlationId,
         payload: {
@@ -262,7 +262,7 @@ export function attributeFilterParentChanged(
  * @internal
  */
 export interface DashboardFilterContextChanged extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED";
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED";
     readonly payload: {
         readonly filterContext: IFilterContextDefinition;
     };
@@ -274,7 +274,7 @@ export function filterContextChanged(
     correlationId?: string,
 ): DashboardFilterContextChanged {
     return {
-        type: "GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED",
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
         ctx,
         correlationId,
         payload: {

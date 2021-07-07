@@ -19,7 +19,11 @@ export interface UseDrillToAttributeUrlProps {
 /**
  * @internal
  */
-export const useDrillToAttributeUrl = ({ onSuccess, onError, onBeforeRun }: UseDrillToAttributeUrlProps) => {
+export const useDrillToAttributeUrl = ({
+    onSuccess,
+    onError,
+    onBeforeRun,
+}: UseDrillToAttributeUrlProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: drillToAttributeUrl,
         successEvent: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.TRIGGERED",

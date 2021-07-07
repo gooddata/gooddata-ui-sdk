@@ -7,52 +7,58 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IAttributeElements, ObjRef } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
+import { IDashboardFilter } from "@gooddata/sdk-ui-ext";
+
+/**
+ * @internal
+ */
+export interface DateFilterSelection {
+    /**
+     * Indicates whether the filter should select absolute or relative values.
+     *
+     * -  Absolute values: `from` and `to` props should be exact dates on the defined granularity
+     * -  Relative values: `from` and `to` are offsets on the defined granularity
+     */
+    readonly type: DateFilterType;
+
+    /**
+     * Date filter granularity. For absolute dates this indicates what is the expected input format.
+     *
+     * -  Date = MM/DD/YYYY
+     * -  Month = MM/YYYY
+     * -  Year = YYYY
+     * -  Quarter = Q#/YYYY
+     * -  Week = WW/YYYY
+     */
+    readonly granularity: DateFilterGranularity;
+
+    /**
+     * The start date. If absolute date filter, then `from` is the formatted start date. If relative
+     * date filter, then `from` is offset from today.
+     *
+     * If not specified, then the start date is unbounded.
+     *
+     * @remarks see `granularity` prop for more on date format.
+     */
+    readonly from?: DateString | number;
+
+    /**
+     * The end date. If absolute date filter, then `to` is formatted end date. If relative date filter,
+     * then `to` is offset from today.
+     *
+     * If not specified, then the end date is current date.
+     *
+     * @remarks see `granularity` prop for more on date format
+     */
+    readonly to?: DateString | number;
+}
 
 /**
  * @internal
  */
 export interface ChangeDateFilterSelection extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION";
-    readonly payload: {
-        /**
-         * Indicates whether the filter should select absolute or relative values.
-         *
-         * -  Absolute values: `from` and `to` props should be exact dates on the defined granularity
-         * -  Relative values: `from` and `to` are offsets on the defined granularity
-         */
-        readonly type: DateFilterType;
-
-        /**
-         * Date filter granularity. For absolute dates this indicates what is the expected input format.
-         *
-         * -  Date = MM/DD/YYYY
-         * -  Month = MM/YYYY
-         * -  Year = YYYY
-         * -  Quarter = Q#/YYYY
-         * -  Week = WW/YYYY
-         */
-        readonly granularity: DateFilterGranularity;
-
-        /**
-         * The start date. If absolute date filter, then `from` is the formatted start date. If relative
-         * date filter, then `from` is offset from today.
-         *
-         * If not specified, then the start date is unbounded.
-         *
-         * @remarks see `granularity` prop for more on date format.
-         */
-        readonly from?: DateString | number;
-
-        /**
-         * The end date. If absolute date filter, then `to` is formatted end date. If relative date filter,
-         * then `to` is offset from today.
-         *
-         * If not specified, then the end date is current date.
-         *
-         * @remarks see `granularity` prop for more on date format
-         */
-        readonly to?: DateString | number;
-    };
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION";
+    readonly payload: DateFilterSelection;
 }
 
 /**
@@ -77,7 +83,7 @@ export function changeDateFilterSelection(
     correlationId?: string,
 ): ChangeDateFilterSelection {
     return {
-        type: "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION",
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
             type,
@@ -99,7 +105,7 @@ export function changeDateFilterSelection(
  */
 export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection {
     return {
-        type: "GDC.DASH/CMD.DATE_FILTER.CHANGE_SELECTION",
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
             type: "relative",
@@ -116,7 +122,7 @@ export function clearDateFilterSelection(correlationId?: string): ChangeDateFilt
  * @internal
  */
 export interface AddAttributeFilter extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD";
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD";
     readonly payload: {
         readonly displayForm: ObjRef;
 
@@ -168,7 +174,7 @@ export function addAttributeFilter(
     correlationId?: string,
 ): AddAttributeFilter {
     return {
-        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.ADD",
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD",
         correlationId,
         payload: {
             displayForm,
@@ -185,7 +191,7 @@ export function addAttributeFilter(
  * @internal
  */
 export interface RemoveAttributeFilters extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE";
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE";
     readonly payload: {
         /**
          * XXX: we do not necessarily need to remove multiple filters atm, but this should
@@ -206,7 +212,7 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
  */
 export function removeAttributeFilter(filterLocalId: string, correlationId?: string): RemoveAttributeFilters {
     return {
-        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.REMOVE",
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE",
         correlationId,
         payload: {
             filterLocalIds: [filterLocalId],
@@ -222,7 +228,7 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
  * @internal
  */
 export interface MoveAttributeFilter extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE";
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE";
     readonly payload: {
         readonly filterLocalId: string;
         readonly index: number;
@@ -248,7 +254,7 @@ export function moveAttributeFilter(
     correlationId?: string,
 ): MoveAttributeFilter {
     return {
-        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.MOVE",
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE",
         correlationId,
         payload: {
             filterLocalId,
@@ -269,13 +275,27 @@ export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 /**
  * @internal
  */
+export interface AttributeFilterSelection {
+    /**
+     * Dashboard attribute filter's local identifier.
+     */
+    readonly filterLocalId: string;
+    /**
+     * Selected attribute elements.
+     */
+    readonly elements: IAttributeElements;
+    /**
+     * Selection type. Either 'IN' or 'NOT_IN'.
+     */
+    readonly selectionType: AttributeFilterSelectionType;
+}
+
+/**
+ * @internal
+ */
 export interface ChangeAttributeFilterSelection extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION";
-    readonly payload: {
-        readonly filterLocalId: string;
-        readonly elements: IAttributeElements;
-        readonly selectionType: AttributeFilterSelectionType;
-    };
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION";
+    readonly payload: AttributeFilterSelection;
 }
 
 /**
@@ -303,7 +323,7 @@ export function changeAttributeFilterSelection(
     correlationId?: string,
 ): ChangeAttributeFilterSelection {
     return {
-        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION",
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
             filterLocalId,
@@ -330,7 +350,7 @@ export function resetAttributeFilterSelection(
     correlationId?: string,
 ): ChangeAttributeFilterSelection {
     return {
-        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.CHANGE_SELECTION",
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
             filterLocalId,
@@ -348,7 +368,7 @@ export function resetAttributeFilterSelection(
  * @internal
  */
 export interface SetAttributeFilterParent extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT";
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENT";
     readonly payload: {
         readonly filterLocalId: string;
         readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
@@ -379,11 +399,63 @@ export function setAttributeFilterParent(
     correlationId?: string,
 ): SetAttributeFilterParent {
     return {
-        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER.SET_PARENT",
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENT",
         correlationId,
         payload: {
             filterLocalId,
             parentFilters: [parentFilter],
+        },
+    };
+}
+
+/**
+ * @internal
+ */
+export interface FilterContextSelection {
+    /**
+     * Attribute filters to apply.
+     */
+    readonly attributeFilters?: Array<AttributeFilterSelection>;
+    /**
+     * Date filter to apply.
+     */
+    readonly dateFilter?: DateFilterSelection;
+}
+
+/**
+ * @internal
+ */
+export interface ChangeFilterContextSelection extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION";
+    readonly payload: {
+        /**
+         * Filters to apply to the current dashboard filter context.
+         */
+        filters: IDashboardFilter[];
+    };
+}
+
+/**
+ * Creates the {@link ChangeFilterContextSelection} command.
+ * Dispatching this command will result into setting provided dashboard filters to the current dashboard filter context.
+ *
+ * Only filters that are stored in the filter context can be applied (filters that are visible in the filter bar).
+ * Filters will be matched via display form ref, duplicities will be omitted.
+ *
+ * @internal
+ * @param selection - attribute filters and date filter to apply.
+ * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns change filter selection command
+ */
+export function changeFilterContextSelection(
+    filters: IDashboardFilter[],
+    correlationId?: string,
+): ChangeFilterContextSelection {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
+        correlationId,
+        payload: {
+            filters,
         },
     };
 }

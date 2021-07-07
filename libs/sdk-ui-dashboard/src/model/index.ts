@@ -36,7 +36,7 @@ export {
     selectEnableKPIDashboardScheduleRecipients,
 } from "./state/config/configSelectors";
 export { PermissionsState } from "./state/permissions/permissionsState";
-export { selectPermissions, selectCanListUsersInProject } from "./state/permissions/permissionsSelectors";
+export { selectPermissions, selectCanListUsersInWorkspace } from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
 export {
     selectFilterContext,
@@ -113,3 +113,4 @@ export * from "./commands";
 export * from "./events";
 export * from "./queries";
 export { DashboardEventHandler } from "./events/eventHandler";
+export { createDrillToSameDashboardHandler } from "./eventHandlers/createDrillToSameDashboardHandler";

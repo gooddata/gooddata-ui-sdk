@@ -10,24 +10,24 @@ describe("changeDateFilterSelectionHandler", () => {
 
     it("should emit the appropriate events for changed date filter", async () => {
         Tester.dispatch(changeDateFilterSelection("relative", "GDC.time.month", -3, 0, "testCorrelation"));
-        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
         expect(Tester.emittedEventsDigest()).toMatchSnapshot();
     });
 
     it("should set the date filter in the state when a date filter is changed", async () => {
         Tester.dispatch(changeDateFilterSelection("relative", "GDC.time.month", -3, 0));
-        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
         expect(selectFilterContextDateFilter(Tester.state())).toMatchSnapshot();
     });
 
     it("should clear the date filter in the state when a date filter is cleared", async () => {
         Tester.dispatch(changeDateFilterSelection("relative", "GDC.time.month", -3, 0));
-        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
         Tester.dispatch(clearDateFilterSelection());
-        await Tester.waitFor("GDC.DASH/EVT.FILTERS.FILTER_CONTEXT_CHANGED");
+        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
         expect(selectFilterContextDateFilter(Tester.state())).toBeUndefined();
     });

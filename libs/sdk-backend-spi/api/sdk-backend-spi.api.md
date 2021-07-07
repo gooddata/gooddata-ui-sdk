@@ -1231,6 +1231,7 @@ export interface ISettings {
     enableApproxCount?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;
+    enableCompanyLogoInEmbeddedUI?: boolean;
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
     enableEmbedButtonInKD?: boolean;
@@ -1250,6 +1251,7 @@ export interface ISettings {
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
     enableWeekFilters?: boolean;
+    platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
 }
 
@@ -1918,6 +1920,9 @@ export class NotSupported extends AnalyticalBackendError {
 
 // @alpha
 export type OptionType = AllTimeType | AbsoluteFormType | RelativeFormType | AbsolutePresetType | RelativePresetType;
+
+// @public
+export type PlatformEdition = "free" | "growth" | "enterprise";
 
 // @public
 export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition): IPreparedExecution;

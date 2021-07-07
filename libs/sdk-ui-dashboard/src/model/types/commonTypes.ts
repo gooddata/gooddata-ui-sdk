@@ -82,6 +82,14 @@ export type DashboardConfig = {
      * Defaults to false i.e. NOT a read-only mode.
      */
     isReadOnly?: boolean;
+
+    /**
+     * When dashboard is embedded via iframe, this property must be set to true.
+     * In embedded mode, some interactions may be disabled.
+     *
+     * Defaults to false.
+     */
+    isEmbedded?: boolean;
 };
 
 /**
@@ -141,4 +149,14 @@ export type DashboardContext = {
      * Dashboard that should be loaded into the store.
      */
     dashboardRef: ObjRef;
+
+    /**
+     * Client identifier - it's required, if the backend implementation supports it and workspace is provisioned via LCM.
+     */
+    clientId?: string;
+
+    /**
+     * Data product identifier - it's required, if the backend implementation supports it and workspace is provisioned via LCM.
+     */
+    dataProductId?: string;
 };

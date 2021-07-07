@@ -53,6 +53,7 @@ import {
 } from "./insight";
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
+import { DashboardUserInteractionLogged } from "./logUserInteraction";
 import {
     DashboardDrillDownTriggered,
     DashboardDrillToAttributeUrlTriggered,
@@ -142,11 +143,13 @@ export {
     drillToLegacyDashboardTriggered,
     drillTriggered,
 } from "./drill";
+export { DashboardUserInteractionLogged, userInteractionLogged } from "./logUserInteraction";
 
 /**
  * @internal
  */
 export type DashboardEvents =
+    | DashboardUserInteractionLogged
     | DashboardLoaded
     | DateFilterValidationFailed
     | DashboardCommandFailed

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 import { ObjRef, ObjRefInScope } from "../../objRef";
@@ -310,7 +310,9 @@ export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter {
  *
  * @public
  */
-export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter {
+export function isAllTimeDateFilter(
+    obj: unknown,
+): obj is IRelativeDateFilter & { relativeDateFilter: { granularity: "ALL_TIME_GRANULARITY" } } {
     return (
         !isEmpty(obj) &&
         (obj as IRelativeDateFilter).relativeDateFilter?.granularity === "ALL_TIME_GRANULARITY"
