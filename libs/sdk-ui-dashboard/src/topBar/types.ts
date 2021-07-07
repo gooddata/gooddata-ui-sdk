@@ -149,6 +149,7 @@ export interface IDefaultTopBarProps extends ITopBarCoreProps {
          * Optionally specify custom component that the top bar will use to render the title.
          *
          * If not specified then the default implementation {@link DefaultTitle} will be used.
+         * If you do not want to render the title, then use the {@link HiddenTitle} component.
          */
         Component?: CustomTitleComponent;
 
@@ -172,6 +173,7 @@ export interface IDefaultTopBarProps extends ITopBarCoreProps {
          * Optionally specify custom component that the top bar will use to render the bar of control buttons.
          *
          * If not specified then the default implementation {@link DefaultButtonBar} will be used.
+         * If you do not want to render the button bar, then use the {@link HiddenButtonBar} component.
          */
         Component?: CustomButtonBarComponent;
 
@@ -199,6 +201,7 @@ export interface IDefaultTopBarProps extends ITopBarCoreProps {
          * Optionally specify custom component that the top bar will use the render the menu button.
          *
          * If not specified then the default implementation {@link DefaultMenuButton} will be used.
+         * If you do not want to render the menu button, then use the {@link HiddenMenuButton} component.
          */
         Component?: CustomMenuButtonComponent;
 

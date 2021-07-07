@@ -1,22 +1,16 @@
 // (C) 2021 GoodData Corporation
+export * from "./DefaultFilterBar";
+export { HiddenFilterBar } from "./HiddenFilterBar";
 export {
-    FilterBar,
-    HiddenFilterBar,
-    IFilterBarProps,
-    IDefaultFilterBarProps,
     CustomAttributeFilterFactory,
-    FilterBarComponent,
-} from "./FilterBar";
-export {
-    IDashboardAttributeFilterProps,
-    DashboardAttributeFilterComponent,
-    DashboardAttributeFilter,
-    HiddenDashboardAttributeFilter,
-} from "./DashboardAttributeFilter";
-export {
-    IDashboardDateFilterProps,
+    CustomDashboardAttributeFilterComponent,
+    CustomDashboardDateFilterComponent,
+    CustomFilterBarComponent,
+    IDashboardAttributeFilterCoreProps,
     IDashboardDateFilterConfig,
-    DashboardDateFilterComponent,
-    DashboardDateFilter,
-    HiddenDashboardDateFilter,
-} from "./DashboardDateFilter";
+    IDashboardDateFilterCoreProps,
+    IDefaultDashboardAttributeFilterProps,
+    IDefaultDashboardDateFilterProps,
+    IDefaultFilterBarProps,
+    IFilterBarCoreProps,
+} from "./types";

@@ -1,8 +1,9 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 
-import { IntlWrapper } from "../../localization/IntlWrapper";
+import { IntlWrapper } from "../../localization";
 import { IDefaultTopBarProps } from "../types";
+
 import { DefaultButtonBar } from "./DefaultButtonBar";
 import { DefaultMenuButton } from "./DefaultMenuButton";
 import { DefaultTitle } from "./DefaultTitle";
