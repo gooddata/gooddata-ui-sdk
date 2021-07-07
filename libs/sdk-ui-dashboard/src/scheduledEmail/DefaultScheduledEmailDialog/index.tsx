@@ -1,14 +1,16 @@
 // (C) 2019-2020 GoodData Corporation
 import React from "react";
 import invariant from "ts-invariant";
+
+import { IDefaultScheduledEmailDialogProps } from "../types";
+
 import { ScheduledMailDialogRenderer } from "./ScheduledMailDialogRenderer/ScheduledMailDialogRenderer";
-import { useScheduledEmail } from "../useScheduledEmail";
-import { ScheduledEmailDialogProps } from "../types";
+import { useScheduledEmail } from "./useScheduledEmail";
 
 /**
  * @internal
  */
-export const DefaultScheduledEmailDialog: React.FC<ScheduledEmailDialogProps> = (props) => {
+export const DefaultScheduledEmailDialog: React.FC<IDefaultScheduledEmailDialogProps> = (props) => {
     const { onSubmit, onCancel, onError, isVisible, onSuccess } = props;
 
     const {

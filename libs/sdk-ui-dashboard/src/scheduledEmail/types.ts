@@ -1,93 +1,29 @@
 // (C) 2019-2021 GoodData Corporation
-import { UriRef } from "@gooddata/sdk-model";
-import {
-    FilterContextItem,
-    IScheduledMail,
-    IScheduledMailDefinition,
-    IUser,
-} from "@gooddata/sdk-backend-spi";
-import { ILocale, GoodDataSdkError } from "@gooddata/sdk-ui";
-import { CommandProcessingStatus } from "../dashboard/useDashboardCommandProcessing";
+import { ComponentType } from "react";
+import { IScheduledMail, IScheduledMailDefinition } from "@gooddata/sdk-backend-spi";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
+///
+/// Core props
+///
 
 /**
+ * The necessary props a component must be able to handle for it to be usable as a ScheduleEmailDialog.
  * @internal
  */
-export interface ScheduledEmailProps {
-    /**
-     * Filters to apply to the exported dashboard attached to the scheduled email.
-     */
-    filters?: FilterContextItem[];
-
-    /**
-     * Reference of the dashboard to be attached to the scheduled email.
-     */
-    dashboardRef: UriRef;
-
-    /**
-     * Dashboard title. It's used as the default scheduled email subject.
-     */
-    dashboardTitle: string;
-
-    /**
-     * Has user permissions to list users in the workspace?
-     */
-    canListUsersInWorkspace?: boolean;
-
-    /**
-     * Is user able to create scheduled emails?
-     */
-    enableKPIDashboardSchedule?: boolean;
-
-    /**
-     * Is user able to send scheduled email to other recipients?
-     */
-    enableKPIDashboardScheduleRecipients?: boolean;
-
-    /**
-     * Date format user for the date select and default scheduled email subject.
-     */
-    dateFormat?: string;
-
-    /**
-     * Currently logged in user. Current user has to be one of the recipients of the scheduled email.
-     */
-    currentUser: IUser;
-
-    /**
-     * Locale used for translations
-     */
-    locale: ILocale;
-
-    /**
-     * Function that results in the creation of the scheduled email on the backend.
-     */
-    handleCreateScheduledEmail: (
-        scheduledEmailToCreate: IScheduledMailDefinition,
-        filters?: FilterContextItem[],
-    ) => void;
-
-    /**
-     * Status of the scheduled email creation -
-     */
-    scheduledEmailCreationStatus?: CommandProcessingStatus;
-}
-
-/**
- * @internal
- */
-export interface ScheduledEmailDialogProps {
+export interface IScheduledEmailDialogCoreProps {
     /**
      * Is scheduled e-mail dialog visible?
      */
     isVisible?: boolean;
 
     /**
-     * Callback to be called, when user submit the scheduled email dialog.
+     * Callback to be called, when user submits the scheduled email dialog.
      */
     onSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
 
     /**
-     * Callback to be called, when user close the scheduled email dialog.
+     * Callback to be called, when user closes the scheduled email dialog.
      */
     onCancel?: () => void;
 
@@ -101,3 +37,36 @@ export interface ScheduledEmailDialogProps {
      */
     onSuccess?: (scheduledMail: IScheduledMail) => void;
 }
+
+///
+/// Custom component types
+///
+
+/**
+ * @internal
+ */
+export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogCoreProps>;
+
+///
+/// Default component props
+///
+
+/**
+ * The subset of {@link IDefaultScheduledEmailDialogProps} that can be subscribed to by the user (i.e. the callbacks
+ * will be called in addition to the default callbacks).
+ *
+ * @internal
+ */
+export type IDefaultScheduledEmailDialogCallbackProps = Pick<
+    IDefaultScheduledEmailDialogProps,
+    "onCancel" | "onError" | "onSubmit" | "onSuccess"
+>;
+
+/**
+ * Props of the default ScheduledEmailDialog implementation: {@link DefaultScheduledEmailDialog}.
+ * @internal
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IDefaultScheduledEmailDialogProps
+    extends IScheduledEmailDialogCoreProps,
+        IDefaultScheduledEmailDialogCallbackProps {}

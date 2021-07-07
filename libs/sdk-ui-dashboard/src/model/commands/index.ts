@@ -110,7 +110,7 @@ export {
     UndoPointSelector,
 } from "./layout";
 export { CreateAlert, createAlert, RemoveAlert, removeAlert, UpdateAlert, updateAlert } from "./alerts";
-export { CreateScheduledEmail } from "./scheduledEmail";
+export { CreateScheduledEmail, createScheduledEmail } from "./scheduledEmail";
 export {
     Drill,
     DrillDown,
