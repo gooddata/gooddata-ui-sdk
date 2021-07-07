@@ -5,7 +5,6 @@ import {
     IInsightWidget,
     InsightDrillDefinition,
     isInsightWidgetDefinition,
-    DrillDefinition,
     IInsightWidgetDefinition,
     isInsightWidget,
 } from "@gooddata/sdk-backend-spi";
@@ -56,7 +55,7 @@ export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> impl
     }
 
     public drills = (valueOrUpdateCallback: ValueOrUpdateCallback<InsightDrillDefinition[]>): this =>
-        this.setWidgetProp("drills", valueOrUpdateCallback as DrillDefinition[]);
+        this.setWidgetProp("drills", valueOrUpdateCallback);
 
     public insight = (valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>): this =>
         this.setWidgetProp("insight", valueOrUpdateCallback);

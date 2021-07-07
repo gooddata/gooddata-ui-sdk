@@ -825,6 +825,7 @@ export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIden
 
 // @alpha (undocumented)
 export interface IInsightWidgetBase extends IWidgetBase {
+    readonly drills: InsightDrillDefinition[];
     readonly insight: ObjRef;
     readonly properties?: VisualizationProperties;
     // (undocumented)
@@ -841,6 +842,7 @@ export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {
 
 // @alpha (undocumented)
 export interface IKpiWidgetBase extends IWidgetBase {
+    readonly drills: KpiDrillDefinition[];
     readonly kpi: ILegacyKpi;
     // (undocumented)
     readonly type: "kpi";
