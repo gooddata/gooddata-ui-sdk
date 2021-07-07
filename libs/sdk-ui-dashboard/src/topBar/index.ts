@@ -1,26 +1,20 @@
 // (C) 2021 GoodData Corporation
+export * from "./DefaultTopBar";
+export { NoTopBar } from "./NoTopBar";
 export {
-    TopBar,
-    NoTopBar,
-    ITopBarProps,
-    IDefaultTopBarProps,
-    TopBarComponent,
-    ITopBarTitleConfig,
-    ITopBarMenuButtonConfig,
-    IDefaultMenuButtonCallbackProps,
-} from "./TopBar";
-
-export { IDashboardTitleProps, DashboardTitle, DashboardTitleComponent } from "./DashboardTitle";
-export {
-    IDashboardButtonBarProps,
-    DashboardButtonBarComponent,
-    DashboardButtonBar,
+    CustomButtonBarComponent,
+    CustomMenuButtonComponent,
+    CustomTitleComponent,
+    CustomTopBarComponent,
+    IButtonBarCoreProps,
     IDefaultButtonBarProps,
-} from "./DashboardButtonBar";
-export {
-    IDashboardMenuButtonProps,
-    IDefaultMenuButtonProps,
-    MenuButtonItem,
-    DashboardMenuButtonComponent,
-    DashboardMenuButton,
-} from "./DashboardMenuButton";
+    IDefaultMenuButtonComponentCallbacks,
+    IDefaultMenuButtonComponentProps,
+    IDefaultTitleProps,
+    IDefaultTopBarProps,
+    IMenuButtonCoreProps,
+    IMenuButtonItem,
+    ITitleCoreProps,
+    ITitleProps,
+    ITopBarCoreProps,
+} from "./types";

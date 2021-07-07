@@ -1,7 +1,13 @@
 // (C) 2021 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
 import { FilterBar, FilterBarComponent, IDefaultFilterBarProps } from "../filterBar";
-import { IDefaultTopBarProps, TopBar, TopBarComponent } from "../topBar";
+import {
+    CustomTopBarComponent,
+    IDefaultTopBarProps,
+    DefaultTopBar,
+    IDefaultMenuButtonComponentCallbacks,
+    ITopBarCoreProps,
+} from "../topBar";
 import { Provider } from "react-redux";
 import {
     createDashboardStore,
@@ -60,7 +66,6 @@ import {
     DefaultDashboardWidget,
 } from "../layout";
 import { DefaultScheduledEmailDialog, ScheduledEmailDialogProps } from "../scheduledEmail";
-import { IDefaultMenuButtonCallbackProps } from "../topBar/TopBar";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { IntlWrapper } from "../localization/IntlWrapper";
 import { useDashboardPdfExporter } from "./useDashboardPdfExporter";
@@ -197,17 +202,17 @@ export interface IDashboardProps {
         /**
          * Optionally specify component to use for rendering and handling the dashboard's Top Bar.
          *
-         * If not specified the default {@link TopBar} will be used. If you do not want to render the top bar, then
+         * If not specified the default {@link DefaultTopBar} will be used. If you do not want to render the top bar, then
          * use the {@link NoTopBar} component.
          */
-        Component?: TopBarComponent;
+        Component?: CustomTopBarComponent;
 
         /**
          * Optionally specify props to customize the default implementation of Top bar.
          *
          * This has no effect if custom component is used.
          */
-        defaultComponentProps?: IDefaultTopBarProps;
+        defaultComponentProps?: Omit<IDefaultTopBarProps, keyof ITopBarCoreProps>;
     };
 
     /**
@@ -341,7 +346,7 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
     const { drillableItems, filterBarConfig, topBarConfig, dashboardRef, backend, workspace } = props;
 
     const FilterBarComponent = filterBarConfig?.Component ?? FilterBar;
-    const TopBarComponent = topBarConfig?.Component ?? TopBar;
+    const TopBarComponent = topBarConfig?.Component ?? DefaultTopBar;
     const { ScheduledEmailDialogComponent } = useDashboardComponentsContext();
     const { filters, onFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
@@ -356,15 +361,15 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
         },
     });
 
-    const defaultOnScheduleEmailing = (isDialogOpen: boolean) => {
-        setIsScheduleEmailingDialogOpen(isDialogOpen);
+    const defaultOnScheduleEmailing = () => {
+        setIsScheduleEmailingDialogOpen(true);
     };
 
     const defaultOnExportToPdf = () => {
         exportDashboard(dashboardRef, filters);
     };
 
-    const menuButtonCallbacks: IDefaultMenuButtonCallbackProps = {
+    const menuButtonCallbacks: IDefaultMenuButtonComponentCallbacks = {
         onScheduleEmailingCallback: defaultOnScheduleEmailing,
         onExportToPdfCallback: defaultOnExportToPdf,
     };
@@ -395,8 +400,13 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
                 />
             )}
             <TopBarComponent
-                titleConfig={{ title, onTitleChanged }}
-                menuButtonConfig={{ defaultComponentCallbackProps: menuButtonCallbacks }}
+                titleProps={{ title, onTitleChanged }}
+                menuButtonConfig={{
+                    defaultComponentCallbackProps: menuButtonCallbacks,
+                    ...topBarConfig?.defaultComponentProps?.menuButtonConfig,
+                }}
+                buttonBarConfig={topBarConfig?.defaultComponentProps?.buttonBarConfig}
+                titleConfig={topBarConfig?.defaultComponentProps?.titleConfig}
             />
             <FilterBarComponent filters={filters} onFilterChanged={onFilterChanged} />
             <DashboardLayout drillableItems={drillableItems} />
