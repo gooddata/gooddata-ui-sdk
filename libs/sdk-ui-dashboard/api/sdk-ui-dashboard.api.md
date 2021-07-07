@@ -382,10 +382,19 @@ export interface CreateScheduledEmail extends IDashboardCommand {
 }
 
 // @internal (undocumented)
-export type CustomAttributeFilterFactory = (filter: IDashboardAttributeFilter) => DashboardAttributeFilterComponent | undefined;
+export type CustomAttributeFilterFactory = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent | undefined;
 
 // @internal (undocumented)
 export type CustomButtonBarComponent = ComponentType<IButtonBarCoreProps>;
+
+// @internal (undocumented)
+export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterCoreProps>;
+
+// @internal (undocumented)
+export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterCoreProps>;
+
+// @internal (undocumented)
+export type CustomFilterBarComponent = ComponentType<IFilterBarCoreProps>;
 
 // @internal (undocumented)
 export type CustomMenuButtonComponent = ComponentType<IMenuButtonCoreProps>;
@@ -430,9 +439,6 @@ export interface DashboardAlertUpdated extends IDashboardEvent {
 }
 
 // @internal
-export const DashboardAttributeFilter: React_2.FC<IDashboardAttributeFilterProps>;
-
-// @internal
 export interface DashboardAttributeFilterAdded extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
@@ -442,9 +448,6 @@ export interface DashboardAttributeFilterAdded extends IDashboardEvent {
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED";
 }
-
-// @internal (undocumented)
-export type DashboardAttributeFilterComponent = React_2.ComponentType<IDashboardAttributeFilterProps>;
 
 // @internal
 export interface DashboardAttributeFilterMoved extends IDashboardEvent {
@@ -544,12 +547,6 @@ export interface DashboardCopySaved extends IDashboardEvent {
     // (undocumented)
     readonly type: "GDC.DASH/EVT.COPY_SAVED";
 }
-
-// @internal
-export const DashboardDateFilter: React_2.FC<IDashboardDateFilterProps>;
-
-// @internal (undocumented)
-export type DashboardDateFilterComponent = React_2.ComponentType<IDashboardDateFilterProps>;
 
 // @internal
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
@@ -1191,6 +1188,12 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
 // @internal (undocumented)
 export const DefaultButtonBar: React_2.FC<IButtonBarCoreProps>;
 
+// @internal
+export const DefaultDashboardAttributeFilter: React_2.FC<IDefaultDashboardAttributeFilterProps>;
+
+// @internal
+export const DefaultDashboardDateFilter: React_2.FC<IDefaultDashboardDateFilterProps>;
+
 // @internal (undocumented)
 export const DefaultDashboardInsight: React_2.FC<DashboardInsightProps>;
 
@@ -1205,6 +1208,9 @@ export const DefaultDashboardLayout: ({ onFiltersChange, drillableItems, onDrill
 
 // @internal (undocumented)
 export const DefaultDashboardWidget: (props: DashboardWidgetProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultFilterBar: React_2.FC<IDefaultFilterBarProps>;
 
 // @internal
 export const DefaultMenuButton: React_2.FC<IDefaultMenuButtonComponentProps>;
@@ -1361,12 +1367,6 @@ export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDas
 export type ExtendedDashboardWidget = DashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
 
 // @internal (undocumented)
-export const FilterBar: React_2.FC<IFilterBarProps & IDefaultFilterBarProps>;
-
-// @internal (undocumented)
-export type FilterBarComponent = ComponentType<IFilterBarProps>;
-
-// @internal (undocumented)
 export interface FilterContextSelection {
     readonly attributeFilters?: Array<AttributeFilterSelection>;
     readonly dateFilter?: DateFilterSelection;
@@ -1379,20 +1379,32 @@ export interface FilterContextState {
 }
 
 // @internal
-export const HiddenDashboardAttributeFilter: React_2.FC<IDashboardAttributeFilter>;
+export const HiddenButtonBar: React_2.FC<IButtonBarCoreProps>;
 
 // @internal
-export const HiddenDashboardDateFilter: React_2.FC;
+export const HiddenDashboardAttributeFilter: React_2.FC<IDashboardAttributeFilterCoreProps>;
 
 // @internal
-export const HiddenFilterBar: React_2.FC<IFilterBarProps>;
+export const HiddenDashboardDateFilter: React_2.FC<IDashboardDateFilterCoreProps>;
+
+// @internal
+export const HiddenFilterBar: React_2.FC<IFilterBarCoreProps>;
+
+// @internal
+export const HiddenMenuButton: React_2.FC<IMenuButtonCoreProps>;
+
+// @internal
+export const HiddenTitle: React_2.FC<ITitleCoreProps>;
+
+// @internal
+export const HiddenTopBar: React_2.FC<ITopBarCoreProps>;
 
 // @internal
 export interface IButtonBarCoreProps {
 }
 
 // @internal
-export interface IDashboardAttributeFilterProps {
+export interface IDashboardAttributeFilterCoreProps {
     filter: IDashboardAttributeFilter;
     onFilterChanged: (filter: IDashboardAttributeFilter) => void;
 }
@@ -1412,8 +1424,8 @@ export interface IDashboardDateFilterConfig {
 }
 
 // @internal
-export interface IDashboardDateFilterProps {
-    config: IDashboardDateFilterConfig;
+export interface IDashboardDateFilterCoreProps {
+    config?: IDashboardDateFilterConfig;
     filter: IDashboardDateFilter | undefined;
     onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
     readonly?: boolean;
@@ -1452,8 +1464,8 @@ export interface IDashboardProps {
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
     eventHandlers?: DashboardEventHandler[];
     filterBarConfig?: {
-        Component?: FilterBarComponent;
-        defaultComponentProps?: IDefaultFilterBarProps;
+        Component?: CustomFilterBarComponent;
+        defaultComponentProps?: Omit<IDefaultFilterBarProps, keyof IFilterBarCoreProps>;
     };
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
     permissions?: IWorkspacePermissions;
@@ -1502,15 +1514,24 @@ export type IDashboardWidgetRendererProps = {
 export interface IDefaultButtonBarProps extends IButtonBarCoreProps {
 }
 
-// @internal (undocumented)
-export interface IDefaultFilterBarProps {
+// @internal
+export interface IDefaultDashboardAttributeFilterProps extends IDashboardAttributeFilterCoreProps {
+}
+
+// @internal
+export interface IDefaultDashboardDateFilterProps extends IDashboardDateFilterCoreProps {
+    config: IDashboardDateFilterConfig;
+}
+
+// @internal
+export interface IDefaultFilterBarProps extends IFilterBarCoreProps {
     // (undocumented)
     attributeFilterConfig?: {
         ComponentFactory?: CustomAttributeFilterFactory;
     };
     // (undocumented)
     dateFilterConfig?: {
-        Component?: DashboardDateFilterComponent;
+        Component?: CustomDashboardDateFilterComponent;
     };
 }
 
@@ -1572,8 +1593,8 @@ export interface IDrillDownDefinition {
     type: "drillDown";
 }
 
-// @internal (undocumented)
-export interface IFilterBarProps {
+// @internal
+export interface IFilterBarCoreProps {
     filters: FilterContextItem[];
     onFilterChanged: (filter: FilterContextItem | undefined) => void;
 }
@@ -1762,9 +1783,6 @@ export interface MoveSectionItem extends IDashboardCommand {
 
 // @internal
 export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
-
-// @internal (undocumented)
-export const NoTopBar: React_2.FC<ITopBarCoreProps>;
 
 // @internal
 export type ObjectAvailabilityConfig = {

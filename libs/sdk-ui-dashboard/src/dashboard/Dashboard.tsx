@@ -1,6 +1,11 @@
 // (C) 2021 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
-import { FilterBar, FilterBarComponent, IDefaultFilterBarProps } from "../filterBar";
+import {
+    CustomFilterBarComponent,
+    DefaultFilterBar,
+    IDefaultFilterBarProps,
+    IFilterBarCoreProps,
+} from "../filterBar";
 import {
     CustomTopBarComponent,
     IDefaultTopBarProps,
@@ -223,7 +228,7 @@ export interface IDashboardProps {
          * Optionally specify component to use for rendering and handling the dashboard's Top Bar.
          *
          * If not specified the default {@link DefaultTopBar} will be used. If you do not want to render the top bar, then
-         * use the {@link NoTopBar} component.
+         * use the {@link HiddenTopBar} component.
          */
         Component?: CustomTopBarComponent;
 
@@ -242,17 +247,17 @@ export interface IDashboardProps {
         /**
          * Specify component to use for rendering and handling the dashboard's Filter Bar.
          *
-         * If not specified the default {@link FilterBar} will be used. If you do not want to render the filter bar, then
+         * If not specified the default {@link DefaultFilterBar} will be used. If you do not want to render the filter bar, then
          * use the {@link HiddenFilterBar} component.
          */
-        Component?: FilterBarComponent;
+        Component?: CustomFilterBarComponent;
 
         /**
          * Optionally specify props to customize the default implementation of Filter Bar
          *
          * This has no effect if custom component is used.
          */
-        defaultComponentProps?: IDefaultFilterBarProps;
+        defaultComponentProps?: Omit<IDefaultFilterBarProps, keyof IFilterBarCoreProps>;
     };
 
     /**
@@ -365,7 +370,7 @@ export interface IDashboardProps {
 const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const { drillableItems, filterBarConfig, topBarConfig, dashboardRef, backend, workspace } = props;
 
-    const FilterBarComponent = filterBarConfig?.Component ?? FilterBar;
+    const FilterBarComponent = filterBarConfig?.Component ?? DefaultFilterBar;
     const TopBarComponent = topBarConfig?.Component ?? DefaultTopBar;
     const { ScheduledEmailDialogComponent } = useDashboardComponentsContext();
     const { filters, onFilterChanged } = useFilterBar();
@@ -420,15 +425,18 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
                 />
             )}
             <TopBarComponent
+                {...topBarConfig?.defaultComponentProps}
                 titleProps={{ title, onTitleChanged }}
                 menuButtonConfig={{
                     defaultComponentCallbackProps: menuButtonCallbacks,
                     ...topBarConfig?.defaultComponentProps?.menuButtonConfig,
                 }}
-                buttonBarConfig={topBarConfig?.defaultComponentProps?.buttonBarConfig}
-                titleConfig={topBarConfig?.defaultComponentProps?.titleConfig}
             />
-            <FilterBarComponent filters={filters} onFilterChanged={onFilterChanged} />
+            <FilterBarComponent
+                {...filterBarConfig?.defaultComponentProps}
+                filters={filters}
+                onFilterChanged={onFilterChanged}
+            />
             <DashboardLayout drillableItems={drillableItems} />
         </>
     );

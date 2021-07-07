@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 export * from "./DefaultTopBar";
-export { NoTopBar } from "./NoTopBar";
+export { HiddenTopBar } from "./HiddenTopBar";
 export {
     CustomButtonBarComponent,
     CustomMenuButtonComponent,
