@@ -22,8 +22,13 @@ export function generateHeaderMenuItemsGroups(
         return [];
     }
 
-    const { enableCsvUploader, enableDataSection, analyticalDesigner, enableAnalyticalDashboards } =
-        featureFlags;
+    const {
+        enableCsvUploader,
+        enableDataSection,
+        analyticalDesigner,
+        enableAnalyticalDashboards,
+        enableRenamingProjectToWorkspace,
+    } = featureFlags;
 
     const {
         canCreateAnalyticalDashboard,
@@ -41,6 +46,7 @@ export function generateHeaderMenuItemsGroups(
 
     const shouldHidePixelPerfectExperience = shouldHidePPExperience(featureFlags);
     const isFreemiumCustomer = isFreemiumEdition(featureFlags.platformEdition.toString());
+    const workspaceRef = enableRenamingProjectToWorkspace ? "workspace" : "project";
 
     // PIXEL PERFECT MENU ITEMS
     if (!shouldHidePixelPerfectExperience) {
@@ -49,12 +55,12 @@ export function generateHeaderMenuItemsGroups(
         const pixelPerfectDashboardsItem = {
             key: "gs.header.dashboards",
             className: "s-menu-dashboards",
-            href: `/#s=/gdc/projects/${workspaceId}|projectDashboardPage|${dashboardIdAndTabId}`,
+            href: `/#s=/gdc/${workspaceRef}s/${workspaceId}|projectDashboardPage|${dashboardIdAndTabId}`,
         };
         const pixelPerfectReportsItem = {
             key: "gs.header.reports",
             className: "s-menu-reports",
-            href: `/#s=/gdc/projects/${workspaceId}|domainPage|all-reports`,
+            href: `/#s=/gdc/${workspaceRef}s/${workspaceId}|domainPage|all-reports`,
         };
 
         const showPixelPerfectDashboardsItem = canAccessWorkbench === true;
@@ -75,7 +81,7 @@ export function generateHeaderMenuItemsGroups(
     const kpiDashboardsItem = {
         key: shouldEnableNewNavigation(featureFlags) ? "gs.header.kpis.new" : "gs.header.kpis",
         className: "s-menu-kpis",
-        href: `/dashboards/#/project/${workspaceId}`,
+        href: `/dashboards/#/${workspaceRef}/${workspaceId}`,
     };
     const analyticalDesignerItem = {
         key: "gs.header.analyze",
@@ -86,12 +92,12 @@ export function generateHeaderMenuItemsGroups(
     const loadCsvItem = {
         key: "gs.header.load",
         className: "s-menu-load",
-        href: `/data/#/projects/${workspaceId}/datasets`,
+        href: `/data/#/${workspaceRef}s/${workspaceId}/datasets`,
     };
     const dataItemLink = !backendSupportsDataItem
         ? canManageProject && hasNoDataSet
-            ? `/admin/connect/#/projects/${workspaceId}/datasource`
-            : `/modeler/#/projects/${workspaceId}`
+            ? `/admin/connect/#/${workspaceRef}s/${workspaceId}/datasource`
+            : `/modeler/#/${workspaceRef}s/${workspaceId}`
         : `/modeler/#/${workspaceId}`;
     const dataItem = {
         key: "gs.header.data",
@@ -131,7 +137,7 @@ export function generateHeaderMenuItemsGroups(
     const manageItem = {
         key: "gs.header.manage",
         className: "s-menu-manage",
-        href: `/#s=/gdc/projects/${workspaceId}|dataPage|`,
+        href: `/#s=/gdc/${workspaceRef}s/${workspaceId}|dataPage|`,
     };
     const showManageItem = canManageMetric;
     if (showManageItem) {
