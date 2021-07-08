@@ -3,6 +3,9 @@ import React from "react";
 
 import { Color, IIconProps } from "../typings";
 
+/**
+ * @internal
+ */
 export interface IRowsIconProps extends IIconProps {
     colorPalette?: {
         odd?: Color;

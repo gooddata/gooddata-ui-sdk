@@ -13,10 +13,13 @@ import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-backend-spi';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeFilter } from '@gooddata/sdk-model';
+import { IDateFilter } from '@gooddata/sdk-model';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IElementsQueryOptions } from '@gooddata/sdk-backend-spi';
 import { IElementsQueryResult } from '@gooddata/sdk-backend-spi';
+import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
+import { IntlShape } from 'react-intl';
 import { IPlaceholder } from '@gooddata/sdk-ui';
 import { IRankingFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-backend-spi';
@@ -57,23 +60,23 @@ export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFil
 
 // @beta (undocumented)
 export const DateFilterHelpers: {
-    validateFilterOption: (filterOption: import("./interfaces").DateFilterOption) => import("./interfaces").IExtendedDateFilterErrors;
-    getDateFilterTitle: (filter: import("./interfaces").DateFilterOption, locale: import("@gooddata/sdk-ui").ILocale, dateFormat?: string) => string;
-    getDateFilterTitleUsingTranslator: (filter: import("./interfaces").DateFilterOption, translator: import("./utils/Translations/Translators").IDateAndMessageTranslator, dateFormat?: string) => string;
-    getDateFilterRepresentation: (filter: import("./interfaces").DateFilterOption, locale: import("@gooddata/sdk-ui").ILocale, dateFormat?: string) => string;
+    validateFilterOption: (filterOption: DateFilterOption) => IExtendedDateFilterErrors;
+    getDateFilterTitle: (filter: DateFilterOption, locale: ILocale, dateFormat?: string) => string;
+    getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, dateFormat?: string) => string;
+    getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, dateFormat?: string) => string;
     granularityIntlCodes: {
-        "GDC.time.year": import("./constants/i18n").GranularityIntlKey;
-        "GDC.time.week_us": import("./constants/i18n").GranularityIntlKey;
-        "GDC.time.quarter": import("./constants/i18n").GranularityIntlKey;
-        "GDC.time.month": import("./constants/i18n").GranularityIntlKey;
-        "GDC.time.date": import("./constants/i18n").GranularityIntlKey;
+        "GDC.time.year": GranularityIntlKey;
+        "GDC.time.week_us": GranularityIntlKey;
+        "GDC.time.quarter": GranularityIntlKey;
+        "GDC.time.month": GranularityIntlKey;
+        "GDC.time.date": GranularityIntlKey;
     };
-    applyExcludeCurrentPeriod: (dateFilterOption: import("./interfaces").DateFilterOption, excludeCurrentPeriod: boolean) => import("./interfaces").DateFilterOption;
-    defaultDateFilterOptions: import("./interfaces").IDateFilterOptionsByType;
-    canExcludeCurrentPeriod: (dateFilterOption: import("./interfaces").DateFilterOption) => boolean;
-    mapOptionToAfm: (value: import("./interfaces").DateFilterOption, dateDataSet: import("@gooddata/sdk-model").ObjRef, excludeCurrentPeriod: boolean) => import("@gooddata/sdk-model").IDateFilter;
+    applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => DateFilterOption;
+    defaultDateFilterOptions: IDateFilterOptionsByType;
+    canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
+    mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter;
     formatAbsoluteDateRange: (from: string | Date, to: string | Date, dateFormat: string) => string;
-    formatRelativeDateRange: (from: number, to: number, granularity: import("@gooddata/sdk-backend-spi").DateFilterGranularity, translator: import("./utils/Translations/Translators").IDateAndMessageTranslator) => string;
+    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
 
@@ -90,6 +93,9 @@ export const defaultDateFilterOptions: IDateFilterOptionsByType;
 
 // @public
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
+
+// @beta (undocumented)
+export type GranularityIntlKey = "day" | "week" | "month" | "quarter" | "year";
 
 // @beta (undocumented)
 export interface IAttributeDropdownItem {
@@ -175,6 +181,10 @@ export interface ICustomGranularitySelection {
     warningMessage: string;
 }
 
+// @beta (undocumented)
+export interface IDateAndMessageTranslator extends IDateTranslator, IMessageTranslator {
+}
+
 // @public
 export interface IDateFilterCallbackProps {
     // (undocumented)
@@ -234,6 +244,12 @@ export interface IDateFilterStatePropsIntersection {
     excludeCurrentPeriod: boolean;
     // (undocumented)
     selectedFilterOption: DateFilterOption;
+}
+
+// @beta (undocumented)
+export interface IDateTranslator {
+    // (undocumented)
+    formatDate: IntlShape["formatDate"];
 }
 
 // @public
@@ -302,6 +318,12 @@ export interface IMeasureValueFilterProps extends IMeasureValueFilterCommonProps
 export interface IMeasureValueFilterState {
     // (undocumented)
     displayDropdown: boolean;
+}
+
+// @beta (undocumented)
+export interface IMessageTranslator {
+    // (undocumented)
+    formatMessage: IntlShape["formatMessage"];
 }
 
 // @beta (undocumented)
@@ -388,7 +410,7 @@ export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilte
     render(): React_2.ReactNode;
     // (undocumented)
     state: IMeasureValueFilterState;
-    }
+}
 
 // @beta (undocumented)
 export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureValueFilterDropdownProps> {
@@ -409,6 +431,5 @@ export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDate
 
 // @beta (undocumented)
 export type WarningMessage = string | IWarningMessage;
-
 
 ```

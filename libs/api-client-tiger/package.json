@@ -61,7 +61,7 @@
         "@gooddata/eslint-config": "^2.1.0",
         "@gooddata/reference-workspace": "^8.6.0-alpha.20",
         "@microsoft/api-documenter": "^7.12.13",
-        "@microsoft/api-extractor": "^7.3.8",
+        "@microsoft/api-extractor": "^7.18.4",
         "@openapitools/openapi-generator-cli": "^1.0.10-4.2.3",
         "@types/jest": "^26.0.12",
         "@types/lodash": "^4.14.158",

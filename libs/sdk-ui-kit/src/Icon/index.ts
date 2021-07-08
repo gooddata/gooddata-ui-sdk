@@ -3,7 +3,7 @@
 /**
  * @internal
  */
-export { Icon } from "./Icon";
+export { Icon, IRowsIconProps } from "./Icon";
 
 /**
  * @internal

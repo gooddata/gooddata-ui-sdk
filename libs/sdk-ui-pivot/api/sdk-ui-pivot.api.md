@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -205,6 +207,5 @@ export const PivotTable: (props: IPivotTableProps) => JSX.Element;
 
 // @public
 export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities, desiredMenu?: IMenu): IMenu;
-
 
 ```

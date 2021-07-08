@@ -14,7 +14,7 @@ import { Hyperlink } from "./icons/Hyperlink";
 import { Undo } from "./icons/Undo";
 import { Home } from "./icons/Home";
 import { BurgerMenu } from "./icons/BurgerMenu";
-import { Rows } from "./icons/Rows";
+import { Rows, IRowsIconProps } from "./icons/Rows";
 import { DragHandle } from "./icons/DragHandle";
 import { Interaction } from "./icons/Interaction";
 import { AttributeFilter } from "./icons/AttributeFilter";
@@ -45,3 +45,5 @@ export const Icon = {
     AttributeFilter,
     LegendMenu,
 };
+
+export { IRowsIconProps };

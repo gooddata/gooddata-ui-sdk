@@ -113,3 +113,9 @@ export const BackendToBearConvertors = {
     convertLayoutSize: convertLayoutSizeFromBackend,
     convertLayoutItemSize: convertLayoutItemSizeFromBackend,
 };
+
+export {
+    ReferenceConverter,
+    IConversionData,
+    IdGenerator,
+} from "./convertors/fromBackend/ReferenceConverter";
