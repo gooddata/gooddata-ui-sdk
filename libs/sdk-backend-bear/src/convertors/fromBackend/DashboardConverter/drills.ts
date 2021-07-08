@@ -4,7 +4,7 @@ import { GdcVisualizationWidget, GdcKpi } from "@gooddata/api-model-bear";
 import { uriRef, idRef } from "@gooddata/sdk-model";
 import {
     IDrillToLegacyDashboard,
-    DrillDefinition,
+    InsightDrillDefinition,
     IDrillToDashboard,
     IDrillToInsight,
     IDrillToCustomUrl,
@@ -48,7 +48,7 @@ export const convertDrillOrigin = (from: GdcVisualizationWidget.DrillFromType): 
 
 export const convertVisualizationWidgetDrill = (
     drill: GdcVisualizationWidget.IDrillDefinition,
-): DrillDefinition => {
+): InsightDrillDefinition => {
     if (GdcVisualizationWidget.isDrillToDashboard(drill)) {
         const {
             drillToDashboard: { toDashboard, target, from },

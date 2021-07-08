@@ -2,7 +2,7 @@
 import { ObjRef, isObjRef, ObjectType, VisualizationProperties } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { IDashboardFilterReference } from "./filterContext";
-import { DrillDefinition } from "./drills";
+import { DrillDefinition, InsightDrillDefinition, KpiDrillDefinition } from "./drills";
 import { ILegacyKpi } from "./kpi";
 import { IDashboardObjectIdentity } from "./common";
 import invariant from "ts-invariant";
@@ -60,6 +60,11 @@ export interface IKpiWidgetBase extends IWidgetBase {
      * Temporary place for legacy kpi properties
      */
     readonly kpi: ILegacyKpi;
+
+    /**
+     * Drill interactions configured for the kpi widget.
+     */
+    readonly drills: KpiDrillDefinition[];
 }
 
 /**
@@ -92,6 +97,11 @@ export interface IInsightWidgetBase extends IWidgetBase {
      *
      */
     readonly properties?: VisualizationProperties;
+
+    /**
+     * Drill interactions configured for the insight widget.
+     */
+    readonly drills: InsightDrillDefinition[];
 }
 
 /**

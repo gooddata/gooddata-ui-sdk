@@ -8,7 +8,6 @@ import {
     ILegacyKpiComparisonDirection,
     ILegacyKpi,
     isKpiWidgetDefinition,
-    DrillDefinition,
     IKpiWidgetDefinition,
     isKpiWidget,
 } from "@gooddata/sdk-backend-spi";
@@ -77,7 +76,7 @@ export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements I
     };
 
     public drills = (valueOrUpdateCallback: ValueOrUpdateCallback<KpiDrillDefinition[]>): this =>
-        this.setWidgetProp("drills", valueOrUpdateCallback as DrillDefinition[]);
+        this.setWidgetProp("drills", valueOrUpdateCallback);
 
     public measure = (valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>): this =>
         this.setKpiWidgetProp("metric", valueOrUpdateCallback);
