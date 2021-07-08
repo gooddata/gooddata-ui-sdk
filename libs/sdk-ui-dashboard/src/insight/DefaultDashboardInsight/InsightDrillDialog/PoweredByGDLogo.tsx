@@ -1,15 +1,15 @@
 // (C) 2007-2021 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { useDashboardSelector } from "../model";
-import { selectCanManageWorkspace } from "../model/state/permissions/permissionsSelectors";
 import { createSelector } from "@reduxjs/toolkit";
-import { useLogUserInteraction } from "../logUserInteraction/useLogUserInteraction";
+import { useLogUserInteraction } from "../../../logUserInteraction";
 import {
     selectEnableCompanyLogoInEmbeddedUI,
     selectIsEmbedded,
     selectPlatformEdition,
-} from "../model/state/config/configSelectors";
+    selectCanManageWorkspace,
+    useDashboardSelector,
+} from "../../../model";
 
 /**
  * @internal

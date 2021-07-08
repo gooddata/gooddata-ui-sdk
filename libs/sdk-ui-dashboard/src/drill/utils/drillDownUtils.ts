@@ -3,6 +3,9 @@
 import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import { IDrillDownDefinition } from "../../types";
 
+/**
+ * @internal
+ */
 export function getDrillDownAttributeTitle(drill: IDrillDownDefinition, drillEvent: IDrillEvent): string {
     return (drillEvent.drillContext.intersection || [])
         .map((intersectionElement) => intersectionElement.header)

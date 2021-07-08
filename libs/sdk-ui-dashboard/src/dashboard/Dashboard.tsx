@@ -61,9 +61,17 @@ import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { DashboardConfig } from "../model/types/commonTypes";
 import invariant from "ts-invariant";
-import { DashboardEventsProvider } from "./DashboardEventsContext";
-import { DashboardComponentsProvider, useDashboardComponentsContext } from "./DashboardComponentsContext";
-import { DashboardInsightProps, DefaultDashboardInsightWithDrillDialog } from "../insight";
+import {
+    DashboardComponentsProvider,
+    DashboardEventsProvider,
+    useDashboardComponentsContext,
+} from "../dashboardContexts";
+import {
+    CustomDashboardInsightComponent,
+    DefaultDashboardInsightWithDrillDialog,
+    IDashboardInsightCoreProps,
+    IDefaultDashboardInsightProps,
+} from "../insight";
 import { DashboardKpiProps, DefaultDashboardKpi } from "../kpi";
 import {
     DashboardLayout,
@@ -306,14 +314,14 @@ export interface IDashboardProps {
             /**
              * Specify component to use for rendering the insight
              */
-            Component?: React.ComponentType<DashboardInsightProps>;
+            Component?: CustomDashboardInsightComponent;
 
             /**
              * Optionally specify props to customize the default implementation of Insight.
              *
              * This has no effect if custom component is used.
              */
-            defaultComponentProps?: DashboardInsightProps;
+            defaultComponentProps?: Omit<IDefaultDashboardInsightProps, keyof IDashboardInsightCoreProps>; // TODO: also how to propagate these?
         };
 
         /**
@@ -321,7 +329,7 @@ export interface IDashboardProps {
          */
         kpi?: {
             /**
-             * Specify component to use for rendering the insight
+             * Specify component to use for rendering the KPI
              */
             Component?: React.ComponentType<DashboardKpiProps>;
 

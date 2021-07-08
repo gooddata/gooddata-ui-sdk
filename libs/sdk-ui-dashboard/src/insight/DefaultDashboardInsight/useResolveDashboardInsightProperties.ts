@@ -1,9 +1,10 @@
 // (C) 2020-2021 GoodData Corporation
 import { useMemo } from "react";
+import merge from "lodash/merge";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
-import { selectSettings, useDashboardSelector } from "../model";
-import merge from "lodash/merge";
+
+import { selectSettings, useDashboardSelector } from "../../model";
 
 /**
  * @internal

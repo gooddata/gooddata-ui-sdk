@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import { useDashboardDispatch } from "../model/state/dashboardStore";
-import { useDashboardEventsContext } from "./DashboardEventsContext";
+import { useDashboardEventsContext } from "../dashboardContexts";
 import { DashboardEventHandler } from "../model/events/eventHandler";
 import { v4 as uuid } from "uuid";
 import { DashboardEventType, DashboardCommands, DashboardEvents } from "../model";

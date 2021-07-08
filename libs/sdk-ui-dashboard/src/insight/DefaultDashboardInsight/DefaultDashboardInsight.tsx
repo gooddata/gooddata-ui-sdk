@@ -11,7 +11,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { InsightError, InsightRenderer } from "@gooddata/sdk-ui-ext";
-import { useDashboardComponentsContext } from "../dashboard/DashboardComponentsContext";
+import { useDashboardComponentsContext } from "../../dashboardContexts";
 import {
     useDashboardSelector,
     selectColorPalette,
@@ -19,8 +19,8 @@ import {
     selectMapboxToken,
     selectSeparators,
     selectSettings,
-} from "../model";
-import { DashboardInsightProps } from "./types";
+} from "../../model";
+import { IDefaultDashboardInsightProps } from "../types";
 import { useResolveDashboardInsightFilters } from "./useResolveDashboardInsightFilters";
 import { useResolveDashboardInsightProperties } from "./useResolveDashboardInsightProperties";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
@@ -30,7 +30,7 @@ const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "
 /**
  * @internal
  */
-export const DefaultDashboardInsight: React.FC<DashboardInsightProps> = (props): JSX.Element => {
+export const DefaultDashboardInsight: React.FC<IDefaultDashboardInsightProps> = (props): JSX.Element => {
     const {
         widget,
         insight,

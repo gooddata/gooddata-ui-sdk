@@ -397,6 +397,9 @@ export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAt
 export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterCoreProps>;
 
 // @internal (undocumented)
+export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightCoreProps>;
+
+// @internal (undocumented)
 export type CustomFilterBarComponent = ComponentType<IFilterBarCoreProps>;
 
 // @internal (undocumented)
@@ -681,45 +684,7 @@ export interface DashboardFilterContextChanged extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export const DashboardInsight: (props: DashboardInsightProps) => JSX.Element;
-
-// @internal (undocumented)
-export interface DashboardInsightProps {
-    // (undocumented)
-    backend?: IAnalyticalBackend;
-    // (undocumented)
-    clientHeight?: number;
-    // (undocumented)
-    disableWidgetImplicitDrills?: boolean;
-    // (undocumented)
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    // (undocumented)
-    ErrorComponent?: React_2.ComponentType<IErrorProps>;
-    // (undocumented)
-    filters?: FilterContextItem[];
-    // (undocumented)
-    insight: IInsight;
-    // (undocumented)
-    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
-    // (undocumented)
-    onDrill?: OnDashboardDrill;
-    // (undocumented)
-    onDrillDown?: OnDrillDown;
-    // (undocumented)
-    onDrillToAttributeUrl?: OnDrillToAttributeUrl;
-    // (undocumented)
-    onDrillToCustomUrl?: OnDrillToCustomUrl;
-    // (undocumented)
-    onDrillToDashboard?: OnDrillToDashboard;
-    // (undocumented)
-    onDrillToInsight?: OnDrillToInsight;
-    // (undocumented)
-    onError?: OnError;
-    // (undocumented)
-    widget: IInsightWidget;
-    // (undocumented)
-    workspace?: string;
-}
+export const DashboardInsight: (props: IDashboardInsightCoreProps) => JSX.Element;
 
 // @internal
 export interface DashboardInsightWidgetChanged extends IDashboardEvent {
@@ -1201,10 +1166,13 @@ export const DefaultDashboardAttributeFilter: React_2.FC<IDefaultDashboardAttrib
 export const DefaultDashboardDateFilter: React_2.FC<IDefaultDashboardDateFilterProps>;
 
 // @internal (undocumented)
-export const DefaultDashboardInsight: React_2.FC<DashboardInsightProps>;
+export const DefaultDashboardInsight: React_2.FC<IDefaultDashboardInsightProps>;
 
 // @internal (undocumented)
-export const DefaultDashboardInsightWithDrillDialog: (props: DashboardInsightProps) => JSX.Element;
+export const DefaultDashboardInsightWithDrillDialog: (props: IDefaultDashboardInsightProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultDashboardInsightWithDrillSelect: React_2.FC<IDefaultDashboardInsightProps>;
 
 // @internal (undocumented)
 export const DefaultDashboardKpi: React_2.FC<DashboardKpiProps>;
@@ -1384,6 +1352,9 @@ export interface FilterContextState {
     filterContext?: IFilterContextDefinition;
 }
 
+// @internal (undocumented)
+export function getDrillDownAttributeTitle(drill: IDrillDownDefinition, drillEvent: IDrillEvent): string;
+
 // @internal
 export const HiddenButtonBar: React_2.FC<IButtonBarCoreProps>;
 
@@ -1453,6 +1424,22 @@ export interface IDashboardEvent {
 // @beta
 export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
 
+// @internal
+export interface IDashboardInsightCoreProps {
+    // (undocumented)
+    clientHeight?: number;
+    // (undocumented)
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    // (undocumented)
+    insight: IInsight;
+    // (undocumented)
+    onDrill?: OnDashboardDrill;
+    // (undocumented)
+    onError?: OnError;
+    // (undocumented)
+    widget: IInsightWidget;
+}
+
 // @internal (undocumented)
 export interface IDashboardProps {
     backend?: IAnalyticalBackend;
@@ -1489,8 +1476,8 @@ export interface IDashboardProps {
         Component?: React_2.ComponentType<DashboardWidgetProps>;
         defaultComponentProps?: DashboardWidgetProps;
         insight?: {
-            Component?: React_2.ComponentType<DashboardInsightProps>;
-            defaultComponentProps?: DashboardInsightProps;
+            Component?: CustomDashboardInsightComponent;
+            defaultComponentProps?: Omit<IDefaultDashboardInsightProps, keyof IDashboardInsightCoreProps>;
         };
         kpi?: {
             Component?: React_2.ComponentType<DashboardKpiProps>;
@@ -1527,6 +1514,32 @@ export interface IDefaultDashboardAttributeFilterProps extends IDashboardAttribu
 // @internal
 export interface IDefaultDashboardDateFilterProps extends IDashboardDateFilterCoreProps {
     config: IDashboardDateFilterConfig;
+}
+
+// @internal
+export interface IDefaultDashboardInsightProps extends IDashboardInsightCoreProps {
+    // (undocumented)
+    backend?: IAnalyticalBackend;
+    // (undocumented)
+    disableWidgetImplicitDrills?: boolean;
+    // (undocumented)
+    ErrorComponent?: ComponentType<IErrorProps>;
+    // (undocumented)
+    filters?: FilterContextItem[];
+    // (undocumented)
+    LoadingComponent?: ComponentType<ILoadingProps>;
+    // (undocumented)
+    onDrillDown?: OnDrillDown;
+    // (undocumented)
+    onDrillToAttributeUrl?: OnDrillToAttributeUrl;
+    // (undocumented)
+    onDrillToCustomUrl?: OnDrillToCustomUrl;
+    // (undocumented)
+    onDrillToDashboard?: OnDrillToDashboard;
+    // (undocumented)
+    onDrillToInsight?: OnDrillToInsight;
+    // (undocumented)
+    workspace?: string;
 }
 
 // @internal
@@ -2109,6 +2122,9 @@ export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<Dashbo
 // @internal
 export const selectCanListUsersInWorkspace: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("@gooddata/sdk-backend-spi").IWorkspacePermissions) => boolean>;
 
+// @internal
+export const selectCanManageWorkspace: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("@gooddata/sdk-backend-spi").IWorkspacePermissions) => boolean>;
+
 // @internal (undocumented)
 export const selectCatalogAttributes: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ICatalogAttribute[], (res: import("./catalogState").CatalogState) => import("@gooddata/sdk-backend-spi").ICatalogAttribute[]>;
 
@@ -2175,6 +2191,9 @@ export const selectEffectiveDateFilterOptions: import("@reduxjs/toolkit").Output
 export const selectEffectiveDateFilterTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => string | undefined>;
 
 // @internal
+export const selectEnableCompanyLogoInEmbeddedUI: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("../..").ResolvedDashboardConfig) => boolean>;
+
+// @internal
 export const selectEnableKPIDashboardSchedule: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;
 
 // @internal
@@ -2216,6 +2235,9 @@ export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-mo
 export const selectInsightsById: (state: DashboardState) => import("@reduxjs/toolkit").Dictionary<import("@gooddata/sdk-model").IInsight>;
 
 // @internal
+export const selectIsEmbedded: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("../..").ResolvedDashboardConfig) => boolean>;
+
+// @internal
 export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("../..").ResolvedDashboardConfig) => boolean>;
 
 // @internal
@@ -2232,6 +2254,9 @@ export const selectObjectAvailabilityConfig: import("@reduxjs/toolkit").OutputSe
 
 // @internal
 export const selectPermissions: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IWorkspacePermissions, (res: import("./permissionsState").PermissionsState) => import("@gooddata/sdk-backend-spi").IWorkspacePermissions>;
+
+// @internal
+export const selectPlatformEdition: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").PlatformEdition, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").PlatformEdition>;
 
 // @internal
 export const selectSeparators: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").ISeparators>;

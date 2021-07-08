@@ -34,9 +34,16 @@ export {
     selectDateFormat,
     selectEnableKPIDashboardSchedule,
     selectEnableKPIDashboardScheduleRecipients,
+    selectEnableCompanyLogoInEmbeddedUI,
+    selectIsEmbedded,
+    selectPlatformEdition,
 } from "./state/config/configSelectors";
 export { PermissionsState } from "./state/permissions/permissionsState";
-export { selectPermissions, selectCanListUsersInWorkspace } from "./state/permissions/permissionsSelectors";
+export {
+    selectPermissions,
+    selectCanListUsersInWorkspace,
+    selectCanManageWorkspace,
+} from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
 export {
     selectFilterContext,

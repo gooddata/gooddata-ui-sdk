@@ -9,9 +9,20 @@ options = {
             "src/model",
             "src/model/_staging/*",
         ]),
+        depCruiser.moduleWithDependencies("insight", "src/insight", [
+            "src/converters",
+            "src/dashboardContexts",
+            "src/dashboardHooks",
+            "src/drill",
+            "src/drill/interfaces.ts", // TODO RAIL-3383 can we avoid this?
+            "src/localization",
+            "src/logUserInteraction",
+            "src/model",
+            "src/model/_staging/*",
+            "src/types.ts",
+        ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/scheduledEmail", [
-            // TODO: RAIL-3383 this hook should probably live somewhere else
-            "src/dashboard/useDashboardCommandProcessing.ts",
+            "src/dashboardHooks",
             "src/localization",
             "src/model",
         ]),

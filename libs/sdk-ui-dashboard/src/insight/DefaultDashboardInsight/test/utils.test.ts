@@ -1,8 +1,9 @@
 // (C) 2020-2021 GoodData Corporation
 import { IFilter, newAllTimeFilter, newRelativeDateFilter, idRef } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { addImplicitAllTimeFilter } from "../utils";
 import { IWidgetDefinition } from "@gooddata/sdk-backend-spi";
+
+import { addImplicitAllTimeFilter } from "../utils";
 
 describe("addImplicitAllTimeFilter", () => {
     type Scenario = [string, IWidgetDefinition, IFilter[], IFilter[]];

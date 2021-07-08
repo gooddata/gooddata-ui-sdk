@@ -3,7 +3,7 @@ import React from "react";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
 import { useKpiData } from "./useKpiData";
-import { useDashboardComponentsContext } from "../../dashboard/DashboardComponentsContext";
+import { useDashboardComponentsContext } from "../../dashboardContexts";
 import {
     useDashboardSelector,
     selectSeparators,

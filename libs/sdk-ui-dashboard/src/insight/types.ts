@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import React from "react";
+import { ComponentType } from "react";
 import { FilterContextItem, IAnalyticalBackend, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import { IDrillableItem, IErrorProps, IHeaderPredicate, ILoadingProps, OnError } from "@gooddata/sdk-ui";
@@ -12,25 +12,50 @@ import {
     OnDrillToInsight,
 } from "../drill/interfaces";
 
+///
+/// Core props
+///
+
+/**
+ * The necessary props a component must be able to handle for it to be usable as a DashboardInsight.
+ * @internal
+ */
+export interface IDashboardInsightCoreProps {
+    widget: IInsightWidget;
+    insight: IInsight;
+    clientHeight?: number;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    onDrill?: OnDashboardDrill;
+    onError?: OnError;
+}
+
+///
+/// Custom component types
+///
+
 /**
  * @internal
  */
-export interface DashboardInsightProps {
-    widget: IInsightWidget;
-    insight: IInsight;
+export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightCoreProps>;
+
+///
+/// Default component props
+///
+
+/**
+ * Props of the default DashboardInsight implementation: {@link DefaultDashboardInsight}.
+ * @internal
+ */
+export interface IDefaultDashboardInsightProps extends IDashboardInsightCoreProps {
     backend?: IAnalyticalBackend;
     workspace?: string;
     filters?: FilterContextItem[];
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    onDrill?: OnDashboardDrill;
     onDrillDown?: OnDrillDown;
     onDrillToInsight?: OnDrillToInsight;
     onDrillToDashboard?: OnDrillToDashboard;
     onDrillToAttributeUrl?: OnDrillToAttributeUrl;
     onDrillToCustomUrl?: OnDrillToCustomUrl;
     disableWidgetImplicitDrills?: boolean;
-    onError?: OnError;
-    ErrorComponent?: React.ComponentType<IErrorProps>;
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
-    clientHeight?: number;
+    ErrorComponent?: ComponentType<IErrorProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
 }

@@ -17,3 +17,4 @@ export {
     OnDrillToDashboard,
     OnDrillToInsight,
 } from "./interfaces";
+export { getDrillDownAttributeTitle } from "./utils/drillDownUtils";
