@@ -2,6 +2,27 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.5.0",
+      "tag": "@gooddata/sdk-ui-all_v8.5.0",
+      "date": "Thu, 08 Jul 2021 09:09:51 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support for the data sampling feature of GoodData.CN is added."
+          },
+          {
+            "comment": "Support for approximate count aggregation in GoodData.CN is added."
+          },
+          {
+            "comment": "The AttributeFilterButton component with DateFilter-like styles was added."
+          },
+          {
+            "comment": "Support for parent-child filtering was added to the AttributeFilter and AttributeFilterButton components."
+          }
+        ]
+      }
+    },
+    {
       "version": "8.4.0",
       "tag": "@gooddata/sdk-ui-all_v8.4.0",
       "date": "Thu, 03 Jun 2021 09:24:58 GMT",

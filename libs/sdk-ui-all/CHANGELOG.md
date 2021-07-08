@@ -1,6 +1,16 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 03 Jun 2021 09:24:58 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Jul 2021 09:09:51 GMT and should not be manually modified.
+
+## 8.5.0
+Thu, 08 Jul 2021 09:09:51 GMT
+
+### Updates
+
+- Support for the data sampling feature of GoodData.CN is added.
+- Support for approximate count aggregation in GoodData.CN is added.
+- The AttributeFilterButton component with DateFilter-like styles was added.
+- Support for parent-child filtering was added to the AttributeFilter and AttributeFilterButton components.
 
 ## 8.4.0
 Thu, 03 Jun 2021 09:24:58 GMT
