@@ -40,7 +40,7 @@ import { Input } from "./Input";
 import { DateTime } from "./DateTime";
 import { Attachment } from "./Attachment";
 import { RecipientsSelect } from "./RecipientsSelect/RecipientsSelect";
-import { IntlWrapper } from "../../../localization/IntlWrapper";
+import { IntlWrapper } from "../../../localization";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;

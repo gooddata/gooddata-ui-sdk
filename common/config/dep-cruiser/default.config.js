@@ -307,6 +307,10 @@ function moduleWithDependencies(module, dir, deps) {
             if (dep.endsWith("/*")) {
                 return `${dep.slice(0, -2)}/.*$`;
             }
+            // for single file dependencies, return them as-is
+            if (dep.match(/\.tsx?$/)) {
+                return dep;
+            }
             return `${dep}/index\.ts(x)?$`;
         }),
     );

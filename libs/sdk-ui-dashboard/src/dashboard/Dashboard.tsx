@@ -38,6 +38,7 @@ import {
     FilterContextItem,
     IAnalyticalBackend,
     IScheduledMail,
+    IScheduledMailDefinition,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     ITheme,
@@ -46,6 +47,7 @@ import {
 import { ObjRef } from "@gooddata/sdk-model";
 import {
     ErrorComponent as DefaultError,
+    GoodDataSdkError,
     IDrillableItem,
     IErrorProps,
     IHeaderPredicate,
@@ -70,7 +72,11 @@ import {
     DefaultDashboardLayout,
     DefaultDashboardWidget,
 } from "../layout";
-import { DefaultScheduledEmailDialog, ScheduledEmailDialogProps } from "../scheduledEmail";
+import {
+    CustomScheduledEmailDialogComponent,
+    DefaultScheduledEmailDialog,
+    IDefaultScheduledEmailDialogCallbackProps,
+} from "../scheduledEmail";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { IntlWrapper } from "../localization/IntlWrapper";
 import { useDashboardPdfExporter } from "./useDashboardPdfExporter";
@@ -335,14 +341,14 @@ export interface IDashboardProps {
         /**
          * Specify component to use for rendering the scheduled email dialog
          */
-        Component?: React.ComponentType<ScheduledEmailDialogProps>;
+        Component?: CustomScheduledEmailDialogComponent;
 
         /**
-         * Optionally specify props to customize the default implementation of scheduled email dialog.
+         * Optionally specify callbacks props to be called by the default implementation of scheduled email dialog.
          *
-         * This has no effect if custom component is used.
+         * These will have no effect if custom component is used.
          */
-        defaultComponentProps?: ScheduledEmailDialogProps;
+        defaultComponentCallbackProps?: IDefaultScheduledEmailDialogCallbackProps;
     };
 
     /**
@@ -368,11 +374,21 @@ export interface IDashboardProps {
 }
 
 const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const { drillableItems, filterBarConfig, topBarConfig, dashboardRef, backend, workspace } = props;
+    const {
+        drillableItems,
+        filterBarConfig,
+        topBarConfig,
+        scheduledEmailDialogConfig,
+        dashboardRef,
+        backend,
+        workspace,
+    } = props;
 
     const FilterBarComponent = filterBarConfig?.Component ?? DefaultFilterBar;
     const TopBarComponent = topBarConfig?.Component ?? DefaultTopBar;
-    const { ScheduledEmailDialogComponent } = useDashboardComponentsContext();
+    const ScheduledEmailDialogComponent =
+        scheduledEmailDialogConfig?.Component ?? DefaultScheduledEmailDialog;
+    const isDefaultScheduledEmailDialogUsed = !scheduledEmailDialogConfig?.Component;
     const { filters, onFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
     const { addSuccess, addError } = useToastMessage();
@@ -399,18 +415,36 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
         onExportToPdfCallback: defaultOnExportToPdf,
     };
 
-    function onScheduleEmailingError() {
+    function onScheduleEmailingError(error: GoodDataSdkError) {
+        if (isDefaultScheduledEmailDialogUsed) {
+            scheduledEmailDialogConfig?.defaultComponentCallbackProps?.onError?.(error);
+        }
+
         setIsScheduleEmailingDialogOpen(false);
         addError({ id: "dialogs.schedule.email.submit.error" });
     }
 
-    function onScheduleEmailingSuccess(_scheduledMail: IScheduledMail) {
+    function onScheduleEmailingSuccess(scheduledMail: IScheduledMail) {
+        if (isDefaultScheduledEmailDialogUsed) {
+            scheduledEmailDialogConfig?.defaultComponentCallbackProps?.onSuccess?.(scheduledMail);
+        }
+
         setIsScheduleEmailingDialogOpen(false);
         addSuccess({ id: "dialogs.schedule.email.submit.success" });
     }
 
     function onScheduleEmailingCancel() {
+        if (isDefaultScheduledEmailDialogUsed) {
+            scheduledEmailDialogConfig?.defaultComponentCallbackProps?.onCancel?.();
+        }
+
         setIsScheduleEmailingDialogOpen(false);
+    }
+
+    function onScheduleEmailingSubmit(scheduledMail: IScheduledMailDefinition) {
+        if (isDefaultScheduledEmailDialogUsed) {
+            scheduledEmailDialogConfig?.defaultComponentCallbackProps?.onSubmit?.(scheduledMail);
+        }
     }
 
     return (
@@ -422,6 +456,7 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
                     onCancel={onScheduleEmailingCancel}
                     onError={onScheduleEmailingError}
                     onSuccess={onScheduleEmailingSuccess}
+                    onSubmit={onScheduleEmailingSubmit}
                 />
             )}
             <TopBarComponent
@@ -514,9 +549,6 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                             }
                             KpiComponent={props.widgetConfig?.kpi?.Component ?? DefaultDashboardKpi}
                             WidgetComponent={props.widgetConfig?.Component ?? DefaultDashboardWidget}
-                            ScheduledEmailDialogComponent={
-                                props.scheduledEmailDialogConfig?.Component ?? DefaultScheduledEmailDialog
-                            }
                         >
                             <DashboardLoading {...props} />
                         </DashboardComponentsProvider>
