@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "The AttributeFilterButton component with DateFilter like styles was added.",
+            "comment": "The AttributeFilterButton component with DateFilter-like styles was added.",
             "type": "none"
         }
     ],

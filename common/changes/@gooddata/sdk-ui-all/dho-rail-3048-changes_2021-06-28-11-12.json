@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Support for approximate count aggreagation in GoodData.CN is added.",
+            "comment": "Support for approximate count aggregation in GoodData.CN is added.",
             "type": "none"
         }
     ],
