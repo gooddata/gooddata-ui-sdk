@@ -7,7 +7,7 @@ import {
     IFilterContextDefinition,
 } from "@gooddata/sdk-backend-spi";
 import { createScheduledEmail } from "../../model";
-import { useDashboardCommandProcessing, CommandProcessingStatus } from "../../dashboardHooks";
+import { useDashboardCommandProcessing, CommandProcessingStatus } from "../../dashboardAux";
 
 export const useCreateScheduledEmail = ({
     onBeforeRun,

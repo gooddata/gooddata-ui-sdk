@@ -21,7 +21,7 @@ import {
     selectCanListUsersInWorkspace,
     selectEnableKPIDashboardSchedule,
 } from "../../model";
-import { CommandProcessingStatus } from "../../dashboardHooks";
+import { CommandProcessingStatus } from "../../dashboardAux";
 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail";
 

@@ -11,7 +11,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { InsightError, InsightRenderer } from "@gooddata/sdk-ui-ext";
-import { useDashboardComponentsContext } from "../../dashboardContexts";
+import { useDashboardComponentsContext } from "../../dashboardAux";
 import {
     useDashboardSelector,
     selectColorPalette,

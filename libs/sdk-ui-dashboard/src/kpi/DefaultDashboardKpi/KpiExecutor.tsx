@@ -43,7 +43,7 @@ import { KpiRenderer } from "./KpiRenderer";
 import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
 import { useKpiAlertOperations } from "./useKpiAlertOperations";
 import { selectPermissions, selectSettings, selectUser, useDashboardSelector } from "../../model";
-import { useDashboardComponentsContext } from "../../dashboardContexts";
+import { useDashboardComponentsContext } from "../../dashboardAux";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../types";
 import { IKpiAlertResult, IKpiResult } from "./types";
 import {

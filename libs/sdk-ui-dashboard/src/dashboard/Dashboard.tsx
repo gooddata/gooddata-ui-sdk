@@ -65,7 +65,7 @@ import {
     DashboardComponentsProvider,
     DashboardEventsProvider,
     useDashboardComponentsContext,
-} from "../dashboardContexts";
+} from "../dashboardAux";
 import {
     CustomDashboardInsightComponent,
     DefaultDashboardInsightWithDrillDialog,

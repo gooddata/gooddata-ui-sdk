@@ -11,8 +11,7 @@ options = {
         ]),
         depCruiser.moduleWithDependencies("insight", "src/insight", [
             "src/converters",
-            "src/dashboardContexts",
-            "src/dashboardHooks",
+            "src/dashboardAux",
             "src/drill",
             "src/drill/interfaces.ts", // TODO RAIL-3383 can we avoid this?
             "src/localization",
@@ -22,7 +21,7 @@ options = {
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/scheduledEmail", [
-            "src/dashboardHooks",
+            "src/dashboardAux",
             "src/localization",
             "src/model",
         ]),

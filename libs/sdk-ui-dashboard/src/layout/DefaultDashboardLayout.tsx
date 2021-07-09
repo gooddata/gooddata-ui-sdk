@@ -20,7 +20,7 @@ import {
 import { EmptyDashboardError } from "./EmptyDashboardError";
 import { selectInsights, selectSettings, selectBasicLayout, useDashboardSelector } from "../model";
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget";
-import { useDashboardComponentsContext } from "../dashboardContexts";
+import { useDashboardComponentsContext } from "../dashboardAux";
 import { DashboardLayoutProps } from "./types";
 import {
     DashboardLayout,
