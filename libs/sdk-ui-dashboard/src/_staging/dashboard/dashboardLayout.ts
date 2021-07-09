@@ -16,7 +16,7 @@ import { InvariantError } from "ts-invariant";
 import {
     MeasurableWidgetContent,
     validateDashboardLayoutWidgetSize,
-} from "../../../layout/DefaultDashboardLayoutRenderer";
+} from "../../layout/DefaultDashboardLayoutRenderer";
 
 function extractContentFromWidget(
     widget: DashboardWidget,

@@ -5,7 +5,7 @@ import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import {
     attributeFilterToDashboardAttributeFilter,
     dashboardAttributeFilterToAttributeFilter,
-} from "../../model/_staging/dashboard/dashboardFilterConverter";
+} from "../../_staging/dashboard/dashboardFilterConverter";
 import { IDefaultDashboardAttributeFilterProps } from "../types";
 
 /**

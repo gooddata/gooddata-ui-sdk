@@ -23,7 +23,6 @@ import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
-import { ICatalogDateAttribute } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
 import { ICatalogFact } from '@gooddata/sdk-backend-spi';
 import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
@@ -41,7 +40,6 @@ import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
-import { Identifier } from '@gooddata/sdk-model';
 import { IDrillableItem } from '@gooddata/sdk-ui';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillToAttributeUrl } from '@gooddata/sdk-backend-spi';
@@ -79,7 +77,6 @@ import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { LocalIdRef } from '@gooddata/sdk-model';
-import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
@@ -157,12 +154,6 @@ export interface BackendCapabilitiesState {
     // (undocumented)
     backendCapabilities?: IBackendCapabilities;
 }
-
-// @internal (undocumented)
-export type CatalogDateAttributeWithDataset = {
-    readonly attribute: ICatalogDateAttribute;
-    readonly dataset: ICatalogDateDataset;
-};
 
 // @internal (undocumented)
 export interface CatalogState {
@@ -1825,36 +1816,6 @@ export type ObjectAvailabilityConfig = {
     includeObjectsWithTags?: string[];
 };
 
-// @internal
-export class ObjRefMap<T> {
-    // (undocumented)
-    [Symbol.iterator](): IterableIterator<[ObjRef, T]>;
-    // (undocumented)
-    readonly [Symbol.toStringTag]: string;
-    constructor(config: ObjRefMapConfig<T>);
-    // (undocumented)
-    entries(): IterableIterator<[ObjRef, T]>;
-    // (undocumented)
-    fromItems(items: ReadonlyArray<T>): ObjRefMap<T>;
-    // (undocumented)
-    get(key: ObjRef): T | undefined;
-    // (undocumented)
-    keys(): IterableIterator<ObjRef>;
-    // (undocumented)
-    size: number;
-    // (undocumented)
-    values(): IterableIterator<T>;
-}
-
-// @internal
-export type ObjRefMapConfig<T> = {
-    readonly refExtract: (obj: T) => ObjRef;
-    readonly idExtract: (obj: T) => Identifier;
-    readonly uriExtract: (obj: T) => string;
-    readonly strictTypeCheck: boolean;
-    readonly type: ObjectType;
-};
-
 // @internal (undocumented)
 export type OnDashboardDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
 
@@ -2105,10 +2066,10 @@ export function saveDashboardAs(identifier?: string, title?: string, correlation
 export const selectAlerts: (state: DashboardState) => import("@gooddata/sdk-backend-spi").IWidgetAlert[];
 
 // @internal
-export const selectAllCatalogAttributesMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../_infra/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute>, (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[], res3: import("@gooddata/sdk-backend-spi").IBackendCapabilities) => import("../_infra/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute>>;
+export const selectAllCatalogAttributesMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute>, (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[], res3: import("@gooddata/sdk-backend-spi").IBackendCapabilities) => import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute>>;
 
 // @internal
-export const selectAllCatalogDisplayFormsMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../_infra/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").IAttributeDisplayFormMetadataObject>, (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[], res3: import("@gooddata/sdk-backend-spi").IBackendCapabilities) => import("../_infra/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").IAttributeDisplayFormMetadataObject>>;
+export const selectAllCatalogDisplayFormsMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").IAttributeDisplayFormMetadataObject>, (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[], res3: import("@gooddata/sdk-backend-spi").IBackendCapabilities) => import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").IAttributeDisplayFormMetadataObject>>;
 
 // @internal (undocumented)
 export const selectAttributesWithDrillDown: import("@reduxjs/toolkit").OutputSelector<DashboardState, (import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute)[], (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateAttribute[]) => (import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute)[]>;
@@ -2147,10 +2108,10 @@ export const selectConfig: import("@reduxjs/toolkit").OutputSelector<DashboardSt
 export const selectDashboardLoading: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;
 
 // @internal
-export const selectDashboardRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").ObjRef, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "ref" | "description" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => import("@gooddata/sdk-model").ObjRef>;
+export const selectDashboardRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").ObjRef, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => import("@gooddata/sdk-model").ObjRef>;
 
 // @internal
-export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "ref" | "description" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => string>;
+export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => string>;
 
 // @internal
 export const selectDashboardUriRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").UriRef, (res: string) => import("@gooddata/sdk-model").UriRef>;

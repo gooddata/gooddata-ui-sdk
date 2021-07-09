@@ -2,8 +2,9 @@
 
 import React, { useMemo, useState } from "react";
 import { DateFilter } from "@gooddata/sdk-ui-filters";
-import { dateFilterOptionToDashboardDateFilter } from "../../model/_staging/dashboard/dashboardFilterConverter";
-import { matchDateFilterToDateFilterOptionWithPreference } from "../../model/_staging/dateFilterConfig/dateFilterOptionMapping";
+
+import { dateFilterOptionToDashboardDateFilter } from "../../_staging/dashboard/dashboardFilterConverter";
+import { matchDateFilterToDateFilterOptionWithPreference } from "../../_staging/dateFilterConfig/dateFilterOptionMapping";
 import { IDefaultDashboardDateFilterProps } from "../types";
 
 /**

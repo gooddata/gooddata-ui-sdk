@@ -2,8 +2,10 @@
 
 import { IDashboard, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
+
+import { DateFilterConfigValidationResult } from "../../_staging/dateFilterConfig/validation";
 import { DashboardConfig, DashboardContext } from "../types/commonTypes";
-import { DateFilterConfigValidationResult } from "../_staging/dateFilterConfig/validation";
+
 import { IDashboardEvent } from "./base";
 
 //

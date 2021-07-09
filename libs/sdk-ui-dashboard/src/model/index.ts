@@ -14,7 +14,6 @@
 
 export { useDashboardSelector, useDashboardDispatch, DashboardDispatch } from "./state/dashboardStore";
 export { DashboardState } from "./state/types";
-export { ObjRefMap, ObjRefMapConfig } from "./state/_infra/objRefMap";
 
 export { selectDashboardLoading } from "./state/loading/loadingSelectors";
 export { LoadingState } from "./state/loading/loadingState";
@@ -113,9 +112,6 @@ export {
     RelativeIndex,
 } from "./types/layoutTypes";
 export { WidgetFilterSettings, WidgetHeader } from "./types/widgetTypes";
-
-export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
-export { CatalogDateAttributeWithDataset } from "./_staging/catalog/dateAttributeWithDatasetMap";
 
 export * from "./commands";
 export * from "./events";

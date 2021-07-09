@@ -1,13 +1,18 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
 import flatMap from "lodash/flatMap";
-import { newCatalogAttributeMap, newCatalogDateDatasetMap, newDisplayFormMap } from "../_infra/objRefMap";
-import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
+
 import {
     CatalogDateAttributeWithDataset,
     newCatalogDateAttributeWithDatasetMap,
-} from "../../_staging/catalog/dateAttributeWithDatasetMap";
+} from "../../../_staging/catalog/dateAttributeWithDatasetMap";
+import {
+    newCatalogAttributeMap,
+    newCatalogDateDatasetMap,
+    newDisplayFormMap,
+} from "../../../_staging/metadata/objRefMap";
+import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
+import { DashboardState } from "../types";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

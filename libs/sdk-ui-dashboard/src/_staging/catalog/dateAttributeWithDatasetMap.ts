@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { ICatalogDateAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
-import { ObjRefMap, ObjRefMapConfig } from "../../state/_infra/objRefMap";
+
+import { ObjRefMap, ObjRefMapConfig } from "../metadata/objRefMap";
 
 /**
  * @internal

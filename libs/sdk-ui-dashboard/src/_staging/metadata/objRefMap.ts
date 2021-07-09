@@ -7,7 +7,6 @@ import {
     ICatalogDateDataset,
     IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
-// (C) 2021 GoodData Corporation
 import { Identifier, isIdentifierRef, ObjectType, ObjRef } from "@gooddata/sdk-model";
 
 /**

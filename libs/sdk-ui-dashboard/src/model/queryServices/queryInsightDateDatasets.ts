@@ -1,6 +1,10 @@
 // (C) 2021 GoodData Corporation
-import { DashboardContext } from "../types/commonTypes";
 import { SagaIterator } from "redux-saga";
+import { call, SagaReturnType, select } from "redux-saga/effects";
+import compact from "lodash/compact";
+import fromPairs from "lodash/fromPairs";
+import uniqBy from "lodash/uniqBy";
+import { invariant } from "ts-invariant";
 import {
     filterObjRef,
     idRef,
@@ -12,9 +16,11 @@ import {
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import { call, SagaReturnType, select } from "redux-saga/effects";
+import { ICatalogDateDataset, isCatalogDateDataset } from "@gooddata/sdk-backend-spi";
+
 import { createCachedQueryService } from "../state/_infra/queryService";
 import { PromiseFnReturnType } from "../types/sagas";
+import { DashboardContext } from "../types/commonTypes";
 import {
     InsightAttributesMeta,
     InsightDateDatasets,
@@ -24,19 +30,14 @@ import {
 import { selectObjectAvailabilityConfig } from "../state/config/configSelectors";
 import { selectInsightByRef } from "../state/insights/insightsSelectors";
 import { invalidQueryArguments } from "../events/general";
-import { ICatalogDateDataset, isCatalogDateDataset } from "@gooddata/sdk-backend-spi";
 import { query } from "../state/_infra/queryCall";
-import { invariant } from "ts-invariant";
 import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogDateAttributeToDataset,
 } from "../state/catalog/catalogSelectors";
-import uniqBy from "lodash/uniqBy";
-import fromPairs from "lodash/fromPairs";
-import { newDisplayFormMap, ObjRefMap } from "../state/_infra/objRefMap";
-import compact from "lodash/compact";
 import { selectBackendCapabilities } from "../state/backendCapabilities/backendCapabilitiesSelectors";
-import { CatalogDateAttributeWithDataset } from "../_staging/catalog/dateAttributeWithDatasetMap";
+import { newDisplayFormMap, ObjRefMap } from "../../_staging/metadata/objRefMap";
+import { CatalogDateAttributeWithDataset } from "../../_staging/catalog/dateAttributeWithDatasetMap";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
