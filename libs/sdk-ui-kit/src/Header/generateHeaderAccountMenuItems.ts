@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 
 import { IHeaderMenuItem } from "./typings";
 
@@ -18,15 +18,17 @@ export function generateHeaderAccountMenuItems(
     uiSettings: IUiSettings, // bootstrapResource.settings
     workspaceId?: string, // parsed from bootstrapResource.current.project.links.self
     showOnlyLogoutItem?: boolean,
+    featureFlags?: ISettings,
 ): IHeaderMenuItem[] {
     const { canInitData } = workspacePermissions;
     const { displayAccountPage } = uiSettings;
     const accountMenuItems: IHeaderMenuItem[] = [];
+    const workspaceRef = featureFlags?.enableRenamingProjectToWorkspace ? "workspaces" : "projects";
 
     const accountItem = {
         key: "gs.header.account",
         className: "s-account",
-        href: `/#s=/gdc/projects/${workspaceId}|accountPage|`,
+        href: `/#s=/gdc/${workspaceRef}/${workspaceId}|accountPage|`,
     };
     const dataIntegrationConsoleItem = {
         key: "gs.header.dic",

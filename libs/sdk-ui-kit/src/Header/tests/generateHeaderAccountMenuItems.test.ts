@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { generateHeaderAccountMenuItems } from "../generateHeaderAccountMenuItems";
-import { getWorkspacePermissionsMock } from "./mock";
+import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock";
 
 describe("generateHeaderAccountMenuItems", () => {
     it("should return account, dic and logout items if workspace id is specified ", () => {
@@ -58,6 +58,26 @@ describe("generateHeaderAccountMenuItems", () => {
             {
                 className: "s-account",
                 href: "/#s=/gdc/projects/TestWorkspaceId|accountPage|",
+                key: "gs.header.account",
+            },
+            { className: "s-logout", key: "gs.header.logout" },
+        ]);
+    });
+
+    it("should return dic and logout items with workspace in uri if user doesn't have canInitData permission and enableRenamingProjectToWorkspace is true", () => {
+        const items = generateHeaderAccountMenuItems(
+            getWorkspacePermissionsMock(false, true),
+            {
+                displayAccountPage: true,
+            },
+            "TestWorkspaceId",
+            undefined,
+            getAccountMenuFeatureFlagsMock(true, true, false, true, "enterprise", true),
+        );
+        expect(items).toEqual([
+            {
+                className: "s-account",
+                href: "/#s=/gdc/workspaces/TestWorkspaceId|accountPage|",
                 key: "gs.header.account",
             },
             { className: "s-logout", key: "gs.header.logout" },

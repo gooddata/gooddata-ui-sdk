@@ -17,6 +17,7 @@ export const getAccountMenuFeatureFlagsMock = (
     hidePixelPerfectExperience: boolean,
     analyticalDesigner: boolean,
     platformEdition: PlatformEdition,
+    enableRenamingProjectToWorkspace: boolean,
 ): ISettings => {
     return {
         enableCsvUploader,
@@ -24,6 +25,7 @@ export const getAccountMenuFeatureFlagsMock = (
         hidePixelPerfectExperience,
         analyticalDesigner,
         platformEdition,
+        enableRenamingProjectToWorkspace,
     };
 };
 
