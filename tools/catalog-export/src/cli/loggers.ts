@@ -37,9 +37,6 @@ export function logBox(message: string, padding: number = 2): void {
 }
 
 export function printHeader(version: string): void {
-    if (version) {
-        console.log(chalk`{blue.bold ${createBox(`GoodData Catalog Export Tool v${version}`)}}`);
-    } else {
-        console.log(chalk`{blue.bold ${createBox("GoodData Catalog Export Tool")}}`);
-    }
+    const name = version ? `GoodData Catalog Export Tool v${version}` : "GoodData Catalog Export Tool";
+    console.log(chalk`{blue.bold ${createBox(name)}}`);
 }
