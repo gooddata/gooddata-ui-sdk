@@ -9,6 +9,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 import {
+    IAttributeDisplayForm,
     IDrillToDashboardConfig,
     DRILL_TARGET_TYPE,
     IDrillToInsightConfig,
@@ -17,7 +18,6 @@ import {
     IDrillToUrlConfig,
     AttributeDisplayFormType,
 } from "../../../types";
-import { IAttributeDisplayForm } from "../../../types";
 
 export function testDrillToInsight(localId: string, target: ObjRef | string): IDrillToInsight {
     return {
