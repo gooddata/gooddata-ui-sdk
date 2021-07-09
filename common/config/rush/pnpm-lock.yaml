@@ -22272,7 +22272,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-ICfN8oOwHreO4NJRryM6I1A5vYaMQtOPiuinzqk40x7nwJVIp9bBjhTd7SqR670vtgsEO5QP/kLfoo+AGogscQ==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-nbFtbJmBwaXEoNG/+s8e5Q9kVoWX4YPgnGsTEaINn1wUYGlAqm44aJ5yW+g8IqurREIBC6vlKxg3fsUOfr17xw==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -22316,6 +22316,7 @@ packages:
       eslint-plugin-prettier: 3.4.0_eslint@7.28.0+prettier@2.3.1
       eslint-plugin-react: 7.24.0_eslint@7.28.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.28.0
+      eslint-plugin-sonarjs: 0.9.1_eslint@7.28.0
       fixed-data-table-2: 0.8.28_react-dom@16.14.0+react@16.14.0
       foundation-sites: 5.5.3
       jest: 26.6.3_ts-node@8.10.2

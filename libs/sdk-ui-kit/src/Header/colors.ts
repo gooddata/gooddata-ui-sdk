@@ -52,9 +52,7 @@ export function luminanceOf(color: IRgbaColor): number {
     // Imprecise luminance values may arise from finite precision of RGB coefitients
     // We have to round this value to two decimal places to avoid strange results
     const raw = 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;
-    const rounded = Math.round(raw * 100) / 100;
-
-    return rounded;
+    return Math.round(raw * 100) / 100;
 }
 
 /**

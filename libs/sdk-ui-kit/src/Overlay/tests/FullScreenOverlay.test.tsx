@@ -5,9 +5,7 @@ import { renderIntoDocumentWithUnmount } from "../../test/utils";
 import { FullScreenOverlay } from "../FullScreenOverlay";
 
 function renderOverlay(options: any) {
-    const fullScreenOverlay = renderIntoDocumentWithUnmount(<FullScreenOverlay {...options} />);
-
-    return fullScreenOverlay;
+    return renderIntoDocumentWithUnmount(<FullScreenOverlay {...options} />);
 }
 
 describe("FullScreen Overlay", () => {

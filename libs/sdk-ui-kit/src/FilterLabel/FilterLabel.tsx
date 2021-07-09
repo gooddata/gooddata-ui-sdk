@@ -64,10 +64,8 @@ class WrappedFilterLabel extends React.PureComponent<
                 return this.renderSelectionLabel(intl.formatMessage({ id: "gs.filterLabel.none" }));
             }
 
-            if (this.state.hasEllipsis) {
-                if (selectionSize > 0) {
-                    return this.renderSelectionLabel(`(${selectionSize})`);
-                }
+            if (this.state.hasEllipsis && selectionSize > 0) {
+                return this.renderSelectionLabel(`(${selectionSize})`);
             }
         }
 
