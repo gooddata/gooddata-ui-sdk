@@ -560,7 +560,7 @@
     },
     {
       "name": "eslint-plugin-sonarjs",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "fast-levenshtein",
