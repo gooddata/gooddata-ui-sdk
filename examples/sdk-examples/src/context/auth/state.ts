@@ -32,6 +32,7 @@ export const useAuthState = (initialAuthState: IAuthState = initialState) => {
             authStatus: AuthStatus.UNAUTHORIZED,
             authError: undefined,
         });
+    // eslint-disable-next-line sonarjs/no-identical-functions
     const onLogoutError = (err: Error) =>
         setState({
             authStatus: AuthStatus.UNAUTHORIZED,
@@ -42,11 +43,13 @@ export const useAuthState = (initialAuthState: IAuthState = initialState) => {
         setState({
             authStatus: AuthStatus.REGISTERING,
         });
+    // eslint-disable-next-line sonarjs/no-identical-functions
     const onRegisterSuccess = () =>
         setState({
             authStatus: AuthStatus.UNAUTHORIZED,
             authError: undefined,
         });
+    // eslint-disable-next-line sonarjs/no-identical-functions
     const onRegisterError = (err: Error) =>
         setState({
             authStatus: AuthStatus.UNAUTHORIZED,

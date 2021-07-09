@@ -28,8 +28,7 @@ const getMeasureListByTag = async (tag: string) => {
     const items = result.data.entries;
     const measureItems = items.filter((item: any) => item.category === "metric");
     const measures = await Promise.all(measureItems.map((measure: any) => sdk.xhr.get(measure.link)));
-    const measuresMeta = measures.map((measure: any) => measure.data.metric.meta);
-    return measuresMeta;
+    return measures.map((measure: any) => measure.data.metric.meta);
 };
 
 const config: IChartConfig = { legend: { position: "bottom" } };
