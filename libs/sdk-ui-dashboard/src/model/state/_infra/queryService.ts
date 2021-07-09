@@ -198,13 +198,8 @@ function createQueryCacheSlice<TQuery extends IDashboardQuery<TResult>, TResult>
     const selectById = (id: EntityId) => {
         return createSelector(
             (state: DashboardState) => state,
-            (state) => {
-                const result: QueryCacheEntryResult<TResult> | undefined = cacheSelectors.selectById(
-                    state,
-                    id,
-                );
-
-                return result;
+            (state): QueryCacheEntryResult<TResult> | undefined => {
+                return cacheSelectors.selectById(state, id);
             },
         );
     };
@@ -215,13 +210,8 @@ function createQueryCacheSlice<TQuery extends IDashboardQuery<TResult>, TResult>
 
             return createSelector(
                 (state: DashboardState) => state,
-                (state) => {
-                    const result: QueryCacheEntryResult<TResult> | undefined = cacheSelectors.selectById(
-                        state,
-                        id,
-                    );
-
-                    return result;
+                (state): QueryCacheEntryResult<TResult> | undefined => {
+                    return cacheSelectors.selectById(state, id);
                 },
             );
         },

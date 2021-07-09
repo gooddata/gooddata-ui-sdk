@@ -55,11 +55,10 @@ export function matchDateFilterToDateFilterOptionWithPreference(
     // other cases are correctly handled by the unbiased matching function
     if (
         dateFilter &&
-        (preferredOption?.type === "absoluteForm" || preferredOption?.type === "relativeForm")
+        (preferredOption?.type === "absoluteForm" || preferredOption?.type === "relativeForm") &&
+        canReconstructFormForStoredFilter(availableOptions, dateFilter)
     ) {
-        if (canReconstructFormForStoredFilter(availableOptions, dateFilter)) {
-            return reconstructFormForStoredFilter(availableOptions, dateFilter);
-        }
+        return reconstructFormForStoredFilter(availableOptions, dateFilter);
     }
 
     return matchDateFilterToDateFilterOption(dateFilter, availableOptions);
