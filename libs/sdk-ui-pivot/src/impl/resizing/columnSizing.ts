@@ -494,14 +494,7 @@ function getSizeItemByColId(col: AnyCol, width: ColumnWidth): ColumnWidthItem {
         } else {
             throw new InvariantError(`width value for attributeColumnWidthItem has to be number ${col.id}`);
         }
-    } else if (isScopeCol(col)) {
-        return {
-            measureColumnWidthItem: {
-                width,
-                locators: createColumnLocator(col),
-            },
-        };
-    } else if (isSeriesCol(col)) {
+    } else if (isScopeCol(col) || isSeriesCol(col)) {
         return {
             measureColumnWidthItem: {
                 width,
@@ -822,23 +815,19 @@ function calculateColumnWidths(
                 }
             }
             config.rowData.forEach((row: IGridRow) => {
-                if (context) {
-                    context.font = isSomeTotal(row.type) ? config.subtotalFont : config.rowFont;
-                    collectWidths(config, row, column, maxWidths);
-                }
+                context.font = isSomeTotal(row.type) ? config.subtotalFont : config.rowFont;
+                collectWidths(config, row, column, maxWidths);
             });
 
             config.totalData.forEach((row: IGridRow) => {
-                if (context) {
-                    context.font = config.totalFont;
-                    collectWidths(config, row, column, maxWidths);
-                }
+                context.font = config.totalFont;
+                collectWidths(config, row, column, maxWidths);
             });
             if (config.columnAutoresizeOption === "viewport") {
                 const finalMaxWidth = colId ? maxWidths.get(colId) : undefined;
 
                 const manuallyResizedColumn = resizedColumnsStore.getManuallyResizedColumn(column);
-                // total width used for stoping calculation should prefer manual width over autowidth
+                // total width used for stopping calculation should prefer manual width over autowidth
                 calculatedColumnsTotalWidth += manuallyResizedColumn
                     ? manuallyResizedColumn.width
                     : getColWidth(finalMaxWidth, config.padding);

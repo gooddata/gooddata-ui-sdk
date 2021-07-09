@@ -66,6 +66,12 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         onSortClick: () => null,
     };
 
+    private resetSortDirection = () => {
+        this.setState({
+            currentSortDirection: this.props.sortDirection!,
+        });
+    };
+
     public state: IHeaderCellState = {
         isMenuOpen: false,
         isMenuButtonVisible: false,
@@ -73,9 +79,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     };
 
     public componentDidMount(): void {
-        this.setState({
-            currentSortDirection: this.props.sortDirection!,
-        });
+        this.resetSortDirection();
     }
 
     public UNSAFE_componentWillReceiveProps(nextProps: IHeaderCellProps): void {
@@ -206,9 +210,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     };
 
     private onMouseLeaveHeaderCellText = () => {
-        this.setState({
-            currentSortDirection: this.props.sortDirection!,
-        });
+        this.resetSortDirection();
     };
 
     private onTextClick = () => {

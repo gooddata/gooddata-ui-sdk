@@ -242,7 +242,7 @@ export class TableFacade {
     ): AgGridDatasource => {
         this.onPageLoadedCallback = tableMethods.onPageLoaded;
 
-        const dataSource = createAgGridDatasource(
+        return createAgGridDatasource(
             {
                 tableDescriptor: this.tableDescriptor,
                 getGroupRows: tableMethods.getGroupRows,
@@ -259,8 +259,6 @@ export class TableFacade {
             this.gridApiGuard,
             this.intl,
         );
-
-        return dataSource;
     };
 
     private onExecutionTransformed = (newExecution: IPreparedExecution): void => {
