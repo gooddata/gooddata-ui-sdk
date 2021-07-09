@@ -53,7 +53,7 @@ function transformPushpinDataSource(dataSourceProps: IGeoDataSourceProps): IGeoD
 
     const pushpinColors: IPushpinColor[] = getPushpinColors(colorData, segmentData, colorStrategy);
 
-    const features = locationData.reduce(
+    return locationData.reduce(
         (result: IGeoDataSourceFeatures, coordinates: IGeoLngLat, index: number): IGeoDataSourceFeatures => {
             if (!coordinates) {
                 return result;
@@ -108,8 +108,6 @@ function transformPushpinDataSource(dataSourceProps: IGeoDataSourceProps): IGeoD
         },
         [],
     );
-
-    return features;
 }
 
 // transform data value to pushpin size in pixel
