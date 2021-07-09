@@ -113,6 +113,5 @@ export function builderFactory<
     modifications: BuilderModifications<TBuilder, TItem>,
 ): TItem {
     const builder = new Builder(defaultItem);
-    const result = modifications(builder).build();
-    return result;
+    return modifications(builder).build();
 }

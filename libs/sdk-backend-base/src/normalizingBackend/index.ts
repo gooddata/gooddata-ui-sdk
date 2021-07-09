@@ -133,18 +133,7 @@ class DenormalizingExecutionResult implements IExecutionResult {
             .then((dataView) => {
                 return new DenormalizedDataView(this, dataView, this.denormalizer);
             })
-            .catch((error) => {
-                // make sure that errors with dataViews are repackaged with the dataView denormalized as well
-                // otherwise the dataViews will not make sense to the caller
-                if (isNoDataError(error) && error.dataView) {
-                    throw new NoDataError(
-                        error.message,
-                        new DenormalizedDataView(this, error.dataView, this.denormalizer),
-                    );
-                }
-
-                throw error;
-            });
+            .catch(this.handleDataViewError);
     };
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
@@ -154,18 +143,7 @@ class DenormalizingExecutionResult implements IExecutionResult {
             .then((dataView) => {
                 return new DenormalizedDataView(this, dataView, this.denormalizer);
             })
-            .catch((error) => {
-                // make sure that errors with dataViews are repackaged with the dataView denormalized as well
-                // otherwise the dataViews will not make sense to the caller
-                if (isNoDataError(error) && error.dataView) {
-                    throw new NoDataError(
-                        error.message,
-                        new DenormalizedDataView(this, error.dataView, this.denormalizer),
-                    );
-                }
-
-                throw error;
-            });
+            .catch(this.handleDataViewError);
     };
 
     public equals = (other: IExecutionResult): boolean => {
@@ -174,6 +152,19 @@ class DenormalizingExecutionResult implements IExecutionResult {
 
     public fingerprint = (): string => {
         return this._fingerprint;
+    };
+
+    private handleDataViewError = (error: unknown): never => {
+        // make sure that errors with dataViews are repackaged with the dataView denormalized as well
+        // otherwise the dataViews will not make sense to the caller
+        if (isNoDataError(error) && error.dataView) {
+            throw new NoDataError(
+                error.message,
+                new DenormalizedDataView(this, error.dataView, this.denormalizer),
+            );
+        }
+
+        throw error;
     };
 }
 
