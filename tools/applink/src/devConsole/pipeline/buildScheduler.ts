@@ -278,15 +278,13 @@ export class BuildScheduler implements IEventListener {
             return [];
         }
 
-        const packagesWithCleanDeps = dirtyPackages.filter((pkg) => {
+        return dirtyPackages.filter((pkg) => {
             return values(this.dependencyGraph!.outgoing[pkg] ?? []).every((dependency) => {
                 const dependencyState = this.packageStates[dependency.to];
-
+                // packages with clean dependencies
                 return !dependencyState.dirty && !dependencyState.failed;
             });
         });
-
-        return packagesWithCleanDeps;
     };
 
     private isAllClean = (): boolean => {
