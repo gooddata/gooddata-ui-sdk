@@ -7,6 +7,22 @@ options = {
         depCruiser.isolatedSubmodule("constants", "src/constants"),
         depCruiser.isolatedSubmodule("dashboardItems", "src/dashboardItems"),
         depCruiser.moduleWithDependencies("converters", "src/converters", ["src/types.ts"]),
+        depCruiser.moduleWithDependencies(
+            "dashboard",
+            "src/dashboard/", // the trailing / is necessary here, otherwise dashboardAux is matched as well
+            [
+                "src/dashboardAux",
+                "src/filterBar",
+                "src/insight",
+                "src/kpi",
+                "src/layout",
+                "src/localization",
+                "src/model",
+                "src/model/state/dashboardStore.ts",
+                "src/scheduledEmail",
+                "src/topBar",
+            ],
+        ),
         depCruiser.moduleWithDependencies("dashboardAux", "src/dashboardAux", [
             "src/model",
             "src/insight/types.ts",
