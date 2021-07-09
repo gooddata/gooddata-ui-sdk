@@ -35,10 +35,7 @@ import {
     OnError,
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
-import {
-    filterContextItemsToFiltersForWidget,
-    filterContextToFiltersForWidget,
-} from "../../converters/filterConverters";
+import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
 import { KpiRenderer } from "./KpiRenderer";
 import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
 import { useKpiAlertOperations } from "./useKpiAlertOperations";
@@ -51,7 +48,7 @@ import {
     evaluateAlertTriggered,
     getBrokenAlertFiltersBasicInfo,
 } from "./KpiAlerts";
-import { DashboardItemHeadline } from "../../layout/DashboardItem";
+import { DashboardItemHeadline } from "../../dashboardItems";
 import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
 
 interface IKpiExecutorProps {

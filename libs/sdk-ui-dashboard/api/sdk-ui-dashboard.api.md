@@ -2437,6 +2437,22 @@ export interface UseDrillToInsightProps {
 }
 
 // @internal (undocumented)
+export const useDrillToLegacyDashboard: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToLegacyDashboardProps) => {
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToLegacyDashboard, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: "error" | "running" | "success" | undefined;
+};
+
+// @internal (undocumented)
+export interface UseDrillToLegacyDashboardProps {
+    // (undocumented)
+    onBeforeRun?: () => void;
+    // (undocumented)
+    onError?: (event: DashboardCommandFailed) => void;
+    // (undocumented)
+    onSuccess?: (event: DashboardDrillToLegacyDashboardTriggered) => void;
+}
+
+// @internal (undocumented)
 export type UserInteraction = "poweredByGDLogoClicked";
 
 // @internal (undocumented)

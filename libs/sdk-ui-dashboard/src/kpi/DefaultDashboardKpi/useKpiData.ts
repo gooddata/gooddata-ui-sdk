@@ -28,10 +28,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
-import {
-    filterContextItemsToFiltersForWidget,
-    filterContextToFiltersForWidget,
-} from "../../converters/filterConverters";
+import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
 import { IDashboardFilter } from "../../types";
 
 interface IUseKpiDataConfig {

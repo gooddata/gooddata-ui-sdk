@@ -18,7 +18,7 @@ import { DashboardInsight } from "../insight";
 import { getVisTypeCssClass } from "./utils";
 import { selectAlerts, selectInsights, useDashboardSelector } from "../model";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../types";
-import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "./DashboardItem";
+import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "../dashboardItems";
 
 const dashboardStyle: CSSProperties = { height: "100%", width: "100%" };
 

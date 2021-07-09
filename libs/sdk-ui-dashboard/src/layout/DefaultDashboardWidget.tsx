@@ -12,7 +12,7 @@ import {
     isInsightWidget,
 } from "@gooddata/sdk-backend-spi";
 import { VisType } from "@gooddata/sdk-ui";
-import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "./DashboardItem";
+import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "../dashboardItems";
 import { DashboardKpi } from "../kpi";
 import { DashboardInsight } from "../insight";
 import { getVisTypeCssClass } from "./utils";

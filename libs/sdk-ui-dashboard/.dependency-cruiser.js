@@ -20,6 +20,16 @@ options = {
             "src/model/_staging/*",
             "src/types.ts",
         ]),
+        depCruiser.moduleWithDependencies("kpi", "src/kpi", [
+            "src/converters",
+            "src/dashboardAux",
+            "src/dashboardItems",
+            "src/drill",
+            "src/localization",
+            "src/model",
+            "src/model/_staging/*",
+            "src/types.ts",
+        ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/scheduledEmail", [
             "src/dashboardAux",
             "src/localization",

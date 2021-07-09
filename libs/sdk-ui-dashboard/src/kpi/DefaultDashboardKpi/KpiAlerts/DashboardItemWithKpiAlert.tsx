@@ -1,4 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
+import React, { Component, MouseEvent } from "react";
+import { FormattedMessage } from "react-intl";
+import cx from "classnames";
 import {
     IUserWorkspaceSettings,
     IWidgetAlertDefinition,
@@ -7,12 +10,10 @@ import {
 import { IFilter } from "@gooddata/sdk-model";
 import { GoodDataSdkError, isNoDataSdkError } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
-import React, { Component, MouseEvent } from "react";
-import { FormattedMessage } from "react-intl";
 
-import { DashboardItemKpi } from "../../../layout/DashboardItem";
+import { DashboardItemKpi } from "../../../dashboardItems";
 import { IKpiResult, IKpiAlertResult, KpiAlertOperationStatus } from "../types";
+
 import { isAlertingTemporarilyDisabledForGivenFilter } from "./utils/filterUtils";
 
 // adapted from jQuery:
