@@ -43,7 +43,7 @@ export function useDataExport(
     } & UseDataExportCallbacks,
     deps?: DependencyList,
 ): UseDataExportState {
-    const cancelablePromiseState = useCancelablePromise<string, GoodDataSdkError>(
+    return useCancelablePromise<string, GoodDataSdkError>(
         {
             promise: execution
                 ? () =>
@@ -65,6 +65,4 @@ export function useDataExport(
         },
         deps,
     );
-
-    return cancelablePromiseState;
 }

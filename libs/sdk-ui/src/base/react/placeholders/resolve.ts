@@ -67,8 +67,7 @@ export function resolveComposedPlaceholderValue<TReturn, TValue extends any[], T
     const values = placeholder.placeholders.map((p) =>
         resolveValueWithPlaceholders(p, state, resolutionContext),
     ) as PlaceholdersResolvedValues<TValue>;
-    const result = placeholder.computeValue(values, resolutionContext!);
-    return result;
+    return placeholder.computeValue(values, resolutionContext!);
 }
 
 /**

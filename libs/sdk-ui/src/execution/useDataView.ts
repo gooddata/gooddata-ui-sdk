@@ -45,7 +45,7 @@ export function useDataView(
     } & UseDataViewCallbacks,
     deps?: DependencyList,
 ): UseDataViewState {
-    const cancelablePromiseState = useCancelablePromise<DataViewFacade, GoodDataSdkError>(
+    return useCancelablePromise<DataViewFacade, GoodDataSdkError>(
         {
             promise: execution
                 ? () =>
@@ -71,6 +71,4 @@ export function useDataView(
         },
         deps,
     );
-
-    return cancelablePromiseState;
 }

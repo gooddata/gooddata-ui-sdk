@@ -101,9 +101,7 @@ const getMeasureData = (result: DataViewFacade) => {
 
 const getMeasureFormat = (result: DataViewFacade) => {
     const headerItems = result.meta().measureDescriptors();
-    const format = headerItems?.[0]?.measureHeaderItem?.format;
-
-    return format;
+    return headerItems?.[0]?.measureHeaderItem?.format;
 };
 
 const IntlKpi = injectIntl(CoreKpi);

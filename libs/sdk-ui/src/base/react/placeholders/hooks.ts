@@ -95,11 +95,9 @@ export function usePlaceholders<T extends IPlaceholder<any>[]>(
                         ? valueOrUpdateCallback(resolvedValues)
                         : valueOrUpdateCallback;
 
-                const updatedState = placeholders.reduce((acc, placeholder, i): PlaceholdersState => {
+                return placeholders.reduce((acc, placeholder, i): PlaceholdersState => {
                     return setPlaceholder(placeholder, updatedValues[i], acc);
                 }, s);
-
-                return updatedState;
             });
         },
         [],
@@ -125,9 +123,7 @@ export function useComposedPlaceholder<
         state,
         resolutionContext,
     ) as PlaceholderResolvedValue<TPlaceholder>;
-    const memoizedResolvedValue = useMemoStringify(resolvedValue);
-
-    return memoizedResolvedValue;
+    return useMemoStringify(resolvedValue);
 }
 
 /**
@@ -142,9 +138,7 @@ export function useResolveValueWithPlaceholders<T, C>(
 ): PlaceholderResolvedValue<T> {
     const { state } = usePlaceholdersContext();
     const resolvedValue = resolveValueWithPlaceholders(value, state, resolutionContext);
-    const memoizedResolvedValue = useMemoStringify(resolvedValue);
-
-    return memoizedResolvedValue;
+    return useMemoStringify(resolvedValue);
 }
 
 /**
@@ -161,9 +155,7 @@ export function useResolveValuesWithPlaceholders<T extends any[], C>(
     const resolvedValues = values?.map((value) =>
         resolveValueWithPlaceholders(value, state, resolutionContext),
     ) as PlaceholdersResolvedValues<T>;
-    const memoizedResolvedValues = useMultiValueMemoStringify(resolvedValues);
-
-    return memoizedResolvedValues;
+    return useMultiValueMemoStringify(resolvedValues);
 }
 
 /**
@@ -174,11 +166,9 @@ export function useResolveValuesWithPlaceholders<T extends any[], C>(
  * @internal
  */
 export function useMemoStringify<T>(value: T): T {
-    const memoizedValue = useMemo(() => {
+    return useMemo(() => {
         return value;
     }, [stableStringify(value)]);
-
-    return memoizedValue;
 }
 
 /**
@@ -196,7 +186,7 @@ export function useMultiValueMemoStringify<T extends any[]>(values: T): T {
         })) ?? [],
     );
 
-    const memoizedValues = useMemo(() => {
+    return useMemo(() => {
         return values?.map((val, idx) => {
             const hash = stableStringify(val);
             if (hash === prevValues.current[idx].hash) {
@@ -211,6 +201,4 @@ export function useMultiValueMemoStringify<T extends any[]>(values: T): T {
             return val;
         }) as T;
     }, [stableStringify(values)]);
-
-    return memoizedValues;
 }

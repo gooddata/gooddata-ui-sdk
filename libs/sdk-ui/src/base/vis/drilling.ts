@@ -94,11 +94,7 @@ export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventI
                         header: drillItem,
                     });
                 }
-            } else if (isMeasureDescriptor(drillItem)) {
-                drillIntersection.push({
-                    header: drillItem,
-                });
-            } else if (isTotalDescriptor(drillItem)) {
+            } else if (isMeasureDescriptor(drillItem) || isTotalDescriptor(drillItem)) {
                 drillIntersection.push({
                     header: drillItem,
                 });
