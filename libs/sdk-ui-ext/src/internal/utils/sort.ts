@@ -7,7 +7,6 @@ import omitBy from "lodash/omitBy";
 import set from "lodash/set";
 import {
     bucketAttributes,
-    IAttributeSortItem,
     IBucket,
     IInsightDefinition,
     IMeasure,
@@ -42,7 +41,7 @@ export function getAttributeSortItem(
         direction,
     };
 
-    const attributeSortItem: IAttributeSortItem = {
+    return {
         attributeSortItem: aggregation
             ? {
                   ...attributeSortItemWithoutAggregation,
@@ -50,8 +49,6 @@ export function getAttributeSortItem(
               }
             : attributeSortItemWithoutAggregation,
     };
-
-    return attributeSortItem;
 }
 
 function getDefaultBarChartSort(

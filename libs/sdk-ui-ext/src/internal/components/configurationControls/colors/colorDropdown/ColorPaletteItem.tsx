@@ -37,11 +37,14 @@ export default class ColorPaletteItem extends React.PureComponent<IColorPaletteI
     }
 
     private scrollSelectedItemIntoParent() {
-        if (this.props.selected && this.itemRef.current && this.itemRef.current.parentNode) {
-            if (this.isItemVisible()) {
-                const target = this.itemRef.current;
-                target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop - ITEM_MARGIN;
-            }
+        if (
+            this.props.selected &&
+            this.itemRef.current &&
+            this.itemRef.current.parentNode &&
+            this.isItemVisible()
+        ) {
+            const target = this.itemRef.current;
+            target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop - ITEM_MARGIN;
         }
     }
 

@@ -143,16 +143,14 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         return [newDimension([MeasureGroupIdentifier])];
     }
 
-    private withEmptyAttributeTargets(data: IPushData) {
-        const dataWithEmptyAttributeTargets: IPushData = {
+    private withEmptyAttributeTargets(data: IPushData): IPushData {
+        return {
             ...data,
             availableDrillTargets: {
                 ...data?.availableDrillTargets,
                 attributes: [],
             },
         };
-
-        return dataWithEmptyAttributeTargets;
     }
 
     // This is effectively calling super.pushData()

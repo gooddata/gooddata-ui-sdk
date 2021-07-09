@@ -134,15 +134,13 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
     } = useUserWorkspaceSettings({ backend, workspace });
     const [submittedScheduledMail, setSubmittedScheduledMail] = useState<IScheduledMailDefinition>();
 
-    const filterContextToSave = useMemo(() => {
+    const filterContextToSave = useMemo((): IFilterContextDefinition | undefined => {
         if (filters) {
-            const filterContext: IFilterContextDefinition = {
+            return {
                 title: "filterContext",
                 description: "",
                 filters,
             };
-
-            return filterContext;
         }
 
         return undefined;

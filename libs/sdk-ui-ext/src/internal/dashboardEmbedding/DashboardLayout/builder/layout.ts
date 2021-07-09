@@ -38,12 +38,7 @@ export class DashboardLayoutBuilder<TWidget> implements IDashboardLayoutBuilder<
      */
     public static for<TWidget>(layout: IDashboardLayout<TWidget>): IDashboardLayoutBuilder<TWidget> {
         invariant(isDashboardLayout<TWidget>(layout), "Provided data must be IDashboardLayout!");
-        const dashboardLayoutBuilder: IDashboardLayoutBuilder<TWidget> = new DashboardLayoutBuilder(
-            DashboardLayoutFacade.for(layout),
-            DashboardLayoutFacade.for,
-        );
-
-        return dashboardLayoutBuilder;
+        return new DashboardLayoutBuilder(DashboardLayoutFacade.for(layout), DashboardLayoutFacade.for);
     }
 
     /**

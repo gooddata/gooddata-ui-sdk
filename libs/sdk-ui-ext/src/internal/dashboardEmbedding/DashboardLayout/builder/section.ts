@@ -49,13 +49,11 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
             `Provided data must be IDashboardLayoutSection!`,
         );
 
-        const sectionBuilder: IDashboardLayoutSectionBuilder<TContent> = new DashboardLayoutSectionBuilder(
+        return new DashboardLayoutSectionBuilder(
             sectionIndex,
             () => layoutBuilder.facade().section(sectionIndex)!,
             (layout) => layoutBuilder.setLayout(layout),
         );
-
-        return sectionBuilder;
     }
 
     public header(

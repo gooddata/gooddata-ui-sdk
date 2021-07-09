@@ -2,8 +2,6 @@
 import {
     NotSupported,
     FilterContextItem,
-    IDashboardDateFilter,
-    IDashboardAttributeFilter,
     isDateFilterGranularity,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterReference,
@@ -40,17 +38,15 @@ export function dashboardFilterToFilterContextItem(filter: IDashboardFilter): Fi
                 "Attribute filter with text values is not supported. Please provide element uris instead.",
             );
         }
-        const filterContextItem: IDashboardAttributeFilter = {
+        return {
             attributeFilter: {
                 negativeSelection: isNegativeAttributeFilter(filter),
                 displayForm: filterObjRef(filter),
                 attributeElements,
             },
         };
-
-        return filterContextItem;
     } else if (isAbsoluteDateFilter(filter)) {
-        const filterContextItem: IDashboardDateFilter = {
+        return {
             dateFilter: {
                 type: "absolute",
                 granularity: "GDC.time.date",
@@ -59,8 +55,6 @@ export function dashboardFilterToFilterContextItem(filter: IDashboardFilter): Fi
                 dataSet: filter.absoluteDateFilter.dataSet,
             },
         };
-
-        return filterContextItem;
     } else if (isRelativeDateFilter(filter)) {
         if (!isDateFilterGranularity(filter.relativeDateFilter.granularity)) {
             // Only a subset of granularity can be stored in the filter context.
@@ -68,7 +62,7 @@ export function dashboardFilterToFilterContextItem(filter: IDashboardFilter): Fi
                 "Unsupported date filter granularity! Please provide valid date filter granularity. (Check DateFilterGranularity type)",
             );
         }
-        const filterContextItem: IDashboardDateFilter = {
+        return {
             dateFilter: {
                 type: "relative",
                 granularity: filter.relativeDateFilter.granularity,
@@ -77,8 +71,6 @@ export function dashboardFilterToFilterContextItem(filter: IDashboardFilter): Fi
                 dataSet: filter.relativeDateFilter.dataSet,
             },
         };
-
-        return filterContextItem;
     }
 
     throw new NotSupported("Unsupported filter type! Please provide valid dashboard filter.");
