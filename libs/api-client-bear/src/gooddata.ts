@@ -96,5 +96,5 @@ export class SDK {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const factory =
     (fetchMethod: typeof fetch) =>
-    (config: any = {}) =>
+    (config: any = {}): SDK =>
         new SDK(fetchMethod, config);

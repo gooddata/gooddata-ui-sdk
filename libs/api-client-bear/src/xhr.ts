@@ -117,23 +117,23 @@ export class ApiResponse<T = any> {
     }
 
     get data(): T {
-        try {
-            return JSON.parse(this.responseBody) as T;
-        } catch (error) {
-            throw new Error("Cannot parse responseBody.");
-        }
+        return this.getDataInner();
     }
 
     public getData(): T {
-        try {
-            return JSON.parse(this.responseBody) as T;
-        } catch (error) {
-            throw new Error("Cannot parse responseBody.");
-        }
+        return this.getDataInner();
     }
 
     public getHeaders(): Response {
         return this.response;
+    }
+
+    private getDataInner(): T {
+        try {
+            return JSON.parse(this.responseBody) as T;
+        } catch (error) {
+            throw new Error("Cannot parse responseBody.");
+        }
     }
 }
 

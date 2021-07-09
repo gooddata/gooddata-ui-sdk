@@ -174,11 +174,8 @@ export class MetadataModuleExt {
                 },
             };
 
-            const duplicateDashboardUri: string = (
-                await this.metadataModule.createObject(projectId, duplicateDashboard)
-            ).analyticalDashboard.meta.uri!;
-
-            return duplicateDashboardUri;
+            return (await this.metadataModule.createObject(projectId, duplicateDashboard)).analyticalDashboard
+                .meta.uri!;
         } catch (err) {
             if (this.shouldCopyVisObj(options)) {
                 await Promise.all(visWidgetUris.map((uri) => this.cascadingDelete(projectId, uri)));

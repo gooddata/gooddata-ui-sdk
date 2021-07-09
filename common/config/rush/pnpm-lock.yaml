@@ -20751,7 +20751,7 @@ packages:
     dev: false
 
   file:projects/api-client-bear.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-/t5MOJ1ug4bQIzE7pa+G+QUJyHbDnmVgNfo/8IgENnoJDO3B7qoKG2V3lcxxWzJPNYBxywheOSdk7aziy0km3w==, tarball: file:projects/api-client-bear.tgz}
+    resolution: {integrity: sha512-lqvXVEVthRO/ard4AxiE2Tmx58rCOZMQzOBRWgEcWXocXC7gvQtSGgRXuoz8oB0Jc/EUw63q961sjA9NmqD/Iw==, tarball: file:projects/api-client-bear.tgz}
     id: file:projects/api-client-bear.tgz
     name: '@rush-temp/api-client-bear'
     version: 0.0.0
@@ -20776,6 +20776,7 @@ packages:
       eslint-plugin-jest: 24.3.6_f98d5d2fd31c8fccbbe3929ad7289cd2
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 3.4.0_eslint@7.28.0+prettier@2.3.1
+      eslint-plugin-sonarjs: 0.9.1_eslint@7.28.0
       fast-levenshtein: 2.0.6
       fetch-cookie: 0.7.3
       fetch-mock: 5.13.1
@@ -21950,7 +21951,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-of9mm4B0hkWoBfz7/5ctOowFtTtAc0Gy3kiGJLhNoJMWJRhLOpS5ndkBBKB7q2aaayPaqXC62Oiz4xEkIi+V5Q==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-4C9FOB2Gp79RAHxETdLjo3uninvNcPGOWbUtAK8GlFrwS2bv0jO2q3he2WSoG8apV6XXX0Znc+YXsrh8CWtoWQ==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0

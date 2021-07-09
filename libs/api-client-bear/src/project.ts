@@ -359,8 +359,7 @@ export class ProjectModule {
         return this.xhr
             .get(`/gdc/app/projects/${projectId}/config`)
             .then((apiResponse: ApiResponse) => {
-                const projectConfig = apiResponse.getData();
-                return projectConfig;
+                return apiResponse.getData();
             })
             .then((result: IProjectConfigResponse) => {
                 if (result && result.settings && result.settings.items) {
