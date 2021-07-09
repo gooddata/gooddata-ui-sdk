@@ -2244,6 +2244,9 @@ export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<Dashboa
 export const selectLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>>;
 
 // @internal
+export const selectListedDashboards: (state: DashboardState) => import("@gooddata/sdk-backend-spi").IListedDashboard[];
+
+// @internal
 export const selectLocale: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-ui").ILocale, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-ui").ILocale>;
 
 // @internal

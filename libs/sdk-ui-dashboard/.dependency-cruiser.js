@@ -4,6 +4,14 @@ options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
+        depCruiser.moduleWithDependencies("drill", "src/drill", [
+            "src/constants",
+            "src/dashboardAux",
+            "src/localization",
+            "src/model",
+            "src/model/_staging/*",
+            "src/types.ts",
+        ]),
         depCruiser.moduleWithDependencies("filterBar", "src/filterBar", [
             "src/localization",
             "src/model",

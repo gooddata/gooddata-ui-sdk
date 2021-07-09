@@ -20,16 +20,14 @@ import {
     isDrillToDashboard,
     isDrillToInsight,
 } from "@gooddata/sdk-backend-spi";
-import { useDashboardSelector } from "../../model/state/dashboardStore";
 import { useDrill } from "../hooks/useDrill";
-import { IntlWrapper } from "../../localization/IntlWrapper";
-import { selectLocale } from "../../model/state/config/configSelectors";
+import { IntlWrapper } from "../../localization";
+import { DashboardCommandFailed, selectLocale, useDashboardSelector } from "../../model";
 import { useDrillDown } from "../hooks/useDrillDown";
 import { useDrillToInsight } from "../hooks/useDrillToInsight";
 import { useDrillToDashboard } from "../hooks/useDrillToDashboard";
 import { useDrillToAttributeUrl } from "../hooks/useDrillToAttributeUrl";
 import { useDrillToCustomUrl } from "../hooks/useDrillToCustomUrl";
-import { DashboardCommandFailed } from "../../model";
 import { IDashboardDrillEvent, isDrillDownDefinition } from "../../types";
 
 /**

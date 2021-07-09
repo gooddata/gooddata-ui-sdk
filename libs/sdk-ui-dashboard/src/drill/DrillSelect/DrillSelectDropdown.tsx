@@ -18,11 +18,10 @@ import { DashboardDrillDefinition, isDrillToUrl } from "../interfaces";
 import { DrillSelectListBody } from "./DrillSelectListBody";
 import { getDrillDownAttributeTitle } from "../utils/drillDownUtils";
 import { DrillSelectContext, DrillType, DrillSelectItem } from "./interfaces";
-import { useDashboardSelector } from "../../model/state/dashboardStore";
-import { selectListedDashboards } from "../../model/state/listedDashboards/listedDashboardsSelectors";
+import { useDashboardSelector, selectListedDashboards } from "../../model";
 import { dashboardMatch } from "../utils/dashboardPredicate";
 import { selectDashboardTitle, selectInsights } from "../../model";
-import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants/zIndex";
+import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;
