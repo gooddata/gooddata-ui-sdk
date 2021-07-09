@@ -22127,7 +22127,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-QEqiRAvA4su+viSg5CW3uUx/TCqZBwhXCVbIp9RJktf26sRn9K3PkQ6XtY0OydR9shpzhkdWWQrVKd/IMYa5GA==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-+SAkt3Oxuo4zbEmmAqGi5BGuIzbcDrTWiGS71ktIOI9rU4WYGvL+7cVUfZ8Fyu1wzcBjshLCSErV9KmN5eRqZA==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
@@ -22166,6 +22166,7 @@ packages:
       eslint-plugin-prettier: 3.4.0_eslint@7.28.0+prettier@2.3.1
       eslint-plugin-react: 7.24.0_eslint@7.28.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.28.0
+      eslint-plugin-sonarjs: 0.9.1_eslint@7.28.0
       fixed-data-table-2: 0.8.28_react-dom@16.14.0+react@16.14.0
       foundation-sites: 5.5.3
       full-icu: 1.3.4
