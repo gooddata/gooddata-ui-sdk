@@ -10,7 +10,7 @@ import {
     MeasureGroupIdentifier,
     newDimension,
 } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import { BucketNames, IPushData } from "@gooddata/sdk-ui";
 
 import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import React from "react";
@@ -20,6 +20,7 @@ import {
     IReferencePoint,
     IVisConstruct,
     IVisProps,
+    IVisualizationOptions,
     RenderFunction,
 } from "../../../interfaces/Visualization";
 import {
@@ -141,4 +142,27 @@ export class PluggableXirr extends AbstractPluggableVisualization {
 
         return [newDimension([MeasureGroupIdentifier])];
     }
+
+    private withEmptyAttributeTargets(data: IPushData) {
+        const dataWithEmptyAttributeTargets: IPushData = {
+            ...data,
+            availableDrillTargets: {
+                ...data?.availableDrillTargets,
+                attributes: [],
+            },
+        };
+
+        return dataWithEmptyAttributeTargets;
+    }
+
+    // This is effectively calling super.pushData()
+    // https://stackoverflow.com/questions/31088947/inheritance-method-call-triggers-typescript-compiler-error
+    // https://github.com/basarat/typescript-book/blob/master/docs/arrow-functions.md#tip-arrow-functions-and-inheritance
+    private superPushData = this.pushData;
+
+    protected pushData = (data: IPushData, options?: IVisualizationOptions): void => {
+        // For xirr chart we do not support drilling from attributes.
+        const filterAtrributes = this.withEmptyAttributeTargets(data);
+        this.superPushData(filterAtrributes, options);
+    };
 }
