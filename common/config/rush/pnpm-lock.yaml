@@ -21851,7 +21851,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-all.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-HInr9AqnriQxNrJQDSHLONlLovG8sFLo+DZyomchqSPuu+b8A0TFKDSgmFcOs8DqWrxk5bP1kXbxIfxXVO8z/Q==, tarball: file:projects/sdk-ui-all.tgz}
+    resolution: {integrity: sha512-uVqBN996BhaMTCa4QiEOrftcCzzx0K64MNEv/qsAO6m80sNYpGBvpojJCx6IuN/Bh0hKYRihaaaHbDROzn8eJA==, tarball: file:projects/sdk-ui-all.tgz}
     id: file:projects/sdk-ui-all.tgz
     name: '@rush-temp/sdk-ui-all'
     version: 0.0.0
@@ -21870,6 +21870,7 @@ packages:
       eslint-plugin-jest: 24.3.6_f98d5d2fd31c8fccbbe3929ad7289cd2
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 3.4.0_eslint@7.28.0+prettier@2.3.1
+      eslint-plugin-sonarjs: 0.9.1_eslint@7.28.0
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
       prettier: 2.3.1
