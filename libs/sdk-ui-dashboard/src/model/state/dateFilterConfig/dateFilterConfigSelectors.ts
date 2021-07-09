@@ -1,10 +1,11 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
 import invariant from "ts-invariant";
 import { DashboardDateFilterConfigMode, DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
-import { convertDateFilterConfigToDateFilterOptions } from "../../_staging/dateFilterConfig/dateFilterConfigConverters";
+
+import { convertDateFilterConfigToDateFilterOptions } from "../../../_staging/dateFilterConfig/dateFilterConfigConverters";
+import { DashboardState } from "../types";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

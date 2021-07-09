@@ -3,6 +3,9 @@
 /*
  */
 
+// exported only for api-extractor's sake
+export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
+
 export * from "./dashboard";
 export * from "./filterBar";
 export * from "./topBar";

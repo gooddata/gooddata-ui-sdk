@@ -24,7 +24,7 @@ import {
     ICatalogDateAttribute,
 } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
-import { ObjRefMap } from "../state/_infra/objRefMap";
+import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import uniqBy from "lodash/uniqBy";
 
 export const QueryInsightAttributesMetaService = createCachedQueryService(

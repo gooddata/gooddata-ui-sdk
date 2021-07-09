@@ -1,10 +1,11 @@
 // (C) 2021 GoodData Corporation
 
 import { dashboardFilterContextDefinition, dashboardFilterContextSanitize } from "../dashboardFilterContext";
+// TODO RAIL-3383 move the fixtures?
 import {
     EmptyDashboardWithReferences,
     SimpleDashboardWithReferences,
-} from "../../../tests/Dashboard.fixtures";
+} from "../../../model/tests/Dashboard.fixtures";
 import { defaultDateFilterConfig } from "../../dateFilterConfig/defaultConfig";
 import { TestFilterContext, TestFilterContextWithInvalidParents } from "./dashboardFilterContext.fixture";
 import { uriRef } from "@gooddata/sdk-model";
@@ -31,7 +32,7 @@ describe("dashboardFilterContextDefinition", () => {
 });
 
 describe("omitNonExistingParentsFromFilterContext", () => {
-    it("should handle filtrs without local identifiers and parents", () => {
+    it("should handle filters without local identifiers and parents", () => {
         const getResult = () => dashboardFilterContextSanitize(TestFilterContext);
 
         expect(getResult).not.toThrow();

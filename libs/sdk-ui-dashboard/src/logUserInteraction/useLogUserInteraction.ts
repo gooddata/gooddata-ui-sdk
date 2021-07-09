@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import { useCallback } from "react";
-import { logUserInteraction, UserInteraction } from "../model/commands/logUserInteraction";
-import { useDashboardDispatch } from "../model/state/dashboardStore";
+
+import { logUserInteraction, useDashboardDispatch, UserInteraction } from "../model";
 
 /**
  * @internal

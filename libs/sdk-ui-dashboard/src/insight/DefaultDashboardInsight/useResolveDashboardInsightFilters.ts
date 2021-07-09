@@ -10,12 +10,11 @@ import {
     UseCancelablePromiseState,
     GoodDataSdkError,
 } from "@gooddata/sdk-ui";
-import { useDashboardSelector, selectFilterContext } from "../model";
+
+import { useDashboardSelector, selectFilterContext } from "../../model";
+import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
+
 import { addImplicitAllTimeFilter, isDateFilterIgnoredForInsight } from "./utils";
-import {
-    filterContextItemsToFiltersForWidget,
-    filterContextToFiltersForWidget,
-} from "../converters/filterConverters";
 
 /**
  * @internal

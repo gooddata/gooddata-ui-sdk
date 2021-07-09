@@ -14,15 +14,14 @@ import {
 import { Overlay } from "@gooddata/sdk-ui-kit";
 import { isDrillDownDefinition } from "../../types";
 import { IInsight, insightRef, insightTitle, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { DashboardDrillDefinition, isDrillToUrl } from "../interfaces";
+import { DashboardDrillDefinition, isDrillToUrl } from "../types";
 import { DrillSelectListBody } from "./DrillSelectListBody";
 import { getDrillDownAttributeTitle } from "../utils/drillDownUtils";
-import { DrillSelectContext, DrillType, DrillSelectItem } from "./interfaces";
-import { useDashboardSelector } from "../../model/state/dashboardStore";
-import { selectListedDashboards } from "../../model/state/listedDashboards/listedDashboardsSelectors";
+import { DrillSelectContext, DrillType, DrillSelectItem } from "./types";
+import { useDashboardSelector, selectListedDashboards } from "../../model";
 import { dashboardMatch } from "../utils/dashboardPredicate";
 import { selectDashboardTitle, selectInsights } from "../../model";
-import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants/zIndex";
+import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;

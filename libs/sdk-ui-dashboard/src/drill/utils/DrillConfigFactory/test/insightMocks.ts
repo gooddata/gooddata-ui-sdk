@@ -1,6 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import { newBucket, newMeasure, uriRef } from "@gooddata/sdk-model";
-import { newInsight } from "../../../../model/_staging/insight/insightBuilder";
+
+import { newInsight } from "../../../../_staging/insight/insightBuilder";
 
 export const MockColumnChartInsight = newInsight("local:column", (i) =>
     i

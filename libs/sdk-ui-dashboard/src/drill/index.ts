@@ -5,6 +5,7 @@ export { useDrillToInsight, UseDrillToInsightProps } from "./hooks/useDrillToIns
 export { useDrillToDashboard, UseDrillToDashboardProps } from "./hooks/useDrillToDashboard";
 export { useDrillToAttributeUrl, UseDrillToAttributeUrlProps } from "./hooks/useDrillToAttributeUrl";
 export { useDrillToCustomUrl, UseDrillToCustomUrlProps } from "./hooks/useDrillToCustomUrl";
+export { useDrillToLegacyDashboard, UseDrillToLegacyDashboardProps } from "./hooks/useDrillToLegacyDashboard";
 export { WithDrillSelectProps, WithDrillSelect } from "./DrillSelect/WithDrillSelect";
 export {
     DashboardDrillDefinition,
@@ -16,4 +17,5 @@ export {
     OnDrillToCustomUrl,
     OnDrillToDashboard,
     OnDrillToInsight,
-} from "./interfaces";
+} from "./types";
+export { getDrillDownAttributeTitle } from "./utils/drillDownUtils";

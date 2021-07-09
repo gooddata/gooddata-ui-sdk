@@ -3,9 +3,9 @@ import React from "react";
 import partition from "lodash/partition";
 import { FormattedHTMLMessage } from "react-intl";
 import { isDrillDownDefinition } from "../../types";
-import { DashboardDrillDefinition } from "../interfaces";
+import { DashboardDrillDefinition } from "../types";
 import { DrillSelectListItem } from "./DrillSelectListItem";
-import { DrillSelectItem } from "./interfaces";
+import { DrillSelectItem } from "./types";
 
 export interface DrillSelectListProps {
     items: DrillSelectItem[];

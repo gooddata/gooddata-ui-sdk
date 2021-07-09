@@ -13,10 +13,11 @@ import {
     IDrillableItem,
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
-import { useDashboardSelector, selectAttributesWithDrillDown } from "../model";
-import { getImplicitDrillsWithPredicates } from "../model/_staging/drills/drillingUtils";
-import { OnDashboardDrill } from "../drill/interfaces";
-import { IDashboardDrillEvent } from "../types";
+
+import { getImplicitDrillsWithPredicates } from "../../_staging/drills/drillingUtils";
+import { OnDashboardDrill } from "../../drill";
+import { useDashboardSelector, selectAttributesWithDrillDown } from "../../model";
+import { IDashboardDrillEvent } from "../../types";
 
 /**
  * @internal
@@ -29,10 +30,18 @@ export interface UseDashboardInsightDrillsProps {
     onDrill?: OnDashboardDrill;
 }
 
+interface UseDashboardInsightDrillsResult {
+    handleDrill?: (event: IDrillEvent) => false | void;
+    handlePushData: (data: IPushData) => void;
+    drillableItems: (IDrillableItem | IHeaderPredicate)[] | undefined;
+}
+
 /**
  * @internal
  */
-export const useDashboardInsightDrills = (props: UseDashboardInsightDrillsProps) => {
+export const useDashboardInsightDrills = (
+    props: UseDashboardInsightDrillsProps,
+): UseDashboardInsightDrillsResult => {
     const { widget, insight, drillableItems, disableWidgetImplicitDrills, onDrill } = props;
 
     const attributesWithDrillDown = useDashboardSelector(selectAttributesWithDrillDown);

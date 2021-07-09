@@ -1,12 +1,13 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { IDashboardDateFilterConfig, IDateFilterConfig } from "@gooddata/sdk-backend-spi";
-import { DashboardContext } from "../../../types/commonTypes";
+
+import { mergeDateFilterConfigs } from "../../../../_staging/dateFilterConfig/merge";
+import { validateDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";
 import { LoadDashboard } from "../../../commands/dashboard";
-import { mergeDateFilterConfigs } from "../../../_staging/dateFilterConfig/merge";
-import { validateDateFilterConfig } from "../../../_staging/dateFilterConfig/validation";
 import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
 import { dateFilterValidationFailed } from "../../../events/dashboard";
+import { DashboardContext } from "../../../types/commonTypes";
 
 export type DateFilterMergeResult = {
     config: IDateFilterConfig;
@@ -29,8 +30,8 @@ export function* mergeDateFilterConfigWithOverrides(
     const mergedConfig = mergeDateFilterConfigs(config, dashboardOverrides);
     /*
      * KD's validation logic did not include selected option. The validation of workspace-level configs was
-     * doing that explicitly outside of validate logic. That logic was not par of the dashboard-level override
-     * processing where just the plaing validation was used.
+     * doing that explicitly outside of validate logic. That logic was not part of the dashboard-level override
+     * processing where just the plain validation was used.
      *
      * The flag below ensures matching behavior.
      */

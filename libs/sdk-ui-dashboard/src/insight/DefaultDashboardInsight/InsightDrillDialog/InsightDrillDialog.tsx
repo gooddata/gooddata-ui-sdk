@@ -1,8 +1,11 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
+import stableStringify from "json-stable-stringify";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight, insightTitle } from "@gooddata/sdk-model";
-import stableStringify from "json-stable-stringify";
+import { FullScreenOverlay, Overlay, OverlayPositionType, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { ILocale } from "@gooddata/sdk-ui";
+
 import {
     OnDashboardDrill,
     OnDrillDown,
@@ -10,12 +13,11 @@ import {
     OnDrillToCustomUrl,
     OnDrillToDashboard,
     OnDrillToInsight,
-} from "../interfaces";
+} from "../../../drill";
+import { IntlWrapper } from "../../../localization";
+import { DefaultDashboardInsightWithDrillSelect } from "../DefaultDashboardInsightWithDrillSelect";
+
 import { DrillDialog } from "./DrillDialog";
-import { FullScreenOverlay, Overlay, OverlayPositionType, useMediaQuery } from "@gooddata/sdk-ui-kit";
-import { DefaultDashboardInsightWithDrillSelect } from "../../insight/DefaultDashboardInsightWithDrillSelect";
-import { IntlWrapper } from "../../localization/IntlWrapper";
-import { ILocale } from "@gooddata/sdk-ui";
 
 /**
  * @internal

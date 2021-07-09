@@ -4,7 +4,7 @@ import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { IDrillToDashboard } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, ObjRef, idRef } from "@gooddata/sdk-model";
 
-import { IDefinitionValidationData, DRILL_TARGET_TYPE, IDrillToDashboardConfig } from "../../interfaces";
+import { IDefinitionValidationData, DRILL_TARGET_TYPE, IDrillToDashboardConfig } from "../../types";
 
 import { DrillItem } from "./DrilItem";
 

@@ -2,7 +2,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { Button, Bubble, BubbleHoverTrigger, ShortenedText } from "@gooddata/sdk-ui-kit";
-import { PoweredByGDLogo } from "../PoweredByGDLogo";
+import { PoweredByGDLogo } from "./PoweredByGDLogo";
 
 export interface DrillDialogProps {
     title: string;

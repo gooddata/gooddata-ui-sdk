@@ -2,7 +2,7 @@
 import React, { createContext, useContext } from "react";
 import { IErrorProps, ILoadingProps, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { DashboardLayoutProps, DashboardWidgetProps } from "../layout/types";
-import { DashboardInsightProps } from "../insight/types";
+import { CustomDashboardInsightComponent } from "../insight/types";
 import { DashboardKpiProps } from "../kpi/types";
 
 /**
@@ -13,7 +13,7 @@ interface IDashboardComponentsContext {
     LoadingComponent: React.ComponentType<ILoadingProps>;
     LayoutComponent: React.ComponentType<DashboardLayoutProps>;
     WidgetComponent: React.ComponentType<DashboardWidgetProps>;
-    InsightComponent: React.ComponentType<DashboardInsightProps>;
+    InsightComponent: CustomDashboardInsightComponent;
     KpiComponent: React.ComponentType<DashboardKpiProps>;
 }
 

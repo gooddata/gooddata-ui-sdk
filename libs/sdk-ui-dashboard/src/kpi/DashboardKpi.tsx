@@ -1,9 +1,11 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { useDashboardComponentsContext } from "../dashboard/DashboardComponentsContext";
-import { DashboardKpiProps } from "./types";
-import { useDrillToLegacyDashboard } from "../drill/hooks/useDrillToLegacyDashboard";
 import { IDrillToLegacyDashboard } from "@gooddata/sdk-backend-spi";
+
+import { useDashboardComponentsContext } from "../dashboardAux";
+import { useDrillToLegacyDashboard } from "../drill";
+
+import { DashboardKpiProps } from "./types";
 
 /**
  * @internal

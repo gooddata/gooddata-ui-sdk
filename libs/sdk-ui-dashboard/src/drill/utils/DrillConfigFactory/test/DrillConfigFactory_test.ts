@@ -8,12 +8,7 @@ import { DrillConfigFactory } from "../DrillConfigFactory";
 import { DrillToVisualizationItem } from "../DrillToVisualizationItem";
 import { DrillToDashboardItem } from "../DrillToDashboardItem";
 import { DrillToUrlItem } from "../DrillToUrlItem";
-import {
-    IDefinitionValidationData,
-    IDrillConfigItem,
-    DRILL_TARGET_TYPE,
-    IDrillToUrl,
-} from "../../../interfaces";
+import { IDefinitionValidationData, IDrillConfigItem, DRILL_TARGET_TYPE, IDrillToUrl } from "../../../types";
 import {
     drillToCustomUrl,
     drillToAttributeUrl,

@@ -1,39 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
-import {
-    CustomFilterBarComponent,
-    DefaultFilterBar,
-    IDefaultFilterBarProps,
-    IFilterBarCoreProps,
-} from "../filterBar";
-import {
-    CustomTopBarComponent,
-    IDefaultTopBarProps,
-    DefaultTopBar,
-    IDefaultMenuButtonComponentCallbacks,
-    ITopBarCoreProps,
-} from "../topBar";
 import { Provider } from "react-redux";
-import {
-    createDashboardStore,
-    ReactDashboardContext,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../model/state/dashboardStore";
-import {
-    InitialLoadCorrelationId,
-    renameDashboard,
-    selectDashboardLoading,
-    selectDashboardTitle,
-    selectFilterContextFilters,
-    selectLocale,
-} from "../model";
-import { loadDashboard } from "../model/commands/dashboard";
-import {
-    changeAttributeFilterSelection,
-    changeDateFilterSelection,
-    clearDateFilterSelection,
-} from "../model/commands/filters";
+import invariant from "ts-invariant";
 import {
     FilterContextItem,
     IAnalyticalBackend,
@@ -45,6 +13,7 @@ import {
     IWorkspacePermissions,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
+import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import {
     ErrorComponent as DefaultError,
     GoodDataSdkError,
@@ -57,13 +26,24 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
-import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
-import { DashboardEventHandler } from "../model/events/eventHandler";
-import { DashboardConfig } from "../model/types/commonTypes";
-import invariant from "ts-invariant";
-import { DashboardEventsProvider } from "./DashboardEventsContext";
-import { DashboardComponentsProvider, useDashboardComponentsContext } from "./DashboardComponentsContext";
-import { DashboardInsightProps, DefaultDashboardInsightWithDrillDialog } from "../insight";
+
+import {
+    DashboardComponentsProvider,
+    DashboardEventsProvider,
+    useDashboardComponentsContext,
+} from "../dashboardAux";
+import {
+    CustomFilterBarComponent,
+    DefaultFilterBar,
+    IDefaultFilterBarProps,
+    IFilterBarCoreProps,
+} from "../filterBar";
+import {
+    CustomDashboardInsightComponent,
+    DefaultDashboardInsightWithDrillDialog,
+    IDashboardInsightCoreProps,
+    IDefaultDashboardInsightProps,
+} from "../insight";
 import { DashboardKpiProps, DefaultDashboardKpi } from "../kpi";
 import {
     DashboardLayout,
@@ -72,13 +52,39 @@ import {
     DefaultDashboardLayout,
     DefaultDashboardWidget,
 } from "../layout";
+import { IntlWrapper } from "../localization";
+import {
+    changeAttributeFilterSelection,
+    changeDateFilterSelection,
+    clearDateFilterSelection,
+    DashboardConfig,
+    DashboardEventHandler,
+    InitialLoadCorrelationId,
+    loadDashboard,
+    renameDashboard,
+    selectDashboardLoading,
+    selectDashboardTitle,
+    selectFilterContextFilters,
+    selectLocale,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../model";
+// we do not want to expose those publicly so reach "inside" the model module just here
+import { createDashboardStore, ReactDashboardContext } from "../model/state/dashboardStore";
 import {
     CustomScheduledEmailDialogComponent,
     DefaultScheduledEmailDialog,
     IDefaultScheduledEmailDialogCallbackProps,
 } from "../scheduledEmail";
-import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
-import { IntlWrapper } from "../localization/IntlWrapper";
+import {
+    CustomTopBarComponent,
+    IDefaultTopBarProps,
+    DefaultTopBar,
+    IDefaultMenuButtonComponentCallbacks,
+    ITopBarCoreProps,
+} from "../topBar";
+
+import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { useDashboardPdfExporter } from "./useDashboardPdfExporter";
 
 const useFilterBar = (): {
@@ -306,14 +312,14 @@ export interface IDashboardProps {
             /**
              * Specify component to use for rendering the insight
              */
-            Component?: React.ComponentType<DashboardInsightProps>;
+            Component?: CustomDashboardInsightComponent;
 
             /**
              * Optionally specify props to customize the default implementation of Insight.
              *
              * This has no effect if custom component is used.
              */
-            defaultComponentProps?: DashboardInsightProps;
+            defaultComponentProps?: Omit<IDefaultDashboardInsightProps, keyof IDashboardInsightCoreProps>; // TODO: also how to propagate these?
         };
 
         /**
@@ -321,7 +327,7 @@ export interface IDashboardProps {
          */
         kpi?: {
             /**
-             * Specify component to use for rendering the insight
+             * Specify component to use for rendering the KPI
              */
             Component?: React.ComponentType<DashboardKpiProps>;
 

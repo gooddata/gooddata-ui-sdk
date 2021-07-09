@@ -1,13 +1,15 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { DashboardInsightProps } from "./types";
-import { WithDrillSelect } from "../drill/DrillSelect/WithDrillSelect";
+
+import { IDefaultDashboardInsightProps } from "../types";
+import { WithDrillSelect } from "../../drill";
+
 import { DefaultDashboardInsight } from "./DefaultDashboardInsight";
 
 /**
  * @internal
  */
-export const DefaultDashboardInsightWithDrillSelect: React.FC<DashboardInsightProps> = (
+export const DefaultDashboardInsightWithDrillSelect: React.FC<IDefaultDashboardInsightProps> = (
     props,
 ): JSX.Element => {
     const { onDrillDown, onDrillToInsight, onDrillToAttributeUrl, onDrillToCustomUrl, onDrillToDashboard } =

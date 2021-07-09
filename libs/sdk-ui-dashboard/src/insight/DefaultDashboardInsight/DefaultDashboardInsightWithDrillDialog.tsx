@@ -1,20 +1,20 @@
 // (C) 2020 GoodData Corporation
 import React, { useState } from "react";
-import { InsightDrillDialog } from "../drill/DrillDialog/InsightDrillDialog";
-import { DrillStep, OnDashboardDrill } from "../drill/interfaces";
-import { DashboardInsightProps } from "./types";
-import last from "lodash/last";
-import { DefaultDashboardInsightWithDrillSelect } from "./DefaultDashboardInsightWithDrillSelect";
-import { getDrillDownAttributeTitle } from "../drill/utils/drillDownUtils";
-import { useDashboardSelector } from "../model/state/dashboardStore";
-import { selectLocale, selectWidgetByRef } from "../model";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
-import { IDrillDownDefinition, isDrillDownDefinition } from "../types";
+import last from "lodash/last";
+
+import { selectLocale, selectWidgetByRef, useDashboardSelector } from "../../model";
+import { DrillStep, OnDashboardDrill, getDrillDownAttributeTitle } from "../../drill";
+import { IDrillDownDefinition, isDrillDownDefinition } from "../../types";
+import { IDefaultDashboardInsightProps } from "../types";
+
+import { DefaultDashboardInsightWithDrillSelect } from "./DefaultDashboardInsightWithDrillSelect";
+import { InsightDrillDialog } from "./InsightDrillDialog";
 
 /**
  * @internal
  */
-export const DefaultDashboardInsightWithDrillDialog = (props: DashboardInsightProps): JSX.Element => {
+export const DefaultDashboardInsightWithDrillDialog = (props: IDefaultDashboardInsightProps): JSX.Element => {
     const [drillSteps, setDrillSteps] = useState<DrillStep[]>([]);
     const activeDrillStep = last(drillSteps);
     const insight = activeDrillStep?.insight;

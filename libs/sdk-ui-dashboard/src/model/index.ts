@@ -14,7 +14,6 @@
 
 export { useDashboardSelector, useDashboardDispatch, DashboardDispatch } from "./state/dashboardStore";
 export { DashboardState } from "./state/types";
-export { ObjRefMap, ObjRefMapConfig } from "./state/_infra/objRefMap";
 
 export { selectDashboardLoading } from "./state/loading/loadingSelectors";
 export { LoadingState } from "./state/loading/loadingState";
@@ -34,9 +33,16 @@ export {
     selectDateFormat,
     selectEnableKPIDashboardSchedule,
     selectEnableKPIDashboardScheduleRecipients,
+    selectEnableCompanyLogoInEmbeddedUI,
+    selectIsEmbedded,
+    selectPlatformEdition,
 } from "./state/config/configSelectors";
 export { PermissionsState } from "./state/permissions/permissionsState";
-export { selectPermissions, selectCanListUsersInWorkspace } from "./state/permissions/permissionsSelectors";
+export {
+    selectPermissions,
+    selectCanListUsersInWorkspace,
+    selectCanManageWorkspace,
+} from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
 export {
     selectFilterContext,
@@ -84,6 +90,7 @@ export { UserState } from "./state/user/userState";
 export { selectUser } from "./state/user/userSelectors";
 export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
 export { selectDashboardRef, selectDashboardUriRef, selectDashboardTitle } from "./state/meta/metaSelectors";
+export { selectListedDashboards } from "./state/listedDashboards/listedDashboardsSelectors";
 
 export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta";
@@ -105,9 +112,6 @@ export {
     RelativeIndex,
 } from "./types/layoutTypes";
 export { WidgetFilterSettings, WidgetHeader } from "./types/widgetTypes";
-
-export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
-export { CatalogDateAttributeWithDataset } from "./_staging/catalog/dateAttributeWithDatasetMap";
 
 export * from "./commands";
 export * from "./events";

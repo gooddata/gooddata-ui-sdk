@@ -17,7 +17,8 @@ import {
     localIdRef,
 } from "@gooddata/sdk-model";
 import { HeaderPredicates, IAvailableDrillTargetAttribute, IHeaderPredicate } from "@gooddata/sdk-ui";
-import { IDrillDownDefinition } from "../../../types";
+
+import { IDrillDownDefinition } from "../../types";
 
 interface IImplicitDrillWithPredicates {
     drillDefinition: DrillDefinition | IDrillDownDefinition;

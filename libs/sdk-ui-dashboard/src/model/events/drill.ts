@@ -2,7 +2,7 @@
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
 import { IInsight } from "@gooddata/sdk-model";
-import { DashboardDrillContext } from "../../drill/interfaces";
+import { DashboardDrillContext } from "../../drill/types";
 import {
     IDrillToDashboard,
     IDrillToInsight,

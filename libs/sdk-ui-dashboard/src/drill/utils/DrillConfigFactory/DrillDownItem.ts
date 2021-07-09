@@ -3,7 +3,7 @@
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { ObjRef } from "@gooddata/sdk-model";
 
-import { IDefinitionValidationData, IDrillConfigItemBase } from "../../interfaces";
+import { IDefinitionValidationData, IDrillConfigItemBase } from "../../types";
 import { IDrillDownDefinition } from "../../../types";
 
 import { DrillItem } from "./DrilItem";
