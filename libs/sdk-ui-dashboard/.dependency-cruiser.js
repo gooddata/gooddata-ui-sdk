@@ -4,6 +4,15 @@ options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
+        depCruiser.isolatedSubmodule("constants", "src/constants"),
+        depCruiser.isolatedSubmodule("dashboardItems", "src/dashboardItems"),
+        depCruiser.moduleWithDependencies("converters", "src/converters", ["src/types.ts"]),
+        depCruiser.moduleWithDependencies("dashboardAux", "src/dashboardAux", [
+            "src/model",
+            "src/insight/types.ts",
+            "src/kpi/types.ts",
+            "src/layout/types.ts",
+        ]),
         depCruiser.moduleWithDependencies("drill", "src/drill", [
             "src/_staging/*",
             "src/constants",
@@ -22,7 +31,7 @@ options = {
             "src/converters",
             "src/dashboardAux",
             "src/drill",
-            "src/drill/types.ts", // TODO RAIL-3383 can we avoid this?
+            "src/drill/types.ts",
             "src/localization",
             "src/logUserInteraction",
             "src/model",
