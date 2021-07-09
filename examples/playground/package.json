@@ -65,7 +65,8 @@
         "webpack-cli": "^4.6.0",
         "webpack-dev-server": "^3.11.2",
         "webpack": "^5.18.0",
-        "speed-measure-webpack-plugin": "^1.5.0"
+        "speed-measure-webpack-plugin": "^1.5.0",
+        "eslint-plugin-sonarjs": "^0.9.1"
     },
     "dependencies": {
         "@gooddata/sdk-backend-base": "^8.6.0-alpha.7",
