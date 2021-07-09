@@ -10,15 +10,17 @@ const DataSampleConstName = "DataSamples";
 type DataSampleRecording = [string, DisplayFormRecording];
 
 function generateRecordingForDataSample(entries: DataSampleRecording[]): string {
-    return `{ ${entries
+    const entryRows = entries
         .map(([_, entryRecording]) => {
-            return `${entryRecording.getAttributeElements().map((element, index) => {
+            return entryRecording.getAttributeElements().map((element, index) => {
                 return `${createUniqueVariableName(
                     element.title,
                 )} : ${entryRecording.getRecordingName()}[${index}]`;
-            })}`;
+            });
         })
-        .join(",")} }`;
+        .join(",");
+
+    return `{ ${entryRows} }`;
 }
 
 function comparatorDataSample(a: [string, DataSampleRecording[]], b: [string, DataSampleRecording[]]) {
@@ -42,15 +44,16 @@ function generateDataSampleConst(
     const entriesDataSample = Object.entries(groupBy(recsWithDataSample, ([title]) => title)).sort(
         comparatorDataSample,
     );
+    const dataSampleRows = entriesDataSample
+        .map(([title, rec]) => `${title}: ${generateRecordingForDataSample(rec)}`)
+        .join(",");
     return {
         declarationKind: VariableDeclarationKind.Const,
         isExported: true,
         declarations: [
             {
                 name: DataSampleConstName,
-                initializer: `{ ${entriesDataSample
-                    .map(([title, rec]) => `${title}: ${generateRecordingForDataSample(rec)}`)
-                    .join(",")} }`,
+                initializer: `{ ${dataSampleRows} }`,
             },
         ],
     };
