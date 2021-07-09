@@ -1,15 +1,9 @@
 // (C) 2019 GoodData Corporation
 
 import {
-    IAttributeDescriptor,
     IDataView,
-    IDimensionDescriptor,
     IExecutionResult,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
     IPreparedExecution,
-    isAttributeDescriptor,
-    isMeasureGroupDescriptor,
     isNoDataError,
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
@@ -18,16 +12,8 @@ import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import noop from "lodash/noop";
 import omit from "lodash/omit";
-import flatMap from "lodash/fp/flatMap";
-import filter from "lodash/fp/filter";
-import flow from "lodash/fp/flow";
-import uniqBy from "lodash/fp/uniqBy";
-import {
-    IAvailableDrillTargetMeasure,
-    IAvailableDrillTargets,
-    IExportFunction,
-    ILoadingState,
-} from "../../vis/Events";
+
+import { IExportFunction, ILoadingState } from "../../vis/Events";
 import {
     DataTooLargeToDisplaySdkError,
     GoodDataSdkError,
@@ -38,6 +24,7 @@ import { DataViewFacade } from "../../results/facade";
 import { convertError } from "../../errors/errorHandling";
 import { IntlWrapper } from "../../localization/IntlWrapper";
 import { IDataVisualizationProps } from "../../vis/VisualizationProps";
+import { getAvailableDrillTargets } from "./availableDrillTargets";
 
 interface IDataViewLoadState {
     isLoading: boolean;
@@ -200,59 +187,6 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onError(new NegativeValuesSdkError());
         }
 
-        private getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
-            const attributes = uniqBy(
-                (attributeDescriptor) => attributeDescriptor.attributeHeader.formOf.identifier,
-                dv.meta().attributeDescriptors(),
-            );
-            return {
-                measures: dv
-                    .meta()
-                    .measureDescriptors()
-                    .map(
-                        (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
-                            measure,
-                            attributes,
-                        }),
-                    ),
-                attributes: dv
-                    .meta()
-                    .attributeDescriptors()
-                    .map((attribute) => ({ attribute })),
-            };
-        }
-
-        private getAvailableDrillTargetsFromExecutionResult(
-            executionResult: IExecutionResult,
-        ): IAvailableDrillTargets {
-            const getDimensionHeaders = (dimensionDescriptor: IDimensionDescriptor) =>
-                dimensionDescriptor.headers;
-            const attributeDescriptors: IAttributeDescriptor[] = flow(
-                flatMap(getDimensionHeaders),
-                filter(isAttributeDescriptor),
-                uniqBy((attributeDescriptor) => attributeDescriptor.attributeHeader.formOf.identifier),
-            )(executionResult.dimensions);
-
-            const measureDescriptors: IMeasureDescriptor[] = flow(
-                flatMap((dimensionDescriptor: IDimensionDescriptor) => dimensionDescriptor.headers),
-                filter(isMeasureGroupDescriptor),
-                flatMap(
-                    (measureGroupDescriptor: IMeasureGroupDescriptor) =>
-                        measureGroupDescriptor.measureGroupHeader.items,
-                ),
-            )(executionResult.dimensions);
-
-            return {
-                measures: measureDescriptors.map(
-                    (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
-                        measure,
-                        attributes: attributeDescriptors,
-                    }),
-                ),
-                attributes: attributeDescriptors.map((attribute) => ({ attribute })),
-            };
-        }
-
         private async initDataLoading(execution: IPreparedExecution) {
             const { onExportReady, pushData, exportTitle } = this.props;
             this.onLoadingChanged({ isLoading: true });
@@ -276,8 +210,9 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                      * we still want to push availableDrillTargets
                      */
                     if (isUnexpectedResponseError(err) && pushData) {
-                        const availableDrillTargets =
-                            this.getAvailableDrillTargetsFromExecutionResult(executionResult);
+                        const availableDrillTargets = getAvailableDrillTargets(
+                            DataViewFacade.forResult(executionResult),
+                        );
 
                         pushData({ availableDrillTargets });
                     }
@@ -304,7 +239,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 }
 
                 if (pushData) {
-                    const availableDrillTargets = this.getAvailableDrillTargets(DataViewFacade.for(dataView));
+                    const availableDrillTargets = getAvailableDrillTargets(DataViewFacade.for(dataView));
 
                     pushData({ dataView, availableDrillTargets });
                 }
@@ -322,7 +257,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                  * metadata essential for setup of drilling. Look for that and if available push up.
                  */
                 if (isNoDataError(error) && error.dataView && pushData) {
-                    const availableDrillTargets = this.getAvailableDrillTargets(
+                    const availableDrillTargets = getAvailableDrillTargets(
                         DataViewFacade.for(error.dataView),
                     );
 

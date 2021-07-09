@@ -1,0 +1,316 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getAvailableDrillTargets gets propper available drill targets - ignoring column attributes 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.department",
+              "name": "Department",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1088",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1088",
+            },
+            "identifier": "label.owner.department",
+            "localIdentifier": "a_label.owner.department",
+            "name": "Department",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1089",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1089",
+          },
+        },
+      ],
+    },
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.owner.department",
+            "name": "Department",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1088",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1088",
+          },
+          "identifier": "label.owner.department",
+          "localIdentifier": "a_label.owner.department",
+          "name": "Department",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1089",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1089",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.department",
+              "name": "Department",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1088",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1088",
+            },
+            "identifier": "label.owner.department",
+            "localIdentifier": "a_label.owner.department",
+            "name": "Department",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1089",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1089",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.department",
+              "name": "Department",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1088",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1088",
+            },
+            "identifier": "label.owner.department",
+            "localIdentifier": "a_label.owner.department",
+            "name": "Department",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1089",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1089",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.opportunitysnapshot.forecastcategory",
+              "name": "Forecast Category",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1062",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1062",
+            },
+            "identifier": "label.opportunitysnapshot.forecastcategory",
+            "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+            "name": "Forecast Category",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1063",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1063",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.region",
+              "name": "Region",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "identifier": "label.owner.region",
+            "localIdentifier": "a_label.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.department",
+              "name": "Department",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1088",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1088",
+            },
+            "identifier": "label.owner.department",
+            "localIdentifier": "a_label.owner.department",
+            "name": "Department",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1089",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1089",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.opportunitysnapshot.forecastcategory",
+              "name": "Forecast Category",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1062",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1062",
+            },
+            "identifier": "label.opportunitysnapshot.forecastcategory",
+            "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+            "name": "Forecast Category",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1063",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1063",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.region",
+              "name": "Region",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "identifier": "label.owner.region",
+            "localIdentifier": "a_label.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+  ],
+}
+`;

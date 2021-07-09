@@ -82,6 +82,7 @@ export interface IAvailableDrillTargetMeasure {
  */
 export interface IAvailableDrillTargetAttribute {
     attribute: IAttributeDescriptor;
+    intersectionAttributes: IAttributeDescriptor[];
 }
 
 /*

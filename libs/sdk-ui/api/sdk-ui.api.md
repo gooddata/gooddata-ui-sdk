@@ -312,6 +312,7 @@ export class DataViewFacade {
     fingerprint(): string;
     // (undocumented)
     static for(dataView: IDataView): DataViewFacade;
+    static forResult(result: IExecutionResult): DataViewFacade;
     // @internal (undocumented)
     meta(): IResultMetaMethods;
     // @internal (undocumented)
@@ -498,6 +499,8 @@ export interface IAttrs {
 export interface IAvailableDrillTargetAttribute {
     // (undocumented)
     attribute: IAttributeDescriptor;
+    // (undocumented)
+    intersectionAttributes: IAttributeDescriptor[];
 }
 
 // @internal (undocumented)
