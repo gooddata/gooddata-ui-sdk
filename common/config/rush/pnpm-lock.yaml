@@ -5739,7 +5739,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.1_debug@4.3.1
+      follow-redirects: 1.14.1
     transitivePeerDependencies:
       - debug
     dev: false
@@ -9655,6 +9655,16 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
+    dev: false
+
+  /follow-redirects/1.14.1:
+    resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /follow-redirects/1.14.1_debug@4.1.1:
@@ -21443,7 +21453,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-mockingbird.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-jM/xduCpwIu0sD02qnhC51TwxO2dlPWKLQzi+cdw6bilgPCfosREj3ECSd+E7y0es0/nrfGtJNURV+A1BUFKaA==, tarball: file:projects/sdk-backend-mockingbird.tgz}
+    resolution: {integrity: sha512-4tB4aUjIGBehjN/WSmpRVinvyLrGwe9QPt5sIvlDEbeqx8vqYRDH1hKJ2J8q3yE0+/X/BuNRzW7uN8R6fg1Hrg==, tarball: file:projects/sdk-backend-mockingbird.tgz}
     id: file:projects/sdk-backend-mockingbird.tgz
     name: '@rush-temp/sdk-backend-mockingbird'
     version: 0.0.0
@@ -21463,6 +21473,7 @@ packages:
       eslint-plugin-jest: 24.3.6_f98d5d2fd31c8fccbbe3929ad7289cd2
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 3.4.0_eslint@7.28.0+prettier@2.3.1
+      eslint-plugin-sonarjs: 0.9.1_eslint@7.28.0
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
