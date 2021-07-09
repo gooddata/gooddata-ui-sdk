@@ -49,14 +49,12 @@ export class BearWorkspace implements IAnalyticalWorkspace {
             const project = projects.find(
                 (project) => project.links?.self.split("/").pop() === this.workspace,
             );
-            const descriptor: IWorkspaceDescriptor = {
+            return {
                 id: this.workspace,
                 description: project?.meta.summary ?? "",
                 title: project?.meta.title ?? "",
                 // isDemo:  TO-DO: Implement this using sdk.project.getProjectsWithPaging, which contains demoWorkspace prop
             };
-
-            return descriptor;
         }
 
         return this.descriptor;

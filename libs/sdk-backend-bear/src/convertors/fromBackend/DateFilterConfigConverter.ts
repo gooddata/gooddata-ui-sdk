@@ -71,7 +71,7 @@ export const convertDateFilterConfig = (
             meta,
         },
     } = dateFilterConfig;
-    const convertedDateFilterConfig: IDateFilterConfig = {
+    return {
         ref: uriRef(meta.uri!),
         selectedOption,
         allTime: allTime && convertAllTime(allTime),
@@ -80,5 +80,4 @@ export const convertDateFilterConfig = (
         absolutePresets: absolutePresets && absolutePresets.map(convertAbsolutePreset),
         relativePresets: relativePresets && relativePresets.map(convertRelativePreset),
     };
-    return convertedDateFilterConfig;
 };

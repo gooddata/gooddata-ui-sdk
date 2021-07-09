@@ -21,13 +21,11 @@ export const convertScheduledMailAttachment = (
         kpiDashboardAttachment: { format, uri, filterContext },
     } = scheduledMailAttachment;
 
-    const convertedAttachment: ScheduledMailAttachment = {
+    return {
         dashboard: uriRef(uri),
         format,
         filterContext: filterContext ? uriRef(filterContext) : undefined,
     };
-
-    return convertedAttachment;
 };
 
 export const convertScheduledMail = (
@@ -40,7 +38,7 @@ export const convertScheduledMail = (
         },
     } = scheduledMail;
 
-    const convertedScheduledMail: IScheduledMail | IScheduledMailDefinition = {
+    return {
         title,
         description: summary!,
         ...(uri
@@ -65,6 +63,4 @@ export const convertScheduledMail = (
         attachments: attachments.map(convertScheduledMailAttachment),
         unlisted: !!unlisted,
     };
-
-    return convertedScheduledMail;
 };

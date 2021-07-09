@@ -5,10 +5,6 @@ import { uriRef, idRef } from "@gooddata/sdk-model";
 import {
     IDrillToLegacyDashboard,
     InsightDrillDefinition,
-    IDrillToDashboard,
-    IDrillToInsight,
-    IDrillToCustomUrl,
-    IDrillToAttributeUrl,
     UnexpectedError,
     DrillOrigin,
 } from "@gooddata/sdk-backend-spi";
@@ -16,7 +12,7 @@ import {
 export const convertKpiDrill = (kpi: GdcKpi.IWrappedKPI): IDrillToLegacyDashboard => {
     const { drillTo: { projectDashboard, projectDashboardTab } = {}, metric } = kpi.kpi.content;
 
-    const drillDefinition: IDrillToLegacyDashboard = {
+    return {
         type: "drillToLegacyDashboard",
         origin: {
             type: "drillFromMeasure",
@@ -26,8 +22,6 @@ export const convertKpiDrill = (kpi: GdcKpi.IWrappedKPI): IDrillToLegacyDashboar
         tab: projectDashboardTab!,
         transition: "in-place",
     };
-
-    return drillDefinition;
 };
 
 export const convertDrillOrigin = (from: GdcVisualizationWidget.DrillFromType): DrillOrigin => {
@@ -53,31 +47,27 @@ export const convertVisualizationWidgetDrill = (
         const {
             drillToDashboard: { toDashboard, target, from },
         } = drill;
-        const drillDefinition: IDrillToDashboard = {
+        return {
             type: "drillToDashboard",
             origin: convertDrillOrigin(from),
             target: toDashboard !== undefined ? idRef(toDashboard) : undefined,
             transition: target,
         };
-
-        return drillDefinition;
     } else if (GdcVisualizationWidget.isDrillToVisualization(drill)) {
         const {
             drillToVisualization: { toVisualization, target, from },
         } = drill;
-        const drillDefinition: IDrillToInsight = {
+        return {
             type: "drillToInsight",
             origin: convertDrillOrigin(from),
             target: toVisualization,
             transition: target,
         };
-
-        return drillDefinition;
     } else if (GdcVisualizationWidget.isDrillToCustomUrl(drill)) {
         const {
             drillToCustomUrl: { target, customUrl, from },
         } = drill;
-        const drillDefinition: IDrillToCustomUrl = {
+        return {
             type: "drillToCustomUrl",
             origin: convertDrillOrigin(from),
             target: {
@@ -85,13 +75,11 @@ export const convertVisualizationWidgetDrill = (
             },
             transition: target,
         };
-
-        return drillDefinition;
     } else if (GdcVisualizationWidget.isDrillToAttributeUrl(drill)) {
         const {
             drillToAttributeUrl: { drillToAttributeDisplayForm, insightAttributeDisplayForm, target, from },
         } = drill;
-        const drillDefinition: IDrillToAttributeUrl = {
+        return {
             type: "drillToAttributeUrl",
             origin: convertDrillOrigin(from),
             target: {
@@ -100,8 +88,6 @@ export const convertVisualizationWidgetDrill = (
             },
             transition: target,
         };
-
-        return drillDefinition;
     }
 
     throw new UnexpectedError("Unable to convert unknown drill!");

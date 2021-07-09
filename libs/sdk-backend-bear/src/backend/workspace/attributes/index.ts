@@ -138,7 +138,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
             content: { formOf, default: defaultDisplayForm, type },
         } = displayFormDetails;
         const ref: UriRef = uriRef(uri!);
-        const isDefaultDf = !!(defaultDisplayForm === 1);
+        const isDefaultDf = defaultDisplayForm === 1;
         return newAttributeDisplayFormMetadataObject(ref, (df) =>
             df
                 .attribute(uriRef(formOf))

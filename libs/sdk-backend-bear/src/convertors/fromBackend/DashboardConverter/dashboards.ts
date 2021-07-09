@@ -39,11 +39,10 @@ const convertDateFilterConfigAddedPresets = (
     addPresets: GdcDashboard.IDashboardDateFilterAddedPresets,
 ): IDashboardDateFilterAddedPresets => {
     const { absolutePresets = [], relativePresets = [] } = addPresets;
-    const convertedPresets: IDashboardDateFilterAddedPresets = {
+    return {
         absolutePresets: absolutePresets.map((preset) => ({ ...preset, type: "absolutePreset" })),
         relativePresets: relativePresets.map((preset) => ({ ...preset, type: "relativePreset" })),
     };
-    return convertedPresets;
 };
 
 export const convertDashboardDateFilterConfig = (
@@ -85,7 +84,7 @@ export const convertDashboard = (
         exportFilterContextUri ? dep.uri === exportFilterContextUri : dep.uri === filterContext,
     ) as IFilterContext | ITempFilterContext | undefined;
 
-    const convertedDashboard: IDashboard = {
+    return {
         title,
         description: summary!,
 
@@ -110,8 +109,6 @@ export const convertDashboard = (
         // filter takes care of multiple spaces and also the base scenario ("" ~> [])
         tags: tags?.split(" ").filter((t) => t),
     };
-
-    return convertedDashboard;
 };
 
 const convertDashboardDependency = (dependency: BearDashboardDependency): DashboardDependency => {

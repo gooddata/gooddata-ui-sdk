@@ -17,12 +17,10 @@ import keyBy from "lodash/keyBy";
 import { convertMetric } from "../../../convertors/fromBackend/CatalogConverter";
 
 const objectTypeToObjectCategory = (type: SupportedWidgetReferenceTypes): GdcMetadata.ObjectCategory => {
-    switch (type) {
-        case "measure":
-            return "metric";
-        default:
-            return type;
+    if (type === "measure") {
+        return "metric";
     }
+    return type;
 };
 
 export class WidgetReferencesQuery {
@@ -105,10 +103,8 @@ export class WidgetReferencesQuery {
         convertedObjects.forEach((obj) => {
             const fullObject = objectsByUri[obj.uri];
 
-            switch (obj.type) {
-                case "measure":
-                    catalogItems.push(convertMetric({ metric: fullObject as GdcMetadata.IMetric }));
-                    break;
+            if (obj.type === "measure") {
+                catalogItems.push(convertMetric({ metric: fullObject as GdcMetadata.IMetric }));
             }
         });
 

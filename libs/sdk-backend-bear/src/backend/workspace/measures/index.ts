@@ -100,7 +100,7 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
             {},
         );
 
-        const expressionTokensWithDetails = expressionTokens.map((token): IMeasureExpressionToken => {
+        return expressionTokens.map((token): IMeasureExpressionToken => {
             if (token.type === "element_uri") {
                 const element = attributeElementsByUri[token.value];
                 return {
@@ -131,8 +131,6 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
                 value: token.value,
             };
         });
-
-        return expressionTokensWithDetails;
     }
 
     async createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {

@@ -85,8 +85,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         const dashboardsObjectLinks = await this.authCall((sdk) =>
             sdk.md.getAnalyticalDashboards(this.workspace),
         );
-        const dashboards = dashboardsObjectLinks.map(toSdkModel.convertListedDashboard);
-        return dashboards;
+        return dashboardsObjectLinks.map(toSdkModel.convertListedDashboard);
     };
 
     public getDashboard = async (
@@ -110,14 +109,12 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             bearDependencies.push(bearExportFilterContext);
         }
 
-        const sdkDashboard = toSdkModel.convertDashboard(
+        return toSdkModel.convertDashboard(
             bearDashboard,
             bearDependencies,
             bearVisualizationClasses,
             exportFilterContextUri,
         );
-
-        return sdkDashboard;
     };
 
     public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
@@ -258,13 +255,12 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
                 nearest: true,
             }),
         );
-        const convertedResult = result.map((entry): IWidgetAlertCount => {
+        return result.map((entry): IWidgetAlertCount => {
             return {
                 ref: uriRef(entry.uri),
                 alertCount: entry.entries.length,
             };
         });
-        return convertedResult;
     };
 
     public createWidgetAlert = async (alert: IWidgetAlertDefinition): Promise<IWidgetAlert> => {
@@ -431,12 +427,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         ]);
 
         // Update relevant parts of the layout with saved widgets
-        const layout = createdAndUpdatedWidgetsWithLayoutPaths.reduce((acc, widgetWithPath) => {
-            const updated = set(acc, widgetWithPath.path, widgetWithPath.widget);
-            return updated;
+        return createdAndUpdatedWidgetsWithLayoutPaths.reduce((acc, widgetWithPath) => {
+            return set(acc, widgetWithPath.path, widgetWithPath.widget);
         }, clone(updatedLayout));
-
-        return layout;
     };
 
     // Filter context
@@ -477,7 +470,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             this.authCall,
         );
 
-        const exportFilterContext = await this.authCall(async (sdk) => {
+        return await this.authCall(async (sdk) => {
             let result:
                 | GdcFilterContext.IWrappedFilterContext
                 | GdcFilterContext.IWrappedTempFilterContext
@@ -499,8 +492,6 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
             return result;
         });
-
-        return exportFilterContext;
     };
 
     private createBearFilterContext = async (
@@ -533,8 +524,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     private createBearWidget = async (widget: IWidgetDefinition): Promise<IWidget> => {
         const bearWidget = fromSdkModel.convertWidget(widget);
         const savedBearWidget = await this.authCall((sdk) => sdk.md.createObject(this.workspace, bearWidget));
-        const savedWidget = toSdkModel.convertWidget(savedBearWidget);
-        return savedWidget;
+        return toSdkModel.convertWidget(savedBearWidget);
     };
 
     private updateBearWidget = async (widget: IWidget): Promise<IWidget> => {
@@ -552,12 +542,10 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     ): IWidgetWithLayoutPath<IWidgetDefinition>[] => {
         const widgetsWithPath = updatedLayout ? layoutWidgetsWithPaths(updatedLayout) : [];
 
-        const createdWidgets: IWidgetWithLayoutPath<IWidgetDefinition>[] = widgetsWithPath.filter(
+        return widgetsWithPath.filter(
             (widgetWithPath): widgetWithPath is IWidgetWithLayoutPath<IWidgetDefinition> =>
                 isWidgetDefinition(widgetWithPath.widget),
         );
-
-        return createdWidgets;
     };
 
     private collectUpdatedWidgetsWithLayoutPaths = (
@@ -568,7 +556,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const updatedLayoutWidgetsWithPath = updatedLayout ? layoutWidgetsWithPaths(updatedLayout) : [];
 
-        const updatedWidgetsWithPath = updatedLayoutWidgetsWithPath.filter(({ widget }) => {
+        return updatedLayoutWidgetsWithPath.filter(({ widget }) => {
             return (
                 isWidget(widget) &&
                 originalLayoutWidgetsWithPath.some(
@@ -579,8 +567,6 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
                 )
             );
         }) as IWidgetWithLayoutPath[];
-
-        return updatedWidgetsWithPath;
     };
 
     private collectDeletedWidgets = (
@@ -631,12 +617,10 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             filterContexts,
             (filterContext) => filterContext.filterContext.meta.uri!,
         );
-        const convertedAlerts = alerts.map((alert) => {
+        return alerts.map((alert) => {
             const alertFilterContext = filterContextByUri[alert.kpiAlert.content.filterContext!];
             return toSdkModel.convertAlert(alert, alertFilterContext) as IWidgetAlert;
         });
-
-        return convertedAlerts;
     };
 
     private getBearKpiAlertsFilterContexts = async (
@@ -690,11 +674,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             }),
         );
         const dependenciesUris = dependenciesObjectLinks.map((objectLink) => objectLink.link);
-        const dependenciesMetadataObjects = await this.authCall((sdk) =>
+        return await this.authCall((sdk) =>
             sdk.md.getObjects<toSdkModel.BearDashboardDependency>(this.workspace, dependenciesUris),
         );
-
-        return dependenciesMetadataObjects;
     };
 
     public async getDashboardWithReferences(

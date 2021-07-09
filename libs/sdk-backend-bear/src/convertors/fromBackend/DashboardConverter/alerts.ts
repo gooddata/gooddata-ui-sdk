@@ -14,7 +14,7 @@ export const convertAlert = (
             meta: { uri, identifier, title, summary },
         },
     } = alert;
-    const convertedAlert: IWidgetAlert | IWidgetAlertDefinition = {
+    return {
         title,
         description: summary!,
         ...(uri
@@ -31,6 +31,4 @@ export const convertAlert = (
         isTriggered,
         filterContext: filterContext && convertFilterContext(filterContext),
     };
-
-    return convertedAlert;
 };
