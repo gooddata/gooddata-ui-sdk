@@ -66,8 +66,6 @@ export namespace GdcMetadataObject {
         | GdcReport.IWrappedReportDefinition;
 
     export function unwrapMetadataObject(object: WrappedObject): IObject {
-        const unwrappedObject: IObject = flow(values, first)(object);
-
-        return unwrappedObject;
+        return flow(values, first)(object);
     }
 }
