@@ -4,8 +4,11 @@ options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
+
         depCruiser.isolatedSubmodule("constants", "src/constants"),
         depCruiser.isolatedSubmodule("dashboardItems", "src/dashboardItems"),
+        depCruiser.isolatedSubmodule("localization", "src/localization"),
+
         depCruiser.moduleWithDependencies("converters", "src/converters", ["src/types.ts"]),
         depCruiser.moduleWithDependencies(
             "dashboard",
@@ -24,10 +27,10 @@ options = {
             ],
         ),
         depCruiser.moduleWithDependencies("dashboardAux", "src/dashboardAux", [
-            "src/model",
             "src/insight/types.ts",
             "src/kpi/types.ts",
             "src/layout/types.ts",
+            "src/model",
         ]),
         depCruiser.moduleWithDependencies("drill", "src/drill", [
             "src/_staging/*",
@@ -53,6 +56,16 @@ options = {
             "src/model",
             "src/types.ts",
         ]),
+        depCruiser.moduleWithDependencies("layout", "src/layout", [
+            "src/dashboardAux",
+            "src/dashboardItems",
+            "src/insight",
+            "src/kpi",
+            "src/localization",
+            "src/model",
+            "src/types.ts",
+        ]),
+        depCruiser.moduleWithDependencies("logUserInteraction", "src/logUserInteraction", ["src/model"]),
         depCruiser.moduleWithDependencies("kpi", "src/kpi", [
             "src/_staging/*",
             "src/converters",
