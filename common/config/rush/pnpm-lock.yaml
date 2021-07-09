@@ -20988,7 +20988,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-824gKGLTDLdHOf/n17eFrUmNWoqzllATnf6c9eHusPH9S1pLF+G77+RZgVUCJS9wYluNC5cCpcyOXPzv/uQBTg==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-9XOqZx39AUvmyxUvlV9lN+hZD+orrPTuQblfWyHVAcQXf4J6QGJdRXo/8dXFRp3f5lholpU5h7CkdWHs9ECNvA==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -21021,6 +21021,7 @@ packages:
       eslint-plugin-prettier: 3.4.0_eslint@7.28.0+prettier@2.3.1
       eslint-plugin-react: 7.24.0_eslint@7.28.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.28.0
+      eslint-plugin-sonarjs: 0.9.1_eslint@7.28.0
       jest: 26.6.3_ts-node@8.10.2
       jest-enzyme: 7.1.2_847a09de400b6a6d5a9c863e7946818d
       jest-junit: 3.7.0
