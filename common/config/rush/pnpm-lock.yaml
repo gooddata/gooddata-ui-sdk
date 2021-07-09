@@ -21571,7 +21571,7 @@ packages:
     dev: false
 
   file:projects/sdk-embedding.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-D/j/yXL8d0LT5+FVAECXxchPtfFdLnKuAC1uI7Do1oB1JsxA3sjpxiOjUj0gBRwxUzibG8H7rWPoq1NRIySFEw==, tarball: file:projects/sdk-embedding.tgz}
+    resolution: {integrity: sha512-5kpOi2XZ8N16GVytj1i09Cs5m4fYiE/0UdtCz6woOy/BqBK84sJZ1AiN6OI3Whw5jB9frQsA9QnDidP1M76Eig==, tarball: file:projects/sdk-embedding.tgz}
     id: file:projects/sdk-embedding.tgz
     name: '@rush-temp/sdk-embedding'
     version: 0.0.0
@@ -21591,6 +21591,7 @@ packages:
       eslint-plugin-jest: 24.3.6_f98d5d2fd31c8fccbbe3929ad7289cd2
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 3.4.0_eslint@7.28.0+prettier@2.3.1
+      eslint-plugin-sonarjs: 0.9.1_eslint@7.28.0
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
