@@ -202,10 +202,8 @@ function getFormat(measure: IMeasure): string | undefined {
     } = measure;
     const measureFormat = measure.measure.format;
 
-    if (isArithmeticMeasureDefinition(definition)) {
-        if (definition.arithmeticMeasure.operator === "change") {
-            return "#,##0.00%";
-        }
+    if (isArithmeticMeasureDefinition(definition) && definition.arithmeticMeasure.operator === "change") {
+        return "#,##0.00%";
     }
 
     const predefinedFormat = isMeasureDefinition(definition) ? getPredefinedFormat(definition) : undefined;

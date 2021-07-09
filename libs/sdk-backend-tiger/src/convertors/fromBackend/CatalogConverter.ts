@@ -51,12 +51,7 @@ export const convertAttribute = (
     geoLabels: JsonApiLabelOutWithLinks[],
     allLabels: JsonApiLabelOutWithLinks[],
 ): ICatalogAttribute => {
-    const geoPinDisplayForms = geoLabels.map((label) => {
-        return newAttributeDisplayFormMetadataObject(
-            idRef(label.id, "displayForm"),
-            commonMetadataObjectModifications(label),
-        );
-    });
+    const geoPinDisplayForms = geoLabels.map(tigerLabelToDisplayFormMd);
     const displayForms = allLabels.map(tigerLabelToDisplayFormMd);
 
     return newCatalogAttribute((catalogA) =>

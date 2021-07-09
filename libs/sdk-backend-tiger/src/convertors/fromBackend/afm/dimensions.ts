@@ -1,11 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import {
-    IAttributeDescriptor,
-    IMeasureGroupDescriptor,
-    IMeasureDescriptor,
-    IDimensionDescriptor,
-    ITotalDescriptor,
-} from "@gooddata/sdk-backend-spi";
+import { IDimensionDescriptor, IDimensionItemDescriptor, ITotalDescriptor } from "@gooddata/sdk-backend-spi";
 import { isAttributeHeader, ResultDimension } from "@gooddata/api-client-tiger";
 
 import {
@@ -33,11 +27,11 @@ function transformDimension(
     attrTotals: AttrTotals,
 ): IDimensionDescriptor {
     return {
-        headers: dim.headers.map((header) => {
+        headers: dim.headers.map((header): IDimensionItemDescriptor => {
             const h = header;
 
             if (isAttributeHeader(h)) {
-                const attrDescriptor: IAttributeDescriptor = {
+                return {
                     attributeHeader: {
                         // TODO: TIGER-HACK: Tiger provides no uri
                         uri: "",
@@ -55,8 +49,6 @@ function transformDimension(
                         totalItems: attrTotals[h.attributeHeader.localIdentifier] ?? [],
                     },
                 };
-
-                return attrDescriptor;
             } else {
                 /*
                  * Funny stuff #1: tiger does not send name & format according to the contract (which is inspired
@@ -69,13 +61,13 @@ function transformDimension(
                  *
                  * -   look up simple measure by local id from execution definition
                  */
-                const measureDescriptor: IMeasureGroupDescriptor = {
+                return {
                     measureGroupHeader: {
                         items: h.measureGroupHeaders.map((m) => {
                             const ref = simpleMeasureRefs[m.localIdentifier];
                             const identifier = isIdentifierRef(ref) ? ref.identifier : undefined;
 
-                            const newItem: IMeasureDescriptor = {
+                            return {
                                 measureHeaderItem: {
                                     localIdentifier: m.localIdentifier,
                                     name: m.name ?? m.localIdentifier,
@@ -84,13 +76,9 @@ function transformDimension(
                                     ref,
                                 },
                             };
-
-                            return newItem;
                         }),
                     },
                 };
-
-                return measureDescriptor;
             }
         }),
     };

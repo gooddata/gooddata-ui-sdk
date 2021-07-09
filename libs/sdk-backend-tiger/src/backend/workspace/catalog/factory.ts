@@ -105,7 +105,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         if (isCatalogMeasure(item)) {
             return item.measure.title;
         }
-        return;
+        return undefined;
     };
 
     private tagsToIdentifiers = (tags: ObjRef[]): string[] => {

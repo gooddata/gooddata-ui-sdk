@@ -9,12 +9,10 @@ export class TigerUserSettingsService implements IUserSettingsService {
     public async getSettings(): Promise<IUserSettings> {
         return this.authCall(async (_client, ctx) => {
             const principal = await ctx.getPrincipal();
-            const settings: IUserSettings = {
+            return {
                 ...DefaultUserSettings,
                 userId: principal.userId,
             };
-
-            return settings;
         });
     }
 }

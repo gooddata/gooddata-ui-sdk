@@ -49,13 +49,11 @@ const mapToTigerType = (type: CatalogItemType): AfmValidObjectsQueryTypesEnum =>
  * @param type - type to convert
  */
 const mapToTigerRestrictingType = (type: CatalogItemType): CatalogItemType => {
-    switch (type) {
+    if (type === "dateDataset") {
         // date datasets' availability is restricted by their attributes' availability in tiger
-        case "dateDataset":
-            return "attribute";
-        default:
-            return type;
+        return "attribute";
     }
+    return type;
 };
 
 const getRestrictingTypes = (requested: CatalogItemType[]): CatalogItemType[] => {

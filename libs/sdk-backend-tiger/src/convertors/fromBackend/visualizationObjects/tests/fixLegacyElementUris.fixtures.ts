@@ -15,15 +15,13 @@ import { newInsightWidget } from "@gooddata/sdk-backend-base";
 type ColorMapping = { color: { type: "guid"; value: string }; id: string };
 
 const mockColorMapping = (elementIds: string[]): ColorMapping[] => {
-    const colorMapping: ColorMapping[] = elementIds.map((id, idx) => ({
+    return elementIds.map((id, idx) => ({
         id,
         color: {
             type: "guid",
             value: idx.toString(),
         },
     }));
-
-    return colorMapping;
 };
 
 /**
@@ -45,8 +43,8 @@ interface IAttributeColumnLocator {
     };
 }
 
-const mockColumnWidths = (elementIds: string[]) => {
-    const measureColumnWidths: IMeasureColumnWidthItem[] = elementIds.map((id) => {
+const mockColumnWidths = (elementIds: string[]): IMeasureColumnWidthItem[] => {
+    return elementIds.map((id) => {
         const attributeElementColumnLocator: IAttributeColumnLocator = {
             attributeLocatorItem: {
                 element: id,
@@ -58,12 +56,10 @@ const mockColumnWidths = (elementIds: string[]) => {
             },
         };
     });
-
-    return measureColumnWidths;
 };
 
 const mockSortItems = (elementIds: string[]): ISortItem[] => {
-    const sortItems: ISortItem[] = elementIds.map((id) => {
+    return elementIds.map((id) => {
         const attributeElementColumnLocator: IAttributeLocatorItem = {
             attributeLocatorItem: {
                 attributeIdentifier: "localAttributeId",
@@ -77,8 +73,6 @@ const mockSortItems = (elementIds: string[]): ISortItem[] => {
             },
         };
     });
-
-    return sortItems;
 };
 
 export const mockInsight = (elementIds: string[]): IInsight => {

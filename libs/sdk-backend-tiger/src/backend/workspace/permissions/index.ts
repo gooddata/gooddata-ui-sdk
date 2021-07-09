@@ -7,7 +7,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
 
     public async getPermissionsForCurrentUser(): Promise<IWorkspacePermissions> {
         return await this.authCall(async () => {
-            const result: IWorkspacePermissions = {
+            return {
                 canAccessWorkbench: true,
                 canCreateReport: true,
                 canCreateVisualization: true,
@@ -26,7 +26,6 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
                 canInviteUserToProject: true,
                 canRefreshData: true,
             };
-            return result;
         });
     }
 }
