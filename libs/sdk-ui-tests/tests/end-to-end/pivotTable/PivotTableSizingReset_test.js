@@ -46,9 +46,7 @@ const getFirstCellResizer = async (t, tableSelectorStr) => {
 
     const firstHeaderCell = `.s-table-measure-column-header-group-cell-0.gd-column-group-header--first .ag-header-cell-resize`;
 
-    const resizer = await tableSelector.find(firstHeaderCell);
-
-    return resizer;
+    return await tableSelector.find(firstHeaderCell);
 };
 
 const getSecondCellResizer = async (t, tableSelectorStr) => {
@@ -57,9 +55,7 @@ const getSecondCellResizer = async (t, tableSelectorStr) => {
 
     const secondHeaderCell = `.s-table-measure-column-header-group-cell-0.s-table-measure-column-header-index-1 .ag-header-cell-resize`;
 
-    const resizer = await tableSelector.find(secondHeaderCell);
-
-    return resizer;
+    return await tableSelector.find(secondHeaderCell);
 };
 
 // first attribute column

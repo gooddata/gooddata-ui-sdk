@@ -240,8 +240,6 @@ function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefinition)
     };
 
     writeAsJsonSync(insightIndexFile, insightIndex);
-
-    return;
 }
 
 /*
@@ -278,6 +276,8 @@ describe("all scenarios", () => {
             return;
         }
 
+        // this is intentional, the PlugVisUnsupported might get filled in the future
+        // eslint-disable-next-line sonarjs/no-empty-collection
         if (scenario.tags.includes("mock-no-insight") || PlugVisUnsupported.indexOf(scenario.vis) >= 0) {
             /*
              * Some visualizations may not support plug vis yet. For those, just store scenario
