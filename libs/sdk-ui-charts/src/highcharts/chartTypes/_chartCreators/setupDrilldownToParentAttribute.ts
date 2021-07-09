@@ -17,14 +17,12 @@ export function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick):
     }
 
     // replace y value by target value for bullet chart target
-    const modifiedPoints = ddPoints.map((ddPoint) => {
+    return ddPoints.map((ddPoint) => {
         if ((ddPoint.series as any)?.userOptions?.bulletChartMeasureType === "target") {
             return Object.assign({}, ddPoint, { y: ddPoint.isNullTarget ? null : ddPoint.target });
         }
         return ddPoint;
     });
-
-    return modifiedPoints;
 }
 
 function setParentTickDrillable(

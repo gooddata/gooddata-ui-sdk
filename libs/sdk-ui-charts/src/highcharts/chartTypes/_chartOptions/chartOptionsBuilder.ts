@@ -592,7 +592,7 @@ export function getChartOptions(
         isDualAxis,
     );
 
-    const chartOptions: IChartOptions = {
+    return {
         type,
         stacking,
         hasStackByAttribute: Boolean(stackByAttribute),
@@ -621,6 +621,4 @@ export function getChartOptions(
         forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
         verticalAlign: chart?.verticalAlign,
     };
-
-    return chartOptions;
 }

@@ -322,17 +322,16 @@ export function getLabelOrDataLabelForPoints(points: Highcharts.Point[]): Highch
 
 export function getStackItems(yAxis: Highcharts.Axis[]): IStackItem[] {
     return flatten(
-        yAxis.map((axis: Highcharts.Axis) => {
+        yAxis.map((axis: Highcharts.Axis): IStackItem[] => {
             if (!isEmpty((axis as UnsafeInternals)?.stacking.stacks)) {
                 return (axis as UnsafeInternals)?.stacking.stacks;
             }
             const series = axis.series;
-            const dataLabels: IStackItem[] = series.map((serie: Highcharts.Series) => {
+            return series.map((serie: Highcharts.Series) => {
                 return {
                     column: { ...serie.data },
                 };
             });
-            return dataLabels;
         }),
     );
 }

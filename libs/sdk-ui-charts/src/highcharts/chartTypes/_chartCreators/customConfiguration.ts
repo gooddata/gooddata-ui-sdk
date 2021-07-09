@@ -89,29 +89,22 @@ export const TOOLTIP_VIEWPORT_MARGIN_TOP = 20;
 
 const escapeAngleBrackets = (str: any) => str && str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+function getAxisTitleConfiguration<T extends XAxisOptions | YAxisOptions>(axis: IAxis): T {
+    return (
+        axis
+            ? {
+                  title: {
+                      text: escapeAngleBrackets(axis?.label ?? ""),
+                  },
+              }
+            : {}
+    ) as T;
+}
+
 function getTitleConfiguration(chartOptions: IChartOptions): HighchartsOptions {
     const { yAxes = [], xAxes = [] } = chartOptions;
-    const yAxis = yAxes.map(
-        (axis: IAxis): YAxisOptions =>
-            axis
-                ? {
-                      title: {
-                          text: escapeAngleBrackets(axis?.label ?? ""),
-                      },
-                  }
-                : {},
-    );
-
-    const xAxis = xAxes.map(
-        (axis: IAxis): XAxisOptions =>
-            axis
-                ? {
-                      title: {
-                          text: escapeAngleBrackets(axis?.label ?? ""),
-                      },
-                  }
-                : {},
-    );
+    const yAxis = yAxes.map((axis) => getAxisTitleConfiguration<YAxisOptions>(axis));
+    const xAxis = xAxes.map((axis) => getAxisTitleConfiguration<XAxisOptions>(axis));
 
     return {
         yAxis,
@@ -188,31 +181,25 @@ function hideOverlappedLabels(chartOptions: IChartOptions): HighchartsOptions {
     return {};
 }
 
+function getAxisPercentConfiguration<T extends XAxisOptions | YAxisOptions>(
+    axis: IAxis,
+    percentageFormatter: () => string,
+): T {
+    return (axis && isInPercent(axis.format)
+        ? {
+              labels: {
+                  formatter: percentageFormatter,
+              },
+          }
+        : {}) as unknown as T;
+}
+
 function getShowInPercentConfiguration(chartOptions: IChartOptions): HighchartsOptions {
     const { yAxes = [], xAxes = [] } = chartOptions;
     const percentageFormatter = partial(formatAsPercent, 100);
 
-    const xAxis = xAxes.map(
-        (axis: any): XAxisOptions =>
-            axis && isInPercent(axis.format)
-                ? {
-                      labels: {
-                          formatter: percentageFormatter,
-                      },
-                  }
-                : {},
-    );
-
-    const yAxis = yAxes.map(
-        (axis: any): YAxisOptions =>
-            axis && isInPercent(axis.format)
-                ? {
-                      labels: {
-                          formatter: percentageFormatter,
-                      },
-                  }
-                : {},
-    );
+    const xAxis = xAxes.map((axis) => getAxisPercentConfiguration<XAxisOptions>(axis, percentageFormatter));
+    const yAxis = yAxes.map((axis) => getAxisPercentConfiguration<YAxisOptions>(axis, percentageFormatter));
 
     return {
         xAxis,
@@ -1241,7 +1228,7 @@ function getAxesConfiguration(
     const axisLabelColor =
         theme?.chart?.axisLabelColor ?? theme?.palette?.complementary?.c7 ?? styleVariables.gdColorLink;
 
-    const options: HighchartsOptions = {
+    return {
         plotOptions: {
             series: {
                 ...shouldExpandYAxis(chartOptions),
@@ -1251,7 +1238,6 @@ function getAxesConfiguration(
 
         xAxis: getXAxisConfiguration(chartOptions, chartConfig, axisValueColor, axisLabelColor),
     };
-    return options;
 }
 
 function getTargetCursorConfigurationForBulletChart(chartOptions: IChartOptions) {
