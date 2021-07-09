@@ -7,7 +7,7 @@ import {
     IDrillToInsight,
     IDrillToLegacyDashboard,
 } from "@gooddata/sdk-backend-spi";
-import { DashboardDrillContext } from "../../drill/interfaces";
+import { DashboardDrillContext } from "../../drill/types";
 import { IInsight } from "@gooddata/sdk-model";
 import { IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
 

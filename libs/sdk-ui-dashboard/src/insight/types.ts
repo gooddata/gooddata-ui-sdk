@@ -10,7 +10,7 @@ import {
     OnDrillToCustomUrl,
     OnDrillToDashboard,
     OnDrillToInsight,
-} from "../drill/interfaces";
+} from "../drill/types";
 
 ///
 /// Core props

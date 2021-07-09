@@ -11,8 +11,8 @@ import {
     OnDrillToCustomUrl,
     OnDrillToDashboard,
     OnDrillToInsight,
-} from "../interfaces";
-import { DrillSelectContext } from "./interfaces";
+} from "../types";
+import { DrillSelectContext } from "./types";
 import { IInsight } from "@gooddata/sdk-model";
 import {
     isDrillToCustomUrl,

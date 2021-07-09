@@ -9,7 +9,7 @@ import { selectFilterContext } from "../../state/filterContext/filterContextSele
 import { selectWidgetByRef } from "../../state/layout/layoutSelectors";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IDashboardFilter } from "../../../types";
-import { filterContextToFiltersForWidget } from "../../../converters/filterConverters";
+import { filterContextToFiltersForWidget } from "../../../converters";
 import {
     DrillEventIntersectionElementHeader,
     IDrillEventIntersectionElement,

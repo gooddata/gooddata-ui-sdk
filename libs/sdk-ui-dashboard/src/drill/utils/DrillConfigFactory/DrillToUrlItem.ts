@@ -11,7 +11,7 @@ import {
     UrlDrillTarget,
     AttributeDisplayFormType,
     IDrillToUrlPlaceholder,
-} from "../../interfaces";
+} from "../../types";
 import { DrillItem } from "./DrilItem";
 
 function matchAll(regex: RegExp, text: string): RegExpExecArray[] {

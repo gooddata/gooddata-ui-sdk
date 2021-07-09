@@ -17,5 +17,5 @@ export {
     OnDrillToCustomUrl,
     OnDrillToDashboard,
     OnDrillToInsight,
-} from "./interfaces";
+} from "./types";
 export { getDrillDownAttributeTitle } from "./utils/drillDownUtils";

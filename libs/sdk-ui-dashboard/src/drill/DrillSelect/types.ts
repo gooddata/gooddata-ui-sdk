@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { DashboardDrillContext, DashboardDrillDefinition } from "../interfaces";
+import { DashboardDrillContext, DashboardDrillDefinition } from "../types";
 import { IDashboardDrillEvent } from "../../types";
 
 /**

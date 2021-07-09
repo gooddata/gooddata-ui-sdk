@@ -4,7 +4,7 @@ import last from "lodash/last";
 import { getMappingHeaderLocalIdentifier, IDrillEvent } from "@gooddata/sdk-ui";
 import { DrillDefinition, isMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IDrillDownDefinition } from "../../types";
-import { DashboardDrillDefinition } from "../interfaces";
+import { DashboardDrillDefinition } from "../types";
 import { DrillConfigFactory } from "./DrillConfigFactory/DrillConfigFactory";
 
 export function getDrillsBySourceLocalIdentifiers(

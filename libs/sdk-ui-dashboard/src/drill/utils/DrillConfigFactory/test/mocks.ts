@@ -16,8 +16,8 @@ import {
     IDrillToAttributeUrlConfig,
     IDrillToUrlConfig,
     AttributeDisplayFormType,
-} from "../../../interfaces";
-import { IAttributeDisplayForm } from "../../../interfaces";
+} from "../../../types";
+import { IAttributeDisplayForm } from "../../../types";
 
 export function testDrillToInsight(localId: string, target: ObjRef | string): IDrillToInsight {
     return {

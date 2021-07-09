@@ -2,8 +2,8 @@
 import React from "react";
 
 import { DrillSelectList } from "./DrillSelectList";
-import { DashboardDrillDefinition } from "../interfaces";
-import { DrillSelectItem } from "./interfaces";
+import { DashboardDrillDefinition } from "../types";
+import { DrillSelectItem } from "./types";
 
 interface DrillSelectListBodyProps {
     items: DrillSelectItem[];
