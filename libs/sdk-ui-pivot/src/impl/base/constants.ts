@@ -11,6 +11,7 @@ export const COLUMN_GROUPING_DELIMITER = " › ";
 export const AVAILABLE_TOTALS: TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
 export const COLS_PER_PAGE: number = 1000;
 export const VALUE_CLASS = "s-value";
+export const DRILLABLE_CELL_CLASS = "gd-cell-drillable";
 export const HEADER_LABEL_CLASS = "s-header-cell-label";
 export const ROW_TOTAL_CLASS = "gd-row-total";
 export const ROW_SUBTOTAL_CLASS = "gd-table-row-subtotal";

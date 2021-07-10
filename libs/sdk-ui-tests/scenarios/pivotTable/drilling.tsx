@@ -11,6 +11,13 @@ import {
     WonMeasurePredicate,
 } from "../_infra/predicates";
 
+function drillableItemDecorator(value: string | undefined) {
+    if (value) {
+        return `${value.toLocaleUpperCase()} ⬈`;
+    }
+    return "";
+}
+
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("drilling")
     .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
@@ -30,4 +37,16 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             WonMeasurePredicate,
         ],
         onDrill: action("onDrill"),
+    })
+    .addScenario("with custom drillableItemDecorator", {
+        ...PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols,
+        drillableItems: [
+            ProductPredicate,
+            DepartmentPredicate,
+            SalesRepPredicate,
+            AmountMeasurePredicate,
+            WonMeasurePredicate,
+        ],
+        onDrill: action("onDrill"),
+        drillableItemDecorator,
     });

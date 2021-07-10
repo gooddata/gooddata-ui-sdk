@@ -180,6 +180,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         | "pageSize"
         | "config"
         | "onColumnResized"
+        | "drillableItemDecorator"
     > = {
         locale: "en-US",
         drillableItems: [],
@@ -194,6 +195,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         pageSize: 100,
         config: {},
         onColumnResized: noop,
+        drillableItemDecorator: (value) => value || "",
     };
 
     private readonly errorMap: IErrorDescriptors;

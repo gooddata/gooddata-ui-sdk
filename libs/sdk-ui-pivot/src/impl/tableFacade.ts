@@ -5,7 +5,9 @@ import {
     createExportFunction,
     DataViewFacade,
     IAvailableDrillTargets,
+    IDrillableItem,
     IExportFunction,
+    IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import {
     AUTO_SIZED_MAX_WIDTH,
@@ -50,7 +52,7 @@ import {
     TableConfigAccessors,
     OnExecutionTransformed,
 } from "./privateTypes";
-import { ICorePivotTableProps } from "../publicTypes";
+import { DrillableItemDecorator, ICorePivotTableProps } from "../publicTypes";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
@@ -76,6 +78,8 @@ export class TableFacade {
     public readonly tableDescriptor: TableDescriptor;
     private readonly resizedColumnsStore: ResizedColumnsStore;
     private readonly originalExecution: IPreparedExecution;
+    private readonly drillableItems: (IDrillableItem | IHeaderPredicate)[] | undefined;
+    private readonly drillableItemDecorator: DrillableItemDecorator;
 
     /**
      * When user changes sorts or totals by interacting with the table, the current execution result will
@@ -147,6 +151,9 @@ export class TableFacade {
         this.onExecutionTransformedCallback = tableMethods.onExecutionTransformed;
         this.updateColumnWidths(tableMethods.getResizingConfig());
         this.originalExecution = props.execution;
+        this.drillableItems = props.drillableItems;
+        const defaultDrillableItemDecorator = (value: string | undefined) => value || "";
+        this.drillableItemDecorator = props.drillableItemDecorator || defaultDrillableItemDecorator;
     }
 
     public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
@@ -461,6 +468,9 @@ export class TableFacade {
             this.currentResult,
             resizingConfig,
             this.resizedColumnsStore,
+            this.getDrillDataContext(),
+            this.drillableItems,
+            this.drillableItemDecorator,
             {
                 measureHeaders: true,
                 padding: 2 * DEFAULT_AUTOSIZE_PADDING + HEADER_CELL_BORDER,

@@ -192,6 +192,12 @@ export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
 
 /**
  * @public
+ * TODO Is value param enough, or can decorator need whole datapoint?
+ */
+export type DrillableItemDecorator = (value: string | undefined) => string;
+
+/**
+ * @public
  */
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     /**
@@ -212,4 +218,11 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
      * @param columnWidths - new widths for columns
      */
     onColumnResized?: ColumnResizedCallback;
+
+    /**
+     * Define decoration of drillable cells
+     * Note: Only strig operations are supported to keep autoresizing measurement working
+     * Eg. Add unicode icon as prefix/suffix
+     */
+    drillableItemDecorator?: DrillableItemDecorator;
 }
