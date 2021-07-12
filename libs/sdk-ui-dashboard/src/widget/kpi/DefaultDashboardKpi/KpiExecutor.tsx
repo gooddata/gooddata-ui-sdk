@@ -37,7 +37,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../../converters";
-import { useDashboardComponentsContext } from "../../../dashboardAux";
+import { useDashboardComponentsContext } from "../../../dashboardContexts";
 import { selectPermissions, selectSettings, selectUser, useDashboardSelector } from "../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../types";

@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { InsightError, InsightRenderer } from "@gooddata/sdk-ui-ext";
 
-import { useDashboardComponentsContext } from "../../../dashboardAux";
+import { useDashboardComponentsContext } from "../../../dashboardContexts";
 import {
     useDashboardSelector,
     selectColorPalette,

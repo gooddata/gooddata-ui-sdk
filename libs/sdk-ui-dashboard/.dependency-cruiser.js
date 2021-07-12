@@ -12,28 +12,25 @@ options = {
         depCruiser.moduleWithDependencies("converters", "src/converters", ["src/types.ts"]),
         depCruiser.moduleWithDependencies(
             "dashboard",
-            "src/dashboard/", // the trailing / is necessary here, otherwise dashboardAux is matched as well
+            "src/dashboard/", // the trailing / is necessary here, otherwise dashboardContexts is matched as well
             [
-                "src/dashboardAux",
+                "src/dashboardContexts",
                 "src/filterBar",
                 "src/layout",
                 "src/localization",
                 "src/model",
-                "src/model/state/dashboardStore.ts",
                 "src/scheduledEmail",
                 "src/topBar",
                 "src/widget",
             ],
         ),
-        depCruiser.moduleWithDependencies("dashboardAux", "src/dashboardAux", [
+        depCruiser.moduleWithDependencies("dashboardContexts", "src/dashboardContexts", [
             "src/layout/types.ts",
-            "src/model",
             "src/widget/types.ts",
         ]),
         depCruiser.moduleWithDependencies("drill", "src/drill", [
             "src/_staging/*",
             "src/constants",
-            "src/dashboardAux",
             "src/localization",
             "src/model",
             "src/types.ts",
@@ -44,7 +41,7 @@ options = {
             "src/model",
         ]),
         depCruiser.moduleWithDependencies("layout", "src/layout", [
-            "src/dashboardAux",
+            "src/dashboardContexts",
             "src/localization",
             "src/model",
             "src/presentationComponents",
@@ -60,7 +57,7 @@ options = {
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/scheduledEmail", [
-            "src/dashboardAux",
+            "src/dashboardContexts",
             "src/localization",
             "src/model",
         ]),
@@ -68,7 +65,7 @@ options = {
         depCruiser.moduleWithDependencies("widget", "src/widget", [
             "src/_staging/*",
             "src/converters",
-            "src/dashboardAux",
+            "src/dashboardContexts",
             "src/drill",
             "src/drill/types.ts",
             "src/localization",

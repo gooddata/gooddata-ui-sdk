@@ -16,7 +16,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
-import { DashboardComponentsProvider, useDashboardComponentsContext } from "../dashboardAux";
+import { DashboardComponentsProvider, useDashboardComponentsContext } from "../dashboardContexts";
 import { DefaultFilterBar } from "../filterBar";
 import { DefaultDashboardInsightWithDrillDialog, DefaultDashboardKpi } from "../widget";
 import { DashboardLayout, DefaultDashboardLayout, DefaultDashboardWidget } from "../layout";

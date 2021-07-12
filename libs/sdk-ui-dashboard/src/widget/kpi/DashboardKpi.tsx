@@ -2,7 +2,7 @@
 import React from "react";
 import { IDrillToLegacyDashboard } from "@gooddata/sdk-backend-spi";
 
-import { useDashboardComponentsContext } from "../../dashboardAux";
+import { useDashboardComponentsContext } from "../../dashboardContexts";
 import { useDrillToLegacyDashboard } from "../../drill";
 
 import { DashboardKpiProps } from "./types";
