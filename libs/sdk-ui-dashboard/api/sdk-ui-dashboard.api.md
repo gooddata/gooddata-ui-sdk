@@ -1439,19 +1439,19 @@ export interface IDashboardProps {
     clientId?: string;
     config?: DashboardConfig;
     dashboardLayoutConfig?: {
-        Component?: React_2.ComponentType<DashboardLayoutProps>;
+        Component?: ComponentType<DashboardLayoutProps>;
         defaultComponentProps?: DashboardLayoutProps;
     };
     dashboardRef: ObjRef;
     dataProductId?: string;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
     eventHandlers?: DashboardEventHandler[];
     filterBarConfig?: {
         Component?: CustomFilterBarComponent;
         defaultComponentProps?: Omit<IDefaultFilterBarProps, keyof IFilterBarCoreProps>;
     };
-    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
     permissions?: IWorkspacePermissions;
     scheduledEmailDialogConfig?: {
         Component?: CustomScheduledEmailDialogComponent;
@@ -1464,14 +1464,14 @@ export interface IDashboardProps {
         defaultComponentProps?: Omit<IDefaultTopBarProps, keyof ITopBarCoreProps>;
     };
     widgetConfig?: {
-        Component?: React_2.ComponentType<DashboardWidgetProps>;
+        Component?: ComponentType<DashboardWidgetProps>;
         defaultComponentProps?: DashboardWidgetProps;
         insight?: {
             Component?: CustomDashboardInsightComponent;
             defaultComponentProps?: Omit<IDefaultDashboardInsightProps, keyof IDashboardInsightCoreProps>;
         };
         kpi?: {
-            Component?: React_2.ComponentType<DashboardKpiProps>;
+            Component?: ComponentType<DashboardKpiProps>;
             defaultComponentProps?: DashboardKpiProps;
         };
     };
