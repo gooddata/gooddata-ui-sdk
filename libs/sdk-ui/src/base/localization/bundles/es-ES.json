@@ -212,8 +212,5 @@
     "rankingFilter.preview.bottom_without_attribute": "{value} inferiores de <strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "{value} superiores de <strong>{attribute}</strong> según <strong>{measure}</strong>",
     "rankingFilter.preview.bottom_with_attribute": "{value} inferiores de <strong>{attribute}</strong> según <strong>{measure}</strong>",
-    "rankingFilter.valueTooltip": "Si varios elementos tienen el mismo valor, el filtro muestra todos los elementos con ese valor. Después, la perspectiva puede mostrar más elementos que el número establecido.",
-    "attributesDropdown.allItemsFiltered": "Todos los elementos están filtrados",
-    "attributesDropdown.itemsFiltered.tooltip": "Los elementos se han filtrado por: <strong>{filters}</strong>",
-    "attributesDropdown.itemsFiltered": "Los elementos se han filtrado"
+    "rankingFilter.valueTooltip": "Si varios elementos tienen el mismo valor, el filtro muestra todos los elementos con ese valor. Después, la perspectiva puede mostrar más elementos que el número establecido."
 }
