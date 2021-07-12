@@ -393,8 +393,10 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const groupNearbyPoints =
             hasLocationAttribute && !hasColorMesure && !hasSizeMesure && !hasSegmentAttribute;
 
-        // For tooltip text, displayFrom uri must be default displayFrom
-        const tooltipText = isUriRef(dfRef) ? dfRef.uri : dfRef.identifier;
+        // for tooltip, prefer standard text display form (whose type is `undefined`) over geo or hyperlink display forms
+        const tooltipDfRef =
+            locationItem.displayForms?.find((displayForm) => !displayForm.type)?.ref || dfRef;
+        const tooltipText = isUriRef(tooltipDfRef) ? tooltipDfRef.uri : tooltipDfRef.identifier;
 
         set(referencePointConfigured, "properties", {
             controls: {
