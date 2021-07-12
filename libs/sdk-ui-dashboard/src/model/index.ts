@@ -12,7 +12,7 @@
  * -  all commands, their types & command factories
  */
 
-export { useDashboardSelector, useDashboardDispatch, DashboardDispatch } from "./state/dashboardStore";
+export { DashboardDispatch } from "./state/dashboardStore";
 export { DashboardState } from "./state/types";
 
 export { selectDashboardLoading } from "./state/loading/loadingSelectors";
@@ -116,5 +116,6 @@ export { WidgetFilterSettings, WidgetHeader } from "./types/widgetTypes";
 export * from "./commands";
 export * from "./events";
 export * from "./queries";
+export * from "./react";
 export { DashboardEventHandler } from "./events/eventHandler";
 export { createDrillToSameDashboardHandler } from "./eventHandlers/createDrillToSameDashboardHandler";

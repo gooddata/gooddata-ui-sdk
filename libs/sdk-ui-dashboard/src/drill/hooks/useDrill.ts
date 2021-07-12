@@ -1,7 +1,11 @@
 // (C) 2020-2021 GoodData Corporation
 
-import { useDashboardCommandProcessing } from "../../dashboardAux";
-import { DashboardDrillTriggered, DashboardCommandFailed, drill } from "../../model";
+import {
+    DashboardDrillTriggered,
+    DashboardCommandFailed,
+    drill,
+    useDashboardCommandProcessing,
+} from "../../model";
 
 /**
  * @internal

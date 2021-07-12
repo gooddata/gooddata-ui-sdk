@@ -10,6 +10,7 @@ import { GoodDataSdkError, ILocale } from "@gooddata/sdk-ui";
 import { UriRef } from "@gooddata/sdk-model";
 
 import {
+    CommandProcessingStatus,
     useDashboardSelector,
     selectDashboardTitle,
     selectDashboardUriRef,
@@ -21,7 +22,6 @@ import {
     selectCanListUsersInWorkspace,
     selectEnableKPIDashboardSchedule,
 } from "../../model";
-import { CommandProcessingStatus } from "../../dashboardAux";
 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail";
 
