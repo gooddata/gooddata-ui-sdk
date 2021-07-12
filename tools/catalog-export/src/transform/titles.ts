@@ -3,13 +3,19 @@ import has from "lodash/has";
 
 const NonAlphaNumRegex = /[^\w\d$]+/g;
 
-function titleToVariableName(title: string): string {
+/**
+ * Given a string, returns a version of it that is safe to be used as a variable identifier in TypeScript.
+ *
+ * @param input - string to create a variable name for
+ * @returns a string that can be used as a variable identifier in TypeScript
+ */
+export function stringToVariableName(input: string): string {
     /*
      * First do special substitution of chars that have common meaning
      *
      * Then replace all non-chars and non-digits (except for $) with whitespace
      */
-    const onlyAlphaNumWithSpaces = title
+    const onlyAlphaNumWithSpaces = input
         .replace(/&/g, " and ")
         .replace(/#/g, "Nr")
         .replace(/%/g, "Percent")
@@ -54,7 +60,7 @@ export type TakenNamesSet = { [name: string]: any };
  * @param scope - uniqueness scope
  */
 export function createUniqueVariableName(title: string, scope: TakenNamesSet = {}): string {
-    const variableName = titleToVariableName(title);
+    const variableName = stringToVariableName(title);
 
     return createUniqueName(variableName, scope);
 }

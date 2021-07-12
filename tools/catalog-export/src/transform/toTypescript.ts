@@ -10,7 +10,7 @@ import {
 } from "ts-morph";
 import { MeasureAggregation } from "@gooddata/sdk-model";
 import { Attribute, DateDataSet, DisplayForm, Fact, Metric, WorkspaceMetadata } from "../base/types";
-import { createUniqueVariableName, TakenNamesSet } from "./titles";
+import { createUniqueVariableName, stringToVariableName, TakenNamesSet } from "./titles";
 
 export type TypescriptOutput = {
     project: Project;
@@ -178,7 +178,9 @@ function generateAttributeDisplayForm(
     let variableName = attributeVariableName === dfVariableName ? "Default" : dfVariableName;
 
     if (variableName.startsWith(attributeVariableName)) {
-        variableName = variableName.substr(attributeVariableName.length);
+        // we need to do the variable conversion again as it can happen that after removing the attribute name what is left starts with a number
+        // for example Foo attribute and Foo123Bar display form becomes 123Bar which is invalid in this context
+        variableName = stringToVariableName(variableName.substr(attributeVariableName.length));
     }
 
     return `/** \n* Display Form Title: ${meta.title}  \n* Display Form ID: ${meta.identifier}\n*/\n${variableName}: newAttribute('${meta.identifier}')`;
