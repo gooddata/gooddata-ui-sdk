@@ -5,12 +5,6 @@ import { ObjRef } from "@gooddata/sdk-model";
 import { IDrillableItem, IErrorProps, IHeaderPredicate, ILoadingProps } from "@gooddata/sdk-ui";
 
 import { CustomFilterBarComponent, IDefaultFilterBarProps, IFilterBarCoreProps } from "../filterBar";
-import {
-    CustomDashboardInsightComponent,
-    IDashboardInsightCoreProps,
-    IDefaultDashboardInsightProps,
-} from "../insight";
-import { DashboardKpiProps } from "../kpi";
 import { DashboardLayoutProps, DashboardWidgetProps } from "../layout";
 import { DashboardConfig, DashboardEventHandler } from "../model";
 import {
@@ -18,6 +12,12 @@ import {
     IDefaultScheduledEmailDialogCallbackProps,
 } from "../scheduledEmail";
 import { CustomTopBarComponent, IDefaultTopBarProps, ITopBarCoreProps } from "../topBar";
+import {
+    CustomDashboardInsightComponent,
+    IDashboardInsightCoreProps,
+    IDefaultDashboardInsightProps,
+    DashboardKpiProps,
+} from "../widget";
 
 /**
  * @internal

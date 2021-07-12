@@ -1171,6 +1171,9 @@ export const DefaultDashboardKpi: React_2.FC<DashboardKpiProps>;
 // @internal (undocumented)
 export const DefaultDashboardLayout: ({ onFiltersChange, drillableItems, onDrill, onError, ErrorComponent: CustomError, }: DashboardLayoutProps) => JSX.Element;
 
+// @beta
+export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
+
 // @internal (undocumented)
 export const DefaultDashboardWidget: (props: DashboardWidgetProps) => JSX.Element;
 

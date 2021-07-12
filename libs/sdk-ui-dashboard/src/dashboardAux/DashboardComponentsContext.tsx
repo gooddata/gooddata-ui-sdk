@@ -2,8 +2,7 @@
 import React, { createContext, useContext } from "react";
 import { IErrorProps, ILoadingProps, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { DashboardLayoutProps, DashboardWidgetProps } from "../layout/types";
-import { CustomDashboardInsightComponent } from "../insight/types";
-import { DashboardKpiProps } from "../kpi/types";
+import { CustomDashboardInsightComponent, DashboardKpiProps } from "../widget/types";
 
 /**
  * @internal

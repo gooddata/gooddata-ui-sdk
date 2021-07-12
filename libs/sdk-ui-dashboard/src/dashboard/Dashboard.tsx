@@ -25,8 +25,7 @@ import {
     useDashboardComponentsContext,
 } from "../dashboardAux";
 import { DefaultFilterBar } from "../filterBar";
-import { DefaultDashboardInsightWithDrillDialog } from "../insight";
-import { DefaultDashboardKpi } from "../kpi";
+import { DefaultDashboardInsightWithDrillDialog, DefaultDashboardKpi } from "../widget";
 import { DashboardLayout, DefaultDashboardLayout, DefaultDashboardWidget } from "../layout";
 import { IntlWrapper } from "../localization";
 import {
