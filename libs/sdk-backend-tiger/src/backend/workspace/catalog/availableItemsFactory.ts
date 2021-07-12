@@ -138,7 +138,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const measures = relevantItems.filter(isMeasure);
         const filters = relevantItems.filter(isFilter);
 
-        const { filters: afmFilters, auxMeasures } = convertAfmFilters(attributes, measures, filters);
+        const { filters: afmFilters, auxMeasures } = convertAfmFilters(measures, filters);
 
         const afmValidObjectsQuery: AfmValidObjectsQuery = {
             types: relevantRestrictingTypes.map(mapToTigerType),

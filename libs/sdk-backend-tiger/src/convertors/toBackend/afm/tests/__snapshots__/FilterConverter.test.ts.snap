@@ -19,28 +19,6 @@ exports[`tiger filter converter from model to AFM convert absolute date filter s
 
 exports[`tiger filter converter from model to AFM convert absolute date filter should convert absolute date filter without 'to' attribute 1`] = `null`;
 
-exports[`tiger filter converter from model to AFM convert filter should convert ranking filter when localIds used for attributes 1`] = `
-Object {
-  "rankingFilter": Object {
-    "dimensionality": Array [
-      Object {
-        "identifier": Object {
-          "id": "label.stage.isactive",
-          "type": "label",
-        },
-      },
-    ],
-    "measures": Array [
-      Object {
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    ],
-    "operator": "TOP",
-    "value": 3,
-  },
-}
-`;
-
 exports[`tiger filter converter from model to AFM convert filter should return absolute date filter 1`] = `
 Object {
   "absoluteDateFilter": Object {
@@ -343,6 +321,8 @@ Object {
   },
 }
 `;
+
+exports[`tiger filter converter from model to AFM convert measure value filter should throw exception if filter has idRef without type 1`] = `"Incomplete object specification in {\\"identifier\\":\\"ambiguous\\"}. You must provide both id and type of object you want to reference."`;
 
 exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with date granularity 1`] = `
 Object {

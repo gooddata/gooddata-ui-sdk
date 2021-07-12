@@ -15,7 +15,6 @@ import {
 import {
     filterIsEmpty,
     IAbsoluteDateFilter,
-    IAttribute,
     IAttributeElements,
     IAttributeFilter,
     IFilter,
@@ -36,12 +35,7 @@ import {
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
 import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions";
-import {
-    toDateDataSetQualifier,
-    toLabelQualifier,
-    toMeasureValueFilterMeasureQualifier,
-    toRankingFilterDimensionalityIdentifier,
-} from "../ObjRefConverter";
+import { toDateDataSetQualifier, toLabelQualifier, toAfmIdentifier } from "../ObjRefConverter";
 
 /**
  * Tiger specific wrapper for IFilter, adding 'applyOnResult' property influencing the place of filter application.
@@ -185,7 +179,7 @@ function convertMeasureValueFilter(
         const { operator, value, treatNullValuesAs } = condition.comparison;
         return {
             comparisonMeasureValueFilter: {
-                measure: toMeasureValueFilterMeasureQualifier(measureValueFilter.measure),
+                measure: toAfmIdentifier(measureValueFilter.measure),
                 // Operator has same values, we only need type assertion
                 operator: operator as ComparisonMeasureValueFilterBodyOperatorEnum,
                 value,
@@ -199,7 +193,7 @@ function convertMeasureValueFilter(
         const { operator, from: originalFrom, to: originalTo, treatNullValuesAs } = condition.range;
         return {
             rangeMeasureValueFilter: {
-                measure: toMeasureValueFilterMeasureQualifier(measureValueFilter.measure),
+                measure: toAfmIdentifier(measureValueFilter.measure),
                 // Operator has same values, we only need type assertion
                 operator: operator as RangeMeasureValueFilterBodyOperatorEnum,
                 // make sure the boundaries are always from <= to, because tiger backend cannot handle from > to in a user friendly way
@@ -215,22 +209,12 @@ function convertMeasureValueFilter(
     return null;
 }
 
-function convertRankingFilter(
-    filter: IRankingFilter,
-    applyOnResultProp: ApplyOnResultProp,
-    afmAttributes: IAttribute[],
-): RankingFilter {
+function convertRankingFilter(filter: IRankingFilter, applyOnResultProp: ApplyOnResultProp): RankingFilter {
     const { measure, attributes, operator, value } = filter.rankingFilter;
-    const dimensionalityProp = attributes
-        ? {
-              dimensionality: attributes.map((attr) =>
-                  toRankingFilterDimensionalityIdentifier(attr, afmAttributes),
-              ),
-          }
-        : {};
+    const dimensionalityProp = attributes ? { dimensionality: attributes.map(toAfmIdentifier) } : {};
     return {
         rankingFilter: {
-            measures: [toMeasureValueFilterMeasureQualifier(measure)],
+            measures: [toAfmIdentifier(measure)],
             ...dimensionalityProp,
             operator: operator as RankingFilterBodyOperatorEnum,
             value,
@@ -239,10 +223,7 @@ function convertRankingFilter(
     };
 }
 
-export function convertFilter(
-    filter0: IFilter | IFilterWithApplyOnResult,
-    afmAttributes: IAttribute[] = [],
-): FilterDefinition | null {
+export function convertFilter(filter0: IFilter | IFilterWithApplyOnResult): FilterDefinition | null {
     const [filter, applyOnResult] = isFilter(filter0)
         ? [filter0, undefined]
         : [filter0.filter, filter0.applyOnResult];
@@ -256,7 +237,7 @@ export function convertFilter(
     } else if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter, applyOnResultProp);
     } else if (isRankingFilter(filter)) {
-        return convertRankingFilter(filter, applyOnResultProp, afmAttributes);
+        return convertRankingFilter(filter, applyOnResultProp);
     } else {
         // eslint-disable-next-line no-console
         console.warn("Tiger does not support this filter. The filter will be ignored");

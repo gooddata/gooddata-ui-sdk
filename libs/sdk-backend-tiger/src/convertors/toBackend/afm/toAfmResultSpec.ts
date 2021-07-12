@@ -14,7 +14,7 @@ function convertAFM(def: IExecutionDefinition): AFM {
     const measures: MeasureItem[] = def.measures.map(convertMeasure);
     const measuresProp = { measures };
 
-    const { filters, auxMeasures } = convertAfmFilters(def.attributes, def.measures, def.filters || []);
+    const { filters, auxMeasures } = convertAfmFilters(def.measures, def.filters || []);
     const filtersProp = { filters };
     const auxMeasuresProp = { auxMeasures };
 
