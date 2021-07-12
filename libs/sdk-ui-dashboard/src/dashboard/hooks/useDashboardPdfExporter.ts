@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AnalyticalBackendError, FilterContextItem, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { UseCancelablePromiseCallbacks, UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import { ObjRef } from "@gooddata/sdk-model";
-import { useExportDashboardToPdf as useExportDashboardToPdfCore } from "./internal/useExportDashboardToPdf";
+import { useExportDashboardToPdf as useExportDashboardToPdfCore } from "./useExportDashboardToPdf";
 
 function downloadFile(uri: string): void {
     const anchor = document.createElement("a");

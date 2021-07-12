@@ -43,9 +43,7 @@ export interface IDefaultDashboardWidgetProps {
  *
  * @internal
  */
-export const DashboardWidget: React.FC<IDashboardWidgetProps & IDefaultDashboardWidgetProps> = (
-    _props: IDashboardWidgetProps & IDefaultDashboardWidgetProps,
-) => {
+export const DashboardWidget: React.FC<IDashboardWidgetProps & IDefaultDashboardWidgetProps> = (_props) => {
     return null;
 };
 
@@ -55,7 +53,7 @@ export const DashboardWidget: React.FC<IDashboardWidgetProps & IDefaultDashboard
  * @param _props
  * @constructor
  */
-export const SimpleDashboardWidget: React.FC<IDashboardWidgetProps> = (_props: IDashboardWidgetProps) => {
+export const SimpleDashboardWidget: React.FC<IDashboardWidgetProps> = (_props) => {
     return null;
 };
 

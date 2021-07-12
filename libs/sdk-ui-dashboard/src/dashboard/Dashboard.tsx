@@ -48,8 +48,8 @@ import { createDashboardStore, ReactDashboardContext } from "../model/state/dash
 import { DefaultScheduledEmailDialog } from "../scheduledEmail";
 import { DefaultTopBar, IDefaultMenuButtonComponentCallbacks } from "../topBar";
 
+import { useDashboardPdfExporter } from "./hooks/useDashboardPdfExporter";
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
-import { useDashboardPdfExporter } from "./useDashboardPdfExporter";
 import { IDashboardProps } from "./types";
 
 const useFilterBar = (): {
