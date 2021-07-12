@@ -1,6 +1,5 @@
 // (C) 2021 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
-import { Provider } from "react-redux";
 import invariant from "ts-invariant";
 import {
     FilterContextItem,
@@ -14,16 +13,10 @@ import {
     ErrorComponent as DefaultError,
     GoodDataSdkError,
     LoadingComponent as DefaultLoading,
-    useBackendStrict,
-    useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
-import {
-    DashboardComponentsProvider,
-    DashboardEventsProvider,
-    useDashboardComponentsContext,
-} from "../dashboardAux";
+import { DashboardComponentsProvider, useDashboardComponentsContext } from "../dashboardAux";
 import { DefaultFilterBar } from "../filterBar";
 import { DefaultDashboardInsightWithDrillDialog, DefaultDashboardKpi } from "../widget";
 import { DashboardLayout, DefaultDashboardLayout, DefaultDashboardWidget } from "../layout";
@@ -32,6 +25,7 @@ import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
     clearDateFilterSelection,
+    DashboardStoreProvider,
     InitialLoadCorrelationId,
     loadDashboard,
     renameDashboard,
@@ -42,8 +36,6 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../model";
-// we do not want to expose those publicly so reach "inside" the model module just here
-import { createDashboardStore, ReactDashboardContext } from "../model/state/dashboardStore";
 import { DefaultScheduledEmailDialog } from "../scheduledEmail";
 import { DefaultTopBar, IDefaultMenuButtonComponentCallbacks } from "../topBar";
 
@@ -242,46 +234,34 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
  * @internal
  */
 export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const backend = useBackendStrict(props.backend);
-    const workspace = useWorkspaceStrict(props.workspace);
-    const dashboardStore = createDashboardStore({
-        sagaContext: {
-            backend,
-            workspace,
-            dashboardRef: props.dashboardRef,
-            clientId: props.clientId,
-            dataProductId: props.dataProductId,
-        },
-        initialEventHandlers: props.eventHandlers,
-    });
-
     return (
-        <Provider store={dashboardStore.store} context={ReactDashboardContext}>
+        <DashboardStoreProvider
+            dashboardRef={props.dashboardRef}
+            backend={props.backend}
+            workspace={props.workspace}
+            clientId={props.clientId}
+            dataProductId={props.dataProductId}
+            eventHandlers={props.eventHandlers}
+        >
             <ToastMessageContextProvider>
                 <ThemeProvider
                     theme={props.theme}
                     modifier={props.themeModifier ?? defaultDashboardThemeModifier}
                 >
-                    <DashboardEventsProvider
-                        registerHandler={dashboardStore.registerEventHandler}
-                        unregisterHandler={dashboardStore.unregisterEventHandler}
+                    <DashboardComponentsProvider
+                        ErrorComponent={props.ErrorComponent ?? DefaultError}
+                        LoadingComponent={props.LoadingComponent ?? DefaultLoading}
+                        LayoutComponent={props.dashboardLayoutConfig?.Component ?? DefaultDashboardLayout}
+                        InsightComponent={
+                            props.widgetConfig?.insight?.Component ?? DefaultDashboardInsightWithDrillDialog
+                        }
+                        KpiComponent={props.widgetConfig?.kpi?.Component ?? DefaultDashboardKpi}
+                        WidgetComponent={props.widgetConfig?.Component ?? DefaultDashboardWidget}
                     >
-                        <DashboardComponentsProvider
-                            ErrorComponent={props.ErrorComponent ?? DefaultError}
-                            LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                            LayoutComponent={props.dashboardLayoutConfig?.Component ?? DefaultDashboardLayout}
-                            InsightComponent={
-                                props.widgetConfig?.insight?.Component ??
-                                DefaultDashboardInsightWithDrillDialog
-                            }
-                            KpiComponent={props.widgetConfig?.kpi?.Component ?? DefaultDashboardKpi}
-                            WidgetComponent={props.widgetConfig?.Component ?? DefaultDashboardWidget}
-                        >
-                            <DashboardLoading {...props} />
-                        </DashboardComponentsProvider>
-                    </DashboardEventsProvider>
+                        <DashboardLoading {...props} />
+                    </DashboardComponentsProvider>
                 </ThemeProvider>
             </ToastMessageContextProvider>
-        </Provider>
+        </DashboardStoreProvider>
     );
 };

@@ -1,6 +1,9 @@
 // (C) 2020-2021 GoodData Corporation
-import { DashboardEventType, DashboardCommands, DashboardEvents } from "../model";
 import { useState } from "react";
+
+import { DashboardCommands } from "../commands";
+import { DashboardEvents, DashboardEventType } from "../events";
+
 import { useDashboardCommand } from "./useDashboardCommand";
 
 /**

@@ -1,12 +1,13 @@
 // (C) 2019 GoodData Corporation
 import React, { createContext, useContext, useMemo } from "react";
 import noop from "lodash/noop";
-import { DashboardEventHandler } from "../model";
+
+import { DashboardEventHandler } from "../events/eventHandler";
 
 /**
  * @internal
  */
-interface IDashboardEventsContext {
+export interface IDashboardEventsContext {
     registerHandler: (handler: DashboardEventHandler) => void;
     unregisterHandler: (handler: DashboardEventHandler) => void;
 }

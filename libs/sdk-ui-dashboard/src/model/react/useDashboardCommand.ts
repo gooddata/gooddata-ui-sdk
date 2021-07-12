@@ -1,15 +1,12 @@
 // (C) 2020-2021 GoodData Corporation
 import { v4 as uuid } from "uuid";
 
-import {
-    DashboardEventHandler,
-    DashboardEventType,
-    DashboardCommands,
-    DashboardEvents,
-    useDashboardDispatch,
-} from "../model";
+import { DashboardCommands } from "../commands";
+import { DashboardEvents, DashboardEventType } from "../events";
+import { DashboardEventHandler } from "../events/eventHandler";
 
 import { useDashboardEventsContext } from "./DashboardEventsContext";
+import { useDashboardDispatch } from "./DashboardStoreProvider";
 
 /**
  * Hook that takes command creator and event handlers and returns function

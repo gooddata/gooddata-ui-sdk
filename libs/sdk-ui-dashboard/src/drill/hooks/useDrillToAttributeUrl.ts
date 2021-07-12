@@ -1,10 +1,10 @@
 // (C) 2020-2021 GoodData Corporation
 
-import { useDashboardCommandProcessing } from "../../dashboardAux";
 import {
     DashboardCommandFailed,
     drillToAttributeUrl,
     DashboardDrillToAttributeUrlTriggered,
+    useDashboardCommandProcessing,
 } from "../../model";
 
 /**

@@ -340,6 +340,9 @@ export type CommandProcessingMeta = {
 };
 
 // @internal (undocumented)
+export type CommandProcessingStatus = "running" | "success" | "error";
+
+// @internal (undocumented)
 export interface ConfigState {
     // (undocumented)
     config?: ResolvedDashboardConfig;
@@ -1077,6 +1080,9 @@ export type DashboardState = {
     };
 };
 
+// @internal (undocumented)
+export const DashboardStoreProvider: React_2.FC<IDashboardStoreProviderProps>;
+
 // @internal
 export interface DashboardUserInteractionLogged extends IDashboardEvent {
     // (undocumented)
@@ -1415,6 +1421,14 @@ export interface IDashboardEvent {
     readonly type: DashboardEventType;
 }
 
+// @internal (undocumented)
+export interface IDashboardEventsContext {
+    // (undocumented)
+    registerHandler: (handler: DashboardEventHandler) => void;
+    // (undocumented)
+    unregisterHandler: (handler: DashboardEventHandler) => void;
+}
+
 // @beta
 export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
 
@@ -1485,6 +1499,16 @@ export interface IDashboardProps {
 export interface IDashboardQuery<_TResult = any> {
     readonly correlationId?: string;
     readonly type: DashboardQueryType;
+}
+
+// @internal (undocumented)
+export interface IDashboardStoreProviderProps {
+    backend?: IAnalyticalBackend;
+    clientId?: string;
+    dashboardRef: ObjRef;
+    dataProductId?: string;
+    eventHandlers?: DashboardEventHandler[];
+    workspace?: string;
 }
 
 // @internal (undocumented)
@@ -2301,8 +2325,288 @@ export interface UpdateAlert extends IDashboardCommand {
 // @internal
 export function updateAlert(alert: IWidgetAlert, correlationId?: string): UpdateAlert;
 
+// @internal
+export const useDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand, eventHandlers: {
+    "GDC.DASH/EVT.COMMAND.FAILED"?: ((event: import("../events").DashboardCommandFailed) => void) | undefined;
+    "GDC.DASH/EVT.COMMAND.REJECTED"?: ((event: import("../events").DashboardCommandRejected) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.FAILED"?: ((event: import("../events").DashboardQueryFailed) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.REJECTED"?: ((event: import("../events").DashboardQueryRejected) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.STARTED"?: ((event: import("../events").DashboardQueryStarted) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.COMPLETED"?: ((event: import("../events").DashboardQueryCompleted<any, any>) => void) | undefined;
+    "GDC.DASH/EVT.USER_INTERACTION_LOGGED"?: ((event: import("../events").DashboardUserInteractionLogged) => void) | undefined;
+    "GDC.DASH/EVT.LOADED"?: ((event: import("../events").DashboardLoaded) => void) | undefined;
+    "GDC.DASH/EVT.SAVED"?: ((event: import("../events").DashboardSaved) => void) | undefined;
+    "GDC.DASH/EVT.COPY_SAVED"?: ((event: import("../events").DashboardCopySaved) => void) | undefined;
+    "GDC.DASH/EVT.RENAMED"?: ((event: import("../events").DashboardRenamed) => void) | undefined;
+    "GDC.DASH/EVT.RESET"?: ((event: import("../events").DashboardWasReset) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED"?: ((event: import("../events").DateFilterValidationFailed) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED"?: ((event: import("../events").DashboardDateFilterSelectionChanged) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED"?: ((event: import("../events").DashboardAttributeFilterAdded) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED"?: ((event: import("../events").DashboardAttributeFilterRemoved) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED"?: ((event: import("../events").DashboardAttributeFilterMoved) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED"?: ((event: import("../events").DashboardAttributeFilterSelectionChanged) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED"?: ((event: import("../events").DashboardAttributeFilterParentChanged) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED"?: ((event: import("../events").DashboardFilterContextChanged) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED"?: ((event: import("../events").DashboardLayoutSectionAdded) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED"?: ((event: import("../events").DashboardLayoutSectionMoved) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED"?: ((event: import("../events").DashboardLayoutSectionRemoved) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED"?: ((event: import("../events").DashboardLayoutSectionHeaderChanged) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED"?: ((event: import("../events").DashboardLayoutSectionItemsAdded) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED"?: ((event: import("../events").DashboardLayoutSectionItemReplaced) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED"?: ((event: import("../events").DashboardLayoutSectionItemMoved) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED"?: ((event: import("../events").DashboardLayoutSectionItemRemoved) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED"?: ((event: import("../events").DashboardLayoutChanged) => void) | undefined;
+    "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED"?: ((event: import("../events").DashboardKpiWidgetHeaderChanged) => void) | undefined;
+    "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED"?: ((event: import("../events").DashboardKpiWidgetMeasureChanged) => void) | undefined;
+    "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED"?: ((event: import("../events").DashboardKpiWidgetFilterSettingsChanged) => void) | undefined;
+    "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED"?: ((event: import("../events").DashboardKpiWidgetComparisonChanged) => void) | undefined;
+    "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED"?: ((event: import("../events").DashboardKpiWidgetChanged) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED"?: ((event: import("../events").DashboardInsightWidgetHeaderChanged) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED"?: ((event: import("../events").DashboardInsightWidgetFilterSettingsChanged) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED"?: ((event: import("../events").DashboardInsightWidgetVisPropertiesChanged) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED"?: ((event: import("../events").DashboardInsightWidgetInsightSwitched) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED"?: ((event: import("../events").DashboardInsightWidgetDrillsModified) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED"?: ((event: import("../events").DashboardInsightWidgetDrillsRemoved) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED"?: ((event: import("../events").DashboardInsightWidgetChanged) => void) | undefined;
+    "GDC.DASH/EVT.ALERT.CREATED"?: ((event: import("../events").DashboardAlertCreated) => void) | undefined;
+    "GDC.DASH/EVT.ALERT.UPDATED"?: ((event: import("../events").DashboardAlertUpdated) => void) | undefined;
+    "GDC.DASH/EVT.ALERT.REMOVED"?: ((event: import("../events").DashboardAlertRemoved) => void) | undefined;
+    "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED"?: ((event: import("../events").DashboardScheduledEmailCreated) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.TRIGGERED"?: ((event: import("../events").DashboardDrillTriggered) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_DOWN.TRIGGERED"?: ((event: import("../events").DashboardDrillDownTriggered) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.TRIGGERED"?: ((event: import("../events").DashboardDrillToInsightTriggered) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.TRIGGERED"?: ((event: import("../events").DashboardDrillToDashboardTriggered) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.TRIGGERED"?: ((event: import("../events").DashboardDrillToAttributeUrlTriggered) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.TRIGGERED"?: ((event: import("../events").DashboardDrillToCustomUrlTriggered) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.TRIGGERED"?: ((event: import("../events").DashboardDrillToLegacyDashboardTriggered) => void) | undefined;
+}, onBeforeRun: (command: TCommand) => void) => (...args: TArgs) => void;
+
+// @internal (undocumented)
+export const useDashboardCommandProcessing: <TCommand extends DashboardCommands, TCommandCreatorArgs extends any[], TSuccessEventType extends DashboardEventType, TErrorEventType extends DashboardEventType>({ commandCreator, successEvent, errorEvent, onSuccess, onError, onBeforeRun, }: {
+    commandCreator: (...args: TCommandCreatorArgs) => TCommand;
+    successEvent: TSuccessEventType;
+    errorEvent: TErrorEventType;
+    onSuccess?: ((event: Extract<import("../events").DashboardLoaded, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardSaved, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardCopySaved, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardRenamed, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardWasReset, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DateFilterValidationFailed, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardCommandFailed, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardCommandRejected, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardQueryRejected, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardQueryFailed, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardQueryStarted, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardDateFilterSelectionChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardAttributeFilterAdded, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardAttributeFilterRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardAttributeFilterMoved, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardAttributeFilterSelectionChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardAttributeFilterParentChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardFilterContextChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionAdded, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionMoved, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionHeaderChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionItemsAdded, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionItemReplaced, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionItemMoved, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionItemRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardLayoutChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardKpiWidgetHeaderChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardKpiWidgetMeasureChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardKpiWidgetFilterSettingsChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardKpiWidgetComparisonChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardKpiWidgetChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetHeaderChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetFilterSettingsChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetVisPropertiesChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetInsightSwitched, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetDrillsModified, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetDrillsRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetChanged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardAlertCreated, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardAlertRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardAlertUpdated, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardScheduledEmailCreated, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardUserInteractionLogged, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardDrillTriggered, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardDrillDownTriggered, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardDrillToInsightTriggered, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardDrillToDashboardTriggered, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardDrillToCustomUrlTriggered, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardDrillToAttributeUrlTriggered, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardDrillToLegacyDashboardTriggered, {
+        type: TSuccessEventType;
+    }> | Extract<import("../events").DashboardQueryCompleted<any, any>, {
+        type: TSuccessEventType;
+    }>) => void) | undefined;
+    onError?: ((event: Extract<import("../events").DashboardLoaded, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardSaved, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardCopySaved, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardRenamed, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardWasReset, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DateFilterValidationFailed, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardCommandFailed, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardCommandRejected, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardQueryRejected, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardQueryFailed, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardQueryStarted, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardDateFilterSelectionChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardAttributeFilterAdded, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardAttributeFilterRemoved, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardAttributeFilterMoved, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardAttributeFilterSelectionChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardAttributeFilterParentChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardFilterContextChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionAdded, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionMoved, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionRemoved, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionHeaderChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionItemsAdded, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionItemReplaced, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionItemMoved, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardLayoutSectionItemRemoved, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardLayoutChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardKpiWidgetHeaderChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardKpiWidgetMeasureChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardKpiWidgetFilterSettingsChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardKpiWidgetComparisonChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardKpiWidgetChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetHeaderChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetFilterSettingsChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetVisPropertiesChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetInsightSwitched, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetDrillsModified, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetDrillsRemoved, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardInsightWidgetChanged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardAlertCreated, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardAlertRemoved, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardAlertUpdated, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardScheduledEmailCreated, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardUserInteractionLogged, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardDrillTriggered, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardDrillDownTriggered, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardDrillToInsightTriggered, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardDrillToDashboardTriggered, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardDrillToCustomUrlTriggered, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardDrillToAttributeUrlTriggered, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardDrillToLegacyDashboardTriggered, {
+        type: TErrorEventType;
+    }> | Extract<import("../events").DashboardQueryCompleted<any, any>, {
+        type: TErrorEventType;
+    }>) => void) | undefined;
+    onBeforeRun?: ((command: TCommand) => void) | undefined;
+}) => {
+    run: (...args: TCommandCreatorArgs) => void;
+    status?: "error" | "running" | "success" | undefined;
+};
+
 // @internal (undocumented)
 export const useDashboardDispatch: () => Dispatch<AnyAction>;
+
+// @internal (undocumented)
+export const useDashboardEventsContext: () => IDashboardEventsContext;
 
 // @internal (undocumented)
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;

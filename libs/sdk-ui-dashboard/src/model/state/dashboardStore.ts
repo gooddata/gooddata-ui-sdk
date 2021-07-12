@@ -1,5 +1,4 @@
 // (C) 2021 GoodData Corporation
-import React from "react";
 import {
     AnyAction,
     combineReducers,
@@ -11,7 +10,6 @@ import {
 } from "@reduxjs/toolkit";
 import createSagaMiddleware, { Saga, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
-import { createDispatchHook, createSelectorHook, TypedUseSelectorHook } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { filterContextSliceReducer } from "./filterContext";
 import { layoutSliceReducer } from "./layout";
@@ -53,22 +51,6 @@ export type DashboardDispatch = Dispatch<AnyAction>;
  * @internal
  */
 export type DashboardStore = EnhancedStore<DashboardState>;
-
-/**
- * @internal
- */
-export const ReactDashboardContext: any = React.createContext(null);
-
-/**
- * @internal
- */
-export const useDashboardDispatch = createDispatchHook(ReactDashboardContext);
-
-/**
- * @internal
- */
-export const useDashboardSelector: TypedUseSelectorHook<DashboardState> =
-    createSelectorHook(ReactDashboardContext);
 
 export type DashboardStoreConfig = {
     /**

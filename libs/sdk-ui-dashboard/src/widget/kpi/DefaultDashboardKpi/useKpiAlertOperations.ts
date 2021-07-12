@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { IWidgetAlertDefinition, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 
-import { useDashboardCommand } from "../../../dashboardAux";
-import { createAlert, updateAlert, removeAlert } from "../../../model";
+import { createAlert, updateAlert, removeAlert, useDashboardCommand } from "../../../model";
 
 import { KpiAlertOperationStatus } from "./types";
 
