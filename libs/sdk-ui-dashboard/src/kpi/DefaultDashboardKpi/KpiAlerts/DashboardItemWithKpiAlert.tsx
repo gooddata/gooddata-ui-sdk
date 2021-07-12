@@ -11,7 +11,7 @@ import { IFilter } from "@gooddata/sdk-model";
 import { GoodDataSdkError, isNoDataSdkError } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { DashboardItemKpi } from "../../../dashboardItems";
+import { DashboardItemKpi } from "../../../presentationComponents";
 import { IKpiResult, IKpiAlertResult, KpiAlertOperationStatus } from "../types";
 
 import { isAlertingTemporarilyDisabledForGivenFilter } from "./utils/filterUtils";

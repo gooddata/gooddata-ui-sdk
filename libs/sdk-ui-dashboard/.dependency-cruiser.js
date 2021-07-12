@@ -6,8 +6,8 @@ options = {
         ...depCruiser.DefaultSdkRules,
 
         depCruiser.isolatedSubmodule("constants", "src/constants"),
-        depCruiser.isolatedSubmodule("dashboardItems", "src/dashboardItems"),
         depCruiser.isolatedSubmodule("localization", "src/localization"),
+        depCruiser.isolatedSubmodule("presentationComponents", "src/presentationComponents"),
 
         depCruiser.moduleWithDependencies("converters", "src/converters", ["src/types.ts"]),
         depCruiser.moduleWithDependencies(
@@ -58,11 +58,11 @@ options = {
         ]),
         depCruiser.moduleWithDependencies("layout", "src/layout", [
             "src/dashboardAux",
-            "src/dashboardItems",
             "src/insight",
             "src/kpi",
             "src/localization",
             "src/model",
+            "src/presentationComponents",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("logUserInteraction", "src/logUserInteraction", ["src/model"]),
@@ -70,10 +70,10 @@ options = {
             "src/_staging/*",
             "src/converters",
             "src/dashboardAux",
-            "src/dashboardItems",
             "src/drill",
             "src/localization",
             "src/model",
+            "src/presentationComponents",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("model", "src/model", [

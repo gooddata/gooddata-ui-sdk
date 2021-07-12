@@ -48,7 +48,7 @@ import {
     evaluateAlertTriggered,
     getBrokenAlertFiltersBasicInfo,
 } from "./KpiAlerts";
-import { DashboardItemHeadline } from "../../dashboardItems";
+import { DashboardItemHeadline } from "../../presentationComponents";
 import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
 
 interface IKpiExecutorProps {
