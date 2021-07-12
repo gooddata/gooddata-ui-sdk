@@ -78,7 +78,7 @@
     "apply": "適用",
     "cancel": "キャンセル",
     "loading": "読み込んでいます…",
-    "filtering": "フィルタリング中…",
+    "filtering": "フィルタリング中...",
     "dateFilterDropdown.title": "日付範囲",
     "dateFilterDropdown.buttonTitle": "日付範囲",
     "dateFilterDropdown.setDefault": "ビューア用に既定の日付フィルタを設定:",
@@ -212,8 +212,5 @@
     "rankingFilter.preview.bottom_without_attribute": "下位{value}の<strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "上位{value}の<strong>{attribute}</strong>でベースが<strong>{measure}</strong>",
     "rankingFilter.preview.bottom_with_attribute": "下位{value}の<strong>{attribute}</strong>でベースが<strong>{measure}</strong>",
-    "rankingFilter.valueTooltip": "複数の項目に同じ値が設定されている場合は、この値を持つすべての項目がフィルターで表示されます。 インサイトには、設定数よりも多くのアイテムが表示される場合があります。",
-    "attributesDropdown.allItemsFiltered": "すべてのアイテムはフィルター済み",
-    "attributesDropdown.itemsFiltered.tooltip": "アイテムのフィルター：<strong>{filters}</strong>",
-    "attributesDropdown.itemsFiltered": "アイテムはフィルター済み"
+    "rankingFilter.valueTooltip": "複数の項目に同じ値が設定されている場合は、この値を持つすべての項目がフィルターで表示されます。 インサイトには、設定数よりも多くのアイテムが表示される場合があります。"
 }

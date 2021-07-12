@@ -212,8 +212,5 @@
     "rankingFilter.preview.bottom_without_attribute": "Bottom {value} von <strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "Top {value} von <strong>{attribute}</strong> basierend auf <strong>{measure}</strong>",
     "rankingFilter.preview.bottom_with_attribute": "Bottom {value} von <strong>{attribute}</strong> basierend auf <strong>{measure}</strong>",
-    "rankingFilter.valueTooltip": "Wenn mehrere Elemente den gleichen Wert haben, zeigt der Filter alle Elemente mit diesem Wert an. In diesem Fall kann die Einsicht mehr Elemente anzeigen als die eingestellte Zahl.",
-    "attributesDropdown.allItemsFiltered": "Alle Elemente sind ausgefiltert.",
-    "attributesDropdown.itemsFiltered.tooltip": "Elemente wurden nach: <strong>{filters}</strong> gefiltert",
-    "attributesDropdown.itemsFiltered": "Elemente wurden gefiltert."
+    "rankingFilter.valueTooltip": "Wenn mehrere Elemente den gleichen Wert haben, zeigt der Filter alle Elemente mit diesem Wert an. In diesem Fall kann die Einsicht mehr Elemente anzeigen als die eingestellte Zahl."
 }
