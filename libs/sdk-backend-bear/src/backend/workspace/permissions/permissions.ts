@@ -12,9 +12,8 @@ export class BearWorkspacePermissionsFactory implements IWorkspacePermissionsSer
         const bootstrapResource = await this.authCall((sdk) =>
             sdk.user.getBootstrapResource({ projectId: this.workspace }),
         );
-        const permissions = convertPermissions(
+        return convertPermissions(
             bootstrapResource.bootstrapResource.current?.projectPermissions || emptyPermissions,
         );
-        return permissions;
     }
 }

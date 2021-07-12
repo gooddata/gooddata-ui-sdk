@@ -64,7 +64,8 @@ export function modifyBucketsAttributesForDrillDown(
         },
     );
 
-    const removedDuplicitAttributes = insightReduceItems(
+    // remove duplicate attributes
+    return insightReduceItems(
         replacedDrill,
         (acc: IAttributeOrMeasure[], cur: IAttributeOrMeasure): IAttributeOrMeasure[] => {
             if (isAttribute(cur)) {
@@ -77,8 +78,6 @@ export function modifyBucketsAttributesForDrillDown(
             return [...acc, cur];
         },
     );
-
-    return removedDuplicitAttributes;
 }
 
 function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {

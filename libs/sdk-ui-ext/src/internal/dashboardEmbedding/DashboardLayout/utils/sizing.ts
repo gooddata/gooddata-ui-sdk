@@ -56,6 +56,7 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
     itemsOrLayout: IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[],
 ): IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[] {
     if (isDashboardLayout<TWidget>(itemsOrLayout)) {
+        // eslint-disable-next-line sonarjs/prefer-immediate-return
         const updatedLayout: IDashboardLayout<TWidget> = {
             ...itemsOrLayout,
             sections: DashboardLayoutFacade.for(itemsOrLayout)
@@ -79,22 +80,15 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
         size: implicitLayoutItemSizeFromXlSize(item.size.xl),
     }));
 
-    const itemsWithUnifiedHeightForAllScreens: IDashboardLayoutItem<TWidget>[] = ALL_SCREENS.reduce(
-        (acc, screen) => {
-            const itemsAsFutureGridRows = splitDashboardLayoutItemsAsRenderedGridRows(acc, screen);
+    return ALL_SCREENS.reduce((acc, screen) => {
+        const itemsAsFutureGridRows = splitDashboardLayoutItemsAsRenderedGridRows(acc, screen);
 
-            const itemsWithUnifiedHeight = flatten(
-                itemsAsFutureGridRows.map((futureGridRow) =>
-                    unifyDashboardLayoutItemHeightsForScreen(futureGridRow, screen),
-                ),
-            );
-
-            return itemsWithUnifiedHeight;
-        },
-        itemsWithSizeForAllScreens,
-    );
-
-    return itemsWithUnifiedHeightForAllScreens;
+        return flatten(
+            itemsAsFutureGridRows.map((futureGridRow) =>
+                unifyDashboardLayoutItemHeightsForScreen(futureGridRow, screen),
+            ),
+        );
+    }, itemsWithSizeForAllScreens);
 }
 
 /**

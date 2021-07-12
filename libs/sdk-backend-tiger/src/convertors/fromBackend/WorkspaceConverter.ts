@@ -8,12 +8,10 @@ export const workspaceConverter = ({
     id,
 }: JsonApiWorkspaceOut | JsonApiWorkspaceOutWithLinks): IWorkspaceDescriptor => {
     const parentWorkspace = relationships?.parent?.data?.id;
-    const workspace: IWorkspaceDescriptor = {
+    return {
         description: attributes?.name || id,
         title: attributes?.name || id,
         id: id,
         parentWorkspace,
     };
-
-    return workspace;
 };

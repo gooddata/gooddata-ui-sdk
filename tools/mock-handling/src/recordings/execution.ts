@@ -220,8 +220,6 @@ export class ExecutionRecording implements IRecording {
 
             writeAsJsonSync(filename, dataView, { pickKeys: DataViewPropsToSerialize, replaceString });
         }
-
-        return;
     }
 
     public getEntryForRecordingIndex(): RecordingIndexEntry {

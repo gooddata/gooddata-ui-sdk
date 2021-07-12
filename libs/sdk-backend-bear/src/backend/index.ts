@@ -328,13 +328,7 @@ export class BearBackend implements IAnalyticalBackend {
                         throw errorConverter(err2);
                     });
             })
-            .catch((err) => {
-                if (isNotAuthenticated(err)) {
-                    this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
-                }
-
-                throw err;
-            });
+            .catch(this.handleNotAuthenticated);
     };
 
     private getAuthenticationContext = (): IAuthenticationContext => ({ client: this.sdk, backend: this });
@@ -350,13 +344,17 @@ export class BearBackend implements IAnalyticalBackend {
             this.authProvider.reset();
         }
 
-        return this.authProvider.authenticate(this.getAuthenticationContext()).catch((err) => {
-            if (isNotAuthenticated(err)) {
-                this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
-            }
+        return this.authProvider
+            .authenticate(this.getAuthenticationContext())
+            .catch(this.handleNotAuthenticated);
+    };
 
-            throw err;
-        });
+    private handleNotAuthenticated = (err: unknown): never => {
+        if (isNotAuthenticated(err)) {
+            this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
+        }
+
+        throw err;
     };
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {

@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { isInsightWidget, IInsightWidget, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
+import { isInsightWidget, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import {
     IInsightDefinition,
     ILocatorItem,
@@ -210,12 +210,10 @@ export function fixWidgetLegacyElementUris(widget: IWidgetDefinition): IWidgetDe
     if (isInsightWidget(widget)) {
         const fixedProperties = fixVisualizationPropertiesColumnWidths(widget.properties);
 
-        const fixedWidget: IInsightWidget = {
+        return {
             ...widget,
             properties: fixedProperties,
         };
-
-        return fixedWidget;
     }
 
     return widget;

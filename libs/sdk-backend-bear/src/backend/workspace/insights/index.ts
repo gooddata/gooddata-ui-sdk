@@ -241,13 +241,11 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
             throw new Error(`Visualization class with url ${visClassUrl} not found.`);
         }
 
-        const withFixedVisClass = {
+        return {
             insight: {
                 ...insight.insight,
                 visualizationUrl: visClass.visualizationClass.uri, // bear client expects this to be the URI, not URL
             },
         } as T;
-
-        return withFixedVisClass;
     }
 }

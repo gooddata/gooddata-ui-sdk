@@ -229,13 +229,7 @@ export class TigerBackend implements IAnalyticalBackend {
             });
         }
 
-        return this.triggerAuthentication(true).catch((err) => {
-            if (isNotAuthenticated(err)) {
-                this.authProvider.onNotAuthenticated?.({ client: this.client, backend: this }, err);
-            }
-
-            throw err;
-        });
+        return this.triggerAuthentication(true).catch(this.handleNotAuthenticated);
     };
 
     /**
@@ -266,13 +260,15 @@ export class TigerBackend implements IAnalyticalBackend {
                         throw errorConverter(err2);
                     });
             })
-            .catch((err) => {
-                if (isNotAuthenticated(err)) {
-                    this.authProvider.onNotAuthenticated?.({ client: this.client, backend: this }, err);
-                }
+            .catch(this.handleNotAuthenticated);
+    };
 
-                throw err;
-            });
+    private handleNotAuthenticated = (err: unknown): never => {
+        if (isNotAuthenticated(err)) {
+            this.authProvider.onNotAuthenticated?.({ client: this.client, backend: this }, err);
+        }
+
+        throw err;
     };
 
     private getAuthenticationContext = (): IAuthenticationContext => {

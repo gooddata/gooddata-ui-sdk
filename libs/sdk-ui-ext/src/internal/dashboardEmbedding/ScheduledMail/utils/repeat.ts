@@ -115,9 +115,7 @@ export function generateRepeatString(repeatData: IScheduleEmailRepeat): string {
     ];
 
     // Join into one repeatData string
-    const repeatString = reptParts.map((p: number[]) => p.join(FRAGMENT_DELIM)).join(REPEAT_DELIM);
-
-    return repeatString;
+    return reptParts.map((p: number[]) => p.join(FRAGMENT_DELIM)).join(REPEAT_DELIM);
 }
 
 export function setDailyRepeat(repeatData: IScheduleEmailRepeat): void {

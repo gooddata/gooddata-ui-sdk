@@ -84,9 +84,7 @@ export function getProperties(
 ): IVisualizationProperties {
     if (isMeasureDescriptor(item)) {
         const id = getMeasureMappingIdentifier(item);
-        const newProperties = mergeColorMappingToProperties(properties, id, color);
-
-        return newProperties;
+        return mergeColorMappingToProperties(properties, id, color);
     } else if (isResultAttributeHeader(item)) {
         return mergeColorMappingToProperties(properties, item.attributeHeaderItem.uri, color);
     } else if (isAttributeDescriptor(item)) {

@@ -24,9 +24,10 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     const intl = useIntl();
     const renderTitle = () => {
         const separator = "\u203A";
+        const paddedSeparator = ` ${separator} `;
 
         return breadcrumbs.length > 0
-            ? `${title} ${separator} ${breadcrumbs.filter(Boolean).join(` ${separator} `)}`
+            ? `${title} ${separator} ${breadcrumbs.filter(Boolean).join(paddedSeparator)}`
             : title;
     };
 

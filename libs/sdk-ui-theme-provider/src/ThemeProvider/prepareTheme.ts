@@ -86,13 +86,9 @@ export const preparePrimaryColor = (theme: ITheme): ITheme => {
 export const prepareTheme = (theme: ITheme, enableComplementaryPalette = true): ITheme => {
     if (!enableComplementaryPalette) {
         const themeWithContrastPrimaryColor = preparePrimaryColor(theme);
-        const themeWithoutComplementaryPalette = stripComplementaryPalette(themeWithContrastPrimaryColor);
-
-        return themeWithoutComplementaryPalette;
+        return stripComplementaryPalette(themeWithContrastPrimaryColor);
     }
 
     const themeWithComplementaryPalette = prepareComplementaryPalette(theme);
-    const themeWithBaseColors = prepareBaseColors(themeWithComplementaryPalette);
-
-    return themeWithBaseColors;
+    return prepareBaseColors(themeWithComplementaryPalette);
 };

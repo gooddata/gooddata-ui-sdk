@@ -59,9 +59,7 @@ export class DisplayFormRecording implements IRecording {
     }
 
     public getAttributeElements(): IAttributeElement[] {
-        const elements = readJsonSync(this.elementFile) as IAttributeElement[];
-
-        return elements;
+        return readJsonSync(this.elementFile) as IAttributeElement[];
     }
 
     public getDisplayFormTitle(): string {

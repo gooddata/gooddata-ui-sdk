@@ -123,8 +123,6 @@ export class RecordedInsights implements IWorkspaceInsightsService {
         }
 
         delete this.insights[recordingId];
-
-        return;
     }
 
     public async getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass> {

@@ -33,11 +33,9 @@ function createfontFace(src: string, weight: number): undefined {
 }
 
 export function handleUnits(value: string): string {
-    if (value !== undefined && value !== "NaN") {
-        // just number
-        if (parseFloat(value).toString() === value) {
-            return `${value}px`;
-        }
+    // just number without unit
+    if (value !== undefined && value !== "NaN" && parseFloat(value).toString() === value) {
+        return `${value}px`;
     }
     return value;
 }
@@ -164,10 +162,11 @@ export function setCssProperties(theme: ITheme, isDarkTheme: boolean): void {
 
     const styleTag = document.createElement("style");
     styleTag.id = "gdc-theme-properties";
+    const cssPropertiesRules = cssProperties.map(({ key, value }) => `${key}: ${value};`).join("");
     styleTag.appendChild(
         document.createTextNode(`
             :root {
-                ${cssProperties.map(({ key, value }) => `${key}: ${value};`).join("")}
+                ${cssPropertiesRules}
                 color-scheme: ${isDarkTheme ? "dark" : "light"};
             }
         `),

@@ -559,6 +559,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eslint-plugin-sonarjs",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "fast-levenshtein",
       "allowedCategories": [ "production" ]
     },

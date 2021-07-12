@@ -42,9 +42,7 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<DashboardWidget> | undef
                 identifier: temporaryWidgetId,
             };
 
-            const insightWidget = fixWidgetLegacyElementUris(convertedWidget);
-
-            return insightWidget;
+            return fixWidgetLegacyElementUris(convertedWidget);
         });
     }, layout);
 }

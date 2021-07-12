@@ -227,6 +227,7 @@ class DataSlice implements IDataSlice {
         return this.rawDataValues;
     };
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
     public dataPoints = (): DataPoint[] => {
         if (!this.dataPointsArray) {
             this.dataPointsArray = Array.from(this);

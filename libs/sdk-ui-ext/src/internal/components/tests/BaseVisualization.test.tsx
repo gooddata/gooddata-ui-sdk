@@ -35,7 +35,6 @@ class DummyClass extends AbstractPluggableVisualization {
 
     public update(opts?: IVisProps) {
         noop(opts);
-        return;
     }
 
     protected renderConfigurationPanel(_insight: IInsightDefinition): void {

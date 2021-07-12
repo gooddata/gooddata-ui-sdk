@@ -203,11 +203,9 @@ function generateDisplayFormPropertyInitializers(
     naming: NamingStrategies = DefaultNaming,
 ): string[] {
     const localNameScope: TakenNamesSet = {};
-    const displayFormInits: string[] = attribute.attribute.content.displayForms.map((df) =>
+    return attribute.attribute.content.displayForms.map((df) =>
         generateAttributeDisplayForm(df, attributeVariableName, localNameScope, naming),
     );
-
-    return displayFormInits;
 }
 
 /**

@@ -4,7 +4,6 @@ import { uriRef } from "@gooddata/sdk-model";
 import {
     IFilterContext,
     FilterContextItem,
-    IDashboardAttributeFilter,
     IDashboardDateFilter,
     ITempFilterContext,
     isDashboardDateFilter,
@@ -14,9 +13,7 @@ import {
 
 function isNotTemporaryAllTimeDateFilter(filter: FilterContextItem): boolean {
     if (isDashboardDateFilter(filter)) {
-        const isNotTemporaryAllTimeDateFilter =
-            filter.dateFilter.from !== undefined || filter.dateFilter.to !== undefined;
-        return isNotTemporaryAllTimeDateFilter;
+        return filter.dateFilter.from !== undefined || filter.dateFilter.to !== undefined;
     }
 
     return true;
@@ -57,7 +54,7 @@ export const convertFilterContextItem = (
             },
         );
 
-        const convertedFilterContextItem: IDashboardAttributeFilter = {
+        return {
             attributeFilter: {
                 attributeElements: { uris: attributeElements },
                 displayForm: uriRef(displayForm),
@@ -66,8 +63,6 @@ export const convertFilterContextItem = (
                 filterElementsBy: convertedFilterElementsBy,
             },
         };
-
-        return convertedFilterContextItem;
     }
     const {
         dateFilter: { granularity, type, attribute, dataSet, from, to },
@@ -100,7 +95,7 @@ export const convertFilterContext = (
         },
     } = filterContext;
 
-    const convertedFilterContext: IFilterContext | IFilterContextDefinition = {
+    return {
         description: summary!,
         ...(uri
             ? {
@@ -112,8 +107,6 @@ export const convertFilterContext = (
         title,
         filters: filters.map(convertFilterContextItem),
     };
-
-    return convertedFilterContext;
 };
 
 export const convertTempFilterContext = (
@@ -123,12 +116,10 @@ export const convertTempFilterContext = (
         tempFilterContext: { created, filters, uri },
     } = filterContext;
 
-    const convertedTempFilterContext: ITempFilterContext = {
+    return {
         uri,
         ref: uriRef(uri),
         filters: filters.map(convertFilterContextItem),
         created,
     };
-
-    return convertedTempFilterContext;
 };

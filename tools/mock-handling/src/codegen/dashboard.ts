@@ -7,9 +7,11 @@ import { DashboardRecording } from "../recordings/dashboards";
 function displayFormRecordingInit(rec: DashboardRecording, targetDir: string): string {
     const entries = Object.entries(rec.getEntryForRecordingIndex());
 
-    return `{ ${entries
+    const entryRows = entries
         .map(([type, file]) => `${type}: require('./${path.relative(targetDir, file)}')`)
-        .join(",")} }`;
+        .join(",");
+
+    return `{ ${entryRows} }`;
 }
 
 function generateRecordingConst(

@@ -12,9 +12,7 @@ export function getGeoAttributeHeaderItems(dv: DataViewFacade, geoData: IGeoData
     const hasColorMeasure = color !== undefined;
     const hasSizeMeasure = size !== undefined;
     const attrHeaderItemIndex = hasColorMeasure || hasSizeMeasure ? 1 : 0;
-    const attributeHeaderItems = dv.meta().allHeaders()[attrHeaderItemIndex];
-
-    return attributeHeaderItems;
+    return dv.meta().allHeaders()[attrHeaderItemIndex];
 }
 
 export function isDataOfReasonableSize(dv: DataViewFacade, geoData: IGeoData, limit: number): boolean {

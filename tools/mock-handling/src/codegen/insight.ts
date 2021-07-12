@@ -11,9 +11,11 @@ const InsightIndexConstName = "Insights";
 function insightRecordingInit(rec: InsightRecording, targetDir: string): string {
     const entries = Object.entries(rec.getEntryForRecordingIndex());
 
-    return `{ ${entries
+    const entryPairs = entries
         .map(([type, file]) => `${type}: require('./${path.relative(targetDir, file)}')`)
-        .join(",")} }`;
+        .join(",");
+
+    return `{ ${entryPairs} }`;
 }
 
 function generateRecordingConst(
@@ -41,14 +43,16 @@ type VisScenarioToInsight = [string, string, InsightRecording];
 function generateScenarioForVis(entries: VisScenarioToInsight[]): string {
     const scope: TakenNamesSet = {};
 
-    return `{ ${entries
+    const entryRows = entries
         .map(([_, entryName, entryRecording]) => {
             const varName = createUniqueVariableName(entryName, scope);
             scope[varName] = true;
 
             return `${varName}: ${entryRecording.getRecordingName()}`;
         })
-        .join(",")} }`;
+        .join(",");
+
+    return `{ ${entryRows} }`;
 }
 
 function generateInsightsConst(recordings: InsightRecording[]): OptionalKind<VariableStatementStructure> {
@@ -57,6 +61,9 @@ function generateInsightsConst(recordings: InsightRecording[]): OptionalKind<Var
         .map((rec) => [rec.getVisName(), rec.getScenarioName(), rec]);
 
     const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
+    const entryRows = entriesByVis
+        .map(([vis, visScenarios]) => `${vis}: ${generateScenarioForVis(visScenarios)}`)
+        .join(",");
 
     return {
         declarationKind: VariableDeclarationKind.Const,
@@ -64,9 +71,7 @@ function generateInsightsConst(recordings: InsightRecording[]): OptionalKind<Var
         declarations: [
             {
                 name: InsightIndexConstName,
-                initializer: `{ ${entriesByVis
-                    .map(([vis, visScenarios]) => `${vis}: ${generateScenarioForVis(visScenarios)}`)
-                    .join(",")} }`,
+                initializer: `{ ${entryRows} }`,
             },
         ],
     };

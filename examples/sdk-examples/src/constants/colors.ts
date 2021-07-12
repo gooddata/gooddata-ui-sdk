@@ -28,6 +28,7 @@ export const DEFAULT_COLOR_PALETTE = [
         `#${/rgb\(([\d]*),([\d]*),([\d]*)\)/
             .exec(color)!
             .slice(1)
+            // eslint-disable-next-line sonarjs/no-nested-template-literals
             .map((val) => `0${parseInt(val, 10).toString(16)}`.slice(-2))
             .join("")}`,
 );

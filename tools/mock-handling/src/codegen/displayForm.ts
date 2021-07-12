@@ -7,9 +7,11 @@ import { DisplayFormRecording } from "../recordings/displayForms";
 function displayFormRecordingInit(rec: DisplayFormRecording, targetDir: string): string {
     const entries = Object.entries(rec.getEntryForRecordingIndex());
 
-    return `{ ${entries
+    const entryRows = entries
         .map(([type, file]) => `${type}: require('./${path.relative(targetDir, file)}')`)
-        .join(",")} }`;
+        .join(",");
+
+    return `{ ${entryRows} }`;
 }
 
 function generateRecordingConst(

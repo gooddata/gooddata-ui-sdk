@@ -44,7 +44,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public async getDescriptor(): Promise<IWorkspaceDescriptor> {
         if (!this.descriptor) {
-            const workspaceDescriptor = workspaceConverter(
+            return workspaceConverter(
                 (
                     await this.authCall(async (client) => {
                         return client.organizationObjects.getEntityWorkspaces({
@@ -54,7 +54,6 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
                     })
                 ).data.data,
             );
-            return workspaceDescriptor;
         }
         return this.descriptor;
     }

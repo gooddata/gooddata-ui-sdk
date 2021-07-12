@@ -49,22 +49,18 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
                 this.props.clientHeight,
             );
 
-            const heightStyles = {
+            return {
                 height: `${height}px`,
                 lineHeight: `${height}px`,
             };
-
-            return heightStyles;
         }
 
         return undefined;
     }
 
     render() {
-        if (this.props.enableCompactSize) {
-            if (!this.props.clientHeight) {
-                return null;
-            }
+        if (this.props.enableCompactSize && !this.props.clientHeight) {
+            return null;
         }
 
         return (

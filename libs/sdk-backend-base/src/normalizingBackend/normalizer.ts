@@ -130,7 +130,8 @@ export class Denormalizer {
                 };
             }
 
-            return;
+            // let the default logic handle this
+            return undefined;
         });
     };
 
@@ -143,19 +144,18 @@ export class Denormalizer {
      * @returns new headers
      */
     public denormalizeHeaders = (headerItems: IResultHeader[][][]): IResultHeader[][][] => {
-        return cloneDeepWith(headerItems, (value) => {
+        return cloneDeepWith(headerItems, (value): IResultMeasureHeader | undefined => {
             if (isResultMeasureHeader(value)) {
-                const newHeader: IResultMeasureHeader = {
+                return {
                     measureHeaderItem: {
                         name: this.fillOriginalMeasureTitle(value.measureHeaderItem.name),
                         order: value.measureHeaderItem.order,
                     },
                 };
-
-                return newHeader;
             }
 
-            return;
+            // let the default logic handle this
+            return undefined;
         });
     };
 

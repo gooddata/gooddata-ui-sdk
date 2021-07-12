@@ -24,6 +24,14 @@ export interface IUriIdentifierPair {
     identifier: string;
 }
 
+function getResponseData(r: ApiResponse) {
+    if (!r.response.ok) {
+        throw new ApiResponseError(r.response.statusText, r.response, r.getData());
+    }
+
+    return r.getData();
+}
+
 /**
  * Functions for working with metadata objects
  *
@@ -56,8 +64,7 @@ export class MetadataModule {
                 `${defaultDisplayFormUri}/elements?id=${elementId}`,
             );
 
-        const firstElement = defaultDisplayFormElementValue.attributeElements.elements[0];
-        return firstElement;
+        return defaultDisplayFormElementValue.attributeElements.elements[0];
     }
 
     /**
@@ -100,8 +107,7 @@ export class MetadataModule {
     >(projectId: string, identifiers: string[]): Promise<T[]> {
         const uriIdentifierPairs = await this.getUrisFromIdentifiers(projectId, identifiers);
         const uris = uriIdentifierPairs.map((pair) => pair.uri);
-        const objects: T[] = await this.getObjects(projectId, uris);
-        return objects;
+        return await this.getObjects(projectId, uris);
     }
 
     /**
@@ -251,13 +257,7 @@ export class MetadataModule {
 
         return this.xhr
             .post(resourceUri, { body })
-            .then((r: ApiResponse) => {
-                if (!r.response.ok) {
-                    throw new ApiResponseError(r.response.statusText, r.response, r.getData());
-                }
-
-                return r.getData();
-            })
+            .then(getResponseData)
             .then((result) => result.entries);
     }
 
@@ -292,13 +292,7 @@ export class MetadataModule {
 
         return this.xhr
             .post(resourceUri, { body })
-            .then((r: ApiResponse) => {
-                if (!r.response.ok) {
-                    throw new ApiResponseError(r.response.statusText, r.response, r.getData());
-                }
-
-                return r.getData();
-            })
+            .then(getResponseData)
             .then((result: any) => result.useMany);
     }
 

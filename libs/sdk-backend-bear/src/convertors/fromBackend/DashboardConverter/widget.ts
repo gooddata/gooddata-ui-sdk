@@ -2,12 +2,7 @@
 
 import { GdcVisualizationWidget, GdcKpi, GdcExtendedDateFilters } from "@gooddata/api-model-bear";
 import { uriRef } from "@gooddata/sdk-model";
-import {
-    IWidget,
-    IDashboardFilterReference,
-    IDashboardDateFilterReference,
-    IDashboardAttributeFilterReference,
-} from "@gooddata/sdk-backend-spi";
+import { IWidget, IDashboardFilterReference } from "@gooddata/sdk-backend-spi";
 import { convertVisualizationWidgetDrill, convertKpiDrill } from "./drills";
 import { convertReferencesToUris } from "../ReferenceConverter";
 import { deserializeProperties } from "../PropertiesConverter";
@@ -18,19 +13,16 @@ export const convertFilterReference = (
         | GdcExtendedDateFilters.IAttributeFilterReference,
 ): IDashboardFilterReference => {
     if (GdcExtendedDateFilters.isDateFilterReference(filterReference)) {
-        const convertedDateFilterReference: IDashboardDateFilterReference = {
+        return {
             type: "dateFilterReference",
             dataSet: uriRef(filterReference.dateFilterReference.dataSet),
         };
-        return convertedDateFilterReference;
     }
 
-    const convertedAttributeFilterReference: IDashboardAttributeFilterReference = {
+    return {
         type: "attributeFilterReference",
         displayForm: uriRef(filterReference.attributeFilterReference.displayForm),
     };
-
-    return convertedAttributeFilterReference;
 };
 
 export const convertVisualizationWidget = (
@@ -48,7 +40,7 @@ export const convertVisualizationWidget = (
         references: references || {},
     });
 
-    const convertedWidget: IWidget = {
+    return {
         type: "insight",
         ref: uriRef(uri!),
         identifier: identifier!,
@@ -63,8 +55,6 @@ export const convertVisualizationWidget = (
         drills: drills ? drills.map(convertVisualizationWidgetDrill) : [],
         properties: convertedProperties,
     };
-
-    return convertedWidget;
 };
 
 export const convertKpi = (kpi: GdcKpi.IWrappedKPI): IWidget => {
@@ -76,7 +66,7 @@ export const convertKpi = (kpi: GdcKpi.IWrappedKPI): IWidget => {
         },
     } = kpi;
 
-    const convertedWidget: IWidget = {
+    return {
         type: "kpi",
         ref: uriRef(uri!),
         identifier: identifier!,
@@ -99,8 +89,6 @@ export const convertKpi = (kpi: GdcKpi.IWrappedKPI): IWidget => {
                   metric: uriRef(content.metric),
               },
     };
-
-    return convertedWidget;
 };
 
 export const convertWidget = (

@@ -208,6 +208,7 @@ export const App: React.FC = () => {
                                             )}
                                         </Switch>
                                         {authStatus === AuthStatus.AUTHORIZED &&
+                                            // eslint-disable-next-line sonarjs/no-identical-functions
                                             routes.map(({ title: _, path, Component, ...routeProps }) => (
                                                 <Route
                                                     key={path}

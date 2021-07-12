@@ -17,6 +17,7 @@ export class NoopPublisher implements IEventListener {
     }
 
     public onEvent(event: DcEvent): void {
+        // eslint-disable-next-line sonarjs/no-small-switch
         switch (event.type) {
             case "packagesRebuilt": {
                 event.body.packages.forEach((packageName) => {

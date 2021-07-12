@@ -88,8 +88,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
     useEffect(() => {
         const getExportUri = async () => {
             try {
-                const uri = (await exportFunction(exportConfig!))?.uri;
-                return uri;
+                return (await exportFunction(exportConfig!))?.uri;
             } catch (error) {
                 let errorMessage = error.message;
                 if (error.responseBody) {

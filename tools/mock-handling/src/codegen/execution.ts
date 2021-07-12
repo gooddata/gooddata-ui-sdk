@@ -12,9 +12,11 @@ const ScenariosConstName = "Scenarios";
 function executionRecordingInit(rec: ExecutionRecording, targetDir: string): string {
     const entries = Object.entries(rec.getEntryForRecordingIndex());
 
-    return `{ ${entries
+    const entryRows = entries
         .map(([type, file]) => `${type}: require('./${path.relative(targetDir, file)}')`)
-        .join(",")} }`;
+        .join(",");
+
+    return `{ ${entryRows} }`;
 }
 
 function generateRecordingConst(
@@ -40,7 +42,7 @@ function generateRecordingConst(
 type VisScenarioRecording = [string, string, ExecutionRecording, number];
 
 function generateScenarioForVis(entries: VisScenarioRecording[]): string {
-    return `{ ${entries
+    const entryRows = entries
         .map(
             ([_, entryName, entryRecording, scenarioIndex]) =>
                 `${createUniqueVariableName(
@@ -48,7 +50,9 @@ function generateScenarioForVis(entries: VisScenarioRecording[]): string {
                     {},
                 )}: { scenarioIndex: ${scenarioIndex}, execution: ${entryRecording.getRecordingName()}}`,
         )
-        .join(",")} }`;
+        .join(",");
+
+    return `{ ${entryRows} }`;
 }
 
 function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<VariableStatementStructure> {
@@ -56,16 +60,16 @@ function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<
         rec.scenarios.map<VisScenarioRecording>((s, idx) => [s.vis, s.scenario, rec, idx]),
     );
     const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
-
+    const entryRows = entriesByVis
+        .map(([vis, visScenarios]) => `${vis}: ${generateScenarioForVis(visScenarios)}`)
+        .join(",");
     return {
         declarationKind: VariableDeclarationKind.Const,
         isExported: true,
         declarations: [
             {
                 name: ScenariosConstName,
-                initializer: `{ ${entriesByVis
-                    .map(([vis, visScenarios]) => `${vis}: ${generateScenarioForVis(visScenarios)}`)
-                    .join(",")} }`,
+                initializer: `{ ${entryRows} }`,
             },
         ],
     };

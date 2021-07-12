@@ -983,7 +983,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     /**
      * Wraps the provided callback function with a guard that checks whether the current table state is the same
-     * as the state snapshotted at the time of callback creation. If the state differs, the wrapped function WILL NOT
+     * as the state snapshot at the time of callback creation. If the state differs, the wrapped function WILL NOT
      * be called.
      *
      * @param callback - function to wrap with state guard
@@ -991,14 +991,12 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     // eslint-disable-next-line @typescript-eslint/ban-types
     private stateBoundCallback = <T extends Function>(callback: T): T => {
         const forInternalState = this.internal;
-        const guarded: T = ((...args: any) => {
+        return ((...args: any) => {
             if (this.internal !== forInternalState) {
                 return;
             }
             return callback(...args);
         }) as unknown as T;
-
-        return guarded;
     };
 
     /**

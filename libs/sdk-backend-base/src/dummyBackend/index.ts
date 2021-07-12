@@ -269,36 +269,29 @@ function dummyExecutionResult(
 ): IExecutionResult {
     const fp = defFingerprint(definition) + "/emptyResult";
 
+    function dummyRead() {
+        if (config.raiseNoDataExceptions) {
+            return Promise.reject(
+                new NoDataError(
+                    "Empty data view from dummy backend",
+                    config.raiseNoDataExceptions === "with-data-view"
+                        ? dummyDataView(definition, result, config)
+                        : undefined,
+                ),
+            );
+        }
+
+        return Promise.resolve(dummyDataView(definition, result, config));
+    }
+
     const result: IExecutionResult = {
         definition,
         dimensions: [],
         readAll(): Promise<IDataView> {
-            if (config.raiseNoDataExceptions) {
-                return Promise.reject(
-                    new NoDataError(
-                        "Empty data view from dummy backend",
-                        config.raiseNoDataExceptions === "with-data-view"
-                            ? dummyDataView(definition, result, config)
-                            : undefined,
-                    ),
-                );
-            }
-
-            return Promise.resolve(dummyDataView(definition, result, config));
+            return dummyRead();
         },
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
-            if (config.raiseNoDataExceptions) {
-                return Promise.reject(
-                    new NoDataError(
-                        "Empty data view from dummy backend",
-                        config.raiseNoDataExceptions === "with-data-view"
-                            ? dummyDataView(definition, result, config)
-                            : undefined,
-                    ),
-                );
-            }
-
-            return Promise.resolve(dummyDataView(definition, result, config));
+            return dummyRead();
         },
         fingerprint(): string {
             return fp;

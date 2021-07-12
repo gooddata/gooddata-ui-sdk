@@ -20,7 +20,5 @@ export function convertVisualizationObject(
         },
     };
 
-    const insight = fixInsightLegacyElementUris(convertedInsight);
-
-    return insight;
+    return fixInsightLegacyElementUris(convertedInsight);
 }

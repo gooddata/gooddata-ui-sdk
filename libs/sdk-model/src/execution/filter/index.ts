@@ -661,5 +661,5 @@ export function measureValueFilterOperator(
         return filter.measureValueFilter.condition.range.operator;
     }
 
-    return;
+    return undefined;
 }

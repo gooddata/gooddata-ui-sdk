@@ -64,10 +64,8 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
     }
 
     render() {
-        if (this.props.enableCompactSize) {
-            if (!this.props.clientHeight) {
-                return null;
-            }
+        if (this.props.enableCompactSize && !this.props.clientHeight) {
+            return null;
         }
 
         return (

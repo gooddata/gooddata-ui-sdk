@@ -55,11 +55,12 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = (props) 
         apiError,
     } = props;
 
-    const errorMessage = `Error: ${
+    const errorMessageBody =
         apiError?.toUpperCase() === AuthStatus.UNAUTHORIZED
             ? `${apiError} Wrong email or password.`
-            : apiError
-    }`;
+            : apiError;
+
+    const errorMessage = `Error: ${errorMessageBody}`;
 
     return (
         <div className="Login">

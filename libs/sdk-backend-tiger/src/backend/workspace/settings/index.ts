@@ -41,14 +41,12 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
                 })
             ).data;
 
-            const settings: IUserWorkspaceSettings = {
+            return {
                 ...DefaultUserSettings,
                 userId: principal.userId,
                 workspace: this.workspace,
                 ...config?.config,
             };
-
-            return settings;
         });
     }
 }

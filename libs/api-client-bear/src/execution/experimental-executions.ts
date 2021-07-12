@@ -158,9 +158,13 @@ function getGeneratedMetricExpression(item: any, attributesMap: any) {
         (e) => !!e,
     );
 
-    return `SELECT ${aggregation ? `${aggregation}([${objectUri}])` : `[${objectUri}]`}${
-        notEmpty(...where) ? ` WHERE ${where.join(" AND ")}` : ""
-    }`;
+    return [
+        "SELECT",
+        aggregation ? `${aggregation}([${objectUri}])` : `[${objectUri}]`,
+        notEmpty(...where) && `WHERE ${where.join(" AND ")}`,
+    ]
+        .filter(Boolean)
+        .join(" ");
 }
 
 function getPercentMetricExpression(category: any, attributesMap: any, measure: any) {

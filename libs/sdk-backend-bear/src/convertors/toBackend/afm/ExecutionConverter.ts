@@ -83,13 +83,11 @@ function convertNativeTotals(def: IExecutionDefinition): GdcExecuteAFM.INativeTo
 
 function convertTotals(totals: ITotal[] = []): GdcExecuteAFM.ITotalItem[] {
     return totals.map((t) => {
-        const newItem: GdcExecuteAFM.ITotalItem = {
+        return {
             type: t.type,
             attributeIdentifier: t.attributeIdentifier,
             measureIdentifier: t.measureIdentifier,
         };
-
-        return newItem;
     });
 }
 
@@ -98,12 +96,10 @@ function convertDimensions(def: IExecutionDefinition): GdcExecuteAFM.IDimension[
         const totals = convertTotals(dim.totals);
         const totalsProp = !isEmpty(totals) ? { totals } : {};
 
-        const newDim: GdcExecuteAFM.IDimension = {
+        return {
             itemIdentifiers: dim.itemIdentifiers,
             ...totalsProp,
         };
-
-        return newDim;
     });
 }
 

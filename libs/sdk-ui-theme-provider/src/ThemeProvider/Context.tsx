@@ -71,8 +71,7 @@ export const useTheme = (theme?: ITheme): ITheme | undefined => {
  * @public
  */
 export const useThemeIsLoading = (): boolean | undefined => {
-    const themeIsLoading = React.useContext(ThemeIsLoadingContext);
-    return themeIsLoading;
+    return React.useContext(ThemeIsLoadingContext);
 };
 
 /**

@@ -126,14 +126,12 @@ export const convertLayoutItemSize = (
 const convertLayoutItem = (column: IDashboardLayoutItem): GdcDashboardLayout.IFluidLayoutColumn => {
     const { size, widget } = column;
     if (isWidget(widget)) {
-        const converted: GdcDashboardLayout.IFluidLayoutColumn = {
+        return {
             size: convertLayoutItemSize(size),
             content: {
                 widget: { qualifier: { uri: refToUri(widget.ref) } },
             },
         };
-
-        return converted;
     } else if (isDashboardLayout(widget)) {
         return {
             size: convertLayoutItemSize(size),
@@ -237,7 +235,7 @@ export const convertFilterContextItem = (
         );
     }
 
-    const convertedAttributeFilter: GdcFilterContext.IAttributeFilter = {
+    return {
         attributeFilter: {
             negativeSelection,
             attributeElements: attributeElements.uris,
@@ -246,8 +244,6 @@ export const convertFilterContextItem = (
             filterElementsBy: convertedAttributeFilterParents,
         },
     };
-
-    return convertedAttributeFilter;
 };
 
 export function convertFilterContext(
@@ -262,7 +258,7 @@ export function convertFilterContext(
     if (isTempFilterContext(filterContext)) {
         const { created, filters } = filterContext;
 
-        const convertedTempFilterContext: GdcFilterContext.IWrappedTempFilterContext = {
+        return {
             tempFilterContext: {
                 created,
                 filters: filters.map(convertFilterContextItem),
@@ -273,13 +269,11 @@ export function convertFilterContext(
                     : {}),
             } as GdcFilterContext.ITempFilterContext,
         };
-
-        return convertedTempFilterContext;
     }
 
     const { description, filters, title } = filterContext;
 
-    const convertedFilterContext: GdcFilterContext.IWrappedFilterContext = {
+    return {
         filterContext: {
             content: {
                 filters: filters.map(convertFilterContextItem),
@@ -296,29 +290,24 @@ export function convertFilterContext(
             },
         },
     };
-
-    return convertedFilterContext;
 }
 
 const convertFilterReference = (
     filterReference: IDashboardFilterReference,
 ): GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference => {
     if (isDashboardDateFilterReference(filterReference)) {
-        const convertedDateFilterReference: GdcExtendedDateFilters.IDateFilterReference = {
+        return {
             dateFilterReference: {
                 dataSet: refToUri(filterReference.dataSet),
             },
         };
-        return convertedDateFilterReference;
     }
 
-    const convertedAttributeFilterReference: GdcExtendedDateFilters.IAttributeFilterReference = {
+    return {
         attributeFilterReference: {
             displayForm: refToUri(filterReference.displayForm),
         },
     };
-
-    return convertedAttributeFilterReference;
 };
 
 export function convertDrill(drill: IDrillToLegacyDashboard): GdcKpi.IKpiProjectDashboardLink;
@@ -330,11 +319,10 @@ export function convertDrill(
 ): GdcKpi.IKpiProjectDashboardLink | GdcVisualizationWidget.IDrillDefinition {
     if (isDrillToLegacyDashboard(drill)) {
         const { tab } = drill;
-        const kpiDrill: GdcKpi.IKpiProjectDashboardLink = {
+        return {
             projectDashboard: refToUri(drill.target),
             projectDashboardTab: tab,
         };
-        return kpiDrill;
     }
 
     const { origin } = drill;
@@ -358,17 +346,15 @@ export function convertDrill(
     }
 
     if (isDrillToDashboard(drill)) {
-        const drillToDashboard: GdcVisualizationWidget.IDrillToDashboard = {
+        return {
             drillToDashboard: {
                 from: drillFrom,
                 target: "in-place",
                 toDashboard: drill.target !== undefined ? refToIdentifier(drill.target) : undefined,
             },
         };
-
-        return drillToDashboard;
     } else if (isDrillToInsight(drill)) {
-        const drillToInsight: GdcVisualizationWidget.IDrillToVisualization = {
+        return {
             drillToVisualization: {
                 from: drillFrom,
                 target: "pop-up",
@@ -377,19 +363,16 @@ export function convertDrill(
                 },
             },
         };
-
-        return drillToInsight;
     } else if (isDrillToCustomUrl(drill)) {
-        const drillToCustomUrl: GdcVisualizationWidget.IDrillToCustomUrl = {
+        return {
             drillToCustomUrl: {
                 from: drillFrom,
                 target: "new-window",
                 customUrl: drill.target.url,
             },
         };
-        return drillToCustomUrl;
     } else if (isDrillToAttributeUrl(drill)) {
-        const drillToAttributeUrl: GdcVisualizationWidget.IDrillToAttributeUrl = {
+        return {
             drillToAttributeUrl: {
                 from: drillFrom,
                 target: "new-window",
@@ -397,8 +380,6 @@ export function convertDrill(
                 insightAttributeDisplayForm: { uri: refToUri(drill.target.displayForm) },
             },
         };
-
-        return drillToAttributeUrl;
     }
 
     throw new UnexpectedError("Unable to convert unknown drill!");
@@ -425,7 +406,7 @@ export const convertWidget = (
         invariant(widget.kpi, "Widget type is kpi, but kpi props are not defined!");
         const { kpi } = widget;
 
-        const kpiWidget: GdcKpi.IWrappedKPI = {
+        return {
             kpi: {
                 content: {
                     ...(isLegacyKpiWithComparison(kpi)
@@ -445,8 +426,6 @@ export const convertWidget = (
                 meta,
             },
         };
-
-        return kpiWidget;
     }
 
     const { insight, properties: widgetProperties = {} } = widget;
@@ -458,7 +437,7 @@ export const convertWidget = (
 
     const nonEmptyProperties = omitBy(properties, (value, key) => key !== "controls" && isEmpty(value));
 
-    const visualizationWidget: GdcVisualizationWidget.IWrappedVisualizationWidget = {
+    return {
         visualizationWidget: {
             content: {
                 visualization: refToUri(insight),
@@ -475,8 +454,6 @@ export const convertWidget = (
             meta,
         },
     };
-
-    return visualizationWidget;
 };
 
 const convertAbsoluteDateFilterPreset = (
@@ -524,7 +501,7 @@ export const convertDashboard = (
     const filterContextUri = filterContext?.ref && refToUri(filterContext.ref);
     const convertedDateFilterConfig = dateFilterConfig && convertDateFilterConfig(dateFilterConfig);
 
-    const legacyDashboard: GdcDashboard.IWrappedAnalyticalDashboard = {
+    return {
         analyticalDashboard: {
             content: {
                 ...(convertedDateFilterConfig && { dateFilterConfig: convertedDateFilterConfig }),
@@ -546,8 +523,6 @@ export const convertDashboard = (
             },
         },
     };
-
-    return legacyDashboard;
 };
 
 export const convertWidgetAlert = (
@@ -568,7 +543,7 @@ export const convertWidgetAlert = (
 
     const alertUri = ref && refToUri(ref);
 
-    const convertedKpiAlert: GdcMetadata.IWrappedKpiAlert = {
+    return {
         kpiAlert: {
             content: {
                 filterContext: filterContext?.ref && refToUri(filterContext.ref),
@@ -590,8 +565,6 @@ export const convertWidgetAlert = (
             },
         },
     };
-
-    return convertedKpiAlert;
 };
 
 export const convertScheduledMailAttachment = (
@@ -599,15 +572,13 @@ export const convertScheduledMailAttachment = (
 ): GdcScheduledMail.ScheduledMailAttachment => {
     const { dashboard, format, filterContext } = scheduledMailAttachment;
 
-    const convertedAttachment: GdcScheduledMail.IKpiDashboardAttachment = {
+    return {
         kpiDashboardAttachment: {
             uri: refToUri(dashboard),
             format,
             filterContext: filterContext && refToUri(filterContext),
         },
     };
-
-    return convertedAttachment;
 };
 
 export const convertScheduledMail = (
@@ -629,7 +600,7 @@ export const convertScheduledMail = (
         unlisted,
     } = scheduledMail;
 
-    const convertedScheduledMail: GdcScheduledMail.IWrappedScheduledMail = {
+    return {
         scheduledMail: {
             content: {
                 attachments: attachments.map(convertScheduledMailAttachment),
@@ -659,6 +630,4 @@ export const convertScheduledMail = (
             },
         },
     };
-
-    return convertedScheduledMail;
 };

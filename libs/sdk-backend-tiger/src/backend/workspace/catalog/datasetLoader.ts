@@ -34,7 +34,7 @@ function getAttributeLabels(
     included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,
 ): JsonApiLabelOutWithLinks[] {
     const labelsRefs = attribute.relationships?.labels?.data as JsonApiLabelLinkage[];
-    const allLabels: JsonApiLabelOutWithLinks[] = labelsRefs
+    return labelsRefs
         .map((ref) => {
             const obj = lookupRelatedObject(included, ref.id, ref.type);
             if (!obj) {
@@ -43,8 +43,6 @@ function getAttributeLabels(
             return obj as JsonApiLabelOutWithLinks;
         })
         .filter((obj): obj is JsonApiLabelOutWithLinks => obj !== undefined);
-
-    return allLabels;
 }
 
 function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
@@ -107,7 +105,7 @@ function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDa
     const dateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity !== undefined);
     const dateDatasets = identifyDateDatasets(dateAttributes, attributes.included);
 
-    const converted = dateDatasets.map((dd) => {
+    return dateDatasets.map((dd) => {
         const catalogDateAttributes = dd.attributes.map((attribute) => {
             const labels = getAttributeLabels(attribute, attributes.included);
             const defaultLabel = labels[0];
@@ -117,8 +115,6 @@ function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDa
 
         return convertDateDataset(dd.dataset, catalogDateAttributes);
     });
-
-    return converted;
 }
 
 export async function loadAttributesAndDateDatasets(

@@ -381,9 +381,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 const displayForm = await attributes.getAttributeDisplayForm(
                     getObjRef(currentFilter, props.identifier),
                 );
-                const attribute = await attributes.getAttribute(displayForm.attribute);
-
-                return attribute;
+                return attributes.getAttribute(displayForm.attribute);
             },
         },
         [currentFilterObjRef, props.workspace, props.backend, props.identifier],
