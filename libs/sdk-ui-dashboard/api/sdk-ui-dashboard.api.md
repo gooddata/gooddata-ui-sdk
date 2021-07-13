@@ -1453,14 +1453,12 @@ export interface IDashboardProps {
     backend?: IAnalyticalBackend;
     // (undocumented)
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
-    clientId?: string;
     config?: DashboardConfig;
     dashboardLayoutConfig?: {
         Component?: ComponentType<DashboardLayoutProps>;
         defaultComponentProps?: DashboardLayoutProps;
     };
     dashboardRef: ObjRef;
-    dataProductId?: string;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     ErrorComponent?: ComponentType<IErrorProps>;
     eventHandlers?: DashboardEventHandler[];
@@ -1504,10 +1502,10 @@ export interface IDashboardQuery<_TResult = any> {
 // @internal (undocumented)
 export interface IDashboardStoreProviderProps {
     backend?: IAnalyticalBackend;
-    clientId?: string;
+    config?: DashboardConfig;
     dashboardRef: ObjRef;
-    dataProductId?: string;
     eventHandlers?: DashboardEventHandler[];
+    permissions?: IWorkspacePermissions;
     workspace?: string;
 }
 

@@ -192,6 +192,9 @@ export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "t
 // @public (undocumented)
 export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pareto" | "alluvial";
 
+// @alpha
+export const ClientWorkspaceProvider: React_2.FC<IClientWorkspaceProviderProps>;
+
 // @public
 export function composedFromIdentifier(identifier: string): IHeaderPredicate;
 
@@ -546,6 +549,34 @@ export interface ICatalog {
     visualizations: {
         [key: string]: IIdentifierWithTags;
     };
+}
+
+// @alpha
+export interface IClientWorkspaceIdentifiers {
+    client?: string;
+    dataProduct?: string;
+    segment?: string;
+    workspace?: string;
+}
+
+// @alpha
+export interface IClientWorkspaceProviderCoreProps {
+    backend?: IAnalyticalBackend;
+    children: React_2.ReactNode;
+}
+
+// @alpha
+export type IClientWorkspaceProviderProps = IClientWorkspaceProviderWithWorkspaceProps | IClientWorkspaceProviderWithClientAndDataProductProps;
+
+// @alpha (undocumented)
+export interface IClientWorkspaceProviderWithClientAndDataProductProps extends IClientWorkspaceProviderCoreProps {
+    client: string;
+    dataProduct: string;
+}
+
+// @alpha (undocumented)
+export interface IClientWorkspaceProviderWithWorkspaceProps extends IClientWorkspaceProviderCoreProps {
+    workspace: string;
 }
 
 // @internal (undocumented)
@@ -1556,6 +1587,15 @@ export type UseCancelablePromiseSuccessState<TResult> = {
     status: "success";
 };
 
+// @alpha
+export const useClientWorkspaceError: () => GoodDataSdkError | undefined;
+
+// @alpha
+export const useClientWorkspaceIdentifiers: () => IClientWorkspaceIdentifiers;
+
+// @alpha
+export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
+
 // @public
 export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
 
@@ -1603,6 +1643,9 @@ export function usePlaceholder<T extends IPlaceholder<any>>(placeholder?: T): [
 
 // @public
 export function usePlaceholders<T extends IPlaceholder<any>[]>(placeholders: [...T]): [PlaceholdersValues<T>, (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => void];
+
+// @internal
+export const usePrevious: <T>(props: T) => T;
 
 // @public
 export function useResolveValuesWithPlaceholders<T extends any[], C>(values: [...T], resolutionContext?: C): PlaceholdersResolvedValues<T>;

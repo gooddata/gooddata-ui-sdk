@@ -101,12 +101,12 @@ export function* rootCommandHandler(): SagaIterator<void> {
     const commandChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.DASH/CMD"));
 
     while (true) {
-        const action: DashboardCommands = yield take(commandChannel);
+        const command: DashboardCommands = yield take(commandChannel);
         const dashboardContext: DashboardContext = yield getContext("dashboardContext");
-        const commandHandler = DefaultCommandHandlers[action.type] ?? unhandledCommand;
+        const commandHandler = DefaultCommandHandlers[command.type] ?? unhandledCommand;
 
         try {
-            const result = yield call(commandHandler, dashboardContext, action);
+            const result = yield call(commandHandler, dashboardContext, command);
 
             if (isDashboardEvent(result)) {
                 yield dispatchDashboardEvent(result);
@@ -121,9 +121,9 @@ export function* rootCommandHandler(): SagaIterator<void> {
                 yield dispatchDashboardEvent(
                     internalErrorOccurred(
                         dashboardContext,
-                        `Internal error has occurred while handling ${action.type}`,
+                        `Internal error has occurred while handling ${command.type}`,
                         e,
-                        action.correlationId,
+                        command.correlationId,
                     ),
                 );
             }

@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import invariant from "ts-invariant";
 import {
     FilterContextItem,
@@ -25,9 +25,6 @@ import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
     clearDateFilterSelection,
-    DashboardStoreProvider,
-    InitialLoadCorrelationId,
-    loadDashboard,
     renameDashboard,
     selectDashboardLoading,
     selectDashboardTitle,
@@ -35,6 +32,7 @@ import {
     selectLocale,
     useDashboardDispatch,
     useDashboardSelector,
+    DashboardStoreProvider,
 } from "../model";
 import { DefaultScheduledEmailDialog } from "../scheduledEmail";
 import { DefaultTopBar, IDefaultMenuButtonComponentCallbacks } from "../topBar";
@@ -209,15 +207,8 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
 };
 
 const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const dispatch = useDashboardDispatch();
     const { loading, error, result } = useDashboardSelector(selectDashboardLoading);
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
-
-    useEffect(() => {
-        if (!loading && result === undefined) {
-            dispatch(loadDashboard(props.config, props.permissions, InitialLoadCorrelationId));
-        }
-    }, [loading, result]);
 
     if (error) {
         return <ErrorComponent message={error.message} />;
@@ -239,8 +230,6 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             dashboardRef={props.dashboardRef}
             backend={props.backend}
             workspace={props.workspace}
-            clientId={props.clientId}
-            dataProductId={props.dataProductId}
             eventHandlers={props.eventHandlers}
         >
             <ToastMessageContextProvider>
