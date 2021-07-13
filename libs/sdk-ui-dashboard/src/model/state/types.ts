@@ -12,6 +12,7 @@ import { CatalogState } from "./catalog/catalogState";
 import { UserState } from "./user/userState";
 import { DashboardMetaState } from "./meta/metaState";
 import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState";
+import { IDrillTargets } from "./drillTargets/drillTargetsTypes";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -35,6 +36,7 @@ export type DashboardState = {
     // Entities
     insights: EntityState<IInsight>;
     alerts: EntityState<IWidgetAlert>;
+    drillTargets: EntityState<IDrillTargets>;
     listedDashboards: EntityState<IListedDashboard>;
 
     /**

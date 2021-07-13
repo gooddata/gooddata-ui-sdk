@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addDrillTargetsHandler should add  drill target to the state for given widget 1`] = `Object {}`;
+
+exports[`addDrillTargetsHandler should emit the appropriate events for add drill target 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
+  },
+]
+`;

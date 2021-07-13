@@ -37,6 +37,7 @@ import keyBy from "lodash/keyBy";
 import { listedDashboardsSliceReducer } from "./listedDashboards";
 import { backendCapabilitiesSliceReducer } from "./backendCapabilities";
 import { SagaIterator } from "redux-saga";
+import { drillTargetsReducer } from "./drillTargets";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -191,6 +192,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         dateFilterConfig: dateFilterConfigSliceReducer,
         insights: insightsSliceReducer,
         alerts: alertsSliceReducer,
+        drillTargets: drillTargetsReducer,
         catalog: catalogSliceReducer,
         user: userSliceReducer,
         meta: metaSliceReducer,
