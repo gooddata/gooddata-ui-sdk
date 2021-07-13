@@ -72,6 +72,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
 
     const allowOverflow = !!currentSize.heightAsRatio;
 
+    const className = settings.enableKDWidgetCustomHeight ? "custom-height" : undefined;
+
     return (
         <DefaultWidgetRenderer
             DefaultWidgetRenderer={DefaultWidgetRenderer}
@@ -80,6 +82,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             allowOverflow={allowOverflow}
             height={height}
             minHeight={minHeight}
+            className={className}
         >
             <RenderDashboardWidget
                 screen={screen}

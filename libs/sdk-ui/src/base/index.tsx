@@ -138,7 +138,18 @@ export {
     resolveUseCancelablePromisesError,
     resolveUseCancelablePromisesStatus,
 } from "./react/useCancelablePromiseUtils";
-
+export {
+    IClientWorkspaceProviderProps,
+    IClientWorkspaceProviderCoreProps,
+    IClientWorkspaceProviderWithClientAndDataProductProps,
+    IClientWorkspaceProviderWithWorkspaceProps,
+    ClientWorkspaceProvider,
+    useClientWorkspaceIdentifiers,
+    useClientWorkspaceStatus,
+    useClientWorkspaceError,
+} from "./react/ClientWorkspaceContext/ClientWorkspaceContext";
+export { IClientWorkspaceIdentifiers } from "./react/ClientWorkspaceContext/interfaces";
+export { usePrevious } from "./react/usePrevious";
 /*
  * Localization exports
  */

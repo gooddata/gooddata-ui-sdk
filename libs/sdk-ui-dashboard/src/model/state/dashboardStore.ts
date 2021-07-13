@@ -24,7 +24,7 @@ import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
 import { permissionsSliceReducer } from "./permissions";
 import { alertsSliceReducer } from "./alerts";
 import { catalogSliceReducer } from "./catalog";
-import { spawn } from "redux-saga/effects";
+import { fork } from "redux-saga/effects";
 import { userSliceReducer } from "./user";
 import { metaSliceReducer } from "./meta";
 import { DashboardState } from "./types";
@@ -36,6 +36,7 @@ import merge from "lodash/merge";
 import keyBy from "lodash/keyBy";
 import { listedDashboardsSliceReducer } from "./listedDashboards";
 import { backendCapabilitiesSliceReducer } from "./backendCapabilities";
+import { SagaIterator } from "redux-saga";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -76,17 +77,15 @@ export type DashboardStoreConfig = {
     queryServices?: IDashboardQueryService<any, any>[];
 };
 
-function createRootSaga(eventEmitter: Saga, commandHandler: Saga, queryProcessor: Saga) {
-    return function* () {
-        try {
-            yield spawn(eventEmitter);
-            yield spawn(commandHandler);
-            yield spawn(queryProcessor);
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error("Root saga failed", e);
-        }
-    };
+function* rootSaga(eventEmitter: Saga, commandHandler: Saga, queryProcessor: Saga): SagaIterator<void> {
+    try {
+        yield fork(eventEmitter);
+        yield fork(commandHandler);
+        yield fork(queryProcessor);
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Root saga failed", e);
+    }
 }
 
 /**
@@ -205,12 +204,13 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
     });
 
     const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers, store.dispatch);
-    const rootSaga = createRootSaga(
+
+    const rootSagaTask = sagaMiddleware.run(
+        rootSaga,
         rootEventEmitter.eventEmitterSaga,
-        rootCommandHandler as any,
+        rootCommandHandler,
         queryProcessing.rootQueryProcessor,
     );
-    const rootSagaTask = sagaMiddleware.run(rootSaga);
 
     return {
         store,

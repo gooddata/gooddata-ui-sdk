@@ -18,7 +18,6 @@ export const DashboardKpi = (props: DashboardKpiProps): JSX.Element => {
         <KpiComponent
             {...props}
             onDrill={(event) => {
-                // TODO: RAIL-3533 correct Kpi drill typings
                 handleDrillToLegacyDashboard(event.drillDefinitions![0] as IDrillToLegacyDashboard, event);
             }}
         />
