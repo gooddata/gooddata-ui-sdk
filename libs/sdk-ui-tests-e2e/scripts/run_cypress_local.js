@@ -6,10 +6,10 @@
  By default runs against local dev server.
  Parameter --with-recordings makes it run against local Wiremock server and dockerized KD.
  */
-import { config as envConfig } from "dotenv";
+const { config } = require("dotenv");
 
-import { runCypress } from "./cypress.js";
-import { getRecordingsWorkspaceId } from "./recordings.js";
+const { runCypress } = require("./cypress.js");
+const { getRecordingsWorkspaceId } = require("./recordings.js");
 
 async function main() {
     const withRecordings = process.argv.indexOf("--with-recordings") !== -1;
@@ -18,7 +18,7 @@ async function main() {
 
     let mockServer = withRecordings ? "localhost:8080" : undefined;
 
-    envConfig({ path: ".env" });
+    config({ path: ".env" });
 
     const { USER_NAME, PASSWORD, TEST_WORKSPACE_ID } = process.env;
 

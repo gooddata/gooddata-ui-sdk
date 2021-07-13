@@ -65,7 +65,6 @@
         "react": "^16.10.0",
         "react-dom": "^16.10.0"
     },
-    "type": "module",
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
         "@gooddata/sdk-model": "^8.6.0-alpha.9",

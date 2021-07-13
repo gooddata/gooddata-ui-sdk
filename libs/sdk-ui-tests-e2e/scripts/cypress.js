@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // (C) 2021 GoodData Corporation
 
-import { spawn, execSync } from "child_process";
+const { spawn, execSync } = require("child_process");
 
-export function runCypress(
+function runCypress(
     visual,
     appHost,
     mockServer,
@@ -52,3 +52,7 @@ export function runCypress(
     });
     return cypressProcess;
 }
+
+module.exports = {
+    runCypress,
+};

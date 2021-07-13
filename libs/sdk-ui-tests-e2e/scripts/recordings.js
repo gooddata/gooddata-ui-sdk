@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // (C) 2021 GoodData Corporation
 
-import { execSync } from "child_process";
-import fs from "fs";
+const { execSync } = require("child_process");
+const fs = require("fs");
 
-export function deleteRecordings() {
+function deleteRecordings() {
     process.stdout.write("Deleting recordings\n");
     deleteFilesInDir("./recordings/__files");
     deleteFilesInDir("./recordings/mappings");
@@ -14,7 +14,7 @@ function deleteFilesInDir(directory) {
     execSync(`rm -rf ${directory}/*`);
 }
 
-export function sanitizeCredentials() {
+function sanitizeCredentials() {
     try {
         const stdout = execSync("ls ./recordings/mappings/gdc_account_login*").toString();
         if (stdout) {
@@ -35,12 +35,12 @@ export function sanitizeCredentials() {
     }
 }
 
-export function recordingsPresent() {
+function recordingsPresent() {
     const recordingsLength = fs.readdirSync("./recordings/mappings").length;
     return recordingsLength !== 0;
 }
 
-export function saveRecordingsWorkspaceId(workspaceId) {
+function saveRecordingsWorkspaceId(workspaceId) {
     fs.writeFileSync(
         "./recordings/recordings_workspace.json",
         JSON.stringify(
@@ -53,6 +53,14 @@ export function saveRecordingsWorkspaceId(workspaceId) {
     );
 }
 
-export function getRecordingsWorkspaceId() {
+function getRecordingsWorkspaceId() {
     return JSON.parse(fs.readFileSync("./recordings/recordings_workspace.json")).workspaceId;
 }
+
+module.exports = {
+    sanitizeCredentials,
+    recordingsPresent,
+    saveRecordingsWorkspaceId,
+    deleteRecordings,
+    getRecordingsWorkspaceId,
+};
