@@ -1,15 +1,11 @@
 // (C) 2007-2021 GoodData Corporation
-import { DataViewFacade, IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import {
-    IAttributeDescriptor,
-    IDimensionDescriptor,
-    IExecutionResult,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
-    isAttributeDescriptor,
-    isMeasureGroupDescriptor,
-} from "@gooddata/sdk-backend-spi";
-import { flow, flatMap, filter } from "lodash/fp";
+    DataViewFacade,
+    IAvailableDrillTargetAttribute,
+    IAvailableDrillTargetMeasure,
+    IAvailableDrillTargets,
+} from "@gooddata/sdk-ui";
+import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 
 export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
     const measureDescriptors = dv
@@ -22,42 +18,16 @@ export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTar
             }),
         );
 
-    const rowAttributeItems = dv
+    const rowAttributeItems: IAvailableDrillTargetAttribute[] = dv
         .meta()
         .attributeDescriptorsForDim(0)
-        .map((attribute: IAttributeDescriptor) => ({
+        .map((attribute, _index, attributes) => ({
             attribute,
+            intersectionAttributes: attributes,
         }));
 
     return {
         measures: measureDescriptors,
         attributes: rowAttributeItems,
-    };
-}
-
-export function getAvailableDrillTargetsFromExecutionResult(
-    executionResult: IExecutionResult,
-): IAvailableDrillTargets {
-    const attributeDescriptors: IAttributeDescriptor[] = flow(
-        flatMap((dimensionDescriptor: IDimensionDescriptor) => dimensionDescriptor.headers),
-        filter(isAttributeDescriptor),
-    )(executionResult.dimensions);
-
-    const measureDescriptors: IMeasureDescriptor[] = flow(
-        flatMap((dimensionDescriptor: IDimensionDescriptor) => dimensionDescriptor.headers),
-        filter(isMeasureGroupDescriptor),
-        flatMap(
-            (measureGroupDescriptor: IMeasureGroupDescriptor) =>
-                measureGroupDescriptor.measureGroupHeader.items,
-        ),
-    )(executionResult.dimensions);
-
-    return {
-        measures: measureDescriptors.map(
-            (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
-                measure,
-                attributes: attributeDescriptors,
-            }),
-        ),
     };
 }

@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import { IDataView, IExecutionResult, IResultWarning } from "@gooddata/sdk-backend-spi";
 import { DataAccessConfig } from "./dataAccessConfig";
 import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods";
@@ -26,6 +26,10 @@ import { newDataAccessMethods } from "./internal/dataAccessMethods";
  */
 export class DataViewFacade {
     private static Facades: WeakMap<IDataView, DataViewFacade> = new WeakMap<IDataView, DataViewFacade>();
+    private static FacadesForResult: WeakMap<IExecutionResult, DataViewFacade> = new WeakMap<
+        IExecutionResult,
+        DataViewFacade
+    >();
 
     public readonly definition: IExecutionDefinition;
 
@@ -52,6 +56,23 @@ export class DataViewFacade {
         }
 
         return DataViewFacade.Facades.get(dataView)!;
+    }
+
+    /**
+     * Creates a DataViewFacade with provided execution result. Only use this when execution result is unable to load data and some
+     * form of DataViewFacade is still needed. Beware that the calculated data view is empty after the creation. Only execution
+     * definition and result is defined.
+     *
+     * @param result - instance of execution result to create the facade for
+     * @public
+     */
+    public static forResult(result: IExecutionResult): DataViewFacade {
+        if (!DataViewFacade.FacadesForResult.has(result)) {
+            const emptyView = emptyDataViewForResult(result);
+            DataViewFacade.FacadesForResult.set(result, new DataViewFacade(emptyView));
+        }
+
+        return DataViewFacade.FacadesForResult.get(result)!;
     }
 
     /**
@@ -130,4 +151,32 @@ export class DataViewFacade {
 
         return this.resultDataMethods;
     }
+}
+
+/**
+ * Constructs an empty data view with given execution result.
+ *
+ * @param result - execution result
+ * @returns data view
+ * @public
+ */
+export function emptyDataViewForResult(result: IExecutionResult): IDataView {
+    const { definition } = result;
+    const fp = defFingerprint(definition) + "/emptyView";
+
+    return {
+        definition,
+        result,
+        headerItems: [],
+        data: [],
+        offset: [0, 0],
+        count: [0, 0],
+        totalCount: [0, 0],
+        fingerprint(): string {
+            return fp;
+        },
+        equals(other: IDataView): boolean {
+            return fp === other.fingerprint();
+        },
+    };
 }

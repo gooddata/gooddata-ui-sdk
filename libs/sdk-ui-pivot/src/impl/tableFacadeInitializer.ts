@@ -8,10 +8,7 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { COLS_PER_PAGE } from "./base/constants";
-import {
-    getAvailableDrillTargets,
-    getAvailableDrillTargetsFromExecutionResult,
-} from "./drilling/drillTargets";
+import { getAvailableDrillTargets } from "./drilling/drillTargets";
 import { convertError, DataViewFacade } from "@gooddata/sdk-ui";
 import { ICorePivotTableProps } from "../publicTypes";
 import invariant from "ts-invariant";
@@ -104,7 +101,9 @@ export class TableFacadeInitializer {
                          * we still want to push availableDrillTargets
                          */
                         if (isUnexpectedResponseError(error)) {
-                            const availableDrillTargets = getAvailableDrillTargetsFromExecutionResult(result);
+                            const availableDrillTargets = getAvailableDrillTargets(
+                                DataViewFacade.forResult(result),
+                            );
 
                             this.props.pushData!({ availableDrillTargets });
                         }
