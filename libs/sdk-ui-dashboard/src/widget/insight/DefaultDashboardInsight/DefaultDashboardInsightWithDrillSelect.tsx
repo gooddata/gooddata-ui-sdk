@@ -2,16 +2,14 @@
 import React from "react";
 
 import { WithDrillSelect } from "../../../drill";
-import { IDefaultDashboardInsightProps } from "../types";
+import { IDashboardInsightProps } from "../types";
 
 import { DefaultDashboardInsight } from "./DefaultDashboardInsight";
 
 /**
  * @internal
  */
-export const DefaultDashboardInsightWithDrillSelect: React.FC<IDefaultDashboardInsightProps> = (
-    props,
-): JSX.Element => {
+export const DefaultDashboardInsightWithDrillSelect = (props: IDashboardInsightProps): JSX.Element => {
     const { onDrillDown, onDrillToInsight, onDrillToAttributeUrl, onDrillToCustomUrl, onDrillToDashboard } =
         props;
     return (

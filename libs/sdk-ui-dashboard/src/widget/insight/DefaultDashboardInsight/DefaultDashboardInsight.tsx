@@ -21,32 +21,33 @@ import {
     selectSeparators,
     selectSettings,
 } from "../../../model";
-import { IDefaultDashboardInsightProps } from "../types";
 
 import { useResolveDashboardInsightFilters } from "./useResolveDashboardInsightFilters";
 import { useResolveDashboardInsightProperties } from "./useResolveDashboardInsightProperties";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
+import { IDashboardInsightProps } from "../types";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative" };
 
 /**
  * @internal
  */
-export const DefaultDashboardInsight: React.FC<IDefaultDashboardInsightProps> = (props): JSX.Element => {
+export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Element => {
     const {
-        widget,
-        insight,
         filters,
+        insight,
+        widget,
+        clientHeight,
+        backend,
+        workspace,
+        disableWidgetImplicitDrills,
         drillableItems,
         onDrill,
         onError,
-        backend,
-        workspace,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
-        clientHeight,
-        disableWidgetImplicitDrills,
     } = props;
+
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,

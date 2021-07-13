@@ -23,6 +23,7 @@ import {
     getDashboardLayoutWidgetDefaultHeight,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
+import { DashboardWidgetPropsProvider } from "./DashboardWidgetPropsContext";
 
 /**
  * @internal
@@ -84,14 +85,16 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             minHeight={minHeight}
             className={className}
         >
-            <RenderDashboardWidget
+            <DashboardWidgetPropsProvider
                 screen={screen}
                 drillableItems={drillableItems}
                 onDrill={onDrill}
                 onError={onError}
                 onFiltersChange={onFiltersChange}
                 widget={widget as IWidget}
-            />
+            >
+                <RenderDashboardWidget />
+            </DashboardWidgetPropsProvider>
         </DefaultWidgetRenderer>
     );
 };

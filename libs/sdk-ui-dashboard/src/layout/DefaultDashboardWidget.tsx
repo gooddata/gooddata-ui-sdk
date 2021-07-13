@@ -15,18 +15,20 @@ import { VisType } from "@gooddata/sdk-ui";
 
 import { selectAlerts, selectInsights, useDashboardSelector } from "../model";
 import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "../presentationComponents";
-import { DashboardInsight, DashboardKpi } from "../widget";
+import { DashboardInsight, DashboardKpi, DashboardKpiPropsProvider } from "../widget";
 
 import { DashboardWidgetProps } from "./types";
 import { getVisTypeCssClass } from "./utils";
+import { DashboardInsightPropsProvider } from "../widget/insight/DashboardInsightPropsContext";
+import { DashboardWidgetPropsProvider, useDashboardWidgetProps } from "./DashboardWidgetPropsContext";
 
 const dashboardStyle: CSSProperties = { height: "100%", width: "100%" };
 
 /**
  * @internal
  */
-export const DefaultDashboardWidget = (props: DashboardWidgetProps): JSX.Element => {
-    const { drillableItems, onFiltersChange, onDrill, onError, screen, widget } = props;
+export const DefaultDashboardWidgetInner = (): JSX.Element => {
+    const { onError, onFiltersChange, screen, widget } = useDashboardWidgetProps();
     const insights = useDashboardSelector(selectInsights);
     const alerts = useDashboardSelector(selectAlerts);
 
@@ -88,14 +90,13 @@ export const DefaultDashboardWidget = (props: DashboardWidgetProps): JSX.Element
                                         )}
                                     >
                                         {() => (
-                                            <DashboardInsight
+                                            <DashboardInsightPropsProvider
                                                 clientHeight={contentRect.client?.height}
                                                 insight={insight!}
                                                 widget={widget}
-                                                drillableItems={drillableItems}
-                                                onDrill={onDrill}
-                                                onError={onError}
-                                            />
+                                            >
+                                                <DashboardInsight />
+                                            </DashboardInsightPropsProvider>
                                         )}
                                     </DashboardItemVisualization>
                                 </DashboardItem>
@@ -108,17 +109,28 @@ export const DefaultDashboardWidget = (props: DashboardWidgetProps): JSX.Element
 
         return (
             <DashboardItem className="type-kpi" screen={screen}>
-                <DashboardKpi
+                <DashboardKpiPropsProvider
                     kpiWidget={widget}
                     alert={alert}
                     onFiltersChange={onFiltersChange}
-                    drillableItems={drillableItems}
-                    onDrill={onDrill}
                     onError={onError}
-                />
+                >
+                    <DashboardKpi />
+                </DashboardKpiPropsProvider>
             </DashboardItem>
         );
     }
 
     return <div>Unknown widget</div>;
+};
+
+/**
+ * @internal
+ */
+export const DefaultDashboardWidget = (props: DashboardWidgetProps): JSX.Element => {
+    return (
+        <DashboardWidgetPropsProvider {...props}>
+            <DefaultDashboardWidgetInner />
+        </DashboardWidgetPropsProvider>
+    );
 };

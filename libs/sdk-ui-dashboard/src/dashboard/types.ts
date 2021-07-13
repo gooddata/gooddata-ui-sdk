@@ -5,19 +5,15 @@ import { ObjRef } from "@gooddata/sdk-model";
 import { IDrillableItem, IErrorProps, IHeaderPredicate, ILoadingProps } from "@gooddata/sdk-ui";
 
 import { CustomFilterBarComponent, IDefaultFilterBarProps, IFilterBarCoreProps } from "../filterBar";
-import { DashboardLayoutProps, DashboardWidgetProps } from "../layout";
+import { DashboardLayoutProps } from "../layout";
 import { DashboardConfig, DashboardEventHandler } from "../model";
 import {
     CustomScheduledEmailDialogComponent,
     IDefaultScheduledEmailDialogCallbackProps,
 } from "../scheduledEmail";
 import { CustomTopBarComponent, IDefaultTopBarProps, ITopBarCoreProps } from "../topBar";
-import {
-    CustomDashboardInsightComponent,
-    IDashboardInsightCoreProps,
-    IDefaultDashboardInsightProps,
-    DashboardKpiProps,
-} from "../widget";
+import { CustomDashboardInsightComponent, CustomDashboardKpiComponent } from "../widget";
+import { CustomDashboardWidgetComponent } from "../layout/types";
 
 /**
  * @internal
@@ -152,55 +148,47 @@ export interface IDashboardProps {
     };
 
     /**
-     * Optionally configure how the dashboard widget looks and behaves.
+     * Optionally specify component to use for rendering widgets.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useDashboardWidgetProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultDashboardWidget} component.
+     *
+     * @example
+     *
+     * ```tsx
+     * // Simple component that alters the title of every widget
+     * const CustomWidget = () => {
+     *     const props = useDashboardWidgetProps();
+     *
+     *     const widget: IInsightWidget = {
+     *         ...props.widget,
+     *         title: `Prepend to ${props.widget.title}`,
+     *     };
+     *
+     *     return <DefaultDashboardWidget {...props} widget={widget} />;
+     * };
+     * ```
      */
-    widgetConfig?: {
-        /**
-         * Specify component to use for rendering the widget.
-         */
-        Component?: ComponentType<DashboardWidgetProps>;
+    WidgetComponent?: CustomDashboardWidgetComponent;
 
-        /**
-         * Optionally specify props to customize the default implementation of Dashboard View.
-         *
-         * This has no effect if custom component is used.
-         */
-        defaultComponentProps?: DashboardWidgetProps;
+    /**
+     * Optionally specify component to use for rendering insights.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useDashboardInsightProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultDashboardInsightWithDrillDialog} component.
+     */
+    InsightComponent?: CustomDashboardInsightComponent;
 
-        /**
-         * Insight config
-         */
-        insight?: {
-            /**
-             * Specify component to use for rendering the insight
-             */
-            Component?: CustomDashboardInsightComponent;
-
-            /**
-             * Optionally specify props to customize the default implementation of Insight.
-             *
-             * This has no effect if custom component is used.
-             */
-            defaultComponentProps?: Omit<IDefaultDashboardInsightProps, keyof IDashboardInsightCoreProps>; // TODO: also how to propagate these?
-        };
-
-        /**
-         * Kpi config
-         */
-        kpi?: {
-            /**
-             * Specify component to use for rendering the KPI
-             */
-            Component?: ComponentType<DashboardKpiProps>;
-
-            /**
-             * Optionally specify props to customize the default implementation of Insight.
-             *
-             * This has no effect if custom component is used.
-             */
-            defaultComponentProps?: DashboardKpiProps;
-        };
-    };
+    /**
+     * Optionally specify component to use for rendering KPI's.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useDashboardKpiProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultDashboardKpi} component.
+     */
+    KpiComponent?: CustomDashboardKpiComponent;
 
     /**
      * Optionally configure how the scheduled email dialog looks and behaves.
