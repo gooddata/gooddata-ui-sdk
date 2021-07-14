@@ -1,10 +1,10 @@
 {
     "extends": "./tsconfig.json",
-    "include": ["cypress/plugins/index.ts", "cypress/support/index.ts"],
+    "include": ["cypress/**/*.ts"],
     "compilerOptions": {
+        "noImplicitAny": true,
+        "incremental": true,
         "baseUrl": null,
-        "paths": null,
-        "paths": null,
-        "declaration": true
+        "paths": null
     }
 }
