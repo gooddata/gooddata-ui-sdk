@@ -1,8 +1,9 @@
 {
     "extends": "./tsconfig.json",
-    "include": ["src/index.ts", "src/typings.d.ts", "src/internal/index.ts"],
+    "include": ["cypress/plugins/index.ts", "cypress/support/index.ts"],
     "compilerOptions": {
         "baseUrl": null,
+        "paths": null,
         "paths": null,
         "declaration": true
     }
