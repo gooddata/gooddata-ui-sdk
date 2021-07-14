@@ -32,7 +32,7 @@
         "styles"
     ],
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts,tsx src/"
+        "eslint": "-c .eslintrc.js --ext ts,tsx cypress/"
     },
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log styles/css && jest --clearCache",
@@ -49,8 +49,8 @@
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long cypress/",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long cypress/",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
         "cypress": "node ./scripts/run_cypress_local.js"
@@ -67,8 +67,9 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/sdk-model": "^8.6.0-alpha.9",
-        "@gooddata/util": "^8.6.0-alpha.9",
+        "@gooddata/sdk-model": "^8.6.0-alpha.10",
+        "@gooddata/sdk-backend-spi": "^8.6.0-alpha.10",
+        "@gooddata/util": "^8.6.0-alpha.10",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/enzyme-adapter-react-16": "^1.0.5",

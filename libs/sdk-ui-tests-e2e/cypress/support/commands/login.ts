@@ -6,7 +6,7 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        interface Chainable<Subject> {
+        interface Chainable<> {
             /**
              * # Login
              * Sends request to get auth cookie. Run this before all tests and then use `preserveLoginCookies`

@@ -1,3 +1,4 @@
+// (C) 2021 GoodData Corporation
 /// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins

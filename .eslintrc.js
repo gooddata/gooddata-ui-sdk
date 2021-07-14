@@ -36,7 +36,7 @@ module.exports = {
     },
     overrides: [
         {
-            files: ["*.test.ts", "*.test.tsx"],
+            files: ["*.test.ts", "*.test.tsx", "*.spec.ts"],
             rules: {
                 // we do not care about duplicate functions in test files, they often make sense (e.g. in different describe blocks)
                 "sonarjs/no-identical-functions": "off",
