@@ -1,6 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
+import { IExecutionConfig } from "@gooddata/sdk-model";
 import { IChartConfig } from "./chartConfig";
 
 /**
@@ -13,6 +14,11 @@ export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks 
      * Configure chart's behavior and appearance.
      */
     config?: IChartConfig;
+
+    /**
+     * Execution configuration, will provide the execution with necessary config before initiating execution.
+     */
+    execConfig?: IExecutionConfig;
 
     /**
      * Set height of the chart (in pixels).

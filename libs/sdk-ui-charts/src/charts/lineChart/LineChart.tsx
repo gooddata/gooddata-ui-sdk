@@ -42,7 +42,7 @@ const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartPro
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("LineChart", props)
@@ -50,7 +50,8 @@ const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartPro
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...(props.sortBy as ISortItem[]))
-            .withDimensions(lineChartDimensions);
+            .withDimensions(lineChartDimensions)
+            .withExecConfig(execConfig);
     },
 };
 

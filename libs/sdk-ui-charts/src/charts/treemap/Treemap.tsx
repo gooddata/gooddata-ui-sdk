@@ -41,7 +41,7 @@ const treemapDefinition: IChartDefinition<ITreemapBucketProps, ITreemapProps> = 
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
         const sortBy = getDefaultTreemapSort(buckets);
 
         return backend
@@ -50,7 +50,8 @@ const treemapDefinition: IChartDefinition<ITreemapBucketProps, ITreemapProps> = 
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...sortBy)
-            .withDimensions(treemapDimensions);
+            .withDimensions(treemapDimensions)
+            .withExecConfig(execConfig);
     },
 };
 

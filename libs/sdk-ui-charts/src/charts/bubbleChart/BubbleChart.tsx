@@ -31,7 +31,7 @@ const bubbleChartDefinition: IChartDefinition<IBubbleChartBucketProps, IBubbleCh
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("BubbleChart", props)
@@ -39,7 +39,8 @@ const bubbleChartDefinition: IChartDefinition<IBubbleChartBucketProps, IBubbleCh
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...(props.sortBy as ISortItem[]))
-            .withDimensions(pointyChartDimensions);
+            .withDimensions(pointyChartDimensions)
+            .withExecConfig(execConfig);
     },
 };
 

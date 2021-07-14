@@ -40,7 +40,7 @@ const heatmapDefinition: IChartDefinition<IHeatmapBucketProps, IHeatmapProps> = 
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
         const sortBy = getDefaultHeatmapSort(buckets);
 
         return backend
@@ -49,7 +49,8 @@ const heatmapDefinition: IChartDefinition<IHeatmapBucketProps, IHeatmapProps> = 
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...sortBy)
-            .withDimensions(heatmapDimensions);
+            .withDimensions(heatmapDimensions)
+            .withExecConfig(execConfig);
     },
 };
 

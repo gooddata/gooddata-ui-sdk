@@ -45,6 +45,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     widgetRenderer,
     transformLayout,
     isReadOnly = false,
+    execConfig,
 }) => {
     const dashboardRef = typeof dashboard === "string" ? idRef(dashboard, "analyticalDashboard") : dashboard;
 
@@ -190,6 +191,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
             alerts={alertsData}
             isReadOnly={isReadOnly}
             locale={effectiveLocale}
+            execConfig={execConfig}
         >
             {!isReadOnly && (
                 <ScheduledMailDialog

@@ -29,7 +29,7 @@ const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps>
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("PieChart", props)
@@ -37,7 +37,8 @@ const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps>
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...(props.sortBy as ISortItem[]))
-            .withDimensions(roundChartDimensions);
+            .withDimensions(roundChartDimensions)
+            .withExecConfig(execConfig);
     },
 };
 

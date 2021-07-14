@@ -58,7 +58,7 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("ComboChart", props)
@@ -66,7 +66,8 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...(props.sortBy as ISortItem[]))
-            .withDimensions(defaultDimensions);
+            .withDimensions(defaultDimensions)
+            .withExecConfig(execConfig);
     },
     propOverridesFactory: (props) => {
         return {

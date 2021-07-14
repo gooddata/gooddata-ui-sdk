@@ -43,7 +43,7 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("BarChart", props)
@@ -51,7 +51,8 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
             .execution()
             .forBuckets(buckets, props.filters as IFilter[])
             .withSorting(...(props.sortBy as ISortItem[]))
-            .withDimensions(stackedChartDimensions);
+            .withDimensions(stackedChartDimensions)
+            .withExecConfig(execConfig);
     },
     propOverridesFactory: (props, buckets) => {
         return {

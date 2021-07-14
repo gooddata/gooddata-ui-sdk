@@ -43,7 +43,7 @@ const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnCh
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("ColumnChart", props)
@@ -51,7 +51,8 @@ const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnCh
             .execution()
             .forBuckets(buckets, props.filters as IFilter[])
             .withSorting(...(props.sortBy as ISortItem[]))
-            .withDimensions(stackedChartDimensions);
+            .withDimensions(stackedChartDimensions)
+            .withExecConfig(execConfig);
     },
     propOverridesFactory: (props, buckets) => {
         return {

@@ -6,3 +6,4 @@ export * from "./DashboardAlertsContext";
 export * from "./DashboardViewConfigContext";
 export * from "./DashboardViewIsReadOnlyContext";
 export * from "./UserWorkspaceSettingsContext";
+export * from "./DashboardViewExecConfigProvider";

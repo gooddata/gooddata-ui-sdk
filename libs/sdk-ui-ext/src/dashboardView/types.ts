@@ -10,7 +10,7 @@ import {
     FilterContextItem,
     ILegacyKpi,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IInsight } from "@gooddata/sdk-model";
+import { ObjRef, IInsight, IExecutionConfig } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IHeaderPredicate,
@@ -192,6 +192,11 @@ export interface IDashboardViewProps {
      * options saved for the insights.
      */
     config?: IDashboardViewConfig;
+
+    /**
+     * Execution configuration, will provide the execution with necessary config before initiating execution.
+     */
+    execConfig?: IExecutionConfig;
 
     /**
      * Indicates, whether the dialog for scheduling emails with the exported dashboard as an attachment is visible.

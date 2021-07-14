@@ -45,6 +45,7 @@ import {
     useAttributesWithDrillDown,
     useColorPalette,
     useDashboardViewConfig,
+    useDashboardViewExecConfig,
     useUserWorkspaceSettings,
 } from "../../contexts";
 import { OnFiredDashboardViewDrillEvent, IDashboardDrillEvent } from "../../types";
@@ -83,6 +84,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
     const dashboardViewConfig = useDashboardViewConfig();
+    const execConfig = useDashboardViewExecConfig();
     const userWorkspaceSettings = useUserWorkspaceSettings();
     const colorPalette = useColorPalette();
     const attributesWithDrillDown = useAttributesWithDrillDown();
@@ -281,6 +283,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                             drillableItems={drillableItemsToUse}
                             onDrill={onDrill ? handleDrill : undefined}
                             config={chartConfig}
+                            execConfig={execConfig}
                             onLoadingChanged={handleLoadingChanged}
                             locale={dashboardViewConfig.locale ?? (userWorkspaceSettings.locale as ILocale)}
                             settings={userWorkspaceSettings}

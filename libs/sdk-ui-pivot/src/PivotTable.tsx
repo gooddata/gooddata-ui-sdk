@@ -46,14 +46,15 @@ import { AVAILABLE_TOTALS } from "./impl/base/constants";
  * @returns new prepared execution
  */
 function prepareExecution(props: IPivotTableProps): IPreparedExecution {
-    const { backend, workspace, filters, sortBy = [] } = props;
+    const { backend, workspace, filters, sortBy = [], execConfig = {} } = props;
 
     return backend!
         .workspace(workspace!)
         .execution()
         .forBuckets(getBuckets(props), filters as INullableFilter[])
         .withDimensions(pivotDimensions)
-        .withSorting(...(sortBy as ISortItem[]));
+        .withSorting(...(sortBy as ISortItem[]))
+        .withExecConfig(execConfig);
 }
 
 function getBuckets(props: IPivotTableBucketProps): IBucket[] {

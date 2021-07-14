@@ -34,7 +34,7 @@ const donutChartDefinition: IChartDefinition<IDonutChartBucketProps, IDonutChart
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("DonutChart", props)
@@ -42,7 +42,8 @@ const donutChartDefinition: IChartDefinition<IDonutChartBucketProps, IDonutChart
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...(props.sortBy as ISortItem[]))
-            .withDimensions(roundChartDimensions);
+            .withDimensions(roundChartDimensions)
+            .withExecConfig(execConfig);
     },
 };
 

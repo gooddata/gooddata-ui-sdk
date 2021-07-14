@@ -265,6 +265,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
                         backend={this.props.backend}
                         colorPalette={this.props.colorPalette ?? this.state.colorPalette}
                         config={this.props.config}
+                        execConfig={this.props.execConfig}
                         drillableItems={this.props.drillableItems}
                         executeByReference={this.props.executeByReference}
                         filters={this.props.filters}

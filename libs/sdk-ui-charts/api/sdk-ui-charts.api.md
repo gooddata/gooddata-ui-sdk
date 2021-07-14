@@ -15,6 +15,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
+import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISettings } from '@gooddata/sdk-backend-spi';
@@ -257,6 +258,7 @@ export interface IComboChartProps extends IBucketChartProps, IComboChartBucketPr
 // @public
 export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks {
     config?: IChartConfig;
+    execConfig?: IExecutionConfig;
     height?: number;
     width?: number;
 }
