@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
-
+import stableStringify from "json-stable-stringify";
 import {
     attributeFilterToDashboardAttributeFilter,
     dashboardAttributeFilterToAttributeFilter,
@@ -21,8 +21,10 @@ export const DefaultDashboardAttributeFilter: React.FC<IDefaultDashboardAttribut
 }) => {
     return (
         <AttributeFilterButton
-            // TODO: RAIL-3533 - button is not updated after attribute filter elements change
-            key={JSON.stringify(filter)}
+            // TODO: https://jira.intgdc.com/browse/RAIL-2174
+            // AttributeFilterButton is not updated after attribute filter elements change.
+            // Same issue is in the AttributeFilter.
+            key={stableStringify(filter)}
             filter={dashboardAttributeFilterToAttributeFilter(filter)}
             onApply={(newFilter) => {
                 onFilterChanged(

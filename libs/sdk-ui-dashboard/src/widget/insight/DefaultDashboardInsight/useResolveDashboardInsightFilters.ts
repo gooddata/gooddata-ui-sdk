@@ -70,6 +70,6 @@ export const useResolveDashboardInsightFilters = (
             },
             onError,
         },
-        [effectiveBackend, effectiveWorkspace, widget, inputFilters],
+        [effectiveBackend, effectiveWorkspace, widget, inputFilters, insight],
     );
 };

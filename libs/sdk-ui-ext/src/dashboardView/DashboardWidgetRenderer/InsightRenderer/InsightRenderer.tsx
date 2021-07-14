@@ -141,7 +141,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
             },
             onError,
         },
-        [effectiveBackend, effectiveWorkspace, insightWidget, inputFilters],
+        [effectiveBackend, effectiveWorkspace, insightWidget, insight, inputFilters],
     );
 
     const insightWithAddedWidgetProperties = useMemo(() => {
