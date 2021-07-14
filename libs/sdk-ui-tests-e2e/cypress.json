@@ -1,0 +1,14 @@
+{
+    "ignoreTestFiles": "*.js",
+    "supportFile": "cypress/support/index.ts",
+    "pluginsFile": "cypress/plugins/index.ts",
+    "viewportWidth": 1400,
+    "viewportHeight": 800,
+    "defaultCommandTimeout": 20000,
+    "reporter": "junit",
+    "reporterOptions": {
+        "mochaFile": "./cypress/results/result.[hash].xml"
+    },
+    "video": true,
+    "videoUploadOnPasses": false
+}

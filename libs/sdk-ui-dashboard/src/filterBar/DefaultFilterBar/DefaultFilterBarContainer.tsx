@@ -25,7 +25,7 @@ const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
     };
 
     return (
-        <div className="dash-filters-wrapper">
+        <div className="dash-filters-wrapper s-gd-dashboard-filter-bar">
             <div className="dash-filters-visible" style={dashFiltersVisibleStyle}>
                 <Measure
                     bounds

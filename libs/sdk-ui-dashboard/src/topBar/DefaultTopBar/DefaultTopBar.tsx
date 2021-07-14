@@ -12,7 +12,7 @@ const TopBarCore: React.FC<IDefaultTopBarProps> = (props) => {
     const { titleProps: titleProperties, titleConfig, buttonBarConfig, menuButtonConfig } = props;
 
     return (
-        <div className={"dash-header"}>
+        <div className={"dash-header s-top-bar"}>
             <div className={"dash-header-inner"}>
                 {titleConfig?.Component ? (
                     <titleConfig.Component {...titleProperties} />
