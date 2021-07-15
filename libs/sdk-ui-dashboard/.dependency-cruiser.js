@@ -25,6 +25,7 @@ options = {
             ],
         ),
         depCruiser.moduleWithDependencies("dashboardContexts", "src/dashboardContexts", [
+            "src/topBar/types.ts",
             "src/layout/types.ts",
             "src/widget/types.ts",
         ]),
@@ -61,7 +62,10 @@ options = {
             "src/localization",
             "src/model",
         ]),
-        depCruiser.moduleWithDependencies("topBar", "src/topBar", ["src/localization"]),
+        depCruiser.moduleWithDependencies("topBar", "src/topBar", [
+            "src/dashboardContexts",
+            "src/localization",
+        ]),
         depCruiser.moduleWithDependencies("widget", "src/widget", [
             "src/_staging/*",
             "src/converters",

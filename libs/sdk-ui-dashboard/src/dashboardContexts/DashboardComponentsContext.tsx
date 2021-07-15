@@ -7,6 +7,12 @@ import {
     CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
 } from "../widget/types";
+import {
+    CustomButtonBarComponent,
+    CustomMenuButtonComponent,
+    CustomTitleComponent,
+    CustomTopBarComponent,
+} from "../topBar/types";
 
 /**
  * @internal
@@ -18,6 +24,10 @@ interface IDashboardComponentsContext {
     WidgetComponent: CustomDashboardWidgetComponent;
     InsightComponent: CustomDashboardInsightComponent;
     KpiComponent: CustomDashboardKpiComponent;
+    ButtonBarComponent: CustomButtonBarComponent;
+    MenuButtonComponent: CustomMenuButtonComponent;
+    TitleComponent: CustomTitleComponent;
+    TopBarComponent: CustomTopBarComponent;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -36,6 +46,10 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     InsightComponent: ThrowMissingComponentError("InsightComponent"),
     KpiComponent: ThrowMissingComponentError("KpiComponent"),
     WidgetComponent: ThrowMissingComponentError("WidgetComponent"),
+    ButtonBarComponent: ThrowMissingComponentError("ButtonBarComponent"),
+    MenuButtonComponent: ThrowMissingComponentError("MenuButtonComponent"),
+    TitleComponent: ThrowMissingComponentError("TitleComponent"),
+    TopBarComponent: ThrowMissingComponentError("TopBarComponent"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

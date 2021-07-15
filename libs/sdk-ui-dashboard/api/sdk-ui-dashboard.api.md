@@ -172,6 +172,12 @@ export interface BackendCapabilitiesState {
     backendCapabilities?: IBackendCapabilities;
 }
 
+// @internal (undocumented)
+export const ButtonBar: () => JSX.Element;
+
+// @internal (undocumented)
+export const ButtonBarPropsProvider: React_2.FC<IButtonBarProps>;
+
 // @alpha (undocumented)
 export interface CatalogState {
     // (undocumented)
@@ -398,8 +404,8 @@ export function createScheduledEmail(scheduledEmail: IScheduledMailDefinition, f
 // @internal (undocumented)
 export type CustomAttributeFilterFactory = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent | undefined;
 
-// @internal (undocumented)
-export type CustomButtonBarComponent = ComponentType<IButtonBarCoreProps>;
+// @alpha (undocumented)
+export type CustomButtonBarComponent = ComponentType;
 
 // @internal (undocumented)
 export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterCoreProps>;
@@ -419,17 +425,17 @@ export type CustomDashboardWidgetComponent = ComponentType;
 // @internal (undocumented)
 export type CustomFilterBarComponent = ComponentType<IFilterBarCoreProps>;
 
-// @internal (undocumented)
-export type CustomMenuButtonComponent = ComponentType<IMenuButtonCoreProps>;
+// @alpha (undocumented)
+export type CustomMenuButtonComponent = ComponentType;
 
 // @alpha (undocumented)
 export type CustomScheduledEmailDialogComponent = ComponentType;
 
-// @internal (undocumented)
-export type CustomTitleComponent = ComponentType<ITitleCoreProps>;
+// @alpha (undocumented)
+export type CustomTitleComponent = ComponentType;
 
-// @internal (undocumented)
-export type CustomTopBarComponent = ComponentType<ITopBarCoreProps>;
+// @alpha (undocumented)
+export type CustomTopBarComponent = ComponentType;
 
 // @internal (undocumented)
 export const Dashboard: React_2.FC<IDashboardProps>;
@@ -1202,8 +1208,11 @@ export interface DateFilterValidationFailed extends IDashboardEvent {
 // @alpha (undocumented)
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
+// @alpha (undocumented)
+export const DefaultButtonBar: (_props: IButtonBarProps) => JSX.Element;
+
 // @internal (undocumented)
-export const DefaultButtonBar: React_2.FC<IButtonBarCoreProps>;
+export const DefaultButtonBarInner: () => JSX.Element | null;
 
 // @internal
 export const DefaultDashboardAttributeFilter: React_2.FC<IDefaultDashboardAttributeFilterProps>;
@@ -1244,8 +1253,11 @@ export const DefaultDashboardWidgetInner: () => JSX.Element;
 // @internal (undocumented)
 export const DefaultFilterBar: React_2.FC<IDefaultFilterBarProps>;
 
-// @internal
-export const DefaultMenuButton: React_2.FC<IDefaultMenuButtonComponentProps>;
+// @alpha (undocumented)
+export const DefaultMenuButton: (props: IMenuButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultMenuButtonInner: () => JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element;
@@ -1253,11 +1265,17 @@ export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) =>
 // @internal (undocumented)
 export const DefaultScheduledEmailDialogInner: () => JSX.Element | null;
 
-// @internal
-export const DefaultTitle: React_2.FC<IDefaultTitleProps>;
+// @alpha (undocumented)
+export const DefaultTitle: (props: ITitleProps) => JSX.Element;
 
 // @internal (undocumented)
-export const DefaultTopBar: React_2.FC<IDefaultTopBarProps>;
+export const DefaultTitleInner: () => JSX.Element | null;
+
+// @alpha (undocumented)
+export const DefaultTopBar: (props: ITopBarProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultTopBarInner: () => JSX.Element;
 
 // @alpha (undocumented)
 export interface Drill extends IDashboardCommand {
@@ -1430,8 +1448,8 @@ export interface FilterContextState {
 // @internal (undocumented)
 export function getDrillDownAttributeTitle(drill: IDrillDownDefinition, drillEvent: IDrillEvent): string;
 
-// @internal
-export const HiddenButtonBar: React_2.FC<IButtonBarCoreProps>;
+// @alpha
+export const HiddenButtonBar: () => JSX.Element | null;
 
 // @internal
 export const HiddenDashboardAttributeFilter: React_2.FC<IDashboardAttributeFilterCoreProps>;
@@ -1442,17 +1460,17 @@ export const HiddenDashboardDateFilter: React_2.FC<IDashboardDateFilterCoreProps
 // @internal
 export const HiddenFilterBar: React_2.FC<IFilterBarCoreProps>;
 
-// @internal
-export const HiddenMenuButton: React_2.FC<IMenuButtonCoreProps>;
+// @alpha
+export const HiddenMenuButton: () => JSX.Element | null;
 
-// @internal
-export const HiddenTitle: React_2.FC<ITitleCoreProps>;
+// @alpha
+export const HiddenTitle: () => JSX.Element | null;
 
-// @internal
-export const HiddenTopBar: React_2.FC<ITopBarCoreProps>;
+// @alpha
+export const HiddenTopBar: () => JSX.Element | null;
 
-// @internal
-export interface IButtonBarCoreProps {
+// @alpha (undocumented)
+export interface IButtonBarProps {
 }
 
 // @internal
@@ -1548,6 +1566,7 @@ export interface IDashboardInsightProps {
 // @internal (undocumented)
 export interface IDashboardProps {
     backend?: IAnalyticalBackend;
+    ButtonBarComponent?: CustomButtonBarComponent;
     // (undocumented)
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
     config?: DashboardConfig;
@@ -1566,14 +1585,13 @@ export interface IDashboardProps {
     InsightComponent?: CustomDashboardInsightComponent;
     KpiComponent?: CustomDashboardKpiComponent;
     LoadingComponent?: ComponentType<ILoadingProps>;
+    MenuButtonComponent?: CustomMenuButtonComponent;
     permissions?: IWorkspacePermissions;
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
     theme?: ITheme;
     themeModifier?: (theme: ITheme) => ITheme;
-    topBarConfig?: {
-        Component?: CustomTopBarComponent;
-        defaultComponentProps?: Omit<IDefaultTopBarProps, keyof ITopBarCoreProps>;
-    };
+    TitleComponent?: CustomTitleComponent;
+    TopBarComponent?: CustomTopBarComponent;
     WidgetComponent?: CustomDashboardWidgetComponent;
     workspace?: string;
 }
@@ -1605,10 +1623,6 @@ export type IDashboardWidgetRendererProps = {
 };
 
 // @internal
-export interface IDefaultButtonBarProps extends IButtonBarCoreProps {
-}
-
-// @internal
 export interface IDefaultDashboardAttributeFilterProps extends IDashboardAttributeFilterCoreProps {
 }
 
@@ -1626,48 +1640,6 @@ export interface IDefaultFilterBarProps extends IFilterBarCoreProps {
     // (undocumented)
     dateFilterConfig?: {
         Component?: CustomDashboardDateFilterComponent;
-    };
-}
-
-// @internal
-export interface IDefaultMenuButtonComponentCallbacks {
-    // (undocumented)
-    onExportToPdfCallback?: () => void;
-    // (undocumented)
-    onScheduleEmailingCallback?: () => void;
-}
-
-// @internal
-export interface IDefaultMenuButtonComponentProps extends IMenuButtonCoreProps, IDefaultMenuButtonComponentCallbacks {
-    additionalMenuItems?: [number, IMenuButtonItem][];
-    ButtonComponent?: React.FC;
-    menuItems?: IMenuButtonItem[];
-}
-
-// @internal
-export interface IDefaultTitleProps extends ITitleCoreProps {
-}
-
-// @internal
-export interface IDefaultTopBarProps extends ITopBarCoreProps {
-    // (undocumented)
-    buttonBarConfig?: {
-        Component?: CustomButtonBarComponent;
-        placement?: "left" | "right";
-        order?: number;
-    };
-    menuButtonConfig?: {
-        Component?: CustomMenuButtonComponent;
-        placement?: "left" | "right";
-        order?: number;
-        defaultComponentProps?: IDefaultMenuButtonComponentProps;
-        defaultComponentCallbackProps?: IDefaultMenuButtonComponentCallbacks;
-    };
-    // (undocumented)
-    titleConfig?: {
-        Component?: CustomTitleComponent;
-        placement?: "left" | "right";
-        order?: number;
     };
 }
 
@@ -1701,11 +1673,7 @@ export interface IFilterBarCoreProps {
     onFilterChanged: (filter: FilterContextItem | undefined) => void;
 }
 
-// @internal
-export interface IMenuButtonCoreProps {
-}
-
-// @internal (undocumented)
+// @alpha (undocumented)
 export interface IMenuButtonItem {
     // (undocumented)
     itemId: string;
@@ -1714,6 +1682,11 @@ export interface IMenuButtonItem {
     // (undocumented)
     onClick?: () => void;
     type?: "separator" | "header";
+}
+
+// @alpha (undocumented)
+export interface IMenuButtonProps {
+    menuItems: IMenuButtonItem[];
 }
 
 // @alpha
@@ -1763,11 +1736,7 @@ export function isDashboardQueryFailed(obj: unknown): obj is DashboardQueryFaile
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
 
-// @internal
-export interface ITitleCoreProps extends ITitleProps {
-}
-
-// @internal
+// @alpha (undocumented)
 export interface ITitleProps {
     // (undocumented)
     onTitleChanged?: (newTitle: string) => void;
@@ -1775,8 +1744,10 @@ export interface ITitleProps {
     title: string;
 }
 
-// @internal
-export interface ITopBarCoreProps {
+// @alpha (undocumented)
+export interface ITopBarProps {
+    // (undocumented)
+    menuButtonProps: IMenuButtonProps;
     // (undocumented)
     titleProps: ITitleProps;
 }
@@ -1836,6 +1807,12 @@ export interface LogUserInteraction extends IDashboardCommand {
 
 // @alpha (undocumented)
 export function logUserInteraction(interaction: UserInteraction, correlationId?: string): LogUserInteraction;
+
+// @internal (undocumented)
+export const MenuButton: () => JSX.Element;
+
+// @internal (undocumented)
+export const MenuButtonPropsProvider: React_2.FC<IMenuButtonProps>;
 
 // @alpha
 export function modifyDrillForInsightWidget(ref: ObjRef, drill: InsightDrillDefinition, correlationId?: string): ModifyDrillsForInsightWidget;
@@ -2351,6 +2328,18 @@ export function setAttributeFilterParent(filterLocalId: string, parentFilter: ID
 // @alpha
 export type StashedDashboardItemsId = string;
 
+// @internal (undocumented)
+export const Title: () => JSX.Element;
+
+// @internal (undocumented)
+export const TitlePropsProvider: React_2.FC<ITitleProps>;
+
+// @internal (undocumented)
+export const TopBar: () => JSX.Element;
+
+// @internal (undocumented)
+export const TopBarPropsProvider: React_2.FC<ITopBarProps>;
+
 // @alpha
 export type UndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> = {
     _undo: {
@@ -2394,6 +2383,9 @@ export interface UpdateAlert extends IDashboardCommand {
 
 // @alpha
 export function updateAlert(alert: IWidgetAlert, correlationId?: string): UpdateAlert;
+
+// @alpha (undocumented)
+export const useButtonBarProps: () => IButtonBarProps;
 
 // @alpha
 export const useDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand, eventHandlers: {
@@ -2804,6 +2796,9 @@ export interface UseDrillToLegacyDashboardProps {
 }
 
 // @alpha (undocumented)
+export const useMenuButtonProps: () => IMenuButtonProps;
+
+// @alpha (undocumented)
 export type UserInteraction = "poweredByGDLogoClicked";
 
 // @alpha (undocumented)
@@ -2817,6 +2812,12 @@ export interface UserState {
 
 // @alpha (undocumented)
 export const useScheduledEmailDialogProps: () => IScheduledEmailDialogProps;
+
+// @alpha (undocumented)
+export const useTitleProps: () => ITitleProps;
+
+// @alpha (undocumented)
+export const useTopBarProps: () => ITopBarProps;
 
 // @alpha (undocumented)
 export type WidgetFilterSettings = {

@@ -1,56 +1,29 @@
 // (C) 2021 GoodData Corporation
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Button, SingleSelectListItem, ItemsWrapper, Overlay } from "@gooddata/sdk-ui-kit";
 
-import { useIntl } from "react-intl";
-import { IDefaultMenuButtonComponentProps, IMenuButtonItem } from "../types";
+import { IMenuButtonProps } from "./types";
+import { MenuButtonPropsProvider, useMenuButtonProps } from "./MenuButtonPropsContext";
 
 /**
- * Default implementation of the menu. Apart from fulfilling the dashboard menu contract, the default implementation
- * allows customization of the button itself.
- *
  * @internal
  */
-export const DefaultMenuButton: React.FC<IDefaultMenuButtonComponentProps> = ({
-    onExportToPdfCallback,
-    onScheduleEmailingCallback,
-    menuItems,
-    additionalMenuItems,
-}) => {
+export const DefaultMenuButtonInner = (): JSX.Element | null => {
+    const { menuItems } = useMenuButtonProps();
     const [isOpen, setIsOpen] = useState(false);
-    const intl = useIntl();
-
-    const effectiveMenuItems = useMemo(() => {
-        if (menuItems) {
-            return menuItems;
-        }
-
-        const defaultMenuItems: IMenuButtonItem[] = [
-            {
-                itemId: "export-to-pdf",
-                itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
-                onClick: onExportToPdfCallback,
-            },
-            {
-                itemId: "schedule-emailing",
-                itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
-                onClick: onScheduleEmailingCallback,
-            },
-        ];
-
-        return (additionalMenuItems ?? []).reduce((acc, [index, item]) => {
-            if (index === -1) {
-                acc.push(item);
-            } else {
-                acc.splice(index, 0, item);
-            }
-            return acc;
-        }, defaultMenuItems);
-    }, [onExportToPdfCallback, onScheduleEmailingCallback, menuItems, additionalMenuItems, intl]);
 
     const onMenuButtonClick = () => {
         setIsOpen(!isOpen);
     };
+
+    if (!menuItems.length) {
+        // eslint-disable-next-line no-console
+        console.warn(
+            "DefaultMenuButton rendered without menu items. Make sure you are passing some items there.",
+        );
+
+        return null;
+    }
 
     const renderMenuItems = () => {
         return (
@@ -64,7 +37,7 @@ export const DefaultMenuButton: React.FC<IDefaultMenuButtonComponentProps> = ({
                 onClose={onMenuButtonClick}
             >
                 <ItemsWrapper smallItemsSpacing>
-                    {effectiveMenuItems.map((menuItem) => {
+                    {menuItems.map((menuItem) => {
                         return (
                             <SingleSelectListItem
                                 className="gd-menu-item"
@@ -92,5 +65,16 @@ export const DefaultMenuButton: React.FC<IDefaultMenuButtonComponentProps> = ({
             />
             {isOpen && renderMenuItems()}
         </>
+    );
+};
+
+/**
+ * @alpha
+ */
+export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element => {
+    return (
+        <MenuButtonPropsProvider {...props}>
+            <DefaultMenuButtonInner />
+        </MenuButtonPropsProvider>
     );
 };

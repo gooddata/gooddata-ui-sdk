@@ -2,7 +2,8 @@
 import React from "react";
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
-import { IDefaultTitleProps } from "../types";
+import { ITitleProps } from "./types";
+import { TitlePropsProvider, useTitleProps } from "./TitlePropsContext";
 
 const EditableTitle: React.FC<{
     title: string;
@@ -22,15 +23,24 @@ const EditableTitle: React.FC<{
 
 /**
  * @internal
- *
- * TODO Consider placement property.
  */
-export const DefaultTitle: React.FC<IDefaultTitleProps> = (props) => {
-    const { title, onTitleChanged } = props;
+export const DefaultTitleInner = (): JSX.Element | null => {
+    const { title, onTitleChanged } = useTitleProps();
 
     return onTitleChanged ? (
         <EditableTitle title={title} onTitleChanged={onTitleChanged} />
     ) : (
         <div className={"s-gd-dashboard-title dash-title static"}>{title}</div>
+    );
+};
+
+/**
+ * @alpha
+ */
+export const DefaultTitle = (props: ITitleProps): JSX.Element => {
+    return (
+        <TitlePropsProvider {...props}>
+            <DefaultTitleInner />
+        </TitlePropsProvider>
     );
 };

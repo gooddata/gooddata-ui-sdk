@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import invariant from "ts-invariant";
 import {
     FilterContextItem,
@@ -9,6 +9,7 @@ import {
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
+import { useIntl } from "react-intl";
 
 import { DashboardComponentsProvider, useDashboardComponentsContext } from "../dashboardContexts";
 import { DefaultFilterBar } from "../filterBar";
@@ -33,7 +34,15 @@ import {
     DashboardStoreProvider,
 } from "../model";
 import { DefaultScheduledEmailDialog, ScheduledEmailDialogPropsProvider } from "../scheduledEmail";
-import { DefaultTopBar, IDefaultMenuButtonComponentCallbacks } from "../topBar";
+import {
+    DefaultButtonBarInner,
+    DefaultTitleInner,
+    DefaultMenuButtonInner,
+    DefaultTopBarInner,
+    TopBarPropsProvider,
+    TopBar,
+    IMenuButtonItem,
+} from "../topBar";
 
 import { useDashboardPdfExporter } from "./hooks/useDashboardPdfExporter";
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
@@ -92,15 +101,14 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
     const {
         drillableItems,
         filterBarConfig,
-        topBarConfig,
         ScheduledEmailDialogComponent = DefaultScheduledEmailDialog,
         dashboardRef,
         backend,
         workspace,
     } = props;
+    const intl = useIntl();
 
     const FilterBarComponent = filterBarConfig?.Component ?? DefaultFilterBar;
-    const TopBarComponent = topBarConfig?.Component ?? DefaultTopBar;
     const { filters, onFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
     const { addSuccess, addError } = useToastMessage();
@@ -114,18 +122,29 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
         },
     });
 
-    const defaultOnScheduleEmailing = () => {
+    const defaultOnScheduleEmailing = useCallback(() => {
         setIsScheduleEmailingDialogOpen(true);
-    };
+    }, []);
 
-    const defaultOnExportToPdf = () => {
+    const defaultOnExportToPdf = useCallback(() => {
         exportDashboard(dashboardRef, filters);
-    };
+    }, [exportDashboard, dashboardRef, filters]);
 
-    const menuButtonCallbacks: IDefaultMenuButtonComponentCallbacks = {
-        onScheduleEmailingCallback: defaultOnScheduleEmailing,
-        onExportToPdfCallback: defaultOnExportToPdf,
-    };
+    const defaultMenuItems = useMemo<IMenuButtonItem[]>(
+        () => [
+            {
+                itemId: "export-to-pdf",
+                itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
+                onClick: defaultOnExportToPdf,
+            },
+            {
+                itemId: "schedule-emailing",
+                itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
+                onClick: defaultOnScheduleEmailing,
+            },
+        ],
+        [defaultOnScheduleEmailing, defaultOnExportToPdf],
+    );
 
     const onScheduleEmailingError = useCallback(() => {
         setIsScheduleEmailingDialogOpen(false);
@@ -154,14 +173,12 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
                     <ScheduledEmailDialogComponent />
                 </ScheduledEmailDialogPropsProvider>
             )}
-            <TopBarComponent
-                {...topBarConfig?.defaultComponentProps}
+            <TopBarPropsProvider
+                menuButtonProps={{ menuItems: defaultMenuItems }} // TODO memoize whole objects
                 titleProps={{ title, onTitleChanged }}
-                menuButtonConfig={{
-                    defaultComponentCallbackProps: menuButtonCallbacks,
-                    ...topBarConfig?.defaultComponentProps?.menuButtonConfig,
-                }}
-            />
+            >
+                <TopBar />
+            </TopBarPropsProvider>
             <FilterBarComponent
                 {...filterBarConfig?.defaultComponentProps}
                 filters={filters}
@@ -224,6 +241,10 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         }
                         KpiComponent={props.KpiComponent ?? DefaultDashboardKpiInner}
                         WidgetComponent={props.WidgetComponent ?? DefaultDashboardWidgetInner}
+                        ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
+                        MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
+                        TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
+                        TitleComponent={props.TitleComponent ?? DefaultTitleInner}
                     >
                         <DashboardLoading {...props} />
                     </DashboardComponentsProvider>
