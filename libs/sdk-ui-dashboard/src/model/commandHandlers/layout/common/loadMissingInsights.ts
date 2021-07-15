@@ -1,10 +1,10 @@
 // (C) 2021 GoodData Corporation
 import { DashboardContext } from "../../../types/commonTypes";
-import { IInsight, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import { ExtendedDashboardItem } from "../../../types/layoutTypes";
 import { isInsightWidget } from "@gooddata/sdk-backend-spi";
-import differenceBy from "lodash/differenceBy";
 import isEmpty from "lodash/isEmpty";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 
 function getInsightRefsFromItems(items: ReadonlyArray<ExtendedDashboardItem>): ObjRef[] {
     const result: ObjRef[] = [];
@@ -20,11 +20,11 @@ function getInsightRefsFromItems(items: ReadonlyArray<ExtendedDashboardItem>): O
 
 export function loadInsightsForDashboardItems(
     ctx: DashboardContext,
-    availableInsights: ObjRef[],
+    availableInsights: ObjRefMap<IInsight>,
     items: ReadonlyArray<ExtendedDashboardItem>,
 ): Promise<IInsight[]> {
     const usedInsightRefs = getInsightRefsFromItems(items);
-    const missingInsightRefs = differenceBy(usedInsightRefs, availableInsights, serializeObjRef);
+    const missingInsightRefs = usedInsightRefs.filter((ref) => !availableInsights.has(ref));
 
     if (isEmpty(missingInsightRefs)) {
         return Promise.resolve([]);

@@ -2209,7 +2209,7 @@ export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) =>
 } | undefined>;
 
 // @internal
-export const selectInsightByRef: ((ref: ObjRef) => import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").IInsight | undefined, (res: DashboardState) => import("@gooddata/sdk-model").IInsight | undefined>) & import("lodash").MemoizedFunction;
+export const selectInsightByRef: ((ref: ObjRef) => import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").IInsight | undefined, (res: import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-model").IInsight>) => import("@gooddata/sdk-model").IInsight | undefined>) & import("lodash").MemoizedFunction;
 
 // @internal
 export const selectInsightRefs: import("@reduxjs/toolkit").OutputSelector<DashboardState, ObjRef[], (res: import("@gooddata/sdk-model").IInsight[]) => ObjRef[]>;
@@ -2218,7 +2218,7 @@ export const selectInsightRefs: import("@reduxjs/toolkit").OutputSelector<Dashbo
 export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];
 
 // @internal
-export const selectInsightsById: (state: DashboardState) => import("@reduxjs/toolkit").Dictionary<import("@gooddata/sdk-model").IInsight>;
+export const selectInsightsMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-model").IInsight>, (res1: import("@gooddata/sdk-model").IInsight[], res2: import("@gooddata/sdk-backend-spi").IBackendCapabilities) => import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-model").IInsight>>;
 
 // @internal
 export const selectIsEmbedded: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("../..").ResolvedDashboardConfig) => boolean>;

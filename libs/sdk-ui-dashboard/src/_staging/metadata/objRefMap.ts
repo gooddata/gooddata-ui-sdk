@@ -7,7 +7,17 @@ import {
     ICatalogDateDataset,
     IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
-import { Identifier, isIdentifierRef, isUriRef, ObjectType, ObjRef } from "@gooddata/sdk-model";
+import {
+    Identifier,
+    IInsight,
+    insightId,
+    insightRef,
+    insightUri,
+    isIdentifierRef,
+    isUriRef,
+    ObjectType,
+    ObjRef,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 /**
@@ -123,7 +133,7 @@ export class ObjRefMap<T> {
         }
 
         if (identifier) {
-            this.itemsByIdentifier[`${this.idRefToKey(identifier, this.config.type)}`] = item;
+            this.itemsByIdentifier[this.idRefToKey(identifier, this.config.type)] = item;
         }
 
         this.items.push([refExtract(item), item]);
@@ -159,6 +169,10 @@ export class ObjRefMap<T> {
         }
 
         return this.itemsByUri[key.uri];
+    }
+
+    public has(key: ObjRef): boolean {
+        return this.get(key) !== undefined;
     }
 
     public keys(): IterableIterator<ObjRef> {
@@ -280,6 +294,27 @@ export function newMapForObjectWithRef<T extends { ref: ObjRef }>(
         idExtract: (i) => (isIdentifierRef(i.ref) ? i.ref.identifier : undefined),
         uriExtract: (i) => (isUriRef(i.ref) ? i.ref.uri : undefined),
         refExtract: (i) => i.ref,
+    });
+
+    return map.fromItems(items);
+}
+
+/**
+ * Creates {@link ObjRefMap} for insights.
+ *
+ * @param items - items to add into mapping
+ * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ */
+export function newInsightMap(
+    items: ReadonlyArray<IInsight>,
+    strictTypeCheck: boolean = false,
+): ObjRefMap<IInsight> {
+    const map = new ObjRefMap<IInsight>({
+        type: "insight",
+        strictTypeCheck,
+        idExtract: insightId,
+        uriExtract: insightUri,
+        refExtract: insightRef,
     });
 
     return map.fromItems(items);
