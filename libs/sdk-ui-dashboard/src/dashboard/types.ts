@@ -7,10 +7,7 @@ import { IDrillableItem, IErrorProps, IHeaderPredicate, ILoadingProps } from "@g
 import { CustomFilterBarComponent, IDefaultFilterBarProps, IFilterBarCoreProps } from "../filterBar";
 import { DashboardLayoutProps } from "../layout";
 import { DashboardConfig, DashboardEventHandler } from "../model";
-import {
-    CustomScheduledEmailDialogComponent,
-    IDefaultScheduledEmailDialogCallbackProps,
-} from "../scheduledEmail";
+import { CustomScheduledEmailDialogComponent } from "../scheduledEmail";
 import { CustomTopBarComponent, IDefaultTopBarProps, ITopBarCoreProps } from "../topBar";
 import {
     CustomDashboardInsightComponent,
@@ -194,21 +191,13 @@ export interface IDashboardProps {
     KpiComponent?: CustomDashboardKpiComponent;
 
     /**
-     * Optionally configure how the scheduled email dialog looks and behaves.
+     * Optionally specify component to use for rendering the scheduled email dialog.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useScheduledEmailDialogProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultScheduledEmailDialog} component.
      */
-    scheduledEmailDialogConfig?: {
-        /**
-         * Specify component to use for rendering the scheduled email dialog
-         */
-        Component?: CustomScheduledEmailDialogComponent;
-
-        /**
-         * Optionally specify callbacks props to be called by the default implementation of scheduled email dialog.
-         *
-         * These will have no effect if custom component is used.
-         */
-        defaultComponentCallbackProps?: IDefaultScheduledEmailDialogCallbackProps;
-    };
+    ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
 
     /**
      *

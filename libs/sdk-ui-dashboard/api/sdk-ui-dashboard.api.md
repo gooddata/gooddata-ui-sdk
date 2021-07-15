@@ -422,8 +422,8 @@ export type CustomFilterBarComponent = ComponentType<IFilterBarCoreProps>;
 // @internal (undocumented)
 export type CustomMenuButtonComponent = ComponentType<IMenuButtonCoreProps>;
 
-// @internal (undocumented)
-export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogCoreProps>;
+// @alpha (undocumented)
+export type CustomScheduledEmailDialogComponent = ComponentType;
 
 // @internal (undocumented)
 export type CustomTitleComponent = ComponentType<ITitleCoreProps>;
@@ -1247,8 +1247,11 @@ export const DefaultFilterBar: React_2.FC<IDefaultFilterBarProps>;
 // @internal
 export const DefaultMenuButton: React_2.FC<IDefaultMenuButtonComponentProps>;
 
+// @alpha (undocumented)
+export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element;
+
 // @internal (undocumented)
-export const DefaultScheduledEmailDialog: React_2.FC<IDefaultScheduledEmailDialogProps>;
+export const DefaultScheduledEmailDialogInner: () => JSX.Element | null;
 
 // @internal
 export const DefaultTitle: React_2.FC<IDefaultTitleProps>;
@@ -1564,10 +1567,7 @@ export interface IDashboardProps {
     KpiComponent?: CustomDashboardKpiComponent;
     LoadingComponent?: ComponentType<ILoadingProps>;
     permissions?: IWorkspacePermissions;
-    scheduledEmailDialogConfig?: {
-        Component?: CustomScheduledEmailDialogComponent;
-        defaultComponentCallbackProps?: IDefaultScheduledEmailDialogCallbackProps;
-    };
+    ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
     theme?: ITheme;
     themeModifier?: (theme: ITheme) => ITheme;
     topBarConfig?: {
@@ -1642,13 +1642,6 @@ export interface IDefaultMenuButtonComponentProps extends IMenuButtonCoreProps, 
     additionalMenuItems?: [number, IMenuButtonItem][];
     ButtonComponent?: React.FC;
     menuItems?: IMenuButtonItem[];
-}
-
-// @internal
-export type IDefaultScheduledEmailDialogCallbackProps = Pick<IDefaultScheduledEmailDialogProps, "onCancel" | "onError" | "onSubmit" | "onSuccess">;
-
-// @internal
-export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialogCoreProps, IDefaultScheduledEmailDialogCallbackProps {
 }
 
 // @internal
@@ -1749,8 +1742,8 @@ export type InsightPlaceholderWidget = {
     readonly type: "insightPlaceholder";
 };
 
-// @internal
-export interface IScheduledEmailDialogCoreProps {
+// @alpha (undocumented)
+export interface IScheduledEmailDialogProps {
     isVisible?: boolean;
     onCancel?: () => void;
     onError?: (error: GoodDataSdkError) => void;
@@ -2153,6 +2146,9 @@ export interface SaveDashboardAs extends IDashboardCommand {
 
 // @alpha
 export function saveDashboardAs(identifier?: string, title?: string, correlationId?: string): SaveDashboardAs;
+
+// @internal (undocumented)
+export const ScheduledEmailDialogPropsProvider: React_2.FC<IScheduledEmailDialogProps>;
 
 // @alpha
 export const selectAlerts: (state: DashboardState) => import("@gooddata/sdk-backend-spi").IWidgetAlert[];
@@ -2818,6 +2814,9 @@ export interface UserState {
     // (undocumented)
     user?: IUser;
 }
+
+// @alpha (undocumented)
+export const useScheduledEmailDialogProps: () => IScheduledEmailDialogProps;
 
 // @alpha (undocumented)
 export type WidgetFilterSettings = {
