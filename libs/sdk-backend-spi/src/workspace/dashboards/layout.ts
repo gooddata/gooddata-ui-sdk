@@ -15,13 +15,13 @@ export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
  *
  * @alpha
  */
-export type DashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<DashboardWidget>;
+export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link DashboardWidget}.
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardWidget}.
  * @alpha
  */
-export const isDashboardWidget = (obj: unknown): obj is DashboardWidget =>
+export const isDashboardWidget = (obj: unknown): obj is IDashboardWidget =>
     [isDashboardLayout, isWidget, isWidgetDefinition].some((guard) => guard(obj));
 
 /**
@@ -30,7 +30,7 @@ export const isDashboardWidget = (obj: unknown): obj is DashboardWidget =>
  *
  * @alpha
  */
-export interface IDashboardLayoutItem<TWidget = DashboardWidget> {
+export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
     /**
      * Unique type to identify dashboard layout item.
      */
@@ -61,7 +61,7 @@ export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardL
  *
  * @alpha
  */
-export interface IDashboardLayout<TWidget = DashboardWidget> {
+export interface IDashboardLayout<TWidget = IDashboardWidget> {
     /**
      * Unique type to identify dashboard layout.
      */
@@ -82,7 +82,9 @@ export interface IDashboardLayout<TWidget = DashboardWidget> {
  * Type-guard testing whether the provided object is an instance of {@link IDashboardLayout}.
  * @alpha
  */
-export function isDashboardLayout<TWidget = DashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget> {
+export function isDashboardLayout<TWidget = IDashboardWidget>(
+    obj: unknown,
+): obj is IDashboardLayout<TWidget> {
     return !isEmpty(obj) && (obj as IDashboardLayout<TWidget>).type === "IDashboardLayout";
 }
 
@@ -152,7 +154,7 @@ export interface IDashboardLayoutSize {
  * Dashboard layout section represents a group of widgets on the dashboard with a title and description.
  * @alpha
  */
-export interface IDashboardLayoutSection<TWidget = DashboardWidget> {
+export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
     /**
      * Unique type to identify dashboard layout section.
      */

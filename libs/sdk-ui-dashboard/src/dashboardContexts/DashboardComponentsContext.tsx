@@ -1,8 +1,12 @@
 // (C) 2019 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import { IErrorProps, ILoadingProps, UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { DashboardLayoutProps, DashboardWidgetProps } from "../layout/types";
-import { CustomDashboardInsightComponent, DashboardKpiProps } from "../widget/types";
+import { DashboardLayoutProps } from "../layout/types";
+import {
+    CustomDashboardInsightComponent,
+    CustomDashboardKpiComponent,
+    CustomDashboardWidgetComponent,
+} from "../widget/types";
 
 /**
  * @internal
@@ -11,9 +15,9 @@ interface IDashboardComponentsContext {
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
     LayoutComponent: React.ComponentType<DashboardLayoutProps>;
-    WidgetComponent: React.ComponentType<DashboardWidgetProps>;
+    WidgetComponent: CustomDashboardWidgetComponent;
     InsightComponent: CustomDashboardInsightComponent;
-    KpiComponent: React.ComponentType<DashboardKpiProps>;
+    KpiComponent: CustomDashboardKpiComponent;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {

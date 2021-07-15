@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { DashboardWidget, IDashboardLayout, ScreenSize } from "@gooddata/sdk-backend-spi";
+import { IDashboardWidget, IDashboardLayout, ScreenSize } from "@gooddata/sdk-backend-spi";
 import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./facade/interfaces";
 
 /**
@@ -7,7 +7,7 @@ import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./fac
  *
  * @alpha
  */
-export type IDashboardLayoutSectionKeyGetterProps<TWidget = DashboardWidget> = {
+export type IDashboardLayoutSectionKeyGetterProps<TWidget = IDashboardWidget> = {
     /**
      * Dashboard layout section.
      */
@@ -28,7 +28,7 @@ export type IDashboardLayoutSectionKeyGetterProps<TWidget = DashboardWidget> = {
  *
  * @alpha
  */
-export type IDashboardLayoutSectionKeyGetter<TWidget = DashboardWidget> = (
+export type IDashboardLayoutSectionKeyGetter<TWidget = IDashboardWidget> = (
     props: IDashboardLayoutSectionKeyGetterProps<TWidget>,
 ) => string;
 
@@ -37,7 +37,7 @@ export type IDashboardLayoutSectionKeyGetter<TWidget = DashboardWidget> = (
  *
  * @alpha
  */
-export type IDashboardLayoutSectionRenderProps<TWidget = DashboardWidget> = {
+export type IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> = {
     /**
      * Dashboard layout section.
      */
@@ -80,7 +80,7 @@ export type IDashboardLayoutSectionRenderProps<TWidget = DashboardWidget> = {
  *
  * @alpha
  */
-export type IDashboardLayoutSectionRenderer<TWidget = DashboardWidget, TCustomProps = object> = (
+export type IDashboardLayoutSectionRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutSectionRenderProps<TWidget> & TCustomProps,
 ) => JSX.Element;
 
@@ -89,7 +89,7 @@ export type IDashboardLayoutSectionRenderer<TWidget = DashboardWidget, TCustomPr
  *
  * @alpha
  */
-export type IDashboardLayoutSectionHeaderRenderProps<TWidget = DashboardWidget> = {
+export type IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWidget> = {
     /**
      * Dashboard layout section.
      */
@@ -112,7 +112,7 @@ export type IDashboardLayoutSectionHeaderRenderProps<TWidget = DashboardWidget> 
  *
  * @alpha
  */
-export type IDashboardLayoutSectionHeaderRenderer<TWidget = DashboardWidget, TCustomProps = object> = (
+export type IDashboardLayoutSectionHeaderRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutSectionHeaderRenderProps<TWidget> & TCustomProps,
 ) => JSX.Element;
 
@@ -121,7 +121,7 @@ export type IDashboardLayoutSectionHeaderRenderer<TWidget = DashboardWidget, TCu
  *
  * @alpha
  */
-export type IDashboardLayoutItemKeyGetterProps<TWidget = DashboardWidget> = {
+export type IDashboardLayoutItemKeyGetterProps<TWidget = IDashboardWidget> = {
     /**
      * Dashboard layout item.
      */
@@ -142,7 +142,7 @@ export type IDashboardLayoutItemKeyGetterProps<TWidget = DashboardWidget> = {
  *
  * @alpha
  */
-export type IDashboardLayoutItemKeyGetter<TWidget = DashboardWidget> = (
+export type IDashboardLayoutItemKeyGetter<TWidget = IDashboardWidget> = (
     props: IDashboardLayoutItemKeyGetterProps<TWidget>,
 ) => string;
 
@@ -151,7 +151,7 @@ export type IDashboardLayoutItemKeyGetter<TWidget = DashboardWidget> = (
  *
  * @alpha
  */
-export type IDashboardLayoutItemRenderProps<TWidget = DashboardWidget> = {
+export type IDashboardLayoutItemRenderProps<TWidget = IDashboardWidget> = {
     /**
      * Dashboard layout item.
      */
@@ -194,7 +194,7 @@ export type IDashboardLayoutItemRenderProps<TWidget = DashboardWidget> = {
  *
  * @alpha
  */
-export type IDashboardLayoutItemRenderer<TWidget = DashboardWidget, TCustomProps = object> = (
+export type IDashboardLayoutItemRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutItemRenderProps<TWidget> & TCustomProps,
 ) => JSX.Element;
 
@@ -203,7 +203,7 @@ export type IDashboardLayoutItemRenderer<TWidget = DashboardWidget, TCustomProps
  *
  * @alpha
  */
-export type IDashboardLayoutWidgetRenderProps<TWidget = DashboardWidget> = {
+export type IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> = {
     /**
      * Dashboard layout item.
      */
@@ -267,7 +267,7 @@ export type IDashboardLayoutWidgetRenderProps<TWidget = DashboardWidget> = {
  *
  * @alpha
  */
-export type IDashboardLayoutWidgetRenderer<TWidget = DashboardWidget, TCustomProps = object> = (
+export type IDashboardLayoutWidgetRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutWidgetRenderProps<TWidget> & TCustomProps,
 ) => JSX.Element;
 
@@ -276,7 +276,7 @@ export type IDashboardLayoutWidgetRenderer<TWidget = DashboardWidget, TCustomPro
  *
  * @alpha
  */
-export type IDashboardLayoutGridRowRenderProps<TWidget = DashboardWidget> = {
+export type IDashboardLayoutGridRowRenderProps<TWidget = IDashboardWidget> = {
     /**
      * Items rendered in one row.
      */
@@ -305,7 +305,7 @@ export type IDashboardLayoutGridRowRenderProps<TWidget = DashboardWidget> = {
  *
  * @alpha
  */
-export type IDashboardLayoutGridRowRenderer<TWidget = DashboardWidget, TCustomProps = object> = (
+export type IDashboardLayoutGridRowRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutGridRowRenderProps<TWidget> & TCustomProps,
 ) => JSX.Element;
 
@@ -315,7 +315,7 @@ export type IDashboardLayoutGridRowRenderer<TWidget = DashboardWidget, TCustomPr
  *
  * @alpha
  */
-export type IDashboardLayoutRenderProps<TWidget = DashboardWidget> = {
+export type IDashboardLayoutRenderProps<TWidget = IDashboardWidget> = {
     /**
      * Dashboard layout definition to render.
      */
@@ -386,6 +386,6 @@ export type IDashboardLayoutRenderProps<TWidget = DashboardWidget> = {
  *
  * @alpha
  */
-export type IDashboardLayoutRenderer<TWidget = DashboardWidget, TCustomProps = object> = (
+export type IDashboardLayoutRenderer<TWidget = IDashboardWidget, TCustomProps = object> = (
     renderProps: IDashboardLayoutRenderProps<TWidget> & TCustomProps,
 ) => JSX.Element;

@@ -8,7 +8,7 @@ import {
     isKpiWidgetDefinition,
     IDashboardLayoutItem,
     IDashboardLayoutSection,
-    DashboardWidget,
+    IDashboardWidget,
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import {
@@ -30,7 +30,7 @@ import identity from "lodash/identity";
  * @alpha
  */
 export class DashboardLayoutItemBuilder<TWidget>
-    implements IDashboardLayoutItemBuilder<TWidget | DashboardWidget>
+    implements IDashboardLayoutItemBuilder<TWidget | IDashboardWidget>
 {
     protected constructor(
         protected setSection: (

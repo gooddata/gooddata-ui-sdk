@@ -7,7 +7,7 @@ import {
     IDashboardLayout,
     IDashboardLayoutItem,
     IDashboardLayoutSection,
-    DashboardWidget,
+    IDashboardWidget,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { InsightWidgetBuilder, KpiWidgetBuilder, ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
@@ -26,7 +26,7 @@ import {
  * @param sectionsFacade - sections facade to create a query
  * @returns array of section facades, single section facade, or undefined
  */
-export type DashboardLayoutSectionsSelector<TWidget = DashboardWidget> = (
+export type DashboardLayoutSectionsSelector<TWidget = IDashboardWidget> = (
     sectionsFacade: IDashboardLayoutSectionsFacade<TWidget>,
 ) => IDashboardLayoutSectionFacade<TWidget>[] | IDashboardLayoutSectionFacade<TWidget> | undefined;
 
@@ -38,7 +38,7 @@ export type DashboardLayoutSectionsSelector<TWidget = DashboardWidget> = (
  * @param sectionFacade - section facade for convenient work with the item
  * @returns section builder with applied transforms
  */
-export type DashboardLayoutSectionModifications<TWidget = DashboardWidget> = (
+export type DashboardLayoutSectionModifications<TWidget = IDashboardWidget> = (
     sectionBuilder: IDashboardLayoutSectionBuilder<TWidget>,
     sectionFacade: IDashboardLayoutSectionFacade<TWidget>,
 ) => IDashboardLayoutSectionBuilder<TWidget>;
@@ -50,7 +50,7 @@ export type DashboardLayoutSectionModifications<TWidget = DashboardWidget> = (
  * @param itemsFacade - items facade to create a query
  * @returns array of item facades, single item facade, or undefined
  */
-export type DashboardLayoutItemsSelector<TWidget = DashboardWidget> = (
+export type DashboardLayoutItemsSelector<TWidget = IDashboardWidget> = (
     itemsFacade: IDashboardLayoutItemsFacade<TWidget>,
 ) => IDashboardLayoutItemFacade<TWidget>[] | IDashboardLayoutItemFacade<TWidget> | undefined;
 
@@ -62,7 +62,7 @@ export type DashboardLayoutItemsSelector<TWidget = DashboardWidget> = (
  * @param itemFacade - item facade for convenient work with the layout item
  * @returns section builder with applied transforms
  */
-export type DashboardLayoutItemModifications<TWidget = DashboardWidget> = (
+export type DashboardLayoutItemModifications<TWidget = IDashboardWidget> = (
     itemBuilder: IDashboardLayoutItemBuilder<TWidget>,
     itemFacade: IDashboardLayoutItemFacade<TWidget>,
 ) => IDashboardLayoutItemBuilder<TWidget>;
@@ -75,7 +75,7 @@ export type DashboardLayoutItemModifications<TWidget = DashboardWidget> = (
  * @param layoutFacade - layout facade for convenient work with the layout
  * @returns layout builder with applied transforms
  */
-export type DashboardLayoutModifications<TWidget = DashboardWidget> = (
+export type DashboardLayoutModifications<TWidget = IDashboardWidget> = (
     layoutBuilder: IDashboardLayoutBuilder<TWidget>,
     layoutFacade: IDashboardLayoutFacade<TWidget>,
 ) => IDashboardLayoutBuilder<TWidget>;
@@ -85,7 +85,7 @@ export type DashboardLayoutModifications<TWidget = DashboardWidget> = (
  *
  * @beta
  */
-export interface IDashboardLayoutItemBuilder<TWidget = DashboardWidget> {
+export interface IDashboardLayoutItemBuilder<TWidget = IDashboardWidget> {
     /**
      * Set or update item size.
      *
@@ -177,7 +177,7 @@ export interface IDashboardLayoutItemBuilder<TWidget = DashboardWidget> {
  *
  * @beta
  */
-export interface IDashboardLayoutSectionBuilder<TWidget = DashboardWidget> {
+export interface IDashboardLayoutSectionBuilder<TWidget = IDashboardWidget> {
     /**
      * Set or update section header.
      *
@@ -334,7 +334,7 @@ export interface IDashboardLayoutSectionBuilder<TWidget = DashboardWidget> {
  *
  * @beta
  */
-export interface IDashboardLayoutBuilder<TWidget = DashboardWidget> {
+export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
     /**
      * Set or update layout size.
      *

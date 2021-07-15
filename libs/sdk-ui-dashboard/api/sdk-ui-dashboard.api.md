@@ -7,7 +7,6 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
-import { DashboardWidget } from '@gooddata/sdk-backend-spi';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
 import { DateFilterType } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
@@ -38,6 +37,7 @@ import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
+import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDrillableItem } from '@gooddata/sdk-ui';
@@ -78,6 +78,7 @@ import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
+import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { Patch } from 'immer';
@@ -391,7 +392,13 @@ export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAt
 export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterCoreProps>;
 
 // @internal (undocumented)
-export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightCoreProps>;
+export type CustomDashboardInsightComponent = ComponentType;
+
+// @internal (undocumented)
+export type CustomDashboardKpiComponent = ComponentType;
+
+// @internal (undocumented)
+export type CustomDashboardWidgetComponent = ComponentType;
 
 // @internal (undocumented)
 export type CustomFilterBarComponent = ComponentType<IFilterBarCoreProps>;
@@ -678,7 +685,10 @@ export interface DashboardFilterContextChanged extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export const DashboardInsight: (props: IDashboardInsightCoreProps) => JSX.Element;
+export const DashboardInsight: () => JSX.Element;
+
+// @internal (undocumented)
+export const DashboardInsightPropsProvider: React_2.FC<IDashboardInsightProps>;
 
 // @internal
 export interface DashboardInsightWidgetChanged extends IDashboardEvent {
@@ -761,7 +771,7 @@ export interface DashboardInsightWidgetVisPropertiesChanged extends IDashboardEv
 export type DashboardItemDefinition = ExtendedDashboardItem | StashedDashboardItemsId;
 
 // @internal (undocumented)
-export const DashboardKpi: (props: DashboardKpiProps) => JSX.Element;
+export const DashboardKpi: () => JSX.Element;
 
 // @internal (undocumented)
 export interface DashboardKpiProps {
@@ -777,6 +787,9 @@ export interface DashboardKpiProps {
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
     workspace?: string;
 }
+
+// @internal (undocumented)
+export const DashboardKpiPropsProvider: React_2.FC<DashboardKpiProps>;
 
 // @internal
 export interface DashboardKpiWidgetChanged extends IDashboardEvent {
@@ -1104,20 +1117,39 @@ export interface DashboardWasReset extends IDashboardEvent {
 }
 
 // @internal (undocumented)
+export const DashboardWidget: () => JSX.Element;
+
+// @internal (undocumented)
 export interface DashboardWidgetProps {
     // (undocumented)
+    backend?: IAnalyticalBackend;
+    dateDataset?: ObjRef;
+    // (undocumented)
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    // (undocumented)
+    ErrorComponent?: ComponentType<IErrorProps>;
+    ignoredAttributeFilters?: ObjRefInScope[];
+    // (undocumented)
+    LoadingComponent?: ComponentType<ILoadingProps>;
     // (undocumented)
     onDrill?: OnFiredDashboardViewDrillEvent;
     // (undocumented)
     onError?: OnError;
     // (undocumented)
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onWidgetClicked?: () => void;
     // (undocumented)
     screen: ScreenSize;
+    showHeader?: boolean;
+    showMenu?: boolean;
     // (undocumented)
     widget?: IWidget;
+    // (undocumented)
+    workspace?: string;
 }
+
+// @internal (undocumented)
+export const DashboardWidgetPropsProvider: React_2.FC<DashboardWidgetProps>;
 
 // @internal (undocumented)
 export const DashboardWidgetRenderer: React_2.FC<IDashboardWidgetRendererProps>;
@@ -1163,16 +1195,22 @@ export const DefaultDashboardAttributeFilter: React_2.FC<IDefaultDashboardAttrib
 export const DefaultDashboardDateFilter: React_2.FC<IDefaultDashboardDateFilterProps>;
 
 // @internal (undocumented)
-export const DefaultDashboardInsight: React_2.FC<IDefaultDashboardInsightProps>;
+export const DefaultDashboardInsight: (props: IDashboardInsightProps) => JSX.Element;
 
 // @internal (undocumented)
-export const DefaultDashboardInsightWithDrillDialog: (props: IDefaultDashboardInsightProps) => JSX.Element;
+export const DefaultDashboardInsightWithDrillDialog: (props: IDashboardInsightProps) => JSX.Element;
 
 // @internal (undocumented)
-export const DefaultDashboardInsightWithDrillSelect: React_2.FC<IDefaultDashboardInsightProps>;
+export const DefaultDashboardInsightWithDrillDialogInner: () => JSX.Element;
 
 // @internal (undocumented)
-export const DefaultDashboardKpi: React_2.FC<DashboardKpiProps>;
+export const DefaultDashboardInsightWithDrillSelect: (props: IDashboardInsightProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultDashboardKpi: (props: DashboardKpiProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultDashboardKpiInner: () => JSX.Element;
 
 // @internal (undocumented)
 export const DefaultDashboardLayout: ({ onFiltersChange, drillableItems, onDrill, onError, ErrorComponent: CustomError, }: DashboardLayoutProps) => JSX.Element;
@@ -1182,6 +1220,9 @@ export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
 // @internal (undocumented)
 export const DefaultDashboardWidget: (props: DashboardWidgetProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultDashboardWidgetInner: () => JSX.Element;
 
 // @internal (undocumented)
 export const DefaultFilterBar: React_2.FC<IDefaultFilterBarProps>;
@@ -1338,7 +1379,7 @@ export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @internal
-export type ExtendedDashboardWidget = DashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
+export type ExtendedDashboardWidget = IDashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
 
 // @internal (undocumented)
 export interface FilterContextSelection {
@@ -1432,20 +1473,42 @@ export interface IDashboardEventsContext {
 // @beta
 export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
 
-// @internal
-export interface IDashboardInsightCoreProps {
+// @internal (undocumented)
+export interface IDashboardInsightProps {
+    // (undocumented)
+    backend?: IAnalyticalBackend;
     // (undocumented)
     clientHeight?: number;
     // (undocumented)
+    disableWidgetImplicitDrills?: boolean;
+    // (undocumented)
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    // (undocumented)
+    ErrorComponent?: ComponentType<IErrorProps>;
+    // (undocumented)
+    filters?: FilterContextItem[];
     // (undocumented)
     insight: IInsight;
     // (undocumented)
+    LoadingComponent?: ComponentType<ILoadingProps>;
+    // (undocumented)
     onDrill?: OnDashboardDrill;
+    // (undocumented)
+    onDrillDown?: OnDrillDown;
+    // (undocumented)
+    onDrillToAttributeUrl?: OnDrillToAttributeUrl;
+    // (undocumented)
+    onDrillToCustomUrl?: OnDrillToCustomUrl;
+    // (undocumented)
+    onDrillToDashboard?: OnDrillToDashboard;
+    // (undocumented)
+    onDrillToInsight?: OnDrillToInsight;
     // (undocumented)
     onError?: OnError;
     // (undocumented)
     widget: IInsightWidget;
+    // (undocumented)
+    workspace?: string;
 }
 
 // @internal (undocumented)
@@ -1466,6 +1529,8 @@ export interface IDashboardProps {
         Component?: CustomFilterBarComponent;
         defaultComponentProps?: Omit<IDefaultFilterBarProps, keyof IFilterBarCoreProps>;
     };
+    InsightComponent?: CustomDashboardInsightComponent;
+    KpiComponent?: CustomDashboardKpiComponent;
     LoadingComponent?: ComponentType<ILoadingProps>;
     permissions?: IWorkspacePermissions;
     scheduledEmailDialogConfig?: {
@@ -1478,18 +1543,7 @@ export interface IDashboardProps {
         Component?: CustomTopBarComponent;
         defaultComponentProps?: Omit<IDefaultTopBarProps, keyof ITopBarCoreProps>;
     };
-    widgetConfig?: {
-        Component?: ComponentType<DashboardWidgetProps>;
-        defaultComponentProps?: DashboardWidgetProps;
-        insight?: {
-            Component?: CustomDashboardInsightComponent;
-            defaultComponentProps?: Omit<IDefaultDashboardInsightProps, keyof IDashboardInsightCoreProps>;
-        };
-        kpi?: {
-            Component?: ComponentType<DashboardKpiProps>;
-            defaultComponentProps?: DashboardKpiProps;
-        };
-    };
+    WidgetComponent?: CustomDashboardWidgetComponent;
     workspace?: string;
 }
 
@@ -1530,32 +1584,6 @@ export interface IDefaultDashboardAttributeFilterProps extends IDashboardAttribu
 // @internal
 export interface IDefaultDashboardDateFilterProps extends IDashboardDateFilterCoreProps {
     config: IDashboardDateFilterConfig;
-}
-
-// @internal
-export interface IDefaultDashboardInsightProps extends IDashboardInsightCoreProps {
-    // (undocumented)
-    backend?: IAnalyticalBackend;
-    // (undocumented)
-    disableWidgetImplicitDrills?: boolean;
-    // (undocumented)
-    ErrorComponent?: ComponentType<IErrorProps>;
-    // (undocumented)
-    filters?: FilterContextItem[];
-    // (undocumented)
-    LoadingComponent?: ComponentType<ILoadingProps>;
-    // (undocumented)
-    onDrillDown?: OnDrillDown;
-    // (undocumented)
-    onDrillToAttributeUrl?: OnDrillToAttributeUrl;
-    // (undocumented)
-    onDrillToCustomUrl?: OnDrillToCustomUrl;
-    // (undocumented)
-    onDrillToDashboard?: OnDrillToDashboard;
-    // (undocumented)
-    onDrillToInsight?: OnDrillToInsight;
-    // (undocumented)
-    workspace?: string;
 }
 
 // @internal
@@ -2103,7 +2131,7 @@ export const selectAttributesWithDrillDown: import("@reduxjs/toolkit").OutputSel
 export const selectBackendCapabilities: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IBackendCapabilities, (res: import("./backendCapabilitiesState").BackendCapabilitiesState) => import("@gooddata/sdk-backend-spi").IBackendCapabilities>;
 
 // @internal
-export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>>;
+export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("@gooddata/sdk-backend-spi").IDashboardWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => IDashboardLayout<import("@gooddata/sdk-backend-spi").IDashboardWidget>>;
 
 // @internal
 export const selectCanListUsersInWorkspace: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("@gooddata/sdk-backend-spi").IWorkspacePermissions) => boolean>;
@@ -2607,7 +2635,16 @@ export const useDashboardDispatch: () => Dispatch<AnyAction>;
 export const useDashboardEventsContext: () => IDashboardEventsContext;
 
 // @internal (undocumented)
+export const useDashboardInsightProps: () => IDashboardInsightProps;
+
+// @internal (undocumented)
+export const useDashboardKpiProps: () => DashboardKpiProps;
+
+// @internal (undocumented)
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;
+
+// @internal (undocumented)
+export const useDashboardWidgetProps: () => DashboardWidgetProps;
 
 // @internal (undocumented)
 export const useDrill: ({ onSuccess, onError, onBeforeRun }?: UseDrillProps) => {

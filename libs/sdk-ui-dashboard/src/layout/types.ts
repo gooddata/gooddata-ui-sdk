@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { FilterContextItem, IWidget, ScreenSize } from "@gooddata/sdk-backend-spi";
+import { FilterContextItem } from "@gooddata/sdk-backend-spi";
 import { IDrillableItem, IErrorProps, IHeaderPredicate, OnError } from "@gooddata/sdk-ui";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../types";
 
@@ -16,16 +16,4 @@ export interface DashboardLayoutProps {
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
     onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
-}
-
-/**
- * @internal
- */
-export interface DashboardWidgetProps {
-    widget?: IWidget;
-    screen: ScreenSize;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    onDrill?: OnFiredDashboardViewDrillEvent;
-    onError?: OnError;
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
 }

@@ -5,7 +5,6 @@
 ```ts
 
 import { AnalyticalBackendError } from '@gooddata/sdk-backend-spi';
-import { DashboardWidget } from '@gooddata/sdk-backend-spi';
 import { DrillDefinition } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
@@ -20,6 +19,7 @@ import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSize } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-backend-spi';
+import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDrillableItem } from '@gooddata/sdk-ui';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IErrorProps } from '@gooddata/sdk-ui';
@@ -74,19 +74,19 @@ export function clearDashboardViewCaches(): void;
 export function clearInsightViewCaches(): void;
 
 // @beta
-export type DashboardLayoutItemModifications<TWidget = DashboardWidget> = (itemBuilder: IDashboardLayoutItemBuilder<TWidget>, itemFacade: IDashboardLayoutItemFacade<TWidget>) => IDashboardLayoutItemBuilder<TWidget>;
+export type DashboardLayoutItemModifications<TWidget = IDashboardWidget> = (itemBuilder: IDashboardLayoutItemBuilder<TWidget>, itemFacade: IDashboardLayoutItemFacade<TWidget>) => IDashboardLayoutItemBuilder<TWidget>;
 
 // @beta
-export type DashboardLayoutItemsSelector<TWidget = DashboardWidget> = (itemsFacade: IDashboardLayoutItemsFacade<TWidget>) => IDashboardLayoutItemFacade<TWidget>[] | IDashboardLayoutItemFacade<TWidget> | undefined;
+export type DashboardLayoutItemsSelector<TWidget = IDashboardWidget> = (itemsFacade: IDashboardLayoutItemsFacade<TWidget>) => IDashboardLayoutItemFacade<TWidget>[] | IDashboardLayoutItemFacade<TWidget> | undefined;
 
 // @beta
-export type DashboardLayoutModifications<TWidget = DashboardWidget> = (layoutBuilder: IDashboardLayoutBuilder<TWidget>, layoutFacade: IDashboardLayoutFacade<TWidget>) => IDashboardLayoutBuilder<TWidget>;
+export type DashboardLayoutModifications<TWidget = IDashboardWidget> = (layoutBuilder: IDashboardLayoutBuilder<TWidget>, layoutFacade: IDashboardLayoutFacade<TWidget>) => IDashboardLayoutBuilder<TWidget>;
 
 // @beta
-export type DashboardLayoutSectionModifications<TWidget = DashboardWidget> = (sectionBuilder: IDashboardLayoutSectionBuilder<TWidget>, sectionFacade: IDashboardLayoutSectionFacade<TWidget>) => IDashboardLayoutSectionBuilder<TWidget>;
+export type DashboardLayoutSectionModifications<TWidget = IDashboardWidget> = (sectionBuilder: IDashboardLayoutSectionBuilder<TWidget>, sectionFacade: IDashboardLayoutSectionFacade<TWidget>) => IDashboardLayoutSectionBuilder<TWidget>;
 
 // @beta
-export type DashboardLayoutSectionsSelector<TWidget = DashboardWidget> = (sectionsFacade: IDashboardLayoutSectionsFacade<TWidget>) => IDashboardLayoutSectionFacade<TWidget>[] | IDashboardLayoutSectionFacade<TWidget> | undefined;
+export type DashboardLayoutSectionsSelector<TWidget = IDashboardWidget> = (sectionsFacade: IDashboardLayoutSectionsFacade<TWidget>) => IDashboardLayoutSectionFacade<TWidget>[] | IDashboardLayoutSectionFacade<TWidget> | undefined;
 
 // @beta (undocumented)
 export type DashboardLayoutTransform<TContent = any> = (layoutBuilder: IDashboardLayoutBuilder<TContent>, additionalProps: IDashboardLayoutTransformAdditionalProps) => IDashboardLayoutBuilder<TContent>;
@@ -114,7 +114,7 @@ export interface IDashboardDrillEvent extends IDrillEvent {
 export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
 
 // @beta
-export interface IDashboardLayoutBuilder<TWidget = DashboardWidget> {
+export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
     addSection(create?: (builder: IDashboardLayoutSectionBuilder<TWidget>) => IDashboardLayoutSectionBuilder<TWidget>, index?: number): this;
     build(): IDashboardLayout<TWidget>;
     facade(): IDashboardLayoutFacade<TWidget>;
@@ -142,7 +142,7 @@ export interface IDashboardLayoutFacade<TWidget> {
 }
 
 // @beta
-export interface IDashboardLayoutItemBuilder<TWidget = DashboardWidget> {
+export interface IDashboardLayoutItemBuilder<TWidget = IDashboardWidget> {
     build(): IDashboardLayoutItem<TWidget>;
     facade(): IDashboardLayoutItemFacade<TWidget>;
     modify(modifications: DashboardLayoutItemModifications<TWidget>): this;
@@ -164,7 +164,7 @@ export interface IDashboardLayoutItemFacade<TWidget> {
     // (undocumented)
     indexIs(index: number): boolean;
     // (undocumented)
-    isCustomItem(): this is IDashboardLayoutItemFacade<Exclude<TWidget, DashboardWidget>>;
+    isCustomItem(): this is IDashboardLayoutItemFacade<Exclude<TWidget, IDashboardWidget>>;
     // (undocumented)
     isEmpty(): boolean;
     // (undocumented)
@@ -240,7 +240,7 @@ export interface IDashboardLayoutItemsFacade<TWidget> {
 }
 
 // @beta
-export interface IDashboardLayoutSectionBuilder<TWidget = DashboardWidget> {
+export interface IDashboardLayoutSectionBuilder<TWidget = IDashboardWidget> {
     addItem(xlSize: IDashboardLayoutSize, create?: (builder: IDashboardLayoutItemBuilder<TWidget>) => IDashboardLayoutItemBuilder<TWidget>, index?: number): this;
     build(): IDashboardLayoutSection<TWidget>;
     facade(): IDashboardLayoutSectionFacade<TWidget>;

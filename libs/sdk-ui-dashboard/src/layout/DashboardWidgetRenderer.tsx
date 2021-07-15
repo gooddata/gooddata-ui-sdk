@@ -16,10 +16,18 @@ import {
 import { IDrillableItem, IHeaderPredicate, OnError, VisType } from "@gooddata/sdk-ui";
 import { selectAlerts, selectInsights, useDashboardSelector } from "../model";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../types";
-import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "../presentationComponents";
-import { DashboardInsight, DashboardKpi } from "../widget";
-
-import { getVisTypeCssClass } from "./utils";
+import {
+    DashboardItem,
+    DashboardItemHeadline,
+    DashboardItemVisualization,
+    getVisTypeCssClass,
+} from "../presentationComponents";
+import {
+    DashboardInsight,
+    DashboardKpi,
+    DashboardInsightPropsProvider,
+    DashboardKpiPropsProvider,
+} from "../widget";
 
 const dashboardStyle: CSSProperties = { height: "100%", width: "100%" };
 
@@ -39,7 +47,7 @@ export type IDashboardWidgetRendererProps = {
  * @internal
  */
 export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRendererProps> = (props) => {
-    const { drillableItems, onFiltersChange, onDrill, onError, screen, widget } = props;
+    const { onError, onFiltersChange, screen, widget } = props;
     const insights = useDashboardSelector(selectInsights);
     const alerts = useDashboardSelector(selectAlerts);
 
@@ -101,14 +109,13 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRendererProps> = 
                                         )}
                                     >
                                         {() => (
-                                            <DashboardInsight
+                                            <DashboardInsightPropsProvider
                                                 clientHeight={contentRect.client?.height}
                                                 insight={insight!}
                                                 widget={widget}
-                                                drillableItems={drillableItems}
-                                                onDrill={onDrill}
-                                                onError={onError}
-                                            />
+                                            >
+                                                <DashboardInsight />
+                                            </DashboardInsightPropsProvider>
                                         )}
                                     </DashboardItemVisualization>
                                 </DashboardItem>
@@ -121,14 +128,14 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRendererProps> = 
 
         return (
             <DashboardItem className="type-kpi" screen={screen}>
-                <DashboardKpi
+                <DashboardKpiPropsProvider
                     kpiWidget={widget}
                     alert={alert}
                     onFiltersChange={onFiltersChange}
-                    drillableItems={drillableItems}
-                    onDrill={onDrill}
                     onError={onError}
-                />
+                >
+                    <DashboardKpi />
+                </DashboardKpiPropsProvider>
             </DashboardItem>
         );
     }

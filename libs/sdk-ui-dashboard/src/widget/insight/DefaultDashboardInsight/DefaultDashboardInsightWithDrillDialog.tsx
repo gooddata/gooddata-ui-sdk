@@ -6,15 +6,17 @@ import last from "lodash/last";
 import { selectLocale, selectWidgetByRef, useDashboardSelector } from "../../../model";
 import { DrillStep, OnDashboardDrill, getDrillDownAttributeTitle } from "../../../drill";
 import { IDrillDownDefinition, isDrillDownDefinition } from "../../../types";
-import { IDefaultDashboardInsightProps } from "../types";
 
 import { DefaultDashboardInsightWithDrillSelect } from "./DefaultDashboardInsightWithDrillSelect";
 import { InsightDrillDialog } from "./InsightDrillDialog";
+import { IDashboardInsightProps } from "../types";
+import { DashboardInsightPropsProvider, useDashboardInsightProps } from "../DashboardInsightPropsContext";
 
 /**
  * @internal
  */
-export const DefaultDashboardInsightWithDrillDialog = (props: IDefaultDashboardInsightProps): JSX.Element => {
+export const DefaultDashboardInsightWithDrillDialogInner = (): JSX.Element => {
+    const props = useDashboardInsightProps();
     const [drillSteps, setDrillSteps] = useState<DrillStep[]>([]);
     const activeDrillStep = last(drillSteps);
     const insight = activeDrillStep?.insight;
@@ -61,5 +63,16 @@ export const DefaultDashboardInsightWithDrillDialog = (props: IDefaultDashboardI
                 />
             )}
         </>
+    );
+};
+
+/**
+ * @internal
+ */
+export const DefaultDashboardInsightWithDrillDialog = (props: IDashboardInsightProps): JSX.Element => {
+    return (
+        <DashboardInsightPropsProvider {...props}>
+            <DefaultDashboardInsightWithDrillDialogInner />
+        </DashboardInsightPropsProvider>
     );
 };

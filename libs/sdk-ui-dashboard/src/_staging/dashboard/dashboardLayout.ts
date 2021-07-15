@@ -1,9 +1,9 @@
 // (C) 2021 GoodData Corporation
 
 import {
-    DashboardWidget,
     IDashboardLayout,
     IDashboardLayoutItem,
+    IDashboardWidget,
     ISettings,
     isInsightWidget,
     isKpiWidget,
@@ -19,7 +19,7 @@ import {
 } from "../../layout/DefaultDashboardLayoutRenderer";
 
 function extractContentFromWidget(
-    widget: DashboardWidget,
+    widget: IDashboardWidget,
     insightsById: Record<string, IInsight>,
 ): { type: WidgetType; content?: MeasurableWidgetContent } {
     if (isInsightWidget(widget)) {

@@ -18,8 +18,12 @@ import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { DashboardComponentsProvider, useDashboardComponentsContext } from "../dashboardContexts";
 import { DefaultFilterBar } from "../filterBar";
-import { DefaultDashboardInsightWithDrillDialog, DefaultDashboardKpi } from "../widget";
-import { DashboardLayout, DefaultDashboardLayout, DefaultDashboardWidget } from "../layout";
+import {
+    DefaultDashboardInsightWithDrillDialogInner,
+    DefaultDashboardKpiInner,
+    DefaultDashboardWidgetInner,
+} from "../widget";
+import { DashboardLayout, DefaultDashboardLayout } from "../layout";
 import { IntlWrapper } from "../localization";
 import {
     changeAttributeFilterSelection,
@@ -242,10 +246,10 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         LoadingComponent={props.LoadingComponent ?? DefaultLoading}
                         LayoutComponent={props.dashboardLayoutConfig?.Component ?? DefaultDashboardLayout}
                         InsightComponent={
-                            props.widgetConfig?.insight?.Component ?? DefaultDashboardInsightWithDrillDialog
+                            props.InsightComponent ?? DefaultDashboardInsightWithDrillDialogInner
                         }
-                        KpiComponent={props.widgetConfig?.kpi?.Component ?? DefaultDashboardKpi}
-                        WidgetComponent={props.widgetConfig?.Component ?? DefaultDashboardWidget}
+                        KpiComponent={props.KpiComponent ?? DefaultDashboardKpiInner}
+                        WidgetComponent={props.WidgetComponent ?? DefaultDashboardWidgetInner}
                     >
                         <DashboardLoading {...props} />
                     </DashboardComponentsProvider>

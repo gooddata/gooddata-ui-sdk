@@ -16,24 +16,27 @@ import { DashboardKpiProps } from "../types";
 
 import { KpiExecutor } from "./KpiExecutor";
 import { useKpiData } from "./useKpiData";
+import { DashboardKpiPropsProvider, useDashboardKpiProps } from "../DashboardKpiPropsContext";
 
 /**
  * @internal
  */
-export const DefaultDashboardKpi: React.FC<DashboardKpiProps> = ({
-    kpiWidget,
-    alert,
-    filters,
-    onFiltersChange,
-    drillableItems,
-    onDrill,
-    onError,
-    backend: customBackend,
-    workspace: customWorkspace,
-    ErrorComponent: CustomErrorComponent,
-    LoadingComponent: CustomLoadingComponent,
-}) => {
+export const DefaultDashboardKpiInner = (): JSX.Element => {
+    const {
+        kpiWidget,
+        alert,
+        filters,
+        onFiltersChange,
+        drillableItems,
+        onDrill,
+        onError,
+        backend: customBackend,
+        workspace: customWorkspace,
+        ErrorComponent: CustomErrorComponent,
+        LoadingComponent: CustomLoadingComponent,
+    } = useDashboardKpiProps();
     invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
+
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
@@ -54,7 +57,6 @@ export const DefaultDashboardKpi: React.FC<DashboardKpiProps> = ({
         filters,
         filterContext,
         workspace,
-        onError,
     });
 
     if (kpiData.status === "loading" || kpiData.status === "pending") {
@@ -86,5 +88,16 @@ export const DefaultDashboardKpi: React.FC<DashboardKpiProps> = ({
             LoadingComponent={LoadingComponent}
             isReadOnly={isReadOnly}
         />
+    );
+};
+
+/**
+ * @internal
+ */
+export const DefaultDashboardKpi = (props: DashboardKpiProps): JSX.Element => {
+    return (
+        <DashboardKpiPropsProvider {...props}>
+            <DefaultDashboardKpiInner />
+        </DashboardKpiPropsProvider>
     );
 };

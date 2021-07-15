@@ -13,49 +13,42 @@ import {
 } from "../../drill/types";
 
 ///
-/// Core props
-///
-
-/**
- * The necessary props a component must be able to handle for it to be usable as a DashboardInsight.
- * @internal
- */
-export interface IDashboardInsightCoreProps {
-    widget: IInsightWidget;
-    insight: IInsight;
-    clientHeight?: number;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    onDrill?: OnDashboardDrill;
-    onError?: OnError;
-}
-
-///
 /// Custom component types
 ///
 
 /**
  * @internal
  */
-export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightCoreProps>;
+export type CustomDashboardInsightComponent = ComponentType;
 
 ///
-/// Default component props
+/// Component props
 ///
 
 /**
- * Props of the default DashboardInsight implementation: {@link DefaultDashboardInsight}.
  * @internal
  */
-export interface IDefaultDashboardInsightProps extends IDashboardInsightCoreProps {
+export interface IDashboardInsightProps {
+    widget: IInsightWidget;
+    insight: IInsight;
+
+    filters?: FilterContextItem[];
+
+    clientHeight?: number;
+
     backend?: IAnalyticalBackend;
     workspace?: string;
-    filters?: FilterContextItem[];
+
+    disableWidgetImplicitDrills?: boolean;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    onDrill?: OnDashboardDrill;
     onDrillDown?: OnDrillDown;
     onDrillToInsight?: OnDrillToInsight;
     onDrillToDashboard?: OnDrillToDashboard;
     onDrillToAttributeUrl?: OnDrillToAttributeUrl;
     onDrillToCustomUrl?: OnDrillToCustomUrl;
-    disableWidgetImplicitDrills?: boolean;
+
+    onError?: OnError;
     ErrorComponent?: ComponentType<IErrorProps>;
     LoadingComponent?: ComponentType<ILoadingProps>;
 }

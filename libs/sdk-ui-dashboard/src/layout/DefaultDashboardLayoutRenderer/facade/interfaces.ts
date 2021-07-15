@@ -11,9 +11,9 @@ import {
     IWidget,
     IWidgetDefinition,
     ScreenSize,
-    DashboardWidget,
     IDashboardLayout,
     IDashboardLayoutSection,
+    IDashboardWidget,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 
@@ -47,7 +47,7 @@ export interface IDashboardLayoutItemFacade<TWidget> {
     isInsightWidgetItem(): this is IDashboardLayoutItemFacade<IInsightWidget>;
     isInsightWidgetDefinitionItem(): this is IDashboardLayoutItemFacade<IInsightWidgetDefinition>;
     isLayoutItem(): this is IDashboardLayoutItemFacade<IDashboardLayout<TWidget>>;
-    isCustomItem(): this is IDashboardLayoutItemFacade<Exclude<TWidget, DashboardWidget>>;
+    isCustomItem(): this is IDashboardLayoutItemFacade<Exclude<TWidget, IDashboardWidget>>;
     isWidgetItemWithRef(ref: ObjRef): boolean;
     isWidgetItemWithInsightRef(ref: ObjRef): boolean;
     isWidgetItemWithKpiRef(ref: ObjRef): boolean;
