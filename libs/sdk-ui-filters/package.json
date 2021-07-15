@@ -58,7 +58,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/goodstrap": "^70.2.2",
+        "@gooddata/goodstrap": "^70.3.0",
         "@gooddata/numberjs": "^3.2.5",
         "@gooddata/sdk-backend-spi": "^8.6.0-alpha.10",
         "@gooddata/sdk-model": "^8.6.0-alpha.10",
@@ -67,7 +67,7 @@
         "@gooddata/util": "^8.6.0-alpha.10",
         "classnames": "^2.3.1",
         "downshift": "^3.4.7",
-        "fixed-data-table-2": "^0.8.21",
+        "fixed-data-table-2": "^1.2.0",
         "hoist-non-react-statics": "^3.3.0",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
