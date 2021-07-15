@@ -19,6 +19,7 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+import values from "lodash/values";
 
 /**
  * Configuration for the ObjRefMap.
@@ -34,12 +35,12 @@ export type ObjRefMapConfig<T> = {
     /**
      * Function that extracts `id` from object
      */
-    readonly idExtract: (obj: T) => Identifier | undefined;
+    readonly idExtract: (obj: T) => Identifier;
 
     /**
      * Function that extracts `uri` from object
      */
-    readonly uriExtract: (obj: T) => string | undefined;
+    readonly uriExtract: (obj: T) => string;
 
     /**
      * Indicates whether strict idRef type-checking is desired. Some backends (e.g. tiger) have identifier
@@ -95,53 +96,29 @@ export class ObjRefMap<T> {
         return !this.config.strictTypeCheck || !type ? identifier : `${identifier}#${type}`;
     };
 
-    private shouldInsert = (uri?: string, identifier?: Identifier): boolean => {
-        if (uri && identifier) {
-            const hasUriEntry = this.itemsByUri[uri] !== undefined;
-            const hasIdentifierEntry = this.itemsByIdentifier[identifier] !== undefined;
-
-            // when item has both uri & id, then it is expected that entries either exist or do not exist in _both_
-            //  maps.
-            invariant(hasUriEntry === hasIdentifierEntry);
-
-            return !hasUriEntry;
-        }
-
-        if (uri) {
-            return this.itemsByUri[uri] === undefined;
-        }
-
-        if (identifier) {
-            return this.itemsByIdentifier[identifier] === undefined;
-        }
-
-        return false;
-    };
-
     private addItem = (item: T) => {
         const { refExtract, uriExtract, idExtract } = this.config;
 
         const uri = uriExtract(item);
         const identifier = idExtract(item);
 
-        if (!this.shouldInsert(uri, identifier)) {
-            return;
-        }
-
-        if (uri) {
-            this.itemsByUri[uri] = item;
-        }
-
-        if (identifier) {
-            this.itemsByIdentifier[this.idRefToKey(identifier, this.config.type)] = item;
-        }
-
+        this.itemsByUri[uri] = item;
+        this.itemsByIdentifier[this.idRefToKey(identifier, this.config.type)] = item;
         this.items.push([refExtract(item), item]);
         this.size++;
     };
 
+    private cleanupUnmappedItems = () => {
+        const allItems = values(this.itemsByUri).concat(values(this.itemsByIdentifier));
+
+        this.items = this.items.filter(([_, item]) => {
+            return allItems.find((mappedItem) => mappedItem === item);
+        });
+    };
+
     public fromItems = (items: ReadonlyArray<T>): ObjRefMap<T> => {
         items.forEach(this.addItem);
+        this.cleanupUnmappedItems();
 
         return this;
     };
@@ -273,7 +250,7 @@ export function newAttributeMap(
 /**
  * Creates {@link ObjRefMap} for any object of any type granted that it contains `ref` property with ObjRef.
  *
- * The map will be setup so that it extracts id and/or uri from the `ref` - thus ensuring that objects that are
+ * The map will be setup so that it extracts id and uri from the `ref` - thus ensuring that objects that are
  * both uri and identifier refs are indexed properly.
  *
  * Storing objects whose `ref` is of both types then allows lookup of those objects externally using either id
@@ -291,8 +268,16 @@ export function newMapForObjectWithRef<T extends { ref: ObjRef }>(
     const map = new ObjRefMap<T>({
         type,
         strictTypeCheck,
-        idExtract: (i) => (isIdentifierRef(i.ref) ? i.ref.identifier : undefined),
-        uriExtract: (i) => (isUriRef(i.ref) ? i.ref.uri : undefined),
+        idExtract: (i) => {
+            invariant(isIdentifierRef(i.ref));
+
+            return i.ref.identifier;
+        },
+        uriExtract: (i) => {
+            invariant(isUriRef(i.ref));
+
+            return i.ref.uri;
+        },
         refExtract: (i) => i.ref,
     });
 
