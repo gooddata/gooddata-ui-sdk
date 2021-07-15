@@ -75,13 +75,29 @@ export type DashboardStoreConfig = {
      * and add new services.
      */
     queryServices?: IDashboardQueryService<any, any>[];
+
+    /**
+     * Optionally specify background workers implementations.
+     * Workers are redux-saga iterators that run on the background, they can listen to dashboard events and fire dashboard commands.
+     * All the provided workers will run in parallel on the background.
+     * Background workers are processed last in the chain of all command and event processing.
+     */
+    backgroundWorkers: (() => SagaIterator<void>)[];
 };
 
-function* rootSaga(eventEmitter: Saga, commandHandler: Saga, queryProcessor: Saga): SagaIterator<void> {
+function* rootSaga(
+    eventEmitter: Saga,
+    commandHandler: Saga,
+    queryProcessor: Saga,
+    backgroundWorkers: (() => SagaIterator<void>)[],
+): SagaIterator<void> {
     try {
         yield fork(eventEmitter);
         yield fork(commandHandler);
         yield fork(queryProcessor);
+        for (const worker of backgroundWorkers) {
+            yield fork(worker);
+        }
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Root saga failed", e);
@@ -210,6 +226,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         rootEventEmitter.eventEmitterSaga,
         rootCommandHandler,
         queryProcessing.rootQueryProcessor,
+        config.backgroundWorkers,
     );
 
     return {

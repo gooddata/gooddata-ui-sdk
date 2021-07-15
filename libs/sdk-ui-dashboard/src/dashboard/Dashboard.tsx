@@ -231,6 +231,8 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             backend={props.backend}
             workspace={props.workspace}
             eventHandlers={props.eventHandlers}
+            config={props.config}
+            permissions={props.permissions}
         >
             <ToastMessageContextProvider>
                 <ThemeProvider

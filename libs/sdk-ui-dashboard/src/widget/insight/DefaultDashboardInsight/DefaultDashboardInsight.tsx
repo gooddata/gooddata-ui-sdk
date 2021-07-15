@@ -1,13 +1,14 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useMemo, useState, CSSProperties } from "react";
+import React, { useCallback, useMemo, useState, CSSProperties, useEffect } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { insightVisualizationUrl } from "@gooddata/sdk-model";
+import { insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IntlWrapper,
     OnError,
     OnLoadingChanged,
     useBackendStrict,
+    usePrevious,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { InsightError, InsightRenderer } from "@gooddata/sdk-ui-ext";
@@ -26,6 +27,7 @@ import { IDefaultDashboardInsightProps } from "../types";
 import { useResolveDashboardInsightFilters } from "./useResolveDashboardInsightFilters";
 import { useResolveDashboardInsightProperties } from "./useResolveDashboardInsightProperties";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
+import { useDashboardExportAsyncRender } from "../../../export/useDashboardExport";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative" };
 
@@ -122,6 +124,27 @@ export const DefaultDashboardInsight: React.FC<IDefaultDashboardInsightProps> = 
                 insight && insightVisualizationUrl(insight).includes("headline") ? "relative" : "absolute",
         };
     }, [insight]);
+
+    const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardExportAsyncRender(
+        objRefToString(widget.ref),
+    );
+
+    const prevIsVisualizationLoading = usePrevious(isVisualizationLoading);
+    useEffect(() => {
+        if (!prevIsVisualizationLoading && isVisualizationLoading) {
+            onRequestAsyncRender();
+        } else if (prevIsVisualizationLoading && !isVisualizationLoading) {
+            onResolveAsyncRender();
+        }
+    }, [
+        isVisualizationLoading,
+        prevIsVisualizationLoading,
+        onRequestAsyncRender,
+        onResolveAsyncRender,
+        widget,
+    ]);
+
+    // on drillChange
 
     const error = insightWithAddedFilters.error ?? visualizationError;
 

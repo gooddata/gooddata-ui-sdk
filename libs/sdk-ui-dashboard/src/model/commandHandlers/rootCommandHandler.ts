@@ -35,6 +35,8 @@ import { drillToDashboardHandler } from "./drill/drillToDashboardHandler";
 import { changeFilterContextSelectionHandler } from "./filterContext/changeFilterContextSelectionHandler";
 import { drillToLegacyDashboardHandler } from "./drill/drillToLegacyDashboardHandler";
 import { logUserInteractionHandler } from "./logUserInteraction/logUserInteractionHandler";
+import { requestAsyncRenderForExportHandler } from "./export/requestAsyncRenderForExportHandler";
+import { resolveAsyncRenderForExportHandler } from "./export/resolveAsyncItemRenderForExportHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -84,6 +86,8 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL": drillToAttributeUrlHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL": drillToCustomUrlHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD": drillToLegacyDashboardHandler,
+    "GDC.DASH/CMD.EXPORT.ASYNC_RENDER.REQUEST": requestAsyncRenderForExportHandler,
+    "GDC.DASH/CMD.EXPORT.ASYNC_RENDER.RESOLVE": resolveAsyncRenderForExportHandler,
 };
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {

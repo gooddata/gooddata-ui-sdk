@@ -1,4 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
+import { useCallback } from "react";
 import { v4 as uuid } from "uuid";
 
 import { DashboardCommands } from "../commands";
@@ -24,15 +25,15 @@ import { useDashboardDispatch } from "./DashboardStoreProvider";
  */
 export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs extends any[]>(
     commandCreator: (...args: TArgs) => TCommand,
-    eventHandlers: {
+    eventHandlers?: {
         [eventType in DashboardEventType]?: (event: Extract<DashboardEvents, { type: eventType }>) => void;
     },
-    onBeforeRun: (command: TCommand) => void,
+    onBeforeRun?: (command: TCommand) => void,
 ): ((...args: TArgs) => void) => {
     const dispatch = useDashboardDispatch();
     const { registerHandler, unregisterHandler } = useDashboardEventsContext();
 
-    const run = (...args: TArgs) => {
+    const run = useCallback((...args: TArgs) => {
         let command = commandCreator(...args);
 
         const correlationId = command.correlationId ?? uuid();
@@ -44,19 +45,21 @@ export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs ex
             };
         }
 
-        const dashboardEventHandlers = Object.keys(eventHandlers).map((eventType) => {
-            const dashboardEventHandler: DashboardEventHandler = {
-                eval: (eT) => eT.type === eventType,
-                handler: (event) => {
-                    if (event.correlationId === correlationId) {
-                        unregisterHandlers();
-                        eventHandlers[eventType](event);
-                    }
-                },
-            };
+        const dashboardEventHandlers = eventHandlers
+            ? Object.keys(eventHandlers).map((eventType) => {
+                  const dashboardEventHandler: DashboardEventHandler = {
+                      eval: (eT) => eT.type === eventType,
+                      handler: (event) => {
+                          if (event.correlationId === correlationId) {
+                              unregisterHandlers();
+                              eventHandlers[eventType](event);
+                          }
+                      },
+                  };
 
-            return dashboardEventHandler;
-        });
+                  return dashboardEventHandler;
+              })
+            : [];
 
         dashboardEventHandlers.forEach((handler) => {
             registerHandler(handler);
@@ -70,7 +73,7 @@ export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs ex
 
         onBeforeRun?.(command);
         dispatch(command);
-    };
+    }, []);
 
     return run;
 };

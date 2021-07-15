@@ -49,6 +49,7 @@ import {
     DrillToLegacyDashboard,
 } from "./drill";
 import { LogUserInteraction } from "./logUserInteraction";
+import { RequestAsyncRenderForExport, ResolveAsyncRenderForExport } from "./export";
 
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
 export {
@@ -161,6 +162,8 @@ export {
 
 export { LogUserInteraction, UserInteraction, logUserInteraction } from "./logUserInteraction";
 
+export { RequestAsyncRenderForExport, ResolveAsyncRenderForExport } from "./export";
+
 /**
  * @internal
  */
@@ -209,4 +212,6 @@ export type DashboardCommands =
     | DrillToCustomUrl
     | DrillToDashboard
     | DrillToInsight
-    | DrillToLegacyDashboard;
+    | DrillToLegacyDashboard
+    | RequestAsyncRenderForExport
+    | ResolveAsyncRenderForExport;

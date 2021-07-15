@@ -54,6 +54,7 @@ import {
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
 import { DashboardUserInteractionLogged } from "./logUserInteraction";
+import { DashboardAsyncRenderForExportRequested, DashboardAsyncRenderForExportResolved } from "./export";
 import {
     DashboardDrillDownTriggered,
     DashboardDrillToAttributeUrlTriggered,
@@ -144,7 +145,7 @@ export {
     drillTriggered,
 } from "./drill";
 export { DashboardUserInteractionLogged, userInteractionLogged } from "./logUserInteraction";
-
+export { DashboardAsyncRenderForExportRequested, DashboardAsyncRenderForExportResolved } from "./export";
 /**
  * @internal
  */
@@ -200,4 +201,6 @@ export type DashboardEvents =
     | DashboardDrillToDashboardTriggered
     | DashboardDrillToInsightTriggered
     | DashboardDrillToLegacyDashboardTriggered
-    | DashboardDrillTriggered;
+    | DashboardDrillTriggered
+    | DashboardAsyncRenderForExportRequested
+    | DashboardAsyncRenderForExportResolved;

@@ -90,6 +90,13 @@ export type DashboardConfig = {
      * Defaults to false.
      */
     isEmbedded?: boolean;
+
+    /**
+     * When dashboard is executed in export mode, this property must be set to true.
+     *
+     * Defaults to false.
+     */
+    isExport?: boolean;
 };
 
 /**
