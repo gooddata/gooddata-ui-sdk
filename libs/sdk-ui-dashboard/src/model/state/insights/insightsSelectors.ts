@@ -2,9 +2,10 @@
 import { insightsAdapter } from "./insightsEntityAdapter";
 import { DashboardState } from "../types";
 import { createSelector } from "@reduxjs/toolkit";
-import { insightRef, serializeObjRef } from "@gooddata/sdk-model";
-import { ObjRef } from "@gooddata/sdk-model";
+import { insightRef, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import memoize from "lodash/memoize";
+import { newInsightMap } from "../../../_staging/metadata/objRefMap";
+import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
 
 const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => state.insights);
 
@@ -25,22 +26,25 @@ export const selectInsightRefs = createSelector(selectInsights, (insights) => {
 });
 
 /**
- * Selects all insights used on the dashboard in an ID to IInsight dictionary.
+ * Selects all insights and returns them in a mapping of obj ref to the insight object.
  *
  * @internal
  */
-export const selectInsightsById = entitySelectors.selectEntities;
+export const selectInsightsMap = createSelector(
+    selectInsights,
+    selectBackendCapabilities,
+    (insights, capabilities) => {
+        return newInsightMap(insights, capabilities.hasTypeScopedIdentifiers);
+    },
+);
 
 /**
- * Selects insight by its ref.
+ * Selects insight used on a dashboard by its ref.
  *
  * @internal
  */
 export const selectInsightByRef = memoize((ref: ObjRef) => {
-    return createSelector(
-        (state: DashboardState) => state,
-        (state) => {
-            return entitySelectors.selectById(state, serializeObjRef(ref));
-        },
-    );
+    return createSelector(selectInsightsMap, (insights) => {
+        return insights.get(ref);
+    });
 }, serializeObjRef);

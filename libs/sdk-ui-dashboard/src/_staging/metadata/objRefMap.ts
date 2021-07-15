@@ -7,7 +7,18 @@ import {
     ICatalogDateDataset,
     IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
-import { Identifier, isIdentifierRef, ObjectType, ObjRef } from "@gooddata/sdk-model";
+import {
+    Identifier,
+    IInsight,
+    insightId,
+    insightRef,
+    insightUri,
+    isIdentifierRef,
+    isUriRef,
+    ObjectType,
+    ObjRef,
+} from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
 
 /**
  * Configuration for the ObjRefMap.
@@ -23,12 +34,12 @@ export type ObjRefMapConfig<T> = {
     /**
      * Function that extracts `id` from object
      */
-    readonly idExtract: (obj: T) => Identifier;
+    readonly idExtract: (obj: T) => Identifier | undefined;
 
     /**
      * Function that extracts `uri` from object
      */
-    readonly uriExtract: (obj: T) => string;
+    readonly uriExtract: (obj: T) => string | undefined;
 
     /**
      * Indicates whether strict idRef type-checking is desired. Some backends (e.g. tiger) have identifier
@@ -43,7 +54,7 @@ export type ObjRefMapConfig<T> = {
     /**
      * Type of object stored in the map.
      */
-    readonly type: ObjectType;
+    readonly type?: ObjectType;
 };
 
 /**
@@ -80,28 +91,60 @@ export class ObjRefMap<T> {
 
     constructor(private readonly config: ObjRefMapConfig<T>) {}
 
-    private idRefToKey(identifier: string, type?: ObjectType): string {
+    private idRefToKey = (identifier: string, type?: ObjectType): string => {
         return !this.config.strictTypeCheck || !type ? identifier : `${identifier}#${type}`;
-    }
+    };
 
-    public fromItems(items: ReadonlyArray<T>): ObjRefMap<T> {
+    private shouldInsert = (uri?: string, identifier?: Identifier): boolean => {
+        if (uri && identifier) {
+            const hasUriEntry = this.itemsByUri[uri] !== undefined;
+            const hasIdentifierEntry = this.itemsByIdentifier[identifier] !== undefined;
+
+            // when item has both uri & id, then it is expected that entries either exist or do not exist in _both_
+            //  maps.
+            invariant(hasUriEntry === hasIdentifierEntry);
+
+            return !hasUriEntry;
+        }
+
+        if (uri) {
+            return this.itemsByUri[uri] === undefined;
+        }
+
+        if (identifier) {
+            return this.itemsByIdentifier[identifier] === undefined;
+        }
+
+        return false;
+    };
+
+    private addItem = (item: T) => {
         const { refExtract, uriExtract, idExtract } = this.config;
 
-        items.forEach((i) => {
-            const uri = uriExtract(i);
+        const uri = uriExtract(item);
+        const identifier = idExtract(item);
 
-            if (this.itemsByUri[uri]) {
-                return;
-            }
+        if (!this.shouldInsert(uri, identifier)) {
+            return;
+        }
 
-            this.itemsByUri[uri] = i;
-            this.itemsByIdentifier[`${this.idRefToKey(idExtract(i), this.config.type)}`] = i;
-            this.items.push([refExtract(i), i]);
-            this.size++;
-        });
+        if (uri) {
+            this.itemsByUri[uri] = item;
+        }
+
+        if (identifier) {
+            this.itemsByIdentifier[this.idRefToKey(identifier, this.config.type)] = item;
+        }
+
+        this.items.push([refExtract(item), item]);
+        this.size++;
+    };
+
+    public fromItems = (items: ReadonlyArray<T>): ObjRefMap<T> => {
+        items.forEach(this.addItem);
 
         return this;
-    }
+    };
 
     public [Symbol.iterator](): IterableIterator<[ObjRef, T]> {
         return this.items[Symbol.iterator]();
@@ -126,6 +169,10 @@ export class ObjRefMap<T> {
         }
 
         return this.itemsByUri[key.uri];
+    }
+
+    public has(key: ObjRef): boolean {
+        return this.get(key) !== undefined;
     }
 
     public keys(): IterableIterator<ObjRef> {
@@ -218,6 +265,56 @@ export function newAttributeMap(
         type: "attribute",
         strictTypeCheck,
         ...metadataObjectExtractors,
+    });
+
+    return map.fromItems(items);
+}
+
+/**
+ * Creates {@link ObjRefMap} for any object of any type granted that it contains `ref` property with ObjRef.
+ *
+ * The map will be setup so that it extracts id and/or uri from the `ref` - thus ensuring that objects that are
+ * both uri and identifier refs are indexed properly.
+ *
+ * Storing objects whose `ref` is of both types then allows lookup of those objects externally using either id
+ * or uri.
+ *
+ * @param items - items to insert
+ * @param type - type of objects, may be undefined
+ * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ */
+export function newMapForObjectWithRef<T extends { ref: ObjRef }>(
+    items: T[],
+    type?: ObjectType,
+    strictTypeCheck: boolean = false,
+): ObjRefMap<T> {
+    const map = new ObjRefMap<T>({
+        type,
+        strictTypeCheck,
+        idExtract: (i) => (isIdentifierRef(i.ref) ? i.ref.identifier : undefined),
+        uriExtract: (i) => (isUriRef(i.ref) ? i.ref.uri : undefined),
+        refExtract: (i) => i.ref,
+    });
+
+    return map.fromItems(items);
+}
+
+/**
+ * Creates {@link ObjRefMap} for insights.
+ *
+ * @param items - items to add into mapping
+ * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ */
+export function newInsightMap(
+    items: ReadonlyArray<IInsight>,
+    strictTypeCheck: boolean = false,
+): ObjRefMap<IInsight> {
+    const map = new ObjRefMap<IInsight>({
+        type: "insight",
+        strictTypeCheck,
+        idExtract: insightId,
+        uriExtract: insightUri,
+        refExtract: insightRef,
     });
 
     return map.fromItems(items);

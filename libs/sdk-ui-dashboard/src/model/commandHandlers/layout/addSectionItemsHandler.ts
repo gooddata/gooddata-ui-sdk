@@ -13,7 +13,7 @@ import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
 import { layoutSectionItemsAdded } from "../../events/layout";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps";
-import { selectInsightRefs } from "../../state/insights/insightsSelectors";
+import { selectInsightsMap } from "../../state/insights/insightsSelectors";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { loadInsightsForDashboardItems } from "./common/loadMissingInsights";
 import { batchActions } from "redux-batched-actions";
@@ -24,7 +24,7 @@ type AddSectionItemsContext = {
     readonly cmd: AddSectionItems;
     readonly layout: ReturnType<typeof selectLayout>;
     readonly stash: ReturnType<typeof selectStash>;
-    readonly insightRefs: ReturnType<typeof selectInsightRefs>;
+    readonly availableInsights: ReturnType<typeof selectInsightsMap>;
 };
 
 function validateAndResolve(commandCtx: AddSectionItemsContext) {
@@ -80,7 +80,7 @@ export function* addSectionItemsHandler(ctx: DashboardContext, cmd: AddSectionIt
         cmd,
         layout: yield select(selectLayout),
         stash: yield select(selectStash),
-        insightRefs: yield select(selectInsightRefs),
+        availableInsights: yield select(selectInsightsMap),
     };
 
     const { stashValidationResult, section } = validateAndResolve(commandCtx);
@@ -89,7 +89,7 @@ export function* addSectionItemsHandler(ctx: DashboardContext, cmd: AddSectionIt
     const insightsToAdd: PromiseFnReturnType<typeof loadInsightsForDashboardItems> = yield call(
         loadInsightsForDashboardItems,
         ctx,
-        commandCtx.insightRefs,
+        commandCtx.availableInsights,
         stashValidationResult.resolved,
     );
 

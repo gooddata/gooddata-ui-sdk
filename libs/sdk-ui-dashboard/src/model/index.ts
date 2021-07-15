@@ -71,7 +71,7 @@ export {
 export {
     selectInsights,
     selectInsightRefs,
-    selectInsightsById,
+    selectInsightsMap,
     selectInsightByRef,
 } from "./state/insights/insightsSelectors";
 export { CatalogState } from "./state/catalog/catalogState";
