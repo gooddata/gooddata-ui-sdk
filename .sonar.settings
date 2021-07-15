@@ -6,7 +6,7 @@ sonar.sources=examples,libs,skel,tools
 sonar.exclusions=**/generated/**, libs/sdk-ui-tests-e2e/recordings/**
 
 # SonarQube needs additional steps before it can fully audit the repo
-# for now just installing the dependencies
-gdc.sonar.prebuild=node "./common/scripts/install-run-rush.js" install
+# for now mainly just installing the dependencies
+gdc.sonar.prebuild=./common/scripts/ci/sonar_prepare.sh
 gdc.sonar.prebuild_img=node:12.20.1
 gdc.sonar.prebuild_docker_params=-e USERID=$(id -u $USER) -e NPM_AUTH_TOKEN
