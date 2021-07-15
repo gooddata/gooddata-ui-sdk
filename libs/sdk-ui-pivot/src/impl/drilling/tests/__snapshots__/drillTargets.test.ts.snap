@@ -43,25 +43,6 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "attr.owner.department",
-              "name": "Department",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1088",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/1088",
-            },
-            "identifier": "label.owner.department",
-            "localIdentifier": "a_label.owner.department",
-            "name": "Department",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1089",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/1089",
-          },
-        },
       ],
     },
     Object {

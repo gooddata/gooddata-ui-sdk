@@ -5,7 +5,19 @@ import {
     IAvailableDrillTargetMeasure,
     IAvailableDrillTargets,
 } from "@gooddata/sdk-ui";
-import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import { areObjRefsEqual } from "@gooddata/sdk-model";
+
+function getIntersectionAttributes(
+    fromAttribute: IAttributeDescriptor,
+    attributes: IAttributeDescriptor[],
+): IAttributeDescriptor[] {
+    const indexOfFromAttribute = attributes.findIndex((attribute) =>
+        areObjRefsEqual(attribute.attributeHeader.ref, fromAttribute.attributeHeader.ref),
+    );
+
+    return attributes.slice(0, indexOfFromAttribute + 1);
+}
 
 export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
     const measureDescriptors = dv
@@ -23,7 +35,7 @@ export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTar
         .attributeDescriptorsForDim(0)
         .map((attribute, _index, attributes) => ({
             attribute,
-            intersectionAttributes: attributes,
+            intersectionAttributes: getIntersectionAttributes(attribute, attributes),
         }));
 
     return {
