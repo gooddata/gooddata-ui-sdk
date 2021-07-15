@@ -91,9 +91,6 @@ export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 // @alpha
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
 
-// @alpha
-export type DashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<DashboardWidget>;
-
 // @public
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
@@ -440,21 +437,21 @@ export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboard
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
 
 // @alpha
-export interface IDashboardLayout<TWidget = DashboardWidget> {
+export interface IDashboardLayout<TWidget = IDashboardWidget> {
     sections: IDashboardLayoutSection<TWidget>[];
     size?: IDashboardLayoutSize;
     type: "IDashboardLayout";
 }
 
 // @alpha
-export interface IDashboardLayoutItem<TWidget = DashboardWidget> {
+export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
     size: IDashboardLayoutSizeByScreenSize;
     type: "IDashboardLayoutItem";
     widget?: TWidget;
 }
 
 // @alpha
-export interface IDashboardLayoutSection<TWidget = DashboardWidget> {
+export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
     header?: IDashboardLayoutSectionHeader;
     items: IDashboardLayoutItem<TWidget>[];
     type: "IDashboardLayoutSection";
@@ -500,6 +497,9 @@ export interface IDashboardReferences {
     // (undocumented)
     insights: IInsight[];
 }
+
+// @alpha
+export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
 
 // @alpha
 export interface IDashboardWithReferences {
@@ -1163,7 +1163,7 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
 
 // @alpha
-export function isDashboardLayout<TWidget = DashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
+export function isDashboardLayout<TWidget = IDashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
 
 // @alpha
 export const isDashboardLayoutEmpty: (layout: IDashboardLayout<any>) => boolean;
@@ -1178,7 +1178,7 @@ export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboa
 export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;
 
 // @alpha
-export const isDashboardWidget: (obj: unknown) => obj is DashboardWidget;
+export const isDashboardWidget: (obj: unknown) => obj is IDashboardWidget;
 
 // @public
 export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataObject;
@@ -1655,7 +1655,7 @@ export interface IWidgetReferences {
 }
 
 // @alpha
-export interface IWidgetWithLayoutPath<TWidget = DashboardWidget> {
+export interface IWidgetWithLayoutPath<TWidget = IDashboardWidget> {
     // (undocumented)
     path: LayoutPath;
     // (undocumented)
@@ -1883,10 +1883,10 @@ export type KpiDrillDefinition = IDrillToLegacyDashboard;
 export type LayoutPath = Array<string | number>;
 
 // @alpha (undocumented)
-export function layoutWidgets<TWidget extends DashboardWidget>(layout: IDashboardLayout<TWidget>): Array<IWidgetDefinition | IWidget>;
+export function layoutWidgets<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>): Array<IWidgetDefinition | IWidget>;
 
 // @alpha
-export function layoutWidgetsWithPaths<TWidget extends DashboardWidget>(layout: IDashboardLayout<TWidget>): IWidgetWithLayoutPath<TWidget>[];
+export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>): IWidgetWithLayoutPath<TWidget>[];
 
 // @public
 export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject;
@@ -1988,7 +1988,7 @@ export function userFullName(user: IUser): string | undefined;
 export type ValidationContext = "CORS" | "UI_EVENT" | "DRILL_TO_URI";
 
 // @alpha
-export function walkLayout<TWidget extends DashboardWidget>(layout: IDashboardLayout<TWidget>, { sectionCallback, itemCallback, widgetCallback, }: {
+export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>, { sectionCallback, itemCallback, widgetCallback, }: {
     sectionCallback?: (section: IDashboardLayoutSection<TWidget>, sectionPath: LayoutPath) => void;
     itemCallback?: (item: IDashboardLayoutItem<TWidget>, widgetPath: LayoutPath) => void;
     widgetCallback?: (widget: TWidget, widgetPath: LayoutPath) => void;

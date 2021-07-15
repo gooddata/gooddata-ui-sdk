@@ -10,7 +10,7 @@ import {
     widgetType as getWidgetType,
     WidgetType,
     isKpiWidget,
-    DashboardWidget,
+    IDashboardWidget,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IInsight, areObjRefsEqual } from "@gooddata/sdk-model";
 
@@ -22,13 +22,13 @@ import {
     getDashboardLayoutWidgetDefaultHeight,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
-import { DashboardWidgetPropsProvider, DashboardWidget as RenderDashboardWidget } from "../widget";
+import { DashboardWidgetPropsProvider, DashboardWidget } from "../widget";
 
 /**
  * @internal
  */
 export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
-    DashboardWidget,
+    IDashboardWidget,
     Pick<IDashboardWidgetRendererProps, "onError" | "onDrill" | "onFiltersChange" | "drillableItems">
 > = (props) => {
     const { item, screen, DefaultWidgetRenderer, drillableItems, onDrill, onFiltersChange, onError } = props;
@@ -92,7 +92,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 onFiltersChange={onFiltersChange}
                 widget={widget as IWidget}
             >
-                <RenderDashboardWidget />
+                <DashboardWidget />
             </DashboardWidgetPropsProvider>
         </DefaultWidgetRenderer>
     );

@@ -5,7 +5,7 @@ import {
     IDashboardLayoutItem,
     IDashboardLayoutSection,
     isDashboardLayout,
-    DashboardWidget,
+    IDashboardWidget,
 } from "./layout";
 import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "./widget";
 
@@ -34,7 +34,7 @@ export type LayoutPath = Array<string | number>;
  * @param callbacks - walk callbacks
  * @returns void
  */
-export function walkLayout<TWidget extends DashboardWidget>(
+export function walkLayout<TWidget extends IDashboardWidget>(
     layout: IDashboardLayout<TWidget>,
     {
         sectionCallback = noop,
@@ -76,7 +76,7 @@ export function walkLayout<TWidget extends DashboardWidget>(
  * Widget with it's layout path
  * @alpha
  */
-export interface IWidgetWithLayoutPath<TWidget = DashboardWidget> {
+export interface IWidgetWithLayoutPath<TWidget = IDashboardWidget> {
     path: LayoutPath;
     widget: TWidget;
 }
@@ -90,7 +90,7 @@ export interface IWidgetWithLayoutPath<TWidget = DashboardWidget> {
  * @param collectedWidgets - bag for collecting widgets recursively from the layout
  * @returns - widgets with layout paths
  */
-export function layoutWidgetsWithPaths<TWidget extends DashboardWidget>(
+export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget>(
     layout: IDashboardLayout<TWidget>,
 ): IWidgetWithLayoutPath<TWidget>[] {
     const collectedWidgets: IWidgetWithLayoutPath<TWidget>[] = [];
@@ -108,7 +108,7 @@ export function layoutWidgetsWithPaths<TWidget extends DashboardWidget>(
 /**
  * @alpha
  */
-export function layoutWidgets<TWidget extends DashboardWidget>(
+export function layoutWidgets<TWidget extends IDashboardWidget>(
     layout: IDashboardLayout<TWidget>,
 ): Array<IWidgetDefinition | IWidget>;
 
@@ -120,7 +120,7 @@ export function layoutWidgets<TWidget extends DashboardWidget>(
  * @param layout - dashboard layout
  * @returns - widgets
  */
-export function layoutWidgets<TWidget extends DashboardWidget>(
+export function layoutWidgets<TWidget extends IDashboardWidget>(
     layout: IDashboardLayout<TWidget>,
 ): Array<TWidget> {
     const collectedWidgets: Array<TWidget> = [];

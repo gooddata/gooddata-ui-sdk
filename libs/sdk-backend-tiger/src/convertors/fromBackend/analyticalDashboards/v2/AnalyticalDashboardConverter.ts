@@ -5,11 +5,11 @@ import {
     JsonApiFilterContextOutDocument,
 } from "@gooddata/api-client-tiger";
 import {
-    DashboardWidget,
     FilterContextItem,
     IDashboard,
     IDashboardDateFilterConfig,
     IDashboardLayout,
+    IDashboardWidget,
     IFilterContext,
     LayoutPath,
     walkLayout,
@@ -22,7 +22,7 @@ import { cloneWithSanitizedIds } from "../../IdSanitization";
 import { isInheritedObject } from "../../utils";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 
-function setWidgetRefsInLayout(layout: IDashboardLayout<DashboardWidget> | undefined) {
+function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
         return;
     }

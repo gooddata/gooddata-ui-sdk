@@ -17,7 +17,7 @@ import {
     IDashboardLayout,
     IDashboardLayoutItem,
     ScreenSize,
-    DashboardWidget,
+    IDashboardWidget,
     isWidget,
     isWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
@@ -124,7 +124,7 @@ export class DashboardLayoutItemFacade<TWidget> implements IDashboardLayoutItemF
     public isLayoutItem(): this is DashboardLayoutItemFacade<IDashboardLayout<TWidget>> {
         return isDashboardLayout(this.widget());
     }
-    public isCustomItem(): this is DashboardLayoutItemFacade<Exclude<TWidget, DashboardWidget>> {
+    public isCustomItem(): this is DashboardLayoutItemFacade<Exclude<TWidget, IDashboardWidget>> {
         return !isDashboardLayoutItem(this.widget());
     }
 

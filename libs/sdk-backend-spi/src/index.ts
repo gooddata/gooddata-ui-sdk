@@ -226,7 +226,7 @@ export {
 } from "./workspace/dashboards/filterContext";
 export {
     IDashboardLayout,
-    DashboardWidget,
+    IDashboardWidget,
     IDashboardLayoutSection,
     IDashboardLayoutSectionHeader,
     IDashboardLayoutSize,

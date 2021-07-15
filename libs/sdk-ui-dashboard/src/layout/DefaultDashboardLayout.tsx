@@ -6,7 +6,6 @@ import {
     widgetUri,
     isInsightWidget,
     isDashboardLayoutEmpty,
-    DashboardWidget,
 } from "@gooddata/sdk-backend-spi";
 import {
     ObjRef,
@@ -101,7 +100,7 @@ export const DefaultDashboardLayout = ({
 const polluteWidgetRefsWithBothIdAndUri =
     (getInsightByRef: (insightRef: ObjRef) => IInsight | undefined): DashboardLayoutItemModifications =>
     (item) =>
-        item.widget((c: DashboardWidget | undefined) => {
+        item.widget((c) => {
             let updatedContent = c;
             if (isWidget(updatedContent)) {
                 updatedContent = {

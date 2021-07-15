@@ -7,7 +7,6 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
-import { DashboardWidget as DashboardWidget_2 } from '@gooddata/sdk-backend-spi';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
 import { DateFilterType } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
@@ -38,6 +37,7 @@ import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
+import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDrillableItem } from '@gooddata/sdk-ui';
@@ -1379,7 +1379,7 @@ export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @internal
-export type ExtendedDashboardWidget = DashboardWidget_2 | KpiPlaceholderWidget | InsightPlaceholderWidget;
+export type ExtendedDashboardWidget = IDashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
 
 // @internal (undocumented)
 export interface FilterContextSelection {
@@ -2131,7 +2131,7 @@ export const selectAttributesWithDrillDown: import("@reduxjs/toolkit").OutputSel
 export const selectBackendCapabilities: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IBackendCapabilities, (res: import("./backendCapabilitiesState").BackendCapabilitiesState) => import("@gooddata/sdk-backend-spi").IBackendCapabilities>;
 
 // @internal
-export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => IDashboardLayout<import("@gooddata/sdk-backend-spi").DashboardWidget>>;
+export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("@gooddata/sdk-backend-spi").IDashboardWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => IDashboardLayout<import("@gooddata/sdk-backend-spi").IDashboardWidget>>;
 
 // @internal
 export const selectCanListUsersInWorkspace: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("@gooddata/sdk-backend-spi").IWorkspacePermissions) => boolean>;

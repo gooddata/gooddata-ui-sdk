@@ -1,9 +1,9 @@
 // (C) 2020-2021 GoodData Corporation
 import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
 import {
-    DashboardWidget,
     IDashboardDefinition,
     IDashboardLayout,
+    IDashboardWidget,
     IFilterContextDefinition,
     LayoutPath,
     walkLayout,
@@ -13,11 +13,11 @@ import omit from "lodash/omit";
 import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 
-function removeIdentifiers(widget: DashboardWidget) {
+function removeIdentifiers(widget: IDashboardWidget) {
     return omit(widget, ["ref", "uri", "identifier"]);
 }
 
-function removeWidgetIdentifiersInLayout(layout: IDashboardLayout<DashboardWidget> | undefined) {
+function removeWidgetIdentifiersInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
         return;
     }

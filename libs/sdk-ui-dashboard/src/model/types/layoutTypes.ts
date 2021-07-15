@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { DashboardWidget, IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayoutItem, IDashboardLayoutSection, IDashboardWidget } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -38,12 +38,12 @@ export function isInsightPlaceholderWidget(obj: unknown): obj is InsightPlacehol
 }
 
 /**
- * Extension of the default DashboardWidget type to also include view-only widget types for KPI placeholder
- * and Insight placeholder.
+ * Extension of the default {@link @gooddata/sdk-backend-spi#DashboardWidget} type to also include view-only
+ * widget types for KPI placeholder and Insight placeholder.
  *
  * @internal
  */
-export type ExtendedDashboardWidget = DashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
+export type ExtendedDashboardWidget = IDashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
 
 /**
  * Specialization of the IDashboardLayoutItem which also includes the extended dashboard widgets - KPI and
