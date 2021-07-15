@@ -2,7 +2,7 @@
 import React, { createContext, useContext } from "react";
 
 import { IDashboardInsightProps } from "./types";
-import { useDashboardWidgetProps } from "../../layout";
+import { useDashboardWidgetProps } from "../widget/DashboardWidgetPropsContext";
 
 // TODO throw some error ideally
 const DashboardInsightPropsContext = createContext<IDashboardInsightProps>({} as any);

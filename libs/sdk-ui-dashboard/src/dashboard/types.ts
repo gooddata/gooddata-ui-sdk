@@ -12,8 +12,11 @@ import {
     IDefaultScheduledEmailDialogCallbackProps,
 } from "../scheduledEmail";
 import { CustomTopBarComponent, IDefaultTopBarProps, ITopBarCoreProps } from "../topBar";
-import { CustomDashboardInsightComponent, CustomDashboardKpiComponent } from "../widget";
-import { CustomDashboardWidgetComponent } from "../layout/types";
+import {
+    CustomDashboardInsightComponent,
+    CustomDashboardKpiComponent,
+    CustomDashboardWidgetComponent,
+} from "../widget";
 
 /**
  * @internal

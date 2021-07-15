@@ -2,7 +2,7 @@
 import React, { createContext, useContext } from "react";
 
 import { DashboardKpiProps } from "./types";
-import { useDashboardWidgetProps } from "../../layout";
+import { useDashboardWidgetProps } from "../widget/DashboardWidgetPropsContext";
 
 // TODO throw some error ideally
 const DashboardKpiPropsContext = createContext<DashboardKpiProps>({} as any);

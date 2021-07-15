@@ -7,7 +7,7 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
-import { DashboardWidget } from '@gooddata/sdk-backend-spi';
+import { DashboardWidget as DashboardWidget_2 } from '@gooddata/sdk-backend-spi';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
 import { DateFilterType } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
@@ -1116,6 +1116,9 @@ export interface DashboardWasReset extends IDashboardEvent {
 }
 
 // @internal (undocumented)
+export const DashboardWidget: () => JSX.Element;
+
+// @internal (undocumented)
 export interface DashboardWidgetProps {
     // (undocumented)
     backend?: IAnalyticalBackend;
@@ -1370,7 +1373,7 @@ export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @internal
-export type ExtendedDashboardWidget = DashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
+export type ExtendedDashboardWidget = DashboardWidget_2 | KpiPlaceholderWidget | InsightPlaceholderWidget;
 
 // @internal (undocumented)
 export interface FilterContextSelection {

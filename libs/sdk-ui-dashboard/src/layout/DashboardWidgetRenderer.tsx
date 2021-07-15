@@ -16,11 +16,18 @@ import {
 import { IDrillableItem, IHeaderPredicate, OnError, VisType } from "@gooddata/sdk-ui";
 import { selectAlerts, selectInsights, useDashboardSelector } from "../model";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../types";
-import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "../presentationComponents";
-import { DashboardInsight, DashboardKpi, DashboardKpiPropsProvider } from "../widget";
-
-import { getVisTypeCssClass } from "./utils";
-import { DashboardInsightPropsProvider } from "../widget/insight/DashboardInsightPropsContext";
+import {
+    DashboardItem,
+    DashboardItemHeadline,
+    DashboardItemVisualization,
+    getVisTypeCssClass,
+} from "../presentationComponents";
+import {
+    DashboardInsight,
+    DashboardKpi,
+    DashboardInsightPropsProvider,
+    DashboardKpiPropsProvider,
+} from "../widget";
 
 const dashboardStyle: CSSProperties = { height: "100%", width: "100%" };
 

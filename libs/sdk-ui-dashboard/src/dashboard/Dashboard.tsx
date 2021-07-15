@@ -18,8 +18,12 @@ import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { DashboardComponentsProvider, useDashboardComponentsContext } from "../dashboardContexts";
 import { DefaultFilterBar } from "../filterBar";
-import { DefaultDashboardInsightWithDrillDialogInner, DefaultDashboardKpiInner } from "../widget";
-import { DashboardLayout, DefaultDashboardLayout, DefaultDashboardWidgetInner } from "../layout";
+import {
+    DefaultDashboardInsightWithDrillDialogInner,
+    DefaultDashboardKpiInner,
+    DefaultDashboardWidgetInner,
+} from "../widget";
+import { DashboardLayout, DefaultDashboardLayout } from "../layout";
 import { IntlWrapper } from "../localization";
 import {
     changeAttributeFilterSelection,

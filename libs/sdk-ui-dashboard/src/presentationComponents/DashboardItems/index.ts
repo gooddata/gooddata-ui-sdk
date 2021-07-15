@@ -5,3 +5,4 @@ export { DashboardItemHeadline } from "./DashboardItemHeadline";
 export { DashboardItemHeadlineContainer } from "./DashboardItemHeadlineContainer";
 export { DashboardItemKpi } from "./DashboardItemKpi";
 export { DashboardItemVisualization } from "./DashboardItemVisualization";
+export { getVisTypeCssClass } from "./utils";

@@ -13,14 +13,20 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { VisType } from "@gooddata/sdk-ui";
 
-import { selectAlerts, selectInsights, useDashboardSelector } from "../model";
-import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "../presentationComponents";
-import { DashboardInsight, DashboardKpi, DashboardKpiPropsProvider } from "../widget";
+import { selectAlerts, selectInsights, useDashboardSelector } from "../../model";
+import {
+    DashboardItem,
+    DashboardItemHeadline,
+    DashboardItemVisualization,
+    getVisTypeCssClass,
+} from "../../presentationComponents";
 
 import { DashboardWidgetProps } from "./types";
-import { getVisTypeCssClass } from "./utils";
-import { DashboardInsightPropsProvider } from "../widget/insight/DashboardInsightPropsContext";
 import { DashboardWidgetPropsProvider, useDashboardWidgetProps } from "./DashboardWidgetPropsContext";
+import { DashboardInsightPropsProvider } from "../insight/DashboardInsightPropsContext";
+import { DashboardInsight } from "../insight/DashboardInsight";
+import { DashboardKpiPropsProvider } from "../kpi/DashboardKpiPropsContext";
+import { DashboardKpi } from "../kpi/DashboardKpi";
 
 const dashboardStyle: CSSProperties = { height: "100%", width: "100%" };
 

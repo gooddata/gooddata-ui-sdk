@@ -1,8 +1,12 @@
 // (C) 2019 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import { IErrorProps, ILoadingProps, UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { CustomDashboardWidgetComponent, DashboardLayoutProps } from "../layout/types";
-import { CustomDashboardInsightComponent, CustomDashboardKpiComponent } from "../widget/types";
+import { DashboardLayoutProps } from "../layout/types";
+import {
+    CustomDashboardInsightComponent,
+    CustomDashboardKpiComponent,
+    CustomDashboardWidgetComponent,
+} from "../widget/types";
 
 /**
  * @internal

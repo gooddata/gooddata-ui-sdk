@@ -16,14 +16,13 @@ import { ObjRef, IInsight, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { IDashboardWidgetRendererProps } from "./DashboardWidgetRenderer";
 import { selectInsights, selectSettings, useDashboardSelector } from "../model";
-import { DashboardWidget as RenderDashboardWidget } from "./DashboardWidget";
 import {
     getDashboardLayoutItemHeight,
     getDashboardLayoutItemHeightForRatioAndScreen,
     getDashboardLayoutWidgetDefaultHeight,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
-import { DashboardWidgetPropsProvider } from "./DashboardWidgetPropsContext";
+import { DashboardWidgetPropsProvider, DashboardWidget as RenderDashboardWidget } from "../widget";
 
 /**
  * @internal
