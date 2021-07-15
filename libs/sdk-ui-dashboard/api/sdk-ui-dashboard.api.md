@@ -78,6 +78,7 @@ import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
+import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { Patch } from 'immer';
@@ -1122,10 +1123,12 @@ export const DashboardWidget: () => JSX.Element;
 export interface DashboardWidgetProps {
     // (undocumented)
     backend?: IAnalyticalBackend;
+    dateDataset?: ObjRef;
     // (undocumented)
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     // (undocumented)
     ErrorComponent?: ComponentType<IErrorProps>;
+    ignoredAttributeFilters?: ObjRefInScope[];
     // (undocumented)
     LoadingComponent?: ComponentType<ILoadingProps>;
     // (undocumented)
@@ -1134,8 +1137,11 @@ export interface DashboardWidgetProps {
     onError?: OnError;
     // (undocumented)
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onWidgetClicked?: () => void;
     // (undocumented)
     screen: ScreenSize;
+    showHeader?: boolean;
+    showMenu?: boolean;
     // (undocumented)
     widget?: IWidget;
     // (undocumented)

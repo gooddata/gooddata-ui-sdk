@@ -2,7 +2,7 @@
 import { MenuButtonItem } from "./topBar";
 import React from "react";
 import { IDashboardAttributeFilterProps } from "./filterBar";
-import { DashboardWidget } from "./dashboard/DashboardWidget";
+import { DashboardWidget } from "./widget";
 import { idRef } from "@gooddata/sdk-model";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import { Dashboard } from "./dashboard";
