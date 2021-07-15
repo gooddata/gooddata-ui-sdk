@@ -2125,6 +2125,9 @@ export interface SaveDashboardAs extends IDashboardCommand {
 export function saveDashboardAs(identifier?: string, title?: string, correlationId?: string): SaveDashboardAs;
 
 // @internal (undocumented)
+export const ScheduledEmailDialog: () => JSX.Element;
+
+// @internal (undocumented)
 export const ScheduledEmailDialogPropsProvider: React_2.FC<IScheduledEmailDialogProps>;
 
 // @alpha

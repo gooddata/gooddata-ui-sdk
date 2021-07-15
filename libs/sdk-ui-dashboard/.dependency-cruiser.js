@@ -25,8 +25,9 @@ options = {
             ],
         ),
         depCruiser.moduleWithDependencies("dashboardContexts", "src/dashboardContexts", [
-            "src/topBar/types.ts",
             "src/layout/types.ts",
+            "src/scheduledEmail/types.ts",
+            "src/topBar/types.ts",
             "src/widget/types.ts",
         ]),
         depCruiser.moduleWithDependencies("drill", "src/drill", [

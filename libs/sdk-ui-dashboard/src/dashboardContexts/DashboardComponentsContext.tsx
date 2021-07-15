@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import { IErrorProps, ILoadingProps, UnexpectedSdkError } from "@gooddata/sdk-ui";
+
 import { DashboardLayoutProps } from "../layout/types";
 import {
     CustomDashboardInsightComponent,
@@ -13,6 +14,7 @@ import {
     CustomTitleComponent,
     CustomTopBarComponent,
 } from "../topBar/types";
+import { CustomScheduledEmailDialogComponent } from "../scheduledEmail/types";
 
 /**
  * @internal
@@ -28,6 +30,7 @@ interface IDashboardComponentsContext {
     MenuButtonComponent: CustomMenuButtonComponent;
     TitleComponent: CustomTitleComponent;
     TopBarComponent: CustomTopBarComponent;
+    ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -50,6 +53,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     MenuButtonComponent: ThrowMissingComponentError("MenuButtonComponent"),
     TitleComponent: ThrowMissingComponentError("TitleComponent"),
     TopBarComponent: ThrowMissingComponentError("TopBarComponent"),
+    ScheduledEmailDialogComponent: ThrowMissingComponentError("ScheduledEmailDialogComponent"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

@@ -33,7 +33,11 @@ import {
     useDashboardSelector,
     DashboardStoreProvider,
 } from "../model";
-import { DefaultScheduledEmailDialog, ScheduledEmailDialogPropsProvider } from "../scheduledEmail";
+import {
+    DefaultScheduledEmailDialogInner,
+    ScheduledEmailDialog,
+    ScheduledEmailDialogPropsProvider,
+} from "../scheduledEmail";
 import {
     DefaultButtonBarInner,
     DefaultTitleInner,
@@ -98,14 +102,7 @@ const useTopBar = () => {
     };
 };
 const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const {
-        drillableItems,
-        filterBarConfig,
-        ScheduledEmailDialogComponent = DefaultScheduledEmailDialog,
-        dashboardRef,
-        backend,
-        workspace,
-    } = props;
+    const { drillableItems, filterBarConfig, dashboardRef, backend, workspace } = props;
     const intl = useIntl();
 
     const FilterBarComponent = filterBarConfig?.Component ?? DefaultFilterBar;
@@ -170,20 +167,23 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
                     onError={onScheduleEmailingError}
                     onSuccess={onScheduleEmailingSuccess}
                 >
-                    <ScheduledEmailDialogComponent />
+                    <ScheduledEmailDialog />
                 </ScheduledEmailDialogPropsProvider>
             )}
+
             <TopBarPropsProvider
                 menuButtonProps={{ menuItems: defaultMenuItems }} // TODO memoize whole objects
                 titleProps={{ title, onTitleChanged }}
             >
                 <TopBar />
             </TopBarPropsProvider>
+
             <FilterBarComponent
                 {...filterBarConfig?.defaultComponentProps}
                 filters={filters}
                 onFilterChanged={onFilterChanged}
             />
+
             <DashboardLayout drillableItems={drillableItems} />
         </>
     );
@@ -245,6 +245,9 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
                         TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
                         TitleComponent={props.TitleComponent ?? DefaultTitleInner}
+                        ScheduledEmailDialogComponent={
+                            props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
+                        }
                     >
                         <DashboardLoading {...props} />
                     </DashboardComponentsProvider>

@@ -1,5 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 export { DefaultScheduledEmailDialog, DefaultScheduledEmailDialogInner } from "./DefaultScheduledEmailDialog";
+export { ScheduledEmailDialog } from "./ScheduledEmailDialog";
 export {
     ScheduledEmailDialogPropsProvider,
     useScheduledEmailDialogProps,
