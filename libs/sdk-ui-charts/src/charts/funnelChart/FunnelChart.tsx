@@ -29,14 +29,15 @@ const funnelChartDefinition: IChartDefinition<IFunnelChartBucketProps, IFunnelCh
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("FunnelChart", props)
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
-            .withDimensions(roundChartDimensions);
+            .withDimensions(roundChartDimensions)
+            .withExecConfig(execConfig);
     },
 };
 

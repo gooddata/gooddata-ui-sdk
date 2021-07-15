@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution, ITheme } from "@gooddata/sdk-backend-spi";
-import { TotalType } from "@gooddata/sdk-model";
+import { TotalType, IExecutionConfig } from "@gooddata/sdk-model";
 import {
     IVisualizationCallbacks,
     IVisualizationProps,
@@ -205,6 +205,11 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
      * Optionally customize how pivot table capabilities and behavior.
      */
     config?: IPivotTableConfig;
+
+    /**
+     * Execution configuration, will provide the execution with necessary config before initiating execution.
+     */
+    execConfig?: IExecutionConfig;
 
     /**
      * Optionally specify function to call when user manually resizes a table column.

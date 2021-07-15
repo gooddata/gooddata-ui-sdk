@@ -6,12 +6,13 @@ import {
     IUserWorkspaceSettings,
     IWidgetAlert,
 } from "@gooddata/sdk-backend-spi";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
 import {
     AttributesWithDrillDownProvider,
     ColorPaletteProvider,
     DashboardAlertsProvider,
     DashboardViewConfigProvider,
+    DashboardViewExecConfigProvider,
     DashboardViewIsReadOnlyProvider,
     UserWorkspaceSettingsProvider,
 } from "./contexts";
@@ -30,6 +31,7 @@ export interface IDashboardViewProviderProps {
     alerts: IWidgetAlert[];
     isReadOnly: boolean;
     locale: string;
+    execConfig: IExecutionConfig;
 }
 
 /**
@@ -44,21 +46,24 @@ export const DashboardViewProvider: React.FC<IDashboardViewProviderProps> = ({
     drillDownAttributes,
     alerts,
     isReadOnly,
+    execConfig,
 }) => {
     return (
         <InternalIntlWrapper locale={locale}>
             <DashboardViewConfigProvider config={config}>
-                <UserWorkspaceSettingsProvider settings={settings}>
-                    <ColorPaletteProvider palette={colorPalette}>
-                        <AttributesWithDrillDownProvider attributes={drillDownAttributes}>
-                            <DashboardAlertsProvider alerts={alerts}>
-                                <DashboardViewIsReadOnlyProvider isReadOnly={isReadOnly}>
-                                    {children}
-                                </DashboardViewIsReadOnlyProvider>
-                            </DashboardAlertsProvider>
-                        </AttributesWithDrillDownProvider>
-                    </ColorPaletteProvider>
-                </UserWorkspaceSettingsProvider>
+                <DashboardViewExecConfigProvider execConfig={execConfig}>
+                    <UserWorkspaceSettingsProvider settings={settings}>
+                        <ColorPaletteProvider palette={colorPalette}>
+                            <AttributesWithDrillDownProvider attributes={drillDownAttributes}>
+                                <DashboardAlertsProvider alerts={alerts}>
+                                    <DashboardViewIsReadOnlyProvider isReadOnly={isReadOnly}>
+                                        {children}
+                                    </DashboardViewIsReadOnlyProvider>
+                                </DashboardAlertsProvider>
+                            </AttributesWithDrillDownProvider>
+                        </ColorPaletteProvider>
+                    </UserWorkspaceSettingsProvider>
+                </DashboardViewExecConfigProvider>
             </DashboardViewConfigProvider>
         </InternalIntlWrapper>
     );

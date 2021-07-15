@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IFilter, IColorPalette, ObjRef, IInsight } from "@gooddata/sdk-model";
+import { IFilter, IColorPalette, ObjRef, IInsight, IExecutionConfig } from "@gooddata/sdk-model";
 
 import {
     ILocale,
@@ -64,6 +64,11 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
      * options saved for the insight.
      */
     config?: IChartConfig | IGeoConfig | IPivotTableConfig | any;
+
+    /**
+     * execConfig will provide the execution with necessary settings before initiating execution.
+     */
+    execConfig?: IExecutionConfig;
 
     /**
      * Locale to use for localization of texts appearing in the chart.

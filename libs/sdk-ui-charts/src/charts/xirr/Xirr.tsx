@@ -110,7 +110,7 @@ export function toCoreXirrProps(props: IXirrProps): ICoreChartProps {
 }
 
 function createExecution(buckets: IBucket[], props: IXirrProps): IPreparedExecution {
-    const { backend, workspace } = props;
+    const { backend, workspace, execConfig } = props;
 
     return backend
         .withTelemetry("Xirr", props)
@@ -122,5 +122,6 @@ function createExecution(buckets: IBucket[], props: IXirrProps): IPreparedExecut
                 "measureGroup",
                 ...bucketsAttributes(buckets).map((attribute) => attributeLocalId(attribute)),
             ]),
-        );
+        )
+        .withExecConfig(execConfig);
 }

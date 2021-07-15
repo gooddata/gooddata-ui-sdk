@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAttribute, IColorPalette } from "@gooddata/sdk-model";
+import { IAttribute, IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
 import {
     AttributeOrPlaceholder,
     IDrillEventContext,
@@ -226,6 +226,11 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     placeholdersResolutionContext?: any;
 
     config?: IGeoConfig;
+
+    /**
+     * Execution configuration, will provide the execution with necessary config before initiating execution.
+     */
+    execConfig?: IExecutionConfig;
 
     /**
      * Optionally specify function to call back when center position of the map changes.

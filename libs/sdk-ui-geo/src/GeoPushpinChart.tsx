@@ -92,7 +92,7 @@ const NON_CORE_PROPS: Array<keyof IGeoPushpinChartProps> = [
 ];
 
 function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
-    const { backend, workspace, sortBy, filters, exportTitle } = props;
+    const { backend, workspace, sortBy, filters, exportTitle, execConfig = {} } = props;
 
     const buckets: IBucket[] = getBuckets(props);
     const newProps = omit(props, NON_CORE_PROPS);
@@ -103,7 +103,8 @@ function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
         .execution()
         .forBuckets(buckets, filters as INullableFilter[])
         .withSorting(...((sortBy as ISortItem[]) || []))
-        .withDimensions(getGeoChartDimensions);
+        .withDimensions(getGeoChartDimensions)
+        .withExecConfig(execConfig);
 
     return (
         <IntlWrapper locale={props.locale}>

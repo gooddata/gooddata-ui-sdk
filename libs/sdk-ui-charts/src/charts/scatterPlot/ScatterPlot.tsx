@@ -30,7 +30,7 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("ScatterPlot", props)
@@ -38,7 +38,8 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...(props.sortBy as ISortItem[]))
-            .withDimensions(pointyChartDimensions);
+            .withDimensions(pointyChartDimensions)
+            .withExecConfig(execConfig);
     },
 };
 

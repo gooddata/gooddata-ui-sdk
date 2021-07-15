@@ -10,6 +10,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
+import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
@@ -123,6 +124,7 @@ export interface IMenu {
 // @public (undocumented)
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     config?: IPivotTableConfig;
+    execConfig?: IExecutionConfig;
     onColumnResized?: ColumnResizedCallback;
     pageSize?: number;
 }

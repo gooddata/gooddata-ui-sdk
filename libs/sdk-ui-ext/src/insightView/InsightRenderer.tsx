@@ -109,6 +109,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                 forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
                 isInEditMode: false,
             },
+            executionConfig: this.props.execConfig,
             customVisualizationConfig: config,
             theme: this.props.theme,
         };

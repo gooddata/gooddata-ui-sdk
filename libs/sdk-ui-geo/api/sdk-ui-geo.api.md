@@ -16,6 +16,7 @@ import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDataVisualizationProps } from '@gooddata/sdk-ui';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDrillConfig } from '@gooddata/sdk-ui';
+import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { ILoadingInjectedProps } from '@gooddata/sdk-ui';
@@ -256,6 +257,7 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     color?: AttributeMeasureOrPlaceholder;
     // (undocumented)
     config?: IGeoConfig;
+    execConfig?: IExecutionConfig;
     // (undocumented)
     filters?: NullableFiltersOrPlaceholders;
     // (undocumented)

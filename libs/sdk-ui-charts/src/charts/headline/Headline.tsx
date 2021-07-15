@@ -102,12 +102,13 @@ export function toCoreHeadlineProps(props: IHeadlineProps): ICoreChartProps {
 }
 
 function createExecution(buckets: IBucket[], props: IHeadlineProps): IPreparedExecution {
-    const { backend, workspace } = props;
+    const { backend, workspace, execConfig } = props;
 
     return backend
         .withTelemetry("Headline", props)
         .workspace(workspace)
         .execution()
         .forBuckets(buckets, props.filters as INullableFilter[])
-        .withDimensions({ itemIdentifiers: ["measureGroup"] });
+        .withDimensions({ itemIdentifiers: ["measureGroup"] })
+        .withExecConfig(execConfig);
 }

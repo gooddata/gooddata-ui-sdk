@@ -43,7 +43,7 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("AreaChart", props)
@@ -51,7 +51,8 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...(props.sortBy as ISortItem[]))
-            .withDimensions(stackedChartDimensions);
+            .withDimensions(stackedChartDimensions)
+            .withExecConfig(execConfig);
     },
     propOverridesFactory: (props, buckets) => {
         const config = getConfigProps(props);

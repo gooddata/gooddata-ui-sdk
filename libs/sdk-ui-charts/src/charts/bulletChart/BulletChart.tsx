@@ -58,7 +58,7 @@ const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletCh
         ];
     },
     executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
+        const { backend, workspace, execConfig } = props;
 
         return backend
             .withTelemetry("BulletChart", props)
@@ -66,7 +66,8 @@ const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletCh
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...(props.sortBy as ISortItem[]))
-            .withDimensions(stackedChartDimensions);
+            .withDimensions(stackedChartDimensions)
+            .withExecConfig(execConfig);
     },
     propOverridesFactory: (props, _buckets) => {
         return {
