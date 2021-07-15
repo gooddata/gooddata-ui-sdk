@@ -1,12 +1,23 @@
 // (C) 2021 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
+import { Identifier, ObjRef } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 /**
- * Represent state item of widget reported available drill targets
+ * Represent state item of widget reported available drill targets.
+ *
  * @internal
  */
 export interface IDrillTargets {
+    /**
+     * Identifier of widget to which the drills belong.
+     */
+    identifier: Identifier;
+
+    /**
+     * URI of the widget to which the drills belong.
+     */
+    uri: string;
+
     /**
      * widget ref
      */

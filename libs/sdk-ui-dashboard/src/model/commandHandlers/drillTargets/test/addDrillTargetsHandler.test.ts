@@ -1,14 +1,18 @@
 // (C) 2021 GoodData Corporation
-import { uriRef } from "@gooddata/sdk-model";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { addDrillTargets } from "../../../commands/drillTargets";
 import { DrillTargetsAdded } from "../../../events/drillTargets";
-import { SimpleDashboardIdentifier } from "../../../tests/Dashboard.fixtures";
+import {
+    SimpleDashboardFirstWidgetRef,
+    SimpleDashboardIdentifier,
+    TestCorrelation,
+} from "../../../tests/Dashboard.fixtures";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { selectDrillTargetsByWidgetRef } from "../../../state/drillTargets/drillTargetsSelectors";
+import { uriRef } from "@gooddata/sdk-model";
+import { DashboardCommandFailed } from "../../../events";
 
 describe("addDrillTargetsHandler", () => {
-    const widgetRef = uriRef("someuri");
     const availableDrillTargetsMock: IAvailableDrillTargets = {};
 
     let Tester: DashboardTester;
@@ -16,21 +20,32 @@ describe("addDrillTargetsHandler", () => {
         preloadedTesterFactory((tester: DashboardTester) => (Tester = tester), SimpleDashboardIdentifier),
     );
 
-    it("should add  drill target to the state for given widget", async () => {
+    it("should add drill target to the state for given widget", async () => {
         const event: DrillTargetsAdded = await Tester.dispatchAndWaitFor(
-            addDrillTargets(widgetRef, availableDrillTargetsMock),
+            addDrillTargets(SimpleDashboardFirstWidgetRef, availableDrillTargetsMock),
             "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
         );
-        expect(event.payload.widgetRef).toEqual(widgetRef);
+
+        expect(event.payload.widgetRef).toEqual(SimpleDashboardFirstWidgetRef);
         expect(event.payload.availableDrillTargets).toMatchSnapshot();
 
-        const drillTargets = selectDrillTargetsByWidgetRef(widgetRef)(Tester.state());
+        const drillTargets = selectDrillTargetsByWidgetRef(SimpleDashboardFirstWidgetRef)(Tester.state());
         expect(drillTargets?.availableDrillTargets).toEqual(availableDrillTargetsMock);
+    });
+
+    it("should fail when trying to add drill targets for non-existing widget", async () => {
+        const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            addDrillTargets(uriRef("bogus"), availableDrillTargetsMock, TestCorrelation),
+            "GDC.DASH/EVT.COMMAND.FAILED",
+        );
+
+        expect(event.payload.reason).toEqual("USER_ERROR");
+        expect(event.correlationId).toEqual(TestCorrelation);
     });
 
     it("should emit the appropriate events for add drill target", async () => {
         await Tester.dispatchAndWaitFor(
-            addDrillTargets(widgetRef, availableDrillTargetsMock, "testCorrelation"),
+            addDrillTargets(SimpleDashboardFirstWidgetRef, availableDrillTargetsMock, TestCorrelation),
             "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
         );
 

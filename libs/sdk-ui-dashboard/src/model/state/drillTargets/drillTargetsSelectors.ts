@@ -5,7 +5,7 @@ import { drillTargetsAdapter } from "./drillTargetsEntityAdapter";
 import memoize from "lodash/memoize";
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import { newMapForObjectWithRef } from "../../../_staging/metadata/objRefMap";
+import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 
 const entitySelectors = drillTargetsAdapter.getSelectors((state: DashboardState) => state.drillTargets);
 
@@ -16,7 +16,7 @@ const selectDrillTargetsInternal = entitySelectors.selectAll;
  * @internal
  */
 export const selectDrillTargets = createSelector(selectDrillTargetsInternal, (drillTargets) => {
-    return newMapForObjectWithRef(drillTargets);
+    return newMapForObjectWithIdentity(drillTargets);
 });
 
 /**

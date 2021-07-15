@@ -58,6 +58,7 @@ export {
     selectStash,
     selectBasicLayout,
     selectWidgetByRef,
+    selectWidgetsMap,
 } from "./state/layout/layoutSelectors";
 export { DateFilterConfigState } from "./state/dateFilterConfig/dateFilterConfigState";
 export {

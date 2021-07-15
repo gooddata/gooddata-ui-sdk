@@ -41,6 +41,7 @@ import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
+import { Identifier } from '@gooddata/sdk-model';
 import { IDrillableItem } from '@gooddata/sdk-ui';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillToAttributeUrl } from '@gooddata/sdk-backend-spi';
@@ -1696,7 +1697,9 @@ export interface IDrillDownDefinition {
 // @internal
 export interface IDrillTargets {
     availableDrillTargets?: IAvailableDrillTargets;
+    identifier: Identifier;
     ref: ObjRef;
+    uri: string;
 }
 
 // @internal
@@ -2329,8 +2332,11 @@ export const selectStash: import("@reduxjs/toolkit").OutputSelector<DashboardSta
 // @alpha
 export const selectUser: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IUser, (res: import("./userState").UserState) => import("@gooddata/sdk-backend-spi").IUser>;
 
-// @alpha
-export const selectWidgetByRef: ((ref: ObjRef | undefined) => import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IKpiWidgetDefinition | import("@gooddata/sdk-backend-spi").IInsightWidgetDefinition | undefined, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => import("@gooddata/sdk-backend-spi").IKpiWidgetDefinition | import("@gooddata/sdk-backend-spi").IInsightWidgetDefinition | undefined>) & import("lodash").MemoizedFunction;
+// @internal
+export const selectWidgetByRef: ((ref: ObjRef | undefined) => import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IKpiWidget | import("@gooddata/sdk-backend-spi").IInsightWidget | undefined, (res: import("../../../_staging/metadata/objRefMap").ObjRefMap<IWidget>) => import("@gooddata/sdk-backend-spi").IKpiWidget | import("@gooddata/sdk-backend-spi").IInsightWidget | undefined>) & import("lodash").MemoizedFunction;
+
+// @internal
+export const selectWidgetsMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../../../_staging/metadata/objRefMap").ObjRefMap<IWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => import("../../../_staging/metadata/objRefMap").ObjRefMap<IWidget>>;
 
 // @alpha (undocumented)
 export interface SetAttributeFilterParent extends IDashboardCommand {
