@@ -101,8 +101,11 @@ const useTopBar = () => {
         onTitleChanged,
     };
 };
-const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const { drillableItems, filterBarConfig, dashboardRef, backend, workspace } = props;
+
+// split the header parts of the dashboard so that changes to their state
+// (e.g. opening email dialog) do not re-render the dashboard body
+const DashboardHeader = (props: IDashboardProps): JSX.Element => {
+    const { filterBarConfig, dashboardRef, backend, workspace } = props;
     const intl = useIntl();
 
     const FilterBarComponent = filterBarConfig?.Component ?? DefaultFilterBar;
@@ -172,7 +175,7 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
             )}
 
             <TopBarPropsProvider
-                menuButtonProps={{ menuItems: defaultMenuItems }} // TODO memoize whole objects
+                menuButtonProps={{ menuItems: defaultMenuItems }}
                 titleProps={{ title, onTitleChanged }}
             >
                 <TopBar />
@@ -183,8 +186,6 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
                 filters={filters}
                 onFilterChanged={onFilterChanged}
             />
-
-            <DashboardLayout drillableItems={drillableItems} />
         </>
     );
 };
@@ -195,7 +196,8 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     return (
         <IntlWrapper locale={locale}>
             <div className="gd-dashboards-root">
-                <DashboardInnerCore {...props} />
+                <DashboardHeader {...props} />
+                <DashboardLayout drillableItems={props.drillableItems} />
             </div>
         </IntlWrapper>
     );
