@@ -8,7 +8,6 @@ import {
     IAvailableDrillTargets,
 } from "../../vis/Events";
 import { DataViewFacade } from "../../results/facade";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -20,8 +19,10 @@ export function getIntersectionAttributes(
     fromAttribute: IAttributeDescriptor,
     attributes: IAttributeDescriptor[],
 ): IAttributeDescriptor[] {
-    const indexOfFromAttribute = attributes.findIndex((attribute) =>
-        areObjRefsEqual(attribute.attributeHeader.ref, fromAttribute.attributeHeader.ref),
+    const indexOfFromAttribute = attributes.findIndex(
+        (attribute) =>
+            // to handle duplicated attributes in the same dimension
+            attribute.attributeHeader.localIdentifier === fromAttribute.attributeHeader.localIdentifier,
     );
 
     return attributes.slice(0, indexOfFromAttribute + 1);

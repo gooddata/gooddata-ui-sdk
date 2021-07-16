@@ -3643,6 +3643,25 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/515",
           },
         },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "closed.year",
+              "name": "Year (Closed)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/497",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "identifier": "closed.aag81lMifn6q",
+            "localIdentifier": "closed.second",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/515",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+        },
       ],
     },
   ],
@@ -5305,6 +5324,25 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/515",
           },
         },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "closed.year",
+              "name": "Year (Closed)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/497",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "identifier": "closed.aag81lMifn6q",
+            "localIdentifier": "closed.second",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/515",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+        },
       ],
     },
   ],
@@ -5745,6 +5783,25 @@ Object {
             },
             "identifier": "closed.aag81lMifn6q",
             "localIdentifier": "a_closed.aag81lMifn6q",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/515",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "closed.year",
+              "name": "Year (Closed)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/497",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "identifier": "closed.aag81lMifn6q",
+            "localIdentifier": "closed.second",
             "name": "Year (Closed)",
             "ref": Object {
               "uri": "/gdc/md/referenceworkspace/obj/515",
@@ -8645,6 +8702,25 @@ Object {
             },
             "identifier": "closed.aag81lMifn6q",
             "localIdentifier": "a_closed.aag81lMifn6q",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/515",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "closed.year",
+              "name": "Year (Closed)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/497",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "identifier": "closed.aag81lMifn6q",
+            "localIdentifier": "closed.second",
             "name": "Year (Closed)",
             "ref": Object {
               "uri": "/gdc/md/referenceworkspace/obj/515",
