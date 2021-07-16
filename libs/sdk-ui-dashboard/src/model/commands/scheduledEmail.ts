@@ -6,7 +6,7 @@ import { IDashboardCommand } from "./base";
 /**
  * Creates scheduled email.
  *
- * @internal
+ * @alpha
  */
 export interface CreateScheduledEmail extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE";
@@ -24,7 +24,7 @@ export interface CreateScheduledEmail extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
- * @internal
+ * @alpha
  */
 export function createScheduledEmail(
     scheduledEmail: IScheduledMailDefinition,

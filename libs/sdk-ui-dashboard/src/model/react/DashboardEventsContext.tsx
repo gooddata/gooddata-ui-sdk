@@ -5,7 +5,7 @@ import noop from "lodash/noop";
 import { DashboardEventHandler } from "../events/eventHandler";
 
 /**
- * @internal
+ * @alpha
  */
 export interface IDashboardEventsContext {
     registerHandler: (handler: DashboardEventHandler) => void;
@@ -13,7 +13,7 @@ export interface IDashboardEventsContext {
 }
 
 /**
- * @internal
+ * @alpha
  */
 const DashboardEventsContext = createContext<IDashboardEventsContext>({
     registerHandler: noop,
@@ -22,7 +22,7 @@ const DashboardEventsContext = createContext<IDashboardEventsContext>({
 DashboardEventsContext.displayName = "DashboardEventsContext";
 
 /**
- * @internal
+ * @alpha
  */
 export const useDashboardEventsContext = (): IDashboardEventsContext => useContext(DashboardEventsContext);
 

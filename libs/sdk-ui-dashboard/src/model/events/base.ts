@@ -3,7 +3,7 @@ import isEmpty from "lodash/isEmpty";
 import { DashboardContext } from "../types/commonTypes";
 
 /**
- * @internal
+ * @alpha
  */
 export type DashboardEventType =
     | "GDC.DASH/EVT.COMMAND.FAILED"
@@ -61,7 +61,7 @@ export type DashboardEventType =
 /**
  * Base type for all dashboard events.
  *
- * @internal
+ * @alpha
  */
 export interface IDashboardEvent {
     /**
@@ -84,7 +84,7 @@ export interface IDashboardEvent {
  * Tests whether object is an instance of {@link IDashboardEvent}.
  *
  * @param obj - object to test
- * @internal
+ * @alpha
  */
 export function isDashboardEvent(obj: unknown): obj is IDashboardEvent {
     return !isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("GDC.DASH/EVT");

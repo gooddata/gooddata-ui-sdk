@@ -2,7 +2,6 @@
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
 import { IInsight } from "@gooddata/sdk-model";
-import { DashboardDrillContext } from "../../drill/types";
 import {
     IDrillToDashboard,
     IDrillToInsight,
@@ -10,7 +9,12 @@ import {
     IDrillToCustomUrl,
     IDrillToLegacyDashboard,
 } from "@gooddata/sdk-backend-spi";
-import { IDashboardDrillEvent, IDrillDownDefinition, IDashboardFilter } from "../../types";
+import {
+    IDashboardDrillEvent,
+    IDrillDownDefinition,
+    IDashboardFilter,
+    DashboardDrillContext,
+} from "../../types";
 
 /**
  * A general drill event that is emitted each time any dashboard drill is triggered.
@@ -27,7 +31,7 @@ import { IDashboardDrillEvent, IDrillDownDefinition, IDashboardFilter } from "..
  * - Specific drill commands that can follow this general drill event are: {@link DrillDown}, {@link DrillToInsight}, {@link DrillToDashboard},
  *   {@link DrillToCustomUrl}, {@link DrillToAttributeUrl}, {@link DrillToLegacyDashboard}
  *
- * @internal
+ * @alpha
  */
 export interface DashboardDrillTriggered extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.TRIGGERED";
@@ -44,7 +48,7 @@ export interface DashboardDrillTriggered extends IDashboardEvent {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export function drillTriggered(
     ctx: DashboardContext,
@@ -75,7 +79,7 @@ export function drillTriggered(
  * In the default dashboard implementation this event also opens drill dialog with the insight
  * that has this particular drill down definition applied.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardDrillDownTriggered extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_DOWN.TRIGGERED";
@@ -96,7 +100,7 @@ export interface DashboardDrillDownTriggered extends IDashboardEvent {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export function drillDownTriggered(
     ctx: DashboardContext,
@@ -128,7 +132,7 @@ export function drillDownTriggered(
  * In the default dashboard implementation this event also opens drill dialog with the insight
  * that has the drill intersection filters applied.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardDrillToInsightTriggered extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.TRIGGERED";
@@ -149,7 +153,7 @@ export interface DashboardDrillToInsightTriggered extends IDashboardEvent {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export function drillToInsightTriggered(
     ctx: DashboardContext,
@@ -180,7 +184,7 @@ export function drillToInsightTriggered(
  *
  * There is a factory function to create default event handler for drill to same dashboard - see {@link createDrillToSameDashboardHandler}.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardDrillToDashboardTriggered extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.TRIGGERED";
@@ -201,7 +205,7 @@ export interface DashboardDrillToDashboardTriggered extends IDashboardEvent {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export function drillToDashboardTriggered(
     ctx: DashboardContext,
@@ -230,7 +234,7 @@ export function drillToDashboardTriggered(
  * This event is emitted as a result of the {@link DrillToCustomUrl} command.
  * It contains resolved custom url from the drill definition.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardDrillToCustomUrlTriggered extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.TRIGGERED";
@@ -251,7 +255,7 @@ export interface DashboardDrillToCustomUrlTriggered extends IDashboardEvent {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export function drillToCustomUrlTriggered(
     ctx: DashboardContext,
@@ -280,7 +284,7 @@ export function drillToCustomUrlTriggered(
  * This event is emitted as a result of the {@link DrillToAttributeUrl} command.
  * It contains resolved attribute url from the drill definition.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardDrillToAttributeUrlTriggered extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.TRIGGERED";
@@ -301,7 +305,7 @@ export interface DashboardDrillToAttributeUrlTriggered extends IDashboardEvent {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export function drillToAttributeUrlTriggered(
     ctx: DashboardContext,
@@ -331,7 +335,7 @@ export function drillToAttributeUrlTriggered(
  *
  * Drill to legacy dashboard can be configured for Kpi widgets only.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardDrillToLegacyDashboardTriggered extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.TRIGGERED";
@@ -342,7 +346,7 @@ export interface DashboardDrillToLegacyDashboardTriggered extends IDashboardEven
 }
 
 /**
- * @internal
+ * @alpha
  */
 export function drillToLegacyDashboardTriggered(
     ctx: DashboardContext,

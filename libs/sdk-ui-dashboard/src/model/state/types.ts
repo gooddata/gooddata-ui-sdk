@@ -19,7 +19,7 @@ import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilit
  *  will have problems if just the type gets exported unless the value from which it is inferred is exported
  *  as well.
  *
- * @internal
+ * @alpha
  */
 export type DashboardState = {
     loading: LoadingState;

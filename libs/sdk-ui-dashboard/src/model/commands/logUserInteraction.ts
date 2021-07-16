@@ -2,7 +2,7 @@
 import { IDashboardCommand } from "./base";
 
 /**
- * @internal
+ * @alpha
  */
 export type UserInteraction = "poweredByGDLogoClicked";
 
@@ -11,7 +11,7 @@ export type UserInteraction = "poweredByGDLogoClicked";
  *
  * Note that this command should be used purely for user interactions that cannot be tracked by other existing events.
  *
- * @internal
+ * @alpha
  */
 export interface LogUserInteraction extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.LOG_USER_INTERACTION";
@@ -21,7 +21,7 @@ export interface LogUserInteraction extends IDashboardCommand {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export function logUserInteraction(interaction: UserInteraction, correlationId?: string): LogUserInteraction {
     return {

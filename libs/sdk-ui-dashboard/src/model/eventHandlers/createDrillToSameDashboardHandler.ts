@@ -13,7 +13,7 @@ import { changeFilterContextSelection } from "../commands/filters";
  * Note that only filters that are already stored in the dashboard filter context will be applied
  * (attribute filters that are not visible in the filter bar will not be applied).
  *
- * @internal
+ * @alpha
  * @param dashboardRef - reference to the current dashboard
  * @returns event handler
  */

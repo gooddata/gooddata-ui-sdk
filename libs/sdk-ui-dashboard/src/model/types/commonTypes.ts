@@ -13,7 +13,7 @@ import includes from "lodash/includes";
  *
  * By default, all objects
  *
- * @internal
+ * @alpha
  */
 export type ObjectAvailabilityConfig = {
     /**
@@ -33,7 +33,7 @@ export type ObjectAvailabilityConfig = {
 /**
  * Dashboard configuration can influence the available features, look and feel and behavior of the dashboard.
  *
- * @internal
+ * @alpha
  */
 export type DashboardConfig = {
     /**
@@ -101,7 +101,7 @@ export type DashboardConfig = {
  * -  `mapboxToken` - has to be provided by the context
  * -  `isReadOnly` - is purely choice of context in which the dashboard is used
  *
- * @internal
+ * @alpha
  */
 export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;
 
@@ -132,7 +132,7 @@ export function isResolvedConfig(config?: DashboardConfig): config is ResolvedDa
 /**
  * Values in this context will be available to all sagas.
  *
- * @internal
+ * @alpha
  */
 export type DashboardContext = {
     /**

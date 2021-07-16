@@ -6,7 +6,7 @@ import { IDashboardEvent } from "./base";
 /**
  * This event is emitted after the scheduled email is successfully created.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardScheduledEmailCreated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED";

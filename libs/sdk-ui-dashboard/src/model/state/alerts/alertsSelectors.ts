@@ -13,6 +13,6 @@ const adapterSelectors = alertsAdapter.getSelectors(selectSelf);
 /**
  * Selects all alerts used on the dashboard.
  *
- * @internal
+ * @alpha
  */
 export const selectAlerts = adapterSelectors.selectAll;

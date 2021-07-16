@@ -7,14 +7,14 @@ import { IDashboardCommand } from "./base";
 /**
  * The initial load of the dashboard will use this correlation id.
  *
- * @internal
+ * @alpha
  */
 export const InitialLoadCorrelationId = "initialLoad";
 
 /**
  * Loads dashboard from analytical backend.
  *
- * @internal
+ * @alpha
  */
 export interface LoadDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.LOAD";
@@ -38,7 +38,7 @@ export interface LoadDashboard extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function loadDashboard(
     config?: DashboardConfig,
@@ -60,7 +60,7 @@ export function loadDashboard(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface SaveDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SAVE";
@@ -82,7 +82,7 @@ export interface SaveDashboard extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
- * @internal
+ * @alpha
  */
 export function saveDashboard(identifier?: string, correlationId?: string): SaveDashboard {
     return {
@@ -99,7 +99,7 @@ export function saveDashboard(identifier?: string, correlationId?: string): Save
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface SaveDashboardAs extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SAVEAS";
@@ -122,7 +122,7 @@ export interface SaveDashboardAs extends IDashboardCommand {
  * @param title - new title for the dashboard; if not specified, the title of original dashboard will be used
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @internal
+ * @alpha
  */
 export function saveDashboardAs(
     identifier?: string,
@@ -144,7 +144,7 @@ export function saveDashboardAs(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface RenameDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RENAME";
@@ -160,7 +160,7 @@ export interface RenameDashboard extends IDashboardCommand {
  * @param newTitle - new dashboard title
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @internal
+ * @alpha
  */
 export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard {
     return {
@@ -177,7 +177,7 @@ export function renameDashboard(newTitle: string, correlationId?: string): Renam
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface ResetDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RESET";
@@ -192,7 +192,7 @@ export interface ResetDashboard extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function resetDashboard(correlationId?: string): ResetDashboard {
     return {

@@ -6,7 +6,7 @@ import isEmpty from "lodash/isEmpty";
 import { IDashboardQuery } from "../queries";
 
 /**
- * @internal
+ * @alpha
  */
 export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 
@@ -18,7 +18,7 @@ export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
  *
  * -  An internal error has occurred in the dashboard component - highly likely due to a bug.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardCommandFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COMMAND.FAILED";
@@ -78,7 +78,7 @@ export function invalidArgumentsProvided(
  * Tests whether the provided object is an instance of {@link DashboardCommandFailed}.
  *
  * @param obj - object to test
- * @internal
+ * @alpha
  */
 export function isDashboardCommandFailed(obj: unknown): obj is DashboardCommandFailed {
     return !isEmpty(obj) && (obj as DashboardCommandFailed).type === "GDC.DASH/EVT.COMMAND.FAILED";
@@ -94,7 +94,7 @@ export function isDashboardCommandFailed(obj: unknown): obj is DashboardCommandF
  *
  * This typically indicates user error, perhaps a typo in the command type name.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardCommandRejected extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COMMAND.REJECTED";
@@ -116,7 +116,7 @@ export function commandRejected(ctx: DashboardContext, correlationId?: string): 
  * This event is emitted when the submitted query has been rejected by the dashboard component because it does
  * not know how to handle the query.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardQueryRejected extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.REJECTED";
@@ -142,7 +142,7 @@ export function queryRejected(ctx: DashboardContext, correlationId?: string): Da
  *
  * -  An internal error has occurred in the dashboard component - highly likely due to a bug.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardQueryFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.FAILED";
@@ -202,7 +202,7 @@ export function invalidQueryArguments(
  * Tests whether the provided object is an instance of {@link DashboardCommandFailed}.
  *
  * @param obj - object to test
- * @internal
+ * @alpha
  */
 export function isDashboardQueryFailed(obj: unknown): obj is DashboardQueryFailed {
     return !isEmpty(obj) && (obj as DashboardQueryFailed).type === "GDC.DASH/EVT.QUERY.FAILED";
@@ -215,7 +215,7 @@ export function isDashboardQueryFailed(obj: unknown): obj is DashboardQueryFaile
 /**
  * This event is emitted when query processing starts.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardQueryStarted extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.STARTED";
@@ -237,7 +237,7 @@ export function queryStarted(ctx: DashboardContext, correlationId?: string): Das
  * This event is emitted when query processing completes with success. Both the query payload and the result are
  * included.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>, TResult>
     extends IDashboardEvent {

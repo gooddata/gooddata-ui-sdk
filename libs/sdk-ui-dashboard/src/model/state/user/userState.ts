@@ -3,7 +3,7 @@
 import { IUser } from "@gooddata/sdk-backend-spi";
 
 /**
- * @internal
+ * @alpha
  */
 export interface UserState {
     user?: IUser;

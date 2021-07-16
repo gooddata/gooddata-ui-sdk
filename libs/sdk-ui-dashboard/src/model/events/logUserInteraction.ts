@@ -6,7 +6,7 @@ import { IDashboardEvent } from "./base";
 /**
  * This event is emitted after user interaction that can be logged.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardUserInteractionLogged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.USER_INTERACTION_LOGGED";
@@ -16,7 +16,7 @@ export interface DashboardUserInteractionLogged extends IDashboardEvent {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export function userInteractionLogged(
     ctx: DashboardContext,

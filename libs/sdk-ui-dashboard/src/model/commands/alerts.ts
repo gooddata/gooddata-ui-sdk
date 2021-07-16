@@ -6,7 +6,7 @@ import { IDashboardCommand } from "./base";
 /**
  * Creates Kpi alert.
  *
- * @internal
+ * @alpha
  */
 export interface CreateAlert extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERT.CREATE";
@@ -21,7 +21,7 @@ export interface CreateAlert extends IDashboardCommand {
  * @param alert - specify alert to create.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @internal
+ * @alpha
  */
 export function createAlert(alert: IWidgetAlertDefinition, correlationId?: string): CreateAlert {
     return {
@@ -36,7 +36,7 @@ export function createAlert(alert: IWidgetAlertDefinition, correlationId?: strin
 /**
  *Updates Kpi alert.
  *
- * @internal
+ * @alpha
  */
 export interface UpdateAlert extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERT.UPDATE";
@@ -52,7 +52,7 @@ export interface UpdateAlert extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
- * @internal
+ * @alpha
  */
 export function updateAlert(alert: IWidgetAlert, correlationId?: string): UpdateAlert {
     return {
@@ -71,7 +71,7 @@ export function updateAlert(alert: IWidgetAlert, correlationId?: string): Update
 /**
  * Removes Kpi alert.
  *
- * @internal
+ * @alpha
  */
 export interface RemoveAlert extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERT.REMOVE";
@@ -87,7 +87,7 @@ export interface RemoveAlert extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
- * @internal
+ * @alpha
  */
 export function removeAlert(alert: IWidgetAlert, correlationId?: string): RemoveAlert {
     return {

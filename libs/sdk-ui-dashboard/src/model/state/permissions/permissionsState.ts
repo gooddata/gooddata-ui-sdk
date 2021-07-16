@@ -3,7 +3,7 @@
 import { IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 
 /**
- * @internal
+ * @alpha
  */
 export interface PermissionsState {
     permissions?: IWorkspacePermissions;

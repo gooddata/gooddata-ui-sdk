@@ -20,7 +20,7 @@ import { useDashboardDispatch } from "./DashboardStoreProvider";
  * @param onBeforeRun - optionally provide callback that will be called before dispatching the command
  * @returns callback that dispatches the command, registers relevant event handlers and unregisters them
  *          when an event that matches the correlation ID and one of the specified event types occurs
- * @internal
+ * @alpha
  */
 export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs extends any[]>(
     commandCreator: (...args: TArgs) => TCommand,

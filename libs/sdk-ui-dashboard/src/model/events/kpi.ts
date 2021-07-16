@@ -9,7 +9,7 @@ import { IKpiWidget, IKpiWidgetDefinition, ILegacyKpi } from "@gooddata/sdk-back
 /**
  * This event is emitted when the dashboard's KPI Widget header is modified.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardKpiWidgetHeaderChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED";
@@ -52,7 +52,7 @@ export function kpiWidgetHeaderChanged(
  * different measure. The change of measure to use may be accompanied with a change of the KPI header (change of
  * title). In that case new value of header is also included in the event.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardKpiWidgetMeasureChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED";
@@ -105,7 +105,7 @@ export function kpiWidgetMeasureChanged(
 /**
  * This event is emitted when dashboard's KPI Widget filter settings are modified.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardKpiWidgetFilterSettingsChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED";
@@ -148,7 +148,7 @@ export function kpiWidgetFilterSettingsChanged(
  * the new definition of the KPI that has uses same measure as before however has new setup of the over-time
  * comparison.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardKpiWidgetComparisonChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED";
@@ -193,7 +193,7 @@ export function kpiWidgetComparisonChanged(
  * This event is emitted after any change to KPI Widget configuration. It contains the entire new state of the
  * KPI Widget.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardKpiWidgetChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED";

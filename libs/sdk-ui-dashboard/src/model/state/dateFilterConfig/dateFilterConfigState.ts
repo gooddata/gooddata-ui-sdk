@@ -3,7 +3,7 @@
 import { IDashboardDateFilterConfig, IDateFilterConfig } from "@gooddata/sdk-backend-spi";
 
 /**
- * @internal
+ * @alpha
  */
 export interface DateFilterConfigState {
     /**

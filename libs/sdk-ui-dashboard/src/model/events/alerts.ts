@@ -6,7 +6,7 @@ import { IDashboardEvent } from "./base";
 /**
  * This event is emitted after the Kpi alert is successfully saved.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardAlertCreated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERT.CREATED";
@@ -37,7 +37,7 @@ export function alertCreated(
 /**
  * This event is emitted after the Kpi alert is successfully removed.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardAlertRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERT.REMOVED";
@@ -68,7 +68,7 @@ export function alertRemoved(
 /**
  * This event is emitted after the Kpi alert is updated.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardAlertUpdated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERT.UPDATED";

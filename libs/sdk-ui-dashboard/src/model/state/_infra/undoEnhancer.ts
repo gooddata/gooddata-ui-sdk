@@ -13,7 +13,7 @@ enablePatches();
 /**
  * An entry on undo stack contains patches required
  *
- * @internal
+ * @alpha
  */
 export type UndoEntry<T extends IDashboardCommand = IDashboardCommand> = {
     /**
@@ -35,7 +35,7 @@ export type UndoEntry<T extends IDashboardCommand = IDashboardCommand> = {
 /**
  * Slice that can be undo-enabled needs to include the undo section which will contain the essential undo metadata.
  *
- * @internal
+ * @alpha
  */
 export type UndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> = {
     _undo: {

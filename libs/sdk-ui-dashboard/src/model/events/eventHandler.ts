@@ -7,7 +7,7 @@ import { DashboardEvents } from "./index";
  * evaluated against all registered handlers and if evaluation succeeds they will be dispatched to the handler
  * function.
  *
- * @internal
+ * @alpha
  */
 export type DashboardEventHandler<TEvents extends DashboardEvents = any> = {
     /**

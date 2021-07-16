@@ -1,14 +1,16 @@
 // (C) 2007-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { DrillDefinition } from "@gooddata/sdk-backend-spi";
-import { LocalIdRef, ObjRef } from "@gooddata/sdk-model";
+import { DrillDefinition, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import {
     IAbsoluteDateFilter,
-    IRelativeDateFilter,
-    IPositiveAttributeFilter,
+    IInsight,
     INegativeAttributeFilter,
+    IPositiveAttributeFilter,
+    IRelativeDateFilter,
+    LocalIdRef,
+    ObjRef,
 } from "@gooddata/sdk-model";
-import { OnFiredDrillEvent, IDrillEvent } from "@gooddata/sdk-ui";
+import { IDrillEvent, OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
 /**
  * Supported dashboard filter type.
@@ -76,4 +78,19 @@ export interface IDrillDownDefinition {
  */
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition {
     return !isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
+}
+
+/**
+ * @alpha
+ */
+export interface DashboardDrillContext {
+    /**
+     * Particular insight that triggered the drill event.
+     */
+    insight?: IInsight;
+
+    /**
+     * Particular widget that triggered the drill event.
+     */
+    widget?: IInsightWidget;
 }

@@ -10,15 +10,15 @@ import { IDashboardStoreProviderProps } from "./types";
 /**
  * @internal
  */
-export const ReactDashboardContext: any = React.createContext(null);
+const ReactDashboardContext: any = React.createContext(null);
 
 /**
- * @internal
+ * @alpha
  */
 export const useDashboardDispatch: () => Dispatch<AnyAction> = createDispatchHook(ReactDashboardContext);
 
 /**
- * @internal
+ * @alpha
  */
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState> =
     createSelectorHook(ReactDashboardContext);

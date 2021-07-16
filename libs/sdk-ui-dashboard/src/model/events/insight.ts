@@ -10,7 +10,7 @@ import { DrillDefinition, IInsightWidget, IInsightWidgetDefinition } from "@good
  * This event is emitted when the header of an insight widget changed. The new value of the header (title)
  * is included in the event.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardInsightWidgetHeaderChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED";
@@ -55,7 +55,7 @@ export function insightWidgetHeaderChanged(
  * should be used for the widget. A change of filter settings means the insight rendered in the widget will
  * be re-rendered.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardInsightWidgetFilterSettingsChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED";
@@ -99,7 +99,7 @@ export function insightWidgetFilterSettingsChanged(
  * The properties specified influence how the insight rendered in the widget appears visually (legend, tooltips,
  * axes, etc)
  *
- * @internal
+ * @alpha
  */
 export interface DashboardInsightWidgetVisPropertiesChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED";
@@ -144,7 +144,7 @@ export function insightWidgetVisPropertiesChanged(
  *
  * That essentially means the insight widget now renders a different visualization
  *
- * @internal
+ * @alpha
  */
 export interface DashboardInsightWidgetInsightSwitched extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED";
@@ -186,7 +186,7 @@ export function insightWidgetInsightChanged(
  * This event is emitted when the insight widget's drill definitions change. The change may include
  * addition or change of drill definition for one or more drillable measures.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardInsightWidgetDrillsModified extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED";
@@ -237,7 +237,7 @@ export function insightWidgetDrillsModified(
  * This event is emitted when the insight widget's drill definitions are removed. The measures for which
  * the drill definitions were set up will no longer be clickable.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardInsightWidgetDrillsRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED";
@@ -279,7 +279,7 @@ export function insightWidgetDrillsRemoved(
  * This event is emitted after any change to Insight Widget configuration. It contains the entire new state of the
  * Insight Widget.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardInsightWidgetChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED";

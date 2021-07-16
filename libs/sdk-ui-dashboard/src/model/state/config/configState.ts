@@ -3,7 +3,7 @@
 import { ResolvedDashboardConfig } from "../../types/commonTypes";
 
 /**
- * @internal
+ * @alpha
  */
 export interface ConfigState {
     config?: ResolvedDashboardConfig;

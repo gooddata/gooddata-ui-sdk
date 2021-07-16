@@ -20,7 +20,7 @@ const selectSelf = createSelector(
  * This selector returns dashboard's filter context. It is expected that the selector is called only after the filter
  * context state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @internal
+ * @alpha
  */
 export const selectFilterContext = createSelector(selectSelf, (filterContextState) => {
     invariant(filterContextState.filterContext, "attempting to access uninitialized filter context state");
@@ -32,7 +32,7 @@ export const selectFilterContext = createSelector(selectSelf, (filterContextStat
  * This selector returns dashboard's filter context filters. It is expected that the selector is called only after the filter
  * context state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @internal
+ * @alpha
  */
 export const selectFilterContextFilters = createSelector(
     selectFilterContext,
@@ -43,7 +43,7 @@ export const selectFilterContextFilters = createSelector(
  * This selector returns dashboard's filter context attribute filters. It is expected that the selector is called only after the filter
  * context state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @internal
+ * @alpha
  */
 export const selectFilterContextAttributeFilters = createSelector(
     selectFilterContextFilters,
@@ -54,7 +54,7 @@ export const selectFilterContextAttributeFilters = createSelector(
  * This selector returns dashboard's filter context date filter. It is expected that the selector is called only after the filter
  * context state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @internal
+ * @alpha
  */
 export const selectFilterContextDateFilter = createSelector(
     selectFilterContextFilters,
@@ -64,7 +64,9 @@ export const selectFilterContextDateFilter = createSelector(
 /**
  * Creates a selector for selecting attribute filter by its displayForm {@link @gooddata/sdk-model#ObjRef}.
  *
- * @internal
+ * TODO: switch to select.. with memoize
+ *
+ * @alpha
  */
 export const makeSelectFilterContextAttributeFilterByDisplayForm = () =>
     createSelector(
@@ -79,7 +81,9 @@ export const makeSelectFilterContextAttributeFilterByDisplayForm = () =>
 /**
  * Creates a selector for selecting attribute filter by its localId.
  *
- * @internal
+ * TODO: switch to select.. with memoize
+ *
+ * @alpha
  */
 export const makeSelectFilterContextAttributeFilterByLocalId = () =>
     createSelector(
@@ -92,7 +96,9 @@ export const makeSelectFilterContextAttributeFilterByLocalId = () =>
 /**
  * Creates a selector for selecting attribute filter index by its localId.
  *
- * @internal
+ * TODO: switch to select.. with memoize
+ *
+ * @alpha
  */
 export const makeSelectFilterContextAttributeFilterIndexByLocalId = () =>
     createSelector(

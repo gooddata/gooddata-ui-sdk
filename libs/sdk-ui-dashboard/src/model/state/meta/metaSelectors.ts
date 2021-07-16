@@ -13,7 +13,7 @@ const selectSelf = createSelector(
  * Returns dashboard's metadata. It is expected that the selector is called only after the filter
  * context state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @internal
+ * @alpha
  */
 const selectDashboardMetadata = createSelector(selectSelf, (state) => {
     invariant(state.meta, "attempting to access uninitialized meta state");
@@ -24,7 +24,7 @@ const selectDashboardMetadata = createSelector(selectSelf, (state) => {
 /**
  * Returns current dashboard ref.
  *
- * @internal
+ * @alpha
  */
 export const selectDashboardRef = createSelector(selectDashboardMetadata, (state) => {
     return state.ref;
@@ -33,7 +33,7 @@ export const selectDashboardRef = createSelector(selectDashboardMetadata, (state
 /**
  * Returns current dashboard identifier.
  *
- * @internal
+ * @alpha
  */
 export const selectDashboardId = createSelector(selectDashboardMetadata, (state) => {
     return state.identifier;
@@ -42,7 +42,7 @@ export const selectDashboardId = createSelector(selectDashboardMetadata, (state)
 /**
  * Returns current dashboard uri.
  *
- * @internal
+ * @alpha
  */
 const selectDashboardUri = createSelector(selectDashboardMetadata, (state) => {
     return state.uri;
@@ -51,7 +51,7 @@ const selectDashboardUri = createSelector(selectDashboardMetadata, (state) => {
 /**
  * Returns current dashboard uri ref.
  *
- * @internal
+ * @alpha
  */
 export const selectDashboardUriRef = createSelector(selectDashboardUri, (uri) => {
     return uriRef(uri);
@@ -60,7 +60,7 @@ export const selectDashboardUriRef = createSelector(selectDashboardUri, (uri) =>
 /**
  * Returns current dashboard title.
  *
- * @internal
+ * @alpha
  */
 export const selectDashboardTitle = createSelector(selectDashboardMetadata, (state) => {
     return state.title;
