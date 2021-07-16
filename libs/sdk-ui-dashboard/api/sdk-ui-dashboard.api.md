@@ -416,6 +416,9 @@ export type CustomDashboardInsightComponent = ComponentType;
 // @internal (undocumented)
 export type CustomDashboardKpiComponent = ComponentType;
 
+// @alpha (undocumented)
+export type CustomDashboardLayoutComponent = ComponentType;
+
 // @internal (undocumented)
 export type CustomDashboardWidgetComponent = ComponentType;
 
@@ -890,7 +893,7 @@ export interface DashboardLayoutChanged extends IDashboardEvent {
 // @alpha (undocumented)
 export type DashboardLayoutCommands = AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | MoveSectionItem | RemoveSectionItem;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export interface DashboardLayoutProps {
     // (undocumented)
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
@@ -905,6 +908,9 @@ export interface DashboardLayoutProps {
     // (undocumented)
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
 }
+
+// @internal (undocumented)
+export const DashboardLayoutPropsProvider: React_2.FC<DashboardLayoutProps>;
 
 // @alpha
 export interface DashboardLayoutSectionAdded extends IDashboardEvent {
@@ -1250,8 +1256,11 @@ export const DefaultDashboardKpi: (props: DashboardKpiProps) => JSX.Element;
 // @internal (undocumented)
 export const DefaultDashboardKpiInner: () => JSX.Element;
 
+// @alpha (undocumented)
+export const DefaultDashboardLayout: (props: DashboardLayoutProps) => JSX.Element;
+
 // @internal (undocumented)
-export const DefaultDashboardLayout: ({ onFiltersChange, drillableItems, onDrill, onError, ErrorComponent: CustomError, }: DashboardLayoutProps) => JSX.Element;
+export const DefaultDashboardLayoutInner: () => JSX.Element;
 
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
@@ -1593,10 +1602,6 @@ export interface IDashboardProps {
     config?: DashboardConfig;
     DashboardAttributeFilterComponentFactory?: (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent | undefined;
     DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
-    dashboardLayoutConfig?: {
-        Component?: ComponentType<DashboardLayoutProps>;
-        defaultComponentProps?: DashboardLayoutProps;
-    };
     dashboardRef: ObjRef;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     ErrorComponent?: ComponentType<IErrorProps>;
@@ -1604,6 +1609,7 @@ export interface IDashboardProps {
     FilterBarComponent?: CustomFilterBarComponent;
     InsightComponent?: CustomDashboardInsightComponent;
     KpiComponent?: CustomDashboardKpiComponent;
+    LayoutComponent?: CustomDashboardLayoutComponent;
     LoadingComponent?: ComponentType<ILoadingProps>;
     MenuButtonComponent?: CustomMenuButtonComponent;
     menuButtonConfig?: IMenuButtonConfiguration;
@@ -2691,6 +2697,9 @@ export const useDashboardInsightProps: () => IDashboardInsightProps;
 
 // @internal (undocumented)
 export const useDashboardKpiProps: () => DashboardKpiProps;
+
+// @alpha (undocumented)
+export const useDashboardLayoutProps: () => DashboardLayoutProps;
 
 // @alpha (undocumented)
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;

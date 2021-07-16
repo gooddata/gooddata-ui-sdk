@@ -30,7 +30,7 @@ import {
     DefaultDashboardKpiInner,
     DefaultDashboardWidgetInner,
 } from "../widget";
-import { DashboardLayout, DefaultDashboardLayout } from "../layout";
+import { DashboardLayout, DashboardLayoutPropsProvider, DefaultDashboardLayoutInner } from "../layout";
 import { IntlWrapper } from "../localization";
 import {
     changeAttributeFilterSelection,
@@ -206,7 +206,9 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
         <IntlWrapper locale={locale}>
             <div className="gd-dashboards-root">
                 <DashboardHeader {...props} />
-                <DashboardLayout drillableItems={props.drillableItems} />
+                <DashboardLayoutPropsProvider drillableItems={props.drillableItems}>
+                    <DashboardLayout />
+                </DashboardLayoutPropsProvider>
             </div>
         </IntlWrapper>
     );
@@ -254,7 +256,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                     <DashboardComponentsProvider
                         ErrorComponent={props.ErrorComponent ?? DefaultError}
                         LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                        LayoutComponent={props.dashboardLayoutConfig?.Component ?? DefaultDashboardLayout}
+                        LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
                         InsightComponent={
                             props.InsightComponent ?? DefaultDashboardInsightWithDrillDialogInner
                         }

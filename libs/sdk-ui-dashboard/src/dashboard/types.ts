@@ -14,7 +14,7 @@ import {
     CustomDashboardDateFilterComponent,
     CustomFilterBarComponent,
 } from "../filterBar";
-import { DashboardLayoutProps } from "../layout";
+import { CustomDashboardLayoutComponent } from "../layout";
 import { DashboardConfig, DashboardEventHandler } from "../model";
 import { CustomScheduledEmailDialogComponent } from "../scheduledEmail";
 import {
@@ -106,21 +106,13 @@ export interface IDashboardProps {
     LoadingComponent?: ComponentType<ILoadingProps>;
 
     /**
-     * Optionally configure how the dashboard layout looks and behaves.
+     * Optionally specify component to use for rendering the layout.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useDashboardLayoutProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultDashboardLayout} component.
      */
-    dashboardLayoutConfig?: {
-        /**
-         * Specify component to use for rendering the layout.
-         */
-        Component?: ComponentType<DashboardLayoutProps>;
-
-        /**
-         * Optionally specify props to customize the default implementation of Dashboard View.
-         *
-         * This has no effect if custom component is used.
-         */
-        defaultComponentProps?: DashboardLayoutProps;
-    };
+    LayoutComponent?: CustomDashboardLayoutComponent;
 
     /**
      * Optionally specify component to use for rendering widgets.
