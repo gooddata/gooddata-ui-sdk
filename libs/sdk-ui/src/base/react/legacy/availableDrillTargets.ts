@@ -1,13 +1,31 @@
 // (C) 2021 GoodData Corporation
 import uniqBy from "lodash/fp/uniqBy";
 import flatten from "lodash/flatten";
-import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import {
     IAvailableDrillTargetAttribute,
     IAvailableDrillTargetMeasure,
     IAvailableDrillTargets,
 } from "../../vis/Events";
 import { DataViewFacade } from "../../results/facade";
+import { areObjRefsEqual } from "@gooddata/sdk-model";
+
+/**
+ * @internal
+ * Provides the subset of attributes which consist from all attributes before given attribute and attribute itself.
+ * @param fromAttribute - attribute to which we want to get relevant intersection's attributes
+ * @param attributes - all attributes from the same dimension as fromAttribute
+ */
+export function getIntersectionAttributes(
+    fromAttribute: IAttributeDescriptor,
+    attributes: IAttributeDescriptor[],
+): IAttributeDescriptor[] {
+    const indexOfFromAttribute = attributes.findIndex((attribute) =>
+        areObjRefsEqual(attribute.attributeHeader.ref, fromAttribute.attributeHeader.ref),
+    );
+
+    return attributes.slice(0, indexOfFromAttribute + 1);
+}
 
 function getAvailableDrillAttributes(dv: DataViewFacade): IAvailableDrillTargetAttribute[] {
     return flatten(
@@ -20,7 +38,7 @@ function getAvailableDrillAttributes(dv: DataViewFacade): IAvailableDrillTargetA
                     .attributeDescriptorsForDim(index)
                     .map((attribute, _index, attributes) => ({
                         attribute,
-                        intersectionAttributes: attributes,
+                        intersectionAttributes: getIntersectionAttributes(attribute, attributes),
                     }));
             }),
     );

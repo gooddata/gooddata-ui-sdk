@@ -1,23 +1,12 @@
 // (C) 2007-2021 GoodData Corporation
 import {
     DataViewFacade,
+    getIntersectionAttributes,
     IAvailableDrillTargetAttribute,
     IAvailableDrillTargetMeasure,
     IAvailableDrillTargets,
 } from "@gooddata/sdk-ui";
-import { IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
-
-function getIntersectionAttributes(
-    fromAttribute: IAttributeDescriptor,
-    attributes: IAttributeDescriptor[],
-): IAttributeDescriptor[] {
-    const indexOfFromAttribute = attributes.findIndex((attribute) =>
-        areObjRefsEqual(attribute.attributeHeader.ref, fromAttribute.attributeHeader.ref),
-    );
-
-    return attributes.slice(0, indexOfFromAttribute + 1);
-}
+import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 
 export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
     const measureDescriptors = dv

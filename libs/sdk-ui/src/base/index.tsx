@@ -134,6 +134,8 @@ export { withContexts } from "./react/withContexts";
 export { wrapDisplayName } from "./react/wrapDisplayName";
 export { CancelError, ICancelablePromise, makeCancelable, isCancelError } from "./react/CancelablePromise";
 export { withEntireDataView, ILoadingInjectedProps } from "./react/legacy/withEntireDataView";
+export { getIntersectionAttributes } from "./react/legacy/availableDrillTargets";
+
 export {
     resolveUseCancelablePromisesError,
     resolveUseCancelablePromisesStatus,
