@@ -31,6 +31,7 @@ export const SimpleDashboardIdentifier = "aaRaEZRWdRpQ";
 export const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
     .dash_aaRaEZRWdRpQ.obj as IDashboardWithReferences;
 export const SimpleDashboardLayout = SimpleDashboardWithReferences.dashboard.layout!;
+export const SimpleDashboardFirstWidgetRef = (SimpleDashboardLayout.sections[0].items[0].widget as any).ref;
 
 /**
  * A more complex dashboard that has 3 sections (rows).

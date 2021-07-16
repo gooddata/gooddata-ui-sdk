@@ -49,6 +49,7 @@ import {
     DrillToLegacyDashboard,
 } from "./drill";
 import { LogUserInteraction } from "./logUserInteraction";
+import { AddDrillTargets } from "./drillTargets";
 
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
 export {
@@ -161,6 +162,8 @@ export {
 
 export { LogUserInteraction, UserInteraction, logUserInteraction } from "./logUserInteraction";
 
+export { AddDrillTargets, addDrillTargets } from "./drillTargets";
+
 /**
  * @alpha
  */
@@ -209,4 +212,5 @@ export type DashboardCommands =
     | DrillToCustomUrl
     | DrillToDashboard
     | DrillToInsight
-    | DrillToLegacyDashboard;
+    | DrillToLegacyDashboard
+    | AddDrillTargets;

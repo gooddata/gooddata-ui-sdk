@@ -4,10 +4,11 @@ import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 import { LayoutState } from "./layoutState";
-import { IDashboardLayout, IDashboardLayoutItem } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout, IDashboardLayoutItem, IWidget } from "@gooddata/sdk-backend-spi";
 import { isInsightPlaceholderWidget, isKpiPlaceholderWidget } from "../../types/layoutTypes";
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 import memoize from "lodash/memoize";
+import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -75,24 +76,45 @@ export const selectBasicLayout = createSelector(selectLayout, (layout) => {
 });
 
 /**
+ * Selects dashboard widgets in an obj ref to widget map. This map will include all insight and all KPI widgets - those
+ * that are persisted as part of the dashboard.
+ *
+ * The 'ephemeral' widgets such as placeholders that are not persisted and cannot be referenced using a `ref` will naturally
+ * not be included in this map.
+ *
+ * @internal
+ */
+export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
+    const items: IWidget[] = [];
+
+    for (const section of layout.sections) {
+        for (const item of section.items) {
+            if (!item.widget) {
+                continue;
+            }
+
+            if (item.widget.type === "insight" || item.widget.type === "kpi") {
+                items.push(item.widget as IWidget);
+            }
+        }
+    }
+
+    return newMapForObjectWithIdentity(items);
+});
+
+/**
  * Selects widget by its ref.
  *
  * @alpha
  */
 export const selectWidgetByRef = memoize(
     (ref: ObjRef | undefined) => {
-        return createSelector(selectLayout, (layout) => {
+        return createSelector(selectWidgetsMap, (widgetMap) => {
             if (!ref) {
                 return;
             }
 
-            for (const section of layout.sections) {
-                for (const item of section.items) {
-                    if (item.widget?.type === "insight" || item.widget?.type === "kpi") {
-                        return item.widget;
-                    }
-                }
-            }
+            return widgetMap.get(ref);
         });
     },
     (ref) => ref && serializeObjRef(ref),

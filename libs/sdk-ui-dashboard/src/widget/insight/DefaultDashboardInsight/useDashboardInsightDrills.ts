@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { useCallback, useMemo, useState, useRef, useEffect } from "react";
+import { useCallback, useMemo, useRef, useEffect } from "react";
 import flatMap from "lodash/flatMap";
 import isEqual from "lodash/isEqual";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
@@ -16,7 +16,13 @@ import {
 
 import { getImplicitDrillsWithPredicates } from "../../../_staging/drills/drillingUtils";
 import { OnDashboardDrill } from "../../../drill";
-import { useDashboardSelector, selectAttributesWithDrillDown } from "../../../model";
+import {
+    useDashboardSelector,
+    selectAttributesWithDrillDown,
+    selectDrillTargetsByWidgetRef,
+    useDashboardDispatch,
+    addDrillTargets,
+} from "../../../model";
 import { IDashboardDrillEvent } from "../../../types";
 
 /**
@@ -43,21 +49,24 @@ export const useDashboardInsightDrills = (
     props: UseDashboardInsightDrillsProps,
 ): UseDashboardInsightDrillsResult => {
     const { widget, insight, drillableItems, disableWidgetImplicitDrills, onDrill } = props;
+    const { ref: widgetRef } = widget;
 
+    const dispatch = useDashboardDispatch();
     const attributesWithDrillDown = useDashboardSelector(selectAttributesWithDrillDown);
-    const [possibleDrills, setPossibleDrills] = useState<IAvailableDrillTargetAttribute[]>([]);
+
+    const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
+    const drillTargetsAttributes = drillTargets?.availableDrillTargets?.attributes;
+
+    const possibleDrills: IAvailableDrillTargetAttribute[] = useMemo(() => {
+        return drillTargetsAttributes ? drillTargetsAttributes : [];
+    }, [drillTargetsAttributes]);
 
     const handlePushData = useCallback((data: IPushData): void => {
-        if (data.availableDrillTargets?.attributes) {
-            setPossibleDrills((prevValue) => {
-                // only set possible drills if really different to prevent other hooks firing unnecessarily
-                if (!isEqual(prevValue, data.availableDrillTargets?.attributes)) {
-                    return data.availableDrillTargets!.attributes!;
-                }
-
-                // returning prevValue effectively skips the setState
-                return prevValue;
-            });
+        if (
+            data.availableDrillTargets &&
+            !isEqual(drillTargets?.availableDrillTargets, data.availableDrillTargets)
+        ) {
+            dispatch(addDrillTargets(widgetRef, data.availableDrillTargets));
         }
     }, []);
 

@@ -145,6 +145,8 @@ export {
 } from "./drill";
 export { DashboardUserInteractionLogged, userInteractionLogged } from "./logUserInteraction";
 
+export { DrillTargetsAdded, drillTargetsAdded } from "./drillTargets";
+
 /**
  * @alpha
  */

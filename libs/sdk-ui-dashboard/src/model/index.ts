@@ -58,6 +58,7 @@ export {
     selectStash,
     selectBasicLayout,
     selectWidgetByRef,
+    selectWidgetsMap,
 } from "./state/layout/layoutSelectors";
 export { DateFilterConfigState } from "./state/dateFilterConfig/dateFilterConfigState";
 export {
@@ -91,6 +92,11 @@ export { selectUser } from "./state/user/userSelectors";
 export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
 export { selectDashboardRef, selectDashboardUriRef, selectDashboardTitle } from "./state/meta/metaSelectors";
 export { selectListedDashboards } from "./state/listedDashboards/listedDashboardsSelectors";
+export {
+    selectDrillTargetsByWidgetRef,
+    selectDrillTargets,
+} from "./state/drillTargets/drillTargetsSelectors";
+export { IDrillTargets } from "./state/drillTargets/drillTargetsTypes";
 
 export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta";

@@ -14,11 +14,9 @@ import {
     insightRef,
     insightUri,
     isIdentifierRef,
-    isUriRef,
     ObjectType,
     ObjRef,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
 import values from "lodash/values";
 
 /**
@@ -260,7 +258,7 @@ export function newAttributeMap(
  * @param type - type of objects, may be undefined
  * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
  */
-export function newMapForObjectWithRef<T extends { ref: ObjRef }>(
+export function newMapForObjectWithIdentity<T extends { identifier: Identifier; uri: string; ref: ObjRef }>(
     items: T[],
     type?: ObjectType,
     strictTypeCheck: boolean = false,
@@ -268,16 +266,8 @@ export function newMapForObjectWithRef<T extends { ref: ObjRef }>(
     const map = new ObjRefMap<T>({
         type,
         strictTypeCheck,
-        idExtract: (i) => {
-            invariant(isIdentifierRef(i.ref));
-
-            return i.ref.identifier;
-        },
-        uriExtract: (i) => {
-            invariant(isUriRef(i.ref));
-
-            return i.ref.uri;
-        },
+        idExtract: (i) => i.identifier,
+        uriExtract: (i) => i.uri,
         refExtract: (i) => i.ref,
     });
 
