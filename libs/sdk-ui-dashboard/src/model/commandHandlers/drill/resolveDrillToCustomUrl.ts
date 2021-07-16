@@ -12,7 +12,7 @@ import {
     IInsightWidget,
 } from "@gooddata/sdk-backend-spi";
 import { idRef, ObjRef, areObjRefsEqual, insightId } from "@gooddata/sdk-model";
-import { IDrillToUrlPlaceholder } from "../../../drill/types";
+import { IDrillToUrlPlaceholder } from "../../../types";
 import { DashboardContext } from "../../types/commonTypes";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { SagaIterator } from "redux-saga";

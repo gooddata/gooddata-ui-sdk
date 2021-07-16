@@ -1673,6 +1673,16 @@ export interface IDrillTargets {
     uri: string;
 }
 
+// @internal (undocumented)
+export interface IDrillToUrlPlaceholder {
+    // (undocumented)
+    identifier: string;
+    // (undocumented)
+    placeholder: string;
+    // (undocumented)
+    toBeEncoded: boolean;
+}
+
 // @alpha (undocumented)
 export interface IFilterBarProps {
     filters: FilterContextItem[];
@@ -2709,13 +2719,13 @@ export const useDashboardWidgetProps: () => DashboardWidgetProps;
 
 // @internal (undocumented)
 export const useDrill: ({ onSuccess, onError, onBeforeRun }?: UseDrillProps) => {
-    run: (drillEvent: import("../..").IDashboardDrillEvent, drillContext: import("../..").DashboardDrillContext, correlationId?: string | undefined) => void;
+    run: (drillEvent: import("../../..").IDashboardDrillEvent, drillContext: import("../../..").DashboardDrillContext, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
 // @internal (undocumented)
 export const useDrillDown: ({ onSuccess, onError, onBeforeRun }?: UseDrillDownProps) => {
-    run: (insight: import("@gooddata/sdk-model").IInsight, drillDefinition: import("../..").IDrillDownDefinition, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (insight: import("@gooddata/sdk-model").IInsight, drillDefinition: import("../../..").IDrillDownDefinition, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2741,7 +2751,7 @@ export interface UseDrillProps {
 
 // @internal (undocumented)
 export const useDrillToAttributeUrl: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToAttributeUrlProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToAttributeUrl, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToAttributeUrl, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2757,7 +2767,7 @@ export interface UseDrillToAttributeUrlProps {
 
 // @internal (undocumented)
 export const useDrillToCustomUrl: ({ onSuccess, onError, onBeforeRun }?: UseDrillToCustomUrlProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToCustomUrl, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToCustomUrl, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2773,7 +2783,7 @@ export interface UseDrillToCustomUrlProps {
 
 // @internal (undocumented)
 export const useDrillToDashboard: ({ onSuccess, onError, onBeforeRun }?: UseDrillToDashboardProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToDashboard, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToDashboard, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2789,7 +2799,7 @@ export interface UseDrillToDashboardProps {
 
 // @internal (undocumented)
 export const useDrillToInsight: ({ onSuccess, onError, onBeforeRun }?: UseDrillToInsightProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToInsight, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToInsight, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2805,7 +2815,7 @@ export interface UseDrillToInsightProps {
 
 // @internal (undocumented)
 export const useDrillToLegacyDashboard: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToLegacyDashboardProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToLegacyDashboard, drillEvent: import("../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToLegacyDashboard, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 

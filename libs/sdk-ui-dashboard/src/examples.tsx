@@ -1,11 +1,8 @@
 // (C) 2019 GoodData Corporation
-import { MenuButtonItem } from "./topBar";
+import { IMenuButtonItem, IDashboardAttributeFilterProps, DashboardWidget, Dashboard } from "./presentation";
 import React from "react";
-import { IDashboardAttributeFilterProps } from "./filterBar";
-import { DashboardWidget } from "./widget";
 import { idRef } from "@gooddata/sdk-model";
 import { InsightView } from "@gooddata/sdk-ui-ext";
-import { Dashboard } from "./dashboard";
 
 /**
  * Shows how to use built-in customization to influence placement of the menu
@@ -28,7 +25,7 @@ export function demonstrateCustomMenuPlacement(): JSX.Element {
  * Shows how to use built-in customization to influence placement and add custom menu items
  */
 export function demonstrateCustomMenuPlacementAndItem(): JSX.Element {
-    const customItem: [number, MenuButtonItem] = [
+    const customItem: [number, IMenuButtonItem] = [
         -1,
         {
             itemId: "myItem",
