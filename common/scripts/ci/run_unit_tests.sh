@@ -61,17 +61,12 @@ RC=1
   fi;
 
   if [ $RC -eq 0 ]; then
-    $_RUSH validate-ci
+    $_RUSH validate-pr
     RC=$?
   fi;
 
   if [ $RC -eq 0 ]; then
-    #
-    # Explicitly limiting parallelism during tests; this is because Jest already does parallel test execution on
-    # per-project basis.
-    #
-
-    $_RUSH test-ci --parallelism 4
+    $_RUSH test-pr
     RC=$?
   fi
 
