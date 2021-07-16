@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import invariant from "ts-invariant";
 import {
     FilterContextItem,
+    IDashboardAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
@@ -16,7 +17,14 @@ import {
     DashboardConfigProvider,
     useDashboardComponentsContext,
 } from "../dashboardContexts";
-import { DefaultFilterBar } from "../filterBar";
+import {
+    DefaultDashboardAttributeFilterInner,
+    DefaultDashboardDateFilterInner,
+    CustomDashboardAttributeFilterComponent,
+    DefaultFilterBarInner,
+    FilterBarPropsProvider,
+    FilterBar,
+} from "../filterBar";
 import {
     DefaultDashboardInsightWithDrillDialogInner,
     DefaultDashboardKpiInner,
@@ -109,10 +117,9 @@ const useTopBar = () => {
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
 const DashboardHeader = (props: IDashboardProps): JSX.Element => {
-    const { filterBarConfig, dashboardRef, backend, workspace } = props;
+    const { dashboardRef, backend, workspace } = props;
     const intl = useIntl();
 
-    const FilterBarComponent = filterBarConfig?.Component ?? DefaultFilterBar;
     const { filters, onFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
     const { addSuccess, addError } = useToastMessage();
@@ -185,11 +192,9 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
                 <TopBar />
             </TopBarPropsProvider>
 
-            <FilterBarComponent
-                {...filterBarConfig?.defaultComponentProps}
-                filters={filters}
-                onFilterChanged={onFilterChanged}
-            />
+            <FilterBarPropsProvider filters={filters} onFilterChanged={onFilterChanged}>
+                <FilterBar />
+            </FilterBarPropsProvider>
         </>
     );
 };
@@ -226,6 +231,14 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
  * @internal
  */
 export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+    const attributeFilterFactory = useCallback(
+        (filter: IDashboardAttributeFilter): CustomDashboardAttributeFilterComponent => {
+            const userSpecified = props.DashboardAttributeFilterComponentFactory?.(filter);
+            return userSpecified ?? DefaultDashboardAttributeFilterInner;
+        },
+        [props.DashboardAttributeFilterComponentFactory],
+    );
+
     return (
         <DashboardStoreProvider
             dashboardRef={props.dashboardRef}
@@ -254,6 +267,11 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         ScheduledEmailDialogComponent={
                             props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
                         }
+                        DashboardAttributeFilterComponentFactory={attributeFilterFactory}
+                        DashboardDateFilterComponent={
+                            props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
+                        }
+                        FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBarInner}
                     >
                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                             <DashboardLoading {...props} />

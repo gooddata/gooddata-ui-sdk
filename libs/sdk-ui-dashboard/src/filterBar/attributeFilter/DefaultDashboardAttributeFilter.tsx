@@ -2,23 +2,23 @@
 import React from "react";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import stableStringify from "json-stable-stringify";
+
 import {
     attributeFilterToDashboardAttributeFilter,
     dashboardAttributeFilterToAttributeFilter,
 } from "../../_staging/dashboard/dashboardFilterConverter";
-import { IDefaultDashboardAttributeFilterProps } from "../types";
+
+import {
+    DashboardAttributeFilterPropsProvider,
+    useDashboardAttributeFilterProps,
+} from "./DashboardAttributeFilterPropsContext";
+import { IDashboardAttributeFilterProps } from "./types";
 
 /**
- * Default implementation of the attribute filter to use on the dashboard's filter bar.
- *
- * This will use the SDK's AttributeFilter with the button styled same as we have it today on KD.
- *
  * @internal
  */
-export const DefaultDashboardAttributeFilter: React.FC<IDefaultDashboardAttributeFilterProps> = ({
-    filter,
-    onFilterChanged,
-}) => {
+export const DefaultDashboardAttributeFilterInner = (): JSX.Element => {
+    const { filter, onFilterChanged } = useDashboardAttributeFilterProps();
     return (
         <AttributeFilterButton
             // TODO: https://jira.intgdc.com/browse/RAIL-2174
@@ -35,5 +35,20 @@ export const DefaultDashboardAttributeFilter: React.FC<IDefaultDashboardAttribut
                 );
             }}
         />
+    );
+};
+
+/**
+ * Default implementation of the attribute filter to use on the dashboard's filter bar.
+ *
+ * This will use the SDK's AttributeFilter with the button styled same as we have it today on KD.
+ *
+ * @alpha
+ */
+export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilterProps): JSX.Element => {
+    return (
+        <DashboardAttributeFilterPropsProvider {...props}>
+            <DefaultDashboardAttributeFilterInner />
+        </DashboardAttributeFilterPropsProvider>
     );
 };

@@ -15,6 +15,12 @@ import {
     CustomTopBarComponent,
 } from "../topBar/types";
 import { CustomScheduledEmailDialogComponent } from "../scheduledEmail/types";
+import {
+    CustomDashboardAttributeFilterComponent,
+    CustomDashboardDateFilterComponent,
+    CustomFilterBarComponent,
+} from "../filterBar/types";
+import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 /**
  * @internal
@@ -31,6 +37,11 @@ interface IDashboardComponentsContext {
     TitleComponent: CustomTitleComponent;
     TopBarComponent: CustomTopBarComponent;
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
+    DashboardAttributeFilterComponentFactory: (
+        filter: IDashboardAttributeFilter,
+    ) => CustomDashboardAttributeFilterComponent;
+    DashboardDateFilterComponent: CustomDashboardDateFilterComponent;
+    FilterBarComponent: CustomFilterBarComponent;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -54,6 +65,11 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     TitleComponent: ThrowMissingComponentError("TitleComponent"),
     TopBarComponent: ThrowMissingComponentError("TopBarComponent"),
     ScheduledEmailDialogComponent: ThrowMissingComponentError("ScheduledEmailDialogComponent"),
+    DashboardAttributeFilterComponentFactory: ThrowMissingComponentError(
+        "DashboardAttributeFilterComponentFactory",
+    ),
+    DashboardDateFilterComponent: ThrowMissingComponentError("DashboardDateFilterComponent"),
+    FilterBarComponent: ThrowMissingComponentError("FilterBarComponent"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 
