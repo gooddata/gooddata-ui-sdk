@@ -14,7 +14,7 @@ const MenuButtonPropsContext = createContext<IMenuButtonProps>({} as any);
 export const useMenuButtonProps = (config: IMenuButtonConfiguration = {}): IMenuButtonProps => {
     const contextValue = useContext(MenuButtonPropsContext);
     const configContextValue = useDashboardConfigContext();
-    const effectiveConfig: IMenuButtonConfiguration = { ...configContextValue?.menuButtonConfig, ...config };
+    const effectiveConfig = config ?? configContextValue?.menuButtonConfig ?? {};
 
     const { additionalMenuItems, menuItems } = effectiveConfig;
 
@@ -23,14 +23,17 @@ export const useMenuButtonProps = (config: IMenuButtonConfiguration = {}): IMenu
             return menuItems;
         }
 
-        return (additionalMenuItems ?? []).reduce((acc, [index, item]) => {
-            if (index === -1) {
-                acc.push(item);
-            } else {
-                acc.splice(index, 0, item);
-            }
-            return acc;
-        }, contextValue?.menuItems ?? []);
+        return (additionalMenuItems ?? []).reduce(
+            (acc, [index, item]) => {
+                if (index === -1) {
+                    acc.push(item);
+                } else {
+                    acc.splice(index, 0, item);
+                }
+                return acc;
+            },
+            [...(contextValue?.menuItems ?? [])],
+        );
     }, [menuItems, additionalMenuItems]);
 
     return { ...contextValue, menuItems: effectiveMenuItems };

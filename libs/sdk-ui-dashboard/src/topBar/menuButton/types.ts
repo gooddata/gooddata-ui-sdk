@@ -21,7 +21,7 @@ export interface IMenuButtonProps {
     /**
      * Items that will be in the menu.
      */
-    menuItems: IMenuButtonItem[];
+    menuItems: ReadonlyArray<IMenuButtonItem>;
 }
 
 /**
@@ -37,7 +37,7 @@ export interface IMenuButtonConfiguration {
      * Optionally specify custom items that will be in the menu. Using this setting fully overrides the
      * menu items. The default items will not be shown.
      */
-    menuItems?: IMenuButtonItem[];
+    menuItems?: ReadonlyArray<IMenuButtonItem>;
 
     /**
      * Optionally specify additional menu items to add on top of the default items.
@@ -45,5 +45,5 @@ export interface IMenuButtonConfiguration {
      * If specified, this should be a list of tuples: index to add item at, the menu item to add. If you want
      * to add item at the end of the list, use index `-1`.
      */
-    additionalMenuItems?: [number, IMenuButtonItem][];
+    additionalMenuItems?: ReadonlyArray<[number, IMenuButtonItem]>;
 }

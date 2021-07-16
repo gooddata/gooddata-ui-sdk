@@ -1676,8 +1676,8 @@ export interface IFilterBarCoreProps {
 
 // @alpha (undocumented)
 export interface IMenuButtonConfiguration {
-    additionalMenuItems?: [number, IMenuButtonItem][];
-    menuItems?: IMenuButtonItem[];
+    additionalMenuItems?: ReadonlyArray<[number, IMenuButtonItem]>;
+    menuItems?: ReadonlyArray<IMenuButtonItem>;
 }
 
 // @alpha (undocumented)
@@ -1693,7 +1693,7 @@ export interface IMenuButtonItem {
 
 // @alpha (undocumented)
 export interface IMenuButtonProps {
-    menuItems: IMenuButtonItem[];
+    menuItems: ReadonlyArray<IMenuButtonItem>;
 }
 
 // @alpha
