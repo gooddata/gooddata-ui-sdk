@@ -411,6 +411,9 @@ export class GeoTokenMissingSdkError extends GoodDataSdkError {
 // @internal (undocumented)
 export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventIntersectionElement[];
 
+// @internal
+export function getIntersectionAttributes(fromAttribute: IAttributeDescriptor, attributes: IAttributeDescriptor[]): IAttributeDescriptor[];
+
 // @internal (undocumented)
 export function getIntersectionPartAfter(intersection: IDrillEventIntersectionElement[], localIdentifier: string): IDrillEventIntersectionElement[];
 

@@ -1843,25 +1843,6 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "attr.owner.region",
-              "name": "Region",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1086",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/1086",
-            },
-            "identifier": "label.owner.region",
-            "localIdentifier": "a_label.owner.region",
-            "name": "Region",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1087",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/1087",
-          },
-        },
       ],
     },
     Object {
@@ -2665,25 +2646,6 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "attr.owner.region",
-              "name": "Region",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1086",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/1086",
-            },
-            "identifier": "label.owner.region",
-            "localIdentifier": "a_label.owner.region",
-            "name": "Region",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1087",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/1087",
-          },
-        },
       ],
     },
     Object {
@@ -2902,25 +2864,6 @@ Object {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
-          },
-        },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "attr.owner.region",
-              "name": "Region",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1086",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/1086",
-            },
-            "identifier": "label.owner.region",
-            "localIdentifier": "a_label.owner.region",
-            "name": "Region",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1087",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -3658,25 +3601,6 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/515",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "closed.year",
-              "name": "Year (Closed)",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/497",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/497",
-            },
-            "identifier": "closed.aag81lMifn6q",
-            "localIdentifier": "closed.second",
-            "name": "Year (Closed)",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/515",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/515",
-          },
-        },
       ],
     },
     Object {
@@ -3712,25 +3636,6 @@ Object {
             },
             "identifier": "closed.aag81lMifn6q",
             "localIdentifier": "a_closed.aag81lMifn6q",
-            "name": "Year (Closed)",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/515",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/515",
-          },
-        },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "closed.year",
-              "name": "Year (Closed)",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/497",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/497",
-            },
-            "identifier": "closed.aag81lMifn6q",
-            "localIdentifier": "closed.second",
             "name": "Year (Closed)",
             "ref": Object {
               "uri": "/gdc/md/referenceworkspace/obj/515",
@@ -5358,25 +5263,6 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/515",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "closed.year",
-              "name": "Year (Closed)",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/497",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/497",
-            },
-            "identifier": "closed.aag81lMifn6q",
-            "localIdentifier": "closed.second",
-            "name": "Year (Closed)",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/515",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/515",
-          },
-        },
       ],
     },
     Object {
@@ -5412,25 +5298,6 @@ Object {
             },
             "identifier": "closed.aag81lMifn6q",
             "localIdentifier": "a_closed.aag81lMifn6q",
-            "name": "Year (Closed)",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/515",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/515",
-          },
-        },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "closed.year",
-              "name": "Year (Closed)",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/497",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/497",
-            },
-            "identifier": "closed.aag81lMifn6q",
-            "localIdentifier": "closed.second",
             "name": "Year (Closed)",
             "ref": Object {
               "uri": "/gdc/md/referenceworkspace/obj/515",
@@ -5571,25 +5438,6 @@ Object {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
-          },
-        },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "attr.owner.region",
-              "name": "Region",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1086",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/1086",
-            },
-            "identifier": "label.owner.region",
-            "localIdentifier": "a_label.owner.region",
-            "name": "Region",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1087",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -5862,25 +5710,6 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/515",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "closed.year",
-              "name": "Year (Closed)",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/497",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/497",
-            },
-            "identifier": "closed.aag81lMifn6q",
-            "localIdentifier": "closed.second",
-            "name": "Year (Closed)",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/515",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/515",
-          },
-        },
       ],
     },
     Object {
@@ -5916,25 +5745,6 @@ Object {
             },
             "identifier": "closed.aag81lMifn6q",
             "localIdentifier": "a_closed.aag81lMifn6q",
-            "name": "Year (Closed)",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/515",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/515",
-          },
-        },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "closed.year",
-              "name": "Year (Closed)",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/497",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/497",
-            },
-            "identifier": "closed.aag81lMifn6q",
-            "localIdentifier": "closed.second",
             "name": "Year (Closed)",
             "ref": Object {
               "uri": "/gdc/md/referenceworkspace/obj/515",
@@ -6733,25 +6543,6 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "attr.opportunity.id",
-              "name": "Opportunity",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1066",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/1066",
-            },
-            "identifier": "label.opportunity.id.name",
-            "localIdentifier": "a_label.opportunity.id.name",
-            "name": "Opportunity Name",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1067",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/1067",
-          },
-        },
       ],
     },
     Object {
@@ -7124,25 +6915,6 @@ Object {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
-          },
-        },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "attr.owner.region",
-              "name": "Region",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1086",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/1086",
-            },
-            "identifier": "label.owner.region",
-            "localIdentifier": "a_label.owner.region",
-            "name": "Region",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1087",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -8103,25 +7875,6 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "attr.owner.region",
-              "name": "Region",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1086",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/1086",
-            },
-            "identifier": "label.owner.region",
-            "localIdentifier": "a_label.owner.region",
-            "name": "Region",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1087",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/1087",
-          },
-        },
       ],
     },
     Object {
@@ -8857,25 +8610,6 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/515",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "closed.year",
-              "name": "Year (Closed)",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/497",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/497",
-            },
-            "identifier": "closed.aag81lMifn6q",
-            "localIdentifier": "closed.second",
-            "name": "Year (Closed)",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/515",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/515",
-          },
-        },
       ],
     },
     Object {
@@ -8911,25 +8645,6 @@ Object {
             },
             "identifier": "closed.aag81lMifn6q",
             "localIdentifier": "a_closed.aag81lMifn6q",
-            "name": "Year (Closed)",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/515",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/515",
-          },
-        },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "closed.year",
-              "name": "Year (Closed)",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/497",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/497",
-            },
-            "identifier": "closed.aag81lMifn6q",
-            "localIdentifier": "closed.second",
             "name": "Year (Closed)",
             "ref": Object {
               "uri": "/gdc/md/referenceworkspace/obj/515",
@@ -15390,25 +15105,6 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "attr.owner.region",
-              "name": "Region",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1086",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/1086",
-            },
-            "identifier": "label.owner.region",
-            "localIdentifier": "a_label.owner.region",
-            "name": "Region",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1087",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/1087",
-          },
-        },
       ],
     },
     Object {
@@ -15573,25 +15269,6 @@ Object {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
-          },
-        },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "attr.owner.region",
-              "name": "Region",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1086",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/1086",
-            },
-            "identifier": "label.owner.region",
-            "localIdentifier": "a_label.owner.region",
-            "name": "Region",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1087",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -16038,25 +15715,6 @@ Object {
               "uri": "/gdc/md/referenceworkspace/obj/515",
             },
             "uri": "/gdc/md/referenceworkspace/obj/515",
-          },
-        },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
-              "identifier": "created.year",
-              "name": "Year (Created)",
-              "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/332",
-              },
-              "uri": "/gdc/md/referenceworkspace/obj/332",
-            },
-            "identifier": "created.aag81lMifn6q",
-            "localIdentifier": "a_created.aag81lMifn6q",
-            "name": "Year (Created)",
-            "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/350",
-            },
-            "uri": "/gdc/md/referenceworkspace/obj/350",
           },
         },
       ],
