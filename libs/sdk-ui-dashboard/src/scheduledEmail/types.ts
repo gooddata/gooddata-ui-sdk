@@ -4,14 +4,13 @@ import { IScheduledMail, IScheduledMailDefinition } from "@gooddata/sdk-backend-
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 ///
-/// Core props
+/// Component props
 ///
 
 /**
- * The necessary props a component must be able to handle for it to be usable as a ScheduleEmailDialog.
- * @internal
+ * @alpha
  */
-export interface IScheduledEmailDialogCoreProps {
+export interface IScheduledEmailDialogProps {
     /**
      * Is scheduled e-mail dialog visible?
      */
@@ -43,30 +42,6 @@ export interface IScheduledEmailDialogCoreProps {
 ///
 
 /**
- * @internal
+ * @alpha
  */
-export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogCoreProps>;
-
-///
-/// Default component props
-///
-
-/**
- * The subset of {@link IDefaultScheduledEmailDialogProps} that can be subscribed to by the user (i.e. the callbacks
- * will be called in addition to the default callbacks).
- *
- * @internal
- */
-export type IDefaultScheduledEmailDialogCallbackProps = Pick<
-    IDefaultScheduledEmailDialogProps,
-    "onCancel" | "onError" | "onSubmit" | "onSuccess"
->;
-
-/**
- * Props of the default ScheduledEmailDialog implementation: {@link DefaultScheduledEmailDialog}.
- * @internal
- */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IDefaultScheduledEmailDialogProps
-    extends IScheduledEmailDialogCoreProps,
-        IDefaultScheduledEmailDialogCallbackProps {}
+export type CustomScheduledEmailDialogComponent = ComponentType;

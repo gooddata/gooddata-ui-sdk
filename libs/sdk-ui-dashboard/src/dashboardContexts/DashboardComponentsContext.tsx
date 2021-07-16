@@ -1,12 +1,20 @@
 // (C) 2019 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import { IErrorProps, ILoadingProps, UnexpectedSdkError } from "@gooddata/sdk-ui";
+
 import { DashboardLayoutProps } from "../layout/types";
 import {
     CustomDashboardInsightComponent,
     CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
 } from "../widget/types";
+import {
+    CustomButtonBarComponent,
+    CustomMenuButtonComponent,
+    CustomTitleComponent,
+    CustomTopBarComponent,
+} from "../topBar/types";
+import { CustomScheduledEmailDialogComponent } from "../scheduledEmail/types";
 
 /**
  * @internal
@@ -18,6 +26,11 @@ interface IDashboardComponentsContext {
     WidgetComponent: CustomDashboardWidgetComponent;
     InsightComponent: CustomDashboardInsightComponent;
     KpiComponent: CustomDashboardKpiComponent;
+    ButtonBarComponent: CustomButtonBarComponent;
+    MenuButtonComponent: CustomMenuButtonComponent;
+    TitleComponent: CustomTitleComponent;
+    TopBarComponent: CustomTopBarComponent;
+    ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -36,6 +49,11 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     InsightComponent: ThrowMissingComponentError("InsightComponent"),
     KpiComponent: ThrowMissingComponentError("KpiComponent"),
     WidgetComponent: ThrowMissingComponentError("WidgetComponent"),
+    ButtonBarComponent: ThrowMissingComponentError("ButtonBarComponent"),
+    MenuButtonComponent: ThrowMissingComponentError("MenuButtonComponent"),
+    TitleComponent: ThrowMissingComponentError("TitleComponent"),
+    TopBarComponent: ThrowMissingComponentError("TopBarComponent"),
+    ScheduledEmailDialogComponent: ThrowMissingComponentError("ScheduledEmailDialogComponent"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

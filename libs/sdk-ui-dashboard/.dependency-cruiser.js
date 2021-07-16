@@ -26,6 +26,8 @@ options = {
         ),
         depCruiser.moduleWithDependencies("dashboardContexts", "src/dashboardContexts", [
             "src/layout/types.ts",
+            "src/scheduledEmail/types.ts",
+            "src/topBar/types.ts",
             "src/widget/types.ts",
         ]),
         depCruiser.moduleWithDependencies("drill", "src/drill", [
@@ -61,7 +63,10 @@ options = {
             "src/localization",
             "src/model",
         ]),
-        depCruiser.moduleWithDependencies("topBar", "src/topBar", ["src/localization"]),
+        depCruiser.moduleWithDependencies("topBar", "src/topBar", [
+            "src/dashboardContexts",
+            "src/localization",
+        ]),
         depCruiser.moduleWithDependencies("widget", "src/widget", [
             "src/_staging/*",
             "src/converters",

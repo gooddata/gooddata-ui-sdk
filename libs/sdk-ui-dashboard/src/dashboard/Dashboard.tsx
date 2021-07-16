@@ -1,22 +1,21 @@
 // (C) 2021 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import invariant from "ts-invariant";
 import {
     FilterContextItem,
-    IScheduledMail,
-    IScheduledMailDefinition,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
-import {
-    ErrorComponent as DefaultError,
-    GoodDataSdkError,
-    LoadingComponent as DefaultLoading,
-} from "@gooddata/sdk-ui";
+import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
+import { useIntl } from "react-intl";
 
-import { DashboardComponentsProvider, useDashboardComponentsContext } from "../dashboardContexts";
+import {
+    DashboardComponentsProvider,
+    DashboardConfigProvider,
+    useDashboardComponentsContext,
+} from "../dashboardContexts";
 import { DefaultFilterBar } from "../filterBar";
 import {
     DefaultDashboardInsightWithDrillDialogInner,
@@ -38,8 +37,20 @@ import {
     useDashboardSelector,
     DashboardStoreProvider,
 } from "../model";
-import { DefaultScheduledEmailDialog } from "../scheduledEmail";
-import { DefaultTopBar, IDefaultMenuButtonComponentCallbacks } from "../topBar";
+import {
+    DefaultScheduledEmailDialogInner,
+    ScheduledEmailDialog,
+    ScheduledEmailDialogPropsProvider,
+} from "../scheduledEmail";
+import {
+    DefaultButtonBarInner,
+    DefaultTitleInner,
+    DefaultMenuButtonInner,
+    DefaultTopBarInner,
+    TopBarPropsProvider,
+    TopBar,
+    IMenuButtonItem,
+} from "../topBar";
 
 import { useDashboardPdfExporter } from "./hooks/useDashboardPdfExporter";
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
@@ -94,22 +105,14 @@ const useTopBar = () => {
         onTitleChanged,
     };
 };
-const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const {
-        drillableItems,
-        filterBarConfig,
-        topBarConfig,
-        scheduledEmailDialogConfig,
-        dashboardRef,
-        backend,
-        workspace,
-    } = props;
+
+// split the header parts of the dashboard so that changes to their state
+// (e.g. opening email dialog) do not re-render the dashboard body
+const DashboardHeader = (props: IDashboardProps): JSX.Element => {
+    const { filterBarConfig, dashboardRef, backend, workspace } = props;
+    const intl = useIntl();
 
     const FilterBarComponent = filterBarConfig?.Component ?? DefaultFilterBar;
-    const TopBarComponent = topBarConfig?.Component ?? DefaultTopBar;
-    const ScheduledEmailDialogComponent =
-        scheduledEmailDialogConfig?.Component ?? DefaultScheduledEmailDialog;
-    const isDefaultScheduledEmailDialogUsed = !scheduledEmailDialogConfig?.Component;
     const { filters, onFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
     const { addSuccess, addError } = useToastMessage();
@@ -123,77 +126,70 @@ const DashboardInnerCore: React.FC<IDashboardProps> = (props: IDashboardProps) =
         },
     });
 
-    const defaultOnScheduleEmailing = () => {
+    const defaultOnScheduleEmailing = useCallback(() => {
         setIsScheduleEmailingDialogOpen(true);
-    };
+    }, []);
 
-    const defaultOnExportToPdf = () => {
+    const defaultOnExportToPdf = useCallback(() => {
         exportDashboard(dashboardRef, filters);
-    };
+    }, [exportDashboard, dashboardRef, filters]);
 
-    const menuButtonCallbacks: IDefaultMenuButtonComponentCallbacks = {
-        onScheduleEmailingCallback: defaultOnScheduleEmailing,
-        onExportToPdfCallback: defaultOnExportToPdf,
-    };
+    const defaultMenuItems = useMemo<IMenuButtonItem[]>(
+        () => [
+            {
+                itemId: "export-to-pdf",
+                itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
+                onClick: defaultOnExportToPdf,
+            },
+            {
+                itemId: "schedule-emailing",
+                itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
+                onClick: defaultOnScheduleEmailing,
+            },
+        ],
+        [defaultOnScheduleEmailing, defaultOnExportToPdf],
+    );
 
-    function onScheduleEmailingError(error: GoodDataSdkError) {
-        if (isDefaultScheduledEmailDialogUsed) {
-            scheduledEmailDialogConfig?.defaultComponentCallbackProps?.onError?.(error);
-        }
-
+    const onScheduleEmailingError = useCallback(() => {
         setIsScheduleEmailingDialogOpen(false);
         addError({ id: "dialogs.schedule.email.submit.error" });
-    }
+    }, []);
 
-    function onScheduleEmailingSuccess(scheduledMail: IScheduledMail) {
-        if (isDefaultScheduledEmailDialogUsed) {
-            scheduledEmailDialogConfig?.defaultComponentCallbackProps?.onSuccess?.(scheduledMail);
-        }
-
+    const onScheduleEmailingSuccess = useCallback(() => {
         setIsScheduleEmailingDialogOpen(false);
         addSuccess({ id: "dialogs.schedule.email.submit.success" });
-    }
+    }, []);
 
-    function onScheduleEmailingCancel() {
-        if (isDefaultScheduledEmailDialogUsed) {
-            scheduledEmailDialogConfig?.defaultComponentCallbackProps?.onCancel?.();
-        }
-
+    const onScheduleEmailingCancel = useCallback(() => {
         setIsScheduleEmailingDialogOpen(false);
-    }
-
-    function onScheduleEmailingSubmit(scheduledMail: IScheduledMailDefinition) {
-        if (isDefaultScheduledEmailDialogUsed) {
-            scheduledEmailDialogConfig?.defaultComponentCallbackProps?.onSubmit?.(scheduledMail);
-        }
-    }
+    }, []);
 
     return (
         <>
             <ToastMessages />
             {isScheduleEmailingDialogOpen && (
-                <ScheduledEmailDialogComponent
+                <ScheduledEmailDialogPropsProvider
                     isVisible={isScheduleEmailingDialogOpen}
                     onCancel={onScheduleEmailingCancel}
                     onError={onScheduleEmailingError}
                     onSuccess={onScheduleEmailingSuccess}
-                    onSubmit={onScheduleEmailingSubmit}
-                />
+                >
+                    <ScheduledEmailDialog />
+                </ScheduledEmailDialogPropsProvider>
             )}
-            <TopBarComponent
-                {...topBarConfig?.defaultComponentProps}
+
+            <TopBarPropsProvider
+                menuButtonProps={{ menuItems: defaultMenuItems }}
                 titleProps={{ title, onTitleChanged }}
-                menuButtonConfig={{
-                    defaultComponentCallbackProps: menuButtonCallbacks,
-                    ...topBarConfig?.defaultComponentProps?.menuButtonConfig,
-                }}
-            />
+            >
+                <TopBar />
+            </TopBarPropsProvider>
+
             <FilterBarComponent
                 {...filterBarConfig?.defaultComponentProps}
                 filters={filters}
                 onFilterChanged={onFilterChanged}
             />
-            <DashboardLayout drillableItems={drillableItems} />
         </>
     );
 };
@@ -204,7 +200,8 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     return (
         <IntlWrapper locale={locale}>
             <div className="gd-dashboards-root">
-                <DashboardInnerCore {...props} />
+                <DashboardHeader {...props} />
+                <DashboardLayout drillableItems={props.drillableItems} />
             </div>
         </IntlWrapper>
     );
@@ -250,8 +247,17 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         }
                         KpiComponent={props.KpiComponent ?? DefaultDashboardKpiInner}
                         WidgetComponent={props.WidgetComponent ?? DefaultDashboardWidgetInner}
+                        ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
+                        MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
+                        TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
+                        TitleComponent={props.TitleComponent ?? DefaultTitleInner}
+                        ScheduledEmailDialogComponent={
+                            props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
+                        }
                     >
-                        <DashboardLoading {...props} />
+                        <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
+                            <DashboardLoading {...props} />
+                        </DashboardConfigProvider>
                     </DashboardComponentsProvider>
                 </ThemeProvider>
             </ToastMessageContextProvider>

@@ -7,11 +7,14 @@ import { IDrillableItem, IErrorProps, IHeaderPredicate, ILoadingProps } from "@g
 import { CustomFilterBarComponent, IDefaultFilterBarProps, IFilterBarCoreProps } from "../filterBar";
 import { DashboardLayoutProps } from "../layout";
 import { DashboardConfig, DashboardEventHandler } from "../model";
+import { CustomScheduledEmailDialogComponent } from "../scheduledEmail";
 import {
-    CustomScheduledEmailDialogComponent,
-    IDefaultScheduledEmailDialogCallbackProps,
-} from "../scheduledEmail";
-import { CustomTopBarComponent, IDefaultTopBarProps, ITopBarCoreProps } from "../topBar";
+    CustomButtonBarComponent,
+    CustomMenuButtonComponent,
+    CustomTitleComponent,
+    CustomTopBarComponent,
+    IMenuButtonConfiguration,
+} from "../topBar";
 import {
     CustomDashboardInsightComponent,
     CustomDashboardKpiComponent,
@@ -94,26 +97,6 @@ export interface IDashboardProps {
     LoadingComponent?: ComponentType<ILoadingProps>;
 
     /**
-     * Optionally configure how the top bar looks and behaves.
-     */
-    topBarConfig?: {
-        /**
-         * Optionally specify component to use for rendering and handling the dashboard's Top Bar.
-         *
-         * If not specified the default {@link DefaultTopBar} will be used. If you do not want to render the top bar, then
-         * use the {@link HiddenTopBar} component.
-         */
-        Component?: CustomTopBarComponent;
-
-        /**
-         * Optionally specify props to customize the default implementation of Top bar.
-         *
-         * This has no effect if custom component is used.
-         */
-        defaultComponentProps?: Omit<IDefaultTopBarProps, keyof ITopBarCoreProps>;
-    };
-
-    /**
      * Optionally configure how the filter bar looks and behaves
      */
     filterBarConfig?: {
@@ -194,21 +177,57 @@ export interface IDashboardProps {
     KpiComponent?: CustomDashboardKpiComponent;
 
     /**
-     * Optionally configure how the scheduled email dialog looks and behaves.
+     * Optionally specify component to use for rendering the scheduled email dialog.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useScheduledEmailDialogProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultScheduledEmailDialog} component.
      */
-    scheduledEmailDialogConfig?: {
-        /**
-         * Specify component to use for rendering the scheduled email dialog
-         */
-        Component?: CustomScheduledEmailDialogComponent;
+    ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
 
-        /**
-         * Optionally specify callbacks props to be called by the default implementation of scheduled email dialog.
-         *
-         * These will have no effect if custom component is used.
-         */
-        defaultComponentCallbackProps?: IDefaultScheduledEmailDialogCallbackProps;
-    };
+    /**
+     * Optionally specify component to use for rendering the button bar.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useButtonBarProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultButtonBar} component.
+     */
+    ButtonBarComponent?: CustomButtonBarComponent;
+
+    /**
+     * Optionally specify component to use for rendering the menu button.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useMenuButtonProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultMenuButton} component.
+     */
+    MenuButtonComponent?: CustomMenuButtonComponent;
+
+    /**
+     * Optionally provide custom configuration for the Menu button.
+     */
+    menuButtonConfig?: IMenuButtonConfiguration;
+
+    /**
+     * Optionally specify component to use for rendering the top bar.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useTopBarProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultTopBar} component.
+     *
+     * Note that if you override this component, the ButtonBarComponent, MenuButtonComponent and TitleComponent
+     * props might get ignored depending on your implementation.
+     */
+    TopBarComponent?: CustomTopBarComponent;
+
+    /**
+     * Optionally specify component to use for rendering the title.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useTitleProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultTitle} component.
+     */
+    TitleComponent?: CustomTitleComponent;
 
     /**
      *
