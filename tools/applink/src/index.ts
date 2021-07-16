@@ -5,6 +5,7 @@ import program from "commander";
 import * as process from "process";
 import * as pkg from "../package.json";
 import { autoBuild, devConsole } from "./devConsole/action";
+import { findImpacted } from "./findImpacted";
 
 program
     .version(pkg.version)
@@ -18,6 +19,13 @@ program
         "Starts development console in auto-build mode where changes to all SDK libraries and tools will be monitored for changes and incremental builds will be started according to dependencies.",
     )
     .action(autoBuild);
+
+program
+    .command("findImpacted")
+    .description(
+        "Given a list of modified file paths incoming on stdin, this command will return all impacted packages. The paths should be relative to repository root. Example: `git diff --name-only upstream/master origin/master`",
+    )
+    .action(findImpacted);
 
 async function run() {
     program.parse(process.argv);
