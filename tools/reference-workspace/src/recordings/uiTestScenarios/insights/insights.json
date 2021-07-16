@@ -2845,6 +2845,11 @@
     "PivotTable.2cb5eb0d6b1dfc120c5d8b42137b123f": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with custom metric column size."
     },
+    "PivotTable.2eceab3f50f6adcc0e88cc95427aa633": {
+        "comment": "Auto-generated insight for test scenario PivotTable - one measure and repeating row attributes on different positions.",
+        "scenarioName": "one measure and repeating row attributes on different positions",
+        "visName": "PivotTable"
+    },
     "PivotTable.3495df66ed7cc8ec1f7ca4f9f4b12f24": {
         "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot sorted by second row attr.",
         "scenarioName": "single measure pivot sorted by second row attr",

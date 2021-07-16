@@ -15,6 +15,10 @@ export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = recordedDataFacade(
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor = TableDescriptor.for(
     TwoMeasuresWithTwoRowAndTwoColumnAttributes,
 );
+export const OneMeasureAndRepeatingRowAttributesOnDifferentPositions = recordedDataFacade(
+    ReferenceRecordings.Scenarios.PivotTable.OneMeasureAndRepeatingRowAttributesOnDifferentPositions,
+    DataViewFirstPage,
+);
 
 export function createTestRow(
     tableDescriptor: TableDescriptor,

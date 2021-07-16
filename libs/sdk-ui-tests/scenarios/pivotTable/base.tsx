@@ -60,6 +60,16 @@ export const PivotTableWithTwoSameDate = {
     columns: [],
 };
 
+const modifiedProductName: IAttribute = modifyAttribute(ReferenceLdm.Product.Name, (m) =>
+    m.localId("product.name.test"),
+);
+
+export const PivotTableWithRepeatingRowAttributes = {
+    measures: [ReferenceLdm.Amount],
+    rows: [ReferenceLdm.Product.Name, ReferenceLdm.Region, modifiedProductName],
+    columns: [],
+};
+
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
@@ -123,6 +133,10 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario("arithmetic measures", PivotTableWithArithmeticMeasures)
     .addScenario("with attributes without measures", PivotTableWithAttributesWithoutMeasures)
     .addScenario("with two same dates", PivotTableWithTwoSameDate)
+    .addScenario(
+        "one measure and repeating row attributes on different positions",
+        PivotTableWithRepeatingRowAttributes,
+    )
     .addScenario(
         "with date filter",
         {
