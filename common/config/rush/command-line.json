@@ -123,6 +123,20 @@
       "summary": "Makes projects populate reference workspace with recording definitions or recordings themselves.",
       "shellCommand": "bash common/scripts/populate-ref.sh",
       "safeForSimultaneousRushProcesses": false
+    },
+    {
+      "commandKind": "global",
+      "name": "test-pr",
+      "summary": "Run tests for only those packages whose files have changed and packages that depend on them. This is intended to run in PR to test just the changed packages.",
+      "shellCommand": "bash common/scripts/test-pr.sh",
+      "safeForSimultaneousRushProcesses": false
+    },
+    {
+      "commandKind": "global",
+      "name": "validate-pr",
+      "summary": "Run tests for only those packages whose files have changed and packages that depend on them. This is intended to run in PR to validate just the changed packages.",
+      "shellCommand": "bash common/scripts/validate-pr.sh",
+      "safeForSimultaneousRushProcesses": false
     }
     // {
     //   /**
