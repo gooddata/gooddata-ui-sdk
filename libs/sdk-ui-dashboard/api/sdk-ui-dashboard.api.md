@@ -1586,6 +1586,7 @@ export interface IDashboardProps {
     KpiComponent?: CustomDashboardKpiComponent;
     LoadingComponent?: ComponentType<ILoadingProps>;
     MenuButtonComponent?: CustomMenuButtonComponent;
+    menuButtonConfig?: IMenuButtonConfiguration;
     permissions?: IWorkspacePermissions;
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
     theme?: ITheme;
@@ -1671,6 +1672,12 @@ export interface IDrillTargets {
 export interface IFilterBarCoreProps {
     filters: FilterContextItem[];
     onFilterChanged: (filter: FilterContextItem | undefined) => void;
+}
+
+// @alpha (undocumented)
+export interface IMenuButtonConfiguration {
+    additionalMenuItems?: [number, IMenuButtonItem][];
+    menuItems?: IMenuButtonItem[];
 }
 
 // @alpha (undocumented)
@@ -2799,7 +2806,7 @@ export interface UseDrillToLegacyDashboardProps {
 }
 
 // @alpha (undocumented)
-export const useMenuButtonProps: () => IMenuButtonProps;
+export const useMenuButtonProps: (config?: IMenuButtonConfiguration) => IMenuButtonProps;
 
 // @alpha (undocumented)
 export type UserInteraction = "poweredByGDLogoClicked";

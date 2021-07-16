@@ -11,7 +11,11 @@ import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } fr
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import { useIntl } from "react-intl";
 
-import { DashboardComponentsProvider, useDashboardComponentsContext } from "../dashboardContexts";
+import {
+    DashboardComponentsProvider,
+    DashboardConfigProvider,
+    useDashboardComponentsContext,
+} from "../dashboardContexts";
 import { DefaultFilterBar } from "../filterBar";
 import {
     DefaultDashboardInsightWithDrillDialogInner,
@@ -251,7 +255,9 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                             props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
                         }
                     >
-                        <DashboardLoading {...props} />
+                        <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
+                            <DashboardLoading {...props} />
+                        </DashboardConfigProvider>
                     </DashboardComponentsProvider>
                 </ThemeProvider>
             </ToastMessageContextProvider>

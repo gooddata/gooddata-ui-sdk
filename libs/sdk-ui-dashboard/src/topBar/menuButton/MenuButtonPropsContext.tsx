@@ -1,7 +1,9 @@
 // (C) 2020 GoodData Corporation
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 
-import { IMenuButtonProps } from "./types";
+import { useDashboardConfigContext } from "../../dashboardContexts";
+
+import { IMenuButtonConfiguration, IMenuButtonProps } from "./types";
 
 // TODO throw some error ideally
 const MenuButtonPropsContext = createContext<IMenuButtonProps>({} as any);
@@ -9,8 +11,29 @@ const MenuButtonPropsContext = createContext<IMenuButtonProps>({} as any);
 /**
  * @alpha
  */
-export const useMenuButtonProps = (): IMenuButtonProps => {
-    return useContext(MenuButtonPropsContext);
+export const useMenuButtonProps = (config: IMenuButtonConfiguration = {}): IMenuButtonProps => {
+    const contextValue = useContext(MenuButtonPropsContext);
+    const configContextValue = useDashboardConfigContext();
+    const effectiveConfig: IMenuButtonConfiguration = { ...configContextValue?.menuButtonConfig, ...config };
+
+    const { additionalMenuItems, menuItems } = effectiveConfig;
+
+    const effectiveMenuItems = useMemo(() => {
+        if (menuItems) {
+            return menuItems;
+        }
+
+        return (additionalMenuItems ?? []).reduce((acc, [index, item]) => {
+            if (index === -1) {
+                acc.push(item);
+            } else {
+                acc.splice(index, 0, item);
+            }
+            return acc;
+        }, contextValue?.menuItems ?? []);
+    }, [menuItems, additionalMenuItems]);
+
+    return { ...contextValue, menuItems: effectiveMenuItems };
 };
 
 /**

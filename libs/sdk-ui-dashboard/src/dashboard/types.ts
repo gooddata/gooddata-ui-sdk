@@ -13,6 +13,7 @@ import {
     CustomMenuButtonComponent,
     CustomTitleComponent,
     CustomTopBarComponent,
+    IMenuButtonConfiguration,
 } from "../topBar";
 import {
     CustomDashboardInsightComponent,
@@ -201,6 +202,11 @@ export interface IDashboardProps {
      * To fall back to the default implementation, use the {@link DefaultMenuButton} component.
      */
     MenuButtonComponent?: CustomMenuButtonComponent;
+
+    /**
+     * Optionally provide custom configuration for the Menu button.
+     */
+    menuButtonConfig?: IMenuButtonConfiguration;
 
     /**
      * Optionally specify component to use for rendering the top bar.
