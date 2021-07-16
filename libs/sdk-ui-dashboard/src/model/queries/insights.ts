@@ -11,7 +11,7 @@ import {
  * Given a reference to an insight, this query will obtain list of all date datasets that may be used
  * to filter it.
  *
- * @internal
+ * @alpha
  */
 export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDatasets> {
     readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
@@ -27,7 +27,7 @@ export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDat
  * @param insightRef - reference to insight
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @internal
+ * @alpha
  */
 export function queryDateDatasetsForInsight(
     insightRef: ObjRef,
@@ -55,7 +55,7 @@ export function queryDateDatasetsForInsight(
  * it is not available (meaning the insight does not directly use anything related to date datasets) then the `dateDatasetsOrdered`
  * can be used to pick the date dataset for filtering.
  *
- * @internal
+ * @alpha
  */
 export type InsightDateDatasets = {
     /**
@@ -122,7 +122,7 @@ export type InsightDateDatasets = {
  * insight. For each display form, the result will also contain attribute to which the display form
  * belongs.
  *
- * @internal
+ * @alpha
  */
 export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
     readonly type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
@@ -132,7 +132,7 @@ export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttri
 }
 
 /**
- * @internal
+ * @alpha
  */
 export type InsightAttributesMeta = {
     /**
@@ -158,7 +158,7 @@ export type InsightAttributesMeta = {
  * @param insightRef - reference to insight
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @internal
+ * @alpha
  */
 export function queryInsightAttributesMeta(
     insightRef: ObjRef,

@@ -5,7 +5,7 @@ import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from 
 import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
 
 /**
- * @internal
+ * @alpha
  */
 export interface AddLayoutSection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION";
@@ -42,7 +42,7 @@ export interface AddLayoutSection extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function addLayoutSection(
     index: number,
@@ -66,7 +66,7 @@ export function addLayoutSection(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface MoveLayoutSection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION";
@@ -96,7 +96,7 @@ export interface MoveLayoutSection extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function moveLayoutSection(
     sectionIndex: number,
@@ -118,7 +118,7 @@ export function moveLayoutSection(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface RemoveLayoutSection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION";
@@ -151,7 +151,7 @@ export interface RemoveLayoutSection extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function removeLayoutSection(
     index: number,
@@ -173,7 +173,7 @@ export function removeLayoutSection(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeLayoutSectionHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER";
@@ -209,7 +209,7 @@ export interface ChangeLayoutSectionHeader extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function changeLayoutSectionHeader(
     index: number,
@@ -233,7 +233,7 @@ export function changeLayoutSectionHeader(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface AddSectionItems extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS";
@@ -275,7 +275,7 @@ export interface AddSectionItems extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function addSectionItem(
     sectionIndex: number,
@@ -299,7 +299,7 @@ export function addSectionItem(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface ReplaceSectionItem extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM";
@@ -339,7 +339,7 @@ export interface ReplaceSectionItem extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function replaceSectionItem(
     sectionIndex: number,
@@ -365,7 +365,7 @@ export function replaceSectionItem(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface MoveSectionItem extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM";
@@ -412,7 +412,7 @@ export interface MoveSectionItem extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function moveSectionItem(
     sectionIndex: number,
@@ -438,7 +438,7 @@ export function moveSectionItem(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface RemoveSectionItem extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM";
@@ -489,7 +489,7 @@ export interface RemoveSectionItem extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function removeSectionItem(
     sectionIndex: number,
@@ -521,7 +521,7 @@ export function removeSectionItem(
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function eagerRemoveSectionItem(
     sectionIndex: number,
@@ -546,7 +546,7 @@ export function eagerRemoveSectionItem(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export type DashboardLayoutCommands =
     | AddLayoutSection
@@ -569,12 +569,12 @@ export type DashboardLayoutCommands =
  * The function must return index of command up to (and including) which the undo should be done. It is not possible
  * to undo just some command randomly.
  *
- * @internal
+ * @alpha
  */
 export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayoutCommands>) => number;
 
 /**
- * @internal
+ * @alpha
  */
 export interface UndoLayoutChanges extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
@@ -616,7 +616,7 @@ export interface UndoLayoutChanges extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function undoLayoutChanges(
     undoPointSelector?: UndoPointSelector,
@@ -646,7 +646,7 @@ export function undoLayoutChanges(
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges {
     return {

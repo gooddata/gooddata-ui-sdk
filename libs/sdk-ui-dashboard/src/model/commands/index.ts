@@ -162,7 +162,7 @@ export {
 export { LogUserInteraction, UserInteraction, logUserInteraction } from "./logUserInteraction";
 
 /**
- * @internal
+ * @alpha
  */
 export type DashboardCommands =
     | LogUserInteraction

@@ -6,7 +6,7 @@ import { WidgetFilterSettings, WidgetHeader } from "../types/widgetTypes";
 import { InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeInsightWidgetHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER";
@@ -33,7 +33,7 @@ export interface ChangeInsightWidgetHeader extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function changeInsightWidgetHeader(
     ref: ObjRef,
@@ -55,7 +55,7 @@ export function changeInsightWidgetHeader(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS";
@@ -83,7 +83,7 @@ export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function changeInsightWidgetFilterSettings(
     ref: ObjRef,
@@ -105,7 +105,7 @@ export function changeInsightWidgetFilterSettings(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES";
@@ -137,7 +137,7 @@ export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function changeInsightWidgetVisProperties(
     ref: ObjRef,
@@ -162,7 +162,7 @@ export function changeInsightWidgetVisProperties(
  * XXX: don't think this is needed right away. should definitely allow such flexibility though. Would allow
  *  to switch between insights that are of different vis type but show same data.
  *
- * @internal
+ * @alpha
  */
 export interface ChangeInsightWidgetInsight extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT";
@@ -199,7 +199,7 @@ export interface ChangeInsightWidgetInsight extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function changeInsightWidgetInsight(
     ref: ObjRef,
@@ -223,7 +223,7 @@ export function changeInsightWidgetInsight(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS";
@@ -266,7 +266,7 @@ export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function modifyDrillForInsightWidget(
     ref: ObjRef,
@@ -288,12 +288,12 @@ export function modifyDrillForInsightWidget(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export type RemoveDrillsSelector = ObjRef[] | "*";
 
 /**
- * @internal
+ * @alpha
  */
 export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS";
@@ -320,7 +320,7 @@ export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function removeDrillForInsightWidget(
     ref: ObjRef,
@@ -342,7 +342,7 @@ export function removeDrillForInsightWidget(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface RefreshInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH";
@@ -362,7 +362,7 @@ export interface RefreshInsightWidget extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function refreshInsightWidget(ref: ObjRef, correlationId?: string): RefreshInsightWidget {
     return {

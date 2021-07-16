@@ -13,6 +13,6 @@ export {
 } from "./insights";
 
 /**
- * @internal
+ * @alpha
  */
 export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta;

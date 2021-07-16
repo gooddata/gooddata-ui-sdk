@@ -11,7 +11,6 @@ export {
     DashboardDrillDefinition,
     OnDashboardDrill,
     DrillStep,
-    DashboardDrillContext,
     OnDrillDown,
     OnDrillToAttributeUrl,
     OnDrillToCustomUrl,

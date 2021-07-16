@@ -4,7 +4,7 @@ import { IDashboardFilterReference } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 
 /**
- * @internal
+ * @alpha
  */
 export type WidgetHeader = {
     /**
@@ -14,7 +14,7 @@ export type WidgetHeader = {
 };
 
 /**
- * @internal
+ * @alpha
  */
 export type WidgetFilterSettings = {
     /**

@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 /**
- * @internal
+ * @alpha
  */
 export type LoadingState = {
     loading: boolean;

@@ -12,7 +12,7 @@ const selectSelf = createSelector(
  * Returns dashboard's filter context. It is expected that the selector is called only after the filter
  * context state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @internal
+ * @alpha
  */
 export const selectConfig = createSelector(selectSelf, (configState) => {
     invariant(configState.config, "attempting to access uninitialized filter context state");
@@ -26,7 +26,7 @@ export const selectConfig = createSelector(selectSelf, (configState) => {
  * Note: this configuration SHOULD be further augmented by the dashboard-level overrides to obtain
  * the effective date filter configuration.
  *
- * @internal
+ * @alpha
  */
 export const selectDateFilterConfig = createSelector(selectConfig, (state) => {
     return state.dateFilterConfig;
@@ -35,7 +35,7 @@ export const selectDateFilterConfig = createSelector(selectConfig, (state) => {
 /**
  * Returns settings that are in effect for the current dashboard.
  *
- * @internal
+ * @alpha
  */
 export const selectSettings = createSelector(selectConfig, (state) => {
     return state.settings;
@@ -44,7 +44,7 @@ export const selectSettings = createSelector(selectConfig, (state) => {
 /**
  * Returns locale to use for internationalization of the dashboard.
  *
- * @internal
+ * @alpha
  */
 export const selectLocale = createSelector(selectConfig, (state) => {
     return state.locale;
@@ -53,7 +53,7 @@ export const selectLocale = createSelector(selectConfig, (state) => {
 /**
  * Returns number separators to use when rendering numeric values on charts or KPIs.
  *
- * @internal
+ * @alpha
  */
 export const selectSeparators = createSelector(selectConfig, (state) => {
     return state.separators;
@@ -62,7 +62,7 @@ export const selectSeparators = createSelector(selectConfig, (state) => {
 /**
  * Returns the color palette for dashboard charts.
  *
- * @internal
+ * @alpha
  */
 export const selectColorPalette = createSelector(selectConfig, (state) => {
     return state.colorPalette;
@@ -73,7 +73,7 @@ export const selectColorPalette = createSelector(selectConfig, (state) => {
  * criteria can appear in selections where user has pick an object to use for some purpose (for instance metric for
  * KPI or date dataset to filter by).
  *
- * @internal
+ * @alpha
  */
 export const selectObjectAvailabilityConfig = createSelector(selectConfig, (state) => {
     return state.objectAvailability;
@@ -82,7 +82,7 @@ export const selectObjectAvailabilityConfig = createSelector(selectConfig, (stat
 /**
  * Returns Mapbox token.
  *
- * @internal
+ * @alpha
  */
 export const selectMapboxToken = createSelector(selectConfig, (state) => {
     return state.mapboxToken;
@@ -92,7 +92,7 @@ export const selectMapboxToken = createSelector(selectConfig, (state) => {
  * Returns whether the Dashboard is executed in read-only mode.
  * Read-only mode disables any interactions that can alter the backend data.
  *
- * @internal
+ * @alpha
  */
 export const selectIsReadOnly = createSelector(selectConfig, (state) => {
     return state.isReadOnly;
@@ -102,7 +102,7 @@ export const selectIsReadOnly = createSelector(selectConfig, (state) => {
  * Returns whether the Dashboard is executed in embedded context.
  * In embedded mode, some interactions may be disabled.
  *
- * @internal
+ * @alpha
  */
 export const selectIsEmbedded = createSelector(selectConfig, (state) => {
     return state.isEmbedded;
@@ -115,7 +115,7 @@ export const selectIsEmbedded = createSelector(selectConfig, (state) => {
 /**
  * Returns date format.
  *
- * @internal
+ * @alpha
  */
 export const selectDateFormat = createSelector(selectConfig, (state) => {
     return state.settings?.responsiveUiDateFormat;
@@ -124,7 +124,7 @@ export const selectDateFormat = createSelector(selectConfig, (state) => {
 /**
  * Returns whether the current user can schedule emails.
  *
- * @internal
+ * @alpha
  */
 export const selectEnableKPIDashboardSchedule = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardSchedule;
@@ -133,7 +133,7 @@ export const selectEnableKPIDashboardSchedule = createSelector(selectConfig, (st
 /**
  * Returns whether the current user can share scheduled email to other recipients.
  *
- * @internal
+ * @alpha
  */
 export const selectEnableKPIDashboardScheduleRecipients = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardScheduleRecipients;
@@ -142,7 +142,7 @@ export const selectEnableKPIDashboardScheduleRecipients = createSelector(selectC
 /**
  * Returns current platform edition.
  *
- * @internal
+ * @alpha
  */
 export const selectPlatformEdition = createSelector(selectConfig, (state) => {
     return state.settings?.platformEdition ?? "enterprise";
@@ -151,7 +151,7 @@ export const selectPlatformEdition = createSelector(selectConfig, (state) => {
 /**
  * Returns whether comapny logo should be visible in embedded dashboard.
  *
- * @internal
+ * @alpha
  */
 export const selectEnableCompanyLogoInEmbeddedUI = createSelector(selectConfig, (state) => {
     return state.settings?.enableCompanyLogoInEmbeddedUI ?? false;

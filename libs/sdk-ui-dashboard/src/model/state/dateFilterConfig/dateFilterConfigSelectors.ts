@@ -23,7 +23,7 @@ const selectSelf = createSelector(
  *  date filter config that contains the final config obtained by merging the workspace-level config and the
  *  dashboard-level overrides.
  *
- * @internal
+ * @alpha
  */
 export const selectDateFilterConfigOverrides = createSelector(selectSelf, (dateFilterConfigState) => {
     return dateFilterConfigState.dateFilterConfig;
@@ -35,7 +35,7 @@ export const selectDateFilterConfigOverrides = createSelector(selectSelf, (dateF
  *
  * This is the configuration that the DateFilter SHOULD use when rendering filtering presets.
  *
- * @internal
+ * @alpha
  */
 export const selectEffectiveDateFilterConfig = createSelector(selectSelf, (dateFilterConfigState) => {
     invariant(
@@ -52,7 +52,7 @@ export const selectEffectiveDateFilterConfig = createSelector(selectSelf, (dateF
  *
  * These are the date filter options that the DateFilter SHOULD use when rendering filtering presets.
  *
- * @internal
+ * @alpha
  */
 export const selectEffectiveDateFilterOptions = createSelector(
     selectEffectiveDateFilterConfig,
@@ -66,7 +66,7 @@ export const selectEffectiveDateFilterOptions = createSelector(
  *
  * These are the date filter options that the DateFilter SHOULD use when rendering filtering presets.
  *
- * @internal
+ * @alpha
  */
 export const selectEffectiveDateFilterAvailableGranularities = createSelector(
     selectEffectiveDateFilterConfig,
@@ -91,7 +91,7 @@ const effectiveDateFilterConfigIsUsingOverrides = createSelector(selectSelf, (da
  * were defined OR the effective date filter config is not using them (because applying them means the final date filter config is invalid),
  * then no custom filter should be used.
  *
- * @internal
+ * @alpha
  */
 export const selectEffectiveDateFilterTitle = createSelector(
     effectiveDateFilterConfigIsUsingOverrides,
@@ -113,7 +113,7 @@ export const selectEffectiveDateFilterTitle = createSelector(
  * Returns display mode for the effective date filter. This always comes from the dashboard-level date filter config overrides - regardless whether
  * the rest of the overrides are actually used.
  *
- * @internal
+ * @alpha
  */
 export const selectEffectiveDateFilterMode = createSelector(
     selectDateFilterConfigOverrides,

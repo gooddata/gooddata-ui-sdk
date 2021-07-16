@@ -13,6 +13,6 @@ const adapterSelectors = listedDashboardsEntityAdapter.getSelectors(selectSelf);
 /**
  * Selects all alerts used on the dashboard.
  *
- * @internal
+ * @alpha
  */
 export const selectListedDashboards = adapterSelectors.selectAll;

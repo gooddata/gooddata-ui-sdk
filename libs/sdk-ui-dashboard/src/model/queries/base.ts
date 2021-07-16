@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 /**
- * @internal
+ * @alpha
  */
 export type DashboardQueryType =
     | "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS"
@@ -11,7 +11,7 @@ export type DashboardQueryType =
  * Base type for all dashboard queries. A dashboard query encapsulates how complex, read-only dashboard-specific logic
  * can be can be executed.
  *
- * @internal
+ * @alpha
  */
 export interface IDashboardQuery<_TResult = any> {
     /**

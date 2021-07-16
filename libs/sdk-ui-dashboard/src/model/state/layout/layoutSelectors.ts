@@ -38,7 +38,7 @@ export const selectUndoableLayoutCommands = createSelector(selectSelf, (layoutSt
  * This selector returns dashboard's layout. It is expected that the selector is called only after the layout state
  * is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @internal
+ * @alpha
  */
 export const selectLayout = createSelector(selectSelf, (layoutState: LayoutState) => {
     invariant(layoutState.layout, "attempting to access uninitialized layout state");
@@ -77,7 +77,7 @@ export const selectBasicLayout = createSelector(selectLayout, (layout) => {
 /**
  * Selects widget by its ref.
  *
- * @internal
+ * @alpha
  */
 export const selectWidgetByRef = memoize(
     (ref: ObjRef | undefined) => {

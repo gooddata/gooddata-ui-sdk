@@ -7,7 +7,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 /**
- * @internal
+ * @alpha
  */
 export interface CatalogState {
     attributes?: ICatalogAttribute[];

@@ -7,12 +7,11 @@ import {
     IDrillToInsight,
     IDrillToLegacyDashboard,
 } from "@gooddata/sdk-backend-spi";
-import { DashboardDrillContext } from "../../drill/types";
 import { IInsight } from "@gooddata/sdk-model";
-import { IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
+import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
 
 /**
- * @internal
+ * @alpha
  */
 export interface Drill extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL";
@@ -43,7 +42,7 @@ export interface Drill extends IDashboardCommand {
  *   {@link DrillToCustomUrl}, {@link DrillToAttributeUrl}, {@link DrillToLegacyDashboard}
  *
  *
- * @internal
+ * @alpha
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
  * @param drillContext - context in which the drill interaction was triggered (widget and insight details - if available).
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
@@ -69,7 +68,7 @@ export function drill(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface DrillDown extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_DOWN";
@@ -97,7 +96,7 @@ export interface DrillDown extends IDashboardCommand {
  * In the default dashboard implementation dispatching this command will also result into opening drill dialog with the insight
  * that has this particular drill down definition applied.
  *
- * @internal
+ * @alpha
  * @param insight - insight to which the drill down should be applied.
  * @param drillDefinition - drill definition to apply.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
@@ -126,7 +125,7 @@ export function drillDown(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface DrillToInsight extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT";
@@ -150,7 +149,7 @@ export interface DrillToInsight extends IDashboardCommand {
  * In the default dashboard implementation this command will also result into opening the drill dialog with the target insight
  * that has the drill intersection filters applied.
  *
- * @internal
+ * @alpha
  * @param drillDefinition - drill definition with the target insight.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
@@ -176,7 +175,7 @@ export function drillToInsight(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface DrillToDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD";
@@ -197,7 +196,7 @@ export interface DrillToDashboard extends IDashboardCommand {
  * Dispatching this command will result into getting the drill intersection filters that can be applied to the target dashboard
  * and dispatching {@link DashboardDrillToDashboardTriggered} event that will contain them.
  *
- * @internal
+ * @alpha
  * @param drillDefinition - drill definition with the target dashboard.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
@@ -223,7 +222,7 @@ export function drillToDashboard(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface DrillToCustomUrl extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL";
@@ -247,12 +246,12 @@ export interface DrillToCustomUrl extends IDashboardCommand {
  * Custom url can contain various identifier or attribute title placeholders, see:
  * {@link https://help.gooddata.com/pages/viewpage.action?pageId=86794855}
  *
- * @internal
+ * @alpha
  * @param drillDefinition - drill definition with the target url to resolve.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns drill to custom url command
- * @internal
+ * @alpha
  */
 export function drillToCustomUrl(
     drillDefinition: IDrillToCustomUrl,
@@ -274,7 +273,7 @@ export function drillToCustomUrl(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface DrillToAttributeUrl extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL";
@@ -297,12 +296,12 @@ export interface DrillToAttributeUrl extends IDashboardCommand {
  *
  * For more details, see: {@link https://help.gooddata.com/pages/viewpage.action?pageId=86794855}
  *
- * @internal
+ * @alpha
  * @param drillDefinition - drill definition with the target attribute url to resolve.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns drill to attribute url command
- * @internal
+ * @alpha
  */
 export function drillToAttributeUrl(
     drillDefinition: IDrillToAttributeUrl,
@@ -324,7 +323,7 @@ export function drillToAttributeUrl(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface DrillToLegacyDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD";
@@ -346,12 +345,12 @@ export interface DrillToLegacyDashboard extends IDashboardCommand {
  *
  * Drill to legacy dashboard can be configured for Kpi widgets only.
  *
- * @internal
+ * @alpha
  * @param drillDefinition - drill definition with the target dashboard.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns drill to legacy dashboard command
- * @internal
+ * @alpha
  */
 export function drillToLegacyDashboard(
     drillDefinition: IDrillToLegacyDashboard,

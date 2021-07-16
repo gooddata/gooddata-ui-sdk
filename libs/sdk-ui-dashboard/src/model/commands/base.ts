@@ -2,7 +2,7 @@
 /**
  * All available command types.
  *
- * @internal
+ * @alpha
  */
 export type DashboardCommandType =
     | "GDC.DASH/CMD.LOG_USER_INTERACTION"
@@ -52,7 +52,7 @@ export type DashboardCommandType =
     | "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD";
 
 /**
- * @internal
+ * @alpha
  */
 export type CommandProcessingMeta = {
     /**
@@ -68,7 +68,7 @@ export type CommandProcessingMeta = {
  * they target backend, workspace and dashboard in depending on the Dashboard component tree from which the dispatch
  * is done.
  *
- * @internal
+ * @alpha
  */
 export interface IDashboardCommand {
     /**

@@ -3,7 +3,7 @@
 import { IDashboard } from "@gooddata/sdk-backend-spi";
 
 /**
- * @internal
+ * @alpha
  */
 export type DashboardMeta = Pick<
     IDashboard,
@@ -11,7 +11,7 @@ export type DashboardMeta = Pick<
 >;
 
 /**
- * @internal
+ * @alpha
  */
 export interface DashboardMetaState {
     meta?: DashboardMeta;

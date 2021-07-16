@@ -10,7 +10,7 @@ import { IDashboardCommand } from "./base";
 import { IDashboardFilter } from "@gooddata/sdk-ui-ext";
 
 /**
- * @internal
+ * @alpha
  */
 export interface DateFilterSelection {
     /**
@@ -54,7 +54,7 @@ export interface DateFilterSelection {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeDateFilterSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION";
@@ -73,7 +73,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
  *  events that will be emitted during the command processing
  * @remarks see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
- * @internal
+ * @alpha
  */
 export function changeDateFilterSelection(
     type: DateFilterType,
@@ -101,7 +101,7 @@ export function changeDateFilterSelection(
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection {
     return {
@@ -119,7 +119,7 @@ export function clearDateFilterSelection(correlationId?: string): ChangeDateFilt
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface AddAttributeFilter extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD";
@@ -166,7 +166,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
  *  The index starts at zero and there is convenience that index of -1 would add the filter at the end.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @internal
+ * @alpha
  */
 export function addAttributeFilter(
     displayForm: ObjRef,
@@ -188,7 +188,7 @@ export function addAttributeFilter(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface RemoveAttributeFilters extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE";
@@ -208,7 +208,7 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
  * @param filterLocalId - dashboard attribute filter's local identifier
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @internal
+ * @alpha
  */
 export function removeAttributeFilter(filterLocalId: string, correlationId?: string): RemoveAttributeFilters {
     return {
@@ -225,7 +225,7 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface MoveAttributeFilter extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE";
@@ -246,7 +246,7 @@ export interface MoveAttributeFilter extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function moveAttributeFilter(
     filterLocalId: string,
@@ -268,12 +268,12 @@ export function moveAttributeFilter(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 
 /**
- * @internal
+ * @alpha
  */
 export interface AttributeFilterSelection {
     /**
@@ -291,7 +291,7 @@ export interface AttributeFilterSelection {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeAttributeFilterSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION";
@@ -314,7 +314,7 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function changeAttributeFilterSelection(
     filterLocalId: string,
@@ -343,7 +343,7 @@ export function changeAttributeFilterSelection(
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function resetAttributeFilterSelection(
     filterLocalId: string,
@@ -365,7 +365,7 @@ export function resetAttributeFilterSelection(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface SetAttributeFilterParent extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENT";
@@ -391,7 +391,7 @@ export interface SetAttributeFilterParent extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function setAttributeFilterParent(
     filterLocalId: string,
@@ -409,7 +409,7 @@ export function setAttributeFilterParent(
 }
 
 /**
- * @internal
+ * @alpha
  */
 export interface FilterContextSelection {
     /**
@@ -423,7 +423,7 @@ export interface FilterContextSelection {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeFilterContextSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION";
@@ -442,7 +442,7 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
  * Only filters that are stored in the filter context can be applied (filters that are visible in the filter bar).
  * Filters will be matched via display form ref, duplicities will be omitted.
  *
- * @internal
+ * @alpha
  * @param selection - attribute filters and date filter to apply.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns change filter selection command

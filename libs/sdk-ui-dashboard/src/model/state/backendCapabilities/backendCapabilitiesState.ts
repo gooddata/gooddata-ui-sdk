@@ -3,7 +3,7 @@
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 
 /**
- * @internal
+ * @alpha
  */
 export interface BackendCapabilitiesState {
     backendCapabilities?: IBackendCapabilities;

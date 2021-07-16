@@ -1,19 +1,23 @@
 // (C) 2019-2021 GoodData Corporation
-import { IAvailableDrillTargets, IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
+import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
 import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import {
     DrillDefinition,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
-    IInsightWidget,
+    IDrillToDashboard,
+    IDrillToInsight,
+    IListedDashboard,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
-    IListedDashboard,
-    IDrillToInsight,
-    IDrillToDashboard,
 } from "@gooddata/sdk-backend-spi";
-import { IDashboardDrillEvent, IDrillDownDefinition, IDashboardFilter } from "../types";
+import {
+    DashboardDrillContext,
+    IDashboardDrillEvent,
+    IDashboardFilter,
+    IDrillDownDefinition,
+} from "../types";
 
 /**
  * @internal
@@ -72,21 +76,6 @@ export type OnDrillToCustomUrl = (context: {
     drillEvent: IDashboardDrillEvent;
     url: string;
 }) => void;
-
-/**
- * @internal
- */
-export interface DashboardDrillContext {
-    /**
-     * Particular insight that triggered the drill event.
-     */
-    insight?: IInsight;
-
-    /**
-     * Particular widget that triggered the drill event.
-     */
-    widget?: IInsightWidget;
-}
 
 /**
  * @internal

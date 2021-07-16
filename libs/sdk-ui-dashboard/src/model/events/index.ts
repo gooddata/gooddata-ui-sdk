@@ -146,7 +146,7 @@ export {
 export { DashboardUserInteractionLogged, userInteractionLogged } from "./logUserInteraction";
 
 /**
- * @internal
+ * @alpha
  */
 export type DashboardEvents =
     | DashboardUserInteractionLogged

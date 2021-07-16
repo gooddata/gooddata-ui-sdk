@@ -20,42 +20,42 @@ const selectSelf = createSelector(
 );
 
 /**
- * @internal
+ * @alpha
  */
 export const selectCatalogAttributes = createSelector(selectSelf, (state) => {
     return state.attributes ?? [];
 });
 
 /**
- * @internal
+ * @alpha
  */
 export const selectCatalogMeasures = createSelector(selectSelf, (state) => {
     return state.measures ?? [];
 });
 
 /**
- * @internal
+ * @alpha
  */
 export const selectCatalogFacts = createSelector(selectSelf, (state) => {
     return state.facts ?? [];
 });
 
 /**
- * @internal
+ * @alpha
  */
 export const selectCatalogDateDatasets = createSelector(selectSelf, (state) => {
     return state.dateDatasets ?? [];
 });
 
 /**
- * @internal
+ * @alpha
  */
 export const selectCatalogDateAttributes = createSelector(selectCatalogDateDatasets, (dateDatasets) => {
     return flatMap(dateDatasets, (dd) => dd.dateAttributes);
 });
 
 /**
- * @internal
+ * @alpha
  */
 export const selectAttributesWithDrillDown = createSelector(
     [selectCatalogAttributes, selectCatalogDateAttributes],
@@ -66,6 +66,8 @@ export const selectAttributesWithDrillDown = createSelector(
 
 /**
  * Selects all date datasets in the catalog as a mapping of obj ref to date dataset.
+ *
+ * @alpha
  */
 export const selectAllCatalogDateDatasetsMap = createSelector(
     [selectCatalogDateDatasets, selectBackendCapabilities],
@@ -77,7 +79,7 @@ export const selectAllCatalogDateDatasetsMap = createSelector(
 /**
  * Selects all display forms in the catalog as a mapping of obj ref to display form
  *
- * @internal
+ * @alpha
  */
 export const selectAllCatalogDisplayFormsMap = createSelector(
     [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
@@ -99,7 +101,7 @@ export const selectAllCatalogDisplayFormsMap = createSelector(
  * will include both 'normal' attributes and attributes from date datasets.
  *
  * @remarks see `isCatalogAttribute` guard; this can be used to determine type of attribute
- * @internal
+ * @alpha
  */
 export const selectAllCatalogAttributesMap = createSelector(
     [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
@@ -118,7 +120,7 @@ export const selectAllCatalogAttributesMap = createSelector(
  * and the date dataset to which it belongs. The lookup is indexed by the date dataset attribute and entries can be obtained using
  * attribute refs.
  *
- * @internal
+ * @alpha
  */
 export const selectCatalogDateAttributeToDataset = createSelector(
     [selectCatalogDateDatasets, selectBackendCapabilities],

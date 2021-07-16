@@ -85,7 +85,7 @@ function isSelectedOptionValid(config: IDateFilterConfig): boolean {
 /**
  * Validation result.
  *
- * @internal
+ * @alpha
  */
 export type DateFilterConfigValidationResult =
     | "Valid"

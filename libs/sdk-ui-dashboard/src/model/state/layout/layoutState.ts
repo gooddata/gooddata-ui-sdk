@@ -6,12 +6,12 @@ import { ExtendedDashboardItem, ExtendedDashboardWidget } from "../../types/layo
 import { DashboardLayoutCommands } from "../../commands";
 
 /**
- * @internal
+ * @alpha
  */
 export type LayoutStash = Record<string, ExtendedDashboardItem[]>;
 
 /**
- * @internal
+ * @alpha
  */
 export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> {
     layout?: IDashboardLayout<ExtendedDashboardWidget>;

@@ -16,7 +16,7 @@ import { IDashboardEvent } from "./base";
  * This event is emitted when a dashboard is successfully loaded. It contains contextual information and then
  * the dashboard.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardLoaded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.LOADED";
@@ -75,7 +75,7 @@ export function dashboardLoaded(
  * This event is emitted at the end of successful dashboard save command processing. At this point, the
  * dashboard state is persisted on the backend.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardSaved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SAVED";
@@ -118,7 +118,7 @@ export function dashboardSaved(
  * This event is emitted at the end of successful 'dashboard save as' command processing. At this point, a new
  * dashboard exists on the backend.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardCopySaved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COPY_SAVED";
@@ -153,7 +153,7 @@ export function dashboardCopySaved(
  * This event is emitted at the end of successful 'dashboard rename' command processing. At this point, only the
  * in-memory title is changed and the changes are not saved on the backend.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardRenamed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENAMED";
@@ -188,7 +188,7 @@ export function dashboardRenamed(
  * This event is emitted at the end of successful 'dashboard reset' command processing. At this point, the
  * dashboard is reset to the state it was after initial load.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardWasReset extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RESET";
@@ -217,7 +217,7 @@ export function dashboardWasReset(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
@@ -231,7 +231,7 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
  * Note that this event is not a show stopper. The dashboard load will recover and fall back to a safe date
  * filter configuration.
  *
- * @internal
+ * @alpha
  */
 export interface DateFilterValidationFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED";

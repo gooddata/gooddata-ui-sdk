@@ -12,7 +12,7 @@ const selectSelf = createSelector(
  * This selector returns current logged in user. It is expected that the
  * selector is called only after the permission state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @internal
+ * @alpha
  */
 export const selectUser = createSelector(selectSelf, (state) => {
     invariant(state.user, "attempting to access uninitialized user state");

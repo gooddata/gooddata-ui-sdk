@@ -13,7 +13,7 @@ import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-b
 /**
  * This event is emitted when a new dashboard layout section is added.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardLayoutSectionAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED";
@@ -56,7 +56,7 @@ export function layoutSectionAdded(
 /**
  * This event is emitted when a dashboard layout section is moved from one place to another.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardLayoutSectionMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED";
@@ -97,7 +97,7 @@ export function layoutSectionMoved(
  * its items. E.g. item is removed, it is last item in the section, and the whole section is removed
  * as well.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED";
@@ -155,7 +155,7 @@ export function layoutSectionRemoved(
 /**
  * This event is emitted when dashboard layout section changes.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardLayoutSectionHeaderChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED";
@@ -196,7 +196,7 @@ export function layoutSectionHeaderChanged(
 /**
  * This event is emitted when items are added to a dashboard section.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardLayoutSectionItemsAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED";
@@ -251,7 +251,7 @@ export function layoutSectionItemsAdded(
 
 /**
  * This event is emitted when an item in a dashboard section is replaced.
- * @internal
+ * @alpha
  */
 export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED";
@@ -314,7 +314,7 @@ export function layoutSectionItemReplaced(
 /**
  * This event is emitted when a dashboard item is moved between sections or within a section.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardLayoutSectionItemMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED";
@@ -378,7 +378,7 @@ export function layoutSectionItemMoved(
 /**
  * This event is emitted when an item is removed from dashboard layout section.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED";
@@ -435,7 +435,7 @@ export function layoutSectionItemRemoved(
 /**
  * This event is emitted after any change to the dashboard layout and will include the entire new layout.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardLayoutChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";

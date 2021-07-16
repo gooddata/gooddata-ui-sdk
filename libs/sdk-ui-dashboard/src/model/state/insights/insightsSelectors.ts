@@ -12,14 +12,14 @@ const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => 
 /**
  * Selects all insights used on the dashboard.
  *
- * @internal
+ * @alpha
  */
 export const selectInsights = entitySelectors.selectAll;
 
 /**
  * Selects refs of all insights used on the dashboard.
  *
- * @internal
+ * @alpha
  */
 export const selectInsightRefs = createSelector(selectInsights, (insights) => {
     return insights.map(insightRef);
@@ -28,7 +28,7 @@ export const selectInsightRefs = createSelector(selectInsights, (insights) => {
 /**
  * Selects all insights and returns them in a mapping of obj ref to the insight object.
  *
- * @internal
+ * @alpha
  */
 export const selectInsightsMap = createSelector(
     selectInsights,
@@ -41,7 +41,7 @@ export const selectInsightsMap = createSelector(
 /**
  * Selects insight used on a dashboard by its ref.
  *
- * @internal
+ * @alpha
  */
 export const selectInsightByRef = memoize((ref: ObjRef) => {
     return createSelector(selectInsightsMap, (insights) => {

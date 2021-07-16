@@ -6,7 +6,7 @@ import { ILegacyKpiComparisonDirection, ILegacyKpiComparisonTypeComparison } fro
 import { WidgetFilterSettings, WidgetHeader } from "../types/widgetTypes";
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeKpiWidgetHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER";
@@ -33,7 +33,7 @@ export interface ChangeKpiWidgetHeader extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function changeKpiWidgetHeader(
     ref: ObjRef,
@@ -55,7 +55,7 @@ export function changeKpiWidgetHeader(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE";
@@ -88,7 +88,7 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function changeKpiWidgetMeasure(
     ref: ObjRef,
@@ -112,7 +112,7 @@ export function changeKpiWidgetMeasure(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS";
@@ -140,7 +140,7 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function changeKpiWidgetFilterSettings(
     ref: ObjRef,
@@ -162,7 +162,7 @@ export function changeKpiWidgetFilterSettings(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export type KpiWidgetComparison = {
     /**
@@ -183,7 +183,7 @@ export type KpiWidgetComparison = {
 };
 
 /**
- * @internal
+ * @alpha
  */
 export interface ChangeKpiWidgetComparison extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON";
@@ -213,7 +213,7 @@ export interface ChangeKpiWidgetComparison extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function changeKpiWidgetComparison(
     ref: ObjRef,
@@ -235,7 +235,7 @@ export function changeKpiWidgetComparison(
 //
 
 /**
- * @internal
+ * @alpha
  */
 export interface RefreshKpiWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.REFRESH";
@@ -254,7 +254,7 @@ export interface RefreshKpiWidget extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @alpha
  */
 export function refreshKpiWidget(ref: ObjRef, correlationId?: string): RefreshKpiWidget {
     return {

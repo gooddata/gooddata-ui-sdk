@@ -10,7 +10,7 @@ import { DashboardContext } from "../types/commonTypes";
 /**
  * This event is emitted after the dashboard's date filter selection is changed.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
@@ -44,7 +44,7 @@ export function dateFilterChanged(
  *
  * Each dashboard attribute filter has
  *
- * @internal
+ * @alpha
  */
 export interface DashboardAttributeFilterAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED";
@@ -89,7 +89,7 @@ export function attributeFilterAdded(
  * If the removed filter figured as a parent to one or more child filters, then the removal
  * also cleaned up the parent relationship.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED";
@@ -135,7 +135,7 @@ export function attributeFilterRemoved(
  * This event is emitted after a dashboard attribute filter is moved from one position in the filter bar
  * to a new position
  *
- * @internal
+ * @alpha
  */
 export interface DashboardAttributeFilterMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED";
@@ -183,7 +183,7 @@ export function attributeFilterMoved(
 /**
  * This event is emitted after new elements are selected and applied in an attribute filter.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardAttributeFilterSelectionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
@@ -219,7 +219,7 @@ export function attributeFilterSelectionChanged(
 /**
  * This event is emitted after the parent relationships of a filter change.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardAttributeFilterParentChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED";
@@ -259,7 +259,7 @@ export function attributeFilterParentChanged(
  * This is event is emitted as convenience - more granular events describe all the possible
  * changes to the dashboard filters and can be used to event source the state of filter context.
  *
- * @internal
+ * @alpha
  */
 export interface DashboardFilterContextChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED";

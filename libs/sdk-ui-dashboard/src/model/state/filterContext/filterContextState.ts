@@ -3,7 +3,7 @@
 import { IFilterContextDefinition } from "@gooddata/sdk-backend-spi";
 
 /**
- * @internal
+ * @alpha
  */
 export interface FilterContextState {
     filterContext?: IFilterContextDefinition;
