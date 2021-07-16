@@ -7,7 +7,7 @@ import { IDashboardCommand } from "./base";
 /**
  * Add widget drill targets
  *
- * @internal
+ * @alpha
  */
 export interface AddDrillTargets extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL_TARGETS.ADD";
@@ -25,7 +25,7 @@ export interface AddDrillTargets extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  * @returns AddDrillTargets command
  *
- * @internal
+ * @alpha
  */
 export function addDrillTargets(
     widgetRef: ObjRef,

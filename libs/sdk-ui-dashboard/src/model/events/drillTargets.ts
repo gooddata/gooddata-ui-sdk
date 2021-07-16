@@ -7,7 +7,7 @@ import { IDashboardEvent } from "./base";
 /**
  *  Widget drill targets added event
  *
- * @internal
+ * @alpha
  */
 export interface DrillTargetsAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL_TARGETS.ADDED";
@@ -25,7 +25,7 @@ export interface DrillTargetsAdded extends IDashboardEvent {
  * @param  correlationId - correlationId
  * @returns - DrillTargetsAdded command
  *
- * @internal
+ * @alpha
  */
 export function drillTargetsAdded(
     ctx: DashboardContext,

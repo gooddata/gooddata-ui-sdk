@@ -13,7 +13,7 @@ const selectDrillTargetsInternal = entitySelectors.selectAll;
 
 /**
  * Return all widgets drill targets
- * @internal
+ * @alpha
  */
 export const selectDrillTargets = createSelector(selectDrillTargetsInternal, (drillTargets) => {
     return newMapForObjectWithIdentity(drillTargets);
@@ -22,7 +22,7 @@ export const selectDrillTargets = createSelector(selectDrillTargetsInternal, (dr
 /**
  * Selects drill targets by widget ref.
  *
- * @internal
+ * @alpha
  */
 export const selectDrillTargetsByWidgetRef = memoize((ref: ObjRef) => {
     return createSelector(selectDrillTargets, (drillTargets) => {

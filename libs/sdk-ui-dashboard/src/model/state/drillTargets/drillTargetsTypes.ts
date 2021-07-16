@@ -5,7 +5,7 @@ import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 /**
  * Represent state item of widget reported available drill targets.
  *
- * @internal
+ * @alpha
  */
 export interface IDrillTargets {
     /**
