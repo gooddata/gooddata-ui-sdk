@@ -38,6 +38,7 @@ import { addDrillTargetsHandler } from "./drillTargets/addDrillTargetsHandler";
 import { userInteractionHandler } from "./userInteraction/userInteractionHandler";
 import { requestAsyncRenderHandler } from "./render/requestAsyncRenderHandler";
 import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler";
+import { changeInsightWidgetHeaderHandler } from "./widgets/changeInsightWidgetHeaderHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -69,7 +70,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS": unhandledCommand,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON": unhandledCommand,
     "GDC.DASH/CMD.KPI_WIDGET.REFRESH": unhandledCommand,
-    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER": changeInsightWidgetHeaderHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT": unhandledCommand,
