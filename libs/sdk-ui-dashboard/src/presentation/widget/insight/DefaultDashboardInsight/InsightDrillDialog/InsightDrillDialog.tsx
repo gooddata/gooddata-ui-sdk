@@ -17,6 +17,7 @@ import { IntlWrapper } from "../../../../localization";
 import { DefaultDashboardInsightWithDrillSelect } from "../DefaultDashboardInsightWithDrillSelect";
 
 import { DrillDialog } from "./DrillDialog";
+import { useDashboardDrillTargetsLocal } from "../useDashboardDrillTargets";
 
 /**
  * @internal
@@ -54,6 +55,8 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
 
     const isMobileDevice = useMediaQuery("mobileDevice");
 
+    const { drillTargets, onAvailableDrillTargetsReceived } = useDashboardDrillTargetsLocal();
+
     const modalTitle = insightTitle(insight);
 
     const positionType: OverlayPositionType = "fixed";
@@ -89,6 +92,8 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                         onDrillToCustomUrl={onDrillToCustomUrl}
                         onDrillToDashboard={onDrillToDashboard}
                         onDrillToInsight={onDrillToInsight}
+                        drillTargets={drillTargets}
+                        onAvailableDrillTargetsReceived={onAvailableDrillTargetsReceived}
                     />
                 </DrillDialog>
             </IntlWrapper>

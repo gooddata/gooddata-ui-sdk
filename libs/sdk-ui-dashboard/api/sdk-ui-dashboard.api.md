@@ -1600,6 +1600,8 @@ export interface IDashboardInsightProps {
     // (undocumented)
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     // (undocumented)
+    drillTargets?: IAvailableDrillTargets;
+    // (undocumented)
     ErrorComponent?: ComponentType<IErrorProps>;
     // (undocumented)
     filters?: FilterContextItem[];
@@ -1607,6 +1609,8 @@ export interface IDashboardInsightProps {
     insight: IInsight;
     // (undocumented)
     LoadingComponent?: ComponentType<ILoadingProps>;
+    // (undocumented)
+    onAvailableDrillTargetsReceived?: (availableDrillTargets?: IAvailableDrillTargets) => void;
     // (undocumented)
     onDrill?: OnDashboardDrill;
     // (undocumented)

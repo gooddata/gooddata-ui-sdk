@@ -11,6 +11,7 @@ import { DashboardInsightPropsProvider, useDashboardInsightProps } from "../Dash
 import { IDashboardInsightProps } from "../types";
 import { DefaultDashboardInsightWithDrillSelect } from "./DefaultDashboardInsightWithDrillSelect";
 import { InsightDrillDialog } from "./InsightDrillDialog";
+import { useDashboardDrillTargets } from "./useDashboardDrillTargets";
 
 /**
  * @internal
@@ -18,6 +19,11 @@ import { InsightDrillDialog } from "./InsightDrillDialog";
 export const DefaultDashboardInsightWithDrillDialogInner = (): JSX.Element => {
     const props = useDashboardInsightProps();
     const [drillSteps, setDrillSteps] = useState<DrillStep[]>([]);
+
+    const { drillTargets, onAvailableDrillTargetsReceived } = useDashboardDrillTargets({
+        widgetRef: props.widget.ref,
+    });
+
     const activeDrillStep = last(drillSteps);
     const insight = activeDrillStep?.insight;
 
@@ -48,6 +54,8 @@ export const DefaultDashboardInsightWithDrillDialogInner = (): JSX.Element => {
                 onDrillDown={setNextDrillStep}
                 onDrillToInsight={setNextDrillStep}
                 onDrill={onDrill}
+                drillTargets={drillTargets}
+                onAvailableDrillTargetsReceived={onAvailableDrillTargetsReceived}
             />
             {activeDrillStep && (
                 <InsightDrillDialog
