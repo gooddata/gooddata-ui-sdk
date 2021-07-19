@@ -23,11 +23,11 @@ _common-build() {
 
     _build_styles
 
-    mkdir -p dist/localization/bundles
-    cp -rf src/localization/bundles dist/localization
+    mkdir -p dist/presentation/localization/bundles
+    cp -rf src/presentation/localization/bundles dist/presentation/localization
 
-    mkdir -p esm/localization/bundles
-    cp -rf src/localization/bundles esm/localization
+    mkdir -p esm/presentation/localization/bundles
+    cp -rf src/presentation/localization/bundles esm/presentation/localization
 }
 
 build() {

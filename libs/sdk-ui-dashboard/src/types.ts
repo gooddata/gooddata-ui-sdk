@@ -94,3 +94,12 @@ export interface DashboardDrillContext {
      */
     widget?: IInsightWidget;
 }
+
+/**
+ * @internal
+ */
+export interface IDrillToUrlPlaceholder {
+    placeholder: string;
+    identifier: string;
+    toBeEncoded: boolean;
+}
