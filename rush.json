@@ -310,7 +310,8 @@
             "packageName": "@gooddata/sdk-ui-dashboard",
             "projectFolder": "libs/sdk-ui-dashboard",
             "reviewCategory": "production",
-            "shouldPublish": false
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/dashboard-plugin-template",
