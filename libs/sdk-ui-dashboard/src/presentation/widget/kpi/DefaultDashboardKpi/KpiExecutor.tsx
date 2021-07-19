@@ -18,6 +18,7 @@ import {
     IPreviousPeriodMeasureDefinition,
     isMeasureFormatInPercent,
     ObjRef,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import {
     convertDrillableItemsToPredicates,
@@ -41,7 +42,13 @@ import {
     filterContextToFiltersForWidget,
 } from "../../../../converters";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
-import { selectPermissions, selectSettings, selectUser, useDashboardSelector } from "../../../../model";
+import {
+    selectPermissions,
+    selectSettings,
+    selectUser,
+    useDashboardSelector,
+    useDashboardAsyncRender,
+} from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
 
@@ -176,6 +183,18 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
     const closeAlertDialog = () => setIsAlertDialogOpen(false);
     const kpiAlertOperations = useKpiAlertOperations(closeAlertDialog);
     const canSetAlert = permissions?.canCreateScheduledMail;
+
+    const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(
+        objRefToString(kpiWidget.ref),
+    );
+
+    useEffect(() => {
+        if (status === "loading") {
+            onRequestAsyncRender();
+        } else if (status === "success" || status === "error") {
+            onResolveAsyncRender();
+        }
+    }, [status, onRequestAsyncRender, onResolveAsyncRender]);
 
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;

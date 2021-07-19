@@ -53,7 +53,14 @@ import {
 } from "./insight";
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
-import { DashboardUserInteractionLogged } from "./logUserInteraction";
+import { DashboardUserInteractionTriggered } from "./userInteraction";
+import { Action } from "@reduxjs/toolkit";
+import {
+    DashboardRenderRequested,
+    DashboardAsyncRenderRequested,
+    DashboardAsyncRenderResolved,
+    DashboardRenderResolved,
+} from "./render";
 import {
     DashboardDrillDownTriggered,
     DashboardDrillToAttributeUrlTriggered,
@@ -143,15 +150,24 @@ export {
     drillToLegacyDashboardTriggered,
     drillTriggered,
 } from "./drill";
-export { DashboardUserInteractionLogged, userInteractionLogged } from "./logUserInteraction";
 
 export { DrillTargetsAdded, drillTargetsAdded } from "./drillTargets";
 
+export { DashboardUserInteractionTriggered, userInteractionTriggered } from "./userInteraction";
+export {
+    DashboardRenderRequested,
+    DashboardAsyncRenderRequested,
+    DashboardAsyncRenderResolved,
+    DashboardRenderResolved,
+    asyncRenderRequested,
+    asyncRenderResolved,
+    renderRequested,
+    renderResolved,
+} from "./render";
 /**
  * @alpha
  */
 export type DashboardEvents =
-    | DashboardUserInteractionLogged
     | DashboardLoaded
     | DateFilterValidationFailed
     | DashboardCommandFailed
@@ -164,6 +180,11 @@ export type DashboardEvents =
     | DashboardCopySaved
     | DashboardRenamed
     | DashboardWasReset
+    | DashboardRenderRequested
+    | DashboardAsyncRenderRequested
+    | DashboardAsyncRenderResolved
+    | DashboardRenderResolved
+    | DashboardUserInteractionTriggered
     | DashboardDateFilterSelectionChanged
     | DashboardAttributeFilterAdded
     | DashboardAttributeFilterRemoved
@@ -203,3 +224,23 @@ export type DashboardEvents =
     | DashboardDrillToInsightTriggered
     | DashboardDrillToLegacyDashboardTriggered
     | DashboardDrillTriggered;
+
+/**
+ * Creates DashboardEvent predicate that test whether the provided event matches it.
+ *
+ * @alpha
+ * @param eventType - dashboard event type
+ * @param pred - predicate to test
+ * @returns boolean - matches?
+ */
+export function newDashboardEventPredicate<T extends DashboardEvents["type"]>(
+    eventType: T,
+    pred?: (event: DashboardEvents & { type: T }) => boolean,
+) {
+    return (event: Action): boolean => {
+        if (event?.type !== eventType) {
+            return false;
+        }
+        return pred?.(event as DashboardEvents & { type: T }) ?? true;
+    };
+}

@@ -4,7 +4,7 @@ import { RelativeIndex } from "../types/layoutTypes";
 import { Draft } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
-export function addArrayElements<T>(arr: WritableDraft<T[]>, index: RelativeIndex, items: Draft<T[]>) {
+export function addArrayElements<T>(arr: WritableDraft<T[]>, index: RelativeIndex, items: Draft<T[]>): void {
     if (index === 0) {
         arr.unshift(...items);
     } else if (index < 0) {
@@ -26,7 +26,11 @@ export function removeArrayElement<T>(arr: WritableDraft<T[]>, index: RelativeIn
     }
 }
 
-export function moveArrayElement<T>(arr: WritableDraft<T[]>, fromIndex: number, toIndex: RelativeIndex) {
+export function moveArrayElement<T>(
+    arr: WritableDraft<T[]>,
+    fromIndex: number,
+    toIndex: RelativeIndex,
+): void {
     const element = removeArrayElement(arr, fromIndex);
 
     // if this happens then there is error in the validation (or no validation) before the call

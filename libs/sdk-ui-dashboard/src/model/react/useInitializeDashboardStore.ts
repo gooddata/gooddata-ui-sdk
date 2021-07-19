@@ -6,6 +6,7 @@ import { InitialLoadCorrelationId, loadDashboard } from "../commands/dashboard";
 import { useBackendStrict, useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 import { objectUtils } from "@gooddata/util";
 import { IDashboardStoreProviderProps } from "./types";
+import { newRenderingWorker } from "../commandHandlers/render/renderingWorker";
 
 /**
  * This hook is responsible for properly initializing and re-initializing the dashboard redux store,
@@ -42,6 +43,8 @@ export const useInitializeDashboardStore = (
                 dashboardStore.rootSagaTask.cancel();
             }
 
+            const backgroundWorkers = [newRenderingWorker()];
+
             // Create new store and fire load dashboard command.
             const dashStore = createDashboardStore({
                 sagaContext: {
@@ -52,6 +55,7 @@ export const useInitializeDashboardStore = (
                     dataProductId: currentInitProps.dataProductId,
                 },
                 initialEventHandlers: props.eventHandlers,
+                backgroundWorkers,
             });
             dashStore.store.dispatch(
                 loadDashboard(props.config, props.permissions, InitialLoadCorrelationId),

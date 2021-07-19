@@ -13,6 +13,7 @@ import { DashboardCommandType, LoadDashboard, loadDashboard } from "../commands"
 import { IDashboardQuery } from "../queries";
 import { QueryEnvelope, QueryEnvelopeActionTypeName } from "../state/_infra/queryProcessing";
 import { IDashboardQueryService } from "../state/_infra/queryService";
+import { newRenderingWorker, RenderingWorkerConfiguration } from "../commandHandlers/render/renderingWorker";
 
 type MonitoredAction = {
     calls: number;
@@ -21,13 +22,18 @@ type MonitoredAction = {
     reject: (e: any) => void;
 };
 
+type DashboardTesterConfig = {
+    queryServices?: IDashboardQueryService<any, any>[];
+    renderingWorkerConfig?: RenderingWorkerConfiguration;
+};
+
 export class DashboardTester {
     protected readonly reduxedStore: ReduxedDashboardStore;
     private monitoredActions: Record<string, MonitoredAction> = {};
     private capturedActions: Array<PayloadAction<any>> = [];
     private capturedEvents: Array<DashboardEvents> = [];
 
-    protected constructor(ctx: DashboardContext, queryServices: IDashboardQueryService<any, any>[]) {
+    protected constructor(ctx: DashboardContext, config?: DashboardTesterConfig) {
         // Middleware to store the actions and create promises
         const testerMiddleware: Middleware = () => (next) => (action) => {
             if (action.type.startsWith("@@redux/")) {
@@ -48,7 +54,8 @@ export class DashboardTester {
                     handler: this.eventHandler,
                 },
             ],
-            queryServices,
+            queryServices: config?.queryServices,
+            backgroundWorkers: [newRenderingWorker(config?.renderingWorkerConfig)],
         });
     }
 
@@ -115,7 +122,7 @@ export class DashboardTester {
      */
     public static forRecording(
         identifier: Identifier,
-        queryServices: IDashboardQueryService<any, any>[] = [],
+        testerConfig?: DashboardTesterConfig,
         backendConfig?: RecordedBackendConfig,
     ): DashboardTester {
         const ctx: DashboardContext = {
@@ -124,7 +131,7 @@ export class DashboardTester {
             dashboardRef: idRef(identifier),
         };
 
-        return new DashboardTester(ctx, queryServices);
+        return new DashboardTester(ctx, testerConfig);
     }
 
     public dispatch(action: PayloadAction<any>): void {
@@ -234,6 +241,20 @@ export class DashboardTester {
     }
 
     /**
+     * Wait the specified time.
+     *
+     * @param timeout - timeout after which the wait will be resolved
+     * @returns promise
+     */
+    public wait(timeout: number): Promise<void> {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve();
+            }, timeout);
+        });
+    }
+
+    /**
      * Returns all actions that were dispatched since the tester was created or since it was last reset.
      */
     public dispatchedActions(): ReadonlyArray<PayloadAction<any>> {
@@ -339,11 +360,11 @@ export function preloadedTesterFactory(
     onLoaded: (tester: DashboardTester) => void,
     identifier: Identifier,
     options: PreloadedTesterOptions = {},
-) {
+): (done: jest.DoneCallback) => void {
     const { loadCommand = loadDashboard(), queryServices, backendConfig } = options;
 
     return (done: jest.DoneCallback): void => {
-        const tester = DashboardTester.forRecording(identifier, queryServices, backendConfig);
+        const tester = DashboardTester.forRecording(identifier, { queryServices }, backendConfig);
 
         tester.dispatch(loadCommand);
 

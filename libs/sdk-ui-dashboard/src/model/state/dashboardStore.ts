@@ -24,7 +24,7 @@ import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
 import { permissionsSliceReducer } from "./permissions";
 import { alertsSliceReducer } from "./alerts";
 import { catalogSliceReducer } from "./catalog";
-import { fork } from "redux-saga/effects";
+import { fork, getContext } from "redux-saga/effects";
 import { userSliceReducer } from "./user";
 import { metaSliceReducer } from "./meta";
 import { DashboardState } from "./types";
@@ -76,13 +76,30 @@ export type DashboardStoreConfig = {
      * and add new services.
      */
     queryServices?: IDashboardQueryService<any, any>[];
+
+    /**
+     * Optionally specify background workers implementations.
+     * Workers are redux-saga iterators that run on the background, they can listen to dashboard events and fire dashboard commands.
+     * All the provided workers will run in parallel on the background.
+     * Background workers are processed last in the chain of all command and event processing.
+     */
+    backgroundWorkers: ((context: DashboardContext) => SagaIterator<void>)[];
 };
 
-function* rootSaga(eventEmitter: Saga, commandHandler: Saga, queryProcessor: Saga): SagaIterator<void> {
+function* rootSaga(
+    eventEmitter: Saga,
+    commandHandler: Saga,
+    queryProcessor: Saga,
+    backgroundWorkers: ((context: DashboardContext) => SagaIterator<void>)[],
+): SagaIterator<void> {
+    const dashboardContext: DashboardContext = yield getContext("dashboardContext");
     try {
         yield fork(eventEmitter);
         yield fork(commandHandler);
         yield fork(queryProcessor);
+        for (const worker of backgroundWorkers) {
+            yield fork(worker, dashboardContext);
+        }
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Root saga failed", e);
@@ -212,6 +229,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         rootEventEmitter.eventEmitterSaga,
         rootCommandHandler,
         queryProcessing.rootQueryProcessor,
+        config.backgroundWorkers,
     );
 
     return {

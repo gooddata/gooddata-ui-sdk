@@ -108,6 +108,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                 mapboxToken: config.mapboxToken,
                 forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
                 isInEditMode: false,
+                isExportMode: config.isExportMode,
             },
             executionConfig: this.props.execConfig,
             customVisualizationConfig: config,

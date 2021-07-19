@@ -162,6 +162,7 @@ Object {
     "selectedOption": "THIS_MONTH",
   },
   "isEmbedded": false,
+  "isExport": false,
   "isReadOnly": false,
   "locale": "en-US",
   "mapboxToken": undefined,
@@ -198,6 +199,10 @@ Object {
 
 exports[`load dashboard handler should emit events in correct order and carry-over correlationId 1`] = `
 Array [
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
   Object {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",

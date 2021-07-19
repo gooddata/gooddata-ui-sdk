@@ -1,7 +1,6 @@
 // (C) 2020 GoodData Corporation
-import React, { CSSProperties } from "react";
+import React from "react";
 import cx from "classnames";
-import Measure from "react-measure";
 import { areObjRefsEqual, IInsight, insightVisualizationUrl, ObjRef } from "@gooddata/sdk-model";
 import {
     isWidget,
@@ -27,8 +26,6 @@ import { DashboardInsightPropsProvider } from "../insight/DashboardInsightPropsC
 import { DashboardInsight } from "../insight/DashboardInsight";
 import { DashboardKpiPropsProvider } from "../kpi/DashboardKpiPropsContext";
 import { DashboardKpi } from "../kpi/DashboardKpi";
-
-const dashboardStyle: CSSProperties = { height: "100%", width: "100%" };
 
 /**
  * @internal
@@ -75,41 +72,30 @@ export const DefaultDashboardWidgetInner = (): JSX.Element => {
     if (isWidget(widget)) {
         if (widget.type === "insight") {
             return (
-                <Measure client>
-                    {({ measureRef, contentRect }) => {
-                        return (
-                            <div style={dashboardStyle} ref={measureRef}>
-                                <DashboardItem
-                                    className={cx(
-                                        "type-visualization",
-                                        "gd-dashboard-view-widget",
-                                        getVisTypeCssClass(widget.type, visType),
-                                    )}
-                                    screen={screen}
-                                >
-                                    <DashboardItemVisualization
-                                        renderHeadline={() => (
-                                            <DashboardItemHeadline
-                                                title={widget.title}
-                                                clientHeight={contentRect.client?.height}
-                                            />
-                                        )}
-                                    >
-                                        {() => (
-                                            <DashboardInsightPropsProvider
-                                                clientHeight={contentRect.client?.height}
-                                                insight={insight!}
-                                                widget={widget}
-                                            >
-                                                <DashboardInsight />
-                                            </DashboardInsightPropsProvider>
-                                        )}
-                                    </DashboardItemVisualization>
-                                </DashboardItem>
-                            </div>
-                        );
-                    }}
-                </Measure>
+                <DashboardItem
+                    className={cx(
+                        "type-visualization",
+                        "gd-dashboard-view-widget",
+                        getVisTypeCssClass(widget.type, visType!),
+                    )}
+                    screen={screen}
+                >
+                    <DashboardItemVisualization
+                        renderHeadline={(clientHeight) => (
+                            <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
+                        )}
+                    >
+                        {({ clientHeight }) => (
+                            <DashboardInsightPropsProvider
+                                clientHeight={clientHeight}
+                                insight={insight!}
+                                widget={widget}
+                            >
+                                <DashboardInsight />
+                            </DashboardInsightPropsProvider>
+                        )}
+                    </DashboardItemVisualization>
+                </DashboardItem>
             );
         }
 

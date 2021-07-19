@@ -6,6 +6,7 @@ import {
     widgetUri,
     isInsightWidget,
     isDashboardLayoutEmpty,
+    IDashboardLayout,
 } from "@gooddata/sdk-backend-spi";
 import {
     ObjRef,
@@ -16,7 +17,13 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { selectInsights, selectSettings, selectBasicLayout, useDashboardSelector } from "../../model";
+import {
+    selectInsights,
+    selectSettings,
+    selectBasicLayout,
+    useDashboardSelector,
+    selectIsExport,
+} from "../../model";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget";
@@ -30,6 +37,41 @@ import {
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
 import { DashboardLayoutPropsProvider, useDashboardLayoutProps } from "./DashboardLayoutPropsContext";
+
+/**
+ * Get dashboard layout for exports.
+ *  - Create new extra rows if current row has width of widgets greater than 12
+ *
+ * @internal
+ * @param layout - dashboard layout to modify
+ * @returns transformed layout
+ */
+function getDashboardLayoutForExport(layout: IDashboardLayout): IDashboardLayout {
+    const dashLayout = DashboardLayoutBuilder.for(layout);
+    const layoutFacade = dashLayout.facade();
+    const sections = layoutFacade.sections();
+    const screenSplitSections = sections.map((section) => ({
+        items: section.items().asGridRows("xl"),
+        header: section.header(),
+    }));
+
+    dashLayout.removeSections();
+    screenSplitSections.forEach((wrappedSection) => {
+        wrappedSection.items.forEach((rowSection, index) => {
+            dashLayout.addSection((section) => {
+                rowSection.forEach((item) => {
+                    if (index === 0) {
+                        section.header(wrappedSection.header);
+                    }
+                    section.addItem(item.size().xl, (i) => i.widget(item.widget()));
+                });
+                return section;
+            });
+        });
+    });
+
+    return dashLayout.build();
+}
 
 const selectAllItemsWithInsights: DashboardLayoutItemsSelector = (items) =>
     items.filter((item) => item.isInsightWidgetItem());
@@ -50,27 +92,31 @@ export const DefaultDashboardLayoutInner = (): JSX.Element => {
     const settings = useDashboardSelector(selectSettings);
     const insights = useDashboardSelector(selectInsights);
     const { ErrorComponent } = useDashboardComponentsContext({ ErrorComponent: CustomError });
+    const isExport = useDashboardSelector(selectIsExport);
 
     const getInsightByRef = (insightRef: ObjRef): IInsight | undefined => {
         return insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));
     };
 
     const transformedLayout = useMemo(() => {
-        const commonLayoutBuilder = DashboardLayoutBuilder.for(layout).modifySections((section) =>
-            section
-                .modifyItems(polluteWidgetRefsWithBothIdAndUri(getInsightByRef))
-                .modifyItems(
-                    validateItemsSize(getInsightByRef, settings.enableKDWidgetCustomHeight!),
-                    selectAllItemsWithInsights,
-                ),
-        );
-        return commonLayoutBuilder.build();
-    }, [layout]);
+        const layoutWithRefs = DashboardLayoutBuilder.for(layout)
+            .modifySections((section) =>
+                section
+                    .modifyItems(polluteWidgetRefsWithBothIdAndUri(getInsightByRef))
+                    .modifyItems(
+                        validateItemsSize(getInsightByRef, settings.enableKDWidgetCustomHeight!),
+                        selectAllItemsWithInsights,
+                    ),
+            )
+            .build();
+        return isExport ? getDashboardLayoutForExport(layout) : layoutWithRefs;
+    }, [layout, isExport]);
 
     return isDashboardLayoutEmpty(layout) ? (
         <EmptyDashboardError ErrorComponent={ErrorComponent} />
     ) : (
         <DashboardLayout
+            className={isExport ? "export-mode" : ""}
             layout={transformedLayout}
             itemKeyGetter={(keyGetterProps) => {
                 const widget = keyGetterProps.item.widget();
