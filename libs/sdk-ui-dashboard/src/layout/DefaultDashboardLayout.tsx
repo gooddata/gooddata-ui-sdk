@@ -28,6 +28,7 @@ import {
     DashboardLayoutItemsSelector,
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
+import { DashboardLayoutPropsProvider, useDashboardLayoutProps } from "./DashboardLayoutPropsContext";
 
 const selectAllItemsWithInsights: DashboardLayoutItemsSelector = (items) =>
     items.filter((item) => item.isInsightWidgetItem());
@@ -35,13 +36,15 @@ const selectAllItemsWithInsights: DashboardLayoutItemsSelector = (items) =>
 /**
  * @internal
  */
-export const DefaultDashboardLayout = ({
-    onFiltersChange,
-    drillableItems,
-    onDrill,
-    onError,
-    ErrorComponent: CustomError,
-}: DashboardLayoutProps): JSX.Element => {
+export const DefaultDashboardLayoutInner = (): JSX.Element => {
+    const {
+        onFiltersChange,
+        drillableItems,
+        onDrill,
+        onError,
+        ErrorComponent: CustomError,
+    } = useDashboardLayoutProps();
+
     const layout = useDashboardSelector(selectBasicLayout);
     const settings = useDashboardSelector(selectSettings);
     const insights = useDashboardSelector(selectInsights);
@@ -91,6 +94,17 @@ export const DefaultDashboardLayout = ({
             sectionHeaderRenderer={settings.enableSectionHeaders ? undefined : () => <React.Fragment />}
             enableCustomHeight={settings.enableKDWidgetCustomHeight}
         />
+    );
+};
+
+/**
+ * @alpha
+ */
+export const DefaultDashboardLayout = (props: DashboardLayoutProps): JSX.Element => {
+    return (
+        <DashboardLayoutPropsProvider {...props}>
+            <DefaultDashboardLayoutInner />
+        </DashboardLayoutPropsProvider>
     );
 };
 

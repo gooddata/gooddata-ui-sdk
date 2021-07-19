@@ -1,25 +1,21 @@
 // (C) 2021 GoodData Corporation
-
 import React, { useMemo, useState } from "react";
 import { DateFilter } from "@gooddata/sdk-ui-filters";
 
 import { dateFilterOptionToDashboardDateFilter } from "../../_staging/dashboard/dashboardFilterConverter";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../_staging/dateFilterConfig/dateFilterOptionMapping";
-import { IDefaultDashboardDateFilterProps } from "../types";
+
+import {
+    DashboardDateFilterPropsProvider,
+    useDashboardDateFilterProps,
+} from "./DashboardDateFilterPropsContext";
+import { IDashboardDateFilterProps } from "./types";
 
 /**
- * Default implementation of the date filter to use on the dashboard's filter bar.
- *
- * This will use SDK's Date Filter implementation. Loading of available presets will happen at this point.
- *
  * @internal
  */
-export const DefaultDashboardDateFilter: React.FC<IDefaultDashboardDateFilterProps> = ({
-    filter,
-    onFilterChanged,
-    config,
-    readonly,
-}) => {
+export const DefaultDashboardDateFilterInner = (): JSX.Element => {
+    const { filter, onFilterChanged, config, readonly } = useDashboardDateFilterProps();
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
         () =>
@@ -44,5 +40,20 @@ export const DefaultDashboardDateFilter: React.FC<IDefaultDashboardDateFilterPro
                 onFilterChanged(dateFilterOptionToDashboardDateFilter(option, exclude));
             }}
         />
+    );
+};
+
+/**
+ * Default implementation of the attribute filter to use on the dashboard's filter bar.
+ *
+ * This will use the SDK's DateFilter with the button styled same as we have it today on KD.
+ *
+ * @alpha
+ */
+export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JSX.Element => {
+    return (
+        <DashboardDateFilterPropsProvider {...props}>
+            <DefaultDashboardDateFilterInner />
+        </DashboardDateFilterPropsProvider>
     );
 };

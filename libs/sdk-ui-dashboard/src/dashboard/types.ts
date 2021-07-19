@@ -1,11 +1,20 @@
 // (C) 2021 GoodData Corporation
 import { ComponentType } from "react";
-import { IAnalyticalBackend, ITheme, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IDashboardAttributeFilter,
+    ITheme,
+    IWorkspacePermissions,
+} from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { IDrillableItem, IErrorProps, IHeaderPredicate, ILoadingProps } from "@gooddata/sdk-ui";
 
-import { CustomFilterBarComponent, IDefaultFilterBarProps, IFilterBarCoreProps } from "../filterBar";
-import { DashboardLayoutProps } from "../layout";
+import {
+    CustomDashboardAttributeFilterComponent,
+    CustomDashboardDateFilterComponent,
+    CustomFilterBarComponent,
+} from "../filterBar";
+import { CustomDashboardLayoutComponent } from "../layout";
 import { DashboardConfig, DashboardEventHandler } from "../model";
 import { CustomScheduledEmailDialogComponent } from "../scheduledEmail";
 import {
@@ -97,41 +106,13 @@ export interface IDashboardProps {
     LoadingComponent?: ComponentType<ILoadingProps>;
 
     /**
-     * Optionally configure how the filter bar looks and behaves
+     * Optionally specify component to use for rendering the layout.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useDashboardLayoutProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultDashboardLayout} component.
      */
-    filterBarConfig?: {
-        /**
-         * Specify component to use for rendering and handling the dashboard's Filter Bar.
-         *
-         * If not specified the default {@link DefaultFilterBar} will be used. If you do not want to render the filter bar, then
-         * use the {@link HiddenFilterBar} component.
-         */
-        Component?: CustomFilterBarComponent;
-
-        /**
-         * Optionally specify props to customize the default implementation of Filter Bar
-         *
-         * This has no effect if custom component is used.
-         */
-        defaultComponentProps?: Omit<IDefaultFilterBarProps, keyof IFilterBarCoreProps>;
-    };
-
-    /**
-     * Optionally configure how the dashboard layout looks and behaves.
-     */
-    dashboardLayoutConfig?: {
-        /**
-         * Specify component to use for rendering the layout.
-         */
-        Component?: ComponentType<DashboardLayoutProps>;
-
-        /**
-         * Optionally specify props to customize the default implementation of Dashboard View.
-         *
-         * This has no effect if custom component is used.
-         */
-        defaultComponentProps?: DashboardLayoutProps;
-    };
+    LayoutComponent?: CustomDashboardLayoutComponent;
 
     /**
      * Optionally specify component to use for rendering widgets.
@@ -228,6 +209,51 @@ export interface IDashboardProps {
      * To fall back to the default implementation, use the {@link DefaultTitle} component.
      */
     TitleComponent?: CustomTitleComponent;
+
+    /**
+     * Optionally specify custom component to use for rendering all attribute filters or a factory function to customize the component
+     * per different attribute filter.
+     *
+     * -  If not provided, the default implementation {@link DefaultDashboardAttributeFilter} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardAttributeFilter}.
+     *    This is useful if you want to customize just one particular filter and keep all other filters the same.
+     *
+     * @example
+     * Here is how to override the component for all filters:
+     * ```
+     * ComponentFactory: () => MyCustomComponent
+     * ```
+     *
+     * @remarks
+     * If you want to hide some or all filters, you can use the {@link HiddenDashboardAttributeFilter} implementation.
+     *
+     * To access the necessary props in your custom component, use the {@link useDashboardAttributeFilterProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultDashboardAttributeFilter} component.
+     */
+    DashboardAttributeFilterComponentFactory?: (
+        filter: IDashboardAttributeFilter,
+    ) => CustomDashboardAttributeFilterComponent | undefined;
+
+    /**
+     * Optionally specify component to use for rendering the date filters.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useDashboardDateFilterProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultDashboardDateFilter} component.
+     */
+    DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
+
+    /**
+     * Optionally specify component to use for rendering the filter bar.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useFilterBarProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultFilterBar} component.
+     *
+     * Note that if you override this component, the DashboardAttributeFilterComponentFactory and DashboardDateFilterComponent
+     * props might get ignored depending on your implementation.
+     */
+    FilterBarComponent?: CustomFilterBarComponent;
 
     /**
      *

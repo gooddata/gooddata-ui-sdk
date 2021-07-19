@@ -25,6 +25,7 @@ options = {
             ],
         ),
         depCruiser.moduleWithDependencies("dashboardContexts", "src/dashboardContexts", [
+            "src/filterBar/types.ts",
             "src/layout/types.ts",
             "src/scheduledEmail/types.ts",
             "src/topBar/types.ts",
@@ -39,6 +40,7 @@ options = {
         ]),
         depCruiser.moduleWithDependencies("filterBar", "src/filterBar", [
             "src/_staging/*",
+            "src/dashboardContexts",
             "src/localization",
             "src/model",
         ]),
