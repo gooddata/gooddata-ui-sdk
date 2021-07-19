@@ -70,3 +70,5 @@ ready for controlled growth, the setup is as follows:
 
 -   There is a centralized event emitter. This sets up an action channel for all events and dispatches the events
     to the registered event handlers.
+
+For design notes specific to the presentation side of things, see the README in the src/presentation folder.
