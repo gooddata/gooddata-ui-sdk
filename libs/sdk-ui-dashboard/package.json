@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-dashboard",
-    "version": "1.0.0",
+    "version": "8.6.0-alpha.13",
     "description": "GoodData SDK - Dashboard Component",
     "repository": {
         "type": "git",
@@ -9,7 +9,6 @@
     },
     "author": "GoodData Corporation",
     "license": "LicenseRef-LICENSE",
-    "private": true,
     "main": "dist/index.js",
     "module": "esm/index.js",
     "browser": "dist/index.js",
@@ -43,6 +42,7 @@
         "build-esm": "tsc -p tsconfig.build.esm.json",
         "build-styles": "bash scripts/build.sh --styles",
         "dev": "bash scripts/build.sh --dev-watch",
+        "prepack": "cp -f ../../NOTICE ./NOTICE",
         "test": "jest --watch",
         "test-once": "jest --passWithNoTests",
         "test-once-with-coverage": "jest --passWithNoTests --coverage=true",
