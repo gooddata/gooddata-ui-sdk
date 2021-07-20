@@ -2,7 +2,14 @@
 import { ComponentType } from "react";
 import { FilterContextItem, IAnalyticalBackend, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
-import { IDrillableItem, IErrorProps, IHeaderPredicate, ILoadingProps, OnError } from "@gooddata/sdk-ui";
+import {
+    IAvailableDrillTargets,
+    IDrillableItem,
+    IErrorProps,
+    IHeaderPredicate,
+    ILoadingProps,
+    OnError,
+} from "@gooddata/sdk-ui";
 import {
     OnDashboardDrill,
     OnDrillDown,
@@ -41,6 +48,10 @@ export interface IDashboardInsightProps {
 
     disableWidgetImplicitDrills?: boolean;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillTargets?: IAvailableDrillTargets;
+
+    onAvailableDrillTargetsReceived?: (availableDrillTargets?: IAvailableDrillTargets) => void;
+
     onDrill?: OnDashboardDrill;
     onDrillDown?: OnDrillDown;
     onDrillToInsight?: OnDrillToInsight;

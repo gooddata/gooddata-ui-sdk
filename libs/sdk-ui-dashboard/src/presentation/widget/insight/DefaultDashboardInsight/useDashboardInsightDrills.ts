@@ -1,29 +1,22 @@
 // (C) 2020-2021 GoodData Corporation
-import { useCallback, useMemo, useRef, useEffect } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import flatMap from "lodash/flatMap";
-import isEqual from "lodash/isEqual";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import {
     IAvailableDrillTargetAttribute,
-    IPushData,
     IDrillEvent,
     isSomeHeaderPredicateMatched,
     DataViewFacade,
     IDrillableItem,
     IHeaderPredicate,
+    IAvailableDrillTargets,
 } from "@gooddata/sdk-ui";
 
 import { getImplicitDrillsWithPredicates } from "../../../../_staging/drills/drillingUtils";
 import { OnDashboardDrill } from "../../../drill";
-import {
-    useDashboardSelector,
-    selectAttributesWithDrillDown,
-    selectDrillTargetsByWidgetRef,
-    useDashboardDispatch,
-    addDrillTargets,
-} from "../../../../model";
 import { IDashboardDrillEvent } from "../../../../types";
+import { useDashboardSelector, selectAttributesWithDrillDown } from "../../../../model";
 
 /**
  * @internal
@@ -33,13 +26,13 @@ export interface UseDashboardInsightDrillsProps {
     widget: IInsightWidget;
     insight: IInsight;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillTargets?: IAvailableDrillTargets;
     onDrill?: OnDashboardDrill;
 }
 
 interface UseDashboardInsightDrillsResult {
     handleDrill?: (event: IDrillEvent) => false | void;
-    handlePushData: (data: IPushData) => void;
-    drillableItems: (IDrillableItem | IHeaderPredicate)[] | undefined;
+    drillableItems?: (IDrillableItem | IHeaderPredicate)[];
 }
 
 /**
@@ -48,27 +41,13 @@ interface UseDashboardInsightDrillsResult {
 export const useDashboardInsightDrills = (
     props: UseDashboardInsightDrillsProps,
 ): UseDashboardInsightDrillsResult => {
-    const { widget, insight, drillableItems, disableWidgetImplicitDrills, onDrill } = props;
-    const { ref: widgetRef } = widget;
-
-    const dispatch = useDashboardDispatch();
+    const { widget, insight, drillableItems, disableWidgetImplicitDrills, drillTargets, onDrill } = props;
     const attributesWithDrillDown = useDashboardSelector(selectAttributesWithDrillDown);
-
-    const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
-    const drillTargetsAttributes = drillTargets?.availableDrillTargets?.attributes;
+    const drillTargetsAttributes = drillTargets?.attributes;
 
     const possibleDrills: IAvailableDrillTargetAttribute[] = useMemo(() => {
         return drillTargetsAttributes ? drillTargetsAttributes : [];
     }, [drillTargetsAttributes]);
-
-    const handlePushData = useCallback((data: IPushData): void => {
-        if (
-            data.availableDrillTargets &&
-            !isEqual(drillTargets?.availableDrillTargets, data.availableDrillTargets)
-        ) {
-            dispatch(addDrillTargets(widgetRef, data.availableDrillTargets));
-        }
-    }, []);
 
     const implicitDrillDefinitions = useMemo(() => {
         return getImplicitDrillsWithPredicates(
@@ -136,7 +115,6 @@ export const useDashboardInsightDrills = (
 
     return {
         handleDrill,
-        handlePushData,
         drillableItems: drillableItemsToUse,
     };
 };

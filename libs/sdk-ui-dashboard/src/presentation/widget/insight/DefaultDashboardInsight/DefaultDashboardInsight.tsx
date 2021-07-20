@@ -5,6 +5,7 @@ import { insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IntlWrapper,
+    IPushData,
     OnError,
     OnLoadingChanged,
     useBackendStrict,
@@ -48,6 +49,8 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
         onError,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
+        drillTargets,
+        onAvailableDrillTargetsReceived,
     } = props;
 
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
@@ -70,6 +73,15 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
 
     const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(
         objRefToString(widget.ref),
+    );
+
+    const handlePushData = useCallback(
+        (data: IPushData): void => {
+            if (onAvailableDrillTargetsReceived && data?.availableDrillTargets) {
+                onAvailableDrillTargetsReceived(data.availableDrillTargets);
+            }
+        },
+        [onAvailableDrillTargetsReceived],
     );
 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
@@ -103,15 +115,12 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
         widget,
     });
 
-    const {
-        drillableItems: drillableItemsToUse,
-        handleDrill,
-        handlePushData,
-    } = useDashboardInsightDrills({
+    const { drillableItems: drillableItemsToUse, handleDrill } = useDashboardInsightDrills({
         insight: insightWithAddedWidgetProperties,
         widget,
         disableWidgetImplicitDrills,
         drillableItems,
+        drillTargets,
         onDrill,
     });
 
