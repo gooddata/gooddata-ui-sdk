@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isDate from "lodash/isDate";
 import format from "date-fns/format";
 
@@ -30,8 +30,12 @@ export function getDayName(date: Date): string {
     return format(date, "eeee");
 }
 
+export function convertSun2MonWeekday(dayIndex: number): number {
+    return dayIndex === 0 ? 7 : dayIndex;
+}
+
 export function getDay(date: Date): number {
-    return date.getDay();
+    return convertSun2MonWeekday(date.getDay());
 }
 
 export function getWeek(date: Date): number {
