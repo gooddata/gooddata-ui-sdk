@@ -3,13 +3,13 @@ import React from "react";
 import cx from "classnames";
 import { createSelector } from "@reduxjs/toolkit";
 
-import { useLogUserInteraction } from "../../../../../logUserInteraction";
 import {
     selectEnableCompanyLogoInEmbeddedUI,
     selectIsEmbedded,
     selectPlatformEdition,
     selectCanManageWorkspace,
     useDashboardSelector,
+    useDashboardUserInteraction,
 } from "../../../../../model";
 
 /**
@@ -36,7 +36,7 @@ const isPoweredByGDLogoPresent = createSelector(
 export const PoweredByGDLogo: React.FC<PoweredByGDLogoProps> = ({ isSmall }: PoweredByGDLogoProps) => {
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
     const isPresent = useDashboardSelector(isPoweredByGDLogoPresent);
-    const logUserInteraction = useLogUserInteraction();
+    const userInteraction = useDashboardUserInteraction();
     return (
         <>
             {isPresent && (
@@ -45,7 +45,7 @@ export const PoweredByGDLogo: React.FC<PoweredByGDLogoProps> = ({ isSmall }: Pow
                         "gd-powered-by-logo-wrapper-small": isSmall,
                         "gd-powered-by-logo-wrapper-large": !isSmall,
                     })}
-                    onClick={logUserInteraction.poweredByGDLogoClicked}
+                    onClick={userInteraction.poweredByGDLogoClicked}
                 >
                     <a
                         className={cx("gd-powered-by-logo-img", {

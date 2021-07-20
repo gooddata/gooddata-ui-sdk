@@ -13,11 +13,8 @@ import {
     IDashboardWidget,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IInsight, areObjRefsEqual } from "@gooddata/sdk-model";
-
 import { selectInsights, selectSettings, useDashboardSelector } from "../../model";
-import { DashboardWidgetPropsProvider, DashboardWidget } from "../widget";
-
-import { IDashboardWidgetRendererProps } from "./DashboardWidgetRenderer";
+import { DashboardWidgetPropsProvider, DashboardWidget, DashboardWidgetProps } from "../widget";
 import {
     getDashboardLayoutItemHeight,
     getDashboardLayoutItemHeightForRatioAndScreen,
@@ -30,7 +27,7 @@ import {
  */
 export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     IDashboardWidget,
-    Pick<IDashboardWidgetRendererProps, "onError" | "onDrill" | "onFiltersChange" | "drillableItems">
+    Pick<DashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange" | "drillableItems">
 > = (props) => {
     const { item, screen, DefaultWidgetRenderer, drillableItems, onDrill, onFiltersChange, onError } = props;
     const insights = useDashboardSelector(selectInsights);

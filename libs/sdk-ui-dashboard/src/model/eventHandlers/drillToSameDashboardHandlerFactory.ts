@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
-import { DashboardDrillToDashboardTriggered } from "../events/drill";
 import { DashboardEventHandler } from "../events/eventHandler";
-import { changeFilterContextSelection } from "../commands/filters";
+import { changeFilterContextSelection } from "../commands";
+import { newDashboardEventPredicate, DashboardDrillToDashboardTriggered } from "../events";
 
 /**
  * Event handler with the default implementation for drill to the same dashboard.
@@ -17,13 +17,15 @@ import { changeFilterContextSelection } from "../commands/filters";
  * @param dashboardRef - reference to the current dashboard
  * @returns event handler
  */
-export const createDrillToSameDashboardHandler = (
+export const newDrillToSameDashboardHandler = (
     dashboardRef: ObjRef,
 ): DashboardEventHandler<DashboardDrillToDashboardTriggered> => ({
-    eval: (event) =>
-        event.type === "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.TRIGGERED" &&
-        (!event.payload.drillDefinition.target ||
-            areObjRefsEqual(event.payload.drillDefinition.target, dashboardRef)),
+    eval: newDashboardEventPredicate(
+        "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.TRIGGERED",
+        (e) =>
+            !e.payload.drillDefinition.target ||
+            areObjRefsEqual(e.payload.drillDefinition.target, dashboardRef),
+    ),
     handler: (event, dispatch) => {
         dispatch(changeFilterContextSelection(event.payload.filters));
     },

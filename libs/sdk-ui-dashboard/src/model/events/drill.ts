@@ -182,7 +182,7 @@ export function drillToInsightTriggered(
  * This event is emitted as a result of the {@link DrillToDashboard} command.
  * It contains the drill intersection filters that can be applied to the target dashboard.
  *
- * There is a factory function to create default event handler for drill to same dashboard - see {@link createDrillToSameDashboardHandler}.
+ * There is a factory function to create default event handler for drill to same dashboard - see {@link newDrillToSameDashboardHandler}.
  *
  * @alpha
  */

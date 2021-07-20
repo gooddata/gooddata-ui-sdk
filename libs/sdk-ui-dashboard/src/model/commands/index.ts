@@ -48,8 +48,9 @@ import {
     DrillToInsight,
     DrillToLegacyDashboard,
 } from "./drill";
-import { LogUserInteraction } from "./logUserInteraction";
 import { AddDrillTargets } from "./drillTargets";
+import { UserInteraction } from "./userInteraction";
+import { RequestAsyncRender, ResolveAsyncRender } from "./render";
 
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
 export {
@@ -160,7 +161,9 @@ export {
     refreshInsightWidget,
 } from "./insight";
 
-export { LogUserInteraction, UserInteraction, logUserInteraction } from "./logUserInteraction";
+export { UserInteraction, UserInteractionType, userInteraction } from "./userInteraction";
+
+export { RequestAsyncRender, ResolveAsyncRender } from "./render";
 
 export { AddDrillTargets, addDrillTargets } from "./drillTargets";
 
@@ -168,12 +171,14 @@ export { AddDrillTargets, addDrillTargets } from "./drillTargets";
  * @alpha
  */
 export type DashboardCommands =
-    | LogUserInteraction
     | LoadDashboard
     | SaveDashboard
     | SaveDashboardAs
     | RenameDashboard
     | ResetDashboard
+    | UserInteraction
+    | RequestAsyncRender
+    | ResolveAsyncRender
     | ChangeFilterContextSelection
     | ChangeDateFilterSelection
     | AddAttributeFilter

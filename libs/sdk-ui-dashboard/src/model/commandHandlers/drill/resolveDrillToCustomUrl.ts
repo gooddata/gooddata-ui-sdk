@@ -46,7 +46,7 @@ export function* loadElementTitle(
     dfIdentifier: string,
     attrElementUri: string,
     ctx: DashboardContext,
-) {
+): SagaIterator<IDrillToUrlElement> {
     const elementTitle: PromiseFnReturnType<typeof getElementTitle> = yield call(
         getElementTitle,
         ctx.workspace,
@@ -131,7 +131,7 @@ export function* getAttributeIdentifiersReplacements(
     url: string,
     drillIntersectionElements: IDrillEventIntersectionElement[],
     ctx: DashboardContext,
-) {
+): SagaIterator<IDrillToUrlPlaceholderReplacement[]> {
     const attributeIdentifiersPlaceholders = getAttributeIdentifiersPlaceholdersFromUrl(url);
 
     if (attributeIdentifiersPlaceholders.length === 0) {
@@ -152,17 +152,19 @@ export function* getAttributeIdentifiersReplacements(
         ctx,
     );
 
-    return attributeIdentifiersPlaceholders.map(({ placeholder: toBeReplaced, identifier, toBeEncoded }) => {
-        const elementTitle = elements.find(
-            (element: IDrillToUrlElement) => element.identifier === identifier,
-        )?.elementTitle;
-        const replacement = toBeEncoded ? encodeParameterIfSet(elementTitle) : elementTitle;
+    return attributeIdentifiersPlaceholders.map(
+        ({ placeholder: toBeReplaced, identifier, toBeEncoded }): IDrillToUrlPlaceholderReplacement => {
+            const elementTitle = elements.find(
+                (element: IDrillToUrlElement) => element.identifier === identifier,
+            )?.elementTitle;
+            const replacement = toBeEncoded ? encodeParameterIfSet(elementTitle) : elementTitle;
 
-        return {
-            toBeReplaced,
-            replacement,
-        };
-    });
+            return {
+                toBeReplaced,
+                replacement: replacement!,
+            };
+        },
+    );
 }
 
 const createIdentifierReplacement = (
@@ -174,7 +176,7 @@ export function* getInsightIdentifiersReplacements(
     customUrl: string,
     widgetRef: ObjRef,
     ctx: DashboardContext,
-) {
+): SagaIterator<IDrillToUrlPlaceholderReplacement[]> {
     const { workspace, clientId, dataProductId } = ctx;
     const dashboardId: ReturnType<typeof selectDashboardId> = yield select(selectDashboardId);
     const widget: IInsightWidget = yield select(selectWidgetByRef(widgetRef));
@@ -215,7 +217,7 @@ export function* resolveDrillToCustomUrl(
     widgetRef: ObjRef,
     event: IDrillEvent,
     ctx: DashboardContext,
-) {
+): SagaIterator<string> {
     const customUrl = drillConfig.target.url;
 
     const attributeIdentifiersReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(

@@ -9,6 +9,7 @@ import {
     selectEffectiveDateFilterMode,
     selectEffectiveDateFilterOptions,
     selectEffectiveDateFilterTitle,
+    selectIsExport,
     useDashboardSelector,
 } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
@@ -18,6 +19,7 @@ import { IDashboardDateFilterConfig, IFilterBarProps } from "../types";
 
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer";
 import { FilterBarPropsProvider, useFilterBarProps } from "./FilterBarPropsContext";
+import { HiddenFilterBar } from "./HiddenFilterBar";
 
 /**
  * @internal
@@ -28,8 +30,12 @@ export const DefaultFilterBarInner = (): JSX.Element => {
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
-
+    const isExport = useDashboardSelector(selectIsExport);
     const { DashboardAttributeFilterComponentFactory } = useDashboardComponentsContext();
+
+    if (isExport) {
+        return <HiddenFilterBar />;
+    }
 
     const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
 

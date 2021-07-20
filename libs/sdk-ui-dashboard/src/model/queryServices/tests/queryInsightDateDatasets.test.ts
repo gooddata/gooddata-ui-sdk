@@ -101,11 +101,15 @@ describe("query insight date datasets", () => {
         };
 
         it("should order date datasets by relevance desc", async () => {
-            const Tester = DashboardTester.forRecording(EmptyDashboardIdentifier, [], {
-                catalogAvailability: {
-                    availableDateDatasets: MockAvailabilityWithDifferentRelevance,
+            const Tester = DashboardTester.forRecording(
+                EmptyDashboardIdentifier,
+                {},
+                {
+                    catalogAvailability: {
+                        availableDateDatasets: MockAvailabilityWithDifferentRelevance,
+                    },
                 },
-            });
+            );
 
             await addTestSection(Tester, PivotTableWithRowAndColumnAttributes);
 
@@ -124,11 +128,15 @@ describe("query insight date datasets", () => {
         });
 
         it("should order date datasets by relevance and title if tied", async () => {
-            const Tester = DashboardTester.forRecording(EmptyDashboardIdentifier, [], {
-                catalogAvailability: {
-                    availableDateDatasets: MockAvailabilityWithSameRelevance,
+            const Tester = DashboardTester.forRecording(
+                EmptyDashboardIdentifier,
+                {},
+                {
+                    catalogAvailability: {
+                        availableDateDatasets: MockAvailabilityWithSameRelevance,
+                    },
                 },
-            });
+            );
 
             await addTestSection(Tester, PivotTableWithRowAndColumnAttributes);
 

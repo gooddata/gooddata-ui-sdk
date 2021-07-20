@@ -35,6 +35,7 @@ export {
     selectEnableKPIDashboardScheduleRecipients,
     selectEnableCompanyLogoInEmbeddedUI,
     selectIsEmbedded,
+    selectIsExport,
     selectPlatformEdition,
 } from "./state/config/configSelectors";
 export { PermissionsState } from "./state/permissions/permissionsState";
@@ -124,4 +125,4 @@ export * from "./events";
 export * from "./queries";
 export * from "./react";
 export { DashboardEventHandler } from "./events/eventHandler";
-export { createDrillToSameDashboardHandler } from "./eventHandlers/createDrillToSameDashboardHandler";
+export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory";

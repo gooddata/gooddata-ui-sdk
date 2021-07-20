@@ -34,8 +34,10 @@ import { drillToAttributeUrlHandler } from "./drill/drillToAttributeUrlHandler";
 import { drillToDashboardHandler } from "./drill/drillToDashboardHandler";
 import { changeFilterContextSelectionHandler } from "./filterContext/changeFilterContextSelectionHandler";
 import { drillToLegacyDashboardHandler } from "./drill/drillToLegacyDashboardHandler";
-import { logUserInteractionHandler } from "./logUserInteraction/logUserInteractionHandler";
 import { addDrillTargetsHandler } from "./drillTargets/addDrillTargetsHandler";
+import { userInteractionHandler } from "./userInteraction/userInteractionHandler";
+import { requestAsyncRenderHandler } from "./render/requestAsyncRenderHandler";
+import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -45,7 +47,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.SAVEAS": unhandledCommand,
     "GDC.DASH/CMD.RESET": unhandledCommand,
     "GDC.DASH/CMD.RENAME": unhandledCommand,
-    "GDC.DASH/CMD.LOG_USER_INTERACTION": logUserInteractionHandler,
+    "GDC.DASH/CMD.USER_INTERACTION": userInteractionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION": changeFilterContextSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION": changeDateFilterSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD": addAttributeFilterHandler,
@@ -86,6 +88,8 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL": drillToCustomUrlHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD": drillToLegacyDashboardHandler,
     "GDC.DASH/CMD.DRILL_TARGETS.ADD": addDrillTargetsHandler,
+    "GDC.DASH/CMD.RENDER.ASYNC.REQUEST": requestAsyncRenderHandler,
+    "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE": resolveAsyncRenderHandler,
 };
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {

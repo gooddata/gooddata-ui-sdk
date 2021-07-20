@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { insightVisualizationUrl } from "@gooddata/sdk-model";
+import { insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IntlWrapper,
@@ -20,6 +20,8 @@ import {
     selectMapboxToken,
     selectSeparators,
     selectSettings,
+    selectIsExport,
+    useDashboardAsyncRender,
 } from "../../../../model";
 
 import { useResolveDashboardInsightFilters } from "./useResolveDashboardInsightFilters";
@@ -27,7 +29,7 @@ import { useResolveDashboardInsightProperties } from "./useResolveDashboardInsig
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
 import { IDashboardInsightProps } from "../types";
 
-const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative" };
+const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 
 /**
  * @internal
@@ -61,11 +63,21 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
     const locale = useDashboardSelector(selectLocale);
     const settings = useDashboardSelector(selectSettings);
     const colorPalette = useDashboardSelector(selectColorPalette);
+    const isExport = useDashboardSelector(selectIsExport);
 
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | undefined>();
 
+    const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(
+        objRefToString(widget.ref),
+    );
+
     const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
+        if (isLoading) {
+            onRequestAsyncRender();
+        } else {
+            onResolveAsyncRender();
+        }
         setIsVisualizationLoading(isLoading);
     }, []);
 
@@ -108,8 +120,9 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
             mapboxToken,
             separators,
             forceDisableDrillOnAxes: !drillableItems, // to keep in line with KD, enable axes drilling only if using explicit drills
+            isExportMode: isExport,
         }),
-        [separators, mapboxToken, drillableItems],
+        [separators, mapboxToken, drillableItems, isExport],
     );
 
     const insightPositionStyle: CSSProperties = useMemo(() => {
