@@ -1,7 +1,12 @@
 // (C) 2021 GoodData Corporation
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { LayoutState } from "./layoutState";
-import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
+import {
+    IDashboardLayout,
+    IDashboardLayoutSectionHeader,
+    isInsightWidget,
+    isKpiWidget,
+} from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 import { undoReducer, withUndo } from "../_infra/undoEnhancer";
 import {
@@ -11,6 +16,9 @@ import {
     StashedDashboardItemsId,
 } from "../../types/layoutTypes";
 import { addArrayElements, moveArrayElement, removeArrayElement } from "../../utils/arrayOps";
+import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import { WidgetHeader } from "../../types/widgetTypes";
+import flatMap from "lodash/flatMap";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 
@@ -220,6 +228,30 @@ const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (stat
 //
 //
 
+type ReplaceWidgetHeader = {
+    ref: ObjRef;
+    header: WidgetHeader;
+};
+
+const replaceWidgetHeader: LayoutReducer<ReplaceWidgetHeader> = (state, action) => {
+    invariant(state.layout);
+
+    const { header, ref: widgetRef } = action.payload;
+    const allWidgets = flatMap(state.layout.sections, (section) => section.items.map((item) => item.widget));
+    const widget = allWidgets.find((w) => {
+        // defer type checks until the actual widget is found
+        const ref: ObjRef | undefined = w && (w as any).ref;
+
+        return ref && areObjRefsEqual(ref, widgetRef);
+    });
+
+    // this means command handler did not correctly validate that the widget exists before dispatching the
+    // reducer action
+    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
+
+    widget.title = header.title ?? "";
+};
+
 export const layoutReducers = {
     setLayout,
     addSection: withUndo(addSection),
@@ -230,5 +262,6 @@ export const layoutReducers = {
     moveSectionItem: withUndo(moveSectionItem),
     removeSectionItem: withUndo(removeSectionItem),
     replaceSectionItem: withUndo(replaceSectionItem),
+    replaceWidgetHeader: withUndo(replaceWidgetHeader),
     undoLayout: undoReducer,
 };

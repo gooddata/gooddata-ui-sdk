@@ -6,6 +6,7 @@ import {
     IDashboardLayoutSectionHeader,
     IDashboardWithReferences,
     IInsightWidget,
+    IKpiWidget,
 } from "@gooddata/sdk-backend-spi";
 import { idRef, IInsight, insightId } from "@gooddata/sdk-model";
 import { InsightPlaceholderWidget, KpiPlaceholderWidget } from "../types/layoutTypes";
@@ -45,6 +46,27 @@ export const ComplexDashboardIdentifier = "aeis6NlXcL7X";
 export const ComplexDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
     .dash_aeis6NlXcL7X.obj as IDashboardWithReferences;
 export const ComplexDashboardLayout = ComplexDashboardWithReferences.dashboard.layout!;
+
+export const ComplexDashboardWidgets = {
+    FirstSection: {
+        FirstKpi: ComplexDashboardWithReferences.dashboard.layout!.sections[0].items[0].widget! as IKpiWidget,
+        LastKpi: ComplexDashboardWithReferences.dashboard.layout!.sections[0].items[5].widget! as IKpiWidget,
+    },
+    SecondSection: {
+        FirstTable: ComplexDashboardWithReferences.dashboard.layout!.sections[1].items[0]
+            .widget! as IInsightWidget,
+        SecondTable: ComplexDashboardWithReferences.dashboard.layout!.sections[1].items[1]
+            .widget! as IInsightWidget,
+    },
+    ThirdSection: {
+        Heatmap: ComplexDashboardWithReferences.dashboard.layout!.sections[2].items[0]
+            .widget! as IInsightWidget,
+    },
+};
+
+//
+//
+//
 
 export const EmptyDashboardIdentifier = "emptyDashboard";
 export const EmptyDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
