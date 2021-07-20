@@ -534,6 +534,7 @@ function getTreemapLabelsConfiguration(
                         style: {
                             ...style,
                             fontSize: "14px",
+                            fontFamily: "gdcustomfont, Avenir, 'Helvetica Neue', Arial, sans-serif",
                         },
                         formatter: partial(level1LabelsFormatter, config),
                         allowOverlap: false,
@@ -1106,7 +1107,7 @@ const getYAxisConfiguration = (
                 ...labelsEnabled,
                 style: {
                     color: axisValueColor,
-                    font: '12px Avenir, "Helvetica Neue", Arial, sans-serif',
+                    font: '12px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
                 },
                 ...rotationProp,
             },
@@ -1115,7 +1116,7 @@ const getYAxisConfiguration = (
                 margin: 15,
                 style: {
                     color: axisLabelColor,
-                    font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
+                    font: '14px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
                 },
             },
             opposite,
@@ -1189,7 +1190,7 @@ const getXAxisConfiguration = (
                 ...labelsEnabled,
                 style: {
                     color: axisValueColor,
-                    font: '12px Avenir, "Helvetica Neue", Arial, sans-serif',
+                    font: '12px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
                 },
                 autoRotation: [-90],
                 ...rotationProp,
@@ -1204,7 +1205,7 @@ const getXAxisConfiguration = (
                 style: {
                     textOverflow: "ellipsis",
                     color: axisLabelColor,
-                    font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
+                    font: '14px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
                 },
             },
             className,

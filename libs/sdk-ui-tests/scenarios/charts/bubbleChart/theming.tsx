@@ -8,4 +8,5 @@ export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", BubbleChartWithAllMeasuresAndAttribute);
+    .addScenario("themed", BubbleChartWithAllMeasuresAndAttribute)
+    .addScenario("font", BubbleChartWithAllMeasuresAndAttribute, (m) => m.withTags("themed", "font"));

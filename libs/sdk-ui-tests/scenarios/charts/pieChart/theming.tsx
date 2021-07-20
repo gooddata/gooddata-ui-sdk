@@ -8,4 +8,5 @@ export default scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", PieChartWithSingleMeasureAndViewBy);
+    .addScenario("themed", PieChartWithSingleMeasureAndViewBy)
+    .addScenario("font", PieChartWithSingleMeasureAndViewBy, (m) => m.withTags("themed", "font"));

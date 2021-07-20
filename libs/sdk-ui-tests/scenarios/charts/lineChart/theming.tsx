@@ -8,4 +8,5 @@ export default scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", LineChartTwoMeasuresWithTrendyBy);
+    .addScenario("themed", LineChartTwoMeasuresWithTrendyBy)
+    .addScenario("font", LineChartTwoMeasuresWithTrendyBy, (m) => m.withTags("themed", "font"));

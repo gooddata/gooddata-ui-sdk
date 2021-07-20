@@ -124,7 +124,7 @@ function getThemedConfiguration(theme: ITheme): any {
             animation: false,
             backgroundColor,
             style: {
-                fontFamily: 'Avenir, "Helvetica Neue", Arial, sans-serif',
+                fontFamily: 'gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
             },
             events: {
                 afterGetContainer() {

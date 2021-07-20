@@ -8,4 +8,5 @@ export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", BulletChartWithAllMeasuresAndViewBy);
+    .addScenario("themed", BulletChartWithAllMeasuresAndViewBy)
+    .addScenario("font", BulletChartWithAllMeasuresAndViewBy, (m) => m.withTags("themed", "font"));

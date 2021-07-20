@@ -106,6 +106,11 @@
     "AreaChart.568952b51f0ab0669506969d70cd3bf6": {
         "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy and enabled stacking."
     },
+    "AreaChart.57ee4a1de229584341732a663ab1afad": {
+        "comment": "Auto-generated insight for test scenario AreaChart - font.",
+        "scenarioName": "font",
+        "visName": "AreaChart"
+    },
     "AreaChart.5f072aef5439d6747fd28cef547beef1": {
         "comment": "Auto-generated insight for test scenario AreaChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on right."
     },
@@ -609,6 +614,11 @@
     "BarChart.fe6d09ce2bab557b21d43e57ddb2f152": {
         "comment": "Auto-generated insight for test scenario BarChart - 610x154 - Force position RIGHT - legend at bottom."
     },
+    "BarChart.ff115761a94814f811b6c5dc2b99b616": {
+        "comment": "Auto-generated insight for test scenario BarChart - font.",
+        "scenarioName": "font",
+        "visName": "BarChart"
+    },
     "BubbleChart.02241bd86f6d83501c2363174d214e51": {
         "comment": "Auto-generated insight for test scenario BubbleChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on left."
     },
@@ -623,6 +633,11 @@
     },
     "BubbleChart.187b19728bcdce1d24f670b4dd6d9c10": {
         "comment": "Auto-generated insight for test scenario BubbleChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left."
+    },
+    "BubbleChart.191ad845f2513cc294aab6078a64056d": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - font.",
+        "scenarioName": "font",
+        "visName": "BubbleChart"
     },
     "BubbleChart.21697aaaa62aef0d043164c26c2f3270": {
         "comment": "Auto-generated insight for test scenario BubbleChart - axis name customization - middle."
@@ -853,6 +868,11 @@
     },
     "BulletChart.01bf6f2ed0c9e8d223e73513e4b13f08": {
         "comment": "Auto-generated insight for test scenario BulletChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top."
+    },
+    "BulletChart.062f769ec901f07b9e24a00a6a3f185d": {
+        "comment": "Auto-generated insight for test scenario BulletChart - font.",
+        "scenarioName": "font",
+        "visName": "BulletChart"
     },
     "BulletChart.0bd9002fb1578725e8eafb366864a633": {
         "comment": "Auto-generated insight for test scenario BulletChart - axis name customization - middle."
@@ -1271,6 +1291,11 @@
     "ColumnChart.6f255f99aa969be8ccd672ef7b092235": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 60x354 - without y axis labels."
     },
+    "ColumnChart.72014c0b1393b082417ea6b3320bdf91": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - font.",
+        "scenarioName": "font",
+        "visName": "ColumnChart"
+    },
     "ColumnChart.74128830a2cd1cff35b8ce52a900787d": {
         "comment": "Auto-generated insight for test scenario ColumnChart - dual axis name customization - middle."
     },
@@ -1652,6 +1677,11 @@
         "scenarioName": "one primary and secondary measure with viewBy sorted by attr",
         "visName": "ComboChart"
     },
+    "ComboChart.64aed64a39a77e9ec82be8b9a4da607b": {
+        "comment": "Auto-generated insight for test scenario ComboChart - font.",
+        "scenarioName": "font",
+        "visName": "ComboChart"
+    },
     "ComboChart.6641bb6c43ebcb9c5aa871f61ea2efbe": {
         "comment": "Auto-generated insight for test scenario ComboChart - axis name configuration - invisible."
     },
@@ -1980,6 +2010,11 @@
     "DonutChart.66d49827d9c965e383996c2aabbab07d": {
         "comment": "Auto-generated insight for test scenario DonutChart - 300x250 - auto data labels."
     },
+    "DonutChart.67333f71dd9dad40e39552ede5293192": {
+        "comment": "Auto-generated insight for test scenario DonutChart - font.",
+        "scenarioName": "font",
+        "visName": "DonutChart"
+    },
     "DonutChart.6a6b050427301d249740d98a61bf6f74": {
         "comment": "Auto-generated insight for test scenario DonutChart - single measure with viewBy.",
         "scenarioName": "single measure with viewBy",
@@ -2132,6 +2167,11 @@
     "FunnelChart.eb371d4d3e9deffd69976abde6392f99": {
         "comment": "Auto-generated insight for test scenario FunnelChart - assign color to attributes."
     },
+    "FunnelChart.ec97a9a234a510f8a9eb9a8ef86ac1e2": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - font.",
+        "scenarioName": "font",
+        "visName": "FunnelChart"
+    },
     "FunnelChart.fa2e577f1efafd0722d957e1ad78d955": {
         "comment": "Auto-generated insight for test scenario FunnelChart - single measure with viewBy sorted by attribute.",
         "scenarioName": "single measure with viewBy sorted by attribute",
@@ -2140,6 +2180,11 @@
     "Headline.346303855acfc20de32fcfcef4a77a57": {
         "comment": "Auto-generated insight for test scenario Headline - two measures.",
         "scenarioName": "two measures",
+        "visName": "Headline"
+    },
+    "Headline.5a15a98985dbd7379cf2d185cc65f229": {
+        "comment": "Auto-generated insight for test scenario Headline - font.",
+        "scenarioName": "font",
         "visName": "Headline"
     },
     "Headline.90d166ce3513a8ecb3abf8f0737f9965": {
@@ -2272,6 +2317,11 @@
     "Heatmap.ee51505c9fb1b2676d4f1a480227e7e6": {
         "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - legend on right."
     },
+    "Heatmap.f1b5a3cc48ca380e3c54647b7cc365cd": {
+        "comment": "Auto-generated insight for test scenario Heatmap - font.",
+        "scenarioName": "font",
+        "visName": "Heatmap"
+    },
     "Heatmap.f5efbdeba1dd7ed8bcdfc2197e5413eb": {
         "comment": "Auto-generated insight for test scenario Heatmap - 180x400 - Force position TOP, minimised variant - auto legend."
     },
@@ -2306,6 +2356,11 @@
     },
     "LineChart.163bab002bb394a581239db6d95a4f98": {
         "comment": "Auto-generated insight for test scenario LineChart - legend position - legend at bottom."
+    },
+    "LineChart.187b35efefd988ce7272771aa26fd6ed": {
+        "comment": "Auto-generated insight for test scenario LineChart - font.",
+        "scenarioName": "font",
+        "visName": "LineChart"
     },
     "LineChart.1c5884886948860877de42c1f8b8f56f": {
         "comment": "Auto-generated insight for test scenario LineChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
@@ -2655,6 +2710,11 @@
     "PieChart.63c6caa5ec48a312e9f154497271ac88": {
         "comment": "Auto-generated insight for test scenario PieChart - legend position - two measures - legend on left."
     },
+    "PieChart.6501da3e1a21256de21b0dbacb72a966": {
+        "comment": "Auto-generated insight for test scenario PieChart - font.",
+        "scenarioName": "font",
+        "visName": "PieChart"
+    },
     "PieChart.654fbce275b2ed4e58bc79a3faed62f5": {
         "comment": "Auto-generated insight for test scenario PieChart - data labels - auto visibility."
     },
@@ -2897,6 +2957,11 @@
     "PivotTable.5fcccd2691c4bfdb0dcdf3a7725b0866": {
         "comment": "Auto-generated insight for test scenario PivotTable - with two measures, grand totals and subtotals with auto-resizing."
     },
+    "PivotTable.63e553691e20234abf08e32fed08b9eb": {
+        "comment": "Auto-generated insight for test scenario PivotTable - font.",
+        "scenarioName": "font",
+        "visName": "PivotTable"
+    },
     "PivotTable.6505c191912087a7187a8365369df497": {
         "comment": "Auto-generated insight for test scenario PivotTable - themed.",
         "scenarioName": "themed",
@@ -3087,6 +3152,11 @@
     "ScatterPlot.384e6595215e2e9ffbcf2f0ce6a12185": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - data labels - default."
     },
+    "ScatterPlot.3c9babf74bfd6151e4b5e7c51dbd5a8e": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot - font.",
+        "scenarioName": "font",
+        "visName": "ScatterPlot"
+    },
     "ScatterPlot.43f04a05e8ba3ee3ffcf1d4d5bcc25c1": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - x and y axis measures and attribute with nulls in data.",
         "scenarioName": "x and y axis measures and attribute with nulls in data",
@@ -3163,6 +3233,11 @@
     },
     "Treemap.1edb03118ad7abd82451c5996a9e90ea": {
         "comment": "Auto-generated insight for test scenario Treemap - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
+    "Treemap.28d444e0e405d64c9d46ae19316e27f0": {
+        "comment": "Auto-generated insight for test scenario Treemap - font.",
+        "scenarioName": "font",
+        "visName": "Treemap"
     },
     "Treemap.2a058520af2a109a030d0ec59ace9463": {
         "comment": "Auto-generated insight for test scenario Treemap - 610x154 - Force position RIGHT - legend at bottom."
@@ -3369,6 +3444,11 @@
     "Xirr.e5deb6dfe7ff06cdc5210a56fc84c841": {
         "comment": "Auto-generated insight for test scenario Xirr - semantically wrong measure.",
         "scenarioName": "semantically wrong measure",
+        "visName": "Xirr"
+    },
+    "Xirr.f2812be4e4636cfdf0d8dda028b56bc3": {
+        "comment": "Auto-generated insight for test scenario Xirr - font.",
+        "scenarioName": "font",
         "visName": "Xirr"
     },
     "Xirr.feb8ea5ece361cf1c5681654f085f9a5": {

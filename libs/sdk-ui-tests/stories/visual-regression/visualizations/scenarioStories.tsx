@@ -21,19 +21,7 @@ const DefaultWrapperStyle = { width: 800, height: 400 };
 const backend = StorybookBackend();
 const ScenarioGroupsByVis = values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis));
 
-function simpleStory(Component: React.ComponentType, props: any, wrapperStyle: any) {
-    return () => {
-        return withScreenshot(
-            <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-                <div style={wrapperStyle}>
-                    <Component {...props} />
-                </div>
-            </ScreenshotReadyWrapper>,
-        );
-    };
-}
-
-function themedStory(Component: React.ComponentType, props: any, wrapperStyle: any) {
+function buildStory(Component: React.ComponentType, props: any, wrapperStyle: any, tags: string[] = []) {
     return () => {
         return withScreenshot(
             wrapWithTheme(
@@ -42,6 +30,7 @@ function themedStory(Component: React.ComponentType, props: any, wrapperStyle: a
                         <Component {...props} />
                     </div>
                 </ScreenshotReadyWrapper>,
+                tags,
             ),
         );
     };
@@ -102,12 +91,7 @@ ScenarioGroupsByVis.forEach((groups) => {
                 const { propsFactory, workspaceType, component: Component } = scenario;
                 const props = propsFactory(backend, workspaceType);
 
-                storiesForChart.add(
-                    name,
-                    scenario.tags.includes("themed")
-                        ? themedStory(Component, props, wrapperStyle)
-                        : simpleStory(Component, props, wrapperStyle),
-                );
+                storiesForChart.add(name, buildStory(Component, props, wrapperStyle, scenario.tags));
             });
         }
     }

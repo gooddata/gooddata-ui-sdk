@@ -1,0 +1,39 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aadpHDMBecIy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aadpHDMBecIy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "timeline.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_timeline.aag81lMifn6q"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            }
+        ],
+        "filters": [],
+        "identifier": "Xirr.f2812be4e4636cfdf0d8dda028b56bc3",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "Xirr - font",
+        "uri": "Xirr.f2812be4e4636cfdf0d8dda028b56bc3",
+        "visualizationUrl": "local:xirr"
+    }
+}

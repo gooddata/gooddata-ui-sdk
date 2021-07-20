@@ -8,4 +8,5 @@ export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", AreaChartWithTwoMeasuresAndViewBy);
+    .addScenario("themed", AreaChartWithTwoMeasuresAndViewBy)
+    .addScenario("font", AreaChartWithTwoMeasuresAndViewBy, (m) => m.withTags("themed", "font"));

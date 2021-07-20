@@ -183,6 +183,127 @@ Object {
 }
 `;
 
+exports[`getAvailableDrillTargets should provide correct available drill targets for: AreaChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets should provide correct available drill targets for: AreaChart - single measure 1`] = `
 Object {
   "attributes": Array [],
@@ -1514,6 +1635,153 @@ Object {
           "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           "name": "Ratio of Won and Lost",
           "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: BarChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1086",
+          },
+          "identifier": "label.owner.region",
+          "localIdentifier": "a_label.owner.region",
+          "name": "Region",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.region",
+              "name": "Region",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "identifier": "label.owner.region",
+            "localIdentifier": "a_label.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+        },
+      ],
+    },
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.region",
+              "name": "Region",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "identifier": "label.owner.region",
+            "localIdentifier": "a_label.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
       },
     },
@@ -3923,6 +4191,162 @@ Object {
 }
 `;
 
+exports[`getAvailableDrillTargets should provide correct available drill targets for: BubbleChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.0%",
+          "identifier": "abZgFKGPaGYM",
+          "localIdentifier": "m_abZgFKGPaGYM",
+          "name": "Win Rate",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1270",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1270",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.0%",
+          "identifier": "abEgMnq5hyJQ",
+          "localIdentifier": "m_abEgMnq5hyJQ",
+          "name": "Probability",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1273",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1273",
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets should provide correct available drill targets for: BubbleChart - themed 1`] = `
 Object {
   "attributes": Array [
@@ -5012,6 +5436,158 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/1273",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1273",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: BulletChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.00",
+          "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          "name": "Calculated 'Lost' measure",
+          "ref": undefined,
         },
       },
     },
@@ -6712,6 +7288,127 @@ Object {
           "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
           "name": "m_fact.opportunitysnapshot.amount_sum",
           "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: ColumnChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
         },
       },
     },
@@ -9020,6 +9717,189 @@ Object {
 }
 `;
 
+exports[`getAvailableDrillTargets should provide correct available drill targets for: ComboChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.00",
+          "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          "name": "Calculated 'Lost' measure",
+          "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.00",
+          "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          "name": "Ratio of Won and Lost",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets should provide correct available drill targets for: ComboChart - multiple measures and no viewBy 1`] = `
 Object {
   "attributes": Array [],
@@ -10406,6 +11286,92 @@ Object {
 }
 `;
 
+exports[`getAvailableDrillTargets should provide correct available drill targets for: DonutChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets should provide correct available drill targets for: DonutChart - single measure 1`] = `
 Object {
   "attributes": Array [],
@@ -11071,6 +12037,92 @@ Object {
 }
 `;
 
+exports[`getAvailableDrillTargets should provide correct available drill targets for: FunnelChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets should provide correct available drill targets for: FunnelChart - single measure 1`] = `
 Object {
   "attributes": Array [],
@@ -11390,6 +12442,44 @@ Object {
 }
 `;
 
+exports[`getAvailableDrillTargets should provide correct available drill targets for: Headline - font 1`] = `
+Object {
+  "attributes": Array [],
+  "measures": Array [
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets should provide correct available drill targets for: Headline - single measure 1`] = `
 Object {
   "attributes": Array [],
@@ -11544,6 +12634,153 @@ Object {
     },
     Object {
       "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: Heatmap - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1086",
+          },
+          "identifier": "label.owner.region",
+          "localIdentifier": "a_label.owner.region",
+          "name": "Region",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.region",
+              "name": "Region",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "identifier": "label.owner.region",
+            "localIdentifier": "a_label.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.region",
+              "name": "Region",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "identifier": "label.owner.region",
+            "localIdentifier": "a_label.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+        },
+      ],
       "measure": Object {
         "measureHeaderItem": Object {
           "format": "$#,##0.00",
@@ -12520,6 +13757,127 @@ Object {
           "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           "name": "Ratio of Won and Lost",
           "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: LineChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "created.quarter",
+            "name": "Quarter/Year (Created)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/347",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/347",
+          },
+          "identifier": "created.aci81lMifn6q",
+          "localIdentifier": "a_created.aci81lMifn6q",
+          "name": "US Short (Created)",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/382",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/382",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "created.quarter",
+              "name": "Quarter/Year (Created)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/347",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/347",
+            },
+            "identifier": "created.aci81lMifn6q",
+            "localIdentifier": "a_created.aci81lMifn6q",
+            "name": "US Short (Created)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/382",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/382",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "created.quarter",
+              "name": "Quarter/Year (Created)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/347",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/347",
+            },
+            "identifier": "created.aci81lMifn6q",
+            "localIdentifier": "a_created.aci81lMifn6q",
+            "name": "US Short (Created)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/382",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/382",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "created.quarter",
+              "name": "Quarter/Year (Created)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/347",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/347",
+            },
+            "identifier": "created.aci81lMifn6q",
+            "localIdentifier": "a_created.aci81lMifn6q",
+            "name": "US Short (Created)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/382",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/382",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
         },
       },
     },
@@ -13646,6 +15004,92 @@ Object {
 }
 `;
 
+exports[`getAvailableDrillTargets should provide correct available drill targets for: PieChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets should provide correct available drill targets for: PieChart - single measure 1`] = `
 Object {
   "attributes": Array [],
@@ -14019,6 +15463,127 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/1272",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: ScatterPlot - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.0%",
+          "identifier": "abZgFKGPaGYM",
+          "localIdentifier": "m_abZgFKGPaGYM",
+          "name": "Win Rate",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1270",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1270",
         },
       },
     },
@@ -14850,6 +16415,172 @@ Object {
           "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           "name": "Calculated 'Lost' measure",
           "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: Treemap - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.product.id",
+            "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+      ],
+    },
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1086",
+          },
+          "identifier": "label.owner.region",
+          "localIdentifier": "a_label.owner.region",
+          "name": "Region",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.region",
+              "name": "Region",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "identifier": "label.owner.region",
+            "localIdentifier": "a_label.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.product.id",
+              "name": "Product",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+        },
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.owner.region",
+              "name": "Region",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
+            },
+            "identifier": "label.owner.region",
+            "localIdentifier": "a_label.owner.region",
+            "name": "Region",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
       },
     },
@@ -15917,6 +17648,92 @@ Object {
 `;
 
 exports[`getAvailableDrillTargets should provide correct available drill targets for: Xirr - correct config 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "timeline.year",
+            "name": "Year (Timeline)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/992",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/992",
+          },
+          "identifier": "timeline.aag81lMifn6q",
+          "localIdentifier": "a_timeline.aag81lMifn6q",
+          "name": "Year (Timeline)",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1010",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1010",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "timeline.year",
+              "name": "Year (Timeline)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/992",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/992",
+            },
+            "identifier": "timeline.aag81lMifn6q",
+            "localIdentifier": "a_timeline.aag81lMifn6q",
+            "name": "Year (Timeline)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1010",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1010",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "timeline.year",
+              "name": "Year (Timeline)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/992",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/992",
+            },
+            "identifier": "timeline.aag81lMifn6q",
+            "localIdentifier": "a_timeline.aag81lMifn6q",
+            "name": "Year (Timeline)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1010",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1010",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.00",
+          "identifier": "aadpHDMBecIy",
+          "localIdentifier": "m_aadpHDMBecIy",
+          "name": "Sample XIRR",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1274",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1274",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: Xirr - font 1`] = `
 Object {
   "attributes": Array [
     Object {

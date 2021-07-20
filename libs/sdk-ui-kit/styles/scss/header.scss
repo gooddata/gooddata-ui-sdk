@@ -21,7 +21,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     padding: 0 0 0 20px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     color: #fff;
-    font-family: $gd-font-primary-without-custom;
+    font-family: $gd-font-primary;
     background: #000;
 
     &.is-not-loaded {
@@ -564,7 +564,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
 .gd-list-item.gd-project-list-item {
     justify-content: flex-start;
     font-size: 14px;
-    font-family: $gd-font-primary-without-custom;
+    font-family: $gd-font-primary;
     font-weight: 400;
     padding: 0 15px;
 
@@ -601,7 +601,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         min-width: 210px;
 
         .gd-list-item {
-            font-family: $gd-font-primary-without-custom;
+            font-family: $gd-font-primary;
             font-weight: 400;
         }
     }
@@ -614,7 +614,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         min-width: 150px;
 
         .gd-list-item {
-            font-family: $gd-font-primary-without-custom;
+            font-family: $gd-font-primary;
             font-weight: 400;
         }
     }
@@ -850,7 +850,7 @@ button.gd-button-primary {
     // stylelint-disable-next-line declaration-no-important
     background: none !important;
     cursor: pointer;
-    font-family: $gd-font-primary-without-custom;
+    font-family: $gd-font-primary;
     border-style: none;
     perspective-origin: 0 0;
     text-align: start;

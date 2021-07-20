@@ -11,4 +11,12 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .addScenario("themed", {
         primaryMeasure: ReferenceLdm.Won,
         secondaryMeasure: ReferenceLdm.Amount,
-    });
+    })
+    .addScenario(
+        "font",
+        {
+            primaryMeasure: ReferenceLdm.Won,
+            secondaryMeasure: ReferenceLdm.Amount,
+        },
+        (m) => m.withTags("themed", "font"),
+    );

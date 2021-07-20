@@ -13,7 +13,7 @@ $custom-secondary-foreground-color: var(
 
 $border-color: transparent;
 $font-size: 12px;
-$font-family: $gd-font-primary-without-custom;
+$font-family: $gd-font-primary;
 $foreground-color: $custom-foreground-color;
 $default-background: $default-gd-color-white;
 $custom-background-color: var(
@@ -65,6 +65,14 @@ $subtotal-odd-background-color: var(
 .gd-table-component {
     @import "~@ag-grid-community/all-modules/dist/styles/ag-grid";
     @import "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham";
+
+    .ag-theme-balham {
+        font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    }
+
+    .ag-theme-balham .ag-header {
+        font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    }
 
     .gd-table {
         // TODO remove once css variables can modify theme

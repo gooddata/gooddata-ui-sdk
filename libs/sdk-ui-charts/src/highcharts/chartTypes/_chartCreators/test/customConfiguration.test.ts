@@ -274,7 +274,7 @@ describe("getCustomizedConfiguration", () => {
             const result = getCustomizedConfiguration(chartOptions);
             expect(result.xAxis[0].title.style).toEqual({
                 color: "#6d7680",
-                font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
+                font: '14px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
                 textOverflow: "ellipsis",
             });
         });

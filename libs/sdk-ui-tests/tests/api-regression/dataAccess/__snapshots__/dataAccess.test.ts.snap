@@ -29,6 +29,33 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: AreaChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: AreaChart - single measure 1`] = `
 Object {
   "seriesDigest": Object {
@@ -318,6 +345,33 @@ Object {
       "Grammar Plus",
       "PhoenixSoft",
       "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: BarChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 6,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": Array [
+      "CompuSci > Amount",
+      "Educationly > Amount",
+      "Explorer > Amount",
+      "Grammar Plus > Amount",
+      "PhoenixSoft > Amount",
+      "WonderKid > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": Array [
+      "East Coast",
+      "West Coast",
     ],
     "totals": 0,
   },
@@ -801,6 +855,34 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: BubbleChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": Array [
+      " > Amount",
+      " > Win Rate",
+      " > Probability",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: BubbleChart - themed 1`] = `
 Object {
   "seriesDigest": Object {
@@ -1022,6 +1104,34 @@ Object {
     "seriesNames": Array [
       " > Amount",
       " > Probability",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: BulletChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": Array [
+      " > Won",
+      " > Amount",
+      " > Calculated 'Lost' measure",
     ],
   },
   "slicesDigest": Object {
@@ -1581,6 +1691,33 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: ColumnChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: ColumnChart - single measure 1`] = `
 Object {
   "seriesDigest": Object {
@@ -2042,6 +2179,35 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: ComboChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
+      " > Calculated 'Lost' measure",
+      " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: ComboChart - multiple measures and no viewBy 1`] = `
 Object {
   "seriesDigest": Object {
@@ -2372,6 +2538,32 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: DonutChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: DonutChart - single measure 1`] = `
 Object {
   "seriesDigest": Object {
@@ -2574,6 +2766,32 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: FunnelChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: FunnelChart - single measure 1`] = `
 Object {
   "seriesDigest": Object {
@@ -2691,6 +2909,26 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: Headline - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": Array [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: Headline - single measure 1`] = `
 Object {
   "seriesDigest": Object {
@@ -2785,6 +3023,33 @@ Object {
     "allSlices": 0,
     "attributes": 0,
     "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: Heatmap - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": Array [
+      "East Coast > Amount",
+      "West Coast > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
     "totals": 0,
   },
 }
@@ -2988,6 +3253,45 @@ Object {
       " > Won",
       " > Calculated 'Lost' measure",
       " > Ratio of Won and Lost",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 18,
+    "attributes": 1,
+    "sliceNames": Array [
+      "Q1/2008",
+      "Q2/2008",
+      "Q3/2008",
+      "Q4/2008",
+      "Q1/2009",
+      "Q2/2009",
+      "Q3/2009",
+      "Q4/2009",
+      "Q1/2010",
+      "Q2/2010",
+      "Q3/2010",
+      "Q4/2010",
+      "Q1/2011",
+      "Q2/2011",
+      "Q3/2011",
+      "Q4/2011",
+      "Q1/2012",
+      "Q2/2012",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: LineChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
     ],
   },
   "slicesDigest": Object {
@@ -3386,6 +3690,32 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: PieChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: PieChart - single measure 1`] = `
 Object {
   "seriesDigest": Object {
@@ -3537,6 +3867,33 @@ Object {
     "allSlices": 0,
     "attributes": 0,
     "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: ScatterPlot - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": Array [
+      " > Amount",
+      " > Win Rate",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
     "totals": 0,
   },
 }
@@ -3756,6 +4113,38 @@ Object {
       "Q4/2011",
       "Q1/2012",
       "Q2/2012",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: Treemap - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": Array [
+      "CompuSci > West Coast",
+      "CompuSci > East Coast",
+      "Educationly > West Coast",
+      "Educationly > East Coast",
+      "Explorer > West Coast",
+      "Explorer > East Coast",
+      "Grammar Plus > West Coast",
+      "Grammar Plus > East Coast",
+      "PhoenixSoft > West Coast",
+      "PhoenixSoft > East Coast",
+      "WonderKid > West Coast",
+      "WonderKid > East Coast",
     ],
     "totals": 0,
   },
@@ -4032,6 +4421,28 @@ Object {
 `;
 
 exports[`DataAccess should correctly identify series and slices for: Xirr - correct config 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 4,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": Array [
+      "2018 > Sample XIRR",
+      "2019 > Sample XIRR",
+      "2020 > Sample XIRR",
+      "2021 > Sample XIRR",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: Xirr - font 1`] = `
 Object {
   "seriesDigest": Object {
     "allSeries": 4,
