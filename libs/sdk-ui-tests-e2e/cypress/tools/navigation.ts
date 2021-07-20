@@ -16,9 +16,9 @@ function visitUrl(url: string, options: Partial<VisitOptions>) {
     });
 }
 
-export function visit(workspaceSettings?: ISettings) {
+export function visit(componentName: string, workspaceSettings?: ISettings) {
     const dashboardUrl = getDashboardUrl();
-    visitUrl(dashboardUrl, {
+    visitUrl(`${dashboardUrl}/${componentName}`, {
         onBeforeLoad(win: Cypress.AUTWindow) {
             win["customWorkspaceSettings"] = workspaceSettings;
         },

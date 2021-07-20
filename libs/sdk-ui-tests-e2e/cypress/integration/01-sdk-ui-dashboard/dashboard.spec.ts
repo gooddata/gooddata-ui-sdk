@@ -8,7 +8,7 @@ describe("Dashboard", () => {
         beforeEach(() => {
             cy.login();
 
-            Navigation.visit();
+            Navigation.visit("dashboard");
         });
 
         it("should render topBar", () => {
@@ -56,7 +56,7 @@ describe("Dashboard", () => {
         beforeEach(() => {
             cy.login();
 
-            Navigation.visit();
+            Navigation.visit("dashboard");
         });
 
         it("should render filter bar", () => {
@@ -96,7 +96,7 @@ describe("Dashboard", () => {
         beforeEach(() => {
             cy.login();
 
-            Navigation.visit();
+            Navigation.visit("dashboard");
         });
 
         it("should render single insight", () => {

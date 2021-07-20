@@ -1,0 +1,121 @@
+// (C) 2021 GoodData Corporation
+
+@import "../../theme.scss";
+@import "../../mixins.scss";
+
+.Login {
+    padding: $spacing;
+    background-color: $color-box;
+    margin: $spacing auto;
+    display: flex;
+    max-width: 300px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    align-self: center;
+    text-align: center;
+    border-radius: $border-radius;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px $spacing $spacing/2 0px;
+    color: $color-text;
+}
+
+.LoginLogo {
+    text-align: center;
+}
+
+.InputBlock {
+    text-align: left;
+    margin: $spacing/2 0;
+    width: 300px;
+}
+
+.Label {
+    margin-bottom: $spacing/4;
+}
+
+.Error {
+    position: relative;
+    box-sizing: border-box;
+    display: block;
+    max-width: 100%;
+    margin-top: $spacing/4;
+    padding: $spacing/4 $spacing/2;
+    min-height: 1px;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: $font-size-body;
+    text-align: left;
+    line-height: in;
+    color: $color-error;
+    background: transparentize($color-error, 0.85);
+    pointer-events: all;
+}
+
+.Action {
+    margin-top: $spacing/2;
+}
+
+.Input.Input {
+    max-width: 100%;
+    padding: $spacing/4 $spacing/2;
+    border: 1px solid $color-border;
+    color: $color-text;
+    background: $color-paper;
+    border-radius: $border-radius;
+    box-shadow: inset 0 1px 1px 0 rgba(31, 53, 74, 0.15);
+    transition: 0.25s border-color ease, 0.25s color ease, 0.25s box-shadow ease;
+
+    &:focus,
+    &:active {
+        border-color: $color-primary;
+        outline: 0;
+        box-shadow: inset 0 1px 1px 0 rgba(31, 53, 74, 0.2);
+    }
+    &::placeholder {
+        @include reset-appearance;
+        color: $color-text-muted;
+    }
+}
+
+.Error {
+    box-shadow: inset 0 0 2px 0 transparentize($color-error, 0.5);
+}
+
+// This button is styled so that it matches the usual login forms of the GoodData platform
+.SubmitButton {
+    background-color: #fcfcfd;
+    border-radius: 3px;
+    border: 1px solid #ccd8e2;
+    box-shadow: 0 1px 1px 0 rgba(20, 56, 93, 0.15);
+    color: #778491;
+    cursor: pointer;
+    display: block;
+    font-family: avenir, "Helvetica Neue", arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    height: 38px;
+    line-height: 22px;
+    outline: none;
+    padding: 7px 19px;
+    text-align: center;
+    transition-duration: 0.25s;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+    width: 100%;
+
+    &:hover {
+        border-color: rgba(31, 52, 73, 0.2);
+        box-shadow: 0 1px 1px 0 rgba(20, 56, 93, 0.15), inset 0 -1px 0 0 rgba(177, 193, 209, 0.6);
+        color: #464e56;
+        background: #f5f8fa;
+    }
+
+    &:active,
+    &:focus {
+        border-color: #b1c1d1;
+        box-shadow: inset 0 1px 0 0 rgba(177, 193, 209, 0.65);
+        color: #464e56;
+        background: #ecf0f5;
+        background-image: linear-gradient(to top, #dee6ef, #ecf0f5);
+    }
+}

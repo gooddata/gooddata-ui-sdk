@@ -1,0 +1,74 @@
+gzip on;
+gzip_disable "msie6";
+gzip_vary on;
+gzip_proxied any;
+gzip_types image/jpeg image/bmp image/svg+xml text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript image/x-icon;
+
+client_max_body_size 10M;
+
+log_format json escape=json '{'
+ '"timestamp": "$time_iso8601", '
+  '"remoteAddress": "$remote_addr", '
+  '"method": "$request_method", '
+  '"url": "$request_uri", '
+  '"httpVersion": "$server_protocol", '
+  '"statusCode": "$status", '
+  '"body_bytes_sent":"$body_bytes_sent",'
+  '"requestTime": "$request_time", '
+  '"upstreamTime": "$upstream_response_time", '
+  '"userAgent": "$http_user_agent", '
+  '"referer": "$http_referer", '
+  '"requestSize": "$request_length", '
+  '"responseSize": "$bytes_sent"'
+'}';
+
+map $sent_http_content_type $expires {
+    default                    off;
+    text/html                  -1;
+    application/json           -1;
+    text/css                   max;
+    application/javascript     max;
+}
+
+server {
+  #
+  # Comment this out if you are setting up HTTPS for localhost
+  #
+  listen ${PORT};
+
+  #
+  # Uncomment the lines below if you are setting up HTTPS for localhost
+  #
+  # listen ${PORT} ssl;
+  #
+  # server_name  localhost;
+  # ssl_certificate /etc/ssl/certs/localhost.crt;
+  # ssl_certificate_key /etc/ssl/private/localhost.key;
+  #
+
+  root   /usr/share/nginx/html;
+  index  index.html;
+  access_log /var/log/nginx/access.log json;
+
+  expires $expires;
+
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+
+  location ^~ /gdc {
+    proxy_pass ${BACKEND_URL};
+    proxy_set_header x-forwarded-host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host ${BACKEND_HOST};
+    proxy_set_header Referer ${BACKEND_URL};
+    proxy_set_header Origin "";
+    proxy_cookie_domain ${BACKEND_HOST} $host;
+    proxy_ssl_server_name on;
+  }
+
+  location ~* \.(?:css|js)$ {
+    add_header Cache-Control "public";
+  }
+
+}

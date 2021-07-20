@@ -47,7 +47,11 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long cypress/",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
-        "cypress": "node ./scripts/run_cypress_local.js"
+        "cypress": "node ./scripts/run_cypress_local.js",
+        "run-isolated": "docker-compose -f docker-compose-isolated.yaml up --abort-on-container-exit --exit-code-from isolated-tests --force-recreate --always-recreate-deps --renew-anon-volumes",
+        "docker-build-local": "docker build --file ../../examples/playground/Dockerfile_local -t gooddata-ui-sdk .",
+        "run-isolated-local": "yarn docker-build-local && IMAGE_ID=gooddata-ui-sdk yarn run-isolated",
+        "run-scenarios-local": "node ./scripts/run-scenarios-local.js"
     },
     "dependencies": {
         "dotenv": "^8.2.0",

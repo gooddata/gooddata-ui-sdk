@@ -1,0 +1,28 @@
+// (C) 2021 GoodData Corporation
+
+@import "../../theme.scss";
+@import "../../mixins.scss";
+
+.Button {
+    @include reset-appearance;
+    min-width: calc(1em + #{$spacing/2});
+    padding: 0 ($spacing/4);
+    text-align: center;
+    border-radius: $border-radius;
+    cursor: pointer;
+    color: $color-accent;
+    transition: 0.3 background-color ease, 0.3 color ease;
+    background: $color-paper;
+
+    &.Active {
+        background-color: $color-accent;
+        color: $color-paper;
+    }
+
+    &:hover,
+    :focus,
+    :active {
+        background-color: $color-accent-lighter;
+        color: $color-accent;
+    }
+}

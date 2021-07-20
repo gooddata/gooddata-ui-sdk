@@ -14,7 +14,7 @@ const { getRecordingsWorkspaceId } = require("./recordings.js");
 async function main() {
     const withRecordings = process.argv.indexOf("--with-recordings") !== -1;
 
-    let host = withRecordings ? "http://localhost:9500" : "https://localhost:8999";
+    let host = withRecordings ? "http://localhost:9500" : "http://localhost:9500";
 
     let mockServer = withRecordings ? "localhost:8080" : undefined;
 
