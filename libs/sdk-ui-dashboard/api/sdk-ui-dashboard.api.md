@@ -2151,6 +2151,9 @@ export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
 // @alpha
 export function queryInsightWidgetFilters(widgetRef: ObjRef, correlationId?: string): QueryInsightWidgetFilters;
 
+// @internal (undocumented)
+export type QueryProcessingStatus = "running" | "success" | "error";
+
 // @alpha (undocumented)
 export interface RefreshInsightWidget extends IDashboardCommand {
     // (undocumented)
@@ -2981,6 +2984,26 @@ export const useDashboardKpiProps: () => DashboardKpiProps;
 
 // @alpha (undocumented)
 export const useDashboardLayoutProps: () => DashboardLayoutProps;
+
+// @alpha
+export const useDashboardQuery: <TQuery extends DashboardQueries, TArgs extends any[]>(queryCreator: (...args: TArgs) => TQuery, eventHandlers?: {
+    "GDC.DASH/EVT.QUERY.FAILED"?: ((event: import("../events").DashboardQueryFailed) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.REJECTED"?: ((event: import("../events").DashboardQueryRejected) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.STARTED"?: ((event: import("../events").DashboardQueryStarted) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.COMPLETED"?: ((event: import("../events").DashboardQueryCompleted<any, any>) => void) | undefined;
+} | undefined, onBeforeRun?: ((command: TQuery) => void) | undefined) => (...args: TArgs) => void;
+
+// @internal (undocumented)
+export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryCreatorArgs extends any[], TResult>({ queryCreator, onSuccess, onError, onBeforeRun, }: {
+    queryCreator: (...args: TQueryCreatorArgs) => TQuery;
+    onSuccess?: ((event: DashboardQueryCompleted<TQuery, TResult>) => void) | undefined;
+    onError?: ((event: DashboardQueryFailed | DashboardQueryRejected) => void) | undefined;
+    onBeforeRun?: ((query: TQuery) => void) | undefined;
+}) => {
+    run: (...args: TQueryCreatorArgs) => void;
+    status?: "error" | "running" | "success" | undefined;
+    result?: TResult | undefined;
+};
 
 // @alpha (undocumented)
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;
