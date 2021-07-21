@@ -5,7 +5,8 @@
  */
 export type DashboardQueryType =
     | "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS"
-    | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
+    | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META"
+    | "GDC.DASH/QUERY.INSIGHT_WIDGET.FILTERS";
 
 /**
  * Base type for all dashboard queries. A dashboard query encapsulates how complex, read-only dashboard-specific logic

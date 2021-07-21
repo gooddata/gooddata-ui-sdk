@@ -55,6 +55,7 @@ import { IDrillToDashboard } from '@gooddata/sdk-backend-spi';
 import { IDrillToInsight } from '@gooddata/sdk-backend-spi';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-backend-spi';
 import { IErrorProps } from '@gooddata/sdk-ui';
+import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
@@ -1149,7 +1150,7 @@ export interface DashboardMetaState {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta;
+export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryInsightWidgetFilters;
 
 // @alpha
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>, TResult> extends IDashboardEvent {
@@ -1187,7 +1188,7 @@ export interface DashboardQueryStarted extends IDashboardEvent {
 }
 
 // @alpha (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.INSIGHT_WIDGET.FILTERS";
 
 // @alpha
 export interface DashboardRenamed extends IDashboardEvent {
@@ -2136,6 +2137,19 @@ export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDat
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
 }
+
+// @alpha
+export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
+    // (undocumented)
+    readonly payload: {
+        readonly widgetRef: ObjRef;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.INSIGHT_WIDGET.FILTERS";
+}
+
+// @alpha
+export function queryInsightWidgetFilters(widgetRef: ObjRef, correlationId?: string): QueryInsightWidgetFilters;
 
 // @alpha (undocumented)
 export interface RefreshInsightWidget extends IDashboardCommand {
