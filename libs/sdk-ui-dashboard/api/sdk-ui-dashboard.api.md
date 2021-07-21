@@ -2922,7 +2922,7 @@ export interface UseDrillToLegacyDashboardProps {
 export const useFilterBarProps: () => IFilterBarProps;
 
 // @alpha (undocumented)
-export const useMenuButtonProps: (config?: IMenuButtonConfiguration) => IMenuButtonProps;
+export const useMenuButtonProps: (config?: IMenuButtonConfiguration | undefined) => IMenuButtonProps;
 
 // @alpha
 export interface UserInteraction extends IDashboardCommand {

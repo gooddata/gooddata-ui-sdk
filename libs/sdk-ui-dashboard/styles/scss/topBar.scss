@@ -1,25 +1,5 @@
 @import "variables";
 
-.dash-header-wrapper {
-    z-index: 100;
-    transition: left $sidebar-transition-length;
-
-    .is-dashboard-loading & {
-        z-index: 0;
-        animation-delay: 1s;
-        animation-duration: $sidebar-transition-length;
-        animation-fill-mode: forwards;
-        opacity: 0;
-    }
-
-    @media #{$medium-up} {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-    }
-}
-
 .dash-header {
     @include clearfix();
 
