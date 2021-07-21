@@ -205,10 +205,16 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     return (
         <IntlWrapper locale={locale}>
             <div className="gd-dashboards-root">
-                <DashboardHeader {...props} />
-                <DashboardLayoutPropsProvider drillableItems={props.drillableItems}>
-                    <DashboardLayout />
-                </DashboardLayoutPropsProvider>
+                <div className="dash-header-wrapper">
+                    <DashboardHeader {...props} />
+                </div>
+                <div className="gd-flex-item-stretch dash-section dash-section-kpis">
+                    <div className="gd-flex-container root-flex-maincontent">
+                        <DashboardLayoutPropsProvider drillableItems={props.drillableItems}>
+                            <DashboardLayout />
+                        </DashboardLayoutPropsProvider>
+                    </div>
+                </div>
             </div>
         </IntlWrapper>
     );

@@ -11,7 +11,7 @@ const MenuButtonPropsContext = createContext<IMenuButtonProps>({} as any);
 /**
  * @alpha
  */
-export const useMenuButtonProps = (config: IMenuButtonConfiguration = {}): IMenuButtonProps => {
+export const useMenuButtonProps = (config?: IMenuButtonConfiguration): IMenuButtonProps => {
     const contextValue = useContext(MenuButtonPropsContext);
     const configContextValue = useDashboardConfigContext();
     const effectiveConfig = config ?? configContextValue?.menuButtonConfig ?? {};
