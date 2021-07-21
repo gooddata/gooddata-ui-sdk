@@ -110,19 +110,21 @@ export function updateStickyRowContentClassesAndData(
         }
     });
     const previousRowData = gridApi.getPinnedTopRow(0)?.data as IGridRow;
-    const {
-        headerItemMap: _ignoredHeaders,
-        type: _ignoredType,
-        subtotalStyle: _ignoredStyle,
-        ...previousData
-    } = previousRowData;
+    const previousStickyHeaderMap = previousRowData.stickyHeaderItemMap || {};
+    const previousStickyData = Object.keys(previousStickyHeaderMap).reduce((data, colId) => {
+        data[colId] = previousRowData[colId]; // get rid of irrelevant keys and keep just data for columns which need sticky cell
+        return data;
+    }, {});
     // set new rowData only if differen to avoid rerendering and flashing of the sticky row
-    if (areDataDifferent(previousData, stickyRowData)) {
-        const headerItemMapProp = isEmpty(headerItemMap) ? {} : { headerItemMap };
+    if (areDataDifferent(previousStickyData, stickyRowData)) {
+        const stickyHeaderItemMapProp = isEmpty(headerItemMap)
+            ? { stickyHeaderItemMap: {} }
+            : { stickyHeaderItemMap: headerItemMap };
         gridApi.setPinnedTopRowData([
             {
                 ...stickyRowData,
-                ...headerItemMapProp,
+                ...firstVisibleNodeData,
+                ...stickyHeaderItemMapProp,
             },
         ]);
     }
