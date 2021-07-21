@@ -21,6 +21,14 @@ describe("stickyRowHandler", () => {
                     },
                 },
             },
+            stickyHeaderItemMap: {
+                r_0: {
+                    attributeHeaderItem: {
+                        name: "Educationly",
+                        uri: "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+                    },
+                },
+            },
         },
     };
 
@@ -303,8 +311,21 @@ describe("stickyRowHandler", () => {
                 fakeGridApiWrapper,
             );
 
-            it("should set empty sticky row data", () => {
-                expect(fakeGridApi.setPinnedTopRowData).toHaveBeenCalledWith([{}]);
+            it("should set empty stickyHeaderItemMap data", () => {
+                expect(fakeGridApi.setPinnedTopRowData).toHaveBeenCalledWith([
+                    {
+                        headerItemMap: {
+                            r_0: {
+                                attributeHeaderItem: {
+                                    name: "Educationly",
+                                    uri: "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+                                },
+                            },
+                        },
+                        r_0: "123",
+                        stickyHeaderItemMap: {},
+                    },
+                ]);
             });
 
             it("should temporarily show table cell behind", () => {
@@ -340,8 +361,20 @@ describe("stickyRowHandler", () => {
                 fakeGridApiWrapper,
             );
 
-            it("should set correct sticky row data", () => {
-                expect(fakeGridApi.setPinnedTopRowData).toHaveBeenCalledWith([fakeRow.data]);
+            it("should set correct stickyHeaderItemMap data", () => {
+                const expectedData = {
+                    ...fakeRow.data,
+                    stickyHeaderItemMap: {
+                        headerItemMap: undefined,
+                        r_0: {
+                            attributeHeaderItem: {
+                                name: "Educationly",
+                                uri: "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+                            },
+                        },
+                    },
+                };
+                expect(fakeGridApi.setPinnedTopRowData).toHaveBeenCalledWith([expectedData]);
             });
 
             it("should not temporarily show table cell behind", () => {
