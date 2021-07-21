@@ -344,7 +344,9 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             year: getYear(selectedDateObject),
         };
 
-        this.setState({ startDate: selectedDateObject });
+        this.setState({ startDate: selectedDateObject }, () => {
+            this.updateStartDateForRepeats(selectedDateObject);
+        });
     };
 
     private onTimeChange = (time: IScheduleEmailRepeatTime): void => {
@@ -364,6 +366,28 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     private onMessageChange = (value: string): void => {
         this.emailBody = value;
     };
+
+    private updateStartDateForRepeats(startDate: Date) {
+        const repeatType = this.repeatData.repeatType;
+        const repeatFrequency = this.repeatData.repeatFrequency;
+        const repeatExecuteOn = this.repeatData.repeatExecuteOn;
+
+        if (repeatType === REPEAT_TYPES.CUSTOM) {
+            if (repeatFrequency === REPEAT_FREQUENCIES.MONTH) {
+                setMonthlyRepeat(this.repeatData, repeatExecuteOn, startDate);
+            } else if (repeatFrequency === REPEAT_FREQUENCIES.WEEK) {
+                setWeeklyRepeat(this.repeatData, startDate);
+            } else {
+                setDailyRepeat(this.repeatData);
+            }
+        } else if (repeatType === REPEAT_TYPES.MONTHLY) {
+            setMonthlyRepeat(this.repeatData, REPEAT_EXECUTE_ON.DAY_OF_WEEK, startDate);
+        } else if (repeatType === REPEAT_TYPES.WEEKLY) {
+            setWeeklyRepeat(this.repeatData, startDate);
+        } else {
+            setDailyRepeat(this.repeatData);
+        }
+    }
 
     private onRepeatsChange = (data: IRepeatSelectData): void => {
         const { repeatExecuteOn, repeatFrequency, repeatPeriod, repeatType } = data;
