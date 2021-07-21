@@ -1714,8 +1714,6 @@ export interface IDashboardInsightProps {
     // (undocumented)
     ErrorComponent?: ComponentType<IErrorProps>;
     // (undocumented)
-    filters?: FilterContextItem[];
-    // (undocumented)
     insight: IInsight;
     // (undocumented)
     LoadingComponent?: ComponentType<ILoadingProps>;

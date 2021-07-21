@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useMemo, useState, CSSProperties } from "react";
+import React, { useCallback, useEffect, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
+import { IFilter, insightSetFilters, insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IntlWrapper,
@@ -23,9 +23,11 @@ import {
     selectSettings,
     selectIsExport,
     useDashboardAsyncRender,
+    useDashboardQueryProcessing,
+    queryInsightWidgetFilters,
+    selectFilterContextFilters,
 } from "../../../../model";
 
-import { useResolveDashboardInsightFilters } from "./useResolveDashboardInsightFilters";
 import { useResolveDashboardInsightProperties } from "./useResolveDashboardInsightProperties";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
 import { IDashboardInsightProps } from "../types";
@@ -37,7 +39,6 @@ const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "
  */
 export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Element => {
     const {
-        filters,
         insight,
         widget,
         clientHeight,
@@ -67,6 +68,20 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
     const settings = useDashboardSelector(selectSettings);
     const colorPalette = useDashboardSelector(selectColorPalette);
     const isExport = useDashboardSelector(selectIsExport);
+    const filters = useDashboardSelector(selectFilterContextFilters);
+
+    const {
+        run: runFiltersQuery,
+        result: insightFilters,
+        status: filtersStatus,
+    } = useDashboardQueryProcessing({
+        queryCreator: queryInsightWidgetFilters,
+    });
+
+    useEffect(() => {
+        // TODO how to prevent reloads in case ignored filter changes?
+        runFiltersQuery(widget);
+    }, [widget, filters]);
 
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | undefined>();
@@ -101,17 +116,10 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
         [onError],
     );
 
-    const insightWithAddedFilters = useResolveDashboardInsightFilters({
-        insight,
-        widget,
-        backend,
-        filters,
-        onError,
-        workspace,
-    });
+    const insightWithAddedFilters = insightSetFilters(insight, insightFilters as IFilter[]); // TODO how to type this better?
 
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
-        insight: insightWithAddedFilters.result ?? insight,
+        insight: insightWithAddedFilters ?? insight,
         widget,
     });
 
@@ -146,15 +154,13 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
         };
     }, [insight]);
 
-    const error = insightWithAddedFilters.error ?? visualizationError;
+    const error = /*insightWithAddedFilters.error ?? */ visualizationError;
 
     return (
         <div style={insightStyle}>
             <div style={insightPositionStyle}>
                 <IntlWrapper locale={locale}>
-                    {(insightWithAddedFilters.status === "loading" ||
-                        insightWithAddedFilters.status === "pending" ||
-                        isVisualizationLoading) && <LoadingComponent />}
+                    {(filtersStatus === "running" || isVisualizationLoading) && <LoadingComponent />}
                     {error && (
                         <InsightError
                             error={error}
@@ -163,7 +169,7 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
                             height={null} // make sure the error is aligned to the top (this is the behavior in gdc-dashboards)
                         />
                     )}
-                    {insightWithAddedFilters.status === "success" && (
+                    {filtersStatus === "success" && (
                         <InsightRenderer
                             insight={insightWithAddedWidgetProperties}
                             backend={effectiveBackend}
