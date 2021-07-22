@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { DashboardContext } from "../types/commonTypes";
 import { SagaIterator } from "redux-saga";
+import invariant from "ts-invariant";
 import { all, call, SagaReturnType, select } from "redux-saga/effects";
 import { createQueryService } from "../state/_infra/queryService";
 import {
@@ -42,18 +43,60 @@ import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-backend-spi";
 import { selectFilterContextFilters } from "../state/filterContext/filterContextSelectors";
 import { filterContextItemsToFiltersForWidget } from "../../converters";
 import compact from "lodash/compact";
+import flatMap from "lodash/flatMap";
 import groupBy from "lodash/groupBy";
 import last from "lodash/last";
 import partition from "lodash/partition";
-import { selectCatalogDateDatasets } from "../state/catalog/catalogSelectors";
+import { selectCatalogAttributes, selectCatalogDateDatasets } from "../state/catalog/catalogSelectors";
+import { PromiseFnReturnType } from "../types/sagas";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
-function loadDisplayFormsMetadata(
+async function loadDisplayFormsMetadata(
     ctx: DashboardContext,
     refs: ObjRef[],
 ): Promise<IAttributeDisplayFormMetadataObject[]> {
+    if (!refs.length) {
+        return [];
+    }
+
     return ctx.backend.workspace(ctx.workspace).attributes().getAttributeDisplayForms(refs);
+}
+
+function* getOrLoadDisplayFormsMetadata(
+    ctx: DashboardContext,
+    refs: ObjRef[],
+): SagaIterator<IAttributeDisplayFormMetadataObject[]> {
+    // first try getting as much as possible from catalog, there is a good chance the data is already there
+    const fromCatalog: ReturnType<typeof selectCatalogAttributes> = yield select(selectCatalogAttributes);
+    const catalogDisplayForms = flatMap(fromCatalog, (item) => [
+        ...item.displayForms,
+        ...item.geoPinDisplayForms,
+    ]);
+
+    // for any ref not in catalog, load it from server (probably something from non-production dataset)
+    const refsMissing = refs.filter(
+        (ref) =>
+            !catalogDisplayForms.some((displayForm) => refMatchesMdObject(ref, displayForm, "displayForm")),
+    );
+
+    const dataForMissingRefs: PromiseFnReturnType<typeof loadDisplayFormsMetadata> = yield call(
+        loadDisplayFormsMetadata,
+        ctx,
+        refsMissing,
+    );
+
+    const allDisplayForms = [...catalogDisplayForms, ...dataForMissingRefs];
+
+    return refs.map((ref): IAttributeDisplayFormMetadataObject => {
+        const match = allDisplayForms.find((displayForm) =>
+            refMatchesMdObject(ref, displayForm, "displayForm"),
+        );
+        // if this bombs the logic above is broken
+        invariant(match);
+
+        return match;
+    });
 }
 
 interface IFilterDisplayFormPair {
@@ -66,14 +109,13 @@ interface IFilterDateDatasetPair {
     dateDataset: ICatalogDateDataset | undefined;
 }
 
-// TODO this could try to use the catalog for most of the items to speed things up
 function* loadDisplayFormsForNonDateFilters(
     ctx: DashboardContext,
     filters: Exclude<IFilter, IDateFilter>[],
 ): SagaIterator<IFilterDisplayFormPair[]> {
     const refs = filters.map(filterObjRef);
 
-    const mdObjects = yield call(loadDisplayFormsMetadata, ctx, compact(refs));
+    const mdObjects = yield call(getOrLoadDisplayFormsMetadata, ctx, compact(refs));
 
     let mdObjectPointer = 0;
     let filterPointer = 0;
