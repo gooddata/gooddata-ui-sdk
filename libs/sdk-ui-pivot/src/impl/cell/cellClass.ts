@@ -26,12 +26,6 @@ export function cellClassFactory(
         const isEmptyCell = !cellClassParams.value;
         // hide empty sticky cells
         const isTopPinned = cellClassParams.node.rowPinned === "top";
-        const isHiddenTopPinnedCell =
-            isTopPinned &&
-            cellClassParams.colDef.colId &&
-            (!cellClassParams.data.stickyHeaderItemMap ||
-                (cellClassParams.data.stickyHeaderItemMap &&
-                    !cellClassParams.data.stickyHeaderItemMap[cellClassParams.colDef.colId]));
 
         if (isEmpty(row)) {
             // ag-grid calls getCellClass before the data is available & rows are created - there will be no
@@ -41,7 +35,7 @@ export function cellClassFactory(
             // ag-grid may call this with either data undefined or data being empty object
 
             // empty row data are also possible for pinned row, when no cell should be visible
-            return cx(classList, isHiddenTopPinnedCell ? "gd-hidden-sticky-column" : null);
+            return cx(classList, isTopPinned && isEmptyCell ? "gd-hidden-sticky-column" : null);
         }
 
         const dv = table.getDrillDataContext();
@@ -76,7 +70,7 @@ export function cellClassFactory(
             subtotalStyle ? `gd-table-row-subtotal gd-table-row-subtotal-${subtotalStyle}` : null,
             hiddenCell ? "gd-cell-hide s-gd-cell-hide" : null,
             rowSeparator ? "gd-table-row-separator s-gd-table-row-separator" : null,
-            isHiddenTopPinnedCell ? "gd-hidden-sticky-column" : null,
+            isTopPinned && isEmptyCell ? "gd-hidden-sticky-column" : null,
         );
     };
 }
