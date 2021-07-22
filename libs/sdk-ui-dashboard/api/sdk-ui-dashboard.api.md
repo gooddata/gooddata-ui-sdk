@@ -2148,7 +2148,7 @@ export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
 }
 
 // @internal (undocumented)
-export type QueryProcessingStatus = "running" | "success" | "error";
+export type QueryProcessingStatus = "running" | "success" | "error" | "rejected";
 
 // @alpha
 export function queryWidgetFilters(widgetRef: ObjRef, widgetFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;
@@ -2993,15 +2993,17 @@ export const useDashboardQuery: <TQuery extends DashboardQueries, TArgs extends 
 } | undefined, onBeforeRun?: ((command: TQuery) => void) | undefined) => (...args: TArgs) => void;
 
 // @internal (undocumented)
-export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryCreatorArgs extends any[], TResult>({ queryCreator, onSuccess, onError, onBeforeRun, }: {
+export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryCreatorArgs extends any[], TResult>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
     onSuccess?: ((event: DashboardQueryCompleted<TQuery, TResult>) => void) | undefined;
-    onError?: ((event: DashboardQueryFailed | DashboardQueryRejected) => void) | undefined;
+    onError?: ((event: DashboardQueryFailed) => void) | undefined;
+    onRejected?: ((event: DashboardQueryRejected) => void) | undefined;
     onBeforeRun?: ((query: TQuery) => void) | undefined;
 }) => {
     run: (...args: TQueryCreatorArgs) => void;
-    status?: "error" | "running" | "success" | undefined;
+    status?: "error" | "running" | "success" | "rejected" | undefined;
     result?: TResult | undefined;
+    error?: GoodDataSdkError | undefined;
 };
 
 // @alpha (undocumented)

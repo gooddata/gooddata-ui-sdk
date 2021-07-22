@@ -80,6 +80,7 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
         run: runFiltersQuery,
         result: filtersForInsight,
         status: filtersStatus,
+        error: filtersError,
     } = useDashboardQueryProcessing({
         queryCreator: queryWidgetFilters,
     });
@@ -160,7 +161,7 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
         };
     }, [insight]);
 
-    const error = /*insightWithAddedFilters.error ?? */ visualizationError;
+    const error = filtersError ?? visualizationError;
 
     return (
         <div style={insightStyle}>
