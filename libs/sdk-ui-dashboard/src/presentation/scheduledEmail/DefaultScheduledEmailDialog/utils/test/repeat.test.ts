@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 
 import { generateRepeatString, setDailyRepeat, setMonthlyRepeat, setWeeklyRepeat } from "../repeat";
@@ -110,6 +110,25 @@ describe("RepeatGenerator", () => {
                 ).toBe(expectedRepeatString);
             },
         );
+    });
+
+    describe("getDay", () => {
+        it("should convert sunday correctly", () => {
+            const monthZeroBased = 7;
+            const monthOneBased = monthZeroBased + 1;
+
+            const sunday = new Date(2021, monthZeroBased, 22, 10, 30, 0, 0);
+            const sundayDate: IScheduleEmailRepeatDate = {
+                day: getDay(sunday),
+                month: getMonth(sunday),
+                year: getYear(sunday),
+            };
+            expect(sundayDate).toEqual({
+                day: 7,
+                month: monthOneBased,
+                year: 2021,
+            });
+        });
     });
 
     describe("setDailyRepeat", () => {

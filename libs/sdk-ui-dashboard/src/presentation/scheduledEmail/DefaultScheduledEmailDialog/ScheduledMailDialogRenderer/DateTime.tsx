@@ -38,6 +38,7 @@ export class DateTime extends React.PureComponent<IDateTimeProps> {
                     <Timepicker
                         className="gd-schedule-email-dialog-datetime-time"
                         maxVisibleItemsCount={MAX_VISIBLE_ITEMS_COUNT}
+                        skipNormalizeTime
                         time={date}
                         onChange={this.timeChange}
                         overlayPositionType="sameAsTarget"
