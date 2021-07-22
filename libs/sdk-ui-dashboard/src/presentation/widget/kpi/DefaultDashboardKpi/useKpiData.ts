@@ -1,12 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
-import {
-    FilterContextItem,
-    IAnalyticalBackend,
-    IFilterContext,
-    ITempFilterContext,
-    IKpiWidget,
-    IFilterContextDefinition,
-} from "@gooddata/sdk-backend-spi";
+import { useEffect } from "react";
+import { FilterContextItem, IAnalyticalBackend, IKpiWidget } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
     IPoPMeasureDefinition,
@@ -29,15 +23,13 @@ import {
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
 
-import {
-    filterContextItemsToFiltersForWidget,
-    filterContextToFiltersForWidget,
-} from "../../../../converters";
+import { filterContextItemsToFiltersForWidget } from "../../../../converters";
+import { queryWidgetFilters, useDashboardQueryProcessing } from "../../../../model";
 import { IDashboardFilter } from "../../../../types";
 
 interface IUseKpiDataConfig {
     kpiWidget?: IKpiWidget;
-    filterContext?: IFilterContextDefinition | IFilterContext | ITempFilterContext;
+    dashboardFilters: FilterContextItem[];
     filters?: FilterContextItem[];
     backend?: IAnalyticalBackend;
     workspace?: string;
@@ -57,74 +49,82 @@ interface IUseKpiDataResult {
 export function useKpiData({
     kpiWidget,
     filters,
-    filterContext,
+    dashboardFilters,
     backend,
     workspace,
 }: IUseKpiDataConfig): UseCancelablePromiseState<IUseKpiDataResult, GoodDataSdkError> {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
 
-    const promise = kpiWidget
-        ? async (): Promise<IUseKpiDataResult> => {
-              invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
+    const { run: runFiltersQuery, result } = useDashboardQueryProcessing({
+        queryCreator: queryWidgetFilters,
+    });
 
-              const allFilters = filters
-                  ? filterContextItemsToFiltersForWidget(filters, kpiWidget)
-                  : filterContextToFiltersForWidget(filterContext, kpiWidget);
+    const effectiveFilters = result as IDashboardFilter[];
 
-              const effectiveFilters = (await effectiveBackend
-                  .workspace(effectiveWorkspace)
-                  .dashboards()
-                  .getResolvedFiltersForWidget(kpiWidget, allFilters)) as IDashboardFilter[]; // all the inputs are IDashboardFilter, so the result must be too
+    useEffect(() => {
+        if (kpiWidget) {
+            // TODO how to prevent reloads in case ignored filter changes?
+            runFiltersQuery(kpiWidget, filters && filterContextItemsToFiltersForWidget(filters, kpiWidget));
+        }
+    }, [kpiWidget, dashboardFilters, filters]);
 
-              const primaryMeasure = newMeasure(kpiWidget.kpi.metric);
+    const promise =
+        kpiWidget && dashboardFilters && effectiveFilters
+            ? async (): Promise<IUseKpiDataResult> => {
+                  invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
-              const comparison = kpiWidget.kpi.comparisonType;
+                  const allFilters = filterContextItemsToFiltersForWidget(dashboardFilters, kpiWidget);
 
-              const isAllTime =
-                  !effectiveFilters ||
-                  !effectiveFilters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
+                  const primaryMeasure = newMeasure(kpiWidget.kpi.metric);
 
-              if (comparison === "none" || isAllTime) {
-                  return { primaryMeasure, effectiveFilters, allFilters };
+                  const comparison = kpiWidget.kpi.comparisonType;
+
+                  const isAllTime =
+                      !effectiveFilters ||
+                      !effectiveFilters.some(
+                          (filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter),
+                      );
+
+                  if (comparison === "none" || isAllTime) {
+                      return { primaryMeasure, effectiveFilters, allFilters };
+                  }
+
+                  if (comparison === "previousPeriod") {
+                      invariant(
+                          kpiWidget.dateDataSet,
+                          "Inconsistent KPI in useKpiData, it has comparison but not dateDataset",
+                      );
+                      const secondaryMeasure = newPreviousPeriodMeasure(primaryMeasure, [
+                          { dataSet: kpiWidget.dateDataSet, periodsAgo: 1 },
+                      ]);
+
+                      return { primaryMeasure, secondaryMeasure, effectiveFilters, allFilters };
+                  }
+
+                  if (comparison === "lastYear") {
+                      invariant(
+                          kpiWidget.dateDataSet,
+                          "Inconsistent KPI in useKpiData, it has comparison but not dateDataset",
+                      );
+                      const secondaryMeasure = await getLastYearComparisonMeasure(
+                          effectiveBackend,
+                          effectiveWorkspace,
+                          primaryMeasure,
+                          kpiWidget.dateDataSet,
+                      );
+
+                      return { primaryMeasure, secondaryMeasure, effectiveFilters, allFilters };
+                  }
+
+                  invariant(false, `Unknown comparison ${comparison}`);
               }
-
-              if (comparison === "previousPeriod") {
-                  invariant(
-                      kpiWidget.dateDataSet,
-                      "Inconsistent KPI in useKpiData, it has comparison but not dateDataset",
-                  );
-                  const secondaryMeasure = newPreviousPeriodMeasure(primaryMeasure, [
-                      { dataSet: kpiWidget.dateDataSet, periodsAgo: 1 },
-                  ]);
-
-                  return { primaryMeasure, secondaryMeasure, effectiveFilters, allFilters };
-              }
-
-              if (comparison === "lastYear") {
-                  invariant(
-                      kpiWidget.dateDataSet,
-                      "Inconsistent KPI in useKpiData, it has comparison but not dateDataset",
-                  );
-                  const secondaryMeasure = await getLastYearComparisonMeasure(
-                      effectiveBackend,
-                      effectiveWorkspace,
-                      primaryMeasure,
-                      kpiWidget.dateDataSet,
-                  );
-
-                  return { primaryMeasure, secondaryMeasure, effectiveFilters, allFilters };
-              }
-
-              invariant(false, `Unknown comparison ${comparison}`);
-          }
-        : null;
+            : null;
 
     return useCancelablePromise({ promise }, [
         effectiveBackend,
         effectiveWorkspace,
-        filters,
-        filterContext,
+        effectiveFilters,
         kpiWidget,
     ]);
 }
