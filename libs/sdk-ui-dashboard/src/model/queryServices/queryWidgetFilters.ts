@@ -25,7 +25,7 @@ import {
     objRefToString,
     uriRef,
 } from "@gooddata/sdk-model";
-import { QueryInsightWidgetFilters } from "../queries/widgets";
+import { QueryWidgetFilters } from "../queries/widgets";
 import { selectWidgetByRef } from "../state/layout/layoutSelectors";
 import { selectInsightByRef } from "../state/insights/insightsSelectors";
 import { invalidQueryArguments } from "../events/general";
@@ -47,10 +47,7 @@ import last from "lodash/last";
 import partition from "lodash/partition";
 import { selectCatalogDateDatasets } from "../state/catalog/catalogSelectors";
 
-export const QueryInsightWidgetFiltersService = createQueryService(
-    "GDC.DASH/QUERY.INSIGHT_WIDGET.FILTERS",
-    queryService,
-);
+export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
 function loadDisplayFormsMetadata(
     ctx: DashboardContext,
@@ -365,7 +362,7 @@ function* queryForKpiWidget(ctx: DashboardContext, widget: IKpiWidget): SagaIter
     return [...dateFilters, ...nonDateFilters];
 }
 
-function* queryService(ctx: DashboardContext, query: QueryInsightWidgetFilters): SagaIterator<IFilter[]> {
+function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIterator<IFilter[]> {
     const {
         payload: { widgetRef },
         correlationId,

@@ -24,7 +24,7 @@ import {
     selectIsExport,
     useDashboardAsyncRender,
     useDashboardQueryProcessing,
-    queryInsightWidgetFilters,
+    queryWidgetFilters,
     selectFilterContextFilters,
 } from "../../../../model";
 
@@ -75,7 +75,7 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
         result: insightFilters,
         status: filtersStatus,
     } = useDashboardQueryProcessing({
-        queryCreator: queryInsightWidgetFilters,
+        queryCreator: queryWidgetFilters,
     });
 
     useEffect(() => {

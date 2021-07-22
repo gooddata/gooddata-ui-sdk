@@ -1188,7 +1188,7 @@ export interface DashboardQueryStarted extends IDashboardEvent {
 }
 
 // @alpha (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.INSIGHT_WIDGET.FILTERS";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.WIDGET.FILTERS";
 
 // @alpha
 export interface DashboardRenamed extends IDashboardEvent {
@@ -2143,14 +2143,14 @@ export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
         readonly widgetRef: ObjRef;
     };
     // (undocumented)
-    readonly type: "GDC.DASH/QUERY.INSIGHT_WIDGET.FILTERS";
+    readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
 }
-
-// @alpha
-export function queryInsightWidgetFilters(widgetRef: ObjRef, correlationId?: string): QueryInsightWidgetFilters;
 
 // @internal (undocumented)
 export type QueryProcessingStatus = "running" | "success" | "error";
+
+// @alpha
+export function queryWidgetFilters(widgetRef: ObjRef, correlationId?: string): QueryInsightWidgetFilters;
 
 // @alpha (undocumented)
 export interface RefreshInsightWidget extends IDashboardCommand {
