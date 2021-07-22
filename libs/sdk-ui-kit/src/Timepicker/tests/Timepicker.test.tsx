@@ -58,12 +58,31 @@ describe("TimePicker", () => {
         });
 
         describe("props", () => {
-            it("should process time property", () => {
-                const component = mountComponent();
+            it.each([
+                [9, 15, false, "09:30 AM"],
+                [9, 30, false, "10:00 AM"],
+                [14, 29, false, "02:30 PM"],
+                [9, 15, true, "09:15 AM"],
+                [9, 30, true, "09:30 AM"],
+                [17, 0, true, "05:00 PM"],
+            ])(
+                "should processed time property (%s, %s) with skipNormalizeTime=%s be equal to %s",
+                (hours: number, mins: number, skipNormalizeTime: boolean, expected: string) => {
+                    const alignedTime = new Date();
+                    alignedTime.setHours(hours);
+                    alignedTime.setMinutes(mins);
+                    alignedTime.setSeconds(0);
+                    alignedTime.setMilliseconds(0);
 
-                const currentTime = getTimePickerValue(component);
-                expect(currentTime).toBe("09:30 AM");
-            });
+                    const component = mountComponent({
+                        time: alignedTime,
+                        skipNormalizeTime,
+                    });
+
+                    const currentTime = getTimePickerValue(component);
+                    expect(currentTime).toBe(expected);
+                },
+            );
 
             it("should pass overlayPositionType and overlayZIndex to Dropdown", () => {
                 const overlayPositionType = "sameAsTarget";

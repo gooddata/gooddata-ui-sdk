@@ -2434,6 +2434,8 @@ export interface ITimepickerOwnProps {
     // (undocumented)
     overlayZIndex?: number;
     // (undocumented)
+    skipNormalizeTime?: boolean;
+    // (undocumented)
     time: Date;
 }
 

@@ -121,6 +121,7 @@ export type IScheduledMailDialogRendererProps = IScheduledMailDialogRendererOwnP
 type IScheduledMailDialogRendererState = {
     alignment: string;
     startDate: Date;
+    startTime: IScheduleEmailRepeatTime;
     isValidScheduleEmailData: boolean;
     selectedRecipients: IScheduleEmailRecipient[];
 };
@@ -148,14 +149,19 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         super(props);
 
         const now = new Date();
+        const normalizedTime = normalizeTime(now);
         this.state = {
             alignment: "cc cc",
             startDate: now,
+            startTime: {
+                hour: normalizedTime.getHours(),
+                minute: normalizedTime.getMinutes(),
+                second: 0,
+            },
             selectedRecipients: [userToRecipient(this.props.currentUser)],
             isValidScheduleEmailData: true,
         };
 
-        const normalizedTime = normalizeTime(now);
         this.repeatData = {
             date: {
                 day: getDate(now),
@@ -246,10 +252,12 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
     private renderDateTime = (): React.ReactNode => {
         const { dateFormat, intl, locale } = this.props;
-        const { startDate } = this.state;
+
+        const { date, time } = this.repeatData;
+        const sendDate = new Date(date.year, date.month - 1, date.day, time.hour, time.minute);
         return (
             <DateTime
-                date={startDate}
+                date={sendDate}
                 dateFormat={dateFormat}
                 label={intl.formatMessage({ id: "dialogs.schedule.email.time.label" })}
                 locale={locale}
@@ -351,6 +359,9 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
     private onTimeChange = (time: IScheduleEmailRepeatTime): void => {
         this.repeatData.time = time;
+        this.setState({
+            startTime: time,
+        });
     };
 
     private onRecipientsChange = (selectedRecipients: IScheduleEmailRecipient[]): void => {

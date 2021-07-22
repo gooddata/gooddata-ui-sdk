@@ -30,6 +30,7 @@ export interface ITimepickerOwnProps {
     overlayPositionType?: OverlayPositionType;
     overlayZIndex?: number;
     locale?: string;
+    skipNormalizeTime?: boolean;
 }
 
 export type TimePickerProps = ITimepickerOwnProps & WrappedComponentProps;
@@ -48,6 +49,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
         time: new Date(),
         onChange: noop,
         overlayZIndex: 0,
+        skipNormalizeTime: false,
     };
 
     constructor(props: TimePickerProps) {
@@ -55,16 +57,18 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
 
         this.updateLocaleForMoment();
 
+        const time = props.time || new Date();
         this.state = {
             dropdownWidth: DEFAULT_WIDTH,
-            selectedTime: normalizeTime(props.time || new Date()),
+            selectedTime: props.skipNormalizeTime ? time : normalizeTime(time),
         };
     }
 
     public UNSAFE_componentWillReceiveProps(newProps: TimePickerProps): void {
         if (newProps.time !== this.props.time) {
+            const updatedTime = newProps.time || new Date();
             this.setState({
-                selectedTime: normalizeTime(newProps.time || new Date()),
+                selectedTime: this.props.skipNormalizeTime ? updatedTime : normalizeTime(updatedTime),
             });
         }
     }
