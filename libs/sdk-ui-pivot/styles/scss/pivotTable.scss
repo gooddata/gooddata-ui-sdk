@@ -267,7 +267,6 @@ $subtotal-odd-background-color: var(
                 .ag-cell {
                     background-color: $custom-background-color;
                     border-top-color: $custom-background-color;
-                    pointer-events: auto;
 
                     // stylelint-disable-next-line max-nesting-depth
                     &.gd-hidden-sticky-column {
@@ -275,7 +274,6 @@ $subtotal-odd-background-color: var(
                         border-top-color: transparent;
                         // stylelint-disable-next-line declaration-no-important
                         background-color: transparent !important; // TODO: remove !important after IE11 deprecation
-                        pointer-events: none;
                     }
 
                     // stylelint-disable-next-line max-nesting-depth
@@ -293,8 +291,7 @@ $subtotal-odd-background-color: var(
             border-top: none;
         }
 
-        .gd-cell-drillable:not(.gd-cell-hide),
-        .gd-cell-drillable.gd-cell-show-hidden {
+        .gd-cell-drillable {
             font-weight: bold;
             cursor: pointer;
 
@@ -303,11 +300,10 @@ $subtotal-odd-background-color: var(
             }
         }
 
-        .gd-cell-hide:not(.gd-cell-show-hidden) {
+        .gd-cell-hide {
             color: transparent;
             border-top: 1px solid transparent;
             background-color: $custom-background-color;
-            pointer-events: none;
         }
 
         .gd-cell-show-hidden {
