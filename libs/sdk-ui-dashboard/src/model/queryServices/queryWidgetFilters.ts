@@ -343,6 +343,14 @@ function resolveDateFilters(allDateFilterDateDatasetPairs: IFilterDateDatasetPai
         .filter((item) => !isAllTimeDateFilter(item));
 }
 
+function* getWidgetAwareDashboardFilters(widget: IWidget): SagaIterator<IFilter[]> {
+    // convert all the filter context items to "normal" filters in context of given widget
+    const dashboardFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
+        selectFilterContextFilters,
+    );
+    return filterContextItemsToFiltersForWidget(dashboardFilters, widget);
+}
+
 function* queryForInsightWidget(
     ctx: DashboardContext,
     widget: IInsightWidget,
@@ -361,11 +369,10 @@ function* queryForInsightWidget(
         );
     }
 
-    // convert all the filter context items to "normal" filters
-    const dashboardFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
-        selectFilterContextFilters,
+    const widgetAwareDashboardFilters: SagaReturnType<typeof getWidgetAwareDashboardFilters> = yield call(
+        getWidgetAwareDashboardFilters,
+        widget,
     );
-    const widgetAwareDashboardFilters = filterContextItemsToFiltersForWidget(dashboardFilters, widget);
 
     // resolve date filters and other filters separately as the logic there is quite different
     const [insightDateFilters, insightNonDateFilters] = partition(
@@ -385,14 +392,19 @@ function* queryForInsightWidget(
     return [...dateFilters, ...nonDateFilters];
 }
 
-function* queryForKpiWidget(ctx: DashboardContext, widget: IKpiWidget): SagaIterator<IFilter[]> {
-    // convert all the filter context items to "normal" filters
-    const dashboardFilters = yield select(selectFilterContextFilters);
-    const widgetAwareDashboardFilters = filterContextItemsToFiltersForWidget(dashboardFilters, widget);
+function* queryForKpiWidget(
+    ctx: DashboardContext,
+    widget: IKpiWidget,
+    widgetFilterOverrides: IFilter[] | undefined,
+): SagaIterator<IFilter[]> {
+    const widgetAwareDashboardFilters: SagaReturnType<typeof getWidgetAwareDashboardFilters> = yield call(
+        getWidgetAwareDashboardFilters,
+        widget,
+    );
 
     // resolve date filters and other filters separately as the logic there is quite different
     const [dashboardDateFilters, dashboardNonDateFilters] = partition(
-        widgetAwareDashboardFilters,
+        widgetFilterOverrides ?? widgetAwareDashboardFilters,
         isDateFilter,
     );
 
@@ -423,6 +435,6 @@ function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIt
     if (isInsightWidget(widget)) {
         return yield call(queryForInsightWidget, ctx, widget, widgetFilterOverrides, correlationId);
     } else {
-        return yield call(queryForKpiWidget, ctx, widget);
+        return yield call(queryForKpiWidget, ctx, widget, widgetFilterOverrides);
     }
 }
