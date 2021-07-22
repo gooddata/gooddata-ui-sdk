@@ -2141,6 +2141,7 @@ export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
     // (undocumented)
     readonly payload: {
         readonly widgetRef: ObjRef;
+        readonly widgetFilterOverrides: IFilter[] | undefined;
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
@@ -2150,7 +2151,7 @@ export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
 export type QueryProcessingStatus = "running" | "success" | "error";
 
 // @alpha
-export function queryWidgetFilters(widgetRef: ObjRef, correlationId?: string): QueryInsightWidgetFilters;
+export function queryWidgetFilters(widgetRef: ObjRef, widgetFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;
 
 // @alpha (undocumented)
 export interface RefreshInsightWidget extends IDashboardCommand {

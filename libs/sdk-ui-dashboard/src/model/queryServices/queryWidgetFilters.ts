@@ -306,6 +306,7 @@ function resolveDateFilters(allDateFilterDateDatasetPairs: IFilterDateDatasetPai
 function* queryForInsightWidget(
     ctx: DashboardContext,
     widget: IInsightWidget,
+    widgetFilterOverrides: IFilter[] | undefined,
     correlationId: string | undefined,
 ): SagaIterator<IFilter[]> {
     const insightRef = widget.insight;
@@ -327,7 +328,10 @@ function* queryForInsightWidget(
     const widgetAwareDashboardFilters = filterContextItemsToFiltersForWidget(dashboardFilters, widget);
 
     // resolve date filters and other filters separately as the logic there is quite different
-    const [insightDateFilters, insightNonDateFilters] = partition(insightFilters(insight), isDateFilter);
+    const [insightDateFilters, insightNonDateFilters] = partition(
+        widgetFilterOverrides ?? insightFilters(insight), // use the widgetFilterOverrides if specified instead of insight filters
+        isDateFilter,
+    );
     const [dashboardDateFilters, dashboardNonDateFilters] = partition(
         widgetAwareDashboardFilters,
         isDateFilter,
@@ -343,9 +347,7 @@ function* queryForInsightWidget(
 
 function* queryForKpiWidget(ctx: DashboardContext, widget: IKpiWidget): SagaIterator<IFilter[]> {
     // convert all the filter context items to "normal" filters
-    const dashboardFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
-        selectFilterContextFilters,
-    );
+    const dashboardFilters = yield select(selectFilterContextFilters);
     const widgetAwareDashboardFilters = filterContextItemsToFiltersForWidget(dashboardFilters, widget);
 
     // resolve date filters and other filters separately as the logic there is quite different
@@ -364,7 +366,7 @@ function* queryForKpiWidget(ctx: DashboardContext, widget: IKpiWidget): SagaIter
 
 function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIterator<IFilter[]> {
     const {
-        payload: { widgetRef },
+        payload: { widgetRef, widgetFilterOverrides },
         correlationId,
     } = query;
     const widgetSelector = selectWidgetByRef(widgetRef);
@@ -379,7 +381,7 @@ function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIt
     }
 
     if (isInsightWidget(widget)) {
-        return yield call(queryForInsightWidget, ctx, widget, correlationId);
+        return yield call(queryForInsightWidget, ctx, widget, widgetFilterOverrides, correlationId);
     } else {
         return yield call(queryForKpiWidget, ctx, widget);
     }

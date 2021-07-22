@@ -1,7 +1,13 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IFilter, insightSetFilters, insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
+import {
+    IFilter,
+    insightFilters,
+    insightSetFilters,
+    insightVisualizationUrl,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IntlWrapper,
@@ -68,11 +74,11 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
     const settings = useDashboardSelector(selectSettings);
     const colorPalette = useDashboardSelector(selectColorPalette);
     const isExport = useDashboardSelector(selectIsExport);
-    const filters = useDashboardSelector(selectFilterContextFilters);
+    const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
 
     const {
         run: runFiltersQuery,
-        result: insightFilters,
+        result: filtersForInsight,
         status: filtersStatus,
     } = useDashboardQueryProcessing({
         queryCreator: queryWidgetFilters,
@@ -80,8 +86,8 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
 
     useEffect(() => {
         // TODO how to prevent reloads in case ignored filter changes?
-        runFiltersQuery(widget);
-    }, [widget, filters]);
+        runFiltersQuery(widget, insight && insightFilters(insight));
+    }, [widget, dashboardFilters, insight]);
 
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | undefined>();
@@ -116,7 +122,7 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
         [onError],
     );
 
-    const insightWithAddedFilters = insightSetFilters(insight, insightFilters as IFilter[]); // TODO how to type this better?
+    const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight as IFilter[]); // TODO how to type this better?
 
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
         insight: insightWithAddedFilters ?? insight,
