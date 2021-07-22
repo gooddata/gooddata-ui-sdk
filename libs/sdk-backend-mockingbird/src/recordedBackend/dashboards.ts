@@ -49,7 +49,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
                 created: dashboard.created,
                 description: dashboard.description,
                 updated: dashboard.updated,
-                tags: dashboard.tags,
+                tags: dashboard.tags ?? [],
             } as IListedDashboard;
         });
 

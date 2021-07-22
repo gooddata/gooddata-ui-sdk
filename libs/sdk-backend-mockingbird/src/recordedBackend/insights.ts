@@ -31,6 +31,7 @@ import {
     insightSetFilters,
     uriRef,
     idRef,
+    insightTags,
 } from "@gooddata/sdk-model";
 import values from "lodash/values";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
@@ -165,6 +166,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
             insight: {
                 ...cloneDeep(obj.insight),
                 ref: this.createRef(obj.insight.uri, obj.insight.identifier),
+                tags: insightTags(obj),
             },
         };
     }

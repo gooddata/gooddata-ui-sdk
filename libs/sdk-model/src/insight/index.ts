@@ -93,7 +93,13 @@ export type IInsightDefinition = {
         title: string;
 
         /**
-         * Insight (optional) tagging system
+         * Insight tags.
+         *
+         * @remarks
+         * This property is optional for backwards compatibility reasons, but for newly created insights,
+         * you can expect this to always be defined (an empty array in case there are no tags).
+         *
+         * Added in 8.6.0
          */
         tags?: string[];
 
