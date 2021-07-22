@@ -1,5 +1,7 @@
+// (C) 2021 GoodData Corporation
+
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-06-21T15:11:23.718Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-07-26T07:38:27.360Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -3293,6 +3295,30 @@ export const Insights = {
      * Insight Title: table with multiple measures
      * Insight ID: aegg7T2lgUh7
      */ TableWithMultipleMeasures: "aegg7T2lgUh7",
+    /**
+     * Insight Title: Insight with own attribute filter
+     * Insight ID: aaA8OrDqeYbN
+     */ InsightWithOwnAttributeFilter: "aaA8OrDqeYbN",
+    /**
+     * Insight Title: Insight with own date filter
+     * Insight ID: abQ8wcaMfKnD
+     */ InsightWithOwnDateFilter: "abQ8wcaMfKnD",
+    /**
+     * Insight Title: Insight with own ranking filter
+     * Insight ID: acY8CSf4bjDP
+     */ InsightWithOwnRankingFilter: "acY8CSf4bjDP",
+    /**
+     * Insight Title: Insight with own measure value filter
+     * Insight ID: aea8whgCavlB
+     */ InsightWithOwnMeasureValueFilter: "aea8whgCavlB",
+    /**
+     * Insight Title: Insight with all measures filtered by date
+     * Insight ID: abD8NTsMizAs
+     */ InsightWithAllMeasuresFilteredByDate: "abD8NTsMizAs",
+    /**
+     * Insight Title: Insight with some measures filtered by date
+     * Insight ID: acN8vxIwh5gI
+     */ InsightWithSomeMeasuresFilteredByDate: "acN8vxIwh5gI",
 };
 export const Dashboards = {
     /**
@@ -3324,4 +3350,16 @@ export const Dashboards = {
      * Dashboard Title: Dashboard With 3 Sections
      * Dashboard ID: aeis6NlXcL7X
      */ DashboardWith3Sections: "aeis6NlXcL7X",
+    /**
+     * Dashboard Title: Drill to same dashboard
+     * Dashboard ID: ac4ahpU6bpzD
+     */ DrillToSameDashboard: "ac4ahpU6bpzD",
+    /**
+     * Dashboard Title: widget filtering tests
+     * Dashboard ID: abr8vSe5exU7
+     */ WidgetFilteringTests: "abr8vSe5exU7",
+    /**
+     * Dashboard Title: widget filtering tests advanced
+     * Dashboard ID: aaQ8QjLVhNOG
+     */ WidgetFilteringTestsAdvanced: "aaQ8QjLVhNOG",
 };

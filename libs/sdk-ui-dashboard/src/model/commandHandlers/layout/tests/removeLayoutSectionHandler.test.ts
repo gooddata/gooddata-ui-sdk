@@ -47,7 +47,7 @@ describe("remove layout section handler", () => {
 
             const layout = selectLayout(Tester.state());
 
-            expect(layout.sections).toEqual([]);
+            expect(layout.sections).toEqual([originalLayout.sections[1]]);
         });
 
         it("should remove the section and stash the items", async () => {
@@ -94,7 +94,7 @@ describe("remove layout section handler", () => {
 
         it("should fail command if the section does not exist", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                removeLayoutSection(1, undefined, TestCorrelation),
+                removeLayoutSection(2, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

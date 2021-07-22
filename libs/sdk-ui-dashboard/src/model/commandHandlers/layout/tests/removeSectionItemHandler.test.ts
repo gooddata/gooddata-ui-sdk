@@ -24,7 +24,7 @@ describe("remove layout section item handler", () => {
 
         it("should fail if bad section index specified", async () => {
             const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                removeSectionItem(1, 0, undefined, TestCorrelation),
+                removeSectionItem(2, 0, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

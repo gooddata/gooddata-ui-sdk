@@ -16,6 +16,12 @@ Array [
 exports[`changeDateFilterSelectionHandler should set the date filter in the state when a date filter is changed 1`] = `
 Object {
   "dateFilter": Object {
+    "dateFilter": Object {
+      "from": "-6",
+      "granularity": "GDC.time.date",
+      "to": "0",
+      "type": "relative",
+    },
     "from": -3,
     "granularity": "GDC.time.month",
     "to": 0,

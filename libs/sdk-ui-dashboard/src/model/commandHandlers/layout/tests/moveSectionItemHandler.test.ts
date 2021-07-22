@@ -22,7 +22,7 @@ describe("move layout section item handler", () => {
 
         it("should fail if bad source section index is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                moveSectionItem(1, 0, -1, -1, TestCorrelation),
+                moveSectionItem(2, 0, -1, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -42,7 +42,7 @@ describe("move layout section item handler", () => {
 
         it("should fail if bad target section index is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                moveSectionItem(0, 0, 1, -1, TestCorrelation),
+                moveSectionItem(0, 0, 2, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

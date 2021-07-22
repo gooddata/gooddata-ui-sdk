@@ -27,7 +27,7 @@ describe("move section command handler", () => {
 
         it("should fail if no move would happen", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                moveLayoutSection(0, -1, TestCorrelation),
+                moveLayoutSection(1, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
