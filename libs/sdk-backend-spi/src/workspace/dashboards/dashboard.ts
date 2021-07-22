@@ -82,7 +82,13 @@ export interface IDashboardBase {
     readonly isLocked?: boolean;
 
     /**
-     * Dashboard (optional) tagging system
+     * Dashboard tags.
+     *
+     * @remarks
+     * This property is optional for backwards compatibility reasons, but for newly created dashboards,
+     * you can expect this to always be defined (an empty array in case there are no tags).
+     *
+     * Since 8.6.0
      */
     readonly tags?: string[];
 }
@@ -189,6 +195,17 @@ export interface IListedDashboard {
      * Updated date
      */
     readonly updated: string;
+
+    /**
+     * Dashboard tags.
+     *
+     * @remarks
+     * This property is optional for backwards compatibility reasons, but for newly created dashboards,
+     * you can expect this to always be defined (an empty array in case there are no tags).
+     *
+     * Since 8.6.0
+     */
+    readonly tags?: string[];
 }
 
 /**

@@ -12,6 +12,7 @@ export const insightFromInsightDefinition = (
     insight: IInsightDefinition,
     id: string,
     uri: string,
+    tags: string[] | undefined,
 ): IInsight => {
     return {
         insight: {
@@ -21,6 +22,7 @@ export const insightFromInsightDefinition = (
             ref: idRef(id, "visualizationObject"),
             // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
             isLocked: isInheritedObject(id),
+            tags,
         },
     };
 };
@@ -37,5 +39,6 @@ export const visualizationObjectsItemToInsight = (
         ),
         visualizationObject.id,
         visualizationObject.links!.self,
+        visualizationObject.attributes!.tags,
     );
 };

@@ -21,6 +21,7 @@ import {
     insightFilters,
     insightSetFilters,
     insightUpdated,
+    insightTags,
 } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
 import sortBy from "lodash/sortBy";
@@ -140,6 +141,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             ),
             visualizationObject.id,
             links!.self,
+            visualizationObject.attributes!.tags,
         );
 
         if (!insight) {
@@ -162,6 +164,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                                 description: insightTitle(insight),
                                 content: convertInsight(insight),
                                 title: insightTitle(insight),
+                                tags: insightTags(insight),
                             },
                         },
                     },
@@ -172,7 +175,12 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             );
         });
         const insightData = createResponse.data;
-        return insightFromInsightDefinition(insight, insightData.data.id, insightData.links!.self);
+        return insightFromInsightDefinition(
+            insight,
+            insightData.data.id,
+            insightData.links!.self,
+            insightData.data.attributes?.tags,
+        );
     };
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
@@ -189,6 +197,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                                 description: insightTitle(insight),
                                 content: convertInsight(insight),
                                 title: insightTitle(insight),
+                                tags: insightTags(insight),
                             },
                         },
                     },

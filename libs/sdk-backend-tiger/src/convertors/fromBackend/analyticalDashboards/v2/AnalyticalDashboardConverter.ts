@@ -83,7 +83,7 @@ export function convertDashboard(
         updated: "",
         // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
         isLocked: isInheritedObject(id),
-        tags: attributes.tags,
+        tags: attributes.tags ?? [],
         filterContext,
         dateFilterConfig,
         layout,

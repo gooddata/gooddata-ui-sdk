@@ -20,6 +20,7 @@ import {
     IInsight,
     insightCreated,
     insightUpdated,
+    insightTags,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import omitBy from "lodash/omitBy";
@@ -110,6 +111,7 @@ export const convertInsight = (insight: IInsight): GdcVisualizationObject.IVisua
             created: insightCreated(insight),
             updated: insightUpdated(insight),
             ...(locked && { locked }),
+            tags: insightTags(insight).join(" "),
         },
     };
 };

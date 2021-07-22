@@ -65,19 +65,16 @@ export type IInsight = IInsightDefinition & {
 
         /**
          * Last update date - YYYY-MM-DD HH:mm:ss
-         *
          */
         created?: string;
 
         /**
          * Last update date - YYYY-MM-DD HH:mm:ss
-         *
          */
         updated?: string;
 
         /**
          * Insight is locked for editing & deleting
-         *
          */
         isLocked?: boolean;
     };
@@ -94,6 +91,17 @@ export type IInsightDefinition = {
          * User-assigned title of this insight
          */
         title: string;
+
+        /**
+         * Insight tags.
+         *
+         * @remarks
+         * This property is optional for backwards compatibility reasons, but for newly created insights,
+         * you can expect this to always be defined (an empty array in case there are no tags).
+         *
+         * Added in 8.6.0
+         */
+        tags?: string[];
 
         /**
          * URL of visualization that should be used to render this insight. This is a link to the location
@@ -454,6 +462,19 @@ export function insightTitle(insight: IInsightDefinition): string {
     invariant(insight, "insight to get title from must be specified");
 
     return insight.insight.title;
+}
+
+/**
+ * Gets the insights tags from the tagging system
+ *
+ * @param insight - insight to get the tags of
+ * @returns the insight tags or aan empty array if none are specified
+ * @public
+ */
+export function insightTags(insight: IInsightDefinition): string[] {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.tags ?? [];
 }
 
 /**
