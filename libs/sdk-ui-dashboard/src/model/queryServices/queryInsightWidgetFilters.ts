@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { DashboardContext } from "../types/commonTypes";
 import { SagaIterator } from "redux-saga";
-import { all, call, select } from "redux-saga/effects";
+import { all, call, SagaReturnType, select } from "redux-saga/effects";
 import { createQueryService } from "../state/_infra/queryService";
 import {
     areObjRefsEqual,
@@ -43,6 +43,7 @@ import compact from "lodash/compact";
 import groupBy from "lodash/groupBy";
 import last from "lodash/last";
 import partition from "lodash/partition";
+import { selectCatalogDateDatasets } from "../state/catalog/catalogSelectors";
 
 export const QueryInsightWidgetFiltersService = createQueryService(
     "GDC.DASH/QUERY.INSIGHT_WIDGET.FILTERS",
@@ -56,16 +57,6 @@ function loadDisplayFormsMetadata(
     return ctx.backend.workspace(ctx.workspace).attributes().getAttributeDisplayForms(refs);
 }
 
-async function loadDateDatasetsMetadata(
-    ctx: DashboardContext,
-    refs: ObjRef[],
-): Promise<(ICatalogDateDataset | undefined)[]> {
-    const catalog = await ctx.backend.workspace(ctx.workspace).catalog().forTypes(["dateDataset"]).load();
-    const datasets = catalog.dateDatasets();
-
-    return refs.map((ref) => datasets.find((dataset) => refMatchesMdObject(ref, dataset.dataSet, "dataSet")));
-}
-
 interface IFilterDisplayFormPair {
     filter: Exclude<IFilter, IDateFilter>;
     displayForm: IAttributeDisplayFormMetadataObject | undefined;
@@ -77,13 +68,13 @@ interface IFilterDateDatasetPair {
 }
 
 // TODO this could try to use the catalog for most of the items to speed things up
-async function loadDisplayFormsForNonDateFilters(
+function* loadDisplayFormsForNonDateFilters(
     ctx: DashboardContext,
     filters: Exclude<IFilter, IDateFilter>[],
-): Promise<IFilterDisplayFormPair[]> {
+): SagaIterator<IFilterDisplayFormPair[]> {
     const refs = filters.map(filterObjRef);
 
-    const mdObjects = await loadDisplayFormsMetadata(ctx, compact(refs));
+    const mdObjects = yield call(loadDisplayFormsMetadata, ctx, compact(refs));
 
     let mdObjectPointer = 0;
     let filterPointer = 0;
@@ -112,40 +103,20 @@ async function loadDisplayFormsForNonDateFilters(
     return result;
 }
 
-// TODO this could try to use the catalog for most of the items to speed things up
-async function loadDateDatasetsForDateFilters(
-    ctx: DashboardContext,
-    filters: IDateFilter[],
-): Promise<IFilterDateDatasetPair[]> {
-    const refs = filters.map(filterObjRef);
+// TODO maybe turn this into a selector?
+function* getDateDatasetsForDateFilters(filters: IDateFilter[]): SagaIterator<IFilterDateDatasetPair[]> {
+    const fromCatalog: ReturnType<typeof selectCatalogDateDatasets> = yield select(selectCatalogDateDatasets);
 
-    const mdObjects = await loadDateDatasetsMetadata(ctx, compact(refs));
+    return filters.map((filter): IFilterDateDatasetPair => {
+        const dateDataset = fromCatalog.find((dateDataset) =>
+            refMatchesMdObject(filterObjRef(filter), dateDataset.dataSet, "dataSet"),
+        );
 
-    let mdObjectPointer = 0;
-    let filterPointer = 0;
-
-    const result: IFilterDateDatasetPair[] = [];
-
-    while (filterPointer < filters.length) {
-        const filter = filters[filterPointer];
-        const hasObjRef = !!filterObjRef(filter);
-
-        if (hasObjRef) {
-            result.push({
-                dateDataset: mdObjects[mdObjectPointer],
-                filter,
-            });
-            mdObjectPointer++;
-        } else {
-            result.push({
-                dateDataset: undefined,
-                filter,
-            });
-        }
-        filterPointer++;
-    }
-
-    return result;
+        return {
+            dateDataset,
+            filter,
+        };
+    });
 }
 
 function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: ObjectType): boolean {
@@ -156,15 +127,16 @@ function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: Objec
     );
 }
 
-async function getResolvedInsightNonDateFilters(
+function* getResolvedInsightNonDateFilters(
     ctx: DashboardContext,
     widget: IWidget,
     dashboardNonDateFilters: Exclude<IFilter, IDateFilter>[],
     insightNonDateFilters: Exclude<IFilter, IDateFilter>[],
-): Promise<Exclude<IFilter, IDateFilter>[]> {
+): SagaIterator<Exclude<IFilter, IDateFilter>[]> {
     const allNonDateFilters = [...insightNonDateFilters, ...dashboardNonDateFilters];
 
-    const allNonDateFilterDisplayFormPairs = await loadDisplayFormsForNonDateFilters(ctx, allNonDateFilters);
+    const allNonDateFilterDisplayFormPairs: SagaReturnType<typeof loadDisplayFormsForNonDateFilters> =
+        yield call(loadDisplayFormsForNonDateFilters, ctx, allNonDateFilters);
 
     const insightFilterDisplayFormPairs = allNonDateFilterDisplayFormPairs.slice(
         0,
@@ -253,19 +225,22 @@ export function isDateFilterIgnoredForInsight(insight: IInsight): boolean {
     return simpleMeasures.length === simpleMeasuresWithDateFilter.length;
 }
 
-async function getResolvedInsightDateFilters(
-    ctx: DashboardContext,
+// TODO maybe turn this into a selector?
+function* getResolvedInsightDateFilters(
     widget: IWidget,
     insight: IInsight,
     dashboardDateFilters: IDateFilter[],
     insightDateFilters: IDateFilter[],
-): Promise<IDateFilter[]> {
+): SagaIterator<IDateFilter[]> {
     if (isDateFilterIgnoredForInsight(insight)) {
         return insightDateFilters;
     }
 
     const allDateFilters = addImplicitAllTimeFilter(widget, [...insightDateFilters, ...dashboardDateFilters]);
-    const allDateFilterDateDatasetPairs = await loadDateDatasetsForDateFilters(ctx, allDateFilters);
+    const allDateFilterDateDatasetPairs: SagaReturnType<typeof getDateDatasetsForDateFilters> = yield call(
+        getDateDatasetsForDateFilters,
+        allDateFilters,
+    );
 
     // go through the filters in reverse order using the first filter for a given dimension encountered
     // and strip useless all time filters at the end
@@ -335,7 +310,7 @@ function* queryService(ctx: DashboardContext, query: QueryInsightWidgetFilters):
     );
 
     const [dateFilters, nonDateFilters] = yield all([
-        call(getResolvedInsightDateFilters, ctx, widget, insight, dashboardDateFilters, insightDateFilters),
+        call(getResolvedInsightDateFilters, widget, insight, dashboardDateFilters, insightDateFilters),
         call(getResolvedInsightNonDateFilters, ctx, widget, dashboardNonDateFilters, insightNonDateFilters),
     ]);
 
