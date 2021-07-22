@@ -36,6 +36,7 @@ export const convertAnalyticalDashboard = (
         description: attributes?.description ?? "",
         created: "",
         updated: "",
+        tags: attributes?.tags,
     };
 };
 

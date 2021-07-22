@@ -189,6 +189,11 @@ export interface IListedDashboard {
      * Updated date
      */
     readonly updated: string;
+
+    /**
+     * Dashboard (optional) tagging system
+     */
+    readonly tags?: string[];
 }
 
 /**

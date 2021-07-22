@@ -902,6 +902,7 @@ export interface IListedDashboard {
     readonly description: string;
     readonly identifier: string;
     readonly ref: ObjRef;
+    readonly tags?: string[];
     readonly title: string;
     readonly updated: string;
     readonly uri: string;

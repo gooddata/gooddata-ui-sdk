@@ -33,6 +33,8 @@ export const convertListedDashboard = (dashboardLink: GdcMetadata.IObjectLink): 
     description: dashboardLink.summary!,
     updated: dashboardLink.updated!,
     created: dashboardLink.created!,
+    // filter takes care of multiple spaces and also the base scenario ("" ~> [])
+    tags: dashboardLink.tags?.split(" ").filter(Boolean),
 });
 
 const convertDateFilterConfigAddedPresets = (
