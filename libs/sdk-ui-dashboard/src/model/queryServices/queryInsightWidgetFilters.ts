@@ -31,6 +31,8 @@ import { selectInsightByRef } from "../state/insights/insightsSelectors";
 import { invalidQueryArguments } from "../events/general";
 import {
     ICatalogDateDataset,
+    IInsightWidget,
+    IKpiWidget,
     IMetadataObject,
     isDashboardAttributeFilterReference,
     isInsightWidget,
@@ -146,16 +148,9 @@ function* getResolvedInsightNonDateFilters(
         insightNonDateFilters.length,
     );
 
-    const dashboardFilterDisplayFormPairsWithIgnoreResolved = dashboardFilterDisplayFormPairs.filter(
-        ({ displayForm }) => {
-            const matches =
-                displayForm &&
-                widget.ignoreDashboardFilters
-                    .filter(isDashboardAttributeFilterReference)
-                    .some((ignored) => refMatchesMdObject(ignored.displayForm, displayForm, "displayForm"));
-
-            return !matches;
-        },
+    const dashboardFilterDisplayFormPairsWithIgnoreResolved = resolveWidgetFilterIgnore(
+        widget,
+        dashboardFilterDisplayFormPairs,
     );
 
     const nonIgnoredFilterPairs = [
@@ -163,10 +158,32 @@ function* getResolvedInsightNonDateFilters(
         ...dashboardFilterDisplayFormPairsWithIgnoreResolved,
     ];
 
+    return getResolvedNonDateFilters(nonIgnoredFilterPairs);
+}
+
+function* getResolvedKpiNonDateFilters(
+    ctx: DashboardContext,
+    widget: IWidget,
+    dashboardNonDateFilters: Exclude<IFilter, IDateFilter>[],
+): SagaIterator<Exclude<IFilter, IDateFilter>[]> {
+    const dashboardNonDateFilterDisplayFormPairs: SagaReturnType<typeof loadDisplayFormsForNonDateFilters> =
+        yield call(loadDisplayFormsForNonDateFilters, ctx, dashboardNonDateFilters);
+
+    const dashboardFilterDisplayFormPairsWithIgnoreResolved = resolveWidgetFilterIgnore(
+        widget,
+        dashboardNonDateFilterDisplayFormPairs,
+    );
+
+    return getResolvedNonDateFilters(dashboardFilterDisplayFormPairsWithIgnoreResolved);
+}
+
+function getResolvedNonDateFilters(
+    nonIgnoredFilterPairs: IFilterDisplayFormPair[],
+): Exclude<IFilter, IDateFilter>[] {
     // resolve attribute filters - simple concat
     const resolvedAttributeFilters = nonIgnoredFilterPairs
-        .filter(isAttributeFilter)
-        .map((item) => item.filter);
+        .map((item) => item.filter)
+        .filter(isAttributeFilter);
 
     // resolve Measure Value Filters - make sure there is at most one per measure
     const measureValueFilterGroups = groupBy(
@@ -182,6 +199,21 @@ function* getResolvedInsightNonDateFilters(
     const resolvedRankingFilters = nonIgnoredFilterPairs.filter(isRankingFilter).map((item) => item.filter);
 
     return [...resolvedAttributeFilters, ...resolvedMeasureValueFilters, ...resolvedRankingFilters];
+}
+
+function resolveWidgetFilterIgnore(
+    widget: IWidget,
+    dashboardNonDateFilterDisplayFormPairs: IFilterDisplayFormPair[],
+): IFilterDisplayFormPair[] {
+    return dashboardNonDateFilterDisplayFormPairs.filter(({ displayForm }) => {
+        const matches =
+            displayForm &&
+            widget.ignoreDashboardFilters
+                .filter(isDashboardAttributeFilterReference)
+                .some((ignored) => refMatchesMdObject(ignored.displayForm, displayForm, "displayForm"));
+
+        return !matches;
+    });
 }
 
 function hasDateFilterForDateDataset(filters: IFilter[], dateDataset: ObjRef): boolean {
@@ -242,6 +274,20 @@ function* getResolvedInsightDateFilters(
         allDateFilters,
     );
 
+    return resolveDateFilters(allDateFilterDateDatasetPairs);
+}
+
+// TODO maybe turn this into a selector?
+function* getResolvedKpiDateFilters(dashboardDateFilters: IDateFilter[]): SagaIterator<IDateFilter[]> {
+    const allDateFilterDateDatasetPairs: SagaReturnType<typeof getDateDatasetsForDateFilters> = yield call(
+        getDateDatasetsForDateFilters,
+        dashboardDateFilters,
+    );
+
+    return resolveDateFilters(allDateFilterDateDatasetPairs);
+}
+
+function resolveDateFilters(allDateFilterDateDatasetPairs: IFilterDateDatasetPair[]): IDateFilter[] {
     // go through the filters in reverse order using the first filter for a given dimension encountered
     // and strip useless all time filters at the end
     return allDateFilterDateDatasetPairs
@@ -260,30 +306,11 @@ function* getResolvedInsightDateFilters(
         .filter((item) => !isAllTimeDateFilter(item));
 }
 
-function* queryService(ctx: DashboardContext, query: QueryInsightWidgetFilters): SagaIterator<IFilter[]> {
-    const {
-        payload: { widgetRef },
-        correlationId,
-    } = query;
-    const widgetSelector = selectWidgetByRef(widgetRef);
-    const widget: ReturnType<typeof widgetSelector> = yield select(widgetSelector);
-
-    if (!widget) {
-        throw invalidQueryArguments(
-            ctx,
-            `Widget with ref ${objRefToString(widgetRef)} does not exist on the dashboard`,
-            correlationId,
-        );
-    }
-
-    if (!isInsightWidget(widget)) {
-        throw invalidQueryArguments(
-            ctx,
-            `Widget with ref: ${objRefToString(widgetRef)} exists but is not an insight widget.`,
-            correlationId,
-        );
-    }
-
+function* queryForInsightWidget(
+    ctx: DashboardContext,
+    widget: IInsightWidget,
+    correlationId: string | undefined,
+): SagaIterator<IFilter[]> {
     const insightRef = widget.insight;
     const insightSelector = selectInsightByRef(insightRef);
     const insight: ReturnType<typeof insightSelector> = yield select(insightSelector);
@@ -315,4 +342,48 @@ function* queryService(ctx: DashboardContext, query: QueryInsightWidgetFilters):
     ]);
 
     return [...dateFilters, ...nonDateFilters];
+}
+
+function* queryForKpiWidget(ctx: DashboardContext, widget: IKpiWidget): SagaIterator<IFilter[]> {
+    // convert all the filter context items to "normal" filters
+    const dashboardFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
+        selectFilterContextFilters,
+    );
+    const widgetAwareDashboardFilters = filterContextItemsToFiltersForWidget(dashboardFilters, widget);
+
+    // resolve date filters and other filters separately as the logic there is quite different
+    const [dashboardDateFilters, dashboardNonDateFilters] = partition(
+        widgetAwareDashboardFilters,
+        isDateFilter,
+    );
+
+    const [dateFilters, nonDateFilters] = yield all([
+        call(getResolvedKpiDateFilters, dashboardDateFilters),
+        call(getResolvedKpiNonDateFilters, ctx, widget, dashboardNonDateFilters),
+    ]);
+
+    return [...dateFilters, ...nonDateFilters];
+}
+
+function* queryService(ctx: DashboardContext, query: QueryInsightWidgetFilters): SagaIterator<IFilter[]> {
+    const {
+        payload: { widgetRef },
+        correlationId,
+    } = query;
+    const widgetSelector = selectWidgetByRef(widgetRef);
+    const widget: ReturnType<typeof widgetSelector> = yield select(widgetSelector);
+
+    if (!widget) {
+        throw invalidQueryArguments(
+            ctx,
+            `Widget with ref ${objRefToString(widgetRef)} does not exist on the dashboard`,
+            correlationId,
+        );
+    }
+
+    if (isInsightWidget(widget)) {
+        return yield call(queryForInsightWidget, ctx, widget, correlationId);
+    } else {
+        return yield call(queryForKpiWidget, ctx, widget);
+    }
 }
