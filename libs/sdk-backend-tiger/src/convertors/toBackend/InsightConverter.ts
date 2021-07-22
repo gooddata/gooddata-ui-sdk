@@ -27,18 +27,17 @@ function removeVisualizationPropertiesSortItems(insight: IInsight): IInsightDefi
 export const convertInsight = (
     insight: IInsightDefinition,
 ): VisualizationObjectModelV2.IVisualizationObject => {
-    const sanitizedInsight = flow(
+    const sanitizedInsight: IInsightDefinition = flow(
         removeIdentifiers,
         removeVisualizationPropertiesSortItems,
     )(insight as IInsight);
 
-    const { title: _, ...insightData } = sanitizedInsight.insight;
-
     return {
-        ...insightData,
         buckets: cloneWithSanitizedIds(sanitizedInsight.insight.buckets),
         filters: cloneWithSanitizedIds(sanitizedInsight.insight.filters),
         sorts: cloneWithSanitizedIds(sanitizedInsight.insight.sorts),
+        properties: sanitizedInsight.insight.properties,
+        visualizationUrl: sanitizedInsight.insight.visualizationUrl,
         version: "2",
     };
 };

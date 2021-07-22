@@ -7,6 +7,7 @@ import { fixInsightLegacyElementUris } from "../../fixLegacyElementUris";
 export function convertVisualizationObject(
     visualizationObject: VisualizationObjectModelV2.IVisualizationObject,
     title: string,
+    tags?: string[],
 ): IInsightDefinition {
     const { version: _, ...data } = visualizationObject;
 
@@ -17,6 +18,7 @@ export function convertVisualizationObject(
             buckets: cloneWithSanitizedIds(visualizationObject.buckets) ?? [],
             filters: cloneWithSanitizedIds(visualizationObject.filters) ?? [],
             sorts: cloneWithSanitizedIds(visualizationObject.sorts) ?? [],
+            tags,
         },
     };
 

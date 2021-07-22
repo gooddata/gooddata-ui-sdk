@@ -331,6 +331,7 @@ export {
     insightBuckets,
     insightSorts,
     insightBucket,
+    insightTags,
     insightTitle,
     insightUri,
     insightIsLocked,

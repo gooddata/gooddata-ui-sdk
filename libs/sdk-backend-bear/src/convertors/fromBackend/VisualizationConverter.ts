@@ -230,6 +230,7 @@ export const convertVisualization = (
             visualizationUrl: visualizationClassUri,
             updated: meta.updated,
             isLocked: meta.locked,
+            tags: meta.tags?.split(" ").filter(Boolean),
         },
     };
 };
