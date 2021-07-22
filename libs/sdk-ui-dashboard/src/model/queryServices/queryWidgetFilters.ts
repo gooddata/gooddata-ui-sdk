@@ -52,6 +52,14 @@ import { PromiseFnReturnType } from "../types/sagas";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
+function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: ObjectType): boolean {
+    return (
+        areObjRefsEqual(ref, mdObject.ref) ||
+        areObjRefsEqual(ref, idRef(mdObject.id, type)) ||
+        areObjRefsEqual(ref, uriRef(mdObject.uri))
+    );
+}
+
 async function loadDisplayFormsMetadata(
     ctx: DashboardContext,
     refs: ObjRef[],
@@ -158,14 +166,6 @@ function* getDateDatasetsForDateFilters(filters: IDateFilter[]): SagaIterator<IF
             filter,
         };
     });
-}
-
-function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: ObjectType): boolean {
-    return (
-        areObjRefsEqual(ref, mdObject.ref) ||
-        areObjRefsEqual(ref, idRef(mdObject.id, type)) ||
-        areObjRefsEqual(ref, uriRef(mdObject.uri))
-    );
 }
 
 function* getResolvedInsightNonDateFilters(
@@ -296,7 +296,6 @@ export function isDateFilterIgnoredForInsight(insight: IInsight): boolean {
     return simpleMeasures.length === simpleMeasuresWithDateFilter.length;
 }
 
-// TODO maybe turn this into a selector?
 function* getResolvedInsightDateFilters(
     widget: IWidget,
     insight: IInsight,
@@ -316,7 +315,6 @@ function* getResolvedInsightDateFilters(
     return resolveDateFilters(allDateFilterDateDatasetPairs);
 }
 
-// TODO maybe turn this into a selector?
 function* getResolvedKpiDateFilters(dashboardDateFilters: IDateFilter[]): SagaIterator<IDateFilter[]> {
     const allDateFilterDateDatasetPairs: SagaReturnType<typeof getDateDatasetsForDateFilters> = yield call(
         getDateDatasetsForDateFilters,
