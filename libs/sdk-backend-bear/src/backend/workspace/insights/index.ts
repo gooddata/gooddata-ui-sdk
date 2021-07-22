@@ -106,6 +106,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
 
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
         const mergedOptions = { ...options, getTotalCount: true };
+        const defaultLimit = 50;
         const {
             items: visualizations,
             paging: { count, offset, totalCount },
@@ -113,6 +114,8 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
             sdk.md.getObjectsByQueryWithPaging<GdcVisualizationObject.IVisualization>(this.workspace, {
                 category: "visualizationObject",
                 ...mergedOptions,
+                // the limit must be specified at all times, otherwise we get 400 (RAIL-3557)
+                limit: mergedOptions.limit ?? defaultLimit,
             }),
         );
 
