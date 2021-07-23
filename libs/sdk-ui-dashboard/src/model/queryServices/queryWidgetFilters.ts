@@ -20,7 +20,6 @@ import {
     isRankingFilter,
     isSimpleMeasure,
     measureFilters,
-    newAllTimeFilter,
     ObjectType,
     ObjRef,
     objRefToString,
@@ -255,26 +254,6 @@ function resolveWidgetFilterIgnore(
     });
 }
 
-function hasDateFilterForDateDataset(filters: IFilter[], dateDataset: ObjRef): boolean {
-    return filters.some((filter) => {
-        if (!isDateFilter(filter)) {
-            return false;
-        }
-
-        return areObjRefsEqual(filterObjRef(filter), dateDataset);
-    });
-}
-
-function addImplicitAllTimeFilter(widget: IWidget, resolvedFilters: IDateFilter[]): IDateFilter[] {
-    // if the widget is connected to a dateDataset and has no date filters for it in the context,
-    // add an implicit All time filter for that dimension - this will cause the InsightView to ignore
-    // any date filters on that dimension - this is how KPI dashboards behave
-    if (widget.dateDataSet && !hasDateFilterForDateDataset(resolvedFilters, widget.dateDataSet)) {
-        return [...resolvedFilters, newAllTimeFilter(widget.dateDataSet)];
-    }
-    return resolvedFilters;
-}
-
 /**
  * Tests whether dashboard's date filter should not be applied on the insight included in the provided widget.
  *
@@ -297,7 +276,6 @@ export function isDateFilterIgnoredForInsight(insight: IInsight): boolean {
 }
 
 function* getResolvedInsightDateFilters(
-    widget: IWidget,
     insight: IInsight,
     dashboardDateFilters: IDateFilter[],
     insightDateFilters: IDateFilter[],
@@ -306,7 +284,7 @@ function* getResolvedInsightDateFilters(
         return insightDateFilters;
     }
 
-    const allDateFilters = addImplicitAllTimeFilter(widget, [...insightDateFilters, ...dashboardDateFilters]);
+    const allDateFilters = [...insightDateFilters, ...dashboardDateFilters];
     const allDateFilterDateDatasetPairs: SagaReturnType<typeof getDateDatasetsForDateFilters> = yield call(
         getDateDatasetsForDateFilters,
         allDateFilters,
@@ -385,7 +363,7 @@ function* queryForInsightWidget(
     );
 
     const [dateFilters, nonDateFilters] = yield all([
-        call(getResolvedInsightDateFilters, widget, insight, dashboardDateFilters, insightDateFilters),
+        call(getResolvedInsightDateFilters, insight, dashboardDateFilters, insightDateFilters),
         call(getResolvedInsightNonDateFilters, ctx, widget, dashboardNonDateFilters, insightNonDateFilters),
     ]);
 
