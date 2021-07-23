@@ -29,7 +29,7 @@ export interface Drill extends IDashboardCommand {
 
 /**
  * Creates the {@link Drill} command.
- * Dispatching this command will result into dispatching {@link DashboardDrillTriggered} event.
+ * Dispatching this command will result into dispatching {@link DashboardDrillResolved} event.
  *
  * This is general dashboard drill command with details about all possible more granular drill interactions that can follow.
  * Reason for this general drill command is that it may happen that multiple drill interactions are possible for one drill event.
@@ -91,7 +91,7 @@ export interface DrillDown extends IDashboardCommand {
 /**
  * Creates the {@link DrillDown} command.
  * Dispatching this command will result into applying drill down definition to the provided insight (result of the drill down application
- * depends on the particular visualization type) and dispatching {@link DashboardDrillDownTriggered} event that will contain it.
+ * depends on the particular visualization type) and dispatching {@link DashboardDrillDownResolved} event that will contain it.
  *
  * In the default dashboard implementation dispatching this command will also result into opening drill dialog with the insight
  * that has this particular drill down definition applied.
@@ -144,7 +144,7 @@ export interface DrillToInsight extends IDashboardCommand {
 /**
  * Creates the {@link DrillToInsight} command.
  * Dispatching this command will result into applying the drill intersection filters to the target insight
- * and dispatching {@link DashboardDrillToInsightTriggered} event that will contain it.
+ * and dispatching {@link DashboardDrillToInsightResolved} event that will contain it.
  *
  * In the default dashboard implementation this command will also result into opening the drill dialog with the target insight
  * that has the drill intersection filters applied.
@@ -194,7 +194,7 @@ export interface DrillToDashboard extends IDashboardCommand {
 /**
  * Creates the {@link DrillToDashboard} command.
  * Dispatching this command will result into getting the drill intersection filters that can be applied to the target dashboard
- * and dispatching {@link DashboardDrillToDashboardTriggered} event that will contain them.
+ * and dispatching {@link DashboardDrillToDashboardResolved} event that will contain them.
  *
  * @alpha
  * @param drillDefinition - drill definition with the target dashboard.
@@ -241,7 +241,7 @@ export interface DrillToCustomUrl extends IDashboardCommand {
 /**
  * Creates the {@link DrillToCustomUrl} command.
  * Dispatching this command will result into resolving the target url
- * and dispatching {@link DashboardDrillToCustomUrlTriggered} event that will contain it.
+ * and dispatching {@link DashboardDrillToCustomUrlResolved} event that will contain it.
  *
  * Custom url can contain various identifier or attribute title placeholders, see:
  * {@link https://help.gooddata.com/pages/viewpage.action?pageId=86794855}
@@ -292,7 +292,7 @@ export interface DrillToAttributeUrl extends IDashboardCommand {
 /**
  * Creates the {@link DrillToAttributeUrl} command.
  * Dispatching this command will result into resolving the target attribute url
- * and dispatching {@link DashboardDrillToAttributeUrlTriggered} event that will contain it.
+ * and dispatching {@link DashboardDrillToAttributeUrlResolved} event that will contain it.
  *
  * For more details, see: {@link https://help.gooddata.com/pages/viewpage.action?pageId=86794855}
  *
@@ -341,7 +341,7 @@ export interface DrillToLegacyDashboard extends IDashboardCommand {
 
 /**
  * Creates the {@link DrillToLegacyDashboard} command.
- * Dispatching this command will result into dispatching {@link DashboardDrillToLegacyDashboardTriggered} event.
+ * Dispatching this command will result into dispatching {@link DashboardDrillToLegacyDashboardResolved} event.
  *
  * Drill to legacy dashboard can be configured for Kpi widgets only.
  *

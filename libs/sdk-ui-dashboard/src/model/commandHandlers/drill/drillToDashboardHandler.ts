@@ -1,10 +1,14 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { select, call } from "redux-saga/effects";
+import { select, call, put } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
 import { internalErrorOccurred } from "../../events/general";
 import { DrillToDashboard } from "../../commands/drill";
-import { DashboardDrillToDashboardTriggered, drillToDashboardTriggered } from "../../events/drill";
+import {
+    DashboardDrillToDashboardResolved,
+    drillToDashboardResolved,
+    drillToDashboardRequested,
+} from "../../events/drill";
 import { selectFilterContext } from "../../state/filterContext/filterContextSelectors";
 import { selectWidgetByRef } from "../../state/layout/layoutSelectors";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
@@ -31,11 +35,13 @@ import flow from "lodash/flow";
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
     cmd: DrillToDashboard,
-): SagaIterator<DashboardDrillToDashboardTriggered> {
+): SagaIterator<DashboardDrillToDashboardResolved> {
     // eslint-disable-next-line no-console
     console.debug("handling drill to dashboard", cmd, "in context", ctx);
 
     try {
+        yield put(drillToDashboardRequested(ctx, cmd.payload.drillDefinition, cmd.payload.drillEvent));
+
         const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
         const widget: IInsightWidget = yield select(selectWidgetByRef(cmd.payload.drillEvent.widgetRef!));
         const widgetFilters = filterContextToFiltersForWidget(filterContext, widget);
@@ -64,7 +70,7 @@ export function* drillToDashboardHandler(
             uniqueFilters,
         );
 
-        return drillToDashboardTriggered(
+        return drillToDashboardResolved(
             ctx,
             resolvedFilters,
             cmd.payload.drillDefinition,

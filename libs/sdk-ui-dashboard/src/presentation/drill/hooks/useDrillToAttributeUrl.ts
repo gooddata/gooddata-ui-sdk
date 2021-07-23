@@ -3,7 +3,7 @@
 import {
     DashboardCommandFailed,
     drillToAttributeUrl,
-    DashboardDrillToAttributeUrlTriggered,
+    DashboardDrillToAttributeUrlResolved,
     useDashboardCommandProcessing,
 } from "../../../model";
 
@@ -11,7 +11,7 @@ import {
  * @internal
  */
 export interface UseDrillToAttributeUrlProps {
-    onSuccess?: (event: DashboardDrillToAttributeUrlTriggered) => void;
+    onSuccess?: (event: DashboardDrillToAttributeUrlResolved) => void;
     onError?: (event: DashboardCommandFailed) => void;
     onBeforeRun?: () => void;
 }
@@ -26,7 +26,7 @@ export const useDrillToAttributeUrl = ({
 }: UseDrillToAttributeUrlProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: drillToAttributeUrl,
-        successEvent: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.TRIGGERED",
+        successEvent: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         onSuccess,
         onError,

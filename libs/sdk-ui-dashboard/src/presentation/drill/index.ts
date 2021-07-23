@@ -8,7 +8,6 @@ export { useDrillToCustomUrl, UseDrillToCustomUrlProps } from "./hooks/useDrillT
 export { useDrillToLegacyDashboard, UseDrillToLegacyDashboardProps } from "./hooks/useDrillToLegacyDashboard";
 export { WithDrillSelectProps, WithDrillSelect } from "./DrillSelect/WithDrillSelect";
 export {
-    DashboardDrillDefinition,
     OnDashboardDrill,
     DrillStep,
     OnDrillDown,

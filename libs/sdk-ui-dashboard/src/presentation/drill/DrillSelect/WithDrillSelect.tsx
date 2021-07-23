@@ -4,7 +4,6 @@ import cx from "classnames";
 import { v4 as uuid } from "uuid";
 import { DrillSelectDropdown } from "./DrillSelectDropdown";
 import {
-    DashboardDrillDefinition,
     OnDashboardDrill,
     OnDrillDown,
     OnDrillToAttributeUrl,
@@ -28,7 +27,7 @@ import { useDrillToInsight } from "../hooks/useDrillToInsight";
 import { useDrillToDashboard } from "../hooks/useDrillToDashboard";
 import { useDrillToAttributeUrl } from "../hooks/useDrillToAttributeUrl";
 import { useDrillToCustomUrl } from "../hooks/useDrillToCustomUrl";
-import { IDashboardDrillEvent, isDrillDownDefinition } from "../../../types";
+import { DashboardDrillDefinition, IDashboardDrillEvent, isDrillDownDefinition } from "../../../types";
 
 /**
  * @internal

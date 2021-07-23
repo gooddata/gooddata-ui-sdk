@@ -1,21 +1,33 @@
 // (C) 2021 GoodData Corporation
+import { SagaIterator } from "redux-saga";
+import { put } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
 import { internalErrorOccurred } from "../../events/general";
 import {
-    DashboardDrillToLegacyDashboardTriggered,
-    drillToLegacyDashboardTriggered,
+    DashboardDrillToLegacyDashboardResolved,
+    drillToLegacyDashboardResolved,
+    drillToLegacyDashboardRequested,
 } from "../../events/drill";
 import { DrillToLegacyDashboard } from "../../commands";
 
-export function drillToLegacyDashboardHandler(
+export function* drillToLegacyDashboardHandler(
     ctx: DashboardContext,
     cmd: DrillToLegacyDashboard,
-): DashboardDrillToLegacyDashboardTriggered {
+): SagaIterator<DashboardDrillToLegacyDashboardResolved> {
     // eslint-disable-next-line no-console
     console.debug("handling drill to legacy dashboard", cmd, "in context", ctx);
 
     try {
-        return drillToLegacyDashboardTriggered(
+        yield put(
+            drillToLegacyDashboardRequested(
+                ctx,
+                cmd.payload.drillDefinition,
+                cmd.payload.drillEvent,
+                cmd.correlationId,
+            ),
+        );
+
+        return drillToLegacyDashboardResolved(
             ctx,
             cmd.payload.drillDefinition,
             cmd.payload.drillEvent,

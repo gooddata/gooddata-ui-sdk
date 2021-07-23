@@ -1,6 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { DashboardDrillDefinition } from "../types";
-import { DashboardDrillContext, IDashboardDrillEvent } from "../../../types";
+import { DashboardDrillDefinition, DashboardDrillContext, IDashboardDrillEvent } from "../../../types";
 
 /**
  * These types are also used as s-classes for testing e.g. .s-drill-to-dashboard

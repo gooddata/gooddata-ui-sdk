@@ -4,7 +4,7 @@ import cx from "classnames";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ITheme } from "@gooddata/sdk-backend-spi";
-import { DashboardDrillDefinition } from "../types";
+import { DashboardDrillDefinition } from "../../../types";
 import { DrillType, DrillSelectItem } from "./types";
 
 const DRILL_ICON_NAME: Record<DrillType, string> = {

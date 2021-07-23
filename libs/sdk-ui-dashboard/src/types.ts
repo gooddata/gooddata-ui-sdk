@@ -23,6 +23,13 @@ export type IDashboardFilter =
     | INegativeAttributeFilter;
 
 /**
+ * Supported dashboard drill definitions.
+ *
+ * @beta
+ */
+export type DashboardDrillDefinition = DrillDefinition | IDrillDownDefinition;
+
+/**
  * A {@link @gooddata/sdk-ui#IDrillEvent} with added information about the drill event specific to the DashboardView context.
  * @beta
  */
@@ -30,7 +37,7 @@ export interface IDashboardDrillEvent extends IDrillEvent {
     /**
      * All the drilling interactions set in KPI dashboards that are relevant to the given drill event (including drill downs).
      */
-    drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
+    drillDefinitions?: DashboardDrillDefinition[];
 
     /**
      * Reference to the widget that triggered the drill event.
