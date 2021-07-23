@@ -40,7 +40,14 @@ export function* drillToDashboardHandler(
     console.debug("handling drill to dashboard", cmd, "in context", ctx);
 
     try {
-        yield put(drillToDashboardRequested(ctx, cmd.payload.drillDefinition, cmd.payload.drillEvent));
+        yield put(
+            drillToDashboardRequested(
+                ctx,
+                cmd.payload.drillDefinition,
+                cmd.payload.drillEvent,
+                cmd.correlationId,
+            ),
+        );
 
         const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
         const widget: IInsightWidget = yield select(selectWidgetByRef(cmd.payload.drillEvent.widgetRef!));
