@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-07-27T08:27:08.909Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-07-27T08:32:58.699Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -4577,6 +4577,10 @@ const dash_abr8vSe5exU7 = {
     obj: require("./metadata/dashboards/abr8vSe5exU7/obj.json"),
     alerts: require("./metadata/dashboards/abr8vSe5exU7/alerts.json"),
 };
+const dash_aaQ8QjLVhNOG = {
+    obj: require("./metadata/dashboards/aaQ8QjLVhNOG/obj.json"),
+    alerts: require("./metadata/dashboards/aaQ8QjLVhNOG/alerts.json"),
+};
 const dash_emptyDashboard = {
     obj: require("./metadata/dashboards/emptyDashboard/obj.json"),
     alerts: require("./metadata/dashboards/emptyDashboard/alerts.json"),
@@ -5756,6 +5760,12 @@ export const Recordings = {
             i_Xirr_e5deb6dfe7ff06cdc5210a56fc84c841,
             i_Xirr_feb8ea5ece361cf1c5681654f085f9a5,
         },
-        dashboards: { dash_aaRaEZRWdRpQ, dash_aeis6NlXcL7X, dash_abr8vSe5exU7, dash_emptyDashboard },
+        dashboards: {
+            dash_aaRaEZRWdRpQ,
+            dash_aeis6NlXcL7X,
+            dash_abr8vSe5exU7,
+            dash_aaQ8QjLVhNOG,
+            dash_emptyDashboard,
+        },
     },
 };
