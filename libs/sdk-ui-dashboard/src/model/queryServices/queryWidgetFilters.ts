@@ -235,7 +235,7 @@ function getResolvedNonDateFilters(
     );
 
     // resolve ranking filters - simple concat
-    const resolvedRankingFilters = nonIgnoredFilterPairs.filter(isRankingFilter).map((item) => item.filter);
+    const resolvedRankingFilters = nonIgnoredFilterPairs.map((item) => item.filter).filter(isRankingFilter);
 
     return [...resolvedAttributeFilters, ...resolvedMeasureValueFilters, ...resolvedRankingFilters];
 }
