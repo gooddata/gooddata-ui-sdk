@@ -4,7 +4,8 @@ import { IAvailableDrillTargets, IAvailableDrillTargetMeasure } from "@gooddata/
 import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { isLocalIdRef, ObjRefInScope } from "@gooddata/sdk-model";
 
-import { DashboardDrillDefinition, IDefinitionValidationData, IDrillConfigItem } from "../../types";
+import { IDefinitionValidationData, IDrillConfigItem } from "../../types";
+import { DashboardDrillDefinition } from "../../../../types";
 
 export abstract class DrillItem<T extends DashboardDrillDefinition> {
     protected data: T;

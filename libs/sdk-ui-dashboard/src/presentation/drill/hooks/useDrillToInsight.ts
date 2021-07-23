@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 
 import {
-    DashboardDrillToInsightTriggered,
+    DashboardDrillToInsightResolved,
     DashboardCommandFailed,
     drillToInsight,
     useDashboardCommandProcessing,
@@ -11,7 +11,7 @@ import {
  * @internal
  */
 export interface UseDrillToInsightProps {
-    onSuccess?: (event: DashboardDrillToInsightTriggered) => void;
+    onSuccess?: (event: DashboardDrillToInsightResolved) => void;
     onError?: (event: DashboardCommandFailed) => void;
     onBeforeRun?: () => void;
 }
@@ -22,7 +22,7 @@ export interface UseDrillToInsightProps {
 export const useDrillToInsight = ({ onSuccess, onError, onBeforeRun }: UseDrillToInsightProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: drillToInsight,
-        successEvent: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.TRIGGERED",
+        successEvent: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         onSuccess,
         onError,

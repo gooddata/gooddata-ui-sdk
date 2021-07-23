@@ -1,20 +1,33 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
 import { internalErrorOccurred } from "../../events/general";
 import { DrillToCustomUrl } from "../../commands/drill";
-import { DashboardDrillToCustomUrlTriggered, drillToCustomUrlTriggered } from "../../events/drill";
+import {
+    DashboardDrillToCustomUrlResolved,
+    drillToCustomUrlResolved,
+    drillToCustomUrlRequested,
+} from "../../events/drill";
 import { resolveDrillToCustomUrl } from "./resolveDrillToCustomUrl";
 
 export function* drillToCustomUrlHandler(
     ctx: DashboardContext,
     cmd: DrillToCustomUrl,
-): SagaIterator<DashboardDrillToCustomUrlTriggered> {
+): SagaIterator<DashboardDrillToCustomUrlResolved> {
     // eslint-disable-next-line no-console
     console.debug("handling drill to custom url", cmd, "in context", ctx);
 
     try {
+        yield put(
+            drillToCustomUrlRequested(
+                ctx,
+                cmd.payload.drillDefinition,
+                cmd.payload.drillEvent,
+                cmd.correlationId,
+            ),
+        );
+
         const resolvedUrl = yield call(
             resolveDrillToCustomUrl,
             cmd.payload.drillDefinition,
@@ -23,7 +36,7 @@ export function* drillToCustomUrlHandler(
             ctx,
         );
 
-        return drillToCustomUrlTriggered(
+        return drillToCustomUrlResolved(
             ctx,
             resolvedUrl,
             cmd.payload.drillDefinition,

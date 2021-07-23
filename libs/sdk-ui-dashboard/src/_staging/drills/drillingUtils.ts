@@ -7,6 +7,8 @@ import {
     isDrillFromAttribute,
     isDrillFromMeasure,
     UnexpectedError,
+    isDrillToLegacyDashboard,
+    isMeasureDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import {
     isLocalIdRef,
@@ -16,9 +18,17 @@ import {
     ObjRefInScope,
     localIdRef,
 } from "@gooddata/sdk-model";
-import { HeaderPredicates, IAvailableDrillTargetAttribute, IHeaderPredicate } from "@gooddata/sdk-ui";
-
-import { IDrillDownDefinition } from "../../types";
+import {
+    HeaderPredicates,
+    IAvailableDrillTargetAttribute,
+    IHeaderPredicate,
+    getMappingHeaderLocalIdentifier,
+    IDrillEvent,
+} from "@gooddata/sdk-ui";
+import first from "lodash/first";
+import last from "lodash/last";
+import { DashboardDrillDefinition, IDrillDownDefinition } from "../../types";
+import { getDrillOriginLocalIdentifier } from "./InsightDrillDefinitionUtils";
 
 interface IImplicitDrillWithPredicates {
     drillDefinition: DrillDefinition | IDrillDownDefinition;
@@ -102,4 +112,55 @@ export function getImplicitDrillsWithPredicates(
     }
 
     return drills;
+}
+
+export function getDrillsBySourceLocalIdentifiers(
+    widgetDrillDefinition: Array<DashboardDrillDefinition>,
+    drillSourceLocalIdentifiers: string[],
+): Array<DashboardDrillDefinition> {
+    return widgetDrillDefinition.filter(
+        (d) =>
+            isDrillToLegacyDashboard(d) ||
+            drillSourceLocalIdentifiers.includes(getDrillOriginLocalIdentifier(d)),
+    );
+}
+
+export function getLocalIdentifiersFromEvent(drillEvent: IDrillEvent): string[] {
+    const drillIntersection =
+        (drillEvent && drillEvent.drillContext && drillEvent.drillContext.intersection) || [];
+    return drillIntersection.map((x) => x.header).map(getMappingHeaderLocalIdentifier);
+}
+
+const getMeasureLocalIdentifier = (drillEvent: IDrillEvent): string =>
+    first(
+        ((drillEvent && drillEvent.drillContext.intersection) || [])
+            .map((intersection) => intersection.header)
+            .filter(isMeasureDescriptor)
+            .map(getMappingHeaderLocalIdentifier),
+    )!;
+
+export function getDrillSourceLocalIdentifierFromEvent(drillEvent: IDrillEvent): string[] {
+    const localIdentifiersFromEvent = getLocalIdentifiersFromEvent(drillEvent);
+
+    if (drillEvent.drillContext.type === "table") {
+        /*
+        For tables, the event is always triggered on the individual column and there is no hierarchy involved.
+        */
+        const measureLocalIdentifier = getMeasureLocalIdentifier(drillEvent);
+
+        return [measureLocalIdentifier ? measureLocalIdentifier : last(localIdentifiersFromEvent)!];
+    }
+
+    return localIdentifiersFromEvent;
+}
+
+export function filterDrillsByDrillEvent(
+    drillDefinitions: DashboardDrillDefinition[],
+    drillEvent: IDrillEvent,
+): DashboardDrillDefinition[] {
+    if (!drillDefinitions || !drillEvent) {
+        return [];
+    }
+    const drillSourceLocalIdentifiers = getDrillSourceLocalIdentifierFromEvent(drillEvent);
+    return getDrillsBySourceLocalIdentifiers(drillDefinitions, drillSourceLocalIdentifiers);
 }

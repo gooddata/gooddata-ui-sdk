@@ -8,7 +8,7 @@ import {
     getDefaultMiddleware,
     Middleware,
 } from "@reduxjs/toolkit";
-import createSagaMiddleware, { Saga, Task } from "redux-saga";
+import createSagaMiddleware, { Saga, Task, SagaIterator } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
 import { v4 as uuidv4 } from "uuid";
 import { filterContextSliceReducer } from "./filterContext";
@@ -36,8 +36,36 @@ import merge from "lodash/merge";
 import keyBy from "lodash/keyBy";
 import { listedDashboardsSliceReducer } from "./listedDashboards";
 import { backendCapabilitiesSliceReducer } from "./backendCapabilities";
-import { SagaIterator } from "redux-saga";
 import { drillTargetsReducer } from "./drillTargets";
+import { DashboardEventType } from "../events";
+
+const nonSerializableEventsAndCommands: DashboardEventType[] = [
+    "GDC.DASH/EVT.COMMAND.FAILED",
+    "GDC.DASH/EVT.QUERY.FAILED",
+    "@@QUERY.ENVELOPE" as any,
+    // Drill commands & events contain non-serializable dataView
+    "GDC.DASH/CMD.DRILL",
+    "GDC.DASH/EVT.DRILL.REQUESTED",
+    "GDC.DASH/EVT.DRILL.RESOLVED",
+    "GDC.DASH/CMD.DRILL.DRILL_DOWN",
+    "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED",
+    "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED",
+    "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT",
+    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED",
+    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED",
+    "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD",
+    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED",
+    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED",
+    "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL",
+    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED",
+    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED",
+    "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL",
+    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED",
+    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED",
+    "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD",
+    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED",
+    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED",
+];
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -172,26 +200,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
              * error instance in them.
              */
             serializableCheck: {
-                ignoredActions: [
-                    "GDC.DASH/EVT.COMMAND.FAILED",
-                    "GDC.DASH/EVT.QUERY.FAILED",
-                    "@@QUERY.ENVELOPE",
-                    // Drill commands & events contain non-serializable dataView
-                    "GDC.DASH/CMD.DRILL",
-                    "GDC.DASH/EVT.DRILL.TRIGGERED",
-                    "GDC.DASH/CMD.DRILL.DRILL_DOWN",
-                    "GDC.DASH/EVT.DRILL.DRILL_DOWN.TRIGGERED",
-                    "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT",
-                    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.TRIGGERED",
-                    "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD",
-                    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.TRIGGERED",
-                    "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL",
-                    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.TRIGGERED",
-                    "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL",
-                    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.TRIGGERED",
-                    "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD",
-                    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.TRIGGERED",
-                ],
+                ignoredActions: nonSerializableEventsAndCommands,
                 ignoredActionPaths: ["ctx"],
             },
         }),

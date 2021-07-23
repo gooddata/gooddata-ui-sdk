@@ -12,9 +12,9 @@ import {
     isDrillToLegacyDashboard,
 } from "@gooddata/sdk-backend-spi";
 import { Overlay } from "@gooddata/sdk-ui-kit";
-import { isDrillDownDefinition } from "../../../types";
+import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
 import { IInsight, insightRef, insightTitle, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { DashboardDrillDefinition, isDrillToUrl } from "../types";
+import { isDrillToUrl } from "../types";
 import { DrillSelectListBody } from "./DrillSelectListBody";
 import { getDrillDownAttributeTitle } from "../utils/drillDownUtils";
 import { DrillSelectContext, DrillType, DrillSelectItem } from "./types";

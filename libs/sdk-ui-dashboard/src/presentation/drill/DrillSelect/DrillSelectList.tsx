@@ -2,8 +2,7 @@
 import React from "react";
 import partition from "lodash/partition";
 import { FormattedHTMLMessage } from "react-intl";
-import { isDrillDownDefinition } from "../../../types";
-import { DashboardDrillDefinition } from "../types";
+import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
 import { DrillSelectListItem } from "./DrillSelectListItem";
 import { DrillSelectItem } from "./types";
 

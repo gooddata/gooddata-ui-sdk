@@ -3,7 +3,6 @@ import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/
 import isEmpty from "lodash/isEmpty";
 import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import {
-    DrillDefinition,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
     IDrillToDashboard,
@@ -13,16 +12,12 @@ import {
     isDrillToCustomUrl,
 } from "@gooddata/sdk-backend-spi";
 import {
+    DashboardDrillDefinition,
     DashboardDrillContext,
     IDashboardDrillEvent,
     IDashboardFilter,
     IDrillDownDefinition,
 } from "../../types";
-
-/**
- * @internal
- */
-export type DashboardDrillDefinition = DrillDefinition | IDrillDownDefinition;
 
 /**
  * @internal

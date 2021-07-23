@@ -1,8 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
 import { isDrillToInsight, isDrillToDashboard } from "@gooddata/sdk-backend-spi";
 
-import { isDrillDownDefinition } from "../../../../types";
-import { DashboardDrillDefinition, isDrillToUrl } from "../../types";
+import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../../types";
+import { isDrillToUrl } from "../../types";
 
 import { DrillToVisualizationItem } from "./DrillToVisualizationItem";
 import { DrillToDashboardItem } from "./DrillToDashboardItem";

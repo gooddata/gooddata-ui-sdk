@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 
 import {
-    DashboardDrillTriggered,
+    DashboardDrillResolved,
     DashboardCommandFailed,
     drill,
     useDashboardCommandProcessing,
@@ -11,7 +11,7 @@ import {
  * @internal
  */
 export interface UseDrillProps {
-    onSuccess?: (event: DashboardDrillTriggered) => void;
+    onSuccess?: (event: DashboardDrillResolved) => void;
     onError?: (event: DashboardCommandFailed) => void;
     onBeforeRun?: () => void;
 }
@@ -22,7 +22,7 @@ export interface UseDrillProps {
 export const useDrill = ({ onSuccess, onError, onBeforeRun }: UseDrillProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: drill,
-        successEvent: "GDC.DASH/EVT.DRILL.TRIGGERED",
+        successEvent: "GDC.DASH/EVT.DRILL.RESOLVED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         onSuccess,
         onError,
