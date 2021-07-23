@@ -1,0 +1,275 @@
+{
+    "dashboard": {
+        "created": "2021-07-23 11:06:59",
+        "description": "",
+        "filterContext": {
+            "description": "",
+            "filters": [
+                {
+                    "dateFilter": {
+                        "from": "2012-01-01",
+                        "granularity": "GDC.time.date",
+                        "to": "2019-01-01",
+                        "type": "absolute"
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": {
+                            "uris": ["/gdc/md/referenceworkspace/obj/1088/elements?id=460490"]
+                        },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "171d1c56852c47438283737c0dea882e",
+                        "negativeSelection": true
+                    }
+                }
+            ],
+            "identifier": "abm8vIf3eXzg",
+            "ref": { "uri": "/gdc/md/referenceworkspace/obj/1393" },
+            "title": "filterContext",
+            "uri": "/gdc/md/referenceworkspace/obj/1393"
+        },
+        "identifier": "abr8vSe5exU7",
+        "isLocked": false,
+        "layout": {
+            "sections": [
+                {
+                    "header": { "title": "No ignored filters" },
+                    "items": [
+                        {
+                            "size": { "xl": { "gridWidth": 6 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "aac8KB01gII9",
+                                "ignoreDashboardFilters": [],
+                                "insight": { "uri": "/gdc/md/referenceworkspace/obj/1281" },
+                                "properties": {},
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1390" },
+                                "title": "my insight",
+                                "type": "insight",
+                                "uri": "/gdc/md/referenceworkspace/obj/1390"
+                            }
+                        },
+                        {
+                            "size": { "xl": { "gridHeight": 16, "gridWidth": 2 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "adB8gyQRdgUn",
+                                "ignoreDashboardFilters": [],
+                                "kpi": {
+                                    "comparisonDirection": "growIsGood",
+                                    "comparisonType": "previousPeriod",
+                                    "metric": { "uri": "/gdc/md/referenceworkspace/obj/1272" }
+                                },
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1388" },
+                                "title": "Won",
+                                "type": "kpi",
+                                "uri": "/gdc/md/referenceworkspace/obj/1388"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                },
+                {
+                    "header": { "title": "Ignored attribute filter" },
+                    "items": [
+                        {
+                            "size": { "xl": { "gridWidth": 6 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "acz8j3CvbW20",
+                                "ignoreDashboardFilters": [
+                                    {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                                        "type": "attributeFilterReference"
+                                    }
+                                ],
+                                "insight": { "uri": "/gdc/md/referenceworkspace/obj/1281" },
+                                "properties": {},
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1391" },
+                                "title": "my insight",
+                                "type": "insight",
+                                "uri": "/gdc/md/referenceworkspace/obj/1391"
+                            }
+                        },
+                        {
+                            "size": { "xl": { "gridWidth": 2 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "aaG8ESHSegDz",
+                                "ignoreDashboardFilters": [
+                                    {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                                        "type": "attributeFilterReference"
+                                    }
+                                ],
+                                "kpi": {
+                                    "comparisonDirection": "growIsGood",
+                                    "comparisonType": "previousPeriod",
+                                    "metric": { "uri": "/gdc/md/referenceworkspace/obj/1272" }
+                                },
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1387" },
+                                "title": "Won",
+                                "type": "kpi",
+                                "uri": "/gdc/md/referenceworkspace/obj/1387"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                },
+                {
+                    "header": { "title": "Ignored date filter" },
+                    "items": [
+                        {
+                            "size": { "xl": { "gridWidth": 6 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "description": "",
+                                "drills": [],
+                                "identifier": "aag8KZK0eJRL",
+                                "ignoreDashboardFilters": [],
+                                "insight": { "uri": "/gdc/md/referenceworkspace/obj/1281" },
+                                "properties": {},
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1392" },
+                                "title": "my insight",
+                                "type": "insight",
+                                "uri": "/gdc/md/referenceworkspace/obj/1392"
+                            }
+                        },
+                        {
+                            "size": { "xl": { "gridWidth": 2 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "description": "",
+                                "drills": [],
+                                "identifier": "ac18fLy7cCN1",
+                                "ignoreDashboardFilters": [],
+                                "kpi": {
+                                    "comparisonDirection": "growIsGood",
+                                    "comparisonType": "previousPeriod",
+                                    "metric": { "uri": "/gdc/md/referenceworkspace/obj/1272" }
+                                },
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1389" },
+                                "title": "Won",
+                                "type": "kpi",
+                                "uri": "/gdc/md/referenceworkspace/obj/1389"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                }
+            ],
+            "type": "IDashboardLayout"
+        },
+        "ref": { "uri": "/gdc/md/referenceworkspace/obj/1394" },
+        "tags": [],
+        "title": "widget filtering tests",
+        "updated": "2021-07-23 11:06:59",
+        "uri": "/gdc/md/referenceworkspace/obj/1394"
+    },
+    "references": {
+        "insights": [
+            {
+                "insight": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": { "uri": "/gdc/md/referenceworkspace/obj/1271" }
+                                            }
+                                        },
+                                        "localIdentifier": "1d6f7c1c254e475d9fd708cd55e39273",
+                                        "title": "Amount"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": { "uri": "/gdc/md/referenceworkspace/obj/1272" }
+                                            }
+                                        },
+                                        "localIdentifier": "92b17b262bff43718fad6271d95115ee",
+                                        "title": "Won"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1055" },
+                                        "localIdentifier": "3d9849004f5b4bb5bf95232f291f152f"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1087" },
+                                        "localIdentifier": "daa575d4a7024907839b01f6e7828b4c"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                                        "localIdentifier": "e51db698edec473e955fff19e1b29a19"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "filters": [],
+                    "identifier": "acFU8WHNe2JJ",
+                    "properties": {
+                        "sortItems": [
+                            {
+                                "attributeSortItem": {
+                                    "attributeIdentifier": "3d9849004f5b4bb5bf95232f291f152f",
+                                    "direction": "asc"
+                                }
+                            }
+                        ]
+                    },
+                    "ref": { "uri": "/gdc/md/referenceworkspace/obj/1281" },
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "3d9849004f5b4bb5bf95232f291f152f",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "title": "my insight",
+                    "updated": "2020-02-17 13:06:25",
+                    "uri": "/gdc/md/referenceworkspace/obj/1281",
+                    "visualizationUrl": "local:table"
+                }
+            }
+        ]
+    }
+}
