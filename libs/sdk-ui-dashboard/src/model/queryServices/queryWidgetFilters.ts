@@ -43,11 +43,13 @@ import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-backend-spi";
 import { selectFilterContextFilters } from "../state/filterContext/filterContextSelectors";
 import { filterContextItemsToFiltersForWidget } from "../../converters";
 import compact from "lodash/compact";
-import flatMap from "lodash/flatMap";
 import groupBy from "lodash/groupBy";
 import last from "lodash/last";
 import partition from "lodash/partition";
-import { selectCatalogAttributes, selectCatalogDateDatasets } from "../state/catalog/catalogSelectors";
+import {
+    selectCatalogAttributeDisplayForms,
+    selectCatalogDateDatasets,
+} from "../state/catalog/catalogSelectors";
 import { PromiseFnReturnType } from "../types/sagas";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
@@ -76,11 +78,9 @@ function* getOrLoadDisplayFormsMetadata(
     refs: ObjRef[],
 ): SagaIterator<IAttributeDisplayFormMetadataObject[]> {
     // first try getting as much as possible from catalog, there is a good chance the data is already there
-    const fromCatalog: ReturnType<typeof selectCatalogAttributes> = yield select(selectCatalogAttributes);
-    const catalogDisplayForms = flatMap(fromCatalog, (item) => [
-        ...item.displayForms,
-        ...item.geoPinDisplayForms,
-    ]);
+    const catalogDisplayForms: ReturnType<typeof selectCatalogAttributeDisplayForms> = yield select(
+        selectCatalogAttributeDisplayForms,
+    );
 
     // for any ref not in catalog, load it from server (probably something from non-production dataset)
     const refsMissing = refs.filter(

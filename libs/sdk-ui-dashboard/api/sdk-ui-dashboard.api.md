@@ -2383,6 +2383,9 @@ export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boole
 export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @alpha (undocumented)
+export const selectCatalogAttributeDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: ICatalogAttribute[]) => IAttributeDisplayFormMetadataObject[]>;
+
+// @alpha (undocumented)
 export const selectCatalogAttributes: OutputSelector<DashboardState, ICatalogAttribute[], (res: CatalogState) => ICatalogAttribute[]>;
 
 // @alpha (undocumented)
@@ -2986,10 +2989,10 @@ export const useDashboardLayoutProps: () => DashboardLayoutProps;
 
 // @alpha
 export const useDashboardQuery: <TQuery extends DashboardQueries, TArgs extends any[]>(queryCreator: (...args: TArgs) => TQuery, eventHandlers?: {
-    "GDC.DASH/EVT.QUERY.FAILED"?: ((event: import("../events").DashboardQueryFailed) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.REJECTED"?: ((event: import("../events").DashboardQueryRejected) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.STARTED"?: ((event: import("../events").DashboardQueryStarted) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.COMPLETED"?: ((event: import("../events").DashboardQueryCompleted<any, any>) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.FAILED"?: ((event: DashboardQueryFailed) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.REJECTED"?: ((event: DashboardQueryRejected) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.STARTED"?: ((event: DashboardQueryStarted) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.COMPLETED"?: ((event: DashboardQueryCompleted<any, any>) => void) | undefined;
 } | undefined, onBeforeRun?: ((command: TQuery) => void) | undefined) => (...args: TArgs) => void;
 
 // @internal (undocumented)

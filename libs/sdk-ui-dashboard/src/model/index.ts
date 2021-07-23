@@ -80,6 +80,7 @@ export { CatalogState } from "./state/catalog/catalogState";
 export {
     selectAttributesWithDrillDown,
     selectCatalogAttributes,
+    selectCatalogAttributeDisplayForms,
     selectCatalogDateDatasets,
     selectCatalogFacts,
     selectCatalogMeasures,
