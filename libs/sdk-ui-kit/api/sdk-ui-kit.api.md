@@ -4,9 +4,13 @@
 
 ```ts
 
+/// <reference types="lodash" />
+/// <reference types="react" />
+
 import { ColorFormats } from 'tinycolor2';
 import { Component } from 'react';
 import { CSSProperties } from 'react';
+import { FC } from 'react';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISettings } from '@gooddata/sdk-backend-spi';
@@ -16,6 +20,7 @@ import { MessageDescriptor } from 'react-intl';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
+import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
@@ -30,7 +35,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick">>;
+export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -54,7 +59,7 @@ export class AutoSize extends Component<IAutoSizeProps> {
         width: number;
         height: number;
     };
-    }
+}
 
 // @internal (undocumented)
 export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
@@ -153,7 +158,7 @@ export class Button extends React_2.Component<IButtonProps> {
     };
     // (undocumented)
     render(): React_2.ReactNode;
-    }
+}
 
 // @internal (undocumented)
 export class Checkbox extends React_2.PureComponent<CheckboxProps> {
@@ -390,7 +395,7 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
     renderChildren(): ReactNode;
     // (undocumented)
     updateSize: () => void;
-    }
+}
 
 // @internal (undocumented)
 export class FullScreenOverlay extends Overlay<IOverlayState> {
@@ -691,26 +696,26 @@ export interface ICommunityEditionDialogProps {
 
 // @internal (undocumented)
 export const Icon: {
-    Book: import("react").FC<import("./typings").IIconProps>;
-    Refresh: import("react").FC<import("./typings").IIconProps>;
-    DrillDown: import("react").FC<import("./typings").IIconProps>;
-    DrillToDashboard: import("react").FC<import("./typings").IIconProps>;
-    DrillToInsight: import("react").FC<import("./typings").IIconProps>;
-    Date: import("react").FC<import("./typings").IIconProps>;
-    Explore: import("react").FC<import("./typings").IIconProps>;
-    Logout: import("react").FC<import("./typings").IIconProps>;
-    Lock: import("react").FC<import("./typings").IIconProps>;
-    Pdf: import("react").FC<import("./typings").IIconProps>;
-    ExternalLink: import("react").FC<import("./typings").IIconProps>;
-    Hyperlink: import("react").FC<import("./typings").IIconProps>;
-    Undo: import("react").FC<import("./typings").IIconProps>;
-    Home: import("react").FC<import("./typings").IIconProps>;
-    BurgerMenu: import("react").FC<import("./typings").IIconProps>;
-    Rows: import("react").FC<import("./icons/Rows").IRowsIconProps>;
-    DragHandle: import("react").FC<import("./typings").IIconProps>;
-    Interaction: import("react").FC<import("./typings").IIconProps>;
-    AttributeFilter: import("react").FC<import("./typings").IIconProps>;
-    LegendMenu: import("react").FC<import("./typings").IIconProps>;
+    Book: FC<IIconProps>;
+    Refresh: FC<IIconProps>;
+    DrillDown: FC<IIconProps>;
+    DrillToDashboard: FC<IIconProps>;
+    DrillToInsight: FC<IIconProps>;
+    Date: FC<IIconProps>;
+    Explore: FC<IIconProps>;
+    Logout: FC<IIconProps>;
+    Lock: FC<IIconProps>;
+    Pdf: FC<IIconProps>;
+    ExternalLink: FC<IIconProps>;
+    Hyperlink: FC<IIconProps>;
+    Undo: FC<IIconProps>;
+    Home: FC<IIconProps>;
+    BurgerMenu: FC<IIconProps>;
+    Rows: FC<IRowsIconProps>;
+    DragHandle: FC<IIconProps>;
+    Interaction: FC<IIconProps>;
+    AttributeFilter: FC<IIconProps>;
+    LegendMenu: FC<IIconProps>;
 };
 
 // @internal (undocumented)
@@ -2292,6 +2297,15 @@ export interface IResponsiveTextProps {
 }
 
 // @internal (undocumented)
+export interface IRowsIconProps extends IIconProps {
+    // (undocumented)
+    colorPalette?: {
+        odd?: Color;
+        even?: Color;
+    };
+}
+
+// @internal (undocumented)
 export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
 
 // @internal (undocumented)
@@ -2497,7 +2511,7 @@ export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
     static defaultProps: Pick<ILegacyListProps, "className" | "onScroll" | "onScrollStart" | "onSelect" | "width" | "height" | "itemHeight" | "itemHeightGetter" | "compensateBorder" | "scrollToSelected">;
     // (undocumented)
     render(): JSX.Element;
-    }
+}
 
 // @internal @deprecated (undocumented)
 export class LegacyListItem<T> extends Component<ILegacyListItemProps<T>> {
@@ -2678,7 +2692,7 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean;
     // (undocumented)
     UNSAFE_componentWillReceiveProps(nextProps: IOverlayProps<T>): void;
-    }
+}
 
 // @internal (undocumented)
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
@@ -2766,7 +2780,7 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     componentDidMount(): void;
     // (undocumented)
     render(): JSX.Element;
-    }
+}
 
 // @internal (undocumented)
 export type SingleSelectListItemType = "header" | "separator";
@@ -2826,7 +2840,7 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
     };
     // (undocumented)
     render(): JSX.Element;
-    }
+}
 
 // @internal (undocumented)
 export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
@@ -2885,6 +2899,5 @@ export interface UseToastMessageType {
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Pick<IWorkspacePickerHomeFooterProps, "className" | "onClick" | "href">>;
-
 
 ```

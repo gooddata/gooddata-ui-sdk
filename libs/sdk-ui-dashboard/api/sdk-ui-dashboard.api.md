@@ -4,6 +4,9 @@
 
 ```ts
 
+/// <reference types="lodash" />
+/// <reference types="react" />
+
 import { Action } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
@@ -24,6 +27,7 @@ import { IAttributeMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
+import { ICatalogDateAttribute } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
 import { ICatalogFact } from '@gooddata/sdk-backend-spi';
 import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
@@ -80,14 +84,19 @@ import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { LocalIdRef } from '@gooddata/sdk-model';
+import { MemoizedFunction } from 'lodash';
+import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
+import { OutputSelector } from '@reduxjs/toolkit';
 import { Patch } from 'immer';
+import { PlatformEdition } from '@gooddata/sdk-backend-spi';
 import { default as React_2 } from 'react';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
+import { UriRef } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @alpha (undocumented)
@@ -2023,6 +2032,38 @@ export type ObjectAvailabilityConfig = {
     includeObjectsWithTags?: string[];
 };
 
+// @alpha
+export class ObjRefMap<T> {
+    // (undocumented)
+    [Symbol.iterator](): IterableIterator<[ObjRef, T]>;
+    // (undocumented)
+    readonly [Symbol.toStringTag]: string;
+    constructor(config: ObjRefMapConfig<T>);
+    // (undocumented)
+    entries(): IterableIterator<[ObjRef, T]>;
+    // (undocumented)
+    fromItems: (items: ReadonlyArray<T>) => ObjRefMap<T>;
+    // (undocumented)
+    get(key: ObjRef): T | undefined;
+    // (undocumented)
+    has(key: ObjRef): boolean;
+    // (undocumented)
+    keys(): IterableIterator<ObjRef>;
+    // (undocumented)
+    size: number;
+    // (undocumented)
+    values(): IterableIterator<T>;
+}
+
+// @alpha
+export type ObjRefMapConfig<T> = {
+    readonly refExtract: (obj: T) => ObjRef;
+    readonly idExtract: (obj: T) => Identifier;
+    readonly uriExtract: (obj: T) => string;
+    readonly strictTypeCheck: boolean;
+    readonly type?: ObjectType;
+};
+
 // @internal (undocumented)
 export type OnDashboardDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
 
@@ -2302,191 +2343,191 @@ export const ScheduledEmailDialog: () => JSX.Element;
 export const ScheduledEmailDialogPropsProvider: React_2.FC<IScheduledEmailDialogProps>;
 
 // @alpha
-export const selectAlerts: (state: DashboardState) => import("@gooddata/sdk-backend-spi").IWidgetAlert[];
+export const selectAlerts: (state: DashboardState) => IWidgetAlert[];
 
 // @alpha
-export const selectAllCatalogAttributesMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute>, (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[], res3: import("@gooddata/sdk-backend-spi").IBackendCapabilities) => import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute>>;
+export const selectAllCatalogAttributesMap: OutputSelector<DashboardState, ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>>;
 
 // @alpha
-export const selectAllCatalogDisplayFormsMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").IAttributeDisplayFormMetadataObject>, (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateDataset[], res3: import("@gooddata/sdk-backend-spi").IBackendCapabilities) => import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-backend-spi").IAttributeDisplayFormMetadataObject>>;
+export const selectAllCatalogDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
 
 // @alpha (undocumented)
-export const selectAttributesWithDrillDown: import("@reduxjs/toolkit").OutputSelector<DashboardState, (import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute)[], (res1: import("@gooddata/sdk-backend-spi").ICatalogAttribute[], res2: import("@gooddata/sdk-backend-spi").ICatalogDateAttribute[]) => (import("@gooddata/sdk-backend-spi").ICatalogAttribute | import("@gooddata/sdk-backend-spi").ICatalogDateAttribute)[]>;
+export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICatalogAttribute | ICatalogDateAttribute)[], (res1: ICatalogAttribute[], res2: ICatalogDateAttribute[]) => (ICatalogAttribute | ICatalogDateAttribute)[]>;
 
 // @alpha
-export const selectBackendCapabilities: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IBackendCapabilities, (res: import("./backendCapabilitiesState").BackendCapabilitiesState) => import("@gooddata/sdk-backend-spi").IBackendCapabilities>;
+export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendCapabilities, (res: BackendCapabilitiesState) => IBackendCapabilities>;
 
 // @internal
-export const selectBasicLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("@gooddata/sdk-backend-spi").IDashboardWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => IDashboardLayout<import("@gooddata/sdk-backend-spi").IDashboardWidget>>;
+export const selectBasicLayout: OutputSelector<DashboardState, IDashboardLayout<IDashboardWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => IDashboardLayout<IDashboardWidget>>;
 
 // @alpha
-export const selectCanListUsersInWorkspace: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("@gooddata/sdk-backend-spi").IWorkspacePermissions) => boolean>;
+export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @alpha
-export const selectCanManageWorkspace: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("@gooddata/sdk-backend-spi").IWorkspacePermissions) => boolean>;
+export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @alpha (undocumented)
-export const selectCatalogAttributes: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ICatalogAttribute[], (res: import("./catalogState").CatalogState) => import("@gooddata/sdk-backend-spi").ICatalogAttribute[]>;
+export const selectCatalogAttributes: OutputSelector<DashboardState, ICatalogAttribute[], (res: CatalogState) => ICatalogAttribute[]>;
 
 // @alpha (undocumented)
-export const selectCatalogDateDatasets: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ICatalogDateDataset[], (res: import("./catalogState").CatalogState) => import("@gooddata/sdk-backend-spi").ICatalogDateDataset[]>;
+export const selectCatalogDateDatasets: OutputSelector<DashboardState, ICatalogDateDataset[], (res: CatalogState) => ICatalogDateDataset[]>;
 
 // @alpha (undocumented)
-export const selectCatalogFacts: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ICatalogFact[], (res: import("./catalogState").CatalogState) => import("@gooddata/sdk-backend-spi").ICatalogFact[]>;
+export const selectCatalogFacts: OutputSelector<DashboardState, ICatalogFact[], (res: CatalogState) => ICatalogFact[]>;
 
 // @alpha (undocumented)
-export const selectCatalogMeasures: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ICatalogMeasure[], (res: import("./catalogState").CatalogState) => import("@gooddata/sdk-backend-spi").ICatalogMeasure[]>;
+export const selectCatalogMeasures: OutputSelector<DashboardState, ICatalogMeasure[], (res: CatalogState) => ICatalogMeasure[]>;
 
 // @alpha
-export const selectColorPalette: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").IColorPalette, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-model").IColorPalette>;
+export const selectColorPalette: OutputSelector<DashboardState, IColorPalette, (res: ResolvedDashboardConfig) => IColorPalette>;
 
 // @alpha
-export const selectConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../..").ResolvedDashboardConfig, (res: import("./configState").ConfigState) => import("../..").ResolvedDashboardConfig>;
+export const selectConfig: OutputSelector<DashboardState, ResolvedDashboardConfig, (res: ConfigState) => ResolvedDashboardConfig>;
 
 // @internal (undocumented)
-export const selectDashboardLoading: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;
+export const selectDashboardLoading: OutputSelector<DashboardState, LoadingState, (res: DashboardState) => LoadingState>;
 
 // @alpha
-export const selectDashboardRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").ObjRef, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => import("@gooddata/sdk-model").ObjRef>;
+export const selectDashboardRef: OutputSelector<DashboardState, ObjRef, (res: Pick<IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => ObjRef>;
 
 // @alpha
-export const selectDashboardTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string, (res: Pick<import("@gooddata/sdk-backend-spi").IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => string>;
+export const selectDashboardTitle: OutputSelector<DashboardState, string, (res: Pick<IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => string>;
 
 // @alpha
-export const selectDashboardUriRef: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").UriRef, (res: string) => import("@gooddata/sdk-model").UriRef>;
+export const selectDashboardUriRef: OutputSelector<DashboardState, UriRef, (res: string) => UriRef>;
 
 // @internal
-export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => import("@reduxjs/toolkit").OutputSelector<import("..").DashboardState, {
-    status: "error" | "loading" | "success";
-    result?: InsightDateDatasets | undefined;
-    error?: string | undefined;
-} | undefined, (res: import("..").DashboardState) => {
-    status: "error" | "loading" | "success";
-    result?: InsightDateDatasets | undefined;
-    error?: string | undefined;
+export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => OutputSelector<DashboardState, {
+status: "error" | "loading" | "success";
+result?: InsightDateDatasets | undefined;
+error?: string | undefined;
+} | undefined, (res: DashboardState) => {
+status: "error" | "loading" | "success";
+result?: InsightDateDatasets | undefined;
+error?: string | undefined;
 } | undefined>;
 
 // @alpha
-export const selectDateFilterConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
+export const selectDateFilterConfig: OutputSelector<DashboardState, IDateFilterConfig, (res: ResolvedDashboardConfig) => IDateFilterConfig>;
 
 // @alpha
-export const selectDateFilterConfigOverrides: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined>;
+export const selectDateFilterConfigOverrides: OutputSelector<DashboardState, IDashboardDateFilterConfig_2 | undefined, (res: DateFilterConfigState) => IDashboardDateFilterConfig_2 | undefined>;
 
 // @alpha
-export const selectDateFormat: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res: import("../..").ResolvedDashboardConfig) => string | undefined>;
+export const selectDateFormat: OutputSelector<DashboardState, string | undefined, (res: ResolvedDashboardConfig) => string | undefined>;
 
 // @alpha
-export const selectDrillTargets: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../../../_staging/metadata/objRefMap").ObjRefMap<import("./drillTargetsTypes").IDrillTargets>, (res: import("./drillTargetsTypes").IDrillTargets[]) => import("../../../_staging/metadata/objRefMap").ObjRefMap<import("./drillTargetsTypes").IDrillTargets>>;
+export const selectDrillTargets: OutputSelector<DashboardState, ObjRefMap<IDrillTargets>, (res: IDrillTargets[]) => ObjRefMap<IDrillTargets>>;
 
 // @alpha
-export const selectDrillTargetsByWidgetRef: ((ref: ObjRef) => import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./drillTargetsTypes").IDrillTargets | undefined, (res: import("../../../_staging/metadata/objRefMap").ObjRefMap<import("./drillTargetsTypes").IDrillTargets>) => import("./drillTargetsTypes").IDrillTargets | undefined>) & import("lodash").MemoizedFunction;
+export const selectDrillTargetsByWidgetRef: ((ref: ObjRef) => OutputSelector<DashboardState, IDrillTargets | undefined, (res: ObjRefMap<IDrillTargets>) => IDrillTargets | undefined>) & MemoizedFunction;
 
 // @alpha
-export const selectEffectiveDateFilterAvailableGranularities: import("@reduxjs/toolkit").OutputSelector<DashboardState, DateFilterGranularity[], (res: import("@gooddata/sdk-backend-spi").IDateFilterConfig) => DateFilterGranularity[]>;
+export const selectEffectiveDateFilterAvailableGranularities: OutputSelector<DashboardState, DateFilterGranularity[], (res: IDateFilterConfig) => DateFilterGranularity[]>;
 
 // @alpha
-export const selectEffectiveDateFilterConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
+export const selectEffectiveDateFilterConfig: OutputSelector<DashboardState, IDateFilterConfig, (res: DateFilterConfigState) => IDateFilterConfig>;
 
 // @alpha
-export const selectEffectiveDateFilterMode: import("@reduxjs/toolkit").OutputSelector<DashboardState, DashboardDateFilterConfigMode, (res: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => DashboardDateFilterConfigMode>;
+export const selectEffectiveDateFilterMode: OutputSelector<DashboardState, DashboardDateFilterConfigMode, (res: IDashboardDateFilterConfig_2 | undefined) => DashboardDateFilterConfigMode>;
 
 // @alpha
-export const selectEffectiveDateFilterOptions: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDateFilterOptionsByType, (res: import("@gooddata/sdk-backend-spi").IDateFilterConfig) => IDateFilterOptionsByType>;
+export const selectEffectiveDateFilterOptions: OutputSelector<DashboardState, IDateFilterOptionsByType, (res: IDateFilterConfig) => IDateFilterOptionsByType>;
 
 // @alpha
-export const selectEffectiveDateFilterTitle: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => string | undefined>;
+export const selectEffectiveDateFilterTitle: OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: IDashboardDateFilterConfig_2 | undefined) => string | undefined>;
 
 // @alpha
-export const selectEnableCompanyLogoInEmbeddedUI: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("../..").ResolvedDashboardConfig) => boolean>;
+export const selectEnableCompanyLogoInEmbeddedUI: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha
-export const selectEnableKPIDashboardSchedule: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;
+export const selectEnableKPIDashboardSchedule: OutputSelector<DashboardState, boolean | undefined, (res: ResolvedDashboardConfig) => boolean | undefined>;
 
 // @alpha
-export const selectEnableKPIDashboardScheduleRecipients: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean | undefined, (res: import("../..").ResolvedDashboardConfig) => boolean | undefined>;
+export const selectEnableKPIDashboardScheduleRecipients: OutputSelector<DashboardState, boolean | undefined, (res: ResolvedDashboardConfig) => boolean | undefined>;
 
 // @alpha
-export const selectFilterContext: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IFilterContextDefinition, (res: import("./filterContextState").FilterContextState) => import("@gooddata/sdk-backend-spi").IFilterContextDefinition>;
+export const selectFilterContext: OutputSelector<DashboardState, IFilterContextDefinition, (res: FilterContextState) => IFilterContextDefinition>;
 
 // @alpha
-export const selectFilterContextAttributeFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem[]) => IDashboardAttributeFilter[]>;
+export const selectFilterContextAttributeFilters: OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem[]) => IDashboardAttributeFilter[]>;
 
 // @alpha
-export const selectFilterContextDateFilter: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardDateFilter | undefined, (res: FilterContextItem[]) => IDashboardDateFilter | undefined>;
+export const selectFilterContextDateFilter: OutputSelector<DashboardState, IDashboardDateFilter | undefined, (res: FilterContextItem[]) => IDashboardDateFilter | undefined>;
 
 // @alpha
-export const selectFilterContextFilters: import("@reduxjs/toolkit").OutputSelector<DashboardState, FilterContextItem[], (res: import("@gooddata/sdk-backend-spi").IFilterContextDefinition) => FilterContextItem[]>;
+export const selectFilterContextFilters: OutputSelector<DashboardState, FilterContextItem[], (res: IFilterContextDefinition) => FilterContextItem[]>;
 
 // @internal
-export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => import("@reduxjs/toolkit").OutputSelector<import("..").DashboardState, {
-    status: "error" | "loading" | "success";
-    result?: InsightAttributesMeta | undefined;
-    error?: string | undefined;
-} | undefined, (res: import("..").DashboardState) => {
-    status: "error" | "loading" | "success";
-    result?: InsightAttributesMeta | undefined;
-    error?: string | undefined;
+export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => OutputSelector<DashboardState, {
+status: "error" | "loading" | "success";
+result?: InsightAttributesMeta | undefined;
+error?: string | undefined;
+} | undefined, (res: DashboardState) => {
+status: "error" | "loading" | "success";
+result?: InsightAttributesMeta | undefined;
+error?: string | undefined;
 } | undefined>;
 
 // @alpha
-export const selectInsightByRef: ((ref: ObjRef) => import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-model").IInsight | undefined, (res: import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-model").IInsight>) => import("@gooddata/sdk-model").IInsight | undefined>) & import("lodash").MemoizedFunction;
+export const selectInsightByRef: ((ref: ObjRef) => OutputSelector<DashboardState, IInsight | undefined, (res: ObjRefMap<IInsight>) => IInsight | undefined>) & MemoizedFunction;
 
 // @alpha
-export const selectInsightRefs: import("@reduxjs/toolkit").OutputSelector<DashboardState, ObjRef[], (res: import("@gooddata/sdk-model").IInsight[]) => ObjRef[]>;
+export const selectInsightRefs: OutputSelector<DashboardState, ObjRef[], (res: IInsight[]) => ObjRef[]>;
 
 // @alpha
-export const selectInsights: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];
+export const selectInsights: (state: DashboardState) => IInsight[];
 
 // @alpha
-export const selectInsightsMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-model").IInsight>, (res1: import("@gooddata/sdk-model").IInsight[], res2: import("@gooddata/sdk-backend-spi").IBackendCapabilities) => import("../../../_staging/metadata/objRefMap").ObjRefMap<import("@gooddata/sdk-model").IInsight>>;
+export const selectInsightsMap: OutputSelector<DashboardState, ObjRefMap<IInsight>, (res1: IInsight[], res2: IBackendCapabilities) => ObjRefMap<IInsight>>;
 
 // @alpha
-export const selectIsEmbedded: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("../..").ResolvedDashboardConfig) => boolean>;
+export const selectIsEmbedded: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal
-export const selectIsExport: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("../..").ResolvedDashboardConfig) => boolean>;
+export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha
-export const selectIsReadOnly: import("@reduxjs/toolkit").OutputSelector<DashboardState, boolean, (res: import("../..").ResolvedDashboardConfig) => boolean>;
+export const selectIsReadOnly: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha
-export const selectLayout: import("@reduxjs/toolkit").OutputSelector<DashboardState, IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>>;
+export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
 
 // @alpha
-export const selectListedDashboards: (state: DashboardState) => import("@gooddata/sdk-backend-spi").IListedDashboard[];
+export const selectListedDashboards: (state: DashboardState) => IListedDashboard[];
 
 // @alpha
-export const selectLocale: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-ui").ILocale, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-ui").ILocale>;
+export const selectLocale: OutputSelector<DashboardState, ILocale, (res: ResolvedDashboardConfig) => ILocale>;
 
 // @alpha
-export const selectMapboxToken: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res: import("../..").ResolvedDashboardConfig) => string | undefined>;
+export const selectMapboxToken: OutputSelector<DashboardState, string | undefined, (res: ResolvedDashboardConfig) => string | undefined>;
 
 // @alpha
-export const selectObjectAvailabilityConfig: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../..").ObjectAvailabilityConfig, (res: import("../..").ResolvedDashboardConfig) => import("../..").ObjectAvailabilityConfig>;
+export const selectObjectAvailabilityConfig: OutputSelector<DashboardState, ObjectAvailabilityConfig, (res: ResolvedDashboardConfig) => ObjectAvailabilityConfig>;
 
 // @alpha
-export const selectPermissions: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IWorkspacePermissions, (res: import("./permissionsState").PermissionsState) => import("@gooddata/sdk-backend-spi").IWorkspacePermissions>;
+export const selectPermissions: OutputSelector<DashboardState, IWorkspacePermissions, (res: PermissionsState) => IWorkspacePermissions>;
 
 // @alpha
-export const selectPlatformEdition: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").PlatformEdition, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").PlatformEdition>;
+export const selectPlatformEdition: OutputSelector<DashboardState, PlatformEdition, (res: ResolvedDashboardConfig) => PlatformEdition>;
 
 // @alpha
-export const selectSeparators: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").ISeparators>;
+export const selectSeparators: OutputSelector<DashboardState, ISeparators, (res: ResolvedDashboardConfig) => ISeparators>;
 
 // @alpha
-export const selectSettings: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings, (res: import("../..").ResolvedDashboardConfig) => import("@gooddata/sdk-backend-spi").ISettings>;
+export const selectSettings: OutputSelector<DashboardState, ISettings, (res: ResolvedDashboardConfig) => ISettings>;
 
 // @internal
-export const selectStash: import("@reduxjs/toolkit").OutputSelector<DashboardState, Record<string, import("../../types/layoutTypes").ExtendedDashboardItem[]>, (res: LayoutState) => Record<string, import("../../types/layoutTypes").ExtendedDashboardItem[]>>;
+export const selectStash: OutputSelector<DashboardState, Record<string, ExtendedDashboardItem[]>, (res: LayoutState) => Record<string, ExtendedDashboardItem[]>>;
 
 // @alpha
-export const selectUser: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IUser, (res: import("./userState").UserState) => import("@gooddata/sdk-backend-spi").IUser>;
+export const selectUser: OutputSelector<DashboardState, IUser, (res: UserState) => IUser>;
 
 // @alpha
-export const selectWidgetByRef: ((ref: ObjRef | undefined) => import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IKpiWidget | import("@gooddata/sdk-backend-spi").IInsightWidget | undefined, (res: import("../../../_staging/metadata/objRefMap").ObjRefMap<IWidget>) => import("@gooddata/sdk-backend-spi").IKpiWidget | import("@gooddata/sdk-backend-spi").IInsightWidget | undefined>) & import("lodash").MemoizedFunction;
+export const selectWidgetByRef: ((ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | undefined, (res: ObjRefMap<IWidget>) => IKpiWidget | IInsightWidget | undefined>) & MemoizedFunction;
 
 // @internal
-export const selectWidgetsMap: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../../../_staging/metadata/objRefMap").ObjRefMap<IWidget>, (res: IDashboardLayout<import("../../types/layoutTypes").ExtendedDashboardWidget>) => import("../../../_staging/metadata/objRefMap").ObjRefMap<IWidget>>;
+export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<IWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => ObjRefMap<IWidget>>;
 
 // @alpha (undocumented)
 export interface SetAttributeFilterParent extends IDashboardCommand {
@@ -2578,70 +2619,70 @@ export const useDashboardAttributeFilterProps: () => IDashboardAttributeFilterPr
 
 // @alpha
 export const useDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand, eventHandlers?: {
-    "GDC.DASH/EVT.COMMAND.FAILED"?: ((event: import("../events").DashboardCommandFailed) => void) | undefined;
-    "GDC.DASH/EVT.COMMAND.REJECTED"?: ((event: import("../events").DashboardCommandRejected) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.FAILED"?: ((event: import("../events").DashboardQueryFailed) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.REJECTED"?: ((event: import("../events").DashboardQueryRejected) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.STARTED"?: ((event: import("../events").DashboardQueryStarted) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.COMPLETED"?: ((event: import("../events").DashboardQueryCompleted<any, any>) => void) | undefined;
-    "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED"?: ((event: import("../events").DashboardUserInteractionTriggered) => void) | undefined;
-    "GDC.DASH/EVT.LOADED"?: ((event: import("../events").DashboardLoaded) => void) | undefined;
-    "GDC.DASH/EVT.SAVED"?: ((event: import("../events").DashboardSaved) => void) | undefined;
-    "GDC.DASH/EVT.COPY_SAVED"?: ((event: import("../events").DashboardCopySaved) => void) | undefined;
-    "GDC.DASH/EVT.RENAMED"?: ((event: import("../events").DashboardRenamed) => void) | undefined;
-    "GDC.DASH/EVT.RESET"?: ((event: import("../events").DashboardWasReset) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED"?: ((event: import("../events").DateFilterValidationFailed) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED"?: ((event: import("../events").DashboardDateFilterSelectionChanged) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED"?: ((event: import("../events").DashboardAttributeFilterAdded) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED"?: ((event: import("../events").DashboardAttributeFilterRemoved) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED"?: ((event: import("../events").DashboardAttributeFilterMoved) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED"?: ((event: import("../events").DashboardAttributeFilterSelectionChanged) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED"?: ((event: import("../events").DashboardAttributeFilterParentChanged) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED"?: ((event: import("../events").DashboardFilterContextChanged) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED"?: ((event: import("../events").DashboardLayoutSectionAdded) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED"?: ((event: import("../events").DashboardLayoutSectionMoved) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED"?: ((event: import("../events").DashboardLayoutSectionRemoved) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED"?: ((event: import("../events").DashboardLayoutSectionHeaderChanged) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED"?: ((event: import("../events").DashboardLayoutSectionItemsAdded) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED"?: ((event: import("../events").DashboardLayoutSectionItemReplaced) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED"?: ((event: import("../events").DashboardLayoutSectionItemMoved) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED"?: ((event: import("../events").DashboardLayoutSectionItemRemoved) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED"?: ((event: import("../events").DashboardLayoutChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED"?: ((event: import("../events").DashboardKpiWidgetHeaderChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED"?: ((event: import("../events").DashboardKpiWidgetMeasureChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED"?: ((event: import("../events").DashboardKpiWidgetFilterSettingsChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED"?: ((event: import("../events").DashboardKpiWidgetComparisonChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED"?: ((event: import("../events").DashboardKpiWidgetChanged) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED"?: ((event: import("../events").DashboardInsightWidgetHeaderChanged) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED"?: ((event: import("../events").DashboardInsightWidgetFilterSettingsChanged) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED"?: ((event: import("../events").DashboardInsightWidgetVisPropertiesChanged) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED"?: ((event: import("../events").DashboardInsightWidgetInsightSwitched) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED"?: ((event: import("../events").DashboardInsightWidgetDrillsModified) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED"?: ((event: import("../events").DashboardInsightWidgetDrillsRemoved) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED"?: ((event: import("../events").DashboardInsightWidgetChanged) => void) | undefined;
-    "GDC.DASH/EVT.ALERT.CREATED"?: ((event: import("../events").DashboardAlertCreated) => void) | undefined;
-    "GDC.DASH/EVT.ALERT.UPDATED"?: ((event: import("../events").DashboardAlertUpdated) => void) | undefined;
-    "GDC.DASH/EVT.ALERT.REMOVED"?: ((event: import("../events").DashboardAlertRemoved) => void) | undefined;
-    "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED"?: ((event: import("../events").DashboardScheduledEmailCreated) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.REQUESTED"?: ((event: import("../events").DashboardDrillRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.RESOLVED"?: ((event: import("../events").DashboardDrillResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED"?: ((event: import("../events").DashboardDrillDownRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED"?: ((event: import("../events").DashboardDrillDownResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED"?: ((event: import("../events").DashboardDrillToInsightRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED"?: ((event: import("../events").DashboardDrillToInsightResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED"?: ((event: import("../events").DashboardDrillToDashboardRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED"?: ((event: import("../events").DashboardDrillToDashboardResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED"?: ((event: import("../events").DashboardDrillToAttributeUrlRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED"?: ((event: import("../events").DashboardDrillToAttributeUrlResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED"?: ((event: import("../events").DashboardDrillToCustomUrlRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED"?: ((event: import("../events").DashboardDrillToCustomUrlResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED"?: ((event: import("../events").DashboardDrillToLegacyDashboardRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED"?: ((event: import("../events").DashboardDrillToLegacyDashboardResolved) => void) | undefined;
+    "GDC.DASH/EVT.COMMAND.FAILED"?: ((event: DashboardCommandFailed) => void) | undefined;
+    "GDC.DASH/EVT.COMMAND.REJECTED"?: ((event: DashboardCommandRejected) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.FAILED"?: ((event: DashboardQueryFailed) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.REJECTED"?: ((event: DashboardQueryRejected) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.STARTED"?: ((event: DashboardQueryStarted) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.COMPLETED"?: ((event: DashboardQueryCompleted<any, any>) => void) | undefined;
+    "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED"?: ((event: DashboardUserInteractionTriggered) => void) | undefined;
+    "GDC.DASH/EVT.LOADED"?: ((event: DashboardLoaded) => void) | undefined;
+    "GDC.DASH/EVT.SAVED"?: ((event: DashboardSaved) => void) | undefined;
+    "GDC.DASH/EVT.COPY_SAVED"?: ((event: DashboardCopySaved) => void) | undefined;
+    "GDC.DASH/EVT.RENAMED"?: ((event: DashboardRenamed) => void) | undefined;
+    "GDC.DASH/EVT.RESET"?: ((event: DashboardWasReset) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED"?: ((event: DateFilterValidationFailed) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED"?: ((event: DashboardDateFilterSelectionChanged) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED"?: ((event: DashboardAttributeFilterAdded) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED"?: ((event: DashboardAttributeFilterRemoved) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED"?: ((event: DashboardAttributeFilterMoved) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED"?: ((event: DashboardAttributeFilterSelectionChanged) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED"?: ((event: DashboardAttributeFilterParentChanged) => void) | undefined;
+    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED"?: ((event: DashboardFilterContextChanged) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED"?: ((event: DashboardLayoutSectionAdded) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED"?: ((event: DashboardLayoutSectionMoved) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED"?: ((event: DashboardLayoutSectionRemoved) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED"?: ((event: DashboardLayoutSectionHeaderChanged) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED"?: ((event: DashboardLayoutSectionItemsAdded) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED"?: ((event: DashboardLayoutSectionItemReplaced) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED"?: ((event: DashboardLayoutSectionItemMoved) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED"?: ((event: DashboardLayoutSectionItemRemoved) => void) | undefined;
+    "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED"?: ((event: DashboardLayoutChanged) => void) | undefined;
+    "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED"?: ((event: DashboardKpiWidgetHeaderChanged) => void) | undefined;
+    "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED"?: ((event: DashboardKpiWidgetMeasureChanged) => void) | undefined;
+    "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED"?: ((event: DashboardKpiWidgetFilterSettingsChanged) => void) | undefined;
+    "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED"?: ((event: DashboardKpiWidgetComparisonChanged) => void) | undefined;
+    "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED"?: ((event: DashboardKpiWidgetChanged) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED"?: ((event: DashboardInsightWidgetHeaderChanged) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED"?: ((event: DashboardInsightWidgetFilterSettingsChanged) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED"?: ((event: DashboardInsightWidgetVisPropertiesChanged) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED"?: ((event: DashboardInsightWidgetInsightSwitched) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED"?: ((event: DashboardInsightWidgetDrillsModified) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED"?: ((event: DashboardInsightWidgetDrillsRemoved) => void) | undefined;
+    "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED"?: ((event: DashboardInsightWidgetChanged) => void) | undefined;
+    "GDC.DASH/EVT.ALERT.CREATED"?: ((event: DashboardAlertCreated) => void) | undefined;
+    "GDC.DASH/EVT.ALERT.UPDATED"?: ((event: DashboardAlertUpdated) => void) | undefined;
+    "GDC.DASH/EVT.ALERT.REMOVED"?: ((event: DashboardAlertRemoved) => void) | undefined;
+    "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED"?: ((event: DashboardScheduledEmailCreated) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.REQUESTED"?: ((event: DashboardDrillRequested) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.RESOLVED"?: ((event: DashboardDrillResolved) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED"?: ((event: DashboardDrillDownRequested) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED"?: ((event: DashboardDrillDownResolved) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED"?: ((event: DashboardDrillToInsightRequested) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED"?: ((event: DashboardDrillToInsightResolved) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED"?: ((event: DashboardDrillToDashboardRequested) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED"?: ((event: DashboardDrillToDashboardResolved) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED"?: ((event: DashboardDrillToAttributeUrlRequested) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED"?: ((event: DashboardDrillToAttributeUrlResolved) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED"?: ((event: DashboardDrillToCustomUrlRequested) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED"?: ((event: DashboardDrillToCustomUrlResolved) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED"?: ((event: DashboardDrillToLegacyDashboardRequested) => void) | undefined;
+    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED"?: ((event: DashboardDrillToLegacyDashboardResolved) => void) | undefined;
     "GDC.DASH/EVT.DRILL_TARGETS.ADDED"?: ((event: never) => void) | undefined;
-    "GDC.DASH/EVT.RENDER.REQUESTED"?: ((event: import("../events").DashboardRenderRequested) => void) | undefined;
-    "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED"?: ((event: import("../events").DashboardAsyncRenderRequested) => void) | undefined;
-    "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED"?: ((event: import("../events").DashboardAsyncRenderResolved) => void) | undefined;
-    "GDC.DASH/EVT.RENDER.RESOLVED"?: ((event: import("../events").DashboardRenderResolved) => void) | undefined;
+    "GDC.DASH/EVT.RENDER.REQUESTED"?: ((event: DashboardRenderRequested) => void) | undefined;
+    "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED"?: ((event: DashboardAsyncRenderRequested) => void) | undefined;
+    "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED"?: ((event: DashboardAsyncRenderResolved) => void) | undefined;
+    "GDC.DASH/EVT.RENDER.RESOLVED"?: ((event: DashboardRenderResolved) => void) | undefined;
 } | undefined, onBeforeRun?: ((command: TCommand) => void) | undefined) => (...args: TArgs) => void;
 
 // @internal (undocumented)
@@ -2649,258 +2690,258 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     commandCreator: (...args: TCommandCreatorArgs) => TCommand;
     successEvent: TSuccessEventType;
     errorEvent: TErrorEventType;
-    onSuccess?: ((event: Extract<import("../events").DashboardLoaded, {
+    onSuccess?: ((event: Extract<DashboardLoaded, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardSaved, {
+    }> | Extract<DashboardSaved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardCopySaved, {
+    }> | Extract<DashboardCopySaved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardRenamed, {
+    }> | Extract<DashboardRenamed, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardWasReset, {
+    }> | Extract<DashboardWasReset, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DateFilterValidationFailed, {
+    }> | Extract<DateFilterValidationFailed, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardCommandFailed, {
+    }> | Extract<DashboardCommandFailed, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardCommandRejected, {
+    }> | Extract<DashboardCommandRejected, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardQueryRejected, {
+    }> | Extract<DashboardQueryRejected, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardQueryFailed, {
+    }> | Extract<DashboardQueryFailed, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardQueryStarted, {
+    }> | Extract<DashboardQueryStarted, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDateFilterSelectionChanged, {
+    }> | Extract<DashboardDateFilterSelectionChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardAttributeFilterAdded, {
+    }> | Extract<DashboardAttributeFilterAdded, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardAttributeFilterRemoved, {
+    }> | Extract<DashboardAttributeFilterRemoved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardAttributeFilterMoved, {
+    }> | Extract<DashboardAttributeFilterMoved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardAttributeFilterSelectionChanged, {
+    }> | Extract<DashboardAttributeFilterSelectionChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardAttributeFilterParentChanged, {
+    }> | Extract<DashboardAttributeFilterParentChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardFilterContextChanged, {
+    }> | Extract<DashboardFilterContextChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionAdded, {
+    }> | Extract<DashboardLayoutSectionAdded, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionMoved, {
+    }> | Extract<DashboardLayoutSectionMoved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionRemoved, {
+    }> | Extract<DashboardLayoutSectionRemoved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionHeaderChanged, {
+    }> | Extract<DashboardLayoutSectionHeaderChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionItemsAdded, {
+    }> | Extract<DashboardLayoutSectionItemsAdded, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionItemReplaced, {
+    }> | Extract<DashboardLayoutSectionItemReplaced, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionItemMoved, {
+    }> | Extract<DashboardLayoutSectionItemMoved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionItemRemoved, {
+    }> | Extract<DashboardLayoutSectionItemRemoved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardLayoutChanged, {
+    }> | Extract<DashboardLayoutChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardKpiWidgetHeaderChanged, {
+    }> | Extract<DashboardKpiWidgetHeaderChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardKpiWidgetMeasureChanged, {
+    }> | Extract<DashboardKpiWidgetMeasureChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardKpiWidgetFilterSettingsChanged, {
+    }> | Extract<DashboardKpiWidgetFilterSettingsChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardKpiWidgetComparisonChanged, {
+    }> | Extract<DashboardKpiWidgetComparisonChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardKpiWidgetChanged, {
+    }> | Extract<DashboardKpiWidgetChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetHeaderChanged, {
+    }> | Extract<DashboardInsightWidgetHeaderChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetFilterSettingsChanged, {
+    }> | Extract<DashboardInsightWidgetFilterSettingsChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetVisPropertiesChanged, {
+    }> | Extract<DashboardInsightWidgetVisPropertiesChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetInsightSwitched, {
+    }> | Extract<DashboardInsightWidgetInsightSwitched, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetDrillsModified, {
+    }> | Extract<DashboardInsightWidgetDrillsModified, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetDrillsRemoved, {
+    }> | Extract<DashboardInsightWidgetDrillsRemoved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetChanged, {
+    }> | Extract<DashboardInsightWidgetChanged, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardAlertCreated, {
+    }> | Extract<DashboardAlertCreated, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardAlertRemoved, {
+    }> | Extract<DashboardAlertRemoved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardAlertUpdated, {
+    }> | Extract<DashboardAlertUpdated, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardScheduledEmailCreated, {
+    }> | Extract<DashboardScheduledEmailCreated, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardUserInteractionTriggered, {
+    }> | Extract<DashboardUserInteractionTriggered, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardRenderRequested, {
+    }> | Extract<DashboardRenderRequested, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardAsyncRenderRequested, {
+    }> | Extract<DashboardAsyncRenderRequested, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardAsyncRenderResolved, {
+    }> | Extract<DashboardAsyncRenderResolved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardRenderResolved, {
+    }> | Extract<DashboardRenderResolved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillRequested, {
+    }> | Extract<DashboardDrillRequested, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillResolved, {
+    }> | Extract<DashboardDrillResolved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillDownRequested, {
+    }> | Extract<DashboardDrillDownRequested, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillDownResolved, {
+    }> | Extract<DashboardDrillDownResolved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillToInsightRequested, {
+    }> | Extract<DashboardDrillToInsightRequested, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillToInsightResolved, {
+    }> | Extract<DashboardDrillToInsightResolved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillToDashboardRequested, {
+    }> | Extract<DashboardDrillToDashboardRequested, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillToDashboardResolved, {
+    }> | Extract<DashboardDrillToDashboardResolved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillToCustomUrlRequested, {
+    }> | Extract<DashboardDrillToCustomUrlRequested, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillToCustomUrlResolved, {
+    }> | Extract<DashboardDrillToCustomUrlResolved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillToAttributeUrlRequested, {
+    }> | Extract<DashboardDrillToAttributeUrlRequested, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillToAttributeUrlResolved, {
+    }> | Extract<DashboardDrillToAttributeUrlResolved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillToLegacyDashboardRequested, {
+    }> | Extract<DashboardDrillToLegacyDashboardRequested, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardDrillToLegacyDashboardResolved, {
+    }> | Extract<DashboardDrillToLegacyDashboardResolved, {
         type: TSuccessEventType;
-    }> | Extract<import("../events").DashboardQueryCompleted<any, any>, {
+    }> | Extract<DashboardQueryCompleted<any, any>, {
         type: TSuccessEventType;
     }>) => void) | undefined;
-    onError?: ((event: Extract<import("../events").DashboardLoaded, {
+    onError?: ((event: Extract<DashboardLoaded, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardSaved, {
+    }> | Extract<DashboardSaved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardCopySaved, {
+    }> | Extract<DashboardCopySaved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardRenamed, {
+    }> | Extract<DashboardRenamed, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardWasReset, {
+    }> | Extract<DashboardWasReset, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DateFilterValidationFailed, {
+    }> | Extract<DateFilterValidationFailed, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardCommandFailed, {
+    }> | Extract<DashboardCommandFailed, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardCommandRejected, {
+    }> | Extract<DashboardCommandRejected, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardQueryRejected, {
+    }> | Extract<DashboardQueryRejected, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardQueryFailed, {
+    }> | Extract<DashboardQueryFailed, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardQueryStarted, {
+    }> | Extract<DashboardQueryStarted, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDateFilterSelectionChanged, {
+    }> | Extract<DashboardDateFilterSelectionChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardAttributeFilterAdded, {
+    }> | Extract<DashboardAttributeFilterAdded, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardAttributeFilterRemoved, {
+    }> | Extract<DashboardAttributeFilterRemoved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardAttributeFilterMoved, {
+    }> | Extract<DashboardAttributeFilterMoved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardAttributeFilterSelectionChanged, {
+    }> | Extract<DashboardAttributeFilterSelectionChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardAttributeFilterParentChanged, {
+    }> | Extract<DashboardAttributeFilterParentChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardFilterContextChanged, {
+    }> | Extract<DashboardFilterContextChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionAdded, {
+    }> | Extract<DashboardLayoutSectionAdded, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionMoved, {
+    }> | Extract<DashboardLayoutSectionMoved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionRemoved, {
+    }> | Extract<DashboardLayoutSectionRemoved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionHeaderChanged, {
+    }> | Extract<DashboardLayoutSectionHeaderChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionItemsAdded, {
+    }> | Extract<DashboardLayoutSectionItemsAdded, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionItemReplaced, {
+    }> | Extract<DashboardLayoutSectionItemReplaced, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionItemMoved, {
+    }> | Extract<DashboardLayoutSectionItemMoved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardLayoutSectionItemRemoved, {
+    }> | Extract<DashboardLayoutSectionItemRemoved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardLayoutChanged, {
+    }> | Extract<DashboardLayoutChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardKpiWidgetHeaderChanged, {
+    }> | Extract<DashboardKpiWidgetHeaderChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardKpiWidgetMeasureChanged, {
+    }> | Extract<DashboardKpiWidgetMeasureChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardKpiWidgetFilterSettingsChanged, {
+    }> | Extract<DashboardKpiWidgetFilterSettingsChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardKpiWidgetComparisonChanged, {
+    }> | Extract<DashboardKpiWidgetComparisonChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardKpiWidgetChanged, {
+    }> | Extract<DashboardKpiWidgetChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetHeaderChanged, {
+    }> | Extract<DashboardInsightWidgetHeaderChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetFilterSettingsChanged, {
+    }> | Extract<DashboardInsightWidgetFilterSettingsChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetVisPropertiesChanged, {
+    }> | Extract<DashboardInsightWidgetVisPropertiesChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetInsightSwitched, {
+    }> | Extract<DashboardInsightWidgetInsightSwitched, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetDrillsModified, {
+    }> | Extract<DashboardInsightWidgetDrillsModified, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetDrillsRemoved, {
+    }> | Extract<DashboardInsightWidgetDrillsRemoved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardInsightWidgetChanged, {
+    }> | Extract<DashboardInsightWidgetChanged, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardAlertCreated, {
+    }> | Extract<DashboardAlertCreated, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardAlertRemoved, {
+    }> | Extract<DashboardAlertRemoved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardAlertUpdated, {
+    }> | Extract<DashboardAlertUpdated, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardScheduledEmailCreated, {
+    }> | Extract<DashboardScheduledEmailCreated, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardUserInteractionTriggered, {
+    }> | Extract<DashboardUserInteractionTriggered, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardRenderRequested, {
+    }> | Extract<DashboardRenderRequested, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardAsyncRenderRequested, {
+    }> | Extract<DashboardAsyncRenderRequested, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardAsyncRenderResolved, {
+    }> | Extract<DashboardAsyncRenderResolved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardRenderResolved, {
+    }> | Extract<DashboardRenderResolved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillRequested, {
+    }> | Extract<DashboardDrillRequested, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillResolved, {
+    }> | Extract<DashboardDrillResolved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillDownRequested, {
+    }> | Extract<DashboardDrillDownRequested, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillDownResolved, {
+    }> | Extract<DashboardDrillDownResolved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillToInsightRequested, {
+    }> | Extract<DashboardDrillToInsightRequested, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillToInsightResolved, {
+    }> | Extract<DashboardDrillToInsightResolved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillToDashboardRequested, {
+    }> | Extract<DashboardDrillToDashboardRequested, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillToDashboardResolved, {
+    }> | Extract<DashboardDrillToDashboardResolved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillToCustomUrlRequested, {
+    }> | Extract<DashboardDrillToCustomUrlRequested, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillToCustomUrlResolved, {
+    }> | Extract<DashboardDrillToCustomUrlResolved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillToAttributeUrlRequested, {
+    }> | Extract<DashboardDrillToAttributeUrlRequested, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillToAttributeUrlResolved, {
+    }> | Extract<DashboardDrillToAttributeUrlResolved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillToLegacyDashboardRequested, {
+    }> | Extract<DashboardDrillToLegacyDashboardRequested, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardDrillToLegacyDashboardResolved, {
+    }> | Extract<DashboardDrillToLegacyDashboardResolved, {
         type: TErrorEventType;
-    }> | Extract<import("../events").DashboardQueryCompleted<any, any>, {
+    }> | Extract<DashboardQueryCompleted<any, any>, {
         type: TErrorEventType;
     }>) => void) | undefined;
     onBeforeRun?: ((command: TCommand) => void) | undefined;
@@ -2943,13 +2984,13 @@ export const useDashboardWidgetProps: () => DashboardWidgetProps;
 
 // @internal (undocumented)
 export const useDrill: ({ onSuccess, onError, onBeforeRun }?: UseDrillProps) => {
-    run: (drillEvent: import("../../..").IDashboardDrillEvent, drillContext: import("../../..").DashboardDrillContext, correlationId?: string | undefined) => void;
+    run: (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
 // @internal (undocumented)
 export const useDrillDown: ({ onSuccess, onError, onBeforeRun }?: UseDrillDownProps) => {
-    run: (insight: import("@gooddata/sdk-model").IInsight, drillDefinition: import("../../..").IDrillDownDefinition, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2975,7 +3016,7 @@ export interface UseDrillProps {
 
 // @internal (undocumented)
 export const useDrillToAttributeUrl: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToAttributeUrlProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToAttributeUrl, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -2991,7 +3032,7 @@ export interface UseDrillToAttributeUrlProps {
 
 // @internal (undocumented)
 export const useDrillToCustomUrl: ({ onSuccess, onError, onBeforeRun }?: UseDrillToCustomUrlProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToCustomUrl, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -3007,7 +3048,7 @@ export interface UseDrillToCustomUrlProps {
 
 // @internal (undocumented)
 export const useDrillToDashboard: ({ onSuccess, onError, onBeforeRun }?: UseDrillToDashboardProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToDashboard, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -3023,7 +3064,7 @@ export interface UseDrillToDashboardProps {
 
 // @internal (undocumented)
 export const useDrillToInsight: ({ onSuccess, onError, onBeforeRun }?: UseDrillToInsightProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToInsight, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -3039,7 +3080,7 @@ export interface UseDrillToInsightProps {
 
 // @internal (undocumented)
 export const useDrillToLegacyDashboard: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToLegacyDashboardProps) => {
-    run: (drillDefinition: import("@gooddata/sdk-backend-spi").IDrillToLegacyDashboard, drillEvent: import("../../..").IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    run: (drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: "error" | "running" | "success" | undefined;
 };
 
@@ -3120,7 +3161,6 @@ export type WithDrillSelectProps = {
         onDrill: OnDashboardDrill;
     }) => JSX.Element;
 };
-
 
 // (No @packageDocumentation comment for this package)
 

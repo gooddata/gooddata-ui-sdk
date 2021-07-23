@@ -22,7 +22,7 @@ import values from "lodash/values";
 /**
  * Configuration for the ObjRefMap.
  *
- * @internal
+ * @alpha
  */
 export type ObjRefMapConfig<T> = {
     /**
@@ -78,7 +78,7 @@ export type ObjRefMapConfig<T> = {
  * This class addresses the problem by having the `get` method check the type of ObjRef first and then perform
  * lookups into either id to item or uri to item mapping.
  *
- * @internal
+ * @alpha
  */
 export class ObjRefMap<T> {
     public readonly [Symbol.toStringTag]: string = "ObjRefMap";

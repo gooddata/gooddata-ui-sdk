@@ -4,10 +4,14 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
+import { ComponentClass } from 'react';
 import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-backend-spi';
 import { DependencyList } from 'react';
+import { FunctionComponent } from 'react';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -54,6 +58,7 @@ import { ITotalDescriptor } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
+import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public
@@ -72,7 +77,7 @@ export type AnyPlaceholderOf<T> = AnyPlaceholder<T> | PlaceholderOf<T>;
 export class ArithmeticMeasureTitleFactory {
     constructor(locale: ILocale);
     getTitle(arithmeticMeasureProps: IArithmeticMeasureTitleProps, measureTitleProps: IMeasureTitleProps[]): string | null;
-    }
+}
 
 // @public
 export type ArrayOf<T> = T extends any ? T[] : never;
@@ -345,7 +350,7 @@ export const DefaultLocale: ILocale;
 export class DerivedMeasureTitleSuffixFactory {
     constructor(locale: ILocale);
     getSuffix(overTimeComparisonType: OverTimeComparisonType): string;
-    }
+}
 
 // @public (undocumented)
 export type DrillEventIntersectionElementHeader = IAttributeDescriptor | IMeasureDescriptor | ITotalDescriptor | IDrillIntersectionAttributeItem;
@@ -1064,7 +1069,7 @@ export interface IMeasureTitleProps {
 }
 
 // @internal (undocumented)
-export const IntlTranslationsProvider: React_2.FC<import("react-intl").WithIntlProps<ITranslationsProviderProps>> & {
+export const IntlTranslationsProvider: React_2.FC<WithIntlProps<ITranslationsProviderProps>> & {
     WrappedComponent: React_2.ComponentType<ITranslationsProviderProps>;
 };
 
@@ -1317,8 +1322,8 @@ export interface IUsePagedResourceState<TItem> {
 
 // @public
 export type IUsePlaceholderHook<T extends IPlaceholder<any>> = () => [
-    PlaceholderValue<T> | undefined,
-    (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
+PlaceholderValue<T> | undefined,
+(valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
 ];
 
 // @public
@@ -1643,8 +1648,8 @@ export function usePagedResource<TParams, TItem>(resourceFactory: (params: TPara
 
 // @public
 export function usePlaceholder<T extends IPlaceholder<any>>(placeholder?: T): [
-    PlaceholderValue<T> | undefined,
-    (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
+PlaceholderValue<T> | undefined,
+(valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
 ];
 
 // @public
@@ -1756,10 +1761,9 @@ export function withWorkspace<T extends {
 export const WorkspaceProvider: React_2.FC<IWorkspaceProviderProps>;
 
 // @internal
-export const wrapDisplayName: (hocName: string, BaseComponent?: import("react").ComponentClass<any, any> | import("react").FunctionComponent<any> | undefined) => <T>(Component: import("react").ComponentType<T>) => import("react").ComponentType<T>;
+export const wrapDisplayName: (hocName: string, BaseComponent?: ComponentClass<any, any> | FunctionComponent<any> | undefined) => <T>(Component: ComponentType<T>) => ComponentType<T>;
 
 // @public (undocumented)
 export type XirrType = "xirr";
-
 
 ```

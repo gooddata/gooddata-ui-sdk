@@ -1,6 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
+/**
+ * @beta
+ */
 export type GranularityIntlKey = "day" | "week" | "month" | "quarter" | "year";
 
 export const granularityIntlCodes: {

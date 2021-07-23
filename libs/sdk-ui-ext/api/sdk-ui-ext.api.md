@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { AnalyticalBackendError } from '@gooddata/sdk-backend-spi';
 import { DrillDefinition } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
@@ -549,6 +551,5 @@ export function validateDashboardLayoutWidgetSize(currentWidth: number, currentH
     validWidth: number;
     validHeight: number;
 };
-
 
 ```

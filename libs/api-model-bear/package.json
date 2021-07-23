@@ -58,7 +58,7 @@
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
         "@microsoft/api-documenter": "^7.12.13",
-        "@microsoft/api-extractor": "^7.3.8",
+        "@microsoft/api-extractor": "^7.18.4",
         "@types/jest": "^26.0.12",
         "@types/lodash": "^4.14.158",
         "@typescript-eslint/eslint-plugin": "^4.14.2",

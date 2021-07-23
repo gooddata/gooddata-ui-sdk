@@ -98,7 +98,7 @@
         "@gooddata/eslint-config": "^2.1.0",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.12.13",
-        "@microsoft/api-extractor": "^7.3.8",
+        "@microsoft/api-extractor": "^7.18.4",
         "@types/codemirror": "^0.0.95",
         "@types/enzyme-adapter-react-16": "^1.0.5",
         "@types/enzyme": "^3.10.3",

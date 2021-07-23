@@ -5,6 +5,7 @@
 
 // exported only for api-extractor's sake
 export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
+export { ObjRefMap, ObjRefMapConfig } from "./_staging/metadata/objRefMap";
 
 export * from "./model";
 export * from "./presentation";

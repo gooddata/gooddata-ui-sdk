@@ -12,6 +12,11 @@ import {
     formatAbsoluteDateRange,
     formatRelativeDateRange,
 } from "./utils/Translations/DateFilterTitle";
+export {
+    IDateAndMessageTranslator,
+    IDateTranslator,
+    IMessageTranslator,
+} from "./utils/Translations/Translators";
 import {
     DateFilter,
     IDateFilterCallbackProps,
@@ -66,3 +71,4 @@ export {
 } from "./interfaces";
 
 export { defaultDateFilterOptions } from "./constants/config";
+export { GranularityIntlKey } from "./constants/i18n";

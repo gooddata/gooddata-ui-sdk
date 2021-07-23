@@ -4,6 +4,9 @@
 
 ```ts
 
+/// <reference types="mapbox-gl" />
+/// <reference types="react" />
+
 import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { ContentRect } from 'react-measure';
@@ -285,6 +288,5 @@ export type PushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" |
 
 // @public (undocumented)
 export type ZoomChangedCallback = (zoom: number) => void;
-
 
 ```

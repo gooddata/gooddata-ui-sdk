@@ -37,6 +37,10 @@ export {
     IUiRelativeDateFilterForm,
     filterVisibleDateFilterOptions,
     isUiRelativeDateFilterForm,
+    GranularityIntlKey,
+    IDateAndMessageTranslator,
+    IDateTranslator,
+    IMessageTranslator,
 } from "./DateFilter";
 export {
     MeasureValueFilter,

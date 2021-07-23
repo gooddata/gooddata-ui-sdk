@@ -14,7 +14,10 @@ const getReferenceValue = (id: string, references: GdcVisualizationObject.IRefer
 const getReferenceId = (value: string, references: GdcVisualizationObject.IReferenceItems) =>
     Object.keys(references).find((id) => references[id] === value);
 
-type IdGenerator = () => string;
+/**
+ * @internal
+ */
+export type IdGenerator = () => string;
 
 const defaultIdGenerator: IdGenerator = () => uuidv4().replace(/-/g, "");
 
@@ -38,6 +41,9 @@ const traverse = (obj: any, convert: StringTransformation): any => {
     }
 };
 
+/**
+ * @internal
+ */
 export interface IConversionData {
     properties: VisualizationProperties;
     references: GdcVisualizationObject.IReferenceItems;
@@ -45,6 +51,9 @@ export interface IConversionData {
 
 type ConversionFunction = (conversionData: IConversionData, idGenerator: IdGenerator) => IConversionData;
 
+/**
+ * @internal
+ */
 export type ReferenceConverter = (
     conversionData: IConversionData,
     idGenerator?: IdGenerator,
