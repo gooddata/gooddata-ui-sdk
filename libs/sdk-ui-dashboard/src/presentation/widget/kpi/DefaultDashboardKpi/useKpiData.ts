@@ -1,5 +1,4 @@
 // (C) 2020-2021 GoodData Corporation
-import { useEffect } from "react";
 import { FilterContextItem, IAnalyticalBackend, IKpiWidget } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
@@ -24,8 +23,8 @@ import {
 import invariant from "ts-invariant";
 
 import { filterContextItemsToFiltersForWidget } from "../../../../converters";
-import { queryWidgetFilters, useDashboardQueryProcessing } from "../../../../model";
 import { IDashboardFilter } from "../../../../types";
+import { useWidgetFiltersQuery } from "../../common";
 
 interface IUseKpiDataConfig {
     kpiWidget?: IKpiWidget;
@@ -56,18 +55,13 @@ export function useKpiData({
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
 
-    const { run: runFiltersQuery, result } = useDashboardQueryProcessing({
-        queryCreator: queryWidgetFilters,
-    });
+    const { result } = useWidgetFiltersQuery(
+        kpiWidget,
+        filters && kpiWidget && filterContextItemsToFiltersForWidget(filters, kpiWidget),
+    );
 
-    const effectiveFilters = result as IDashboardFilter[];
-
-    useEffect(() => {
-        if (kpiWidget) {
-            // TODO how to prevent reloads in case ignored filter changes?
-            runFiltersQuery(kpiWidget, filters && filterContextItemsToFiltersForWidget(filters, kpiWidget));
-        }
-    }, [kpiWidget, dashboardFilters, filters]);
+    // we only put IDashboardFilters in, so we must get IDashboardFilters out as well
+    const effectiveFilters = result as IDashboardFilter[] | undefined;
 
     const promise =
         kpiWidget && dashboardFilters && effectiveFilters

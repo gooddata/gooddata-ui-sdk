@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useState, CSSProperties } from "react";
+import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
@@ -29,14 +29,12 @@ import {
     selectSettings,
     selectIsExport,
     useDashboardAsyncRender,
-    useDashboardQueryProcessing,
-    queryWidgetFilters,
-    selectFilterContextFilters,
 } from "../../../../model";
 
 import { useResolveDashboardInsightProperties } from "./useResolveDashboardInsightProperties";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
 import { IDashboardInsightProps } from "../types";
+import { useWidgetFiltersQuery } from "../../common";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 
@@ -74,21 +72,12 @@ export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Elem
     const settings = useDashboardSelector(selectSettings);
     const colorPalette = useDashboardSelector(selectColorPalette);
     const isExport = useDashboardSelector(selectIsExport);
-    const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
 
     const {
-        run: runFiltersQuery,
         result: filtersForInsight,
         status: filtersStatus,
         error: filtersError,
-    } = useDashboardQueryProcessing({
-        queryCreator: queryWidgetFilters,
-    });
-
-    useEffect(() => {
-        // TODO how to prevent reloads in case ignored filter changes?
-        runFiltersQuery(widget, insight && insightFilters(insight));
-    }, [widget, dashboardFilters, insight]);
+    } = useWidgetFiltersQuery(widget, insight && insightFilters(insight));
 
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | undefined>();

@@ -20,6 +20,7 @@ const playgroundDefinitions = {
     stg3: ["https://staging3.intgdc.com", "mbuumy476p78ybcceiru61hcyr8i8lo8"],
     developer: ["https://developer.na.gooddata.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp"],
     public: ["https://live-examples-proxy.herokuapp.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp"],
+    reference: ["https://secure.gooddata.com", "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf"],
 };
 
 module.exports = async (env, argv) => {
