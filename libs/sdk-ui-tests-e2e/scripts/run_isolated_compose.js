@@ -4,9 +4,9 @@
 /*
 This file is supposed to run within the Cypress container, controlling the execution of the isolated tests in docker-compose
  */
-const childProcess = require("child_process");
-
 const dotenv = require("dotenv");
+
+const childProcess = require("child_process");
 
 const {
     wiremockStartRecording,
@@ -34,7 +34,7 @@ async function main() {
         const filter = filterArg ? filterArg.slice("--filter=".length) : "";
 
         dotenv.config({ path: ".env" });
-        const { HOST, USER_NAME, PASSWORD } = process.env;
+        const { HOST, USER_NAME, PASSWORD, CYPRESS_HOST } = process.env;
         let { TEST_WORKSPACE_ID } = process.env;
         if (recording && !HOST && !USER_NAME && !PASSWORD && !TEST_WORKSPACE_ID) {
             process.stderr.write(
@@ -65,7 +65,7 @@ async function main() {
 
         const cypressProcess = runCypress(
             false,
-            "http://kpi-dashboards-ui:9500",
+            CYPRESS_HOST,
             wiremockHost,
             recording,
             filter,
@@ -74,13 +74,15 @@ async function main() {
             PASSWORD,
         );
 
+        console.log("Cypress process created.");
+
         cypressProcess.on("exit", async (e) => {
             if (recording) {
                 await wiremockStopRecording(wiremockHost);
                 sanitizeCredentials();
             }
 
-            childProcess.execSync(`node scripts/create_github_report.js`);
+            // childProcess.execSync(`node scripts/create_github_report.js`);
 
             process.exit(e);
         });

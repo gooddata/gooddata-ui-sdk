@@ -16,21 +16,25 @@ function deleteFilesInDir(directory) {
 
 function sanitizeCredentials() {
     try {
+        console.log("sanitizing credentials");
         const stdout = execSync("ls ./recordings/mappings/gdc_account_login*").toString();
+        console.log("stdout", stdout);
         if (stdout) {
             const loginRecordings = stdout.split("\n");
-            loginRecordings.forEach((loginReconding) => {
-                if (loginReconding === "") {
+            console.log("login recordings", loginRecordings);
+            loginRecordings.forEach((loginRecording) => {
+                if (loginRecording === "") {
                     return;
                 }
-                const data = fs.readFileSync(loginReconding);
+                const data = fs.readFileSync(loginRecording);
                 const json = JSON.parse(data);
                 delete json["request"]["bodyPatterns"];
                 delete json["response"]["headers"]["Set-Cookie"];
-                fs.writeFileSync(loginReconding, JSON.stringify(json, null, 2));
+                fs.writeFileSync(loginRecording, JSON.stringify(json, null, 2));
             });
         }
-    } catch {
+    } catch (error) {
+        process.stdout.write("error", error);
         process.stdout.write("Credentials not cleared\n");
     }
 }

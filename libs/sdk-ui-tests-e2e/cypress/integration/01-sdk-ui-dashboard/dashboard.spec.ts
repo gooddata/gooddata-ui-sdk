@@ -3,6 +3,11 @@
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 
+Cypress.on("uncaught:exception", (error) => {
+    console.error("Uncaught excepton cause", error);
+    return false;
+});
+
 describe("Dashboard", () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {

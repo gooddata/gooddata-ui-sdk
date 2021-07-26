@@ -4,9 +4,8 @@ FROM nginx:1.19-alpine
 # you can either change it here, or by using --env PORT=1234 when running the container
 ENV PORT=8080
 
-
-COPY ../nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ../scenarios/build/ /usr/share/nginx/html
+COPY ./docker/nginx.conf.template /etc/nginx/templates/default.conf.template
+COPY ./build/ /usr/share/nginx/html
 
 # Uncomment the lines below if you are setting up HTTPS for localhost
 #

@@ -4,6 +4,7 @@
     "private": true,
     "dependencies": {
         "@gooddata/sdk-backend-bear": "^8.6.0-alpha.10",
+        "@gooddata/sdk-model": "^8.6.0-alpha.10",
         "@gooddata/sdk-ui-dashboard": "^8.6.0-alpha.10",
         "classnames": "^2.3.1",
         "formik": "^2.2.9",

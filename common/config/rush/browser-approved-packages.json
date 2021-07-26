@@ -979,6 +979,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "wait-on",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "webpack",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

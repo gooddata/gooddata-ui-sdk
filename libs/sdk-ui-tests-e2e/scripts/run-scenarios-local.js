@@ -14,7 +14,7 @@ async function main() {
         "-e BACKEND_HOST=staging3.intgdc.com",
         "-e BACKEND_URL=https://staging3.intgdc.com",
         "-v",
-        `${process.env.PWD}/scenarios/build:/usr/share/nginx/html/:ro`,
+        `${process.env.PWD}/scenarios/build:/usr/share/nginx/html/gooddata-ui-sdk:ro`,
         "-v",
         `${process.env.PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro`,
         "-v",
