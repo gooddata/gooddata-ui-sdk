@@ -26,9 +26,7 @@ exports[`setAttributeFilterParentHandler should set the appropriate values in st
 Object {
   "attributeFilter": Object {
     "attributeElements": Object {
-      "uris": Array [
-        "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
-      ],
+      "uris": Array [],
     },
     "displayForm": Object {
       "uri": "/gdc/md/referenceworkspace/obj/1089",
@@ -45,7 +43,7 @@ Object {
         },
       },
     ],
-    "localIdentifier": "c474351d6e26495183447c9bd3a23ffd",
+    "localIdentifier": "8dd5d9818c5d45198cef0faa652b202b",
     "negativeSelection": true,
   },
 }

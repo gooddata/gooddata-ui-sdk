@@ -23,7 +23,7 @@ describe("replace section item handler", () => {
 
         it("should fail if bad section index is provided", async () => {
             const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                replaceSectionItem(1, 0, TestKpiPlaceholderItem, undefined, TestCorrelation),
+                replaceSectionItem(2, 0, TestKpiPlaceholderItem, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

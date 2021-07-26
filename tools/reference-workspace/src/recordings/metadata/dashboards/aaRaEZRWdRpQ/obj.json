@@ -6,13 +6,19 @@
             "description": "",
             "filters": [
                 {
+                    "dateFilter": {
+                        "from": "-6",
+                        "granularity": "GDC.time.date",
+                        "to": "0",
+                        "type": "relative"
+                    }
+                },
+                {
                     "attributeFilter": {
-                        "attributeElements": {
-                            "uris": ["/gdc/md/referenceworkspace/obj/1088/elements?id=460487"]
-                        },
+                        "attributeElements": { "uris": [] },
                         "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
                         "filterElementsBy": [],
-                        "localIdentifier": "c474351d6e26495183447c9bd3a23ffd",
+                        "localIdentifier": "8dd5d9818c5d45198cef0faa652b202b",
                         "negativeSelection": true
                     }
                 },
@@ -38,31 +44,55 @@
                 {
                     "items": [
                         {
-                            "size": { "xl": { "gridWidth": 12 } },
+                            "size": { "xl": { "gridWidth": 2 } },
                             "type": "IDashboardLayoutItem",
                             "widget": {
                                 "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
                                 "description": "",
                                 "drills": [],
-                                "identifier": "abpwk9TZbHkH",
+                                "identifier": "abZ3WTf0ckan",
                                 "ignoreDashboardFilters": [],
-                                "insight": { "uri": "/gdc/md/referenceworkspace/obj/1311" },
-                                "properties": {},
-                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1312" },
-                                "title": "test insight",
-                                "type": "insight",
-                                "uri": "/gdc/md/referenceworkspace/obj/1312"
+                                "kpi": {
+                                    "comparisonDirection": "growIsGood",
+                                    "comparisonType": "previousPeriod",
+                                    "metric": { "uri": "/gdc/md/referenceworkspace/obj/1271" }
+                                },
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1386" },
+                                "title": "Amount",
+                                "type": "kpi",
+                                "uri": "/gdc/md/referenceworkspace/obj/1386"
                             }
-                        },
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                },
+                {
+                    "items": [
                         {
                             "size": { "xl": { "gridWidth": 12 } },
                             "type": "IDashboardLayoutItem",
                             "widget": {
-                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
                                 "description": "",
-                                "drills": [],
+                                "drills": [
+                                    {
+                                        "origin": {
+                                            "measure": {
+                                                "localIdentifier": "31c22194386b408aa80ab90b966e85a7"
+                                            },
+                                            "type": "drillFromMeasure"
+                                        },
+                                        "target": { "identifier": "aeis6NlXcL7X" },
+                                        "transition": "in-place",
+                                        "type": "drillToDashboard"
+                                    }
+                                ],
                                 "identifier": "acMpe9e1gOEC",
-                                "ignoreDashboardFilters": [],
+                                "ignoreDashboardFilters": [
+                                    {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1071" },
+                                        "type": "attributeFilterReference"
+                                    }
+                                ],
                                 "insight": { "uri": "/gdc/md/referenceworkspace/obj/1308" },
                                 "properties": {},
                                 "ref": { "uri": "/gdc/md/referenceworkspace/obj/1310" },
@@ -75,7 +105,6 @@
                             "size": { "xl": { "gridWidth": 4 } },
                             "type": "IDashboardLayoutItem",
                             "widget": {
-                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
                                 "description": "",
                                 "drills": [],
                                 "identifier": "acrpg7NRgQub",
@@ -92,7 +121,7 @@
                             "size": { "xl": { "gridWidth": 6 } },
                             "type": "IDashboardLayoutItem",
                             "widget": {
-                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/392" },
+                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
                                 "description": "",
                                 "drills": [
                                     {
@@ -126,7 +155,7 @@
         "ref": { "uri": "/gdc/md/referenceworkspace/obj/1304" },
         "tags": [],
         "title": "simple dashboard",
-        "updated": "2020-09-24 13:02:44",
+        "updated": "2021-07-22 15:41:43",
         "uri": "/gdc/md/referenceworkspace/obj/1304"
     },
     "references": {
@@ -235,13 +264,22 @@
                             "localIdentifier": "view"
                         }
                     ],
-                    "filters": [],
+                    "filters": [
+                        {
+                            "relativeDateFilter": {
+                                "dataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
+                                "from": -29,
+                                "granularity": "GDC.time.date",
+                                "to": 0
+                            }
+                        }
+                    ],
                     "identifier": "aagaIzlMbxR9",
                     "properties": {},
                     "ref": { "uri": "/gdc/md/referenceworkspace/obj/1297" },
                     "sorts": [],
                     "title": "Test insight",
-                    "updated": "2020-07-28 06:51:01",
+                    "updated": "2021-06-01 20:54:13",
                     "uri": "/gdc/md/referenceworkspace/obj/1297",
                     "visualizationUrl": "local:column"
                 }
@@ -338,101 +376,6 @@
                     "title": "Simple Sorted Table",
                     "updated": "2020-08-16 20:07:15",
                     "uri": "/gdc/md/referenceworkspace/obj/1308",
-                    "visualizationUrl": "local:table"
-                }
-            },
-            {
-                "insight": {
-                    "buckets": [
-                        {
-                            "items": [
-                                {
-                                    "measure": {
-                                        "definition": {
-                                            "measureDefinition": {
-                                                "filters": [],
-                                                "item": { "uri": "/gdc/md/referenceworkspace/obj/1272" }
-                                            }
-                                        },
-                                        "localIdentifier": "0ac5aaf1f86940e4aad88016ae6bb4f8",
-                                        "title": "Won"
-                                    }
-                                },
-                                {
-                                    "measure": {
-                                        "definition": {
-                                            "measureDefinition": {
-                                                "filters": [],
-                                                "item": { "uri": "/gdc/md/referenceworkspace/obj/1271" }
-                                            }
-                                        },
-                                        "localIdentifier": "e5e7e8a107a64aab955b6daba4b2e9d0",
-                                        "title": "Amount"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "measures"
-                        },
-                        {
-                            "items": [
-                                {
-                                    "attribute": {
-                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1055" },
-                                        "localIdentifier": "6d0039fca1c44eb6ad56a2f45d244082"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "columns"
-                        }
-                    ],
-                    "filters": [],
-                    "identifier": "acKwfO4Yg9yo",
-                    "properties": {
-                        "sortItems": [
-                            {
-                                "measureSortItem": {
-                                    "direction": "desc",
-                                    "locators": [
-                                        {
-                                            "attributeLocatorItem": {
-                                                "attributeIdentifier": "6d0039fca1c44eb6ad56a2f45d244082",
-                                                "element": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
-                                            }
-                                        },
-                                        {
-                                            "measureLocatorItem": {
-                                                "measureIdentifier": "e5e7e8a107a64aab955b6daba4b2e9d0"
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    },
-                    "ref": { "uri": "/gdc/md/referenceworkspace/obj/1311" },
-                    "sorts": [
-                        {
-                            "measureSortItem": {
-                                "direction": "desc",
-                                "locators": [
-                                    {
-                                        "attributeLocatorItem": {
-                                            "attributeIdentifier": "6d0039fca1c44eb6ad56a2f45d244082",
-                                            "element": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
-                                        }
-                                    },
-                                    {
-                                        "measureLocatorItem": {
-                                            "measureIdentifier": "e5e7e8a107a64aab955b6daba4b2e9d0"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "title": "test insight",
-                    "updated": "2020-08-12 10:29:13",
-                    "uri": "/gdc/md/referenceworkspace/obj/1311",
                     "visualizationUrl": "local:table"
                 }
             }

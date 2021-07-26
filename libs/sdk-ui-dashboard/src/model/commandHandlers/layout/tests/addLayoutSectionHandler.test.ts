@@ -143,7 +143,7 @@ describe("add layout section handler", () => {
         });
     });
 
-    // Note: the SimpleDashboard contains a single section
+    // Note: the SimpleDashboard contains a single two sections
     describe("for a dashboard with existing sections", () => {
         let Tester: DashboardTester;
         beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
@@ -153,11 +153,11 @@ describe("add layout section handler", () => {
                 addLayoutSection(-1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
-            expect(event.payload.index).toEqual(1);
+            expect(event.payload.index).toEqual(2);
             expect(event.payload.section).toMatchSnapshot();
 
             const layout = selectLayout(Tester.state());
-            expect(layout.sections[1]).toEqual(event.payload.section);
+            expect(layout.sections[2]).toEqual(event.payload.section);
         });
 
         it("should add new first section by using index 0", async () => {
@@ -183,8 +183,8 @@ describe("add layout section handler", () => {
             );
 
             const layout = selectLayout(Tester.state());
-            expect(layout.sections.length).toBe(3);
-            expect(layout.sections[2]).toEqual(lastSectionAdded.payload.section);
+            expect(layout.sections.length).toBe(4);
+            expect(layout.sections[3]).toEqual(lastSectionAdded.payload.section);
             expect(layout.sections[1]).toEqual(middleSectionAdded.payload.section);
         });
 
