@@ -1090,5 +1090,10 @@
         "value": "Items are filtered",
         "comment": "This message is displayed when attribute elements are being filtered out by parent filters",
         "limit": 0
+    },
+    "attributesDropdown.noData": {
+        "value": "This attribute does not have any value.",
+        "comment": "",
+        "limit": 0
     }
 }
