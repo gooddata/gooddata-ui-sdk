@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttribute } from "../attribute";
 import { Identifier } from "../../objRef";
@@ -16,6 +16,7 @@ import { modifySimpleMeasure } from "../measure/factory";
 import isArray from "lodash/isArray";
 import identity from "lodash/identity";
 import findIndex from "lodash/findIndex";
+import intersection from "lodash/intersection";
 
 /**
  * Type representing bucket items - which can be either measure or an attribute.
@@ -104,6 +105,8 @@ export function isBucket(obj: unknown): obj is IBucket {
 // Functions
 //
 
+const AGGREGATION_KEYS = ["Sum", "Count", "Avg", "Min", "Max", "Median", "Runsum"];
+
 /**
  * Creates a new bucket with the provided id and all the specified content.
  *
@@ -125,6 +128,9 @@ export function newBucket(
         if (!i) {
             return;
         }
+
+        const contentErrorMessage = `Contents of a bucket must be either attribute, measure or total.`;
+
         if (isAttribute(i) || isMeasure(i)) {
             items.push(i);
         } else if (isTotal(i)) {
@@ -137,8 +143,25 @@ export function newBucket(
                 } as one of the items for bucket ${localId}.` +
                     "Please make sure that you are not trying to put an array of items into a bucket that only accepts single item.",
             );
+        } else if (typeof i === "object") {
+            if (Object.keys(i).indexOf("Default") > -1) {
+                invariant(
+                    false,
+                    `${contentErrorMessage} It looks like you meant to use of the following display forms: ${Object.keys(
+                        i,
+                    )}.`,
+                );
+            }
+            const keys = intersection(AGGREGATION_KEYS, Object.keys(i));
+            if (!isEmpty(keys)) {
+                invariant(
+                    false,
+                    `${contentErrorMessage} It looks like you meant to use of the following measures: ${keys}.`,
+                );
+            }
+            invariant(false, `${contentErrorMessage} Got unknown content object.`);
         } else {
-            invariant(false, `Contents of a bucket must be either attribute, measure or total. Got: ${i}`);
+            invariant(false, `${contentErrorMessage} Got ${typeof i} unsupported content.`);
         }
     });
 
