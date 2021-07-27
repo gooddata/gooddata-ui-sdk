@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`changeDateFilterSelectionHandler should clear date filter in the state 1`] = `undefined`;
+
 exports[`changeDateFilterSelectionHandler should emit the appropriate events for changed date filter 1`] = `
 Array [
   Object {
@@ -13,15 +15,20 @@ Array [
 ]
 `;
 
+exports[`changeDateFilterSelectionHandler should set the date filter in the state when a date filter is added 1`] = `
+Object {
+  "dateFilter": Object {
+    "from": -3,
+    "granularity": "GDC.time.month",
+    "to": 0,
+    "type": "relative",
+  },
+}
+`;
+
 exports[`changeDateFilterSelectionHandler should set the date filter in the state when a date filter is changed 1`] = `
 Object {
   "dateFilter": Object {
-    "dateFilter": Object {
-      "from": "-6",
-      "granularity": "GDC.time.date",
-      "to": "0",
-      "type": "relative",
-    },
     "from": -3,
     "granularity": "GDC.time.month",
     "to": 0,
