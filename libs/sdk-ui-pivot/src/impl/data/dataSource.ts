@@ -233,7 +233,8 @@ export class AgGridDatasource implements IDatasource {
             result
                 .readWindow([startRow, 0], [endRow - startRow, COLS_PER_PAGE])
                 .then((data) => {
-                    this.processData(DataViewFacade.for(data), params);
+                    const dataView = this.config.dataViewTransform(data);
+                    this.processData(DataViewFacade.for(dataView), params);
                 })
                 .catch((err) => {
                     // eslint-disable-next-line no-console
