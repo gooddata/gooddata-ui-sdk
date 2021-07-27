@@ -9,7 +9,6 @@ import {
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardAttributeFilterParent,
-    IDashboardDateFilter,
     IFilterContextDefinition,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
@@ -65,15 +64,14 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
         }
     } else if (existingFilterIndex >= 0) {
         const { type, granularity, from, to } = action.payload;
-        state.filterContext.filters[existingFilterIndex] = {
-            dateFilter: {
-                ...(state.filterContext.filters[existingFilterIndex] as IDashboardDateFilter),
-                granularity,
-                type,
-                from,
-                to,
-            },
-        };
+        const dateFilter = state.filterContext.filters[existingFilterIndex];
+
+        if (isDashboardDateFilter(dateFilter)) {
+            dateFilter.dateFilter.type = type;
+            dateFilter.dateFilter.granularity = granularity;
+            dateFilter.dateFilter.from = from;
+            dateFilter.dateFilter.to = to;
+        }
     } else {
         const { type, granularity, from, to } = action.payload;
         state.filterContext.filters.unshift({
