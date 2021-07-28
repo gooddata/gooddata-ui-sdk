@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     applyRatioRule,
@@ -18,7 +18,7 @@ import {
     IBucket,
     bucketModifyItems,
 } from "../index";
-import { Account, Activity, Velocity, Won } from "../../../../__mocks__/model";
+import { Account, Activity, Velocity, Won, Duration } from "../../../../__mocks__/model";
 import { InvariantError } from "ts-invariant";
 import { ITotal, newTotal } from "../../base/totals";
 import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute";
@@ -51,6 +51,26 @@ describe("newBucket", () => {
 
     it("should throw if content is invalid type", () => {
         expect(() => newBucket("invalidBucket", Won, {} as any, Account.Name)).toThrowError(InvariantError);
+    });
+
+    it("should throw error if content invalid object containing valid aggregations", () => {
+        expect(() =>
+            newBucket("invalidBucket", Duration as any, {} as any, Account.Name),
+        ).toThrowErrorMatchingSnapshot();
+    });
+
+    it("should throw error if attribute has more than one display forms", () => {
+        expect(() =>
+            newBucket("invalidBucket", Duration.Sum, Activity as any),
+        ).toThrowErrorMatchingSnapshot();
+    });
+
+    it("should throw if unknown object", () => {
+        expect(() => newBucket("invalidBucket", {} as any)).toThrowErrorMatchingSnapshot();
+    });
+
+    it("should throw if content not an object", () => {
+        expect(() => newBucket("invalidBucket", "string" as any)).toThrowErrorMatchingSnapshot();
     });
 });
 

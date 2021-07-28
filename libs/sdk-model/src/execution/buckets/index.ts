@@ -1,6 +1,13 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttribute } from "../attribute";
+import {
+    anyAttribute,
+    attributeIdentifier,
+    AttributePredicate,
+    IAttribute,
+    idMatchAttribute,
+    isAttribute,
+} from "../attribute";
 import { Identifier } from "../../objRef";
 import {
     anyMeasure,
@@ -8,6 +15,7 @@ import {
     IMeasure,
     isMeasure,
     isSimpleMeasure,
+    measureIdentifier,
     MeasurePredicate,
 } from "../measure";
 import { isTotal, ITotal } from "../base/totals";
@@ -16,6 +24,8 @@ import { modifySimpleMeasure } from "../measure/factory";
 import isArray from "lodash/isArray";
 import identity from "lodash/identity";
 import findIndex from "lodash/findIndex";
+import intersection from "lodash/intersection";
+import stringify from "json-stable-stringify";
 
 /**
  * Type representing bucket items - which can be either measure or an attribute.
@@ -104,6 +114,33 @@ export function isBucket(obj: unknown): obj is IBucket {
 // Functions
 //
 
+const AGGREGATION_KEYS = ["Sum", "Count", "Avg", "Min", "Max", "Median", "Runsum"];
+
+function getIdentifier(obj: any): string | undefined {
+    if (isMeasure(obj)) {
+        return measureIdentifier(obj);
+    }
+
+    if (isAttribute(obj)) {
+        return attributeIdentifier(obj);
+    }
+
+    return undefined;
+}
+
+function getAttributeDisplayFormIdentifiers(obj: any): any[] {
+    const result = [];
+    for (const objKey of Object.keys(obj)) {
+        const identifier = getIdentifier(obj[objKey]);
+        if (identifier) {
+            result.push({
+                [objKey]: identifier,
+            });
+        }
+    }
+    return result;
+}
+
 /**
  * Creates a new bucket with the provided id and all the specified content.
  *
@@ -125,6 +162,9 @@ export function newBucket(
         if (!i) {
             return;
         }
+
+        const contentErrorMessage = `Contents of a bucket must be either attribute, measure or total.`;
+
         if (isAttribute(i) || isMeasure(i)) {
             items.push(i);
         } else if (isTotal(i)) {
@@ -137,8 +177,34 @@ export function newBucket(
                 } as one of the items for bucket ${localId}.` +
                     "Please make sure that you are not trying to put an array of items into a bucket that only accepts single item.",
             );
+        } else if (typeof i === "object") {
+            if (Object.keys(i).indexOf("Default") > -1) {
+                const identifiers = getAttributeDisplayFormIdentifiers(i).map((identifier) => {
+                    const k = Object.keys(identifier)[0];
+                    const value = identifier[k];
+                    return `${k}: ${value}`;
+                });
+                invariant(
+                    false,
+                    `${contentErrorMessage} It looks like you used an attribute from generated metadata containing more than one display form. Use one of the following display forms instead: ${identifiers.join(
+                        ", ",
+                    )}.`,
+                );
+            }
+            const keys = intersection(AGGREGATION_KEYS, Object.keys(i));
+            if (!isEmpty(keys)) {
+                const identifier = getIdentifier(i[keys[0]]);
+
+                invariant(
+                    false,
+                    `${contentErrorMessage} It looks like you used an object ${identifier} from generated metadata. You need to use one of the following aggregation functions instead: ${keys.join(
+                        ", ",
+                    )}.`,
+                );
+            }
+            invariant(false, `${contentErrorMessage} Got unknown content object: ${stringify(i)}.`);
         } else {
-            invariant(false, `Contents of a bucket must be either attribute, measure or total. Got: ${i}`);
+            invariant(false, `${contentErrorMessage} Got unsupported content of type ${typeof i}: ${i}.`);
         }
     });
 
