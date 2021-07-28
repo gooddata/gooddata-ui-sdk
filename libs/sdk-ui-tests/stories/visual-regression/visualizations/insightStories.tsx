@@ -37,6 +37,7 @@ import keyBy from "lodash/keyBy";
 import sortBy from "lodash/sortBy";
 import values from "lodash/values";
 import { PlugVizStories } from "../../_infra/storyGroups";
+import { wrapWithTheme, theme } from "../themeWrapper";
 
 /*
  * Code in this file generates stories that render test scenarios using pluggable visualizations.
@@ -160,12 +161,25 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
     const visClass = createVisualizationClass(insight);
     const gdcConfig = createGdcConfig(backend, testScenario);
 
+    const screenshotWrapper = (child: any) =>
+        withScreenshot(child, {
+            clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
+            readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
+            postInteractionWait: 200,
+        });
+
+    const wrapper = testScenario.tags.includes("themed")
+        ? (child: any) => screenshotWrapper(wrapWithTheme(child)) // since themes are global anyway, wrap only once
+        : (child: any) => screenshotWrapper(child);
+
+    const effectiveTheme = testScenario.tags.includes("themed") ? theme : undefined;
+
     /*
      * Note: for KD rendering the story passes width&height explicitly. this is to emulate plug vis behavior where
      * context sets/determines both and sends them down.
      */
     return () => {
-        return withScreenshot(
+        return wrapper(
             <ScreenshotReadyWrapper className="plugviz-report" resolver={ReportReadyResolver}>
                 <h3>
                     {insightTitle(insight)} ({insightId(insight)})
@@ -185,6 +199,7 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             onLoadingChanged={action("onLoadingChanged")}
                             featureFlags={settings}
                             config={gdcConfig}
+                            // AD does not support theming, so do not use the theme prop there
                         />
                     </div>
 
@@ -205,6 +220,7 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             configPanelClassName={DoNotRenderConfigPanel}
                             featureFlags={settings}
                             config={gdcConfig}
+                            theme={effectiveTheme}
                         />
                     </div>
 
@@ -225,6 +241,7 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             configPanelClassName={DoNotRenderConfigPanel}
                             featureFlags={settings}
                             config={gdcConfig}
+                            theme={effectiveTheme}
                         />
                     </div>
 
@@ -245,15 +262,11 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             configPanelClassName={DoNotRenderConfigPanel}
                             featureFlags={settings}
                             config={gdcConfig}
+                            theme={effectiveTheme}
                         />
                     </div>
                 </div>
             </ScreenshotReadyWrapper>,
-            {
-                clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
-                readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
-                postInteractionWait: 200,
-            },
         );
     };
 }

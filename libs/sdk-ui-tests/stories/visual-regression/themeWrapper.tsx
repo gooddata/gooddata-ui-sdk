@@ -8,7 +8,7 @@ import { ITheme } from "@gooddata/sdk-backend-spi";
 import "./themeWrapper.scss";
 
 const workspace = "testWorkspace";
-const theme: ITheme = {
+export const theme: ITheme = {
     palette: {
         primary: {
             base: "#009882",
