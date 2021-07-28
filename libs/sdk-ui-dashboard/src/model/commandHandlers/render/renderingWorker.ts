@@ -155,7 +155,6 @@ function* waitForAsyncRenderResolution(id: string, config: RenderingWorkerConfig
     const maxRetries = 3;
     let retries = 0;
     const renderResolvedChannel = yield actionChannel(isAsyncRenderResolvedEvent(id));
-    const renderRequestedChannel = yield actionChannel(isAsyncRenderRequestedEvent(id));
 
     while (true) {
         yield take(renderResolvedChannel);
@@ -165,7 +164,7 @@ function* waitForAsyncRenderResolution(id: string, config: RenderingWorkerConfig
         // (e.g. by data received from PluggableVisualization pushData callback)
         const { timeout } = yield race({
             timeout: call(wait, config.asyncRenderResolvedTimeout),
-            anotherExecution: take(renderRequestedChannel),
+            anotherExecution: take(isAsyncRenderRequestedEvent(id)),
         });
 
         retries += 1;

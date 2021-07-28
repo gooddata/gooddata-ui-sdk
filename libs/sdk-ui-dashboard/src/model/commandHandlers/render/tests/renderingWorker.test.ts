@@ -77,6 +77,18 @@ describe("renderingWorker", () => {
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
         });
 
+        it("should emit render resolved after async rendering resolution, even if the component requested async rendering multiple times before the resolution", async () => {
+            const componentId = "component";
+            await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
+            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            Tester.dispatch(requestAsyncRender(componentId));
+            await Tester.wait(asyncRenderRequestedTimeout);
+            Tester.dispatch(requestAsyncRender(componentId));
+            Tester.dispatch(resolveAsyncRender(componentId));
+            await Tester.waitFor("GDC.DASH/EVT.RENDER.RESOLVED", asyncRenderResolvedTimeout);
+            expect(Tester.emittedEventsDigest()).toMatchSnapshot();
+        });
+
         it("should not emit render resolved, when async rendering is not resolved", async () => {
             const componentId = "component";
             await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
