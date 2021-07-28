@@ -39,6 +39,7 @@ import { userInteractionHandler } from "./userInteraction/userInteractionHandler
 import { requestAsyncRenderHandler } from "./render/requestAsyncRenderHandler";
 import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler";
 import { changeInsightWidgetHeaderHandler } from "./widgets/changeInsightWidgetHeaderHandler";
+import { modifyDrillsForInsightWidgetHandler } from "./widgets/modifyDrillsForInsightWidgetHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -74,7 +75,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT": unhandledCommand,
-    "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": modifyDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": unhandledCommand,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,

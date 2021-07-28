@@ -12,7 +12,10 @@ import { IDashboardEvent } from "./base";
 export interface DrillTargetsAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL_TARGETS.ADDED";
     readonly payload: {
-        readonly widgetRef: ObjRef;
+        /**
+         * Reference to Insight Widget
+         */
+        readonly ref: ObjRef;
         readonly availableDrillTargets: IAvailableDrillTargets;
     };
 }
@@ -20,7 +23,7 @@ export interface DrillTargetsAdded extends IDashboardEvent {
 /**
  * Create DrillTargetsAdded {@link DrillTargetsAdded} event.
  *
- * @param widgetRef - Unique widget ref
+ * @param ref - Unique widget ref
  * @param availableDrillTargets - Available widget drill targets {@link @gooddata/sdk-ui#IAvailableDrillTargets}
  * @param  correlationId - correlationId
  * @returns - DrillTargetsAdded command
@@ -29,7 +32,7 @@ export interface DrillTargetsAdded extends IDashboardEvent {
  */
 export function drillTargetsAdded(
     ctx: DashboardContext,
-    widgetRef: ObjRef,
+    ref: ObjRef,
     availableDrillTargets: IAvailableDrillTargets,
     correlationId?: string,
 ): DrillTargetsAdded {
@@ -38,7 +41,7 @@ export function drillTargetsAdded(
         ctx,
         correlationId,
         payload: {
-            widgetRef,
+            ref,
             availableDrillTargets,
         },
     };

@@ -8,7 +8,6 @@ import { CreateAlert } from "../../commands/alerts";
 import { alertCreated } from "../../events/alerts";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { alertsActions } from "../../state/alerts";
-import { internalErrorOccurred } from "../../events/general";
 
 function createAlert(
     ctx: DashboardContext,
@@ -23,24 +22,9 @@ export function* createAlertHandler(ctx: DashboardContext, cmd: CreateAlert): Sa
     // eslint-disable-next-line no-console
     console.debug("handling create alert", cmd, "in context", ctx);
 
-    try {
-        const alert: PromiseFnReturnType<typeof createAlert> = yield call(
-            createAlert,
-            ctx,
-            cmd.payload.alert,
-        );
+    const alert: PromiseFnReturnType<typeof createAlert> = yield call(createAlert, ctx, cmd.payload.alert);
 
-        yield put(alertsActions.addAlert(alert));
+    yield put(alertsActions.addAlert(alert));
 
-        yield dispatchDashboardEvent(alertCreated(ctx, alert, cmd.correlationId));
-    } catch (e) {
-        yield dispatchDashboardEvent(
-            internalErrorOccurred(
-                ctx,
-                "An unexpected error has occurred while creating alert",
-                e,
-                cmd.correlationId,
-            ),
-        );
-    }
+    yield dispatchDashboardEvent(alertCreated(ctx, alert, cmd.correlationId));
 }

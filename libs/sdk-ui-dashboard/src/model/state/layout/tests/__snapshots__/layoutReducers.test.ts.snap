@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`layout slice reducer should correctly handle remove section and create undo entry 1`] = `
+exports[`layout slice reducer removeSection action should correctly handle remove section and create undo entry 1`] = `
 Object {
   "undoPointer": 0,
   "undoStack": Array [
@@ -313,6 +313,98 @@ Object {
             ],
             "type": "IDashboardLayoutSection",
           },
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`layout slice reducer replaceWidgetDrill action should correctly handle replace widget drill and create undo entry 1`] = `
+Object {
+  "undoPointer": 0,
+  "undoStack": Array [
+    Object {
+      "cmd": Object {
+        "correlationId": "correlation",
+        "payload": Object {
+          "drills": Array [
+            Object {
+              "origin": Object {
+                "measure": Object {
+                  "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
+                },
+                "type": "drillFromMeasure",
+              },
+              "target": Object {
+                "identifier": "aeis6NlXcL7X",
+              },
+              "transition": "in-place",
+              "type": "drillToDashboard",
+            },
+          ],
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1310",
+          },
+        },
+        "type": "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
+      },
+      "redoPatches": Array [
+        Object {
+          "op": "replace",
+          "path": Array [
+            "layout",
+            "sections",
+            1,
+            "items",
+            0,
+            "widget",
+            "drills",
+          ],
+          "value": Array [
+            Object {
+              "origin": Object {
+                "measure": Object {
+                  "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
+                },
+                "type": "drillFromMeasure",
+              },
+              "target": Object {
+                "identifier": "aeis6NlXcL7X",
+              },
+              "transition": "in-place",
+              "type": "drillToDashboard",
+            },
+          ],
+        },
+      ],
+      "undoPatches": Array [
+        Object {
+          "op": "replace",
+          "path": Array [
+            "layout",
+            "sections",
+            1,
+            "items",
+            0,
+            "widget",
+            "drills",
+          ],
+          "value": Array [
+            Object {
+              "origin": Object {
+                "measure": Object {
+                  "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
+                },
+                "type": "drillFromMeasure",
+              },
+              "target": Object {
+                "identifier": "aeis6NlXcL7X",
+              },
+              "transition": "in-place",
+              "type": "drillToDashboard",
+            },
+          ],
         },
       ],
     },

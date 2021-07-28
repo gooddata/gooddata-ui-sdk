@@ -6,7 +6,7 @@ const drillTargetsSlice = createSlice({
     name: "drillTargets",
     initialState: drillTargetsAdapter.getInitialState(),
     reducers: {
-        addDrillTargets: drillTargetsAdapter.addOne,
+        addDrillTargets: drillTargetsAdapter.upsertOne,
     },
 });
 

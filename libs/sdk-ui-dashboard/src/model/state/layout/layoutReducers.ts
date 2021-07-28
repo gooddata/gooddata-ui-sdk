@@ -4,6 +4,7 @@ import { LayoutState } from "./layoutState";
 import {
     IDashboardLayout,
     IDashboardLayoutSectionHeader,
+    InsightDrillDefinition,
     isInsightWidget,
     isKpiWidget,
 } from "@gooddata/sdk-backend-spi";
@@ -19,6 +20,7 @@ import { addArrayElements, moveArrayElement, removeArrayElement } from "../../ut
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { WidgetHeader } from "../../types/widgetTypes";
 import flatMap from "lodash/flatMap";
+import { WritableDraft } from "immer/dist/internal";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 
@@ -237,19 +239,32 @@ const replaceWidgetHeader: LayoutReducer<ReplaceWidgetHeader> = (state, action) 
     invariant(state.layout);
 
     const { header, ref: widgetRef } = action.payload;
-    const allWidgets = flatMap(state.layout.sections, (section) => section.items.map((item) => item.widget));
-    const widget = allWidgets.find((w) => {
-        // defer type checks until the actual widget is found
-        const ref: ObjRef | undefined = w && (w as any).ref;
 
-        return ref && areObjRefsEqual(ref, widgetRef);
-    });
+    const widget = getWidgetByRef(state, widgetRef);
 
     // this means command handler did not correctly validate that the widget exists before dispatching the
     // reducer action
     invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
 
     widget.title = header.title ?? "";
+};
+
+type ReplaceWidgetDrillDefinitions = {
+    ref: ObjRef;
+    drillDefinitions: InsightDrillDefinition[];
+};
+
+const replaceWidgetDrill: LayoutReducer<ReplaceWidgetDrillDefinitions> = (state, action) => {
+    invariant(state.layout);
+
+    const { drillDefinitions, ref: widgetRef } = action.payload;
+    const widget = getWidgetByRef(state, widgetRef);
+
+    // this means command handler did not correctly validate that the widget exists before dispatching the
+    // reducer action
+    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
+
+    widget.drills = drillDefinitions ?? [];
 };
 
 export const layoutReducers = {
@@ -263,5 +278,22 @@ export const layoutReducers = {
     removeSectionItem: withUndo(removeSectionItem),
     replaceSectionItem: withUndo(replaceSectionItem),
     replaceWidgetHeader: withUndo(replaceWidgetHeader),
+    replaceWidgetDrills: withUndo(replaceWidgetDrill),
     undoLayout: undoReducer,
+};
+
+// reducer helpers
+
+const getWidgetByRef = (state: WritableDraft<LayoutState>, widgetRef: ObjRef) => {
+    const allWidgets = flatMap(state?.layout?.sections, (section) =>
+        section.items.map((item) => item.widget),
+    );
+
+    const widget = allWidgets.find((w) => {
+        // defer type checks until the actual widget is found
+        const ref: ObjRef | undefined = w && (w as any).ref;
+
+        return ref && areObjRefsEqual(ref, widgetRef);
+    });
+    return widget;
 };

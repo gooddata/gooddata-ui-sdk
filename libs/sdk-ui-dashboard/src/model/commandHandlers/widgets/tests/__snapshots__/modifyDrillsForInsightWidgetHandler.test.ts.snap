@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`modifyDrillsForInsightWidgetHandler modify should emit the appropriate events for modify drill for Insight Widget command 1`] = `
+Array [
+  Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
+  },
+]
+`;
+
+exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill has invalid attribute origin 1`] = `
+Object {
+  "message": "Invalid drill origin for InsightDrillDefinition: {\\"origin\\":{\\"attribute\\":{\\"localIdentifier\\":\\"some origin\\"},\\"type\\":\\"drillFromAttribute\\"},\\"target\\":{\\"identifier\\":\\"aeis6NlXcL7X\\"},\\"transition\\":\\"in-place\\",\\"type\\":\\"drillToDashboard\\"}. Error: InsightDrillDefinition origin is not valid attribute drillTarget",
+  "reason": "USER_ERROR",
+}
+`;
+
+exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill has invalid measure origin 1`] = `
+Object {
+  "message": "Invalid drill origin for InsightDrillDefinition: {\\"origin\\":{\\"measure\\":{\\"localIdentifier\\":\\"some origin\\"},\\"type\\":\\"drillFromMeasure\\"},\\"target\\":{\\"identifier\\":\\"aeis6NlXcL7X\\"},\\"transition\\":\\"in-place\\",\\"type\\":\\"drillToDashboard\\"}. Error: InsightDrillDefinition origin is not valid measure drillTarget",
+  "reason": "USER_ERROR",
+}
+`;
+
+exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill targets are not set 1`] = `
+Object {
+  "message": "Drill targets not set",
+  "reason": "USER_ERROR",
+}
+`;
+
+exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills of kpi widget 1`] = `
+Object {
+  "message": "Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1386\\"} exists but is not an insight widget.",
+  "reason": "USER_ERROR",
+}
+`;
+
+exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills of non-existent widget 1`] = `
+Object {
+  "message": "Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}.",
+  "reason": "USER_ERROR",
+}
+`;

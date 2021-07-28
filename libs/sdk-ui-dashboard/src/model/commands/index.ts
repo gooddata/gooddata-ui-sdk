@@ -153,7 +153,7 @@ export {
     ChangeInsightWidgetInsight,
     changeInsightWidgetInsight,
     ModifyDrillsForInsightWidget,
-    modifyDrillForInsightWidget,
+    modifyDrillsForInsightWidget,
     RemoveDrillsForInsightWidget,
     removeDrillForInsightWidget,
     RemoveDrillsSelector,
