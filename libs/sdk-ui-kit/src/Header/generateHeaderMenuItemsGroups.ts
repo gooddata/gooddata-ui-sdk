@@ -55,7 +55,7 @@ export function generateHeaderMenuItemsGroups(
         const pixelPerfectDashboardsItem = {
             key: "gs.header.dashboards",
             className: "s-menu-dashboards",
-            href: `/#s=/gdc/${workspaceRef}s/${workspaceId}|projectDashboardPage|${dashboardIdAndTabId}`,
+            href: `/#s=/gdc/${workspaceRef}s/${workspaceId}|${workspaceRef}DashboardPage|${dashboardIdAndTabId}`,
         };
         const pixelPerfectReportsItem = {
             key: "gs.header.reports",

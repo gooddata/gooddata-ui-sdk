@@ -69,7 +69,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-dashboards",
-                    href: "/#s=/gdc/workspaces/TestWorkspaceId|projectDashboardPage|TestDashboardId|TestTabId",
+                    href: "/#s=/gdc/workspaces/TestWorkspaceId|workspaceDashboardPage|TestDashboardId|TestTabId",
                     key: "gs.header.dashboards",
                 },
                 {
@@ -434,7 +434,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-dashboards",
-                    href: "/#s=/gdc/workspaces/TestWorkspaceId|projectDashboardPage|TestDashboardId|TestTabId",
+                    href: "/#s=/gdc/workspaces/TestWorkspaceId|workspaceDashboardPage|TestDashboardId|TestTabId",
                     key: "gs.header.dashboards",
                 },
                 {
