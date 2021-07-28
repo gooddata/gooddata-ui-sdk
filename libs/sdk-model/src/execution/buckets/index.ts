@@ -186,7 +186,9 @@ export function newBucket(
                 });
                 invariant(
                     false,
-                    `${contentErrorMessage} It looks like you used an attribute from generated metadata containing more than one display forms. Use one of the following display forms instead: ${identifiers}.`,
+                    `${contentErrorMessage} It looks like you used an attribute from generated metadata containing more than one display form. Use one of the following display forms instead: ${identifiers.join(
+                        ", ",
+                    )}.`,
                 );
             }
             const keys = intersection(AGGREGATION_KEYS, Object.keys(i));
@@ -195,7 +197,9 @@ export function newBucket(
 
                 invariant(
                     false,
-                    `${contentErrorMessage} It looks like you used an object ${identifier} from generated metadata. You need to use one of the following aggregation functions instead: ${keys}.`,
+                    `${contentErrorMessage} It looks like you used an object ${identifier} from generated metadata. You need to use one of the following aggregation functions instead: ${keys.join(
+                        ", ",
+                    )}.`,
                 );
             }
             invariant(false, `${contentErrorMessage} Got unknown content object: ${stringify(i)}.`);
