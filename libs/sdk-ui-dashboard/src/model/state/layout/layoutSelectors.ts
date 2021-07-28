@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { ObjRef, objRefToString, serializeObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 import { LayoutState } from "./layoutState";
@@ -9,6 +9,8 @@ import { isInsightPlaceholderWidget, isKpiPlaceholderWidget } from "../../types/
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 import memoize from "lodash/memoize";
 import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
+import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
+import { filterContextItemsToFiltersForWidget } from "../../../converters";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -116,6 +118,28 @@ export const selectWidgetByRef = memoize(
 
             return widgetMap.get(ref);
         });
+    },
+    (ref) => ref && serializeObjRef(ref),
+);
+
+/**
+ * Selects all filters from filter context converted to filters specific for a widget specified by a ref.
+ *
+ * @remarks
+ * This does NOT resolve things like ignored filters for a widget, etc.
+ *
+ * @internal
+ */
+export const selectAllFiltersForWidgetByRef = memoize(
+    (ref: ObjRef) => {
+        return createSelector(
+            selectWidgetByRef(ref),
+            selectFilterContextFilters,
+            (widget, dashboardFilters) => {
+                invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+                return filterContextItemsToFiltersForWidget(dashboardFilters, widget);
+            },
+        );
     },
     (ref) => ref && serializeObjRef(ref),
 );

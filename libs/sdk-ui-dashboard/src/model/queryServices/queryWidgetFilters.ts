@@ -26,7 +26,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { QueryWidgetFilters } from "../queries/widgets";
-import { selectWidgetByRef } from "../state/layout/layoutSelectors";
+import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../state/layout/layoutSelectors";
 import { selectInsightByRef } from "../state/insights/insightsSelectors";
 import { invalidQueryArguments } from "../events/general";
 import {
@@ -39,8 +39,6 @@ import {
     IWidget,
 } from "@gooddata/sdk-backend-spi";
 import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-backend-spi";
-import { selectFilterContextFilters } from "../state/filterContext/filterContextSelectors";
-import { filterContextItemsToFiltersForWidget } from "../../converters";
 import compact from "lodash/compact";
 import groupBy from "lodash/groupBy";
 import last from "lodash/last";
@@ -321,14 +319,6 @@ function resolveDateFilters(allDateFilterDateDatasetPairs: IFilterDateDatasetPai
         .filter((item) => !isAllTimeDateFilter(item));
 }
 
-function* getWidgetAwareDashboardFilters(widget: IWidget): SagaIterator<IFilter[]> {
-    // convert all the filter context items to "normal" filters in context of given widget
-    const dashboardFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
-        selectFilterContextFilters,
-    );
-    return filterContextItemsToFiltersForWidget(dashboardFilters, widget);
-}
-
 function* queryForInsightWidget(
     ctx: DashboardContext,
     widget: IInsightWidget,
@@ -347,9 +337,9 @@ function* queryForInsightWidget(
         );
     }
 
-    const widgetAwareDashboardFilters: SagaReturnType<typeof getWidgetAwareDashboardFilters> = yield call(
-        getWidgetAwareDashboardFilters,
-        widget,
+    const widgetAwareDashboardFiltersSelector = selectAllFiltersForWidgetByRef(widget.ref);
+    const widgetAwareDashboardFilters: ReturnType<typeof widgetAwareDashboardFiltersSelector> = yield select(
+        widgetAwareDashboardFiltersSelector,
     );
 
     // resolve date filters and other filters separately as the logic there is quite different
@@ -375,9 +365,9 @@ function* queryForKpiWidget(
     widget: IKpiWidget,
     widgetFilterOverrides: IFilter[] | undefined,
 ): SagaIterator<IFilter[]> {
-    const widgetAwareDashboardFilters: SagaReturnType<typeof getWidgetAwareDashboardFilters> = yield call(
-        getWidgetAwareDashboardFilters,
-        widget,
+    const widgetAwareDashboardFiltersSelector = selectAllFiltersForWidgetByRef(widget.ref);
+    const widgetAwareDashboardFilters: ReturnType<typeof widgetAwareDashboardFiltersSelector> = yield select(
+        widgetAwareDashboardFiltersSelector,
     );
 
     // resolve date filters and other filters separately as the logic there is quite different
