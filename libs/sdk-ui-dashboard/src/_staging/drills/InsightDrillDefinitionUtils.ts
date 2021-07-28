@@ -4,6 +4,7 @@ import { InsightDrillDefinition, isDrillFromAttribute, isDrillFromMeasure } from
 import { isLocalIdRef, ObjRefInScope } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { IDrillDownDefinition } from "../../types";
+import { RemoveDrillsSelector } from "../../model/commands/insight";
 
 export function getDrillOriginLocalIdentifier(
     drillDefinition: InsightDrillDefinition | IDrillDownDefinition,
@@ -77,4 +78,24 @@ export function existsDrillDefinitionInArray(
     return drillDefinitionArray.some((x) => {
         return drillId === getDrillOriginLocalIdentifier(x);
     });
+}
+
+export function validateDrillDefinitionByLocalIdentifier(
+    ref: ObjRefInScope,
+    drillDefinitionArray: InsightDrillDefinition[] = [],
+): InsightDrillDefinition {
+    const localIdentifier: string = getLocalIdentifierOrDie(ref);
+    const result = drillDefinitionArray.find((item) => {
+        return localIdentifier === getDrillOriginLocalIdentifier(item);
+    });
+
+    if (!result) {
+        throw new Error("Cannot find drill definition specified by local identifier");
+    }
+
+    return result;
+}
+
+export function isAllDrillSelector(obj: RemoveDrillsSelector): obj is "*" {
+    return obj === "*";
 }

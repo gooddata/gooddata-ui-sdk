@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
-import { ObjRef, VisualizationProperties } from "@gooddata/sdk-model";
+import { ObjRef, ObjRefInScope, VisualizationProperties } from "@gooddata/sdk-model";
 import { WidgetFilterSettings, WidgetHeader } from "../types/widgetTypes";
 import { InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
 
@@ -290,7 +290,7 @@ export function modifyDrillsForInsightWidget(
 /**
  * @alpha
  */
-export type RemoveDrillsSelector = ObjRef[] | "*";
+export type RemoveDrillsSelector = ObjRefInScope[] | "*";
 
 /**
  * @alpha
@@ -304,9 +304,9 @@ export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
         readonly ref: ObjRef;
 
         /**
-         * Specify measures whose drills to remove or '*' to remove all defined drills.
+         * Specify measure or attribute localIdentifiers whose drills to remove or '*' to remove all defined drills.
          */
-        readonly measures?: RemoveDrillsSelector;
+        readonly origins: RemoveDrillsSelector;
     };
 }
 
@@ -316,15 +316,15 @@ export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
  *
  *
  * @param ref - reference of insight widget whose drill should be removed
- * @param measure - measure whose drill definition should be removed
+ * @param origins - measure or attribute localIdentifiers whose drill definitions should be removed
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
  */
-export function removeDrillForInsightWidget(
+export function removeDrillsForInsightWidget(
     ref: ObjRef,
-    measure: ObjRef,
+    origins: RemoveDrillsSelector,
     correlationId?: string,
 ): RemoveDrillsForInsightWidget {
     return {
@@ -332,7 +332,7 @@ export function removeDrillForInsightWidget(
         correlationId,
         payload: {
             ref,
-            measures: [measure],
+            origins,
         },
     };
 }
