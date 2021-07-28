@@ -125,12 +125,12 @@ function getIdentifier(obj: any): string | undefined {
         return attributeIdentifier(obj);
     }
 
-    return;
+    return undefined;
 }
 
 function getAttributeDisplayFormIdentifiers(obj: any): any[] {
     const result = [];
-    for (let objKey of Object.keys(obj)) {
+    for (const objKey of Object.keys(obj)) {
         const identifier = getIdentifier(obj[objKey]);
         if (identifier) {
             result.push({
@@ -179,14 +179,14 @@ export function newBucket(
             );
         } else if (typeof i === "object") {
             if (Object.keys(i).indexOf("Default") > -1) {
+                const identifiers = getAttributeDisplayFormIdentifiers(i).map((identifier) => {
+                    const k = Object.keys(identifier)[0];
+                    const value = identifier[k];
+                    return `${k}: ${value}`;
+                });
                 invariant(
                     false,
-                    `${contentErrorMessage} It looks like you used an attribute from generated metadata containing more than one display forms. Use one of the following display forms instead: ${getAttributeDisplayFormIdentifiers(
-                        i,
-                    ).map((identifier) => {
-                        const k = Object.keys(identifier)[0];
-                        return `${k}: ${identifier[k]}`;
-                    })}.`,
+                    `${contentErrorMessage} It looks like you used an attribute from generated metadata containing more than one display forms. Use one of the following display forms instead: ${identifiers}.`,
                 );
             }
             const keys = intersection(AGGREGATION_KEYS, Object.keys(i));
