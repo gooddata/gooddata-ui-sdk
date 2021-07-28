@@ -155,7 +155,7 @@ export {
     ModifyDrillsForInsightWidget,
     modifyDrillsForInsightWidget,
     RemoveDrillsForInsightWidget,
-    removeDrillForInsightWidget,
+    removeDrillsForInsightWidget,
     RemoveDrillsSelector,
     RefreshInsightWidget,
     refreshInsightWidget,

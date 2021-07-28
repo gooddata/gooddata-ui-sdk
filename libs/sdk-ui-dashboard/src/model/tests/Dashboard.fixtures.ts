@@ -169,9 +169,10 @@ export function createTestInsightItem(insight: IInsight): IDashboardLayoutItem<I
 /**
  * localIdentifier of Won Measure of Simple SortedTable Widget on Simple Dashboard
  */
-const SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier = "31c22194386b408aa80ab90b966e85a7";
+export const SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier = "31c22194386b408aa80ab90b966e85a7";
 
-const SimpleDashboardSimpleSortedTableProductAttributeLocalIdentifier = "3b196b9f8de04b61ba37762fa28fcf4f";
+export const SimpleDashboardSimpleSortedTableProductAttributeLocalIdentifier =
+    "3b196b9f8de04b61ba37762fa28fcf4f";
 
 /**
  * This mock is real reported drillTargets after firs render

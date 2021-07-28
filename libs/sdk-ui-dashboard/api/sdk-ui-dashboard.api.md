@@ -2192,22 +2192,22 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE";
 }
 
-// @alpha
-export function removeDrillForInsightWidget(ref: ObjRef, measure: ObjRef, correlationId?: string): RemoveDrillsForInsightWidget;
-
 // @alpha (undocumented)
 export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly measures?: RemoveDrillsSelector;
+        readonly origins: RemoveDrillsSelector;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS";
 }
 
+// @alpha
+export function removeDrillsForInsightWidget(ref: ObjRef, origins: RemoveDrillsSelector, correlationId?: string): RemoveDrillsForInsightWidget;
+
 // @alpha (undocumented)
-export type RemoveDrillsSelector = ObjRef[] | "*";
+export type RemoveDrillsSelector = ObjRefInScope[] | "*";
 
 // @alpha (undocumented)
 export interface RemoveLayoutSection extends IDashboardCommand {
