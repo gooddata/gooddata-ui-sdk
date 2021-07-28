@@ -70,11 +70,11 @@ export function validateDrillDefinitionOrigin(
 
 export function existsDrillDefinitionInArray(
     drillDefinition: InsightDrillDefinition,
-    drillDefinitionArray: InsightDrillDefinition[],
+    drillDefinitionArray: InsightDrillDefinition[] = [],
 ): boolean {
     const drillId = getDrillOriginLocalIdentifier(drillDefinition);
 
     return drillDefinitionArray.some((x) => {
-        drillId === getDrillOriginLocalIdentifier(x);
+        return drillId === getDrillOriginLocalIdentifier(x);
     });
 }

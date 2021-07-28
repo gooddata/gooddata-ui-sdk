@@ -262,15 +262,15 @@ export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
  *    drill action.
  *
  * @param ref - reference to insight widget whose drills should be modified
- * @param drill - drill to add or modify.
+ * @param drills - drills to add or modify.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
  */
-export function modifyDrillForInsightWidget(
+export function modifyDrillsForInsightWidget(
     ref: ObjRef,
-    drill: InsightDrillDefinition,
+    drills: InsightDrillDefinition[],
     correlationId?: string,
 ): ModifyDrillsForInsightWidget {
     return {
@@ -278,7 +278,7 @@ export function modifyDrillForInsightWidget(
         correlationId,
         payload: {
             ref,
-            drills: [drill],
+            drills,
         },
     };
 }

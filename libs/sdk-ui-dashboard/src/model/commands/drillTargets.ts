@@ -12,7 +12,7 @@ import { IDashboardCommand } from "./base";
 export interface AddDrillTargets extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL_TARGETS.ADD";
     readonly payload: {
-        readonly widgetRef: ObjRef;
+        readonly ref: ObjRef;
         readonly availableDrillTargets: IAvailableDrillTargets;
     };
 }
@@ -20,7 +20,7 @@ export interface AddDrillTargets extends IDashboardCommand {
 /**
  * Create AddDrillTargets {@link AddDrillTargets} command.
  *
- * @param widgetRef - Unique widget ref
+ * @param ref - Unique widget ref
  * @param availableDrillTargets - Available widget drill targets {@link @gooddata/sdk-ui#IAvailableDrillTargets}
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  * @returns AddDrillTargets command
@@ -28,7 +28,7 @@ export interface AddDrillTargets extends IDashboardCommand {
  * @alpha
  */
 export function addDrillTargets(
-    widgetRef: ObjRef,
+    ref: ObjRef,
     availableDrillTargets: IAvailableDrillTargets,
     correlationId?: string,
 ): AddDrillTargets {
@@ -36,7 +36,7 @@ export function addDrillTargets(
         type: "GDC.DASH/CMD.DRILL_TARGETS.ADD",
         correlationId,
         payload: {
-            widgetRef,
+            ref,
             availableDrillTargets,
         },
     };

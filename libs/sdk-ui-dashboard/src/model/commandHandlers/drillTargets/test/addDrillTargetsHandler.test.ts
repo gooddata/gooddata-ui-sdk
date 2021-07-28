@@ -3,9 +3,10 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { addDrillTargets } from "../../../commands/drillTargets";
 import { DrillTargetsAdded } from "../../../events/drillTargets";
 import {
-    SimpleDashboardFirstWidgetRef,
+    SimpleSortedTableWidgetRef,
     SimpleDashboardIdentifier,
     TestCorrelation,
+    KpiWidgetRef,
 } from "../../../tests/Dashboard.fixtures";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { selectDrillTargetsByWidgetRef } from "../../../state/drillTargets/drillTargetsSelectors";
@@ -22,14 +23,14 @@ describe("addDrillTargetsHandler", () => {
 
     it("should add drill target to the state for given widget", async () => {
         const event: DrillTargetsAdded = await Tester.dispatchAndWaitFor(
-            addDrillTargets(SimpleDashboardFirstWidgetRef, availableDrillTargetsMock),
+            addDrillTargets(SimpleSortedTableWidgetRef, availableDrillTargetsMock),
             "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
         );
 
-        expect(event.payload.widgetRef).toEqual(SimpleDashboardFirstWidgetRef);
+        expect(event.payload.ref).toEqual(SimpleSortedTableWidgetRef);
         expect(event.payload.availableDrillTargets).toMatchSnapshot();
 
-        const drillTargets = selectDrillTargetsByWidgetRef(SimpleDashboardFirstWidgetRef)(Tester.state());
+        const drillTargets = selectDrillTargetsByWidgetRef(SimpleSortedTableWidgetRef)(Tester.state());
         expect(drillTargets?.availableDrillTargets).toEqual(availableDrillTargetsMock);
     });
 
@@ -43,9 +44,19 @@ describe("addDrillTargetsHandler", () => {
         expect(event.correlationId).toEqual(TestCorrelation);
     });
 
+    it("should fail when trying to add drill targets for kpi widget", async () => {
+        const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            addDrillTargets(KpiWidgetRef, availableDrillTargetsMock, TestCorrelation),
+            "GDC.DASH/EVT.COMMAND.FAILED",
+        );
+
+        expect(event.payload.reason).toEqual("USER_ERROR");
+        expect(event.correlationId).toEqual(TestCorrelation);
+    });
+
     it("should emit the appropriate events for add drill target", async () => {
         await Tester.dispatchAndWaitFor(
-            addDrillTargets(SimpleDashboardFirstWidgetRef, availableDrillTargetsMock, TestCorrelation),
+            addDrillTargets(SimpleSortedTableWidgetRef, availableDrillTargetsMock, TestCorrelation),
             "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
         );
 

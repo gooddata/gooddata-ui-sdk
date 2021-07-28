@@ -123,7 +123,7 @@ export function addAttributeFilter(displayForm: ObjRef, index: number, correlati
 export interface AddDrillTargets extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly widgetRef: ObjRef;
+        readonly ref: ObjRef;
         readonly availableDrillTargets: IAvailableDrillTargets;
     };
     // (undocumented)
@@ -131,7 +131,7 @@ export interface AddDrillTargets extends IDashboardCommand {
 }
 
 // @alpha
-export function addDrillTargets(widgetRef: ObjRef, availableDrillTargets: IAvailableDrillTargets, correlationId?: string): AddDrillTargets;
+export function addDrillTargets(ref: ObjRef, availableDrillTargets: IAvailableDrillTargets, correlationId?: string): AddDrillTargets;
 
 // @alpha (undocumented)
 export interface AddLayoutSection extends IDashboardCommand {
@@ -1478,7 +1478,7 @@ export interface DrillStep {
 export interface DrillTargetsAdded extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly widgetRef: ObjRef;
+        readonly ref: ObjRef;
         readonly availableDrillTargets: IAvailableDrillTargets;
     };
     // (undocumented)
@@ -1486,7 +1486,7 @@ export interface DrillTargetsAdded extends IDashboardEvent {
 }
 
 // @alpha
-export function drillTargetsAdded(ctx: DashboardContext, widgetRef: ObjRef, availableDrillTargets: IAvailableDrillTargets, correlationId?: string): DrillTargetsAdded;
+export function drillTargetsAdded(ctx: DashboardContext, ref: ObjRef, availableDrillTargets: IAvailableDrillTargets, correlationId?: string): DrillTargetsAdded;
 
 // @alpha (undocumented)
 export interface DrillToAttributeUrl extends IDashboardCommand {
@@ -1960,9 +1960,6 @@ export const MenuButton: () => JSX.Element;
 // @internal (undocumented)
 export const MenuButtonPropsProvider: React_2.FC<IMenuButtonProps>;
 
-// @alpha
-export function modifyDrillForInsightWidget(ref: ObjRef, drill: InsightDrillDefinition, correlationId?: string): ModifyDrillsForInsightWidget;
-
 // @alpha (undocumented)
 export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
     // (undocumented)
@@ -1973,6 +1970,9 @@ export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
     // (undocumented)
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS";
 }
+
+// @alpha
+export function modifyDrillsForInsightWidget(ref: ObjRef, drills: InsightDrillDefinition[], correlationId?: string): ModifyDrillsForInsightWidget;
 
 // @alpha (undocumented)
 export interface MoveAttributeFilter extends IDashboardCommand {
