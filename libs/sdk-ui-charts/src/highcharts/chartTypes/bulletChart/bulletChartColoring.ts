@@ -72,7 +72,7 @@ class BulletChartColorStrategy extends ColorStrategy {
                     return getColorByGuid(colorPalette, colorAssignment.color.value as string, index);
                 }
             })
-            .filter((color) => typeof color !== "undefined")
+            .filter(Boolean)
             .map((color) => getRgbStringFromRGB(color));
     }
 
