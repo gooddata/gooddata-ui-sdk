@@ -215,5 +215,6 @@
     "rankingFilter.valueTooltip": "複数の項目に同じ値が設定されている場合は、この値を持つすべての項目がフィルターで表示されます。 インサイトには、設定数よりも多くのアイテムが表示される場合があります。",
     "attributesDropdown.allItemsFiltered": "すべてのアイテムはフィルター済み",
     "attributesDropdown.itemsFiltered.tooltip": "アイテムのフィルター：<strong>{filters}</strong>",
-    "attributesDropdown.itemsFiltered": "アイテムはフィルター済み"
+    "attributesDropdown.itemsFiltered": "アイテムはフィルター済み",
+    "attributesDropdown.noData": "この属性には値がありません。"
 }

@@ -12,11 +12,13 @@ import {
     newPositiveAttributeFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
+import { NoData } from "@gooddata/sdk-ui-kit";
 import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { AttributeDropdownBody } from "./AttributeDropdown/AttributeDropdownBody";
 import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
+import isNil from "lodash/isNil";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdown/AttributeDropdownList";
 import { mergeElementQueryResults } from "./AttributeDropdown/mergeElementQueryResults";
 import {
@@ -480,12 +482,12 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             return "";
         }
 
-        if (isTotalCountLoading() && !state.firstLoad && props.parentFilters) {
-            return getFilteringTitleIntl(props.intl);
-        }
-
-        if (isTotalCountLoading() && state.firstLoad) {
-            return getLoadingTitleIntl(props.intl);
+        if (isTotalCountLoading()) {
+            if (state.firstLoad) {
+                return getLoadingTitleIntl(props.intl);
+            } else if (props.parentFilters) {
+                return getFilteringTitleIntl(props.intl);
+            }
         }
 
         if (state.isAllFiltered) {
@@ -493,7 +495,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         }
 
         const displayForm = getObjRef(currentFilter, props.identifier);
-        if (elementsResult && totalCount && displayForm) {
+        if (elementsResult && !isNil(totalCount) && displayForm) {
             const empty = isEmpty(state.selectedFilterOptions);
             const equal = isEqual(totalCount, state.selectedFilterOptions?.length);
             const getAllPartIntl = getAllTitleIntl(props.intl, state.isInverted, empty, equal);
@@ -627,6 +629,12 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         return state.selectedFilterOptions.length;
     };
 
+    const hasNoData =
+        !isParentFilterTitlesLoading() &&
+        !parentFilterTitles?.length &&
+        !isElementsLoading() &&
+        elementsResult?.validOptions?.items?.length === 0;
+
     const renderAttributeDropdown = () => {
         return (
             <Dropdown
@@ -670,6 +678,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                                 />
                             )}
                         </MediaQuery>
+                    ) : hasNoData ? (
+                        <NoData noDataLabel={props.intl.formatMessage({ id: "attributesDropdown.noData" })} />
                     ) : (
                         <AttributeDropdownBody
                             items={elementsResult?.validOptions?.items ?? []}

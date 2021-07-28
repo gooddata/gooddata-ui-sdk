@@ -215,5 +215,6 @@
     "rankingFilter.valueTooltip": "Als meerdere items dezelfde waarde hebben, toont het filter alle items met deze waarde. Het inzicht geeft dan mogelijk meer items weer dan het ingestelde aantal.",
     "attributesDropdown.allItemsFiltered": "Alle items zijn uitgefilterd",
     "attributesDropdown.itemsFiltered.tooltip": "Items zijn gefilterd op: <strong>{filters}</strong> ",
-    "attributesDropdown.itemsFiltered": "Items zijn gefilterd"
+    "attributesDropdown.itemsFiltered": "Items zijn gefilterd",
+    "attributesDropdown.noData": "Dit attribuut bevat geen enkele waarde."
 }

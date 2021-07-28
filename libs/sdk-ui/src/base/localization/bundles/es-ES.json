@@ -215,5 +215,6 @@
     "rankingFilter.valueTooltip": "Si varios elementos tienen el mismo valor, el filtro muestra todos los elementos con ese valor. Después, la perspectiva puede mostrar más elementos que el número establecido.",
     "attributesDropdown.allItemsFiltered": "Todos los elementos están filtrados",
     "attributesDropdown.itemsFiltered.tooltip": "Los elementos se han filtrado por: <strong>{filters}</strong>",
-    "attributesDropdown.itemsFiltered": "Los elementos se han filtrado"
+    "attributesDropdown.itemsFiltered": "Los elementos se han filtrado",
+    "attributesDropdown.noData": "Este atributo no tiene ningún valor."
 }
