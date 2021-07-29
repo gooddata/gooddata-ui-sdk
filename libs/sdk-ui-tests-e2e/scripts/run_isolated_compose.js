@@ -55,7 +55,6 @@ async function main() {
         process.stdout.write("Wiremock ready\n");
 
         if (recording) {
-            process.stdout.write(`HOST is ${HOST}\n`);
             saveRecordingsWorkspaceId(TEST_WORKSPACE_ID);
             await wiremockStartRecording(wiremockHost, HOST);
         } else {
