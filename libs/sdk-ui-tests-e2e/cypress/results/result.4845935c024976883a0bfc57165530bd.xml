@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="17.4530" tests="9" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-07-29T11:26:14" tests="0" file="cypress/integration/01-sdk-ui-dashboard/dashboard.spec.ts" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Dashboard" timestamp="2021-07-29T11:26:14" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="TopBar rendering" timestamp="2021-07-29T11:26:14" tests="5" time="12.0400" failures="0">
+    <testcase name="Dashboard TopBar rendering should render topBar" time="6.6050" classname="should render topBar">
+    </testcase>
+    <testcase name="Dashboard TopBar rendering should render title" time="1.7040" classname="should render title">
+    </testcase>
+    <testcase name="Dashboard TopBar rendering should not render edit button" time="1.2650" classname="should not render edit button">
+    </testcase>
+    <testcase name="Dashboard TopBar rendering should menu button render" time="1.1020" classname="should menu button render">
+    </testcase>
+    <testcase name="Dashboard TopBar rendering should open menu button and contain items" time="1.3640" classname="should open menu button and contain items">
+    </testcase>
+  </testsuite>
+  <testsuite name="FilterBar rendering" timestamp="2021-07-29T11:26:27" tests="3" time="4.2670" failures="0">
+    <testcase name="Dashboard FilterBar rendering should render filter bar" time="1.1350" classname="should render filter bar">
+    </testcase>
+    <testcase name="Dashboard FilterBar rendering should render date filter" time="1.4430" classname="should render date filter">
+    </testcase>
+    <testcase name="Dashboard FilterBar rendering should change the filter" time="1.6890" classname="should change the filter">
+    </testcase>
+  </testsuite>
+  <testsuite name="Dashboard body rendering" timestamp="2021-07-29T11:26:32" tests="1" time="1.1460" failures="0">
+    <testcase name="Dashboard Dashboard body rendering should render single insight" time="1.1460" classname="should render single insight">
+    </testcase>
+  </testsuite>
+</testsuites>

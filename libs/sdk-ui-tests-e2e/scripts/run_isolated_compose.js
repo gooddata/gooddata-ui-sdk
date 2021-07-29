@@ -4,7 +4,7 @@
 /*
 This file is supposed to run within the Cypress container, controlling the execution of the isolated tests in docker-compose
  */
-const dotenv = require("dotenv-extended");
+const dotenv = require("dotenv");
 
 const childProcess = require("child_process");
 
@@ -33,7 +33,7 @@ async function main() {
         const filterArg = process.argv.find((arg) => arg.indexOf("--filter") === 0);
         const filter = filterArg ? filterArg.slice("--filter=".length) : "";
 
-        dotenv.load({ path: ".env" });
+        dotenv.config({ path: ".env" });
         const { HOST, USER_NAME, PASSWORD, CYPRESS_HOST } = process.env;
         let { TEST_WORKSPACE_ID } = process.env;
         if (recording && !HOST && !USER_NAME && !PASSWORD && !TEST_WORKSPACE_ID) {

@@ -22871,7 +22871,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz:
-    resolution: {integrity: sha512-ADJ1x8tLkqtyzbjk2hWgG0wsM9Rh0miQSHRl98/UeHxiTLU+wWZxUgTzcLxQfa9Z6eT3kz3OdZQMQdwvPUcG7g==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-tlX0IhFyfKNOp/7cwMF4GVSDxoufPdMvqmOmr0J9bHuK4B1R/qO2XBiaVgEjRVYJRuKbHG2FJ+7eGI/CaBbwHg==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
     dependencies:
