@@ -3,10 +3,16 @@
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 
+Cypress.Cookies.defaults({
+    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
+});
+
 Cypress.on("uncaught:exception", (error) => {
     console.error("Uncaught excepton cause", error);
     return false;
 });
+
+Cypress.Cookies.debug(true);
 
 describe("Dashboard", () => {
     describe("TopBar rendering", () => {

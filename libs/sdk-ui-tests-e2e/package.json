@@ -59,7 +59,8 @@
         "react-intl": "^3.6.0",
         "tslib": "^2.0.0",
         "axios": "^0.21.1",
-        "wait-on": "~6.0.0"
+        "wait-on": "~6.0.0",
+        "dotenv-extended": "~2.9.0"
     },
     "peerDependencies": {
         "react": "^16.10.0",

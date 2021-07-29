@@ -16,7 +16,7 @@ async function wiremockStartRecording(wiremockHost, appHost) {
             urlPathPattern: "/.*",
         },
         response: {
-            proxyBaseUrl: appHost,
+            proxyBaseUrl: `https://${appHost}`,
         },
     });
 }
