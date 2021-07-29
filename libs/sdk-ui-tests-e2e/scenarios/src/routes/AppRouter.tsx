@@ -3,15 +3,14 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { WorkspaceProvider } from "../contexts/Workspace";
 
-import styles from "./AppRouter.module.scss";
-import Home from "./Home";
+import ComponentResolver from "./ComponentResolver";
 
 const AppRouter: React.FC = () => {
     return (
-        <div className={styles.AppRouter}>
+        <div>
             <Router>
                 <WorkspaceProvider>
-                    <Route path="/" component={Home} />
+                    <Route path="/" component={ComponentResolver} />
                 </WorkspaceProvider>
             </Router>
         </div>

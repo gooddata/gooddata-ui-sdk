@@ -2,9 +2,7 @@ import React from "react";
 
 import { DashboardScenario } from "../components/Scenarios/DashboardScenario";
 
-const Home: React.FC = () => {
-    console.log("location hash", window.location.hash);
-
+const ComponentResolver: React.FC = () => {
     const hash = window.location.hash;
     switch (hash) {
         case "#dashboard":
@@ -14,4 +12,4 @@ const Home: React.FC = () => {
     }
 };
 
-export default Home;
+export default ComponentResolver;

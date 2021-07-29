@@ -24,9 +24,6 @@
         "build-with-explicit-hostname": "cross-env REACT_APP_SET_HOSTNAME=true npm run build",
         "eject": "react-scripts eject",
         "test": "react-scripts test --setupFilesAfterEnv ./jest.setup.js",
-        "testcafe-backend": "rm -R ./build & yarn build & serve -l 5000 build",
-        "testcafe": "cross-env TEST_BACKEND=http://localhost:5000 ./scripts/run-testcafe.js",
-        "testcafe-visual": "cross-env TEST_MODE=visual ./scripts/run-testcafe.js",
         "refresh-md": "node ./scripts/refresh-md.js"
     },
     "eslintConfig": {
