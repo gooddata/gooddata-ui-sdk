@@ -8,4 +8,5 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", BarChartWithSingleMeasureViewByAndStackBy);
+    .addScenario("themed", BarChartWithSingleMeasureViewByAndStackBy)
+    .addScenario("font", BarChartWithSingleMeasureViewByAndStackBy, (m) => m.withTags("themed", "font"));

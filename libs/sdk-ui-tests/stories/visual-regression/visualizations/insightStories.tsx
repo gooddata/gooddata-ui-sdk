@@ -37,7 +37,7 @@ import keyBy from "lodash/keyBy";
 import sortBy from "lodash/sortBy";
 import values from "lodash/values";
 import { PlugVizStories } from "../../_infra/storyGroups";
-import { wrapWithTheme, theme } from "../themeWrapper";
+import { wrapWithTheme, getTheme } from "../themeWrapper";
 
 /*
  * Code in this file generates stories that render test scenarios using pluggable visualizations.
@@ -168,11 +168,8 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
             postInteractionWait: 200,
         });
 
-    const wrapper = testScenario.tags.includes("themed")
-        ? (child: any) => screenshotWrapper(wrapWithTheme(child)) // since themes are global anyway, wrap only once
-        : (child: any) => screenshotWrapper(child);
-
-    const effectiveTheme = testScenario.tags.includes("themed") ? theme : undefined;
+    const wrapper = (child: any) => screenshotWrapper(wrapWithTheme(child, testScenario.tags)); // since themes are global anyway, wrap only once
+    const effectiveTheme = getTheme(testScenario.tags);
 
     /*
      * Note: for KD rendering the story passes width&height explicitly. this is to emulate plug vis behavior where

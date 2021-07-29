@@ -18,7 +18,7 @@ export const KpiError: React.StatelessComponent<IErrorProps> = (props) => {
                 fontWeight: 700,
                 verticalAlign: "middle",
                 color: "#94a1ad",
-                fontFamily: "avenir, Helvetica Neue, arial, sans-serif",
+                fontFamily: "gdcustomfont, avenir, Helvetica Neue, arial, sans-serif",
             }}
         >
             {message}

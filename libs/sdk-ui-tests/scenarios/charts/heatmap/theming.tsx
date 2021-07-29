@@ -9,4 +9,5 @@ export default scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
     .addScenario("themed", HeatmapWithMeasureRowsAndColumns)
-    .addScenario("themed with null values", HeatmapWithNullDataPoints);
+    .addScenario("themed with null values", HeatmapWithNullDataPoints)
+    .addScenario("font", HeatmapWithMeasureRowsAndColumns, (m) => m.withTags("themed", "font"));

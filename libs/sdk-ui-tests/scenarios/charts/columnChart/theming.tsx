@@ -8,4 +8,5 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", ColumnChartWithTwoMeasuresAndViewBy);
+    .addScenario("themed", ColumnChartWithTwoMeasuresAndViewBy)
+    .addScenario("font", ColumnChartWithTwoMeasuresAndViewBy, (m) => m.withTags("themed", "font"));

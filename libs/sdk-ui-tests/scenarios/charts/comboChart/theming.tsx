@@ -8,4 +8,5 @@ export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", ComboChartWithArithmeticMeasuresAndViewBy);
+    .addScenario("themed", ComboChartWithArithmeticMeasuresAndViewBy)
+    .addScenario("font", ComboChartWithArithmeticMeasuresAndViewBy, (m) => m.withTags("themed", "font"));

@@ -11,4 +11,12 @@ export default scenariosFor<IXirrProps>("Xirr", Xirr)
     .addScenario("themed", {
         measure: ReferenceLdm.SampleXIRR,
         attribute: ReferenceLdm.TimelineYear,
-    });
+    })
+    .addScenario(
+        "font",
+        {
+            measure: ReferenceLdm.SampleXIRR,
+            attribute: ReferenceLdm.TimelineYear,
+        },
+        (m) => m.withTags("themed", "font"),
+    );

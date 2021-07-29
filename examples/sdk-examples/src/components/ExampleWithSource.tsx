@@ -30,7 +30,7 @@ const SourceSection: React.FC<ISourceSectionProps> = ({ source, sourceJS }) => {
                 }
 
                 .gd-source-button {
-                    font-family: Avenir, "Helvetica Neue", arial, sans-serif;
+                    font-family: gdcustomfont, Avenir, "Helvetica Neue", arial, sans-serif;
                     text-transform: none;
                 }
 

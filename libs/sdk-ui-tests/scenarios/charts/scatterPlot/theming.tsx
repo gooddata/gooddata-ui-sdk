@@ -8,4 +8,5 @@ export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", ScatterPlotWithMeasuresAndAttribute);
+    .addScenario("themed", ScatterPlotWithMeasuresAndAttribute)
+    .addScenario("font", ScatterPlotWithMeasuresAndAttribute, (m) => m.withTags("themed", "font"));

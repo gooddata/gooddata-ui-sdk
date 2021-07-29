@@ -8,4 +8,5 @@ export default scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", DonutChartWithSingleMeasureAndViewBy);
+    .addScenario("themed", DonutChartWithSingleMeasureAndViewBy)
+    .addScenario("font", DonutChartWithSingleMeasureAndViewBy, (m) => m.withTags("themed", "font"));

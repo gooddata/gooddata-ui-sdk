@@ -8,4 +8,5 @@ export default scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", FunnelChartWithMeasureAndViewBy);
+    .addScenario("themed", FunnelChartWithMeasureAndViewBy)
+    .addScenario("font", FunnelChartWithMeasureAndViewBy, (m) => m.withTags("themed", "font"));

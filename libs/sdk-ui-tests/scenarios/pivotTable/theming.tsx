@@ -9,4 +9,5 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withDefaultTestTypes("visual")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .withDefaultTags("themed")
-    .addScenario("themed", PivotTableWithSingleMeasureAndTwoRowsAndCols);
+    .addScenario("themed", PivotTableWithSingleMeasureAndTwoRowsAndCols)
+    .addScenario("font", PivotTableWithSingleMeasureAndTwoRowsAndCols, (m) => m.withTags("themed", "font"));

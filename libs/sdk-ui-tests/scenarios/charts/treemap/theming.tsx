@@ -8,4 +8,5 @@ export default scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .addScenario("themed", TreemapWithMeasureViewByAndSegmentBy);
+    .addScenario("themed", TreemapWithMeasureViewByAndSegmentBy)
+    .addScenario("font", TreemapWithMeasureViewByAndSegmentBy, (m) => m.withTags("themed", "font"));

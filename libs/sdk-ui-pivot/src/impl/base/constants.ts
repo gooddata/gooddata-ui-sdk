@@ -14,10 +14,11 @@ export const VALUE_CLASS = "s-value";
 export const HEADER_LABEL_CLASS = "s-header-cell-label";
 export const ROW_TOTAL_CLASS = "gd-row-total";
 export const ROW_SUBTOTAL_CLASS = "gd-table-row-subtotal";
-export const DEFAULT_HEADER_FONT = '12px / 28px avenir, "Helvetica Neue", arial, sans-serif';
-export const DEFAULT_ROW_FONT = '12px / 26px avenir, "Helvetica Neue", arial, sans-serif';
-export const DEFAULT_SUBTOTAL_FONT = '700 12px / 26px avenir, "Helvetica Neue", arial, sans-serif';
-export const DEFAULT_TOTAL_FONT = '700 12px / 26px avenir, "Helvetica Neue", arial, sans-serif';
+export const DEFAULT_HEADER_FONT = '12px / 28px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif';
+export const DEFAULT_ROW_FONT = '12px / 26px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif';
+export const DEFAULT_SUBTOTAL_FONT =
+    '700 12px / 26px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif';
+export const DEFAULT_TOTAL_FONT = '700 12px / 26px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif';
 
 /**
  * DEFAULT_AUTOSIZE_PADDING needs to match real padding from styles

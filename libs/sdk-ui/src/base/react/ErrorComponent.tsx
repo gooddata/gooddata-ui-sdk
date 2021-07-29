@@ -70,7 +70,7 @@ export class ErrorComponent extends React.Component<IErrorProps> {
             justifyContent: "center",
             whiteSpace: "normal",
             lineHeight: "normal",
-            fontFamily: "avenir, Helvetica Neue, arial, sans-serif",
+            fontFamily: "gdcustomfont, avenir, Helvetica Neue, arial, sans-serif",
         },
     };
 

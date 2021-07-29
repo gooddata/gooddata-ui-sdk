@@ -8,7 +8,7 @@ import { ITheme } from "@gooddata/sdk-backend-spi";
 import "./themeWrapper.scss";
 
 const workspace = "testWorkspace";
-export const theme: ITheme = {
+const theme: ITheme = {
     palette: {
         primary: {
             base: "#009882",
@@ -77,10 +77,37 @@ export const theme: ITheme = {
         tooltipValueColor: "#fff",
     },
 };
-const backend = recordedBackend(ReferenceRecordings.Recordings, { theme });
+const themeWithFontChanged: ITheme = {
+    typography: {
+        font: "local(DejaVu Serif Bold)",
+    },
+};
 
-export const wrapWithTheme = (component: JSX.Element): JSX.Element => (
-    <ThemeProvider workspace={workspace} backend={backend}>
-        <div className="theme-wrapper">{component}</div>
-    </ThemeProvider>
-);
+const backend = recordedBackend(ReferenceRecordings.Recordings, { theme });
+const backendWithFontChanged = recordedBackend(ReferenceRecordings.Recordings, {
+    theme: themeWithFontChanged,
+});
+
+export const wrapWithTheme = (component: JSX.Element, tags: string[] = ["themed"]): JSX.Element =>
+    tags.includes("themed") ? (
+        <ThemeProvider
+            workspace={workspace}
+            backend={tags.includes("font") ? backendWithFontChanged : backend}
+        >
+            <div className="theme-wrapper">{component}</div>
+        </ThemeProvider>
+    ) : (
+        component
+    );
+
+export const getTheme = (tags: string[] = []): ITheme => {
+    if (!tags.includes("themed")) {
+        return {};
+    }
+
+    if (tags.includes("font")) {
+        return themeWithFontChanged;
+    }
+
+    return theme;
+};
