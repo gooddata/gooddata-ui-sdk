@@ -6,7 +6,7 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        interface Chainable<Subject> {
+        interface Chainable<> {
             login: () => Chainable<void>;
         }
     }

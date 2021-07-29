@@ -5,57 +5,57 @@ import { getTestClassByTitle } from "./utils";
 export class Dashboard {
     constructor(private name: string) {}
 
-    getElement() {
+    getElement(): Cypress.Chainable {
         const testClass = getTestClassByTitle(this.name);
         return cy.get(testClass);
     }
 
-    getTopBarElement() {
+    getTopBarElement(): Cypress.Chainable {
         const topBarClass = ".s-top-bar";
         return cy.get(topBarClass);
     }
 
-    getFilterBarElement() {
+    getFilterBarElement(): Cypress.Chainable {
         return cy.get(".s-gd-dashboard-filter-bar");
     }
 
-    getDashboardBody() {
+    getDashboardBody(): Cypress.Chainable {
         return cy.get(".s-fluid-layout-container");
     }
 }
 
 export class TopBar {
-    getDashboardTitleElement() {
+    getDashboardTitleElement(): Cypress.Chainable {
         return cy.get(".s-gd-dashboard-title");
     }
 
-    getEditButtonElement() {
+    getEditButtonElement(): Cypress.Chainable {
         return cy.get(".s-edit_button");
     }
 
-    getMenuButtonElement() {
+    getMenuButtonElement(): Cypress.Chainable {
         return cy.get(".s-header-options-button");
     }
 
-    getMenuButtonItemElement(itemClass: string) {
+    getMenuButtonItemElement(itemClass: string): Cypress.Chainable {
         return cy.get(`.${itemClass}`);
     }
 }
 
 export class FilterBar {
-    getDateFilterElement() {
+    getDateFilterElement(): Cypress.Chainable {
         return cy.get(".s-date-filter-button");
     }
 
-    getDateFilterTitleElement() {
+    getDateFilterTitleElement(): Cypress.Chainable {
         return cy.get(".s-date-filter-title");
     }
 
-    getDateFilterBodyElement(groupClass: string) {
+    getDateFilterBodyElement(groupClass: string): Cypress.Chainable {
         return cy.get(`.${groupClass}`);
     }
 
-    getDateFilterSubtitleElement() {
+    getDateFilterSubtitleElement(): Cypress.Chainable {
         return cy.get(".s-button-text");
     }
 }
