@@ -105,7 +105,7 @@ export interface WorkspaceSettingsConfiguration {
 export function withCustomWorkspaceSettings(
     realBackend: IAnalyticalBackend,
     config: WorkspaceSettingsConfiguration,
-) {
+): IAnalyticalBackend {
     const workspaceSettings = customWorkspaceSettings(config);
     return decoratedBackend(realBackend, { workspaceSettings });
 }

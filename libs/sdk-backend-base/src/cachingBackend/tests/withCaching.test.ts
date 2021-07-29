@@ -1,10 +1,14 @@
 // (C) 2007-2021 GoodData Corporation
 
-import { IAnalyticalBackend, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IAttributeDisplayFormMetadataObject,
+    IExecutionResult,
+} from "@gooddata/sdk-backend-spi";
 import { CacheControl, withCaching } from "../index";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { IAttributeOrMeasure, IBucket, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
+import { IAttributeOrMeasure, IBucket, newBucket, newInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import { withEventing } from "../../eventingBackend";
 
 const defaultBackend = dummyBackendEmptyData();
@@ -21,6 +25,9 @@ function withCachingForTests(
         maxSecuritySettingsOrgs: 1,
         maxSecuritySettingsOrgUrls: 1,
         maxSecuritySettingsOrgUrlsAge: 300_000,
+        // set to two as one attribute can take up two places (one for id, one for uri)
+        maxAttributeDisplayFormsPerWorkspace: 2,
+        maxAttributeWorkspaces: 1,
         onCacheReady,
     });
 }
@@ -32,6 +39,20 @@ function doExecution(backend: IAnalyticalBackend, items: IAttributeOrMeasure[]):
 function doInsightExecution(backend: IAnalyticalBackend, buckets: IBucket[]): Promise<IExecutionResult> {
     const insight = newInsightDefinition("foo", (i) => i.buckets(buckets));
     return backend.workspace("test").execution().forInsight(insight).execute();
+}
+
+function doGetAttributeDisplayForm(
+    backend: IAnalyticalBackend,
+    ref: ObjRef,
+): Promise<IAttributeDisplayFormMetadataObject> {
+    return backend.workspace("test").attributes().getAttributeDisplayForm(ref);
+}
+
+function doGetAttributeDisplayForms(
+    backend: IAnalyticalBackend,
+    refs: ObjRef[],
+): Promise<IAttributeDisplayFormMetadataObject[]> {
+    return backend.workspace("test").attributes().getAttributeDisplayForms(refs);
 }
 
 describe("withCaching", () => {
@@ -302,6 +323,127 @@ describe("withCaching", () => {
                 .isUrlValid(URL, "UI_EVENT");
 
             expect(second).not.toBe(first);
+        });
+    });
+
+    describe("attributes", () => {
+        describe("getAttributeDisplayForm and getAttributeDisplayForms", () => {
+            it("should cache the scalar calls", async () => {
+                const backend = withCachingForTests();
+
+                const first = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                );
+                const second = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).toBe(first);
+            });
+
+            it("should cache the vector calls", async () => {
+                const backend = withCachingForTests();
+
+                const first = await doGetAttributeDisplayForms(backend, [
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                ]);
+                const second = await doGetAttributeDisplayForms(backend, [
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                ]);
+
+                expect(second[0]).toBe(first[0]);
+            });
+
+            it("should use cached results from scalar version in the vector version", async () => {
+                const backend = withCachingForTests();
+
+                const scalar = await doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                );
+                const vector = await doGetAttributeDisplayForms(backend, [
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceLdm.Activity.Default.attribute.displayForm,
+                ]);
+
+                expect(vector[0]).toBe(scalar);
+            });
+
+            it("should use cached results from vector version in the scalar version", async () => {
+                const backend = withCachingForTests();
+
+                const vector = await doGetAttributeDisplayForms(backend, [
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                ]);
+                const scalar = await doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                );
+
+                expect(scalar).toBe(vector[0]);
+            });
+
+            it("should evict cache items when the limit is hit", async () => {
+                const backend = withCachingForTests();
+
+                const first = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                );
+
+                // other 2 calls with different display form to replace the first one
+                doGetAttributeDisplayForm(backend, ReferenceLdm.Activity.Default.attribute.displayForm);
+                doGetAttributeDisplayForm(backend, ReferenceLdm.Activity.Subject.attribute.displayForm);
+
+                const second = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attributes cache with resetAttributes", async () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAttributes();
+
+                const second = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attributes cache with resetAll", async () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAll();
+
+                const second = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceLdm.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
         });
     });
 });
