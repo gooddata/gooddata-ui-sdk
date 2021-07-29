@@ -55,6 +55,7 @@ import { IDrillToDashboard } from '@gooddata/sdk-backend-spi';
 import { IDrillToInsight } from '@gooddata/sdk-backend-spi';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-backend-spi';
 import { IErrorProps } from '@gooddata/sdk-ui';
+import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
@@ -1149,7 +1150,7 @@ export interface DashboardMetaState {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta;
+export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryInsightWidgetFilters;
 
 // @alpha
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>, TResult> extends IDashboardEvent {
@@ -1187,7 +1188,7 @@ export interface DashboardQueryStarted extends IDashboardEvent {
 }
 
 // @alpha (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.WIDGET.FILTERS";
 
 // @alpha
 export interface DashboardRenamed extends IDashboardEvent {
@@ -1713,8 +1714,6 @@ export interface IDashboardInsightProps {
     // (undocumented)
     ErrorComponent?: ComponentType<IErrorProps>;
     // (undocumented)
-    filters?: FilterContextItem[];
-    // (undocumented)
     insight: IInsight;
     // (undocumented)
     LoadingComponent?: ComponentType<ILoadingProps>;
@@ -2137,6 +2136,23 @@ export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDat
     readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
 }
 
+// @alpha
+export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
+    // (undocumented)
+    readonly payload: {
+        readonly widgetRef: ObjRef;
+        readonly widgetFilterOverrides: IFilter[] | undefined;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
+}
+
+// @internal (undocumented)
+export type QueryProcessingStatus = "running" | "success" | "error" | "rejected";
+
+// @alpha
+export function queryWidgetFilters(widgetRef: ObjRef, widgetFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;
+
 // @alpha (undocumented)
 export interface RefreshInsightWidget extends IDashboardCommand {
     // (undocumented)
@@ -2365,6 +2381,9 @@ export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boole
 
 // @alpha
 export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @alpha (undocumented)
+export const selectCatalogAttributeDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: ICatalogAttribute[]) => IAttributeDisplayFormMetadataObject[]>;
 
 // @alpha (undocumented)
 export const selectCatalogAttributes: OutputSelector<DashboardState, ICatalogAttribute[], (res: CatalogState) => ICatalogAttribute[]>;
@@ -2967,6 +2986,28 @@ export const useDashboardKpiProps: () => DashboardKpiProps;
 
 // @alpha (undocumented)
 export const useDashboardLayoutProps: () => DashboardLayoutProps;
+
+// @alpha
+export const useDashboardQuery: <TQuery extends DashboardQueries, TArgs extends any[]>(queryCreator: (...args: TArgs) => TQuery, eventHandlers?: {
+    "GDC.DASH/EVT.QUERY.FAILED"?: ((event: DashboardQueryFailed) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.REJECTED"?: ((event: DashboardQueryRejected) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.STARTED"?: ((event: DashboardQueryStarted) => void) | undefined;
+    "GDC.DASH/EVT.QUERY.COMPLETED"?: ((event: DashboardQueryCompleted<any, any>) => void) | undefined;
+} | undefined, onBeforeRun?: ((command: TQuery) => void) | undefined) => (...args: TArgs) => void;
+
+// @internal (undocumented)
+export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryCreatorArgs extends any[], TResult>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
+    queryCreator: (...args: TQueryCreatorArgs) => TQuery;
+    onSuccess?: ((event: DashboardQueryCompleted<TQuery, TResult>) => void) | undefined;
+    onError?: ((event: DashboardQueryFailed) => void) | undefined;
+    onRejected?: ((event: DashboardQueryRejected) => void) | undefined;
+    onBeforeRun?: ((query: TQuery) => void) | undefined;
+}) => {
+    run: (...args: TQueryCreatorArgs) => void;
+    status?: "error" | "running" | "success" | "rejected" | undefined;
+    result?: TResult | undefined;
+    error?: GoodDataSdkError | undefined;
+};
 
 // @alpha (undocumented)
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;

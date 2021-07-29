@@ -29,6 +29,13 @@ export const selectCatalogAttributes = createSelector(selectSelf, (state) => {
 /**
  * @alpha
  */
+export const selectCatalogAttributeDisplayForms = createSelector(selectCatalogAttributes, (attributes) => {
+    return flatMap(attributes, (attribute) => [...attribute.displayForms, ...attribute.geoPinDisplayForms]);
+});
+
+/**
+ * @alpha
+ */
 export const selectCatalogMeasures = createSelector(selectSelf, (state) => {
     return state.measures ?? [];
 });

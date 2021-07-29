@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import { ComponentType } from "react";
-import { FilterContextItem, IAnalyticalBackend, IInsightWidget } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import {
     IAvailableDrillTargets,
@@ -38,8 +38,6 @@ export type CustomDashboardInsightComponent = ComponentType;
 export interface IDashboardInsightProps {
     widget: IInsightWidget;
     insight: IInsight;
-
-    filters?: FilterContextItem[];
 
     clientHeight?: number;
 

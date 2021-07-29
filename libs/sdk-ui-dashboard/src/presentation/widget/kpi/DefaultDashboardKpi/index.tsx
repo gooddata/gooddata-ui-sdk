@@ -8,7 +8,7 @@ import {
     useDashboardSelector,
     selectSeparators,
     selectIsReadOnly,
-    selectFilterContext,
+    selectFilterContextFilters,
     selectSettings,
     selectDashboardRef,
 } from "../../../../model";
@@ -46,7 +46,7 @@ export const DefaultDashboardKpiInner = (): JSX.Element => {
     const workspace = useWorkspaceStrict(customWorkspace);
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
-    const filterContext = useDashboardSelector(selectFilterContext);
+    const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
     const settings = useDashboardSelector(selectSettings);
     const separators = useDashboardSelector(selectSeparators);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
@@ -55,7 +55,7 @@ export const DefaultDashboardKpiInner = (): JSX.Element => {
         kpiWidget,
         backend,
         filters,
-        filterContext,
+        dashboardFilters,
         workspace,
     });
 
