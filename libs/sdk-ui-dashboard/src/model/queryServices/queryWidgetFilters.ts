@@ -47,6 +47,7 @@ import {
     selectCatalogDateDatasets,
 } from "../state/catalog/catalogSelectors";
 import { PromiseFnReturnType } from "../types/sagas";
+import { DashboardState } from "../state/types";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
@@ -131,9 +132,11 @@ function* loadDisplayFormsForAttributeFilters(
     }));
 }
 
-// TODO maybe turn this into a selector?
-function* getDateDatasetsForDateFilters(filters: IDateFilter[]): SagaIterator<IFilterDateDatasetPair[]> {
-    const fromCatalog: ReturnType<typeof selectCatalogDateDatasets> = yield select(selectCatalogDateDatasets);
+function selectDateDatasetsForDateFilters(
+    state: DashboardState,
+    filters: IDateFilter[],
+): IFilterDateDatasetPair[] {
+    const fromCatalog = selectCatalogDateDatasets(state);
 
     return filters.map((filter): IFilterDateDatasetPair => {
         const dateDataset = fromCatalog.find((dateDataset) =>
@@ -216,29 +219,27 @@ export function isDateFilterIgnoredForInsight(insight: IInsight): boolean {
     return simpleMeasures.length === simpleMeasuresWithDateFilter.length;
 }
 
-function* getResolvedInsightDateFilters(
+function selectResolvedInsightDateFilters(
+    state: DashboardState,
     insight: IInsight,
     dashboardDateFilters: IDateFilter[],
     insightDateFilters: IDateFilter[],
-): SagaIterator<IDateFilter[]> {
+): IDateFilter[] {
     if (isDateFilterIgnoredForInsight(insight)) {
         return insightDateFilters;
     }
 
     const allDateFilters = [...insightDateFilters, ...dashboardDateFilters];
-    const allDateFilterDateDatasetPairs: SagaReturnType<typeof getDateDatasetsForDateFilters> = yield call(
-        getDateDatasetsForDateFilters,
-        allDateFilters,
-    );
+    const allDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(state, allDateFilters);
 
     return resolveDateFilters(allDateFilterDateDatasetPairs);
 }
 
-function* getResolvedKpiDateFilters(dashboardDateFilters: IDateFilter[]): SagaIterator<IDateFilter[]> {
-    const allDateFilterDateDatasetPairs: SagaReturnType<typeof getDateDatasetsForDateFilters> = yield call(
-        getDateDatasetsForDateFilters,
-        dashboardDateFilters,
-    );
+function selectResolvedKpiDateFilters(
+    state: DashboardState,
+    dashboardDateFilters: IDateFilter[],
+): IDateFilter[] {
+    const allDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(state, dashboardDateFilters);
 
     return resolveDateFilters(allDateFilterDateDatasetPairs);
 }
@@ -289,8 +290,8 @@ function* queryForInsightWidget(
     const effectiveInsightFilters = widgetFilterOverrides ?? insightFilters(insight);
 
     const [dateFilters, attributeFilters] = yield all([
-        call(
-            getResolvedInsightDateFilters,
+        select(
+            selectResolvedInsightDateFilters,
             insight,
             widgetAwareDashboardFilters.filter(isDateFilter),
             effectiveInsightFilters.filter(isDateFilter),
@@ -336,7 +337,7 @@ function* queryForKpiWidget(
     const effectiveDashboardFilters = widgetFilterOverrides ?? widgetAwareDashboardFilters;
 
     const [dateFilters, attributeFilters] = yield all([
-        call(getResolvedKpiDateFilters, effectiveDashboardFilters.filter(isDateFilter)),
+        select(selectResolvedKpiDateFilters, effectiveDashboardFilters.filter(isDateFilter)),
         call(getResolvedAttributeFilters, ctx, widget, effectiveDashboardFilters.filter(isAttributeFilter)),
     ]);
 
