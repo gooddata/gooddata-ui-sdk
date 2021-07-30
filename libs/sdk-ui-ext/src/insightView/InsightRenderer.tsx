@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { render } from "react-dom";
 import noop from "lodash/noop";
@@ -248,16 +248,60 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
 export const IntlInsightRenderer = compose(injectIntl, withTheme, withContexts)(InsightRendererCore);
 
 /**
+ * Updated callback (callback with a different reference) is not properly propagated to the "visualization" instance
+ * (because it only takes the callbacks provided on the first render)
+ * Workaround it by storing the updated callback to the ref and calling it instead.
+ *
+ * @param callback
+ */
+function useUpdatableCallback<T extends (...args: any[]) => any>(callback: T): T {
+    const pushDataCached = useRef(callback);
+
+    useEffect(() => {
+        pushDataCached.current = callback;
+    }, [callback]);
+
+    return useCallback<T>(
+        ((...args) => {
+            if (pushDataCached.current) {
+                pushDataCached.current(...args);
+            }
+        }) as T,
+        [],
+    );
+}
+
+/**
  * Renders insight passed as a parameter.
  *
  * @internal
  */
-export class InsightRenderer extends React.Component<IInsightRendererProps> {
-    public render(): React.ReactNode {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <IntlInsightRenderer {...this.props} />
-            </IntlWrapper>
-        );
-    }
-}
+export const InsightRenderer: React.FC<IInsightRendererProps> = (props) => {
+    const {
+        pushData,
+        onDrill: onDrillCallBack,
+        onError: onErrorCallBack,
+        onExportReady: onExportReadyCallback,
+        onLoadingChanged: onLoadingChangedCallback,
+        ...resProps
+    } = props;
+
+    const onPushData = useUpdatableCallback(pushData);
+    const onDrill = useUpdatableCallback(onDrillCallBack);
+    const onError = useUpdatableCallback(onErrorCallBack);
+    const onExportReady = useUpdatableCallback(onExportReadyCallback);
+    const onLoadingChanged = useUpdatableCallback(onLoadingChangedCallback);
+
+    return (
+        <IntlWrapper locale={props.locale}>
+            <IntlInsightRenderer
+                pushData={onPushData}
+                onDrill={onDrill}
+                onError={onError}
+                onExportReady={onExportReady}
+                onLoadingChanged={onLoadingChanged}
+                {...resProps}
+            />
+        </IntlWrapper>
+    );
+};
