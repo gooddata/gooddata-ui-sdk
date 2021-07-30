@@ -511,10 +511,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "dotenv-extended",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "dotenv-webpack",
       "allowedCategories": [ "examples" ]
     },
