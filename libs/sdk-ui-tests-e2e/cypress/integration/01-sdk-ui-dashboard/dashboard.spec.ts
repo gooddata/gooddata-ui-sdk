@@ -3,12 +3,24 @@
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 
+Cypress.Cookies.defaults({
+    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
+});
+
+Cypress.on("uncaught:exception", (error) => {
+    // eslint-disable-next-line no-console
+    console.error("Uncaught excepton cause", error);
+    return false;
+});
+
+Cypress.Cookies.debug(true);
+
 describe("Dashboard", () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {
             cy.login();
 
-            Navigation.visit();
+            Navigation.visit("dashboard");
         });
 
         it("should render topBar", () => {
@@ -56,7 +68,7 @@ describe("Dashboard", () => {
         beforeEach(() => {
             cy.login();
 
-            Navigation.visit();
+            Navigation.visit("dashboard");
         });
 
         it("should render filter bar", () => {
@@ -96,7 +108,7 @@ describe("Dashboard", () => {
         beforeEach(() => {
             cy.login();
 
-            Navigation.visit();
+            Navigation.visit("dashboard");
         });
 
         it("should render single insight", () => {

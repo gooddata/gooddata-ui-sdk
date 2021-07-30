@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  isolated-tests:
+    image: harbor.intgdc.com/tools/gdc-frontend-cypress-included:475cbce
+    entrypoint: node ./scripts/run_isolated_compose.js --$MODE --filter=$FILTER
+    volumes:
+      - ../../:/gooddata-ui-sdk-e2e:rw
+    working_dir: /gooddata-ui-sdk-e2e/libs/sdk-ui-tests-e2e
+    user: "$USER_UID:$USER_GID"
+    depends_on:
+      - gooddata-ui-sdk-scenarios
+      - backend-mock
+    environment:
+      - CYPRESS_HOST=http://gooddata-ui-sdk-scenarios:9500
+      - NPM_TOKEN
+      - MODE
+      - FILTER
+      - NO_COLOR
+      - BUILD_URL
+
+  gooddata-ui-sdk-scenarios:
+    image: $IMAGE_ID
+    volumes:
+      - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
+    depends_on:
+      - backend-mock
+
+  backend-mock:
+    image: harbor.intgdc.com/3rdparty/rodolpheche/wiremock
+    command: "--preserve-host-header --proxy-all=https://${HOST:-staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
+#    --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer --verbose"
+    volumes:
+      - ./recordings/:/home/wiremock:cached
+      - ./recordings/wiremock_extension/jar/:/var/wiremock/extensions:ro
+    environment:
+      - PROXY_HOST=https://${HOST:-staging3.intgdc.com}

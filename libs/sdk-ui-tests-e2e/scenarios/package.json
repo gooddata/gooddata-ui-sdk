@@ -1,0 +1,78 @@
+{
+    "name": "scenarios",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@gooddata/sdk-backend-bear": "^8.6.0-alpha.10",
+        "@gooddata/sdk-model": "^8.6.0-alpha.10",
+        "@gooddata/sdk-ui-dashboard": "^8.6.0-alpha.10",
+        "classnames": "^2.3.1",
+        "formik": "^2.2.9",
+        "lodash": "^4.17.15",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-helmet": "^5.2.1",
+        "react-router-dom": "^5.0.1",
+        "react-router-use-location-state": "^2.3.1",
+        "react-scripts": "4.0.3",
+        "use-location-state": "^2.3.1",
+        "yup": "^0.32.9"
+    },
+    "scripts": {
+        "start": "cross-env HTTPS=true PORT=3000 react-scripts start",
+        "build": "react-scripts build",
+        "build-with-explicit-hostname": "cross-env REACT_APP_SET_HOSTNAME=true npm run build",
+        "eject": "react-scripts eject",
+        "test": "react-scripts test --setupFilesAfterEnv ./jest.setup.js",
+        "refresh-md": "node ./scripts/refresh-md.js"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@babel/core": "^7.13.8",
+        "@babel/plugin-transform-typescript": "^7.9.6",
+        "@babel/preset-env": "^7.13.9",
+        "@babel/preset-typescript": "^7.13.0",
+        "@babel/register": "^7.13.8",
+        "@gooddata/catalog-export": "^8.5.0",
+        "@types/enzyme": "^3.10.8",
+        "@types/express": "^4.17.11",
+        "@types/http-proxy-middleware": "^0.19.1",
+        "@types/jest": "^26.0.20",
+        "@types/node": "^14.14.31",
+        "@types/react": "^17.0.2",
+        "@types/react-dom": "^17.0.1",
+        "@types/react-helmet": "^6.1.0",
+        "@types/react-router-dom": "^5.1.7",
+        "@types/yup": "^0.29.11",
+        "babel-plugin-add-module-exports": "^1.0.4",
+        "cross-env": "^5.2.0",
+        "enzyme": "^3.10.0",
+        "enzyme-adapter-react-16": "^1.14.0",
+        "husky": "^3.0.0",
+        "node-sass": "^4.13.1",
+        "prettier": "^1.18.2",
+        "pretty-quick": "^1.11.1",
+        "serve": "^11.3.2",
+        "testcafe": "^1.5.0",
+        "typescript": "^4.1.5"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged --pattern \"**/*.*(js|jsx|ts|tsx|scss)\""
+        }
+    }
+}
