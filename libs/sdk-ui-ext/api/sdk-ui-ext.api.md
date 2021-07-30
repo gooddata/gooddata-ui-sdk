@@ -465,10 +465,7 @@ export const InsightError: React_2.ForwardRefExoticComponent<Pick<IInsightErrorP
 };
 
 // @internal
-export class InsightRenderer extends React_2.Component<IInsightRendererProps> {
-    // (undocumented)
-    render(): React_2.ReactNode;
-}
+export const InsightRenderer: React_2.FC<IInsightRendererProps>;
 
 // @public
 export class InsightView extends React_2.Component<IInsightViewProps> {
