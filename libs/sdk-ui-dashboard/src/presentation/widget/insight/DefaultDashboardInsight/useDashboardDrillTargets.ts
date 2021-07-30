@@ -54,12 +54,12 @@ export const useDashboardDrillTargets = (
         (availableDrillTargets?: IAvailableDrillTargets): void => {
             if (
                 availableDrillTargets &&
-                !isEqual(drillTargets?.availableDrillTargets, availableDrillTargets)
+                !isEqual(availableDrillTargets, drillTargets?.availableDrillTargets)
             ) {
                 dispatch(addDrillTargets(widgetRef, availableDrillTargets));
             }
         },
-        [widgetRef, drillTargets],
+        [widgetRef, drillTargets?.availableDrillTargets],
     );
 
     return {
@@ -79,14 +79,14 @@ export const useDashboardDrillTargetsLocal = (): UseDashboardDrillTargetsResult 
     const onAvailableDrillTargetsReceived = useCallback(
         (availableDrillTargets?: IAvailableDrillTargets): void => {
             setDrillTargets((prevValue) => {
-                if (availableDrillTargets && !isEqual(drillTargets, availableDrillTargets)) {
+                if (availableDrillTargets && !isEqual(prevValue, availableDrillTargets)) {
                     return availableDrillTargets;
                 }
                 // returning prevValue effectively skips the setState
                 return prevValue;
             });
         },
-        [drillTargets],
+        [],
     );
 
     return {
