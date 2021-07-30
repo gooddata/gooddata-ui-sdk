@@ -111,6 +111,12 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public attributes(): IWorkspaceAttributesService {
+        const { attributes } = this.factories;
+
+        if (attributes) {
+            return attributes(this.decorated.attributes(), this.workspace);
+        }
+
         return this.decorated.attributes();
     }
 
@@ -241,6 +247,14 @@ export type WorkspaceSettingsDecoratorFactory = (
 ) => IWorkspaceSettingsService;
 
 /**
+ * @alpha
+ */
+export type AttributesDecoratorFactory = (
+    attributes: IWorkspaceAttributesService,
+    workspace: string,
+) => IWorkspaceAttributesService;
+
+/**
  * Provides factory functions for the different decorators (currently only supports execution
  * decorator). Input to each factory function is the original implementation from the wrapped backend, output
  * is whatever decorateur sees fit.
@@ -252,13 +266,14 @@ export type DecoratorFactories = {
     catalog?: CatalogDecoratorFactory;
     securitySettings?: SecuritySettingsDecoratorFactory;
     workspaceSettings?: WorkspaceSettingsDecoratorFactory;
+    attributes?: AttributesDecoratorFactory;
 };
 
 /**
  * Decorated backend is a wrapper of any other backend implementations that can be used to enrich
  * functionality of the services that the wrapped backend normally provides.
  *
- * It can be for instance used to decorate execution factories and in conjuction with {@link DecoratedPreparedExecution}
+ * It can be for instance used to decorate execution factories and in conjunction with {@link DecoratedPreparedExecution}
  * also create decorated prepared executions.
  *
  * @param backend - instance of backend to decorate

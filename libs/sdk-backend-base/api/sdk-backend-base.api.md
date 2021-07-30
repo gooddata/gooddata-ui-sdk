@@ -64,6 +64,7 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVariableMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IWidget } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceAttributesService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
@@ -138,6 +139,9 @@ export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject =
     drillDownStep(ref: ObjRef | undefined): this;
 }
 
+// @alpha (undocumented)
+export type AttributesDecoratorFactory = (attributes: IWorkspaceAttributesService, workspace: string) => IWorkspaceAttributesService;
+
 // @beta
 export type AuthenticatedAsyncCall<TSdk, TReturn> = (sdk: TSdk, context: IAuthenticatedAsyncCallContext) => Promise<TReturn>;
 
@@ -190,6 +194,7 @@ export type CacheControl = {
     resetExecutions: () => void;
     resetCatalogs: () => void;
     resetSecuritySettings: () => void;
+    resetAttributes: () => void;
     resetAll: () => void;
 };
 
@@ -203,6 +208,8 @@ export type CachingConfiguration = {
     maxSecuritySettingsOrgs: number | undefined;
     maxSecuritySettingsOrgUrls: number | undefined;
     maxSecuritySettingsOrgUrlsAge: number | undefined;
+    maxAttributeWorkspaces: number | undefined;
+    maxAttributeDisplayFormsPerWorkspace: number | undefined;
 };
 
 // @beta
@@ -332,7 +339,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
     // (undocumented)
     forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
     protected wrap: (execution: IPreparedExecution) => IPreparedExecution;
-    }
+}
 
 // @alpha
 export abstract class DecoratedExecutionResult implements IExecutionResult {
@@ -353,7 +360,7 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     // (undocumented)
     transform(): IPreparedExecution;
-    }
+}
 
 // @alpha
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
@@ -448,6 +455,7 @@ export type DecoratorFactories = {
     catalog?: CatalogDecoratorFactory;
     securitySettings?: SecuritySettingsDecoratorFactory;
     workspaceSettings?: WorkspaceSettingsDecoratorFactory;
+    attributes?: AttributesDecoratorFactory;
 };
 
 // @beta (undocumented)
@@ -761,7 +769,7 @@ export class Normalizer {
     readonly normalized: IExecutionDefinition;
     // (undocumented)
     readonly original: IExecutionDefinition;
-    }
+}
 
 // @alpha (undocumented)
 export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
@@ -852,6 +860,5 @@ export interface WorkspaceSettingsConfiguration {
 
 // @alpha (undocumented)
 export type WorkspaceSettingsDecoratorFactory = (settings: IWorkspaceSettingsService) => IWorkspaceSettingsService;
-
 
 ```

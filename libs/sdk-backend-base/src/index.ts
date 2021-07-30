@@ -18,6 +18,7 @@ export {
     ExecutionDecoratorFactory,
     SecuritySettingsDecoratorFactory,
     WorkspaceSettingsDecoratorFactory,
+    AttributesDecoratorFactory,
 } from "./decoratedBackend";
 
 export {

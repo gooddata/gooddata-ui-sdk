@@ -10,8 +10,12 @@ import {
     IWorkspaceCatalogFactoryOptions,
     ValidationContext,
     ISecuritySettingsService,
+    IAttributeDisplayFormMetadataObject,
+    IWorkspaceAttributesService,
+    IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 import {
+    AttributesDecoratorFactory,
     CatalogDecoratorFactory,
     decoratedBackend,
     ExecutionDecoratorFactory,
@@ -28,9 +32,23 @@ import {
 } from "../decoratedBackend/execution";
 import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog";
 import stringify from "json-stable-stringify";
+import compact from "lodash/compact";
+import first from "lodash/first";
+import flow from "lodash/flow";
 import identity from "lodash/identity";
 import invariant from "ts-invariant";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+import partition from "lodash/partition";
+import {
+    areObjRefsEqual,
+    idRef,
+    IExecutionDefinition,
+    isIdentifierRef,
+    isUriRef,
+    ObjectType,
+    ObjRef,
+    uriRef,
+} from "@gooddata/sdk-model";
+import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes";
 
 //
 // Supporting types
@@ -48,11 +66,16 @@ type SecuritySettingsCacheEntry = {
     valid: LRUCache<string, Promise<boolean>>;
 };
 
+type AttributeCacheEntry = {
+    displayForms: LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>;
+};
+
 type CachingContext = {
     caches: {
         execution?: LRUCache<string, ExecutionCacheEntry>;
         workspaceCatalogs?: LRUCache<string, CatalogCacheEntry>;
         securitySettings?: LRUCache<string, SecuritySettingsCacheEntry>;
+        workspaceAttributes?: LRUCache<string, AttributeCacheEntry>;
     };
     config: CachingConfiguration;
 };
@@ -296,6 +319,126 @@ class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
 }
 
 //
+// Attributes caching
+//
+
+function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: ObjectType): boolean {
+    return (
+        areObjRefsEqual(ref, mdObject.ref) ||
+        areObjRefsEqual(ref, idRef(mdObject.id, type)) ||
+        areObjRefsEqual(ref, uriRef(mdObject.uri))
+    );
+}
+
+const firstDefined = flow(compact, first);
+
+class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
+    constructor(
+        decorated: IWorkspaceAttributesService,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    public getAttributeDisplayForm = (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
+        const cache = this.getOrCreateWorkspaceEntry(this.workspace).displayForms;
+
+        const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+        const uriCacheKey = isUriRef(ref) ? ref.uri : undefined;
+
+        let cacheItem = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+
+        if (!cacheItem) {
+            cacheItem = super.getAttributeDisplayForm(ref).catch((e) => {
+                if (idCacheKey) {
+                    cache.del(idCacheKey);
+                }
+                if (uriCacheKey) {
+                    cache.del(uriCacheKey);
+                }
+                throw e;
+            });
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+
+            if (uriCacheKey) {
+                cache.set(uriCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    public getAttributeDisplayForms = async (
+        refs: ObjRef[],
+    ): Promise<IAttributeDisplayFormMetadataObject[]> => {
+        const cache = this.getOrCreateWorkspaceEntry(this.workspace).displayForms;
+
+        // grab a reference to the cache results as soon as possible in case they would get evicted while loading the ones with missing data in cache
+        // then would might not be able to call cache.get again and be guaranteed to get the data
+        const refsWithCacheResults = refs.map(
+            (ref): { ref: ObjRef; cacheHit: Promise<IAttributeDisplayFormMetadataObject> | undefined } => {
+                const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+                const uriCacheKey = isUriRef(ref) ? ref.uri : undefined;
+
+                const cacheHit = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+
+                return { ref, cacheHit };
+            },
+        );
+
+        const [withCacheHits, withoutCacheHits] = partition(
+            refsWithCacheResults,
+            ({ cacheHit }) => !!cacheHit,
+        );
+
+        const [alreadyInCache, loadedFromServer] = await Promise.all([
+            // await the stuff from cache, we need the data available (we cannot just return the promises)
+            Promise.all(withCacheHits.map((item) => item.cacheHit!)),
+            // load items not in cache using the bulk operation
+            this.decorated.getAttributeDisplayForms(withoutCacheHits.map((item) => item.ref)),
+        ]);
+
+        // save newly loaded to cache for future reference
+        loadedFromServer.forEach((loaded) => {
+            const promisifiedResult = Promise.resolve(loaded);
+            // save the cache item for both types of refs
+            cache.set(loaded.id, promisifiedResult);
+            cache.set(loaded.uri, promisifiedResult);
+        });
+
+        // reconstruct the original ordering
+        const candidates = [...loadedFromServer, ...alreadyInCache];
+
+        return refs.map((ref) => {
+            const match = candidates.find((item) => refMatchesMdObject(ref, item, "displayForm"));
+            // if this bombs, some data got lost in the process
+            invariant(match);
+            return match;
+        });
+    };
+
+    private getOrCreateWorkspaceEntry = (workspace: string): AttributeCacheEntry => {
+        const cache = this.ctx.caches.workspaceAttributes!;
+        let cacheEntry = cache.get(workspace);
+
+        if (!cacheEntry) {
+            cacheEntry = {
+                displayForms: new LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>({
+                    max: this.ctx.config.maxAttributeDisplayFormsPerWorkspace,
+                }),
+            };
+            cache.set(workspace, cacheEntry);
+        }
+
+        return cacheEntry;
+    };
+}
+
+//
 //
 //
 
@@ -312,12 +455,16 @@ function cachedSecuritySettings(ctx: CachingContext): SecuritySettingsDecoratorF
     return (original: ISecuritySettingsService) => new WithSecuritySettingsCaching(original, ctx);
 }
 
+function cachedAttributes(ctx: CachingContext): AttributesDecoratorFactory {
+    return (original, workspace) => new WithAttributesCaching(original, ctx, workspace);
+}
+
 function cachingEnabled(desiredSize: number | undefined): boolean {
     return desiredSize !== undefined && desiredSize > 0;
 }
 
 function cacheControl(ctx: CachingContext): CacheControl {
-    const control = {
+    const control: CacheControl = {
         resetExecutions: () => {
             ctx.caches.execution?.reset();
         },
@@ -330,10 +477,15 @@ function cacheControl(ctx: CachingContext): CacheControl {
             ctx.caches.securitySettings?.reset();
         },
 
+        resetAttributes: () => {
+            ctx.caches.workspaceAttributes?.reset();
+        },
+
         resetAll: () => {
             control.resetExecutions();
             control.resetCatalogs();
             control.resetSecuritySettings();
+            control.resetAttributes();
         },
     };
 
@@ -368,6 +520,11 @@ export type CacheControl = {
      * Resets all organization security settings caches.
      */
     resetSecuritySettings: () => void;
+
+    /**
+     * Resets all workspace attribute caches.
+     */
+    resetAttributes: () => void;
 
     /**
      * Convenience method to reset all caches (calls all the particular resets).
@@ -488,6 +645,35 @@ export type CachingConfiguration = {
      * caching, tweak the `maxSecuritySettingsOrgs`.
      */
     maxSecuritySettingsOrgUrlsAge: number | undefined;
+
+    /**
+     * Maximum number of workspaces for which to cache selected {@link @gooddata/sdk-backend-spi#IWorkspaceAttributesService} calls.
+     * The workspace identifier is used as cache key.
+     * For each workspace, there will be a cache entry holding `maxAttributeDisplayFormsPerWorkspace` entries for attribute display form-related calls.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * cache may be OK in applications where number of workspaces is small - the cache will be limited
+     * naturally and will not grow uncontrollably.
+     *
+     * When non-positive number is specified, then no caching will be done.
+     */
+    maxAttributeWorkspaces: number | undefined;
+
+    /**
+     * Maximum number of attribute display forms to cache per workspace.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * attribute display form cache may be OK in applications where number of attribute display forms is small
+     * and/or they are requested infrequently - the cache will be limited naturally and will not grow uncontrollably.
+     *
+     * Setting non-positive number here is invalid. If you want to turn off attribute display form
+     * caching, tweak the `maxAttributeWorkspaces` value.
+     */
+    maxAttributeDisplayFormsPerWorkspace: number | undefined;
 };
 
 function assertPositiveOrUndefined(value: number | undefined, valueName: string) {
@@ -508,6 +694,8 @@ export const DefaultCachingConfiguration: CachingConfiguration = {
     maxSecuritySettingsOrgs: 3,
     maxSecuritySettingsOrgUrls: 100,
     maxSecuritySettingsOrgUrlsAge: 300_000, // 5 minutes
+    maxAttributeWorkspaces: 1,
+    maxAttributeDisplayFormsPerWorkspace: 100,
 };
 
 /**
@@ -530,6 +718,7 @@ export function withCaching(
     const execCaching = cachingEnabled(config.maxExecutions);
     const catalogCaching = cachingEnabled(config.maxCatalogs);
     const securitySettingsCaching = cachingEnabled(config.maxSecuritySettingsOrgs);
+    const attributeCaching = cachingEnabled(config.maxAttributeWorkspaces);
 
     const ctx: CachingContext = {
         caches: {
@@ -538,6 +727,9 @@ export function withCaching(
             securitySettings: securitySettingsCaching
                 ? new LRUCache({ max: config.maxSecuritySettingsOrgs })
                 : undefined,
+            workspaceAttributes: attributeCaching
+                ? new LRUCache({ max: config.maxAttributeWorkspaces })
+                : undefined,
         },
         config,
     };
@@ -545,10 +737,11 @@ export function withCaching(
     const execution = execCaching ? cachedExecutions(ctx) : identity;
     const catalog = catalogCaching ? cachedCatalog(ctx) : identity;
     const securitySettings = securitySettingsCaching ? cachedSecuritySettings(ctx) : identity;
+    const attributes = attributeCaching ? cachedAttributes(ctx) : identity;
 
     if (config.onCacheReady) {
         config.onCacheReady(cacheControl(ctx));
     }
 
-    return decoratedBackend(realBackend, { execution, catalog, securitySettings });
+    return decoratedBackend(realBackend, { execution, catalog, securitySettings, attributes });
 }

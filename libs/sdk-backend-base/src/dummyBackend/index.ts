@@ -38,6 +38,10 @@ import {
     IOrganizations,
     IWorkspaceSettings,
     IUserWorkspaceSettings,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IElementsQueryFactory,
+    IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -50,6 +54,9 @@ import {
     ISortItem,
     ObjRef,
     defWithDateFormat,
+    idRef,
+    isIdentifierRef,
+    isUriRef,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
@@ -217,7 +224,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             return new DummyWorkspaceCatalogFactory(workspace);
         },
         attributes(): IWorkspaceAttributesService {
-            throw new NotSupported("not supported");
+            return new DummyWorkspaceAttributesService(workspace);
         },
         measures(): IWorkspaceMeasuresService {
             throw new NotSupported("not supported");
@@ -434,5 +441,44 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
                 decimal: ".",
             },
         });
+    }
+}
+
+class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
+    constructor(public readonly workspace: string) {}
+    elements(): IElementsQueryFactory {
+        throw new NotSupported("not supported");
+    }
+    async getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> {
+        return {
+            attribute: idRef("dummyAttribute"),
+            deprecated: false,
+            description: "Dummy attribute",
+            id: isIdentifierRef(ref) ? ref.identifier : "dummyDisplayForm",
+            production: true,
+            ref,
+            title: "Dummy display form",
+            type: "displayForm",
+            unlisted: false,
+            uri: isUriRef(ref) ? ref.uri : `/gdc/md/${ref.identifier}`,
+        };
+    }
+    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
+        return Promise.all(refs.map((ref) => this.getAttributeDisplayForm(ref)));
+    }
+    getAttribute(_ref: ObjRef): Promise<IAttributeMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+    getAttributes(_refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
+        throw new NotSupported("not supported");
+    }
+    getCommonAttributes(_attributeRefs: ObjRef[]): Promise<ObjRef[]> {
+        throw new NotSupported("not supported");
+    }
+    getCommonAttributesBatch(_attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {
+        throw new NotSupported("not supported");
+    }
+    getAttributeDatasetMeta(_ref: ObjRef): Promise<IMetadataObject> {
+        throw new NotSupported("not supported");
     }
 }
