@@ -9,4 +9,4 @@ In case you need to change and compile these extensions
 
 -   install Java JDK 8
 -   download https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-jre8-standalone/2.27.2/wiremock-jre8-standalone-2.27.2.jar to this directory
--   run `./buils.sh`
+-   run `./build.sh`

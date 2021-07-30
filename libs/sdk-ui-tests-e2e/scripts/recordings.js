@@ -16,12 +16,9 @@ function deleteFilesInDir(directory) {
 
 function sanitizeCredentials() {
     try {
-        console.log("sanitizing credentials");
         const stdout = execSync("ls ./recordings/mappings/gdc_account_login*").toString();
-        console.log("stdout", stdout);
         if (stdout) {
             const loginRecordings = stdout.split("\n");
-            console.log("login recordings", loginRecordings);
             loginRecordings.forEach((loginRecording) => {
                 if (loginRecording === "") {
                     return;

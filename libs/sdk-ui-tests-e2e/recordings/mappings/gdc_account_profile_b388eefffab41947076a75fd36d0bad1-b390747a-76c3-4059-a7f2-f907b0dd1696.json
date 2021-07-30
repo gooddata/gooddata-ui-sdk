@@ -7,7 +7,7 @@
     },
     "response": {
         "status": 200,
-        "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2021-07-21 14:07:27\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"720976661\",\"login\":\"martin.plavek@gooddata.com\",\"lastName\":\"Plavek\",\"firstName\":\"Martin\",\"created\":\"2021-04-07 11:36:41\",\"country\":null,\"companyName\":\"Good Data\",\"email\":\"martin.plavek@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"projects\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/auditEvents\"}}}",
+        "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2021-07-21 14:07:27\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"123456789\",\"login\":\"martin.plavek@gooddata.com\",\"lastName\":\"Plavek\",\"firstName\":\"Martin\",\"created\":\"2021-04-07 11:36:41\",\"country\":null,\"companyName\":\"Good Data\",\"email\":\"martin.plavek@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"projects\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/auditEvents\"}}}",
         "headers": {
             "server": "undefined",
             "x-envoy-upstream-service-time": "6",
