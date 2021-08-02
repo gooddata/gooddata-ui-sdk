@@ -290,14 +290,14 @@ export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly properties: VisualizationProperties;
+        readonly properties: VisualizationProperties | undefined;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES";
 }
 
 // @alpha
-export function changeInsightWidgetVisProperties(ref: ObjRef, properties: VisualizationProperties, correlationId?: string): ChangeInsightWidgetVisProperties;
+export function changeInsightWidgetVisProperties(ref: ObjRef, properties: VisualizationProperties | undefined, correlationId?: string): ChangeInsightWidgetVisProperties;
 
 // @alpha (undocumented)
 export interface ChangeKpiWidgetComparison extends IDashboardCommand {
@@ -906,7 +906,7 @@ export interface DashboardInsightWidgetVisPropertiesChanged extends IDashboardEv
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly properties: VisualizationProperties;
+        readonly properties: VisualizationProperties | undefined;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED";

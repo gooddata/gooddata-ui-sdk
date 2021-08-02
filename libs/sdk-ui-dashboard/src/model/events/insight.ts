@@ -113,15 +113,18 @@ export interface DashboardInsightWidgetVisPropertiesChanged extends IDashboardEv
          * New visualization properties that are now in effect for the insight widget. These properties
          * will be merged with the properties defined on the insight itself. They will influence how the
          * insight visually appears.
+         *
+         * Will be undefined if there are no widget-level visualization properties set for the particular
+         * insight widget.
          */
-        readonly properties: VisualizationProperties;
+        readonly properties: VisualizationProperties | undefined;
     };
 }
 
 export function insightWidgetVisPropertiesChanged(
     ctx: DashboardContext,
     ref: ObjRef,
-    properties: VisualizationProperties,
+    properties: VisualizationProperties | undefined,
     correlationId?: string,
 ): DashboardInsightWidgetVisPropertiesChanged {
     return {
