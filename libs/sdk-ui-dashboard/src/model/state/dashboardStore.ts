@@ -231,7 +231,9 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         middleware,
     });
 
-    const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers, store.dispatch);
+    const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers, store.dispatch, (selector) =>
+        selector(store.getState()),
+    );
 
     const rootSagaTask = sagaMiddleware.run(
         rootSaga,

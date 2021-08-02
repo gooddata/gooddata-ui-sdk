@@ -47,6 +47,7 @@ import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { Identifier } from '@gooddata/sdk-model';
+import { IdentifierRef } from '@gooddata/sdk-model';
 import { IDrillableItem } from '@gooddata/sdk-ui';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillToAttributeUrl } from '@gooddata/sdk-backend-spi';
@@ -811,7 +812,7 @@ export interface DashboardDrillToLegacyDashboardResolved extends IDashboardEvent
 // @alpha
 export type DashboardEventHandler<TEvents extends DashboardEvents = any> = {
     eval: (event: DashboardEvents) => boolean;
-    handler: (event: TEvents, dispatchCommand: (command: DashboardCommands) => void) => void;
+    handler: (event: TEvents, dispatchCommand: (command: DashboardCommands) => void, evalSelector: DashboardSelectorEvaluator) => void;
 };
 
 // @alpha (undocumented)
@@ -1233,6 +1234,12 @@ export interface DashboardScheduledEmailCreated extends IDashboardEvent {
     // (undocumented)
     readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED";
 }
+
+// @alpha
+export type DashboardSelector<TResult> = (state: DashboardState) => TResult;
+
+// @alpha
+export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<TResult>) => TResult;
 
 // @alpha
 export type DashboardState = {
@@ -2405,6 +2412,9 @@ export const selectColorPalette: OutputSelector<DashboardState, IColorPalette, (
 
 // @alpha
 export const selectConfig: OutputSelector<DashboardState, ResolvedDashboardConfig, (res: ConfigState) => ResolvedDashboardConfig>;
+
+// @alpha
+export const selectDashboardIdRef: OutputSelector<DashboardState, IdentifierRef, (res: string) => IdentifierRef>;
 
 // @internal (undocumented)
 export const selectDashboardLoading: OutputSelector<DashboardState, LoadingState, (res: DashboardState) => LoadingState>;

@@ -4,6 +4,7 @@ import { actionChannel, take } from "redux-saga/effects";
 import { DashboardEventHandler } from "../../events/eventHandler";
 import { DashboardEvents } from "../../events";
 import { DashboardCommands } from "../../commands";
+import { DashboardState } from "../types";
 
 export type EventEmitter = {
     registerHandler: (handler: DashboardEventHandler) => void;
@@ -24,6 +25,7 @@ export type EventEmitter = {
 export function createRootEventEmitter(
     initialHandlers: DashboardEventHandler[] = [],
     dispatch: (command: DashboardCommands) => void,
+    evalSelector: <TResult>(selector: (state: DashboardState) => TResult) => TResult,
 ): EventEmitter {
     let eventHandlers = initialHandlers;
 
@@ -43,7 +45,7 @@ export function createRootEventEmitter(
                 try {
                     eventHandlers.forEach((handler) => {
                         if (handler.eval(event)) {
-                            handler.handler(event, dispatch);
+                            handler.handler(event, dispatch, evalSelector);
                         }
                     });
                 } catch (e) {
