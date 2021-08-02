@@ -67,8 +67,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/sdk-backend-spi": "^8.6.0-alpha.24",
-        "@gooddata/util": "^8.6.0-alpha.24",
+        "@gooddata/sdk-backend-spi": "^8.6.0-alpha.25",
+        "@gooddata/util": "^8.6.0-alpha.25",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.18.4",
         "@types/enzyme-adapter-react-16": "^1.0.5",
