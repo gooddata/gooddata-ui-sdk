@@ -629,7 +629,7 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
         readonly filter: IDashboardDateFilter;
-        readonly dateFilterOptionLocalId: string | undefined;
+        readonly dateFilterOptionLocalId?: string;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
