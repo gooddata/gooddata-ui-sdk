@@ -11,6 +11,7 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 import { IDrillEvent, OnFiredDrillEvent } from "@gooddata/sdk-ui";
+import { DateFilterOption } from "@gooddata/sdk-ui-filters";
 
 /**
  * Supported dashboard filter type.
@@ -109,4 +110,14 @@ export interface IDrillToUrlPlaceholder {
     placeholder: string;
     identifier: string;
     toBeEncoded: boolean;
+}
+
+/**
+ * Provides information about a {@link @gooddata/sdk-ui-filters#DateFilter} value.
+ *
+ * @alpha
+ */
+export interface IDateFilterOptionInfo {
+    dateFilterOption: DateFilterOption;
+    excludeCurrentPeriod: boolean;
 }

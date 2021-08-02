@@ -59,6 +59,7 @@ import {
     TopBar,
     IMenuButtonItem,
 } from "../topBar";
+import { IDateFilterOptionInfo } from "../../types";
 
 import { useDashboardPdfExporter } from "./hooks/useDashboardPdfExporter";
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
@@ -71,13 +72,13 @@ const useFilterBar = (): {
     const filters = useDashboardSelector(selectFilterContextFilters);
     const dispatch = useDashboardDispatch();
     const onFilterChanged = useCallback(
-        (filter: FilterContextItem | undefined) => {
+        (filter: FilterContextItem | undefined, dateFilterOptionInfo?: IDateFilterOptionInfo) => {
             if (!filter) {
                 // all time filter
                 dispatch(clearDateFilterSelection());
             } else if (isDashboardDateFilter(filter)) {
                 const { type, granularity, from, to } = filter.dateFilter;
-                dispatch(changeDateFilterSelection(type, granularity, from, to));
+                dispatch(changeDateFilterSelection(type, granularity, from, to, dateFilterOptionInfo));
             } else if (isDashboardAttributeFilter(filter)) {
                 const { attributeElements, negativeSelection, localIdentifier } = filter.attributeFilter;
                 dispatch(

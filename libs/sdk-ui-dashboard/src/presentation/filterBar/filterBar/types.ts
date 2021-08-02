@@ -2,6 +2,8 @@
 import { ComponentType } from "react";
 import { FilterContextItem } from "@gooddata/sdk-backend-spi";
 
+import { IDateFilterOptionInfo } from "../../../types";
+
 /**
  * @alpha
  */
@@ -16,8 +18,12 @@ export interface IFilterBarProps {
      * using this callback.
      *
      * @param filter - filter that has changed, undefined if All time date filter was selected
+     * @param dateFilterOptionInfo - if using a component compatible with {@link @gooddata/sdk-ui-filters#DateFilter}, information about the configuration that was active at the time of the filter change
      */
-    onFilterChanged: (filter: FilterContextItem | undefined) => void;
+    onFilterChanged: (
+        filter: FilterContextItem | undefined,
+        dateFilterOptionInfo?: IDateFilterOptionInfo,
+    ) => void;
 }
 
 /**

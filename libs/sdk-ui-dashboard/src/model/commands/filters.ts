@@ -8,6 +8,7 @@ import {
 import { IAttributeElements, ObjRef } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 import { IDashboardFilter } from "@gooddata/sdk-ui-ext";
+import { IDateFilterOptionInfo } from "../../types";
 
 /**
  * @alpha
@@ -51,6 +52,11 @@ export interface DateFilterSelection {
      * @remarks see `granularity` prop for more on date format
      */
     readonly to?: DateString | number;
+
+    /**
+     * The configuration of the date filter component (if using component compatible with {@link @gooddata/sdk-ui-filters#DateFilter}).
+     */
+    readonly dateFilterOptionInfo?: IDateFilterOptionInfo;
 }
 
 /**
@@ -80,6 +86,7 @@ export function changeDateFilterSelection(
     granularity: DateFilterGranularity,
     from?: DateString | number,
     to?: DateString | number,
+    dateFilterOptionInfo?: IDateFilterOptionInfo,
     correlationId?: string,
 ): ChangeDateFilterSelection {
     return {
@@ -90,6 +97,7 @@ export function changeDateFilterSelection(
             granularity,
             from,
             to,
+            dateFilterOptionInfo,
         },
     };
 }

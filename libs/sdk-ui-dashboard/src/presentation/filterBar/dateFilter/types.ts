@@ -3,6 +3,8 @@ import { ComponentType } from "react";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
+import { IDateFilterOptionInfo } from "../../../types";
+
 /**
  * Defines the configuration of the DateFilter component.
  *
@@ -39,8 +41,12 @@ export interface IDashboardDateFilterProps {
      * new filter value.
      *
      * @param filter - new date filter value.
+     * @param dateFilterOptionInfo - if using a component compatible with {@link @gooddata/sdk-ui-filters#DateFilter}, information about the configuration that was active at the time of the filter change.
      */
-    onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
+    onFilterChanged: (
+        filter: IDashboardDateFilter | undefined,
+        dateFilterOptionInfo?: IDateFilterOptionInfo,
+    ) => void;
 
     /**
      * Additional DateFilter configuration.
