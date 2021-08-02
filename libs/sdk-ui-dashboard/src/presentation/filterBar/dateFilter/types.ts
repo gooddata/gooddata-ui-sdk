@@ -3,8 +3,6 @@ import { ComponentType } from "react";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
-import { IDateFilterOptionInfo } from "../../../types";
-
 /**
  * Defines the configuration of the DateFilter component.
  *
@@ -40,13 +38,10 @@ export interface IDashboardDateFilterProps {
      * When the user interacts with the filter and changes its value, it MUST use this callback to propagate the
      * new filter value.
      *
-     * @param filter - new date filter value.
-     * @param dateFilterOptionInfo - if using a component compatible with {@link @gooddata/sdk-ui-filters#DateFilter}, information about the configuration that was active at the time of the filter change.
+     * @param filter - new date filter value
+     * @param dateFilterOptionLocalId - localId of the {@link @gooddata/sdk-backend-spi#IDateFilterOption} selected
      */
-    onFilterChanged: (
-        filter: IDashboardDateFilter | undefined,
-        dateFilterOptionInfo?: IDateFilterOptionInfo,
-    ) => void;
+    onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
 
     /**
      * Additional DateFilter configuration.

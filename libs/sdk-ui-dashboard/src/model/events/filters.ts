@@ -6,7 +6,6 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IDashboardEvent } from "./base";
 import { DashboardContext } from "../types/commonTypes";
-import { IDateFilterOptionInfo } from "../../types";
 
 /**
  * This event is emitted after the dashboard's date filter selection is changed.
@@ -17,14 +16,14 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
     readonly payload: {
         readonly filter: IDashboardDateFilter;
-        readonly dateFilterOptionInfo: IDateFilterOptionInfo | undefined;
+        readonly dateFilterOptionLocalId: string | undefined;
     };
 }
 
 export function dateFilterChanged(
     ctx: DashboardContext,
     filter: IDashboardDateFilter,
-    dateFilterOptionInfo: IDateFilterOptionInfo | undefined,
+    dateFilterOptionLocalId: string | undefined,
     correlationId?: string,
 ): DashboardDateFilterSelectionChanged {
     return {
@@ -33,7 +32,7 @@ export function dateFilterChanged(
         correlationId,
         payload: {
             filter,
-            dateFilterOptionInfo,
+            dateFilterOptionLocalId,
         },
     };
 }

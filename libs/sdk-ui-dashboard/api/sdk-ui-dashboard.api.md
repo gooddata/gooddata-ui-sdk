@@ -12,7 +12,6 @@ import { AnyAction } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
-import { DateFilterOption } from '@gooddata/sdk-ui-filters';
 import { DateFilterType } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
 import { Dispatch } from '@reduxjs/toolkit';
@@ -228,7 +227,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 }
 
 // @alpha
-export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionInfo?: IDateFilterOptionInfo, correlationId?: string): ChangeDateFilterSelection;
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string): ChangeDateFilterSelection;
 
 // @alpha (undocumented)
 export interface ChangeFilterContextSelection extends IDashboardCommand {
@@ -630,7 +629,7 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
         readonly filter: IDashboardDateFilter;
-        readonly dateFilterOptionInfo: IDateFilterOptionInfo | undefined;
+        readonly dateFilterOptionLocalId: string | undefined;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
@@ -1326,7 +1325,7 @@ export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "C
 
 // @alpha (undocumented)
 export interface DateFilterSelection {
-    readonly dateFilterOptionInfo?: IDateFilterOptionInfo;
+    readonly dateFilterOptionLocalId?: string;
     readonly from?: DateString | number;
     readonly granularity: DateFilterGranularity;
     readonly to?: DateString | number;
@@ -1674,7 +1673,7 @@ export interface IDashboardDateFilterConfig {
 export interface IDashboardDateFilterProps {
     config: IDashboardDateFilterConfig;
     filter: IDashboardDateFilter | undefined;
-    onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionInfo?: IDateFilterOptionInfo) => void;
+    onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
     readonly?: boolean;
 }
 
@@ -1789,14 +1788,6 @@ export interface IDashboardStoreProviderProps {
 }
 
 // @alpha
-export interface IDateFilterOptionInfo {
-    // (undocumented)
-    dateFilterOption: DateFilterOption;
-    // (undocumented)
-    excludeCurrentPeriod: boolean;
-}
-
-// @alpha
 export interface IDrillDownContext {
     // (undocumented)
     drillDefinition: IDrillDownDefinition;
@@ -1833,7 +1824,7 @@ export interface IDrillToUrlPlaceholder {
 // @alpha (undocumented)
 export interface IFilterBarProps {
     filters: FilterContextItem[];
-    onFilterChanged: (filter: FilterContextItem | undefined, dateFilterOptionInfo?: IDateFilterOptionInfo) => void;
+    onFilterChanged: (filter: FilterContextItem | undefined, dateFilterOptionLocalId?: string) => void;
 }
 
 // @alpha (undocumented)

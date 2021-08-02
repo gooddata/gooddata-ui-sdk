@@ -43,7 +43,6 @@ options = {
             "src/model",
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
-            "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("layout", "src/presentation/layout", [
             "src/model",

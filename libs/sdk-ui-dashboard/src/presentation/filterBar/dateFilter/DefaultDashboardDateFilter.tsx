@@ -37,10 +37,10 @@ export const DefaultDashboardDateFilterInner = (): JSX.Element => {
             customFilterName={config.customFilterName}
             onApply={(option, exclude) => {
                 setLastSelectedOptionId(option.localIdentifier);
-                onFilterChanged(dateFilterOptionToDashboardDateFilter(option, exclude), {
-                    dateFilterOption: option,
-                    excludeCurrentPeriod: exclude,
-                });
+                onFilterChanged(
+                    dateFilterOptionToDashboardDateFilter(option, exclude),
+                    option.localIdentifier,
+                );
             }}
         />
     );

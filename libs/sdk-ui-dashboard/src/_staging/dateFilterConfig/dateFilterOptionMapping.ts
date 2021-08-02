@@ -18,8 +18,6 @@ import compact from "lodash/compact";
 import flatten from "lodash/flatten";
 import values from "lodash/values";
 
-import { IDateFilterOptionInfo } from "../../types";
-
 const VIRTUAL_PRESET_IDENTIFIER = "GDC__VIRTUAL_PRESET";
 
 const virtualPresetBase = {
@@ -27,6 +25,11 @@ const virtualPresetBase = {
     name: "",
     visible: false,
 };
+
+interface IDateFilterOptionInfo {
+    dateFilterOption: DateFilterOption;
+    excludeCurrentPeriod: boolean;
+}
 
 /**
  * Tries to match a preset or a form with the provided value. Prioritizes the provided option if possible.
