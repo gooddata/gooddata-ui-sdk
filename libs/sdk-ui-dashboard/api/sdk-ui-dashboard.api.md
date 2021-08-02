@@ -1824,7 +1824,8 @@ export interface IDrillToUrlPlaceholder {
 // @alpha (undocumented)
 export interface IFilterBarProps {
     filters: FilterContextItem[];
-    onFilterChanged: (filter: FilterContextItem | undefined, dateFilterOptionLocalId?: string) => void;
+    onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
+    onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
 }
 
 // @alpha (undocumented)

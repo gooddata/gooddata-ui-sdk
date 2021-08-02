@@ -1,11 +1,9 @@
 // (C) 2021 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
-import invariant from "ts-invariant";
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
-    isDashboardAttributeFilter,
-    isDashboardDateFilter,
+    IDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
@@ -66,35 +64,39 @@ import { IDashboardProps } from "./types";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
-    onFilterChanged: (filter: FilterContextItem | undefined) => void;
+    onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
+    onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
 } => {
     const filters = useDashboardSelector(selectFilterContextFilters);
     const dispatch = useDashboardDispatch();
-    const onFilterChanged = useCallback(
-        (filter: FilterContextItem | undefined, dateFilterOptionLocalId?: string) => {
+    const onAttributeFilterChanged = useCallback(
+        (filter: IDashboardAttributeFilter) => {
+            const { attributeElements, negativeSelection, localIdentifier } = filter.attributeFilter;
+            dispatch(
+                changeAttributeFilterSelection(
+                    localIdentifier!,
+                    attributeElements,
+                    negativeSelection ? "NOT_IN" : "IN",
+                ),
+            );
+        },
+        [dispatch],
+    );
+
+    const onDateFilterChanged = useCallback(
+        (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => {
             if (!filter) {
                 // all time filter
                 dispatch(clearDateFilterSelection());
-            } else if (isDashboardDateFilter(filter)) {
+            } else {
                 const { type, granularity, from, to } = filter.dateFilter;
                 dispatch(changeDateFilterSelection(type, granularity, from, to, dateFilterOptionLocalId));
-            } else if (isDashboardAttributeFilter(filter)) {
-                const { attributeElements, negativeSelection, localIdentifier } = filter.attributeFilter;
-                dispatch(
-                    changeAttributeFilterSelection(
-                        localIdentifier!,
-                        attributeElements,
-                        negativeSelection ? "NOT_IN" : "IN",
-                    ),
-                );
-            } else {
-                invariant(false, "Unknown filter type");
             }
         },
         [dispatch],
     );
 
-    return { filters, onFilterChanged };
+    return { filters, onAttributeFilterChanged, onDateFilterChanged };
 };
 
 const useTopBar = () => {
@@ -120,7 +122,7 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     const { dashboardRef, backend, workspace } = props;
     const intl = useIntl();
 
-    const { filters, onFilterChanged } = useFilterBar();
+    const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
     const { addSuccess, addError } = useToastMessage();
 
@@ -192,7 +194,11 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
                 <TopBar />
             </TopBarPropsProvider>
 
-            <FilterBarPropsProvider filters={filters} onFilterChanged={onFilterChanged}>
+            <FilterBarPropsProvider
+                filters={filters}
+                onAttributeFilterChanged={onAttributeFilterChanged}
+                onDateFilterChanged={onDateFilterChanged}
+            >
                 <FilterBar />
             </FilterBarPropsProvider>
         </>
