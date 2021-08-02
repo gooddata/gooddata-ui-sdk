@@ -209,8 +209,9 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
         kpiResult &&
         result &&
         status !== "error" &&
-        (kpiWidget.drills.length > 0 ||
-            isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result));
+        (drillableItems
+            ? isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result)
+            : kpiWidget.drills.length > 0);
 
     const enableCompactSize = settings.enableKDWidgetCustomHeight;
 
