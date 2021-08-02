@@ -27,7 +27,13 @@ import { useDrillToInsight } from "../hooks/useDrillToInsight";
 import { useDrillToDashboard } from "../hooks/useDrillToDashboard";
 import { useDrillToAttributeUrl } from "../hooks/useDrillToAttributeUrl";
 import { useDrillToCustomUrl } from "../hooks/useDrillToCustomUrl";
-import { DashboardDrillDefinition, IDashboardDrillEvent, isDrillDownDefinition } from "../../../types";
+import {
+    DashboardDrillContext,
+    DashboardDrillDefinition,
+    IDashboardDrillEvent,
+    isDrillDownDefinition,
+} from "../../../types";
+import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils";
 
 /**
  * @internal
@@ -141,13 +147,19 @@ export function WithDrillSelect({
 
     const drill = useDrill({
         onSuccess: (s) => {
-            if (s.payload.drillEvent.drillDefinitions!.length === 1) {
-                onSelect(s.payload.drillEvent.drillDefinitions![0], s.payload.drillEvent);
-            } else {
+            const drillDefinition: DashboardDrillDefinition[] = s.payload.drillEvent.drillDefinitions || [];
+            const drillEvent: IDashboardDrillEvent = s.payload.drillEvent;
+            const context: DashboardDrillContext = s.payload.drillContext;
+
+            const filteredByPriority = filterDrillFromAttributeByPriority(drillDefinition);
+
+            if (filteredByPriority.length === 1) {
+                onSelect(filteredByPriority[0], drillEvent);
+            } else if (filteredByPriority.length > 1) {
                 setDropdownProps({
-                    drillDefinitions: s.payload.drillEvent.drillDefinitions!,
-                    drillEvent: s.payload.drillEvent,
-                    drillContext: s.payload.drillContext,
+                    drillDefinitions: filteredByPriority,
+                    drillEvent: drillEvent,
+                    drillContext: context,
                 });
                 setIsOpen(true);
             }
