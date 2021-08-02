@@ -19,9 +19,6 @@ export function* updateAlertHandler(
     ctx: DashboardContext,
     cmd: UpdateAlert,
 ): SagaIterator<DashboardAlertUpdated> {
-    // eslint-disable-next-line no-console
-    console.debug("handling update alert", cmd, "in context", ctx);
-
     const alert: PromiseFnReturnType<typeof updateAlert> = yield call(updateAlert, ctx, cmd.payload.alert);
 
     yield put(

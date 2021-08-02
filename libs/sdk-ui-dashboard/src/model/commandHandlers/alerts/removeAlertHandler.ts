@@ -18,9 +18,6 @@ export function* removeAlertHandler(
     ctx: DashboardContext,
     cmd: RemoveAlert,
 ): SagaIterator<DashboardAlertRemoved> {
-    // eslint-disable-next-line no-console
-    console.debug("handling remove alert", cmd, "in context", ctx);
-
     yield call(removeAlert, ctx, cmd.payload.alert);
 
     yield put(alertsActions.removeAlert(objRefToString(cmd.payload.alert.ref)));

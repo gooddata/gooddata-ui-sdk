@@ -25,9 +25,6 @@ export function* createScheduledEmailHandler(
     ctx: DashboardContext,
     cmd: CreateScheduledEmail,
 ): SagaIterator<DashboardScheduledEmailCreated> {
-    // eslint-disable-next-line no-console
-    console.debug("handling create scheduled email", cmd, "in context", ctx);
-
     const scheduledEmail: PromiseFnReturnType<typeof createScheduledEmail> = yield call(
         createScheduledEmail,
         ctx,

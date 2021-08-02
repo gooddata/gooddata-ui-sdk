@@ -21,9 +21,6 @@ export function* createAlertHandler(
     ctx: DashboardContext,
     cmd: CreateAlert,
 ): SagaIterator<DashboardAlertCreated> {
-    // eslint-disable-next-line no-console
-    console.debug("handling create alert", cmd, "in context", ctx);
-
     const alert: PromiseFnReturnType<typeof createAlert> = yield call(createAlert, ctx, cmd.payload.alert);
 
     yield put(alertsActions.addAlert(alert));
