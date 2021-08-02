@@ -2,7 +2,6 @@
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { ReplaceSectionItem } from "../../commands";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
@@ -10,7 +9,7 @@ import { validateItemExists, validateSectionExists } from "./validation/layoutVa
 import { layoutActions } from "../../state/layout";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
-import { layoutSectionItemReplaced } from "../../events/layout";
+import { DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout";
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;
@@ -70,7 +69,7 @@ function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
 export function* replaceSectionItemHandler(
     ctx: DashboardContext,
     cmd: ReplaceSectionItem,
-): SagaIterator<void> {
+): SagaIterator<DashboardLayoutSectionItemReplaced> {
     const commandCtx: ReplaceSectionItemContext = {
         ctx,
         cmd,
@@ -93,15 +92,13 @@ export function* replaceSectionItemHandler(
         }),
     );
 
-    yield dispatchDashboardEvent(
-        layoutSectionItemReplaced(
-            ctx,
-            sectionIndex,
-            itemIndex,
-            stashValidationResult.resolved,
-            itemToReplace,
-            stashIdentifier,
-            cmd.correlationId,
-        ),
+    return layoutSectionItemReplaced(
+        ctx,
+        sectionIndex,
+        itemIndex,
+        stashValidationResult.resolved,
+        itemToReplace,
+        stashIdentifier,
+        cmd.correlationId,
     );
 }

@@ -15,7 +15,7 @@ import { getValidDateFilterConfig } from "../../../../_staging/dateFilterConfig/
 import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion";
 import { LoadDashboard } from "../../../commands/dashboard";
 import { dateFilterValidationFailed } from "../../../events/dashboard";
-import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
 import {
     DashboardConfig,
     DashboardContext,

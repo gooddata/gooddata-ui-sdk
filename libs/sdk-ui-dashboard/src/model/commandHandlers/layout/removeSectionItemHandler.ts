@@ -2,7 +2,7 @@
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { RemoveSectionItem } from "../../commands";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../state/_infra/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout } from "../../state/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";

@@ -14,7 +14,7 @@ import {
 import { DashboardContext } from "../../../types/commonTypes";
 import { validateAttributeFilterParents } from "./validation/parentFiltersValidation";
 import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
 
 export function* setAttributeFilterParentHandler(
     ctx: DashboardContext,

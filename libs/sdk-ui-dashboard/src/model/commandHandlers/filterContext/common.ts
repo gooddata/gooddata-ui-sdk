@@ -7,7 +7,7 @@ import { IDashboardCommand } from "../../commands/base";
 import { filterContextChanged } from "../../events/filters";
 import { selectFilterContext } from "../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../types/commonTypes";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../state/_infra/eventDispatcher";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,

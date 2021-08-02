@@ -2,7 +2,6 @@
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { MoveSectionItem } from "../../commands";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout } from "../../state/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
@@ -13,7 +12,7 @@ import {
     validateSectionPlacement,
 } from "./validation/layoutValidation";
 import { layoutActions } from "../../state/layout";
-import { layoutSectionItemMoved } from "../../events/layout";
+import { DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout";
 import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps";
 
 type MoveSectionItemContext = {
@@ -94,7 +93,10 @@ function validateAndResolve(commandCtx: MoveSectionItemContext) {
     };
 }
 
-export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionItem): SagaIterator<void> {
+export function* moveSectionItemHandler(
+    ctx: DashboardContext,
+    cmd: MoveSectionItem,
+): SagaIterator<DashboardLayoutSectionItemMoved> {
     const commandCtx: MoveSectionItemContext = {
         ctx,
         cmd,
@@ -116,15 +118,13 @@ export function* moveSectionItemHandler(ctx: DashboardContext, cmd: MoveSectionI
         }),
     );
 
-    yield dispatchDashboardEvent(
-        layoutSectionItemMoved(
-            ctx,
-            itemToMove,
-            sectionIndex,
-            targetSectionIndex,
-            itemIndex,
-            targetItemIndex,
-            cmd.correlationId,
-        ),
+    return layoutSectionItemMoved(
+        ctx,
+        itemToMove,
+        sectionIndex,
+        targetSectionIndex,
+        itemIndex,
+        targetItemIndex,
+        cmd.correlationId,
     );
 }

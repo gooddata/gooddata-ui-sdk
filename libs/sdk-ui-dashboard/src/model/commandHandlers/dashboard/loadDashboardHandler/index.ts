@@ -2,8 +2,7 @@
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { LoadDashboard } from "../../../commands/dashboard";
-import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
-import { dashboardLoaded } from "../../../events/dashboard";
+import { DashboardLoaded, dashboardLoaded } from "../../../events/dashboard";
 import { filterContextActions } from "../../../state/filterContext";
 import { insightsActions } from "../../../state/insights";
 import { layoutActions } from "../../../state/layout";
@@ -22,7 +21,6 @@ import { loadDashboardAlerts } from "./loadDashboardAlerts";
 import { catalogActions } from "../../../state/catalog";
 import { alertsActions } from "../../../state/alerts";
 import { batchActions } from "redux-batched-actions";
-import { internalErrorOccurred } from "../../../events/general";
 import { loadUser } from "./loadUser";
 import { userActions } from "../../../state/user";
 import { metaActions } from "../../../state/meta";
@@ -43,7 +41,10 @@ const EmptyDashboardLayout: IDashboardLayout = {
     sections: [],
 };
 
-export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard): SagaIterator<void> {
+export function* loadDashboardHandler(
+    ctx: DashboardContext,
+    cmd: LoadDashboard,
+): SagaIterator<DashboardLoaded> {
     const { backend } = ctx;
     try {
         yield put(loadingActions.setLoadingStart());
@@ -126,18 +127,10 @@ export function* loadDashboardHandler(ctx: DashboardContext, cmd: LoadDashboard)
         yield put(batch);
         yield put(loadingActions.setLoadingSuccess());
 
-        yield dispatchDashboardEvent(
-            dashboardLoaded(ctx, dashboard, references.insights, config, permissions, cmd.correlationId),
-        );
+        return dashboardLoaded(ctx, dashboard, references.insights, config, permissions, cmd.correlationId);
     } catch (e) {
         yield put(loadingActions.setLoadingError(e.message));
-        yield dispatchDashboardEvent(
-            internalErrorOccurred(
-                ctx,
-                "An unexpected error has occurred while loading dashboard",
-                e,
-                cmd.correlationId,
-            ),
-        );
+
+        throw e;
     }
 }

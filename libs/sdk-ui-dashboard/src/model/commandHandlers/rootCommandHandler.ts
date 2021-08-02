@@ -4,7 +4,7 @@ import { actionChannel, call, getContext, take } from "redux-saga/effects";
 import { loadDashboardHandler } from "./dashboard/loadDashboardHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
-import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../state/_infra/eventDispatcher";
 import { commandRejected, internalErrorOccurred, isDashboardCommandFailed } from "../events/general";
 import { changeDateFilterSelectionHandler } from "./filterContext/dateFilter/changeDateFilterSelectionHandler";
 import { addAttributeFilterHandler } from "./filterContext/attributeFilter/addAttributeFilterHandler";

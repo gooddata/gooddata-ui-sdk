@@ -7,7 +7,7 @@ import { filterContextActions } from "../../../state/filterContext";
 import { selectFilterContextDateFilter } from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,

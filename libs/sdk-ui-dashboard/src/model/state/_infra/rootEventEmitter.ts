@@ -1,9 +1,9 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { actionChannel, take } from "redux-saga/effects";
-import { DashboardEventHandler } from "../events/eventHandler";
-import { DashboardEvents } from "../events";
-import { DashboardCommands } from "../commands";
+import { DashboardEventHandler } from "../../events/eventHandler";
+import { DashboardEvents } from "../../events";
+import { DashboardCommands } from "../../commands";
 
 export type EventEmitter = {
     registerHandler: (handler: DashboardEventHandler) => void;
