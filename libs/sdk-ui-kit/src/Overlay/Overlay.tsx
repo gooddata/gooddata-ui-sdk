@@ -324,6 +324,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     };
 
     public onDocumentMouseDown(e: React.MouseEvent): void {
+        e.stopPropagation();
         this.clickedInside = (this.overlayRef.current as any).contains(e.target);
     }
 
