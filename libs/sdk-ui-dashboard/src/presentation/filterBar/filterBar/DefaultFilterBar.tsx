@@ -25,7 +25,7 @@ import { HiddenFilterBar } from "./HiddenFilterBar";
  * @internal
  */
 export const DefaultFilterBarInner = (): JSX.Element => {
-    const { filters, onFilterChanged } = useFilterBarProps();
+    const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBarProps();
     const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
@@ -50,7 +50,7 @@ export const DefaultFilterBarInner = (): JSX.Element => {
             <div className="dash-filters-date dash-filters-attribute">
                 <DashboardDateFilterPropsProvider
                     filter={dateFilter}
-                    onFilterChanged={onFilterChanged}
+                    onFilterChanged={onDateFilterChanged}
                     config={dateFilterComponentConfig}
                     readonly={dateFilterMode === "readonly"}
                 >
@@ -67,7 +67,7 @@ export const DefaultFilterBarInner = (): JSX.Element => {
                     >
                         <DashboardAttributeFilterPropsProvider
                             filter={filter}
-                            onFilterChanged={onFilterChanged}
+                            onFilterChanged={onAttributeFilterChanged}
                         >
                             <AttributeFilter />
                         </DashboardAttributeFilterPropsProvider>

@@ -227,7 +227,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 }
 
 // @alpha
-export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, correlationId?: string): ChangeDateFilterSelection;
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string): ChangeDateFilterSelection;
 
 // @alpha (undocumented)
 export interface ChangeFilterContextSelection extends IDashboardCommand {
@@ -629,6 +629,7 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
         readonly filter: IDashboardDateFilter;
+        readonly dateFilterOptionLocalId?: string;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
@@ -1324,6 +1325,7 @@ export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "C
 
 // @alpha (undocumented)
 export interface DateFilterSelection {
+    readonly dateFilterOptionLocalId?: string;
     readonly from?: DateString | number;
     readonly granularity: DateFilterGranularity;
     readonly to?: DateString | number;
@@ -1671,7 +1673,7 @@ export interface IDashboardDateFilterConfig {
 export interface IDashboardDateFilterProps {
     config: IDashboardDateFilterConfig;
     filter: IDashboardDateFilter | undefined;
-    onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
+    onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
     readonly?: boolean;
 }
 
@@ -1822,7 +1824,8 @@ export interface IDrillToUrlPlaceholder {
 // @alpha (undocumented)
 export interface IFilterBarProps {
     filters: FilterContextItem[];
-    onFilterChanged: (filter: FilterContextItem | undefined) => void;
+    onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
+    onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
 }
 
 // @alpha (undocumented)

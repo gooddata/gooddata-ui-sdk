@@ -16,12 +16,14 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
     readonly payload: {
         readonly filter: IDashboardDateFilter;
+        readonly dateFilterOptionLocalId?: string;
     };
 }
 
 export function dateFilterChanged(
     ctx: DashboardContext,
     filter: IDashboardDateFilter,
+    dateFilterOptionLocalId?: string,
     correlationId?: string,
 ): DashboardDateFilterSelectionChanged {
     return {
@@ -30,6 +32,7 @@ export function dateFilterChanged(
         correlationId,
         payload: {
             filter,
+            dateFilterOptionLocalId,
         },
     };
 }

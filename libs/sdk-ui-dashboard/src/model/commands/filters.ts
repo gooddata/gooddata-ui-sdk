@@ -51,6 +51,11 @@ export interface DateFilterSelection {
      * @remarks see `granularity` prop for more on date format
      */
     readonly to?: DateString | number;
+
+    /**
+     * The localId of the DateFilterOption selected.
+     */
+    readonly dateFilterOptionLocalId?: string;
 }
 
 /**
@@ -69,6 +74,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
  * @param granularity - granularity on which the filter works; days, weeks, months, quarters or years.
  * @param from - start date; if not specified, then the start date will be unbounded
  * @param to - end date; if not specified, then the end date will be unbounded
+ * @param dateFilterOptionLocalId - localId of the {@link @gooddata/sdk-backend-spi#IDateFilterOption} selected
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @remarks see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
@@ -80,6 +86,7 @@ export function changeDateFilterSelection(
     granularity: DateFilterGranularity,
     from?: DateString | number,
     to?: DateString | number,
+    dateFilterOptionLocalId?: string,
     correlationId?: string,
 ): ChangeDateFilterSelection {
     return {
@@ -90,6 +97,7 @@ export function changeDateFilterSelection(
             granularity,
             from,
             to,
+            dateFilterOptionLocalId,
         },
     };
 }

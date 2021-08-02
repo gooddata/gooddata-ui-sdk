@@ -38,9 +38,10 @@ export interface IDashboardDateFilterProps {
      * When the user interacts with the filter and changes its value, it MUST use this callback to propagate the
      * new filter value.
      *
-     * @param filter - new date filter value.
+     * @param filter - new date filter value
+     * @param dateFilterOptionLocalId - localId of the {@link @gooddata/sdk-backend-spi#IDateFilterOption} selected
      */
-    onFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
+    onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
 
     /**
      * Additional DateFilter configuration.

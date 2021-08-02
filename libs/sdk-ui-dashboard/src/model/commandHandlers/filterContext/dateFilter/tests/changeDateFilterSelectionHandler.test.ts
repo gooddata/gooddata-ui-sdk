@@ -9,7 +9,9 @@ describe("changeDateFilterSelectionHandler", () => {
     beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
 
     it("should emit the appropriate events for changed date filter", async () => {
-        Tester.dispatch(changeDateFilterSelection("relative", "GDC.time.month", -3, 0, "testCorrelation"));
+        Tester.dispatch(
+            changeDateFilterSelection("relative", "GDC.time.month", -3, 0, "someLocalId", "testCorrelation"),
+        );
         await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
         expect(Tester.emittedEventsDigest()).toMatchSnapshot();
