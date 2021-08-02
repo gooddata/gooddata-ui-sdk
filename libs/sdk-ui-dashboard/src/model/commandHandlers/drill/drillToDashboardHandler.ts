@@ -1,13 +1,12 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { select, call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
-import { internalErrorOccurred } from "../../events/general";
 import { DrillToDashboard } from "../../commands/drill";
 import {
     DashboardDrillToDashboardResolved,
-    drillToDashboardResolved,
     drillToDashboardRequested,
+    drillToDashboardResolved,
 } from "../../events/drill";
 import { selectFilterContext } from "../../state/filterContext/filterContextSelectors";
 import { selectWidgetByRef } from "../../state/layout/layoutSelectors";
@@ -36,62 +35,50 @@ export function* drillToDashboardHandler(
     ctx: DashboardContext,
     cmd: DrillToDashboard,
 ): SagaIterator<DashboardDrillToDashboardResolved> {
-    // eslint-disable-next-line no-console
-    console.debug("handling drill to dashboard", cmd, "in context", ctx);
-
-    try {
-        yield put(
-            drillToDashboardRequested(
-                ctx,
-                cmd.payload.drillDefinition,
-                cmd.payload.drillEvent,
-                cmd.correlationId,
-            ),
-        );
-
-        const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
-        const widget: IInsightWidget = yield select(selectWidgetByRef(cmd.payload.drillEvent.widgetRef!));
-        const widgetFilters = filterContextToFiltersForWidget(filterContext, widget);
-        const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
-            selectCatalogDateAttributes,
-        );
-
-        const drillFilters = convertIntersectionToAttributeFilters(
-            cmd.payload.drillEvent.drillContext.intersection!,
-            dateAttributes.map((dA) => dA.attribute.ref),
-        );
-
-        const uniqueFilters = uniqBy(
-            [
-                // Drill filters has higher priority than the widget filters
-                ...drillFilters,
-                ...widgetFilters,
-            ],
-            flow(filterObjRef, objRefToString),
-        );
-
-        const resolvedFilters: IDashboardFilter[] = yield call(
-            getResolvedFiltersForWidget,
+    yield put(
+        drillToDashboardRequested(
             ctx,
-            widget,
-            uniqueFilters,
-        );
-
-        return drillToDashboardResolved(
-            ctx,
-            resolvedFilters,
             cmd.payload.drillDefinition,
             cmd.payload.drillEvent,
             cmd.correlationId,
-        );
-    } catch (e) {
-        throw internalErrorOccurred(
-            ctx,
-            "An unexpected error has occurred while drilling to dashboard",
-            e,
-            cmd.correlationId,
-        );
-    }
+        ),
+    );
+
+    const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
+    const widget: IInsightWidget = yield select(selectWidgetByRef(cmd.payload.drillEvent.widgetRef!));
+    const widgetFilters = filterContextToFiltersForWidget(filterContext, widget);
+    const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
+        selectCatalogDateAttributes,
+    );
+
+    const drillFilters = convertIntersectionToAttributeFilters(
+        cmd.payload.drillEvent.drillContext.intersection!,
+        dateAttributes.map((dA) => dA.attribute.ref),
+    );
+
+    const uniqueFilters = uniqBy(
+        [
+            // Drill filters has higher priority than the widget filters
+            ...drillFilters,
+            ...widgetFilters,
+        ],
+        flow(filterObjRef, objRefToString),
+    );
+
+    const resolvedFilters: IDashboardFilter[] = yield call(
+        getResolvedFiltersForWidget,
+        ctx,
+        widget,
+        uniqueFilters,
+    );
+
+    return drillToDashboardResolved(
+        ctx,
+        resolvedFilters,
+        cmd.payload.drillDefinition,
+        cmd.payload.drillEvent,
+        cmd.correlationId,
+    );
 }
 
 function getResolvedFiltersForWidget(

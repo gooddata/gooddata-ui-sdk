@@ -2,12 +2,11 @@
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { RemoveLayoutSection } from "../../commands";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout } from "../../state/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import { layoutActions } from "../../state/layout";
-import { layoutSectionRemoved } from "../../events/layout";
+import { DashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../events/layout";
 import isEmpty from "lodash/isEmpty";
 import { validateSectionExists } from "./validation/layoutValidation";
 import { resolveRelativeIndex } from "../../utils/arrayOps";
@@ -15,7 +14,7 @@ import { resolveRelativeIndex } from "../../utils/arrayOps";
 export function* removeLayoutSectionHandler(
     ctx: DashboardContext,
     cmd: RemoveLayoutSection,
-): SagaIterator<void> {
+): SagaIterator<DashboardLayoutSectionRemoved> {
     const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
     const { index, stashIdentifier } = cmd.payload;
 
@@ -48,7 +47,5 @@ export function* removeLayoutSectionHandler(
         }),
     );
 
-    yield dispatchDashboardEvent(
-        layoutSectionRemoved(ctx, section, absoluteIndex, false, stashIdentifier, cmd.correlationId),
-    );
+    return layoutSectionRemoved(ctx, section, absoluteIndex, false, stashIdentifier, cmd.correlationId);
 }

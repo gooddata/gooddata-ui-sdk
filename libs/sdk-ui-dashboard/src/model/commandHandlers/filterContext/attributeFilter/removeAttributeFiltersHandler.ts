@@ -12,7 +12,7 @@ import { filterContextActions } from "../../../state/filterContext";
 import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
 
 export function* removeAttributeFiltersHandler(
     ctx: DashboardContext,

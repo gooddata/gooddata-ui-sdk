@@ -118,9 +118,10 @@ export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
         /**
          * Visualization properties to use for the insight that is rendered by the widget.
          *
-         * These will replace the existing visualization properties.
+         * These will replace the existing visualization properties. To clear any widget-level properties
+         * currently in effect for the widget, set the properties to `undefined`.
          */
-        readonly properties: VisualizationProperties;
+        readonly properties: VisualizationProperties | undefined;
     };
 }
 
@@ -130,10 +131,12 @@ export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
  * of the visualization properties that are effective for the particular insight widget.
  *
  * Through visualization properties, you can modify how particular visualization looks and behaves (enable/disable
- * tooltips, legend, change axes, enable zooming)
+ * tooltips, legend, change axes, enable zooming).
+ *
+ * If you want to clear any widget-level properties, set properties to `undefined`.
  *
  * @param ref - reference of the insight widget to modify
- * @param properties - new properties to set
+ * @param properties - new properties to set, undefined to clear any widget level visualization properties
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -141,7 +144,7 @@ export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
  */
 export function changeInsightWidgetVisProperties(
     ref: ObjRef,
-    properties: VisualizationProperties,
+    properties: VisualizationProperties | undefined,
     correlationId?: string,
 ): ChangeInsightWidgetVisProperties {
     return {

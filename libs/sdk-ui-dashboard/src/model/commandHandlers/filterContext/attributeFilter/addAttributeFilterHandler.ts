@@ -17,7 +17,7 @@ import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
 import { PromiseFnReturnType } from "../../../types/sagas";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation";
-import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
 
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,

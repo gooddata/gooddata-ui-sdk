@@ -15,7 +15,7 @@ import { filterContextSliceReducer } from "./filterContext";
 import { layoutSliceReducer } from "./layout";
 import { loadingSliceReducer } from "./loading";
 import { insightsSliceReducer } from "./insights";
-import { createRootEventEmitter } from "../eventEmitter/rootEventEmitter";
+import { createRootEventEmitter } from "./_infra/rootEventEmitter";
 import { DashboardEventHandler } from "../events/eventHandler";
 import { rootCommandHandler } from "../commandHandlers/rootCommandHandler";
 import { DashboardContext } from "../types/commonTypes";

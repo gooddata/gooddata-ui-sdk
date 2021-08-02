@@ -17,7 +17,7 @@ import {
     StashedDashboardItemsId,
 } from "../../types/layoutTypes";
 import { addArrayElements, moveArrayElement, removeArrayElement } from "../../utils/arrayOps";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, VisualizationProperties } from "@gooddata/sdk-model";
 import { WidgetHeader } from "../../types/widgetTypes";
 import flatMap from "lodash/flatMap";
 import { WritableDraft } from "immer/dist/internal";
@@ -33,7 +33,7 @@ const setLayout: LayoutReducer<IDashboardLayout> = (state, action) => {
 };
 
 //
-//
+// Reducers that manipulate the layout itself - the sections and items
 //
 
 type AddSectionActionPayload = {
@@ -227,62 +227,8 @@ const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (stat
 };
 
 //
+// Layout-widget specific reducers
 //
-//
-
-type ReplaceWidgetHeader = {
-    ref: ObjRef;
-    header: WidgetHeader;
-};
-
-const replaceWidgetHeader: LayoutReducer<ReplaceWidgetHeader> = (state, action) => {
-    invariant(state.layout);
-
-    const { header, ref: widgetRef } = action.payload;
-
-    const widget = getWidgetByRef(state, widgetRef);
-
-    // this means command handler did not correctly validate that the widget exists before dispatching the
-    // reducer action
-    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
-
-    widget.title = header.title ?? "";
-};
-
-type ReplaceWidgetDrillDefinitions = {
-    ref: ObjRef;
-    drillDefinitions: InsightDrillDefinition[];
-};
-
-const replaceWidgetDrill: LayoutReducer<ReplaceWidgetDrillDefinitions> = (state, action) => {
-    invariant(state.layout);
-
-    const { drillDefinitions, ref: widgetRef } = action.payload;
-    const widget = getWidgetByRef(state, widgetRef);
-
-    // this means command handler did not correctly validate that the widget exists before dispatching the
-    // reducer action
-    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
-
-    widget.drills = drillDefinitions ?? [];
-};
-
-export const layoutReducers = {
-    setLayout,
-    addSection: withUndo(addSection),
-    removeSection: withUndo(removeSection),
-    moveSection: withUndo(moveSection),
-    changeSectionHeader: withUndo(changeSectionHeader),
-    addSectionItems: withUndo(addSectionItems),
-    moveSectionItem: withUndo(moveSectionItem),
-    removeSectionItem: withUndo(removeSectionItem),
-    replaceSectionItem: withUndo(replaceSectionItem),
-    replaceWidgetHeader: withUndo(replaceWidgetHeader),
-    replaceWidgetDrills: withUndo(replaceWidgetDrill),
-    undoLayout: undoReducer,
-};
-
-// reducer helpers
 
 const getWidgetByRef = (state: WritableDraft<LayoutState>, widgetRef: ObjRef) => {
     const allWidgets = flatMap(state?.layout?.sections, (section) =>
@@ -296,4 +242,89 @@ const getWidgetByRef = (state: WritableDraft<LayoutState>, widgetRef: ObjRef) =>
         return ref && areObjRefsEqual(ref, widgetRef);
     });
     return widget;
+};
+
+//
+//
+//
+
+type ReplaceWidgetHeader = {
+    ref: ObjRef;
+    header: WidgetHeader;
+};
+
+const replaceWidgetHeader: LayoutReducer<ReplaceWidgetHeader> = (state, action) => {
+    invariant(state.layout);
+
+    const { header, ref } = action.payload;
+
+    const widget = getWidgetByRef(state, ref);
+
+    // this means command handler did not correctly validate that the widget exists before dispatching the
+    // reducer action
+    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
+
+    widget.title = header.title ?? "";
+};
+
+//
+//
+//
+
+type ReplaceWidgetDrillDefinitions = {
+    ref: ObjRef;
+    drillDefinitions: InsightDrillDefinition[];
+};
+
+const replaceWidgetDrill: LayoutReducer<ReplaceWidgetDrillDefinitions> = (state, action) => {
+    invariant(state.layout);
+
+    const { drillDefinitions, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    // this means command handler did not correctly validate that the widget exists before dispatching the
+    // reducer action
+    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
+
+    widget.drills = drillDefinitions ?? [];
+};
+
+//
+//
+//
+
+type ReplaceWidgetVisProperties = {
+    ref: ObjRef;
+    properties: VisualizationProperties | undefined;
+};
+
+const replaceInsightWidgetVisProperties: LayoutReducer<ReplaceWidgetVisProperties> = (state, action) => {
+    invariant(state.layout);
+
+    const { properties, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && isInsightWidget(widget));
+
+    widget.properties = properties;
+};
+
+//
+//
+//
+
+export const layoutReducers = {
+    setLayout,
+    addSection: withUndo(addSection),
+    removeSection: withUndo(removeSection),
+    moveSection: withUndo(moveSection),
+    changeSectionHeader: withUndo(changeSectionHeader),
+    addSectionItems: withUndo(addSectionItems),
+    moveSectionItem: withUndo(moveSectionItem),
+    removeSectionItem: withUndo(removeSectionItem),
+    replaceSectionItem: withUndo(replaceSectionItem),
+    replaceWidgetHeader: withUndo(replaceWidgetHeader),
+    replaceWidgetDrills: withUndo(replaceWidgetDrill),
+    replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
+    undoLayout: undoReducer,
 };

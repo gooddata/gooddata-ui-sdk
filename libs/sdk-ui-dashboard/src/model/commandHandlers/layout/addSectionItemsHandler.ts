@@ -2,7 +2,6 @@
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { AddSectionItems } from "../../commands";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { call, put, select } from "redux-saga/effects";
@@ -11,7 +10,7 @@ import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
-import { layoutSectionItemsAdded } from "../../events/layout";
+import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps";
 import { selectInsightsMap } from "../../state/insights/insightsSelectors";
 import { PromiseFnReturnType } from "../../types/sagas";
@@ -74,7 +73,10 @@ function validateAndResolve(commandCtx: AddSectionItemsContext) {
 }
 
 // TODO: this needs to handle calculation of the date dataset to use for the items
-export function* addSectionItemsHandler(ctx: DashboardContext, cmd: AddSectionItems): SagaIterator<void> {
+export function* addSectionItemsHandler(
+    ctx: DashboardContext,
+    cmd: AddSectionItems,
+): SagaIterator<DashboardLayoutSectionItemsAdded> {
     const commandCtx: AddSectionItemsContext = {
         ctx,
         cmd,
@@ -108,14 +110,12 @@ export function* addSectionItemsHandler(ctx: DashboardContext, cmd: AddSectionIt
         ]),
     );
 
-    yield dispatchDashboardEvent(
-        layoutSectionItemsAdded(
-            ctx,
-            sectionIndex,
-            resolveIndexOfNewItem(section.items, itemIndex),
-            stashValidationResult.resolved,
-            stashValidationResult.existing,
-            cmd.correlationId,
-        ),
+    return layoutSectionItemsAdded(
+        ctx,
+        sectionIndex,
+        resolveIndexOfNewItem(section.items, itemIndex),
+        stashValidationResult.resolved,
+        stashValidationResult.existing,
+        cmd.correlationId,
     );
 }

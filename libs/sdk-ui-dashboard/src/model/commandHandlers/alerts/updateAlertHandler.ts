@@ -3,10 +3,9 @@ import { SagaIterator } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { objRefToString } from "@gooddata/sdk-model";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { DashboardContext } from "../../types/commonTypes";
 import { UpdateAlert } from "../../commands/alerts";
-import { alertUpdated } from "../../events/alerts";
+import { alertUpdated, DashboardAlertUpdated } from "../../events/alerts";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { alertsActions } from "../../state/alerts";
 
@@ -16,10 +15,10 @@ function updateAlert(ctx: DashboardContext, alert: IWidgetAlert): Promise<IWidge
     return backend.workspace(workspace).dashboards().updateWidgetAlert(alert);
 }
 
-export function* updateAlertHandler(ctx: DashboardContext, cmd: UpdateAlert): SagaIterator<void> {
-    // eslint-disable-next-line no-console
-    console.debug("handling update alert", cmd, "in context", ctx);
-
+export function* updateAlertHandler(
+    ctx: DashboardContext,
+    cmd: UpdateAlert,
+): SagaIterator<DashboardAlertUpdated> {
     const alert: PromiseFnReturnType<typeof updateAlert> = yield call(updateAlert, ctx, cmd.payload.alert);
 
     yield put(
@@ -28,5 +27,6 @@ export function* updateAlertHandler(ctx: DashboardContext, cmd: UpdateAlert): Sa
             id: objRefToString(cmd.payload.alert.ref),
         }),
     );
-    yield dispatchDashboardEvent(alertUpdated(ctx, alert, cmd.correlationId));
+
+    return alertUpdated(ctx, alert, cmd.correlationId);
 }

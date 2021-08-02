@@ -10,7 +10,7 @@ import { Action, CombinedState, combineReducers, Reducer } from "@reduxjs/toolki
 import fromPairs from "lodash/fromPairs";
 import noop from "lodash/noop";
 import compact from "lodash/compact";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "./eventDispatcher";
 import {
     internalQueryErrorOccurred,
     isDashboardQueryFailed,

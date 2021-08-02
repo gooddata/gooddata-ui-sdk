@@ -1,7 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
-import { dispatchDashboardEvent } from "../../eventEmitter/eventDispatcher";
 import { DashboardContext } from "../../types/commonTypes";
 import {
     IScheduledMailDefinition,
@@ -9,9 +8,8 @@ import {
     IScheduledMail,
 } from "@gooddata/sdk-backend-spi";
 import { PromiseFnReturnType } from "../../types/sagas";
-import { internalErrorOccurred } from "../../events/general";
 import { CreateScheduledEmail } from "../../commands/scheduledEmail";
-import { scheduledEmailCreated } from "../../events/scheduledEmail";
+import { DashboardScheduledEmailCreated, scheduledEmailCreated } from "../../events/scheduledEmail";
 
 function createScheduledEmail(
     ctx: DashboardContext,
@@ -26,25 +24,13 @@ function createScheduledEmail(
 export function* createScheduledEmailHandler(
     ctx: DashboardContext,
     cmd: CreateScheduledEmail,
-): SagaIterator<void> {
-    // eslint-disable-next-line no-console
-    console.debug("handling create scheduled email", cmd, "in context", ctx);
+): SagaIterator<DashboardScheduledEmailCreated> {
+    const scheduledEmail: PromiseFnReturnType<typeof createScheduledEmail> = yield call(
+        createScheduledEmail,
+        ctx,
+        cmd.payload.scheduledEmail,
+        cmd.payload.filterContext,
+    );
 
-    try {
-        const scheduledEmail: PromiseFnReturnType<typeof createScheduledEmail> = yield call(
-            createScheduledEmail,
-            ctx,
-            cmd.payload.scheduledEmail,
-            cmd.payload.filterContext,
-        );
-
-        yield dispatchDashboardEvent(scheduledEmailCreated(ctx, scheduledEmail, cmd.correlationId));
-    } catch (e) {
-        throw internalErrorOccurred(
-            ctx,
-            "An unexpected error has occurred while creating scheduled email",
-            e,
-            cmd.correlationId,
-        );
-    }
+    return scheduledEmailCreated(ctx, scheduledEmail, cmd.correlationId);
 }

@@ -10,7 +10,7 @@ import { filterContextActions } from "../../../state/filterContext";
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
 import { makeSelectFilterContextAttributeFilterByLocalId } from "../../../state/filterContext/filterContextSelectors";
-import { dispatchDashboardEvent } from "../../../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,

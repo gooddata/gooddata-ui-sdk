@@ -4,7 +4,7 @@ import { actionChannel, call, getContext, take } from "redux-saga/effects";
 import { loadDashboardHandler } from "./dashboard/loadDashboardHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
-import { dispatchDashboardEvent } from "../eventEmitter/eventDispatcher";
+import { dispatchDashboardEvent } from "../state/_infra/eventDispatcher";
 import { commandRejected, internalErrorOccurred, isDashboardCommandFailed } from "../events/general";
 import { changeDateFilterSelectionHandler } from "./filterContext/dateFilter/changeDateFilterSelectionHandler";
 import { addAttributeFilterHandler } from "./filterContext/attributeFilter/addAttributeFilterHandler";
@@ -41,6 +41,7 @@ import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler";
 import { changeInsightWidgetHeaderHandler } from "./widgets/changeInsightWidgetHeaderHandler";
 import { modifyDrillsForInsightWidgetHandler } from "./widgets/modifyDrillsForInsightWidgetHandler";
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler";
+import { changeInsightWidgetVisPropertiesHandler } from "./widgets/changeInsightWidgetVisPropertiesHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -74,7 +75,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.KPI_WIDGET.REFRESH": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER": changeInsightWidgetHeaderHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS": unhandledCommand,
-    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES": changeInsightWidgetVisPropertiesHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": modifyDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": removeDrillsForInsightWidgetHandler,
