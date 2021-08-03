@@ -812,7 +812,7 @@ export interface DashboardDrillToLegacyDashboardResolved extends IDashboardEvent
 // @alpha
 export type DashboardEventHandler<TEvents extends DashboardEvents = any> = {
     eval: (event: DashboardEvents) => boolean;
-    handler: (event: TEvents, dispatchCommand: (command: DashboardCommands) => void, evalSelector: DashboardSelectorEvaluator) => void;
+    handler: (event: TEvents, dispatchCommand: (command: DashboardCommands) => void, stateSelect: DashboardSelectorEvaluator) => void;
 };
 
 // @alpha (undocumented)

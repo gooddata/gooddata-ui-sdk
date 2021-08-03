@@ -24,12 +24,12 @@ export type DashboardEventHandler<TEvents extends DashboardEvents = any> = {
      *
      * @param event - event to handle
      * @param dispatchCommand - callback to dispatch any dashboard command
-     * @param evalSelector - callback to execute arbitrary selectors against the dashboard state
+     * @param stateSelect - callback to execute arbitrary selectors against the dashboard state
      */
     handler: (
         event: TEvents,
         dispatchCommand: (command: DashboardCommands) => void,
-        evalSelector: DashboardSelectorEvaluator,
+        stateSelect: DashboardSelectorEvaluator,
     ) => void;
 };
 
