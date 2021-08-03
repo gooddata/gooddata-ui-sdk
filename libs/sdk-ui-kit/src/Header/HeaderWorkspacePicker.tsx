@@ -38,6 +38,7 @@ export interface IHeaderWorkspacePickerProps {
     onSelect?: (item: IHeaderWorkspace) => void;
     onScrollEnd?: (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
     projectPickerFooter?: React.ReactNode;
+    isRenamingProjectToWorkspaceEnabled?: boolean;
 }
 
 const renderProjectPickerFooter = (projectPickerFooter?: React.ReactNode) => {
@@ -67,6 +68,7 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
     onScrollEnd,
     projectPickerFooter,
     className,
+    isRenamingProjectToWorkspaceEnabled,
 }) => {
     const t = intl.formatMessage;
 
@@ -75,6 +77,9 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
         "gd-header-measure": true,
         [className]: !!className,
     });
+    const noMatchingWorkspacesId = isRenamingProjectToWorkspaceEnabled
+        ? "gs.header.projectPicker.noMatchingWorkspaces"
+        : "gs.header.projectPicker.noMatchingProjects";
 
     return (
         <Dropdown
@@ -112,7 +117,7 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
                         <NoData
                             className="s-noMatchingProjects"
                             noDataLabel={t({ id: "gs.noData.noDataAvailable" })}
-                            notFoundLabel={t({ id: "gs.header.projectPicker.noMatchingProjects" })}
+                            notFoundLabel={t({ id: noMatchingWorkspacesId })}
                             hasNoMatchingData={hasNoMatchingData}
                         />
                     )}

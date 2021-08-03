@@ -480,7 +480,7 @@ export const HeaderDataMenu: React_2.ForwardRefExoticComponent<Pick<IHeaderDataM
 };
 
 // @internal (undocumented)
-export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHeaderWorkspacePickerProps, "className" | "onSelect" | "isLoading" | "onScrollEnd" | "searchString" | "onSearch" | "showSearch" | "workspaces" | "selectedWorkspace" | "totalWorkspacesCount" | "onOpen" | "projectPickerFooter"> & {
+export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHeaderWorkspacePickerProps, "className" | "onSelect" | "isLoading" | "onScrollEnd" | "searchString" | "onSearch" | "showSearch" | "workspaces" | "selectedWorkspace" | "totalWorkspacesCount" | "onOpen" | "projectPickerFooter" | "isRenamingProjectToWorkspaceEnabled"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
@@ -1242,6 +1242,8 @@ export interface IHeaderWorkspacePickerProps {
     intl: IntlShape;
     // (undocumented)
     isLoading?: boolean;
+    // (undocumented)
+    isRenamingProjectToWorkspaceEnabled?: boolean;
     // (undocumented)
     onOpen?: () => void;
     // (undocumented)
