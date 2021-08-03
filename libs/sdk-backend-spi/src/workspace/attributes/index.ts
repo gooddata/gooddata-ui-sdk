@@ -29,7 +29,10 @@ export interface IWorkspaceAttributesService {
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
 
     /**
-     * Gets the list of metadata of attribute display form with the provided list of uris or identifiers. (list of object refs)
+     * Gets the list of metadata of attribute display form with the provided list of uris or identifiers. (list of object refs).
+     *
+     * If a display form referenced by any of the refs does not exist, then the call must not fail and instead return only
+     * those display forms that exist.
      *
      * @param refs - list of refs of the attribute display form to retrieve.
      * @returns promise of list of attribute display form metadata object.
@@ -37,7 +40,8 @@ export interface IWorkspaceAttributesService {
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
 
     /**
-     * Gets metadata of the attribute
+     * Gets metadata of the attribute.
+     *
      * @param ref - ref of the attribute to retrieve
      * @returns promise of attribute metadata object
      */
@@ -46,13 +50,16 @@ export interface IWorkspaceAttributesService {
     /**
      * Gets the list of metadata of attribute with the provided list of uris. (list of object refs)
      *
+     * If a display form referenced by any of the refs does not exist, then the call must not fail and instead return only
+     * those display forms that exist.
+     *
      * @param refs - list of refs of the attribute to retrieve.
      * @returns promise of list of attribute metadata object.
      */
     getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
 
     /**
-     * Request list of attributes that are "center of star" for the input attributes in the data model
+     * Request list of attributes that are "center of star" for the input attributes in the data model.
      *
      * @param attributeRefs - input list of attribute references
      * @returns promise returning list of attribute references.
