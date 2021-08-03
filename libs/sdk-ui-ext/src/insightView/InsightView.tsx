@@ -5,7 +5,7 @@ import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IInsight, IColorPalette, idRef, insightTitle } from "@gooddata/sdk-model";
+import { IInsight, IColorPalette, idRef, insightTitle, insightVisualizationUrl } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     ILocale,
@@ -240,6 +240,21 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         }
     };
 
+    private getBackendWithTelemetry = (): IAnalyticalBackend => {
+        const telemetryProps: object = {
+            ...this.props,
+        };
+
+        // add a fake prop so that the type of the visualization rendered is present in the telemetry
+        if (this.state.insight) {
+            const visualizationUrl = insightVisualizationUrl(this.state.insight);
+            const key = `visualizationUrl_${visualizationUrl}`;
+            telemetryProps[key] = true;
+        }
+
+        return this.props.backend.withTelemetry("InsightView", telemetryProps);
+    };
+
     public render(): React.ReactNode {
         const { LoadingComponent, TitleComponent } = this.props;
         const { error, isDataLoading, isVisualizationLoading } = this.state;
@@ -262,7 +277,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
                     <InsightRenderer
                         insight={this.state.insight}
                         workspace={this.props.workspace}
-                        backend={this.props.backend}
+                        backend={this.getBackendWithTelemetry()}
                         colorPalette={this.props.colorPalette ?? this.state.colorPalette}
                         config={this.props.config}
                         execConfig={this.props.execConfig}
