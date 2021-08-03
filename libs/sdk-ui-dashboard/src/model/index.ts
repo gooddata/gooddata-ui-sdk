@@ -92,7 +92,12 @@ export { selectAlerts } from "./state/alerts/alertsSelectors";
 export { UserState } from "./state/user/userState";
 export { selectUser } from "./state/user/userSelectors";
 export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
-export { selectDashboardRef, selectDashboardUriRef, selectDashboardTitle } from "./state/meta/metaSelectors";
+export {
+    selectDashboardRef,
+    selectDashboardUriRef,
+    selectDashboardTitle,
+    selectDashboardIdRef,
+} from "./state/meta/metaSelectors";
 export { selectListedDashboards } from "./state/listedDashboards/listedDashboardsSelectors";
 export {
     selectDrillTargetsByWidgetRef,
@@ -125,5 +130,5 @@ export * from "./commands";
 export * from "./events";
 export * from "./queries";
 export * from "./react";
-export { DashboardEventHandler } from "./events/eventHandler";
+export { DashboardEventHandler, DashboardSelector, DashboardSelectorEvaluator } from "./events/eventHandler";
 export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory";

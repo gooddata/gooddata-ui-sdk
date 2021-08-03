@@ -1,9 +1,10 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { actionChannel, take } from "redux-saga/effects";
-import { DashboardEventHandler } from "../../events/eventHandler";
+import { actionChannel, select, take } from "redux-saga/effects";
+import { DashboardEventHandler, DashboardSelectorEvaluator } from "../../events/eventHandler";
 import { DashboardEvents } from "../../events";
 import { DashboardCommands } from "../../commands";
+import { DashboardState } from "../types";
 
 export type EventEmitter = {
     registerHandler: (handler: DashboardEventHandler) => void;
@@ -40,10 +41,14 @@ export function createRootEventEmitter(
             while (true) {
                 const event: DashboardEvents = yield take(eventChannel);
 
+                // snapshot current state to ensure event handlers operate on state relevant to when they were fired
+                const stateSnapshot: DashboardState = yield select();
+                const selectorEvaluator: DashboardSelectorEvaluator = (selector) => selector(stateSnapshot);
+
                 try {
                     eventHandlers.forEach((handler) => {
                         if (handler.eval(event)) {
-                            handler.handler(event, dispatch);
+                            handler.handler(event, dispatch, selectorEvaluator);
                         }
                     });
                 } catch (e) {
