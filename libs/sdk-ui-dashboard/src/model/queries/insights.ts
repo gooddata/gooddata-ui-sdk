@@ -111,6 +111,12 @@ export type InsightDateDatasets = {
      * that figure in the result structure have their titles included in this mapping
      */
     readonly dateDatasetDisplayNames: Record<string, string>;
+
+    /**
+     * All date datasets that can be used to filter the insight. This list is union of all the categorized
+     * date datasets listed in this result.
+     */
+    readonly allAvailableDateDatasets: ICatalogDateDataset[];
 };
 
 //

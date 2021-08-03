@@ -38,7 +38,6 @@ import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilter as IDashboardFilter_2 } from '@gooddata/sdk-ui-ext';
-import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
@@ -247,14 +246,11 @@ export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly settings: WidgetFilterSettings;
+        readonly operation: WidgetFilterOperation;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS";
 }
-
-// @alpha
-export function changeInsightWidgetFilterSettings(ref: ObjRef, settings: WidgetFilterSettings, correlationId?: string): ChangeInsightWidgetFilterSettings;
 
 // @alpha (undocumented)
 export interface ChangeInsightWidgetHeader extends IDashboardCommand {
@@ -318,14 +314,14 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly settings: WidgetFilterSettings;
+        readonly settings: WidgetFilterOperation;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS";
 }
 
 // @alpha
-export function changeKpiWidgetFilterSettings(ref: ObjRef, settings: WidgetFilterSettings, correlationId?: string): ChangeKpiWidgetFilterSettings;
+export function changeKpiWidgetFilterSettings(ref: ObjRef, settings: WidgetFilterOperation, correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha (undocumented)
 export interface ChangeKpiWidgetHeader extends IDashboardCommand {
@@ -874,7 +870,8 @@ export interface DashboardInsightWidgetFilterSettingsChanged extends IDashboardE
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly filterSettings: WidgetFilterSettings;
+        readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+        readonly dateDatasetForFiltering?: ICatalogDateDataset;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED";
@@ -963,7 +960,7 @@ export interface DashboardKpiWidgetFilterSettingsChanged extends IDashboardEvent
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly filterSettings: WidgetFilterSettings;
+        readonly filterSettings: WidgetFilterOperation;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED";
@@ -1426,6 +1423,9 @@ export const DefaultTopBar: (props: ITopBarProps) => JSX.Element;
 // @internal (undocumented)
 export const DefaultTopBarInner: () => JSX.Element;
 
+// @alpha
+export function disableInsightWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
+
 // @alpha (undocumented)
 export interface Drill extends IDashboardCommand {
     // (undocumented)
@@ -1595,6 +1595,9 @@ export function drillToLegacyDashboardResolved(ctx: DashboardContext, drillDefin
 export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
 
 // @alpha
+export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @alpha
 export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget>;
 
 // @alpha
@@ -1619,6 +1622,57 @@ export interface FilterContextSelection {
 export interface FilterContextState {
     // (undocumented)
     filterContext?: IFilterContextDefinition;
+}
+
+// @alpha (undocumented)
+export interface FilterOp {
+    // (undocumented)
+    readonly type: FilterOperations;
+}
+
+// @alpha
+export interface FilterOpDisableDateFilter extends FilterOp {
+    // (undocumented)
+    type: "disableDateFilter";
+}
+
+// @alpha
+export interface FilterOpEnableDateFilter extends FilterOp {
+    dateDataset: ObjRef;
+    // (undocumented)
+    type: "enableDateFilter";
+}
+
+// @alpha (undocumented)
+export type FilterOperations = "enableDateFilter" | "disableDateFilter" | "replaceAttributeIgnores" | "ignoreAttributeFilter" | "unignoreAttributeFilter" | "replace";
+
+// @alpha
+export interface FilterOpIgnoreAttributeFilter extends FilterOp {
+    displayFormRefs: ObjRef[];
+    // (undocumented)
+    type: "ignoreAttributeFilter";
+}
+
+// @alpha
+export interface FilterOpReplaceAll extends FilterOp {
+    readonly dateDatasetForFiltering?: ObjRef;
+    readonly ignoreAttributeFilters?: ObjRef[];
+    // (undocumented)
+    type: "replace";
+}
+
+// @alpha
+export interface FilterOpReplaceAttributeIgnores extends FilterOp {
+    displayFormRefs: ObjRef[];
+    // (undocumented)
+    type: "replaceAttributeIgnores";
+}
+
+// @alpha
+export interface FilterOpUnignoreAttributeFilter extends FilterOp {
+    displayFormRefs: ObjRef[];
+    // (undocumented)
+    type: "unignoreAttributeFilter";
 }
 
 // @internal (undocumented)
@@ -1828,6 +1882,9 @@ export interface IFilterBarProps {
     onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
 }
 
+// @alpha
+export function ignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+
 // @alpha (undocumented)
 export interface IMenuButtonConfiguration {
     additionalMenuItems?: ReadonlyArray<[number, IMenuButtonItem]>;
@@ -1869,6 +1926,7 @@ export type InsightDateDatasets = {
     readonly usedInAttributeFilters: ReadonlyArray<ICatalogDateDataset | undefined>;
     readonly mostImportantFromInsight: ICatalogDateDataset | undefined;
     readonly dateDatasetDisplayNames: Record<string, string>;
+    readonly allAvailableDateDatasets: ICatalogDateDataset[];
 };
 
 // @alpha (undocumented)
@@ -2274,6 +2332,12 @@ export function renderRequested(ctx: DashboardContext, correlationId?: string): 
 // @alpha
 export function renderResolved(ctx: DashboardContext, correlationId?: string): DashboardRenderResolved;
 
+// @alpha
+export function replaceInsightWidgetFilterSettings(ref: ObjRef, settings: Omit<FilterOpReplaceAll, "type">, correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @alpha
+export function replaceInsightWidgetIgnoredFilters(ref: ObjRef, displayForms?: ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+
 // @alpha (undocumented)
 export interface ReplaceSectionItem extends IDashboardCommand {
     // (undocumented)
@@ -2610,6 +2674,9 @@ export function undoLayoutChanges(undoPointSelector?: UndoPointSelector, correla
 
 // @alpha
 export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayoutCommands>) => number;
+
+// @alpha
+export function unignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
 
 // @alpha
 export interface UpdateAlert extends IDashboardCommand {
@@ -3178,11 +3245,8 @@ export const useTitleProps: () => ITitleProps;
 // @alpha (undocumented)
 export const useTopBarProps: () => ITopBarProps;
 
-// @alpha (undocumented)
-export type WidgetFilterSettings = {
-    readonly ignoreDashboardFilters?: IDashboardFilterReference[];
-    readonly dateDataSet?: ObjRef;
-};
+// @alpha
+export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;
 
 // @alpha (undocumented)
 export type WidgetHeader = {
