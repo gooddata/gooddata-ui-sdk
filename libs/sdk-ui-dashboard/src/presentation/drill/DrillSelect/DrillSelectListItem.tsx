@@ -23,7 +23,7 @@ export interface DrillSelectListItemProps {
 export const DrillSelectListItem = (props: DrillSelectListItemProps): JSX.Element => {
     const theme = useTheme(props.theme);
     const {
-        item: { name, type, drillDefinition },
+        item: { name, type, drillDefinition, attributeValue },
     } = props;
 
     const onClick = (e: SyntheticEvent) => {
@@ -41,12 +41,23 @@ export const DrillSelectListItem = (props: DrillSelectListItemProps): JSX.Elemen
 
     const itemClassName = cx("gd-drill-modal-picker-list-item", "s-gd-drill-modal-picker-item", `s-${type}`);
     const IconComponent = Icon[DRILL_ICON_NAME[type]];
+
+    const attributeLabel = attributeValue ? `(${attributeValue})` : "";
+    const title = `${name} ${attributeLabel}`;
+
     return (
-        <a onClick={onClick} className={itemClassName} title={name}>
+        <a onClick={onClick} className={itemClassName} title={title}>
             <div className="gd-drill-modal-picker-icon-wrapper">
                 <IconComponent color={theme?.palette?.complementary?.c5} />
             </div>
-            {!name ? renderLoading() : <span>{name}</span>}
+            {!name ? (
+                renderLoading()
+            ) : (
+                <p>
+                    {name}
+                    {attributeValue && <span>&nbsp;({attributeValue})</span>}
+                </p>
+            )}
         </a>
     );
 };

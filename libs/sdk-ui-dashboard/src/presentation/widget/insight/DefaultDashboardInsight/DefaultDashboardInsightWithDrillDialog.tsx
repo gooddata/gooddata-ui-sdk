@@ -12,6 +12,7 @@ import { IDashboardInsightProps } from "../types";
 import { DefaultDashboardInsightWithDrillSelect } from "./DefaultDashboardInsightWithDrillSelect";
 import { InsightDrillDialog } from "./InsightDrillDialog";
 import { useDashboardDrillTargets } from "./useDashboardDrillTargets";
+import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/InsightDrillDefinitionUtils";
 
 /**
  * @internal
@@ -29,7 +30,12 @@ export const DefaultDashboardInsightWithDrillDialogInner = (): JSX.Element => {
 
     const breadcrumbs = drillSteps
         .filter((s) => isDrillDownDefinition(s.drillDefinition))
-        .map((s) => getDrillDownAttributeTitle(s.drillDefinition as IDrillDownDefinition, s.drillEvent));
+        .map((s) =>
+            getDrillDownAttributeTitle(
+                getDrillOriginLocalIdentifier(s.drillDefinition as IDrillDownDefinition),
+                s.drillEvent,
+            ),
+        );
 
     const widget = useDashboardSelector(selectWidgetByRef(activeDrillStep?.drillEvent.widgetRef)) as
         | IInsightWidget

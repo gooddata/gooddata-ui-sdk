@@ -1629,7 +1629,7 @@ export interface FilterContextState {
 }
 
 // @internal (undocumented)
-export function getDrillDownAttributeTitle(drill: IDrillDownDefinition, drillEvent: IDrillEvent): string;
+export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string;
 
 // @alpha
 export const HiddenButtonBar: () => JSX.Element | null;

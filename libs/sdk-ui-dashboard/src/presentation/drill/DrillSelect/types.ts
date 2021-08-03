@@ -16,6 +16,7 @@ export interface DrillSelectItem {
     id: string;
     name: string;
     drillDefinition: DashboardDrillDefinition;
+    attributeValue?: string;
 }
 
 export interface DrillSelectContext {
