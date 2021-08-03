@@ -2,9 +2,15 @@
 
 import { IDashboardEvent } from "./base";
 import { IInsight, ObjRef, VisualizationProperties } from "@gooddata/sdk-model";
-import { WidgetFilterSettings, WidgetHeader } from "../types/widgetTypes";
+import { WidgetHeader } from "../types/widgetTypes";
 import { DashboardContext } from "../types/commonTypes";
-import { DrillDefinition, IInsightWidget, IInsightWidgetDefinition } from "@gooddata/sdk-backend-spi";
+import {
+    DrillDefinition,
+    ICatalogDateDataset,
+    IDashboardAttributeFilter,
+    IInsightWidget,
+    IInsightWidgetDefinition,
+} from "@gooddata/sdk-backend-spi";
 
 /**
  * This event is emitted when the header of an insight widget changed. The new value of the header (title)
@@ -66,16 +72,26 @@ export interface DashboardInsightWidgetFilterSettingsChanged extends IDashboardE
         readonly ref: ObjRef;
 
         /**
-         * New filter settings that are now in effect for the widget.
+         * Attribute filters that are ignored for the widget.
+         *
+         * If empty, then all attribute filters defined for the dashboard are in effect.
          */
-        readonly filterSettings: WidgetFilterSettings;
+        readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+
+        /**
+         * Date dataset used for date filtering.
+         *
+         * If undefined, then dashboard's date filter is not in effect for the widget.
+         */
+        readonly dateDatasetForFiltering?: ICatalogDateDataset;
     };
 }
 
 export function insightWidgetFilterSettingsChanged(
     ctx: DashboardContext,
     ref: ObjRef,
-    filterSettings: WidgetFilterSettings,
+    ignoredAttributeFilters: IDashboardAttributeFilter[],
+    dateDatasetForFiltering: ICatalogDateDataset | undefined,
     correlationId?: string,
 ): DashboardInsightWidgetFilterSettingsChanged {
     return {
@@ -84,7 +100,8 @@ export function insightWidgetFilterSettingsChanged(
         correlationId,
         payload: {
             ref,
-            filterSettings,
+            ignoredAttributeFilters,
+            dateDatasetForFiltering,
         },
     };
 }

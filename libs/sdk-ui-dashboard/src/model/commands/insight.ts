@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
-import { ObjRef, ObjRefInScope, VisualizationProperties } from "@gooddata/sdk-model";
-import { WidgetFilterSettings, WidgetHeader } from "../types/widgetTypes";
+import { isObjRef, ObjRef, ObjRefInScope, VisualizationProperties } from "@gooddata/sdk-model";
+import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
 import { InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -66,17 +66,17 @@ export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
         readonly ref: ObjRef;
 
         /**
-         * Filter settings to apply for the widget. The settings are used as-is and
-         * replace current widget settings.
+         * Filter operation to apply.
          */
-        readonly settings: WidgetFilterSettings;
+        readonly operation: WidgetFilterOperation;
     };
 }
 
 /**
- * Creates the ChangeInsightWidgetFilterSettings command. Dispatching this command will result in change of Insight widget's
- * filter settings; this includes change of data set used for date filter, disabling date filtering, ignoring
- * attribute filters that are defined on the dashboard for the widget.
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpReplaceAll} operation.
+ *
+ * Dispatching this command will result in replacement of Insight widget's filter settings; this includes change of
+ * data set used for date filter, disabling date filtering, ignoring attribute filters that are defined on the dashboard for the widget.
  *
  * @param ref - reference of the insight widget to modify
  * @param settings - new filter settings to apply
@@ -85,9 +85,9 @@ export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
  *
  * @alpha
  */
-export function changeInsightWidgetFilterSettings(
+export function replaceInsightWidgetFilterSettings(
     ref: ObjRef,
-    settings: WidgetFilterSettings,
+    settings: Omit<FilterOpReplaceAll, "type">,
     correlationId?: string,
 ): ChangeInsightWidgetFilterSettings {
     return {
@@ -95,7 +95,173 @@ export function changeInsightWidgetFilterSettings(
         correlationId,
         payload: {
             ref,
-            settings,
+            operation: {
+                type: "replace",
+                ...settings,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpEnableDateFilter} operation.
+ *
+ * Dispatching this command will result in change of Insight widget's date filter setting. The date filtering will
+ * be enabled and the provided date data set will be used for date-filtering widget's insight.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param dateDataset - date data set to use for filtering the insight
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function enableInsightWidgetDateFilter(
+    ref: ObjRef,
+    dateDataset: ObjRef,
+    correlationId?: string,
+): ChangeInsightWidgetFilterSettings {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "enableDateFilter",
+                dateDataset,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpDisableDateFilter} operation.
+ *
+ * Dispatching this command will result in change of Insight widget's date filter setting. The date filtering will
+ * be disabled.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function disableInsightWidgetDateFilter(
+    ref: ObjRef,
+    correlationId?: string,
+): ChangeInsightWidgetFilterSettings {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "disableDateFilter",
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpReplaceAttributeIgnores} operation.
+ *
+ * Dispatching this command will result in replacement of Insight widget's attribute filter ignore-list. Those attribute filters
+ * that use the provided displayForms for filtering will be ignored by the widget.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param displayForms - refs of display forms used by attribute filters that should be ignored
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function replaceInsightWidgetIgnoredFilters(
+    ref: ObjRef,
+    displayForms?: ObjRef[],
+    correlationId?: string,
+): ChangeInsightWidgetFilterSettings {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "replaceAttributeIgnores",
+                displayFormRefs: displayForms ?? [],
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpIgnoreAttributeFilter} operation.
+ *
+ * Dispatching this command will result in addition of one or more filters into Insight widget's attribute filter ignore-list.
+ * Those attribute filters that use the provided displayForms for filtering will be ignored by the widget on top of any
+ * other filters that are already ignored.
+ *
+ * Ignored attribute filters are not passed down to the insight and will not be used to filter that insight.
+ *
+ * The operation is idempotent - trying to ignore an attribute filter multiple times will have no effect.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param oneOrMoreDisplayForms - one or more refs of display forms used by attribute filters that should be added to the ignore-list
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function ignoreFilterOnInsightWidget(
+    ref: ObjRef,
+    oneOrMoreDisplayForms: ObjRef | ObjRef[],
+    correlationId?: string,
+): ChangeInsightWidgetFilterSettings {
+    const displayFormRefs = isObjRef(oneOrMoreDisplayForms) ? [oneOrMoreDisplayForms] : oneOrMoreDisplayForms;
+
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "ignoreAttributeFilter",
+                displayFormRefs,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpUnignoreAttributeFilter} operation.
+ *
+ * Dispatching this command will result in removal of one or more filters from Insight widget's attribute filter ignore-list.
+ * Ignored attribute filters are not passed down to the insight and will not be used to filter that insight.
+ *
+ * The operation is idempotent - trying to unignore an attribute filter multiple times will have no effect.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param oneOrMoreDisplayForms - one or more refs of display forms used by attribute filters that should be removed from the ignore-list
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function unignoreFilterOnInsightWidget(
+    ref: ObjRef,
+    oneOrMoreDisplayForms: ObjRef | ObjRef[],
+    correlationId?: string,
+): ChangeInsightWidgetFilterSettings {
+    const displayFormRefs = isObjRef(oneOrMoreDisplayForms) ? [oneOrMoreDisplayForms] : oneOrMoreDisplayForms;
+
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "unignoreAttributeFilter",
+                displayFormRefs,
+            },
         },
     };
 }
