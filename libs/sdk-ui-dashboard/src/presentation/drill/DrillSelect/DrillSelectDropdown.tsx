@@ -10,18 +10,20 @@ import {
     isDrillToInsight,
     isDrillToDashboard,
     isDrillToLegacyDashboard,
+    isDrillFromAttribute,
 } from "@gooddata/sdk-backend-spi";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
 import { IInsight, insightRef, insightTitle, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { isDrillToUrl } from "../types";
 import { DrillSelectListBody } from "./DrillSelectListBody";
-import { getDrillDownAttributeTitle } from "../utils/drillDownUtils";
+import { getDrillDownAttributeTitle, getTotalDrillToUrlCount } from "../utils/drillDownUtils";
 import { DrillSelectContext, DrillType, DrillSelectItem } from "./types";
 import { useDashboardSelector, selectListedDashboards } from "../../../model";
 import { dashboardMatch } from "../utils/dashboardPredicate";
 import { selectDashboardTitle, selectInsights } from "../../../model";
 import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants";
+import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/InsightDrillDefinitionUtils";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;
@@ -81,6 +83,8 @@ export const createDrillSelectItems = (
     dashboardTitle: string,
     intl: IntlShape,
 ): DrillSelectItem[] => {
+    const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
+
     return drillDefinitions.map((drillDefinition): DrillSelectItem => {
         invariant(
             !isDrillToLegacyDashboard(drillDefinition),
@@ -88,7 +92,8 @@ export const createDrillSelectItems = (
         );
 
         if (isDrillDownDefinition(drillDefinition)) {
-            const title = getDrillDownAttributeTitle(drillDefinition, drillEvent);
+            const drillDownOrigin = getDrillOriginLocalIdentifier(drillDefinition);
+            const title = getDrillDownAttributeTitle(drillDownOrigin, drillEvent);
 
             return {
                 type: DrillType.DRILL_DOWN,
@@ -124,10 +129,18 @@ export const createDrillSelectItems = (
         }
 
         if (isDrillToUrl(drillDefinition)) {
+            const drillToUrlOrigin = getDrillOriginLocalIdentifier(drillDefinition);
+
+            const attributeValue =
+                isDrillFromAttribute(drillDefinition.origin) && totalDrillToUrls > 1
+                    ? getDrillDownAttributeTitle(drillToUrlOrigin, drillEvent)
+                    : undefined;
+
             return {
                 type: DrillType.DRILL_TO_URL,
                 name: intl.formatMessage({ id: "drill_modal_picker.more.details" }),
                 drillDefinition,
+                attributeValue,
                 id: stringify(drillDefinition),
             };
         }

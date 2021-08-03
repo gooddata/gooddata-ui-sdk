@@ -3,21 +3,30 @@
 import { isDrillToLegacyDashboard } from "@gooddata/sdk-backend-spi";
 import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
-import { IDrillDownDefinition, DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
+import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/InsightDrillDefinitionUtils";
+import { isDrillToUrl } from "../types";
 
 /**
  * @internal
  */
-export function getDrillDownAttributeTitle(drill: IDrillDownDefinition, drillEvent: IDrillEvent): string {
+export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string {
     return (drillEvent.drillContext.intersection || [])
         .map((intersectionElement) => intersectionElement.header)
         .filter(isDrillIntersectionAttributeItem)
         .filter(
             (intersectionAttributeItem) =>
-                intersectionAttributeItem.attributeHeader.localIdentifier === drill.origin.localIdentifier,
+                intersectionAttributeItem.attributeHeader.localIdentifier === localIdentifier,
         )
         .map((intersectionAttributeItem) => intersectionAttributeItem.attributeHeaderItem.name)[0];
+}
+
+/**
+ * Get total number of IDrillToUrl
+ * @internal
+ */
+export function getTotalDrillToUrlCount(drillDefinition: DashboardDrillDefinition[]): number {
+    return drillDefinition.filter(isDrillToUrl).length;
 }
 
 /**

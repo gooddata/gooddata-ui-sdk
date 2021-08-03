@@ -50,13 +50,17 @@
             padding: 4px 10px;
         }
 
-        span {
+        p {
             font-family: $gd-font-primary;
             font-size: 12px;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
             color: var(--gd-palette-complementary-8, #464e56);
+
+            span {
+                color: var(--gd-palette-complementary-5, #b0beca);
+            }
         }
 
         .gd-drill-modal-picker-icon-wrapper {
