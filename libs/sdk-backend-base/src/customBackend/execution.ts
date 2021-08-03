@@ -12,6 +12,7 @@ import {
     defWithDateFormat,
     defWithExecConfig,
     IExecutionConfig,
+    IDebugConfig,
 } from "@gooddata/sdk-model";
 import {
     IDimensionDescriptor,
@@ -76,6 +77,14 @@ class CustomPreparedExecution implements IPreparedExecution {
 
             return this.config.resultProvider(context);
         });
+    };
+
+    public withDebugAfm = (debugConfig: IDebugConfig): IPreparedExecution => {
+        if (debugConfig?.requested) {
+            // eslint-disable-next-line no-console
+            console.warn("Backend does not support explainAFM");
+        }
+        return this.executionFactory.forDefinition(this.definition);
     };
 
     public withDimensions = (...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution => {

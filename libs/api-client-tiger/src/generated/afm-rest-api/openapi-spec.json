@@ -72,6 +72,58 @@
                 }
             }
         },
+        "/api/actions/workspaces/{workspaceId}/execution/afm/explain": {
+            "post": {
+                "tags": ["afm-explain-controller"],
+                "summary": "AFM explain resource.",
+                "description": "The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.",
+                "operationId": "explainAFM",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[.A-Za-z0-9_-]{1,255}$"
+                        }
+                    },
+                    {
+                        "name": "explainType",
+                        "in": "query",
+                        "description": "Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AfmExecution"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "ZIP archive with MAQL, LDM and PDM files.",
+                        "content": {
+                            "application/zip": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects": {
             "post": {
                 "tags": ["validObjects-controller"],
@@ -205,7 +257,7 @@
                     {
                         "name": "dataSamplingPercentage",
                         "in": "query",
-                        "description": "Specifies percentage of source table data scanned during the computation.",
+                        "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
                         "required": false,
                         "schema": {
                             "type": "number",
@@ -616,7 +668,7 @@
                         "type": "object",
                         "properties": {
                             "label": {
-                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                                "$ref": "#/components/schemas/Identifier"
                             }
                         }
                     }
@@ -1150,7 +1202,7 @@
                 "properties": {
                     "dataSamplingPercentage": {
                         "type": "number",
-                        "description": "Specifies percentage of source table data scanned during the computation. Only \"center of star\" (and not e.g. dimension) tables are subject to data sampling. Note that this option is available only for specific data sources.",
+                        "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
                         "minimum": 0,
                         "exclusiveMinimum": true,
                         "maximum": 100,

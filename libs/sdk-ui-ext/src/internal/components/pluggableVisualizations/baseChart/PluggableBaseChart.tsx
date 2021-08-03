@@ -230,6 +230,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             dateFormat,
             theme,
             executionConfig,
+            debugConfig,
         } = options;
         const { height } = dimensions;
 
@@ -247,7 +248,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 ...createSorts(this.type, insight, canSortStackTotalValue(insight, supportedControls)),
             )
             .withDateFormat(dateFormat)
-            .withExecConfig(executionConfig);
+            .withExecConfig(executionConfig)
+            .withDebugAfm(debugConfig);
 
         this.renderFun(
             <BaseChart

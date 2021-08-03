@@ -312,6 +312,12 @@ export interface DeclarativeDataSource {
      */
     password?: string;
     /**
+     * Token as an alternative to username and password.
+     * @type {string}
+     * @memberof DeclarativeDataSource
+     */
+    token?: string;
+    /**
      *
      * @type {DeclarativeTables}
      * @memberof DeclarativeDataSource
@@ -661,6 +667,92 @@ export interface DeclarativeModel {
     ldm: DeclarativeLdm;
 }
 /**
+ * Complete definition of an organization in a declarative form.
+ * @export
+ * @interface DeclarativeOrganization
+ */
+export interface DeclarativeOrganization {
+    /**
+     *
+     * @type {DeclarativeOrganizationInfo}
+     * @memberof DeclarativeOrganization
+     */
+    organization: DeclarativeOrganizationInfo;
+    /**
+     *
+     * @type {Array<DeclarativeUser>}
+     * @memberof DeclarativeOrganization
+     */
+    users: Array<DeclarativeUser>;
+    /**
+     *
+     * @type {Array<DeclarativeUserGroup>}
+     * @memberof DeclarativeOrganization
+     */
+    userGroups: Array<DeclarativeUserGroup>;
+    /**
+     *
+     * @type {Array<DeclarativeDataSource>}
+     * @memberof DeclarativeOrganization
+     */
+    dataSources: Array<DeclarativeDataSource>;
+    /**
+     *
+     * @type {Array<DeclarativeWorkspace>}
+     * @memberof DeclarativeOrganization
+     */
+    workspaces: Array<DeclarativeWorkspace>;
+    /**
+     *
+     * @type {Array<DeclarativeWorkspaceDataFilter>}
+     * @memberof DeclarativeOrganization
+     */
+    workspaceDataFilters: Array<DeclarativeWorkspaceDataFilter>;
+}
+/**
+ * Information available about an organization.
+ * @export
+ * @interface DeclarativeOrganizationInfo
+ */
+export interface DeclarativeOrganizationInfo {
+    /**
+     * Identifier of the organization.
+     * @type {string}
+     * @memberof DeclarativeOrganizationInfo
+     */
+    id: string;
+    /**
+     * Formal name of the organization.
+     * @type {string}
+     * @memberof DeclarativeOrganizationInfo
+     */
+    name: string;
+    /**
+     * Formal hostname used in deployment.
+     * @type {string}
+     * @memberof DeclarativeOrganizationInfo
+     */
+    hostname: string;
+    /**
+     * URI of the authentication provider.
+     * @type {string}
+     * @memberof DeclarativeOrganizationInfo
+     */
+    oauthIssuerLocation?: string;
+    /**
+     * Identifier of the authentication provider
+     * @type {string}
+     * @memberof DeclarativeOrganizationInfo
+     */
+    oauthClientId?: string;
+    /**
+     * Communication secret of the authentication provider (never returned back).
+     * @type {string}
+     * @memberof DeclarativeOrganizationInfo
+     */
+    oauthClientSecret?: string;
+}
+/**
  * A physical data model (PDM) representation for single data source.
  * @export
  * @interface DeclarativePdm
@@ -717,6 +809,12 @@ export interface DeclarativeTable {
      */
     path: Array<string>;
     /**
+     * Table type: TABLE or VIEW.
+     * @type {string}
+     * @memberof DeclarativeTable
+     */
+    type: string;
+    /**
      * An array of physical columns
      * @type {Array<DeclarativeColumn>}
      * @memberof DeclarativeTable
@@ -735,6 +833,76 @@ export interface DeclarativeTables {
      * @memberof DeclarativeTables
      */
     tables: Array<DeclarativeTable>;
+}
+/**
+ * A user and its properties
+ * @export
+ * @interface DeclarativeUser
+ */
+export interface DeclarativeUser {
+    /**
+     * User identifier.
+     * @type {string}
+     * @memberof DeclarativeUser
+     */
+    id: string;
+    /**
+     * User identification in the authentication manager.
+     * @type {string}
+     * @memberof DeclarativeUser
+     */
+    authId?: string;
+    /**
+     *
+     * @type {Array<UserGroupIdentifier>}
+     * @memberof DeclarativeUser
+     */
+    userGroups?: Array<UserGroupIdentifier>;
+}
+/**
+ * A user-group and its properties
+ * @export
+ * @interface DeclarativeUserGroup
+ */
+export interface DeclarativeUserGroup {
+    /**
+     * UserGroup identifier.
+     * @type {string}
+     * @memberof DeclarativeUserGroup
+     */
+    id: string;
+    /**
+     *
+     * @type {Array<UserGroupIdentifier>}
+     * @memberof DeclarativeUserGroup
+     */
+    parents?: Array<UserGroupIdentifier>;
+}
+/**
+ * Declarative form of userGroups and its properties.
+ * @export
+ * @interface DeclarativeUserGroups
+ */
+export interface DeclarativeUserGroups {
+    /**
+     *
+     * @type {Array<DeclarativeUserGroup>}
+     * @memberof DeclarativeUserGroups
+     */
+    userGroups: Array<DeclarativeUserGroup>;
+}
+/**
+ * Declarative form of users and its properties.
+ * @export
+ * @interface DeclarativeUsers
+ */
+export interface DeclarativeUsers {
+    /**
+     *
+     * @type {Array<DeclarativeUser>}
+     * @memberof DeclarativeUsers
+     */
+    users: Array<DeclarativeUser>;
 }
 /**
  *
@@ -774,19 +942,19 @@ export interface DeclarativeVisualizationObject {
     tags?: Array<string>;
 }
 /**
- *
+ * A declarative form of a particular workspace.
  * @export
  * @interface DeclarativeWorkspace
  */
 export interface DeclarativeWorkspace {
     /**
-     *
+     * Identifier of a workspace
      * @type {string}
      * @memberof DeclarativeWorkspace
      */
     id: string;
     /**
-     *
+     * Name of a workspace to view.
      * @type {string}
      * @memberof DeclarativeWorkspace
      */
@@ -834,12 +1002,6 @@ export interface DeclarativeWorkspaceDataFilter {
      * @memberof DeclarativeWorkspaceDataFilter
      */
     columnName: string;
-    /**
-     * Data source ID. Workspace Data Filters must always be connected to single data source.
-     * @type {string}
-     * @memberof DeclarativeWorkspaceDataFilter
-     */
-    dataSourceId: string;
     /**
      * Filter settings specifying values of filters valid for the workspace.
      * @type {Array<DeclarativeWorkspaceDataFilterSetting>}
@@ -891,7 +1053,7 @@ export interface DeclarativeWorkspaceDataFilterSetting {
     workspace: WorkspaceIdentifier;
 }
 /**
- *
+ * Declarative form of data filters.
  * @export
  * @interface DeclarativeWorkspaceDataFilters
  */
@@ -904,7 +1066,7 @@ export interface DeclarativeWorkspaceDataFilters {
     workspaceDataFilters: Array<DeclarativeWorkspaceDataFilter>;
 }
 /**
- *
+ * A declarative form of a model and analytics for a workspace.
  * @export
  * @interface DeclarativeWorkspaceModel
  */
@@ -923,7 +1085,7 @@ export interface DeclarativeWorkspaceModel {
     analytics: DeclarativeAnalyticsLayer;
 }
 /**
- *
+ * A declarative form of a all workspace layout.
  * @export
  * @interface DeclarativeWorkspaces
  */
@@ -1075,17 +1237,17 @@ export interface GranularitiesFormatting {
  */
 export interface JsonApiACLIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiACLIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiACLIn
      */
     type: JsonApiACLInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiACLIn
+     */
+    id: string;
     /**
      *
      * @type {JsonApiACLInAttributes}
@@ -1215,17 +1377,17 @@ export interface JsonApiACLInRelationshipsSubjects {
  */
 export interface JsonApiACLOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiACLOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiACLOut
      */
     type: JsonApiACLOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiACLOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiACLInAttributes}
@@ -1268,11 +1430,16 @@ export interface JsonApiACLOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiUserOutWithLinks | JsonApiUserGroupOutWithLinks>}
+     * @type {Array<JsonApiACLOutIncludes>}
      * @memberof JsonApiACLOutDocument
      */
-    included?: Array<JsonApiUserOutWithLinks | JsonApiUserGroupOutWithLinks>;
+    included?: Array<JsonApiACLOutIncludes>;
 }
+/**
+ * @type JsonApiACLOutIncludes
+ * @export
+ */
+export type JsonApiACLOutIncludes = JsonApiUserGroupOutWithLinks | JsonApiUserOutWithLinks;
 /**
  * A JSON:API document with a list of resources
  * @export
@@ -1293,10 +1460,10 @@ export interface JsonApiACLOutList {
     links?: ListLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiUserOutWithLinks | JsonApiUserGroupOutWithLinks>}
+     * @type {Array<JsonApiACLOutIncludes>}
      * @memberof JsonApiACLOutList
      */
-    included?: Array<JsonApiUserOutWithLinks | JsonApiUserGroupOutWithLinks>;
+    included?: Array<JsonApiACLOutIncludes>;
 }
 /**
  *
@@ -1305,17 +1472,17 @@ export interface JsonApiACLOutList {
  */
 export interface JsonApiACLOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiACLOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiACLOutWithLinks
      */
     type: JsonApiACLOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiACLOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiACLInAttributes}
@@ -1351,23 +1518,23 @@ export enum JsonApiACLOutWithLinksTypeEnum {
  */
 export interface JsonApiAnalyticalDashboardIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiAnalyticalDashboardIn
      */
     type: JsonApiAnalyticalDashboardInTypeEnum;
     /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiAnalyticalDashboardIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiAnalyticalDashboardIn
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 /**
@@ -1378,6 +1545,43 @@ export enum JsonApiAnalyticalDashboardInTypeEnum {
     AnalyticalDashboard = "analyticalDashboard",
 }
 
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardInAttributes
+ */
+export interface JsonApiAnalyticalDashboardInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -1426,23 +1630,23 @@ export enum JsonApiAnalyticalDashboardLinkageTypeEnum {
  */
 export interface JsonApiAnalyticalDashboardOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiAnalyticalDashboardOut
      */
     type: JsonApiAnalyticalDashboardOutTypeEnum;
     /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiAnalyticalDashboardOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiAnalyticalDashboardOut
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1459,43 +1663,6 @@ export enum JsonApiAnalyticalDashboardOutTypeEnum {
     AnalyticalDashboard = "analyticalDashboard",
 }
 
-/**
- *
- * @export
- * @interface JsonApiAnalyticalDashboardOutAttributes
- */
-export interface JsonApiAnalyticalDashboardOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -1516,18 +1683,22 @@ export interface JsonApiAnalyticalDashboardOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiVisualizationObjectOutWithLinks | JsonApiAnalyticalDashboardOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFilterContextOutWithLinks>}
+     * @type {Array<JsonApiAnalyticalDashboardOutIncludes>}
      * @memberof JsonApiAnalyticalDashboardOutDocument
      */
-    included?: Array<
-        | JsonApiVisualizationObjectOutWithLinks
-        | JsonApiAnalyticalDashboardOutWithLinks
-        | JsonApiLabelOutWithLinks
-        | JsonApiMetricOutWithLinks
-        | JsonApiDatasetOutWithLinks
-        | JsonApiFilterContextOutWithLinks
-    >;
+    included?: Array<JsonApiAnalyticalDashboardOutIncludes>;
 }
+/**
+ * @type JsonApiAnalyticalDashboardOutIncludes
+ * @export
+ */
+export type JsonApiAnalyticalDashboardOutIncludes =
+    | JsonApiAnalyticalDashboardOutWithLinks
+    | JsonApiDatasetOutWithLinks
+    | JsonApiFilterContextOutWithLinks
+    | JsonApiLabelOutWithLinks
+    | JsonApiMetricOutWithLinks
+    | JsonApiVisualizationObjectOutWithLinks;
 /**
  * A JSON:API document with a list of resources
  * @export
@@ -1548,17 +1719,10 @@ export interface JsonApiAnalyticalDashboardOutList {
     links?: ListLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiVisualizationObjectOutWithLinks | JsonApiAnalyticalDashboardOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFilterContextOutWithLinks>}
+     * @type {Array<JsonApiAnalyticalDashboardOutIncludes>}
      * @memberof JsonApiAnalyticalDashboardOutList
      */
-    included?: Array<
-        | JsonApiVisualizationObjectOutWithLinks
-        | JsonApiAnalyticalDashboardOutWithLinks
-        | JsonApiLabelOutWithLinks
-        | JsonApiMetricOutWithLinks
-        | JsonApiDatasetOutWithLinks
-        | JsonApiFilterContextOutWithLinks
-    >;
+    included?: Array<JsonApiAnalyticalDashboardOutIncludes>;
 }
 /**
  *
@@ -1688,23 +1852,23 @@ export interface JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects 
  */
 export interface JsonApiAnalyticalDashboardOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiAnalyticalDashboardOutWithLinks
      */
     type: JsonApiAnalyticalDashboardOutWithLinksTypeEnum;
     /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiAnalyticalDashboardOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiAnalyticalDashboardOutWithLinks
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1734,17 +1898,17 @@ export enum JsonApiAnalyticalDashboardOutWithLinksTypeEnum {
  */
 export interface JsonApiApiTokenIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiApiTokenIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiApiTokenIn
      */
     type: JsonApiApiTokenInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiApiTokenIn
+     */
+    id: string;
     /**
      *
      * @type {object}
@@ -1781,17 +1945,17 @@ export interface JsonApiApiTokenInDocument {
  */
 export interface JsonApiApiTokenOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiApiTokenOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiApiTokenOut
      */
     type: JsonApiApiTokenOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiApiTokenOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiApiTokenOutAttributes}
@@ -1866,17 +2030,17 @@ export interface JsonApiApiTokenOutList {
  */
 export interface JsonApiApiTokenOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiApiTokenOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiApiTokenOutWithLinks
      */
     type: JsonApiApiTokenOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiApiTokenOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiApiTokenOutAttributes}
@@ -1934,17 +2098,17 @@ export enum JsonApiAttributeLinkageTypeEnum {
  */
 export interface JsonApiAttributeOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiAttributeOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiAttributeOut
      */
     type: JsonApiAttributeOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiAttributeOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiAttributeOutAttributes}
@@ -2047,11 +2211,16 @@ export interface JsonApiAttributeOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiDatasetOutWithLinks | JsonApiLabelOutWithLinks>}
+     * @type {Array<JsonApiAttributeOutIncludes>}
      * @memberof JsonApiAttributeOutDocument
      */
-    included?: Array<JsonApiDatasetOutWithLinks | JsonApiLabelOutWithLinks>;
+    included?: Array<JsonApiAttributeOutIncludes>;
 }
+/**
+ * @type JsonApiAttributeOutIncludes
+ * @export
+ */
+export type JsonApiAttributeOutIncludes = JsonApiDatasetOutWithLinks | JsonApiLabelOutWithLinks;
 /**
  * A JSON:API document with a list of resources
  * @export
@@ -2072,10 +2241,10 @@ export interface JsonApiAttributeOutList {
     links?: ListLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiDatasetOutWithLinks | JsonApiLabelOutWithLinks>}
+     * @type {Array<JsonApiAttributeOutIncludes>}
      * @memberof JsonApiAttributeOutList
      */
-    included?: Array<JsonApiDatasetOutWithLinks | JsonApiLabelOutWithLinks>;
+    included?: Array<JsonApiAttributeOutIncludes>;
 }
 /**
  *
@@ -2116,17 +2285,17 @@ export interface JsonApiAttributeOutRelationshipsDataset {
  */
 export interface JsonApiAttributeOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiAttributeOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiAttributeOutWithLinks
      */
     type: JsonApiAttributeOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiAttributeOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiAttributeOutAttributes}
@@ -2168,17 +2337,17 @@ export type JsonApiAttributeToOneLinkage = JsonApiAttributeLinkage;
  */
 export interface JsonApiCookieSecurityConfigurationIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiCookieSecurityConfigurationIn
      */
     type: JsonApiCookieSecurityConfigurationInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationIn
+     */
+    id: string;
     /**
      *
      * @type {JsonApiCookieSecurityConfigurationInAttributes}
@@ -2208,110 +2377,11 @@ export interface JsonApiCookieSecurityConfigurationInAttributes {
      */
     lastRotation?: string;
     /**
-     *
-     * @type {JsonApiCookieSecurityConfigurationInAttributesRotationInterval}
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     * @type {string}
      * @memberof JsonApiCookieSecurityConfigurationInAttributes
      */
-    rotationInterval?: JsonApiCookieSecurityConfigurationInAttributesRotationInterval;
-}
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationInAttributesRotationInterval
- */
-export interface JsonApiCookieSecurityConfigurationInAttributesRotationInterval {
-    /**
-     *
-     * @type {number}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationInterval
-     */
-    seconds?: number;
-    /**
-     *
-     * @type {Array<JsonApiCookieSecurityConfigurationInAttributesRotationIntervalUnits>}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationInterval
-     */
-    units?: Array<JsonApiCookieSecurityConfigurationInAttributesRotationIntervalUnits>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationInterval
-     */
-    zero?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationInterval
-     */
-    negative?: boolean;
-    /**
-     *
-     * @type {number}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationInterval
-     */
-    nano?: number;
-}
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationInAttributesRotationIntervalDuration
- */
-export interface JsonApiCookieSecurityConfigurationInAttributesRotationIntervalDuration {
-    /**
-     *
-     * @type {number}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationIntervalDuration
-     */
-    seconds?: number;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationIntervalDuration
-     */
-    zero?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationIntervalDuration
-     */
-    negative?: boolean;
-    /**
-     *
-     * @type {number}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationIntervalDuration
-     */
-    nano?: number;
-}
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationInAttributesRotationIntervalUnits
- */
-export interface JsonApiCookieSecurityConfigurationInAttributesRotationIntervalUnits {
-    /**
-     *
-     * @type {JsonApiCookieSecurityConfigurationInAttributesRotationIntervalDuration}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationIntervalUnits
-     */
-    duration?: JsonApiCookieSecurityConfigurationInAttributesRotationIntervalDuration;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationIntervalUnits
-     */
-    durationEstimated?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationIntervalUnits
-     */
-    dateBased?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributesRotationIntervalUnits
-     */
-    timeBased?: boolean;
+    rotationInterval?: string;
 }
 /**
  *
@@ -2333,17 +2403,17 @@ export interface JsonApiCookieSecurityConfigurationInDocument {
  */
 export interface JsonApiCookieSecurityConfigurationOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiCookieSecurityConfigurationOut
      */
     type: JsonApiCookieSecurityConfigurationOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiCookieSecurityConfigurationInAttributes}
@@ -2405,17 +2475,17 @@ export interface JsonApiCookieSecurityConfigurationOutList {
  */
 export interface JsonApiCookieSecurityConfigurationOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiCookieSecurityConfigurationOutWithLinks
      */
     type: JsonApiCookieSecurityConfigurationOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiCookieSecurityConfigurationInAttributes}
@@ -2445,17 +2515,17 @@ export enum JsonApiCookieSecurityConfigurationOutWithLinksTypeEnum {
  */
 export interface JsonApiDataSourceIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiDataSourceIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiDataSourceIn
      */
     type: JsonApiDataSourceInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiDataSourceIn
+     */
+    id: string;
     /**
      *
      * @type {JsonApiDataSourceInAttributes}
@@ -2514,6 +2584,12 @@ export interface JsonApiDataSourceInAttributes {
      * @memberof JsonApiDataSourceInAttributes
      */
     password?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataSourceInAttributes
+     */
+    token?: string;
 }
 
 /**
@@ -2551,17 +2627,17 @@ export interface JsonApiDataSourceInDocument {
  */
 export interface JsonApiDataSourceOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiDataSourceOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiDataSourceOut
      */
     type: JsonApiDataSourceOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiDataSourceOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -2676,17 +2752,17 @@ export interface JsonApiDataSourceOutList {
  */
 export interface JsonApiDataSourceOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiDataSourceOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiDataSourceOutWithLinks
      */
     type: JsonApiDataSourceOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiDataSourceOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -2716,17 +2792,17 @@ export enum JsonApiDataSourceOutWithLinksTypeEnum {
  */
 export interface JsonApiDataSourceTableOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiDataSourceTableOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiDataSourceTableOut
      */
     type: JsonApiDataSourceTableOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiDataSourceTableOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiDataSourceTableOutAttributes}
@@ -2757,11 +2833,27 @@ export interface JsonApiDataSourceTableOutAttributes {
     path?: Array<string>;
     /**
      *
+     * @type {string}
+     * @memberof JsonApiDataSourceTableOutAttributes
+     */
+    type?: JsonApiDataSourceTableOutAttributesTypeEnum;
+    /**
+     *
      * @type {Array<JsonApiDataSourceTableOutAttributesColumns>}
      * @memberof JsonApiDataSourceTableOutAttributes
      */
     columns?: Array<JsonApiDataSourceTableOutAttributesColumns>;
 }
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum JsonApiDataSourceTableOutAttributesTypeEnum {
+    TABLE = "TABLE",
+    VIEW = "VIEW",
+}
+
 /**
  * Table columns in data source
  * @export
@@ -2858,17 +2950,17 @@ export interface JsonApiDataSourceTableOutList {
  */
 export interface JsonApiDataSourceTableOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiDataSourceTableOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiDataSourceTableOutWithLinks
      */
     type: JsonApiDataSourceTableOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiDataSourceTableOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiDataSourceTableOutAttributes}
@@ -2926,23 +3018,23 @@ export enum JsonApiDatasetLinkageTypeEnum {
  */
 export interface JsonApiDatasetOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiDatasetOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiDatasetOut
      */
     type: JsonApiDatasetOutTypeEnum;
     /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiDatasetOut
+     */
+    id: string;
+    /**
      *
      * @type {JsonApiDatasetOutAttributes}
      * @memberof JsonApiDatasetOut
      */
-    attributes?: JsonApiDatasetOutAttributes;
+    attributes: JsonApiDatasetOutAttributes;
     /**
      *
      * @type {JsonApiDatasetOutRelationships}
@@ -2988,7 +3080,7 @@ export interface JsonApiDatasetOutAttributes {
      * @type {string}
      * @memberof JsonApiDatasetOutAttributes
      */
-    type?: JsonApiDatasetOutAttributesTypeEnum;
+    type: JsonApiDatasetOutAttributesTypeEnum;
     /**
      *
      * @type {Array<JsonApiDatasetOutAttributesGrain>}
@@ -3098,11 +3190,19 @@ export interface JsonApiDatasetOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiAttributeOutWithLinks | JsonApiFactOutWithLinks | JsonApiDatasetOutWithLinks>}
+     * @type {Array<JsonApiDatasetOutIncludes>}
      * @memberof JsonApiDatasetOutDocument
      */
-    included?: Array<JsonApiAttributeOutWithLinks | JsonApiFactOutWithLinks | JsonApiDatasetOutWithLinks>;
+    included?: Array<JsonApiDatasetOutIncludes>;
 }
+/**
+ * @type JsonApiDatasetOutIncludes
+ * @export
+ */
+export type JsonApiDatasetOutIncludes =
+    | JsonApiAttributeOutWithLinks
+    | JsonApiDatasetOutWithLinks
+    | JsonApiFactOutWithLinks;
 /**
  * A JSON:API document with a list of resources
  * @export
@@ -3123,10 +3223,10 @@ export interface JsonApiDatasetOutList {
     links?: ListLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiAttributeOutWithLinks | JsonApiFactOutWithLinks | JsonApiDatasetOutWithLinks>}
+     * @type {Array<JsonApiDatasetOutIncludes>}
      * @memberof JsonApiDatasetOutList
      */
-    included?: Array<JsonApiAttributeOutWithLinks | JsonApiFactOutWithLinks | JsonApiDatasetOutWithLinks>;
+    included?: Array<JsonApiDatasetOutIncludes>;
 }
 /**
  *
@@ -3136,16 +3236,16 @@ export interface JsonApiDatasetOutList {
 export interface JsonApiDatasetOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiDatasetOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiDatasetOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
@@ -3156,41 +3256,9 @@ export interface JsonApiDatasetOutRelationships {
 /**
  *
  * @export
- * @interface JsonApiDatasetOutRelationshipsAttributes
- */
-export interface JsonApiDatasetOutRelationshipsAttributes {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiAttributeLinkage>}
-     * @memberof JsonApiDatasetOutRelationshipsAttributes
-     */
-    data: Array<JsonApiAttributeLinkage>;
-}
-/**
- *
- * @export
- * @interface JsonApiDatasetOutRelationshipsFacts
- */
-export interface JsonApiDatasetOutRelationshipsFacts {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiFactLinkage>}
-     * @memberof JsonApiDatasetOutRelationshipsFacts
-     */
-    data: Array<JsonApiFactLinkage>;
-}
-/**
- *
- * @export
  * @interface JsonApiDatasetOutWithLinks
  */
 export interface JsonApiDatasetOutWithLinks {
-    /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiDatasetOutWithLinks
-     */
-    id: string;
     /**
      * Object type
      * @type {string}
@@ -3198,11 +3266,17 @@ export interface JsonApiDatasetOutWithLinks {
      */
     type: JsonApiDatasetOutWithLinksTypeEnum;
     /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiDatasetOutWithLinks
+     */
+    id: string;
+    /**
      *
      * @type {JsonApiDatasetOutAttributes}
      * @memberof JsonApiDatasetOutWithLinks
      */
-    attributes?: JsonApiDatasetOutAttributes;
+    attributes: JsonApiDatasetOutAttributes;
     /**
      *
      * @type {JsonApiDatasetOutRelationships}
@@ -3266,17 +3340,17 @@ export enum JsonApiFactLinkageTypeEnum {
  */
 export interface JsonApiFactOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiFactOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiFactOut
      */
     type: JsonApiFactOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiFactOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiFactOutAttributes}
@@ -3406,17 +3480,17 @@ export interface JsonApiFactOutRelationships {
  */
 export interface JsonApiFactOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiFactOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiFactOutWithLinks
      */
     type: JsonApiFactOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiFactOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiFactOutAttributes}
@@ -3452,23 +3526,23 @@ export enum JsonApiFactOutWithLinksTypeEnum {
  */
 export interface JsonApiFilterContextIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiFilterContextIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiFilterContextIn
      */
     type: JsonApiFilterContextInTypeEnum;
     /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiFilterContextIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiFilterContextIn
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 /**
@@ -3527,23 +3601,23 @@ export enum JsonApiFilterContextLinkageTypeEnum {
  */
 export interface JsonApiFilterContextOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiFilterContextOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiFilterContextOut
      */
     type: JsonApiFilterContextOutTypeEnum;
     /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiFilterContextOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiFilterContextOut
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -3580,11 +3654,19 @@ export interface JsonApiFilterContextOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiLabelOutWithLinks>}
+     * @type {Array<JsonApiFilterContextOutIncludes>}
      * @memberof JsonApiFilterContextOutDocument
      */
-    included?: Array<JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiLabelOutWithLinks>;
+    included?: Array<JsonApiFilterContextOutIncludes>;
 }
+/**
+ * @type JsonApiFilterContextOutIncludes
+ * @export
+ */
+export type JsonApiFilterContextOutIncludes =
+    | JsonApiAttributeOutWithLinks
+    | JsonApiDatasetOutWithLinks
+    | JsonApiLabelOutWithLinks;
 /**
  * A JSON:API document with a list of resources
  * @export
@@ -3605,10 +3687,10 @@ export interface JsonApiFilterContextOutList {
     links?: ListLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiLabelOutWithLinks>}
+     * @type {Array<JsonApiFilterContextOutIncludes>}
      * @memberof JsonApiFilterContextOutList
      */
-    included?: Array<JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiLabelOutWithLinks>;
+    included?: Array<JsonApiFilterContextOutIncludes>;
 }
 /**
  *
@@ -3618,10 +3700,10 @@ export interface JsonApiFilterContextOutList {
 export interface JsonApiFilterContextOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiFilterContextOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
@@ -3638,15 +3720,22 @@ export interface JsonApiFilterContextOutRelationships {
 /**
  *
  * @export
+ * @interface JsonApiFilterContextOutRelationshipsAttributes
+ */
+export interface JsonApiFilterContextOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiAttributeLinkage>}
+     * @memberof JsonApiFilterContextOutRelationshipsAttributes
+     */
+    data: Array<JsonApiAttributeLinkage>;
+}
+/**
+ *
+ * @export
  * @interface JsonApiFilterContextOutWithLinks
  */
 export interface JsonApiFilterContextOutWithLinks {
-    /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiFilterContextOutWithLinks
-     */
-    id: string;
     /**
      * Object type
      * @type {string}
@@ -3654,11 +3743,17 @@ export interface JsonApiFilterContextOutWithLinks {
      */
     type: JsonApiFilterContextOutWithLinksTypeEnum;
     /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiFilterContextOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiFilterContextOutWithLinks
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -3716,17 +3811,17 @@ export enum JsonApiLabelLinkageTypeEnum {
  */
 export interface JsonApiLabelOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiLabelOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiLabelOut
      */
     type: JsonApiLabelOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiLabelOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiLabelOutAttributes}
@@ -3875,17 +3970,17 @@ export interface JsonApiLabelOutRelationshipsAttribute {
  */
 export interface JsonApiLabelOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiLabelOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiLabelOutWithLinks
      */
     type: JsonApiLabelOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiLabelOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiLabelOutAttributes}
@@ -3921,23 +4016,23 @@ export enum JsonApiLabelOutWithLinksTypeEnum {
  */
 export interface JsonApiMetricIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiMetricIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiMetricIn
      */
     type: JsonApiMetricInTypeEnum;
     /**
-     *
-     * @type {JsonApiMetricOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiMetricIn
      */
-    attributes: JsonApiMetricOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiMetricInAttributes}
+     * @memberof JsonApiMetricIn
+     */
+    attributes: JsonApiMetricInAttributes;
 }
 
 /**
@@ -3948,6 +4043,62 @@ export enum JsonApiMetricInTypeEnum {
     Metric = "metric",
 }
 
+/**
+ *
+ * @export
+ * @interface JsonApiMetricInAttributes
+ */
+export interface JsonApiMetricInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiMetricInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiMetricInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     *
+     * @type {JsonApiMetricInAttributesContent}
+     * @memberof JsonApiMetricInAttributes
+     */
+    content: JsonApiMetricInAttributesContent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricInAttributesContent
+ */
+export interface JsonApiMetricInAttributesContent {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributesContent
+     */
+    format?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributesContent
+     */
+    maql: string;
+}
 /**
  *
  * @export
@@ -3996,23 +4147,23 @@ export enum JsonApiMetricLinkageTypeEnum {
  */
 export interface JsonApiMetricOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiMetricOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiMetricOut
      */
     type: JsonApiMetricOutTypeEnum;
     /**
-     *
-     * @type {JsonApiMetricOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiMetricOut
      */
-    attributes: JsonApiMetricOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiMetricInAttributes}
+     * @memberof JsonApiMetricOut
+     */
+    attributes: JsonApiMetricInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -4029,62 +4180,6 @@ export enum JsonApiMetricOutTypeEnum {
     Metric = "metric",
 }
 
-/**
- *
- * @export
- * @interface JsonApiMetricOutAttributes
- */
-export interface JsonApiMetricOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     *
-     * @type {JsonApiMetricOutAttributesContent}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    content: JsonApiMetricOutAttributesContent;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricOutAttributesContent
- */
-export interface JsonApiMetricOutAttributesContent {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributesContent
-     */
-    format?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributesContent
-     */
-    maql: string;
-}
 /**
  *
  * @export
@@ -4105,16 +4200,20 @@ export interface JsonApiMetricOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks>}
+     * @type {Array<JsonApiMetricOutIncludes>}
      * @memberof JsonApiMetricOutDocument
      */
-    included?: Array<
-        | JsonApiFactOutWithLinks
-        | JsonApiAttributeOutWithLinks
-        | JsonApiLabelOutWithLinks
-        | JsonApiMetricOutWithLinks
-    >;
+    included?: Array<JsonApiMetricOutIncludes>;
 }
+/**
+ * @type JsonApiMetricOutIncludes
+ * @export
+ */
+export type JsonApiMetricOutIncludes =
+    | JsonApiAttributeOutWithLinks
+    | JsonApiFactOutWithLinks
+    | JsonApiLabelOutWithLinks
+    | JsonApiMetricOutWithLinks;
 /**
  * A JSON:API document with a list of resources
  * @export
@@ -4135,15 +4234,10 @@ export interface JsonApiMetricOutList {
     links?: ListLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks>}
+     * @type {Array<JsonApiMetricOutIncludes>}
      * @memberof JsonApiMetricOutList
      */
-    included?: Array<
-        | JsonApiFactOutWithLinks
-        | JsonApiAttributeOutWithLinks
-        | JsonApiLabelOutWithLinks
-        | JsonApiMetricOutWithLinks
-    >;
+    included?: Array<JsonApiMetricOutIncludes>;
 }
 /**
  *
@@ -4153,16 +4247,16 @@ export interface JsonApiMetricOutList {
 export interface JsonApiMetricOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiMetricOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiMetricOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -4179,15 +4273,22 @@ export interface JsonApiMetricOutRelationships {
 /**
  *
  * @export
+ * @interface JsonApiMetricOutRelationshipsFacts
+ */
+export interface JsonApiMetricOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiFactLinkage>}
+     * @memberof JsonApiMetricOutRelationshipsFacts
+     */
+    data: Array<JsonApiFactLinkage>;
+}
+/**
+ *
+ * @export
  * @interface JsonApiMetricOutWithLinks
  */
 export interface JsonApiMetricOutWithLinks {
-    /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiMetricOutWithLinks
-     */
-    id: string;
     /**
      * Object type
      * @type {string}
@@ -4195,11 +4296,17 @@ export interface JsonApiMetricOutWithLinks {
      */
     type: JsonApiMetricOutWithLinksTypeEnum;
     /**
-     *
-     * @type {JsonApiMetricOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiMetricOutWithLinks
      */
-    attributes: JsonApiMetricOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiMetricInAttributes}
+     * @memberof JsonApiMetricOutWithLinks
+     */
+    attributes: JsonApiMetricInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -4229,17 +4336,17 @@ export enum JsonApiMetricOutWithLinksTypeEnum {
  */
 export interface JsonApiOrganizationIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiOrganizationIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiOrganizationIn
      */
     type: JsonApiOrganizationInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiOrganizationIn
+     */
+    id: string;
     /**
      *
      * @type {JsonApiOrganizationInAttributes}
@@ -4313,17 +4420,17 @@ export interface JsonApiOrganizationInDocument {
  */
 export interface JsonApiOrganizationOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiOrganizationOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiOrganizationOut
      */
     type: JsonApiOrganizationOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiOrganizationOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiOrganizationOutAttributes}
@@ -4397,10 +4504,10 @@ export interface JsonApiOrganizationOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiUserOutWithLinks | JsonApiUserGroupOutWithLinks>}
+     * @type {Array<JsonApiACLOutIncludes>}
      * @memberof JsonApiOrganizationOutDocument
      */
-    included?: Array<JsonApiUserOutWithLinks | JsonApiUserGroupOutWithLinks>;
+    included?: Array<JsonApiACLOutIncludes>;
 }
 /**
  *
@@ -4454,17 +4561,17 @@ export interface JsonApiOrganizationOutRelationshipsBootstrapUserGroup {
  */
 export interface JsonApiUserGroupIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiUserGroupIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiUserGroupIn
      */
     type: JsonApiUserGroupInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiUserGroupIn
+     */
+    id: string;
     /**
      *
      * @type {object}
@@ -4548,17 +4655,17 @@ export enum JsonApiUserGroupLinkageTypeEnum {
  */
 export interface JsonApiUserGroupOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiUserGroupOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiUserGroupOut
      */
     type: JsonApiUserGroupOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiUserGroupOut
+     */
+    id: string;
     /**
      *
      * @type {object}
@@ -4638,17 +4745,17 @@ export interface JsonApiUserGroupOutList {
  */
 export interface JsonApiUserGroupOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiUserGroupOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiUserGroupOutWithLinks
      */
     type: JsonApiUserGroupOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiUserGroupOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {object}
@@ -4690,17 +4797,17 @@ export type JsonApiUserGroupToOneLinkage = JsonApiUserGroupLinkage;
  */
 export interface JsonApiUserIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiUserIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiUserIn
      */
     type: JsonApiUserInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiUserIn
+     */
+    id: string;
     /**
      *
      * @type {JsonApiUserInAttributes}
@@ -4797,17 +4904,17 @@ export enum JsonApiUserLinkageTypeEnum {
  */
 export interface JsonApiUserOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiUserOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiUserOut
      */
     type: JsonApiUserOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiUserOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiUserInAttributes}
@@ -4887,17 +4994,17 @@ export interface JsonApiUserOutList {
  */
 export interface JsonApiUserOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiUserOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiUserOutWithLinks
      */
     type: JsonApiUserOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiUserOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiUserInAttributes}
@@ -4939,23 +5046,23 @@ export type JsonApiUserToOneLinkage = JsonApiUserLinkage;
  */
 export interface JsonApiVisualizationObjectIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiVisualizationObjectIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiVisualizationObjectIn
      */
     type: JsonApiVisualizationObjectInTypeEnum;
     /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiVisualizationObjectIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiVisualizationObjectIn
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 /**
@@ -5014,23 +5121,23 @@ export enum JsonApiVisualizationObjectLinkageTypeEnum {
  */
 export interface JsonApiVisualizationObjectOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiVisualizationObjectOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiVisualizationObjectOut
      */
     type: JsonApiVisualizationObjectOutTypeEnum;
     /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiVisualizationObjectOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiVisualizationObjectOut
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiVisualizationObjectOutRelationships}
@@ -5067,17 +5174,21 @@ export interface JsonApiVisualizationObjectOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks>}
+     * @type {Array<JsonApiVisualizationObjectOutIncludes>}
      * @memberof JsonApiVisualizationObjectOutDocument
      */
-    included?: Array<
-        | JsonApiFactOutWithLinks
-        | JsonApiAttributeOutWithLinks
-        | JsonApiLabelOutWithLinks
-        | JsonApiMetricOutWithLinks
-        | JsonApiDatasetOutWithLinks
-    >;
+    included?: Array<JsonApiVisualizationObjectOutIncludes>;
 }
+/**
+ * @type JsonApiVisualizationObjectOutIncludes
+ * @export
+ */
+export type JsonApiVisualizationObjectOutIncludes =
+    | JsonApiAttributeOutWithLinks
+    | JsonApiDatasetOutWithLinks
+    | JsonApiFactOutWithLinks
+    | JsonApiLabelOutWithLinks
+    | JsonApiMetricOutWithLinks;
 /**
  * A JSON:API document with a list of resources
  * @export
@@ -5098,16 +5209,10 @@ export interface JsonApiVisualizationObjectOutList {
     links?: ListLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks>}
+     * @type {Array<JsonApiVisualizationObjectOutIncludes>}
      * @memberof JsonApiVisualizationObjectOutList
      */
-    included?: Array<
-        | JsonApiFactOutWithLinks
-        | JsonApiAttributeOutWithLinks
-        | JsonApiLabelOutWithLinks
-        | JsonApiMetricOutWithLinks
-        | JsonApiDatasetOutWithLinks
-    >;
+    included?: Array<JsonApiVisualizationObjectOutIncludes>;
 }
 /**
  *
@@ -5117,16 +5222,16 @@ export interface JsonApiVisualizationObjectOutList {
 export interface JsonApiVisualizationObjectOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -5153,23 +5258,23 @@ export interface JsonApiVisualizationObjectOutRelationships {
  */
 export interface JsonApiVisualizationObjectOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiVisualizationObjectOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
     type: JsonApiVisualizationObjectOutWithLinksTypeEnum;
     /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiVisualizationObjectOutWithLinks
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiVisualizationObjectOutRelationships}
@@ -5199,29 +5304,29 @@ export enum JsonApiVisualizationObjectOutWithLinksTypeEnum {
  */
 export interface JsonApiWorkspaceDataFilterIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
     type: JsonApiWorkspaceDataFilterInTypeEnum;
     /**
-     *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
+     * @memberof JsonApiWorkspaceDataFilterIn
+     */
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 /**
@@ -5235,6 +5340,31 @@ export enum JsonApiWorkspaceDataFilterInTypeEnum {
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceDataFilterInAttributes
+ */
+export interface JsonApiWorkspaceDataFilterInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    columnName?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceDataFilterInDocument
  */
 export interface JsonApiWorkspaceDataFilterInDocument {
@@ -5244,6 +5374,32 @@ export interface JsonApiWorkspaceDataFilterInDocument {
      * @memberof JsonApiWorkspaceDataFilterInDocument
      */
     data: JsonApiWorkspaceDataFilterIn;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterInRelationships
+ */
+export interface JsonApiWorkspaceDataFilterInRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterInRelationshipsFilterSettings}
+     * @memberof JsonApiWorkspaceDataFilterInRelationships
+     */
+    filterSettings?: JsonApiWorkspaceDataFilterInRelationshipsFilterSettings;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings
+ */
+export interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
+     * @memberof JsonApiWorkspaceDataFilterInRelationshipsFilterSettings
+     */
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -5280,29 +5436,29 @@ export enum JsonApiWorkspaceDataFilterLinkageTypeEnum {
  */
 export interface JsonApiWorkspaceDataFilterOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
     type: JsonApiWorkspaceDataFilterOutTypeEnum;
     /**
-     *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
+     * @memberof JsonApiWorkspaceDataFilterOut
+     */
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 /**
@@ -5313,37 +5469,6 @@ export enum JsonApiWorkspaceDataFilterOutTypeEnum {
     WorkspaceDataFilter = "workspaceDataFilter",
 }
 
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterOutAttributes
- */
-export interface JsonApiWorkspaceDataFilterOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    columnName?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    dataSourceId?: string;
-}
 /**
  *
  * @export
@@ -5397,41 +5522,9 @@ export interface JsonApiWorkspaceDataFilterOutList {
 /**
  *
  * @export
- * @interface JsonApiWorkspaceDataFilterOutRelationships
- */
-export interface JsonApiWorkspaceDataFilterOutRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings}
-     * @memberof JsonApiWorkspaceDataFilterOutRelationships
-     */
-    filterSettings?: JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
- */
-export interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
-     * @memberof JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
-     */
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceDataFilterOutWithLinks
  */
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
-    /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutWithLinks
-     */
-    id: string;
     /**
      * Object type
      * @type {string}
@@ -5439,17 +5532,23 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
      */
     type: JsonApiWorkspaceDataFilterOutWithLinksTypeEnum;
     /**
-     *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * API identifier of an object
+     * @type {string}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
+     * @memberof JsonApiWorkspaceDataFilterOutWithLinks
+     */
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -5501,17 +5600,17 @@ export enum JsonApiWorkspaceDataFilterSettingLinkageTypeEnum {
  */
 export interface JsonApiWorkspaceDataFilterSettingOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterSettingOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiWorkspaceDataFilterSettingOut
      */
     type: JsonApiWorkspaceDataFilterSettingOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterSettingOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiWorkspaceDataFilterSettingOutAttributes}
@@ -5642,17 +5741,17 @@ export interface JsonApiWorkspaceDataFilterSettingOutRelationshipsWorkspaceDataF
  */
 export interface JsonApiWorkspaceDataFilterSettingOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterSettingOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiWorkspaceDataFilterSettingOutWithLinks
      */
     type: JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterSettingOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiWorkspaceDataFilterSettingOutAttributes}
@@ -5694,17 +5793,17 @@ export type JsonApiWorkspaceDataFilterToOneLinkage = JsonApiWorkspaceDataFilterL
  */
 export interface JsonApiWorkspaceIn {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiWorkspaceIn
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiWorkspaceIn
      */
     type: JsonApiWorkspaceInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiWorkspaceIn
+     */
+    id: string;
     /**
      *
      * @type {JsonApiWorkspaceInAttributes}
@@ -5814,17 +5913,17 @@ export enum JsonApiWorkspaceLinkageTypeEnum {
  */
 export interface JsonApiWorkspaceOut {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiWorkspaceOut
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiWorkspaceOut
      */
     type: JsonApiWorkspaceOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiWorkspaceOut
+     */
+    id: string;
     /**
      *
      * @type {JsonApiWorkspaceOutMeta}
@@ -5942,17 +6041,17 @@ export interface JsonApiWorkspaceOutMetaConfig {
  */
 export interface JsonApiWorkspaceOutWithLinks {
     /**
-     * API identifier of an object
-     * @type {string}
-     * @memberof JsonApiWorkspaceOutWithLinks
-     */
-    id: string;
-    /**
      * Object type
      * @type {string}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
     type: JsonApiWorkspaceOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiWorkspaceOutWithLinks
+     */
+    id: string;
     /**
      *
      * @type {JsonApiWorkspaceOutMeta}
@@ -6080,19 +6179,47 @@ export enum ReferenceIdentifierTypeEnum {
 }
 
 /**
- * Store filter into this workspace. Empty if it is part of layout of workspaces.
+ * A user group identifier.
+ * @export
+ * @interface UserGroupIdentifier
+ */
+export interface UserGroupIdentifier {
+    /**
+     * Identifier of the user group.
+     * @type {string}
+     * @memberof UserGroupIdentifier
+     */
+    id: string;
+    /**
+     * A type.
+     * @type {string}
+     * @memberof UserGroupIdentifier
+     */
+    type: UserGroupIdentifierTypeEnum;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum UserGroupIdentifierTypeEnum {
+    UserGroup = "userGroup",
+}
+
+/**
+ * A workspace identifier.
  * @export
  * @interface WorkspaceIdentifier
  */
 export interface WorkspaceIdentifier {
     /**
-     *
+     * Identifier of the workspace.
      * @type {string}
      * @memberof WorkspaceIdentifier
      */
     id: string;
     /**
-     *
+     * A type.
      * @type {string}
      * @memberof WorkspaceIdentifier
      */
@@ -7306,6 +7433,62 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
             };
         },
         /**
+         * Retrieve all user-groups eventually with parent group.
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserGroupsLayout(params: {}, options: any = {}): RequestArgs {
+            const {} = params;
+            const localVarPath = `/api/layout/userGroups`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve all users including authentication properties.
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsersLayout(params: {}, options: any = {}): RequestArgs {
+            const {} = params;
+            const localVarPath = `/api/layout/users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve all workspaces and related workspace data filters (and their settings / values).
          * @summary Get workspace data filters for all workspaces
          * @param {*} [options] Override http request option.
@@ -7408,11 +7591,60 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
         /**
          * Set all data sources including related physical model.
          * @summary Put all data sources
-         * @param {DeclarativeDataSources} declarativeDataSources
+         * @param {DeclarativeUserGroups} declarativeUserGroups
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putDataSourcesLayout(
+            params: {
+                declarativeUserGroups: DeclarativeUserGroups;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { declarativeUserGroups } = params;
+            // verify required parameter 'declarativeUserGroups' is not null or undefined
+            if (declarativeUserGroups === null || declarativeUserGroups === undefined) {
+                throw new RequiredError(
+                    "declarativeUserGroups",
+                    "Required parameter declarativeUserGroups was null or undefined when calling putDataSourcesLayout.",
+                );
+            }
+            const localVarPath = `/api/layout/userGroups`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof declarativeUserGroups !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(declarativeUserGroups !== undefined ? declarativeUserGroups : {})
+                : declarativeUserGroups || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Set all data sources including related physical model.
+         * @summary Put all data sources
+         * @param {DeclarativeDataSources} declarativeDataSources
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putDataSourcesLayout1(
             params: {
                 declarativeDataSources: DeclarativeDataSources;
             },
@@ -7423,7 +7655,7 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
             if (declarativeDataSources === null || declarativeDataSources === undefined) {
                 throw new RequiredError(
                     "declarativeDataSources",
-                    "Required parameter declarativeDataSources was null or undefined when calling putDataSourcesLayout.",
+                    "Required parameter declarativeDataSources was null or undefined when calling putDataSourcesLayout1.",
                 );
             }
             const localVarPath = `/api/layout/dataSources`;
@@ -7448,6 +7680,55 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(declarativeDataSources !== undefined ? declarativeDataSources : {})
                 : declarativeDataSources || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Set all users and their authentication properties.
+         * @summary Put all users
+         * @param {DeclarativeUsers} declarativeUsers
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putUsersLayout(
+            params: {
+                declarativeUsers: DeclarativeUsers;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { declarativeUsers } = params;
+            // verify required parameter 'declarativeUsers' is not null or undefined
+            if (declarativeUsers === null || declarativeUsers === undefined) {
+                throw new RequiredError(
+                    "declarativeUsers",
+                    "Required parameter declarativeUsers was null or undefined when calling putUsersLayout.",
+                );
+            }
+            const localVarPath = `/api/layout/users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof declarativeUsers !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(declarativeUsers !== undefined ? declarativeUsers : {})
+                : declarativeUsers || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -7640,12 +7921,25 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
         /**
          * Sets complete layout of organization, like workspaces, user-groups, etc.
          * @summary Set organization layout
+         * @param {DeclarativeOrganization} declarativeOrganization
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setOrganizationLayout(params: {}, options: any = {}): RequestArgs {
-            const {} = params;
-            const localVarPath = `/api/layout/data`;
+        setOrganizationLayout(
+            params: {
+                declarativeOrganization: DeclarativeOrganization;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { declarativeOrganization } = params;
+            // verify required parameter 'declarativeOrganization' is not null or undefined
+            if (declarativeOrganization === null || declarativeOrganization === undefined) {
+                throw new RequiredError(
+                    "declarativeOrganization",
+                    "Required parameter declarativeOrganization was null or undefined when calling setOrganizationLayout.",
+                );
+            }
+            const localVarPath = `/api/layout/organization`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -7655,10 +7949,18 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
             // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof declarativeOrganization !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(declarativeOrganization !== undefined ? declarativeOrganization : {})
+                : declarativeOrganization || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -7852,10 +8154,52 @@ export const DeclarativeLayoutControllerApiFp = function (configuration?: Config
         getOrganizationLayout(
             params: {},
             options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeOrganization> {
             const localVarAxiosArgs = DeclarativeLayoutControllerApiAxiosParamCreator(
                 configuration,
             ).getOrganizationLayout(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Retrieve all user-groups eventually with parent group.
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserGroupsLayout(
+            params: {},
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeUserGroups> {
+            const localVarAxiosArgs = DeclarativeLayoutControllerApiAxiosParamCreator(
+                configuration,
+            ).getUserGroupsLayout(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Retrieve all users including authentication properties.
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsersLayout(
+            params: {},
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeUsers> {
+            const localVarAxiosArgs = DeclarativeLayoutControllerApiAxiosParamCreator(
+                configuration,
+            ).getUsersLayout(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -7933,11 +8277,35 @@ export const DeclarativeLayoutControllerApiFp = function (configuration?: Config
         /**
          * Set all data sources including related physical model.
          * @summary Put all data sources
-         * @param {DeclarativeDataSources} declarativeDataSources
+         * @param {DeclarativeUserGroups} declarativeUserGroups
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putDataSourcesLayout(
+            params: {
+                declarativeUserGroups: DeclarativeUserGroups;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = DeclarativeLayoutControllerApiAxiosParamCreator(
+                configuration,
+            ).putDataSourcesLayout(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Set all data sources including related physical model.
+         * @summary Put all data sources
+         * @param {DeclarativeDataSources} declarativeDataSources
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putDataSourcesLayout1(
             params: {
                 declarativeDataSources: DeclarativeDataSources;
             },
@@ -7945,7 +8313,31 @@ export const DeclarativeLayoutControllerApiFp = function (configuration?: Config
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
             const localVarAxiosArgs = DeclarativeLayoutControllerApiAxiosParamCreator(
                 configuration,
-            ).putDataSourcesLayout(params, options);
+            ).putDataSourcesLayout1(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Set all users and their authentication properties.
+         * @summary Put all users
+         * @param {DeclarativeUsers} declarativeUsers
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putUsersLayout(
+            params: {
+                declarativeUsers: DeclarativeUsers;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = DeclarativeLayoutControllerApiAxiosParamCreator(
+                configuration,
+            ).putUsersLayout(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -8035,11 +8427,14 @@ export const DeclarativeLayoutControllerApiFp = function (configuration?: Config
         /**
          * Sets complete layout of organization, like workspaces, user-groups, etc.
          * @summary Set organization layout
+         * @param {DeclarativeOrganization} declarativeOrganization
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         setOrganizationLayout(
-            params: {},
+            params: {
+                declarativeOrganization: DeclarativeOrganization;
+            },
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
             const localVarAxiosArgs = DeclarativeLayoutControllerApiAxiosParamCreator(
@@ -8168,8 +8563,32 @@ export const DeclarativeLayoutControllerApiFactory = function (
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationLayout(params: {}, options?: any): AxiosPromise<void> {
+        getOrganizationLayout(params: {}, options?: any): AxiosPromise<DeclarativeOrganization> {
             return DeclarativeLayoutControllerApiFp(configuration).getOrganizationLayout(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Retrieve all user-groups eventually with parent group.
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserGroupsLayout(params: {}, options?: any): AxiosPromise<DeclarativeUserGroups> {
+            return DeclarativeLayoutControllerApiFp(configuration).getUserGroupsLayout(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Retrieve all users including authentication properties.
+         * @summary Get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsersLayout(params: {}, options?: any): AxiosPromise<DeclarativeUsers> {
+            return DeclarativeLayoutControllerApiFp(configuration).getUsersLayout(params, options)(
                 axios,
                 basePath,
             );
@@ -8222,17 +8641,53 @@ export const DeclarativeLayoutControllerApiFactory = function (
         /**
          * Set all data sources including related physical model.
          * @summary Put all data sources
-         * @param {DeclarativeDataSources} declarativeDataSources
+         * @param {DeclarativeUserGroups} declarativeUserGroups
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putDataSourcesLayout(
             params: {
-                declarativeDataSources: DeclarativeDataSources;
+                declarativeUserGroups: DeclarativeUserGroups;
             },
             options?: any,
         ): AxiosPromise<void> {
             return DeclarativeLayoutControllerApiFp(configuration).putDataSourcesLayout(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Set all data sources including related physical model.
+         * @summary Put all data sources
+         * @param {DeclarativeDataSources} declarativeDataSources
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putDataSourcesLayout1(
+            params: {
+                declarativeDataSources: DeclarativeDataSources;
+            },
+            options?: any,
+        ): AxiosPromise<void> {
+            return DeclarativeLayoutControllerApiFp(configuration).putDataSourcesLayout1(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Set all users and their authentication properties.
+         * @summary Put all users
+         * @param {DeclarativeUsers} declarativeUsers
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putUsersLayout(
+            params: {
+                declarativeUsers: DeclarativeUsers;
+            },
+            options?: any,
+        ): AxiosPromise<void> {
+            return DeclarativeLayoutControllerApiFp(configuration).putUsersLayout(params, options)(
                 axios,
                 basePath,
             );
@@ -8300,10 +8755,16 @@ export const DeclarativeLayoutControllerApiFactory = function (
         /**
          * Sets complete layout of organization, like workspaces, user-groups, etc.
          * @summary Set organization layout
+         * @param {DeclarativeOrganization} declarativeOrganization
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setOrganizationLayout(params: {}, options?: any): AxiosPromise<void> {
+        setOrganizationLayout(
+            params: {
+                declarativeOrganization: DeclarativeOrganization;
+            },
+            options?: any,
+        ): AxiosPromise<void> {
             return DeclarativeLayoutControllerApiFp(configuration).setOrganizationLayout(params, options)(
                 axios,
                 basePath,
@@ -8400,7 +8861,25 @@ export interface DeclarativeLayoutControllerApiInterface {
      * @throws {RequiredError}
      * @memberof DeclarativeLayoutControllerApiInterface
      */
-    getOrganizationLayout(params: {}, options?: any): AxiosPromise<void>;
+    getOrganizationLayout(params: {}, options?: any): AxiosPromise<DeclarativeOrganization>;
+
+    /**
+     * Retrieve all user-groups eventually with parent group.
+     * @summary Get all users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeclarativeLayoutControllerApiInterface
+     */
+    getUserGroupsLayout(params: {}, options?: any): AxiosPromise<DeclarativeUserGroups>;
+
+    /**
+     * Retrieve all users including authentication properties.
+     * @summary Get all users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeclarativeLayoutControllerApiInterface
+     */
+    getUsersLayout(params: {}, options?: any): AxiosPromise<DeclarativeUsers>;
 
     /**
      * Retrieve all workspaces and related workspace data filters (and their settings / values).
@@ -8438,14 +8917,44 @@ export interface DeclarativeLayoutControllerApiInterface {
     /**
      * Set all data sources including related physical model.
      * @summary Put all data sources
-     * @param {DeclarativeDataSources} declarativeDataSources
+     * @param {DeclarativeUserGroups} declarativeUserGroups
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeclarativeLayoutControllerApiInterface
      */
     putDataSourcesLayout(
         params: {
+            declarativeUserGroups: DeclarativeUserGroups;
+        },
+        options?: any,
+    ): AxiosPromise<void>;
+
+    /**
+     * Set all data sources including related physical model.
+     * @summary Put all data sources
+     * @param {DeclarativeDataSources} declarativeDataSources
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeclarativeLayoutControllerApiInterface
+     */
+    putDataSourcesLayout1(
+        params: {
             declarativeDataSources: DeclarativeDataSources;
+        },
+        options?: any,
+    ): AxiosPromise<void>;
+
+    /**
+     * Set all users and their authentication properties.
+     * @summary Put all users
+     * @param {DeclarativeUsers} declarativeUsers
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeclarativeLayoutControllerApiInterface
+     */
+    putUsersLayout(
+        params: {
+            declarativeUsers: DeclarativeUsers;
         },
         options?: any,
     ): AxiosPromise<void>;
@@ -8504,11 +9013,17 @@ export interface DeclarativeLayoutControllerApiInterface {
     /**
      * Sets complete layout of organization, like workspaces, user-groups, etc.
      * @summary Set organization layout
+     * @param {DeclarativeOrganization} declarativeOrganization
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeclarativeLayoutControllerApiInterface
      */
-    setOrganizationLayout(params: {}, options?: any): AxiosPromise<void>;
+    setOrganizationLayout(
+        params: {
+            declarativeOrganization: DeclarativeOrganization;
+        },
+        options?: any,
+    ): AxiosPromise<void>;
 
     /**
      * Sets workspace data filters in all workspaces in entire organization.
@@ -8620,6 +9135,34 @@ export class DeclarativeLayoutControllerApi
     }
 
     /**
+     * Retrieve all user-groups eventually with parent group.
+     * @summary Get all users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeclarativeLayoutControllerApi
+     */
+    public getUserGroupsLayout(params: {}, options?: any) {
+        return DeclarativeLayoutControllerApiFp(this.configuration).getUserGroupsLayout(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Retrieve all users including authentication properties.
+     * @summary Get all users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeclarativeLayoutControllerApi
+     */
+    public getUsersLayout(params: {}, options?: any) {
+        return DeclarativeLayoutControllerApiFp(this.configuration).getUsersLayout(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
      * Retrieve all workspaces and related workspace data filters (and their settings / values).
      * @summary Get workspace data filters for all workspaces
      * @param {*} [options] Override http request option.
@@ -8670,18 +9213,58 @@ export class DeclarativeLayoutControllerApi
     /**
      * Set all data sources including related physical model.
      * @summary Put all data sources
-     * @param {DeclarativeDataSources} declarativeDataSources
+     * @param {DeclarativeUserGroups} declarativeUserGroups
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeclarativeLayoutControllerApi
      */
     public putDataSourcesLayout(
         params: {
-            declarativeDataSources: DeclarativeDataSources;
+            declarativeUserGroups: DeclarativeUserGroups;
         },
         options?: any,
     ) {
         return DeclarativeLayoutControllerApiFp(this.configuration).putDataSourcesLayout(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Set all data sources including related physical model.
+     * @summary Put all data sources
+     * @param {DeclarativeDataSources} declarativeDataSources
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeclarativeLayoutControllerApi
+     */
+    public putDataSourcesLayout1(
+        params: {
+            declarativeDataSources: DeclarativeDataSources;
+        },
+        options?: any,
+    ) {
+        return DeclarativeLayoutControllerApiFp(this.configuration).putDataSourcesLayout1(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Set all users and their authentication properties.
+     * @summary Put all users
+     * @param {DeclarativeUsers} declarativeUsers
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeclarativeLayoutControllerApi
+     */
+    public putUsersLayout(
+        params: {
+            declarativeUsers: DeclarativeUsers;
+        },
+        options?: any,
+    ) {
+        return DeclarativeLayoutControllerApiFp(this.configuration).putUsersLayout(params, options)(
             this.axios,
             this.basePath,
         );
@@ -8756,11 +9339,17 @@ export class DeclarativeLayoutControllerApi
     /**
      * Sets complete layout of organization, like workspaces, user-groups, etc.
      * @summary Set organization layout
+     * @param {DeclarativeOrganization} declarativeOrganization
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeclarativeLayoutControllerApi
      */
-    public setOrganizationLayout(params: {}, options?: any) {
+    public setOrganizationLayout(
+        params: {
+            declarativeOrganization: DeclarativeOrganization;
+        },
+        options?: any,
+    ) {
         return DeclarativeLayoutControllerApiFp(this.configuration).setOrganizationLayout(params, options)(
             this.axios,
             this.basePath,
@@ -9097,33 +9686,6 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
         },
         /**
          *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationOrganizations(params: {}, options: any = {}): RequestArgs {
-            const {} = params;
-            const localVarPath = `/api/entities/organization`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
          * @param {string} id
          * @param {JsonApiOrganizationInDocument} jsonApiOrganizationInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
@@ -9250,26 +9812,6 @@ export const OrganizationControllerApiFp = function (configuration?: Configurati
         },
         /**
          *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationOrganizations(
-            params: {},
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationOutDocument> {
-            const localVarAxiosArgs = OrganizationControllerApiAxiosParamCreator(
-                configuration,
-            ).getOrganizationOrganizations(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         *
          * @param {string} id
          * @param {JsonApiOrganizationInDocument} jsonApiOrganizationInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
@@ -9337,20 +9879,6 @@ export const OrganizationControllerApiFactory = function (
         },
         /**
          *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationOrganizations(
-            params: {},
-            options?: any,
-        ): AxiosPromise<JsonApiOrganizationOutDocument> {
-            return OrganizationControllerApiFp(configuration).getOrganizationOrganizations(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         *
          * @param {string} id
          * @param {JsonApiOrganizationInDocument} jsonApiOrganizationInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
@@ -9405,14 +9933,6 @@ export interface OrganizationControllerApiInterface {
 
     /**
      *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApiInterface
-     */
-    getOrganizationOrganizations(params: {}, options?: any): AxiosPromise<JsonApiOrganizationOutDocument>;
-
-    /**
-     *
      * @param {string} id
      * @param {JsonApiOrganizationInDocument} jsonApiOrganizationInDocument
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
@@ -9461,19 +9981,6 @@ export class OrganizationControllerApi extends BaseAPI implements OrganizationCo
         options?: any,
     ) {
         return OrganizationControllerApiFp(this.configuration).getEntityOrganizations(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApi
-     */
-    public getOrganizationOrganizations(params: {}, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).getOrganizationOrganizations(params, options)(
             this.axios,
             this.basePath,
         );
@@ -14538,6 +15045,139 @@ export class OrganizationModelControllerApi
 }
 
 /**
+ * OrganizationRedirectControllerApi - axios parameter creator
+ * @export
+ */
+export const OrganizationRedirectControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Gets a basic information about organization.
+         * @summary Get current organization info
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganization(params: {}, options: any = {}): RequestArgs {
+            const {} = params;
+            const localVarPath = `/api/entities/organization`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * OrganizationRedirectControllerApi - functional programming interface
+ * @export
+ */
+export const OrganizationRedirectControllerApiFp = function (configuration?: Configuration) {
+    return {
+        /**
+         * Gets a basic information about organization.
+         * @summary Get current organization info
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganization(
+            params: {},
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = OrganizationRedirectControllerApiAxiosParamCreator(
+                configuration,
+            ).getOrganization(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    };
+};
+
+/**
+ * OrganizationRedirectControllerApi - factory interface
+ * @export
+ */
+export const OrganizationRedirectControllerApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    return {
+        /**
+         * Gets a basic information about organization.
+         * @summary Get current organization info
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganization(params: {}, options?: any): AxiosPromise<void> {
+            return OrganizationRedirectControllerApiFp(configuration).getOrganization(params, options)(
+                axios,
+                basePath,
+            );
+        },
+    };
+};
+
+/**
+ * OrganizationRedirectControllerApi - interface
+ * @export
+ * @interface OrganizationRedirectControllerApi
+ */
+export interface OrganizationRedirectControllerApiInterface {
+    /**
+     * Gets a basic information about organization.
+     * @summary Get current organization info
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationRedirectControllerApiInterface
+     */
+    getOrganization(params: {}, options?: any): AxiosPromise<void>;
+}
+
+/**
+ * OrganizationRedirectControllerApi - object-oriented interface
+ * @export
+ * @class OrganizationRedirectControllerApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationRedirectControllerApi
+    extends BaseAPI
+    implements OrganizationRedirectControllerApiInterface
+{
+    /**
+     * Gets a basic information about organization.
+     * @summary Get current organization info
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationRedirectControllerApi
+     */
+    public getOrganization(params: {}, options?: any) {
+        return OrganizationRedirectControllerApiFp(this.configuration).getOrganization(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+}
+
+/**
  * UserModelControllerApi - axios parameter creator
  * @export
  */
@@ -15272,8 +15912,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          *
          * @param {string} workspaceId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15282,8 +15920,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             params: {
                 workspaceId: string;
                 jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<
                     | "visualizationObjects"
                     | "analyticalDashboards"
@@ -15296,7 +15932,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             },
             options: any = {},
         ): RequestArgs {
-            const { workspaceId, jsonApiAnalyticalDashboardInDocument, predicate, filter, include } = params;
+            const { workspaceId, jsonApiAnalyticalDashboardInDocument, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
             if (workspaceId === null || workspaceId === undefined) {
                 throw new RequiredError(
@@ -15326,22 +15962,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
-            }
-
-            if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
-            }
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
@@ -15373,8 +15993,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          *
          * @param {string} workspaceId
          * @param {JsonApiFilterContextInDocument} jsonApiFilterContextInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15383,13 +16001,11 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             params: {
                 workspaceId: string;
                 jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
             },
             options: any = {},
         ): RequestArgs {
-            const { workspaceId, jsonApiFilterContextInDocument, predicate, filter, include } = params;
+            const { workspaceId, jsonApiFilterContextInDocument, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
             if (workspaceId === null || workspaceId === undefined) {
                 throw new RequiredError(
@@ -15416,22 +16032,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
-            }
-
-            if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
-            }
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
@@ -15461,8 +16061,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          *
          * @param {string} workspaceId
          * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15471,13 +16069,11 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             params: {
                 workspaceId: string;
                 jsonApiMetricInDocument: JsonApiMetricInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
             },
             options: any = {},
         ): RequestArgs {
-            const { workspaceId, jsonApiMetricInDocument, predicate, filter, include } = params;
+            const { workspaceId, jsonApiMetricInDocument, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
             if (workspaceId === null || workspaceId === undefined) {
                 throw new RequiredError(
@@ -15505,22 +16101,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
-            }
-
-            if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
-            }
-
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
@@ -15547,8 +16127,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          *
          * @param {string} workspaceId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15557,13 +16135,11 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             params: {
                 workspaceId: string;
                 jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
             },
             options: any = {},
         ): RequestArgs {
-            const { workspaceId, jsonApiVisualizationObjectInDocument, predicate, filter, include } = params;
+            const { workspaceId, jsonApiVisualizationObjectInDocument, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
             if (workspaceId === null || workspaceId === undefined) {
                 throw new RequiredError(
@@ -15593,22 +16169,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
-            }
-
-            if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
-            }
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
@@ -15640,8 +16200,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          *
          * @param {string} workspaceId
          * @param {JsonApiWorkspaceDataFilterInDocument} jsonApiWorkspaceDataFilterInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15650,13 +16208,11 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             params: {
                 workspaceId: string;
                 jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
             },
             options: any = {},
         ): RequestArgs {
-            const { workspaceId, jsonApiWorkspaceDataFilterInDocument, predicate, filter, include } = params;
+            const { workspaceId, jsonApiWorkspaceDataFilterInDocument, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
             if (workspaceId === null || workspaceId === undefined) {
                 throw new RequiredError(
@@ -15686,22 +16242,6 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
-            }
-
-            if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
-            }
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
@@ -18527,8 +19067,6 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          *
          * @param {string} workspaceId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18537,8 +19075,6 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
             params: {
                 workspaceId: string;
                 jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<
                     | "visualizationObjects"
                     | "analyticalDashboards"
@@ -18566,8 +19102,6 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          *
          * @param {string} workspaceId
          * @param {JsonApiFilterContextInDocument} jsonApiFilterContextInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18576,8 +19110,6 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
             params: {
                 workspaceId: string;
                 jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
             },
             options: any = {},
@@ -18597,8 +19129,6 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          *
          * @param {string} workspaceId
          * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18607,8 +19137,6 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
             params: {
                 workspaceId: string;
                 jsonApiMetricInDocument: JsonApiMetricInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
             },
             options: any = {},
@@ -18628,8 +19156,6 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          *
          * @param {string} workspaceId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18638,8 +19164,6 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
             params: {
                 workspaceId: string;
                 jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
             },
             options: any = {},
@@ -18659,8 +19183,6 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          *
          * @param {string} workspaceId
          * @param {JsonApiWorkspaceDataFilterInDocument} jsonApiWorkspaceDataFilterInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18669,8 +19191,6 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
             params: {
                 workspaceId: string;
                 jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
             },
             options: any = {},
@@ -19743,8 +20263,6 @@ export const WorkspaceObjectControllerApiFactory = function (
          *
          * @param {string} workspaceId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19753,8 +20271,6 @@ export const WorkspaceObjectControllerApiFactory = function (
             params: {
                 workspaceId: string;
                 jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<
                     | "visualizationObjects"
                     | "analyticalDashboards"
@@ -19776,8 +20292,6 @@ export const WorkspaceObjectControllerApiFactory = function (
          *
          * @param {string} workspaceId
          * @param {JsonApiFilterContextInDocument} jsonApiFilterContextInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19786,8 +20300,6 @@ export const WorkspaceObjectControllerApiFactory = function (
             params: {
                 workspaceId: string;
                 jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
             },
             options?: any,
@@ -19801,8 +20313,6 @@ export const WorkspaceObjectControllerApiFactory = function (
          *
          * @param {string} workspaceId
          * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19811,8 +20321,6 @@ export const WorkspaceObjectControllerApiFactory = function (
             params: {
                 workspaceId: string;
                 jsonApiMetricInDocument: JsonApiMetricInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
             },
             options?: any,
@@ -19826,8 +20334,6 @@ export const WorkspaceObjectControllerApiFactory = function (
          *
          * @param {string} workspaceId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19836,8 +20342,6 @@ export const WorkspaceObjectControllerApiFactory = function (
             params: {
                 workspaceId: string;
                 jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
             },
             options?: any,
@@ -19851,8 +20355,6 @@ export const WorkspaceObjectControllerApiFactory = function (
          *
          * @param {string} workspaceId
          * @param {JsonApiWorkspaceDataFilterInDocument} jsonApiWorkspaceDataFilterInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19861,8 +20363,6 @@ export const WorkspaceObjectControllerApiFactory = function (
             params: {
                 workspaceId: string;
                 jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
-                predicate?: { [key: string]: object };
-                filter?: string;
                 include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
             },
             options?: any,
@@ -20739,8 +21239,6 @@ export interface WorkspaceObjectControllerApiInterface {
      *
      * @param {string} workspaceId
      * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
-     * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
      * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20750,8 +21248,6 @@ export interface WorkspaceObjectControllerApiInterface {
         params: {
             workspaceId: string;
             jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
-            predicate?: { [key: string]: object };
-            filter?: string;
             include?: Array<
                 | "visualizationObjects"
                 | "analyticalDashboards"
@@ -20769,8 +21265,6 @@ export interface WorkspaceObjectControllerApiInterface {
      *
      * @param {string} workspaceId
      * @param {JsonApiFilterContextInDocument} jsonApiFilterContextInDocument
-     * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
      * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20780,8 +21274,6 @@ export interface WorkspaceObjectControllerApiInterface {
         params: {
             workspaceId: string;
             jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
-            predicate?: { [key: string]: object };
-            filter?: string;
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
         },
         options?: any,
@@ -20791,8 +21283,6 @@ export interface WorkspaceObjectControllerApiInterface {
      *
      * @param {string} workspaceId
      * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
-     * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
      * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20802,8 +21292,6 @@ export interface WorkspaceObjectControllerApiInterface {
         params: {
             workspaceId: string;
             jsonApiMetricInDocument: JsonApiMetricInDocument;
-            predicate?: { [key: string]: object };
-            filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
         },
         options?: any,
@@ -20813,8 +21301,6 @@ export interface WorkspaceObjectControllerApiInterface {
      *
      * @param {string} workspaceId
      * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
-     * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
      * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20824,8 +21310,6 @@ export interface WorkspaceObjectControllerApiInterface {
         params: {
             workspaceId: string;
             jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
-            predicate?: { [key: string]: object };
-            filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
         },
         options?: any,
@@ -20835,8 +21319,6 @@ export interface WorkspaceObjectControllerApiInterface {
      *
      * @param {string} workspaceId
      * @param {JsonApiWorkspaceDataFilterInDocument} jsonApiWorkspaceDataFilterInDocument
-     * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
      * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20846,8 +21328,6 @@ export interface WorkspaceObjectControllerApiInterface {
         params: {
             workspaceId: string;
             jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
-            predicate?: { [key: string]: object };
-            filter?: string;
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
         },
         options?: any,
@@ -21629,8 +22109,6 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      *
      * @param {string} workspaceId
      * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
-     * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
      * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21640,8 +22118,6 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
         params: {
             workspaceId: string;
             jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
-            predicate?: { [key: string]: object };
-            filter?: string;
             include?: Array<
                 | "visualizationObjects"
                 | "analyticalDashboards"
@@ -21664,8 +22140,6 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      *
      * @param {string} workspaceId
      * @param {JsonApiFilterContextInDocument} jsonApiFilterContextInDocument
-     * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
      * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21675,8 +22149,6 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
         params: {
             workspaceId: string;
             jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
-            predicate?: { [key: string]: object };
-            filter?: string;
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
         },
         options?: any,
@@ -21691,8 +22163,6 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      *
      * @param {string} workspaceId
      * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
-     * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
      * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21702,8 +22172,6 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
         params: {
             workspaceId: string;
             jsonApiMetricInDocument: JsonApiMetricInDocument;
-            predicate?: { [key: string]: object };
-            filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
         },
         options?: any,
@@ -21718,8 +22186,6 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      *
      * @param {string} workspaceId
      * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
-     * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
      * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21729,8 +22195,6 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
         params: {
             workspaceId: string;
             jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
-            predicate?: { [key: string]: object };
-            filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
         },
         options?: any,
@@ -21745,8 +22209,6 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      *
      * @param {string} workspaceId
      * @param {JsonApiWorkspaceDataFilterInDocument} jsonApiWorkspaceDataFilterInDocument
-     * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;)
      * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21756,8 +22218,6 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
         params: {
             workspaceId: string;
             jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
-            predicate?: { [key: string]: object };
-            filter?: string;
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
         },
         options?: any,

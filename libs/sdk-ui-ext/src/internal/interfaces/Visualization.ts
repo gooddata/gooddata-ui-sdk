@@ -10,6 +10,7 @@ import {
     ObjRef,
     VisualizationProperties,
     IExecutionConfig,
+    IDebugConfig,
     LocalIdRef,
 } from "@gooddata/sdk-model";
 import {
@@ -65,6 +66,7 @@ export interface IVisProps {
     dateFormat?: string;
     config?: IGdcConfig;
     executionConfig?: IExecutionConfig;
+    debugConfig?: IDebugConfig;
     theme?: ITheme;
 
     /*

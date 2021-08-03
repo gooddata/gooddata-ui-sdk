@@ -14,6 +14,7 @@ import {
     ISortItem,
     IExecutionConfig,
     defWithDateFormat,
+    IDebugConfig,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
@@ -57,6 +58,14 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
             convertExecutionApiError,
         );
     }
+
+    public withDebugAfm = (debugConfig: IDebugConfig): IPreparedExecution => {
+        if (debugConfig?.requested) {
+            // eslint-disable-next-line no-console
+            console.warn("Backend does not support explainAFM");
+        }
+        return this.executionFactory.forDefinition(this.definition);
+    };
 
     private async createVisualizationExecution(): Promise<IVisualizationExecution> {
         const uri = await objRefToUri(insightRef(this.insight), this.definition.workspace, this.authCall);

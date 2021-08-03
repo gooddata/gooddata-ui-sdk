@@ -57,6 +57,7 @@ import {
     idRef,
     isIdentifierRef,
     isUriRef,
+    IDebugConfig,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
@@ -337,6 +338,13 @@ function dummyPreparedExecution(
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((r) => r(dummyExecutionResult(definition, executionFactory, config)));
+        },
+        withDebugAfm(debugConfig: IDebugConfig): IPreparedExecution {
+            if (debugConfig?.requested) {
+                // eslint-disable-next-line no-console
+                console.warn("Backend does not support explainAFM");
+            }
+            return executionFactory.forDefinition(this.definition);
         },
         fingerprint(): string {
             return fp;

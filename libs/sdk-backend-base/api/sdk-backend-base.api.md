@@ -30,6 +30,7 @@ import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
 import { IDashboardMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IDataSetMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDebugConfig } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-backend-spi';
 import { IExecutionConfig } from '@gooddata/sdk-model';
@@ -378,6 +379,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     fingerprint(): string;
     // (undocumented)
     withDateFormat(dateFormat: string): IPreparedExecution;
+    // (undocumented)
+    withDebugAfm: (debugConfig: IDebugConfig) => IPreparedExecution;
     // (undocumented)
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     // (undocumented)

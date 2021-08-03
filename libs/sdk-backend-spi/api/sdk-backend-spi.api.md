@@ -11,6 +11,7 @@ import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDebugConfig } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
@@ -1029,6 +1030,7 @@ export interface IPreparedExecution {
     execute(): Promise<IExecutionResult>;
     fingerprint(): string;
     withDateFormat(dateFormat: string): IPreparedExecution;
+    withDebugAfm(debugConfig?: IDebugConfig): IPreparedExecution;
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     withExecConfig(config: IExecutionConfig): IPreparedExecution;
     withSorting(...items: ISortItem[]): IPreparedExecution;
@@ -2009,6 +2011,5 @@ export function widgetUri(widget: IWidget): string;
 
 // @public
 export type WorkspacePermission = "canInitData" | "canUploadNonProductionCSV" | "canExecuteRaw" | "canExportReport" | "canAccessWorkbench" | "canCreateReport" | "canCreateVisualization" | "canCreateAnalyticalDashboard" | "canManageMetric" | "canManageReport" | "canManageAnalyticalDashboard" | "canManageProject" | "canCreateScheduledMail" | "canListUsersInProject" | "canManageDomain" | "canInviteUserToProject" | "canRefreshData";
-
 
 ```

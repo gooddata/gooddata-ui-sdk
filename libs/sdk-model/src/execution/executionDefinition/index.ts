@@ -30,7 +30,7 @@ export interface IPostProcessing {
 }
 
 /**
- * Contains any configiration that should be part of execution
+ * Contains any configuration that should be part of execution
  *
  * @public
  */
@@ -39,6 +39,24 @@ export interface IExecutionConfig {
      * Data sampling is only available in Tiger for specific databases
      */
     dataSamplingPercentage?: number;
+}
+
+/**
+ * Configuration of debugging tool that retrieves json/zip files of AFM details
+ *
+ * @internal
+ */
+export interface IDebugConfig {
+    /**
+     * Trigger mechanism for download zip/json file
+     */
+    requested?: boolean;
+
+    /**
+     * Define type of file to be retrieved. File types: LDM, MAQL, PDM returns in json
+     * If explainType is not defined, all three are returned in a zip file
+     */
+    explainType?: "LDM" | "MAQL" | "PDM";
 }
 
 /**

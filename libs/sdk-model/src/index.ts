@@ -273,6 +273,7 @@ export { bucketItemLocalId } from "./execution/buckets/bucketItem";
 export {
     IExecutionDefinition,
     IExecutionConfig,
+    IDebugConfig,
     DimensionGenerator,
     defWithFilters,
     defFingerprint,

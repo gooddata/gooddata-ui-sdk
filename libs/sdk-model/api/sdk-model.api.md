@@ -426,6 +426,12 @@ export interface IComparisonCondition {
 // @public
 export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
 
+// @internal
+export interface IDebugConfig {
+    explainType?: "LDM" | "MAQL" | "PDM";
+    requested?: boolean;
+}
+
 // @public
 export type Identifier = string;
 
@@ -1240,7 +1246,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     protected generateLocalId(): string;
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
     popAttribute: (popAttrIdOrRef: ObjRef | Identifier) => this;
-    }
+}
 
 // @public
 export type PoPMeasureBuilderInput = {
@@ -1258,7 +1264,7 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
     // (undocumented)
     protected generateLocalId(): string;
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
-    }
+}
 
 // @public
 export type PreviousPeriodMeasureBuilderInput = {
@@ -1330,6 +1336,5 @@ export function visClassUrl(vc: IVisualizationClass): string;
 export type VisualizationProperties = {
     [key: string]: any;
 };
-
 
 ```

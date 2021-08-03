@@ -293,6 +293,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             customVisualizationConfig = {},
             theme,
             executionConfig,
+            debugConfig,
         } = options;
         const { maxHeight, maxWidth } = config;
         const height = dimensions?.height;
@@ -303,7 +304,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             .withDimensions(...this.getDimensions(insight))
             .withSorting(...getPivotTableSortItems(insight))
             .withDateFormat(dateFormat)
-            .withExecConfig(executionConfig);
+            .withExecConfig(executionConfig)
+            .withDebugAfm(debugConfig);
 
         const columnWidths: ColumnWidthItem[] | undefined = getColumnWidthsFromProperties(
             insightProperties(insight),

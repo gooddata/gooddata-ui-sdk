@@ -31,6 +31,7 @@ import {
     uriRef,
     defWithDateFormat,
     IExecutionConfig,
+    IDebugConfig,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {
@@ -143,6 +144,13 @@ function recordedPreparedExecution(
                     );
                 }
             });
+        },
+        withDebugAfm(debugConfig?: IDebugConfig): IPreparedExecution {
+            if (debugConfig?.requested) {
+                // eslint-disable-next-line no-console
+                console.warn("Backend does not support explainAFM");
+            }
+            return executionFactory.forDefinition(this.definition);
         },
         fingerprint(): string {
             return fp;

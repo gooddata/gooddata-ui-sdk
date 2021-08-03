@@ -20,9 +20,11 @@ import { tigerOrganizationObjectsClientFactory } from "./organizationObjects";
 import { setAxiosAuthorizationToken } from "./axios";
 import { AxiosInstance } from "axios";
 import { tigerDeclarativeLayoutClientFactory } from "./layout";
+import { tigerAfmExplainClientFactory } from "./afmExplain";
 
 export {
     tigerWorkspaceObjectsClientFactory,
+    tigerAfmExplainClientFactory,
     tigerExecutionClientFactory,
     tigerExecutionResultClientFactory,
     tigerLabelElementsClientFactory,
@@ -42,6 +44,7 @@ export {
 export interface ITigerClient {
     axios: AxiosInstance;
     workspaceObjects: ReturnType<typeof tigerWorkspaceObjectsClientFactory>;
+    debugAfm: ReturnType<typeof tigerAfmExplainClientFactory>;
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     executionResult: ReturnType<typeof tigerExecutionResultClientFactory>;
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
@@ -71,9 +74,11 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const validObjects = tigerValidObjectsClientFactory(axios);
     const organizationObjects = tigerOrganizationObjectsClientFactory(axios);
     const declarativeLayout = tigerDeclarativeLayoutClientFactory(axios);
+    const debugAfm = tigerAfmExplainClientFactory(axios);
 
     return {
         axios,
+        debugAfm,
         execution,
         executionResult,
         labelElements,

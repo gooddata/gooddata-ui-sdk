@@ -47,6 +47,7 @@ import {
     uriRef,
     defWithDateFormat,
     IExecutionConfig,
+    IDebugConfig,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import isEqual from "lodash/isEqual";
@@ -367,6 +368,13 @@ function recordedPreparedExecution(
                     resolve(recordedExecutionResult(definition, executionFactory, recording));
                 }
             });
+        },
+        withDebugAfm(debugConfig?: IDebugConfig): IPreparedExecution {
+            if (debugConfig?.requested) {
+                // eslint-disable-next-line no-console
+                console.warn("Backend does not support explainAFM");
+            }
+            return executionFactory.forDefinition(this.definition);
         },
         fingerprint(): string {
             return fp;

@@ -11,6 +11,7 @@ import {
     ISortItem,
     defWithDateFormat,
     IExecutionConfig,
+    IDebugConfig,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
@@ -46,6 +47,14 @@ export class BearPreparedExecution implements IPreparedExecution {
             convertExecutionApiError,
         );
     }
+
+    public withDebugAfm = (debugConfig?: IDebugConfig): IPreparedExecution => {
+        if (debugConfig?.requested) {
+            // eslint-disable-next-line no-console
+            console.warn("Backend does not support explainAFM");
+        }
+        return this.executionFactory.forDefinition(this.definition);
+    };
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
         return this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen));

@@ -218,7 +218,14 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): void {
-        const { dimensions = { height: undefined }, custom = {}, locale, theme, executionConfig } = options;
+        const {
+            dimensions = { height: undefined },
+            custom = {},
+            locale,
+            theme,
+            executionConfig,
+            debugConfig,
+        } = options;
         const { height } = dimensions;
         const { geoPushpinElement, intl } = this;
 
@@ -280,7 +287,8 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             .forBuckets(buckets, insightFilters(insight))
             .withDimensions(getGeoChartDimensions)
             .withSorting(...this.createSort(insight))
-            .withExecConfig(executionConfig);
+            .withExecConfig(executionConfig)
+            .withDebugAfm(debugConfig);
 
         const geoPushpinProps = {
             drillableItems,

@@ -146,13 +146,15 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             config,
             customVisualizationConfig,
             executionConfig,
+            debugConfig,
         } = options;
         const { drillableItems } = custom;
         const execution = executionFactory
             .forInsight(insight)
             .withDimensions({ itemIdentifiers: ["measureGroup"] })
             .withDateFormat(dateFormat)
-            .withExecConfig(executionConfig);
+            .withExecConfig(executionConfig)
+            .withDebugAfm(debugConfig);
 
         this.renderFun(
             <CoreHeadline

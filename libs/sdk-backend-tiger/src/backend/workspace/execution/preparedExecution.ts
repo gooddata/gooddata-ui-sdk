@@ -12,6 +12,7 @@ import {
     ISortItem,
     defWithDateFormat,
     IExecutionConfig,
+    IDebugConfig,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { TigerExecutionResult } from "./executionResult";
@@ -48,6 +49,41 @@ export class TigerPreparedExecution implements IPreparedExecution {
                 this.dateFormatter,
             );
         });
+    }
+
+    public withDebugAfm(debugConfig: IDebugConfig): IPreparedExecution {
+        if (debugConfig?.requested) {
+            const { explainType } = debugConfig;
+            this.authCall((client) =>
+                client.debugAfm
+                    .explainAFM(
+                        {
+                            workspaceId: this.definition.workspace,
+                            afmExecution: toAfmExecution(this.definition),
+                            explainType: explainType,
+                        },
+                        {
+                            responseType: "blob",
+                        },
+                    )
+                    .then((response) => {
+                        const url = new Blob([response.data]);
+                        const link = document.createElement("a");
+                        link.href = window.URL.createObjectURL(url);
+                        link.setAttribute("download", explainType ? `${explainType}.json` : "explainAfm.zip");
+                        document.body.appendChild(link);
+                        link.click();
+                        URL.revokeObjectURL(link.href);
+                        document.body.removeChild(link);
+                    })
+                    .catch((error) => {
+                        // eslint-disable-next-line no-console
+                        console.warn(error);
+                    }),
+            );
+        }
+
+        return this.executionFactory.forDefinition(this.definition);
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {

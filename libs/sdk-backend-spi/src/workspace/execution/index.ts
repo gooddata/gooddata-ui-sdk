@@ -10,6 +10,7 @@ import {
     IInsight,
     INullableFilter,
     IExecutionConfig,
+    IDebugConfig,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "./export";
 import { DataValue, IDimensionDescriptor, IResultHeader, IResultWarning } from "./results";
@@ -152,6 +153,12 @@ export interface IPreparedExecution {
     execute(): Promise<IExecutionResult>;
 
     /**
+     * Triggers download of debugging files. If explain type is not specified, all files are included
+     * into a zip file.
+     */
+    withDebugAfm(debugConfig?: IDebugConfig): IPreparedExecution;
+
+    /**
      * Tests whether this execution and the other execution are the same. This effectively means that
      * their definitions are deeply equal.
      *
@@ -171,7 +178,6 @@ export interface IPreparedExecution {
     /**
      * Additional execution configuration
      */
-
     withExecConfig(config: IExecutionConfig): IPreparedExecution;
 }
 

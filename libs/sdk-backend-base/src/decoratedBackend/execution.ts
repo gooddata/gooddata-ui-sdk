@@ -22,6 +22,7 @@ import {
     IInsight,
     INullableFilter,
     IExecutionConfig,
+    IDebugConfig,
 } from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
@@ -98,6 +99,10 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     public execute(): Promise<IExecutionResult> {
         return this.decorated.execute();
     }
+
+    public withDebugAfm = (debugConfig: IDebugConfig): IPreparedExecution => {
+        return this.createNew(this.decorated.withDebugAfm(debugConfig));
+    };
 
     public fingerprint(): string {
         return this.decorated.fingerprint();
