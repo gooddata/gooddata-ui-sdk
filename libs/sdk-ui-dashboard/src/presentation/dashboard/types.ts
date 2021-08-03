@@ -144,7 +144,7 @@ export interface IDashboardProps {
      *
      * @remarks
      * To access the necessary props in your component, use the {@link useDashboardInsightProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardInsightWithDrillDialog} component.
+     * To fall back to the default implementation, use the {@link DefaultDashboardInsight} component.
      */
     InsightComponent?: CustomDashboardInsightComponent;
 

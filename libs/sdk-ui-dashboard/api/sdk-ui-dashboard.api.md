@@ -642,7 +642,7 @@ export type DashboardDispatch = Dispatch<AnyAction>;
 // @alpha (undocumented)
 export interface DashboardDrillContext {
     insight?: IInsight;
-    widget?: IInsightWidget;
+    widget?: IWidget;
 }
 
 // @beta
@@ -1374,13 +1374,7 @@ export const DefaultDashboardDateFilterInner: () => JSX.Element;
 export const DefaultDashboardInsight: (props: IDashboardInsightProps) => JSX.Element;
 
 // @internal (undocumented)
-export const DefaultDashboardInsightWithDrillDialog: (props: IDashboardInsightProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultDashboardInsightWithDrillDialogInner: () => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultDashboardInsightWithDrillSelect: (props: IDashboardInsightProps) => JSX.Element;
+export const DefaultDashboardInsightInner: () => JSX.Element;
 
 // @internal (undocumented)
 export const DefaultDashboardKpi: (props: DashboardKpiProps) => JSX.Element;
@@ -1686,7 +1680,7 @@ export interface IDashboardDateFilterProps {
 
 // @beta
 export interface IDashboardDrillEvent extends IDrillEvent {
-    drillDefinitions?: DashboardDrillDefinition[];
+    drillDefinitions: DashboardDrillDefinition[];
     widgetRef?: ObjRef;
 }
 

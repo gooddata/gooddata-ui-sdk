@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { DrillDefinition, IInsightWidget } from "@gooddata/sdk-backend-spi";
+import { DrillDefinition, IWidget } from "@gooddata/sdk-backend-spi";
 import {
     IAbsoluteDateFilter,
     IInsight,
@@ -37,7 +37,7 @@ export interface IDashboardDrillEvent extends IDrillEvent {
     /**
      * All the drilling interactions set in KPI dashboards that are relevant to the given drill event (including drill downs).
      */
-    drillDefinitions?: DashboardDrillDefinition[];
+    drillDefinitions: DashboardDrillDefinition[];
 
     /**
      * Reference to the widget that triggered the drill event.
@@ -99,7 +99,7 @@ export interface DashboardDrillContext {
     /**
      * Particular widget that triggered the drill event.
      */
-    widget?: IInsightWidget;
+    widget?: IWidget;
 }
 
 /**

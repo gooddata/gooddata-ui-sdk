@@ -7,18 +7,16 @@ import { selectLocale, selectWidgetByRef, useDashboardSelector } from "../../../
 import { DrillStep, OnDashboardDrill, getDrillDownAttributeTitle } from "../../../drill";
 import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types";
 
-import { DashboardInsightPropsProvider, useDashboardInsightProps } from "../DashboardInsightPropsContext";
-import { IDashboardInsightProps } from "../types";
 import { DefaultDashboardInsightWithDrillSelect } from "./DefaultDashboardInsightWithDrillSelect";
 import { InsightDrillDialog } from "./InsightDrillDialog";
 import { useDashboardDrillTargets } from "./useDashboardDrillTargets";
 import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/InsightDrillDefinitionUtils";
+import { IDashboardInsightProps } from "../types";
 
 /**
  * @internal
  */
-export const DefaultDashboardInsightWithDrillDialogInner = (): JSX.Element => {
-    const props = useDashboardInsightProps();
+export const DefaultDashboardInsightWithDrillDialog = (props: IDashboardInsightProps): JSX.Element => {
     const [drillSteps, setDrillSteps] = useState<DrillStep[]>([]);
 
     const { drillTargets, onAvailableDrillTargetsReceived } = useDashboardDrillTargets({
@@ -77,16 +75,5 @@ export const DefaultDashboardInsightWithDrillDialogInner = (): JSX.Element => {
                 />
             )}
         </>
-    );
-};
-
-/**
- * @internal
- */
-export const DefaultDashboardInsightWithDrillDialog = (props: IDashboardInsightProps): JSX.Element => {
-    return (
-        <DashboardInsightPropsProvider {...props}>
-            <DefaultDashboardInsightWithDrillDialogInner />
-        </DashboardInsightPropsProvider>
     );
 };

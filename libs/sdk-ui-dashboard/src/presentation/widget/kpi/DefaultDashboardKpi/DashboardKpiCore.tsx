@@ -16,12 +16,11 @@ import { DashboardKpiProps } from "../types";
 
 import { KpiExecutor } from "./KpiExecutor";
 import { useKpiData } from "./useKpiData";
-import { DashboardKpiPropsProvider, useDashboardKpiProps } from "../DashboardKpiPropsContext";
 
 /**
  * @internal
  */
-export const DefaultDashboardKpiInner = (): JSX.Element => {
+export const DashboardKpiCore = (props: DashboardKpiProps): JSX.Element => {
     const {
         kpiWidget,
         alert,
@@ -34,7 +33,8 @@ export const DefaultDashboardKpiInner = (): JSX.Element => {
         workspace: customWorkspace,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
-    } = useDashboardKpiProps();
+    } = props;
+
     invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
@@ -88,16 +88,5 @@ export const DefaultDashboardKpiInner = (): JSX.Element => {
             LoadingComponent={LoadingComponent}
             isReadOnly={isReadOnly}
         />
-    );
-};
-
-/**
- * @internal
- */
-export const DefaultDashboardKpi = (props: DashboardKpiProps): JSX.Element => {
-    return (
-        <DashboardKpiPropsProvider {...props}>
-            <DefaultDashboardKpiInner />
-        </DashboardKpiPropsProvider>
     );
 };

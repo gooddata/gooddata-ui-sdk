@@ -24,7 +24,7 @@ import {
     FilterBar,
 } from "../filterBar";
 import {
-    DefaultDashboardInsightWithDrillDialogInner,
+    DefaultDashboardInsightInner,
     DefaultDashboardKpiInner,
     DefaultDashboardWidgetInner,
 } from "../widget";
@@ -271,9 +271,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         ErrorComponent={props.ErrorComponent ?? DefaultError}
                         LoadingComponent={props.LoadingComponent ?? DefaultLoading}
                         LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
-                        InsightComponent={
-                            props.InsightComponent ?? DefaultDashboardInsightWithDrillDialogInner
-                        }
+                        InsightComponent={props.InsightComponent ?? DefaultDashboardInsightInner}
                         KpiComponent={props.KpiComponent ?? DefaultDashboardKpiInner}
                         WidgetComponent={props.WidgetComponent ?? DefaultDashboardWidgetInner}
                         ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
