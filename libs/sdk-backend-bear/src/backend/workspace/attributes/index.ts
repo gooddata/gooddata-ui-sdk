@@ -79,7 +79,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
     public getAttributeDisplayForms = async (
         refs: ObjRef[],
     ): Promise<IAttributeDisplayFormMetadataObject[]> => {
-        const displayFormUris = await objRefsToUris(refs, this.workspace, this.authCall);
+        const displayFormUris = await objRefsToUris(refs, this.workspace, this.authCall, false);
         const wrappedAttributeDisplayForms: GdcMetadata.IWrappedAttributeDisplayForm[] = await this.authCall(
             (sdk) =>
                 sdk.md.getObjects<GdcMetadata.IWrappedAttributeDisplayForm>(this.workspace, displayFormUris),
@@ -101,7 +101,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
     };
 
     public getAttributes = async (refs: ObjRef[]): Promise<IAttributeMetadataObject[]> => {
-        const attributeUris = await objRefsToUris(refs, this.workspace, this.authCall);
+        const attributeUris = await objRefsToUris(refs, this.workspace, this.authCall, false);
         const wrappedAttributes = await this.authCall((sdk) =>
             sdk.md.getObjects<GdcMetadata.IWrappedAttribute>(this.workspace, attributeUris),
         );

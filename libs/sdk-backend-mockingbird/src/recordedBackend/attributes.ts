@@ -16,6 +16,7 @@ import { ObjRef, areObjRefsEqual, objRefToString, isIdentifierRef } from "@goodd
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import values from "lodash/values";
 import { objRefsToStringKey } from "./utils";
+import compact from "lodash/compact";
 
 /**
  * @internal
@@ -27,7 +28,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         return new RecordedElementQueryFactory(this.recordings);
     }
 
-    public async getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> {
+    public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
         if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
             throw new UnexpectedResponseError("No displayForm recordings", 404, {});
         }
@@ -41,9 +42,9 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         }
 
         return recording.obj;
-    }
+    };
 
-    public async getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject> {
+    public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
         if (!this.recordings.metadata || !this.recordings.metadata.catalog) {
             throw new UnexpectedResponseError("No recordings", 404, {});
         }
@@ -62,7 +63,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         return newAttributeMetadataObject(ref, (a) =>
             a.title(title).uri(uri).production(Boolean(production)).id(id).description(description),
         );
-    }
+    };
 
     public async getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {
         const key = objRefsToStringKey(attributeRefs);
@@ -79,15 +80,25 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         return Promise.all(attributesRefsBatch.map((refs) => this.getCommonAttributes(refs)));
     }
 
-    public getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
-        const loader = this.getAttributeDisplayForm.bind(this);
-        return Promise.all(refs.map(loader));
-    }
+    public getAttributeDisplayForms = async (
+        refs: ObjRef[],
+    ): Promise<IAttributeDisplayFormMetadataObject[]> => {
+        // note: this is here to match the funky SPI contract; invalid refs are ignored
+        const loader = (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject | undefined> => {
+            return this.getAttributeDisplayForm(ref).catch((_) => undefined);
+        };
 
-    public getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
-        const loader = this.getAttribute.bind(this);
-        return Promise.all(refs.map(loader));
-    }
+        return compact(await Promise.all(refs.map(loader)));
+    };
+
+    public getAttributes = async (refs: ObjRef[]): Promise<IAttributeMetadataObject[]> => {
+        // note: this is here to match the funky SPI contract; invalid refs are ignored
+        const loader = (ref: ObjRef): Promise<IAttributeMetadataObject | undefined> => {
+            return this.getAttribute(ref).catch((_) => undefined);
+        };
+
+        return compact(await Promise.all(refs.map(loader)));
+    };
 
     public getAttributeDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
         throw new NotSupported("not supported");
