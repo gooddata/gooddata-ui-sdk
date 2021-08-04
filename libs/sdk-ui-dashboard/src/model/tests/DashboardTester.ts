@@ -110,6 +110,20 @@ export class DashboardTester {
         });
     };
 
+    private commandRejectedEndsWaitFor = () => {
+        const commandRejected = this.getOrCreateMonitoredAction("GDC.DASH/EVT.COMMAND.REJECTED");
+
+        return commandRejected.promise.then((evt) => {
+            // eslint-disable-next-line no-console
+            console.error(
+                "Command was rejected because dashboard does not know how to handle it. " +
+                    "This is likely because the handler for the rejected command is not registered in the system. See root command handler.",
+            );
+
+            throw evt;
+        });
+    };
+
     /**
      * Creates an instance of DashboardTester set up to run tests on top of a dashboard with the provided
      * identifier. The dashboard will be loaded from recorded backend, from its reference workspace.
@@ -204,6 +218,7 @@ export class DashboardTester {
         return Promise.race([
             this.getOrCreateMonitoredAction(actionType).promise,
             ...(includeErrorHandler ? [this.commandFailedRejectsWaitFor()] : []),
+            this.commandRejectedEndsWaitFor(),
             new Promise((_, reject) => {
                 setTimeout(() => {
                     reject(new Error(`Wait for action '${actionType}' timed out after ${timeout}ms`));
