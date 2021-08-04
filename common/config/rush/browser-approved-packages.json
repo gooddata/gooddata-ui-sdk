@@ -12,7 +12,7 @@
     },
     {
       "name": "@babel/cli",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/core",
@@ -20,7 +20,7 @@
     },
     {
       "name": "@babel/plugin-proposal-class-properties",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/plugin-proposal-export-default-from",
@@ -28,11 +28,11 @@
     },
     {
       "name": "@babel/plugin-proposal-object-rest-spread",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/plugin-transform-async-to-generator",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/plugin-transform-typescript",
@@ -40,7 +40,7 @@
     },
     {
       "name": "@babel/polyfill",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/preset-env",
@@ -52,7 +52,7 @@
     },
     {
       "name": "@babel/preset-typescript",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/runtime",
@@ -76,7 +76,7 @@
     },
     {
       "name": "@gooddata/catalog-export",
-      "allowedCategories": [ "examples", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/eslint-config",
@@ -112,7 +112,7 @@
     },
     {
       "name": "@gooddata/sdk-backend-bear",
-      "allowedCategories": [ "examples", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-backend-mockingbird",
@@ -140,7 +140,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-dashboard",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-ui-ext",
@@ -420,7 +420,7 @@
     },
     {
       "name": "babel-plugin-lodash",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "babel-plugin-require-context-hook",
@@ -428,7 +428,7 @@
     },
     {
       "name": "babel-polyfill",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "babel-runtime",
@@ -452,7 +452,7 @@
     },
     {
       "name": "circular-dependency-plugin",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "classnames",
@@ -460,7 +460,7 @@
     },
     {
       "name": "clean-webpack-plugin",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "codemirror",
@@ -472,7 +472,7 @@
     },
     {
       "name": "compression-webpack-plugin",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "concurrently",
@@ -512,7 +512,7 @@
     },
     {
       "name": "dotenv-webpack",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "downshift",
@@ -592,7 +592,7 @@
     },
     {
       "name": "fork-ts-checker-webpack-plugin",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "formik",
@@ -624,7 +624,7 @@
     },
     {
       "name": "html-webpack-plugin",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "http-status-codes",
@@ -720,7 +720,7 @@
     },
     {
       "name": "npm-run-all",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "open",
@@ -744,7 +744,7 @@
     },
     {
       "name": "prettier-loader",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "process",
@@ -765,6 +765,10 @@
     {
       "name": "react",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "react-app-polyfill",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "react-codemirror2",
@@ -828,7 +832,11 @@
     },
     {
       "name": "react-router-dom",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "react-router-use-location-state",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "react-select",
@@ -872,7 +880,7 @@
     },
     {
       "name": "sass",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "sass-loader",
@@ -880,7 +888,7 @@
     },
     {
       "name": "source-map-loader",
-      "allowedCategories": [ "examples", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "spark-md5",
@@ -888,7 +896,7 @@
     },
     {
       "name": "speed-measure-webpack-plugin",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "stringify-object",
