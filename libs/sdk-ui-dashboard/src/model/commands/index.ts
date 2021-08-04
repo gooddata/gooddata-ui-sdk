@@ -161,7 +161,7 @@ export {
     refreshInsightWidget,
 } from "./insight";
 
-export { UserInteraction, UserInteractionType, userInteraction } from "./userInteraction";
+export * from "./userInteraction";
 
 export { RequestAsyncRender, ResolveAsyncRender } from "./render";
 

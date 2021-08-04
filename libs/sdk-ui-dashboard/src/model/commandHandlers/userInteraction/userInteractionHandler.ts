@@ -7,5 +7,5 @@ export function userInteractionHandler(
     ctx: DashboardContext,
     cmd: UserInteraction,
 ): DashboardUserInteractionTriggered {
-    return userInteractionTriggered(ctx, cmd.payload.interaction, cmd.correlationId);
+    return userInteractionTriggered(ctx, cmd.payload, cmd.correlationId);
 }

@@ -5,6 +5,6 @@ export { useDashboardCommand } from "./useDashboardCommand";
 export { useDashboardCommandProcessing, CommandProcessingStatus } from "./useDashboardCommandProcessing";
 export { useDashboardQuery } from "./useDashboardQuery";
 export { useDashboardQueryProcessing, QueryProcessingStatus } from "./useDashboardQueryProcessing";
-export { UseDashboardUserInteraction, useDashboardUserInteraction } from "./useDashboardUserInteraction";
+export { useDashboardUserInteraction } from "./useDashboardUserInteraction";
 export { useDashboardAsyncRender, UseDashboardAsyncRender } from "./useDashboardAsyncRender";
 export { IDashboardStoreProviderProps } from "./types";
