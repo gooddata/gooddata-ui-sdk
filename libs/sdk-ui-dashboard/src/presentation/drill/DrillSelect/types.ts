@@ -23,4 +23,5 @@ export interface DrillSelectContext {
     drillDefinitions: DashboardDrillDefinition[];
     drillEvent: IDashboardDrillEvent;
     drillContext?: DashboardDrillContext;
+    correlationId?: string;
 }

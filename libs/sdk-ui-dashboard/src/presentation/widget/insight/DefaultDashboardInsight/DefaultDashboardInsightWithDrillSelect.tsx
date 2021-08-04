@@ -4,7 +4,7 @@ import React from "react";
 import { WithDrillSelect } from "../../../drill";
 import { IDashboardInsightProps } from "../types";
 
-import { DefaultDashboardInsight } from "./DefaultDashboardInsight";
+import { DashboardInsightCore } from "./DashboardInsightCore";
 
 /**
  * @internal
@@ -12,6 +12,7 @@ import { DefaultDashboardInsight } from "./DefaultDashboardInsight";
 export const DefaultDashboardInsightWithDrillSelect = (props: IDashboardInsightProps): JSX.Element => {
     const { onDrillDown, onDrillToInsight, onDrillToAttributeUrl, onDrillToCustomUrl, onDrillToDashboard } =
         props;
+
     return (
         <WithDrillSelect
             insight={props.insight}
@@ -22,7 +23,7 @@ export const DefaultDashboardInsightWithDrillSelect = (props: IDashboardInsightP
             onDrillToDashboard={onDrillToDashboard}
         >
             {({ onDrill }) => {
-                return <DefaultDashboardInsight {...props} onDrill={onDrill} />;
+                return <DashboardInsightCore {...props} onDrill={onDrill} />;
             }}
         </WithDrillSelect>
     );

@@ -164,19 +164,14 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
                 return false;
             }
 
-            // only return the definitions if there are no custom-specified drillableItems
-            // if there are, we assume it was the custom drill
-            const drillDefinitions =
-                !drillableItems?.length && kpiWidget.drills.length > 0 ? kpiWidget.drills : undefined;
-
             return onDrill({
                 dataView: result.dataView,
                 drillContext,
-                drillDefinitions,
+                drillDefinitions: kpiWidget.drills,
                 widgetRef: kpiWidget.ref,
             });
         },
-        [onDrill, result],
+        [onDrill, result, kpiWidget],
     );
 
     const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);

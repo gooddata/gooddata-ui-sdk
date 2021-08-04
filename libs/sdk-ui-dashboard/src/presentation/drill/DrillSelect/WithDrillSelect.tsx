@@ -124,19 +124,24 @@ export function WithDrillSelect({
     });
 
     const onSelect = useCallback(
-        (drillDefinition: DashboardDrillDefinition, drillEvent?: IDashboardDrillEvent) => {
+        (
+            drillDefinition: DashboardDrillDefinition,
+            drillEvent?: IDashboardDrillEvent,
+            correlationId?: string,
+        ) => {
             const effectiveDrillEvent = drillEvent ?? dropdownProps?.drillEvent;
+            const effectiveCorrelationId = correlationId ?? dropdownProps?.correlationId;
             if (effectiveDrillEvent) {
                 if (isDrillDownDefinition(drillDefinition)) {
-                    drillDown.run(insight, drillDefinition, effectiveDrillEvent);
+                    drillDown.run(insight, drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
                 } else if (isDrillToInsight(drillDefinition)) {
-                    drillToInsight.run(drillDefinition, effectiveDrillEvent);
+                    drillToInsight.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
                 } else if (isDrillToDashboard(drillDefinition)) {
-                    drillToDashboard.run(drillDefinition, effectiveDrillEvent);
+                    drillToDashboard.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
                 } else if (isDrillToAttributeUrl(drillDefinition)) {
-                    drillToAttributeUrl.run(drillDefinition, effectiveDrillEvent);
+                    drillToAttributeUrl.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
                 } else if (isDrillToCustomUrl(drillDefinition)) {
-                    drillToCustomUrl.run(drillDefinition, effectiveDrillEvent);
+                    drillToCustomUrl.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
                 }
                 setDropdownProps(null);
                 setIsOpen(false);
@@ -154,12 +159,13 @@ export function WithDrillSelect({
             const filteredByPriority = filterDrillFromAttributeByPriority(drillDefinition);
 
             if (filteredByPriority.length === 1) {
-                onSelect(filteredByPriority[0], drillEvent);
+                onSelect(filteredByPriority[0], drillEvent, s.correlationId);
             } else if (filteredByPriority.length > 1) {
                 setDropdownProps({
                     drillDefinitions: filteredByPriority,
                     drillEvent: drillEvent,
                     drillContext: context,
+                    correlationId: s.correlationId,
                 });
                 setIsOpen(true);
             }
