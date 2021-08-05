@@ -142,6 +142,11 @@ export interface ISettings {
     enableKPIDashboardDrillToURL?: boolean;
 
     /**
+     * Indicates whether the drilled insight can be exported.
+     */
+    enableDrilledInsightExport?: boolean;
+
+    /**
      * Indicates whether backend supports data sampling.
      */
     enableDataSampling?: boolean;
