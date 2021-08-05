@@ -21,7 +21,6 @@ module.exports = async (env, argv) => {
 
     const isProduction = argv.mode === "production";
 
-    // see also production proxy at /examples/server/src/endpoints/proxy.js
     const proxy = {
         "/gdc": {
             changeOrigin: true,
