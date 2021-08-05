@@ -6,8 +6,6 @@ COPY . .
 
 ENV FORCE_COLOR 0
 
-RUN ls -la .
-
 FROM harbor.intgdc.com/3rdparty/nginxinc/nginx-unprivileged:1.17.2-alpine
 
 COPY --from=build-stage /nginx/nginx.conf /etc/nginx/nginx.conf

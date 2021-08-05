@@ -48,44 +48,43 @@
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
         "cypress": "node ./scripts/run_cypress_local.js",
-        "run-isolated": "docker-compose -f docker-compose-isolated.yaml up --abort-on-container-exit --exit-code-from isolated-tests --force-recreate --always-recreate-deps --renew-anon-volumes",
-        "docker-build-local": "docker build --file Dockerfile_local -t gooddata-ui-sdk .",
         "docker-build": "npm run build-scenarios && DOCKER_BUILDKIT=0 docker build --file Dockerfile -t gooddata-ui-sdk .",
+        "docker-build-local": "docker build --file Dockerfile_local -t gooddata-ui-sdk .",
+        "run-isolated": "docker-compose -f docker-compose-isolated.yaml up --abort-on-container-exit --exit-code-from isolated-tests --force-recreate --always-recreate-deps --renew-anon-volumes",
+        "run-isolated-record": "MODE=record npm run run-isolated-local",
         "run-isolated-local": "npm run docker-build-local && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
         "run-isolated-ci": "npm run docker-build && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
         "run-scenarios-local": "node ./scripts/run-scenarios-local.js",
         "build-scenarios": "webpack --config scenarios/webpack.config.js"
     },
-    "peerDependencies": {
-        "react": "^16.10.0",
-        "react-dom": "^16.10.0"
-    },
     "dependencies": {
         "@gooddata/catalog-export": "^8.6.0-alpha.29",
         "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/sdk-backend-bear": "^8.6.0-alpha.29",
         "@gooddata/sdk-backend-spi": "^8.6.0-alpha.29",
+        "@gooddata/sdk-model": "^8.6.0-alpha.29",
         "@gooddata/sdk-ui": "^8.6.0-alpha.29",
-        "@gooddata/sdk-ui-kit": "^8.6.0-alpha.29",
         "@gooddata/sdk-ui-charts": "^8.6.0-alpha.29",
         "@gooddata/sdk-ui-dashboard": "^8.6.0-alpha.29",
         "@gooddata/sdk-ui-ext": "^8.6.0-alpha.29",
         "@gooddata/sdk-ui-filters": "^8.6.0-alpha.29",
         "@gooddata/sdk-ui-geo": "^8.6.0-alpha.29",
+        "@gooddata/sdk-ui-kit": "^8.6.0-alpha.29",
         "@gooddata/sdk-ui-pivot": "^8.6.0-alpha.29",
-        "@gooddata/sdk-model": "^8.6.0-alpha.29",
-        "@gooddata/sdk-backend-bear": "^8.6.0-alpha.29",
         "@gooddata/util": "^8.6.0-alpha.29",
         "axios": "^0.21.1",
-        "babel-runtime": "^6.26.0",
         "babel-polyfill": "^6.26.0",
+        "babel-runtime": "^6.26.0",
         "dotenv": "^8.2.0",
         "lodash": "^4.17.19",
+        "react": "^16.10.0",
+        "react-app-polyfill": "~2.0.0",
+        "react-dom": "^16.10.0",
         "react-intl": "^3.6.0",
-        "tslib": "^2.0.0",
-        "wait-on": "^6.0.0",
-        "react-router-use-location-state": "~2.5.0",
         "react-router-dom": "^5.2.0",
-        "react-app-polyfill": "~2.0.0"
+        "react-router-use-location-state": "~2.5.0",
+        "tslib": "^2.0.0",
+        "wait-on": "^6.0.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.7.2",
@@ -147,8 +146,6 @@
         "typescript": "4.0.2",
         "webpack": "^5.18.0",
         "webpack-cli": "^4.6.0",
-        "webpack-dev-server": "^3.11.2",
-        "react": "^16.10.0",
-        "react-dom": "^16.10.0"
+        "webpack-dev-server": "^3.11.2"
     }
 }
