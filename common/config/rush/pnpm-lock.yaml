@@ -23115,8 +23115,10 @@ packages:
       node-sass-magic-importer: 5.3.2
       polished: 3.7.2
       prettier: 2.3.1
+      prettier-loader: 3.3.0_prettier@2.3.1+webpack@5.38.1
       raf: 3.4.1
       react: 16.14.0
+      react-app-polyfill: 2.0.0
       react-dom: 16.14.0_react@16.14.0
       react-intl: 3.12.1_react@16.14.0
       ts-invariant: 0.7.3
@@ -23172,6 +23174,7 @@ packages:
       lodash: 4.17.21
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
+      npm-run-all: 4.1.5
       prettier: 2.3.1
       raf: 3.4.1
       react: 16.14.0
