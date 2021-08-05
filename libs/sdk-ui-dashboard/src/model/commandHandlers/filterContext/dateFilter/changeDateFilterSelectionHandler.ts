@@ -37,13 +37,7 @@ export function* changeDateFilterSelectionHandler(
     );
 
     yield dispatchDashboardEvent(
-        dateFilterChanged(
-            ctx,
-            // TODO we need to decide how to externally represent All Time date filter and unify this
-            affectedFilter ?? { dateFilter: { granularity: "GDC.time.date", type: "relative" } },
-            cmd.payload.dateFilterOptionLocalId,
-            cmd.correlationId,
-        ),
+        dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),
     );
 
     yield call(dispatchFilterContextChanged, ctx, cmd);

@@ -638,7 +638,7 @@ export const DashboardDateFilterPropsProvider: React_2.FC<IDashboardDateFilterPr
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly filter: IDashboardDateFilter;
+        readonly filter: IDashboardDateFilter | undefined;
         readonly dateFilterOptionLocalId?: string;
     };
     // (undocumented)
