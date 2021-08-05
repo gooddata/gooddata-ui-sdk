@@ -48,6 +48,7 @@ import {
     selectUser,
     useDashboardSelector,
     useDashboardAsyncRender,
+    useDashboardUserInteraction,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
@@ -191,6 +192,8 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
         }
     }, [status, onRequestAsyncRender, onResolveAsyncRender]);
 
+    const { kpiAlertDialogClosed, kpiAlertDialogOpened } = useDashboardUserInteraction();
+
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
     }
@@ -247,13 +250,19 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
             isAlertExecutionLoading={alertStatus === "loading"}
             isAlertBroken={isAlertBroken}
             isAlertDialogOpen={isAlertDialogOpen}
-            onAlertDialogOpenClick={() => setIsAlertDialogOpen(true)}
+            onAlertDialogOpenClick={() => {
+                kpiAlertDialogOpened(!!alert);
+                setIsAlertDialogOpen(true);
+            }}
             renderAlertDialog={() => (
                 <KpiAlertDialogWrapper
                     alert={alert}
                     dateFormat={settings.responsiveUiDateFormat!}
                     userEmail={currentUser.email!}
-                    onAlertDialogCloseClick={() => setIsAlertDialogOpen(false)}
+                    onAlertDialogCloseClick={() => {
+                        kpiAlertDialogClosed();
+                        setIsAlertDialogOpen(false);
+                    }}
                     onAlertDialogDeleteClick={() => {
                         kpiAlertOperations.onRemoveAlert(alert!);
                     }}

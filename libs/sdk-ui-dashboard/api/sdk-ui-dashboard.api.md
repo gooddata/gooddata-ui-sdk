@@ -189,6 +189,15 @@ export interface BackendCapabilitiesState {
     backendCapabilities?: IBackendCapabilities;
 }
 
+// @alpha (undocumented)
+export interface BareUserInteractionPayload {
+    // (undocumented)
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked";
+}
+
+// @alpha (undocumented)
+export type BareUserInteractionType = BareUserInteractionPayload["interaction"];
+
 // @internal (undocumented)
 export const ButtonBar: () => JSX.Element;
 
@@ -625,7 +634,7 @@ export const DashboardDateFilterPropsProvider: React_2.FC<IDashboardDateFilterPr
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        readonly filter: IDashboardDateFilter;
+        readonly filter: IDashboardDateFilter | undefined;
         readonly dateFilterOptionLocalId?: string;
     };
     // (undocumented)
@@ -1265,9 +1274,7 @@ export const DashboardStoreProvider: React_2.FC<IDashboardStoreProviderProps>;
 // @alpha
 export interface DashboardUserInteractionTriggered extends IDashboardEvent {
     // (undocumented)
-    readonly payload: {
-        interaction: UserInteractionType;
-    };
+    readonly payload: UserInteractionPayload;
     // (undocumented)
     readonly type: "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED";
 }
@@ -1971,6 +1978,11 @@ export interface ITopBarProps {
     // (undocumented)
     titleProps: ITitleProps;
 }
+
+// @alpha (undocumented)
+export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kpiAlertDialogOpened", {
+    alreadyHasAlert: boolean;
+}>;
 
 // @alpha (undocumented)
 export type KpiPlaceholderWidget = {
@@ -3086,13 +3098,12 @@ export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQue
 // @alpha (undocumented)
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;
 
-// @internal (undocumented)
-export type UseDashboardUserInteraction = {
-    [interaction in UserInteractionType]: () => void;
-};
-
 // @internal
-export const useDashboardUserInteraction: () => UseDashboardUserInteraction;
+export const useDashboardUserInteraction: () => {
+    poweredByGDLogoClicked: () => void;
+    kpiAlertDialogClosed: () => void;
+    kpiAlertDialogOpened: (alreadyHasAlert: boolean) => void;
+};
 
 // @internal (undocumented)
 export const useDashboardWidgetProps: () => DashboardWidgetProps;
@@ -3218,21 +3229,33 @@ export const useMenuButtonProps: (config?: IMenuButtonConfiguration | undefined)
 // @alpha
 export interface UserInteraction extends IDashboardCommand {
     // (undocumented)
-    readonly payload: {
-        interaction: UserInteractionType;
-    };
+    readonly payload: UserInteractionPayload;
     // (undocumented)
     readonly type: "GDC.DASH/CMD.USER_INTERACTION";
 }
 
-// @alpha (undocumented)
-export function userInteraction(interaction: UserInteractionType, correlationId?: string): UserInteraction;
+// @alpha
+export function userInteraction(interactionPayloadOrType: UserInteractionPayload | BareUserInteractionType, correlationId?: string): UserInteraction;
 
 // @alpha (undocumented)
-export function userInteractionTriggered(ctx: DashboardContext, interaction: UserInteractionType, correlationId?: string): DashboardUserInteractionTriggered;
+export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
 
 // @alpha (undocumented)
-export type UserInteractionType = "poweredByGDLogoClicked";
+export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload;
+
+// @alpha (undocumented)
+export interface UserInteractionPayloadWithDataBase<TType extends string, TData extends object> {
+    // (undocumented)
+    data: TData;
+    // (undocumented)
+    interaction: TType;
+}
+
+// @alpha (undocumented)
+export function userInteractionTriggered(ctx: DashboardContext, interactionPayload: UserInteractionPayload, correlationId?: string): DashboardUserInteractionTriggered;
+
+// @alpha (undocumented)
+export type UserInteractionType = UserInteractionPayload["interaction"];
 
 // @alpha (undocumented)
 export interface UserState {

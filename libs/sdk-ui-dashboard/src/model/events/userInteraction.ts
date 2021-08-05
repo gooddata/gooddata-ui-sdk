@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { UserInteractionType } from "../commands/userInteraction";
+import { UserInteractionPayload } from "../commands/userInteraction";
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
 
@@ -11,9 +11,7 @@ import { IDashboardEvent } from "./base";
  */
 export interface DashboardUserInteractionTriggered extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED";
-    readonly payload: {
-        interaction: UserInteractionType;
-    };
+    readonly payload: UserInteractionPayload;
 }
 
 /**
@@ -21,15 +19,13 @@ export interface DashboardUserInteractionTriggered extends IDashboardEvent {
  */
 export function userInteractionTriggered(
     ctx: DashboardContext,
-    interaction: UserInteractionType,
+    interactionPayload: UserInteractionPayload,
     correlationId?: string,
 ): DashboardUserInteractionTriggered {
     return {
         type: "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED",
         ctx,
         correlationId,
-        payload: {
-            interaction,
-        },
+        payload: interactionPayload,
     };
 }
