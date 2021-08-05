@@ -2,7 +2,7 @@
 
 import { IDashboardEvent } from "./base";
 import { ObjRef } from "@gooddata/sdk-model";
-import { WidgetFilterSettings, WidgetHeader } from "../types/widgetTypes";
+import { WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
 import { DashboardContext } from "../types/commonTypes";
 import { IKpiWidget, IKpiWidgetDefinition, ILegacyKpi } from "@gooddata/sdk-backend-spi";
 
@@ -118,14 +118,14 @@ export interface DashboardKpiWidgetFilterSettingsChanged extends IDashboardEvent
         /**
          * New filter settings that are now in effect for the widget.
          */
-        readonly filterSettings: WidgetFilterSettings;
+        readonly filterSettings: WidgetFilterOperation;
     };
 }
 
 export function kpiWidgetFilterSettingsChanged(
     ctx: DashboardContext,
     ref: ObjRef,
-    filterSettings: WidgetFilterSettings,
+    filterSettings: WidgetFilterOperation,
     correlationId?: string,
 ): DashboardKpiWidgetFilterSettingsChanged {
     return {

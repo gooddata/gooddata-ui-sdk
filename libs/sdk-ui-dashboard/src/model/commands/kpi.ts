@@ -3,7 +3,7 @@
 import { IDashboardCommand } from "./base";
 import { ObjRef } from "@gooddata/sdk-model";
 import { ILegacyKpiComparisonDirection, ILegacyKpiComparisonTypeComparison } from "@gooddata/sdk-backend-spi";
-import { WidgetFilterSettings, WidgetHeader } from "../types/widgetTypes";
+import { WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
 
 /**
  * @alpha
@@ -126,7 +126,7 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
          * Filter settings to apply for the widget. The settings are used as-is and
          * replace current widget settings.
          */
-        readonly settings: WidgetFilterSettings;
+        readonly settings: WidgetFilterOperation;
     };
 }
 
@@ -144,7 +144,7 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
  */
 export function changeKpiWidgetFilterSettings(
     ref: ObjRef,
-    settings: WidgetFilterSettings,
+    settings: WidgetFilterOperation,
     correlationId?: string,
 ): ChangeKpiWidgetFilterSettings {
     return {

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IAuthenticatedPrincipal, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import last from "lodash/last";
 import { Identifier, isIdentifierRef, isUriRef, ObjRef, Uri } from "@gooddata/sdk-model";
@@ -105,6 +105,7 @@ export const objRefToUri = async (
  * @param refs - refs to convert
  * @param workspace - workspace id to use
  * @param authCall - call guard to perform API calls through
+ * @param throwOnUnresolved - whether to throw an error if id to uri cannot be resolved for some ref; default is true
  *
  * @internal
  */
@@ -112,26 +113,40 @@ export const objRefsToUris = async (
     refs: ObjRef[],
     workspace: string,
     authCall: BearAuthenticatedCallGuard,
+    throwOnUnresolved: boolean = true,
 ): Promise<Uri[]> => {
     const identifiers = refs.filter(isIdentifierRef).map((filter) => filter.identifier);
     const identifiersToUrisPairs = await authCall((sdk) =>
         sdk.md.getUrisFromIdentifiers(workspace, identifiers),
     );
+    const translatedUris: Uri[] = [];
 
-    return refs.map((ref) => {
+    refs.forEach((ref) => {
         if (isUriRef(ref)) {
-            return ref.uri;
+            translatedUris.push(ref.uri);
         } else {
             const foundPair = identifiersToUrisPairs.find((pair) => pair.identifier === ref.identifier);
+
             if (!foundPair) {
-                throw new UnexpectedError(
-                    "REFERENCED_OBJECT_NOT_FOUND",
-                    new Error(`Referenced object for ${ref.identifier} not found`),
-                );
+                if (throwOnUnresolved) {
+                    throw new UnexpectedError(
+                        "REFERENCED_OBJECT_NOT_FOUND",
+                        new Error(`Referenced object for ${ref.identifier} not found`),
+                    );
+                } else {
+                    // eslint-disable-next-line no-console
+                    console.debug(
+                        `Unable to translate identifier ${ref.identifier} to object URI. The ref will be skipped.`,
+                    );
+                    return;
+                }
             }
-            return foundPair.uri;
+
+            translatedUris.push(foundPair.uri);
         }
     });
+
+    return translatedUris;
 };
 
 /**

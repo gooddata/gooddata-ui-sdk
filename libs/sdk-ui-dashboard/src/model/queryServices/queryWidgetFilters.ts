@@ -1,7 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { DashboardContext } from "../types/commonTypes";
 import { SagaIterator } from "redux-saga";
-import invariant from "ts-invariant";
 import { all, call, SagaReturnType, select } from "redux-saga/effects";
 import { createQueryService } from "../state/_infra/queryService";
 import {
@@ -31,6 +30,7 @@ import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../state/layo
 import { selectInsightByRef } from "../state/insights/insightsSelectors";
 import { invalidQueryArguments } from "../events/general";
 import {
+    IAttributeDisplayFormMetadataObject,
     ICatalogDateDataset,
     IInsightWidget,
     IKpiWidget,
@@ -39,15 +39,12 @@ import {
     isInsightWidget,
     IWidget,
 } from "@gooddata/sdk-backend-spi";
-import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-backend-spi";
 import compact from "lodash/compact";
-import zip from "lodash/zip";
-import {
-    selectCatalogAttributeDisplayForms,
-    selectCatalogDateDatasets,
-} from "../state/catalog/catalogSelectors";
-import { PromiseFnReturnType } from "../types/sagas";
+import { selectAllCatalogDateDatasetsMap } from "../state/catalog/catalogSelectors";
 import { DashboardState } from "../state/types";
+import { resolveDisplayFormMetadata } from "../utils/displayFormResolver";
+import invariant from "ts-invariant";
+import isEmpty from "lodash/isEmpty";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
@@ -57,51 +54,6 @@ function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: Objec
         areObjRefsEqual(ref, idRef(mdObject.id, type)) ||
         areObjRefsEqual(ref, uriRef(mdObject.uri))
     );
-}
-
-async function loadDisplayFormsMetadata(
-    ctx: DashboardContext,
-    refs: ObjRef[],
-): Promise<IAttributeDisplayFormMetadataObject[]> {
-    if (!refs.length) {
-        return [];
-    }
-
-    return ctx.backend.workspace(ctx.workspace).attributes().getAttributeDisplayForms(refs);
-}
-
-function* getOrLoadDisplayFormsMetadata(
-    ctx: DashboardContext,
-    refs: ObjRef[],
-): SagaIterator<IAttributeDisplayFormMetadataObject[]> {
-    // first try getting as much as possible from catalog, there is a good chance the data is already there
-    const catalogDisplayForms: ReturnType<typeof selectCatalogAttributeDisplayForms> = yield select(
-        selectCatalogAttributeDisplayForms,
-    );
-
-    // for any ref not in catalog, load it from server (probably something from non-production dataset)
-    const refsMissing = refs.filter(
-        (ref) =>
-            !catalogDisplayForms.some((displayForm) => refMatchesMdObject(ref, displayForm, "displayForm")),
-    );
-
-    const dataForMissingRefs: PromiseFnReturnType<typeof loadDisplayFormsMetadata> = yield call(
-        loadDisplayFormsMetadata,
-        ctx,
-        refsMissing,
-    );
-
-    const allDisplayForms = [...catalogDisplayForms, ...dataForMissingRefs];
-
-    return refs.map((ref): IAttributeDisplayFormMetadataObject => {
-        const match = allDisplayForms.find((displayForm) =>
-            refMatchesMdObject(ref, displayForm, "displayForm"),
-        );
-        // if this bombs the logic above is broken
-        invariant(match);
-
-        return match;
-    });
 }
 
 interface IFilterDisplayFormPair {
@@ -120,28 +72,31 @@ function* loadDisplayFormsForAttributeFilters(
 ): SagaIterator<IFilterDisplayFormPair[]> {
     const refs = filters.map(filterObjRef);
 
-    const mdObjects: SagaReturnType<typeof getOrLoadDisplayFormsMetadata> = yield call(
-        getOrLoadDisplayFormsMetadata,
+    const resolvedObjects: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
+        resolveDisplayFormMetadata,
         ctx,
         compact(refs),
     );
 
-    return zip(filters, mdObjects).map(([filter, displayForm]) => ({
-        filter: filter!,
-        displayForm: displayForm!,
-    }));
+    // if some display forms could not be resolved then there is something seriously amiss
+    invariant(isEmpty(resolvedObjects.missing));
+
+    return filters.map((filter) => {
+        return {
+            filter,
+            displayForm: resolvedObjects.resolved.get(filterObjRef(filter))!,
+        };
+    });
 }
 
 function selectDateDatasetsForDateFilters(
     state: DashboardState,
     filters: IDateFilter[],
 ): IFilterDateDatasetPair[] {
-    const fromCatalog = selectCatalogDateDatasets(state);
+    const fromCatalog = selectAllCatalogDateDatasetsMap(state);
 
     return filters.map((filter): IFilterDateDatasetPair => {
-        const dateDataset = fromCatalog.find((dateDataset) =>
-            refMatchesMdObject(filterObjRef(filter), dateDataset.dataSet, "dataSet"),
-        );
+        const dateDataset = fromCatalog.get(filterObjRef(filter));
 
         return {
             dateDataset,

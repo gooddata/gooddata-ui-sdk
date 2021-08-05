@@ -11,6 +11,7 @@
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "importHelpers": true,
+        "downlevelIteration": true,
         "strict": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,

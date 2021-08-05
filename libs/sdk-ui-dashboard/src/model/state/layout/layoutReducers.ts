@@ -2,6 +2,7 @@
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { LayoutState } from "./layoutState";
 import {
+    IDashboardFilterReference,
     IDashboardLayout,
     IDashboardLayoutSectionHeader,
     InsightDrillDefinition,
@@ -20,7 +21,7 @@ import { addArrayElements, moveArrayElement, removeArrayElement } from "../../ut
 import { areObjRefsEqual, ObjRef, VisualizationProperties } from "@gooddata/sdk-model";
 import { WidgetHeader } from "../../types/widgetTypes";
 import flatMap from "lodash/flatMap";
-import { WritableDraft } from "immer/dist/internal";
+import { Draft } from "immer";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 
@@ -230,7 +231,7 @@ const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (stat
 // Layout-widget specific reducers
 //
 
-const getWidgetByRef = (state: WritableDraft<LayoutState>, widgetRef: ObjRef) => {
+const getWidgetByRef = (state: Draft<LayoutState>, widgetRef: ObjRef) => {
     const allWidgets = flatMap(state?.layout?.sections, (section) =>
         section.items.map((item) => item.widget),
     );
@@ -313,6 +314,28 @@ const replaceInsightWidgetVisProperties: LayoutReducer<ReplaceWidgetVisPropertie
 //
 //
 
+type ReplaceWidgetFilterSettings = {
+    ref: ObjRef;
+    ignoreDashboardFilters?: IDashboardFilterReference[];
+    dateDataSet?: ObjRef;
+};
+
+const replaceWidgetFilterSettings: LayoutReducer<ReplaceWidgetFilterSettings> = (state, action) => {
+    invariant(state.layout);
+
+    const { ignoreDashboardFilters, dateDataSet, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && (isInsightWidget(widget) || isKpiWidget(widget)));
+
+    widget.dateDataSet = dateDataSet;
+    widget.ignoreDashboardFilters = ignoreDashboardFilters ?? [];
+};
+
+//
+//
+//
+
 export const layoutReducers = {
     setLayout,
     addSection: withUndo(addSection),
@@ -326,5 +349,6 @@ export const layoutReducers = {
     replaceWidgetHeader: withUndo(replaceWidgetHeader),
     replaceWidgetDrills: withUndo(replaceWidgetDrill),
     replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
+    replaceWidgetFilterSettings: withUndo(replaceWidgetFilterSettings),
     undoLayout: undoReducer,
 };

@@ -282,13 +282,15 @@ function* queryService(
     const mostImportantFromInsight: ICatalogDateDataset =
         usedInDateFilters[0] ?? usedInAttributes[0] ?? usedInAttributeFilters[0];
 
+    const allAvailableDateDatasets = uniqBy(
+        [...dateDatasets, ...usedInDateFilters, ...usedInAttributes, ...usedInAttributeFilters].filter(
+            isCatalogDateDataset,
+        ),
+        (d) => serializeObjRef(d.dataSet.ref),
+    );
+
     const dateDatasetDisplayNames = fromPairs(
-        uniqBy(
-            [...dateDatasets, ...usedInDateFilters, ...usedInAttributes, ...usedInAttributeFilters].filter(
-                isCatalogDateDataset,
-            ),
-            (d) => serializeObjRef(d.dataSet.ref),
-        ).map((d) => [d.dataSet.title, sanitizeDateDatasetTitle(d)]),
+        allAvailableDateDatasets.map((d) => [d.dataSet.title, sanitizeDateDatasetTitle(d)]),
     );
 
     const result: InsightDateDatasets = {
@@ -299,6 +301,7 @@ function* queryService(
         usedInAttributeFilters,
         dateDatasetDisplayNames,
         mostImportantFromInsight,
+        allAvailableDateDatasets,
     };
 
     return result;

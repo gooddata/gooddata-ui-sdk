@@ -124,7 +124,18 @@ export {
     ExtendedDashboardLayoutSection,
     RelativeIndex,
 } from "./types/layoutTypes";
-export { WidgetFilterSettings, WidgetHeader } from "./types/widgetTypes";
+export {
+    FilterOp,
+    FilterOpReplaceAll,
+    FilterOpUnignoreAttributeFilter,
+    FilterOpIgnoreAttributeFilter,
+    FilterOpReplaceAttributeIgnores,
+    FilterOpDisableDateFilter,
+    FilterOpEnableDateFilter,
+    FilterOperations,
+    WidgetFilterOperation,
+    WidgetHeader,
+} from "./types/widgetTypes";
 
 export * from "./commands";
 export * from "./events";
