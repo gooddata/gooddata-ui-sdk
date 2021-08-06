@@ -11,7 +11,7 @@ import {
     IInsightWidget,
     IKpiWidget,
 } from "@gooddata/sdk-backend-spi";
-import { idRef, IInsight, insightId, uriRef } from "@gooddata/sdk-model";
+import { idRef, IInsight, insightId, isObjRef, ObjRef, uriRef } from "@gooddata/sdk-model";
 import { InsightPlaceholderWidget, KpiPlaceholderWidget } from "../types/layoutTypes";
 import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
@@ -218,12 +218,18 @@ export const TestInsightItem: IDashboardLayoutItem<IInsightWidget> = createTestI
     PivotTableWithRowAndColumnAttributes,
 );
 
-export function createTestInsightItem(insight: IInsight): IDashboardLayoutItem<IInsightWidget> {
+export function createTestInsightItem(
+    insightOrInsightRef: IInsight | ObjRef,
+): IDashboardLayoutItem<IInsightWidget> {
+    const insightRef = isObjRef(insightOrInsightRef)
+        ? insightOrInsightRef
+        : idRef(insightId(insightOrInsightRef), "insight");
+
     return {
         type: "IDashboardLayoutItem",
         widget: {
             type: "insight",
-            insight: idRef(insightId(insight), "insight"),
+            insight: insightRef,
             ref: idRef("newWidget"),
             uri: "newWidgetUri",
             identifier: "newWidgetIdentifier",
