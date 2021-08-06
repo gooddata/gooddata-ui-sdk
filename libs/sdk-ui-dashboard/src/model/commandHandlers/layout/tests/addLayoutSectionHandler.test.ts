@@ -2,6 +2,7 @@
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import {
+    createTestInsightItem,
     EmptyDashboardIdentifier,
     SimpleDashboardIdentifier,
     TestCorrelation,
@@ -14,6 +15,7 @@ import { addLayoutSection, undoLayoutChanges } from "../../../commands";
 import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionAdded } from "../../../events";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
 import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
+import { uriRef } from "@gooddata/sdk-model";
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {
@@ -111,6 +113,16 @@ describe("add layout section handler", () => {
         it("should fail if bad section placement index is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
                 addLayoutSection(1, undefined, undefined, TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if attempting to add item with non-existent insight", async () => {
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, {}, [createTestInsightItem(uriRef("does-not-exist"))], TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

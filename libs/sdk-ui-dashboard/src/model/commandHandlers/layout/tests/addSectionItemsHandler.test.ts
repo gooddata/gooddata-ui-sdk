@@ -3,6 +3,7 @@
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import {
     ComplexDashboardIdentifier,
+    createTestInsightItem,
     SimpleDashboardIdentifier,
     TestCorrelation,
     TestInsightItem,
@@ -14,6 +15,7 @@ import { DashboardCommandFailed, DashboardLayoutSectionItemsAdded } from "../../
 import { addSectionItem, undoLayoutChanges } from "../../../commands";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
 import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
+import { uriRef } from "@gooddata/sdk-model";
 
 describe("add section items handler", () => {
     describe("for any dashboard", () => {
@@ -61,6 +63,16 @@ describe("add section items handler", () => {
         it("should fail if bad item index is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
                 addSectionItem(0, 4, TestKpiPlaceholderItem, TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if attempting to add item with non-existent insight", async () => {
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                addSectionItem(0, 4, createTestInsightItem(uriRef("does-not-exist")), TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

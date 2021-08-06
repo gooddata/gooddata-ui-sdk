@@ -4,7 +4,7 @@ import { DashboardContext } from "../../types/commonTypes";
 import { AddSectionItems } from "../../commands";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation";
 import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
@@ -13,10 +13,9 @@ import { layoutActions } from "../../state/layout";
 import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps";
 import { selectInsightsMap } from "../../state/insights/insightsSelectors";
-import { PromiseFnReturnType } from "../../types/sagas";
-import { loadInsightsForDashboardItems } from "./common/loadMissingInsights";
 import { batchActions } from "redux-batched-actions";
 import { insightsActions } from "../../state/insights";
+import { validateAndNormalizeItems } from "./validation/itemValidation";
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;
@@ -71,7 +70,7 @@ function validateAndResolve(commandCtx: AddSectionItemsContext) {
     };
 }
 
-// TODO: this needs to handle calculation of the date dataset to use for the items
+// TODO: this needs to include validation of the filter settings
 export function* addSectionItemsHandler(
     ctx: DashboardContext,
     cmd: AddSectionItems,
@@ -85,22 +84,24 @@ export function* addSectionItemsHandler(
     };
 
     const { stashValidationResult, section } = validateAndResolve(commandCtx);
-    const { itemIndex, sectionIndex } = cmd.payload;
+    const {
+        payload: { itemIndex, sectionIndex },
+    } = cmd;
 
-    const insightsToAdd: PromiseFnReturnType<typeof loadInsightsForDashboardItems> = yield call(
-        loadInsightsForDashboardItems,
+    const normalizationResult: SagaReturnType<typeof validateAndNormalizeItems> = yield call(
+        validateAndNormalizeItems,
         ctx,
-        commandCtx.availableInsights,
         stashValidationResult.resolved,
+        cmd,
     );
 
     yield put(
         batchActions([
-            insightsActions.addInsights(insightsToAdd),
+            insightsActions.addInsights(normalizationResult.resolvedInsights.loaded),
             layoutActions.addSectionItems({
                 sectionIndex,
                 itemIndex,
-                items: stashValidationResult.resolved,
+                items: normalizationResult.normalizedItems,
                 usedStashes: stashValidationResult.existing,
                 undo: {
                     cmd,
