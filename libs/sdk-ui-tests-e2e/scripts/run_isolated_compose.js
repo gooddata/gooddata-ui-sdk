@@ -34,6 +34,7 @@ async function main() {
         const filter = filterArg ? filterArg.slice("--filter=".length) : "";
 
         dotenv.config({ path: ".env" });
+
         const { HOST, USER_NAME, PASSWORD, CYPRESS_HOST } = process.env;
         let { TEST_WORKSPACE_ID } = process.env;
         if (recording && !HOST && !USER_NAME && !PASSWORD && !TEST_WORKSPACE_ID) {

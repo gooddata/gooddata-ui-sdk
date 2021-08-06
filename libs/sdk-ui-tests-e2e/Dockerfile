@@ -8,8 +8,8 @@ ENV FORCE_COLOR 0
 
 FROM harbor.intgdc.com/3rdparty/nginxinc/nginx-unprivileged:1.17.2-alpine
 
-COPY --from=build-stage /nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build-stage /scenarios/build /usr/share/nginx/html/gooddata-ui-sdk/
+COPY --from=build-stage ./libs/sdk-ui-tests-e2e/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build-stage ./libs/sdk-ui-tests-e2e/scenarios/build /usr/share/nginx/html/gooddata-ui-sdk/
 
 ARG GIT_COMMIT=unspecified
 LABEL image_name="Gooddata ui sdk Scenarios"

@@ -912,7 +912,7 @@
     },
     {
       "name": "styled-jsx",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "stylelint",
