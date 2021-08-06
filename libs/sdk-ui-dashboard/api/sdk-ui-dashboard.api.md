@@ -2448,6 +2448,12 @@ export const selectAllCatalogAttributesMap: OutputSelector<DashboardState, ObjRe
 // @alpha
 export const selectAllCatalogDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
 
+// @alpha
+export const selectAllInsightWidgets: OutputSelector<DashboardState, IInsightWidget[], (res: IWidget[]) => IInsightWidget[]>;
+
+// @alpha
+export const selectAllKpiWidgets: OutputSelector<DashboardState, IKpiWidget[], (res: IWidget[]) => IKpiWidget[]>;
+
 // @alpha (undocumented)
 export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICatalogAttribute | ICatalogDateAttribute)[], (res1: ICatalogAttribute[], res2: ICatalogDateAttribute[]) => (ICatalogAttribute | ICatalogDateAttribute)[]>;
 

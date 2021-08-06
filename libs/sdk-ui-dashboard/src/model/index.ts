@@ -60,6 +60,8 @@ export {
     selectBasicLayout,
     selectWidgetByRef,
     selectWidgetsMap,
+    selectAllInsightWidgets,
+    selectAllKpiWidgets,
 } from "./state/layout/layoutSelectors";
 export { DateFilterConfigState } from "./state/dateFilterConfig/dateFilterConfigState";
 export {
