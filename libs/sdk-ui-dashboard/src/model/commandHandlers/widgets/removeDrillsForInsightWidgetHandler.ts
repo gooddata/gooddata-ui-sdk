@@ -24,7 +24,7 @@ export function* removeDrillsForInsightWidgetHandler(
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
     const { ref: widgetRef, drills: currentInsightDrills } = insightWidget;
 
-    const drillToRemove = validateRemoveDrillsByOrigins(origins, currentInsightDrills, ctx, correlationId);
+    const drillToRemove = validateRemoveDrillsByOrigins(origins, currentInsightDrills, ctx, cmd);
 
     const notModifiedDrillDefinition = currentInsightDrills.filter(
         (drillItem) => !existsDrillDefinitionInArray(drillItem, drillToRemove),

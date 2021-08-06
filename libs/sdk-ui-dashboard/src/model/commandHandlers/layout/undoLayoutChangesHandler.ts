@@ -30,8 +30,8 @@ export function* undoLayoutChangesHandler(
     if (undoUpToIncludingCmd < 0 || undoUpToIncludingCmd >= undoableCommands.length) {
         throw invalidArgumentsProvided(
             ctx,
+            cmd,
             `Undo point selector returned result out of bounds. Undoable commands: ${undoableCommands.length}. Got index: ${undoUpToIncludingCmd}`,
-            cmd.correlationId,
         );
     }
 

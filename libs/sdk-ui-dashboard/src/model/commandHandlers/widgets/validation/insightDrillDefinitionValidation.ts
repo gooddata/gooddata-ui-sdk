@@ -5,16 +5,17 @@ import { invalidArgumentsProvided } from "../../../events/general";
 import { DashboardContext } from "../../../types/commonTypes";
 import stringify from "json-stable-stringify";
 import { validateDrillDefinitionOrigin } from "../../../../_staging/drills/InsightDrillDefinitionUtils";
-import { IDrillTargets } from "../../../../model/state/drillTargets/drillTargetsTypes";
+import { IDrillTargets } from "../../../state/drillTargets/drillTargetsTypes";
+import { IDashboardCommand } from "../../../commands";
 
 export function validateInsightDrillDefinition(
     drillDefinition: InsightDrillDefinition,
     drillTargets: IDrillTargets | undefined,
     ctx: DashboardContext,
-    correlationId: string | undefined,
+    cmd: IDashboardCommand,
 ): InsightDrillDefinition {
     if (!drillTargets?.availableDrillTargets) {
-        throw invalidArgumentsProvided(ctx, `Drill targets not set`, correlationId);
+        throw invalidArgumentsProvided(ctx, cmd, `Drill targets not set`);
     }
 
     try {
@@ -24,10 +25,10 @@ export function validateInsightDrillDefinition(
 
         throw invalidArgumentsProvided(
             ctx,
+            cmd,
             `Invalid drill origin for InsightDrillDefinition: ${stringify(drillDefinition, {
                 space: 0,
             })}. Error: ${messageDetail}`,
-            correlationId,
         );
     }
 }

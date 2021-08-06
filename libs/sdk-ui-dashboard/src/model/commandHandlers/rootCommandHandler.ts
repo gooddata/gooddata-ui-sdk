@@ -132,9 +132,9 @@ export function* rootCommandHandler(): SagaIterator<void> {
                 yield dispatchDashboardEvent(
                     internalErrorOccurred(
                         dashboardContext,
+                        command,
                         `Internal error has occurred while handling ${command.type}`,
                         e,
-                        command.correlationId,
                     ),
                 );
             }

@@ -574,6 +574,7 @@ export interface DashboardCommandFailed extends IDashboardEvent {
         readonly reason: ActionFailedErrorReason;
         readonly message: string;
         readonly error?: Error;
+        readonly command: IDashboardCommand;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.COMMAND.FAILED";

@@ -27,11 +27,7 @@ export function* changeAttributeFilterSelectionHandler(
     );
 
     if (!affectedFilter) {
-        throw invalidArgumentsProvided(
-            ctx,
-            `Filter with filterLocalId ${filterLocalId} not found.`,
-            cmd.correlationId,
-        );
+        throw invalidArgumentsProvided(ctx, cmd, `Filter with filterLocalId ${filterLocalId} not found.`);
     }
 
     yield put(

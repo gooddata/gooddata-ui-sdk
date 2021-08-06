@@ -19,6 +19,7 @@ import {
 import { localIdRef, uriRef } from "@gooddata/sdk-model";
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
 import { DashboardInsightWidgetDrillsRemoved } from "../../../events/insight";
+import { DashboardCommandFailed } from "../../../events";
 
 describe("removeDrillsForInsightWidgetHandler", () => {
     const fromMeasureLocalIdRef = localIdRef(SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier);
@@ -93,27 +94,39 @@ describe("removeDrillsForInsightWidgetHandler", () => {
 
     describe("validate", () => {
         it("should fail if trying to remove drills of non-existent widget", async () => {
-            const event: DashboardInsightWidgetDrillsRemoved = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
                 removeDrillsForInsightWidget(uriRef("missing"), [fromMeasureLocalIdRef], TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot();
+            expect(event.payload).toMatchSnapshot({
+                command: {
+                    meta: {
+                        uuid: expect.any(String),
+                    },
+                },
+            });
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
         it("should fail if trying to remove drills of kpi widget", async () => {
-            const event: DashboardInsightWidgetDrillsRemoved = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
                 removeDrillsForInsightWidget(KpiWidgetRef, [fromMeasureLocalIdRef], TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot();
+            expect(event.payload).toMatchSnapshot({
+                command: {
+                    meta: {
+                        uuid: expect.any(String),
+                    },
+                },
+            });
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
         it("should fail if trying to remove drills where origin is not specified by localIdRef", async () => {
-            const event: DashboardInsightWidgetDrillsRemoved = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
                 removeDrillsForInsightWidget(
                     SimpleSortedTableWidgetRef,
                     [uriRef("not-valid-ref")],
@@ -122,12 +135,18 @@ describe("removeDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot();
+            expect(event.payload).toMatchSnapshot({
+                command: {
+                    meta: {
+                        uuid: expect.any(String),
+                    },
+                },
+            });
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
         it("should fail if trying to remove drills where origin missing in widget drills", async () => {
-            const event: DashboardInsightWidgetDrillsRemoved = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
                 removeDrillsForInsightWidget(
                     SimpleSortedTableWidgetRef,
                     [localIdRef("missing")],
@@ -136,7 +155,13 @@ describe("removeDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot();
+            expect(event.payload).toMatchSnapshot({
+                command: {
+                    meta: {
+                        uuid: expect.any(String),
+                    },
+                },
+            });
             expect(event.correlationId).toEqual(TestCorrelation);
         });
     });

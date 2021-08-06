@@ -100,7 +100,13 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot();
+            expect(event.payload).toMatchSnapshot({
+                command: {
+                    meta: {
+                        uuid: expect.any(String),
+                    },
+                },
+            });
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -112,7 +118,13 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot();
+            expect(event.payload).toMatchSnapshot({
+                command: {
+                    meta: {
+                        uuid: expect.any(String),
+                    },
+                },
+            });
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -129,7 +141,13 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot();
+            expect(event.payload).toMatchSnapshot({
+                command: {
+                    meta: {
+                        uuid: expect.any(String),
+                    },
+                },
+            });
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -150,7 +168,13 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot();
+            expect(event.payload).toMatchSnapshot({
+                command: {
+                    meta: {
+                        uuid: expect.any(String),
+                    },
+                },
+            });
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -171,7 +195,13 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot();
+            expect(event.payload).toMatchSnapshot({
+                command: {
+                    meta: {
+                        uuid: expect.any(String),
+                    },
+                },
+            });
             expect(event.correlationId).toEqual(TestCorrelation);
         });
     });

@@ -27,15 +27,14 @@ function validateAndResolve(commandCtx: MoveSectionItemContext) {
         layout,
         cmd: {
             payload: { sectionIndex, toSectionIndex, itemIndex, toItemIndex },
-            correlationId,
         },
     } = commandCtx;
 
     if (!validateSectionExists(layout, sectionIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to move item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-            correlationId,
         );
     }
 
@@ -44,8 +43,8 @@ function validateAndResolve(commandCtx: MoveSectionItemContext) {
     if (!validateItemExists(fromSection, itemIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to move non-existent item from index ${itemIndex}. There are only ${fromSection.items.length} items.`,
-            correlationId,
         );
     }
 
@@ -54,8 +53,8 @@ function validateAndResolve(commandCtx: MoveSectionItemContext) {
     if (!validateSectionPlacement(layout, toSectionIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to move item to a wrong section at index ${toSectionIndex}. There are currently ${layout.sections.length} sections.`,
-            correlationId,
         );
     }
 
@@ -65,8 +64,8 @@ function validateAndResolve(commandCtx: MoveSectionItemContext) {
     if (!validateItemPlacement(targetSection, toItemIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to move item to a wrong location at index ${toItemIndex}. Target section has ${targetSection.items.length} items.`,
-            correlationId,
         );
     }
 
@@ -78,8 +77,8 @@ function validateAndResolve(commandCtx: MoveSectionItemContext) {
         if (itemIndex === targetItemIndex) {
             throw invalidArgumentsProvided(
                 ctx,
+                commandCtx.cmd,
                 `Attempting to move item to a same place where it already resides ${toItemIndex}.`,
-                correlationId,
             );
         }
     } else {

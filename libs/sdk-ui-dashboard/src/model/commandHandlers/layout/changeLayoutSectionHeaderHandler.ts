@@ -21,8 +21,8 @@ export function* changeLayoutSectionHeaderHandler(
     if (!validateSectionExists(layout, index)) {
         throw invalidArgumentsProvided(
             ctx,
+            cmd,
             `Attempting to modify header of non-existent section at ${index}. There are currently ${layout.sections.length} sections.`,
-            cmd.correlationId,
         );
     }
 

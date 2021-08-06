@@ -36,8 +36,8 @@ export function* removeAttributeFiltersHandler(
     if (invalidLocalIds.length) {
         throw invalidArgumentsProvided(
             ctx,
+            cmd,
             `Invalid filterLocalIds provided. These ids were not found: ${invalidLocalIds.join(", ")}.`,
-            cmd.correlationId,
         );
     }
 

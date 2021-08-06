@@ -11,6 +11,33 @@ Array [
 
 exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill has invalid attribute origin 1`] = `
 Object {
+  "command": Object {
+    "correlationId": "testCorrelationId",
+    "meta": Object {
+      "uuid": Any<String>,
+    },
+    "payload": Object {
+      "drills": Array [
+        Object {
+          "origin": Object {
+            "attribute": Object {
+              "localIdentifier": "some origin",
+            },
+            "type": "drillFromAttribute",
+          },
+          "target": Object {
+            "identifier": "aeis6NlXcL7X",
+          },
+          "transition": "in-place",
+          "type": "drillToDashboard",
+        },
+      ],
+      "ref": Object {
+        "uri": "/gdc/md/referenceworkspace/obj/1310",
+      },
+    },
+    "type": "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
+  },
   "message": "Invalid drill origin for InsightDrillDefinition: {\\"origin\\":{\\"attribute\\":{\\"localIdentifier\\":\\"some origin\\"},\\"type\\":\\"drillFromAttribute\\"},\\"target\\":{\\"identifier\\":\\"aeis6NlXcL7X\\"},\\"transition\\":\\"in-place\\",\\"type\\":\\"drillToDashboard\\"}. Error: InsightDrillDefinition origin is not valid attribute drillTarget",
   "reason": "USER_ERROR",
 }
@@ -18,6 +45,33 @@ Object {
 
 exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill has invalid measure origin 1`] = `
 Object {
+  "command": Object {
+    "correlationId": "testCorrelationId",
+    "meta": Object {
+      "uuid": Any<String>,
+    },
+    "payload": Object {
+      "drills": Array [
+        Object {
+          "origin": Object {
+            "measure": Object {
+              "localIdentifier": "some origin",
+            },
+            "type": "drillFromMeasure",
+          },
+          "target": Object {
+            "identifier": "aeis6NlXcL7X",
+          },
+          "transition": "in-place",
+          "type": "drillToDashboard",
+        },
+      ],
+      "ref": Object {
+        "uri": "/gdc/md/referenceworkspace/obj/1310",
+      },
+    },
+    "type": "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
+  },
   "message": "Invalid drill origin for InsightDrillDefinition: {\\"origin\\":{\\"measure\\":{\\"localIdentifier\\":\\"some origin\\"},\\"type\\":\\"drillFromMeasure\\"},\\"target\\":{\\"identifier\\":\\"aeis6NlXcL7X\\"},\\"transition\\":\\"in-place\\",\\"type\\":\\"drillToDashboard\\"}. Error: InsightDrillDefinition origin is not valid measure drillTarget",
   "reason": "USER_ERROR",
 }
@@ -25,6 +79,33 @@ Object {
 
 exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill targets are not set 1`] = `
 Object {
+  "command": Object {
+    "correlationId": "testCorrelationId",
+    "meta": Object {
+      "uuid": Any<String>,
+    },
+    "payload": Object {
+      "drills": Array [
+        Object {
+          "origin": Object {
+            "attribute": Object {
+              "localIdentifier": "3b196b9f8de04b61ba37762fa28fcf4f",
+            },
+            "type": "drillFromAttribute",
+          },
+          "target": Object {
+            "identifier": "aeis6NlXcL7X",
+          },
+          "transition": "in-place",
+          "type": "drillToDashboard",
+        },
+      ],
+      "ref": Object {
+        "uri": "/gdc/md/referenceworkspace/obj/1310",
+      },
+    },
+    "type": "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
+  },
   "message": "Drill targets not set",
   "reason": "USER_ERROR",
 }
@@ -32,6 +113,33 @@ Object {
 
 exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills of kpi widget 1`] = `
 Object {
+  "command": Object {
+    "correlationId": "testCorrelationId",
+    "meta": Object {
+      "uuid": Any<String>,
+    },
+    "payload": Object {
+      "drills": Array [
+        Object {
+          "origin": Object {
+            "attribute": Object {
+              "localIdentifier": "3b196b9f8de04b61ba37762fa28fcf4f",
+            },
+            "type": "drillFromAttribute",
+          },
+          "target": Object {
+            "identifier": "aeis6NlXcL7X",
+          },
+          "transition": "in-place",
+          "type": "drillToDashboard",
+        },
+      ],
+      "ref": Object {
+        "uri": "/gdc/md/referenceworkspace/obj/1386",
+      },
+    },
+    "type": "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
+  },
   "message": "Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1386\\"} exists but is not an insight widget.",
   "reason": "USER_ERROR",
 }
@@ -39,6 +147,33 @@ Object {
 
 exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills of non-existent widget 1`] = `
 Object {
+  "command": Object {
+    "correlationId": "testCorrelationId",
+    "meta": Object {
+      "uuid": Any<String>,
+    },
+    "payload": Object {
+      "drills": Array [
+        Object {
+          "origin": Object {
+            "attribute": Object {
+              "localIdentifier": "3b196b9f8de04b61ba37762fa28fcf4f",
+            },
+            "type": "drillFromAttribute",
+          },
+          "target": Object {
+            "identifier": "aeis6NlXcL7X",
+          },
+          "transition": "in-place",
+          "type": "drillToDashboard",
+        },
+      ],
+      "ref": Object {
+        "uri": "missing",
+      },
+    },
+    "type": "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
+  },
   "message": "Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}.",
   "reason": "USER_ERROR",
 }
