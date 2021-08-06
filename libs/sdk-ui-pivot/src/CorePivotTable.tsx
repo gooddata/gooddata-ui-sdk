@@ -219,6 +219,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.internal = new InternalTableState();
         this.boundAgGridCallbacks = this.createBoundAgGridCallbacks();
         this.pivotTableId = uuidv4().replace(/-/g, "");
+        this.onLoadingChanged = this.onLoadingChanged.bind(this);
     }
 
     //
@@ -737,6 +738,9 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         if (this.props.execution.fingerprint() === execution.fingerprint()) {
             this.setState({ error: error.getMessage() });
+
+            // update loading state when an error occurs
+            this.onLoadingChanged({ isLoading: false });
 
             onExportReady!(createExportErrorFunction(error));
 
