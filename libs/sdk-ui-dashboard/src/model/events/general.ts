@@ -4,6 +4,7 @@ import { IDashboardEvent } from "./base";
 import { DashboardContext } from "../types/commonTypes";
 import isEmpty from "lodash/isEmpty";
 import { IDashboardQuery } from "../queries";
+import { IDashboardCommand } from "../commands";
 
 /**
  * @alpha
@@ -37,21 +38,27 @@ export interface DashboardCommandFailed extends IDashboardEvent {
          * Error that has occurred and caused the command to fail.
          */
         readonly error?: Error;
+
+        /**
+         * The command that failed.
+         */
+        readonly command: IDashboardCommand;
     };
 }
 
 export function internalErrorOccurred(
     ctx: DashboardContext,
+    command: IDashboardCommand,
     message: string,
     error?: Error,
-    correlationId?: string,
 ): DashboardCommandFailed {
     return {
         type: "GDC.DASH/EVT.COMMAND.FAILED",
         ctx,
-        correlationId,
+        correlationId: command.correlationId,
         payload: {
             reason: "INTERNAL_ERROR",
+            command,
             message,
             error,
         },
@@ -60,15 +67,16 @@ export function internalErrorOccurred(
 
 export function invalidArgumentsProvided(
     ctx: DashboardContext,
+    command: IDashboardCommand,
     message: string,
-    correlationId?: string,
 ): DashboardCommandFailed {
     return {
         type: "GDC.DASH/EVT.COMMAND.FAILED",
         ctx,
-        correlationId,
+        correlationId: command.correlationId,
         payload: {
             reason: "USER_ERROR",
+            command,
             message,
         },
     };

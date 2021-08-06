@@ -22,7 +22,6 @@ function validateAndResolve(commandCtx: RemoveSectionItemContext) {
         ctx,
         cmd: {
             payload: { sectionIndex, itemIndex },
-            correlationId,
         },
         layout,
     } = commandCtx;
@@ -30,8 +29,8 @@ function validateAndResolve(commandCtx: RemoveSectionItemContext) {
     if (!validateSectionExists(layout, sectionIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to remove item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-            correlationId,
         );
     }
 
@@ -40,8 +39,8 @@ function validateAndResolve(commandCtx: RemoveSectionItemContext) {
     if (!validateItemExists(fromSection, itemIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to remove non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
-            correlationId,
         );
     }
 

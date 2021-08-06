@@ -34,15 +34,14 @@ function validateAndResolve(commandCtx: AddLayoutSectionContext): StashValidatio
         stash,
         cmd: {
             payload: { index, initialItems = [] },
-            correlationId,
         },
     } = commandCtx;
 
     if (!validateSectionPlacement(layout, index)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to insert new section at wrong index ${index}. There are currently ${layout.sections.length} sections.`,
-            correlationId,
         );
     }
 
@@ -51,10 +50,10 @@ function validateAndResolve(commandCtx: AddLayoutSectionContext): StashValidatio
     if (!isEmpty(stashValidationResult.missing)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
                 ", ",
             )}`,
-            correlationId,
         );
     }
 

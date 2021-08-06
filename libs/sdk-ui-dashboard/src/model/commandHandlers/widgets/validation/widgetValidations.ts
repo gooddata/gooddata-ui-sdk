@@ -31,7 +31,6 @@ export function validateExistingInsightWidget(
     ctx: DashboardContext,
 ): IInsightWidget {
     const {
-        correlationId,
         payload: { ref },
     } = cmd;
     const widget = widgets.get(ref);
@@ -39,16 +38,16 @@ export function validateExistingInsightWidget(
     if (!widget) {
         throw invalidArgumentsProvided(
             ctx,
+            cmd,
             `Cannot find insight widget with ref: ${serializeObjRef(ref)}.`,
-            correlationId,
         );
     }
 
     if (!isInsightWidget(widget)) {
         throw invalidArgumentsProvided(
             ctx,
+            cmd,
             `Widget with ref: ${serializeObjRef(ref)} exists but is not an insight widget.`,
-            correlationId,
         );
     }
 

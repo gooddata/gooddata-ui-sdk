@@ -11,6 +11,7 @@ import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver";
 import isEmpty from "lodash/isEmpty";
 import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
 import { ICatalogDateDataset, IDashboardAttributeFilter, IInsightWidget } from "@gooddata/sdk-backend-spi";
+import { IDashboardCommand } from "../../../commands";
 
 /**
  * This generator validates that a date dataset with the provided ref can be used for date filtering of insight in
@@ -25,15 +26,15 @@ import { ICatalogDateDataset, IDashboardAttributeFilter, IInsightWidget } from "
  * the subsequent calls will be instant.
  *
  * @param ctx - dashboard context in which the validation is done
+ * @param cmd - dashboard command it the context of which the validation is done
  * @param widget - insight that whose date filter is about to change
  * @param dateDataSet - ref of a date dataset to validate
- * @param correlationId - correlation id to use in any events that may be raised during the validation
  */
 export function* validateDatasetForInsightWidgetDateFilter(
     ctx: DashboardContext,
+    cmd: IDashboardCommand,
     widget: IInsightWidget,
     dateDataSet: ObjRef,
-    correlationId: string | undefined,
 ): SagaIterator<ICatalogDateDataset> {
     const insightDateDatasets: InsightDateDatasets = yield call(
         query,
@@ -46,10 +47,10 @@ export function* validateDatasetForInsightWidgetDateFilter(
     if (!catalogDataSet) {
         throw invalidArgumentsProvided(
             ctx,
-            `Attempting to use date dataset ${objRefToString(dateDataSet)} 
-            to filter insight widget ${objRefToString(widget.ref)} but the data set either does not exist or 
+            cmd,
+            `Attempting to use date dataset ${objRefToString(dateDataSet)}
+            to filter insight widget ${objRefToString(widget.ref)} but the data set either does not exist or
             is not valid to use for filtering the insight.`,
-            correlationId,
         );
     }
 
@@ -74,13 +75,13 @@ export function* validateDatasetForInsightWidgetDateFilter(
  *    and will eventually bomb
  *
  * @param ctx - dashboard context in which the validation is done
+ * @param cmd - dashboard command in the context of which the validation is done
  * @param toIgnore - refs of display forms used in attribute filters that should be ignored
- * @param correlationId - correlation id to use in any events that may be raised during the validation
  */
 export function* validateAttributeFiltersToIgnore(
     ctx: DashboardContext,
+    cmd: IDashboardCommand,
     toIgnore: ObjRef[],
-    correlationId: string | undefined,
 ): SagaIterator<IDashboardAttributeFilter[]> {
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,
@@ -92,10 +93,10 @@ export function* validateAttributeFiltersToIgnore(
     if (!isEmpty(missing)) {
         throw invalidArgumentsProvided(
             ctx,
+            cmd,
             `Attempting to disable attribute filters but some of the display form refs to disable filters by do not exist: ${missing
                 .map(objRefToString)
                 .join(", ")}`,
-            correlationId,
         );
     }
 
@@ -120,10 +121,10 @@ export function* validateAttributeFiltersToIgnore(
     if (!isEmpty(badIgnores)) {
         throw invalidArgumentsProvided(
             ctx,
+            cmd,
             `Attempting to disable attribute filters but some of the display form refs to disable filters by are not used for filtering at all: ${badIgnores
                 .map(objRefToString)
                 .join(", ")}`,
-            correlationId,
         );
     }
 

@@ -39,8 +39,8 @@ export function* addAttributeFilterHandler(
     if (!canBeAdded) {
         throw invalidArgumentsProvided(
             ctx,
+            cmd,
             `Filter for the displayForm ${objRefToString(displayForm)} already exists in the filter context.`,
-            cmd.correlationId,
         );
     }
 

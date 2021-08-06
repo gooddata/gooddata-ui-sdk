@@ -29,11 +29,7 @@ export function* moveAttributeFilterHandler(
     );
 
     if (!affectedFilter) {
-        throw invalidArgumentsProvided(
-            ctx,
-            `Filter with filterLocalId ${filterLocalId} not found.`,
-            cmd.correlationId,
-        );
+        throw invalidArgumentsProvided(ctx, cmd, `Filter with filterLocalId ${filterLocalId} not found.`);
     }
 
     // validate target index
@@ -46,8 +42,8 @@ export function* moveAttributeFilterHandler(
     if (index > maximalTargetIndex || index < -1) {
         throw invalidArgumentsProvided(
             ctx,
+            cmd,
             `Invalid index (${index}) provided, it must be between -1 and ${maximalTargetIndex}`,
-            cmd.correlationId,
         );
     }
 

@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { RemoveDrillsSelector } from "../../../commands/";
+import { IDashboardCommand, RemoveDrillsSelector } from "../../../commands/";
 import { InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
 import { DashboardContext } from "../../../types/commonTypes";
 import { invalidArgumentsProvided } from "../../../events/general";
@@ -14,7 +14,7 @@ export function validateRemoveDrillsByOrigins(
     drillSelector: RemoveDrillsSelector,
     drills: InsightDrillDefinition[],
     ctx: DashboardContext,
-    correlationId: string | undefined,
+    cmd: IDashboardCommand,
 ): InsightDrillDefinition[] {
     if (isAllDrillSelector(drillSelector)) {
         return drills;
@@ -28,8 +28,8 @@ export function validateRemoveDrillsByOrigins(
 
             throw invalidArgumentsProvided(
                 ctx,
+                cmd,
                 `Invalid measure or attribute origin: ${objRefToString(drillRef)}. Error: ${messageDetail}`,
-                correlationId,
             );
         }
     });

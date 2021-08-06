@@ -21,7 +21,6 @@ function validateAndResolve(commandCtx: MoveLayoutSectionContext) {
         ctx,
         cmd: {
             payload: { sectionIndex, toIndex },
-            correlationId,
         },
         layout,
     } = commandCtx;
@@ -29,16 +28,16 @@ function validateAndResolve(commandCtx: MoveLayoutSectionContext) {
     if (!validateSectionExists(layout, sectionIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to move non-existent section from index ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-            correlationId,
         );
     }
 
     if (!validateSectionPlacement(layout, toIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to move section to a wrong index ${toIndex}. There are currently ${layout.sections.length} sections.`,
-            correlationId,
         );
     }
 
@@ -47,8 +46,8 @@ function validateAndResolve(commandCtx: MoveLayoutSectionContext) {
     if (sectionIndex === absoluteIndex) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to move section to a same index where it already resides ${sectionIndex}.`,
-            correlationId,
         );
     }
 

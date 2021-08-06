@@ -35,7 +35,7 @@ export function* modifyDrillsForInsightWidgetHandler(
     const { drills: currentInsightDrills = [] } = insightWidget;
 
     const validatedDrillDefinition = drillsToModify.map((drillItem) =>
-        validateInsightDrillDefinition(drillItem, drillTargets, ctx, correlationId),
+        validateInsightDrillDefinition(drillItem, drillTargets, ctx, cmd),
     );
 
     const addedDrillDefinition = validatedDrillDefinition.filter(

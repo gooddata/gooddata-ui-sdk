@@ -34,11 +34,7 @@ export function* setAttributeFilterParentHandler(
     );
 
     if (!affectedFilter) {
-        throw invalidArgumentsProvided(
-            ctx,
-            `Filter with localId ${filterLocalId} was not found.`,
-            cmd.correlationId,
-        );
+        throw invalidArgumentsProvided(ctx, cmd, `Filter with localId ${filterLocalId} was not found.`);
     }
 
     const validationResult: SagaReturnType<typeof validateAttributeFilterParents> = yield call(
@@ -56,7 +52,7 @@ export function* setAttributeFilterParentHandler(
                   "Only existing filters can be used as parent filters."
                 : "Some of the parents provided cannot be used because the 'over' parameter is invalid for the target filter.";
 
-        throw invalidArgumentsProvided(ctx, message, cmd.correlationId);
+        throw invalidArgumentsProvided(ctx, cmd, message);
     }
 
     yield put(

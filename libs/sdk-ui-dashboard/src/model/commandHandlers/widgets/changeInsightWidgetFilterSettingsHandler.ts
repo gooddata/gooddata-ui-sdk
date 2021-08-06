@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes";
-import { ChangeInsightWidgetFilterSettings } from "../../commands";
+import { ChangeInsightWidgetFilterSettings, IDashboardCommand } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { DashboardInsightWidgetFilterSettingsChanged } from "../../events";
 import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
@@ -96,29 +96,24 @@ function getIgnoredAttributeFilters(
 
 function* replaceFilterSettings(
     ctx: DashboardContext,
+    cmd: IDashboardCommand,
     widget: IInsightWidget,
     op: FilterOpReplaceAll,
-    correlationId: string | undefined,
 ): SagaIterator<FilterOpResult> {
     let dateDataSet: ICatalogDateDataset | undefined;
     if (op.dateDatasetForFiltering) {
         dateDataSet = yield call(
             validateDatasetForInsightWidgetDateFilter,
             ctx,
+            cmd,
             widget,
             op.dateDatasetForFiltering,
-            correlationId,
         );
     }
 
     let ignoredFilters: IDashboardAttributeFilter[] | undefined = undefined;
     if (op.ignoreAttributeFilters) {
-        ignoredFilters = yield call(
-            validateAttributeFiltersToIgnore,
-            ctx,
-            op.ignoreAttributeFilters,
-            correlationId,
-        );
+        ignoredFilters = yield call(validateAttributeFiltersToIgnore, ctx, cmd, op.ignoreAttributeFilters);
     }
 
     return {
@@ -129,8 +124,8 @@ function* replaceFilterSettings(
 
 function* disableDateFilter(
     ctx: DashboardContext,
+    cmd: IDashboardCommand,
     widget: IInsightWidget,
-    correlationId: string | undefined,
 ): SagaIterator<FilterOpResult> {
     const replaceEquivalent: FilterOpReplaceAll = {
         type: "replace",
@@ -138,14 +133,14 @@ function* disableDateFilter(
         ignoreAttributeFilters: toAttributeDisplayFormRefs(widget.ignoreDashboardFilters),
     };
 
-    return yield call(replaceFilterSettings, ctx, widget, replaceEquivalent, correlationId);
+    return yield call(replaceFilterSettings, ctx, cmd, widget, replaceEquivalent);
 }
 
 function* enableDateFilter(
     ctx: DashboardContext,
+    cmd: IDashboardCommand,
     widget: IInsightWidget,
     op: FilterOpEnableDateFilter,
-    correlationId: string | undefined,
 ): SagaIterator<FilterOpResult> {
     const replaceEquivalent: FilterOpReplaceAll = {
         type: "replace",
@@ -153,14 +148,14 @@ function* enableDateFilter(
         ignoreAttributeFilters: toAttributeDisplayFormRefs(widget.ignoreDashboardFilters),
     };
 
-    return yield call(replaceFilterSettings, ctx, widget, replaceEquivalent, correlationId);
+    return yield call(replaceFilterSettings, ctx, cmd, widget, replaceEquivalent);
 }
 
 function* replaceAttributeIgnores(
     ctx: DashboardContext,
+    cmd: IDashboardCommand,
     widget: IInsightWidget,
     op: FilterOpReplaceAttributeIgnores,
-    correlationId: string | undefined,
 ): SagaIterator<FilterOpResult> {
     const replaceEquivalent: FilterOpReplaceAll = {
         type: "replace",
@@ -168,14 +163,14 @@ function* replaceAttributeIgnores(
         ignoreAttributeFilters: op.displayFormRefs,
     };
 
-    return yield call(replaceFilterSettings, ctx, widget, replaceEquivalent, correlationId);
+    return yield call(replaceFilterSettings, ctx, cmd, widget, replaceEquivalent);
 }
 
 function* ignoreAttributeFilter(
     ctx: DashboardContext,
+    cmd: IDashboardCommand,
     widget: IInsightWidget,
     op: FilterOpIgnoreAttributeFilter,
-    correlationId: string | undefined,
 ): SagaIterator<FilterOpResult> {
     const replaceIntermediate: FilterOpReplaceAll = {
         type: "replace",
@@ -186,9 +181,9 @@ function* ignoreAttributeFilter(
     const intermediate: SagaReturnType<typeof replaceFilterSettings> = yield call(
         replaceFilterSettings,
         ctx,
+        cmd,
         widget,
         replaceIntermediate,
-        correlationId,
     );
     const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
@@ -213,9 +208,9 @@ function* ignoreAttributeFilter(
 
 function* unignoreAttributeFilter(
     ctx: DashboardContext,
+    cmd: IDashboardCommand,
     widget: IInsightWidget,
     op: FilterOpUnignoreAttributeFilter,
-    correlationId: string | undefined,
 ): SagaIterator<FilterOpResult> {
     const replaceIntermediate: FilterOpReplaceAll = {
         type: "replace",
@@ -226,9 +221,9 @@ function* unignoreAttributeFilter(
     const intermediate: SagaReturnType<typeof replaceFilterSettings> = yield call(
         replaceFilterSettings,
         ctx,
+        cmd,
         widget,
         replaceIntermediate,
-        correlationId,
     );
     const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
@@ -255,27 +250,26 @@ function* processFilterOp(
 ): SagaIterator<FilterOpResult> {
     const {
         payload: { operation },
-        correlationId,
     } = cmd;
 
     switch (operation.type) {
         case "replace": {
-            return yield call(replaceFilterSettings, ctx, widget, operation, correlationId);
+            return yield call(replaceFilterSettings, ctx, cmd, widget, operation);
         }
         case "disableDateFilter": {
-            return yield call(disableDateFilter, ctx, widget, correlationId);
+            return yield call(disableDateFilter, ctx, cmd, widget);
         }
         case "enableDateFilter": {
-            return yield call(enableDateFilter, ctx, widget, operation, correlationId);
+            return yield call(enableDateFilter, ctx, cmd, widget, operation);
         }
         case "replaceAttributeIgnores": {
-            return yield call(replaceAttributeIgnores, ctx, widget, operation, correlationId);
+            return yield call(replaceAttributeIgnores, ctx, cmd, widget, operation);
         }
         case "ignoreAttributeFilter": {
-            return yield call(ignoreAttributeFilter, ctx, widget, operation, correlationId);
+            return yield call(ignoreAttributeFilter, ctx, cmd, widget, operation);
         }
         case "unignoreAttributeFilter": {
-            return yield call(unignoreAttributeFilter, ctx, widget, operation, correlationId);
+            return yield call(unignoreAttributeFilter, ctx, cmd, widget, operation);
         }
     }
 }

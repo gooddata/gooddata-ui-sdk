@@ -23,7 +23,6 @@ function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
         ctx,
         cmd: {
             payload: { sectionIndex, itemIndex, item },
-            correlationId,
         },
         layout,
         stash,
@@ -32,8 +31,8 @@ function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
     if (!validateSectionExists(layout, sectionIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to replace item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-            correlationId,
         );
     }
 
@@ -42,8 +41,8 @@ function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
     if (!validateItemExists(fromSection, itemIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to replace non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
-            correlationId,
         );
     }
 
@@ -52,10 +51,10 @@ function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
     if (!isEmpty(stashValidationResult.missing)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
                 ", ",
             )}`,
-            correlationId,
         );
     }
 

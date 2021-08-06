@@ -33,14 +33,13 @@ function validateAndResolve(commandCtx: AddSectionItemsContext) {
         stash,
         cmd: {
             payload: { sectionIndex, itemIndex, items },
-            correlationId,
         },
     } = commandCtx;
     if (!validateSectionExists(layout, sectionIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to add items to non-existing layout section at index ${sectionIndex}.`,
-            correlationId,
         );
     }
 
@@ -49,8 +48,8 @@ function validateAndResolve(commandCtx: AddSectionItemsContext) {
     if (!validateItemPlacement(section, itemIndex)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to insert new item at wrong index ${itemIndex}. There are currently ${section.items.length} items.`,
-            correlationId,
         );
     }
 
@@ -59,10 +58,10 @@ function validateAndResolve(commandCtx: AddSectionItemsContext) {
     if (!isEmpty(stashValidationResult.missing)) {
         throw invalidArgumentsProvided(
             ctx,
+            commandCtx.cmd,
             `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
                 ", ",
             )}`,
-            correlationId,
         );
     }
 
