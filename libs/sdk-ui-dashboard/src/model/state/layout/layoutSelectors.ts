@@ -4,7 +4,13 @@ import { ObjRef, objRefToString, serializeObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 import { LayoutState } from "./layoutState";
-import { IDashboardLayout, IDashboardLayoutItem, IWidget } from "@gooddata/sdk-backend-spi";
+import {
+    IDashboardLayout,
+    IDashboardLayoutItem,
+    isInsightWidget,
+    isKpiWidget,
+    IWidget,
+} from "@gooddata/sdk-backend-spi";
 import { isInsightPlaceholderWidget, isKpiPlaceholderWidget } from "../../types/layoutTypes";
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 import memoize from "lodash/memoize";
@@ -143,3 +149,25 @@ export const selectAllFiltersForWidgetByRef = memoize(
     },
     (ref) => ref && serializeObjRef(ref),
 );
+
+const selectAllWidgets = createSelector(selectWidgetsMap, (widgetMap) => {
+    return Array.from(widgetMap.values());
+});
+
+/**
+ * Selects all KPI widgets in the layout.
+ *
+ * @alpha
+ */
+export const selectAllKpiWidgets = createSelector(selectAllWidgets, (allWidgets) => {
+    return allWidgets.filter(isKpiWidget);
+});
+
+/**
+ * Selects all insight widgets in the layout.
+ *
+ * @alpha
+ */
+export const selectAllInsightWidgets = createSelector(selectAllWidgets, (allWidgets) => {
+    return allWidgets.filter(isInsightWidget);
+});
