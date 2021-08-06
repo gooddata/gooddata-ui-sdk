@@ -2606,6 +2606,9 @@ export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<Exten
 export const selectListedDashboards: (state: DashboardState) => IListedDashboard[];
 
 // @alpha
+export const selectListedDashboardsMap: OutputSelector<DashboardState, ObjRefMap<IListedDashboard>, (res: IListedDashboard[]) => ObjRefMap<IListedDashboard>>;
+
+// @alpha
 export const selectLocale: OutputSelector<DashboardState, ILocale, (res: ResolvedDashboardConfig) => ILocale>;
 
 // @alpha

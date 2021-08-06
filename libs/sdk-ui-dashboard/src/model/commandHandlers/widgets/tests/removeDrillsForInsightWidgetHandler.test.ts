@@ -10,6 +10,7 @@ import {
     SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier,
     SimpleSortedTableWidgetRef,
     TestCorrelation,
+    BeforeTestCorrelation,
 } from "../../../tests/Dashboard.fixtures";
 import {
     addDrillTargets,
@@ -27,16 +28,19 @@ describe("removeDrillsForInsightWidgetHandler", () => {
 
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory((tester) => {
+        preloadedTesterFactory(async (tester) => {
             Tester = tester;
             Tester.dispatch(
                 addDrillTargets(
                     SimpleSortedTableWidgetRef,
                     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
-                    TestCorrelation,
+                    BeforeTestCorrelation,
                 ),
             );
-            Tester.dispatch(modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills));
+            await Tester.dispatchAndWaitFor(
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, BeforeTestCorrelation),
+                "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
+            );
             Tester.resetMonitors();
         }, SimpleDashboardIdentifier),
     );
@@ -71,7 +75,7 @@ describe("removeDrillsForInsightWidgetHandler", () => {
             const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(1);
-            expect(widgetState?.drills).toContain(drillToDashboardFromProductAttributeDefinition);
+            expect(widgetState?.drills).toContainEqual(drillToDashboardFromProductAttributeDefinition);
         });
 
         it("should remove all drills for widget and emit event", async () => {
@@ -81,8 +85,8 @@ describe("removeDrillsForInsightWidgetHandler", () => {
             );
 
             expect(event.payload.removed.length).toBe(2);
-            expect(event.payload.removed).toContain(drillToToInsightFromWonMeasureDefinition);
-            expect(event.payload.removed).toContain(drillToDashboardFromProductAttributeDefinition);
+            expect(event.payload.removed).toContainEqual(drillToToInsightFromWonMeasureDefinition);
+            expect(event.payload.removed).toContainEqual(drillToDashboardFromProductAttributeDefinition);
             expect(event.payload.ref).toEqual(SimpleSortedTableWidgetRef);
 
             const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
@@ -99,13 +103,8 @@ describe("removeDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot({
-                command: {
-                    meta: {
-                        uuid: expect.any(String),
-                    },
-                },
-            });
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -115,13 +114,8 @@ describe("removeDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot({
-                command: {
-                    meta: {
-                        uuid: expect.any(String),
-                    },
-                },
-            });
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -135,13 +129,8 @@ describe("removeDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot({
-                command: {
-                    meta: {
-                        uuid: expect.any(String),
-                    },
-                },
-            });
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -155,13 +144,8 @@ describe("removeDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot({
-                command: {
-                    meta: {
-                        uuid: expect.any(String),
-                    },
-                },
-            });
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
             expect(event.correlationId).toEqual(TestCorrelation);
         });
     });

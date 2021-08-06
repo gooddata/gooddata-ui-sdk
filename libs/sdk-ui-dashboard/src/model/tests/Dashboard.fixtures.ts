@@ -10,6 +10,7 @@ import {
     IDrillToDashboard,
     IInsightWidget,
     IKpiWidget,
+    IListedDashboard,
 } from "@gooddata/sdk-backend-spi";
 import { idRef, IInsight, insightId, isObjRef, ObjRef, uriRef } from "@gooddata/sdk-model";
 import { InsightPlaceholderWidget, KpiPlaceholderWidget } from "../types/layoutTypes";
@@ -23,6 +24,7 @@ import { IDrillToInsight } from "@gooddata/sdk-backend-spi";
 
 export const TestCorrelation = "testCorrelationId";
 export const TestStash = "testStash";
+export const BeforeTestCorrelation = "beforeTestId";
 
 export const TestSectionHeader: IDashboardLayoutSectionHeader = {
     title: "Test Section",
@@ -47,6 +49,11 @@ export const KpiWidgetRef = (SimpleDashboardLayout.sections[0].items[0].widget a
  * First widget from second section
  */
 export const SimpleSortedTableWidgetRef = (SimpleDashboardLayout.sections[1].items[0].widget as any).ref;
+export const SimpleSortedTableWidgetInsightRef =
+    SimpleDashboardWithReferences.references.insights[2].insight.ref;
+export const SimpleSortedTableWidgetInsightIdentifer =
+    SimpleDashboardWithReferences.references.insights[2].insight.identifier;
+export const SimpleSortedTableWidgetInsight = SimpleDashboardWithReferences.references.insights[2];
 
 /**
  * A more complex dashboard that has 3 sections (rows).
@@ -397,5 +404,29 @@ export const drillToToInsightFromWonMeasureDefinition: IDrillToInsight = {
         },
     },
     transition: "pop-up",
-    target: SimpleSortedTableWidgetRef,
+    target: SimpleSortedTableWidgetInsightRef,
 };
+
+const ComplexDashboardListed: IListedDashboard = {
+    ref: ComplexDashboardWithReferences.dashboard.ref,
+    identifier: ComplexDashboardWithReferences.dashboard.identifier,
+    uri: ComplexDashboardWithReferences.dashboard.uri,
+    title: ComplexDashboardWithReferences.dashboard.title,
+    description: ComplexDashboardWithReferences.dashboard.description,
+    updated: ComplexDashboardWithReferences.dashboard.updated,
+    created: ComplexDashboardWithReferences.dashboard.created,
+    tags: ComplexDashboardWithReferences.dashboard.tags,
+};
+
+const SimpleDashboardListed: IListedDashboard = {
+    ref: SimpleDashboardWithReferences.dashboard.ref,
+    identifier: SimpleDashboardWithReferences.dashboard.identifier,
+    uri: SimpleDashboardWithReferences.dashboard.uri,
+    title: SimpleDashboardWithReferences.dashboard.title,
+    description: SimpleDashboardWithReferences.dashboard.description,
+    updated: SimpleDashboardWithReferences.dashboard.updated,
+    created: SimpleDashboardWithReferences.dashboard.created,
+    tags: SimpleDashboardWithReferences.dashboard.tags,
+};
+
+export const dashboardsList: IListedDashboard[] = [SimpleDashboardListed, ComplexDashboardListed];

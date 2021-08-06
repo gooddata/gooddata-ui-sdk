@@ -3,19 +3,21 @@
 import cloneDeep from "lodash/cloneDeep";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import {
+    ComplexDashboardWithReferences,
     drillToDashboardFromProductAttributeDefinition,
     drillToDashboardFromWonMeasureDefinition,
     drillToToInsightFromWonMeasureDefinition,
     KpiWidgetRef,
     SimpleDashboardIdentifier,
     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
+    SimpleSortedTableWidgetInsightIdentifer,
     SimpleSortedTableWidgetRef,
     TestCorrelation,
 } from "../../../tests/Dashboard.fixtures";
 import { addDrillTargets, modifyDrillsForInsightWidget } from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetDrillsModified } from "../../../events";
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
-import { uriRef } from "@gooddata/sdk-model";
+import { idRef, uriRef } from "@gooddata/sdk-model";
 import { DrillOrigin } from "@gooddata/sdk-backend-spi";
 
 describe("modifyDrillsForInsightWidgetHandler", () => {
@@ -65,8 +67,8 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(2);
-            expect(widgetState?.drills).toContain(origStateDrill);
-            expect(widgetState?.drills).toContain(drillToDashboardFromProductAttributeDefinition);
+            expect(widgetState?.drills).toContainEqual(origStateDrill);
+            expect(widgetState?.drills).toContainEqual(drillToDashboardFromProductAttributeDefinition);
         });
 
         it("should update state with given drills for widget and emit event with one updated and one added drill def. All items from state are updated", async () => {
@@ -86,8 +88,48 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(2);
-            expect(widgetState?.drills).toContain(drillToToInsightFromWonMeasureDefinition);
-            expect(widgetState?.drills).toContain(drillToDashboardFromProductAttributeDefinition);
+            expect(widgetState?.drills).toContainEqual(drillToToInsightFromWonMeasureDefinition);
+            expect(widgetState?.drills).toContainEqual(drillToDashboardFromProductAttributeDefinition);
+        });
+
+        it("should correctly update identifier for drillToDashboard target specified by URI", async () => {
+            const drillToDashboardUriTarget = cloneDeep(drillToDashboardFromProductAttributeDefinition);
+            drillToDashboardUriTarget.target = uriRef(ComplexDashboardWithReferences.dashboard.uri);
+            const drills = [drillToDashboardUriTarget];
+
+            const origWidgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+            const origStateDrill = origWidgetState?.drills[0];
+
+            const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
+            );
+
+            expect(event.payload.updated).toEqual([]);
+            expect(event.payload.added).toEqual([drillToDashboardFromProductAttributeDefinition]);
+
+            const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+
+            expect(widgetState?.drills.length).toBe(2);
+            expect(widgetState?.drills).toContainEqual(origStateDrill);
+            expect(widgetState?.drills).toContainEqual(drillToDashboardFromProductAttributeDefinition);
+        });
+
+        it("should correctly update ref for drillToInsight target specified by Identifier", async () => {
+            const drillToInsightIdentifierTarget = cloneDeep(drillToToInsightFromWonMeasureDefinition);
+            drillToInsightIdentifierTarget.target = idRef(SimpleSortedTableWidgetInsightIdentifer);
+            const drills = [drillToInsightIdentifierTarget];
+
+            const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
+            );
+
+            expect(event.payload.updated).toEqual([drillToToInsightFromWonMeasureDefinition]);
+            const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+
+            expect(widgetState?.drills.length).toBe(1);
+            expect(widgetState?.drills).toContainEqual(drillToToInsightFromWonMeasureDefinition);
         });
     });
 
@@ -100,13 +142,8 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot({
-                command: {
-                    meta: {
-                        uuid: expect.any(String),
-                    },
-                },
-            });
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -118,13 +155,8 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot({
-                command: {
-                    meta: {
-                        uuid: expect.any(String),
-                    },
-                },
-            });
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -141,13 +173,8 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot({
-                command: {
-                    meta: {
-                        uuid: expect.any(String),
-                    },
-                },
-            });
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -168,13 +195,8 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot({
-                command: {
-                    meta: {
-                        uuid: expect.any(String),
-                    },
-                },
-            });
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
@@ -195,13 +217,68 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
-            expect(event.payload).toMatchSnapshot({
-                command: {
-                    meta: {
-                        uuid: expect.any(String),
-                    },
-                },
-            });
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if trying to modify/add drillToDashboard with not existing target dashboard specified by uri", async () => {
+            const invalidTargetDrill = cloneDeep(drillToDashboardFromProductAttributeDefinition);
+            invalidTargetDrill.target = uriRef("missing");
+
+            const drills = [invalidTargetDrill];
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if trying to modify/add drillToDashboard with not existing target dashboard specified by identifier", async () => {
+            const invalidTargetDrill = cloneDeep(drillToDashboardFromProductAttributeDefinition);
+            invalidTargetDrill.target = idRef("missing");
+
+            const drills = [invalidTargetDrill];
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if trying to modify/add drillToInsight with not existing target insight specified by uri", async () => {
+            const invalidTargetDrill = cloneDeep(drillToToInsightFromWonMeasureDefinition);
+            invalidTargetDrill.target = uriRef("missing");
+
+            const drills = [invalidTargetDrill];
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if trying to modify/add drillToInsight with not existing target insight specified by identifier", async () => {
+            const invalidTargetDrill = cloneDeep(drillToToInsightFromWonMeasureDefinition);
+            invalidTargetDrill.target = idRef("missing");
+
+            const drills = [invalidTargetDrill];
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.message).toMatchSnapshot();
+            expect(event.payload.reason).toMatchSnapshot();
             expect(event.correlationId).toEqual(TestCorrelation);
         });
     });

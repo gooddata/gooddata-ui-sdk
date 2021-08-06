@@ -100,7 +100,10 @@ export {
     selectDashboardTitle,
     selectDashboardIdRef,
 } from "./state/meta/metaSelectors";
-export { selectListedDashboards } from "./state/listedDashboards/listedDashboardsSelectors";
+export {
+    selectListedDashboards,
+    selectListedDashboardsMap,
+} from "./state/listedDashboards/listedDashboardsSelectors";
 export {
     selectDrillTargetsByWidgetRef,
     selectDrillTargets,
