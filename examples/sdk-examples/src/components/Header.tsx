@@ -62,8 +62,8 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                     </span>
                 </span>
                 <span className="backendInfoItem">
-                    <Link to="/about-this-project">
-                        <span>About This Project</span>
+                    <Link to="/about-this-workspace">
+                        <span>About This Workspace</span>
                     </Link>
                 </span>
                 <span className="backendInfoClose" onClick={toggleBackendInfo} />

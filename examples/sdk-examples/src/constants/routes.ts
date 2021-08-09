@@ -41,7 +41,7 @@ import { PivotTableSizing } from "../examples/hidden/pivotTableSizing";
 
 import { Login } from "../components/login";
 import { WithSubRoutes } from "../components/WithSubRoutes";
-import { AboutThisProject } from "../components/AboutThisProject";
+import { AboutThisWorkspace } from "../components/AboutThisWorkspace";
 
 import SimpleDashboardView from "../examples/dashboardEmbedding/SimpleDashboardView";
 import DashboardViewWithCustomCharts from "../examples/dashboardEmbedding/DashboardViewWithCustomCharts";
@@ -310,7 +310,9 @@ export const hiddenPaths = [
 ];
 
 export const backendInfoRoutes = [
-    { path: "/about-this-project", title: "About This Project", Component: AboutThisProject },
+    // we keep this route for backward compatibility
+    { path: "/about-this-project", title: "About This Workspace", Component: AboutThisWorkspace },
+    { path: "/about-this-workspace", title: "About This Workspace", Component: AboutThisWorkspace },
 ];
 
 export const userRoutes = [{ path: "/login", title: "Login", Component: Login }];
