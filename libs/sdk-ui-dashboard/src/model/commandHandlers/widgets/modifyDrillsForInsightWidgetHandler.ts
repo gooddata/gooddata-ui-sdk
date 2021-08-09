@@ -3,15 +3,22 @@
 import { DashboardContext } from "../../types/commonTypes";
 import { ModifyDrillsForInsightWidget } from "../../commands";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
 
 import { DashboardInsightWidgetDrillsModified, insightWidgetDrillsModified } from "../../events/insight";
 import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
 import { validateExistingInsightWidget } from "./validation/widgetValidations";
 import { selectDrillTargetsByWidgetRef } from "../../state/drillTargets/drillTargetsSelectors";
-import { existsDrillDefinitionInArray } from "../../../_staging/drills/InsightDrillDefinitionUtils";
-import { validateInsightDrillDefinition } from "./validation/insightDrillDefinitionValidation";
+import {
+    existsDrillDefinitionInArray,
+    extractInsightRefs,
+} from "../../../_staging/drills/InsightDrillDefinitionUtils";
+import { validateDrillDefinition } from "./validation/insightDrillDefinitionValidation";
 import { layoutActions } from "../../state/layout";
+import { selectListedDashboardsMap } from "../../state/listedDashboards/listedDashboardsSelectors";
+import { resolveInsights } from "../../utils/insightResolver";
+import { batchActions } from "redux-batched-actions";
+import { insightsActions } from "../../state/insights";
 
 export function* modifyDrillsForInsightWidgetHandler(
     ctx: DashboardContext,
@@ -32,10 +39,28 @@ export function* modifyDrillsForInsightWidgetHandler(
         selectDrillTargetsByWidgetRefSelector,
     );
 
+    const listedDashboardMap: ReturnType<typeof selectListedDashboardsMap> = yield select(
+        selectListedDashboardsMap,
+    );
+
+    const insightRefs = extractInsightRefs(drillsToModify);
+    const resolvedInsights: SagaReturnType<typeof resolveInsights> = yield call(
+        resolveInsights,
+        ctx,
+        insightRefs,
+    );
+
     const { drills: currentInsightDrills = [] } = insightWidget;
 
     const validatedDrillDefinition = drillsToModify.map((drillItem) =>
-        validateInsightDrillDefinition(drillItem, drillTargets, ctx, cmd),
+        validateDrillDefinition(
+            drillItem,
+            drillTargets,
+            listedDashboardMap,
+            resolvedInsights.resolved,
+            ctx,
+            cmd,
+        ),
     );
 
     const addedDrillDefinition = validatedDrillDefinition.filter(
@@ -55,13 +80,16 @@ export function* modifyDrillsForInsightWidgetHandler(
     ];
 
     yield put(
-        layoutActions.replaceWidgetDrills({
-            ref: insightWidget.ref,
-            drillDefinitions: updatedInsightDrills,
-            undo: {
-                cmd,
-            },
-        }),
+        batchActions([
+            insightsActions.addInsights(resolvedInsights.loaded),
+            layoutActions.replaceWidgetDrills({
+                ref: insightWidget.ref,
+                drillDefinitions: updatedInsightDrills,
+                undo: {
+                    cmd,
+                },
+            }),
+        ]),
     );
 
     return insightWidgetDrillsModified(

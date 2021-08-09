@@ -9,98 +9,18 @@ Array [
 ]
 `;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills of kpi widget 1`] = `
-Object {
-  "command": Object {
-    "correlationId": "testCorrelationId",
-    "meta": Object {
-      "uuid": Any<String>,
-    },
-    "payload": Object {
-      "origins": Array [
-        Object {
-          "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
-        },
-      ],
-      "ref": Object {
-        "uri": "/gdc/md/referenceworkspace/obj/1386",
-      },
-    },
-    "type": "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS",
-  },
-  "message": "Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1386\\"} exists but is not an insight widget.",
-  "reason": "USER_ERROR",
-}
-`;
+exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills of kpi widget 1`] = `"Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1386\\"} exists but is not an insight widget."`;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills of non-existent widget 1`] = `
-Object {
-  "command": Object {
-    "correlationId": "testCorrelationId",
-    "meta": Object {
-      "uuid": Any<String>,
-    },
-    "payload": Object {
-      "origins": Array [
-        Object {
-          "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
-        },
-      ],
-      "ref": Object {
-        "uri": "missing",
-      },
-    },
-    "type": "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS",
-  },
-  "message": "Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}.",
-  "reason": "USER_ERROR",
-}
-`;
+exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills of kpi widget 2`] = `"USER_ERROR"`;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills where origin is not specified by localIdRef 1`] = `
-Object {
-  "command": Object {
-    "correlationId": "testCorrelationId",
-    "meta": Object {
-      "uuid": Any<String>,
-    },
-    "payload": Object {
-      "origins": Array [
-        Object {
-          "uri": "not-valid-ref",
-        },
-      ],
-      "ref": Object {
-        "uri": "/gdc/md/referenceworkspace/obj/1310",
-      },
-    },
-    "type": "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS",
-  },
-  "message": "Invalid measure or attribute origin: not-valid-ref. Error: Invalid ObjRef invariant expecting LocalIdRef",
-  "reason": "USER_ERROR",
-}
-`;
+exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}."`;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills where origin missing in widget drills 1`] = `
-Object {
-  "command": Object {
-    "correlationId": "testCorrelationId",
-    "meta": Object {
-      "uuid": Any<String>,
-    },
-    "payload": Object {
-      "origins": Array [
-        Object {
-          "localIdentifier": "missing",
-        },
-      ],
-      "ref": Object {
-        "uri": "/gdc/md/referenceworkspace/obj/1310",
-      },
-    },
-    "type": "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS",
-  },
-  "message": "Invalid measure or attribute origin: missing. Error: Cannot find drill definition specified by local identifier",
-  "reason": "USER_ERROR",
-}
-`;
+exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills of non-existent widget 2`] = `"USER_ERROR"`;
+
+exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills where origin is not specified by localIdRef 1`] = `"Invalid measure or attribute origin: not-valid-ref. Error: Invalid ObjRef invariant expecting LocalIdRef"`;
+
+exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills where origin is not specified by localIdRef 2`] = `"USER_ERROR"`;
+
+exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills where origin missing in widget drills 1`] = `"Invalid measure or attribute origin: missing. Error: Cannot find drill definition specified by local identifier"`;
+
+exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills where origin missing in widget drills 2`] = `"USER_ERROR"`;
