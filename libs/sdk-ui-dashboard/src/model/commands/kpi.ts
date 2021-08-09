@@ -1,9 +1,9 @@
 // (C) 2021 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
-import { ObjRef } from "@gooddata/sdk-model";
+import { isObjRef, ObjRef } from "@gooddata/sdk-model";
 import { ILegacyKpiComparisonDirection, ILegacyKpiComparisonTypeComparison } from "@gooddata/sdk-backend-spi";
-import { WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
+import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
 
 /**
  * @alpha
@@ -126,7 +126,7 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
          * Filter settings to apply for the widget. The settings are used as-is and
          * replace current widget settings.
          */
-        readonly settings: WidgetFilterOperation;
+        readonly operation: WidgetFilterOperation;
     };
 }
 
@@ -142,9 +142,9 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
  *
  * @alpha
  */
-export function changeKpiWidgetFilterSettings(
+export function replaceKpiWidgetFilterSettings(
     ref: ObjRef,
-    settings: WidgetFilterOperation,
+    settings: Omit<FilterOpReplaceAll, "type">,
     correlationId?: string,
 ): ChangeKpiWidgetFilterSettings {
     return {
@@ -152,7 +152,173 @@ export function changeKpiWidgetFilterSettings(
         correlationId,
         payload: {
             ref,
-            settings,
+            operation: {
+                type: "replace",
+                ...settings,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeKpiWidgetFilterSettings command for {@link FilterOpEnableDateFilter} operation.
+ *
+ * Dispatching this command will result in change of KPI widget's date filter setting. The date filtering will
+ * be enabled and the provided date data set will be used for date-filtering widget's KPI.
+ *
+ * @param ref - reference of the KPI widget to modify
+ * @param dateDataset - date data set to use for filtering the KPI
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function enableKpiWidgetDateFilter(
+    ref: ObjRef,
+    dateDataset: ObjRef,
+    correlationId?: string,
+): ChangeKpiWidgetFilterSettings {
+    return {
+        type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "enableDateFilter",
+                dateDataset,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeKpiWidgetFilterSettings command for {@link FilterOpDisableDateFilter} operation.
+ *
+ * Dispatching this command will result in change of KPI widget's date filter setting. The date filtering will
+ * be disabled.
+ *
+ * @param ref - reference of the KPI widget to modify
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function disableKpiWidgetDateFilter(
+    ref: ObjRef,
+    correlationId?: string,
+): ChangeKpiWidgetFilterSettings {
+    return {
+        type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "disableDateFilter",
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeKpiWidgetFilterSettings command for {@link FilterOpReplaceAttributeIgnores} operation.
+ *
+ * Dispatching this command will result in replacement of KPI widget's attribute filter ignore-list. Those attribute filters
+ * that use the provided displayForms for filtering will be ignored by the widget.
+ *
+ * @param ref - reference of the KPI widget to modify
+ * @param displayForms - refs of display forms used by attribute filters that should be ignored
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function replaceKpiWidgetIgnoredFilters(
+    ref: ObjRef,
+    displayForms?: ObjRef[],
+    correlationId?: string,
+): ChangeKpiWidgetFilterSettings {
+    return {
+        type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "replaceAttributeIgnores",
+                displayFormRefs: displayForms ?? [],
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeKpiWidgetFilterSettings command for {@link FilterOpIgnoreAttributeFilter} operation.
+ *
+ * Dispatching this command will result in addition of one or more filters into KPI widget's attribute filter ignore-list.
+ * Those attribute filters that use the provided displayForms for filtering will be ignored by the widget on top of any
+ * other filters that are already ignored.
+ *
+ * Ignored attribute filters are not passed down to the KPI and will not be used to filter that KPI.
+ *
+ * The operation is idempotent - trying to ignore an attribute filter multiple times will have no effect.
+ *
+ * @param ref - reference of the KPI widget to modify
+ * @param oneOrMoreDisplayForms - one or more refs of display forms used by attribute filters that should be added to the ignore-list
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function ignoreFilterOnKpiWidget(
+    ref: ObjRef,
+    oneOrMoreDisplayForms: ObjRef | ObjRef[],
+    correlationId?: string,
+): ChangeKpiWidgetFilterSettings {
+    const displayFormRefs = isObjRef(oneOrMoreDisplayForms) ? [oneOrMoreDisplayForms] : oneOrMoreDisplayForms;
+
+    return {
+        type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "ignoreAttributeFilter",
+                displayFormRefs,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeKpiWidgetFilterSettings command for {@link FilterOpUnignoreAttributeFilter} operation.
+ *
+ * Dispatching this command will result in removal of one or more filters from KPI widget's attribute filter ignore-list.
+ * Ignored attribute filters are not passed down to the KPI and will not be used to filter that KPI.
+ *
+ * The operation is idempotent - trying to unignore an attribute filter multiple times will have no effect.
+ *
+ * @param ref - reference of the KPI widget to modify
+ * @param oneOrMoreDisplayForms - one or more refs of display forms used by attribute filters that should be removed from the ignore-list
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function unignoreFilterOnKpiWidget(
+    ref: ObjRef,
+    oneOrMoreDisplayForms: ObjRef | ObjRef[],
+    correlationId?: string,
+): ChangeKpiWidgetFilterSettings {
+    const displayFormRefs = isObjRef(oneOrMoreDisplayForms) ? [oneOrMoreDisplayForms] : oneOrMoreDisplayForms;
+
+    return {
+        type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "unignoreAttributeFilter",
+                displayFormRefs,
+            },
         },
     };
 }

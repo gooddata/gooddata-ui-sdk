@@ -1,5 +1,10 @@
 // (C) 2021 GoodData Corporation
-import { InsightDateDatasets, queryDateDatasetsForInsight } from "../../../queries";
+import {
+    InsightDateDatasets,
+    MeasureDateDatasets,
+    queryDateDatasetsForInsight,
+    queryDateDatasetsForMeasure,
+} from "../../../queries";
 import { call, SagaReturnType, select } from "redux-saga/effects";
 import { query } from "../../../state/_infra/queryCall";
 import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap";
@@ -10,14 +15,20 @@ import { SagaIterator } from "redux-saga";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver";
 import isEmpty from "lodash/isEmpty";
 import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
-import { ICatalogDateDataset, IDashboardAttributeFilter, IInsightWidget } from "@gooddata/sdk-backend-spi";
+import {
+    ICatalogDateDataset,
+    IDashboardAttributeFilter,
+    IInsightWidget,
+    IKpiWidget,
+    IWidgetBase,
+} from "@gooddata/sdk-backend-spi";
 import { IDashboardCommand } from "../../../commands";
 
 /**
  * This generator validates that a date dataset with the provided ref can be used for date filtering of insight in
- * particular insight widget. If the result is positive, a normalized ref of the date dataset will be returned - this ref
- * should be used going forward, stored in state etc etc. If the result is negative a DashboardCommandFailed will be
- * thrown.
+ * particular insight widget. If the result is positive, a catalog entry of the date dataset will be returned.
+ *
+ * If the result is negative a DashboardCommandFailed will be thrown.
  *
  * The validation will trigger the QueryInsightDateDatasets to obtain a list of all available, valid date datasets for
  * the insight widget - that's where the actual complex logic takes place.
@@ -58,6 +69,48 @@ export function* validateDatasetForInsightWidgetDateFilter(
 }
 
 /**
+ * This generator validates that a date dataset with the provided ref can be used for date filtering of a particular
+ * KPI widget. If the result is positive, a normalized ref of the date dataset will be returned - this ref
+ * should be used going forward, stored in state etc etc. If the result is negative a DashboardCommandFailed will be
+ * thrown.
+ *
+ * The validation will trigger the QueryInsightDateDatasets to obtain a list of all available, valid date datasets for
+ * the insight widget - that's where the actual complex logic takes place.
+ *
+ * Note that the query is a cached query - first execution will cache all available date dataset information in state and
+ * the subsequent calls will be instant.
+ *
+ * @param ctx - dashboard context in which the validation is done
+ * @param cmd - dashboard command it the context of which the validation is done
+ * @param widget - insight that whose date filter is about to change
+ * @param dateDataSet - ref of a date dataset to validate
+ */
+export function* validateDatasetForKpiWidgetDateFilter(
+    ctx: DashboardContext,
+    cmd: IDashboardCommand,
+    widget: IKpiWidget,
+    dateDataSet: ObjRef,
+): SagaIterator<ICatalogDateDataset> {
+    const measureDateDatasets: MeasureDateDatasets = yield call(
+        query,
+        queryDateDatasetsForMeasure(widget.kpi.metric),
+    );
+    const catalogDataSet = newCatalogDateDatasetMap(measureDateDatasets.dateDatasets).get(dateDataSet);
+
+    if (!catalogDataSet) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Attempting to use date dataset ${objRefToString(dateDataSet)}
+            to filter insight widget ${objRefToString(widget.ref)} but the data set either does not exist or
+            is not valid to use for filtering the insight.`,
+        );
+    }
+
+    return catalogDataSet;
+}
+
+/**
  * This generator validates whether it is possible to disable attribute filtering based on the refs of attribute display forms.
  * The validation is not widget-specific - it does not need any info from the widget. It validates that the display forms
  * used to specify filters to ignore are valid and that they are actually used in attribute filters that are currently
@@ -76,11 +129,13 @@ export function* validateDatasetForInsightWidgetDateFilter(
  *
  * @param ctx - dashboard context in which the validation is done
  * @param cmd - dashboard command in the context of which the validation is done
+ * @param _widget - widget on which the filters should be ignored
  * @param toIgnore - refs of display forms used in attribute filters that should be ignored
  */
 export function* validateAttributeFiltersToIgnore(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
+    _widget: IWidgetBase,
     toIgnore: ObjRef[],
 ): SagaIterator<IDashboardAttributeFilter[]> {
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(

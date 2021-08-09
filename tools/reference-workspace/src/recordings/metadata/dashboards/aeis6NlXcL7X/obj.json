@@ -89,7 +89,16 @@
                                 "description": "",
                                 "drills": [],
                                 "identifier": "agSs5Ltkbxws",
-                                "ignoreDashboardFilters": [],
+                                "ignoreDashboardFilters": [
+                                    {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1087" },
+                                        "type": "attributeFilterReference"
+                                    },
+                                    {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1055" },
+                                        "type": "attributeFilterReference"
+                                    }
+                                ],
                                 "kpi": {
                                     "comparisonDirection": "growIsGood",
                                     "comparisonType": "previousPeriod",

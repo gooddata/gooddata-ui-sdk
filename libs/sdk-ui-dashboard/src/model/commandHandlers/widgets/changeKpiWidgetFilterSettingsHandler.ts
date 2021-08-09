@@ -1,23 +1,23 @@
 // (C) 2021 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes";
-import { ChangeInsightWidgetFilterSettings } from "../../commands";
+import { ChangeKpiWidgetFilterSettings } from "../../commands";
 import { SagaIterator } from "redux-saga";
-import { DashboardInsightWidgetFilterSettingsChanged } from "../../events";
+import { DashboardKpiWidgetFilterSettingsChanged } from "../../events";
 import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateExistingInsightWidget } from "./validation/widgetValidations";
+import { validateExistingKpiWidget } from "./validation/widgetValidations";
 import { layoutActions } from "../../state/layout";
-import { insightWidgetFilterSettingsChanged } from "../../events/insight";
-import { IDashboardAttributeFilterReference, IInsightWidget, IWidgetBase } from "@gooddata/sdk-backend-spi";
+import { IDashboardAttributeFilterReference, IKpiWidget, IWidgetBase } from "@gooddata/sdk-backend-spi";
 import { FilterValidators, processFilterOp } from "./common/filterOperations";
 import {
     validateAttributeFiltersToIgnore,
-    validateDatasetForInsightWidgetDateFilter,
+    validateDatasetForKpiWidgetDateFilter,
 } from "./validation/filterValidation";
+import { kpiWidgetFilterSettingsChanged } from "../../events/kpi";
 
-const InsightWidgetFilterValidations: FilterValidators<IInsightWidget> = {
-    dateDatasetValidator: validateDatasetForInsightWidgetDateFilter,
+const KpiWidgetFilterValidations: FilterValidators<IKpiWidget> = {
+    dateDatasetValidator: validateDatasetForKpiWidgetDateFilter,
     attributeFilterValidator: validateAttributeFiltersToIgnore,
 };
 
@@ -32,19 +32,19 @@ const InsightWidgetFilterValidations: FilterValidators<IInsightWidget> = {
  * will ensure that the display form refs on the input represent valid, existing display forms. And then ensure that
  * those display forms are actually used in currently used attribute filters.
  */
-export function* changeInsightWidgetFilterSettingsHandler(
+export function* changeKpiWidgetFilterSettingsHandler(
     ctx: DashboardContext,
-    cmd: ChangeInsightWidgetFilterSettings,
-): SagaIterator<DashboardInsightWidgetFilterSettingsChanged> {
+    cmd: ChangeKpiWidgetFilterSettings,
+): SagaIterator<DashboardKpiWidgetFilterSettingsChanged> {
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
-    const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
+    const kpiWidget = validateExistingKpiWidget(widgets, cmd, ctx);
 
     const result: SagaReturnType<typeof processFilterOp> = yield call(
         processFilterOp,
         ctx,
-        InsightWidgetFilterValidations as FilterValidators<IWidgetBase>,
+        KpiWidgetFilterValidations as FilterValidators<IWidgetBase>,
         cmd,
-        insightWidget,
+        kpiWidget,
     );
     const { dateDataSet, ignoredFilters } = result;
 
@@ -59,7 +59,7 @@ export function* changeInsightWidgetFilterSettingsHandler(
 
     yield put(
         layoutActions.replaceWidgetFilterSettings({
-            ref: insightWidget.ref,
+            ref: kpiWidget.ref,
             dateDataSet: dateDataSet?.dataSet.ref,
             ignoreDashboardFilters: ignoreDashboardFilters,
             undo: {
@@ -68,9 +68,9 @@ export function* changeInsightWidgetFilterSettingsHandler(
         }),
     );
 
-    return insightWidgetFilterSettingsChanged(
+    return kpiWidgetFilterSettingsChanged(
         ctx,
-        insightWidget.ref,
+        kpiWidget.ref,
         ignoredFilters ?? [],
         result.dateDataSet,
         cmd.correlationId,

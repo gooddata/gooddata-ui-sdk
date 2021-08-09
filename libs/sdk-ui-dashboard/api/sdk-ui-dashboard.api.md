@@ -324,14 +324,11 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly settings: WidgetFilterOperation;
+        readonly operation: WidgetFilterOperation;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS";
 }
-
-// @alpha
-export function changeKpiWidgetFilterSettings(ref: ObjRef, settings: WidgetFilterOperation, correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha (undocumented)
 export interface ChangeKpiWidgetHeader extends IDashboardCommand {
@@ -971,7 +968,8 @@ export interface DashboardKpiWidgetFilterSettingsChanged extends IDashboardEvent
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly filterSettings: WidgetFilterOperation;
+        readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+        readonly dateDatasetForFiltering?: ICatalogDateDataset;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED";
@@ -1435,6 +1433,9 @@ export const DefaultTopBarInner: () => JSX.Element;
 // @alpha
 export function disableInsightWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
 
+// @alpha
+export function disableKpiWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
+
 // @alpha (undocumented)
 export interface Drill extends IDashboardCommand {
     // (undocumented)
@@ -1605,6 +1606,9 @@ export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, 
 
 // @alpha
 export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @alpha
+export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha
 export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget>;
@@ -1893,6 +1897,9 @@ export interface IFilterBarProps {
 
 // @alpha
 export function ignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @alpha
+export function ignoreFilterOnKpiWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha (undocumented)
 export interface IMenuButtonConfiguration {
@@ -2372,6 +2379,12 @@ export function replaceInsightWidgetFilterSettings(ref: ObjRef, settings: Omit<F
 // @alpha
 export function replaceInsightWidgetIgnoredFilters(ref: ObjRef, displayForms?: ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
 
+// @alpha
+export function replaceKpiWidgetFilterSettings(ref: ObjRef, settings: Omit<FilterOpReplaceAll, "type">, correlationId?: string): ChangeKpiWidgetFilterSettings;
+
+// @alpha
+export function replaceKpiWidgetIgnoredFilters(ref: ObjRef, displayForms?: ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
+
 // @alpha (undocumented)
 export interface ReplaceSectionItem extends IDashboardCommand {
     // (undocumented)
@@ -2537,7 +2550,7 @@ error?: string | undefined;
 } | undefined>;
 
 // @internal
-export const selectDateDatasetsForMetric: (query: QueryMeasureDateDatasets) => OutputSelector<DashboardState, {
+export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => OutputSelector<DashboardState, {
 status: "error" | "loading" | "success";
 result?: MeasureDateDatasets | undefined;
 error?: string | undefined;
@@ -2731,6 +2744,9 @@ export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayout
 
 // @alpha
 export function unignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @alpha
+export function unignoreFilterOnKpiWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha
 export interface UpdateAlert extends IDashboardCommand {

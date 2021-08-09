@@ -2,9 +2,15 @@
 
 import { IDashboardEvent } from "./base";
 import { ObjRef } from "@gooddata/sdk-model";
-import { WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
+import { WidgetHeader } from "../types/widgetTypes";
 import { DashboardContext } from "../types/commonTypes";
-import { IKpiWidget, IKpiWidgetDefinition, ILegacyKpi } from "@gooddata/sdk-backend-spi";
+import {
+    ICatalogDateDataset,
+    IDashboardAttributeFilter,
+    IKpiWidget,
+    IKpiWidgetDefinition,
+    ILegacyKpi,
+} from "@gooddata/sdk-backend-spi";
 
 /**
  * This event is emitted when the dashboard's KPI Widget header is modified.
@@ -116,16 +122,26 @@ export interface DashboardKpiWidgetFilterSettingsChanged extends IDashboardEvent
         readonly ref: ObjRef;
 
         /**
-         * New filter settings that are now in effect for the widget.
+         * Attribute filters that are ignored for the widget.
+         *
+         * If empty, then all attribute filters defined for the dashboard are in effect.
          */
-        readonly filterSettings: WidgetFilterOperation;
+        readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+
+        /**
+         * Date dataset used for date filtering.
+         *
+         * If undefined, then dashboard's date filter is not in effect for the widget.
+         */
+        readonly dateDatasetForFiltering?: ICatalogDateDataset;
     };
 }
 
 export function kpiWidgetFilterSettingsChanged(
     ctx: DashboardContext,
     ref: ObjRef,
-    filterSettings: WidgetFilterOperation,
+    ignoredAttributeFilters: IDashboardAttributeFilter[],
+    dateDatasetForFiltering: ICatalogDateDataset | undefined,
     correlationId?: string,
 ): DashboardKpiWidgetFilterSettingsChanged {
     return {
@@ -134,7 +150,8 @@ export function kpiWidgetFilterSettingsChanged(
         correlationId,
         payload: {
             ref,
-            filterSettings,
+            ignoredAttributeFilters,
+            dateDatasetForFiltering,
         },
     };
 }
