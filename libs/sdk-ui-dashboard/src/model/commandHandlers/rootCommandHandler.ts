@@ -43,6 +43,7 @@ import { modifyDrillsForInsightWidgetHandler } from "./widgets/modifyDrillsForIn
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler";
 import { changeInsightWidgetVisPropertiesHandler } from "./widgets/changeInsightWidgetVisPropertiesHandler";
 import { changeInsightWidgetFilterSettingsHandler } from "./widgets/changeInsightWidgetFilterSettingsHandler";
+import { changeKpiWidgetHeaderHandler } from "./widgets/changeKpiWidgetHeaderHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -69,7 +70,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM": removeSectionItemHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM": replaceSectionItemHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.UNDO": undoLayoutChangesHandler,
-    "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER": unhandledCommand,
+    "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER": changeKpiWidgetHeaderHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE": unhandledCommand,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS": unhandledCommand,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON": unhandledCommand,
