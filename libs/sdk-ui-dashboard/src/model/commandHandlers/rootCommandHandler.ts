@@ -35,7 +35,6 @@ import { drillToDashboardHandler } from "./drill/drillToDashboardHandler";
 import { changeFilterContextSelectionHandler } from "./filterContext/changeFilterContextSelectionHandler";
 import { drillToLegacyDashboardHandler } from "./drill/drillToLegacyDashboardHandler";
 import { addDrillTargetsHandler } from "./drillTargets/addDrillTargetsHandler";
-import { userInteractionHandler } from "./userInteraction/userInteractionHandler";
 import { requestAsyncRenderHandler } from "./render/requestAsyncRenderHandler";
 import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler";
 import { changeInsightWidgetHeaderHandler } from "./widgets/changeInsightWidgetHeaderHandler";
@@ -54,7 +53,6 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.SAVEAS": unhandledCommand,
     "GDC.DASH/CMD.RESET": unhandledCommand,
     "GDC.DASH/CMD.RENAME": unhandledCommand,
-    "GDC.DASH/CMD.USER_INTERACTION": userInteractionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION": changeFilterContextSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION": changeDateFilterSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD": addAttributeFilterHandler,

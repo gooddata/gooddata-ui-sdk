@@ -174,7 +174,7 @@ export {
 
 export { DrillTargetsAdded, drillTargetsAdded } from "./drillTargets";
 
-export { DashboardUserInteractionTriggered, userInteractionTriggered } from "./userInteraction";
+export * from "./userInteraction";
 export {
     DashboardRenderRequested,
     DashboardAsyncRenderRequested,

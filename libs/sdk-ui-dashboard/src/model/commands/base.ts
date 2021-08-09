@@ -5,7 +5,6 @@
  * @alpha
  */
 export type DashboardCommandType =
-    | "GDC.DASH/CMD.USER_INTERACTION"
     | "GDC.DASH/CMD.LOAD"
     | "GDC.DASH/CMD.SAVE"
     | "GDC.DASH/CMD.SAVEAS"

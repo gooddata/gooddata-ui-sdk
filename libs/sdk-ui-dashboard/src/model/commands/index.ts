@@ -49,7 +49,6 @@ import {
     DrillToLegacyDashboard,
 } from "./drill";
 import { AddDrillTargets } from "./drillTargets";
-import { UserInteraction } from "./userInteraction";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render";
 
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
@@ -171,8 +170,6 @@ export {
     refreshInsightWidget,
 } from "./insight";
 
-export * from "./userInteraction";
-
 export { RequestAsyncRender, ResolveAsyncRender } from "./render";
 
 export { AddDrillTargets, addDrillTargets } from "./drillTargets";
@@ -186,7 +183,6 @@ export type DashboardCommands =
     | SaveDashboardAs
     | RenameDashboard
     | ResetDashboard
-    | UserInteraction
     | RequestAsyncRender
     | ResolveAsyncRender
     | ChangeFilterContextSelection
