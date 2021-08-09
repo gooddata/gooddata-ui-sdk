@@ -5,6 +5,7 @@ import {
     ICatalogAttribute,
     ICatalogDateAttribute,
     ICatalogDateDataset,
+    ICatalogMeasure,
     IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -202,6 +203,27 @@ export function newCatalogAttributeMap(
         idExtract: (i) => i.attribute.id,
         uriExtract: (i) => i.attribute.uri,
         refExtract: (i) => i.attribute.ref,
+    });
+
+    return map.fromItems(items);
+}
+
+/**
+ * Creates {@link ObjRefMap} for catalog measure items.
+ *
+ * @param items - items to add into mapping
+ * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ */
+export function newCatalogMeasureMap(
+    items: ReadonlyArray<ICatalogMeasure>,
+    strictTypeCheck: boolean = false,
+): ObjRefMap<ICatalogMeasure> {
+    const map = new ObjRefMap<ICatalogMeasure>({
+        type: "attribute",
+        strictTypeCheck,
+        idExtract: (i) => i.measure.id,
+        uriExtract: (i) => i.measure.uri,
+        refExtract: (i) => i.measure.ref,
     });
 
     return map.fromItems(items);

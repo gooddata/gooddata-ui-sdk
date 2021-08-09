@@ -109,6 +109,7 @@ export { IDrillTargets } from "./state/drillTargets/drillTargetsTypes";
 
 export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta";
+export { selectDateDatasetsForMeasure } from "./queryServices/queryMeasureDateDatasets";
 
 export {
     DashboardContext,

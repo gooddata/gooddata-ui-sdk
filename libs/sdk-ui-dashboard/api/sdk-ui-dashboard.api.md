@@ -1197,7 +1197,7 @@ export interface DashboardQueryStarted extends IDashboardEvent {
 }
 
 // @alpha (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.WIDGET.FILTERS";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS";
 
 // @alpha
 export interface DashboardRenamed extends IDashboardEvent {
@@ -2028,6 +2028,13 @@ export type LoadingState = {
     error?: Error;
 };
 
+// @alpha
+export type MeasureDateDatasets = {
+    readonly dateDatasets: ReadonlyArray<ICatalogDateDataset>;
+    readonly dateDatasetsOrdered: ReadonlyArray<ICatalogDateDataset>;
+    readonly dateDatasetDisplayNames: Record<string, string>;
+};
+
 // @internal (undocumented)
 export const MenuButton: () => JSX.Element;
 
@@ -2189,6 +2196,9 @@ export interface PermissionsState {
 export function queryDateDatasetsForInsight(insightRef: ObjRef, correlationId?: string): QueryInsightDateDatasets;
 
 // @alpha
+export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: string): QueryMeasureDateDatasets;
+
+// @alpha
 export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
     // (undocumented)
     readonly payload: {
@@ -2220,6 +2230,16 @@ export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
+}
+
+// @alpha
+export interface QueryMeasureDateDatasets extends IDashboardQuery<MeasureDateDatasets> {
+    // (undocumented)
+    readonly payload: {
+        readonly measureRef: ObjRef;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.MEASURE.DATE.DATASETS";
 }
 
 // @internal (undocumented)
@@ -2513,6 +2533,17 @@ error?: string | undefined;
 } | undefined, (res: DashboardState) => {
 status: "error" | "loading" | "success";
 result?: InsightDateDatasets | undefined;
+error?: string | undefined;
+} | undefined>;
+
+// @internal
+export const selectDateDatasetsForMetric: (query: QueryMeasureDateDatasets) => OutputSelector<DashboardState, {
+status: "error" | "loading" | "success";
+result?: MeasureDateDatasets | undefined;
+error?: string | undefined;
+} | undefined, (res: DashboardState) => {
+status: "error" | "loading" | "success";
+result?: MeasureDateDatasets | undefined;
 error?: string | undefined;
 } | undefined>;
 
