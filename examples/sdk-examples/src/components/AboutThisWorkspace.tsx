@@ -3,40 +3,40 @@ import React from "react";
 import { workspace } from "../constants/fixtures";
 import logicalDataModel from "../static/logicalDataModel.png";
 
-export const AboutThisProject: React.FC = () => (
+export const AboutThisWorkspace: React.FC = () => (
     <div>
-        <h1>About This Project</h1>
+        <h1>About This Workspace</h1>
         <p>
-            This project (ID <code>{workspace}</code>) is created specifically for testing purposes. You can
-            use the data from this project for testing or trying out the functionality of GoodData.UI.
+            This workspace (ID <code>{workspace}</code>) is created specifically for testing purposes. You can
+            use the data from this workspace for testing or trying out the functionality of GoodData.UI.
         </p>
         <p>
-            The use case that this project describes is a chain of restaurants where some restaurants are
+            The use case that this workspace describes is a chain of restaurants where some restaurants are
             franchised. As the owner of the business, you want to make successful business decisions and build
             a growth strategy. For example, you need to track food and beverage costs and employees&apos;
             shifts, stuff the restaurants depending on how busy a day is, and look for efficient ways of
             cutting costs.
         </p>
 
-        <h2>What Data This Project Contains</h2>
+        <h2>What Data This Workspace Contains</h2>
         <p>
             Your source data comes from sales (meal prices, the number of meals per order) and costs
             (operational, labor, COG, occupancy).
         </p>
         <p>
-            The project stores a set of attributes that describe restaurants themselves (location, category,
+            The workspace stores a set of attributes that describe restaurants themselves (location, category,
             ownership, franchised or not), staff (employee ID and name), menu (meal category and name, for
             kids or not) and transactions (transaction ID).
         </p>
         <p>
-            By default, the project also provides date attributes that enable aggregation at the day, week,
+            By default, the workspace also provides date attributes that enable aggregation at the day, week,
             month, quarter, and year level.
         </p>
 
         <h2>Logical Data Model</h2>
         <p>
             The logical data model establishes and represents relationships between different types of data in
-            the project. For more information about logical data models, see{" "}
+            the workspace. For more information about logical data models, see{" "}
             <a
                 href="https://help.gooddata.com/display/doc/GoodData+Modeling+Concepts"
                 target="_blank"
