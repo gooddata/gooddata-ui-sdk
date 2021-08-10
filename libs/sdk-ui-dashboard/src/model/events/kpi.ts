@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardEvent } from "./base";
+import { DashboardEventBody, IDashboardEvent } from "./base";
 import { ObjRef } from "@gooddata/sdk-model";
 import { WidgetHeader } from "../types/widgetTypes";
 import { DashboardContext } from "../types/commonTypes";
@@ -11,6 +11,7 @@ import {
     IKpiWidgetDefinition,
     ILegacyKpi,
 } from "@gooddata/sdk-backend-spi";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * This event is emitted when the dashboard's KPI Widget header is modified.
@@ -233,6 +234,38 @@ export function kpiWidgetChanged(
         correlationId,
         payload: {
             kpiWidget,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * This event is emitted after execution of a KPI widget fails.
+ *
+ * @alpha
+ */
+export interface DashboardKpiWidgetExecutionFailed extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED";
+    readonly payload: {
+        error: GoodDataSdkError;
+    };
+}
+
+/**
+ * @alpha
+ */
+export function kpiWidgetExecutionFailed(
+    error: GoodDataSdkError,
+    correlationId?: string,
+): DashboardEventBody<DashboardKpiWidgetExecutionFailed> {
+    return {
+        type: "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",
+        correlationId,
+        payload: {
+            error,
         },
     };
 }

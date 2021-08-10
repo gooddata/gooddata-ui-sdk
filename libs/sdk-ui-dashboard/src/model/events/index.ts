@@ -41,6 +41,7 @@ import {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetHeaderChanged,
     DashboardKpiWidgetMeasureChanged,
+    DashboardKpiWidgetExecutionFailed,
 } from "./kpi";
 import {
     DashboardInsightWidgetChanged,
@@ -50,6 +51,7 @@ import {
     DashboardInsightWidgetHeaderChanged,
     DashboardInsightWidgetInsightSwitched,
     DashboardInsightWidgetVisPropertiesChanged,
+    DashboardInsightWidgetExecutionFailed,
 } from "./insight";
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
@@ -136,6 +138,8 @@ export {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetComparisonChanged,
     DashboardKpiWidgetChanged,
+    DashboardKpiWidgetExecutionFailed,
+    kpiWidgetExecutionFailed,
 } from "./kpi";
 
 export {
@@ -146,6 +150,8 @@ export {
     DashboardInsightWidgetDrillsModified,
     DashboardInsightWidgetDrillsRemoved,
     DashboardInsightWidgetChanged,
+    DashboardInsightWidgetExecutionFailed,
+    insightWidgetExecutionFailed,
 } from "./insight";
 export { DashboardAlertCreated, DashboardAlertRemoved, DashboardAlertUpdated } from "./alerts";
 export { DashboardScheduledEmailCreated } from "./scheduledEmail";
@@ -235,6 +241,7 @@ export type DashboardEvents =
     | DashboardKpiWidgetFilterSettingsChanged
     | DashboardKpiWidgetComparisonChanged
     | DashboardKpiWidgetChanged
+    | DashboardKpiWidgetExecutionFailed
     | DashboardInsightWidgetHeaderChanged
     | DashboardInsightWidgetFilterSettingsChanged
     | DashboardInsightWidgetVisPropertiesChanged
@@ -242,6 +249,7 @@ export type DashboardEvents =
     | DashboardInsightWidgetDrillsModified
     | DashboardInsightWidgetDrillsRemoved
     | DashboardInsightWidgetChanged
+    | DashboardInsightWidgetExecutionFailed
     | DashboardAlertCreated
     | DashboardAlertRemoved
     | DashboardAlertUpdated
