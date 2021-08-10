@@ -1,11 +1,7 @@
 // (C) 2019 GoodData Corporation
-import React from "react";
-import compact from "lodash/compact";
-import isEqual from "lodash/isEqual";
-import noop from "lodash/noop";
+import React, { useCallback, useMemo, useState } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IInsight, IColorPalette, idRef, insightTitle, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { IInsight, idRef, insightTitle, insightVisualizationUrl } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     ILocale,
@@ -14,10 +10,9 @@ import {
     LoadingComponent as DefaultLoading,
     ErrorComponent as DefaultError,
     IntlWrapper,
-    isGoodDataSdkError,
-    UnexpectedSdkError,
     OnLoadingChanged,
     OnError,
+    useCancelablePromise,
 } from "@gooddata/sdk-ui";
 import { IInsightViewProps } from "./types";
 import InsightTitle from "./InsightTitle";
@@ -29,278 +24,204 @@ import {
     userWorkspaceSettingsDataLoaderFactory,
 } from "../dataLoaders";
 
-interface IInsightViewState {
-    isDataLoading: boolean;
+interface IInsightViewCoreState {
     isVisualizationLoading: boolean;
-    error: GoodDataSdkError | undefined;
-    insight: IInsight | undefined;
-    colorPalette: IColorPalette | undefined;
-    settings: IUserWorkspaceSettings | undefined;
+    visualizationError: GoodDataSdkError | undefined;
 }
 
-class InsightViewCore extends React.Component<IInsightViewProps & WrappedComponentProps, IInsightViewState> {
-    public static defaultProps: Partial<IInsightViewProps & WrappedComponentProps> = {
-        ErrorComponent: DefaultError,
-        filters: [],
-        drillableItems: [],
-        LoadingComponent: DefaultLoading,
-        TitleComponent: InsightTitle,
-        pushData: noop,
-    };
+const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (props) => {
+    const {
+        insight,
+        backend,
+        workspace,
+        filters,
+        executeByReference,
+        showTitle,
+        colorPalette,
+        config,
+        execConfig,
+        locale,
+        drillableItems,
 
-    state: IInsightViewState = {
-        isDataLoading: false,
+        onDrill,
+        onLoadingChanged,
+        onExportReady,
+        onError,
+        pushData,
+
+        ErrorComponent = DefaultError,
+        LoadingComponent = DefaultLoading,
+        TitleComponent = InsightTitle,
+    } = props;
+
+    const [state, setState] = useState<IInsightViewCoreState>({
         isVisualizationLoading: false,
-        error: undefined,
-        insight: undefined,
-        colorPalette: undefined,
-        settings: undefined,
-    };
+        visualizationError: undefined,
+    });
 
-    private startDataLoading = () => {
-        this.setIsDataLoading(true);
-        this.setError(undefined);
-    };
+    const {
+        error: insightError,
+        result: insightResult,
+        status: insightStatus,
+    } = useCancelablePromise(
+        {
+            promise: async () => {
+                const ref = typeof insight === "string" ? idRef(insight, "insight") : insight;
 
-    private stopDataLoading = () => {
-        this.setIsDataLoading(false);
-    };
+                const insightData = await insightDataLoaderFactory
+                    .forWorkspace(workspace)
+                    .getInsight(backend, ref);
 
-    private setIsDataLoading = (isLoading: boolean) => {
-        if (this.state.isDataLoading !== isLoading) {
-            this.setState({ isDataLoading: isLoading });
-        }
-    };
+                if (executeByReference) {
+                    /*
+                     * In execute-by-reference, filter merging happens on the server
+                     */
+                    return insightData;
+                }
 
-    private setError = (error: GoodDataSdkError | undefined) => {
-        if (this.state.error !== error) {
-            this.setState({ error });
-        }
-    };
+                /*
+                 * In freeform execution, frontend is responsible for filter merging. Code defers the merging to the
+                 * implementation of analytical backend because the merging may first need to unify how the different
+                 * filter entities are referenced (id vs uri).
+                 */
+                return backend!
+                    .workspace(workspace!)
+                    .insights()
+                    .getInsightWithAddedFilters(insightData, filters ?? []);
+            },
+        },
+        [insight, backend, workspace, executeByReference, filters],
+    );
 
-    private getRemoteResource = async <T extends any>(
-        resourceObtainer: (backend: IAnalyticalBackend, workspace: string) => Promise<T>,
-    ) => {
-        try {
-            return await resourceObtainer(this.props.backend, this.props.workspace);
-        } catch (e) {
-            if (isGoodDataSdkError(e)) {
-                this.setError(e);
-            } else {
-                this.setError(new UnexpectedSdkError(e));
-            }
+    const {
+        error: colorPaletteError,
+        result: colorPaletteResult,
+        status: colorPaletteStatus,
+    } = useCancelablePromise(
+        {
+            promise: () => {
+                return colorPaletteDataLoaderFactory.forWorkspace(workspace).getColorPalette(backend);
+            },
+        },
+        [backend, workspace],
+    );
 
-            this.stopDataLoading();
-            return undefined;
-        }
-    };
+    const {
+        error: workspaceSettingsError,
+        result: workspaceSettingsResult,
+        status: workspaceSettingsStatus,
+    } = useCancelablePromise(
+        {
+            promise: () => {
+                return userWorkspaceSettingsDataLoaderFactory
+                    .forWorkspace(workspace)
+                    .getUserWorkspaceSettings(backend);
+            },
+        },
+        [backend, workspace],
+    );
 
-    private getInsight = async (): Promise<IInsight> => {
-        const ref =
-            typeof this.props.insight === "string"
-                ? idRef(this.props.insight, "insight")
-                : this.props.insight;
+    // extract the url outside of backendWithTelemetry and use it as a dependency instead of the whole insight
+    // this reduces the amount of re-renders in case just filters change for example
+    const currentInsightVisualizationUrl = insightResult && insightVisualizationUrl(insightResult);
+    const backendWithTelemetry = useMemo(() => {
+        const telemetryProps: object = { ...props };
 
-        const insight = await this.getRemoteResource((backend, workspace) =>
-            insightDataLoaderFactory.forWorkspace(workspace).getInsight(backend, ref),
-        );
-
-        if (this.props.executeByReference) {
-            /*
-             * In execute-by-reference, filter merging happens on the server
-             */
-            return insight;
-        }
-
-        /*
-         * In freeform execution, frontend is responsible for filter merging. Code defers the merging to the
-         * implementation of analytical backend because the merging may first need to unify how the different
-         * filter entities are referenced (id vs uri).
-         */
-        return this.props
-            .backend!.workspace(this.props.workspace!)
-            .insights()
-            .getInsightWithAddedFilters(insight, this.props.filters ?? []);
-    };
-
-    private getColorPalette = (): Promise<IColorPalette> => {
-        return this.getRemoteResource((backend, workspace) =>
-            colorPaletteDataLoaderFactory.forWorkspace(workspace).getColorPalette(backend),
-        );
-    };
-
-    private getUserWorkspaceSettings = (): Promise<IUserWorkspaceSettings> => {
-        return this.getRemoteResource((backend, workspace) =>
-            userWorkspaceSettingsDataLoaderFactory.forWorkspace(workspace).getUserWorkspaceSettings(backend),
-        );
-    };
-
-    private updateUserWorkspaceSettings = async () => {
-        const settings = await this.getUserWorkspaceSettings();
-
-        if (!settings || isEqual(settings, this.state.settings)) {
-            return;
+        // add a fake prop so that the type of the visualization rendered is present in the telemetry
+        if (currentInsightVisualizationUrl) {
+            const key = `visualizationUrl_${currentInsightVisualizationUrl}`;
+            telemetryProps[key] = true;
         }
 
-        this.setState({ settings });
-    };
+        return backend.withTelemetry("InsightView", telemetryProps);
+    }, [currentInsightVisualizationUrl, backend]);
 
-    private updateColorPalette = async () => {
-        if (this.props.colorPalette) {
-            return;
-        }
+    const handleLoadingChanged = useCallback<OnLoadingChanged>(
+        ({ isLoading }): void => {
+            setState((oldState) => {
+                return {
+                    isVisualizationLoading: isLoading,
+                    // if we started loading, any previous vis error is obsolete at this point, get rid of it
+                    visualizationError: isLoading ? undefined : oldState.visualizationError,
+                };
+            });
+            onLoadingChanged?.({ isLoading });
+        },
+        [onLoadingChanged],
+    );
 
-        const colorPalette = await this.getColorPalette();
+    const handleError = useCallback<OnError>(
+        (visualizationError): void => {
+            setState((oldState) => {
+                return {
+                    ...oldState,
+                    visualizationError,
+                };
+            });
+            onError?.(error);
+        },
+        [onError],
+    );
 
-        if (!colorPalette || isEqual(colorPalette, this.state.colorPalette)) {
-            return;
-        }
+    const isDataLoading =
+        insightStatus === "loading" ||
+        insightStatus === "pending" ||
+        colorPaletteStatus === "loading" ||
+        colorPaletteStatus === "pending" ||
+        workspaceSettingsStatus === "loading" ||
+        workspaceSettingsStatus === "pending";
 
-        this.setState({ colorPalette });
-    };
-
-    private updateInsight = async () => {
-        const insight = await this.getInsight();
-
-        if (!insight || isEqual(insight, this.state.insight)) {
-            return;
-        }
-        this.props.onInsightLoaded?.(insight);
-        this.setState({ insight });
-    };
-
-    private componentDidMountInner = async () => {
-        this.startDataLoading();
-        await Promise.all([
-            this.updateColorPalette(),
-            this.updateUserWorkspaceSettings(),
-            this.updateInsight(),
-        ]);
-        this.stopDataLoading();
-    };
-
-    public componentDidMount(): void {
-        this.componentDidMountInner();
-    }
-
-    private componentDidUpdateInner = async (prevProps: IInsightViewProps) => {
-        const needsNewSetup =
-            !isEqual(this.props.insight, prevProps.insight) ||
-            !isEqual(this.props.filters, prevProps.filters) ||
-            this.props.workspace !== prevProps.workspace;
-
-        const needsNewColorPalette = this.props.workspace !== prevProps.workspace;
-
-        if (this.props.workspace !== prevProps.workspace) {
-            // if workspace changed, clear the insight as it is definitely wrong
-            // this prevents wrong renders with mismatching insight and workspace
-            // (as workspace changes immediately, but insight change is async)
-            this.setState({ insight: undefined });
-        }
-
-        if (needsNewSetup || needsNewColorPalette) {
-            this.startDataLoading();
-            await Promise.all(
-                compact([
-                    needsNewSetup && this.updateInsight(),
-                    needsNewSetup && this.updateUserWorkspaceSettings(),
-                    needsNewColorPalette && this.updateColorPalette(),
-                ]),
-            );
-            this.stopDataLoading();
-        }
-    };
-
-    public componentDidUpdate(prevProps: IInsightViewProps & WrappedComponentProps): void {
-        this.componentDidUpdateInner(prevProps);
-    }
-
-    private handleLoadingChanged: OnLoadingChanged = ({ isLoading }): void => {
-        this.setState({ isVisualizationLoading: isLoading });
-        this.props.onLoadingChanged?.({ isLoading });
-    };
-
-    private handleError: OnError = (error): void => {
-        this.setError(error);
-        this.props.onError?.(error);
-    };
-
-    private resolveInsightTitle = (insight: IInsight | undefined): string | undefined => {
-        switch (typeof this.props.showTitle) {
+    const resolveInsightTitle = (insight: IInsight | undefined): string | undefined => {
+        switch (typeof showTitle) {
             case "string":
-                return this.props.showTitle;
+                return showTitle;
             case "boolean":
-                return !this.state.isDataLoading && this.props.showTitle && insight
-                    ? insightTitle(insight)
-                    : undefined;
+                return !isDataLoading && showTitle && insight ? insightTitle(insight) : undefined;
             case "function":
-                return !this.state.isDataLoading && insight && this.props.showTitle(insight);
+                return !isDataLoading && insight && showTitle(insight);
             default:
                 return undefined;
         }
     };
+    const resolvedTitle = resolveInsightTitle(insightResult);
 
-    private getBackendWithTelemetry = (): IAnalyticalBackend => {
-        const telemetryProps: object = {
-            ...this.props,
-        };
+    const isLoadingShown = isDataLoading || state.isVisualizationLoading;
+    const error = state.visualizationError || insightError || colorPaletteError || workspaceSettingsError;
 
-        // add a fake prop so that the type of the visualization rendered is present in the telemetry
-        if (this.state.insight) {
-            const visualizationUrl = insightVisualizationUrl(this.state.insight);
-            const key = `visualizationUrl_${visualizationUrl}`;
-            telemetryProps[key] = true;
-        }
-
-        return this.props.backend.withTelemetry("InsightView", telemetryProps);
-    };
-
-    public render(): React.ReactNode {
-        const { LoadingComponent, TitleComponent } = this.props;
-        const { error, isDataLoading, isVisualizationLoading } = this.state;
-
-        const resolvedTitle = this.resolveInsightTitle(this.state.insight);
-        const isLoadingShown = isDataLoading || isVisualizationLoading;
-
-        return (
-            <div className="insight-view-container">
-                {resolvedTitle && <TitleComponent title={resolvedTitle} />}
-                {isLoadingShown && <LoadingComponent className="insight-view-loader" />}
-                {error && !isDataLoading && (
-                    <InsightError error={error} ErrorComponent={this.props.ErrorComponent} />
-                )}
-                <div
-                    className="insight-view-visualization"
-                    // make the visualization div 0 height so that the loading component can take up the whole area
-                    style={isLoadingShown ? { height: 0 } : undefined}
-                >
-                    <InsightRenderer
-                        insight={this.state.insight}
-                        workspace={this.props.workspace}
-                        backend={this.getBackendWithTelemetry()}
-                        colorPalette={this.props.colorPalette ?? this.state.colorPalette}
-                        config={this.props.config}
-                        execConfig={this.props.execConfig}
-                        drillableItems={this.props.drillableItems}
-                        executeByReference={this.props.executeByReference}
-                        filters={this.props.filters}
-                        locale={
-                            this.props.locale || (this.state.settings?.locale as ILocale) || DefaultLocale
-                        }
-                        settings={this.state.settings}
-                        ErrorComponent={this.props.ErrorComponent}
-                        LoadingComponent={this.props.LoadingComponent}
-                        onDrill={this.props.onDrill}
-                        onError={this.handleError}
-                        onExportReady={this.props.onExportReady}
-                        onLoadingChanged={this.handleLoadingChanged}
-                        pushData={this.props.pushData}
-                    />
-                </div>
+    return (
+        <div className="insight-view-container">
+            {resolvedTitle && <TitleComponent title={resolvedTitle} />}
+            {isLoadingShown && <LoadingComponent className="insight-view-loader" />}
+            {error && !isDataLoading && <InsightError error={error} ErrorComponent={ErrorComponent} />}
+            <div
+                className="insight-view-visualization"
+                // make the visualization div 0 height so that the loading component can take up the whole area
+                style={isLoadingShown ? { height: 0 } : undefined}
+            >
+                <InsightRenderer
+                    insight={insightResult}
+                    workspace={workspace}
+                    backend={backendWithTelemetry}
+                    colorPalette={colorPalette ?? colorPaletteResult}
+                    config={config}
+                    execConfig={execConfig}
+                    drillableItems={drillableItems}
+                    executeByReference={executeByReference}
+                    filters={filters}
+                    locale={locale || (workspaceSettingsResult?.locale as ILocale) || DefaultLocale}
+                    settings={workspaceSettingsResult}
+                    ErrorComponent={ErrorComponent}
+                    LoadingComponent={LoadingComponent}
+                    onDrill={onDrill}
+                    onError={handleError}
+                    onExportReady={onExportReady}
+                    onLoadingChanged={handleLoadingChanged}
+                    pushData={pushData}
+                />
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 export const IntlInsightView = withContexts(injectIntl(InsightViewCore));
 
