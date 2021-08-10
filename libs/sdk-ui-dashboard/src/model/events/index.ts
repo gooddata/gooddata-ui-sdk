@@ -78,7 +78,14 @@ import {
     DashboardDrillRequested,
 } from "./drill";
 
-export { IDashboardEvent, DashboardEventType, isDashboardEvent } from "./base";
+export {
+    IDashboardEvent,
+    DashboardEventType,
+    isDashboardEvent,
+    ICustomDashboardEvent,
+    isCustomDashboardEvent,
+    isDashboardEventOrCustomDashboardEvent,
+} from "./base";
 export {
     DateFilterValidationFailed,
     DateFilterValidationResult,

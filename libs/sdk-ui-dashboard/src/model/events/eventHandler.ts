@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { DashboardCommands } from "../commands";
 import { DashboardState } from "../state/types";
+import { ICustomDashboardEvent } from "./base";
 import { DashboardEvents } from "./index";
 
 /**
@@ -10,14 +11,14 @@ import { DashboardEvents } from "./index";
  *
  * @alpha
  */
-export type DashboardEventHandler<TEvents extends DashboardEvents = any> = {
+export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> = {
     /**
      * Specify event evaluation function. This will be used by dashboard's event emitter to determine
      * whether event of particular type should be dispatched to this handler.
      *
-     * @param event - dashboard event
+     * @param event - dashboard or custom event
      */
-    eval: (event: DashboardEvents) => boolean;
+    eval: (event: DashboardEvents | ICustomDashboardEvent) => boolean;
 
     /**
      * The actual event handling function. This will be called if the eval function returns true.

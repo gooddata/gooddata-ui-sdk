@@ -102,3 +102,42 @@ export interface IDashboardEvent {
 export function isDashboardEvent(obj: unknown): obj is IDashboardEvent {
     return !isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("GDC.DASH/EVT");
 }
+
+/**
+ * Base type for all custom events.
+ *
+ * @alpha
+ */
+export interface ICustomDashboardEvent {
+    /**
+     * Event type. Always starts with "CUSTOM/EVT".
+     */
+    readonly type: string;
+
+    /**
+     * Dashboard context in which the event occurred.
+     */
+    readonly ctx: DashboardContext;
+}
+
+/**
+ * Tests whether object is an instance of {@link ICustomDashboardEvent}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isCustomDashboardEvent(obj: unknown): obj is ICustomDashboardEvent {
+    return !isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("CUSTOM/EVT");
+}
+
+/**
+ * Tests whether object is an instance of {@link IDashboardEvent} or {@link ICustomDashboardEvent}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isDashboardEventOrCustomDashboardEvent(
+    obj: unknown,
+): obj is IDashboardEvent | ICustomDashboardEvent {
+    return isDashboardEvent(obj) || isCustomDashboardEvent(obj);
+}

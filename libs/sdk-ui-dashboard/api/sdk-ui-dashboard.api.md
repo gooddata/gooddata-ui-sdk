@@ -816,8 +816,8 @@ export interface DashboardDrillToLegacyDashboardResolved extends IDashboardEvent
 }
 
 // @alpha
-export type DashboardEventHandler<TEvents extends DashboardEvents = any> = {
-    eval: (event: DashboardEvents) => boolean;
+export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomEvent = any> = {
+    eval: (event: DashboardEvents | ICustomEvent) => boolean;
     handler: (event: TEvents, dispatchCommand: (command: DashboardCommands) => void, stateSelect: DashboardSelectorEvaluator) => void;
 };
 
@@ -1719,6 +1719,12 @@ export const HiddenTopBar: () => JSX.Element | null;
 export interface IButtonBarProps {
 }
 
+// @alpha
+export interface ICustomEvent {
+    readonly ctx: DashboardContext;
+    readonly type: string;
+}
+
 // @alpha (undocumented)
 export interface IDashboardAttributeFilterProps {
     filter: IDashboardAttributeFilter;
@@ -1968,6 +1974,9 @@ export interface IScheduledEmailDialogProps {
     onSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
     onSuccess?: (scheduledMail: IScheduledMail) => void;
 }
+
+// @alpha
+export function isCustomEvent(obj: unknown): obj is ICustomEvent;
 
 // @alpha
 export function isDashboardCommandFailed(obj: unknown): obj is DashboardCommandFailed;
@@ -3132,7 +3141,7 @@ export const useDashboardDateFilterProps: () => IDashboardDateFilterProps;
 export const useDashboardDispatch: () => Dispatch<AnyAction>;
 
 // @alpha
-export const useDashboardEventDispatch: () => (event: DashboardEvents) => void;
+export const useDashboardEventDispatch: () => (event: DashboardEvents | ICustomEvent) => void;
 
 // @alpha (undocumented)
 export const useDashboardEventsContext: () => IDashboardEventsContext;
