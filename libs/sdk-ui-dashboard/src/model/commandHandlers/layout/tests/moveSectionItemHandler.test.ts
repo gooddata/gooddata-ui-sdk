@@ -18,7 +18,11 @@ import {
 describe("move layout section item handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
+        );
 
         it("should fail if bad source section index is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
@@ -84,7 +88,11 @@ describe("move layout section item handler", () => {
 
     describe("for dashboard with multiple sections", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
+        );
 
         const [SecondSectionFirstItem, SecondSectionSecondItem] =
             ComplexDashboardWithReferences.dashboard.layout!.sections[1].items;

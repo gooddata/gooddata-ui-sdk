@@ -37,7 +37,11 @@ describe("change insight widget filter settings handler", () => {
     const WidgetWithAllFilters = ComplexDashboardWidgets.ThirdSection.Heatmap;
 
     let Tester: DashboardTester;
-    beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+    beforeEach(
+        preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, ComplexDashboardIdentifier),
+    );
 
     describe("for replace settings operation", () => {
         const TestWidgetRef = WidgetWithNoFilters.ref;

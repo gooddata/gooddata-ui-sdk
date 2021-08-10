@@ -13,7 +13,11 @@ import {
 describe("move section command handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
+        );
 
         it("should fail if bad section index specified", async () => {
             const originalLayout = selectLayout(Tester.state());
@@ -42,7 +46,11 @@ describe("move section command handler", () => {
             ComplexDashboardWithReferences.dashboard.layout!.sections;
 
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
+        );
 
         it("should move first section to the end of the section list", async () => {
             const event: DashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(

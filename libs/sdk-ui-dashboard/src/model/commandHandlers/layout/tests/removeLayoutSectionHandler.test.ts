@@ -17,7 +17,11 @@ import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboa
 describe("remove layout section handler", () => {
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), EmptyDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, EmptyDashboardIdentifier),
+        );
 
         it("should fail the command", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
@@ -32,7 +36,11 @@ describe("remove layout section handler", () => {
 
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
+        );
 
         it("should remove the section", async () => {
             const originalLayout = selectLayout(Tester.state());

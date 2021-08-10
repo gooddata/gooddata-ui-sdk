@@ -12,7 +12,11 @@ import { TestKpiPlaceholderItem } from "../../../tests/fixtures/Layout.fixtures"
 
 describe("stashing", () => {
     let Tester: DashboardTester;
-    beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+    beforeEach(
+        preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, ComplexDashboardIdentifier),
+    );
 
     const [ThirdSectionFirstItem] = ComplexDashboardWithReferences.dashboard.layout!.sections[2].items;
     const [SecondSectionFirstItem, SecondSectionSecondItem] =

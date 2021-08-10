@@ -32,9 +32,15 @@ describe("load dashboard handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
         beforeAll(
-            preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier, {
-                loadCommand: loadDashboard(undefined, undefined, "testCorrelation"),
-            }),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                {
+                    loadCommand: loadDashboard(undefined, undefined, "testCorrelation"),
+                },
+            ),
         );
 
         it("should resolve config props that can be obtained from backend", () => {
@@ -59,7 +65,11 @@ describe("load dashboard handler", () => {
 
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
-        beforeAll(preloadedTesterFactory((tester) => (Tester = tester), EmptyDashboardIdentifier));
+        beforeAll(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, EmptyDashboardIdentifier),
+        );
 
         it("should add default layout for an empty dashboard", () => {
             const layout = selectLayout(Tester.state());

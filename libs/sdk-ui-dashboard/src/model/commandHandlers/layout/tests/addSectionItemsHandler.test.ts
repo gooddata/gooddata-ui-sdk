@@ -20,11 +20,17 @@ describe("add section items handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier, {
-                backendConfig: {
-                    useRefType: "id",
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
                 },
-            }),
+                SimpleDashboardIdentifier,
+                {
+                    backendConfig: {
+                        useRefType: "id",
+                    },
+                },
+            ),
         );
 
         it("should load and add insight when adding insight widget", async () => {
@@ -94,7 +100,11 @@ describe("add section items handler", () => {
 
     describe("for dashboard with existing sections", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
+        );
 
         // this section has two existing items
         const TestSectionIdx = 1;

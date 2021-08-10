@@ -7,7 +7,11 @@ import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDash
 
 describe("addAttributeFilterHandler", () => {
     let Tester: DashboardTester;
-    beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+    beforeEach(
+        preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, SimpleDashboardIdentifier),
+    );
 
     it("should emit the appropriate events for added attribute filter", async () => {
         Tester.dispatch(

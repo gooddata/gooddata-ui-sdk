@@ -23,11 +23,17 @@ describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => (Tester = tester), EmptyDashboardIdentifier, {
-                backendConfig: {
-                    useRefType: "id",
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
                 },
-            }),
+                EmptyDashboardIdentifier,
+                {
+                    backendConfig: {
+                        useRefType: "id",
+                    },
+                },
+            ),
         );
 
         it("should add a new empty section at relative index 0", async () => {
@@ -160,7 +166,11 @@ describe("add layout section handler", () => {
     // Note: the SimpleDashboard contains a single two sections
     describe("for a dashboard with existing sections", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
+        );
 
         it("should add new last section by using relative index -1", async () => {
             const originalLayout = selectLayout(Tester.state());

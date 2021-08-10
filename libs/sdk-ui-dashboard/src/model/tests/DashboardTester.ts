@@ -372,7 +372,7 @@ export type PreloadedTesterOptions = {
  * @param options - options influencing how the tester is created
  */
 export function preloadedTesterFactory(
-    onLoaded: (tester: DashboardTester) => void,
+    onLoaded: (tester: DashboardTester) => void | Promise<void>,
     identifier: Identifier,
     options: PreloadedTesterOptions = {},
 ): (done: jest.DoneCallback) => void {
@@ -385,11 +385,8 @@ export function preloadedTesterFactory(
 
         tester
             .waitFor("GDC.DASH/EVT.LOADED")
-            .then(() => {
-                tester.resetMonitors();
-                onLoaded(tester);
-                done();
-            })
+            .then(() => Promise.resolve(onLoaded(tester)).then(() => tester.resetMonitors()))
+            .then(() => done())
             .catch((err) => {
                 done.fail(`DashboardTester failed to load dashboard: ${err.message}`);
             });

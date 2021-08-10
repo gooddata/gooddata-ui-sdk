@@ -33,7 +33,11 @@ describe("query insight date datasets", () => {
 
     describe("for insights that reference dates", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), EmptyDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, EmptyDashboardIdentifier),
+        );
 
         it("should return date datasets for insight with date attributes in buckets", async () => {
             await addTestSection(Tester, TreemapWithOneMeasureAndViewByDateAndSegmentByDate);

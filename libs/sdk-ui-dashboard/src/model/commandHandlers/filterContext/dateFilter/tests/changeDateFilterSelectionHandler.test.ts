@@ -6,7 +6,11 @@ import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDash
 
 describe("changeDateFilterSelectionHandler", () => {
     let Tester: DashboardTester;
-    beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+    beforeEach(
+        preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, SimpleDashboardIdentifier),
+    );
 
     it("should emit the appropriate events for changed date filter", async () => {
         Tester.dispatch(
