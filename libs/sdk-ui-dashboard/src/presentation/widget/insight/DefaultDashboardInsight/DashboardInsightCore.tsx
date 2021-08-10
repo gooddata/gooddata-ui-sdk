@@ -29,6 +29,8 @@ import {
     selectSettings,
     selectIsExport,
     useDashboardAsyncRender,
+    useDashboardEventDispatch,
+    insightWidgetExecutionFailed,
 } from "../../../../model";
 
 import { useResolveDashboardInsightProperties } from "./useResolveDashboardInsightProperties";
@@ -73,6 +75,8 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
     const colorPalette = useDashboardSelector(selectColorPalette);
     const isExport = useDashboardSelector(selectIsExport);
 
+    const dispatchEvent = useDashboardEventDispatch();
+
     const {
         result: filtersForInsight,
         status: filtersStatus,
@@ -107,9 +111,10 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
     const handleError = useCallback<OnError>(
         (error) => {
             setVisualizationError(error);
+            dispatchEvent(insightWidgetExecutionFailed(error));
             onError?.(error);
         },
-        [onError],
+        [onError, dispatchEvent],
     );
 
     const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight as IFilter[]); // TODO how to type this better?

@@ -2,7 +2,7 @@
 import { SagaIterator } from "redux-saga";
 import { actionChannel, select, take } from "redux-saga/effects";
 import { DashboardEventHandler, DashboardSelectorEvaluator } from "../../events/eventHandler";
-import { DashboardEvents } from "../../events";
+import { DashboardEvents, isDashboardEventOrCustomDashboardEvent } from "../../events";
 import { DashboardCommands } from "../../commands";
 import { DashboardState } from "../types";
 
@@ -29,14 +29,14 @@ export function createRootEventEmitter(
     let eventHandlers = initialHandlers;
 
     return {
-        registerHandler: (handler: DashboardEventHandler) => {
+        registerHandler: (handler) => {
             eventHandlers.push(handler);
         },
-        unregisterHandler: (handler: DashboardEventHandler) => {
+        unregisterHandler: (handler) => {
             eventHandlers = eventHandlers.filter((h) => h !== handler);
         },
         eventEmitterSaga: function* () {
-            const eventChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.DASH/EVT"));
+            const eventChannel = yield actionChannel(isDashboardEventOrCustomDashboardEvent);
 
             while (true) {
                 const event: DashboardEvents = yield take(eventChannel);

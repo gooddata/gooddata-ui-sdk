@@ -38,11 +38,17 @@ import { listedDashboardsSliceReducer } from "./listedDashboards";
 import { backendCapabilitiesSliceReducer } from "./backendCapabilities";
 import { drillTargetsReducer } from "./drillTargets";
 import { DashboardEventType } from "../events";
+import { DashboardCommandType } from "../commands";
 
-const nonSerializableEventsAndCommands: DashboardEventType[] = [
+const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType)[] = [
     "GDC.DASH/EVT.COMMAND.FAILED",
     "GDC.DASH/EVT.QUERY.FAILED",
     "@@QUERY.ENVELOPE" as any,
+    // Execution failed events have the actual error in them
+    "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
+    "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",
+    // Custom events may contain whatever
+    "GDC.DASH/CMD.EVENT.TRIGGER",
     // Drill commands & events contain non-serializable dataView
     "GDC.DASH/CMD.DRILL",
     "GDC.DASH/EVT.DRILL.REQUESTED",

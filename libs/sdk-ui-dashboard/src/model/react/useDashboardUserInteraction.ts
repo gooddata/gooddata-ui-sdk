@@ -1,8 +1,8 @@
 // (C) 2020-2021 GoodData Corporation
 import { useCallback } from "react";
 
-import { userInteraction } from "../commands/userInteraction";
-import { useDashboardDispatch } from "./DashboardStoreProvider";
+import { userInteractionTriggered } from "../events/userInteraction";
+import { useDashboardEventDispatch } from "./useDashboardEventDispatch";
 
 /**
  * Hook for dispatching relevant user interaction commands.
@@ -12,18 +12,20 @@ import { useDashboardDispatch } from "./DashboardStoreProvider";
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useDashboardUserInteraction = () => {
-    const dispatch = useDashboardDispatch();
+    const eventDispatch = useDashboardEventDispatch();
 
     const poweredByGDLogoClicked = useCallback(() => {
-        dispatch(userInteraction("poweredByGDLogoClicked"));
+        eventDispatch(userInteractionTriggered("poweredByGDLogoClicked"));
     }, []);
 
     const kpiAlertDialogClosed = useCallback(() => {
-        dispatch(userInteraction("kpiAlertDialogClosed"));
+        eventDispatch(userInteractionTriggered("kpiAlertDialogClosed"));
     }, []);
 
     const kpiAlertDialogOpened = useCallback((alreadyHasAlert: boolean) => {
-        dispatch(userInteraction({ interaction: "kpiAlertDialogOpened", data: { alreadyHasAlert } }));
+        eventDispatch(
+            userInteractionTriggered({ interaction: "kpiAlertDialogOpened", data: { alreadyHasAlert } }),
+        );
     }, []);
 
     return {

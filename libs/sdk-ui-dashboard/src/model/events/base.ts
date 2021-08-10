@@ -40,6 +40,7 @@ export type DashboardEventType =
     | "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED"
     | "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED"
     | "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED"
+    | "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED"
     | "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED"
     | "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED"
     | "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED"
@@ -47,6 +48,7 @@ export type DashboardEventType =
     | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED"
     | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED"
     | "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED"
+    | "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED"
     | "GDC.DASH/EVT.ALERT.CREATED"
     | "GDC.DASH/EVT.ALERT.UPDATED"
     | "GDC.DASH/EVT.ALERT.REMOVED"
@@ -74,9 +76,10 @@ export type DashboardEventType =
 /**
  * Base type for all dashboard events.
  *
+ * @typeParam TPayload - type of the event's additional data
  * @alpha
  */
-export interface IDashboardEvent {
+export interface IDashboardEvent<TPayload = any> {
     /**
      * Event type. Always starts with "GDC.DASH/EVT".
      */
@@ -91,6 +94,11 @@ export interface IDashboardEvent {
      * Dashboard context in which the event occurred.
      */
     readonly ctx: DashboardContext;
+
+    /**
+     * Optionally specify any additional data the custom event needs.
+     */
+    readonly payload?: TPayload;
 }
 
 /**
@@ -102,3 +110,53 @@ export interface IDashboardEvent {
 export function isDashboardEvent(obj: unknown): obj is IDashboardEvent {
     return !isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("GDC.DASH/EVT");
 }
+
+/**
+ * Base type for all custom events.
+ *
+ * @typeParam TPayload - type of the event's additional data
+ * @alpha
+ */
+export interface ICustomDashboardEvent<TPayload = any> {
+    /**
+     * Event type. Always starts with "CUSTOM/EVT".
+     */
+    readonly type: string;
+
+    /**
+     * Dashboard context in which the event occurred.
+     */
+    readonly ctx: DashboardContext;
+
+    /**
+     * Optionally specify any additional data the custom event needs.
+     */
+    readonly payload?: TPayload;
+}
+
+/**
+ * Tests whether object is an instance of {@link ICustomDashboardEvent}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isCustomDashboardEvent(obj: unknown): obj is ICustomDashboardEvent {
+    return !isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("CUSTOM/EVT");
+}
+
+/**
+ * Tests whether object is an instance of {@link IDashboardEvent} or {@link ICustomDashboardEvent}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isDashboardEventOrCustomDashboardEvent(
+    obj: unknown,
+): obj is IDashboardEvent | ICustomDashboardEvent {
+    return isDashboardEvent(obj) || isCustomDashboardEvent(obj);
+}
+
+/**
+ * @alpha
+ */
+export type DashboardEventBody<T extends IDashboardEvent | ICustomDashboardEvent> = Omit<T, "ctx">;

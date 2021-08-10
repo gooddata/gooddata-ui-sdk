@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { LoadDashboard, RenameDashboard, ResetDashboard, SaveDashboard, SaveDashboardAs } from "./dashboard";
+import { TriggerEvent } from "./events";
 import {
     AddAttributeFilter,
     ChangeAttributeFilterSelection,
@@ -49,7 +50,6 @@ import {
     DrillToLegacyDashboard,
 } from "./drill";
 import { AddDrillTargets } from "./drillTargets";
-import { UserInteraction } from "./userInteraction";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render";
 
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
@@ -66,6 +66,7 @@ export {
     ResetDashboard,
     resetDashboard,
 } from "./dashboard";
+export { TriggerEvent, triggerEvent } from "./events";
 export {
     ChangeDateFilterSelection,
     changeDateFilterSelection,
@@ -171,8 +172,6 @@ export {
     refreshInsightWidget,
 } from "./insight";
 
-export * from "./userInteraction";
-
 export { RequestAsyncRender, ResolveAsyncRender } from "./render";
 
 export { AddDrillTargets, addDrillTargets } from "./drillTargets";
@@ -186,7 +185,7 @@ export type DashboardCommands =
     | SaveDashboardAs
     | RenameDashboard
     | ResetDashboard
-    | UserInteraction
+    | TriggerEvent
     | RequestAsyncRender
     | ResolveAsyncRender
     | ChangeFilterContextSelection

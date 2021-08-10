@@ -41,6 +41,7 @@ import {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetHeaderChanged,
     DashboardKpiWidgetMeasureChanged,
+    DashboardKpiWidgetExecutionFailed,
 } from "./kpi";
 import {
     DashboardInsightWidgetChanged,
@@ -50,6 +51,7 @@ import {
     DashboardInsightWidgetHeaderChanged,
     DashboardInsightWidgetInsightSwitched,
     DashboardInsightWidgetVisPropertiesChanged,
+    DashboardInsightWidgetExecutionFailed,
 } from "./insight";
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
@@ -78,7 +80,15 @@ import {
     DashboardDrillRequested,
 } from "./drill";
 
-export { IDashboardEvent, DashboardEventType, isDashboardEvent } from "./base";
+export {
+    IDashboardEvent,
+    DashboardEventType,
+    isDashboardEvent,
+    ICustomDashboardEvent,
+    isCustomDashboardEvent,
+    isDashboardEventOrCustomDashboardEvent,
+    DashboardEventBody,
+} from "./base";
 export {
     DateFilterValidationFailed,
     DateFilterValidationResult,
@@ -128,6 +138,8 @@ export {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetComparisonChanged,
     DashboardKpiWidgetChanged,
+    DashboardKpiWidgetExecutionFailed,
+    kpiWidgetExecutionFailed,
 } from "./kpi";
 
 export {
@@ -138,6 +150,8 @@ export {
     DashboardInsightWidgetDrillsModified,
     DashboardInsightWidgetDrillsRemoved,
     DashboardInsightWidgetChanged,
+    DashboardInsightWidgetExecutionFailed,
+    insightWidgetExecutionFailed,
 } from "./insight";
 export { DashboardAlertCreated, DashboardAlertRemoved, DashboardAlertUpdated } from "./alerts";
 export { DashboardScheduledEmailCreated } from "./scheduledEmail";
@@ -174,7 +188,7 @@ export {
 
 export { DrillTargetsAdded, drillTargetsAdded } from "./drillTargets";
 
-export { DashboardUserInteractionTriggered, userInteractionTriggered } from "./userInteraction";
+export * from "./userInteraction";
 export {
     DashboardRenderRequested,
     DashboardAsyncRenderRequested,
@@ -227,6 +241,7 @@ export type DashboardEvents =
     | DashboardKpiWidgetFilterSettingsChanged
     | DashboardKpiWidgetComparisonChanged
     | DashboardKpiWidgetChanged
+    | DashboardKpiWidgetExecutionFailed
     | DashboardInsightWidgetHeaderChanged
     | DashboardInsightWidgetFilterSettingsChanged
     | DashboardInsightWidgetVisPropertiesChanged
@@ -234,6 +249,7 @@ export type DashboardEvents =
     | DashboardInsightWidgetDrillsModified
     | DashboardInsightWidgetDrillsRemoved
     | DashboardInsightWidgetChanged
+    | DashboardInsightWidgetExecutionFailed
     | DashboardAlertCreated
     | DashboardAlertRemoved
     | DashboardAlertUpdated
