@@ -2,7 +2,6 @@
 import { useCallback } from "react";
 
 import { userInteractionTriggered } from "../events/userInteraction";
-import { useDashboardContext } from "./DashboardContextContext";
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch";
 
 /**
@@ -14,19 +13,18 @@ import { useDashboardEventDispatch } from "./useDashboardEventDispatch";
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useDashboardUserInteraction = () => {
     const eventDispatch = useDashboardEventDispatch();
-    const ctx = useDashboardContext();
 
     const poweredByGDLogoClicked = useCallback(() => {
-        eventDispatch(userInteractionTriggered(ctx, "poweredByGDLogoClicked"));
+        eventDispatch(userInteractionTriggered("poweredByGDLogoClicked"));
     }, []);
 
     const kpiAlertDialogClosed = useCallback(() => {
-        eventDispatch(userInteractionTriggered(ctx, "kpiAlertDialogClosed"));
+        eventDispatch(userInteractionTriggered("kpiAlertDialogClosed"));
     }, []);
 
     const kpiAlertDialogOpened = useCallback((alreadyHasAlert: boolean) => {
         eventDispatch(
-            userInteractionTriggered(ctx, { interaction: "kpiAlertDialogOpened", data: { alreadyHasAlert } }),
+            userInteractionTriggered({ interaction: "kpiAlertDialogOpened", data: { alreadyHasAlert } }),
         );
     }, []);
 

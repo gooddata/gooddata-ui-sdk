@@ -44,6 +44,7 @@ import { changeInsightWidgetVisPropertiesHandler } from "./widgets/changeInsight
 import { changeInsightWidgetFilterSettingsHandler } from "./widgets/changeInsightWidgetFilterSettingsHandler";
 import { changeKpiWidgetHeaderHandler } from "./widgets/changeKpiWidgetHeaderHandler";
 import { changeKpiWidgetFilterSettingsHandler } from "./widgets/changeKpiWidgetFilterSettingsHandler";
+import { triggerEventHandler } from "./events/triggerEventHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -53,6 +54,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.SAVEAS": unhandledCommand,
     "GDC.DASH/CMD.RESET": unhandledCommand,
     "GDC.DASH/CMD.RENAME": unhandledCommand,
+    "GDC.DASH/CMD.EVENT.TRIGGER": triggerEventHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION": changeFilterContextSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION": changeDateFilterSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD": addAttributeFilterHandler,

@@ -85,6 +85,7 @@ export {
     ICustomDashboardEvent,
     isCustomDashboardEvent,
     isDashboardEventOrCustomDashboardEvent,
+    DashboardEventBody,
 } from "./base";
 export {
     DateFilterValidationFailed,

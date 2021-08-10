@@ -1,12 +1,11 @@
 // (C) 2021 GoodData Corporation
 import { useEffect, useState } from "react";
-import { usePrevious } from "@gooddata/sdk-ui";
+import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
 import { createDashboardStore, ReduxedDashboardStore } from "../state/dashboardStore";
 import { InitialLoadCorrelationId, loadDashboard } from "../commands/dashboard";
 import { objectUtils } from "@gooddata/util";
 import { IDashboardStoreProviderProps } from "./types";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker";
-import { useDashboardContext } from "./DashboardContextContext";
 
 /**
  * This hook is responsible for properly initializing and re-initializing the dashboard redux store,
@@ -18,11 +17,18 @@ import { useDashboardContext } from "./DashboardContextContext";
 export const useInitializeDashboardStore = (
     props: IDashboardStoreProviderProps,
 ): ReduxedDashboardStore | null => {
+    const { dashboardRef } = props;
+    const backend = useBackendStrict(props.backend);
+    const workspace = useWorkspace(props.workspace);
+    const { client: clientId, dataProduct: dataProductId } = useClientWorkspaceIdentifiers() ?? {};
     const [dashboardStore, setDashboardStore] = useState<ReduxedDashboardStore | null>(null);
-    const dashboardContext = useDashboardContext();
 
     const currentInitProps = {
-        ...dashboardContext,
+        backend,
+        workspace,
+        dashboardRef,
+        clientId,
+        dataProductId,
         initialEventHandlers: props.eventHandlers,
     };
 
@@ -40,7 +46,13 @@ export const useInitializeDashboardStore = (
 
             // Create new store and fire load dashboard command.
             const dashStore = createDashboardStore({
-                sagaContext: dashboardContext,
+                sagaContext: {
+                    backend,
+                    workspace: workspace!,
+                    dashboardRef: currentInitProps.dashboardRef,
+                    clientId: currentInitProps.clientId,
+                    dataProductId: currentInitProps.dataProductId,
+                },
                 initialEventHandlers: props.eventHandlers,
                 backgroundWorkers,
             });

@@ -74,9 +74,10 @@ export type DashboardEventType =
 /**
  * Base type for all dashboard events.
  *
+ * @typeParam TPayload - type of the event's additional data
  * @alpha
  */
-export interface IDashboardEvent {
+export interface IDashboardEvent<TPayload = any> {
     /**
      * Event type. Always starts with "GDC.DASH/EVT".
      */
@@ -91,6 +92,11 @@ export interface IDashboardEvent {
      * Dashboard context in which the event occurred.
      */
     readonly ctx: DashboardContext;
+
+    /**
+     * Optionally specify any additional data the custom event needs.
+     */
+    readonly payload?: TPayload;
 }
 
 /**
@@ -106,9 +112,10 @@ export function isDashboardEvent(obj: unknown): obj is IDashboardEvent {
 /**
  * Base type for all custom events.
  *
+ * @typeParam TPayload - type of the event's additional data
  * @alpha
  */
-export interface ICustomDashboardEvent {
+export interface ICustomDashboardEvent<TPayload = any> {
     /**
      * Event type. Always starts with "CUSTOM/EVT".
      */
@@ -118,6 +125,11 @@ export interface ICustomDashboardEvent {
      * Dashboard context in which the event occurred.
      */
     readonly ctx: DashboardContext;
+
+    /**
+     * Optionally specify any additional data the custom event needs.
+     */
+    readonly payload?: TPayload;
 }
 
 /**
@@ -141,3 +153,8 @@ export function isDashboardEventOrCustomDashboardEvent(
 ): obj is IDashboardEvent | ICustomDashboardEvent {
     return isDashboardEvent(obj) || isCustomDashboardEvent(obj);
 }
+
+/**
+ * @alpha
+ */
+export type DashboardEventBody<T extends IDashboardEvent | ICustomDashboardEvent> = Omit<T, "ctx">;

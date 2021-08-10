@@ -2,7 +2,13 @@
 import { useCallback } from "react";
 import invariant from "ts-invariant";
 
-import { DashboardEvents, ICustomDashboardEvent, isDashboardEventOrCustomDashboardEvent } from "../events";
+import { triggerEvent } from "../commands";
+import {
+    DashboardEventBody,
+    DashboardEvents,
+    ICustomDashboardEvent,
+    isDashboardEventOrCustomDashboardEvent,
+} from "../events";
 
 import { useDashboardDispatch } from "./DashboardStoreProvider";
 
@@ -12,16 +18,19 @@ import { useDashboardDispatch } from "./DashboardStoreProvider";
  * @returns function that you can use to dispatch Dashboard events
  * @alpha
  */
-export const useDashboardEventDispatch = (): ((event: DashboardEvents | ICustomDashboardEvent) => void) => {
+export const useDashboardEventDispatch = (): ((
+    eventBody: DashboardEventBody<DashboardEvents | ICustomDashboardEvent>,
+) => void) => {
     const dispatch = useDashboardDispatch();
 
     return useCallback(
-        (event: DashboardEvents | ICustomDashboardEvent) => {
+        (eventBody: DashboardEventBody<DashboardEvents | ICustomDashboardEvent>) => {
             invariant(
-                isDashboardEventOrCustomDashboardEvent(event),
+                isDashboardEventOrCustomDashboardEvent(eventBody),
                 "Unsupported event passed to useDashboardEventDispatch result.",
             );
-            dispatch(event);
+            const command = triggerEvent(eventBody);
+            dispatch(command);
         },
         [dispatch],
     );

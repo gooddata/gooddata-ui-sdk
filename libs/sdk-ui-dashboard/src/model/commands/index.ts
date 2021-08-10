@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { LoadDashboard, RenameDashboard, ResetDashboard, SaveDashboard, SaveDashboardAs } from "./dashboard";
+import { TriggerEvent } from "./events";
 import {
     AddAttributeFilter,
     ChangeAttributeFilterSelection,
@@ -65,6 +66,7 @@ export {
     ResetDashboard,
     resetDashboard,
 } from "./dashboard";
+export { TriggerEvent, triggerEvent } from "./events";
 export {
     ChangeDateFilterSelection,
     changeDateFilterSelection,
@@ -183,6 +185,7 @@ export type DashboardCommands =
     | SaveDashboardAs
     | RenameDashboard
     | ResetDashboard
+    | TriggerEvent
     | RequestAsyncRender
     | ResolveAsyncRender
     | ChangeFilterContextSelection
