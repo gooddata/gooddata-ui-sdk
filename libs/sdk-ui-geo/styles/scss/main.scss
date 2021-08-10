@@ -147,7 +147,7 @@ $font-stack-roman: gdcustomfont, "Avenir", "Helvetica Neue", arial, sans-serif;
 }
 
 .pushpin-size-legend {
-    font-family: $gd-font-primary;
+    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
 
     .metric-name {
         overflow: hidden;
