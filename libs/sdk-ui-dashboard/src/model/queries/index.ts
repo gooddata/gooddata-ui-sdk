@@ -12,6 +12,7 @@ export {
     InsightAttributesMeta,
     queryInsightAttributesMeta,
 } from "./insights";
+export { QueryMeasureDateDatasets, queryDateDatasetsForMeasure, MeasureDateDatasets } from "./kpis";
 export { QueryWidgetFilters as QueryInsightWidgetFilters, queryWidgetFilters } from "./widgets";
 
 /**

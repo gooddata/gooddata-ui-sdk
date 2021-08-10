@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`query measure date datasets for datasets obtained from catalog should order date datasets by relevance and title if tied 1`] = `
+Array [
+  "Date (Activity)",
+  "Date (Timeline)",
+]
+`;
+
+exports[`query measure date datasets for datasets obtained from catalog should order date datasets by relevance and title if tied 2`] = `
+Object {
+  "Date (Activity)": "Activity",
+  "Date (Timeline)": "Timeline",
+}
+`;
+
+exports[`query measure date datasets for datasets obtained from catalog should order date datasets by relevance desc 1`] = `
+Array [
+  "Date (Timeline)",
+  "Date (Activity)",
+]
+`;
+
+exports[`query measure date datasets for datasets obtained from catalog should order date datasets by relevance desc 2`] = `
+Object {
+  "Date (Activity)": "Activity",
+  "Date (Timeline)": "Timeline",
+}
+`;

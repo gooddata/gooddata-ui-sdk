@@ -324,14 +324,11 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly settings: WidgetFilterOperation;
+        readonly operation: WidgetFilterOperation;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS";
 }
-
-// @alpha
-export function changeKpiWidgetFilterSettings(ref: ObjRef, settings: WidgetFilterOperation, correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha (undocumented)
 export interface ChangeKpiWidgetHeader extends IDashboardCommand {
@@ -971,7 +968,8 @@ export interface DashboardKpiWidgetFilterSettingsChanged extends IDashboardEvent
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly filterSettings: WidgetFilterOperation;
+        readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+        readonly dateDatasetForFiltering?: ICatalogDateDataset;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED";
@@ -1197,7 +1195,7 @@ export interface DashboardQueryStarted extends IDashboardEvent {
 }
 
 // @alpha (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.WIDGET.FILTERS";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS";
 
 // @alpha
 export interface DashboardRenamed extends IDashboardEvent {
@@ -1435,6 +1433,9 @@ export const DefaultTopBarInner: () => JSX.Element;
 // @alpha
 export function disableInsightWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
 
+// @alpha
+export function disableKpiWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
+
 // @alpha (undocumented)
 export interface Drill extends IDashboardCommand {
     // (undocumented)
@@ -1605,6 +1606,9 @@ export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, 
 
 // @alpha
 export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @alpha
+export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha
 export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget>;
@@ -1894,6 +1898,9 @@ export interface IFilterBarProps {
 // @alpha
 export function ignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
 
+// @alpha
+export function ignoreFilterOnKpiWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
+
 // @alpha (undocumented)
 export interface IMenuButtonConfiguration {
     additionalMenuItems?: ReadonlyArray<[number, IMenuButtonItem]>;
@@ -2026,6 +2033,13 @@ export type LoadingState = {
     loading: boolean;
     result?: boolean;
     error?: Error;
+};
+
+// @alpha
+export type MeasureDateDatasets = {
+    readonly dateDatasets: ReadonlyArray<ICatalogDateDataset>;
+    readonly dateDatasetsOrdered: ReadonlyArray<ICatalogDateDataset>;
+    readonly dateDatasetDisplayNames: Record<string, string>;
 };
 
 // @internal (undocumented)
@@ -2189,6 +2203,9 @@ export interface PermissionsState {
 export function queryDateDatasetsForInsight(insightRef: ObjRef, correlationId?: string): QueryInsightDateDatasets;
 
 // @alpha
+export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: string): QueryMeasureDateDatasets;
+
+// @alpha
 export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
     // (undocumented)
     readonly payload: {
@@ -2220,6 +2237,16 @@ export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
+}
+
+// @alpha
+export interface QueryMeasureDateDatasets extends IDashboardQuery<MeasureDateDatasets> {
+    // (undocumented)
+    readonly payload: {
+        readonly measureRef: ObjRef;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.MEASURE.DATE.DATASETS";
 }
 
 // @internal (undocumented)
@@ -2351,6 +2378,12 @@ export function replaceInsightWidgetFilterSettings(ref: ObjRef, settings: Omit<F
 
 // @alpha
 export function replaceInsightWidgetIgnoredFilters(ref: ObjRef, displayForms?: ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @alpha
+export function replaceKpiWidgetFilterSettings(ref: ObjRef, settings: Omit<FilterOpReplaceAll, "type">, correlationId?: string): ChangeKpiWidgetFilterSettings;
+
+// @alpha
+export function replaceKpiWidgetIgnoredFilters(ref: ObjRef, displayForms?: ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha (undocumented)
 export interface ReplaceSectionItem extends IDashboardCommand {
@@ -2513,6 +2546,17 @@ error?: string | undefined;
 } | undefined, (res: DashboardState) => {
 status: "error" | "loading" | "success";
 result?: InsightDateDatasets | undefined;
+error?: string | undefined;
+} | undefined>;
+
+// @internal
+export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => OutputSelector<DashboardState, {
+status: "error" | "loading" | "success";
+result?: MeasureDateDatasets | undefined;
+error?: string | undefined;
+} | undefined, (res: DashboardState) => {
+status: "error" | "loading" | "success";
+result?: MeasureDateDatasets | undefined;
 error?: string | undefined;
 } | undefined>;
 
@@ -2703,6 +2747,9 @@ export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayout
 
 // @alpha
 export function unignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @alpha
+export function unignoreFilterOnKpiWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha
 export interface UpdateAlert extends IDashboardCommand {

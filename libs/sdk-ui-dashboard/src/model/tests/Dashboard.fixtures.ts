@@ -92,7 +92,17 @@ export const ComplexDashboardLayout = ComplexDashboardWithReferences.dashboard.l
 
 export const ComplexDashboardWidgets = {
     FirstSection: {
+        /**
+         * KPI with date filter disabled
+         */
         FirstKpi: ComplexDashboardWithReferences.dashboard.layout!.sections[0].items[0].widget! as IKpiWidget,
+        /**
+         * KPI with all filters disabled
+         */
+        ThirdKpi: ComplexDashboardWithReferences.dashboard.layout!.sections[0].items[2].widget! as IKpiWidget,
+        /**
+         * KPI with all filters enabled
+         */
         LastKpi: ComplexDashboardWithReferences.dashboard.layout!.sections[0].items[5].widget! as IKpiWidget,
     },
     SecondSection: {

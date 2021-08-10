@@ -9,6 +9,7 @@ import {
 import {
     newCatalogAttributeMap,
     newCatalogDateDatasetMap,
+    newCatalogMeasureMap,
     newDisplayFormMap,
 } from "../../../_staging/metadata/objRefMap";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
@@ -91,7 +92,7 @@ export const selectAllCatalogDateDatasetsMap = createSelector(
 export const selectAllCatalogDisplayFormsMap = createSelector(
     [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
     (attributes, dateDatasets, capabilities) => {
-        const nonDateDisplayForms = flatMap(attributes, (a) => a.displayForms);
+        const nonDateDisplayForms = flatMap(attributes, (a) => [...a.displayForms, ...a.geoPinDisplayForms]);
         const dateDisplayForms = flatMap(dateDatasets, (d) =>
             flatMap(d.dateAttributes, (a) => a.attribute.displayForms),
         );
@@ -119,6 +120,18 @@ export const selectAllCatalogAttributesMap = createSelector(
             [...attributes, ...dateAttributes],
             capabilities.hasTypeScopedIdentifiers,
         );
+    },
+);
+
+/**
+ * Selects all measures in the catalog as a mapping of ref to catalog's measure object.
+ *
+ * @alpha
+ */
+export const selectAllCatalogMeasuresMap = createSelector(
+    [selectCatalogMeasures, selectBackendCapabilities],
+    (measures, capabilities) => {
+        return newCatalogMeasureMap(measures, capabilities.hasTypeScopedIdentifiers);
     },
 );
 

@@ -7,7 +7,6 @@ import uniqBy from "lodash/uniqBy";
 import { invariant } from "ts-invariant";
 import {
     filterObjRef,
-    idRef,
     IInsight,
     insightFilters,
     insightRef,
@@ -19,7 +18,6 @@ import {
 import { ICatalogDateDataset, isCatalogDateDataset } from "@gooddata/sdk-backend-spi";
 
 import { createCachedQueryService } from "../state/_infra/queryService";
-import { PromiseFnReturnType } from "../types/sagas";
 import { DashboardContext } from "../types/commonTypes";
 import {
     InsightAttributesMeta,
@@ -27,7 +25,6 @@ import {
     queryInsightAttributesMeta,
     QueryInsightDateDatasets,
 } from "../queries";
-import { selectObjectAvailabilityConfig } from "../state/config/configSelectors";
 import { selectInsightByRef } from "../state/insights/insightsSelectors";
 import { invalidQueryArguments } from "../events/general";
 import { query } from "../state/_infra/queryCall";
@@ -38,6 +35,11 @@ import {
 import { selectBackendCapabilities } from "../state/backendCapabilities/backendCapabilitiesSelectors";
 import { newDisplayFormMap, ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { CatalogDateAttributeWithDataset } from "../../_staging/catalog/dateAttributeWithDatasetMap";
+import {
+    sanitizeDateDatasetTitle,
+    sortByRelevanceAndTitle,
+} from "../../_staging/catalog/dateDatasetOrdering";
+import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
@@ -61,85 +63,6 @@ export const selectDateDatasetsForInsight = QueryDateDatasetsForInsightService.c
 //
 // Query implementation
 //
-
-const relevanceComparator = (a: ICatalogDateDataset, b: ICatalogDateDataset) => b.relevance - a.relevance; // descending sort
-
-const titleComparatorFactory = (mapping: Record<string, string>) => {
-    return (a: ICatalogDateDataset, b: ICatalogDateDataset) => {
-        return mapping[a.dataSet.title].localeCompare(mapping[b.dataSet.title]);
-    };
-};
-
-function sortByRelevanceAndTitle(dateDatasets: ICatalogDateDataset[], titleMapping: Record<string, string>) {
-    const titleComparator = titleComparatorFactory(titleMapping);
-
-    return dateDatasets.slice().sort((a, b) => {
-        if (a.relevance === b.relevance) {
-            return titleComparator(a, b);
-        }
-        return relevanceComparator(a, b);
-    });
-}
-
-function sanitizeDateDatasetTitle(dataset: ICatalogDateDataset): string {
-    return dataset.dataSet.title.trim().replace(/^Date \((.*)\)$/, "$1");
-}
-
-//
-//
-//
-
-function* loadDateDatasetsForInsight(ctx: DashboardContext, insight: IInsight) {
-    const { backend, workspace } = ctx;
-    const availability: ReturnType<typeof selectObjectAvailabilityConfig> = yield select(
-        selectObjectAvailabilityConfig,
-    );
-
-    /*
-     * This is a little hack that relies on current catalog caching layer. Whole catalog is loaded at dashboard
-     * load time and thus will be cached by the backend decorator.
-     *
-     * TODO: improve catalog caching to be granular on type level or at least have cache for the whole catalog &
-     *  then for sub-types. if whole-catalog cache is available and another request to load catalog with just a subset
-     *  of types is done, caching layer can satisfy everything from memory.
-     */
-    const catalogLoader = backend.workspace(workspace).catalog().load;
-    const catalog: PromiseFnReturnType<typeof catalogLoader> = yield call(catalogLoader);
-
-    /*
-     * You may remember from KD that the code to get available date datasets was also calculating the
-     * `attributesMap` before calling load date datasets.
-     *
-     * The fun part about that whole thing is, that the attributeMap was useless in that context: it was calculated,
-     * but never used when loading available date datasets.
-     *
-     * That is because a loaded catalog already contains the attribute map as an implementation detail for the
-     * bear backend and services (correctly) do not allow passing attributes map on the SPI.
-     * The mapping is created at bear catalog load time and includes all attributes and display forms in it.
-     *
-     * Now.. the catalog used by KD (and in this here component) is the 'production' catalog that does not include any
-     * custom, non-production datasets. Then.. you may ask.. how come KD worked when adding insights created on top
-     * of non-production datasets? Well as it turns out.. when the low-level code dealing with availability finds
-     * that it is missing some df -> attribute mapping it will obtain the necessary data to construct the mapping
-     * via API calls.
-     */
-    const availableDateDataSetsLoader = catalog.availableItems().withOptions({
-        types: ["dateDataset"],
-        insight: insight,
-        excludeTags: (availability.excludeObjectsWithTags ?? []).map((tag) => idRef(tag)),
-        includeTags: (availability.includeObjectsWithTags ?? []).map((tag) => idRef(tag)),
-    }).load;
-
-    const loadedAvailableDateDataSets: PromiseFnReturnType<typeof availableDateDataSetsLoader> = yield call(
-        availableDateDataSetsLoader,
-    );
-
-    /*
-     * You may also remember from KD that the code was cleaning up the relevance values from the available date
-     * datasets. This was there to carefully align data to get feasible results from the `getRecommendedDateDataset`
-     */
-    return loadedAvailableDateDataSets.availableDateDatasets();
-}
 
 /**
  * Given insight and a list of available cataloged date datasets, this function looks up date datasets that are used
@@ -263,7 +186,7 @@ function* queryService(
      * first use the catalog's availability APIs to obtain date datasets relevant for this insight from the
      * backend
      */
-    const dateDatasets: PromiseFnReturnType<typeof loadDateDatasetsForInsight> = yield call(
+    const dateDatasets: SagaReturnType<typeof loadDateDatasetsForInsight> = yield call(
         loadDateDatasetsForInsight,
         ctx,
         insight,
