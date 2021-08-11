@@ -1,9 +1,5 @@
 // (C) 2021 GoodData Corporation
-
-import { DashboardEventBody, IDashboardEvent } from "./base";
 import { IInsight, ObjRef, VisualizationProperties } from "@gooddata/sdk-model";
-import { WidgetHeader } from "../types/widgetTypes";
-import { DashboardContext } from "../types/commonTypes";
 import {
     DrillDefinition,
     ICatalogDateDataset,
@@ -12,6 +8,11 @@ import {
     IInsightWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
+import { DashboardEventBody, IDashboardEvent } from "./base";
+import { WidgetHeader } from "../types/widgetTypes";
+import { DashboardContext } from "../types/commonTypes";
+import { eventGuard } from "./util";
 
 /**
  * This event is emitted when the header of an insight widget changed. The new value of the header (title)
@@ -50,6 +51,16 @@ export function insightWidgetHeaderChanged(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetHeaderChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetHeaderChanged = eventGuard<DashboardInsightWidgetHeaderChanged>(
+    "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED",
+);
 
 //
 //
@@ -107,6 +118,17 @@ export function insightWidgetFilterSettingsChanged(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetFilterSettingsChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetFilterSettingsChanged =
+    eventGuard<DashboardInsightWidgetFilterSettingsChanged>(
+        "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
+    );
+
 //
 //
 //
@@ -156,6 +178,15 @@ export function insightWidgetVisPropertiesChanged(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetVisPropertiesChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetVisPropertiesChanged =
+    eventGuard<DashboardInsightWidgetVisPropertiesChanged>("GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED");
+
 //
 //
 //
@@ -198,6 +229,16 @@ export function insightWidgetInsightChanged(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetInsightSwitched}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetInsightSwitched = eventGuard<DashboardInsightWidgetInsightSwitched>(
+    "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED",
+);
 
 //
 //
@@ -250,6 +291,16 @@ export function insightWidgetDrillsModified(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetDrillsModified}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetDrillsModified = eventGuard<DashboardInsightWidgetDrillsModified>(
+    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
+);
+
 //
 //
 //
@@ -292,6 +343,16 @@ export function insightWidgetDrillsRemoved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetDrillsRemoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetDrillsRemoved = eventGuard<DashboardInsightWidgetDrillsRemoved>(
+    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED",
+);
+
 //
 //
 //
@@ -327,6 +388,16 @@ export function insightWidgetChanged(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetChanged = eventGuard<DashboardInsightWidgetChanged>(
+    "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED",
+);
+
 //
 //
 //
@@ -358,3 +429,13 @@ export function insightWidgetExecutionFailed(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetExecutionFailed}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetExecutionFailed = eventGuard<DashboardInsightWidgetExecutionFailed>(
+    "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
+);

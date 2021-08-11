@@ -6,6 +6,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IDashboardEvent } from "./base";
 import { DashboardContext } from "../types/commonTypes";
+import { eventGuard } from "./util";
 
 /**
  * This event is emitted after the dashboard's date filter selection is changed.
@@ -36,6 +37,16 @@ export function dateFilterChanged(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDateFilterSelectionChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDateFilterSelectionChanged = eventGuard<DashboardDateFilterSelectionChanged>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED",
+);
 
 //
 //
@@ -81,6 +92,16 @@ export function attributeFilterAdded(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeFilterAdded}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAttributeFilterAdded = eventGuard<DashboardAttributeFilterAdded>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
+);
 
 //
 //
@@ -129,6 +150,16 @@ export function attributeFilterRemoved(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeFilterRemoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAttributeFilterRemoved = eventGuard<DashboardAttributeFilterRemoved>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED",
+);
 
 //
 //
@@ -179,6 +210,16 @@ export function attributeFilterMoved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeFilterMoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAttributeFilterMoved = eventGuard<DashboardAttributeFilterMoved>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED",
+);
+
 //
 //
 //
@@ -214,6 +255,17 @@ export function attributeFilterSelectionChanged(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeFilterSelectionChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAttributeFilterSelectionChanged =
+    eventGuard<DashboardAttributeFilterSelectionChanged>(
+        "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED",
+    );
 
 //
 //
@@ -251,6 +303,16 @@ export function attributeFilterParentChanged(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeFilterParentChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAttributeFilterParentChanged = eventGuard<DashboardAttributeFilterParentChanged>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",
+);
+
 //
 //
 //
@@ -285,3 +347,13 @@ export function filterContextChanged(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardFilterContextChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardFilterContextChanged = eventGuard<DashboardFilterContextChanged>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+);

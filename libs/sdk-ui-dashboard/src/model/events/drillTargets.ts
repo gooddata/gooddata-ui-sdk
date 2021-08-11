@@ -3,6 +3,7 @@ import { ObjRef } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
+import { eventGuard } from "./util";
 
 /**
  *  Widget drill targets added event
@@ -46,3 +47,11 @@ export function drillTargetsAdded(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DrillTargetsAdded}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDrillTargetsAdded = eventGuard<DrillTargetsAdded>("GDC.DASH/EVT.DRILL_TARGETS.ADDED");

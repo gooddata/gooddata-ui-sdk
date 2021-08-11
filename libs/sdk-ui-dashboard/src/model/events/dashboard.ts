@@ -7,6 +7,7 @@ import { DateFilterConfigValidationResult } from "../../_staging/dateFilterConfi
 import { DashboardConfig, DashboardContext } from "../types/commonTypes";
 
 import { IDashboardEvent } from "./base";
+import { eventGuard } from "./util";
 
 //
 //
@@ -67,6 +68,14 @@ export function dashboardLoaded(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLoaded}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLoaded = eventGuard<DashboardLoaded>("GDC.DASH/EVT.LOADED");
+
 //
 //
 //
@@ -110,6 +119,14 @@ export function dashboardSaved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardSaved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardSaved = eventGuard<DashboardSaved>("GDC.DASH/EVT.SAVED");
+
 //
 //
 //
@@ -144,6 +161,14 @@ export function dashboardCopySaved(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardCopySaved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardCopySaved = eventGuard<DashboardCopySaved>("GDC.DASH/EVT.COPY_SAVED");
 
 //
 //
@@ -180,6 +205,14 @@ export function dashboardRenamed(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardRenamed}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardRenamed = eventGuard<DashboardRenamed>("GDC.DASH/EVT.RENAMED");
+
 //
 //
 //
@@ -211,6 +244,14 @@ export function dashboardWasReset(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardWasReset}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardWasReset = eventGuard<DashboardWasReset>("GDC.DASH/EVT.RESET");
 
 //
 //
@@ -254,3 +295,13 @@ export function dateFilterValidationFailed(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DateFilterValidationFailed}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDateFilterValidationFailed = eventGuard<DateFilterValidationFailed>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
+);

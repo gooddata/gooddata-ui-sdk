@@ -2,6 +2,7 @@
 import { IScheduledMail } from "@gooddata/sdk-backend-spi";
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
+import { eventGuard } from "./util";
 
 /**
  * This event is emitted after the scheduled email is successfully created.
@@ -29,6 +30,16 @@ export function scheduledEmailCreated(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardScheduledEmailCreated}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardScheduledEmailCreated = eventGuard<DashboardScheduledEmailCreated>(
+    "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED",
+);
 
 //
 //

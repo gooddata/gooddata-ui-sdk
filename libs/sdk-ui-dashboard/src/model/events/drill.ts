@@ -1,6 +1,4 @@
 // (C) 2021 GoodData Corporation
-import { DashboardContext } from "../types/commonTypes";
-import { IDashboardEvent } from "./base";
 import { IInsight } from "@gooddata/sdk-model";
 import {
     IDrillToDashboard,
@@ -9,12 +7,16 @@ import {
     IDrillToCustomUrl,
     IDrillToLegacyDashboard,
 } from "@gooddata/sdk-backend-spi";
+
+import { DashboardContext } from "../types/commonTypes";
+import { IDashboardEvent } from "./base";
 import {
     IDashboardDrillEvent,
     IDrillDownDefinition,
     IDashboardFilter,
     DashboardDrillContext,
 } from "../../types";
+import { eventGuard } from "./util";
 
 /**
  * This event is emitted on start of the resolution of the {@link Drill} command.
@@ -55,6 +57,14 @@ export function drillRequested(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillRequested = eventGuard<DashboardDrillRequested>("GDC.DASH/EVT.DRILL.REQUESTED");
 
 /**
  * A general drill event that is emitted each time any dashboard drill is resolved.
@@ -106,6 +116,14 @@ export function drillResolved(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillResolved = eventGuard<DashboardDrillResolved>("GDC.DASH/EVT.DRILL.RESOLVED");
 
 //
 //
@@ -159,6 +177,16 @@ export function drillDownRequested(
 }
 
 /**
+ * Tests whether the provided object is an instance of {@link DashboardDrillDownRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillDownRequested = eventGuard<DashboardDrillDownRequested>(
+    "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED",
+);
+
+/**
  * This event is emitted as a result of the {@link DrillDown} command.
  * It contains the target insight with the drill down definition applied (result of the drill down application
  * depends on the particular visualization type).
@@ -207,6 +235,16 @@ export function drillDownResolved(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillDownResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillDownResolved = eventGuard<DashboardDrillDownResolved>(
+    "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED",
+);
 
 //
 //
@@ -259,6 +297,16 @@ export function drillToInsightRequested(
 }
 
 /**
+ * Tests whether the provided object is an instance of {@link DashboardDrillToInsightRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillToInsightRequested = eventGuard<DashboardDrillToInsightRequested>(
+    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED",
+);
+
+/**
  * This event is emitted as a result of the {@link DrillToInsight} command.
  * It contains the target insight with the drill intersection filters applied.
  *
@@ -307,6 +355,16 @@ export function drillToInsightResolved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillToInsightResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillToInsightResolved = eventGuard<DashboardDrillToInsightResolved>(
+    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED",
+);
+
 //
 //
 //
@@ -349,6 +407,16 @@ export function drillToDashboardRequested(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillToDashboardRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillToDashboardRequested = eventGuard<DashboardDrillToDashboardRequested>(
+    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED",
+);
 
 /**
  * This event is emitted as a result of the {@link DrillToDashboard} command.
@@ -398,6 +466,16 @@ export function drillToDashboardResolved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillToDashboardResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillToDashboardResolved = eventGuard<DashboardDrillToDashboardResolved>(
+    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED",
+);
+
 //
 //
 //
@@ -440,6 +518,16 @@ export function drillToCustomUrlRequested(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillToCustomUrlRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillToCustomUrlRequested = eventGuard<DashboardDrillToCustomUrlRequested>(
+    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED",
+);
 
 /**
  * This event is emitted as a result of the {@link DrillToCustomUrl} command.
@@ -487,6 +575,16 @@ export function drillToCustomUrlResolved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillToCustomUrlResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillToCustomUrlResolved = eventGuard<DashboardDrillToCustomUrlResolved>(
+    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED",
+);
+
 //
 //
 //
@@ -529,6 +627,16 @@ export function drillToAttributeUrlRequested(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillToAttributeUrlRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillToAttributeUrlRequested = eventGuard<DashboardDrillToAttributeUrlRequested>(
+    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED",
+);
 
 /**
  * This event is emitted as a result of the {@link DrillToAttributeUrl} command.
@@ -576,6 +684,16 @@ export function drillToAttributeUrlResolved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillToAttributeUrlResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillToAttributeUrlResolved = eventGuard<DashboardDrillToAttributeUrlResolved>(
+    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED",
+);
+
 //
 //
 //
@@ -614,6 +732,17 @@ export function drillToLegacyDashboardRequested(
 }
 
 /**
+ * Tests whether the provided object is an instance of {@link DashboardDrillToLegacyDashboardRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillToLegacyDashboardRequested =
+    eventGuard<DashboardDrillToLegacyDashboardRequested>(
+        "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED",
+    );
+
+/**
  * This event is emitted as a result of the {@link DrillToLegacyDashboard} command.
  *
  * Drill to legacy dashboard can be configured for Kpi widgets only.
@@ -647,6 +776,16 @@ export function drillToLegacyDashboardResolved(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillToLegacyDashboardResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillToLegacyDashboardResolved = eventGuard<DashboardDrillToLegacyDashboardResolved>(
+    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED",
+);
 
 //
 //

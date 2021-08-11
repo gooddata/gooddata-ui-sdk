@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import isString from "lodash/isString";
 import { DashboardEventBody, IDashboardEvent } from "./base";
+import { eventGuard } from "./util";
 
 /**
  * @alpha
@@ -79,3 +80,13 @@ export function userInteractionTriggered(
         payload,
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardUserInteractionTriggered}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardUserInteractionTriggered = eventGuard<DashboardUserInteractionTriggered>(
+    "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED",
+);

@@ -2,9 +2,9 @@
 
 import { IDashboardEvent } from "./base";
 import { DashboardContext } from "../types/commonTypes";
-import isEmpty from "lodash/isEmpty";
 import { IDashboardQuery } from "../queries";
 import { IDashboardCommand } from "../commands";
+import { eventGuard } from "./util";
 
 /**
  * @alpha
@@ -88,9 +88,7 @@ export function invalidArgumentsProvided(
  * @param obj - object to test
  * @alpha
  */
-export function isDashboardCommandFailed(obj: unknown): obj is DashboardCommandFailed {
-    return !isEmpty(obj) && (obj as DashboardCommandFailed).type === "GDC.DASH/EVT.COMMAND.FAILED";
-}
+export const isDashboardCommandFailed = eventGuard<DashboardCommandFailed>("GDC.DASH/EVT.COMMAND.FAILED");
 
 //
 //
@@ -116,6 +114,16 @@ export function commandRejected(ctx: DashboardContext, correlationId?: string): 
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardCommandRejected}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardCommandRejected = eventGuard<DashboardCommandRejected>(
+    "GDC.DASH/EVT.COMMAND.REJECTED",
+);
+
 //
 //
 //
@@ -137,6 +145,14 @@ export function queryRejected(ctx: DashboardContext, correlationId?: string): Da
         correlationId,
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardQueryRejected}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardQueryRejected = eventGuard<DashboardQueryRejected>("GDC.DASH/EVT.QUERY.REJECTED");
 
 //
 //
@@ -212,9 +228,7 @@ export function invalidQueryArguments(
  * @param obj - object to test
  * @alpha
  */
-export function isDashboardQueryFailed(obj: unknown): obj is DashboardQueryFailed {
-    return !isEmpty(obj) && (obj as DashboardQueryFailed).type === "GDC.DASH/EVT.QUERY.FAILED";
-}
+export const isDashboardQueryFailed = eventGuard<DashboardQueryFailed>("GDC.DASH/EVT.QUERY.FAILED");
 
 //
 //
@@ -236,6 +250,14 @@ export function queryStarted(ctx: DashboardContext, correlationId?: string): Das
         correlationId,
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardQueryStarted}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardQueryStarted = eventGuard<DashboardQueryStarted>("GDC.DASH/EVT.QUERY.STARTED");
 
 //
 //
@@ -272,3 +294,13 @@ export function queryCompleted<TQuery extends IDashboardQuery<TResult>, TResult>
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardQueryCompleted}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardQueryCompleted = eventGuard<DashboardQueryCompleted<any, any>>(
+    "GDC.DASH/EVT.QUERY.COMPLETED",
+);

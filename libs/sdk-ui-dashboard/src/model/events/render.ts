@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
+import { eventGuard } from "./util";
 
 /**
  * This event is emitted as soon as the dashboard component is mounted,
@@ -22,6 +23,16 @@ export function renderRequested(ctx: DashboardContext, correlationId?: string): 
         ctx,
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardRenderRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardRenderRequested = eventGuard<DashboardRenderRequested>(
+    "GDC.DASH/EVT.RENDER.REQUESTED",
+);
 
 /**
  * This event is emitted when a component on the dashboard requests async rendering.
@@ -57,6 +68,16 @@ export function asyncRenderRequested(
 }
 
 /**
+ * Tests whether the provided object is an instance of {@link DashboardAsyncRenderRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAsyncRenderRequested = eventGuard<DashboardAsyncRenderRequested>(
+    "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+);
+
+/**
  * This event is emitted when a component on the dashboard resolves async rendering.
  *
  * @alpha
@@ -90,6 +111,16 @@ export function asyncRenderResolved(
 }
 
 /**
+ * Tests whether the provided object is an instance of {@link DashboardAsyncRenderResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAsyncRenderResolved = eventGuard<DashboardAsyncRenderResolved>(
+    "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
+);
+
+/**
  * @alpha
  */
 export interface DashboardRenderResolved extends IDashboardEvent {
@@ -109,3 +140,11 @@ export function renderResolved(ctx: DashboardContext, correlationId?: string): D
         ctx,
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardRenderResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardRenderResolved = eventGuard<DashboardRenderResolved>("GDC.DASH/EVT.RENDER.RESOLVED");

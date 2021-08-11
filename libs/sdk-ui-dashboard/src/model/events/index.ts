@@ -97,6 +97,12 @@ export {
     DashboardCopySaved,
     DashboardRenamed,
     DashboardWasReset,
+    isDashboardCopySaved,
+    isDashboardLoaded,
+    isDashboardRenamed,
+    isDashboardSaved,
+    isDashboardWasReset,
+    isDateFilterValidationFailed,
 } from "./dashboard";
 export {
     DashboardCommandRejected,
@@ -108,6 +114,10 @@ export {
     DashboardQueryStarted,
     DashboardQueryCompleted,
     isDashboardQueryFailed,
+    isDashboardCommandRejected,
+    isDashboardQueryCompleted,
+    isDashboardQueryRejected,
+    isDashboardQueryStarted,
 } from "./general";
 
 export {
@@ -118,6 +128,13 @@ export {
     DashboardAttributeFilterSelectionChanged,
     DashboardAttributeFilterMoved,
     DashboardAttributeFilterAdded,
+    isDashboardAttributeFilterAdded,
+    isDashboardAttributeFilterMoved,
+    isDashboardAttributeFilterParentChanged,
+    isDashboardAttributeFilterRemoved,
+    isDashboardAttributeFilterSelectionChanged,
+    isDashboardDateFilterSelectionChanged,
+    isDashboardFilterContextChanged,
 } from "./filters";
 
 export {
@@ -130,6 +147,15 @@ export {
     DashboardLayoutSectionItemMoved,
     DashboardLayoutSectionItemRemoved,
     DashboardLayoutChanged,
+    isDashboardLayoutChanged,
+    isDashboardLayoutSectionAdded,
+    isDashboardLayoutSectionHeaderChanged,
+    isDashboardLayoutSectionItemMoved,
+    isDashboardLayoutSectionItemRemoved,
+    isDashboardLayoutSectionItemReplaced,
+    isDashboardLayoutSectionItemsAdded,
+    isDashboardLayoutSectionMoved,
+    isDashboardLayoutSectionRemoved,
 } from "./layout";
 
 export {
@@ -140,6 +166,12 @@ export {
     DashboardKpiWidgetChanged,
     DashboardKpiWidgetExecutionFailed,
     kpiWidgetExecutionFailed,
+    isDashboardKpiWidgetChanged,
+    isDashboardKpiWidgetComparisonChanged,
+    isDashboardKpiWidgetExecutionFailed,
+    isDashboardKpiWidgetFilterSettingsChanged,
+    isDashboardKpiWidgetHeaderChanged,
+    isDashboardKpiWidgetMeasureChanged,
 } from "./kpi";
 
 export {
@@ -152,9 +184,24 @@ export {
     DashboardInsightWidgetChanged,
     DashboardInsightWidgetExecutionFailed,
     insightWidgetExecutionFailed,
+    isDashboardInsightWidgetChanged,
+    isDashboardInsightWidgetDrillsModified,
+    isDashboardInsightWidgetDrillsRemoved,
+    isDashboardInsightWidgetExecutionFailed,
+    isDashboardInsightWidgetFilterSettingsChanged,
+    isDashboardInsightWidgetHeaderChanged,
+    isDashboardInsightWidgetInsightSwitched,
+    isDashboardInsightWidgetVisPropertiesChanged,
 } from "./insight";
-export { DashboardAlertCreated, DashboardAlertRemoved, DashboardAlertUpdated } from "./alerts";
-export { DashboardScheduledEmailCreated } from "./scheduledEmail";
+export {
+    DashboardAlertCreated,
+    DashboardAlertRemoved,
+    DashboardAlertUpdated,
+    isDashboardAlertCreated,
+    isDashboardAlertRemoved,
+    isDashboardAlertUpdated,
+} from "./alerts";
+export { DashboardScheduledEmailCreated, isDashboardScheduledEmailCreated } from "./scheduledEmail";
 export {
     DashboardDrillDownRequested,
     DashboardDrillToAttributeUrlRequested,
@@ -184,9 +231,23 @@ export {
     drillToDashboardResolved,
     drillToInsightResolved,
     drillToLegacyDashboardResolved,
+    isDashboardDrillDownRequested,
+    isDashboardDrillDownResolved,
+    isDashboardDrillRequested,
+    isDashboardDrillResolved,
+    isDashboardDrillToAttributeUrlRequested,
+    isDashboardDrillToAttributeUrlResolved,
+    isDashboardDrillToCustomUrlRequested,
+    isDashboardDrillToCustomUrlResolved,
+    isDashboardDrillToDashboardRequested,
+    isDashboardDrillToDashboardResolved,
+    isDashboardDrillToInsightRequested,
+    isDashboardDrillToInsightResolved,
+    isDashboardDrillToLegacyDashboardRequested,
+    isDashboardDrillToLegacyDashboardResolved,
 } from "./drill";
 
-export { DrillTargetsAdded, drillTargetsAdded } from "./drillTargets";
+export { DrillTargetsAdded, drillTargetsAdded, isDrillTargetsAdded } from "./drillTargets";
 
 export * from "./userInteraction";
 export {
@@ -198,6 +259,10 @@ export {
     asyncRenderResolved,
     renderRequested,
     renderResolved,
+    isDashboardAsyncRenderRequested,
+    isDashboardAsyncRenderResolved,
+    isDashboardRenderRequested,
+    isDashboardRenderResolved,
 } from "./render";
 /**
  * @alpha

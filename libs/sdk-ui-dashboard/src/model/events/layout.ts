@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
 
 import {
     ExtendedDashboardItem,
@@ -8,7 +9,7 @@ import {
 } from "../types/layoutTypes";
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
-import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
+import { eventGuard } from "./util";
 
 /**
  * This event is emitted when a new dashboard layout section is added.
@@ -49,6 +50,16 @@ export function layoutSectionAdded(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLayoutSectionAdded}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLayoutSectionAdded = eventGuard<DashboardLayoutSectionAdded>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+);
+
 //
 //
 //
@@ -85,6 +96,16 @@ export function layoutSectionMoved(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLayoutSectionMoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLayoutSectionMoved = eventGuard<DashboardLayoutSectionMoved>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
+);
 
 //
 //
@@ -148,6 +169,16 @@ export function layoutSectionRemoved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLayoutSectionRemoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLayoutSectionRemoved = eventGuard<DashboardLayoutSectionRemoved>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
+);
+
 //
 //
 //
@@ -188,6 +219,16 @@ export function layoutSectionHeaderChanged(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLayoutSectionHeaderChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLayoutSectionHeaderChanged = eventGuard<DashboardLayoutSectionHeaderChanged>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
+);
 
 //
 //
@@ -244,6 +285,16 @@ export function layoutSectionItemsAdded(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemsAdded}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLayoutSectionItemsAdded = eventGuard<DashboardLayoutSectionItemsAdded>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
+);
 
 //
 //
@@ -306,6 +357,16 @@ export function layoutSectionItemReplaced(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemReplaced}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLayoutSectionItemReplaced = eventGuard<DashboardLayoutSectionItemReplaced>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
+);
 
 //
 //
@@ -371,6 +432,16 @@ export function layoutSectionItemMoved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemMoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLayoutSectionItemMoved = eventGuard<DashboardLayoutSectionItemMoved>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
+);
+
 //
 //
 //
@@ -428,6 +499,16 @@ export function layoutSectionItemRemoved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemRemoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLayoutSectionItemRemoved = eventGuard<DashboardLayoutSectionItemRemoved>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
+);
+
 //
 //
 //
@@ -461,3 +542,13 @@ export function layoutChanged(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLayoutChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLayoutChanged = eventGuard<DashboardLayoutChanged>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
+);
