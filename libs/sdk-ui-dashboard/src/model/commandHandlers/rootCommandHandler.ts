@@ -45,7 +45,8 @@ import { changeInsightWidgetFilterSettingsHandler } from "./widgets/changeInsigh
 import { changeKpiWidgetHeaderHandler } from "./widgets/changeKpiWidgetHeaderHandler";
 import { changeKpiWidgetFilterSettingsHandler } from "./widgets/changeKpiWidgetFilterSettingsHandler";
 import { triggerEventHandler } from "./events/triggerEventHandler";
-import { changeKpiWidgetMeasureHandler } from "./widgets/changeKpiWidgetMeasure";
+import { changeKpiWidgetMeasureHandler } from "./widgets/changeKpiWidgetMeasureHandler";
+import { changeKpiWidgetComparisonHandler } from "./widgets/changeKpiWidgetComparisonHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -75,7 +76,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER": changeKpiWidgetHeaderHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE": changeKpiWidgetMeasureHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS": changeKpiWidgetFilterSettingsHandler,
-    "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON": unhandledCommand,
+    "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON": changeKpiWidgetComparisonHandler,
     "GDC.DASH/CMD.KPI_WIDGET.REFRESH": unhandledCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER": changeInsightWidgetHeaderHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS": changeInsightWidgetFilterSettingsHandler,

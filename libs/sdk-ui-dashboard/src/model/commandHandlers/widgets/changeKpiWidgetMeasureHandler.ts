@@ -10,7 +10,7 @@ import { layoutActions } from "../../state/layout";
 import { kpiWidgetMeasureChanged } from "../../events/kpi";
 import { selectAllCatalogMeasuresMap } from "../../state/catalog/catalogSelectors";
 import { invalidArgumentsProvided } from "../../events/general";
-import { objRefToString } from "../../../../../sdk-model/src";
+import { objRefToString } from "@gooddata/sdk-model";
 import { batchActions } from "redux-batched-actions";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { isWidgetHeader, WidgetHeader } from "../../types/widgetTypes";

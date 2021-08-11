@@ -5,6 +5,8 @@ import {
     IDashboardFilterReference,
     IDashboardLayout,
     IDashboardLayoutSectionHeader,
+    ILegacyKpiComparisonDirection,
+    ILegacyKpiComparisonTypeComparison,
     InsightDrillDefinition,
     isInsightWidget,
     isKpiWidget,
@@ -372,6 +374,28 @@ const replaceKpiWidgetMeasure: LayoutReducer<ReplaceKpiWidgetMeasure> = (state, 
     widget.kpi.metric = measureRef;
 };
 
+//
+//
+//
+
+type ReplaceKpiWidgetComparison = {
+    ref: ObjRef;
+    comparisonType: ILegacyKpiComparisonTypeComparison;
+    comparisonDirection?: ILegacyKpiComparisonDirection;
+};
+
+const replaceKpiWidgetComparison: LayoutReducer<ReplaceKpiWidgetComparison> = (state, action) => {
+    invariant(state.layout);
+
+    const { ref, comparisonType, comparisonDirection } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && isKpiWidget(widget));
+
+    widget.kpi.comparisonType = comparisonType;
+    widget.kpi.comparisonDirection = comparisonDirection;
+};
+
 export const layoutReducers = {
     setLayout,
     addSection: withUndo(addSection),
@@ -386,7 +410,8 @@ export const layoutReducers = {
     replaceWidgetDrills: withUndo(replaceWidgetDrill),
     replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
     replaceWidgetFilterSettings: withUndo(replaceWidgetFilterSettings),
-    replaceKpiWidgetMeasure: withUndo(replaceKpiWidgetMeasure),
     replaceWidgetDateDataset: withUndo(replaceWidgetDateDataset),
+    replaceKpiWidgetMeasure: withUndo(replaceKpiWidgetMeasure),
+    replaceKpiWidgetComparison: withUndo(replaceKpiWidgetComparison),
     undoLayout: undoReducer,
 };
