@@ -24,6 +24,9 @@ import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
+export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<string>): IHeaderMenuItem[][];
+
+// @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor) => void;
 
 // @internal (undocumented)
@@ -424,7 +427,7 @@ showOnlyLogoutItem?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 export function generateHeaderHelpMenuItems(documentationUrl?: string, supportForumUrl?: string, userEmail?: string, workspaceId?: string, sessionId?: string, supportEmail?: string, isBranded?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 
 // @internal (undocumented)
-export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean): IHeaderMenuItem[][];
+export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean, hasMeasures?: boolean): IHeaderMenuItem[][];
 
 // @internal (undocumented)
 export function generateSupportUrl(projectId?: string, sessionId?: string, userEmail?: string, url?: string): string;
@@ -465,6 +468,33 @@ export function guidFor(obj: any): string;
 
 // @internal (undocumented)
 export const Header: React_2.FC<IHeaderProps>;
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_ANALYZE = "gs.header.analyze";
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_DASHBOARDS = "gs.header.dashboards";
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_DATA = "gs.header.data";
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_KPIS = "gs.header.kpis";
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_KPIS_NEW = "gs.header.kpis.new";
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_LOAD = "gs.header.load";
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_MANAGE = "gs.header.manage";
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_MEASURES = "gs.header.measures";
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_REPORTS = "gs.header.reports";
 
 // @internal (undocumented)
 export const HeaderBadge: React_2.FC<IHeaderBadgeProps>;

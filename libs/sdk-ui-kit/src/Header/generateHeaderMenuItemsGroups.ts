@@ -7,143 +7,289 @@ import { IHeaderMenuItem } from "./typings";
 /**
  * @internal
  */
+export const HEADER_ITEM_ID_DASHBOARDS = "gs.header.dashboards";
+/**
+ * @internal
+ */
+export const HEADER_ITEM_ID_REPORTS = "gs.header.reports";
+/**
+ * @internal
+ */
+export const HEADER_ITEM_ID_KPIS_NEW = "gs.header.kpis.new";
+/**
+ * @internal
+ */
+export const HEADER_ITEM_ID_KPIS = "gs.header.kpis";
+/**
+ * @internal
+ */
+export const HEADER_ITEM_ID_ANALYZE = "gs.header.analyze";
+/**
+ * @internal
+ */
+export const HEADER_ITEM_ID_MEASURES = "gs.header.measures";
+/**
+ * @internal
+ */
+export const HEADER_ITEM_ID_LOAD = "gs.header.load";
+/**
+ * @internal
+ */
+export const HEADER_ITEM_ID_DATA = "gs.header.data";
+/**
+ * @internal
+ */
+export const HEADER_ITEM_ID_MANAGE = "gs.header.manage";
+
+/**
+ * @internal
+ */
 export function generateHeaderMenuItemsGroups(
     featureFlags: ISettings,
     workspacePermissions: IWorkspacePermissions,
-    hasAnalyticalDashboards?: boolean,
-    workspaceId?: string,
-    dashboardId?: string,
-    tabId?: string,
-    hasNoDataSet?: boolean,
-    backendSupportsDataItem?: boolean,
+    hasAnalyticalDashboards: boolean = false,
+    workspaceId: string = undefined,
+    dashboardId: string = undefined,
+    tabId: string = undefined,
+    hasNoDataSet: boolean = false,
+    backendSupportsDataItem: boolean = false,
     backendSupportsCsvUploader: boolean = true,
+    hasMeasures: boolean = false,
 ): IHeaderMenuItem[][] {
     if (!workspaceId) {
         return [];
     }
 
-    const {
-        enableCsvUploader,
-        enableDataSection,
-        analyticalDesigner,
-        enableAnalyticalDashboards,
-        enableRenamingProjectToWorkspace,
-    } = featureFlags;
+    const workspaceRef = featureFlags.enableRenamingProjectToWorkspace ? "workspace" : "project";
 
-    const {
-        canCreateAnalyticalDashboard,
-        canCreateVisualization,
-        canUploadNonProductionCSV,
-        canAccessWorkbench,
-        canManageReport,
-        canManageMetric,
-        canManageProject,
-        canInitData,
-        canRefreshData,
-    } = workspacePermissions;
+    const pixelPerfectItemsGroup = createPixelPerfectItemsGroup(
+        featureFlags,
+        workspacePermissions,
+        workspaceRef,
+        workspaceId,
+        dashboardId,
+        tabId,
+    );
+    const insightItemsGroup = createInsightsItemsGroup(
+        featureFlags,
+        workspaceRef,
+        workspaceId,
+        workspacePermissions,
+        hasAnalyticalDashboards,
+        hasMeasures,
+        backendSupportsCsvUploader,
+        backendSupportsDataItem,
+        hasNoDataSet,
+    );
+    const manageItemsGroup = createManageItemsGroup(workspacePermissions, workspaceRef, workspaceId);
 
-    const menuItemsGroups: IHeaderMenuItem[][] = [];
+    return [pixelPerfectItemsGroup, insightItemsGroup, manageItemsGroup].filter(
+        (itemsGroup) => itemsGroup.length > 0,
+    );
+}
 
+function createPixelPerfectItemsGroup(
+    featureFlags: ISettings,
+    workspacePermissions: IWorkspacePermissions,
+    workspaceRef: string,
+    workspaceId: string,
+    dashboardId: string,
+    tabId: string,
+) {
+    const { canAccessWorkbench, canManageReport } = workspacePermissions;
     const shouldHidePixelPerfectExperience = shouldHidePPExperience(featureFlags);
+    const pixelPerfectItemsGroup: IHeaderMenuItem[] = [];
+
+    const dashboardUrl = dashboardsItemUrl(workspaceRef, workspaceId, dashboardId, tabId);
+    pushConditionally(
+        pixelPerfectItemsGroup,
+        createIHeaderMenuItem(HEADER_ITEM_ID_DASHBOARDS, "s-menu-dashboards", dashboardUrl),
+        !shouldHidePixelPerfectExperience && canAccessWorkbench === true,
+    );
+
+    const reportsUrl = reportsItemUrl(workspaceRef, workspaceId);
+    pushConditionally(
+        pixelPerfectItemsGroup,
+        createIHeaderMenuItem(HEADER_ITEM_ID_REPORTS, "s-menu-reports", reportsUrl),
+        !shouldHidePixelPerfectExperience && canManageReport === true,
+    );
+
+    return pixelPerfectItemsGroup;
+}
+function createManageItemsGroup(
+    workspacePermissions: IWorkspacePermissions,
+    workspaceRef: string,
+    workspaceId: string,
+) {
+    const { canManageMetric } = workspacePermissions;
+    const manageItemsGroup: IHeaderMenuItem[] = [];
+
+    const manageUrl = manageItemUrl(workspaceRef, workspaceId);
+    pushConditionally(
+        manageItemsGroup,
+        createIHeaderMenuItem(HEADER_ITEM_ID_MANAGE, "s-menu-manage", manageUrl),
+        canManageMetric,
+    );
+    return manageItemsGroup;
+}
+function createInsightsItemsGroup(
+    featureFlags: ISettings,
+    workspaceRef: string,
+    workspaceId: string,
+    workspacePermissions: IWorkspacePermissions,
+    hasAnalyticalDashboards: boolean,
+    hasMeasures: boolean,
+    backendSupportsCsvUploader: boolean,
+    backendSupportsDataItem: boolean,
+    hasNoDataSet: boolean,
+) {
     const isFreemiumCustomer = isFreemiumEdition(featureFlags.platformEdition.toString());
-    const workspaceRef = enableRenamingProjectToWorkspace ? "workspace" : "project";
 
-    // PIXEL PERFECT MENU ITEMS
-    if (!shouldHidePixelPerfectExperience) {
-        const pixelPerfectItemsGroup = [];
-        const dashboardIdAndTabId = dashboardId && tabId ? `${dashboardId}|${tabId}` : "";
-        const pixelPerfectDashboardsItem = {
-            key: "gs.header.dashboards",
-            className: "s-menu-dashboards",
-            href: `/#s=/gdc/${workspaceRef}s/${workspaceId}|${workspaceRef}DashboardPage|${dashboardIdAndTabId}`,
-        };
-        const pixelPerfectReportsItem = {
-            key: "gs.header.reports",
-            className: "s-menu-reports",
-            href: `/#s=/gdc/${workspaceRef}s/${workspaceId}|domainPage|all-reports`,
-        };
+    const insightItemsGroup: IHeaderMenuItem[] = [];
 
-        const showPixelPerfectDashboardsItem = canAccessWorkbench === true;
-        const showPixelPerfectReportsItem = canManageReport === true;
+    const kpisUrl = kpisItemUrl(workspaceRef, workspaceId);
+    const kpisKey = shouldEnableNewNavigation(featureFlags) ? HEADER_ITEM_ID_KPIS_NEW : HEADER_ITEM_ID_KPIS;
+    pushConditionally(
+        insightItemsGroup,
+        createIHeaderMenuItem(kpisKey, "s-menu-kpis", kpisUrl),
+        canShowKpisItem(featureFlags, workspacePermissions, hasAnalyticalDashboards),
+    );
 
-        if (showPixelPerfectDashboardsItem) {
-            pixelPerfectItemsGroup.push(pixelPerfectDashboardsItem);
-        }
-        if (showPixelPerfectReportsItem) {
-            pixelPerfectItemsGroup.push(pixelPerfectReportsItem);
-        }
-        menuItemsGroups.push(pixelPerfectItemsGroup);
+    const analyzeUrl = analyzeItemUrl(workspaceId);
+    pushConditionally(
+        insightItemsGroup,
+        createIHeaderMenuItem(HEADER_ITEM_ID_ANALYZE, "s-menu-analyze", analyzeUrl),
+        canShowAnalyzeItem(featureFlags, workspacePermissions),
+    );
+
+    const measuresUrl = measuresItemUrl(workspaceId);
+    pushConditionally(
+        insightItemsGroup,
+        createIHeaderMenuItem(HEADER_ITEM_ID_MEASURES, "s-menu-measures", measuresUrl),
+        hasMeasures,
+    );
+
+    const loadUrl = loadItemUrl(workspaceRef, workspaceId);
+    pushConditionally(
+        insightItemsGroup,
+        createIHeaderMenuItem(HEADER_ITEM_ID_LOAD, "s-menu-load", loadUrl),
+        canShowLoadItem(featureFlags, workspacePermissions, isFreemiumCustomer, backendSupportsCsvUploader),
+    );
+
+    const dataUrl = dataItemUrl(
+        workspaceRef,
+        workspaceId,
+        workspacePermissions,
+        backendSupportsDataItem,
+        hasNoDataSet,
+    );
+    pushConditionally(
+        insightItemsGroup,
+        createIHeaderMenuItem(HEADER_ITEM_ID_DATA, "s-menu-data", dataUrl),
+        canShowDataItem(featureFlags, workspacePermissions, isFreemiumCustomer, backendSupportsDataItem),
+    );
+    return insightItemsGroup;
+}
+
+function createIHeaderMenuItem(key: string, className: string, href: string): IHeaderMenuItem {
+    return {
+        key,
+        className,
+        href,
+    };
+}
+
+function pushConditionally<T>(items: T[], item: T, cond: boolean) {
+    if (cond) {
+        items.push(item);
     }
+}
 
-    // INSIGHTS MENU ITEMS
-    const insightItemsGroup = [];
+function manageItemUrl(workspaceRef: string, workspaceId: string): string {
+    return `/#s=/gdc/${workspaceRef}s/${workspaceId}|dataPage|`;
+}
+function measuresItemUrl(workspaceId: string): string {
+    return `measures/#/${workspaceId}`;
+}
 
-    const kpiDashboardsItem = {
-        key: shouldEnableNewNavigation(featureFlags) ? "gs.header.kpis.new" : "gs.header.kpis",
-        className: "s-menu-kpis",
-        href: `/dashboards/#/${workspaceRef}/${workspaceId}`,
-    };
-    const analyticalDesignerItem = {
-        key: "gs.header.analyze",
-        className: "s-menu-analyze",
-        href: `/analyze/#/${workspaceId}/reportId/edit`,
-    };
+function kpisItemUrl(workspaceRef: string, workspaceId: string): string {
+    return `/dashboards/#/${workspaceRef}/${workspaceId}`;
+}
+function canShowKpisItem(
+    featureFlags: ISettings,
+    workspacePermissions: IWorkspacePermissions,
+    hasAnalyticalDashboards: boolean,
+): boolean {
+    return Boolean(
+        hasAnalyticalDashboards ||
+            (workspacePermissions.canCreateAnalyticalDashboard === true &&
+                featureFlags.enableAnalyticalDashboards),
+    );
+}
 
-    const loadCsvItem = {
-        key: "gs.header.load",
-        className: "s-menu-load",
-        href: `/data/#/${workspaceRef}s/${workspaceId}/datasets`,
-    };
-    const dataItemLink = !backendSupportsDataItem
-        ? canManageProject && hasNoDataSet
-            ? `/admin/connect/#/${workspaceRef}s/${workspaceId}/datasource`
-            : `/modeler/#/${workspaceRef}s/${workspaceId}`
-        : `/modeler/#/${workspaceId}`;
-    const dataItem = {
-        key: "gs.header.data",
-        className: "s-menu-data",
-        href: dataItemLink,
-    };
+function analyzeItemUrl(workspaceId: string): string {
+    return `/analyze/#/${workspaceId}/reportId/edit`;
+}
+function canShowAnalyzeItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
+    return Boolean(workspacePermissions.canCreateVisualization === true && featureFlags.analyticalDesigner);
+}
 
-    const showKpiDashboardsItem =
-        hasAnalyticalDashboards || (canCreateAnalyticalDashboard === true && enableAnalyticalDashboards);
-    const showAnalyticalDesignerItem = canCreateVisualization === true && analyticalDesigner;
+function dataItemUrl(
+    workspaceRef: string,
+    workspaceId: string,
+    workspacePermissions: IWorkspacePermissions,
+    backendSupportsDataItem: boolean,
+    hasNoDataSet: boolean,
+): string {
+    if (backendSupportsDataItem) {
+        return `/modeler/#/${workspaceId}`;
+    }
+    if (workspacePermissions.canManageProject && hasNoDataSet) {
+        return `/admin/connect/#/${workspaceRef}s/${workspaceId}/datasource`;
+    }
+    return `/modeler/#/${workspaceRef}s/${workspaceId}`;
+}
+function canShowDataItem(
+    featureFlags: ISettings,
+    workspacePermissions: IWorkspacePermissions,
+    isFreemiumCustomer: boolean,
+    backendSupportsDataItem: boolean,
+): boolean {
+    return (
+        featureFlags.enableDataSection &&
+        (isFreemiumCustomer || backendSupportsDataItem) &&
+        (workspacePermissions.canInitData || workspacePermissions.canRefreshData)
+    );
+}
 
-    const canAccessLoadCsvPage = canUploadNonProductionCSV === true && enableCsvUploader;
-    const showLoadCsvItem = enableDataSection
+function loadItemUrl(workspaceRef: string, workspaceId: string): string {
+    return `/data/#/${workspaceRef}s/${workspaceId}/datasets`;
+}
+function canShowLoadItem(
+    featureFlags: ISettings,
+    workspacePermissions: IWorkspacePermissions,
+    isFreemiumCustomer: boolean,
+    backendSupportsCsvUploader: boolean,
+): boolean {
+    const canAccessLoadCsvPage =
+        workspacePermissions.canUploadNonProductionCSV === true && featureFlags.enableCsvUploader;
+    const canShowLoadCsvItem = featureFlags.enableDataSection
         ? !isFreemiumCustomer && canAccessLoadCsvPage
         : canAccessLoadCsvPage;
-    const showDataItem =
-        enableDataSection &&
-        (isFreemiumCustomer || backendSupportsDataItem) &&
-        (canInitData || canRefreshData);
 
-    if (showKpiDashboardsItem) {
-        insightItemsGroup.push(kpiDashboardsItem);
-    }
-    if (showAnalyticalDesignerItem) {
-        insightItemsGroup.push(analyticalDesignerItem);
-    }
-    if (showLoadCsvItem && backendSupportsCsvUploader) {
-        insightItemsGroup.push(loadCsvItem);
-    }
-    if (showDataItem) {
-        insightItemsGroup.push(dataItem);
-    }
-    menuItemsGroups.push(insightItemsGroup);
+    return Boolean(canShowLoadCsvItem && backendSupportsCsvUploader);
+}
 
-    // MANAGE ITEMS
-    const manageItemsGroup = [];
-    const manageItem = {
-        key: "gs.header.manage",
-        className: "s-menu-manage",
-        href: `/#s=/gdc/${workspaceRef}s/${workspaceId}|dataPage|`,
-    };
-    const showManageItem = canManageMetric;
-    if (showManageItem) {
-        manageItemsGroup.push(manageItem);
-    }
-    menuItemsGroups.push(manageItemsGroup);
+function dashboardsItemUrl(
+    workspaceRef: string,
+    workspaceId: string,
+    dashboardId?: string,
+    tabId?: string,
+): string {
+    const dashboardIdAndTabId = dashboardId && tabId ? `${dashboardId}|${tabId}` : "";
+    return `/#s=/gdc/${workspaceRef}s/${workspaceId}|${workspaceRef}DashboardPage|${dashboardIdAndTabId}`;
+}
 
-    return menuItemsGroups.filter((itemsGroup) => itemsGroup.length > 0);
+function reportsItemUrl(workspaceRef: string, workspaceId: string): string {
+    return `/#s=/gdc/${workspaceRef}s/${workspaceId}|domainPage|all-reports`;
 }
