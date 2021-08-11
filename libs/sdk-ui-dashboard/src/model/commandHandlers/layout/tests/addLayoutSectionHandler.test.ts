@@ -2,20 +2,22 @@
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import {
-    createTestInsightItem,
     EmptyDashboardIdentifier,
-    SimpleDashboardIdentifier,
     TestCorrelation,
-    TestInsightItem,
-    TestInsightPlaceholderItem,
-    TestKpiPlaceholderItem,
     TestStash,
-} from "../../../tests/Dashboard.fixtures";
+} from "../../../tests/fixtures/Dashboard.fixtures";
 import { addLayoutSection, undoLayoutChanges } from "../../../commands";
 import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionAdded } from "../../../events";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
 import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
 import { uriRef } from "@gooddata/sdk-model";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import {
+    createTestInsightItem,
+    TestInsightItem,
+    TestInsightPlaceholderItem,
+    TestKpiPlaceholderItem,
+} from "../../../tests/fixtures/Layout.fixtures";
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {

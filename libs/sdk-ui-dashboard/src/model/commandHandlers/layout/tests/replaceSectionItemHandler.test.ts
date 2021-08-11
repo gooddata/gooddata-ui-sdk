@@ -1,13 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import {
-    ComplexDashboardIdentifier,
-    ComplexDashboardWithReferences,
-    SimpleDashboardIdentifier,
-    TestCorrelation,
-    TestKpiPlaceholderItem,
-    TestStash,
-} from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
@@ -15,6 +8,12 @@ import {
 } from "../../../events";
 import { replaceSectionItem, undoLayoutChanges } from "../../../commands";
 import { selectLayout, selectStash } from "../../../state/layout/layoutSelectors";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import {
+    ComplexDashboardIdentifier,
+    ComplexDashboardWithReferences,
+} from "../../../tests/fixtures/ComplexDashboard.fixtures";
+import { TestKpiPlaceholderItem } from "../../../tests/fixtures/Layout.fixtures";
 
 describe("replace section item handler", () => {
     describe("for any dashboard", () => {

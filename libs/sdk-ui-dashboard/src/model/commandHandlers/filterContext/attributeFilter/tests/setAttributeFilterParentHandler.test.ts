@@ -4,7 +4,7 @@ import { setAttributeFilterParent } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { selectFilterContextAttributeFilters } from "../../../../state/filterContext/filterContextSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
-import { SimpleDashboardIdentifier } from "../../../../tests/Dashboard.fixtures";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 
 const BackendConfig = {
     getCommonAttributesResponses: {

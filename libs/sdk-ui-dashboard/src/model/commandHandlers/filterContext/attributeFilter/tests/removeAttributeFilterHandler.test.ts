@@ -2,7 +2,7 @@
 import { removeAttributeFilter } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { selectFilterContextAttributeFilters } from "../../../../state/filterContext/filterContextSelectors";
-import { SimpleDashboardIdentifier } from "../../../../tests/Dashboard.fixtures";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 
 describe("removeAttributeFilterHandler", () => {
     let Tester: DashboardTester;

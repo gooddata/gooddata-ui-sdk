@@ -2,8 +2,13 @@
 
 import cloneDeep from "lodash/cloneDeep";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
+import { addDrillTargets, modifyDrillsForInsightWidget } from "../../../commands";
+import { DashboardCommandFailed, DashboardInsightWidgetDrillsModified } from "../../../events";
+import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
+import { idRef, uriRef } from "@gooddata/sdk-model";
+import { DrillOrigin } from "@gooddata/sdk-backend-spi";
 import {
-    ComplexDashboardWithReferences,
     drillToDashboardFromProductAttributeDefinition,
     drillToDashboardFromWonMeasureDefinition,
     drillToToInsightFromWonMeasureDefinition,
@@ -12,13 +17,8 @@ import {
     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
     SimpleSortedTableWidgetInsightIdentifer,
     SimpleSortedTableWidgetRef,
-    TestCorrelation,
-} from "../../../tests/Dashboard.fixtures";
-import { addDrillTargets, modifyDrillsForInsightWidget } from "../../../commands";
-import { DashboardCommandFailed, DashboardInsightWidgetDrillsModified } from "../../../events";
-import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
-import { idRef, uriRef } from "@gooddata/sdk-model";
-import { DrillOrigin } from "@gooddata/sdk-backend-spi";
+} from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import { ComplexDashboardWithReferences } from "../../../tests/fixtures/ComplexDashboard.fixtures";
 
 describe("modifyDrillsForInsightWidgetHandler", () => {
     let Tester: DashboardTester;

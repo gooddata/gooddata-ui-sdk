@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { loadDashboard } from "../../../commands";
 import { DashboardTester } from "../../../tests/DashboardTester";
-import { EmptyDashboardIdentifier } from "../../../tests/Dashboard.fixtures";
+import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures";
 import { requestAsyncRender, resolveAsyncRender } from "../../../commands/render";
 
 describe("renderingWorker", () => {

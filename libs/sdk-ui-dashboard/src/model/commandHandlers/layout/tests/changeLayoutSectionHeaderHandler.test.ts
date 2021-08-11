@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { SimpleDashboardIdentifier, TestCorrelation } from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
@@ -9,6 +9,7 @@ import {
 } from "../../../events";
 import { changeLayoutSectionHeader, undoLayoutChanges } from "../../../commands";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 
 const FullHeader = { title: "My Section", description: "My Section Description" };
 const HeaderWithJustTitle = { title: "My Section" };

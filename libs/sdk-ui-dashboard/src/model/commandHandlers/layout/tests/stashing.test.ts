@@ -1,14 +1,14 @@
 // (C) 2021 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import {
-    ComplexDashboardIdentifier,
-    ComplexDashboardWithReferences,
-    TestKpiPlaceholderItem,
-    TestStash,
-} from "../../../tests/Dashboard.fixtures";
+import { TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
 import { addLayoutSection, addSectionItem, removeLayoutSection, replaceSectionItem } from "../../../commands";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
 import { removeSectionItem } from "../../../commands/layout";
+import {
+    ComplexDashboardIdentifier,
+    ComplexDashboardWithReferences,
+} from "../../../tests/fixtures/ComplexDashboard.fixtures";
+import { TestKpiPlaceholderItem } from "../../../tests/fixtures/Layout.fixtures";
 
 describe("stashing", () => {
     let Tester: DashboardTester;

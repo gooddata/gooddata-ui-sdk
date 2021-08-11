@@ -4,9 +4,10 @@ import { DashboardTester, preloadedTesterFactory } from "../../../../tests/Dashb
 import { DashboardLoaded } from "../../../../events";
 import { selectConfig } from "../../../../state/config/configSelectors";
 import { selectPermissions } from "../../../../state/permissions/permissionsSelectors";
-import { EmptyDashboardIdentifier, SimpleDashboardIdentifier } from "../../../../tests/Dashboard.fixtures";
+import { EmptyDashboardIdentifier } from "../../../../tests/fixtures/Dashboard.fixtures";
 import { selectLayout } from "../../../../state/layout/layoutSelectors";
 import { selectFilterContext } from "../../../../state/filterContext/filterContextSelectors";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 
 describe("load dashboard handler", () => {
     it("should emit event when dashboard successfully loaded", async () => {

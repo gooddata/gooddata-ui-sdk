@@ -1,11 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import {
-    ComplexDashboardFilters,
-    ComplexDashboardIdentifier,
-    ComplexDashboardWidgets,
-    TestCorrelation,
-} from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import {
     disableKpiWidgetDateFilter,
     enableKpiWidgetDateFilter,
@@ -19,6 +14,11 @@ import { DashboardCommandFailed, DashboardKpiWidgetFilterSettingsChanged } from 
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
 import { isDashboardAttributeFilterReference } from "@gooddata/sdk-backend-spi";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
+import {
+    ComplexDashboardFilters,
+    ComplexDashboardIdentifier,
+    ComplexDashboardWidgets,
+} from "../../../tests/fixtures/ComplexDashboard.fixtures";
 
 function ignoredWidgetFilterRefs(tester: DashboardTester, ref: ObjRef) {
     const widget = selectWidgetByRef(ref)(tester.state());

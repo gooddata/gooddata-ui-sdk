@@ -8,7 +8,7 @@ import {
     validateAttributeFilterParents,
 } from "../parentFiltersValidation";
 import { DashboardContext } from "../../../../../types/commonTypes";
-import { SimpleDashboardIdentifier } from "../../../../../tests/Dashboard.fixtures";
+import { SimpleDashboardIdentifier } from "../../../../../tests/fixtures/SimpleDashboard.fixtures";
 
 describe("validateAttributeFilterParents", () => {
     function getAttributeFilter(displayFormId: string): IDashboardAttributeFilter {

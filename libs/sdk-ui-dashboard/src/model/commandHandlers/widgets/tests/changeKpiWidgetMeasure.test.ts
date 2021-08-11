@@ -1,17 +1,19 @@
 // (C) 2021 GoodData Corporation
-import {
-    ComplexDashboardIdentifier,
-    ComplexDashboardWidgets,
-    MockAvailabilityWithDifferentRelevance,
-    TestCorrelation,
-    TimelineDateDatasetRef,
-} from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { changeKpiWidgetMeasure, loadDashboard } from "../../../commands";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { measureItem, uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed, DashboardKpiWidgetMeasureChanged } from "../../../events";
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
+import {
+    ComplexDashboardIdentifier,
+    ComplexDashboardWidgets,
+} from "../../../tests/fixtures/ComplexDashboard.fixtures";
+import {
+    MockAvailabilityWithDifferentRelevance,
+    TimelineDateDatasetRef,
+} from "../../../tests/fixtures/CatalogAvailability.fixtures";
 
 describe("change KPI widget measure handler", () => {
     describe("for any KPI", () => {
