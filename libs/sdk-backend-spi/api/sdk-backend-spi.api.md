@@ -132,6 +132,11 @@ export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDa
 // @public
 export type ErrorConverter = (e: Error) => AnalyticalBackendError;
 
+// @internal
+export type ExplainConfig = {
+    explainType?: "LDM" | "PDM" | "MAQL";
+};
+
 // @alpha
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
 
@@ -286,6 +291,7 @@ export interface IBackendCapabilities {
     supportsCsvUploader?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
+    supportsExplain?: boolean;
     supportsGenericDateAttributeElements?: boolean;
     supportsHyperlinkAttributeLabels?: boolean;
     supportsKpiWidget?: boolean;
@@ -1027,6 +1033,8 @@ export interface IPreparedExecution {
     readonly definition: IExecutionDefinition;
     equals(other: IPreparedExecution): boolean;
     execute(): Promise<IExecutionResult>;
+    // @internal
+    explain(config: ExplainConfig): Promise<void>;
     fingerprint(): string;
     withDateFormat(dateFormat: string): IPreparedExecution;
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;

@@ -338,6 +338,11 @@ function dummyPreparedExecution(
         execute(): Promise<IExecutionResult> {
             return new Promise((r) => r(dummyExecutionResult(definition, executionFactory, config)));
         },
+        explain(): Promise<void> {
+            // eslint-disable-next-line no-console
+            console.warn("Backend does not support explain mode");
+            return new Promise((resolve) => resolve());
+        },
         fingerprint(): string {
             return fp;
         },

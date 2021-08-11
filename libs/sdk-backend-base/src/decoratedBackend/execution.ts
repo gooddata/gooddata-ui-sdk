@@ -10,6 +10,7 @@ import {
     IResultHeader,
     DataValue,
     IResultWarning,
+    ExplainConfig,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
@@ -97,6 +98,10 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
 
     public execute(): Promise<IExecutionResult> {
         return this.decorated.execute();
+    }
+
+    public explain(config: ExplainConfig): Promise<void> {
+        return this.decorated.explain(config);
     }
 
     public fingerprint(): string {

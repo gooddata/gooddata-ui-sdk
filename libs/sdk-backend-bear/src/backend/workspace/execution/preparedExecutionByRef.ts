@@ -58,6 +58,12 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
         );
     }
 
+    public async explain(): Promise<void> {
+        // eslint-disable-next-line no-console
+        console.warn("Backend does not support explain mode");
+        return new Promise((resolve) => resolve());
+    }
+
     private async createVisualizationExecution(): Promise<IVisualizationExecution> {
         const uri = await objRefToUri(insightRef(this.insight), this.definition.workspace, this.authCall);
         const resultSpec = convertResultSpec(this.definition);

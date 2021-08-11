@@ -1,6 +1,11 @@
 // (C) 2019-2021 GoodData Corporation
 
-import { IExecutionFactory, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import {
+    IExecutionFactory,
+    IExecutionResult,
+    IPreparedExecution,
+    ExplainConfig,
+} from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
     defWithDimensions,
@@ -18,6 +23,7 @@ import { TigerExecutionResult } from "./executionResult";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
 import { TigerAuthenticatedCallGuard } from "../../../types";
+import { downloadFile } from "../../../utils/downloadFile";
 
 export class TigerPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;
@@ -48,6 +54,31 @@ export class TigerPreparedExecution implements IPreparedExecution {
                 this.dateFormatter,
             );
         });
+    }
+
+    public async explain(explainType: ExplainConfig): Promise<void> {
+        if (this.definition) {
+            this.authCall((client) =>
+                client.explain
+                    .explainAFM(
+                        {
+                            workspaceId: this.definition.workspace,
+                            afmExecution: toAfmExecution(this.definition),
+                            explainType: explainType as string,
+                        },
+                        {
+                            responseType: "blob",
+                        },
+                    )
+                    .then((response) => {
+                        downloadFile(explainType ? `${explainType}.json` : "explainAfm.zip", response.data);
+                    })
+                    .catch((error) => {
+                        // eslint-disable-next-line no-console
+                        console.warn(error);
+                    }),
+            );
+        }
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {

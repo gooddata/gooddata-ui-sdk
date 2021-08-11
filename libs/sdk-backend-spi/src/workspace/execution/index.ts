@@ -102,6 +102,12 @@ export interface IExecutionFactory {
 }
 
 /**
+ * Config for execution in explain mode
+ * @internal
+ */
+export type ExplainConfig = { explainType?: "LDM" | "PDM" | "MAQL" };
+
+/**
  * Prepared execution already knows what data to calculate and allows to specify how the data should be
  * sorted and shaped into dimensions.
  *
@@ -150,6 +156,12 @@ export interface IPreparedExecution {
      * Starts the execution.
      */
     execute(): Promise<IExecutionResult>;
+
+    /**
+     * Starts the execution in explain mode.
+     * @internal
+     */
+    explain(config: ExplainConfig): Promise<void>;
 
     /**
      * Tests whether this execution and the other execution are the same. This effectively means that

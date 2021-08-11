@@ -103,6 +103,11 @@ export interface IBackendCapabilities {
     supportsGenericDateAttributeElements?: boolean;
 
     /**
+     * Indicates whether backend supports downloading of files that will be used for debugging.
+     */
+    supportsExplain?: boolean;
+
+    /**
      * Indicates whether backend's identifiers are scoped to a type - e.g. they are unique only on type level. When
      * working with backend that has type scoped identifiers it is essential to provide both `identifier` and `type` when
      * using `IdentifierRef`.

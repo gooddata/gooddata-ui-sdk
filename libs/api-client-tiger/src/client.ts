@@ -19,7 +19,8 @@ import { tigerValidObjectsClientFactory } from "./validObjects";
 import { tigerOrganizationObjectsClientFactory } from "./organizationObjects";
 import { setAxiosAuthorizationToken } from "./axios";
 import { AxiosInstance } from "axios";
-import { tigerDeclarativeLayoutClientFactory } from "./layout";
+import { tigerLayoutClientFactory } from "./layout";
+import { tigerAfmExplainClientFactory } from "./explain";
 
 export {
     tigerWorkspaceObjectsClientFactory,
@@ -28,7 +29,8 @@ export {
     tigerLabelElementsClientFactory,
     tigerValidObjectsClientFactory,
     tigerOrganizationObjectsClientFactory,
-    tigerDeclarativeLayoutClientFactory,
+    tigerLayoutClientFactory,
+    tigerAfmExplainClientFactory,
     MetadataConfiguration,
     MetadataConfigurationParameters,
     MetadataBaseApi,
@@ -47,7 +49,8 @@ export interface ITigerClient {
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
     organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
-    declarativeLayout: ReturnType<typeof tigerDeclarativeLayoutClientFactory>;
+    explain: ReturnType<typeof tigerAfmExplainClientFactory>;
+    declarativeLayout: ReturnType<typeof tigerLayoutClientFactory>;
 
     /**
      * Updates tiger client to send the provided API TOKEN in `Authorization` header of all
@@ -70,7 +73,8 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const workspaceObjects = tigerWorkspaceObjectsClientFactory(axios);
     const validObjects = tigerValidObjectsClientFactory(axios);
     const organizationObjects = tigerOrganizationObjectsClientFactory(axios);
-    const declarativeLayout = tigerDeclarativeLayoutClientFactory(axios);
+    const declarativeLayout = tigerLayoutClientFactory(axios);
+    const explain = tigerAfmExplainClientFactory(axios);
 
     return {
         axios,
@@ -81,6 +85,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         validObjects,
         organizationObjects,
         declarativeLayout,
+        explain,
         setApiToken: (token: string | undefined): void => {
             setAxiosAuthorizationToken(axios, token);
         },
