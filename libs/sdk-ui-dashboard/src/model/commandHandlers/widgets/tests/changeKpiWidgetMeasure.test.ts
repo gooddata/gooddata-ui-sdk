@@ -36,7 +36,11 @@ describe("change KPI widget measure handler", () => {
 
         it("should replace measure and switch widget title to measure title", async () => {
             const event: DashboardKpiWidgetMeasureChanged = await Tester.dispatchAndWaitFor(
-                changeKpiWidgetMeasure(WidgetWithNoFilters.ref, measureItem(ReferenceLdm.Won), "from-title"),
+                changeKpiWidgetMeasure(
+                    WidgetWithNoFilters.ref,
+                    measureItem(ReferenceLdm.Won),
+                    "from-measure",
+                ),
                 "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
             );
 
@@ -95,7 +99,7 @@ describe("change KPI widget measure handler", () => {
                 changeKpiWidgetMeasure(
                     WidgetWithNoFilters.ref,
                     measureItem(ReferenceLdm.Won),
-                    "from-title",
+                    "from-measure",
                     TestCorrelation,
                 ),
                 "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",

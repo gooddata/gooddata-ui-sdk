@@ -77,7 +77,7 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
          * You may specify the widget header as 'from-measure'. In that case the title will be automatically
          * set to the title of measure specified in the `measureRef` property.
          */
-        readonly header?: WidgetHeader | "from-title";
+        readonly header?: WidgetHeader | "from-measure";
     };
 }
 
@@ -96,7 +96,7 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
 export function changeKpiWidgetMeasure(
     ref: ObjRef,
     measureRef: ObjRef,
-    header?: WidgetHeader | "from-title",
+    header?: WidgetHeader | "from-measure",
     correlationId?: string,
 ): ChangeKpiWidgetMeasure {
     return {

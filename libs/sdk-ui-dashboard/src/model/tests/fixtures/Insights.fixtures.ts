@@ -14,7 +14,7 @@ export const PivotTableWithTwoSameDates = recordedInsight(
 export const TreemapWithSingleMeasureAndViewByFilteredToOneElement = recordedInsight(
     ReferenceRecordings.Insights.Treemap.SingleMeasureAndViewByFilteredToOneElement,
 );
-// (C) 2021 GoodData Corporation
+
 export const TreemapWithOneMeasureAndViewByDateAndSegmentByDate = recordedInsight(
     ReferenceRecordings.Insights.Treemap.WithOneMeasureAndViewByDateAndSegmentByDate,
 );

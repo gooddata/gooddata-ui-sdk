@@ -51,7 +51,7 @@ function determineHeaderToUse(
         payload: { header },
     } = cmd;
 
-    if (typeof header === "string" && header === "from-title") {
+    if (typeof header === "string" && header === "from-measure") {
         return {
             title: measure.measure.title,
         };
