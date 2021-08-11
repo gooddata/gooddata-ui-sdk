@@ -10,6 +10,7 @@ import {
     IKpiWidget,
     IKpiWidgetDefinition,
     ILegacyKpi,
+    IMeasureMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -74,10 +75,13 @@ export interface DashboardKpiWidgetMeasureChanged extends IDashboardEvent {
          * are in effect.
          *
          * Note: the comparison may be 'none' - meaning
-         *
-         * XXX: consider including measure metadata as well
          */
-        readonly kpi: ILegacyKpi;
+        readonly kpiWidget: IKpiWidget;
+
+        /**
+         * Metadata object describing the measure that is now used on the KPI.
+         */
+        readonly measure: IMeasureMetadataObject;
 
         /**
          * If a new header was also set while changing the measure, then the new header value is included here.
@@ -89,7 +93,8 @@ export interface DashboardKpiWidgetMeasureChanged extends IDashboardEvent {
 export function kpiWidgetMeasureChanged(
     ctx: DashboardContext,
     ref: ObjRef,
-    kpi: ILegacyKpi,
+    kpiWidget: IKpiWidget,
+    measure: IMeasureMetadataObject,
     header?: WidgetHeader,
     correlationId?: string,
 ): DashboardKpiWidgetMeasureChanged {
@@ -99,7 +104,8 @@ export function kpiWidgetMeasureChanged(
         correlationId,
         payload: {
             ref,
-            kpi,
+            kpiWidget,
+            measure,
             header,
         },
     };
