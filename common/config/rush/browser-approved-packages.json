@@ -912,7 +912,7 @@
     },
     {
       "name": "styled-jsx",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "stylelint",
@@ -1001,6 +1001,10 @@
     {
       "name": "webpack-dev-server",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "xml2js",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "yup",
