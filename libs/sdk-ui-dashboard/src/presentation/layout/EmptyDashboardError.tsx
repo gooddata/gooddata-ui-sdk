@@ -13,8 +13,8 @@ const EmptyDashboardErrorCore: React.FC<IEmptyDashboardErrorProps & WrappedCompo
 }) => {
     return (
         <ErrorComponent
-            message={intl.formatMessage({ id: "dashboard.embedded.error.empty.heading" })}
-            description={intl.formatMessage({ id: "dashboard.embedded.error.empty.text" })}
+            message={intl.formatMessage({ id: "dashboard.error.empty.heading" })}
+            description={intl.formatMessage({ id: "dashboard.error.empty.text" })}
         />
     );
 };

@@ -379,6 +379,21 @@
         "comment": "The user should be instructed to review that they have added one measure and one date attribute to the insight",
         "limit": 0
     },
+    "dashboard.error.empty.heading": {
+        "value": "This dashboard is empty",
+        "comment": "The user has a dashboard that contains no widgets.",
+        "limit": 0
+    },
+    "dashboard.error.empty.text": {
+        "value": "All insights were removed.",
+        "comment": "The user has a dashboard that contains no widgets.",
+        "limit": 0
+    },
+    "dashboardView.error.empty.text": {
+        "value": "All insights were removed or the dashboard was saved empty.",
+        "comment": "The user has a dashboard that contains no widgets.",
+        "limit": 0
+    },
     "dashboard.embedded.error.empty.heading": {
         "value": "No widgets in the dashboard",
         "comment": "The user embedded a dashboard that contains no widgets.",
