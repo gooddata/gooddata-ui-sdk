@@ -427,7 +427,7 @@ showOnlyLogoutItem?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 export function generateHeaderHelpMenuItems(documentationUrl?: string, supportForumUrl?: string, userEmail?: string, workspaceId?: string, sessionId?: string, supportEmail?: string, isBranded?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 
 // @internal (undocumented)
-export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean): IHeaderMenuItem[][];
+export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean, hasMeasures?: boolean): IHeaderMenuItem[][];
 
 // @internal (undocumented)
 export function generateSupportUrl(projectId?: string, sessionId?: string, userEmail?: string, url?: string): string;
@@ -489,6 +489,9 @@ export const HEADER_ITEM_ID_LOAD = "gs.header.load";
 
 // @internal (undocumented)
 export const HEADER_ITEM_ID_MANAGE = "gs.header.manage";
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_MEASURES = "gs.header.measures";
 
 // @internal (undocumented)
 export const HEADER_ITEM_ID_REPORTS = "gs.header.reports";

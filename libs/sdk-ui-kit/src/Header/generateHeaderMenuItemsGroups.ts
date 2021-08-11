@@ -27,6 +27,10 @@ export const HEADER_ITEM_ID_ANALYZE = "gs.header.analyze";
 /**
  * @internal
  */
+export const HEADER_ITEM_ID_MEASURES = "gs.header.measures";
+/**
+ * @internal
+ */
 export const HEADER_ITEM_ID_LOAD = "gs.header.load";
 /**
  * @internal
@@ -50,6 +54,7 @@ export function generateHeaderMenuItemsGroups(
     hasNoDataSet: boolean = false,
     backendSupportsDataItem: boolean = false,
     backendSupportsCsvUploader: boolean = true,
+    hasMeasures: boolean = false,
 ): IHeaderMenuItem[][] {
     if (!workspaceId) {
         return [];
@@ -71,6 +76,7 @@ export function generateHeaderMenuItemsGroups(
         workspaceId,
         workspacePermissions,
         hasAnalyticalDashboards,
+        hasMeasures,
         backendSupportsCsvUploader,
         backendSupportsDataItem,
         hasNoDataSet,
@@ -132,6 +138,7 @@ function createInsightsItemsGroup(
     workspaceId: string,
     workspacePermissions: IWorkspacePermissions,
     hasAnalyticalDashboards: boolean,
+    hasMeasures: boolean,
     backendSupportsCsvUploader: boolean,
     backendSupportsDataItem: boolean,
     hasNoDataSet: boolean,
@@ -153,6 +160,13 @@ function createInsightsItemsGroup(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_ANALYZE, "s-menu-analyze", analyzeUrl),
         canShowAnalyzeItem(featureFlags, workspacePermissions),
+    );
+
+    const measuresUrl = measuresItemUrl(workspaceId);
+    pushConditionally(
+        insightItemsGroup,
+        createIHeaderMenuItem(HEADER_ITEM_ID_MEASURES, "s-menu-measures", measuresUrl),
+        hasMeasures,
     );
 
     const loadUrl = loadItemUrl(workspaceRef, workspaceId);
@@ -193,6 +207,9 @@ function pushConditionally<T>(items: T[], item: T, cond: boolean) {
 
 function manageItemUrl(workspaceRef: string, workspaceId: string): string {
     return `/#s=/gdc/${workspaceRef}s/${workspaceId}|dataPage|`;
+}
+function measuresItemUrl(workspaceId: string): string {
+    return `measures/#/${workspaceId}`;
 }
 
 function kpisItemUrl(workspaceRef: string, workspaceId: string): string {
