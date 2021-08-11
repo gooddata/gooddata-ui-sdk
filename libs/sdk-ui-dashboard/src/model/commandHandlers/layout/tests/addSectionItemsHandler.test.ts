@@ -50,8 +50,10 @@ describe("add section items handler", () => {
         });
 
         it("should fail if bad section is provided", async () => {
+            const originalLayout = selectLayout(Tester.state());
+
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                addSectionItem(2, 0, TestKpiPlaceholderItem, TestCorrelation),
+                addSectionItem(originalLayout.sections.length, 0, TestKpiPlaceholderItem, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

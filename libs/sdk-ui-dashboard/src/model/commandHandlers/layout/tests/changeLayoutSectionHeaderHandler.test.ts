@@ -130,8 +130,10 @@ describe("change layout section header handler", () => {
         });
 
         it("should fail if bad section index provided", async () => {
+            const originalLayout = selectLayout(Tester.state());
+
             const failed: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                changeLayoutSectionHeader(2, FullHeader, false, TestCorrelation),
+                changeLayoutSectionHeader(originalLayout.sections.length, FullHeader, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

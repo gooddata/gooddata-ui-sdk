@@ -37,7 +37,7 @@ describe("layout slice reducer", () => {
                 return layoutReducers.removeSection(draft, removeAction) as any;
             });
 
-            expect(newState.layout!.sections).toEqual([initialState.layout?.sections[1]]);
+            expect(newState.layout!.sections).toEqual(initialState.layout?.sections.slice(1));
             expect(newState._undo).toMatchSnapshot();
         });
 
@@ -54,7 +54,7 @@ describe("layout slice reducer", () => {
                 return layoutReducers.removeSection(draft, removeAction) as any;
             });
 
-            expect(newState.layout!.sections).toEqual([initialState.layout?.sections[1]]);
+            expect(newState.layout!.sections).toEqual(initialState.layout?.sections.slice(1));
             expect(newState.stash["testStash"]).toEqual(initialState.layout!.sections[0].items);
         });
     });

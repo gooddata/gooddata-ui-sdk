@@ -22,8 +22,9 @@ describe("remove layout section item handler", () => {
         beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
 
         it("should fail if bad section index specified", async () => {
+            const layout = selectLayout(Tester.state());
             const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                removeSectionItem(2, 0, undefined, TestCorrelation),
+                removeSectionItem(layout.sections.length, 0, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

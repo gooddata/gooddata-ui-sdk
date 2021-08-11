@@ -16,8 +16,9 @@ describe("move section command handler", () => {
         beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
 
         it("should fail if bad section index specified", async () => {
+            const originalLayout = selectLayout(Tester.state());
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                moveLayoutSection(1, -1, TestCorrelation),
+                moveLayoutSection(originalLayout.sections.length, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -27,7 +28,7 @@ describe("move section command handler", () => {
 
         it("should fail if no move would happen", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                moveLayoutSection(1, -1, TestCorrelation),
+                moveLayoutSection(2, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

@@ -163,15 +163,16 @@ describe("add layout section handler", () => {
         beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
 
         it("should add new last section by using relative index -1", async () => {
+            const originalLayout = selectLayout(Tester.state());
             const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
                 addLayoutSection(-1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
-            expect(event.payload.index).toEqual(2);
+            expect(event.payload.index).toEqual(originalLayout.sections.length);
             expect(event.payload.section).toMatchSnapshot();
 
             const layout = selectLayout(Tester.state());
-            expect(layout.sections[2]).toEqual(event.payload.section);
+            expect(layout.sections[originalLayout.sections.length]).toEqual(event.payload.section);
         });
 
         it("should add new first section by using index 0", async () => {
@@ -187,6 +188,8 @@ describe("add layout section handler", () => {
         });
 
         it("should add a new section between two existing sections", async () => {
+            const originalLayout = selectLayout(Tester.state());
+
             const lastSectionAdded: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
                 addLayoutSection(-1, undefined, [TestKpiPlaceholderItem]),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
@@ -197,8 +200,8 @@ describe("add layout section handler", () => {
             );
 
             const layout = selectLayout(Tester.state());
-            expect(layout.sections.length).toBe(4);
-            expect(layout.sections[3]).toEqual(lastSectionAdded.payload.section);
+            expect(layout.sections.length).toBe(originalLayout.sections.length + 2);
+            expect(layout.sections[4]).toEqual(lastSectionAdded.payload.section);
             expect(layout.sections[1]).toEqual(middleSectionAdded.payload.section);
         });
 

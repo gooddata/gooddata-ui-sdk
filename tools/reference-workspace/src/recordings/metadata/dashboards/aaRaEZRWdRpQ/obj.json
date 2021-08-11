@@ -148,6 +148,27 @@
                         }
                     ],
                     "type": "IDashboardLayoutSection"
+                },
+                {
+                    "items": [
+                        {
+                            "size": { "xl": { "gridWidth": 12 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "description": "",
+                                "drills": [],
+                                "identifier": "ahdV45WpcDUR",
+                                "ignoreDashboardFilters": [],
+                                "insight": { "uri": "/gdc/md/referenceworkspace/obj/1419" },
+                                "properties": {},
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1420" },
+                                "title": "drillToAttributeUrl",
+                                "type": "insight",
+                                "uri": "/gdc/md/referenceworkspace/obj/1420"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
                 }
             ],
             "type": "IDashboardLayout"
@@ -155,7 +176,7 @@
         "ref": { "uri": "/gdc/md/referenceworkspace/obj/1304" },
         "tags": [],
         "title": "simple dashboard",
-        "updated": "2021-07-22 15:41:43",
+        "updated": "2021-08-11 13:40:51",
         "uri": "/gdc/md/referenceworkspace/obj/1304"
     },
     "references": {
@@ -224,6 +245,7 @@
                     },
                     "ref": { "uri": "/gdc/md/referenceworkspace/obj/1284" },
                     "sorts": [],
+                    "tags": [],
                     "title": "my line chart",
                     "updated": "2020-02-17 13:09:29",
                     "uri": "/gdc/md/referenceworkspace/obj/1284",
@@ -278,6 +300,7 @@
                     "properties": {},
                     "ref": { "uri": "/gdc/md/referenceworkspace/obj/1297" },
                     "sorts": [],
+                    "tags": [],
                     "title": "Test insight",
                     "updated": "2021-06-01 20:54:13",
                     "uri": "/gdc/md/referenceworkspace/obj/1297",
@@ -373,9 +396,70 @@
                             }
                         }
                     ],
+                    "tags": [],
                     "title": "Simple Sorted Table",
                     "updated": "2020-08-16 20:07:15",
                     "uri": "/gdc/md/referenceworkspace/obj/1308",
+                    "visualizationUrl": "local:table"
+                }
+            },
+            {
+                "insight": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": { "uri": "/gdc/md/referenceworkspace/obj/1268" }
+                                            }
+                                        },
+                                        "localIdentifier": "8e874c44107d41809d0d5e7bbd1c19ff",
+                                        "title": "# Of Opportunities"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1067" },
+                                        "localIdentifier": "a75a78a7e2194c339b4f6b8694777803"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [],
+                    "identifier": "acSQJgNjhBhi",
+                    "properties": {
+                        "sortItems": [
+                            {
+                                "attributeSortItem": {
+                                    "attributeIdentifier": "a75a78a7e2194c339b4f6b8694777803",
+                                    "direction": "asc"
+                                }
+                            }
+                        ]
+                    },
+                    "ref": { "uri": "/gdc/md/referenceworkspace/obj/1419" },
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "a75a78a7e2194c339b4f6b8694777803",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "tags": [],
+                    "title": "drillToAttributeUrl",
+                    "updated": "2021-08-10 14:52:45",
+                    "uri": "/gdc/md/referenceworkspace/obj/1419",
                     "visualizationUrl": "local:table"
                 }
             }

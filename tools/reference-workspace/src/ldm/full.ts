@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-07-26T07:38:27.360Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-08-11T11:47:21.655Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -3319,6 +3319,10 @@ export const Insights = {
      * Insight Title: Insight with some measures filtered by date
      * Insight ID: acN8vxIwh5gI
      */ InsightWithSomeMeasuresFilteredByDate: "acN8vxIwh5gI",
+    /**
+     * Insight Title: drillToAttributeUrl
+     * Insight ID: acSQJgNjhBhi
+     */ DrillToAttributeUrl: "acSQJgNjhBhi",
 };
 export const Dashboards = {
     /**

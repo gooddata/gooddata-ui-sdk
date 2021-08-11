@@ -142,9 +142,46 @@ Object {
           "path": Array [
             "layout",
             "sections",
+            1,
+          ],
+          "value": Object {
+            "items": Array [
+              Object {
+                "size": Object {
+                  "xl": Object {
+                    "gridWidth": 12,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": Object {
+                  "description": "",
+                  "drills": Array [],
+                  "identifier": "ahdV45WpcDUR",
+                  "ignoreDashboardFilters": Array [],
+                  "insight": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1419",
+                  },
+                  "properties": Object {},
+                  "ref": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1420",
+                  },
+                  "title": "drillToAttributeUrl",
+                  "type": "insight",
+                  "uri": "/gdc/md/referenceworkspace/obj/1420",
+                },
+              },
+            ],
+            "type": "IDashboardLayoutSection",
+          },
+        },
+        Object {
+          "op": "replace",
+          "path": Array [
+            "layout",
+            "sections",
             "length",
           ],
-          "value": 1,
+          "value": 2,
         },
       ],
       "undoPatches": Array [
@@ -192,7 +229,7 @@ Object {
           },
         },
         Object {
-          "op": "add",
+          "op": "replace",
           "path": Array [
             "layout",
             "sections",
@@ -308,6 +345,43 @@ Object {
                   "title": "Test insight",
                   "type": "insight",
                   "uri": "/gdc/md/referenceworkspace/obj/1302",
+                },
+              },
+            ],
+            "type": "IDashboardLayoutSection",
+          },
+        },
+        Object {
+          "op": "add",
+          "path": Array [
+            "layout",
+            "sections",
+            2,
+          ],
+          "value": Object {
+            "items": Array [
+              Object {
+                "size": Object {
+                  "xl": Object {
+                    "gridWidth": 12,
+                  },
+                },
+                "type": "IDashboardLayoutItem",
+                "widget": Object {
+                  "description": "",
+                  "drills": Array [],
+                  "identifier": "ahdV45WpcDUR",
+                  "ignoreDashboardFilters": Array [],
+                  "insight": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1419",
+                  },
+                  "properties": Object {},
+                  "ref": Object {
+                    "uri": "/gdc/md/referenceworkspace/obj/1420",
+                  },
+                  "title": "drillToAttributeUrl",
+                  "type": "insight",
+                  "uri": "/gdc/md/referenceworkspace/obj/1420",
                 },
               },
             ],

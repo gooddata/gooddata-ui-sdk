@@ -21,8 +21,15 @@ describe("replace section item handler", () => {
         beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
 
         it("should fail if bad section index is provided", async () => {
+            const originalLayout = selectLayout(Tester.state());
             const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                replaceSectionItem(2, 0, TestKpiPlaceholderItem, undefined, TestCorrelation),
+                replaceSectionItem(
+                    originalLayout.sections.length,
+                    0,
+                    TestKpiPlaceholderItem,
+                    undefined,
+                    TestCorrelation,
+                ),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

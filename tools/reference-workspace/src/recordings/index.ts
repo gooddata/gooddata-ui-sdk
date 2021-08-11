@@ -1,6 +1,8 @@
+// (C) 2021 GoodData Corporation
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-07-29T15:19:41.978Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-08-11T11:50:41.619Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -4645,10 +4647,6 @@ const catalog = {
     groups: require("./metadata/catalog/groups.json"),
 };
 const visClasses = { items: require("./metadata/visClasses/items.json") };
-const dash_aaRaEZRWdRpQ = {
-    obj: require("./metadata/dashboards/aaRaEZRWdRpQ/obj.json"),
-    alerts: require("./metadata/dashboards/aaRaEZRWdRpQ/alerts.json"),
-};
 const dash_aeis6NlXcL7X = {
     obj: require("./metadata/dashboards/aeis6NlXcL7X/obj.json"),
     alerts: require("./metadata/dashboards/aeis6NlXcL7X/alerts.json"),
@@ -4664,6 +4662,10 @@ const dash_aaQ8QjLVhNOG = {
 const dash_emptyDashboard = {
     obj: require("./metadata/dashboards/emptyDashboard/obj.json"),
     alerts: require("./metadata/dashboards/emptyDashboard/alerts.json"),
+};
+const dash_aaRaEZRWdRpQ = {
+    obj: require("./metadata/dashboards/aaRaEZRWdRpQ/obj.json"),
+    alerts: require("./metadata/dashboards/aaRaEZRWdRpQ/alerts.json"),
 };
 export const Recordings = {
     executions: {
@@ -5857,11 +5859,11 @@ export const Recordings = {
             i_Xirr_feb8ea5ece361cf1c5681654f085f9a5,
         },
         dashboards: {
-            dash_aaRaEZRWdRpQ,
             dash_aeis6NlXcL7X,
             dash_abr8vSe5exU7,
             dash_aaQ8QjLVhNOG,
             dash_emptyDashboard,
+            dash_aaRaEZRWdRpQ,
         },
     },
 };
