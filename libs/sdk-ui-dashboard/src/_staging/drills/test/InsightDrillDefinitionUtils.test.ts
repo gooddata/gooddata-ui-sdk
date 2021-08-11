@@ -1,13 +1,4 @@
 // (C) 2021 GoodData Corporation
-import {
-    ComplexDashboardWithReferences,
-    dashboardsList,
-    drillToDashboardFromProductAttributeDefinition,
-    drillToDashboardFromWonMeasureDefinition,
-    drillToToInsightFromWonMeasureDefinition,
-    SimpleSortedTableWidgetInsight,
-    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
-} from "../../../model/tests/Dashboard.fixtures";
 import { DrillOrigin } from "@gooddata/sdk-backend-spi";
 import {
     InsightDrillDefinitionValidationData,
@@ -18,6 +9,18 @@ import { idRef, uriRef } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import cloneDeep from "lodash/cloneDeep";
 import { newInsightMap, newMapForObjectWithIdentity } from "../../metadata/objRefMap";
+import {
+    drillToDashboardFromProductAttributeDefinition,
+    drillToDashboardFromWonMeasureDefinition,
+    drillToToInsightFromWonMeasureDefinition,
+    SimpleDashboardListed,
+    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
+    SimpleSortedTableWidgetInsight,
+} from "../../../model/tests/fixtures/SimpleDashboard.fixtures";
+import {
+    ComplexDashboardListed,
+    ComplexDashboardWithReferences,
+} from "../../../model/tests/fixtures/ComplexDashboard.fixtures";
 
 describe("validateDrillDefinitionOrigin", () => {
     const drillTargets: IAvailableDrillTargets = SimpleDashboardSimpleSortedTableWidgetDrillTargets;
@@ -83,7 +86,7 @@ describe("validateDrillDefinitionOrigin", () => {
 
 describe("validateInsightDrillDefinition", () => {
     const validationContext: InsightDrillDefinitionValidationData = {
-        dashboardsMap: newMapForObjectWithIdentity(dashboardsList),
+        dashboardsMap: newMapForObjectWithIdentity([SimpleDashboardListed, ComplexDashboardListed]),
         insightsMap: newInsightMap([SimpleSortedTableWidgetInsight]),
     };
 

@@ -1,10 +1,5 @@
 // (C) 2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
-import {
-    drillToDashboardFromWonMeasureDefinition,
-    SimpleDashboardLayout,
-    SimpleSortedTableWidgetRef,
-} from "../../../tests/Dashboard.fixtures";
 import { LayoutState } from "../layoutState";
 import { InitialUndoState } from "../../_infra/undoEnhancer";
 import { IDashboardLayout, IInsightWidget, InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
@@ -12,6 +7,11 @@ import { layoutReducers } from "../layoutReducers";
 import { modifyDrillsForInsightWidget, removeLayoutSection } from "../../../commands";
 import { layoutActions } from "../index";
 import { produce } from "immer";
+import {
+    drillToDashboardFromWonMeasureDefinition,
+    SimpleDashboardLayout,
+    SimpleSortedTableWidgetRef,
+} from "../../../tests/fixtures/SimpleDashboard.fixtures";
 
 describe("layout slice reducer", () => {
     function createLayoutSliceInitialState(layout?: IDashboardLayout): LayoutState {

@@ -69,6 +69,7 @@ import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
 import { IListedDashboard } from '@gooddata/sdk-backend-spi';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
+import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
@@ -350,14 +351,14 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
     readonly payload: {
         readonly ref: ObjRef;
         readonly measureRef: ObjRef;
-        readonly header?: WidgetHeader;
+        readonly header?: WidgetHeader | "from-measure";
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE";
 }
 
 // @alpha
-export function changeKpiWidgetMeasure(ref: ObjRef, measureRef: ObjRef, header?: WidgetHeader, correlationId?: string): ChangeKpiWidgetMeasure;
+export function changeKpiWidgetMeasure(ref: ObjRef, measureRef: ObjRef, header?: WidgetHeader | "from-measure", correlationId?: string): ChangeKpiWidgetMeasure;
 
 // @alpha (undocumented)
 export interface ChangeLayoutSectionHeader extends IDashboardCommand {
@@ -1014,7 +1015,8 @@ export interface DashboardKpiWidgetMeasureChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
         readonly ref: ObjRef;
-        readonly kpi: ILegacyKpi;
+        readonly kpiWidget: IKpiWidget;
+        readonly measure: IMeasureMetadataObject;
         readonly header?: WidgetHeader;
     };
     // (undocumented)

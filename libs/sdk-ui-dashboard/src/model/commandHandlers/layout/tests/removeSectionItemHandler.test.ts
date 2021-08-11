@@ -1,13 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import {
-    ComplexDashboardIdentifier,
-    ComplexDashboardLayout,
-    ComplexDashboardWithReferences,
-    SimpleDashboardIdentifier,
-    TestCorrelation,
-    TestStash,
-} from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
@@ -16,6 +9,12 @@ import {
 } from "../../../events";
 import { eagerRemoveSectionItem, removeSectionItem, undoLayoutChanges } from "../../../commands/layout";
 import { selectLayout, selectStash } from "../../../state/layout/layoutSelectors";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import {
+    ComplexDashboardIdentifier,
+    ComplexDashboardLayout,
+    ComplexDashboardWithReferences,
+} from "../../../tests/fixtures/ComplexDashboard.fixtures";
 
 describe("remove layout section item handler", () => {
     describe("for any dashboard", () => {

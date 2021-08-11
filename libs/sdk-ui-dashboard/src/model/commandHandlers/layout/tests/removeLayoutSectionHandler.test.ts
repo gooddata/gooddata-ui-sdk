@@ -2,10 +2,9 @@
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import {
     EmptyDashboardIdentifier,
-    SimpleDashboardIdentifier,
     TestCorrelation,
     TestStash,
-} from "../../../tests/Dashboard.fixtures";
+} from "../../../tests/fixtures/Dashboard.fixtures";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
@@ -13,6 +12,7 @@ import {
 } from "../../../events";
 import { removeLayoutSection, undoLayoutChanges } from "../../../commands";
 import { selectLayout, selectStash } from "../../../state/layout/layoutSelectors";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 
 describe("remove layout section handler", () => {
     describe("for an empty dashboard", () => {

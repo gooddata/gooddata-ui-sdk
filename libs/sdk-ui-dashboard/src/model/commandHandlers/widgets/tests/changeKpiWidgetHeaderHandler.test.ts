@@ -1,15 +1,15 @@
 // (C) 2021 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import {
-    ComplexDashboardIdentifier,
-    ComplexDashboardWidgets,
-    TestCorrelation,
-} from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { changeKpiWidgetHeader } from "../../../commands";
 import { DashboardCommandFailed, DashboardKpiWidgetHeaderChanged } from "../../../events";
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
+import {
+    ComplexDashboardIdentifier,
+    ComplexDashboardWidgets,
+} from "../../../tests/fixtures/ComplexDashboard.fixtures";
 
 describe("change KPI widget header handler", () => {
     describe("for dashboard with KPIs and insights", () => {

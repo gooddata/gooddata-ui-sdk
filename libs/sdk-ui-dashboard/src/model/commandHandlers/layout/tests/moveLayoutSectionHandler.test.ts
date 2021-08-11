@@ -1,14 +1,14 @@
 // (C) 2021 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import {
-    ComplexDashboardIdentifier,
-    ComplexDashboardWithReferences,
-    SimpleDashboardIdentifier,
-    TestCorrelation,
-} from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { moveLayoutSection, undoLayoutChanges } from "../../../commands";
 import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionMoved } from "../../../events";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import {
+    ComplexDashboardIdentifier,
+    ComplexDashboardWithReferences,
+} from "../../../tests/fixtures/ComplexDashboard.fixtures";
 
 describe("move section command handler", () => {
     describe("for any dashboard", () => {

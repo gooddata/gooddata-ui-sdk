@@ -1,21 +1,20 @@
 // (C) 2021 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import {
-    ComplexDashboardIdentifier,
-    createTestInsightItem,
-    SimpleDashboardIdentifier,
-    TestCorrelation,
-    TestInsightItem,
-    TestInsightPlaceholderItem,
-    TestKpiPlaceholderItem,
-    TestStash,
-} from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
 import { DashboardCommandFailed, DashboardLayoutSectionItemsAdded } from "../../../events";
 import { addSectionItem, undoLayoutChanges } from "../../../commands";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
 import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
 import { uriRef } from "@gooddata/sdk-model";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import { ComplexDashboardIdentifier } from "../../../tests/fixtures/ComplexDashboard.fixtures";
+import {
+    createTestInsightItem,
+    TestInsightItem,
+    TestInsightPlaceholderItem,
+    TestKpiPlaceholderItem,
+} from "../../../tests/fixtures/Layout.fixtures";
 
 describe("add section items handler", () => {
     describe("for any dashboard", () => {

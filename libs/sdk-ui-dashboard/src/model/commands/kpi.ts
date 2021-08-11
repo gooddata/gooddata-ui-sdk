@@ -73,8 +73,11 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
         /**
          * Optionally specify the new header that should be used for the KPI widget with the
          * changed measure.
+         *
+         * You may specify the widget header as 'from-measure'. In that case the title will be automatically
+         * set to the title of measure specified in the `measureRef` property.
          */
-        readonly header?: WidgetHeader;
+        readonly header?: WidgetHeader | "from-measure";
     };
 }
 
@@ -93,7 +96,7 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
 export function changeKpiWidgetMeasure(
     ref: ObjRef,
     measureRef: ObjRef,
-    header?: WidgetHeader,
+    header?: WidgetHeader | "from-measure",
     correlationId?: string,
 ): ChangeKpiWidgetMeasure {
     return {

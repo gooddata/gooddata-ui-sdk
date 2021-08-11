@@ -5,6 +5,8 @@ import {
     IDashboardFilterReference,
     IDashboardLayout,
     IDashboardLayoutSectionHeader,
+    ILegacyKpiComparisonDirection,
+    ILegacyKpiComparisonTypeComparison,
     InsightDrillDefinition,
     isInsightWidget,
     isKpiWidget,
@@ -336,6 +338,64 @@ const replaceWidgetFilterSettings: LayoutReducer<ReplaceWidgetFilterSettings> = 
 //
 //
 
+type ReplaceWidgetDateDataset = {
+    ref: ObjRef;
+    dateDataSet?: ObjRef;
+};
+
+const replaceWidgetDateDataset: LayoutReducer<ReplaceWidgetDateDataset> = (state, action) => {
+    invariant(state.layout);
+
+    const { dateDataSet, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && (isInsightWidget(widget) || isKpiWidget(widget)));
+
+    widget.dateDataSet = dateDataSet;
+};
+
+//
+//
+//
+
+type ReplaceKpiWidgetMeasure = {
+    ref: ObjRef;
+    measureRef: ObjRef;
+};
+
+const replaceKpiWidgetMeasure: LayoutReducer<ReplaceKpiWidgetMeasure> = (state, action) => {
+    invariant(state.layout);
+
+    const { ref, measureRef } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && isKpiWidget(widget));
+
+    widget.kpi.metric = measureRef;
+};
+
+//
+//
+//
+
+type ReplaceKpiWidgetComparison = {
+    ref: ObjRef;
+    comparisonType: ILegacyKpiComparisonTypeComparison;
+    comparisonDirection?: ILegacyKpiComparisonDirection;
+};
+
+const replaceKpiWidgetComparison: LayoutReducer<ReplaceKpiWidgetComparison> = (state, action) => {
+    invariant(state.layout);
+
+    const { ref, comparisonType, comparisonDirection } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && isKpiWidget(widget));
+
+    widget.kpi.comparisonType = comparisonType;
+    widget.kpi.comparisonDirection = comparisonDirection;
+};
+
 export const layoutReducers = {
     setLayout,
     addSection: withUndo(addSection),
@@ -350,5 +410,8 @@ export const layoutReducers = {
     replaceWidgetDrills: withUndo(replaceWidgetDrill),
     replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
     replaceWidgetFilterSettings: withUndo(replaceWidgetFilterSettings),
+    replaceWidgetDateDataset: withUndo(replaceWidgetDateDataset),
+    replaceKpiWidgetMeasure: withUndo(replaceKpiWidgetMeasure),
+    replaceKpiWidgetComparison: withUndo(replaceKpiWidgetComparison),
     undoLayout: undoReducer,
 };

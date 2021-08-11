@@ -1,17 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import {
-    drillToDashboardFromProductAttributeDefinition,
-    drillToToInsightFromWonMeasureDefinition,
-    KpiWidgetRef,
-    SimpleDashboardIdentifier,
-    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
-    SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier,
-    SimpleSortedTableWidgetRef,
-    TestCorrelation,
-    BeforeTestCorrelation,
-} from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation, BeforeTestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import {
     addDrillTargets,
     modifyDrillsForInsightWidget,
@@ -21,6 +11,15 @@ import { localIdRef, uriRef } from "@gooddata/sdk-model";
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
 import { DashboardInsightWidgetDrillsRemoved } from "../../../events/insight";
 import { DashboardCommandFailed } from "../../../events";
+import {
+    drillToDashboardFromProductAttributeDefinition,
+    drillToToInsightFromWonMeasureDefinition,
+    KpiWidgetRef,
+    SimpleDashboardIdentifier,
+    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
+    SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier,
+    SimpleSortedTableWidgetRef,
+} from "../../../tests/fixtures/SimpleDashboard.fixtures";
 
 describe("removeDrillsForInsightWidgetHandler", () => {
     const fromMeasureLocalIdRef = localIdRef(SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier);

@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { ObjRef } from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * @alpha
@@ -11,6 +12,13 @@ export type WidgetHeader = {
      */
     title?: string;
 };
+
+/**
+ * @internal
+ */
+export function isWidgetHeader(obj: unknown): obj is WidgetHeader {
+    return !isEmpty(obj) && (obj as WidgetHeader).title !== undefined;
+}
 
 /**
  * @alpha

@@ -1,14 +1,14 @@
 // (C) 2021 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester";
-import {
-    FilterTestingDashboardIdentifier,
-    FilterTestingDashboardWidgets,
-    AdvancedFilterTestingDashboardIdentifier,
-    AdvancedFilterTestingDashboardWidgets,
-} from "../../tests/Dashboard.fixtures";
 import { queryWidgetFilters } from "../../queries";
 import { idRef, IFilter } from "@gooddata/sdk-model";
 import { IWidget } from "@gooddata/sdk-backend-spi";
+import {
+    AdvancedFilterTestingDashboardIdentifier,
+    AdvancedFilterTestingDashboardWidgets,
+    FilterTestingDashboardIdentifier,
+    FilterTestingDashboardWidgets,
+} from "../../tests/fixtures/FilteredDashboards.fixtures";
 
 describe("query widget filters", () => {
     describe("basic scenarios", () => {

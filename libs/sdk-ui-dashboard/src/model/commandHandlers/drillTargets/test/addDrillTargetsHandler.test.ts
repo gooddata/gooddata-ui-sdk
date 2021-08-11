@@ -2,16 +2,16 @@
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { addDrillTargets } from "../../../commands/drillTargets";
 import { DrillTargetsAdded } from "../../../events/drillTargets";
-import {
-    SimpleSortedTableWidgetRef,
-    SimpleDashboardIdentifier,
-    TestCorrelation,
-    KpiWidgetRef,
-} from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { selectDrillTargetsByWidgetRef } from "../../../state/drillTargets/drillTargetsSelectors";
 import { uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed } from "../../../events";
+import {
+    KpiWidgetRef,
+    SimpleDashboardIdentifier,
+    SimpleSortedTableWidgetRef,
+} from "../../../tests/fixtures/SimpleDashboard.fixtures";
 
 describe("addDrillTargetsHandler", () => {
     const availableDrillTargetsMock: IAvailableDrillTargets = {};

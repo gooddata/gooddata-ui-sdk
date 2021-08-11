@@ -1,16 +1,16 @@
 // (C) 2021 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import {
-    ComplexDashboardIdentifier,
-    ComplexDashboardWidgets,
-    TestCorrelation,
-} from "../../../tests/Dashboard.fixtures";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { changeInsightWidgetVisProperties } from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetVisPropertiesChanged } from "../../../events";
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
+import {
+    ComplexDashboardIdentifier,
+    ComplexDashboardWidgets,
+} from "../../../tests/fixtures/ComplexDashboard.fixtures";
 
 describe("change insight widget vis properties handler", () => {
     describe("for dashboard with KPIs and insights", () => {

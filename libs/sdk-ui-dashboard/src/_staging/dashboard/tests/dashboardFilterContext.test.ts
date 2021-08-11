@@ -2,13 +2,11 @@
 
 import { dashboardFilterContextDefinition, dashboardFilterContextSanitize } from "../dashboardFilterContext";
 // TODO RAIL-3383 move the fixtures?
-import {
-    EmptyDashboardWithReferences,
-    SimpleDashboardWithReferences,
-} from "../../../model/tests/Dashboard.fixtures";
+import { EmptyDashboardWithReferences } from "../../../model/tests/fixtures/Dashboard.fixtures";
 import { defaultDateFilterConfig } from "../../dateFilterConfig/defaultConfig";
 import { TestFilterContext, TestFilterContextWithInvalidParents } from "./dashboardFilterContext.fixture";
 import { uriRef } from "@gooddata/sdk-model";
+import { SimpleDashboardWithReferences } from "../../../model/tests/fixtures/SimpleDashboard.fixtures";
 
 describe("dashboardFilterContextDefinition", () => {
     it("should return default filter context when dashboard does not have one", () => {
