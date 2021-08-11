@@ -2,6 +2,7 @@
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
+    ICatalogDateDataset,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     IDashboardLayoutItem,
@@ -17,6 +18,8 @@ import { InsightPlaceholderWidget, KpiPlaceholderWidget } from "../types/layoutT
 import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { IDrillToInsight } from "@gooddata/sdk-backend-spi";
+import includes from "lodash/includes";
+import { invariant } from "ts-invariant";
 
 //
 // Basic constants and building blocks used in tests
@@ -440,3 +443,49 @@ const SimpleDashboardListed: IListedDashboard = {
 };
 
 export const dashboardsList: IListedDashboard[] = [SimpleDashboardListed, ComplexDashboardListed];
+
+//
+//
+//
+
+/**
+ * given all available datasets, this availability mock will pick 2 by name and associate relevance so that second one has more relevance
+ *
+ * Timeline date has greater relevance; see TimelineDateDatasetRef
+ * Activity date has lower relevance; see ActivityDateDatasetRef
+ */
+export const MockAvailabilityWithDifferentRelevance = (
+    datasets: ICatalogDateDataset[],
+): ICatalogDateDataset[] => {
+    const available = datasets
+        .filter((d) => includes(["Date (Activity)", "Date (Timeline)"], d.dataSet.title))
+        .map((d) => {
+            return {
+                ...d,
+                relevance: d.dataSet.title === "Date (Timeline)" ? 1 : 0,
+            };
+        });
+
+    invariant(available.length === 2, "unexpected mock");
+    return available;
+};
+
+/**
+ * given all available datasets, this mock will pick 2 by name and ensure they have same relevance
+ */
+export const MockAvailabilityWithSameRelevance = (datasets: ICatalogDateDataset[]): ICatalogDateDataset[] => {
+    const available = datasets
+        .filter((d) => includes(["Date (Activity)", "Date (Timeline)"], d.dataSet.title))
+        .map((d) => {
+            return {
+                ...d,
+                relevance: 1,
+            };
+        });
+
+    invariant(available.length === 2, "unexpected mock");
+    return available;
+};
+
+export const TimelineDateDatasetRef = uriRef("/gdc/md/referenceworkspace/obj/1052");
+export const ActivityDateDatasetRef = uriRef("/gdc/md/referenceworkspace/obj/887");

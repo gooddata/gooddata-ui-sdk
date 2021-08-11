@@ -3,6 +3,8 @@ import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTe
 import {
     createTestInsightItem,
     EmptyDashboardIdentifier,
+    MockAvailabilityWithDifferentRelevance,
+    MockAvailabilityWithSameRelevance,
     PivotTableWithDateFilter,
     PivotTableWithRowAndColumnAttributes,
     TestSectionHeader,
@@ -12,8 +14,6 @@ import { addLayoutSection, loadDashboard } from "../../commands";
 import { InsightDateDatasets, queryDateDatasetsForInsight } from "../../queries";
 import { IInsight, insightRef } from "@gooddata/sdk-model";
 import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
-import includes from "lodash/includes";
-import { invariant } from "ts-invariant";
 
 function datasetsDigest(
     datasets: ReadonlyArray<ICatalogDateDataset | undefined>,
@@ -66,40 +66,6 @@ describe("query insight date datasets", () => {
     });
 
     describe("for datasets obtained from catalog", () => {
-        // given all available datasets, this availability mock will pick 2 by name and associate relevance so that second one has more relevance
-        const MockAvailabilityWithDifferentRelevance = (
-            datasets: ICatalogDateDataset[],
-        ): ICatalogDateDataset[] => {
-            const available = datasets
-                .filter((d) => includes(["Date (Activity)", "Date (Timeline)"], d.dataSet.title))
-                .map((d) => {
-                    return {
-                        ...d,
-                        relevance: d.dataSet.title === "Date (Timeline)" ? 1 : 0,
-                    };
-                });
-
-            invariant(available.length === 2, "unexpected mock");
-            return available;
-        };
-
-        // given all available datasets, this mock will pick 2 by name and ensure they have same relevance
-        const MockAvailabilityWithSameRelevance = (
-            datasets: ICatalogDateDataset[],
-        ): ICatalogDateDataset[] => {
-            const available = datasets
-                .filter((d) => includes(["Date (Activity)", "Date (Timeline)"], d.dataSet.title))
-                .map((d) => {
-                    return {
-                        ...d,
-                        relevance: 1,
-                    };
-                });
-
-            invariant(available.length === 2, "unexpected mock");
-            return available;
-        };
-
         it("should order date datasets by relevance desc", async () => {
             const Tester = DashboardTester.forRecording(
                 EmptyDashboardIdentifier,
