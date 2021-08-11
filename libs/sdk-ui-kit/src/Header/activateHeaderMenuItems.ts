@@ -6,12 +6,7 @@ import { IHeaderMenuItem } from "./typings";
  * @internal
  */
 export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<string>): IHeaderMenuItem[][] {
-    return items.reduce((arrHeaderMenuItems, headerMenuList) => {
-        arrHeaderMenuItems.push(
-            headerMenuList.map((item: IHeaderMenuItem) => {
-                return { ...item, isActive: ids.indexOf(item.key) >= 0 };
-            }),
-        );
-        return arrHeaderMenuItems;
-    }, [] as IHeaderMenuItem[][]);
+    return items.map((headerMenuList) =>
+        headerMenuList.map((item: IHeaderMenuItem) => ({ ...item, isActive: ids.indexOf(item.key) >= 0 })),
+    );
 }
