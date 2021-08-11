@@ -34,7 +34,13 @@ export {
 export { IUserService, IUser, userFullName } from "./user";
 export { IUserSettingsService } from "./user/settings";
 
-export { IExecutionFactory, IPreparedExecution, IExecutionResult, IDataView } from "./workspace/execution";
+export {
+    IExecutionFactory,
+    IPreparedExecution,
+    IExecutionResult,
+    IDataView,
+    ExplainConfig,
+} from "./workspace/execution";
 
 export {
     DataValue,

@@ -10,6 +10,7 @@ import { CatalogItemType } from '@gooddata/sdk-backend-spi';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { ErrorConverter } from '@gooddata/sdk-backend-spi';
+import { ExplainConfig } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -374,6 +375,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     equals(other: IPreparedExecution): boolean;
     // (undocumented)
     execute(): Promise<IExecutionResult>;
+    // (undocumented)
+    explain(config: ExplainConfig): Promise<void>;
     // (undocumented)
     fingerprint(): string;
     // (undocumented)

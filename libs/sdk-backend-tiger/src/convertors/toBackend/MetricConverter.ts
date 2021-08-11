@@ -1,11 +1,9 @@
 // (C) 2021 GoodData Corporation
 
-import { JsonApiMetricOutAttributes } from "@gooddata/api-client-tiger";
+import { JsonApiMetricInAttributes } from "@gooddata/api-client-tiger";
 import { IMeasureMetadataObjectDefinition } from "@gooddata/sdk-backend-spi";
 
-export function convertMetricToBackend(
-    measure: IMeasureMetadataObjectDefinition,
-): JsonApiMetricOutAttributes {
+export function convertMetricToBackend(measure: IMeasureMetadataObjectDefinition): JsonApiMetricInAttributes {
     return {
         title: measure.title,
         description: measure.description,

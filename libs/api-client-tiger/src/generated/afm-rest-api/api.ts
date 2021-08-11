@@ -467,10 +467,10 @@ export interface CommonAttributeFilter {
     applyOnResult?: boolean;
     /**
      *
-     * @type {AfmObjectIdentifier}
+     * @type {Identifier}
      * @memberof CommonAttributeFilter
      */
-    label: AfmObjectIdentifier;
+    label: Identifier;
 }
 /**
  *
@@ -480,10 +480,10 @@ export interface CommonAttributeFilter {
 export interface CommonAttributeFilterAllOf {
     /**
      *
-     * @type {AfmObjectIdentifier}
+     * @type {Identifier}
      * @memberof CommonAttributeFilterAllOf
      */
-    label: AfmObjectIdentifier;
+    label: Identifier;
 }
 /**
  *
@@ -934,7 +934,7 @@ export interface ExecutionResultPaging {
  */
 export interface ExecutionSettings {
     /**
-     * Specifies percentage of source table data scanned during the computation. Only \"center of star\" (and not e.g. dimension) tables are subject to data sampling. Note that this option is available only for specific data sources.
+     * Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
      * @type {number}
      * @memberof ExecutionSettings
      */
@@ -1225,10 +1225,10 @@ export interface NegativeAttributeFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {AfmObjectIdentifier}
+     * @type {Identifier}
      * @memberof NegativeAttributeFilterBody
      */
-    label: AfmObjectIdentifier;
+    label: Identifier;
     /**
      *
      * @type {AttributeFilterElements}
@@ -1428,10 +1428,10 @@ export interface PositiveAttributeFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {AfmObjectIdentifier}
+     * @type {Identifier}
      * @memberof PositiveAttributeFilterBody
      */
-    label: AfmObjectIdentifier;
+    label: Identifier;
     /**
      *
      * @type {AttributeFilterElements}
@@ -2172,6 +2172,214 @@ export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterfa
 }
 
 /**
+ * AfmExplainControllerApi - axios parameter creator
+ * @export
+ */
+export const AfmExplainControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+         * @summary AFM explain resource.
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        explainAFM(
+            params: {
+                workspaceId: string;
+                afmExecution: AfmExecution;
+                explainType?: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { workspaceId, afmExecution, explainType } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling explainAFM.",
+                );
+            }
+            // verify required parameter 'afmExecution' is not null or undefined
+            if (afmExecution === null || afmExecution === undefined) {
+                throw new RequiredError(
+                    "afmExecution",
+                    "Required parameter afmExecution was null or undefined when calling explainAFM.",
+                );
+            }
+            const localVarPath = `/api/actions/workspaces/{workspaceId}/execution/afm/explain`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (explainType !== undefined) {
+                if (typeof explainType === "object") {
+                    addFlattenedObjectTo(explainType, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["explainType"] = explainType;
+                }
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof afmExecution !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
+                : afmExecution || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * AfmExplainControllerApi - functional programming interface
+ * @export
+ */
+export const AfmExplainControllerApiFp = function (configuration?: Configuration) {
+    return {
+        /**
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+         * @summary AFM explain resource.
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        explainAFM(
+            params: {
+                workspaceId: string;
+                afmExecution: AfmExecution;
+                explainType?: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any> {
+            const localVarAxiosArgs = AfmExplainControllerApiAxiosParamCreator(configuration).explainAFM(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    };
+};
+
+/**
+ * AfmExplainControllerApi - factory interface
+ * @export
+ */
+export const AfmExplainControllerApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    return {
+        /**
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+         * @summary AFM explain resource.
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        explainAFM(
+            params: {
+                workspaceId: string;
+                afmExecution: AfmExecution;
+                explainType?: string;
+            },
+            options?: any,
+        ): AxiosPromise<any> {
+            return AfmExplainControllerApiFp(configuration).explainAFM(params, options)(axios, basePath);
+        },
+    };
+};
+
+/**
+ * AfmExplainControllerApi - interface
+ * @export
+ * @interface AfmExplainControllerApi
+ */
+export interface AfmExplainControllerApiInterface {
+    /**
+     * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+     * @summary AFM explain resource.
+     * @param {string} workspaceId Workspace identifier
+     * @param {AfmExecution} afmExecution
+     * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AfmExplainControllerApiInterface
+     */
+    explainAFM(
+        params: {
+            workspaceId: string;
+            afmExecution: AfmExecution;
+            explainType?: string;
+        },
+        options?: any,
+    ): AxiosPromise<any>;
+}
+
+/**
+ * AfmExplainControllerApi - object-oriented interface
+ * @export
+ * @class AfmExplainControllerApi
+ * @extends {BaseAPI}
+ */
+export class AfmExplainControllerApi extends BaseAPI implements AfmExplainControllerApiInterface {
+    /**
+     * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+     * @summary AFM explain resource.
+     * @param {string} workspaceId Workspace identifier
+     * @param {AfmExecution} afmExecution
+     * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AfmExplainControllerApi
+     */
+    public explainAFM(
+        params: {
+            workspaceId: string;
+            afmExecution: AfmExecution;
+            explainType?: string;
+        },
+        options?: any,
+    ) {
+        return AfmExplainControllerApiFp(this.configuration).explainAFM(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+}
+
+/**
  * ElementsControllerApi - axios parameter creator
  * @export
  */
@@ -2188,7 +2396,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
          * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
-         * @param {number} [dataSamplingPercentage] Specifies percentage of source table data scanned during the computation.
+         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2346,7 +2554,7 @@ export const ElementsControllerApiFp = function (configuration?: Configuration) 
          * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
-         * @param {number} [dataSamplingPercentage] Specifies percentage of source table data scanned during the computation.
+         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2401,7 +2609,7 @@ export const ElementsControllerApiFactory = function (
          * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
-         * @param {number} [dataSamplingPercentage] Specifies percentage of source table data scanned during the computation.
+         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2446,7 +2654,7 @@ export interface ElementsControllerApiInterface {
      * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
      * @param {number} [offset] Request page with this offset.
      * @param {number} [limit] Return only this number of items.
-     * @param {number} [dataSamplingPercentage] Specifies percentage of source table data scanned during the computation.
+     * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
      * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2487,7 +2695,7 @@ export class ElementsControllerApi extends BaseAPI implements ElementsController
      * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
      * @param {number} [offset] Request page with this offset.
      * @param {number} [limit] Return only this number of items.
-     * @param {number} [dataSamplingPercentage] Specifies percentage of source table data scanned during the computation.
+     * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
      * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

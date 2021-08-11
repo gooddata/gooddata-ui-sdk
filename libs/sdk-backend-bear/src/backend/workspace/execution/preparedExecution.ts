@@ -47,6 +47,12 @@ export class BearPreparedExecution implements IPreparedExecution {
         );
     }
 
+    public async explain(): Promise<void> {
+        // eslint-disable-next-line no-console
+        console.warn("Backend does not support explain mode");
+        return new Promise((resolve) => resolve());
+    }
+
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
         return this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen));
     }
