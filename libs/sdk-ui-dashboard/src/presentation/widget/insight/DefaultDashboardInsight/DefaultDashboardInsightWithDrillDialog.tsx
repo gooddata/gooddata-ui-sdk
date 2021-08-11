@@ -10,7 +10,7 @@ import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types";
 import { DefaultDashboardInsightWithDrillSelect } from "./DefaultDashboardInsightWithDrillSelect";
 import { InsightDrillDialog } from "./InsightDrillDialog";
 import { useDashboardDrillTargets } from "./useDashboardDrillTargets";
-import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/InsightDrillDefinitionUtils";
+import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/drillingUtils";
 import { IDashboardInsightProps } from "../types";
 
 /**

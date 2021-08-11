@@ -1,45 +1,48 @@
 // (C) 2021 GoodData Corporation
 import { DrillOrigin } from "@gooddata/sdk-backend-spi";
+import { idRef, uriRef } from "@gooddata/sdk-model";
+import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import cloneDeep from "lodash/cloneDeep";
+import {
+    DrillToDashboardFromProductAttributeDefinition,
+    DrillToDashboardFromWonMeasureDefinition,
+    DrillToToInsightFromWonMeasureDefinition,
+    SimpleDashboardListed,
+    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
+    SimpleSortedTableWidgetInsight,
+} from "../../../../tests/fixtures/SimpleDashboard.fixtures";
+import {
+    ComplexDashboardListed,
+    ComplexDashboardWithReferences,
+} from "../../../../tests/fixtures/ComplexDashboard.fixtures";
+import {
+    newDisplayFormMap,
+    newInsightMap,
+    newMapForObjectWithIdentity,
+} from "../../../../../_staging/metadata/objRefMap";
 import {
     InsightDrillDefinitionValidationData,
     validateDrillDefinitionOrigin,
     validateInsightDrillDefinition,
-} from "../InsightDrillDefinitionUtils";
-import { idRef, uriRef } from "@gooddata/sdk-model";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import cloneDeep from "lodash/cloneDeep";
-import { newInsightMap, newMapForObjectWithIdentity } from "../../metadata/objRefMap";
-import {
-    drillToDashboardFromProductAttributeDefinition,
-    drillToDashboardFromWonMeasureDefinition,
-    drillToToInsightFromWonMeasureDefinition,
-    SimpleDashboardListed,
-    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
-    SimpleSortedTableWidgetInsight,
-} from "../../../model/tests/fixtures/SimpleDashboard.fixtures";
-import {
-    ComplexDashboardListed,
-    ComplexDashboardWithReferences,
-} from "../../../model/tests/fixtures/ComplexDashboard.fixtures";
+} from "../insightDrillDefinitionUtils";
 
 describe("validateDrillDefinitionOrigin", () => {
     const drillTargets: IAvailableDrillTargets = SimpleDashboardSimpleSortedTableWidgetDrillTargets;
-
     it("should not throw error for valid measure origin drill definition ", async () => {
-        const result = validateDrillDefinitionOrigin(drillToDashboardFromWonMeasureDefinition, drillTargets);
-        expect(result).toEqual(drillToDashboardFromWonMeasureDefinition);
+        const result = validateDrillDefinitionOrigin(DrillToDashboardFromWonMeasureDefinition, drillTargets);
+        expect(result).toEqual(DrillToDashboardFromWonMeasureDefinition);
     });
 
     it("should not throw error for valid attribute origin drill definition ", async () => {
         const result = validateDrillDefinitionOrigin(
-            drillToDashboardFromProductAttributeDefinition,
+            DrillToDashboardFromProductAttributeDefinition,
             drillTargets,
         );
-        expect(result).toEqual(drillToDashboardFromProductAttributeDefinition);
+        expect(result).toEqual(DrillToDashboardFromProductAttributeDefinition);
     });
 
     it("should throw error for invalid measure unknown origin localIdentifier ", async () => {
-        const invalidMeasureOriginDrill = cloneDeep(drillToDashboardFromProductAttributeDefinition);
+        const invalidMeasureOriginDrill = cloneDeep(DrillToDashboardFromProductAttributeDefinition);
         const invalidMeasureOrigin: DrillOrigin = {
             type: "drillFromMeasure",
             measure: {
@@ -54,7 +57,7 @@ describe("validateDrillDefinitionOrigin", () => {
     });
 
     it("should throw error for invalid attribute unknown origin localIdentifier ", async () => {
-        const invalidAttributeOriginDrill = cloneDeep(drillToDashboardFromProductAttributeDefinition);
+        const invalidAttributeOriginDrill = cloneDeep(DrillToDashboardFromProductAttributeDefinition);
         const invalidAttributeOrigin: DrillOrigin = {
             type: "drillFromAttribute",
             attribute: {
@@ -70,7 +73,7 @@ describe("validateDrillDefinitionOrigin", () => {
     });
 
     it("should throw error for invalid attribute ref", async () => {
-        const uriRefAttributeOriginDrill = cloneDeep(drillToDashboardFromProductAttributeDefinition);
+        const uriRefAttributeOriginDrill = cloneDeep(DrillToDashboardFromProductAttributeDefinition);
         const uriRefAttributeOrigin: DrillOrigin = {
             type: "drillFromAttribute",
             attribute: uriRef("some ref"),
@@ -88,27 +91,28 @@ describe("validateInsightDrillDefinition", () => {
     const validationContext: InsightDrillDefinitionValidationData = {
         dashboardsMap: newMapForObjectWithIdentity([SimpleDashboardListed, ComplexDashboardListed]),
         insightsMap: newInsightMap([SimpleSortedTableWidgetInsight]),
+        displayFormsMap: newDisplayFormMap([]),
     };
 
     describe("validate IDrillToDashboard definition", () => {
         it("should not throw error for valid definition with target identifier", async () => {
             const result = validateInsightDrillDefinition(
-                drillToDashboardFromWonMeasureDefinition,
+                DrillToDashboardFromWonMeasureDefinition,
                 validationContext,
             );
-            expect(result).toEqual(drillToDashboardFromWonMeasureDefinition);
+            expect(result).toEqual(DrillToDashboardFromWonMeasureDefinition);
         });
 
         it("should not throw error for valid definition with target uri", async () => {
-            const uriTarget = cloneDeep(drillToDashboardFromWonMeasureDefinition);
+            const uriTarget = cloneDeep(DrillToDashboardFromWonMeasureDefinition);
             uriTarget.target = uriRef(ComplexDashboardWithReferences.dashboard.uri);
 
             const result = validateInsightDrillDefinition(uriTarget, validationContext);
-            expect(result).toEqual(drillToDashboardFromWonMeasureDefinition);
+            expect(result).toEqual(DrillToDashboardFromWonMeasureDefinition);
         });
 
         it("should not throw error for valid definition with target undefined", async () => {
-            const undefinedTarget = cloneDeep(drillToDashboardFromWonMeasureDefinition);
+            const undefinedTarget = cloneDeep(DrillToDashboardFromWonMeasureDefinition);
             undefinedTarget.target = undefined;
 
             const result = validateInsightDrillDefinition(undefinedTarget, validationContext);
@@ -116,7 +120,7 @@ describe("validateInsightDrillDefinition", () => {
         });
 
         it("should throw error for unknown UriRef target IDrillToDashboard definition", async () => {
-            const invalidTarget = cloneDeep(drillToDashboardFromWonMeasureDefinition);
+            const invalidTarget = cloneDeep(DrillToDashboardFromWonMeasureDefinition);
             invalidTarget.target = uriRef("some ref");
             expect(() => {
                 validateInsightDrillDefinition(invalidTarget, validationContext);
@@ -124,7 +128,7 @@ describe("validateInsightDrillDefinition", () => {
         });
 
         it("should throw error for unknown idRef target IDrillToDashboard definition", async () => {
-            const invalidTarget = cloneDeep(drillToDashboardFromWonMeasureDefinition);
+            const invalidTarget = cloneDeep(DrillToDashboardFromWonMeasureDefinition);
             invalidTarget.target = idRef("some id");
             expect(() => {
                 validateInsightDrillDefinition(invalidTarget, validationContext);
@@ -135,22 +139,22 @@ describe("validateInsightDrillDefinition", () => {
     describe("validate IDrillToInsight definition", () => {
         it("should not throw error for valid definition with target uri", async () => {
             const result = validateInsightDrillDefinition(
-                drillToToInsightFromWonMeasureDefinition,
+                DrillToToInsightFromWonMeasureDefinition,
                 validationContext,
             );
-            expect(result).toEqual(drillToToInsightFromWonMeasureDefinition);
+            expect(result).toEqual(DrillToToInsightFromWonMeasureDefinition);
         });
 
         it("should not throw error for valid definition with target identifier", async () => {
-            const identifierTarget = cloneDeep(drillToToInsightFromWonMeasureDefinition);
+            const identifierTarget = cloneDeep(DrillToToInsightFromWonMeasureDefinition);
             identifierTarget.target = idRef(SimpleSortedTableWidgetInsight.insight.identifier);
 
             const result = validateInsightDrillDefinition(identifierTarget, validationContext);
-            expect(result).toEqual(drillToToInsightFromWonMeasureDefinition);
+            expect(result).toEqual(DrillToToInsightFromWonMeasureDefinition);
         });
 
         it("should throw error for unknown UriRef target IDrillToDashboard definition", async () => {
-            const invalidUriTarget = cloneDeep(drillToToInsightFromWonMeasureDefinition);
+            const invalidUriTarget = cloneDeep(DrillToToInsightFromWonMeasureDefinition);
             invalidUriTarget.target = uriRef("some ref");
             expect(() => {
                 validateInsightDrillDefinition(invalidUriTarget, validationContext);
@@ -158,7 +162,7 @@ describe("validateInsightDrillDefinition", () => {
         });
 
         it("should throw error for unknown idRef target IDrillToDashboard definition", async () => {
-            const invalidIdTarget = cloneDeep(drillToToInsightFromWonMeasureDefinition);
+            const invalidIdTarget = cloneDeep(DrillToToInsightFromWonMeasureDefinition);
             invalidIdTarget.target = idRef("some id");
             expect(() => {
                 validateInsightDrillDefinition(invalidIdTarget, validationContext);

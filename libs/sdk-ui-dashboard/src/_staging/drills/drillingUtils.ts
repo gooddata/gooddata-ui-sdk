@@ -9,6 +9,7 @@ import {
     UnexpectedError,
     isDrillToLegacyDashboard,
     isMeasureDescriptor,
+    InsightDrillDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
     isLocalIdRef,
@@ -27,8 +28,7 @@ import {
 } from "@gooddata/sdk-ui";
 import first from "lodash/first";
 import last from "lodash/last";
-import { DashboardDrillDefinition, IDrillDownDefinition } from "../../types";
-import { getDrillOriginLocalIdentifier } from "./InsightDrillDefinitionUtils";
+import { DashboardDrillDefinition, IDrillDownDefinition, IDrillToUrlPlaceholder } from "../../types";
 
 interface IImplicitDrillWithPredicates {
     drillDefinition: DrillDefinition | IDrillDownDefinition;
@@ -163,4 +163,48 @@ export function filterDrillsByDrillEvent(
     }
     const drillSourceLocalIdentifiers = getDrillSourceLocalIdentifierFromEvent(drillEvent);
     return getDrillsBySourceLocalIdentifiers(drillDefinitions, drillSourceLocalIdentifiers);
+}
+
+function matchAll(regex: RegExp, text: string): RegExpExecArray[] {
+    const matches = [];
+    let match = null;
+    while ((match = regex.exec(text)) !== null) {
+        matches.push(match);
+    }
+    return matches;
+}
+
+export const getAttributeIdentifiersPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
+    matchAll(/{attribute_title\((.*?)\)}/g, url).map((match) => ({
+        placeholder: match[0],
+        identifier: match[1],
+        toBeEncoded: match.index !== 0,
+    }));
+
+export function getDrillOriginLocalIdentifier(
+    drillDefinition: InsightDrillDefinition | IDrillDownDefinition,
+): string {
+    const { origin } = drillDefinition;
+
+    if (isLocalIdRef(origin)) {
+        return origin.localIdentifier;
+    }
+
+    if (isDrillFromMeasure(origin)) {
+        return getLocalIdentifierOrDie(origin.measure);
+    }
+
+    if (isDrillFromAttribute(origin)) {
+        return getLocalIdentifierOrDie(origin.attribute);
+    }
+
+    throw new Error("InsightDrillDefinition has invalid drill origin");
+}
+
+export function getLocalIdentifierOrDie(ref: ObjRefInScope): string {
+    if (isLocalIdRef(ref)) {
+        return ref.localIdentifier;
+    }
+
+    throw new Error("Invalid ObjRef invariant expecting LocalIdRef");
 }

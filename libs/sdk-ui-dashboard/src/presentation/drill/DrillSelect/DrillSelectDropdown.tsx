@@ -23,7 +23,7 @@ import { useDashboardSelector, selectListedDashboards } from "../../../model";
 import { dashboardMatch } from "../utils/dashboardPredicate";
 import { selectDashboardTitle, selectInsights } from "../../../model";
 import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants";
-import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/InsightDrillDefinitionUtils";
+import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;

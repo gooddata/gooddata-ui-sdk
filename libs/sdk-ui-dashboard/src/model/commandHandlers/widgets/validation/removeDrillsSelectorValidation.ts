@@ -5,10 +5,8 @@ import { InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
 import { DashboardContext } from "../../../types/commonTypes";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { objRefToString } from "@gooddata/sdk-model";
-import {
-    validateDrillDefinitionByLocalIdentifier,
-    isAllDrillSelector,
-} from "../../../../_staging/drills/InsightDrillDefinitionUtils";
+import { validateDrillDefinitionByLocalIdentifier } from "./insightDrillDefinitionUtils";
+import { isAllDrillSelector } from "../../../commands/insight";
 
 export function validateRemoveDrillsByOrigins(
     drillSelector: RemoveDrillsSelector,

@@ -8,7 +8,7 @@ import { modifyDrillsForInsightWidget, removeLayoutSection } from "../../../comm
 import { layoutActions } from "../index";
 import { produce } from "immer";
 import {
-    drillToDashboardFromWonMeasureDefinition,
+    DrillToDashboardFromWonMeasureDefinition,
     SimpleDashboardLayout,
     SimpleSortedTableWidgetRef,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures";
@@ -60,7 +60,7 @@ describe("layout slice reducer", () => {
     });
 
     describe("replaceWidgetDrill action", () => {
-        const drills: InsightDrillDefinition[] = [drillToDashboardFromWonMeasureDefinition];
+        const drills: InsightDrillDefinition[] = [DrillToDashboardFromWonMeasureDefinition];
 
         const getModifiedWidgetFromLayoutState = (
             layoutState: LayoutState,

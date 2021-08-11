@@ -1,6 +1,9 @@
 // (C) 2021 GoodData Corporation
-
+import flatMap from "lodash/flatMap";
 import {
+    IAttributeDisplayFormMetadataObject,
+    IDrillToAttributeUrl,
+    IDrillToCustomUrl,
     IDrillToDashboard,
     IDrillToInsight,
     IListedDashboard,
@@ -12,39 +15,15 @@ import {
     isDrillToDashboard,
     isDrillToInsight,
 } from "@gooddata/sdk-backend-spi";
-import { idRef, IInsight, isLocalIdRef, ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
+import { idRef, IInsight, ObjRef, ObjRefInScope, objRefToString } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { IDrillDownDefinition } from "../../types";
-import { RemoveDrillsSelector } from "../../model/commands/insight";
-import { ObjRefMap } from "../metadata/objRefMap";
-
-export function getDrillOriginLocalIdentifier(
-    drillDefinition: InsightDrillDefinition | IDrillDownDefinition,
-): string {
-    const { origin } = drillDefinition;
-
-    if (isLocalIdRef(origin)) {
-        return origin.localIdentifier;
-    }
-
-    if (isDrillFromMeasure(origin)) {
-        return getLocalIdentifierOrDie(origin.measure);
-    }
-
-    if (isDrillFromAttribute(origin)) {
-        return getLocalIdentifierOrDie(origin.attribute);
-    }
-
-    throw new Error("InsightDrillDefinition has invalid drill origin");
-}
-
-function getLocalIdentifierOrDie(ref: ObjRefInScope): string {
-    if (isLocalIdRef(ref)) {
-        return ref.localIdentifier;
-    }
-
-    throw new Error("Invalid ObjRef invariant expecting LocalIdRef");
-}
+import { typesUtils } from "@gooddata/util";
+import {
+    getAttributeIdentifiersPlaceholdersFromUrl,
+    getDrillOriginLocalIdentifier,
+    getLocalIdentifierOrDie,
+} from "../../../../_staging/drills/drillingUtils";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 
 export function validateDrillDefinitionOrigin(
     drillDefinition: InsightDrillDefinition,
@@ -108,14 +87,35 @@ export function validateDrillDefinitionByLocalIdentifier(
     return result;
 }
 
-export function isAllDrillSelector(obj: RemoveDrillsSelector): obj is "*" {
-    return obj === "*";
+export function extractInsightRefs(items: ReadonlyArray<InsightDrillDefinition>): ObjRef[] {
+    return items.filter(isDrillToInsight).map((item) => item.target);
+}
+
+export function extractDisplayFormIdentifiers(drillDefinitions: InsightDrillDefinition[]): ObjRef[] {
+    return flatMap(
+        drillDefinitions
+            .filter(typesUtils.combineGuards(isDrillToCustomUrl, isDrillToAttributeUrl))
+            .map((drillItem) => {
+                if (isDrillToCustomUrl(drillItem)) {
+                    const params = getAttributeIdentifiersPlaceholdersFromUrl(drillItem.target.url);
+                    const ids = params.map((param) => {
+                        return idRef(param.identifier);
+                    });
+                    return ids;
+                } else {
+                    return [drillItem.target.displayForm, drillItem.target.hyperlinkDisplayForm];
+                }
+            }),
+    );
 }
 
 export interface InsightDrillDefinitionValidationData {
     dashboardsMap: ObjRefMap<IListedDashboard>;
     insightsMap: ObjRefMap<IInsight>;
+    displayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>;
 }
+
+export const hyperlinkDisplayFormType = "GDC.link";
 
 export function validateInsightDrillDefinition(
     drillDefinition: InsightDrillDefinition,
@@ -130,13 +130,11 @@ export function validateInsightDrillDefinition(
     }
 
     if (isDrillToCustomUrl(drillDefinition)) {
-        // TODO: RAIL-3603
-        return drillDefinition;
+        return validateDrillToCustomURLDefinition(drillDefinition, validationContext);
     }
 
     if (isDrillToAttributeUrl(drillDefinition)) {
-        // TODO: RAIL-3603
-        return drillDefinition;
+        return validateDrillToAttributeUrlDefinition(drillDefinition, validationContext);
     }
 
     throw new Error("Can not validate unknown drillDefinition");
@@ -198,6 +196,53 @@ function validateDrillToInsightDefinition(
     throw Error("Unknown target Insight");
 }
 
-export function extractInsightRefs(items: ReadonlyArray<InsightDrillDefinition>): ObjRef[] {
-    return items.filter(isDrillToInsight).map((item) => item.target);
+export function validateDrillToCustomURLDefinition(
+    drillDefinition: IDrillToCustomUrl,
+    validationContext: InsightDrillDefinitionValidationData,
+): IDrillToCustomUrl {
+    const ids = extractDisplayFormIdentifiers([drillDefinition]);
+
+    ids.forEach((identifer) => {
+        const displayForms = validationContext.displayFormsMap.get(identifer);
+        if (!displayForms) {
+            throw new Error(
+                `Cannot find AttributeDisplayForm definition specified by identifier: ${objRefToString(
+                    identifer,
+                )}`,
+            );
+        }
+    });
+
+    return drillDefinition;
+}
+
+export function validateDrillToAttributeUrlDefinition(
+    drillDefinition: IDrillToAttributeUrl,
+    validationContext: InsightDrillDefinitionValidationData,
+): IDrillToAttributeUrl {
+    const displayForms = validationContext.displayFormsMap.get(drillDefinition.target.displayForm);
+
+    if (!displayForms) {
+        throw new Error(
+            `Cannot find target displayForm: ${objRefToString(drillDefinition.target.displayForm)}`,
+        );
+    }
+
+    const hyperlinkDisplayForm = validationContext.displayFormsMap.get(
+        drillDefinition.target.hyperlinkDisplayForm,
+    );
+
+    if (!hyperlinkDisplayForm) {
+        throw new Error(
+            `Cannot find target hyperlinkDisplayForm: ${objRefToString(
+                drillDefinition.target.hyperlinkDisplayForm,
+            )}`,
+        );
+    }
+
+    if (hyperlinkDisplayForm.displayFormType !== hyperlinkDisplayFormType) {
+        throw new Error(`DisplayFormType of target hyperlinkDisplayForm type has to be GDC.link`);
+    }
+
+    return drillDefinition;
 }

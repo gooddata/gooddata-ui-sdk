@@ -12,7 +12,6 @@ import {
     IInsightWidget,
 } from "@gooddata/sdk-backend-spi";
 import { idRef, ObjRef, areObjRefsEqual, insightId } from "@gooddata/sdk-model";
-import { IDrillToUrlPlaceholder } from "../../../types";
 import { DashboardContext } from "../../types/commonTypes";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { SagaIterator } from "redux-saga";
@@ -20,6 +19,7 @@ import { selectDashboardId } from "../../state/meta/metaSelectors";
 import { selectWidgetByRef } from "../../state/layout/layoutSelectors";
 import { selectInsightByRef } from "../../state/insights/insightsSelectors";
 import { getElementTitle } from "./getElementTitle";
+import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../_staging/drills/drillingUtils";
 
 export enum DRILL_TO_URL_PLACEHOLDER {
     PROJECT_ID = "{project_id}",
@@ -102,22 +102,6 @@ export function* loadAttributeElementsForDrillIntersection(
 
 const encodeParameterIfSet = (parameter: string | undefined): string | undefined =>
     parameter === undefined ? parameter : encodeURIComponent(parameter);
-
-function matchAll(regex: RegExp, text: string): RegExpExecArray[] {
-    const matches = [];
-    let match = null;
-    while ((match = regex.exec(text)) !== null) {
-        matches.push(match);
-    }
-    return matches;
-}
-
-export const getAttributeIdentifiersPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
-    matchAll(/{attribute_title\((.*?)\)}/g, url).map((match) => ({
-        placeholder: match[0],
-        identifier: match[1],
-        toBeEncoded: match.index !== 0,
-    }));
 
 export async function getAttributeDisplayForms(
     projectId: string,
