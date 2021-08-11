@@ -48,7 +48,7 @@
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
         "cypress": "node ./scripts/run_cypress_local.js",
-        "docker-build": "npm run build-scenarios && echo 'finished scenarios build' && DOCKER_BUILDKIT=0 docker build --file Dockerfile -t gooddata-ui-sdk .",
+        "docker-build": "npm run build-scenarios && DOCKER_BUILDKIT=0 docker build --file Dockerfile -t gooddata-ui-sdk .",
         "docker-build-local": "docker build --file Dockerfile_local -t gooddata-ui-sdk .",
         "run-isolated": "docker-compose -f docker-compose-isolated.yaml up --abort-on-container-exit --exit-code-from isolated-tests --force-recreate --always-recreate-deps --renew-anon-volumes",
         "run-isolated-record": "MODE=record npm run run-isolated-local",
@@ -84,7 +84,8 @@
         "react-router-dom": "^5.2.0",
         "react-router-use-location-state": "~2.5.0",
         "tslib": "^2.0.0",
-        "wait-on": "^6.0.0"
+        "wait-on": "^6.0.0",
+        "xml2js": "~0.4.23"
     },
     "devDependencies": {
         "@babel/cli": "^7.7.2",

@@ -83,7 +83,7 @@ async function main() {
                 sanitizeCredentials();
             }
 
-            // childProcess.execSync(`node scripts/create_github_report.js`);
+            childProcess.execSync(`node scripts/create_github_report.js`);
 
             process.exit(e);
         });
