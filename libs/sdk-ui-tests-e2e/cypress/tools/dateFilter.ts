@@ -47,8 +47,8 @@ export class DateFilter {
         return cy.get(`.s-relative-range-picker-${type}`).click();
     }
 
-    typeRangePickerValue(type: CalendarType, value: string) {
-        cy.get(`.s-date-range-picker-${type}`).find("input").clear().type(value);
+    typeRangePickerValue(type: CalendarType, value: string): Cypress.Chainable {
+        return cy.get(`.s-date-range-picker-${type}`).find("input").clear().type(value);
     }
 
     selectDateInNextMonth(): Cypress.Chainable {
