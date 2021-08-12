@@ -19,11 +19,16 @@ import {
 describe("remove layout section item handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
+        );
 
         it("should fail if bad section index specified", async () => {
+            const layout = selectLayout(Tester.state());
             const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                removeSectionItem(2, 0, undefined, TestCorrelation),
+                removeSectionItem(layout.sections.length, 0, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -44,7 +49,11 @@ describe("remove layout section item handler", () => {
 
     describe("for dashboard with existing sections", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
+        );
 
         const [SecondSectionFirstItem, SecondSectionSecondItem] =
             ComplexDashboardWithReferences.dashboard.layout!.sections[1].items;

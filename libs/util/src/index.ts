@@ -14,5 +14,6 @@ import * as testUtils from "./testUtils";
 import * as translationUtils from "./translationUtils";
 import * as arrayUtils from "./arrayUtils";
 import * as objectUtils from "./objectUtils";
+import * as typesUtils from "./typesUtils";
 
-export { stringUtils, testUtils, translationUtils, arrayUtils, objectUtils };
+export { stringUtils, testUtils, translationUtils, arrayUtils, objectUtils, typesUtils };

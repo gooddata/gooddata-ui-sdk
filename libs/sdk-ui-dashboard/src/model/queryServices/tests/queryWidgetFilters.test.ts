@@ -13,7 +13,11 @@ import {
 describe("query widget filters", () => {
     describe("basic scenarios", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), FilterTestingDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, FilterTestingDashboardIdentifier),
+        );
 
         it("should fail in case the widget does not exist", async () => {
             await expect(
@@ -42,7 +46,9 @@ describe("query widget filters", () => {
     describe("advanced scenarios", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => (Tester = tester), AdvancedFilterTestingDashboardIdentifier),
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, AdvancedFilterTestingDashboardIdentifier),
         );
 
         it.each<[string, IWidget]>([

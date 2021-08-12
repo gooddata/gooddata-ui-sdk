@@ -8,39 +8,3 @@ Array [
   },
 ]
 `;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drillToDashboard with not existing target dashboard specified by identifier 1`] = `"Invalid drill origin for InsightDrillDefinition: {\\"origin\\":{\\"attribute\\":{\\"localIdentifier\\":\\"3b196b9f8de04b61ba37762fa28fcf4f\\"},\\"type\\":\\"drillFromAttribute\\"},\\"target\\":{\\"identifier\\":\\"missing\\"},\\"transition\\":\\"in-place\\",\\"type\\":\\"drillToDashboard\\"}. Error: Unknown target dashboard"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drillToDashboard with not existing target dashboard specified by identifier 2`] = `"USER_ERROR"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drillToDashboard with not existing target dashboard specified by uri 1`] = `"Invalid drill origin for InsightDrillDefinition: {\\"origin\\":{\\"attribute\\":{\\"localIdentifier\\":\\"3b196b9f8de04b61ba37762fa28fcf4f\\"},\\"type\\":\\"drillFromAttribute\\"},\\"target\\":{\\"uri\\":\\"missing\\"},\\"transition\\":\\"in-place\\",\\"type\\":\\"drillToDashboard\\"}. Error: Unknown target dashboard"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drillToDashboard with not existing target dashboard specified by uri 2`] = `"USER_ERROR"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drillToInsight with not existing target insight specified by identifier 1`] = `"Invalid drill origin for InsightDrillDefinition: {\\"origin\\":{\\"measure\\":{\\"localIdentifier\\":\\"31c22194386b408aa80ab90b966e85a7\\"},\\"type\\":\\"drillFromMeasure\\"},\\"target\\":{\\"identifier\\":\\"missing\\"},\\"transition\\":\\"pop-up\\",\\"type\\":\\"drillToInsight\\"}. Error: Unknown target Insight"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drillToInsight with not existing target insight specified by identifier 2`] = `"USER_ERROR"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drillToInsight with not existing target insight specified by uri 1`] = `"Invalid drill origin for InsightDrillDefinition: {\\"origin\\":{\\"measure\\":{\\"localIdentifier\\":\\"31c22194386b408aa80ab90b966e85a7\\"},\\"type\\":\\"drillFromMeasure\\"},\\"target\\":{\\"uri\\":\\"missing\\"},\\"transition\\":\\"pop-up\\",\\"type\\":\\"drillToInsight\\"}. Error: Unknown target Insight"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drillToInsight with not existing target insight specified by uri 2`] = `"USER_ERROR"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill has invalid attribute origin 1`] = `"Invalid drill origin for InsightDrillDefinition: {\\"origin\\":{\\"attribute\\":{\\"localIdentifier\\":\\"some origin\\"},\\"type\\":\\"drillFromAttribute\\"},\\"target\\":{\\"identifier\\":\\"aeis6NlXcL7X\\"},\\"transition\\":\\"in-place\\",\\"type\\":\\"drillToDashboard\\"}. Error: InsightDrillDefinition origin is not valid attribute drillTarget"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill has invalid attribute origin 2`] = `"USER_ERROR"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill has invalid measure origin 1`] = `"Invalid drill origin for InsightDrillDefinition: {\\"origin\\":{\\"measure\\":{\\"localIdentifier\\":\\"some origin\\"},\\"type\\":\\"drillFromMeasure\\"},\\"target\\":{\\"identifier\\":\\"aeis6NlXcL7X\\"},\\"transition\\":\\"in-place\\",\\"type\\":\\"drillToDashboard\\"}. Error: InsightDrillDefinition origin is not valid measure drillTarget"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill has invalid measure origin 2`] = `"USER_ERROR"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill targets are not set 1`] = `"Drill targets not set"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills and drill targets are not set 2`] = `"USER_ERROR"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills of kpi widget 1`] = `"Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1386\\"} exists but is not an insight widget."`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills of kpi widget 2`] = `"USER_ERROR"`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}."`;
-
-exports[`modifyDrillsForInsightWidgetHandler validate should fail if trying to modify/add drills of non-existent widget 2`] = `"USER_ERROR"`;

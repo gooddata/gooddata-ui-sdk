@@ -13,7 +13,11 @@ import { createTestInsightItem, TestSectionHeader } from "../../tests/fixtures/L
 
 describe("query insight attributes meta", () => {
     let Tester: DashboardTester;
-    beforeEach(preloadedTesterFactory((tester) => (Tester = tester), EmptyDashboardIdentifier));
+    beforeEach(
+        preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, EmptyDashboardIdentifier),
+    );
 
     it("should return metadata for insight with multiple attributes in buckets", async () => {
         await Tester.dispatchAndWaitFor(

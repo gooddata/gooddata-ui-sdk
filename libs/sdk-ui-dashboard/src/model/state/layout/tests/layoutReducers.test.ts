@@ -8,7 +8,7 @@ import { modifyDrillsForInsightWidget, removeLayoutSection } from "../../../comm
 import { layoutActions } from "../index";
 import { produce } from "immer";
 import {
-    drillToDashboardFromWonMeasureDefinition,
+    DrillToDashboardFromWonMeasureDefinition,
     SimpleDashboardLayout,
     SimpleSortedTableWidgetRef,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures";
@@ -37,7 +37,7 @@ describe("layout slice reducer", () => {
                 return layoutReducers.removeSection(draft, removeAction) as any;
             });
 
-            expect(newState.layout!.sections).toEqual([initialState.layout?.sections[1]]);
+            expect(newState.layout!.sections).toEqual(initialState.layout?.sections.slice(1));
             expect(newState._undo).toMatchSnapshot();
         });
 
@@ -54,13 +54,13 @@ describe("layout slice reducer", () => {
                 return layoutReducers.removeSection(draft, removeAction) as any;
             });
 
-            expect(newState.layout!.sections).toEqual([initialState.layout?.sections[1]]);
+            expect(newState.layout!.sections).toEqual(initialState.layout?.sections.slice(1));
             expect(newState.stash["testStash"]).toEqual(initialState.layout!.sections[0].items);
         });
     });
 
     describe("replaceWidgetDrill action", () => {
-        const drills: InsightDrillDefinition[] = [drillToDashboardFromWonMeasureDefinition];
+        const drills: InsightDrillDefinition[] = [DrillToDashboardFromWonMeasureDefinition];
 
         const getModifiedWidgetFromLayoutState = (
             layoutState: LayoutState,

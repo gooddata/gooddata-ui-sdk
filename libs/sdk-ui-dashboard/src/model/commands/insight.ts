@@ -462,6 +462,15 @@ export function modifyDrillsForInsightWidget(
 export type RemoveDrillsSelector = ObjRefInScope[] | "*";
 
 /**
+ * Type guard resolved all drill selector
+ *
+ * @alpha
+ */
+export function isAllDrillSelector(obj: RemoveDrillsSelector): obj is "*" {
+    return obj === "*";
+}
+
+/**
  * @alpha
  */
 export interface RemoveDrillsForInsightWidget extends IDashboardCommand {

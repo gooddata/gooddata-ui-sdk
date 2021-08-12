@@ -18,11 +18,22 @@ import { TestKpiPlaceholderItem } from "../../../tests/fixtures/Layout.fixtures"
 describe("replace section item handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
+        );
 
         it("should fail if bad section index is provided", async () => {
+            const originalLayout = selectLayout(Tester.state());
             const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                replaceSectionItem(2, 0, TestKpiPlaceholderItem, undefined, TestCorrelation),
+                replaceSectionItem(
+                    originalLayout.sections.length,
+                    0,
+                    TestKpiPlaceholderItem,
+                    undefined,
+                    TestCorrelation,
+                ),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -53,7 +64,11 @@ describe("replace section item handler", () => {
 
     describe("for dashboard with existing sections", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
+        );
 
         const [SecondSectionFirstItem, SecondSectionSecondItem] =
             ComplexDashboardWithReferences.dashboard.layout!.sections[1].items;

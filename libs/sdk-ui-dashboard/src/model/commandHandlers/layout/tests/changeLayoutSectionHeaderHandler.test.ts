@@ -19,7 +19,11 @@ describe("change layout section header handler", () => {
     // Note: the simple dashboard has one section and this section does not have any header specified
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
+        );
 
         it("should replace header with a new one", async () => {
             const event: DashboardLayoutSectionHeaderChanged = await Tester.dispatchAndWaitFor(
@@ -130,8 +134,10 @@ describe("change layout section header handler", () => {
         });
 
         it("should fail if bad section index provided", async () => {
+            const originalLayout = selectLayout(Tester.state());
+
             const failed: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                changeLayoutSectionHeader(2, FullHeader, false, TestCorrelation),
+                changeLayoutSectionHeader(originalLayout.sections.length, FullHeader, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

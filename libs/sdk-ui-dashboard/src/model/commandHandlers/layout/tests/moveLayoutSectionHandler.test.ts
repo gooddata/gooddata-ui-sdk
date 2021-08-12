@@ -13,11 +13,16 @@ import {
 describe("move section command handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
+        );
 
         it("should fail if bad section index specified", async () => {
+            const originalLayout = selectLayout(Tester.state());
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                moveLayoutSection(1, -1, TestCorrelation),
+                moveLayoutSection(originalLayout.sections.length, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -27,7 +32,7 @@ describe("move section command handler", () => {
 
         it("should fail if no move would happen", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                moveLayoutSection(1, -1, TestCorrelation),
+                moveLayoutSection(2, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -41,7 +46,11 @@ describe("move section command handler", () => {
             ComplexDashboardWithReferences.dashboard.layout!.sections;
 
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
+        );
 
         it("should move first section to the end of the section list", async () => {
             const event: DashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(

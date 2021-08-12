@@ -6,7 +6,11 @@ import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDash
 
 describe("moveAttributeFilterHandler", () => {
     let Tester: DashboardTester;
-    beforeEach(preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier));
+    beforeEach(
+        preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, SimpleDashboardIdentifier),
+    );
 
     it("should emit the appropriate events for moved attribute filter", async () => {
         const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter

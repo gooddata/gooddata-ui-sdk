@@ -12,8 +12,8 @@ import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
 import { DashboardInsightWidgetDrillsRemoved } from "../../../events/insight";
 import { DashboardCommandFailed } from "../../../events";
 import {
-    drillToDashboardFromProductAttributeDefinition,
-    drillToToInsightFromWonMeasureDefinition,
+    DrillToDashboardFromProductAttributeDefinition,
+    DrillToToInsightFromWonMeasureDefinition,
     KpiWidgetRef,
     SimpleDashboardIdentifier,
     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
@@ -23,24 +23,24 @@ import {
 
 describe("removeDrillsForInsightWidgetHandler", () => {
     const fromMeasureLocalIdRef = localIdRef(SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier);
-    const drills = [drillToToInsightFromWonMeasureDefinition, drillToDashboardFromProductAttributeDefinition];
+    const drills = [DrillToToInsightFromWonMeasureDefinition, DrillToDashboardFromProductAttributeDefinition];
 
     let Tester: DashboardTester;
     beforeEach(
         preloadedTesterFactory(async (tester) => {
             Tester = tester;
-            Tester.dispatch(
+            await Tester.dispatchAndWaitFor(
                 addDrillTargets(
                     SimpleSortedTableWidgetRef,
                     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
                     BeforeTestCorrelation,
                 ),
+                "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
             );
             await Tester.dispatchAndWaitFor(
                 modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, BeforeTestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
             );
-            Tester.resetMonitors();
         }, SimpleDashboardIdentifier),
     );
 
@@ -68,13 +68,13 @@ describe("removeDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED",
             );
 
-            expect(event.payload.removed).toEqual([drillToToInsightFromWonMeasureDefinition]);
+            expect(event.payload.removed).toEqual([DrillToToInsightFromWonMeasureDefinition]);
             expect(event.payload.ref).toEqual(SimpleSortedTableWidgetRef);
 
             const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(1);
-            expect(widgetState?.drills).toContainEqual(drillToDashboardFromProductAttributeDefinition);
+            expect(widgetState?.drills).toContainEqual(DrillToDashboardFromProductAttributeDefinition);
         });
 
         it("should remove all drills for widget and emit event", async () => {
@@ -84,8 +84,8 @@ describe("removeDrillsForInsightWidgetHandler", () => {
             );
 
             expect(event.payload.removed.length).toBe(2);
-            expect(event.payload.removed).toContainEqual(drillToToInsightFromWonMeasureDefinition);
-            expect(event.payload.removed).toContainEqual(drillToDashboardFromProductAttributeDefinition);
+            expect(event.payload.removed).toContainEqual(DrillToToInsightFromWonMeasureDefinition);
+            expect(event.payload.removed).toContainEqual(DrillToDashboardFromProductAttributeDefinition);
             expect(event.payload.ref).toEqual(SimpleSortedTableWidgetRef);
 
             const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());

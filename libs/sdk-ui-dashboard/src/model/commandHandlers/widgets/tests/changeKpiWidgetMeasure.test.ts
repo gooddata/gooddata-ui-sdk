@@ -20,7 +20,11 @@ describe("change KPI widget measure handler", () => {
         const WidgetWithNoFilters = ComplexDashboardWidgets.FirstSection.ThirdKpi;
 
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
+        );
 
         it("should replace measure and keep existing header", async () => {
             const event: DashboardKpiWidgetMeasureChanged = await Tester.dispatchAndWaitFor(

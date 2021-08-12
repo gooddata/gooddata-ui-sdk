@@ -15,7 +15,11 @@ import { IKpiWidget } from "@gooddata/sdk-backend-spi";
 describe("change KPI widget comparison handler", () => {
     describe("for dashboard with KPIs and insights", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
+        );
 
         const TestComparisonWithDirection: KpiWidgetComparison = {
             comparisonType: "previousPeriod",

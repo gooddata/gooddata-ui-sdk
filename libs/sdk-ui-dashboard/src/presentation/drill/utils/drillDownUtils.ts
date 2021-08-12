@@ -3,8 +3,9 @@
 import { isDrillToLegacyDashboard } from "@gooddata/sdk-backend-spi";
 import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
+import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils";
 import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
-import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/InsightDrillDefinitionUtils";
+
 import { isDrillToUrl } from "../types";
 
 /**

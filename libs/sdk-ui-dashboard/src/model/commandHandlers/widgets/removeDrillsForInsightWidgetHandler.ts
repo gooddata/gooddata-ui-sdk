@@ -8,8 +8,8 @@ import { DashboardInsightWidgetDrillsRemoved, insightWidgetDrillsRemoved } from 
 import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
 import { validateExistingInsightWidget } from "./validation/widgetValidations";
 import { validateRemoveDrillsByOrigins } from "./validation/removeDrillsSelectorValidation";
-import { existsDrillDefinitionInArray } from "../../../_staging/drills/InsightDrillDefinitionUtils";
 import { layoutActions } from "../../state/layout";
+import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils";
 
 export function* removeDrillsForInsightWidgetHandler(
     ctx: DashboardContext,

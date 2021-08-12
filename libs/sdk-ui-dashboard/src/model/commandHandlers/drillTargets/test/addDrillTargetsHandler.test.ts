@@ -18,7 +18,9 @@ describe("addDrillTargetsHandler", () => {
 
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory((tester: DashboardTester) => (Tester = tester), SimpleDashboardIdentifier),
+        preloadedTesterFactory((tester: DashboardTester) => {
+            Tester = tester;
+        }, SimpleDashboardIdentifier),
     );
 
     it("should add drill target to the state for given widget", async () => {

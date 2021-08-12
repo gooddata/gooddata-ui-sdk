@@ -15,7 +15,11 @@ import {
 describe("change insight widget vis properties handler", () => {
     describe("for dashboard with KPIs and insights", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
+        );
 
         const TestProperties = { controls: { legend: false } };
 

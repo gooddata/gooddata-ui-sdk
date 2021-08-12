@@ -20,11 +20,17 @@ describe("add section items handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => (Tester = tester), SimpleDashboardIdentifier, {
-                backendConfig: {
-                    useRefType: "id",
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
                 },
-            }),
+                SimpleDashboardIdentifier,
+                {
+                    backendConfig: {
+                        useRefType: "id",
+                    },
+                },
+            ),
         );
 
         it("should load and add insight when adding insight widget", async () => {
@@ -50,8 +56,10 @@ describe("add section items handler", () => {
         });
 
         it("should fail if bad section is provided", async () => {
+            const originalLayout = selectLayout(Tester.state());
+
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                addSectionItem(2, 0, TestKpiPlaceholderItem, TestCorrelation),
+                addSectionItem(originalLayout.sections.length, 0, TestKpiPlaceholderItem, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -92,7 +100,11 @@ describe("add section items handler", () => {
 
     describe("for dashboard with existing sections", () => {
         let Tester: DashboardTester;
-        beforeEach(preloadedTesterFactory((tester) => (Tester = tester), ComplexDashboardIdentifier));
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
+        );
 
         // this section has two existing items
         const TestSectionIdx = 1;
