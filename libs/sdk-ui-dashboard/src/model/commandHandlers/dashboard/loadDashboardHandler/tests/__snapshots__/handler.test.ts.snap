@@ -200,7 +200,7 @@ Object {
 exports[`load dashboard handler should emit events in correct order and carry-over correlationId 1`] = `
 Array [
   Object {
-    "correlationId": undefined,
+    "correlationId": "renderCorrelation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {

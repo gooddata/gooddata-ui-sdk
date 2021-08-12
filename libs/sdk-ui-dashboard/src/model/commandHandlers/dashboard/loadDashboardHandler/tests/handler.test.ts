@@ -21,7 +21,14 @@ describe("load dashboard handler", () => {
     });
 
     it("should emit events in correct order and carry-over correlationId", async () => {
-        const tester = DashboardTester.forRecording(EmptyDashboardIdentifier);
+        const tester = DashboardTester.forRecording(EmptyDashboardIdentifier, {
+            renderingWorkerConfig: {
+                asyncRenderRequestedTimeout: 2000,
+                asyncRenderResolvedTimeout: 2000,
+                maxTimeout: 60000,
+                correlationIdGenerator: () => "renderCorrelation",
+            },
+        });
 
         tester.dispatch(loadDashboard());
         await tester.waitFor("GDC.DASH/EVT.LOADED");

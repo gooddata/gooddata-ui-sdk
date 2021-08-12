@@ -3,7 +3,7 @@
 exports[`renderingWorker async rendering resolution should accept new async rendering request, when it's fired within time limit after resolution 1`] = `
 Array [
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
@@ -31,7 +31,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
   },
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.RESOLVED",
   },
 ]
@@ -40,7 +40,7 @@ Array [
 exports[`renderingWorker async rendering resolution should accept new async rendering requests, when running requests are not yet resolved 1`] = `
 Array [
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
@@ -76,7 +76,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
   },
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.RESOLVED",
   },
 ]
@@ -85,7 +85,7 @@ Array [
 exports[`renderingWorker async rendering resolution should emit render resolved after async rendering resolution 1`] = `
 Array [
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
@@ -105,7 +105,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
   },
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.RESOLVED",
   },
 ]
@@ -114,7 +114,7 @@ Array [
 exports[`renderingWorker async rendering resolution should emit render resolved after async rendering resolution, even if the component requested async rendering multiple times before the resolution 1`] = `
 Array [
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
@@ -138,7 +138,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
   },
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.RESOLVED",
   },
 ]
@@ -147,7 +147,7 @@ Array [
 exports[`renderingWorker async rendering resolution should emit render resolved, when async renderings are resolved during the asyncRenderRequestedTimeout 1`] = `
 Array [
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
@@ -167,7 +167,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
   },
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.RESOLVED",
   },
 ]
@@ -176,7 +176,7 @@ Array [
 exports[`renderingWorker async rendering resolution should emit render resolved, when no async rendering is requested during the asyncRenderRequestedTimeout 1`] = `
 Array [
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
@@ -188,7 +188,7 @@ Array [
     "type": "GDC.DASH/EVT.LOADED",
   },
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.RESOLVED",
   },
 ]
@@ -199,7 +199,7 @@ exports[`renderingWorker async rendering resolution should not emit render resol
 exports[`renderingWorker async rendering resolution should not emit render resolved, when async rendering is not resolved 2`] = `
 Array [
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
@@ -220,7 +220,7 @@ Array [
 exports[`renderingWorker maximum timeout should emit render resolved, when async rendering is still running, but the maximum timeout reached 1`] = `
 Array [
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
@@ -236,7 +236,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
   },
   Object {
-    "correlationId": undefined,
+    "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.RESOLVED",
   },
 ]
