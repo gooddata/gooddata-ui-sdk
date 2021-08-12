@@ -151,14 +151,26 @@ export type ReduxedDashboardStore = {
 };
 
 /**
- * This middleware ensures that actions which represent the dashboard commands are properly 'stamped' with
- * essential metadata. For now this is just the unique identifier of the command. However going forward we may
- * want to add timing info or other fancy stuff.
+ * This middleware ensures that actions occurring in the dashboard have their meta enriched with appropriate
+ * information:
+ *  - all actions have an acceptedTimestamp - this represents the moment the action was recognized by the redux machinery
+ *  - command actions also have a uuid - this is mainly used to implement the undo/redo logic
+ *
+ * Moving forward, there might be even more types of information added here.
+ *
+ * Note that for the time-related properties to make sense, this middleware should be registered as the first of all the middlewares if possible.
  */
-const commandStampingMiddleware: Middleware = () => (next) => (action) => {
+const actionMetaFillingMiddleware: Middleware = () => (next) => (action) => {
+    const nowTimestamp = +new Date();
+    action.meta = {
+        ...action.meta,
+        acceptedTimestamp: nowTimestamp,
+    };
+
     if (action.type.startsWith("GDC.DASH/CMD.")) {
         // see: https://www.reddit.com/r/reactjs/comments/7cfgzr/redux_modifying_action_payload_in_middleware/dppknrh?utm_source=share&utm_medium=web2x&context=3
         action.meta = {
+            ...action.meta,
             uuid: uuidv4(),
         };
     }
@@ -195,7 +207,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
     });
 
     const middleware = [
-        commandStampingMiddleware,
+        actionMetaFillingMiddleware,
         ...getDefaultMiddleware({
             thunk: false,
             /*

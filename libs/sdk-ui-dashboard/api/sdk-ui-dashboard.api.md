@@ -1744,6 +1744,9 @@ export interface IButtonBarProps {
 // @alpha
 export interface ICustomDashboardEvent<TPayload = any> {
     readonly ctx: DashboardContext;
+    readonly meta?: {
+        acceptedTimestamp: number;
+    };
     readonly payload?: TPayload;
     readonly type: string;
 }
@@ -1786,6 +1789,9 @@ export interface IDashboardDrillEvent extends IDrillEvent {
 export interface IDashboardEvent<TPayload = any> {
     readonly correlationId?: string;
     readonly ctx: DashboardContext;
+    readonly meta?: {
+        acceptedTimestamp: number;
+    };
     readonly payload?: TPayload;
     readonly type: DashboardEventType;
 }

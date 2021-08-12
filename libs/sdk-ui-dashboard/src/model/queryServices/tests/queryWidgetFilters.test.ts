@@ -18,7 +18,9 @@ describe("query widget filters", () => {
         it("should fail in case the widget does not exist", async () => {
             await expect(
                 Tester.query(queryWidgetFilters(idRef("non existent widget"))),
-            ).rejects.toMatchSnapshot();
+            ).rejects.toMatchSnapshot({
+                meta: expect.any(Object),
+            } as any);
         });
 
         it.each<[string, IWidget]>([

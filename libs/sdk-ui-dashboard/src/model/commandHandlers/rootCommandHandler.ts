@@ -107,7 +107,7 @@ function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
 
 /**
  * Root command handler is the central point through which all command processing is done. The handler registers
- * for all actions starting with `GDC.CMD` === all dashboard commands.
+ * for all actions starting with `GDC.DASH/CMD` === all dashboard commands.
  *
  * The commands are intended for serial processing, without any forking. A buffering action channel is in place to
  * prevent loss of commands.

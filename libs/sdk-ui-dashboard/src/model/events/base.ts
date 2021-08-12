@@ -99,6 +99,16 @@ export interface IDashboardEvent<TPayload = any> {
      * Optionally specify any additional data the custom event needs.
      */
     readonly payload?: TPayload;
+
+    /**
+     * Metadata about the event useful for logging and handling of the event.
+     */
+    readonly meta?: {
+        /**
+         * When the event was accepted by the Dashboard store and emitted.
+         */
+        acceptedTimestamp: number;
+    };
 }
 
 /**
@@ -132,6 +142,16 @@ export interface ICustomDashboardEvent<TPayload = any> {
      * Optionally specify any additional data the custom event needs.
      */
     readonly payload?: TPayload;
+
+    /**
+     * Metadata about the event useful for logging and handling of the event.
+     */
+    readonly meta?: {
+        /**
+         * When the event was accepted by the Dashboard store and emitted.
+         */
+        acceptedTimestamp: number;
+    };
 }
 
 /**

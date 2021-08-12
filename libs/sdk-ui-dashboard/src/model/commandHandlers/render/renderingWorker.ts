@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { Task, SagaIterator } from "redux-saga";
 import { put, delay, take, join, race, call, all, spawn, cancel, actionChannel } from "redux-saga/effects";
+import { v4 as uuidv4 } from "uuid";
 import { DashboardContext } from "../../types/commonTypes";
 import { newDashboardEventPredicate, renderResolved, renderRequested } from "../../events";
 
@@ -46,6 +47,13 @@ export interface RenderingWorkerConfiguration {
      * Default: 2000 (2s).
      */
     asyncRenderResolvedTimeout: number;
+
+    /**
+     * Generator of correlation ids
+     *
+     * Default: uuid4
+     */
+    correlationIdGenerator: () => string;
 }
 
 export function newRenderingWorker(
@@ -53,12 +61,16 @@ export function newRenderingWorker(
         asyncRenderRequestedTimeout: 2000,
         asyncRenderResolvedTimeout: 2000,
         maxTimeout: 60000,
+        correlationIdGenerator: uuidv4,
     },
 ) {
     return function* renderingWorker(ctx: DashboardContext): SagaIterator<void> {
         try {
+            // Provide a correlation id so that event handlers can correlate the start and end of the rendering
+            const correlationId = config.correlationIdGenerator();
+
             // First, notify that the rendering of the whole dashboard started.
-            yield put(renderRequested(ctx));
+            yield put(renderRequested(ctx, correlationId));
 
             // Wait for the dashboard initialization.
             yield take("GDC.DASH/EVT.LOADED");
@@ -70,7 +82,7 @@ export function newRenderingWorker(
             yield call(waitForAsyncRenderTasksResolution, asyncRenderTasks, config);
 
             // Notify that the dashboard is fully rendered.
-            yield put(renderResolved(ctx));
+            yield put(renderResolved(ctx, correlationId));
         } catch (err) {
             // eslint-disable-next-line no-console
             console.error("Rendering worker failed", err);

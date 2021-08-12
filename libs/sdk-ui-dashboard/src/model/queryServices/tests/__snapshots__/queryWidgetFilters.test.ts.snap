@@ -248,6 +248,7 @@ Object {
     },
     "workspace": "reference-workspace",
   },
+  "meta": Any<Object>,
   "payload": Object {
     "message": "Widget with ref non existent widget does not exist on the dashboard",
     "reason": "USER_ERROR",

@@ -19,6 +19,7 @@ describe("renderingWorker", () => {
                         asyncRenderRequestedTimeout,
                         asyncRenderResolvedTimeout,
                         maxTimeout,
+                        correlationIdGenerator: () => "correlation",
                     },
                 })),
         );
@@ -45,6 +46,7 @@ describe("renderingWorker", () => {
                         asyncRenderRequestedTimeout,
                         asyncRenderResolvedTimeout,
                         maxTimeout,
+                        correlationIdGenerator: () => "correlation",
                     },
                 })),
         );
