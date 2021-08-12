@@ -209,7 +209,7 @@ function manageItemUrl(workspaceRef: string, workspaceId: string): string {
     return `/#s=/gdc/${workspaceRef}s/${workspaceId}|dataPage|`;
 }
 function measuresItemUrl(workspaceId: string): string {
-    return `measures/#/${workspaceId}`;
+    return `/measures/#/${workspaceId}`;
 }
 
 function kpisItemUrl(workspaceRef: string, workspaceId: string): string {
