@@ -2,7 +2,6 @@
 import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
-    IFilter,
     insightFilters,
     insightSetFilters,
     insightVisualizationUrl,
@@ -117,7 +116,7 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
         [onError, dispatchEvent],
     );
 
-    const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight as IFilter[]); // TODO how to type this better?
+    const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight);
 
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
         insight: insightWithAddedFilters ?? insight,
