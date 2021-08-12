@@ -1,76 +1,101 @@
 // (C) 2021 GoodData Corporation
 
-import { getTestClassByTitle } from "./utils";
+type CalendarType = "from" | "to";
+type ButtonType = "apply" | "cancel";
 
 export class DateFilter {
-    constructor(private name: string) {}
+    constructor() {}
 
-    getElement(): Cypress.Chainable {
-        const testClass = getTestClassByTitle(this.name);
-        return cy.get(testClass);
+    open(): Cypress.Chainable {
+        return cy.get(".s-date-filter-button").click();
     }
 
-    getSubtitleElement(): Cypress.Chainable {
-        return cy.get(".s-button-text");
+    selectAbsoluteForm(): Cypress.Chainable {
+        return cy.get(".s-absolute-form").click();
     }
 
-    getDateFilterButtonElement(): Cypress.Chainable {
-        return cy.get(".s-date-filter-button");
+    selectRelativeForm(): Cypress.Chainable {
+        return cy.get(".s-relative-form").click();
     }
 
-    getThisMonthOptionElement(): Cypress.Chainable {
-        return cy.get(".s-relative-preset-this-month");
+    openAndSelectAbsoluteForm(): Cypress.Chainable {
+        this.open();
+        return this.selectAbsoluteForm();
     }
 
-    getCancelButtonElement(): Cypress.Chainable {
-        return cy.get(".s-date-filter-cancel");
+    openAndSelectRelativeForm(): Cypress.Chainable {
+        this.open();
+        return this.selectRelativeForm();
     }
 
-    getApplyButtonElement(): Cypress.Chainable {
-        return cy.get(".s-date-filter-apply");
+    subtitleHasValue(value: string): Cypress.Chainable {
+        return cy.get(".s-button-text").should("have.text", value);
     }
 
-    getAbsoluteFormOptionElement(): Cypress.Chainable {
-        return cy.get(".s-absolute-form");
+    calendarShouldExist(type: CalendarType, shouldExist: boolean): Cypress.Chainable {
+        const elementClass = `.s-date-range-calendar-${type}`;
+        const chainer = shouldExist ? "exist" : "not.exist";
+
+        return cy.get(elementClass).should(chainer);
     }
 
-    getRelativeFormElement(): Cypress.Chainable {
-        return cy.get(".s-relative-form");
+    openAbsoluteRangePicker(type: CalendarType): Cypress.Chainable {
+        return cy.get(`.s-date-range-picker-${type}`).click();
     }
 
-    getDateFilterRangePickerFromElement(): Cypress.Chainable {
-        return cy.get(".s-date-range-picker-from");
+    openRelativeRangePicker(type: CalendarType): Cypress.Chainable {
+        return cy.get(`.s-relative-range-picker-${type}`).click();
     }
 
-    getDateFilterRangePickerToElement(): Cypress.Chainable {
-        return cy.get(".s-date-range-picker-to");
+    typeRangePickerValue(type: CalendarType, value: string) {
+        cy.get(`.s-date-range-picker-${type}`).find("input").clear().type(value);
     }
 
-    getAbsoluteCalendarFrom(): Cypress.Chainable {
-        return cy.get(".s-date-range-calendar-from");
+    selectDateInNextMonth(): Cypress.Chainable {
+        return cy.get(".DayPicker-Week:last-child .DayPicker-Day--outside").eq(4).click();
     }
 
-    getAbsoluteCalendarTo(): Cypress.Chainable {
-        return cy.get(".s-date-range-calendar-to");
+    shouldMonthGranularityBeSelected(): Cypress.Chainable {
+        return cy.get(".s-granularity-month").should("have.class", "is-active");
     }
 
-    getFirstDayAfterThisMonthElement(): Cypress.Chainable {
-        return cy.get(".DayPicker-Week:last-child .DayPicker-Day--outside").eq(4);
+    shouldRelativeFormHaveValueSelected(option: string): Cypress.Chainable {
+        return cy
+            .get(".s-relative-date-filter-option")
+            .contains(option)
+            .should("have.class", "s-select-item-focused");
     }
 
-    getMonthGranularityTabElement(): Cypress.Chainable {
-        return cy.get(".s-granularity-month");
+    pressKeyOnRelativeFormElement(key: string): Cypress.Chainable {
+        return cy.get(".s-relative-range-picker-from").type(`{${key}}`);
     }
 
-    getRelativeFormFromElement(): Cypress.Chainable {
-        return cy.get(".s-relative-range-picker-from");
+    shouldRelativeFormHaveValue(value: string): Cypress.Chainable {
+        return cy.get(".s-relative-range-picker-from").find("input").should("have.value", value);
+    }
+
+    openAndSelectRelativeRange(selection: string): Cypress.Chainable {
+        this.openRelativeRangePicker("from");
+        return cy.get(".s-relative-date-filter-option").contains(selection).click();
+    }
+
+    shouldRelativeFormRangeBeFocused(type: CalendarType): Cypress.Chainable {
+        return cy.get(`.s-relative-range-picker-${type}`).find("input").should("be.focused");
+    }
+
+    pressButton(type: ButtonType): Cypress.Chainable {
+        return cy.get(`.s-date-filter-${type}`).click();
+    }
+
+    openRelativeFormRangeAndType(type: CalendarType, value: string): Cypress.Chainable {
+        return cy.get(`.s-relative-range-picker-${type}`).find("input").type(value);
+    }
+
+    selectThisMonthOption(): Cypress.Chainable {
+        return cy.get(".s-relative-preset-this-month").click();
     }
 
     getRelativeFormToElement(): Cypress.Chainable {
         return cy.get(".s-relative-range-picker-to");
-    }
-
-    getRelativeFormOptionElement(option: string): Cypress.Chainable {
-        return cy.get(".s-relative-date-filter-option").contains(option);
     }
 }
