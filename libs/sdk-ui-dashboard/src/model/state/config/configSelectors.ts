@@ -9,13 +9,13 @@ const selectSelf = createSelector(
 );
 
 /**
- * Returns dashboard's filter context. It is expected that the selector is called only after the filter
- * context state is correctly initialized. Invocations before initialization lead to invariant errors.
+ * Returns dashboard's config. It is expected that the selector is called only after the config state
+ * is correctly initialized. Invocations before initialization lead to invariant errors.
  *
  * @alpha
  */
 export const selectConfig = createSelector(selectSelf, (configState) => {
-    invariant(configState.config, "attempting to access uninitialized filter context state");
+    invariant(configState.config, "attempting to access uninitialized config state");
 
     return configState.config!;
 });

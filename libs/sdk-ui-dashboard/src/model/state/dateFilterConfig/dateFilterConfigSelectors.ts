@@ -40,7 +40,7 @@ export const selectDateFilterConfigOverrides = createSelector(selectSelf, (dateF
 export const selectEffectiveDateFilterConfig = createSelector(selectSelf, (dateFilterConfigState) => {
     invariant(
         dateFilterConfigState.effectiveDateFilterConfig,
-        "attempting to access uninitialized filter context state",
+        "attempting to access uninitialized date filter config state",
     );
 
     return dateFilterConfigState.effectiveDateFilterConfig!;
@@ -80,7 +80,7 @@ export const selectEffectiveDateFilterAvailableGranularities = createSelector(
 const effectiveDateFilterConfigIsUsingOverrides = createSelector(selectSelf, (dateFilterConfigState) => {
     invariant(
         dateFilterConfigState.isUsingDashboardOverrides !== undefined,
-        "attempting to access uninitialized filter context state",
+        "attempting to access uninitialized date filter config state",
     );
 
     return dateFilterConfigState.isUsingDashboardOverrides!;
