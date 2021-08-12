@@ -1999,7 +1999,88 @@ export interface IScheduledEmailDialogProps {
 export function isCustomDashboardEvent(obj: unknown): obj is ICustomDashboardEvent;
 
 // @alpha
-export function isDashboardCommandFailed(obj: unknown): obj is DashboardCommandFailed;
+export const isDashboardAlertCreated: (obj: unknown) => obj is DashboardAlertCreated;
+
+// @alpha
+export const isDashboardAlertRemoved: (obj: unknown) => obj is DashboardAlertRemoved;
+
+// @alpha
+export const isDashboardAlertUpdated: (obj: unknown) => obj is DashboardAlertUpdated;
+
+// @alpha
+export const isDashboardAsyncRenderRequested: (obj: unknown) => obj is DashboardAsyncRenderRequested;
+
+// @alpha
+export const isDashboardAsyncRenderResolved: (obj: unknown) => obj is DashboardAsyncRenderResolved;
+
+// @alpha
+export const isDashboardAttributeFilterAdded: (obj: unknown) => obj is DashboardAttributeFilterAdded;
+
+// @alpha
+export const isDashboardAttributeFilterMoved: (obj: unknown) => obj is DashboardAttributeFilterMoved;
+
+// @alpha
+export const isDashboardAttributeFilterParentChanged: (obj: unknown) => obj is DashboardAttributeFilterParentChanged;
+
+// @alpha
+export const isDashboardAttributeFilterRemoved: (obj: unknown) => obj is DashboardAttributeFilterRemoved;
+
+// @alpha
+export const isDashboardAttributeFilterSelectionChanged: (obj: unknown) => obj is DashboardAttributeFilterSelectionChanged;
+
+// @alpha
+export const isDashboardCommandFailed: (obj: unknown) => obj is DashboardCommandFailed;
+
+// @alpha
+export const isDashboardCommandRejected: (obj: unknown) => obj is DashboardCommandRejected;
+
+// @alpha
+export const isDashboardCopySaved: (obj: unknown) => obj is DashboardCopySaved;
+
+// @alpha
+export const isDashboardDateFilterSelectionChanged: (obj: unknown) => obj is DashboardDateFilterSelectionChanged;
+
+// @alpha
+export const isDashboardDrillDownRequested: (obj: unknown) => obj is DashboardDrillDownRequested;
+
+// @alpha
+export const isDashboardDrillDownResolved: (obj: unknown) => obj is DashboardDrillDownResolved;
+
+// @alpha
+export const isDashboardDrillRequested: (obj: unknown) => obj is DashboardDrillRequested;
+
+// @alpha
+export const isDashboardDrillResolved: (obj: unknown) => obj is DashboardDrillResolved;
+
+// @alpha
+export const isDashboardDrillToAttributeUrlRequested: (obj: unknown) => obj is DashboardDrillToAttributeUrlRequested;
+
+// @alpha
+export const isDashboardDrillToAttributeUrlResolved: (obj: unknown) => obj is DashboardDrillToAttributeUrlResolved;
+
+// @alpha
+export const isDashboardDrillToCustomUrlRequested: (obj: unknown) => obj is DashboardDrillToCustomUrlRequested;
+
+// @alpha
+export const isDashboardDrillToCustomUrlResolved: (obj: unknown) => obj is DashboardDrillToCustomUrlResolved;
+
+// @alpha
+export const isDashboardDrillToDashboardRequested: (obj: unknown) => obj is DashboardDrillToDashboardRequested;
+
+// @alpha
+export const isDashboardDrillToDashboardResolved: (obj: unknown) => obj is DashboardDrillToDashboardResolved;
+
+// @alpha
+export const isDashboardDrillToInsightRequested: (obj: unknown) => obj is DashboardDrillToInsightRequested;
+
+// @alpha
+export const isDashboardDrillToInsightResolved: (obj: unknown) => obj is DashboardDrillToInsightResolved;
+
+// @alpha
+export const isDashboardDrillToLegacyDashboardRequested: (obj: unknown) => obj is DashboardDrillToLegacyDashboardRequested;
+
+// @alpha
+export const isDashboardDrillToLegacyDashboardResolved: (obj: unknown) => obj is DashboardDrillToLegacyDashboardResolved;
 
 // @alpha
 export function isDashboardEvent(obj: unknown): obj is IDashboardEvent;
@@ -2008,10 +2089,121 @@ export function isDashboardEvent(obj: unknown): obj is IDashboardEvent;
 export function isDashboardEventOrCustomDashboardEvent(obj: unknown): obj is IDashboardEvent | ICustomDashboardEvent;
 
 // @alpha
-export function isDashboardQueryFailed(obj: unknown): obj is DashboardQueryFailed;
+export const isDashboardFilterContextChanged: (obj: unknown) => obj is DashboardFilterContextChanged;
+
+// @alpha
+export const isDashboardInsightWidgetChanged: (obj: unknown) => obj is DashboardInsightWidgetChanged;
+
+// @alpha
+export const isDashboardInsightWidgetDrillsModified: (obj: unknown) => obj is DashboardInsightWidgetDrillsModified;
+
+// @alpha
+export const isDashboardInsightWidgetDrillsRemoved: (obj: unknown) => obj is DashboardInsightWidgetDrillsRemoved;
+
+// @alpha
+export const isDashboardInsightWidgetExecutionFailed: (obj: unknown) => obj is DashboardInsightWidgetExecutionFailed;
+
+// @alpha
+export const isDashboardInsightWidgetFilterSettingsChanged: (obj: unknown) => obj is DashboardInsightWidgetFilterSettingsChanged;
+
+// @alpha
+export const isDashboardInsightWidgetHeaderChanged: (obj: unknown) => obj is DashboardInsightWidgetHeaderChanged;
+
+// @alpha
+export const isDashboardInsightWidgetInsightSwitched: (obj: unknown) => obj is DashboardInsightWidgetInsightSwitched;
+
+// @alpha
+export const isDashboardInsightWidgetVisPropertiesChanged: (obj: unknown) => obj is DashboardInsightWidgetVisPropertiesChanged;
+
+// @alpha
+export const isDashboardKpiWidgetChanged: (obj: unknown) => obj is DashboardKpiWidgetChanged;
+
+// @alpha
+export const isDashboardKpiWidgetComparisonChanged: (obj: unknown) => obj is DashboardKpiWidgetComparisonChanged;
+
+// @alpha
+export const isDashboardKpiWidgetExecutionFailed: (obj: unknown) => obj is DashboardKpiWidgetExecutionFailed;
+
+// @alpha
+export const isDashboardKpiWidgetFilterSettingsChanged: (obj: unknown) => obj is DashboardKpiWidgetFilterSettingsChanged;
+
+// @alpha
+export const isDashboardKpiWidgetHeaderChanged: (obj: unknown) => obj is DashboardKpiWidgetHeaderChanged;
+
+// @alpha
+export const isDashboardKpiWidgetMeasureChanged: (obj: unknown) => obj is DashboardKpiWidgetMeasureChanged;
+
+// @alpha
+export const isDashboardLayoutChanged: (obj: unknown) => obj is DashboardLayoutChanged;
+
+// @alpha
+export const isDashboardLayoutSectionAdded: (obj: unknown) => obj is DashboardLayoutSectionAdded;
+
+// @alpha
+export const isDashboardLayoutSectionHeaderChanged: (obj: unknown) => obj is DashboardLayoutSectionHeaderChanged;
+
+// @alpha
+export const isDashboardLayoutSectionItemMoved: (obj: unknown) => obj is DashboardLayoutSectionItemMoved;
+
+// @alpha
+export const isDashboardLayoutSectionItemRemoved: (obj: unknown) => obj is DashboardLayoutSectionItemRemoved;
+
+// @alpha
+export const isDashboardLayoutSectionItemReplaced: (obj: unknown) => obj is DashboardLayoutSectionItemReplaced;
+
+// @alpha
+export const isDashboardLayoutSectionItemsAdded: (obj: unknown) => obj is DashboardLayoutSectionItemsAdded;
+
+// @alpha
+export const isDashboardLayoutSectionMoved: (obj: unknown) => obj is DashboardLayoutSectionMoved;
+
+// @alpha
+export const isDashboardLayoutSectionRemoved: (obj: unknown) => obj is DashboardLayoutSectionRemoved;
+
+// @alpha
+export const isDashboardLoaded: (obj: unknown) => obj is DashboardLoaded;
+
+// @alpha
+export const isDashboardQueryCompleted: (obj: unknown) => obj is DashboardQueryCompleted<any, any>;
+
+// @alpha
+export const isDashboardQueryFailed: (obj: unknown) => obj is DashboardQueryFailed;
+
+// @alpha
+export const isDashboardQueryRejected: (obj: unknown) => obj is DashboardQueryRejected;
+
+// @alpha
+export const isDashboardQueryStarted: (obj: unknown) => obj is DashboardQueryStarted;
+
+// @alpha
+export const isDashboardRenamed: (obj: unknown) => obj is DashboardRenamed;
+
+// @alpha
+export const isDashboardRenderRequested: (obj: unknown) => obj is DashboardRenderRequested;
+
+// @alpha
+export const isDashboardRenderResolved: (obj: unknown) => obj is DashboardRenderResolved;
+
+// @alpha
+export const isDashboardSaved: (obj: unknown) => obj is DashboardSaved;
+
+// @alpha
+export const isDashboardScheduledEmailCreated: (obj: unknown) => obj is DashboardScheduledEmailCreated;
+
+// @alpha
+export const isDashboardUserInteractionTriggered: (obj: unknown) => obj is DashboardUserInteractionTriggered;
+
+// @alpha
+export const isDashboardWasReset: (obj: unknown) => obj is DashboardWasReset;
+
+// @alpha
+export const isDateFilterValidationFailed: (obj: unknown) => obj is DateFilterValidationFailed;
 
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
+
+// @alpha
+export const isDrillTargetsAdded: (obj: unknown) => obj is DrillTargetsAdded;
 
 // @alpha (undocumented)
 export interface ITitleProps {
@@ -2934,6 +3126,8 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
         type: TSuccessEventType;
     }> | Extract<DashboardQueryStarted, {
         type: TSuccessEventType;
+    }> | Extract<DashboardQueryCompleted<any, any>, {
+        type: TSuccessEventType;
     }> | Extract<DashboardDateFilterSelectionChanged, {
         type: TSuccessEventType;
     }> | Extract<DashboardAttributeFilterAdded, {
@@ -3039,8 +3233,6 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     }> | Extract<DashboardDrillToLegacyDashboardRequested, {
         type: TSuccessEventType;
     }> | Extract<DashboardDrillToLegacyDashboardResolved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardQueryCompleted<any, any>, {
         type: TSuccessEventType;
     }>) => void) | undefined;
     onError?: ((event: Extract<DashboardLoaded, {
@@ -3065,6 +3257,8 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
         type: TErrorEventType;
     }> | Extract<DashboardQueryStarted, {
         type: TErrorEventType;
+    }> | Extract<DashboardQueryCompleted<any, any>, {
+        type: TErrorEventType;
     }> | Extract<DashboardDateFilterSelectionChanged, {
         type: TErrorEventType;
     }> | Extract<DashboardAttributeFilterAdded, {
@@ -3170,8 +3364,6 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     }> | Extract<DashboardDrillToLegacyDashboardRequested, {
         type: TErrorEventType;
     }> | Extract<DashboardDrillToLegacyDashboardResolved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardQueryCompleted<any, any>, {
         type: TErrorEventType;
     }>) => void) | undefined;
     onBeforeRun?: ((command: TCommand) => void) | undefined;

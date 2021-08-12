@@ -1,7 +1,9 @@
 // (C) 2021 GoodData Corporation
 import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
+
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
+import { eventGuard } from "./util";
 
 /**
  * This event is emitted after the Kpi alert is successfully saved.
@@ -29,6 +31,14 @@ export function alertCreated(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAlertCreated}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAlertCreated = eventGuard<DashboardAlertCreated>("GDC.DASH/EVT.ALERT.CREATED");
 
 //
 //
@@ -61,6 +71,14 @@ export function alertRemoved(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAlertRemoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAlertRemoved = eventGuard<DashboardAlertRemoved>("GDC.DASH/EVT.ALERT.REMOVED");
+
 //
 //
 //
@@ -91,3 +109,11 @@ export function alertUpdated(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAlertUpdated}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAlertUpdated = eventGuard<DashboardAlertUpdated>("GDC.DASH/EVT.ALERT.UPDATED");

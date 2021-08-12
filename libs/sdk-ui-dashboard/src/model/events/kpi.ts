@@ -1,9 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { DashboardEventBody, IDashboardEvent } from "./base";
 import { ObjRef } from "@gooddata/sdk-model";
-import { WidgetHeader } from "../types/widgetTypes";
-import { DashboardContext } from "../types/commonTypes";
 import {
     ICatalogDateDataset,
     IDashboardAttributeFilter,
@@ -13,6 +10,11 @@ import {
     IMeasureMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
+import { DashboardEventBody, IDashboardEvent } from "./base";
+import { WidgetHeader } from "../types/widgetTypes";
+import { DashboardContext } from "../types/commonTypes";
+import { eventGuard } from "./util";
 
 /**
  * This event is emitted when the dashboard's KPI Widget header is modified.
@@ -50,6 +52,16 @@ export function kpiWidgetHeaderChanged(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetHeaderChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetHeaderChanged = eventGuard<DashboardKpiWidgetHeaderChanged>(
+    "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED",
+);
 
 //
 //
@@ -111,6 +123,16 @@ export function kpiWidgetMeasureChanged(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetMeasureChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetMeasureChanged = eventGuard<DashboardKpiWidgetMeasureChanged>(
+    "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
+);
+
 //
 //
 //
@@ -163,6 +185,16 @@ export function kpiWidgetFilterSettingsChanged(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetFilterSettingsChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetFilterSettingsChanged = eventGuard<DashboardKpiWidgetFilterSettingsChanged>(
+    "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED",
+);
+
 //
 //
 //
@@ -209,6 +241,16 @@ export function kpiWidgetComparisonChanged(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetComparisonChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetComparisonChanged = eventGuard<DashboardKpiWidgetComparisonChanged>(
+    "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED",
+);
+
 //
 //
 //
@@ -244,6 +286,16 @@ export function kpiWidgetChanged(
     };
 }
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetChanged = eventGuard<DashboardKpiWidgetChanged>(
+    "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED",
+);
+
 //
 //
 //
@@ -275,3 +327,13 @@ export function kpiWidgetExecutionFailed(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetExecutionFailed}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetExecutionFailed = eventGuard<DashboardKpiWidgetExecutionFailed>(
+    "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",
+);
