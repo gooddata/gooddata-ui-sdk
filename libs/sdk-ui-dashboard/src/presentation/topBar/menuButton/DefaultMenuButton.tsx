@@ -63,7 +63,7 @@ export const DefaultMenuButtonInner = (): JSX.Element | null => {
                         const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
                         const body = (
                             <SingleSelectListItem
-                                className={cx("gd-menu-item", {
+                                className={cx("gd-menu-item", `s-${menuItem.itemId}`, {
                                     [selectorClassName]: menuItem.tooltip,
                                     "is-disabled": menuItem.disabled,
                                 })}
