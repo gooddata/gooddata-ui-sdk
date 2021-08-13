@@ -4,8 +4,6 @@ type CalendarType = "from" | "to";
 type ButtonType = "apply" | "cancel";
 
 export class DateFilter {
-    constructor() {}
-
     open(): Cypress.Chainable {
         return cy.get(".s-date-filter-button").click();
     }
