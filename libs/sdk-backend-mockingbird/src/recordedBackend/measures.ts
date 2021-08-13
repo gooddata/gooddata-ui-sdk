@@ -28,8 +28,4 @@ export class RecordedMeasures implements IWorkspaceMeasuresService {
     updateMeasure(_: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
         throw new NotSupported("not supported");
     }
-
-    measureExists(_: IMeasureMetadataObject): Promise<boolean> {
-        throw new NotSupported("not supported");
-    }
 }

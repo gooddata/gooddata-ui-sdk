@@ -40,12 +40,4 @@ export interface IWorkspaceMeasuresService {
      * @returns promise of undefined
      */
     deleteMeasure(measureRef: ObjRef): Promise<void>;
-
-    /**
-     * Checks if measure with the given reference exists
-     *
-     * @param measureRef - ref of the measure to check
-     * @returns promise of undefined
-     */
-    measureExists(measureRef: ObjRef): Promise<boolean>;
 }

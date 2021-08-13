@@ -156,27 +156,4 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             });
         });
     }
-
-    async measureExists(ref: ObjRef): Promise<boolean> {
-        if (!isIdentifierRef(ref)) {
-            throw new Error("only identifiers supported");
-        }
-
-        try {
-            const metricMetadata = await this.authCall((client) =>
-                client.workspaceObjects.getEntityMetrics(
-                    {
-                        objectId: ref.identifier,
-                        workspaceId: this.workspace,
-                    },
-                    {
-                        headers: jsonApiHeaders,
-                    },
-                ),
-            );
-            return metricMetadata.data !== null;
-        } catch (e) {
-            return false;
-        }
-    }
 }
