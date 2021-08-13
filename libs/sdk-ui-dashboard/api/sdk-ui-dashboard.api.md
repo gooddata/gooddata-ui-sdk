@@ -1381,10 +1381,10 @@ export interface DateFilterValidationFailed extends IDashboardEvent {
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
 // @alpha (undocumented)
-export const DefaultButtonBar: (_props: IButtonBarProps) => JSX.Element;
+export const DefaultButtonBar: (props: IButtonBarProps) => JSX.Element;
 
 // @internal (undocumented)
-export const DefaultButtonBarInner: () => JSX.Element | null;
+export const DefaultButtonBarInner: (props: IButtonBarProps) => JSX.Element | null;
 
 // @alpha
 export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element;
@@ -1739,6 +1739,8 @@ export const HiddenTopBar: () => JSX.Element | null;
 
 // @alpha (undocumented)
 export interface IButtonBarProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
 }
 
 // @alpha
@@ -1947,14 +1949,39 @@ export interface IMenuButtonConfiguration {
 }
 
 // @alpha (undocumented)
-export interface IMenuButtonItem {
+export type IMenuButtonItem = IMenuButtonItemButton | IMenuButtonItemSeparator | IMenuButtonItemHeader;
+
+// @alpha (undocumented)
+export interface IMenuButtonItemButton {
+    // (undocumented)
+    disabled?: boolean;
     // (undocumented)
     itemId: string;
     // (undocumented)
     itemName: string;
     // (undocumented)
     onClick?: () => void;
-    type?: "separator" | "header";
+    tooltip?: string;
+    // (undocumented)
+    type: "button";
+}
+
+// @alpha (undocumented)
+export interface IMenuButtonItemHeader {
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    itemName: string;
+    // (undocumented)
+    type: "header";
+}
+
+// @alpha (undocumented)
+export interface IMenuButtonItemSeparator {
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    type: "separator";
 }
 
 // @alpha (undocumented)
@@ -2882,6 +2909,9 @@ export const selectIsEmbedded: OutputSelector<DashboardState, boolean, (res: Res
 
 // @internal
 export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @alpha
+export const selectIsLayoutEmpty: OutputSelector<DashboardState, boolean, (res: IWidget[]) => boolean>;
 
 // @alpha
 export const selectIsReadOnly: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;

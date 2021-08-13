@@ -7,17 +7,20 @@ import { ButtonBarPropsProvider } from "./ButtonBarPropsContext";
 /**
  * @internal
  */
-export const DefaultButtonBarInner = (): JSX.Element | null => {
+export const DefaultButtonBarInner = (props: IButtonBarProps): JSX.Element | null => {
+    if (React.Children.count(props.children) > 0) {
+        return <div className="dash-control-buttons">{props.children}</div>;
+    }
     return null;
 };
 
 /**
  * @alpha
  */
-export const DefaultButtonBar = (_props: IButtonBarProps): JSX.Element => {
+export const DefaultButtonBar = (props: IButtonBarProps): JSX.Element => {
     return (
         <ButtonBarPropsProvider>
-            <DefaultButtonBarInner />
+            <DefaultButtonBarInner {...props} />
         </ButtonBarPropsProvider>
     );
 };

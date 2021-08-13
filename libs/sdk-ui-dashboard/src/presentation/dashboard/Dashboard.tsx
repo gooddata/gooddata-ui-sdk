@@ -146,11 +146,13 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     const defaultMenuItems = useMemo<IMenuButtonItem[]>(
         () => [
             {
+                type: "button",
                 itemId: "export-to-pdf",
                 itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
                 onClick: defaultOnExportToPdf,
             },
             {
+                type: "button",
                 itemId: "schedule-emailing",
                 itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
                 onClick: defaultOnScheduleEmailing,

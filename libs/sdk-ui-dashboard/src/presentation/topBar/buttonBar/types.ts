@@ -1,11 +1,12 @@
 // (C) 2021 GoodData Corporation
-import { ComponentType } from "react";
+import React, { ComponentType } from "react";
 
 /**
  * @alpha
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IButtonBarProps {}
+export interface IButtonBarProps {
+    children?: React.ReactNode;
+}
 
 /**
  * @alpha

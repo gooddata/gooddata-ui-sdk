@@ -155,6 +155,15 @@ const selectAllWidgets = createSelector(selectWidgetsMap, (widgetMap) => {
 });
 
 /**
+ * Selects a boolean indicating if the dashboard is empty.
+ *
+ * @alpha
+ */
+export const selectIsLayoutEmpty = createSelector(selectAllWidgets, (allWidgets) => {
+    return allWidgets.length === 0;
+});
+
+/**
  * Selects all KPI widgets in the layout.
  *
  * @alpha
