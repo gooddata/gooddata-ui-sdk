@@ -230,6 +230,14 @@
     border-radius: 50%;
     background-color: $button-grey-background;
 
+    &:hover {
+        background-color: var(--gd-palette-complementary-7, $gd-color-text-dimmed);
+
+        svg path {
+            fill: $gd-color-white;
+        }
+    }
+
     @media #{$xsmall-only}, #{$small-only} {
         top: -73px;
     }
