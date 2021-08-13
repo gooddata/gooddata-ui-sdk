@@ -29,6 +29,7 @@ import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IUser } from '@gooddata/sdk-backend-spi';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceDescriptor } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ValidationContext } from '@gooddata/sdk-backend-spi';
 
@@ -137,6 +138,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     globalSettings?: ISettings;
     globalPalette?: IColorPalette;
     dateFilterConfig?: IDateFilterConfig;
+    workspaceDescriptor?: Partial<Pick<IWorkspaceDescriptor, "title" | "description" | "isDemo">>;
     theme?: ITheme;
     useRefType?: RecordedRefType;
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
@@ -193,6 +195,5 @@ export type SecuritySettingsUrlValidator = (url: string, context: ValidationCont
 export type VisClassesRecording = {
     items: IVisualizationClass[];
 };
-
 
 ```

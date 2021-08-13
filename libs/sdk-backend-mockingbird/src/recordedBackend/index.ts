@@ -133,8 +133,8 @@ function recordedWorkspace(
 ): IAnalyticalWorkspace {
     return {
         workspace,
-        getDescriptor(): Promise<IWorkspaceDescriptor> {
-            throw new NotSupported("not supported");
+        async getDescriptor(): Promise<IWorkspaceDescriptor> {
+            return recordedDescriptor(this.workspace, implConfig);
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
@@ -289,6 +289,17 @@ function recordedPermissionsFactory(): IWorkspacePermissionsService {
             canInviteUserToProject: true,
             canRefreshData: true,
         }),
+    };
+}
+
+function recordedDescriptor(workspaceId: string, implConfig: RecordedBackendConfig): IWorkspaceDescriptor {
+    const { title, description, isDemo } = implConfig.workspaceDescriptor || {};
+
+    return {
+        id: workspaceId,
+        title: title ?? "",
+        description: description ?? "",
+        isDemo: isDemo ?? false,
     };
 }
 
