@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IMeasureExpressionToken } from "../fromModel/ldm/measure";
 import { IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "../fromModel/ldm/metadata";
@@ -40,4 +40,12 @@ export interface IWorkspaceMeasuresService {
      * @returns promise of undefined
      */
     deleteMeasure(measureRef: ObjRef): Promise<void>;
+
+    /**
+     * Checks if measure with the given reference exists
+     *
+     * @param measureRef - ref of the measure to check
+     * @returns promise of undefined
+     */
+    measureExists(measureRef: ObjRef): Promise<boolean>;
 }

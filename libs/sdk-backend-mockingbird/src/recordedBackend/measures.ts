@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IWorkspaceMeasuresService,
@@ -26,6 +26,10 @@ export class RecordedMeasures implements IWorkspaceMeasuresService {
     }
 
     updateMeasure(_: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+
+    measureExists(_: IMeasureMetadataObject): Promise<boolean> {
         throw new NotSupported("not supported");
     }
 }
