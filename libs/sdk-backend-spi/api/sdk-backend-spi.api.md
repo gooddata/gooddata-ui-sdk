@@ -1806,6 +1806,7 @@ export interface IWorkspaceMeasuresService {
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
+    measureExists(measureRef: ObjRef): Promise<boolean>;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
 }
 
