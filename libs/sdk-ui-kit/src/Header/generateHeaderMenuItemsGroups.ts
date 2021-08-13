@@ -143,7 +143,7 @@ function createInsightsItemsGroup(
     backendSupportsDataItem: boolean,
     hasNoDataSet: boolean,
 ) {
-    const isFreemiumCustomer = isFreemiumEdition(featureFlags.platformEdition.toString());
+    const isFreemiumCustomer = isFreemiumEdition(featureFlags.platformEdition);
 
     const insightItemsGroup: IHeaderMenuItem[] = [];
 

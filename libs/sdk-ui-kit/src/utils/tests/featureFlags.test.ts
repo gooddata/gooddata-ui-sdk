@@ -38,9 +38,19 @@ describe("featureFlags utils", () => {
             expect(isFreemiumCustomer).toBe(false);
         });
 
-        it("should return true if user is free/growth", () => {
+        it("should return true if user is growth", () => {
             const isFreemiumCustomer = isFreemiumEdition("growth");
             expect(isFreemiumCustomer).toBe(true);
+        });
+
+        it("should return true if user is free", () => {
+            const isFreemiumCustomer = isFreemiumEdition("free");
+            expect(isFreemiumCustomer).toBe(true);
+        });
+
+        it("should return false if user is not defined", () => {
+            const isFreemiumCustomer = isFreemiumEdition(undefined);
+            expect(isFreemiumCustomer).toBe(false);
         });
     });
 
