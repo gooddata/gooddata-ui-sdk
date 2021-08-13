@@ -1,6 +1,14 @@
 // (C) 2021 GoodData Corporation
 import React, { useState } from "react";
-import { Button, SingleSelectListItem, ItemsWrapper, Overlay } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
+import {
+    Button,
+    SingleSelectListItem,
+    ItemsWrapper,
+    Overlay,
+    BubbleHoverTrigger,
+    Bubble,
+} from "@gooddata/sdk-ui-kit";
 
 import { IMenuButtonProps } from "./types";
 import { MenuButtonPropsProvider, useMenuButtonProps } from "./MenuButtonPropsContext";
@@ -38,17 +46,51 @@ export const DefaultMenuButtonInner = (): JSX.Element | null => {
             >
                 <ItemsWrapper smallItemsSpacing>
                     {menuItems.map((menuItem) => {
-                        return (
+                        if (menuItem.type === "separator") {
+                            return <SingleSelectListItem key={menuItem.itemId} type={menuItem.type} />;
+                        }
+
+                        if (menuItem.type === "header") {
+                            return (
+                                <SingleSelectListItem
+                                    key={menuItem.itemId}
+                                    type={menuItem.type}
+                                    title={menuItem.itemName}
+                                />
+                            );
+                        }
+
+                        const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
+                        const body = (
                             <SingleSelectListItem
-                                className="gd-menu-item"
+                                className={cx("gd-menu-item", {
+                                    [selectorClassName]: menuItem.tooltip,
+                                    "is-disabled": menuItem.disabled,
+                                })}
                                 key={menuItem.itemId}
                                 title={menuItem.itemName}
-                                type={menuItem.type}
-                                onClick={() => {
-                                    menuItem.onClick?.();
-                                    setIsOpen(false);
-                                }}
+                                onClick={
+                                    menuItem.disabled
+                                        ? undefined
+                                        : () => {
+                                              menuItem.onClick?.();
+                                              setIsOpen(false);
+                                          }
+                                }
                             />
+                        );
+
+                        if (!menuItem.tooltip) {
+                            return body;
+                        }
+
+                        return (
+                            <BubbleHoverTrigger key={menuItem.itemId}>
+                                {body}
+                                <Bubble alignTo={`.${selectorClassName}`} alignPoints={[{ align: "cl tr" }]}>
+                                    <span>{menuItem.tooltip}</span>
+                                </Bubble>
+                            </BubbleHoverTrigger>
                         );
                     })}
                 </ItemsWrapper>

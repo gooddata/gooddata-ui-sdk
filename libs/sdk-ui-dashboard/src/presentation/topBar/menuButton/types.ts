@@ -4,15 +4,36 @@ import { ComponentType } from "react";
 /**
  * @alpha
  */
-export interface IMenuButtonItem {
+export interface IMenuButtonItemButton {
+    type: "button";
     itemId: string;
     itemName: string;
     onClick?: () => void;
     /**
-     * If type is not specified, then common menu button item rendered.
+     * If specified, the value is shown on hover of the item as a tooltip.
      */
-    type?: "separator" | "header";
+    tooltip?: string;
+    disabled?: boolean;
 }
+/**
+ * @alpha
+ */
+export interface IMenuButtonItemSeparator {
+    type: "separator";
+    itemId: string;
+}
+/**
+ * @alpha
+ */
+export interface IMenuButtonItemHeader {
+    type: "header";
+    itemId: string;
+    itemName: string;
+}
+/**
+ * @alpha
+ */
+export type IMenuButtonItem = IMenuButtonItemButton | IMenuButtonItemSeparator | IMenuButtonItemHeader;
 
 /**
  * @alpha

@@ -27,10 +27,14 @@ const EditableTitle: React.FC<{
 export const DefaultTitleInner = (): JSX.Element | null => {
     const { title, onTitleChanged } = useTitleProps();
 
-    return onTitleChanged ? (
-        <EditableTitle title={title} onTitleChanged={onTitleChanged} />
-    ) : (
-        <div className={"s-gd-dashboard-title dash-title static"}>{title}</div>
+    return (
+        <div className="dash-title-wrapper">
+            {onTitleChanged ? (
+                <EditableTitle title={title} onTitleChanged={onTitleChanged} />
+            ) : (
+                <div className={"s-gd-dashboard-title dash-title static"}>{title}</div>
+            )}
+        </div>
     );
 };
 
