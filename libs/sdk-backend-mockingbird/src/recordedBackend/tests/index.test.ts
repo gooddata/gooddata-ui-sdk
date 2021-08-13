@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 
 import { recordedBackend } from "../index";
 
@@ -53,6 +54,61 @@ describe("recordedBackend", () => {
 
                     expect(scope).toBe("#myOrganizationId#");
                 });
+            });
+        });
+    });
+
+    describe("workspace", () => {
+        const WORKSPACE_ID = "workspaceId";
+
+        describe("descriptor", () => {
+            it("should return default empty workspace descriptor", async () => {
+                const descriptor = await recordedBackend(ReferenceRecordings.Recordings)
+                    .workspace(WORKSPACE_ID)
+                    .getDescriptor();
+
+                expect(descriptor).toEqual({
+                    id: WORKSPACE_ID,
+                    title: "",
+                    description: "",
+                    isDemo: false,
+                } as IWorkspaceDescriptor);
+            });
+
+            it("should return from partial filled workspace descriptor", async () => {
+                const config = {
+                    workspaceDescriptor: {
+                        title: "Title",
+                    },
+                };
+                const descriptor = await recordedBackend(ReferenceRecordings.Recordings, config)
+                    .workspace(WORKSPACE_ID)
+                    .getDescriptor();
+
+                expect(descriptor).toEqual({
+                    id: WORKSPACE_ID,
+                    isDemo: false,
+                    description: "",
+                    ...config.workspaceDescriptor,
+                } as IWorkspaceDescriptor);
+            });
+
+            it("should return from filled workspace descriptor", async () => {
+                const config = {
+                    workspaceDescriptor: {
+                        title: "Title",
+                        description: "Description",
+                        isDemo: true,
+                    },
+                };
+                const descriptor = await recordedBackend(ReferenceRecordings.Recordings, config)
+                    .workspace(WORKSPACE_ID)
+                    .getDescriptor();
+
+                expect(descriptor).toEqual({
+                    id: WORKSPACE_ID,
+                    ...config.workspaceDescriptor,
+                } as IWorkspaceDescriptor);
             });
         });
     });

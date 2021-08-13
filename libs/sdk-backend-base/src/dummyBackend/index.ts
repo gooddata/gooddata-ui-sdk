@@ -204,6 +204,7 @@ export function dummyDataView(
         },
     };
 }
+
 //
 // Internals
 //
@@ -211,8 +212,8 @@ export function dummyDataView(
 function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyticalWorkspace {
     return {
         workspace,
-        getDescriptor(): Promise<IWorkspaceDescriptor> {
-            throw new NotSupported("not supported");
+        async getDescriptor(): Promise<IWorkspaceDescriptor> {
+            return dummyDescriptor(this.workspace);
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
@@ -256,6 +257,15 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         dateFilterConfigs(): IDateFilterConfigsQuery {
             throw new NotSupported("not supported");
         },
+    };
+}
+
+function dummyDescriptor(workspaceId: string): IWorkspaceDescriptor {
+    return {
+        id: workspaceId,
+        title: "Title",
+        description: "Description",
+        isDemo: false,
     };
 }
 

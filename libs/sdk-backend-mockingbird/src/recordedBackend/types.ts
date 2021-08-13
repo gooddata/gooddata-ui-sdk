@@ -16,6 +16,7 @@ import {
     IUser,
     IWidgetAlert,
     ValidationContext,
+    IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -51,6 +52,11 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * resolves empty result.
      */
     dateFilterConfig?: IDateFilterConfig;
+
+    /**
+     * Optionally specify descriptor for workspace
+     */
+    workspaceDescriptor?: Partial<Pick<IWorkspaceDescriptor, "title" | "description" | "isDemo">>;
 
     /**
      * Specify theme to return
