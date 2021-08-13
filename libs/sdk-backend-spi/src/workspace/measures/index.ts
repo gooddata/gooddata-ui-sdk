@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IMeasureExpressionToken } from "../fromModel/ldm/measure";
 import { IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "../fromModel/ldm/metadata";
