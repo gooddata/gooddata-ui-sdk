@@ -2341,7 +2341,7 @@ export interface IRowsIconProps extends IIconProps {
 export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
 
 // @internal (undocumented)
-export function isFreemiumEdition(platformEdition: string): boolean;
+export function isFreemiumEdition(platformEdition: string | undefined): boolean;
 
 // @internal (undocumented)
 export interface IShortenedTextProps {
