@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { HeaderPredicates, IDrillableItem, IDrillEvent, IHeaderPredicate } from "@gooddata/sdk-ui";
+import { HeaderPredicates, ExplicitDrill, IDrillEvent } from "@gooddata/sdk-ui";
 import { storiesOf } from "@storybook/react";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
 import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
@@ -11,9 +11,7 @@ import { measureIdentifier, measureLocalId } from "@gooddata/sdk-model";
 
 const backend = StorybookBackend();
 
-const HeadlineDrilling: React.FC<{ drillableItems: Array<IDrillableItem | IHeaderPredicate> }> = ({
-    drillableItems,
-}) => {
+const HeadlineDrilling: React.FC<{ drillableItems: ExplicitDrill[] }> = ({ drillableItems }) => {
     const [lastEvent, setLastEvent] = useState<IDrillEvent | null>(null);
 
     return (

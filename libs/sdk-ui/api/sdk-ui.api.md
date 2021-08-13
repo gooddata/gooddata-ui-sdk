@@ -210,7 +210,7 @@ export function composedFromUri(uri: string): IHeaderPredicate;
 export type ComposedPlaceholderResolutionContext<T> = T extends IComposedPlaceholder<any, any, infer TContext> ? TContext : any;
 
 // @internal (undocumented)
-export function convertDrillableItemsToPredicates(drillableItems: Array<IDrillableItem | IHeaderPredicate>): IHeaderPredicate[];
+export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[]): IHeaderPredicate[];
 
 // @public
 export function convertError(error: unknown): GoodDataSdkError;
@@ -384,6 +384,9 @@ export const Execute: (props: IExecuteProps) => JSX.Element;
 
 // @beta
 export const ExecuteInsight: React_2.ComponentType<IExecuteInsightProps>;
+
+// @public
+export type ExplicitDrill = IDrillableItem | IHeaderPredicate;
 
 // @internal
 export function fillMissingTitles<T extends IInsightDefinition>(insight: T, locale: ILocale, maxArithmeticMeasureTitleLength?: number): T;
@@ -1199,6 +1202,9 @@ export function isDataTooLargeToCompute(obj: unknown): obj is DataTooLargeToComp
 export function isDataTooLargeToDisplay(obj: unknown): obj is DataTooLargeToDisplaySdkError;
 
 // @public (undocumented)
+export function isDrillableItem(item: unknown): item is IDrillableItem;
+
+// @public (undocumented)
 export function isDrillableItemIdentifier(item: unknown): item is IDrillableItemIdentifier;
 
 // @public (undocumented)
@@ -1208,6 +1214,9 @@ export function isDrillableItemUri(item: unknown): item is IDrillableItemUri;
 export function isDrillIntersectionAttributeItem(header: DrillEventIntersectionElementHeader): header is IDrillIntersectionAttributeItem;
 
 export { ISeparators }
+
+// @public (undocumented)
+export function isExplicitDrill(obj: unknown): obj is ExplicitDrill;
 
 // @public
 export function isGeoLocationMissing(obj: unknown): obj is GeoLocationMissingSdkError;
@@ -1340,7 +1349,7 @@ export interface IVisualizationCallbacks {
 
 // @public
 export interface IVisualizationProps {
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
     exportTitle?: string;
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;

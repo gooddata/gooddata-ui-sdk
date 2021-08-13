@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { HeaderPredicates, IDrillableItem, IDrillEvent, IHeaderPredicate } from "@gooddata/sdk-ui";
+import { HeaderPredicates, ExplicitDrill, IDrillEvent } from "@gooddata/sdk-ui";
 import { storiesOf } from "@storybook/react";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
 import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
@@ -18,9 +18,7 @@ const backend = StorybookBackend();
 const measures = [ReferenceLdm.Amount, ReferenceLdm.Won];
 const viewBy = [ReferenceLdm.Product.Name, ReferenceLdm.Region];
 
-const BarChartDrilling: React.FC<{ drillableItems: Array<IDrillableItem | IHeaderPredicate> }> = ({
-    drillableItems,
-}) => {
+const BarChartDrilling: React.FC<{ drillableItems: ExplicitDrill[] }> = ({ drillableItems }) => {
     const [lastEvent, setLastEvent] = useState<IDrillEvent | null>(null);
 
     return (

@@ -27,9 +27,9 @@ import {
  */
 export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     IDashboardWidget,
-    Pick<DashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange" | "drillableItems">
+    Pick<DashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
 > = (props) => {
-    const { item, screen, DefaultWidgetRenderer, drillableItems, onDrill, onFiltersChange, onError } = props;
+    const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError } = props;
     const insights = useDashboardSelector(selectInsights);
     const settings = useDashboardSelector(selectSettings);
 
@@ -84,7 +84,6 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
         >
             <DashboardWidgetPropsProvider
                 screen={screen}
-                drillableItems={drillableItems}
                 onDrill={onDrill}
                 onError={onError}
                 onFiltersChange={onFiltersChange}

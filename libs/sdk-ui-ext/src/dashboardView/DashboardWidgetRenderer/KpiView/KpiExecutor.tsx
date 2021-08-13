@@ -26,10 +26,9 @@ import {
     DataViewFacade,
     ErrorComponent as DefaultError,
     IDataSeries,
-    IDrillableItem,
+    ExplicitDrill,
     IDrillEventContext,
     IErrorProps,
-    IHeaderPredicate,
     ILoadingProps,
     isNoDataSdkError,
     isSomeHeaderPredicateMatched,
@@ -79,7 +78,7 @@ interface IKpiExecutorProps {
      */
     allFilters?: IDashboardFilter[];
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
     onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
     backend: IAnalyticalBackend;

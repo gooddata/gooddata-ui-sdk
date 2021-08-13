@@ -25,9 +25,7 @@ import {
     createNumberJsFormatter,
     DataViewFacade,
     IDataSeries,
-    IDrillableItem,
     IDrillEventContext,
-    IHeaderPredicate,
     ILoadingProps,
     isSomeHeaderPredicateMatched,
     NoDataSdkError,
@@ -47,6 +45,7 @@ import {
     useDashboardSelector,
     useDashboardAsyncRender,
     useDashboardUserInteraction,
+    selectDisableDefaultDrills,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
@@ -58,6 +57,7 @@ import { IKpiAlertResult, IKpiResult } from "./types";
 import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
 import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
 import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
+import { selectDrillableItems } from "../../../../model/state/drill/drillSelectors";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;
@@ -75,7 +75,6 @@ interface IKpiExecutorProps {
      */
     allFilters?: IDashboardFilter[];
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
     backend: IAnalyticalBackend;
@@ -94,7 +93,6 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
     alert,
     effectiveFilters,
     onFiltersChange,
-    drillableItems,
     onDrill,
     onError,
     backend,
@@ -108,6 +106,9 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
     const currentUser = useDashboardSelector(selectUser);
     const permissions = useDashboardSelector(selectPermissions);
     const settings = useDashboardSelector(selectSettings);
+    const drillableItems = useDashboardSelector(selectDrillableItems);
+    const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
+
     const { LoadingComponent } = useDashboardComponentsContext({
         LoadingComponent: CustomLoadingComponent,
     });
@@ -190,14 +191,15 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
     const kpiAlertResult = getKpiAlertResult(alertResult, primaryMeasure, separators);
     const { isThresholdRepresentingPercent, thresholdPlaceholder } = getAlertThresholdInfo(kpiResult, intl);
 
-    const predicates = drillableItems ? convertDrillableItemsToPredicates(drillableItems) : [];
+    const predicates = convertDrillableItemsToPredicates(drillableItems);
     const isDrillable =
         kpiResult &&
         result &&
         status !== "error" &&
-        (drillableItems
+        (disableDefaultDrills
             ? isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result)
-            : kpiWidget.drills.length > 0);
+            : kpiWidget.drills.length > 0 ||
+              isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result));
 
     const enableCompactSize = settings.enableKDWidgetCustomHeight;
 

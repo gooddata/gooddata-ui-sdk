@@ -163,6 +163,7 @@ export function* resolveDashboardConfig(
         isReadOnly: config.isReadOnly ?? false,
         isEmbedded: config.isEmbedded ?? false,
         isExport: config.isExport ?? false,
+        disableDefaultDrills: config.disableDefaultDrills ?? false,
     };
 
     return resolvedConfig;

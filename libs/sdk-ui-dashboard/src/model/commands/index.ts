@@ -48,6 +48,7 @@ import {
     DrillToDashboard,
     DrillToInsight,
     DrillToLegacyDashboard,
+    ChangeDrillableItems,
 } from "./drill";
 import { AddDrillTargets } from "./drillTargets";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render";
@@ -122,6 +123,7 @@ export {
     DrillToDashboard,
     DrillToInsight,
     DrillToLegacyDashboard,
+    ChangeDrillableItems,
     drill,
     drillDown,
     drillToAttributeUrl,
@@ -129,6 +131,7 @@ export {
     drillToDashboard,
     drillToInsight,
     drillToLegacyDashboard,
+    changeDrillableItems,
 } from "./drill";
 export {
     ChangeKpiWidgetHeader,
@@ -227,4 +230,5 @@ export type DashboardCommands =
     | DrillToDashboard
     | DrillToInsight
     | DrillToLegacyDashboard
+    | ChangeDrillableItems
     | AddDrillTargets;

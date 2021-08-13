@@ -18,6 +18,23 @@ import {
     XirrType,
 } from "./visualizationTypes";
 import isEmpty from "lodash/isEmpty";
+import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate";
+
+/**
+ * Drillable item reference or predicate that enables insight / kpi drilling if it matches some attribute or measure of the insight / kpi.
+ * You can use {@link @gooddata/sdk-ui#HeaderPredicates} factory functions to create predicates,
+ * or specify reference to the identifier / uri of the target attribute / measure using {@link @gooddata/sdk-ui#IDrillableItem} definition.
+ *
+ * @public
+ */
+export type ExplicitDrill = IDrillableItem | IHeaderPredicate;
+
+/**
+ * @public
+ */
+export function isExplicitDrill(obj: unknown): obj is ExplicitDrill {
+    return [isDrillableItem, isHeaderPredicate].some((pred) => pred(obj));
+}
 
 /**
  * @public
@@ -45,14 +62,21 @@ export type IDrillableItem =
  * @public
  */
 export function isDrillableItemUri(item: unknown): item is IDrillableItemUri {
-    return (item as IDrillableItemUri).uri !== undefined;
+    return !isEmpty(item) && (item as IDrillableItemUri).uri !== undefined;
 }
 
 /**
  * @public
  */
 export function isDrillableItemIdentifier(item: unknown): item is IDrillableItemIdentifier {
-    return (item as IDrillableItemIdentifier).identifier !== undefined;
+    return !isEmpty(item) && (item as IDrillableItemIdentifier).identifier !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isDrillableItem(item: unknown): item is IDrillableItem {
+    return [isDrillableItemUri, isDrillableItemIdentifier].some((pred) => pred(item));
 }
 
 /**

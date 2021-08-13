@@ -39,6 +39,7 @@ import { backendCapabilitiesSliceReducer } from "./backendCapabilities";
 import { drillTargetsReducer } from "./drillTargets";
 import { DashboardEventType } from "../events";
 import { DashboardCommandType } from "../commands";
+import { drillSliceReducer } from "./drill";
 
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType)[] = [
     "GDC.DASH/EVT.COMMAND.FAILED",
@@ -71,6 +72,9 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD",
     "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED",
     "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED",
+    "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE",
+    "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
+    "meta/setDrillableItems",
 ];
 
 /*
@@ -224,6 +228,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
             serializableCheck: {
                 ignoredActions: nonSerializableEventsAndCommands,
                 ignoredActionPaths: ["ctx"],
+                ignoredPaths: ["drill.drillableItems"],
             },
         }),
         ...(config.additionalMiddleware ? [config.additionalMiddleware] : []),
@@ -244,6 +249,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         catalog: catalogSliceReducer,
         user: userSliceReducer,
         meta: metaSliceReducer,
+        drill: drillSliceReducer,
         listedDashboards: listedDashboardsSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
     });

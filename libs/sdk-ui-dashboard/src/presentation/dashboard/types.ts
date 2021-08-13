@@ -7,7 +7,7 @@ import {
     IWorkspacePermissions,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
-import { IDrillableItem, IErrorProps, IHeaderPredicate, ILoadingProps } from "@gooddata/sdk-ui";
+import { IErrorProps, ILoadingProps } from "@gooddata/sdk-ui";
 
 import { DashboardConfig, DashboardEventHandler } from "../../model";
 import {
@@ -70,14 +70,6 @@ export interface IDashboardProps {
      * logged-in user.
      */
     permissions?: IWorkspacePermissions;
-
-    /**
-     * Configure drillability; e.g. which parts of the visualization can be interacted with.
-     * These are applied to all the widgets in the dashboard. If specified, these override any drills specified in the dashboards.
-     *
-     * TODO: do we need more sophisticated logic to specify drillability?
-     */
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 
     /**
      * Optionally specify event handlers to register at the dashboard creation time.

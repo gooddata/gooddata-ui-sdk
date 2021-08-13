@@ -11,14 +11,7 @@ import {
     ILegacyKpi,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IInsight, IExecutionConfig } from "@gooddata/sdk-model";
-import {
-    IDrillableItem,
-    IHeaderPredicate,
-    IErrorProps,
-    ILoadingProps,
-    OnError,
-    VisType,
-} from "@gooddata/sdk-ui";
+import { ExplicitDrill, IErrorProps, ILoadingProps, OnError, VisType } from "@gooddata/sdk-ui";
 import {
     IDashboardLayoutBuilder,
     IDashboardFilter,
@@ -108,9 +101,8 @@ export interface IDashboardViewProps {
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
      * These are applied to all the widgets in the dashboard. If specified, these override any drills specified in the dashboards.
      *
-     * TODO: do we need more sophisticated logic to specify drillability?
      */
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
 
     /**
      * Called when user triggers a drill on a visualization.

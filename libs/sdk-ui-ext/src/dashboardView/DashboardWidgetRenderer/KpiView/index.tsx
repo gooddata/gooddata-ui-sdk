@@ -14,8 +14,7 @@ import {
     ILoadingProps,
     ErrorComponent as DefaultError,
     LoadingComponent as DefaultLoading,
-    IDrillableItem,
-    IHeaderPredicate,
+    ExplicitDrill,
     OnError,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
@@ -60,7 +59,7 @@ interface IKpiViewProps {
     /**
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
      */
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
 
     /**
      * Called when user triggers a drill on a visualization.

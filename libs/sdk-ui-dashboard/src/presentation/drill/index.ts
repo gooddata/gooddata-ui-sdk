@@ -8,6 +8,7 @@ export { useDrillToCustomUrl, UseDrillToCustomUrlProps } from "./hooks/useDrillT
 export { useDrillToLegacyDashboard, UseDrillToLegacyDashboardProps } from "./hooks/useDrillToLegacyDashboard";
 export { WithDrillSelectProps, WithDrillSelect } from "./DrillSelect/WithDrillSelect";
 export {
+    OnWidgetDrill,
     OnDashboardDrill,
     DrillStep,
     OnDrillDown,
@@ -15,5 +16,14 @@ export {
     OnDrillToCustomUrl,
     OnDrillToDashboard,
     OnDrillToInsight,
+    OnDashboardDrillError,
+    OnDashboardDrillSuccess,
+    OnDrillDownSuccess,
+    OnDrillToAttributeUrlSuccess,
+    OnDrillToCustomUrlSuccess,
+    OnDrillToDashboardSuccess,
+    OnDrillToInsightSuccess,
+    OnDrillToLegacyDashboard,
+    OnDrillToLegacyDashboardSuccess,
 } from "./types";
 export { getDrillDownAttributeTitle } from "./utils/drillDownUtils";

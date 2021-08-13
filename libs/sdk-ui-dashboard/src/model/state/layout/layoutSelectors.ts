@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { ObjRef, objRefToString, serializeObjRef } from "@gooddata/sdk-model";
+import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 import { LayoutState } from "./layoutState";
@@ -13,10 +13,10 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { isInsightPlaceholderWidget, isKpiPlaceholderWidget } from "../../types/layoutTypes";
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
-import memoize from "lodash/memoize";
 import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
 import { filterContextItemsToFiltersForWidget } from "../../../converters";
+import { createMemoizedSelector } from "../_infra/selectors";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -115,17 +115,17 @@ export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
  *
  * @alpha
  */
-export const selectWidgetByRef = memoize(
-    (ref: ObjRef | undefined) => {
-        return createSelector(selectWidgetsMap, (widgetMap) => {
-            if (!ref) {
-                return;
-            }
+export const selectWidgetByRef = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(selectWidgetsMap, (widgetMap) => ref && widgetMap.get(ref)),
+);
 
-            return widgetMap.get(ref);
-        });
-    },
-    (ref) => ref && serializeObjRef(ref),
+/**
+ * Selects widget drills by the widget ref.
+ *
+ * @alpha
+ */
+export const selectWidgetDrills = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(selectWidgetByRef(ref), (widget) => widget?.drills),
 );
 
 /**
@@ -136,19 +136,12 @@ export const selectWidgetByRef = memoize(
  *
  * @internal
  */
-export const selectAllFiltersForWidgetByRef = memoize(
-    (ref: ObjRef) => {
-        return createSelector(
-            selectWidgetByRef(ref),
-            selectFilterContextFilters,
-            (widget, dashboardFilters) => {
-                invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-                return filterContextItemsToFiltersForWidget(dashboardFilters, widget);
-            },
-        );
-    },
-    (ref) => ref && serializeObjRef(ref),
-);
+export const selectAllFiltersForWidgetByRef = createMemoizedSelector((ref: ObjRef) => {
+    return createSelector(selectWidgetByRef(ref), selectFilterContextFilters, (widget, dashboardFilters) => {
+        invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+        return filterContextItemsToFiltersForWidget(dashboardFilters, widget);
+    });
+});
 
 const selectAllWidgets = createSelector(selectWidgetsMap, (widgetMap) => {
     return Array.from(widgetMap.values());

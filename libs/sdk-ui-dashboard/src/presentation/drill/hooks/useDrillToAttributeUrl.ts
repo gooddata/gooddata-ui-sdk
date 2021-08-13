@@ -1,9 +1,10 @@
 // (C) 2020-2021 GoodData Corporation
 
 import {
-    DashboardCommandFailed,
-    drillToAttributeUrl,
     DashboardDrillToAttributeUrlResolved,
+    DashboardCommandFailed,
+    DrillToAttributeUrl,
+    drillToAttributeUrl,
     useDashboardCommandProcessing,
 } from "../../../model";
 
@@ -13,7 +14,7 @@ import {
 export interface UseDrillToAttributeUrlProps {
     onSuccess?: (event: DashboardDrillToAttributeUrlResolved) => void;
     onError?: (event: DashboardCommandFailed) => void;
-    onBeforeRun?: () => void;
+    onBeforeRun?: (cmd: DrillToAttributeUrl) => void;
 }
 
 /**

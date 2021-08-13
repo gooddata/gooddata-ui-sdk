@@ -249,7 +249,6 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
                 <div className="gd-flex-item-stretch dash-section dash-section-kpis">
                     <div className="gd-flex-container root-flex-maincontent">
                         <DashboardLayoutPropsProvider
-                            drillableItems={props.drillableItems}
                             onFiltersChange={onFiltersChange}
                         >
                             <DashboardLayout />

@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { IInsight } from "@gooddata/sdk-model";
+import { ExplicitDrill } from "@gooddata/sdk-ui";
 import {
     IDrillToDashboard,
     IDrillToInsight,
@@ -790,3 +791,36 @@ export const isDashboardDrillToLegacyDashboardResolved = eventGuard<DashboardDri
 //
 //
 //
+
+/**
+ * This event is emitted as a result of the {@link ChangeDrillableItems} command, if drillable items was successfully changed.
+ *
+ * @alpha
+ */
+export interface DashboardDrillableItemsChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED";
+    readonly payload: {
+        /**
+         * Drillable items that was set.
+         */
+        readonly drillableItems: ExplicitDrill[];
+    };
+}
+
+/**
+ * @alpha
+ */
+export function drillableItemsChanged(
+    ctx: DashboardContext,
+    drillableItems: ExplicitDrill[],
+    correlationId?: string,
+): DashboardDrillableItemsChanged {
+    return {
+        type: "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            drillableItems,
+        },
+    };
+}

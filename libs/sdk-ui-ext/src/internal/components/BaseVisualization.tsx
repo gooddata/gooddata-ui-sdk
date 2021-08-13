@@ -12,8 +12,7 @@ import React from "react";
 import { render } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
 import {
-    IDrillableItem,
-    IHeaderPredicate,
+    ExplicitDrill,
     ILocale,
     OnError,
     OnExportReady,
@@ -50,7 +49,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     height?: number;
     locale?: ILocale;
     dateFormat?: string;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
     totalsEditAllowed?: boolean;
     featureFlags?: ISettings;
     visualizationCatalog?: IVisualizationCatalog;

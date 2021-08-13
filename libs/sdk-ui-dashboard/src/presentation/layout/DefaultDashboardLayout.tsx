@@ -74,13 +74,7 @@ const selectAllItemsWithInsights: DashboardLayoutItemsSelector = (items) =>
  * @internal
  */
 export const DefaultDashboardLayoutInner = (): JSX.Element => {
-    const {
-        onFiltersChange,
-        drillableItems,
-        onDrill,
-        onError,
-        ErrorComponent: CustomError,
-    } = useDashboardLayoutProps();
+    const { onFiltersChange, onDrill, onError, ErrorComponent: CustomError } = useDashboardLayoutProps();
 
     const layout = useDashboardSelector(selectBasicLayout);
     const isLayoutEmpty = useDashboardSelector(selectIsLayoutEmpty);
@@ -123,7 +117,6 @@ export const DefaultDashboardLayoutInner = (): JSX.Element => {
             widgetRenderer={(renderProps) => {
                 return (
                     <DashboardLayoutWidget
-                        drillableItems={drillableItems}
                         onError={onError}
                         onDrill={onDrill}
                         onFiltersChange={onFiltersChange}
