@@ -147,13 +147,13 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
         () => [
             {
                 type: "button",
-                itemId: "export-to-pdf",
+                itemId: "pdf-export-item", // careful, this is also used as a selector in tests, do not change
                 itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
                 onClick: defaultOnExportToPdf,
             },
             {
                 type: "button",
-                itemId: "schedule-emailing",
+                itemId: "schedule-email-item", // careful, this is also used as a selector in tests, do not change
                 itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
                 onClick: defaultOnScheduleEmailing,
             },
