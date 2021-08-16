@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
 import isFunction from "lodash/isFunction";
 import set from "lodash/set";
@@ -188,9 +188,16 @@ export class XhrModule {
 
         if (response.status === 401) {
             // if 401 is in login-request, it means wrong user/password (we wont continue)
-            if (url.indexOf("/gdc/account/login") !== -1) {
+            const isLoginRequest = url.indexOf("/gdc/account/login") !== -1;
+            // if 401 is in token request already, it makes no sense to try handling unauthorized again by calling the same token endpoint again
+            const isTokenRequest = url.indexOf("/gdc/account/token") !== -1;
+
+            const shouldSkipUnauthorizedHandling = isLoginRequest || isTokenRequest;
+
+            if (shouldSkipUnauthorizedHandling) {
                 throw new ApiResponseError("Unauthorized", response, responseBody);
             }
+
             return this.handleUnauthorized(url, settings);
         }
 
