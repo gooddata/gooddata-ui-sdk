@@ -14,7 +14,6 @@ export interface DashboardLayoutProps {
     filters?: FilterContextItem[];
     // TODO: create context for drillableItems / put it to store ?
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    // TODO: replace with relevant commands
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
     onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
