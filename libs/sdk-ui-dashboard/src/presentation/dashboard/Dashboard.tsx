@@ -42,6 +42,8 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
     DashboardStoreProvider,
+    useDashboardCommand,
+    changeFilterContextSelection,
 } from "../../model";
 import {
     DefaultScheduledEmailDialogInner,
@@ -209,6 +211,7 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
 
 const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const locale = useDashboardSelector(selectLocale);
+    const onFiltersChange = useDashboardCommand(changeFilterContextSelection);
 
     return (
         <IntlWrapper locale={locale}>
@@ -218,7 +221,10 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
                 </div>
                 <div className="gd-flex-item-stretch dash-section dash-section-kpis">
                     <div className="gd-flex-container root-flex-maincontent">
-                        <DashboardLayoutPropsProvider drillableItems={props.drillableItems}>
+                        <DashboardLayoutPropsProvider
+                            drillableItems={props.drillableItems}
+                            onFiltersChange={onFiltersChange}
+                        >
                             <DashboardLayout />
                         </DashboardLayoutPropsProvider>
                     </div>
