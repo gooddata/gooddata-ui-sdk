@@ -23,7 +23,7 @@ describe("Dashboard", () => {
             Navigation.visit("dashboard");
         });
 
-        it.skip("should render topBar", () => {
+        it("should render topBar", () => {
             const dashboard = new Dashboard();
 
             dashboard.topBarExist();
@@ -36,7 +36,7 @@ describe("Dashboard", () => {
             topBar.dashboardTitleHasValue("E2E RAIL Tests");
         });
 
-        it.skip("should not render edit button", () => {
+        it("should not render edit button", () => {
             const topBar = new TopBar();
             const dashboard = new Dashboard();
 
