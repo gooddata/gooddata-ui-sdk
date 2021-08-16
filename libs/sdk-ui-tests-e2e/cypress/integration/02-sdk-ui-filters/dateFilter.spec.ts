@@ -2,6 +2,8 @@
 import * as Navigation from "../../tools/navigation";
 import { DateFilter } from "../../tools/dateFilter";
 import { clickOutside } from "../../tools/utils";
+import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
+import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
 
 describe("DateFilter", () => {
     beforeEach(() => {
@@ -12,47 +14,44 @@ describe("DateFilter", () => {
         const dateFilter = new DateFilter();
 
         dateFilter.subtitleHasValue("All time");
-        dateFilter.open();
-        dateFilter.selectThisMonthOption();
+        dateFilter.openAndSelectOption(".s-relative-preset-this-month");
         dateFilter.pressButton("cancel");
         dateFilter.subtitleHasValue("All time");
     });
 
     it("Calendar appears when from field has focus", () => {
         const dateFilter = new DateFilter();
+        const dateFilterAbsoluteForm = new DateFilterAbsoluteForm();
 
-        dateFilter.open();
+        dateFilter.openAndSelectOption(".s-absolute-form");
 
-        dateFilter.calendarShouldExist("from", false);
-        dateFilter.calendarShouldExist("to", false);
+        dateFilterAbsoluteForm.fromCalendarOpen(false);
+        dateFilterAbsoluteForm.toCalendarOpen(false);
 
-        dateFilter.selectAbsoluteForm();
-        dateFilter.openAbsoluteRangePicker("from");
-        dateFilter.openAbsoluteRangePicker("from");
+        dateFilterAbsoluteForm.openFromRangePicker();
+        dateFilterAbsoluteForm.fromCalendarOpen();
+        dateFilterAbsoluteForm.toCalendarOpen(false);
 
-        dateFilter.calendarShouldExist("from", true);
-        dateFilter.calendarShouldExist("to", false);
-
-        dateFilter.openAbsoluteRangePicker("to");
-
-        dateFilter.calendarShouldExist("from", false);
-        dateFilter.calendarShouldExist("to", true);
+        dateFilterAbsoluteForm.openToRangePicker();
+        dateFilterAbsoluteForm.fromCalendarOpen(false);
+        dateFilterAbsoluteForm.toCalendarOpen(true);
 
         clickOutside();
 
-        dateFilter.calendarShouldExist("from", false);
-        dateFilter.calendarShouldExist("to", false);
+        dateFilterAbsoluteForm.fromCalendarOpen(false);
+        dateFilterAbsoluteForm.toCalendarOpen(false);
     });
 
     it("It is possible to pick day outside current month", () => {
         const dateFilter = new DateFilter();
+        const dateFilterAbsoluteForm = new DateFilterAbsoluteForm();
 
-        dateFilter.openAndSelectAbsoluteForm();
-        dateFilter.typeRangePickerValue("from", "03/15/2019");
-        dateFilter.typeRangePickerValue("to", "03/15/2019");
+        dateFilter.openAndSelectOption(".s-absolute-form");
+        dateFilterAbsoluteForm.typeIntoFromRangePickerInput("03/15/2019");
+        dateFilterAbsoluteForm.typeIntoToRangePickerInput("03/15/2019");
 
-        dateFilter.openAbsoluteRangePicker("to");
-        dateFilter.selectDateInNextMonth();
+        dateFilterAbsoluteForm.openToRangePicker();
+        dateFilterAbsoluteForm.selectDateInNextMonth();
 
         dateFilter.pressButton("apply");
 
@@ -61,59 +60,63 @@ describe("DateFilter", () => {
 
     it("Select menu item can be switched with arrow keys and enter", () => {
         const dateFilter = new DateFilter();
+        const dateFilterRelativeForm = new DateFilterRelativeForm();
 
         dateFilter.openAndSelectRelativeForm();
 
-        dateFilter.shouldMonthGranularityBeSelected();
+        dateFilterRelativeForm.granularitySelected("month");
 
-        dateFilter.openRelativeRangePicker("from");
-        dateFilter.shouldRelativeFormHaveValueSelected("this month");
+        dateFilterRelativeForm.openFromRangePicker();
+        dateFilterRelativeForm.rangePickerFromHasValueSelected("this month");
 
-        dateFilter.pressKeyOnRelativeFormElement("downarrow");
-        dateFilter.shouldRelativeFormHaveValueSelected("next month");
+        dateFilterRelativeForm.pressKey("downarrow");
+        dateFilterRelativeForm.rangePickerFromHasValueSelected("next month");
 
-        dateFilter.pressKeyOnRelativeFormElement("uparrow");
-        dateFilter.shouldRelativeFormHaveValueSelected("this month");
+        dateFilterRelativeForm.pressKey("uparrow");
+        dateFilterRelativeForm.rangePickerFromHasValueSelected("this month");
 
-        dateFilter.pressKeyOnRelativeFormElement("uparrow");
-        dateFilter.shouldRelativeFormHaveValueSelected("last month");
+        dateFilterRelativeForm.pressKey("uparrow");
+        dateFilterRelativeForm.rangePickerFromHasValueSelected("last month");
 
-        dateFilter.pressKeyOnRelativeFormElement("enter");
-        dateFilter.shouldRelativeFormHaveValue("last month");
+        dateFilterRelativeForm.pressKey("enter");
+        dateFilterRelativeForm.rangePickerFromHasValue("last month");
     });
 
     it("Select menu item can be selected with mouse", () => {
         const dateFilter = new DateFilter();
+        const dateFilterRelativeForm = new DateFilterRelativeForm();
 
         dateFilter.openAndSelectRelativeForm();
 
-        dateFilter.openAndSelectRelativeRange("this month");
-        dateFilter.shouldRelativeFormHaveValue("this month");
+        dateFilterRelativeForm.openFromRangePicker();
+        dateFilterRelativeForm.rangePickerSelectOption("this month");
+        dateFilterRelativeForm.rangePickerFromHasValue("this month");
     });
 
     it("After selecting from range, to input gains focus", () => {
         const dateFilter = new DateFilter();
+        const dateFilterRelativeForm = new DateFilterRelativeForm();
 
         dateFilter.openAndSelectRelativeForm();
-        dateFilter.openAndSelectRelativeRange("this month");
+        dateFilterRelativeForm.openFromRangePicker();
+        dateFilterRelativeForm.rangePickerSelectOption("this month");
 
-        dateFilter.shouldRelativeFormRangeBeFocused("to");
+        dateFilterRelativeForm.rangePickerToFocused();
     });
 
     it("If invalid string is inputted, keep the previous option", () => {
         const dateFilter = new DateFilter();
+        const dateFilterRelativeForm = new DateFilterRelativeForm();
 
         dateFilter.openAndSelectRelativeForm();
 
-        dateFilter.openRelativeFormRangeAndType("from", "1");
-        dateFilter.pressKeyOnRelativeFormElement("enter");
+        dateFilterRelativeForm.typeIntoFromInput("1");
+        dateFilterRelativeForm.pressKey("enter");
 
-        dateFilter.shouldRelativeFormHaveValue("next month");
-        dateFilter.openRelativeFormRangeAndType("from", "xxx");
+        dateFilterRelativeForm.rangePickerFromHasValue("next month");
+        dateFilterRelativeForm.typeIntoFromInput("xxx");
 
-        // Cypress does not support tab key press at the moment. Need to blur out of the field by focusing another element.
-        dateFilter.getRelativeFormToElement().find("input").focus();
-
-        dateFilter.shouldRelativeFormHaveValue("next month");
+        dateFilterRelativeForm.focusToRangePicker();
+        dateFilterRelativeForm.rangePickerFromHasValue("next month");
     });
 });
