@@ -1219,7 +1219,11 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, at
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "visualizationObject" | "filterContext";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard"
+/**
+* @deprecated will be removed in the next major release, use "insight" instead
+*/
+| "visualizationObject" | "filterContext";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -1240,7 +1244,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     protected generateLocalId(): string;
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
     popAttribute: (popAttrIdOrRef: ObjRef | Identifier) => this;
-    }
+}
 
 // @public
 export type PoPMeasureBuilderInput = {
@@ -1258,7 +1262,7 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
     // (undocumented)
     protected generateLocalId(): string;
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
-    }
+}
 
 // @public
 export type PreviousPeriodMeasureBuilderInput = {
@@ -1330,6 +1334,5 @@ export function visClassUrl(vc: IVisualizationClass): string;
 export type VisualizationProperties = {
     [key: string]: any;
 };
-
 
 ```

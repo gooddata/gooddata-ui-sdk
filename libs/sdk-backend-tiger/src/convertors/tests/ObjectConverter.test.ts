@@ -11,7 +11,7 @@ const mapping: [TigerCompatibleObjectType, TigerObjectType][] = [
     ["dataSet", "dataset"],
     ["fact", "fact"],
     ["variable", "variable"],
-    ["visualizationObject", "visualizationObject"],
+    ["insight", "visualizationObject"],
     ["filterContext", "filterContext"],
 ];
 

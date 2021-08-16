@@ -45,6 +45,9 @@ export type ObjectType =
     | "insight"
     | "variable"
     | "analyticalDashboard"
+    /**
+     * @deprecated will be removed in the next major release, use "insight" instead
+     */
     | "visualizationObject"
     | "filterContext";
 
