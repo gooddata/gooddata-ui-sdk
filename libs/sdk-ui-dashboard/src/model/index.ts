@@ -148,5 +148,12 @@ export * from "./commands";
 export * from "./events";
 export * from "./queries";
 export * from "./react";
-export { DashboardEventHandler, DashboardSelector, DashboardSelectorEvaluator } from "./events/eventHandler";
+export {
+    DashboardEventHandler,
+    DashboardSelector,
+    DashboardSelectorEvaluator,
+    anyEventHandler,
+    anyDashboardEventHandler,
+    singleEventTypeHandler,
+} from "./events/eventHandler";
 export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory";
