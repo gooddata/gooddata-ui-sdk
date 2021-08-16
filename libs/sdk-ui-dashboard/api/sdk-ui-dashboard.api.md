@@ -168,6 +168,12 @@ export interface AddSectionItems extends IDashboardCommand {
 // @internal (undocumented)
 export type AlertsState = EntityState<IWidgetAlert>;
 
+// @alpha
+export function anyDashboardEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler;
+
+// @alpha
+export function anyEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler;
+
 // @alpha (undocumented)
 export function asyncRenderRequested(id: string, ctx: DashboardContext, correlationId?: string): DashboardAsyncRenderRequested;
 
@@ -2971,6 +2977,9 @@ export interface SetAttributeFilterParent extends IDashboardCommand {
 
 // @alpha
 export function setAttributeFilterParent(filterLocalId: string, parentFilter: IDashboardAttributeFilterParent, correlationId?: string): SetAttributeFilterParent;
+
+// @alpha
+export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboardEvent)["type"], handler: DashboardEventHandler["handler"]): DashboardEventHandler;
 
 // @alpha
 export type StashedDashboardItemsId = string;

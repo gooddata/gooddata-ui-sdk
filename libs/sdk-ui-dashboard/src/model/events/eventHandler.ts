@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { DashboardCommands } from "../commands";
 import { DashboardState } from "../state/types";
-import { ICustomDashboardEvent } from "./base";
+import { ICustomDashboardEvent, isDashboardEvent } from "./base";
 import { DashboardEvents } from "./index";
 
 /**
@@ -33,6 +33,49 @@ export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashb
         stateSelect: DashboardSelectorEvaluator,
     ) => void;
 };
+
+/**
+ * Creates a {@link DashboardEventHandler} instance that will be invoked for any event (event for custom events).
+ *
+ * @param handler - the actual event handling function
+ * @alpha
+ */
+export function anyEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler {
+    return {
+        eval: () => true,
+        handler,
+    };
+}
+
+/**
+ * Creates a {@link DashboardEventHandler} instance that will be invoked for any dashboard event (i.e. not for custom events).
+ *
+ * @param handler - the actual event handling function
+ * @alpha
+ */
+export function anyDashboardEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler {
+    return {
+        eval: isDashboardEvent,
+        handler,
+    };
+}
+
+/**
+ * Creates a {@link DashboardEventHandler} instance that will be invoked for one specified event type.
+ *
+ * @param type - the type of event this handler should trigger for
+ * @param handler - the actual event handling function
+ * @alpha
+ */
+export function singleEventTypeHandler(
+    type: (DashboardEvents | ICustomDashboardEvent)["type"],
+    handler: DashboardEventHandler["handler"],
+): DashboardEventHandler {
+    return {
+        eval: (e) => e.type === type,
+        handler,
+    };
+}
 
 /**
  * Function that selects part of the Dashboard state.
