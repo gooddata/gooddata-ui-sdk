@@ -32,8 +32,7 @@ describe("Dashboard", () => {
         it("should render title", () => {
             const topBar = new TopBar();
 
-            topBar.dashboardTitleExist();
-            topBar.dashboardTitleHasValue("E2E RAIL Tests");
+            topBar.dashboardTitleExist().dashboardTitleHasValue("E2E RAIL Tests");
         });
 
         it("should not render edit button", () => {
@@ -53,11 +52,11 @@ describe("Dashboard", () => {
         it("should open menu button and contain items", () => {
             const topBar = new TopBar();
 
-            topBar.menuButtonIsVisible();
-            topBar.clickMenuButton();
-
-            topBar.topBarMenuItemExist(".s-export_to_pdf");
-            topBar.topBarMenuItemExist(".s-schedule_emailing");
+            topBar
+                .menuButtonIsVisible()
+                .clickMenuButton()
+                .topBarMenuItemExist(".s-export_to_pdf")
+                .topBarMenuItemExist(".s-schedule_emailing");
         });
     });
 
@@ -77,29 +76,28 @@ describe("Dashboard", () => {
         it("should render date filter", () => {
             const filterBar = new FilterBar();
 
-            filterBar.dateFilterExist();
-
-            filterBar.dateFilterHasTitle("Date range");
-
-            filterBar.clickDateFilter();
-
-            filterBar.dateFilterHasElements([
-                ".s-all-time",
-                ".s-exclude-current-perod-disabled",
-                ".s-date-filter-cancel",
-                ".s-date-filter-apply",
-            ]);
+            filterBar
+                .dateFilterExist()
+                .dateFilterHasTitle("Date range")
+                .clickDateFilter()
+                .dateFilterHasElements([
+                    ".s-all-time",
+                    ".s-exclude-current-perod-disabled",
+                    ".s-date-filter-cancel",
+                    ".s-date-filter-apply",
+                ]);
         });
 
         it("should change the filter", () => {
             const filterBar = new FilterBar();
 
-            filterBar.dateFilterExist();
-            filterBar.dateFilterHasSubtitle("All time");
-            filterBar.clickDateFilter();
-            filterBar.selectDateFilterOption(".s-relative-preset-relative-last-7-days");
-            filterBar.clickApply();
-            filterBar.dateFilterHasSubtitle("Last 7 days");
+            filterBar
+                .dateFilterExist()
+                .dateFilterHasSubtitle("All time")
+                .clickDateFilter()
+                .selectDateFilterOption(".s-relative-preset-relative-last-7-days")
+                .clickApply()
+                .dateFilterHasSubtitle("Last 7 days");
         });
     });
 
