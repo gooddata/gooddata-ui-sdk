@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo } from "react";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
+import { isDashboardLayoutEmpty, IDashboardLayout } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
 import { filterArrayToFilterContextItems } from "../internal";
@@ -19,6 +19,11 @@ import { DashboardRenderer } from "./DashboardRenderer";
 import { EmptyDashboardError } from "./EmptyDashboardError";
 import { IDashboardViewConfig, IDashboardViewProps } from "./types";
 import { DashboardViewProvider } from "./DashboardViewProvider";
+
+const defaultEmptyLayout: IDashboardLayout = {
+    type: "IDashboardLayout",
+    sections: [],
+};
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
@@ -102,7 +107,9 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         result: dashboardLayoutResult,
         status: dashboardLayoutStatus,
     } = useDashboardLayoutData({
-        dashboardLayout: dashboardData?.layout,
+        // With new delete insight functionality, dashboards layout can now be empty.
+        // Use an empty layout to avoid the permanent 'pending' status.
+        dashboardLayout: dashboardData?.layout ?? defaultEmptyLayout,
         backend,
         workspace,
     });
@@ -208,7 +215,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                     isVisible={isScheduledMailDialogVisible}
                 />
             )}
-            {isDashboardLayoutEmpty(dashboardData.layout) ? (
+            {!dashboardData.layout || isDashboardLayoutEmpty(dashboardData.layout) ? (
                 <EmptyDashboardError ErrorComponent={ErrorComponent} />
             ) : (
                 <DashboardRenderer
