@@ -1006,6 +1006,7 @@ export namespace EmbeddedKpiDashboard {
          * For instance, you can call data.filters.find(isDashboardDateFilter) to get the date filter.
          */
         filters: DrillToUrlFilters;
+        resolvedFilterValues?: EmbeddedGdc.IResolvedFilterValues;
     }
 
     /**
