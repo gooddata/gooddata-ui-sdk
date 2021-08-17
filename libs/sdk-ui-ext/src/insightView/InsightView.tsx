@@ -158,7 +158,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
                     visualizationError,
                 };
             });
-            onError?.(error);
+            onError?.(visualizationError);
         },
         [onError],
     );
