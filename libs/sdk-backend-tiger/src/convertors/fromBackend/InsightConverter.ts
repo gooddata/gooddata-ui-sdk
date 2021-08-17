@@ -19,7 +19,7 @@ export const insightFromInsightDefinition = (
             ...insight.insight,
             identifier: id,
             uri,
-            ref: idRef(id, "visualizationObject"),
+            ref: idRef(id, "insight"),
             // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
             isLocked: isInheritedObject(id),
             tags,

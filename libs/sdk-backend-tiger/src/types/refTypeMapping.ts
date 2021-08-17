@@ -6,7 +6,7 @@ import isEmpty from "lodash/isEmpty";
 import values from "lodash/values";
 import { TigerObjectType } from "./index";
 
-export type TigerCompatibleObjectType = Exclude<ObjectType, "tag" | "insight">;
+export type TigerCompatibleObjectType = Exclude<ObjectType, "tag">;
 
 export const tigerIdTypeToObjectType: {
     [tigerType in TigerObjectType]: TigerCompatibleObjectType;
@@ -18,7 +18,7 @@ export const tigerIdTypeToObjectType: {
     fact: "fact",
     variable: "variable",
     analyticalDashboard: "analyticalDashboard",
-    visualizationObject: "visualizationObject",
+    visualizationObject: "insight",
     filterContext: "filterContext",
 };
 
