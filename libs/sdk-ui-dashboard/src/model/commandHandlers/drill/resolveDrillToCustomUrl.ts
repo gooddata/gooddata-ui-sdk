@@ -20,6 +20,8 @@ import { selectWidgetByRef } from "../../state/layout/layoutSelectors";
 import { selectInsightByRef } from "../../state/insights/insightsSelectors";
 import { getElementTitle } from "./getElementTitle";
 import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../_staging/drills/drillingUtils";
+import { DrillToCustomUrl } from "../../commands/drill";
+import { invalidArgumentsProvided } from "../../events/general";
 
 export enum DRILL_TO_URL_PLACEHOLDER {
     PROJECT_ID = "{project_id}",
@@ -201,6 +203,7 @@ export function* resolveDrillToCustomUrl(
     widgetRef: ObjRef,
     event: IDrillEvent,
     ctx: DashboardContext,
+    cmd: DrillToCustomUrl,
 ): SagaIterator<string> {
     const customUrl = drillConfig.target.url;
 
@@ -210,6 +213,18 @@ export function* resolveDrillToCustomUrl(
         event.drillContext.intersection!,
         ctx,
     );
+
+    const missingReplacement = attributeIdentifiersReplacements.find(
+        ({ replacement }) => replacement === undefined,
+    );
+
+    if (missingReplacement) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Drill to custom URL unable to resolve missing paramter ${missingReplacement.toBeReplaced}`,
+        );
+    }
 
     const insightIdentifiersReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(
         getInsightIdentifiersReplacements,
