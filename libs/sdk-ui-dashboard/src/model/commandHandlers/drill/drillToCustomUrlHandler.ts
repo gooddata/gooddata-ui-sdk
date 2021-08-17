@@ -29,6 +29,7 @@ export function* drillToCustomUrlHandler(
         cmd.payload.drillEvent.widgetRef!,
         cmd.payload.drillEvent,
         ctx,
+        cmd,
     );
 
     return drillToCustomUrlResolved(
