@@ -7,7 +7,11 @@
 import { GdcExecuteAFM } from '@gooddata/api-model-bear';
 import { GdcExport } from '@gooddata/api-model-bear';
 import { GdcVisualizationObject } from '@gooddata/api-model-bear';
+import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { INegativeAttributeFilter } from '@gooddata/sdk-model';
+import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
+import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 
 // @public
@@ -303,6 +307,24 @@ export namespace EmbeddedGdc {
         removeRankingFilter: unknown;
     }
     // (undocumented)
+    export interface IResolvedAttributeFilterValues {
+        // (undocumented)
+        [elementRef: string]: string | undefined;
+    }
+    // (undocumented)
+    export interface IResolvedDateFilterValue {
+        // (undocumented)
+        from: string;
+        // (undocumented)
+        granularity: string;
+        // (undocumented)
+        to: string;
+    }
+    export interface IResolvedFilterValues {
+        // (undocumented)
+        [filterStringRef: string]: IResolvedAttributeFilterValues | ResolvedDateFilterValues;
+    }
+    // (undocumented)
     export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFilter;
     // (undocumented)
     export function isAttributeFilter(filter: unknown): filter is AttributeFilterItem;
@@ -340,6 +362,9 @@ export namespace EmbeddedGdc {
     export type RelativeType = "relative";
     // (undocumented)
     export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem | IRemoveRankingFilterItem;
+    export type ResolvableFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
+    // (undocumented)
+    export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
 }
 
 // @public
@@ -452,6 +477,8 @@ export namespace EmbeddedKpiDashboard {
         filters: DrillToUrlFilters;
         // (undocumented)
         id: string;
+        // (undocumented)
+        resolvedFilterValues?: EmbeddedGdc.IResolvedFilterValues;
         // (undocumented)
         url: string;
     }
@@ -705,6 +732,5 @@ export interface ISimpleDrillableItemsCommandBody {
     identifiers?: string[];
     uris?: string[];
 }
-
 
 ```
