@@ -672,7 +672,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     ) : (
                         <AttributeDropdownBody
                             items={state.validOptions?.items ?? []}
-                            totalCount={totalCount || LIMIT}
+                            totalCount={totalCount ?? LIMIT}
                             selectedItems={state.selectedFilterOptions}
                             isInverted={state.isInverted}
                             isLoading={
