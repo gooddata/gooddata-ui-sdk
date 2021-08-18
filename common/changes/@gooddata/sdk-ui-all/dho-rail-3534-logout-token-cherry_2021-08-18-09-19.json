@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Some redundant token requests prevented.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "dan.homola@gooddata.com"
+}
