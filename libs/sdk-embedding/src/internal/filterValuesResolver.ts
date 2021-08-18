@@ -1,4 +1,12 @@
 // (C) 2021 GoodData Corporation
+import invariant from "ts-invariant";
+import {
+    filterObjRef,
+    IAttributeFilter,
+    IDateFilter,
+    isAbsoluteDateFilter,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 import { EmbeddedGdc } from "../iframe/common";
 
 /**
@@ -16,11 +24,37 @@ export function resolveFilterValues(
     return new Promise((resolve) =>
         resolve(
             filters.reduce((result, filter) => {
-                // eslint-disable-next-line no-console
-                console.log(filter);
-                // TODO switch per filter type
+                const ref = filterObjRef(filter);
+                invariant(ref, `filter without reference not supported: ${filter}`);
+                const refString = serializeObjRef(ref);
+                if (isAbsoluteDateFilter(filter)) {
+                    const currentValues = getResolvedFilterValues(result, filter) || [];
+                    result[refString] = [
+                        ...currentValues,
+                        {
+                            from: filter.absoluteDateFilter.from,
+                            to: filter.absoluteDateFilter.to,
+                            granularity: "GDC.time.date",
+                        },
+                    ];
+                }
                 return result;
             }, resolvedValuesMap),
         ),
     );
+}
+
+function getResolvedFilterValues(
+    map: EmbeddedGdc.IResolvedFilterValues,
+    filter: IAttributeFilter,
+): EmbeddedGdc.IResolvedAttributeFilterValues | undefined;
+function getResolvedFilterValues(
+    map: EmbeddedGdc.IResolvedFilterValues,
+    filter: IDateFilter,
+): EmbeddedGdc.ResolvedDateFilterValues | undefined;
+function getResolvedFilterValues(
+    map: EmbeddedGdc.IResolvedFilterValues,
+    filter: IAttributeFilter | IDateFilter,
+): EmbeddedGdc.IResolvedAttributeFilterValues | EmbeddedGdc.ResolvedDateFilterValues | undefined {
+    return map[serializeObjRef(filterObjRef(filter))];
 }

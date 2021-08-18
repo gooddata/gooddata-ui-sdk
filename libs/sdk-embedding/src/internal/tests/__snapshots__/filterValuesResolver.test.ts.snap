@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`resolveFilterValues should return resolved absolute date limits 1`] = `
+Object {
+  "{\\"uri\\":\\"gdc/md/dfuri\\"}": Array [
+    Object {
+      "from": "2020-01-01",
+      "granularity": "GDC.time.date",
+      "to": "2020-02-01",
+    },
+  ],
+}
+`;

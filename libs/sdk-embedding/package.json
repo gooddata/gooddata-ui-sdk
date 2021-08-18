@@ -53,7 +53,8 @@
         "@gooddata/api-model-bear": "^8.6.0-alpha.46",
         "@gooddata/sdk-model": "^8.6.0-alpha.46",
         "lodash": "^4.17.19",
-        "tslib": "^2.0.0"
+        "tslib": "^2.0.0",
+        "ts-invariant": "^0.7.3"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
