@@ -106,13 +106,11 @@ export interface ILoadElementsResult {
     totalCount: number;
 }
 
-export const getElements = async (
+export function needsLoading(
     validElements: IElementQueryResultWithEmptyItems,
     offset: number,
     limit: number,
-    loadElements: (offset: number, limit: number) => Promise<ILoadElementsResult>,
-    force = false,
-): Promise<ILoadElementsResult> => {
+): boolean {
     const currentElements = validElements ? validElements.items : [];
     const isQueryOutOfBound = offset + limit > currentElements.length;
     const isMissingDataInWindow = currentElements
@@ -124,11 +122,20 @@ export const getElements = async (
         currentElements.length === validElements.totalCount &&
         !currentElements.some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
 
-    const needsLoading = !hasAllData && (isQueryOutOfBound || isMissingDataInWindow);
+    return !hasAllData && (isQueryOutOfBound || isMissingDataInWindow);
+}
 
-    if (needsLoading || force) {
+export const getElements = async (
+    validElements: IElementQueryResultWithEmptyItems,
+    offset: number,
+    limit: number,
+    loadElements: (offset: number, limit: number) => Promise<ILoadElementsResult>,
+    force = false,
+): Promise<ILoadElementsResult> => {
+    if (needsLoading(validElements, offset, limit) || force) {
         return loadElements(offset, limit);
     }
+
     return {
         validOptions: validElements,
         totalCount: validElements.totalCount,
