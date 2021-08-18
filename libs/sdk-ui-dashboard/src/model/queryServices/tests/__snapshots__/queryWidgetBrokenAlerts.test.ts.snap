@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`query widget broken alerts filters should return broken filter alerts kpi has correct alert active 1`] = `Array []`;
+
+exports[`query widget broken alerts filters should return broken filter alerts kpi has correct alert off 1`] = `Array []`;
+
+exports[`query widget broken alerts filters should return broken filter alerts kpi has no alerts 1`] = `Array []`;
+
+exports[`query widget broken alerts filters should return broken filter alerts kpi referenced by Identifier where some filters removed from dashboard 1`] = `
+Array [
+  Object {
+    "alertFilter": Object {
+      "attributeFilter": Object {
+        "attributeElements": Object {
+          "uris": Array [],
+        },
+        "displayForm": Object {
+          "uri": "/gdc/md/referenceworkspace/obj/1099",
+        },
+        "filterElementsBy": Array [],
+        "localIdentifier": "2699039d119c4f0b8a7163991004f82e",
+        "negativeSelection": true,
+      },
+    },
+    "brokenType": "deleted",
+  },
+]
+`;
+
+exports[`query widget broken alerts filters should return broken filter alerts kpi where default filer selection changed 1`] = `Array []`;
+
+exports[`query widget broken alerts filters should return broken filter alerts kpi where some filters removed from dashboard 1`] = `
+Array [
+  Object {
+    "alertFilter": Object {
+      "attributeFilter": Object {
+        "attributeElements": Object {
+          "uris": Array [],
+        },
+        "displayForm": Object {
+          "uri": "/gdc/md/referenceworkspace/obj/1099",
+        },
+        "filterElementsBy": Array [],
+        "localIdentifier": "2699039d119c4f0b8a7163991004f82e",
+        "negativeSelection": true,
+      },
+    },
+    "brokenType": "deleted",
+  },
+]
+`;
+
+exports[`query widget broken alerts filters should return broken filter alerts kpi where widget ignore some filters from dashboard 1`] = `
+Array [
+  Object {
+    "alertFilter": Object {
+      "attributeFilter": Object {
+        "attributeElements": Object {
+          "uris": Array [],
+        },
+        "displayForm": Object {
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
+        },
+        "filterElementsBy": Array [],
+        "localIdentifier": "9c6ff2074b2d42b8aace577689155af2",
+        "negativeSelection": true,
+      },
+    },
+    "brokenType": "ignored",
+  },
+]
+`;

@@ -64,10 +64,6 @@ export function updateAlert(alert: IWidgetAlert, correlationId?: string): Update
     };
 }
 
-//
-//
-//
-
 /**
  * Removes Kpi alert.
  *
@@ -98,7 +94,3 @@ export function removeAlert(alert: IWidgetAlert, correlationId?: string): Remove
         },
     };
 }
-
-//
-//
-//

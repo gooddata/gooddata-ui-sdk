@@ -228,6 +228,7 @@ Object {
         "canCalculateSubTotals": true,
         "canCalculateTotals": true,
         "supportsCsvUploader": true,
+        "supportsKpiWidget": true,
       },
       "config": Object {
         "hostname": "test",

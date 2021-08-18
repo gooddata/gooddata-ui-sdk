@@ -1,131 +1,28 @@
 // (C) 2021 GoodData Corporation
 import {
-    FilterContextItem,
     IAttributeElement,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     IDataSetMetadataObject,
-    isDashboardAttributeFilter,
-    isDashboardDateFilter,
-    IWidgetAlertDefinition,
-    IWidgetDefinition,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
     attributeElementsCount,
     attributeElementsIsEmpty,
-    filterObjRef,
-    IFilter,
     isAttributeElementsByRef,
-    isAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
-import last from "lodash/last";
-import partition from "lodash/partition";
 import { IntlShape } from "react-intl";
 
-import { isAttributeFilterIgnored, isDateFilterIrrelevant } from "../../utils/filterUtils";
-
 import { translateDateFilter } from "./translationUtils";
+import { IBrokenAlertAttributeFilter, IBrokenAlertDateFilter, IBrokenAlertFilter } from "../types";
+
 import {
-    BrokenAlertType,
-    IBrokenAlertAttributeFilter,
-    IBrokenAlertDateFilter,
-    IBrokenAlertFilter,
-} from "../types";
-
-export interface IBrokenAlertFilterBasicInfo<TFilter extends FilterContextItem = FilterContextItem> {
-    alertFilter: TFilter;
-    brokenType: BrokenAlertType;
-}
-
-export function isBrokenAlertDateFilterInfo(
-    item: IBrokenAlertFilterBasicInfo,
-): item is IBrokenAlertFilterBasicInfo<IDashboardDateFilter> {
-    return isDashboardDateFilter(item.alertFilter);
-}
-
-export function isBrokenAlertAttributeFilterInfo(
-    item: IBrokenAlertFilterBasicInfo,
-): item is IBrokenAlertFilterBasicInfo<IDashboardAttributeFilter> {
-    return isDashboardAttributeFilter(item.alertFilter);
-}
-
-/**
- * Gets the information about the so called broken alert filters. These are filters that are set up on the alert,
- * but the currently applied filters either do not contain them, or the KPI has started ignoring them
- * since the alert was first set up.
- *
- * @param alert the alert to compute the broken filters for
- * @param kpi the KPI widget that the alert is relevant to
- * @param appliedFilters all the currently applied filters (including All Time date filters)
- */
-export function getBrokenAlertFiltersBasicInfo(
-    alert: IWidgetAlertDefinition | undefined,
-    kpi: IWidgetDefinition,
-    appliedFilters: IFilter[],
-): IBrokenAlertFilterBasicInfo[] {
-    const alertFilters = alert?.filterContext?.filters;
-
-    // no filters -> no filters can be broken, bail early
-    if (!alertFilters) {
-        return [];
-    }
-
-    const result: IBrokenAlertFilterBasicInfo[] = [];
-    const [alertDateFilters, alertAttributeFilters] = partition(alertFilters, isDashboardDateFilter) as [
-        IDashboardDateFilter[],
-        IDashboardAttributeFilter[],
-    ];
-
-    // attribute filters
-    const appliedAttributeFilters = appliedFilters.filter(isAttributeFilter);
-    alertAttributeFilters.forEach((alertFilter) => {
-        // ignored attribute filters are broken even if they are noop
-        const isIgnored = isAttributeFilterIgnored(kpi, alertFilter.attributeFilter.displayForm);
-        if (isIgnored) {
-            result.push({
-                alertFilter,
-                brokenType: "ignored",
-            });
-
-            return;
-        }
-
-        // deleted attribute filters are broken even if they are noop
-        const isInAppliedFilters = appliedAttributeFilters.some((f) =>
-            areObjRefsEqual(filterObjRef(f), alertFilter.attributeFilter.displayForm),
-        );
-
-        const isDeleted = !isInAppliedFilters;
-        if (isDeleted) {
-            result.push({
-                alertFilter,
-                brokenType: "deleted",
-            });
-        }
-    });
-
-    // date filter
-    const alertDateFilter = last(alertDateFilters);
-    if (alertDateFilter) {
-        const isIrrelevantNow = isDateFilterIrrelevant(kpi);
-        if (isIrrelevantNow) {
-            result.push({
-                alertFilter: {
-                    dateFilter: {
-                        ...alertDateFilter.dateFilter,
-                        dataSet: alertDateFilter.dateFilter.dataSet ?? kpi.dateDataSet, // make sure the dataSet is filled
-                    },
-                },
-                brokenType: "ignored",
-            });
-        }
-    }
-
-    return result;
-}
+    IBrokenAlertFilterBasicInfo,
+    isBrokenAlertAttributeFilterInfo,
+    isBrokenAlertDateFilterInfo,
+} from "../../../../../../model";
 
 interface IAttributeFilterMeta {
     validElements: IAttributeElement[];

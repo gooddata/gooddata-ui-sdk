@@ -91,7 +91,7 @@ export {
     selectAllCatalogDisplayFormsMap,
 } from "./state/catalog/catalogSelectors";
 export { AlertsState } from "./state/alerts/alertsState";
-export { selectAlerts } from "./state/alerts/alertsSelectors";
+export { selectAlerts, selectAlertByWidgetRef } from "./state/alerts/alertsSelectors";
 export { UserState } from "./state/user/userState";
 export { selectUser } from "./state/user/userSelectors";
 export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
@@ -148,6 +148,15 @@ export {
     WidgetFilterOperation,
     WidgetHeader,
 } from "./types/widgetTypes";
+
+export {
+    BrokenAlertType,
+    IBrokenAlertFilterBasicInfo,
+    BrokenAlertDateFilterInfo,
+    BrokenAlertAttributeFilterInfo,
+    isBrokenAlertDateFilterInfo,
+    isBrokenAlertAttributeFilterInfo,
+} from "./types/alertTypes";
 
 export * from "./commands";
 export * from "./events";

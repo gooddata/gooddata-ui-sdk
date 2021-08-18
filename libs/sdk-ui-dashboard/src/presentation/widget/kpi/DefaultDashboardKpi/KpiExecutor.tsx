@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
 import compact from "lodash/compact";
 import isNil from "lodash/isNil";
@@ -57,12 +57,9 @@ import { KpiRenderer } from "./KpiRenderer";
 import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
 import { useKpiAlertOperations } from "./useKpiAlertOperations";
 import { IKpiAlertResult, IKpiResult } from "./types";
-import {
-    DashboardItemWithKpiAlert,
-    evaluateAlertTriggered,
-    getBrokenAlertFiltersBasicInfo,
-} from "./KpiAlerts";
+import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
 import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
+import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;
@@ -98,7 +95,6 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
     primaryMeasure,
     secondaryMeasure,
     alert,
-    allFilters,
     effectiveFilters,
     onFiltersChange,
     drillableItems,
@@ -130,10 +126,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
         workspace,
     });
 
-    const brokenAlertsBasicInfo = useMemo(
-        () => (alert ? getBrokenAlertFiltersBasicInfo(alert, kpiWidget, allFilters ?? []) : undefined),
-        [alert, kpiWidget, allFilters],
-    );
+    const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget.ref);
 
     const isAlertBroken = !!brokenAlertsBasicInfo?.length;
 

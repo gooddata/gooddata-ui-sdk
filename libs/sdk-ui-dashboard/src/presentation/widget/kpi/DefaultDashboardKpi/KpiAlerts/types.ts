@@ -1,6 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-
-export type BrokenAlertType = "deleted" | "ignored";
+import { BrokenAlertType } from "../../../../../model";
 
 interface IBrokenAlertFilterBase {
     title: string;

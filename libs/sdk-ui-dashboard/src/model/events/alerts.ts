@@ -40,10 +40,6 @@ export function alertCreated(
  */
 export const isDashboardAlertCreated = eventGuard<DashboardAlertCreated>("GDC.DASH/EVT.ALERT.CREATED");
 
-//
-//
-//
-
 /**
  * This event is emitted after the Kpi alert is successfully removed.
  *
@@ -78,10 +74,6 @@ export function alertRemoved(
  * @alpha
  */
 export const isDashboardAlertRemoved = eventGuard<DashboardAlertRemoved>("GDC.DASH/EVT.ALERT.REMOVED");
-
-//
-//
-//
 
 /**
  * This event is emitted after the Kpi alert is updated.

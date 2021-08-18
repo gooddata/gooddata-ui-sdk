@@ -209,6 +209,15 @@ export interface BareUserInteractionPayload {
 // @alpha (undocumented)
 export type BareUserInteractionType = BareUserInteractionPayload["interaction"];
 
+// @alpha
+export type BrokenAlertAttributeFilterInfo = IBrokenAlertFilterBasicInfo<IDashboardAttributeFilter>;
+
+// @alpha
+export type BrokenAlertDateFilterInfo = IBrokenAlertFilterBasicInfo<IDashboardDateFilter>;
+
+// @alpha
+export type BrokenAlertType = "deleted" | "ignored";
+
 // @internal (undocumented)
 export const ButtonBar: () => JSX.Element;
 
@@ -1192,7 +1201,7 @@ export interface DashboardMetaState {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryInsightWidgetFilters;
+export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryInsightWidgetFilters | QueryWidgetBrokenAlerts;
 
 // @alpha
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>, TResult> extends IDashboardEvent {
@@ -1230,7 +1239,7 @@ export interface DashboardQueryStarted extends IDashboardEvent {
 }
 
 // @alpha (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS";
 
 // @alpha
 export interface DashboardRenamed extends IDashboardEvent {
@@ -1747,6 +1756,14 @@ export const HiddenTitle: () => JSX.Element | null;
 // @alpha
 export const HiddenTopBar: () => JSX.Element | null;
 
+// @alpha
+export interface IBrokenAlertFilterBasicInfo<TFilter extends FilterContextItem = FilterContextItem> {
+    // (undocumented)
+    alertFilter: TFilter;
+    // (undocumented)
+    brokenType: BrokenAlertType;
+}
+
 // @alpha (undocumented)
 export interface IButtonBarProps {
     // (undocumented)
@@ -2037,6 +2054,12 @@ export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICat
 
 // @alpha (undocumented)
 export function insightWidgetExecutionFailed(error: GoodDataSdkError, correlationId?: string): DashboardEventBody<DashboardInsightWidgetExecutionFailed>;
+
+// @alpha
+export function isBrokenAlertAttributeFilterInfo(item: IBrokenAlertFilterBasicInfo): item is BrokenAlertAttributeFilterInfo;
+
+// @alpha
+export function isBrokenAlertDateFilterInfo(item: IBrokenAlertFilterBasicInfo): item is BrokenAlertDateFilterInfo;
 
 // @alpha (undocumented)
 export interface IResolvedAttributeFilterValues {
@@ -2564,6 +2587,19 @@ export interface QueryMeasureDateDatasets extends IDashboardQuery<MeasureDateDat
 export type QueryProcessingStatus = "running" | "success" | "error" | "rejected";
 
 // @alpha
+export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFilterBasicInfo[]> {
+    // (undocumented)
+    readonly payload: {
+        readonly widgetRef: ObjRef;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS";
+}
+
+// @alpha
+export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): QueryWidgetBrokenAlerts;
+
+// @alpha
 export function queryWidgetFilters(widgetRef: ObjRef, widgetFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;
 
 // @alpha (undocumented)
@@ -2791,6 +2827,9 @@ export const ScheduledEmailDialog: () => JSX.Element;
 
 // @internal (undocumented)
 export const ScheduledEmailDialogPropsProvider: React_2.FC<IScheduledEmailDialogProps>;
+
+// @alpha
+export const selectAlertByWidgetRef: ((widgetRef: ObjRef) => (state: DashboardState) => IWidgetAlert | undefined) & MemoizedFunction;
 
 // @alpha
 export const selectAlerts: (state: DashboardState) => IWidgetAlert[];
