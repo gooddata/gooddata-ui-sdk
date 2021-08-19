@@ -1,15 +1,14 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 /**
- * @public
+ * @internal
  */
 export type MessageType = "success" | "progress" | "error" | "warning";
 
 /**
- * @public
+ * @internal
  */
-export interface IMessage {
-    id: string;
+export interface IMessageDefinition {
     component?: React.Component;
     showMore?: string;
     showLess?: string;
@@ -18,10 +17,22 @@ export interface IMessage {
     intensive?: boolean;
     text: string;
     type: MessageType;
+    /**
+     * After how long to automatically remove the message. If set to 0, message is shown until removed manually.
+     * Defaults to 2500 ms.
+     */
+    duration?: number;
 }
 
 /**
- * @public
+ * @internal
+ */
+export interface IMessage extends IMessageDefinition {
+    id: string;
+}
+
+/**
+ * @internal
  */
 export interface IMessageProps {
     className?: string;
@@ -32,7 +43,7 @@ export interface IMessageProps {
 }
 
 /**
- * @public
+ * @internal
  */
 export interface IMessagesProps {
     messages: Array<IMessage>;

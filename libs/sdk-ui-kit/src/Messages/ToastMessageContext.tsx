@@ -1,19 +1,15 @@
 // (C) 2021 GoodData Corporation
 import React, { createContext, useState } from "react";
-import { IMessage } from "./typings";
+import { IMessage, IMessageDefinition } from "./typings";
 
 /**
- * @public
- */
-export type IMessageWithoutId = Omit<IMessage, "id">;
-
-/**
- * @public
+ * @internal
  */
 export interface ToastMessageContextType {
     messages: IMessage[];
     removeMessage: (id: string) => void;
-    addMessage: (message: IMessageWithoutId) => void;
+    removeAllMessages: () => void;
+    addMessage: (message: IMessageDefinition) => string;
 }
 
 /**
@@ -24,12 +20,17 @@ export const ToastMessageContext = createContext<ToastMessageContextType>({
     removeMessage: () => {
         /*do nothing*/
     },
+    removeAllMessages: () => {
+        /*do nothing*/
+    },
     addMessage: () => {
         /*do nothing*/
+        return "";
     },
 });
 
 let idCounter = 0;
+const DEFAULT_DURATION = 2500;
 
 /**
  * @internal
@@ -37,24 +38,34 @@ let idCounter = 0;
 export const ToastMessageContextProvider: React.FC = ({ children }) => {
     const [messages, setMessages] = useState<IMessage[]>([]);
 
-    const removeMessage = function (id: string) {
+    const removeMessage = (id: string) => {
         setMessages((prevMessages) => prevMessages.filter((message) => message.id !== id));
     };
 
-    const addMessage = function (message: IMessageWithoutId) {
+    const removeAllMessages = () => {
+        setMessages([]);
+    };
+
+    const addMessage = (message: IMessageDefinition) => {
+        const id = (++idCounter).toString(10);
         const newMessage = {
             ...message,
-            id: (++idCounter).toString(10),
+            id,
         };
         setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-        setTimeout(() => {
-            removeMessage(newMessage.id);
-        }, 2500);
+        const duration = message.duration ?? DEFAULT_DURATION;
+        if (duration) {
+            setTimeout(() => {
+                removeMessage(newMessage.id);
+            }, duration);
+        }
+
+        return id;
     };
 
     return (
-        <ToastMessageContext.Provider value={{ messages, removeMessage, addMessage }}>
+        <ToastMessageContext.Provider value={{ messages, removeMessage, removeAllMessages, addMessage }}>
             {children}
         </ToastMessageContext.Provider>
     );
