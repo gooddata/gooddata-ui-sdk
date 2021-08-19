@@ -257,7 +257,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                 isLoading: false,
                 validElements: state.searchString ? newElements : mergedValidElements,
                 items,
-                totalCount: state.firstLoad ? items.length : state.totalCount,
+                totalCount: state.firstLoad ? newElements.totalCount : state.totalCount,
                 firstLoad: false,
             };
         });

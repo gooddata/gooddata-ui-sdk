@@ -54,7 +54,7 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
         <LegacyInvertableList
             items={items}
             itemsCount={totalCount}
-            filteredItemsCount={items.length}
+            filteredItemsCount={totalCount}
             selection={selectedItems}
             isLoading={isLoading}
             isLoadingClass={ListLoading}
