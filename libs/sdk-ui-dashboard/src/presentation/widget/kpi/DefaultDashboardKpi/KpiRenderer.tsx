@@ -11,7 +11,7 @@ import { IKpiResult } from "./types";
 
 interface IKpiRendererProps {
     kpi: IKpiWidget | IKpiWidgetDefinition;
-    kpiResult: IKpiResult;
+    kpiResult: IKpiResult | undefined;
     filters: IFilter[];
     separators: ISeparators;
     disableDrillUnderline?: boolean;
@@ -34,7 +34,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     enableCompactSize,
 }) => {
     const onPrimaryValueClick = useCallback(() => {
-        if (!isDrillable || !onDrill) {
+        if (!isDrillable || !onDrill || !kpiResult) {
             return;
         }
         return onDrill({

@@ -85,9 +85,10 @@ export const DefaultDashboardWidgetInner = (): JSX.Element => {
                             <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
                         )}
                     >
-                        {({ clientHeight }) => (
+                        {({ clientHeight, clientWidth }) => (
                             <DashboardInsightPropsProvider
                                 clientHeight={clientHeight}
+                                clientWidth={clientWidth}
                                 insight={insight!}
                                 widget={widget}
                             >

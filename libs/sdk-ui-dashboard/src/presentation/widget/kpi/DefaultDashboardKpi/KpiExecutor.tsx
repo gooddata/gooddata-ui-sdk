@@ -351,7 +351,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
                 if (status === "error" && !isNoDataSdkError(error)) {
                     return <ErrorComponent message={(error! as Error).message} />;
                 }
-                return kpiResult ? (
+                return (
                     <KpiRenderer
                         kpi={kpiWidget}
                         kpiResult={kpiResult}
@@ -362,7 +362,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
                         separators={separators}
                         enableCompactSize={enableCompactSize}
                     />
-                ) : null;
+                );
             }}
         </DashboardItemWithKpiAlert>
     );
