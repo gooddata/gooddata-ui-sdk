@@ -40,6 +40,7 @@ export interface IDashboardInsightProps {
     insight: IInsight;
 
     clientHeight?: number;
+    clientWidth?: number;
 
     backend?: IAnalyticalBackend;
     workspace?: string;

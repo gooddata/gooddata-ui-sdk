@@ -1822,6 +1822,8 @@ export interface IDashboardInsightProps {
     // (undocumented)
     clientHeight?: number;
     // (undocumented)
+    clientWidth?: number;
+    // (undocumented)
     disableWidgetImplicitDrills?: boolean;
     // (undocumented)
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
