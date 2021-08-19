@@ -2,7 +2,8 @@
 
 exports[`resolveFilterValues should return resolved absolute date limits 1`] = `
 Object {
-  "{\\"uri\\":\\"gdc/md/dfuri\\"}": Array [
+  "attributeFilters": Object {},
+  "dateFilters": Array [
     Object {
       "from": "2020-01-01",
       "granularity": "GDC.time.date",

@@ -204,7 +204,10 @@ export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
  * @alpha
  */
 export interface IResolvedFilterValues {
-    [filterStringRef: string]: IResolvedAttributeFilterValues | ResolvedDateFilterValues;
+    dateFilters: ResolvedDateFilterValues;
+    attributeFilters: {
+        [filterStringRef: string]: IResolvedAttributeFilterValues;
+    };
 }
 
 /**

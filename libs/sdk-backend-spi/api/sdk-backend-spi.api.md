@@ -20,6 +20,7 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
@@ -139,6 +140,9 @@ export type ExplainConfig = {
 
 // @alpha
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
+
+// @public
+export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
 // @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
@@ -721,6 +725,7 @@ export interface IElementsQueryAttributeFilter {
 // @public
 export interface IElementsQueryFactory {
     forDisplayForm(ref: ObjRef): IElementsQuery;
+    forFilter(filter: FilterWithResolvableElements): IFilterElementsQuery;
 }
 
 // @public
@@ -790,6 +795,13 @@ export interface IFilterContextBase {
 
 // @alpha
 export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @public
+export interface IFilterElementsQuery {
+    query(): Promise<IElementsQueryResult>;
+    withLimit(limit: number): IFilterElementsQuery;
+    withOffset(offset: number): IFilterElementsQuery;
 }
 
 // @public

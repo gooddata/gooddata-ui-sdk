@@ -318,7 +318,11 @@ export namespace EmbeddedGdc {
     }
     export interface IResolvedFilterValues {
         // (undocumented)
-        [filterStringRef: string]: IResolvedAttributeFilterValues | ResolvedDateFilterValues;
+        attributeFilters: {
+            [filterStringRef: string]: IResolvedAttributeFilterValues;
+        };
+        // (undocumented)
+        dateFilters: ResolvedDateFilterValues;
     }
     // (undocumented)
     export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFilter;

@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { SortDirection, ObjRef, IAttributeFilter, IMeasure } from "@gooddata/sdk-model";
+import { SortDirection, ObjRef, IAttributeFilter, IMeasure, IRelativeDateFilter } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../../common/paging";
 import { IAttributeElement } from "../../fromModel/ldm/attributeElement";
 
@@ -56,6 +56,13 @@ export interface IElementsQueryAttributeFilter {
 }
 
 /**
+ * Only for these filter types makes sense to resolve their elements
+ *
+ * @public
+ */
+export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
+
+/**
  * The attribute itself contains no view data, it's just a sequence of id's.
  * To get data that is useful to users, we need to represent these id's with specific values.
  * For this purpose, we pair the attribute with it's display form (specific representation of attribute values).
@@ -71,6 +78,15 @@ export interface IElementsQueryFactory {
      * @returns instance that can be used to query attribute elements
      */
     forDisplayForm(ref: ObjRef): IElementsQuery;
+
+    /**
+     * Query attribute elements used by provided filter
+     *
+     * @param filter - resolvable filter
+     * @returns instance that can be used to query attribute elements
+     *
+     */
+    forFilter(filter: FilterWithResolvableElements): IFilterElementsQuery;
 }
 
 /**
@@ -122,6 +138,39 @@ export interface IElementsQuery {
      * @returns element query
      */
     withOptions(options: IElementsQueryOptions): IElementsQuery;
+
+    /**
+     * Starts the valid elements query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IElementsQueryResult>;
+}
+
+/**
+ * Service to query valid filter elements for particular filter.
+ *
+ * @public
+ */
+export interface IFilterElementsQuery {
+    /**
+     * Sets number of valid elements to return per page.
+     * Default limit is specific per backend
+     *
+     * @param limit - desired max number of valid elements per page; must be a positive number
+     * @returns element query
+     */
+    withLimit(limit: number): IFilterElementsQuery;
+
+    /**
+     * Sets starting point for the query. Backend WILL return no data if the offset is greater than
+     * total number of valid elements.
+     * Default offset: 0
+     *
+     * @param offset - zero indexed, must be non-negative
+     * @returns element query
+     */
+    withOffset(offset: number): IFilterElementsQuery;
 
     /**
      * Starts the valid elements query.

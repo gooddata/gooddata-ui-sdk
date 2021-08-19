@@ -100,6 +100,8 @@ export {
     IElementsQuery,
     IElementsQueryOptions,
     IElementsQueryAttributeFilter,
+    IFilterElementsQuery,
+    FilterWithResolvableElements,
 } from "./workspace/attributes/elements";
 
 export { IExportConfig, IExportResult } from "./workspace/execution/export";
