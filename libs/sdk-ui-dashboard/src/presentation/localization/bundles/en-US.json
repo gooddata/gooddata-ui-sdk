@@ -19,6 +19,16 @@
         "comment": "Export whole KPI dashboard to PDF failed",
         "limit": 0
     },
+    "options.menu.export.PDF.start": {
+        "value": "Export in progress",
+        "comment": "Dialog. Export of the visualization to the file is in progress.",
+        "limit": 0
+    },
+    "options.menu.export.PDF.success": {
+        "value": "Export successful.",
+        "comment": "Dialog. Export of the visualization to the file is done.",
+        "limit": 0
+    },
     "options.menu.schedule.email": {
         "value": "Schedule emailing",
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",

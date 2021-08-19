@@ -3,12 +3,15 @@
 import { useContext } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 import { ToastMessageContext } from "./ToastMessageContext";
-import { MessageType } from "./typings";
+import { IMessageDefinition, MessageType } from "./typings";
 
 /**
  * @internal
  */
-export type AddMessageType = (message: MessageDescriptor) => void;
+export type AddMessageType = (
+    message: MessageDescriptor,
+    options?: Pick<IMessageDefinition, "duration" | "intensive">,
+) => string;
 
 /**
  * @internal
@@ -18,18 +21,22 @@ export interface UseToastMessageType {
     addProgress: AddMessageType;
     addWarning: AddMessageType;
     addError: AddMessageType;
+    removeMessage: (id: string) => void;
+    removeAllMessages: () => void;
 }
 
 /**
  * @internal
  */
 export const useToastMessage = (): UseToastMessageType => {
-    const { addMessage } = useContext(ToastMessageContext);
+    const { addMessage, removeMessage, removeAllMessages } = useContext(ToastMessageContext);
     const intl = useIntl();
 
-    const addMessageBase = (type: MessageType) => (message: MessageDescriptor) => {
-        addMessage({ type, text: intl.formatMessage(message) });
-    };
+    const addMessageBase =
+        (type: MessageType): AddMessageType =>
+        (message, options) => {
+            return addMessage({ ...options, type, text: intl.formatMessage(message) });
+        };
 
     const addSuccess = addMessageBase("success");
     const addProgress = addMessageBase("progress");
@@ -41,5 +48,7 @@ export const useToastMessage = (): UseToastMessageType => {
         addProgress,
         addWarning,
         addError,
+        removeMessage,
+        removeAllMessages,
     };
 };

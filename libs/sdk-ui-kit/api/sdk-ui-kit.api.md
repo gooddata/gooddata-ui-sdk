@@ -27,7 +27,7 @@ import { WrappedComponentProps } from 'react-intl';
 export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<string>): IHeaderMenuItem[][];
 
 // @internal (undocumented)
-export type AddMessageType = (message: MessageDescriptor) => void;
+export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive">) => string;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -1843,16 +1843,21 @@ export interface IMenuStateProps extends IMenuStateConfig {
     }) => React_2.ReactNode;
 }
 
-// @public (undocumented)
-export interface IMessage {
+// @internal (undocumented)
+export interface IMessage extends IMessageDefinition {
+    // (undocumented)
+    id: string;
+}
+
+// @internal (undocumented)
+export interface IMessageDefinition {
     // (undocumented)
     component?: React.Component;
     // (undocumented)
     contrast?: boolean;
+    duration?: number;
     // (undocumented)
     errorDetail?: string;
-    // (undocumented)
-    id: string;
     // (undocumented)
     intensive?: boolean;
     // (undocumented)
@@ -1865,7 +1870,7 @@ export interface IMessage {
     type: MessageType;
 }
 
-// @public (undocumented)
+// @internal (undocumented)
 export interface IMessageProps {
     // (undocumented)
     className?: string;
@@ -1879,7 +1884,7 @@ export interface IMessageProps {
     type: MessageType;
 }
 
-// @public (undocumented)
+// @internal (undocumented)
 export interface IMessagesProps {
     // (undocumented)
     messages: Array<IMessage>;
@@ -1892,9 +1897,6 @@ export interface IMessagesState {
     // (undocumented)
     shouldShowMore: boolean;
 }
-
-// @public (undocumented)
-export type IMessageWithoutId = Omit<IMessage, "id">;
 
 // @internal (undocumented)
 export interface IMultiSelectListProps<T> {
@@ -2668,7 +2670,7 @@ export const Message: React_2.FC<IMessageProps>;
 // @internal (undocumented)
 export const Messages: React_2.FC<IMessagesProps>;
 
-// @public (undocumented)
+// @internal (undocumented)
 export type MessageType = "success" | "progress" | "error" | "warning";
 
 // @internal (undocumented)
@@ -2886,12 +2888,14 @@ export const ToastMessageContext: React_2.Context<ToastMessageContextType>;
 // @internal (undocumented)
 export const ToastMessageContextProvider: React_2.FC;
 
-// @public (undocumented)
+// @internal (undocumented)
 export interface ToastMessageContextType {
     // (undocumented)
-    addMessage: (message: IMessageWithoutId) => void;
+    addMessage: (message: IMessageDefinition) => string;
     // (undocumented)
     messages: IMessage[];
+    // (undocumented)
+    removeAllMessages: () => void;
     // (undocumented)
     removeMessage: (id: string) => void;
 }
@@ -2927,6 +2931,10 @@ export interface UseToastMessageType {
     addSuccess: AddMessageType;
     // (undocumented)
     addWarning: AddMessageType;
+    // (undocumented)
+    removeAllMessages: () => void;
+    // (undocumented)
+    removeMessage: (id: string) => void;
 }
 
 // @internal (undocumented)

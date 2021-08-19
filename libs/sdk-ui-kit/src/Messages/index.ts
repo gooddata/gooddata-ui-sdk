@@ -5,7 +5,6 @@ export { Messages } from "./Messages";
 export { Message } from "./Message";
 export { ToastMessages } from "./ToastMessages";
 export {
-    IMessageWithoutId,
     ToastMessageContext,
     ToastMessageContextType,
     ToastMessageContextProvider,

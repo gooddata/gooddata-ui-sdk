@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
@@ -126,13 +126,31 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
 
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
-    const { addSuccess, addError } = useToastMessage();
+    const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
 
     const [isScheduleEmailingDialogOpen, setIsScheduleEmailingDialogOpen] = useState(false);
+
+    const lastExportMessageId = useRef("");
     const { exportDashboard } = useDashboardPdfExporter({
         backend,
         workspace,
+        onLoading: () => {
+            lastExportMessageId.current = addProgress(
+                { id: "options.menu.export.PDF.start" },
+                // make sure the message stays there until removed by either success or error
+                { duration: 0 },
+            );
+        },
+        onSuccess: () => {
+            if (lastExportMessageId.current) {
+                removeMessage(lastExportMessageId.current);
+            }
+            addSuccess({ id: "options.menu.export.PDF.success" });
+        },
         onError: () => {
+            if (lastExportMessageId.current) {
+                removeMessage(lastExportMessageId.current);
+            }
             addError({ id: "options.menu.export.PDF.error" });
         },
     });
