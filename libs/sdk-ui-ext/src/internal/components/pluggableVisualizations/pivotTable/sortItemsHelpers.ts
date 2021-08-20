@@ -129,6 +129,7 @@ export function addDefaultSort(
     filters: IBucketFilter[],
     rowAttributes: IBucketItem[],
     previousRowAttributes?: IBucketItem[],
+    tableSortingCheckDisabled?: boolean,
 ): ISortItem[] {
     // cannot construct default sort without a row
     if (rowAttributes.length < 1) {
@@ -139,7 +140,7 @@ export function addDefaultSort(
     const firstRow = rowAttributes[0];
     const previousFirstRow = previousRowAttributes && previousRowAttributes[0];
     const hasVisibleCustomSort = sortItems.some((sortItem) => {
-        if (!isSortItemVisible(sortItem, filters)) {
+        if (!isSortItemVisible(sortItem, filters, tableSortingCheckDisabled)) {
             return false;
         }
         // non attribute sort is definitely custom
@@ -192,8 +193,15 @@ function isMeasureSortItemVisible(sortItem: IMeasureSortItem, filters: IBucketFi
     }, true);
 }
 
-export function isSortItemVisible(sortItem: ISortItem, filters: IBucketFilter[]): boolean {
-    return isAttributeSort(sortItem)
-        ? isAttributeSortItemVisible(sortItem, filters)
-        : isMeasureSortItemVisible(sortItem, filters);
+export function isSortItemVisible(
+    sortItem: ISortItem,
+    filters: IBucketFilter[],
+    tableSortingCheckDisabled: boolean = false,
+): boolean {
+    return (
+        tableSortingCheckDisabled ||
+        (isAttributeSort(sortItem)
+            ? isAttributeSortItemVisible(sortItem, filters)
+            : isMeasureSortItemVisible(sortItem, filters))
+    );
 }

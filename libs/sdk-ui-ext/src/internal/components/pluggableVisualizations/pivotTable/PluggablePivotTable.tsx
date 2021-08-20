@@ -209,6 +209,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 filters,
                 rowAttributes,
                 previousRowAttributes,
+                tableSortingCheckDisabled(this.settings),
             ),
             ...controlsObj,
         };
@@ -455,6 +456,10 @@ function isManualResizingEnabled(settings: ISettings): boolean {
 
 function multipleDatesEnabled(settings: ISettings): boolean {
     return settings["enableMultipleDates"] === true;
+}
+
+function tableSortingCheckDisabled(settings: ISettings): boolean {
+    return settings["tableSortingCheckDisabled"] === true;
 }
 
 /**
