@@ -2,9 +2,6 @@
     "filterBar.showAll": "Exibir tudo",
     "filterBar.showLess": "Exibir menos",
     "options.menu.export.PDF": "Exportar para PDF",
-    "options.menu.export.PDF.error": "Falha ao exportar os dados. Tente novamente.",
-    "options.menu.export.PDF.start": "Exportação em curso",
-    "options.menu.export.PDF.success": "Exportação concluída com sucesso.",
     "options.menu.schedule.email": "Agendar envio por e-mail",
     "dialogs.schedule.email.submit.success": "Sucesso! Seu painel está agendado para envio por e-mail.",
     "dialogs.schedule.email.submit.error": "Erro ao agendar o painel. Tente novamente mais tarde.",
@@ -84,5 +81,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "Deixar o dashboard de KPI?",
     "kpiAlertDialog.unsaved.changes.message": "Há alterações não publicadas que serão perdidas.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Deixar mesmo assim",
-    "kpiAlertDialog.unsaved.changes.stay": "Manter"
+    "kpiAlertDialog.unsaved.changes.stay": "Manter",
+    "messages.exportResultError": "Falha ao exportar os dados. Tente novamente.",
+    "messages.exportResultRestrictedError": "Você não pode exportar esse insight porque ele contém dados restritos.",
+    "messages.exportResultStart": "Exportação em curso",
+    "messages.exportResultSuccess": "Exportação concluída com sucesso."
 }

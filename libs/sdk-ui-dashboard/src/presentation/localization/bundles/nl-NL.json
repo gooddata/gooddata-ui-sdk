@@ -2,9 +2,6 @@
     "filterBar.showAll": "Alle tonen",
     "filterBar.showLess": "Minder weergeven",
     "options.menu.export.PDF": "Exporteren naar PDF",
-    "options.menu.export.PDF.error": "Exporteren van gegevens is mislukt. Probeer het later opnieuw.",
-    "options.menu.export.PDF.start": "Bezig met exporteren",
-    "options.menu.export.PDF.success": "Exporteren geslaagd.",
     "options.menu.schedule.email": "E-mail plannen",
     "dialogs.schedule.email.submit.success": "Gelukt! Uw dashboard is ingesteld om te mailen.",
     "dialogs.schedule.email.submit.error": "Inplannen van dashboard mislukt. Probeer het later opnieuw.",
@@ -84,5 +81,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "Het KPI-dashboard verlaten?",
     "kpiAlertDialog.unsaved.changes.message": "Er zijn ongepubliceerde wijzigingen die verloren gaan.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Toch verlaten",
-    "kpiAlertDialog.unsaved.changes.stay": "Blijven"
+    "kpiAlertDialog.unsaved.changes.stay": "Blijven",
+    "messages.exportResultError": "Exporteren van gegevens is mislukt. Probeer het later opnieuw.",
+    "messages.exportResultRestrictedError": "U kunt dit inzicht niet exporteren omdat het beperkte gegevens bevat.",
+    "messages.exportResultStart": "Bezig met exporteren",
+    "messages.exportResultSuccess": "Exporteren geslaagd."
 }

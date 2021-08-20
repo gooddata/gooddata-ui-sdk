@@ -91,7 +91,9 @@ import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
+import { OnExportReady } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
+import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { OutputSelector } from '@reduxjs/toolkit';
 import { Patch } from 'immer';
 import { PlatformEdition } from '@gooddata/sdk-backend-spi';
@@ -1851,6 +1853,10 @@ export interface IDashboardInsightProps {
     onDrillToInsight?: OnDrillToInsight;
     // (undocumented)
     onError?: OnError;
+    // (undocumented)
+    onExportReady?: OnExportReady;
+    // (undocumented)
+    onLoadingChanged?: OnLoadingChanged;
     // (undocumented)
     widget: IInsightWidget;
     // (undocumented)

@@ -2,9 +2,6 @@
     "filterBar.showAll": "显示全部",
     "filterBar.showLess": "显示更少",
     "options.menu.export.PDF": "导出为 PDF",
-    "options.menu.export.PDF.error": "数据导出失败，请稍后重试。",
-    "options.menu.export.PDF.start": "正在导出",
-    "options.menu.export.PDF.success": "导出成功！",
     "options.menu.schedule.email": "安排电子邮件发送",
     "dialogs.schedule.email.submit.success": "成功！您的控制面板已计划发送电子邮件。",
     "dialogs.schedule.email.submit.error": "计划控制面板失败，请稍后重试。",
@@ -84,5 +81,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "离开 KPI 控制面板？",
     "kpiAlertDialog.unsaved.changes.message": "有未发布的更改，它们将丢失。",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "离开",
-    "kpiAlertDialog.unsaved.changes.stay": "留下"
+    "kpiAlertDialog.unsaved.changes.stay": "留下",
+    "messages.exportResultError": "数据导出失败，请稍后重试。",
+    "messages.exportResultRestrictedError": "您不能导出此洞察，因为它包含限制数据。",
+    "messages.exportResultStart": "正在导出",
+    "messages.exportResultSuccess": "导出成功！"
 }

@@ -4,16 +4,7 @@ import { AnalyticalBackendError, FilterContextItem, IAnalyticalBackend } from "@
 import { UseCancelablePromiseCallbacks, UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import { ObjRef } from "@gooddata/sdk-model";
 import { useExportDashboardToPdf as useExportDashboardToPdfCore } from "./useExportDashboardToPdf";
-
-function downloadFile(uri: string): void {
-    const anchor = document.createElement("a");
-    anchor.id = "downloader";
-    anchor.href = uri;
-    anchor.download = uri;
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
-}
+import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 
 /**
  * @beta

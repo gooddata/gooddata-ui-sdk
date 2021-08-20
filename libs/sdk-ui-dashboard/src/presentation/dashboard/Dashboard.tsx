@@ -4,6 +4,7 @@ import {
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    isProtectedDataError,
 } from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
@@ -136,7 +137,7 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
         workspace,
         onLoading: () => {
             lastExportMessageId.current = addProgress(
-                { id: "options.menu.export.PDF.start" },
+                { id: "messages.exportResultStart" },
                 // make sure the message stays there until removed by either success or error
                 { duration: 0 },
             );
@@ -145,13 +146,18 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
             }
-            addSuccess({ id: "options.menu.export.PDF.success" });
+            addSuccess({ id: "messages.exportResultSuccess" });
         },
-        onError: () => {
+        onError: (err) => {
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
             }
-            addError({ id: "options.menu.export.PDF.error" });
+
+            if (isProtectedDataError(err)) {
+                addError({ id: "messages.exportResultRestrictedError" });
+            } else {
+                addError({ id: "messages.exportResultError" });
+            }
         },
     });
 

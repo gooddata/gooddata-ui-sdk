@@ -2,9 +2,6 @@
     "filterBar.showAll": "Mostrar tudo",
     "filterBar.showLess": "Mostrar menos",
     "options.menu.export.PDF": "Exportar para PDF",
-    "options.menu.export.PDF.error": "Falha ao exportar os dados. Tente mais tarde.",
-    "options.menu.export.PDF.start": "Exportação em curso",
-    "options.menu.export.PDF.success": "Exportação bem sucedida.",
     "options.menu.schedule.email": "Agenda envio de e-mail",
     "dialogs.schedule.email.submit.success": "Êxito! O seu dashboard está agendado para envio de e-mail.",
     "dialogs.schedule.email.submit.error": "Não foi possível agendar o dashboard. Tente mais tarde.",
@@ -84,5 +81,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "Sair do dashboard de KPI?",
     "kpiAlertDialog.unsaved.changes.message": "Existem alterações não publicadas que serão perdidas.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Sim, pretendo sair",
-    "kpiAlertDialog.unsaved.changes.stay": "Permanecer"
+    "kpiAlertDialog.unsaved.changes.stay": "Permanecer",
+    "messages.exportResultError": "Falha ao exportar os dados. Tente mais tarde.",
+    "messages.exportResultRestrictedError": "Não é possível exportar este insight porque contém dados confidenciais.",
+    "messages.exportResultStart": "Exportação em curso",
+    "messages.exportResultSuccess": "Exportação bem sucedida."
 }

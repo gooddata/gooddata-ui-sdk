@@ -2,9 +2,6 @@
     "filterBar.showAll": "Alle anzeigen",
     "filterBar.showLess": "Weniger anzeigen",
     "options.menu.export.PDF": "Nach PFD exportieren",
-    "options.menu.export.PDF.error": "Daten konnten nicht exportiert werden. Versuchen Sie es später noch einmal.",
-    "options.menu.export.PDF.start": "Export wird durchgeführt",
-    "options.menu.export.PDF.success": "Export erfolgreich abgeschlossen.",
     "options.menu.schedule.email": "E-Mailing planen",
     "dialogs.schedule.email.submit.success": "Erfolgreich! Ihr Dashboard ist jetzt für E-Mails eingerichtet.",
     "dialogs.schedule.email.submit.error": "Fehler! E-Mails für das Dashboard konnten nicht eingerichtet werden. Bitte später erneut versuchen.",
@@ -84,5 +81,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "KPI-Dashboard verlassen?",
     "kpiAlertDialog.unsaved.changes.message": "Unveröffentlichte Änderungen gehen verloren.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Trotzdem verlassen",
-    "kpiAlertDialog.unsaved.changes.stay": "Bleiben"
+    "kpiAlertDialog.unsaved.changes.stay": "Bleiben",
+    "messages.exportResultError": "Daten konnten nicht exportiert werden. Versuchen Sie es später noch einmal.",
+    "messages.exportResultRestrictedError": "Sie können die Betrachtungsansicht nicht exportieren, weil sie zugriffsbeschränkte Daten enthält.",
+    "messages.exportResultStart": "Export wird durchgeführt",
+    "messages.exportResultSuccess": "Export erfolgreich abgeschlossen."
 }

@@ -16,6 +16,7 @@ options = {
             "dashboard",
             "src/presentation/dashboard/", // the trailing / is necessary here, otherwise dashboardContexts is matched as well
             [
+                "src/_staging/*",
                 "src/model",
                 "src/presentation/dashboardContexts",
                 "src/presentation/filterBar",
