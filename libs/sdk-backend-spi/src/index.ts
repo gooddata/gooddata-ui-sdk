@@ -272,6 +272,8 @@ export {
     SupportedWidgetReferenceTypes,
     widgetUri,
     widgetId,
+    widgetRef,
+    widgetTitle,
     widgetType,
     IWidgetBase,
 } from "./workspace/dashboards/widget";

@@ -2008,6 +2008,12 @@ export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardL
 export function widgetId(widget: IWidget): string;
 
 // @alpha
+export function widgetRef(widget: IWidget): ObjRef;
+
+// @alpha
+export function widgetTitle(widget: IWidget): string;
+
+// @alpha
 export type WidgetType = "kpi" | "insight";
 
 // @alpha
