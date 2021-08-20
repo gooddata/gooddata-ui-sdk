@@ -108,6 +108,7 @@ type BearLegacyFunctions = {
     ): Promise<{ uri: string; identifier: string }[]>;
     getObjectsByUri?(workspace: string, uris: string[]): Promise<GdcMetadataObject.WrappedObject[]>;
     getVisualizationObject?(workspace: string, uri: string): Promise<GdcVisualizationObject.IVisualization>;
+    getUISettings?(): Promise<{ settings: GdcUser.IUISettings }>;
 };
 
 /**
@@ -219,6 +220,12 @@ export class BearBackend implements IAnalyticalBackend {
 
                         return visObject;
                     });
+                },
+
+                getUISettings: () => {
+                    return this.sdk.xhr
+                        .get("/gdc/account/organization/settings")
+                        .then((response) => response.getData());
                 },
             };
 
