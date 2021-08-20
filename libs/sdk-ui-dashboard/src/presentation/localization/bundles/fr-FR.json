@@ -2,9 +2,6 @@
     "filterBar.showAll": "Afficher tout",
     "filterBar.showLess": "Montrer moins",
     "options.menu.export.PDF": "Exporter vers PDF",
-    "options.menu.export.PDF.error": "Échec de l'exportation des données. Réessayez plus tard.",
-    "options.menu.export.PDF.start": "Exportation en cours",
-    "options.menu.export.PDF.success": "Exportation effectuée",
     "options.menu.schedule.email": "Programmer l'envoi d'e-mails",
     "dialogs.schedule.email.submit.success": "Le tableau de bord est programmé pour envoyer des e-mails.",
     "dialogs.schedule.email.submit.error": "Échec de la programmation du tableau de bord. Réessayez plus tard.",
@@ -84,5 +81,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "Quitter le tableau de bord de KPI ?",
     "kpiAlertDialog.unsaved.changes.message": "Certaines modifications ne sont pas publiées et seront perdues.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Quitter quand même",
-    "kpiAlertDialog.unsaved.changes.stay": "Rester"
+    "kpiAlertDialog.unsaved.changes.stay": "Rester",
+    "messages.exportResultError": "Échec de l'exportation des données. Réessayez plus tard.",
+    "messages.exportResultRestrictedError": "Vous ne pouvez pas exporter cette perception car elle contient des données à accès restreint.",
+    "messages.exportResultStart": "Exportation en cours",
+    "messages.exportResultSuccess": "Exportation effectuée"
 }

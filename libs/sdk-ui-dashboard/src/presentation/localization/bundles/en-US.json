@@ -14,21 +14,6 @@
         "comment": "Export whole KPI dashboard to PDF",
         "limit": 0
     },
-    "options.menu.export.PDF.error": {
-        "value": "Export to PDF failed. Please try again.",
-        "comment": "Export whole KPI dashboard to PDF failed",
-        "limit": 0
-    },
-    "options.menu.export.PDF.start": {
-        "value": "Export in progress",
-        "comment": "Dialog. Export of the visualization to the file is in progress.",
-        "limit": 0
-    },
-    "options.menu.export.PDF.success": {
-        "value": "Export successful.",
-        "comment": "Dialog. Export of the visualization to the file is done.",
-        "limit": 0
-    },
     "options.menu.schedule.email": {
         "value": "Schedule emailing",
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
@@ -427,6 +412,26 @@
     "kpiAlertDialog.unsaved.changes.stay": {
         "value": "Stay",
         "comment": "",
+        "limit": 0
+    },
+    "messages.exportResultError": {
+        "value": "Failed to export the data. Try again later.",
+        "comment": "Error dialog. Exporting insight to the file fails.",
+        "limit": 0
+    },
+    "messages.exportResultRestrictedError": {
+        "value": "You cannot export this insight because it contains restricted data.",
+        "comment": "Error dialog. Exporting insight to the file fails because contains restricted data.",
+        "limit": 0
+    },
+    "messages.exportResultStart": {
+        "value": "Export in progress",
+        "comment": "Dialog. Export of the visualization to the file is in progress.",
+        "limit": 0
+    },
+    "messages.exportResultSuccess": {
+        "value": "Export successful.",
+        "comment": "Dialog. Export of the visualization to the file is done.",
         "limit": 0
     }
 }

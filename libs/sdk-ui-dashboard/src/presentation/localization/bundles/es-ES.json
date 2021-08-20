@@ -2,9 +2,6 @@
     "filterBar.showAll": "Mostrar todo",
     "filterBar.showLess": "Mostrar menos",
     "options.menu.export.PDF": "Exportar a PDF",
-    "options.menu.export.PDF.error": "Error al exportar los datos. Inténtelo de nuevo más tarde.",
-    "options.menu.export.PDF.start": "Exportación en curso",
-    "options.menu.export.PDF.success": "Exportación correcta.",
     "options.menu.schedule.email": "Programar el envío de correos",
     "dialogs.schedule.email.submit.success": "¡Hecho! Su panel se ha configurado para el envío de correos.",
     "dialogs.schedule.email.submit.error": "Error al programar el panel. Inténtelo de nuevo más tarde.",
@@ -84,5 +81,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "¿Salir del panel de KPI?",
     "kpiAlertDialog.unsaved.changes.message": "Hay cambios sin publicar que se perderán.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Salir de todas formas",
-    "kpiAlertDialog.unsaved.changes.stay": "Quedarse"
+    "kpiAlertDialog.unsaved.changes.stay": "Quedarse",
+    "messages.exportResultError": "Error al exportar los datos. Inténtelo de nuevo más tarde.",
+    "messages.exportResultRestrictedError": "No puede exportar esta perspectiva porque contiene datos restringidos.",
+    "messages.exportResultStart": "Exportación en curso",
+    "messages.exportResultSuccess": "Exportación correcta."
 }

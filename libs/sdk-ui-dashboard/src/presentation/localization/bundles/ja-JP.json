@@ -2,9 +2,6 @@
     "filterBar.showAll": "すべて表示",
     "filterBar.showLess": "簡易表示",
     "options.menu.export.PDF": "PDF にエクスポート",
-    "options.menu.export.PDF.error": "データをエクスポートできませんでした。後でもう一度お試しください。",
-    "options.menu.export.PDF.start": "エクスポート実行中",
-    "options.menu.export.PDF.success": "正常にエクスポートしました。",
     "options.menu.schedule.email": "メール送信をスケジュール",
     "dialogs.schedule.email.submit.success": "成功！あなたのダッシュボードでメール送信がスケジュールされました。",
     "dialogs.schedule.email.submit.error": "ダッシュボードのスケジュールに失敗。後で再試行してください。",
@@ -84,5 +81,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "KPI ダッシュボードを終了しますか？",
     "kpiAlertDialog.unsaved.changes.message": "未公開の変更は破棄されます。",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "終了",
-    "kpiAlertDialog.unsaved.changes.stay": "終了しない"
+    "kpiAlertDialog.unsaved.changes.stay": "終了しない",
+    "messages.exportResultError": "データをエクスポートできませんでした。後でもう一度お試しください。",
+    "messages.exportResultRestrictedError": "制限されているデータを含んでいるため、このインサイトをエクスポートできません。",
+    "messages.exportResultStart": "エクスポート実行中",
+    "messages.exportResultSuccess": "正常にエクスポートしました。"
 }
