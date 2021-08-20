@@ -1,13 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useMemo } from "react";
-import {
-    isWidget,
-    widgetId,
-    widgetUri,
-    isInsightWidget,
-    isDashboardLayoutEmpty,
-    IDashboardLayout,
-} from "@gooddata/sdk-backend-spi";
+import { isWidget, widgetId, widgetUri, isInsightWidget, IDashboardLayout } from "@gooddata/sdk-backend-spi";
 import {
     ObjRef,
     IInsight,
@@ -23,6 +16,7 @@ import {
     selectBasicLayout,
     useDashboardSelector,
     selectIsExport,
+    selectIsLayoutEmpty,
 } from "../../model";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 
@@ -89,6 +83,7 @@ export const DefaultDashboardLayoutInner = (): JSX.Element => {
     } = useDashboardLayoutProps();
 
     const layout = useDashboardSelector(selectBasicLayout);
+    const isLayoutEmpty = useDashboardSelector(selectIsLayoutEmpty);
     const settings = useDashboardSelector(selectSettings);
     const insights = useDashboardSelector(selectInsights);
     const { ErrorComponent } = useDashboardComponentsContext({ ErrorComponent: CustomError });
@@ -112,7 +107,7 @@ export const DefaultDashboardLayoutInner = (): JSX.Element => {
         return isExport ? getDashboardLayoutForExport(layout) : layoutWithRefs;
     }, [layout, isExport]);
 
-    return isDashboardLayoutEmpty(layout) ? (
+    return isLayoutEmpty ? (
         <EmptyDashboardError ErrorComponent={ErrorComponent} />
     ) : (
         <DashboardLayout
