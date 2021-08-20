@@ -79,3 +79,21 @@
         color: $gd-color-state-blank;
     }
 }
+
+.dropdown-footer {
+    margin: 0 10px;
+    padding: 10px 0;
+    text-align: right;
+
+    @media #{$medium-up} {
+        border-top: 1px solid $gd-border-color;
+    }
+
+    .delete-button-wrapper {
+        margin-top: 2px;
+        float: left;
+        .delete-button:hover::before {
+            color: $gd-color-negative;
+        }
+    }
+}

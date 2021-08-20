@@ -17,6 +17,12 @@ export {
     IAttributeFilterButtonOwnProps,
 } from "./AttributeFilter/AttributeFilterButton";
 export {
+    IAttributeDropdownBodyProps,
+    IAttributeDropdownBodyExtendedProps,
+    IAttributeDropdownListItemProps,
+} from "./AttributeFilter/AttributeDropdown/AttributeDropdownBody";
+export { AttributeListItem, EmptyListItem } from "./AttributeFilter/AttributeDropdown/types";
+export {
     DateFilter,
     IDateFilterCallbackProps,
     IDateFilterOwnProps,

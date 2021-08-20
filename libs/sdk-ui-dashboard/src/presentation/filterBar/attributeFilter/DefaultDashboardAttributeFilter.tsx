@@ -1,7 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
-import stableStringify from "json-stable-stringify";
+import { AttributeFilterButton, IAttributeDropdownBodyExtendedProps } from "@gooddata/sdk-ui-filters";
 
 import {
     attributeFilterToDashboardAttributeFilter,
@@ -13,6 +12,7 @@ import {
     useDashboardAttributeFilterProps,
 } from "./DashboardAttributeFilterPropsContext";
 import { IDashboardAttributeFilterProps } from "./types";
+import { AttributeFilterBody } from "./dashboardDropdownBody/AttributeFilterBody";
 
 /**
  * @internal
@@ -24,7 +24,6 @@ export const DefaultDashboardAttributeFilterInner = (): JSX.Element => {
             // TODO: https://jira.intgdc.com/browse/RAIL-2174
             // AttributeFilterButton is not updated after attribute filter elements change.
             // Same issue is in the AttributeFilter.
-            key={stableStringify(filter)}
             filter={dashboardAttributeFilterToAttributeFilter(filter)}
             onApply={(newFilter) => {
                 onFilterChanged(
@@ -33,6 +32,9 @@ export const DefaultDashboardAttributeFilterInner = (): JSX.Element => {
                         filter.attributeFilter.localIdentifier,
                     ),
                 );
+            }}
+            renderBody={(filterBodyProps: IAttributeDropdownBodyExtendedProps) => {
+                return <AttributeFilterBody {...filterBodyProps} />;
             }}
         />
     );

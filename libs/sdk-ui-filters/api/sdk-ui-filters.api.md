@@ -12,6 +12,7 @@ import { IAbsoluteDateFilterForm } from '@gooddata/sdk-backend-spi';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-backend-spi';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttributeElement } from '@gooddata/sdk-backend-spi';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
@@ -44,6 +45,9 @@ export const AttributeFilter: React_2.ComponentType<IAttributeFilterProps>;
 
 // @public (undocumented)
 export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonOwnProps>;
+
+// @public (undocumented)
+export type AttributeListItem = IAttributeElement | EmptyListItem;
 
 // @public
 export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFilterState> {
@@ -91,11 +95,79 @@ export type DateFilterRelativeOptionGroup = {
 // @public
 export const defaultDateFilterOptions: IDateFilterOptionsByType;
 
+// @public (undocumented)
+export interface EmptyListItem {
+    // (undocumented)
+    empty: boolean;
+}
+
 // @public
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
 
 // @beta (undocumented)
 export type GranularityIntlKey = "day" | "week" | "month" | "quarter" | "year";
+
+// @public (undocumented)
+export interface IAttributeDropdownBodyExtendedProps extends IAttributeDropdownBodyProps {
+    // (undocumented)
+    attributeFilterRef?: ObjRef;
+    // (undocumented)
+    deleteFilter?: () => void;
+    // (undocumented)
+    isElementsLoading?: boolean;
+    // (undocumented)
+    isLoaded?: boolean;
+    // (undocumented)
+    isMobile?: boolean;
+    // (undocumented)
+    listItemClass?: React_2.ComponentType<IAttributeDropdownListItemProps>;
+    // (undocumented)
+    maxSelectionSize?: number;
+    // (undocumented)
+    onConfigurationChange?: () => void;
+    // (undocumented)
+    showConfigurationButton?: boolean;
+    // (undocumented)
+    showDeleteButton?: boolean;
+    // (undocumented)
+    width?: number;
+}
+
+// @public (undocumented)
+export interface IAttributeDropdownBodyProps {
+    // (undocumented)
+    applyDisabled?: boolean;
+    // (undocumented)
+    error?: any;
+    // (undocumented)
+    isFullWidth?: boolean;
+    // (undocumented)
+    isInverted: boolean;
+    // (undocumented)
+    isLoading: boolean;
+    // (undocumented)
+    items: AttributeListItem[];
+    // (undocumented)
+    onApplyButtonClicked: () => void;
+    // (undocumented)
+    onCloseButtonClicked: () => void;
+    // (undocumented)
+    onRangeChange: (searchString: string, from: number, to: number) => void;
+    // (undocumented)
+    onSearch: (searchString: string) => void;
+    // (undocumented)
+    onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
+    // (undocumented)
+    parentFilterTitles?: string[];
+    // (undocumented)
+    searchString: string;
+    // (undocumented)
+    selectedItems: Array<IAttributeElement>;
+    // (undocumented)
+    showItemsFilteredMessage?: boolean;
+    // (undocumented)
+    totalCount: number;
+}
 
 // @beta (undocumented)
 export interface IAttributeDropdownItem {
@@ -105,6 +177,26 @@ export interface IAttributeDropdownItem {
     title: string;
     // (undocumented)
     type?: "DATE" | "ATTRIBUTE";
+}
+
+// @public (undocumented)
+export interface IAttributeDropdownListItemProps {
+    // (undocumented)
+    intl: IntlShape;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    onMouseOut?: (source: any) => void;
+    // (undocumented)
+    onMouseOver?: (source: any) => void;
+    // (undocumented)
+    onOnly?: (source: any) => void;
+    // (undocumented)
+    onSelect?: (source: any) => void;
+    // (undocumented)
+    selected?: boolean;
+    // (undocumented)
+    source?: any;
 }
 
 // @public
@@ -144,6 +236,7 @@ export interface IAttributeFilterButtonOwnProps {
     onError?: (error: any) => void;
     parentFilterOverAttribute?: ObjRef;
     parentFilters?: AttributeFiltersOrPlaceholders;
+    renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React_2.ReactNode;
     title?: string;
     workspace?: string;
 }
