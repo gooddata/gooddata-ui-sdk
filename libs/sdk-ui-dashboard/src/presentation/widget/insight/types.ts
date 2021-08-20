@@ -9,6 +9,8 @@ import {
     IHeaderPredicate,
     ILoadingProps,
     OnError,
+    OnExportReady,
+    OnLoadingChanged,
 } from "@gooddata/sdk-ui";
 import {
     OnDashboardDrill,
@@ -58,6 +60,9 @@ export interface IDashboardInsightProps {
     onDrillToCustomUrl?: OnDrillToCustomUrl;
 
     onError?: OnError;
+    onLoadingChanged?: OnLoadingChanged;
+    onExportReady?: OnExportReady;
+
     ErrorComponent?: ComponentType<IErrorProps>;
     LoadingComponent?: ComponentType<ILoadingProps>;
 }

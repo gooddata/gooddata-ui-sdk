@@ -2,7 +2,9 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { Button, Bubble, BubbleHoverTrigger, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { selectPermissions, selectSettings, useDashboardSelector } from "../../../../../model";
 import { PoweredByGDLogo } from "./PoweredByGDLogo";
+import { DrillModalFooter } from "./DrillModalFooter";
 
 export interface DrillDialogProps {
     title: string;
@@ -11,6 +13,13 @@ export interface DrillDialogProps {
     onBackButtonClick: () => void;
     isBackButtonVisible?: boolean;
     children: React.ReactNode;
+
+    exportAvailable: boolean;
+    onExportXLSX: () => void;
+    onExportCSV: () => void;
+    exportXLSXEnabled: boolean;
+    exportCSVEnabled: boolean;
+    isLoading: boolean;
 }
 
 export const DrillDialog: React.FC<DrillDialogProps> = ({
@@ -20,8 +29,21 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     onBackButtonClick,
     isBackButtonVisible,
     children,
+
+    exportAvailable,
+    exportXLSXEnabled,
+    exportCSVEnabled,
+    onExportCSV,
+    onExportXLSX,
+    isLoading,
 }) => {
     const intl = useIntl();
+
+    const settings = useDashboardSelector(selectSettings);
+    const permissions = useDashboardSelector(selectPermissions);
+    const shouldShowDrilledInsightExport =
+        settings?.enableDrilledInsightExport && permissions.canExportReport;
+
     const renderTitle = () => {
         const separator = "\u203A";
         const paddedSeparator = ` ${separator} `;
@@ -67,6 +89,18 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             <div className="gd-drill-modal-dialog-content visualization">
                 <div className="gd-drill-modal-dialog-content-base">{children}</div>
             </div>
+            {shouldShowDrilledInsightExport && (
+                <div className="gd-drill-modal-dialog-footer gd-drill-modal-dialog-footer-with-border s-drill-modal-dialog-footer">
+                    <DrillModalFooter
+                        exportAvailable={exportAvailable}
+                        exportXLSXEnabled={exportXLSXEnabled}
+                        exportCSVEnabled={exportCSVEnabled}
+                        onExportXLSX={onExportXLSX}
+                        onExportCSV={onExportCSV}
+                        isLoading={isLoading}
+                    />
+                </div>
+            )}
             <PoweredByGDLogo isSmall />
         </div>
     );

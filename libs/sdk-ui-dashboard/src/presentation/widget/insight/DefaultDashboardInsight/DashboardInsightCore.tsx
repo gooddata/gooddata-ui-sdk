@@ -57,6 +57,8 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
         LoadingComponent: CustomLoadingComponent,
         drillTargets,
         onAvailableDrillTargetsReceived,
+        onLoadingChanged,
+        onExportReady,
     } = props;
 
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
@@ -105,6 +107,7 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
             onResolveAsyncRender();
         }
         setIsVisualizationLoading(isLoading);
+        onLoadingChanged?.({ isLoading });
     }, []);
 
     const handleError = useCallback<OnError>(
@@ -185,6 +188,7 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
                             pushData={handlePushData}
                             ErrorComponent={ErrorComponent}
                             LoadingComponent={LoadingComponent}
+                            onExportReady={onExportReady}
                         />
                     )}
                 </IntlWrapper>
