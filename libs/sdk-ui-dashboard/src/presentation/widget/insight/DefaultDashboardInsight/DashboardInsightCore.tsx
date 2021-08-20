@@ -102,17 +102,20 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
         [onAvailableDrillTargetsReceived],
     );
 
-    const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
-        if (isLoading) {
-            onRequestAsyncRender();
-            // if we started loading, any previous vis error is obsolete at this point, get rid of it
-            setVisualizationError(undefined);
-        } else {
-            onResolveAsyncRender();
-        }
-        setIsVisualizationLoading(isLoading);
-        onLoadingChanged?.({ isLoading });
-    }, []);
+    const handleLoadingChanged = useCallback<OnLoadingChanged>(
+        ({ isLoading }) => {
+            if (isLoading) {
+                onRequestAsyncRender();
+                // if we started loading, any previous vis error is obsolete at this point, get rid of it
+                setVisualizationError(undefined);
+            } else {
+                onResolveAsyncRender();
+            }
+            setIsVisualizationLoading(isLoading);
+            onLoadingChanged?.({ isLoading });
+        },
+        [onLoadingChanged],
+    );
 
     const handleError = useCallback<OnError>(
         (error) => {

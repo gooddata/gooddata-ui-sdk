@@ -2,14 +2,14 @@
 import React, { useCallback, useState } from "react";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight, insightTitle } from "@gooddata/sdk-model";
+import { FullScreenOverlay, Overlay, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import {
-    ExportDialog,
-    FullScreenOverlay,
-    Overlay,
-    OverlayPositionType,
-    useMediaQuery,
-} from "@gooddata/sdk-ui-kit";
-import { GoodDataSdkError, ILocale, OnLoadingChanged } from "@gooddata/sdk-ui";
+    GoodDataSdkError,
+    IExportFunction,
+    ILocale,
+    OnExportReady,
+    OnLoadingChanged,
+} from "@gooddata/sdk-ui";
 
 import {
     OnDashboardDrill,
@@ -21,13 +21,11 @@ import {
 } from "../../../../drill";
 import { IntlWrapper } from "../../../../localization";
 import { DefaultDashboardInsightWithDrillSelect } from "../DefaultDashboardInsightWithDrillSelect";
-import { selectSettings, useDashboardSelector } from "../../../../../model";
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile";
 
 import { DrillDialog } from "./DrillDialog";
 import { useDashboardDrillTargetsLocal } from "../useDashboardDrillTargets";
-import { useDrillExport } from "./useDrillExport";
-import { useExportHandler } from "./useExportHandler";
+import { useInsightExport } from "../../../common";
 
 /**
  * @internal
@@ -46,6 +44,14 @@ export interface InsightDrillDialogProps {
     onClose: () => void;
     onBackButtonClick: () => void;
 }
+
+const overlayIgnoredClasses = [
+    ".s-sort-direction-arrow",
+    ".gd-export-dialog",
+    ".options-menu-export-xlsx",
+    ".options-menu-export-csv",
+    `#${DOWNLOADER_ID}`,
+];
 
 export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element => {
     const {
@@ -69,57 +75,41 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
 
     const [error, setError] = useState<GoodDataSdkError | undefined>();
     const [isLoading, setIsLoading] = useState(false);
+    const [exportFunction, setExportFunction] = useState<IExportFunction | undefined>();
 
-    const handleLoadingChanged = useCallback<OnLoadingChanged>(
-        ({ isLoading }) => {
-            if (isLoading) {
-                setError(undefined);
-            }
+    const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
+        if (isLoading) {
+            setError(undefined);
+        }
 
-            setIsLoading(isLoading);
-        },
-        [isLoading],
-    );
+        setIsLoading(isLoading);
+    }, []);
 
-    const onExport = useExportHandler();
-
-    const settings = useDashboardSelector(selectSettings);
+    const handleExportReady = useCallback<OnExportReady>((newExportFunction) => {
+        setExportFunction(() => newExportFunction); // for functions in state, we always need to use the extra lambda
+    }, []);
 
     const modalTitle = insightTitle(insight);
 
-    const positionType: OverlayPositionType = "fixed";
-
-    const overlayProps = {
-        className: "gd-drill-modal-overlay",
-        isModal: true,
-        closeOnOutsideClick: true,
-        closeOnEscape: true,
-        ignoreClicksOnByClass: [
-            ".s-sort-direction-arrow",
-            ".gd-export-dialog",
-            ".options-menu-export-xlsx",
-            ".options-menu-export-csv",
-            `#${DOWNLOADER_ID}`,
-        ],
-        onClose,
-        positionType,
-    };
-
-    const {
+    const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
+        error,
         exportFunction,
-        onExportReady,
-        isExportDialogVisible,
-        onExportDialogSubmit,
-        onExportDialogCancel,
-        exportCSVEnabled,
-        exportXLSXEnabled,
-        onExportCSV,
-        onExportXLSX,
-    } = useDrillExport(modalTitle, error, isLoading, onExport);
+        isLoading,
+        title: modalTitle,
+    });
 
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;
+
     return (
-        <OverlayComponent {...overlayProps}>
+        <OverlayComponent
+            className="gd-drill-modal-overlay"
+            isModal
+            closeOnEscape
+            closeOnOutsideClick
+            ignoreClicksOnByClass={overlayIgnoredClasses}
+            onClose={onClose}
+            positionType="fixed"
+        >
             <IntlWrapper locale={locale}>
                 <DrillDialog
                     title={modalTitle}
@@ -148,18 +138,9 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                         onAvailableDrillTargetsReceived={onAvailableDrillTargetsReceived}
                         onError={setError}
                         onLoadingChanged={handleLoadingChanged}
-                        onExportReady={onExportReady}
+                        onExportReady={handleExportReady}
                     />
                 </DrillDialog>
-                {isExportDialogVisible && (
-                    <ExportDialog
-                        onCancel={onExportDialogCancel}
-                        onSubmit={onExportDialogSubmit}
-                        includeFilterContext={Boolean(settings?.activeFiltersByDefault ?? true)}
-                        mergeHeaders={Boolean(settings?.cellMergedByDefault ?? true)}
-                        filterContextVisible={Boolean(settings?.enableActiveFilterContext ?? true)}
-                    />
-                )}
             </IntlWrapper>
         </OverlayComponent>
     );

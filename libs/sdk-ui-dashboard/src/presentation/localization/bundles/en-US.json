@@ -433,5 +433,35 @@
         "value": "Export successful.",
         "comment": "Dialog. Export of the visualization to the file is done.",
         "limit": 0
+    },
+    "options.button.bubble": {
+        "value": "Export insight data",
+        "comment": "Show this message when hovering on the options button",
+        "limit": 0
+    },
+    "options.menu.export.CSV": {
+        "value": "CSV",
+        "comment": "Export to file with CSV extension.",
+        "limit": 0
+    },
+    "options.menu.export.XLSX": {
+        "value": "XLSX",
+        "comment": "Export to file with XLSX extension.",
+        "limit": 0
+    },
+    "options.menu.unsupported.error": {
+        "value": "The insight cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
+        "comment": "Error popup. Insight cannot be exported to the file because of wrong setting of filters, measures or attributes.",
+        "limit": 0
+    },
+    "options.menu.unsupported.loading": {
+        "value": "The insight cannot be exported at the moment.",
+        "comment": "Error popup. Insight cannot be exported to the file.",
+        "limit": 0
+    },
+    "export.defaultTitle": {
+        "value": "Untitled insight",
+        "comment": "Default title for exported file",
+        "limit": 0
     }
 }

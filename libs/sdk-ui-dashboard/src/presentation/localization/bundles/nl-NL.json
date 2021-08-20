@@ -85,5 +85,11 @@
     "messages.exportResultError": "Exporteren van gegevens is mislukt. Probeer het later opnieuw.",
     "messages.exportResultRestrictedError": "U kunt dit inzicht niet exporteren omdat het beperkte gegevens bevat.",
     "messages.exportResultStart": "Bezig met exporteren",
-    "messages.exportResultSuccess": "Exporteren geslaagd."
+    "messages.exportResultSuccess": "Exporteren geslaagd.",
+    "options.button.bubble": "Inzichtgegevens exporteren",
+    "options.menu.export.CSV": "CSV",
+    "options.menu.export.XLSX": "XLSX",
+    "options.menu.unsupported.error": "U kunt het inzicht momenteel niet exporteren. Probeer verschillende filters toe te passen of verschillende maten of attributen te gebruiken.",
+    "options.menu.unsupported.loading": "U kunt het inzicht momenteel niet exporteren.",
+    "export.defaultTitle": "Inzicht zonder naam"
 }

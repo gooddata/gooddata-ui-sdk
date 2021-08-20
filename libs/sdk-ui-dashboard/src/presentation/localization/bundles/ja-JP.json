@@ -85,5 +85,11 @@
     "messages.exportResultError": "データをエクスポートできませんでした。後でもう一度お試しください。",
     "messages.exportResultRestrictedError": "制限されているデータを含んでいるため、このインサイトをエクスポートできません。",
     "messages.exportResultStart": "エクスポート実行中",
-    "messages.exportResultSuccess": "正常にエクスポートしました。"
+    "messages.exportResultSuccess": "正常にエクスポートしました。",
+    "options.button.bubble": "インサイトデータをエクスポート",
+    "options.menu.export.CSV": "CSV",
+    "options.menu.export.XLSX": "XLSX",
+    "options.menu.unsupported.error": "現在、このインサイトはエクスポートできません。別のフィルターを適用するか、別の測定値や属性をご利用ください。",
+    "options.menu.unsupported.loading": "現在、このインサイトはエクスポートできません。",
+    "export.defaultTitle": "無題の解析"
 }

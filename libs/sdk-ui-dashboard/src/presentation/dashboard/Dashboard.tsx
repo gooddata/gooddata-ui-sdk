@@ -14,6 +14,7 @@ import { useIntl } from "react-intl";
 import {
     DashboardComponentsProvider,
     DashboardConfigProvider,
+    ExportDialogContextProvider,
     useDashboardComponentsContext,
 } from "../dashboardContexts";
 import {
@@ -64,6 +65,7 @@ import {
 import { useDashboardPdfExporter } from "./hooks/useDashboardPdfExporter";
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { IDashboardProps } from "./types";
+import { ExportDialogProvider } from "../dialogs";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -204,6 +206,7 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     return (
         <>
             <ToastMessages />
+            <ExportDialogProvider />
             {isScheduleEmailingDialogOpen && (
                 <ScheduledEmailDialogPropsProvider
                     isVisible={isScheduleEmailingDialogOpen}
@@ -295,35 +298,37 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             permissions={props.permissions}
         >
             <ToastMessageContextProvider>
-                <ThemeProvider
-                    theme={props.theme}
-                    modifier={props.themeModifier ?? defaultDashboardThemeModifier}
-                >
-                    <DashboardComponentsProvider
-                        ErrorComponent={props.ErrorComponent ?? DefaultError}
-                        LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                        LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
-                        InsightComponent={props.InsightComponent ?? DefaultDashboardInsightInner}
-                        KpiComponent={props.KpiComponent ?? DefaultDashboardKpiInner}
-                        WidgetComponent={props.WidgetComponent ?? DefaultDashboardWidgetInner}
-                        ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
-                        MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
-                        TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
-                        TitleComponent={props.TitleComponent ?? DefaultTitleInner}
-                        ScheduledEmailDialogComponent={
-                            props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
-                        }
-                        DashboardAttributeFilterComponentFactory={attributeFilterFactory}
-                        DashboardDateFilterComponent={
-                            props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
-                        }
-                        FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBarInner}
+                <ExportDialogContextProvider>
+                    <ThemeProvider
+                        theme={props.theme}
+                        modifier={props.themeModifier ?? defaultDashboardThemeModifier}
                     >
-                        <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
-                            <DashboardLoading {...props} />
-                        </DashboardConfigProvider>
-                    </DashboardComponentsProvider>
-                </ThemeProvider>
+                        <DashboardComponentsProvider
+                            ErrorComponent={props.ErrorComponent ?? DefaultError}
+                            LoadingComponent={props.LoadingComponent ?? DefaultLoading}
+                            LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
+                            InsightComponent={props.InsightComponent ?? DefaultDashboardInsightInner}
+                            KpiComponent={props.KpiComponent ?? DefaultDashboardKpiInner}
+                            WidgetComponent={props.WidgetComponent ?? DefaultDashboardWidgetInner}
+                            ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
+                            MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
+                            TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
+                            TitleComponent={props.TitleComponent ?? DefaultTitleInner}
+                            ScheduledEmailDialogComponent={
+                                props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
+                            }
+                            DashboardAttributeFilterComponentFactory={attributeFilterFactory}
+                            DashboardDateFilterComponent={
+                                props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
+                            }
+                            FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBarInner}
+                        >
+                            <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
+                                <DashboardLoading {...props} />
+                            </DashboardConfigProvider>
+                        </DashboardComponentsProvider>
+                    </ThemeProvider>
+                </ExportDialogContextProvider>
             </ToastMessageContextProvider>
         </DashboardStoreProvider>
     );

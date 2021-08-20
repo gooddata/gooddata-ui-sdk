@@ -85,5 +85,11 @@
     "messages.exportResultError": "Échec de l'exportation des données. Réessayez plus tard.",
     "messages.exportResultRestrictedError": "Vous ne pouvez pas exporter cette perception car elle contient des données à accès restreint.",
     "messages.exportResultStart": "Exportation en cours",
-    "messages.exportResultSuccess": "Exportation effectuée"
+    "messages.exportResultSuccess": "Exportation effectuée",
+    "options.button.bubble": "Exporter les données de perception",
+    "options.menu.export.CSV": "CSV",
+    "options.menu.export.XLSX": "XLSX",
+    "options.menu.unsupported.error": "La perception ne peut pas être exportée à l'heure actuelle. Essayez d'appliquer d'autres filtres ou d'utiliser d'autres mesures ou attributs.",
+    "options.menu.unsupported.loading": "La perception ne peut pas être exportée à l'heure actuelle.",
+    "export.defaultTitle": "Perception sans titre"
 }

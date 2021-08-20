@@ -85,5 +85,11 @@
     "messages.exportResultError": "Error al exportar los datos. Inténtelo de nuevo más tarde.",
     "messages.exportResultRestrictedError": "No puede exportar esta perspectiva porque contiene datos restringidos.",
     "messages.exportResultStart": "Exportación en curso",
-    "messages.exportResultSuccess": "Exportación correcta."
+    "messages.exportResultSuccess": "Exportación correcta.",
+    "options.button.bubble": "Exportar datos de la perspectiva",
+    "options.menu.export.CSV": "CSV",
+    "options.menu.export.XLSX": "XLSX",
+    "options.menu.unsupported.error": "No se puede exportar la perspectiva en estos momentos. Intente aplicar otros filtros o utilice unas medidas o unos atributos diferentes.",
+    "options.menu.unsupported.loading": "No se puede exportar la perspectiva en estos momentos.",
+    "export.defaultTitle": "Perspectiva sin título"
 }

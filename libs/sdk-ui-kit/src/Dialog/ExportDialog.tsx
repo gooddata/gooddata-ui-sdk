@@ -1,8 +1,11 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import { Overlay } from "../Overlay";
+import { IAlignPoint } from "../typings/positioning";
 import { ExportDialogBase } from "./ExportDialogBase";
 import { IExportDialogBaseProps } from "./typings";
+
+const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
 /**
  * @internal
@@ -33,11 +36,7 @@ export const ExportDialog = (props: IExportDialogBaseProps): JSX.Element => {
     } = props;
     return (
         <Overlay
-            alignPoints={[
-                {
-                    align: "cc cc",
-                },
-            ]}
+            alignPoints={alignPoints}
             isModal
             positionType="fixed"
             containerClassName={containerClassName}

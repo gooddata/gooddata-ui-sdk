@@ -85,5 +85,11 @@
     "messages.exportResultError": "Daten konnten nicht exportiert werden. Versuchen Sie es später noch einmal.",
     "messages.exportResultRestrictedError": "Sie können die Betrachtungsansicht nicht exportieren, weil sie zugriffsbeschränkte Daten enthält.",
     "messages.exportResultStart": "Export wird durchgeführt",
-    "messages.exportResultSuccess": "Export erfolgreich abgeschlossen."
+    "messages.exportResultSuccess": "Export erfolgreich abgeschlossen.",
+    "options.button.bubble": "Betrachtungsdaten exportieren",
+    "options.menu.export.CSV": "CSV",
+    "options.menu.export.XLSX": "XLSX",
+    "options.menu.unsupported.error": "Die Betrachtung kann momentan nicht exportiert werden. Versuchen Sie andere Filter anzuwenden bzw. andere Messungen oder Attribute.",
+    "options.menu.unsupported.loading": "Die Betrachtung kann momentan nicht exportiert werden. ",
+    "export.defaultTitle": "Betrachtung ohne Namen"
 }
