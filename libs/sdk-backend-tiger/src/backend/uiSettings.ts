@@ -60,6 +60,7 @@ export const DefaultUiSettings: ISettings = {
     ADCatalogGroupsExpanded: true,
     enableCustomColorPicker: true,
     enableAdAdditionalDateAttributes: true,
+    enableAlternativeDisplayFormSelection: true,
 };
 
 /**
