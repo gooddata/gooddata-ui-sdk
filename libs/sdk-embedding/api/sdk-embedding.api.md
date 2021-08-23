@@ -7,11 +7,7 @@
 import { GdcExecuteAFM } from '@gooddata/api-model-bear';
 import { GdcExport } from '@gooddata/api-model-bear';
 import { GdcVisualizationObject } from '@gooddata/api-model-bear';
-import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
-import { INegativeAttributeFilter } from '@gooddata/sdk-model';
-import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
-import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 
 // @public
@@ -362,7 +358,6 @@ export namespace EmbeddedGdc {
     export type RelativeType = "relative";
     // (undocumented)
     export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem | IRemoveRankingFilterItem;
-    export type ResolvableFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
     // (undocumented)
     export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
 }

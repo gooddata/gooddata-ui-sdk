@@ -2034,6 +2034,28 @@ export type InsightPlaceholderWidget = {
 export function insightWidgetExecutionFailed(error: GoodDataSdkError, correlationId?: string): DashboardEventBody<DashboardInsightWidgetExecutionFailed>;
 
 // @alpha (undocumented)
+export interface IResolvedAttributeFilterValues {
+    // (undocumented)
+    [elementRef: string]: string | undefined;
+}
+
+// @alpha (undocumented)
+export interface IResolvedDateFilterValue {
+    // (undocumented)
+    from: string;
+    // (undocumented)
+    granularity: string;
+    // (undocumented)
+    to: string;
+}
+
+// @alpha
+export interface IResolvedFilterValues {
+    // (undocumented)
+    [filterStringRef: string]: IResolvedAttributeFilterValues | ResolvedDateFilterValues;
+}
+
+// @alpha (undocumented)
 export interface IScheduledEmailDialogProps {
     isVisible?: boolean;
     onCancel?: () => void;
@@ -2707,6 +2729,9 @@ export interface ResetDashboard extends IDashboardCommand {
 // @alpha
 export function resetDashboard(correlationId?: string): ResetDashboard;
 
+// @alpha
+export type ResolvableFilter = IDashboardFilter;
+
 // @alpha (undocumented)
 export interface ResolveAsyncRender extends IDashboardCommand {
     // (undocumented)
@@ -2719,6 +2744,12 @@ export interface ResolveAsyncRender extends IDashboardCommand {
 
 // @alpha
 export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;
+
+// @alpha (undocumented)
+export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
+
+// @alpha
+export function resolveFilterValues(filters: ResolvableFilter[]): Promise<IResolvedFilterValues>;
 
 // @alpha
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;

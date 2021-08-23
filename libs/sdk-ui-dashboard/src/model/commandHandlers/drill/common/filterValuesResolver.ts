@@ -7,20 +7,26 @@ import {
     isAbsoluteDateFilter,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import { EmbeddedGdc } from "../iframe/common";
+
+import {
+    IResolvedAttributeFilterValues,
+    IResolvedFilterValues,
+    ResolvableFilter,
+    ResolvedDateFilterValues,
+} from "../../../types/commonTypes";
 
 /**
+ * Resolves filter values
  *
- * @param filters Filters with resolvable values
+ * @param filters - Filters with resolvable values
  *  = all selected elements of attribute filter
  *  + from/to limits of relative date filter
  *  + from/to limits of absolute date filter
  * @returns Map of resolved filter values per filter's identifier (date dimension ref or attribute DF ref)
+ * @alpha
  */
-export function resolveFilterValues(
-    filters: EmbeddedGdc.ResolvableFilter[],
-): Promise<EmbeddedGdc.IResolvedFilterValues> {
-    const resolvedValuesMap: EmbeddedGdc.IResolvedFilterValues = {};
+export function resolveFilterValues(filters: ResolvableFilter[]): Promise<IResolvedFilterValues> {
+    const resolvedValuesMap: IResolvedFilterValues = {};
     return new Promise((resolve) =>
         resolve(
             filters.reduce((result, filter) => {
@@ -45,16 +51,16 @@ export function resolveFilterValues(
 }
 
 function getResolvedFilterValues(
-    map: EmbeddedGdc.IResolvedFilterValues,
+    map: IResolvedFilterValues,
     filter: IAttributeFilter,
-): EmbeddedGdc.IResolvedAttributeFilterValues | undefined;
+): IResolvedAttributeFilterValues | undefined;
 function getResolvedFilterValues(
-    map: EmbeddedGdc.IResolvedFilterValues,
+    map: IResolvedFilterValues,
     filter: IDateFilter,
-): EmbeddedGdc.ResolvedDateFilterValues | undefined;
+): ResolvedDateFilterValues | undefined;
 function getResolvedFilterValues(
-    map: EmbeddedGdc.IResolvedFilterValues,
+    map: IResolvedFilterValues,
     filter: IAttributeFilter | IDateFilter,
-): EmbeddedGdc.IResolvedAttributeFilterValues | EmbeddedGdc.ResolvedDateFilterValues | undefined {
+): IResolvedAttributeFilterValues | ResolvedDateFilterValues | undefined {
     return map[serializeObjRef(filterObjRef(filter))];
 }

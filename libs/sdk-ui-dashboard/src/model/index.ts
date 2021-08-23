@@ -120,6 +120,11 @@ export {
     ObjectAvailabilityConfig,
     DashboardConfig,
     ResolvedDashboardConfig,
+    ResolvableFilter,
+    ResolvedDateFilterValues,
+    IResolvedAttributeFilterValues,
+    IResolvedDateFilterValue,
+    IResolvedFilterValues,
 } from "./types/commonTypes";
 export {
     ExtendedDashboardItem,
