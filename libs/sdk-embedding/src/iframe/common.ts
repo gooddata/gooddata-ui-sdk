@@ -2,12 +2,6 @@
 import isEmpty from "lodash/isEmpty";
 import isObject from "lodash/isObject";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
-import {
-    IAbsoluteDateFilter as ModelAbsoluteDateFilter,
-    IRelativeDateFilter as ModelRelativeDateFilter,
-    IPositiveAttributeFilter as ModelPositiveAttributeFilter,
-    INegativeAttributeFilter as ModelNegativeAttributeFilter,
-} from "@gooddata/sdk-model";
 
 /**
  * List of products using post events
@@ -457,15 +451,6 @@ export namespace EmbeddedGdc {
     export function isDashboardAttributeFilter(filter: unknown): filter is IDashboardAttributeFilter {
         return !isEmpty(filter) && (filter as IDashboardAttributeFilter).attributeFilter !== undefined;
     }
-
-    /**
-     * Supported dashboard filter types. Same as IDashboardFilter
-     */
-    export type ResolvableFilter =
-        | ModelAbsoluteDateFilter
-        | ModelRelativeDateFilter
-        | ModelPositiveAttributeFilter
-        | ModelNegativeAttributeFilter;
 
     export interface IResolvedAttributeFilterValues {
         [elementRef: string]: string | undefined; // restricted elements values cant be resolved

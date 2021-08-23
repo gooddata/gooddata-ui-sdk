@@ -2,6 +2,5 @@
 import * as filterConvertors from "./filterConvertors";
 import * as messagingUtils from "./messagingUtils";
 import * as validators from "./validators";
-import { resolveFilterValues } from "./filterValuesResolver";
 
-export { filterConvertors, messagingUtils, validators, resolveFilterValues };
+export { filterConvertors, messagingUtils, validators };

@@ -7,6 +7,9 @@
 export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
 export { ObjRefMap, ObjRefMapConfig } from "./_staging/metadata/objRefMap";
 
+// TODO remove export after values resolver call from KD is obsolete
+export { resolveFilterValues } from "./model/commandHandlers/drill/common/filterValuesResolver";
+
 export * from "./model";
 export * from "./presentation";
 export * from "./types";

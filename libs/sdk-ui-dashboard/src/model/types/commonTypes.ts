@@ -4,6 +4,7 @@ import { IColorPalette, ObjRef } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys";
 import includes from "lodash/includes";
+import { IDashboardFilter } from "../../types";
 
 /**
  * Dashboard component may offer users to pick objects to use on the dashboard - for instance selecting a metric
@@ -167,3 +168,40 @@ export type DashboardContext = {
      */
     dataProductId?: string;
 };
+
+/**
+ * @alpha
+ */
+export interface IResolvedAttributeFilterValues {
+    [elementRef: string]: string | undefined; // restricted elements values cant be resolved
+}
+
+/**
+ * @alpha
+ */
+export interface IResolvedDateFilterValue {
+    granularity: string;
+    from: string;
+    to: string;
+}
+
+/**
+ * @alpha
+ */
+export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
+
+/**
+ * Resolved values types for all resolvable filters.
+ *
+ * @alpha
+ */
+export interface IResolvedFilterValues {
+    [filterStringRef: string]: IResolvedAttributeFilterValues | ResolvedDateFilterValues;
+}
+
+/**
+ * Supported dashboard filter types for values resolution.
+ *
+ * @alpha
+ */
+export type ResolvableFilter = IDashboardFilter;
