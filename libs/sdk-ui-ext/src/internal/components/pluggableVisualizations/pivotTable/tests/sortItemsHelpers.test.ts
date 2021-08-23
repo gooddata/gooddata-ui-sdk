@@ -211,6 +211,43 @@ describe("addDefaultSort", () => {
         );
         expect(actual).toEqual(expected);
     });
+
+    it("should add default sort if the functionality is suspended by flag (TNT-166)", () => {
+        const uri = "/gdc/md/mockproject/obj/attr.country/elements?id=1";
+        const measureSort: IMeasureSortItem = {
+            measureSortItem: {
+                direction: "asc",
+                locators: [
+                    {
+                        attributeLocatorItem: {
+                            attributeIdentifier: "attr.country",
+                            element: uri,
+                        },
+                    },
+                ],
+            },
+        };
+        const filterElement: IBucketFilterElement = {
+            title: "Matching",
+            uri,
+        };
+        const actual = addDefaultSort(
+            [measureSort],
+            [
+                {
+                    attribute: "irrelevant",
+                    displayFormRef: uriRef("irrelevant/attribute/df/uri"),
+                    isInverted: true,
+                    selectedElements: [filterElement],
+                    totalElementsCount: 4,
+                },
+            ],
+            [accountRow, countryRow, productRow],
+            [accountRow, countryRow],
+            true,
+        );
+        expect(actual).toEqual([measureSort]);
+    });
 });
 
 describe("isSortItemVisible", () => {
@@ -328,6 +365,15 @@ describe("isSortItemVisible", () => {
         it("should return true when filter is MVF", () => {
             const actual = isSortItemVisible(sortItem, [measureValueFilter]);
             expect(actual).toEqual(true);
+        });
+        it('should return true when "notIn" filter with matching element is specified but the check should not be performed', () => {
+            const actual = isSortItemVisible(
+                sortItem,
+                [createFilterBucketItem([matchingFilterElement], true)],
+                true,
+            );
+            const expected = true;
+            expect(actual).toEqual(expected);
         });
     });
 });
