@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-08-11T11:47:21.655Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-08-23T11:37:38.474Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -3366,4 +3366,8 @@ export const Dashboards = {
      * Dashboard Title: widget filtering tests advanced
      * Dashboard ID: aaQ8QjLVhNOG
      */ WidgetFilteringTestsAdvanced: "aaQ8QjLVhNOG",
+    /**
+     * Dashboard Title: Broken Filter Alerts Test
+     * Dashboard ID: abK3yl1TcTWV
+     */ BrokenFilterAlertsTest: "abK3yl1TcTWV",
 };

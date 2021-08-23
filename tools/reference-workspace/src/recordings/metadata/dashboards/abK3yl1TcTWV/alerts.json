@@ -1,0 +1,254 @@
+[
+    {
+        "dashboard": { "uri": "/gdc/md/referenceworkspace/obj/1424" },
+        "description": "",
+        "filterContext": {
+            "description": "",
+            "filters": [
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1055" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "8aa81474ab3b452598570b495d40b3e9",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1087" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "9c6ff2074b2d42b8aace577689155af2",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": {
+                            "uris": ["/gdc/md/referenceworkspace/obj/1088/elements?id=460487"]
+                        },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "03ef1535c47942f08495ab19391fe8f1",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1099" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "2699039d119c4f0b8a7163991004f82e",
+                        "negativeSelection": true
+                    }
+                }
+            ],
+            "identifier": "acD3xBiZh1t5",
+            "ref": { "uri": "/gdc/md/referenceworkspace/obj/1428" },
+            "title": "filterContext",
+            "uri": "/gdc/md/referenceworkspace/obj/1428"
+        },
+        "identifier": "abH3wX9MbAlp",
+        "isTriggered": false,
+        "ref": { "uri": "/gdc/md/referenceworkspace/obj/1429" },
+        "threshold": 3621913158,
+        "title": "kpi alert",
+        "uri": "/gdc/md/referenceworkspace/obj/1429",
+        "whenTriggered": "aboveThreshold",
+        "widget": { "uri": "/gdc/md/referenceworkspace/obj/1421" }
+    },
+    {
+        "dashboard": { "uri": "/gdc/md/referenceworkspace/obj/1424" },
+        "description": "",
+        "filterContext": {
+            "description": "",
+            "filters": [
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1055" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "8aa81474ab3b452598570b495d40b3e9",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1087" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "9c6ff2074b2d42b8aace577689155af2",
+                        "negativeSelection": true
+                    }
+                }
+            ],
+            "identifier": "afp3hbwMee1X",
+            "ref": { "uri": "/gdc/md/referenceworkspace/obj/1430" },
+            "title": "filterContext",
+            "uri": "/gdc/md/referenceworkspace/obj/1430"
+        },
+        "identifier": "ac93lPuqg4L2",
+        "isTriggered": true,
+        "ref": { "uri": "/gdc/md/referenceworkspace/obj/1431" },
+        "threshold": 36219131,
+        "title": "kpi alert",
+        "uri": "/gdc/md/referenceworkspace/obj/1431",
+        "whenTriggered": "aboveThreshold",
+        "widget": { "uri": "/gdc/md/referenceworkspace/obj/1422" }
+    },
+    {
+        "dashboard": { "uri": "/gdc/md/referenceworkspace/obj/1424" },
+        "description": "",
+        "filterContext": {
+            "description": "",
+            "filters": [
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1055" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "8aa81474ab3b452598570b495d40b3e9",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1087" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "9c6ff2074b2d42b8aace577689155af2",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": {
+                            "uris": ["/gdc/md/referenceworkspace/obj/1088/elements?id=460487"]
+                        },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "03ef1535c47942f08495ab19391fe8f1",
+                        "negativeSelection": true
+                    }
+                }
+            ],
+            "identifier": "aer3jbdccD1N",
+            "ref": { "uri": "/gdc/md/referenceworkspace/obj/1432" },
+            "title": "filterContext",
+            "uri": "/gdc/md/referenceworkspace/obj/1432"
+        },
+        "identifier": "abr3v114hLuN",
+        "isTriggered": true,
+        "ref": { "uri": "/gdc/md/referenceworkspace/obj/1433" },
+        "threshold": 0.54,
+        "title": "kpi alert",
+        "uri": "/gdc/md/referenceworkspace/obj/1433",
+        "whenTriggered": "aboveThreshold",
+        "widget": { "uri": "/gdc/md/referenceworkspace/obj/1427" }
+    },
+    {
+        "dashboard": { "uri": "/gdc/md/referenceworkspace/obj/1424" },
+        "description": "",
+        "filterContext": {
+            "description": "",
+            "filters": [
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1055" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "8aa81474ab3b452598570b495d40b3e9",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": {
+                            "uris": ["/gdc/md/referenceworkspace/obj/1086/elements?id=460488"]
+                        },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1087" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "9c6ff2074b2d42b8aace577689155af2",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": {
+                            "uris": ["/gdc/md/referenceworkspace/obj/1088/elements?id=460487"]
+                        },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "03ef1535c47942f08495ab19391fe8f1",
+                        "negativeSelection": true
+                    }
+                }
+            ],
+            "identifier": "afH4hIMRbyIv",
+            "ref": { "uri": "/gdc/md/referenceworkspace/obj/1436" },
+            "title": "filterContext",
+            "uri": "/gdc/md/referenceworkspace/obj/1436"
+        },
+        "identifier": "acz4ug4XgjLi",
+        "isTriggered": true,
+        "ref": { "uri": "/gdc/md/referenceworkspace/obj/1437" },
+        "threshold": 0.53,
+        "title": "kpi alert",
+        "uri": "/gdc/md/referenceworkspace/obj/1437",
+        "whenTriggered": "aboveThreshold",
+        "widget": { "uri": "/gdc/md/referenceworkspace/obj/1435" }
+    },
+    {
+        "dashboard": { "uri": "/gdc/md/referenceworkspace/obj/1424" },
+        "description": "",
+        "filterContext": {
+            "description": "",
+            "filters": [
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1055" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "8aa81474ab3b452598570b495d40b3e9",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": {
+                            "uris": ["/gdc/md/referenceworkspace/obj/1086/elements?id=460488"]
+                        },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1087" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "9c6ff2074b2d42b8aace577689155af2",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": {
+                            "uris": ["/gdc/md/referenceworkspace/obj/1088/elements?id=460487"]
+                        },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "03ef1535c47942f08495ab19391fe8f1",
+                        "negativeSelection": true
+                    }
+                }
+            ],
+            "identifier": "acm4u9NdgX6K",
+            "ref": { "uri": "/gdc/md/referenceworkspace/obj/1439" },
+            "title": "filterContext",
+            "uri": "/gdc/md/referenceworkspace/obj/1439"
+        },
+        "identifier": "abY4v7qibbnE",
+        "isTriggered": false,
+        "ref": { "uri": "/gdc/md/referenceworkspace/obj/1440" },
+        "threshold": 0.55,
+        "title": "kpi alert",
+        "uri": "/gdc/md/referenceworkspace/obj/1440",
+        "whenTriggered": "aboveThreshold",
+        "widget": { "uri": "/gdc/md/referenceworkspace/obj/1438" }
+    }
+]
