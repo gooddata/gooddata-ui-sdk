@@ -54,6 +54,7 @@
     "kpi.alertBox.example": "z. B.",
     "kpi.alertBox.unverifiedEmail": "Leider können Sie keinen Alarm sehen. Überprüfen Sie Ihre E-Mail. Wenn das nichts nützt, bitten Sie Ihren Administrator, Ihre Berechtigungen zu aktualisieren.",
     "kpi.alertBox.disabledInReadOnly": "Warnmeldungen im schreibgeschützten Modus deaktiviert",
+    "kpi.error.view": "KPI kann nicht angezeigt werden. Setzen Sie sich mit Ihrem Administrator in Verbindung, um die KPI-Definition festzulegen.",
     "kpiAlertDialog.delete": "Löschen",
     "kpiAlertDialog.deleting": "Wird gelöscht…",
     "kpiAlertDialog.emailMe": "Schicken Sie mir eine E-Mail",

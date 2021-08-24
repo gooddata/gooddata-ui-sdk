@@ -27,10 +27,8 @@ import {
     IDataSeries,
     IDrillableItem,
     IDrillEventContext,
-    IErrorProps,
     IHeaderPredicate,
     ILoadingProps,
-    isNoDataSdkError,
     isSomeHeaderPredicateMatched,
     NoDataSdkError,
     OnError,
@@ -88,7 +86,6 @@ interface IKpiExecutorProps {
     separators: ISeparators;
     disableDrillUnderline?: boolean;
     isReadOnly?: boolean;
-    ErrorComponent?: React.ComponentType<IErrorProps>;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
 }
 
@@ -110,14 +107,12 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
     disableDrillUnderline,
     intl,
     isReadOnly,
-    ErrorComponent: CustomErrorComponent,
     LoadingComponent: CustomLoadingComponent,
 }) => {
     const currentUser = useDashboardSelector(selectUser);
     const permissions = useDashboardSelector(selectPermissions);
     const settings = useDashboardSelector(selectSettings);
-    const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
-        ErrorComponent: CustomErrorComponent,
+    const { LoadingComponent } = useDashboardComponentsContext({
         LoadingComponent: CustomLoadingComponent,
     });
 
@@ -348,9 +343,6 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
             alertSavingStatus={alertSavingStatus}
         >
             {() => {
-                if (status === "error" && !isNoDataSdkError(error)) {
-                    return <ErrorComponent message={(error! as Error).message} />;
-                }
                 return (
                     <KpiRenderer
                         kpi={kpiWidget}
@@ -361,6 +353,8 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
                         onDrill={onDrill && handleOnDrill}
                         separators={separators}
                         enableCompactSize={enableCompactSize}
+                        error={error}
+                        errorHelp={intl.formatMessage({ id: "kpi.error.view" })}
                     />
                 );
             }}

@@ -54,6 +54,7 @@
     "kpi.alertBox.example": "p. ej.",
     "kpi.alertBox.unverifiedEmail": "Lo sentimos, no puede establecer una alerta. Asegúrese de que su correo electrónico está verificado. Si prosigue el problema, pídale a su administrador que actualice sus permisos.",
     "kpi.alertBox.disabledInReadOnly": "Las alertas están desactivadas en el modo de solo lectura",
+    "kpi.error.view": "No se puede mostrar el KPI. Póngase en contacto con su administrador para solucionar la definición del KPI.",
     "kpiAlertDialog.delete": "Eliminar",
     "kpiAlertDialog.deleting": "Eliminando…",
     "kpiAlertDialog.emailMe": "Enviarme un correo electrónico",
