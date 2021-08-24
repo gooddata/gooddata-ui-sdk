@@ -6,6 +6,7 @@ import {
     IElementsQueryAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import { IntlShape } from "react-intl";
+import isFunction from "lodash/isFunction";
 import {
     AttributeListItem,
     EmptyListItem,
@@ -162,11 +163,13 @@ export const getObjRef = (filter: IAttributeFilter, identifier: string): ObjRef 
 
 export const getValidElementsFilters = (
     parentFilters: IAttributeFilter[],
-    overAttribute: ObjRef,
+    overAttribute: ObjRef | ((parentFilter: IAttributeFilter) => ObjRef),
 ): IElementsQueryAttributeFilter[] => {
     if (!parentFilters || !overAttribute) {
         return [];
     }
+
+    const overAttributeGetter = isFunction(overAttribute) ? overAttribute : () => overAttribute;
 
     return parentFilters
         .filter((parentFilter) => {
@@ -178,7 +181,7 @@ export const getValidElementsFilters = (
         .map((attributeFilter) => {
             return {
                 attributeFilter,
-                overAttribute: overAttribute,
+                overAttribute: overAttributeGetter(attributeFilter),
             };
         });
 };

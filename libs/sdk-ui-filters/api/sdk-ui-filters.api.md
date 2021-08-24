@@ -232,7 +232,7 @@ export interface IAttributeFilterButtonOwnProps {
     locale?: string;
     onApply?: (filter: IAttributeFilter, isInverted: boolean) => void;
     onError?: (error: any) => void;
-    parentFilterOverAttribute?: ObjRef;
+    parentFilterOverAttribute?: ObjRef | ((parentFilter: IAttributeFilter) => ObjRef);
     parentFilters?: AttributeFiltersOrPlaceholders;
     renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React_2.ReactNode;
     title?: string;
@@ -257,7 +257,7 @@ export interface IAttributeFilterProps {
     locale?: string;
     onApply?: (filter: IAttributeFilter) => void;
     onError?: OnError;
-    parentFilterOverAttribute?: ObjRef;
+    parentFilterOverAttribute?: ObjRef | ((parentFilter: IAttributeFilter) => ObjRef);
     parentFilters?: AttributeFiltersOrPlaceholders;
     title?: string;
     titleWithSelection?: boolean;

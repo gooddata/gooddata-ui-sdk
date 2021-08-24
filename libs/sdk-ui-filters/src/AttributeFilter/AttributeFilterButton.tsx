@@ -105,9 +105,12 @@ export interface IAttributeFilterButtonOwnProps {
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
 
     /**
-     * Specify and parent filter attribute ref over which should be available options reduced.
+     * Specify the over attribute - an attribute the filter and its parent filter are connected through.
+     *
+     * You can either provide an {@link @gooddata/sdk-model#ObjRef} which will be used for all the parent filters,
+     * or you can provide a function that will be called for each parent filter to determine the respective over attribute.
      */
-    parentFilterOverAttribute?: ObjRef;
+    parentFilterOverAttribute?: ObjRef | ((parentFilter: IAttributeFilter) => ObjRef);
 
     /**
      * Specify identifier of attribute, for which you want to construct the filter.
