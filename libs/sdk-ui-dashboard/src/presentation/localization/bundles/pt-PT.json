@@ -85,5 +85,11 @@
     "messages.exportResultError": "Falha ao exportar os dados. Tente mais tarde.",
     "messages.exportResultRestrictedError": "Não é possível exportar este insight porque contém dados confidenciais.",
     "messages.exportResultStart": "Exportação em curso",
-    "messages.exportResultSuccess": "Exportação bem sucedida."
+    "messages.exportResultSuccess": "Exportação bem sucedida.",
+    "options.button.bubble": "Exportar dados de insight",
+    "options.menu.export.CSV": "CSV",
+    "options.menu.export.XLSX": "XLSX",
+    "options.menu.unsupported.error": "De momento não é possível exportar o insight. Experimente aplicar outros filtros ou utilizar outras medidas ou atributos.",
+    "options.menu.unsupported.loading": "De momento não é possível exportar o insight.",
+    "export.defaultTitle": "Insight sem título"
 }

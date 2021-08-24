@@ -206,7 +206,7 @@ function hasWidgetProps(obj: unknown): boolean {
 /**
  * Gets the widget identifier
  *
- * @param widget - widget to get identrifier of
+ * @param widget - widget to get identifier of
  * @returns the widget identifier
  * @alpha
  */
@@ -230,6 +230,19 @@ export function widgetUri(widget: IWidget): string {
 }
 
 /**
+ * Gets the widget ref
+ *
+ * @param widget - widget to get ref of
+ * @returns the widget ref
+ * @alpha
+ */
+export function widgetRef(widget: IWidget): ObjRef {
+    invariant(widget, "widget to get ref of must be specified");
+
+    return widget.ref;
+}
+
+/**
  * Gets the widget type
  *
  * @param widget - widget to get type of
@@ -240,4 +253,17 @@ export function widgetType(widget: IWidget): WidgetType {
     invariant(widget, "widget to get type of must be specified");
 
     return widget.type;
+}
+
+/**
+ * Gets the widget title
+ *
+ * @param widget - widget to get title of
+ * @returns the widget title
+ * @alpha
+ */
+export function widgetTitle(widget: IWidget): string {
+    invariant(widget, "widget to get title of must be specified");
+
+    return widget.title;
 }

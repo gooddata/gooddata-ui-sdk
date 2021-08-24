@@ -19,6 +19,7 @@ options = {
                 "src/_staging/*",
                 "src/model",
                 "src/presentation/dashboardContexts",
+                "src/presentation/dialogs",
                 "src/presentation/filterBar",
                 "src/presentation/layout",
                 "src/presentation/localization",
@@ -33,6 +34,11 @@ options = {
             "src/presentation/scheduledEmail/types.ts",
             "src/presentation/topBar/types.ts",
             "src/presentation/widget/types.ts",
+        ]),
+        depCruiser.moduleWithDependencies("dialogs", "src/presentation/dialogs", [
+            "src/_staging/*",
+            "src/presentation/dashboardContexts",
+            "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("drill", "src/presentation/drill", [
             "src/_staging/*",

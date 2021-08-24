@@ -85,5 +85,11 @@
     "messages.exportResultError": "数据导出失败，请稍后重试。",
     "messages.exportResultRestrictedError": "您不能导出此洞察，因为它包含限制数据。",
     "messages.exportResultStart": "正在导出",
-    "messages.exportResultSuccess": "导出成功！"
+    "messages.exportResultSuccess": "导出成功！",
+    "options.button.bubble": "导出洞察数据",
+    "options.menu.export.CSV": "CSV",
+    "options.menu.export.XLSX": "XLSX",
+    "options.menu.unsupported.error": "目前无法导出此洞察。请使用其他筛选器，或使用其他度量或属性。",
+    "options.menu.unsupported.loading": "目前无法导出此洞察。",
+    "export.defaultTitle": "无标题洞察"
 }

@@ -3,7 +3,7 @@ import { useCallback, useRef } from "react";
 import { IExportConfig, isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import { IExportFunction } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { downloadFile } from "../../../../../_staging/fileUtils/downloadFile";
+import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 
 type ExportHandler = (exportFunction: IExportFunction, exportConfig: IExportConfig) => Promise<void>;
 
