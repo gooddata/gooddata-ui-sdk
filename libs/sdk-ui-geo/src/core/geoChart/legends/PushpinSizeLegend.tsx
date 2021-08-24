@@ -10,10 +10,11 @@ export interface IPushpinSizeLegendProps {
     sizes: Array<number | null>;
     measureName?: string;
     isSmall: boolean;
+    showMiddleCircle: boolean;
 }
 
 export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): JSX.Element | null {
-    const { sizes = [], format, numericSymbols = [], measureName, isSmall } = props;
+    const { sizes = [], format, numericSymbols = [], measureName, isSmall, showMiddleCircle } = props;
     const sizeData = getSizeData(sizes);
 
     if (!sizeData.length) {
@@ -47,7 +48,7 @@ export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): JSX.E
                         {formatLegendLabel(min, format, diff, numericSymbols)}
                     </span>
                 </div>
-                {!isSmall && renderMiddleCircle(props)}
+                {showMiddleCircle && renderMiddleCircle(props)}
                 {!measureName && <div className="circle-separator" />}
                 <div className="pushpin-size-legend-circle circle-max-value">
                     <span className="circle-max-icon" />

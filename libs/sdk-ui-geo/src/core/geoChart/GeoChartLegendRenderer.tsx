@@ -15,6 +15,7 @@ import {
     isSmallPushpinSizeLegend,
     getPushpinSizeLegendTitle,
     shouldRenderCircleLegendInsidePopUp,
+    shouldRenderMiddleCircle,
 } from "./helpers/geoChart/responsive";
 
 const HEIGHT_OF_COLOR_LEGEND = 210;
@@ -242,8 +243,10 @@ function renderPushpinSizeLegend(
         size: { data, format, name },
     } = geoData;
     const width = contentRect?.client?.width;
+
     const isSmall = isSmallPushpinSizeLegend(width, ignoreSmallSize, responsive);
     const title = getPushpinSizeLegendTitle(name, width, ignoreMeasureName);
+    const showMiddleCircle = shouldRenderMiddleCircle(width, ignoreSmallSize);
 
     return (
         <PushpinSizeLegend
@@ -252,6 +255,7 @@ function renderPushpinSizeLegend(
             numericSymbols={numericSymbols}
             sizes={data}
             isSmall={isSmall}
+            showMiddleCircle={showMiddleCircle}
         />
     );
 }
