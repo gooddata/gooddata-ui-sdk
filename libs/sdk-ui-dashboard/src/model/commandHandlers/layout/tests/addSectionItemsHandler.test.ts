@@ -35,7 +35,7 @@ describe("add section items handler", () => {
 
         it("should load and add insight when adding insight widget", async () => {
             const event: DashboardLayoutSectionItemsAdded = await Tester.dispatchAndWaitFor(
-                addSectionItem(0, 0, TestInsightItem, TestCorrelation),
+                addSectionItem(0, 0, TestInsightItem, false, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
             );
 
@@ -46,7 +46,7 @@ describe("add section items handler", () => {
 
         it("should not undo loaded insight", async () => {
             await Tester.dispatchAndWaitFor(
-                addSectionItem(0, 0, TestInsightItem, TestCorrelation),
+                addSectionItem(0, 0, TestInsightItem, false, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
             );
             await Tester.dispatchAndWaitFor(undoLayoutChanges(), "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED");
@@ -59,7 +59,13 @@ describe("add section items handler", () => {
             const originalLayout = selectLayout(Tester.state());
 
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                addSectionItem(originalLayout.sections.length, 0, TestKpiPlaceholderItem, TestCorrelation),
+                addSectionItem(
+                    originalLayout.sections.length,
+                    0,
+                    TestKpiPlaceholderItem,
+                    false,
+                    TestCorrelation,
+                ),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -69,7 +75,7 @@ describe("add section items handler", () => {
 
         it("should fail if bad item index is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                addSectionItem(0, 4, TestKpiPlaceholderItem, TestCorrelation),
+                addSectionItem(0, 4, TestKpiPlaceholderItem, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -79,7 +85,7 @@ describe("add section items handler", () => {
 
         it("should fail if attempting to add item with non-existent insight", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                addSectionItem(0, 4, createTestInsightItem(uriRef("does-not-exist")), TestCorrelation),
+                addSectionItem(0, 4, createTestInsightItem(uriRef("does-not-exist")), false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -89,7 +95,7 @@ describe("add section items handler", () => {
 
         it("should fail if bad stash identifier is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                addSectionItem(0, -1, TestStash, TestCorrelation),
+                addSectionItem(0, -1, TestStash, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -176,7 +182,7 @@ describe("add section items handler", () => {
 
         it("should emit events correctly", async () => {
             await Tester.dispatchAndWaitFor(
-                addSectionItem(TestSectionIdx, -1, TestKpiPlaceholderItem, TestCorrelation),
+                addSectionItem(TestSectionIdx, -1, TestKpiPlaceholderItem, false, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
             );
 

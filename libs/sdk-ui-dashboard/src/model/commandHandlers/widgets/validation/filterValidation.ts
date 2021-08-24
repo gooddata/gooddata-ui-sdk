@@ -9,7 +9,7 @@ import { call, SagaReturnType, select } from "redux-saga/effects";
 import { query } from "../../../state/_infra/queryCall";
 import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap";
 import { invalidArgumentsProvided } from "../../../events/general";
-import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { areObjRefsEqual, IInsight, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver";
@@ -40,16 +40,22 @@ import { IDashboardCommand } from "../../../commands";
  * @param cmd - dashboard command it the context of which the validation is done
  * @param widget - insight that whose date filter is about to change
  * @param dateDataSet - ref of a date dataset to validate
+ * @param resolvedInsight - optionally specify entire insight used by the insight widget; if provided, the query
+ *  to obtain date datasets for the insight will use insight instead of looking up insight ref in the current dashboard state.
+ *  Passing resolved insight is essential in cases when this validation is done before the insight widget
+ *  is actually added onto dashboard - because in that case the insight itself is not yet part of the state and
+ *  the query is limited (intentionally) to query only by refs of insights that are on the dashboard
  */
 export function* validateDatasetForInsightWidgetDateFilter(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
     widget: IInsightWidget,
     dateDataSet: ObjRef,
+    resolvedInsight?: IInsight,
 ): SagaIterator<ICatalogDateDataset> {
     const insightDateDatasets: InsightDateDatasets = yield call(
         query,
-        queryDateDatasetsForInsight(widget.insight),
+        queryDateDatasetsForInsight(resolvedInsight ? resolvedInsight : widget.insight),
     );
     const catalogDataSet = newCatalogDateDatasetMap(insightDateDatasets.allAvailableDateDatasets).get(
         dateDataSet,

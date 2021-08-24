@@ -144,16 +144,17 @@ export interface AddLayoutSection extends IDashboardCommand {
         readonly index: RelativeIndex;
         readonly initialHeader?: IDashboardLayoutSectionHeader;
         readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
+        readonly autoResolveDateFilterDataset?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION";
 }
 
 // @alpha
-export function addLayoutSection(index: number, initialHeader?: IDashboardLayoutSectionHeader, initialItems?: DashboardItemDefinition[], correlationId?: string): AddLayoutSection;
+export function addLayoutSection(index: number, initialHeader?: IDashboardLayoutSectionHeader, initialItems?: DashboardItemDefinition[], autoResolveDateFilterDataset?: boolean, correlationId?: string): AddLayoutSection;
 
 // @alpha
-export function addSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, correlationId?: string): AddSectionItems;
+export function addSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, autoResolveDateFilterDataset?: boolean, correlationId?: string): AddSectionItems;
 
 // @alpha (undocumented)
 export interface AddSectionItems extends IDashboardCommand {
@@ -162,6 +163,7 @@ export interface AddSectionItems extends IDashboardCommand {
         readonly sectionIndex: number;
         readonly itemIndex: RelativeIndex;
         readonly items: ReadonlyArray<DashboardItemDefinition>;
+        readonly autoResolveDateFilterDataset?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS";
