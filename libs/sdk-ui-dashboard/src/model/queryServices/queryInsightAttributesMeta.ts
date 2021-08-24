@@ -2,8 +2,11 @@
 import { DashboardContext } from "../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import {
+    IInsightDefinition,
     InsightDisplayFormUsage,
     insightDisplayFormUsage,
+    insightRef,
+    isObjRef,
     ObjRef,
     objRefToString,
     serializeObjRef,
@@ -30,7 +33,14 @@ import uniqBy from "lodash/uniqBy";
 export const QueryInsightAttributesMetaService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META",
     queryService,
-    (query: QueryInsightAttributesMeta) => serializeObjRef(query.payload.insightRef),
+    (query: QueryInsightAttributesMeta) => {
+        const {
+            payload: { insightOrRef },
+        } = query;
+        const ref = isObjRef(insightOrRef) ? insightOrRef : insightRef(insightOrRef);
+
+        return serializeObjRef(ref);
+    },
 );
 
 /**
@@ -113,15 +123,13 @@ async function createInsightAttributesMeta(
         missingDisplayForms,
     );
 
-    const result: InsightAttributesMeta = {
+    return {
         usage,
         attributes: uniqBy([...attributesFromCatalog, ...loadedAttributes], (a) => serializeObjRef(a.ref)),
         displayForms: uniqBy([...displayFormsFromCatalog, ...loadedDisplayForms], (df) =>
             serializeObjRef(df.ref),
         ),
     };
-
-    return result;
 }
 
 function* queryService(
@@ -130,17 +138,22 @@ function* queryService(
 ): SagaIterator<InsightAttributesMeta> {
     const {
         correlationId,
-        payload: { insightRef },
+        payload: { insightOrRef },
     } = query;
-    const insightSelector = selectInsightByRef(insightRef);
-    const insight: ReturnType<typeof insightSelector> = yield select(insightSelector);
+    let insight: IInsightDefinition;
 
-    if (!insight) {
-        throw invalidQueryArguments(
-            ctx,
-            `Insight with ref ${objRefToString(insightRef)} does not exist on the dashboard`,
-            correlationId,
-        );
+    if (isObjRef(insightOrRef)) {
+        insight = yield select(selectInsightByRef(insightOrRef));
+
+        if (!insight) {
+            throw invalidQueryArguments(
+                ctx,
+                `Insight with ref ${objRefToString(insightOrRef)} does not exist on the dashboard`,
+                correlationId,
+            );
+        }
+    } else {
+        insight = insightOrRef;
     }
 
     const usage = insightDisplayFormUsage(insight);

@@ -144,16 +144,17 @@ export interface AddLayoutSection extends IDashboardCommand {
         readonly index: RelativeIndex;
         readonly initialHeader?: IDashboardLayoutSectionHeader;
         readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
+        readonly autoResolveDateFilterDataset?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION";
 }
 
 // @alpha
-export function addLayoutSection(index: number, initialHeader?: IDashboardLayoutSectionHeader, initialItems?: DashboardItemDefinition[], correlationId?: string): AddLayoutSection;
+export function addLayoutSection(index: number, initialHeader?: IDashboardLayoutSectionHeader, initialItems?: DashboardItemDefinition[], autoResolveDateFilterDataset?: boolean, correlationId?: string): AddLayoutSection;
 
 // @alpha
-export function addSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, correlationId?: string): AddSectionItems;
+export function addSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, autoResolveDateFilterDataset?: boolean, correlationId?: string): AddSectionItems;
 
 // @alpha (undocumented)
 export interface AddSectionItems extends IDashboardCommand {
@@ -162,6 +163,7 @@ export interface AddSectionItems extends IDashboardCommand {
         readonly sectionIndex: number;
         readonly itemIndex: RelativeIndex;
         readonly items: ReadonlyArray<DashboardItemDefinition>;
+        readonly autoResolveDateFilterDataset?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS";
@@ -2030,6 +2032,9 @@ export type InsightPlaceholderWidget = {
     readonly type: "insightPlaceholder";
 };
 
+// @alpha
+export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICatalogDateDataset | undefined;
+
 // @alpha (undocumented)
 export function insightWidgetExecutionFailed(error: GoodDataSdkError, correlationId?: string): DashboardEventBody<DashboardInsightWidgetExecutionFailed>;
 
@@ -2506,7 +2511,7 @@ export interface PermissionsState {
 }
 
 // @alpha
-export function queryDateDatasetsForInsight(insightRef: ObjRef, correlationId?: string): QueryInsightDateDatasets;
+export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
 
 // @alpha
 export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: string): QueryMeasureDateDatasets;
@@ -2515,20 +2520,20 @@ export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: 
 export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
     // (undocumented)
     readonly payload: {
-        readonly insightRef: ObjRef;
+        readonly insightOrRef: ObjRef | IInsight;
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
 }
 
 // @alpha
-export function queryInsightAttributesMeta(insightRef: ObjRef, correlationId?: string): QueryInsightAttributesMeta;
+export function queryInsightAttributesMeta(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightAttributesMeta;
 
 // @alpha
 export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDatasets> {
     // (undocumented)
     readonly payload: {
-        readonly insightRef: ObjRef;
+        readonly insightOrRef: ObjRef | IInsight;
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";

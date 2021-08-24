@@ -11,12 +11,15 @@ import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
 import { DashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/layout";
 import { validateSectionPlacement } from "./validation/layoutValidation";
-import { StashValidationResult, validateAndResolveStashedItems } from "./validation/stashValidation";
+import { ItemResolutionResult, validateAndResolveStashedItems } from "./validation/stashValidation";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps";
 import { selectInsightsMap } from "../../state/insights/insightsSelectors";
 import { batchActions } from "redux-batched-actions";
 import { insightsActions } from "../../state/insights";
-import { validateAndNormalizeItems } from "./validation/itemValidation";
+import {
+    validateAndNormalizeWidgetItems,
+    validateAndResolveItemFilterSettings,
+} from "./validation/itemValidation";
 
 type AddLayoutSectionContext = {
     readonly ctx: DashboardContext;
@@ -26,7 +29,7 @@ type AddLayoutSectionContext = {
     readonly availableInsights: ReturnType<typeof selectInsightsMap>;
 };
 
-function validateAndResolve(commandCtx: AddLayoutSectionContext): StashValidationResult {
+function validateAndResolveItems(commandCtx: AddLayoutSectionContext): ItemResolutionResult {
     const {
         ctx,
         layout,
@@ -59,7 +62,6 @@ function validateAndResolve(commandCtx: AddLayoutSectionContext): StashValidatio
     return stashValidationResult;
 }
 
-// TODO: this needs to include validation of the filter settings
 export function* addLayoutSectionHandler(
     ctx: DashboardContext,
     cmd: AddLayoutSection,
@@ -72,22 +74,30 @@ export function* addLayoutSectionHandler(
         availableInsights: yield select(selectInsightsMap),
     };
 
-    const stashValidationResult = validateAndResolve(commandCtx);
+    const stashValidationResult = validateAndResolveItems(commandCtx);
     const {
-        payload: { index, initialHeader },
+        payload: { index, initialHeader, autoResolveDateFilterDataset },
     } = cmd;
 
-    const normalizationResult: SagaReturnType<typeof validateAndNormalizeItems> = yield call(
-        validateAndNormalizeItems,
+    const normalizationResult: SagaReturnType<typeof validateAndNormalizeWidgetItems> = yield call(
+        validateAndNormalizeWidgetItems,
         ctx,
-        stashValidationResult.resolved,
+        stashValidationResult,
         cmd,
+    );
+
+    const itemsToAdd: SagaReturnType<typeof validateAndResolveItemFilterSettings> = yield call(
+        validateAndResolveItemFilterSettings,
+        ctx,
+        cmd,
+        normalizationResult,
+        autoResolveDateFilterDataset,
     );
 
     const section: ExtendedDashboardLayoutSection = {
         type: "IDashboardLayoutSection",
         header: initialHeader,
-        items: normalizationResult.normalizedItems,
+        items: itemsToAdd,
     };
 
     yield put(

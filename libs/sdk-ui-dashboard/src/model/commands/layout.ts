@@ -27,6 +27,19 @@ export interface AddLayoutSection extends IDashboardCommand {
          * Optionally specify one or more items to include in the newly created section.
          */
         readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
+
+        /**
+         * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+         * and insight widgets.
+         *
+         * This is by default disabled. Meaning date filtering will be enabled only for those KPI or Insight widgets
+         * that already specify dateDataset. Those that have dateDataset `undefined` will not be filtered by dashboard's
+         * date filter.
+         *
+         * When you turn on this option, then the dashboard will automatically resolve date dataset for those
+         * KPI and Insight widgets that have it `undefined`.
+         */
+        readonly autoResolveDateFilterDataset?: boolean;
     };
 }
 
@@ -39,6 +52,9 @@ export interface AddLayoutSection extends IDashboardCommand {
  * @param index - index to place the section at; -1 can be used as convenience to append a new section
  * @param initialHeader - optionally specify specify header for the newly created section
  * @param initialItems - optionally specify one or more items that the newly created section should include from the get-go
+ * @param autoResolveDateFilterDataset - optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+ *  and insight widgets; default is disabled meaning date filtering will be enabled only for those KPI or Insight widgets
+ *  that already specify dateDataset.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -48,6 +64,7 @@ export function addLayoutSection(
     index: number,
     initialHeader?: IDashboardLayoutSectionHeader,
     initialItems?: DashboardItemDefinition[],
+    autoResolveDateFilterDataset?: boolean,
     correlationId?: string,
 ): AddLayoutSection {
     return {
@@ -57,6 +74,7 @@ export function addLayoutSection(
             index,
             initialHeader,
             initialItems,
+            autoResolveDateFilterDataset,
         },
     };
 }
@@ -260,6 +278,19 @@ export interface AddSectionItems extends IDashboardCommand {
          * the stash identifier again.
          */
         readonly items: ReadonlyArray<DashboardItemDefinition>;
+
+        /**
+         * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+         * and insight widgets.
+         *
+         * This is by default disabled. Meaning date filtering will be enabled only for those KPI or Insight widgets
+         * that already specify dateDataset. Those that have dateDataset `undefined` will not be filtered by dashboard's
+         * date filter.
+         *
+         * When you turn on this option, then the dashboard will automatically resolve date dataset for those
+         * KPI and Insight widgets that have it `undefined`.
+         */
+        readonly autoResolveDateFilterDataset?: boolean;
     };
 }
 
@@ -272,6 +303,9 @@ export interface AddSectionItems extends IDashboardCommand {
  * @param sectionIndex - index of section to which the new item should be added
  * @param itemIndex - index at which to insert the new item
  * @param item - definition of the new item.
+ * @param autoResolveDateFilterDataset - optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+ *  and insight widgets; default is disabled meaning date filtering will be enabled only for those KPI or Insight widgets
+ *  that already specify dateDataset.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -281,6 +315,7 @@ export function addSectionItem(
     sectionIndex: number,
     itemIndex: number,
     item: DashboardItemDefinition,
+    autoResolveDateFilterDataset?: boolean,
     correlationId?: string,
 ): AddSectionItems {
     return {
@@ -290,6 +325,7 @@ export function addSectionItem(
             sectionIndex,
             itemIndex,
             items: [item],
+            autoResolveDateFilterDataset,
         },
     };
 }

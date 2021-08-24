@@ -16,8 +16,11 @@ import {
     createTestInsightItem,
     TestInsightItem,
     TestInsightPlaceholderItem,
+    testItemWithDateDataset,
+    testItemWithFilterIgnoreList,
     TestKpiPlaceholderItem,
 } from "../../../tests/fixtures/Layout.fixtures";
+import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures";
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {
@@ -84,13 +87,24 @@ describe("add layout section handler", () => {
 
         it("should load and add insight when adding new section insight widget", async () => {
             const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
-                addLayoutSection(0, {}, [TestInsightItem], TestCorrelation),
+                addLayoutSection(0, {}, [TestInsightItem], false, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
 
             expect(event.payload.section.items).toEqual([TestInsightItem]);
             const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
             expect(insight).toBeDefined();
+        });
+
+        it("should auto-resolve insight's date dataset when adding insight widget", async () => {
+            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, {}, [TestInsightItem], true, TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            expect(event.payload.section.items).toEqual([
+                testItemWithDateDataset(TestInsightItem, ActivityDateDatasetRef),
+            ]);
         });
 
         it("should be undoable and revert to empty layout", async () => {
@@ -108,7 +122,7 @@ describe("add layout section handler", () => {
 
         it("should not remove loaded insight during layouting undo", async () => {
             await Tester.dispatchAndWaitFor(
-                addLayoutSection(0, {}, [TestInsightItem], TestCorrelation),
+                addLayoutSection(0, {}, [TestInsightItem], false, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
 
@@ -120,7 +134,7 @@ describe("add layout section handler", () => {
 
         it("should fail if bad section placement index is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                addLayoutSection(1, undefined, undefined, TestCorrelation),
+                addLayoutSection(1, undefined, undefined, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -130,7 +144,45 @@ describe("add layout section handler", () => {
 
         it("should fail if attempting to add item with non-existent insight", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                addLayoutSection(0, {}, [createTestInsightItem(uriRef("does-not-exist"))], TestCorrelation),
+                addLayoutSection(
+                    0,
+                    {},
+                    [createTestInsightItem(uriRef("does-not-exist"))],
+                    false,
+                    TestCorrelation,
+                ),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if attempting to add insight widget with bad date dataset setting", async () => {
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                addLayoutSection(
+                    0,
+                    {},
+                    [testItemWithDateDataset(TestInsightItem, uriRef("does-not-exist"))],
+                    false,
+                    TestCorrelation,
+                ),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if attempting to add insight widget with bad filter ignore list", async () => {
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                addLayoutSection(
+                    0,
+                    {},
+                    [testItemWithFilterIgnoreList(TestInsightItem, [uriRef("does-not-exist")])],
+                    false,
+                    TestCorrelation,
+                ),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -140,7 +192,7 @@ describe("add layout section handler", () => {
 
         it("should fail if bad stash identifier is provided", async () => {
             const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                addLayoutSection(0, undefined, [TestStash], TestCorrelation),
+                addLayoutSection(0, undefined, [TestStash], false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -154,6 +206,7 @@ describe("add layout section handler", () => {
                     0,
                     undefined,
                     [TestKpiPlaceholderItem, TestInsightPlaceholderItem],
+                    false,
                     TestCorrelation,
                 ),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",

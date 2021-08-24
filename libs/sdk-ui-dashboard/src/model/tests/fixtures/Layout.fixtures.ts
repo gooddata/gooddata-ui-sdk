@@ -4,6 +4,7 @@ import {
     IDashboardLayoutItem,
     IDashboardLayoutSectionHeader,
     IInsightWidget,
+    IKpiWidget,
 } from "@gooddata/sdk-backend-spi";
 import { idRef, IInsight, insightId, isObjRef, ObjRef } from "@gooddata/sdk-model";
 import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures";
@@ -66,4 +67,33 @@ export function createTestInsightItem(
             },
         },
     };
+}
+
+export function testItemWithDateDataset<T extends IInsightWidget | IKpiWidget>(
+    item: IDashboardLayoutItem<T>,
+    dataset: ObjRef,
+): IDashboardLayoutItem<T> {
+    return {
+        ...item,
+        widget: {
+            ...item.widget,
+            dateDataSet: dataset,
+        },
+    } as IDashboardLayoutItem<T>;
+}
+
+export function testItemWithFilterIgnoreList<T extends IInsightWidget | IKpiWidget>(
+    item: IDashboardLayoutItem<T>,
+    displayForms: ObjRef[],
+): IDashboardLayoutItem<T> {
+    return {
+        ...item,
+        widget: {
+            ...item.widget,
+            ignoreDashboardFilters: displayForms.map((displayForm) => ({
+                type: "attributeFilterReference",
+                displayForm,
+            })),
+        },
+    } as IDashboardLayoutItem<T>;
 }

@@ -15,7 +15,10 @@ import { resolveIndexOfNewItem } from "../../utils/arrayOps";
 import { selectInsightsMap } from "../../state/insights/insightsSelectors";
 import { batchActions } from "redux-batched-actions";
 import { insightsActions } from "../../state/insights";
-import { validateAndNormalizeItems } from "./validation/itemValidation";
+import {
+    validateAndNormalizeWidgetItems,
+    validateAndResolveItemFilterSettings,
+} from "./validation/itemValidation";
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;
@@ -25,7 +28,7 @@ type AddSectionItemsContext = {
     readonly availableInsights: ReturnType<typeof selectInsightsMap>;
 };
 
-function validateAndResolve(commandCtx: AddSectionItemsContext) {
+function validateAndResolveItems(commandCtx: AddSectionItemsContext) {
     const {
         ctx,
         layout,
@@ -70,7 +73,6 @@ function validateAndResolve(commandCtx: AddSectionItemsContext) {
     };
 }
 
-// TODO: this needs to include validation of the filter settings
 export function* addSectionItemsHandler(
     ctx: DashboardContext,
     cmd: AddSectionItems,
@@ -83,16 +85,24 @@ export function* addSectionItemsHandler(
         availableInsights: yield select(selectInsightsMap),
     };
 
-    const { stashValidationResult, section } = validateAndResolve(commandCtx);
+    const { stashValidationResult, section } = validateAndResolveItems(commandCtx);
     const {
-        payload: { itemIndex, sectionIndex },
+        payload: { itemIndex, sectionIndex, autoResolveDateFilterDataset },
     } = cmd;
 
-    const normalizationResult: SagaReturnType<typeof validateAndNormalizeItems> = yield call(
-        validateAndNormalizeItems,
+    const normalizationResult: SagaReturnType<typeof validateAndNormalizeWidgetItems> = yield call(
+        validateAndNormalizeWidgetItems,
         ctx,
-        stashValidationResult.resolved,
+        stashValidationResult,
         cmd,
+    );
+
+    const itemsToAdd: SagaReturnType<typeof validateAndResolveItemFilterSettings> = yield call(
+        validateAndResolveItemFilterSettings,
+        ctx,
+        cmd,
+        normalizationResult,
+        autoResolveDateFilterDataset,
     );
 
     yield put(
@@ -101,7 +111,7 @@ export function* addSectionItemsHandler(
             layoutActions.addSectionItems({
                 sectionIndex,
                 itemIndex,
-                items: normalizationResult.normalizedItems,
+                items: itemsToAdd,
                 usedStashes: stashValidationResult.existing,
                 undo: {
                     cmd,

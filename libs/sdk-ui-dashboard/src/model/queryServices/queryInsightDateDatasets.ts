@@ -8,9 +8,11 @@ import { invariant } from "ts-invariant";
 import {
     filterObjRef,
     IInsight,
+    IInsightDefinition,
     insightFilters,
     insightRef,
     isDateFilter,
+    isObjRef,
     ObjRef,
     objRefToString,
     serializeObjRef,
@@ -44,7 +46,14 @@ import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets";
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
     queryService,
-    (query: QueryInsightDateDatasets) => serializeObjRef(query.payload.insightRef),
+    (query: QueryInsightDateDatasets) => {
+        const {
+            payload: { insightOrRef },
+        } = query;
+        const ref = isObjRef(insightOrRef) ? insightOrRef : insightRef(insightOrRef);
+
+        return serializeObjRef(ref);
+    },
 );
 
 /**
@@ -72,7 +81,7 @@ export const selectDateDatasetsForInsight = QueryDateDatasetsForInsightService.c
  * @param datasets - all cataloged date datasets
  */
 function lookupDatasetsUsedInDateFilters(
-    insight: IInsight,
+    insight: IInsightDefinition,
     datasets: ObjRefMap<ICatalogDateDataset>,
 ): ReadonlyArray<ICatalogDateDataset> {
     const dateFilters = insightFilters(insight).filter(isDateFilter);
@@ -103,10 +112,7 @@ function* lookupDatasetsUsedInAttributesAndFilters(
     insight: IInsight,
     attributeToDataset: ObjRefMap<CatalogDateAttributeWithDataset>,
 ) {
-    const insightAttributes: InsightAttributesMeta = yield call(
-        query,
-        queryInsightAttributesMeta(insightRef(insight)),
-    );
+    const insightAttributes: InsightAttributesMeta = yield call(query, queryInsightAttributesMeta(insight));
     const {
         usage: { inAttributes, inFilters },
         displayForms,
@@ -168,18 +174,24 @@ function* queryService(
     query: QueryInsightDateDatasets,
 ): SagaIterator<InsightDateDatasets> {
     const {
-        payload: { insightRef },
+        payload: { insightOrRef },
         correlationId,
     } = query;
-    const insightSelector = selectInsightByRef(insightRef);
-    const insight: ReturnType<typeof insightSelector> = yield select(insightSelector);
 
-    if (!insight) {
-        throw invalidQueryArguments(
-            ctx,
-            `Insight with ref ${objRefToString(insightRef)} does not exist on the dashboard`,
-            correlationId,
-        );
+    let insight: IInsight;
+
+    if (isObjRef(insightOrRef)) {
+        insight = yield select(selectInsightByRef(insightOrRef));
+
+        if (!insight) {
+            throw invalidQueryArguments(
+                ctx,
+                `Insight with ref ${objRefToString(insightOrRef)} does not exist on the dashboard`,
+                correlationId,
+            );
+        }
+    } else {
+        insight = insightOrRef;
     }
 
     /*
@@ -216,7 +228,7 @@ function* queryService(
         allAvailableDateDatasets.map((d) => [d.dataSet.title, sanitizeDateDatasetTitle(d)]),
     );
 
-    const result: InsightDateDatasets = {
+    return {
         dateDatasets,
         dateDatasetsOrdered: sortByRelevanceAndTitle(dateDatasets, dateDatasetDisplayNames),
         usedInDateFilters,
@@ -226,6 +238,4 @@ function* queryService(
         mostImportantFromInsight,
         allAvailableDateDatasets,
     };
-
-    return result;
 }
