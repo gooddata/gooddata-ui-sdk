@@ -6,8 +6,8 @@ import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterMoved } from "../../../events/filters";
 import { filterContextActions } from "../../../state/filterContext";
 import {
-    makeSelectFilterContextAttributeFilterByLocalId,
-    makeSelectFilterContextAttributeFilterIndexByLocalId,
+    selectFilterContextAttributeFilterByLocalId,
+    selectFilterContextAttributeFilterIndexByLocalId,
     selectFilterContextFilters,
 } from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
@@ -21,12 +21,8 @@ export function* moveAttributeFilterHandler(
     const { filterLocalId, index } = cmd.payload;
 
     // validate filterLocalId
-    const selectFilterByLocalId = makeSelectFilterContextAttributeFilterByLocalId();
-
-    const affectedFilter: ReturnType<typeof selectFilterByLocalId> = yield select(
-        selectFilterByLocalId,
-        filterLocalId,
-    );
+    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
+        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
 
     if (!affectedFilter) {
         throw invalidArgumentsProvided(ctx, cmd, `Filter with filterLocalId ${filterLocalId} not found.`);
@@ -47,12 +43,8 @@ export function* moveAttributeFilterHandler(
         );
     }
 
-    const selectFilterIndexByLocalId = makeSelectFilterContextAttributeFilterIndexByLocalId();
-
-    const originalIndex: ReturnType<typeof selectFilterIndexByLocalId> = yield select(
-        selectFilterIndexByLocalId,
-        filterLocalId,
-    );
+    const originalIndex: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterIndexByLocalId>> =
+        yield select(selectFilterContextAttributeFilterIndexByLocalId(filterLocalId));
 
     yield put(
         filterContextActions.moveAttributeFilter({
@@ -61,10 +53,8 @@ export function* moveAttributeFilterHandler(
         }),
     );
 
-    const finalIndex: ReturnType<typeof selectFilterIndexByLocalId> = yield select(
-        selectFilterIndexByLocalId,
-        filterLocalId,
-    );
+    const finalIndex: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterIndexByLocalId>> =
+        yield select(selectFilterContextAttributeFilterIndexByLocalId(filterLocalId));
 
     yield dispatchDashboardEvent(
         attributeFilterMoved(ctx, affectedFilter, originalIndex, finalIndex, cmd.correlationId),

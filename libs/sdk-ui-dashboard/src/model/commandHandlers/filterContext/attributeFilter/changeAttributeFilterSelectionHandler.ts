@@ -9,7 +9,7 @@ import { ChangeAttributeFilterSelection } from "../../../commands/filters";
 import { filterContextActions } from "../../../state/filterContext";
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
-import { makeSelectFilterContextAttributeFilterByLocalId } from "../../../state/filterContext/filterContextSelectors";
+import { selectFilterContextAttributeFilterByLocalId } from "../../../state/filterContext/filterContextSelectors";
 import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
 
 export function* changeAttributeFilterSelectionHandler(
@@ -18,13 +18,9 @@ export function* changeAttributeFilterSelectionHandler(
 ): SagaIterator<void> {
     const { elements, filterLocalId, selectionType } = cmd.payload;
 
-    const selectFilterByLocalId = makeSelectFilterContextAttributeFilterByLocalId();
-
     // validate filterLocalId
-    const affectedFilter: ReturnType<typeof selectFilterByLocalId> = yield select(
-        selectFilterByLocalId,
-        cmd.payload.filterLocalId,
-    );
+    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
+        yield select(selectFilterContextAttributeFilterByLocalId(cmd.payload.filterLocalId));
 
     if (!affectedFilter) {
         throw invalidArgumentsProvided(ctx, cmd, `Filter with filterLocalId ${filterLocalId} not found.`);
@@ -38,10 +34,8 @@ export function* changeAttributeFilterSelectionHandler(
         }),
     );
 
-    const changedFilter: ReturnType<typeof selectFilterByLocalId> = yield select(
-        selectFilterByLocalId,
-        cmd.payload.filterLocalId,
-    );
+    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
+        yield select(selectFilterContextAttributeFilterByLocalId(cmd.payload.filterLocalId));
 
     invariant(changedFilter, "Inconsistent state in attributeFilterChangeSelectionCommandHandler");
 

@@ -8,7 +8,7 @@ import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterParentChanged } from "../../../events/filters";
 import { filterContextActions } from "../../../state/filterContext";
 import {
-    makeSelectFilterContextAttributeFilterByLocalId,
+    selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilters,
 } from "../../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
@@ -26,12 +26,8 @@ export function* setAttributeFilterParentHandler(
         selectFilterContextAttributeFilters,
     );
 
-    const selectFilterByLocalId = makeSelectFilterContextAttributeFilterByLocalId();
-
-    const affectedFilter: ReturnType<typeof selectFilterByLocalId> = yield select(
-        selectFilterByLocalId,
-        filterLocalId,
-    );
+    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
+        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
 
     if (!affectedFilter) {
         throw invalidArgumentsProvided(ctx, cmd, `Filter with localId ${filterLocalId} was not found.`);
@@ -62,10 +58,8 @@ export function* setAttributeFilterParentHandler(
         }),
     );
 
-    const changedFilter: ReturnType<typeof selectFilterByLocalId> = yield select(
-        selectFilterByLocalId,
-        filterLocalId,
-    );
+    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
+        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
 
     invariant(changedFilter, "Inconsistent state in attributeFilterSetParentCommandHandler");
 

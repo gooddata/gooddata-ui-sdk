@@ -9,7 +9,7 @@ import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterAdded } from "../../../events/filters";
 import { filterContextActions } from "../../../state/filterContext";
 import {
-    makeSelectFilterContextAttributeFilterByDisplayForm,
+    selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilters,
 } from "../../../state/filterContext/filterContextSelectors";
 
@@ -54,11 +54,8 @@ export function* addAttributeFilterHandler(
         }),
     );
 
-    const selectAddedFilter = makeSelectFilterContextAttributeFilterByDisplayForm();
-    const addedFilter: ReturnType<typeof selectAddedFilter> = yield select(
-        selectAddedFilter,
-        cmd.payload.displayForm,
-    );
+    const addedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>> =
+        yield select(selectFilterContextAttributeFilterByDisplayForm(cmd.payload.displayForm));
 
     invariant(addedFilter, "Inconsistent state in attributeFilterAddCommandHandler");
 

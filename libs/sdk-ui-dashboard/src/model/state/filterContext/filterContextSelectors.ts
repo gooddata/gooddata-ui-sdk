@@ -2,6 +2,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import invariant from "ts-invariant";
+import memoize from "lodash/memoize";
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
@@ -9,7 +10,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -64,46 +65,37 @@ export const selectFilterContextDateFilter = createSelector(
 /**
  * Creates a selector for selecting attribute filter by its displayForm {@link @gooddata/sdk-model#ObjRef}.
  *
- * TODO: switch to select.. with memoize
- *
  * @alpha
  */
-export const makeSelectFilterContextAttributeFilterByDisplayForm = () =>
-    createSelector(
-        selectFilterContextAttributeFilters,
-        (_: any, displayForm: ObjRef) => displayForm,
-        (attributeFilters, displayForm) =>
+export const selectFilterContextAttributeFilterByDisplayForm = memoize(
+    (displayForm: ObjRef) =>
+        createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
             attributeFilters.find((filter) =>
                 areObjRefsEqual(filter.attributeFilter.displayForm, displayForm),
             ),
-    );
+        ),
+    (ref) => ref && serializeObjRef(ref),
+);
 
 /**
  * Creates a selector for selecting attribute filter by its localId.
  *
- * TODO: switch to select.. with memoize
- *
  * @alpha
  */
-export const makeSelectFilterContextAttributeFilterByLocalId = () =>
-    createSelector(
-        selectFilterContextAttributeFilters,
-        (_: any, localId: string) => localId,
-        (attributeFilters, localId) =>
-            attributeFilters.find((filter) => filter.attributeFilter.localIdentifier === localId),
-    );
+export const selectFilterContextAttributeFilterByLocalId = memoize((localId: string) =>
+    createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
+        attributeFilters.find((filter) => filter.attributeFilter.localIdentifier === localId),
+    ),
+);
 
 /**
  * Creates a selector for selecting attribute filter index by its localId.
  *
- * TODO: switch to select.. with memoize
  *
  * @alpha
  */
-export const makeSelectFilterContextAttributeFilterIndexByLocalId = () =>
-    createSelector(
-        selectFilterContextAttributeFilters,
-        (_: any, localId: string) => localId,
-        (attributeFilters, localId) =>
-            attributeFilters.findIndex((filter) => filter.attributeFilter.localIdentifier === localId),
-    );
+export const selectFilterContextAttributeFilterIndexByLocalId = memoize((localId: string) =>
+    createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
+        attributeFilters.findIndex((filter) => filter.attributeFilter.localIdentifier === localId),
+    ),
+);
