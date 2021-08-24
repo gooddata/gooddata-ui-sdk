@@ -11,7 +11,7 @@ import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
 import { DashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/layout";
 import { validateSectionPlacement } from "./validation/layoutValidation";
-import { StashValidationResult, validateAndResolveStashedItems } from "./validation/stashValidation";
+import { ItemResolutionResult, validateAndResolveStashedItems } from "./validation/stashValidation";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps";
 import { selectInsightsMap } from "../../state/insights/insightsSelectors";
 import { batchActions } from "redux-batched-actions";
@@ -26,7 +26,7 @@ type AddLayoutSectionContext = {
     readonly availableInsights: ReturnType<typeof selectInsightsMap>;
 };
 
-function validateAndResolve(commandCtx: AddLayoutSectionContext): StashValidationResult {
+function validateAndResolve(commandCtx: AddLayoutSectionContext): ItemResolutionResult {
     const {
         ctx,
         layout,
