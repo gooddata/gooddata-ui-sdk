@@ -180,9 +180,7 @@ export interface IAttributeDropdownItem {
 }
 
 // @public (undocumented)
-export interface IAttributeDropdownListItemProps {
-    // (undocumented)
-    intl: IntlShape;
+export interface IAttributeDropdownListItemProps extends WrappedComponentProps {
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
