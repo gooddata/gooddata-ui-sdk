@@ -50,6 +50,16 @@ export const lastYear: IRelativeDateFilterPreset = {
     visible: true,
 };
 
+export const last30days: IRelativeDateFilterPreset = {
+    from: -29,
+    to: 0,
+    granularity: "GDC.time.date",
+    type: "relativePreset",
+    localIdentifier: "LAST_30_DAYS",
+    name: "",
+    visible: true,
+};
+
 export const relativeForm: IRelativeDateFilterForm = {
     type: "relativeForm",
     availableGranularities: ["GDC.time.year", "GDC.time.month"],

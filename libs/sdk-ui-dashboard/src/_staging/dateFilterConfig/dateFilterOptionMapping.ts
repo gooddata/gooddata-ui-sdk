@@ -86,11 +86,11 @@ export function matchDateFilterToDateFilterOption(
         return { dateFilterOption: matchingFilter, excludeCurrentPeriod: false };
     }
     // try matching the filter with excludeCurrentPeriod === true, but only for relativeFormPresets
-    if (dateFilter.dateFilter.type === "relative" && dateFilter.dateFilter.to === -1) {
+    if (dateFilter.dateFilter.type === "relative" && dateFilter.dateFilter.to?.toString() === "-1") {
         const filterToMatch: IDashboardDateFilter = {
             dateFilter: {
                 ...dateFilter.dateFilter,
-                from: (dateFilter.dateFilter.from! as number) + 1,
+                from: Number.parseInt(dateFilter.dateFilter.from!.toString(), 10) + 1,
                 to: 0,
             },
         };
