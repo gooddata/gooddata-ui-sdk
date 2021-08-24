@@ -10,11 +10,13 @@ import {
     useDashboardDateFilterProps,
 } from "./DashboardDateFilterPropsContext";
 import { IDashboardDateFilterProps } from "./types";
+import { selectSettings, useDashboardSelector } from "../../../model";
 
 /**
  * @internal
  */
 export const DefaultDashboardDateFilterInner = (): JSX.Element => {
+    const settings = useDashboardSelector(selectSettings);
     const { filter, onFilterChanged, config, readonly } = useDashboardDateFilterProps();
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
@@ -42,6 +44,7 @@ export const DefaultDashboardDateFilterInner = (): JSX.Element => {
                     option.localIdentifier,
                 );
             }}
+            dateFormat={settings.responsiveUiDateFormat}
         />
     );
 };
