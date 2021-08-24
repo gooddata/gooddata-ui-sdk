@@ -54,6 +54,7 @@
     "kpi.alertBox.example": "例:",
     "kpi.alertBox.unverifiedEmail": "申し訳ございませんが、通知を設定できません。電子メールが有効なことを確認してください。それでも問題が解決しない場合は、管理者にあなたの許可を更新するように要請してください。",
     "kpi.alertBox.disabledInReadOnly": "読み取り専用モードではアラートは無効になっています",
+    "kpi.error.view": "KPIを表示できません。管理者にKPI定義を修正するように要請してください。",
     "kpiAlertDialog.delete": "削除",
     "kpiAlertDialog.deleting": "消去しています…",
     "kpiAlertDialog.emailMe": "電子メールの受信を希望",

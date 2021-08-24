@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback } from "react";
-import { IDrillEventContext } from "@gooddata/sdk-ui";
+import { GoodDataSdkError, IDrillEventContext } from "@gooddata/sdk-ui";
 import { ISeparators, IKpiWidget, IKpiWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 
@@ -18,6 +18,8 @@ interface IKpiRendererProps {
     isDrillable?: boolean;
     onDrill?: (drillContext: IDrillEventContext) => ReturnType<OnFiredDashboardViewDrillEvent>;
     enableCompactSize?: boolean;
+    error?: GoodDataSdkError;
+    errorHelp?: string;
 }
 
 /**
@@ -32,6 +34,8 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     filters,
     separators,
     enableCompactSize,
+    error,
+    errorHelp,
 }) => {
     const onPrimaryValueClick = useCallback(() => {
         if (!isDrillable || !onDrill || !kpiResult) {
@@ -59,6 +63,8 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
             filters={filters}
             separators={separators}
             enableCompactSize={enableCompactSize}
+            error={error}
+            errorHelp={errorHelp}
         />
     );
 };

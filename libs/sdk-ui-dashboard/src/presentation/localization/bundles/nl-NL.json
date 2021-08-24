@@ -54,6 +54,7 @@
     "kpi.alertBox.example": "bijv.",
     "kpi.alertBox.unverifiedEmail": "Sorry, u kunt geen alarm instellen. Zorg ervoor dat uw e-mailadres is geverifieerd. Als dit niet helpt, vraag uw beheerder dan om uw machtigingen bij te werken.",
     "kpi.alertBox.disabledInReadOnly": "Alarmen zijn uitgeschakeld in alleen-lezen",
+    "kpi.error.view": "KPI kan niet worden weergegeven. Neem contact op met uw beheerder om de KPI-definitie te corrigeren.",
     "kpiAlertDialog.delete": "Verwijderen",
     "kpiAlertDialog.deleting": "Verwijderen…",
     "kpiAlertDialog.emailMe": "E-mail mij",

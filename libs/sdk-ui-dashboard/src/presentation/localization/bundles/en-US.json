@@ -274,6 +274,11 @@
         "comment": "",
         "limit": 0
     },
+    "kpi.error.view": {
+        "value": "KPI cannot be displayed. Contact your administrator to fix the KPI definition.",
+        "comment": "",
+        "limit": 0
+    },
     "kpiAlertDialog.delete": {
         "value": "Delete",
         "comment": "",

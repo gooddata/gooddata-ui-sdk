@@ -96,7 +96,6 @@ export const DashboardKpiCore = (props: DashboardKpiProps): JSX.Element => {
             disableDrillUnderline={settings.disableKpiDashboardHeadlineUnderline}
             backend={backend}
             workspace={workspace}
-            ErrorComponent={ErrorComponent}
             LoadingComponent={LoadingComponent}
             isReadOnly={isReadOnly}
         />
