@@ -11,6 +11,7 @@ const alertsSlice = createSlice({
         addAlert: alertsAdapter.addOne,
         updateAlert: alertsAdapter.updateOne,
         removeAlert: alertsAdapter.removeOne,
+        removeAlerts: alertsAdapter.removeMany,
     },
 });
 

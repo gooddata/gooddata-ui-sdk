@@ -148,11 +148,11 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     }
 
     public deleteWidgetAlert(_ref: ObjRef): Promise<void> {
-        throw new NotSupported("recorded backend does not support this call");
+        return Promise.resolve();
     }
 
     public deleteWidgetAlerts(_refs: ObjRef[]): Promise<void> {
-        throw new NotSupported("recorded backend does not support this call");
+        return Promise.resolve();
     }
 
     public exportDashboardToPdf(_ref: ObjRef, _filters?: FilterContextItem[]): Promise<string> {

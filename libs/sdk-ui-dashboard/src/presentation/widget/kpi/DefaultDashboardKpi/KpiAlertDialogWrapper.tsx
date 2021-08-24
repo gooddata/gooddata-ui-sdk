@@ -3,14 +3,13 @@ import React, { useMemo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { useDashboardSelector, selectCatalogDateDatasets } from "../../../../model";
-
 import {
-    enrichBrokenAlertsInfo,
+    useDashboardSelector,
+    selectCatalogDateDatasets,
     IBrokenAlertFilterBasicInfo,
-    IKpiAlertDialogProps,
-    KpiAlertDialog,
-} from "./KpiAlerts";
+} from "../../../../model";
+
+import { enrichBrokenAlertsInfo, IKpiAlertDialogProps, KpiAlertDialog } from "./KpiAlerts";
 import { useBrokenAlertFiltersMeta } from "./useBrokenAlertFiltersMeta";
 
 interface IKpiAlertDialogWrapperProps

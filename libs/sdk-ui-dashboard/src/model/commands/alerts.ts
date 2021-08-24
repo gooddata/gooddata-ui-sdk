@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 
 /**
@@ -64,41 +65,36 @@ export function updateAlert(alert: IWidgetAlert, correlationId?: string): Update
     };
 }
 
-//
-//
-//
-
 /**
  * Removes Kpi alert.
  *
  * @alpha
  */
-export interface RemoveAlert extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ALERT.REMOVE";
+export interface RemoveAlerts extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.ALERTS.REMOVE";
     readonly payload: {
-        readonly alert: IWidgetAlert;
+        /**
+         * References to Kpi alerts whose should be removed.
+         */
+        readonly refs: ObjRef[];
     };
 }
 
 /**
- * Creates the RemoveAlert command. Dispatching this command will result in the removing Kpi alert on the backend.
+ * Creates the RemoveAlerts command. Dispatching this command will result in the removing Kpi alerts on the backend.
  *
- * @param alertRef - specify ObjRef of the alert to remove
+ * @param refs - specify ObjRef of the alerts to remove
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
  * @alpha
  */
-export function removeAlert(alert: IWidgetAlert, correlationId?: string): RemoveAlert {
+export function removeAlerts(refs: ObjRef[], correlationId?: string): RemoveAlerts {
     return {
-        type: "GDC.DASH/CMD.ALERT.REMOVE",
+        type: "GDC.DASH/CMD.ALERTS.REMOVE",
         correlationId,
         payload: {
-            alert,
+            refs,
         },
     };
 }
-
-//
-//
-//

@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { IFilter, ObjRef } from "@gooddata/sdk-model";
+import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes";
 import { IDashboardQuery } from "./base";
 
 /**
@@ -39,6 +40,37 @@ export function queryWidgetFilters(
         payload: {
             widgetRef,
             widgetFilterOverrides,
+        },
+    };
+}
+
+/**
+ * This query base on given kpi widgetRef calculate BrokenAlertFilterBasicInfo {@link IBrokenAlertFilterBasicInfo}
+ * In case any broken alert filters query return empty array.
+ * @alpha
+ */
+export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFilterBasicInfo[]> {
+    readonly type: "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS";
+    readonly payload: {
+        readonly widgetRef: ObjRef;
+    };
+}
+
+/**
+ *  Creates action thought which you can query dashboard component for broken alert filters.
+ *
+ * @param widgetRef - reference to insight kpi widget
+ * @param correlationId - optionally specify correlation id to use for this command.
+ * @returns
+ *
+ * @alpha
+ */
+export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): QueryWidgetBrokenAlerts {
+    return {
+        type: "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS",
+        correlationId,
+        payload: {
+            widgetRef,
         },
     };
 }

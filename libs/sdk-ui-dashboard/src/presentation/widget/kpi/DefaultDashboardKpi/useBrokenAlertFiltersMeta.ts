@@ -15,11 +15,9 @@ import {
 } from "@gooddata/sdk-ui";
 import { isAttributeElementsByRef, objRefToString } from "@gooddata/sdk-model";
 
-import {
-    IAttributeFilterMetaCollection,
-    IBrokenAlertFilterBasicInfo,
-    isBrokenAlertAttributeFilterInfo,
-} from "./KpiAlerts";
+import { IAttributeFilterMetaCollection } from "./KpiAlerts";
+
+import { IBrokenAlertFilterBasicInfo, isBrokenAlertAttributeFilterInfo } from "../../../../model";
 
 export interface IBrokenAlertFiltersMeta {
     attributeFiltersMeta: IAttributeFilterMetaCollection;

@@ -53,7 +53,7 @@ import {
     DashboardInsightWidgetVisPropertiesChanged,
     DashboardInsightWidgetExecutionFailed,
 } from "./insight";
-import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertRemoved } from "./alerts";
+import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertsRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
 import { DashboardUserInteractionTriggered } from "./userInteraction";
 import { Action } from "@reduxjs/toolkit";
@@ -195,10 +195,10 @@ export {
 } from "./insight";
 export {
     DashboardAlertCreated,
-    DashboardAlertRemoved,
+    DashboardAlertsRemoved,
     DashboardAlertUpdated,
     isDashboardAlertCreated,
-    isDashboardAlertRemoved,
+    isDashboardAlertsRemoved,
     isDashboardAlertUpdated,
 } from "./alerts";
 export { DashboardScheduledEmailCreated, isDashboardScheduledEmailCreated } from "./scheduledEmail";
@@ -316,7 +316,7 @@ export type DashboardEvents =
     | DashboardInsightWidgetChanged
     | DashboardInsightWidgetExecutionFailed
     | DashboardAlertCreated
-    | DashboardAlertRemoved
+    | DashboardAlertsRemoved
     | DashboardAlertUpdated
     | DashboardScheduledEmailCreated
     | DashboardDrillDownResolved

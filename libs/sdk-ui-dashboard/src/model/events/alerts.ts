@@ -40,48 +40,40 @@ export function alertCreated(
  */
 export const isDashboardAlertCreated = eventGuard<DashboardAlertCreated>("GDC.DASH/EVT.ALERT.CREATED");
 
-//
-//
-//
-
 /**
- * This event is emitted after the Kpi alert is successfully removed.
+ * This event is emitted after the Kpi alerts are successfully removed.
  *
  * @alpha
  */
-export interface DashboardAlertRemoved extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ALERT.REMOVED";
+export interface DashboardAlertsRemoved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.ALERTS.REMOVED";
     readonly payload: {
-        readonly alert: IWidgetAlert;
+        readonly alerts: IWidgetAlert[];
     };
 }
 
-export function alertRemoved(
+export function alertsRemoved(
     ctx: DashboardContext,
-    alert: IWidgetAlert,
+    alerts: IWidgetAlert[],
     correlationId?: string,
-): DashboardAlertRemoved {
+): DashboardAlertsRemoved {
     return {
-        type: "GDC.DASH/EVT.ALERT.REMOVED",
+        type: "GDC.DASH/EVT.ALERTS.REMOVED",
         ctx,
         correlationId,
         payload: {
-            alert,
+            alerts,
         },
     };
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAlertRemoved}.
+ * Tests whether the provided object is an instance of {@link DashboardAlertsRemoved}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardAlertRemoved = eventGuard<DashboardAlertRemoved>("GDC.DASH/EVT.ALERT.REMOVED");
-
-//
-//
-//
+export const isDashboardAlertsRemoved = eventGuard<DashboardAlertsRemoved>("GDC.DASH/EVT.ALERTS.REMOVED");
 
 /**
  * This event is emitted after the Kpi alert is updated.

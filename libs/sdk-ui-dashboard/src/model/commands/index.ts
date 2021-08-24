@@ -38,7 +38,7 @@ import {
     ReplaceSectionItem,
     UndoLayoutChanges,
 } from "./layout";
-import { CreateAlert, RemoveAlert, UpdateAlert } from "./alerts";
+import { CreateAlert, RemoveAlerts, UpdateAlert } from "./alerts";
 import { CreateScheduledEmail } from "./scheduledEmail";
 import {
     Drill,
@@ -112,7 +112,7 @@ export {
     DashboardLayoutCommands,
     UndoPointSelector,
 } from "./layout";
-export { CreateAlert, createAlert, RemoveAlert, removeAlert, UpdateAlert, updateAlert } from "./alerts";
+export { CreateAlert, createAlert, RemoveAlerts, removeAlerts, UpdateAlert, updateAlert } from "./alerts";
 export { CreateScheduledEmail, createScheduledEmail } from "./scheduledEmail";
 export {
     Drill,
@@ -218,7 +218,7 @@ export type DashboardCommands =
     | RefreshInsightWidget
     | CreateAlert
     | UpdateAlert
-    | RemoveAlert
+    | RemoveAlerts
     | CreateScheduledEmail
     | Drill
     | DrillDown
