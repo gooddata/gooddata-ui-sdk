@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { IDashboardQuery } from "./base";
-import { InsightDisplayFormUsage, ObjRef } from "@gooddata/sdk-model";
+import { IInsight, InsightDisplayFormUsage, ObjRef } from "@gooddata/sdk-model";
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
@@ -16,7 +16,7 @@ import {
 export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDatasets> {
     readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
     readonly payload: {
-        readonly insightRef: ObjRef;
+        readonly insightOrRef: ObjRef | IInsight;
     };
 }
 
@@ -24,20 +24,21 @@ export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDat
  * Creates action through which you can query dashboard component for information about the date data sets
  * that are applicable for the provided insight.
  *
- * @param insightRef - reference to insight
+ * @param insightOrRef - insight body or a reference to an insight. if the reference is provided, then it is expected
+ *  to be a reference of an insight that is already placed on a dashboard
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
 export function queryDateDatasetsForInsight(
-    insightRef: ObjRef,
+    insightOrRef: ObjRef | IInsight,
     correlationId?: string,
 ): QueryInsightDateDatasets {
     return {
         type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
         correlationId,
         payload: {
-            insightRef,
+            insightOrRef,
         },
     };
 }
@@ -119,6 +120,19 @@ export type InsightDateDatasets = {
     readonly allAvailableDateDatasets: ICatalogDateDataset[];
 };
 
+/**
+ * Given results of a query of date datasets available to use for filtering an insight, this function will
+ * pick a single date dataset to use.
+ *
+ * @param queryResult - insight date datasets query result
+ * @alpha
+ */
+export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICatalogDateDataset | undefined {
+    const { mostImportantFromInsight, dateDatasetsOrdered } = queryResult;
+
+    return mostImportantFromInsight ?? dateDatasetsOrdered[0];
+}
+
 //
 //
 //
@@ -133,7 +147,7 @@ export type InsightDateDatasets = {
 export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
     readonly type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
     readonly payload: {
-        readonly insightRef: ObjRef;
+        readonly insightOrRef: ObjRef | IInsight;
     };
 }
 
@@ -161,20 +175,20 @@ export type InsightAttributesMeta = {
  * Creates action thought which you can query dashboard component for information about display forms and
  * attributes used by an insight.
  *
- * @param insightRef - reference to insight
+ * @param insightOrRef - insight body or a reference to an insight on the dashboard
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
 export function queryInsightAttributesMeta(
-    insightRef: ObjRef,
+    insightOrRef: ObjRef | IInsight,
     correlationId?: string,
 ): QueryInsightAttributesMeta {
     return {
         type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META",
         correlationId,
         payload: {
-            insightRef,
+            insightOrRef,
         },
     };
 }

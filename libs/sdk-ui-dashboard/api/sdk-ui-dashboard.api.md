@@ -2030,6 +2030,9 @@ export type InsightPlaceholderWidget = {
     readonly type: "insightPlaceholder";
 };
 
+// @alpha
+export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICatalogDateDataset | undefined;
+
 // @alpha (undocumented)
 export function insightWidgetExecutionFailed(error: GoodDataSdkError, correlationId?: string): DashboardEventBody<DashboardInsightWidgetExecutionFailed>;
 
@@ -2506,7 +2509,7 @@ export interface PermissionsState {
 }
 
 // @alpha
-export function queryDateDatasetsForInsight(insightRef: ObjRef, correlationId?: string): QueryInsightDateDatasets;
+export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
 
 // @alpha
 export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: string): QueryMeasureDateDatasets;
@@ -2515,20 +2518,20 @@ export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: 
 export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
     // (undocumented)
     readonly payload: {
-        readonly insightRef: ObjRef;
+        readonly insightOrRef: ObjRef | IInsight;
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
 }
 
 // @alpha
-export function queryInsightAttributesMeta(insightRef: ObjRef, correlationId?: string): QueryInsightAttributesMeta;
+export function queryInsightAttributesMeta(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightAttributesMeta;
 
 // @alpha
 export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDatasets> {
     // (undocumented)
     readonly payload: {
-        readonly insightRef: ObjRef;
+        readonly insightOrRef: ObjRef | IInsight;
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
