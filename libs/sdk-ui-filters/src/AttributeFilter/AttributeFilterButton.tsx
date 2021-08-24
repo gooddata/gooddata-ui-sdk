@@ -318,7 +318,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 });
             },
         },
-        [state.validOptions, state.offset, state.limit],
+        [state.validOptions, state.offset, state.limit, resolvedParentFilters],
     );
 
     const {
@@ -461,7 +461,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     };
 
     const isElementsLoading = () => {
-        return elementsStatus === "pending" || elementsStatus === "loading";
+        // pending means idle in this context
+        return elementsStatus === "loading";
     };
 
     const isTotalCountLoading = () => {
