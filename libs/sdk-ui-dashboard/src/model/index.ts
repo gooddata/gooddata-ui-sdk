@@ -91,7 +91,12 @@ export {
     selectAllCatalogDisplayFormsMap,
 } from "./state/catalog/catalogSelectors";
 export { AlertsState } from "./state/alerts/alertsState";
-export { selectAlerts, selectAlertByWidgetRef } from "./state/alerts/alertsSelectors";
+export {
+    selectAlerts,
+    selectAlertByWidgetRef,
+    selectAlertsMap,
+    selectAlertByRef,
+} from "./state/alerts/alertsSelectors";
 export { UserState } from "./state/user/userState";
 export { selectUser } from "./state/user/userSelectors";
 export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";

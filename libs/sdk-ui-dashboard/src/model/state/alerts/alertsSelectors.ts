@@ -71,3 +71,26 @@ export const selectAlertByWidgetRef = memoize(
     },
     serializeObjRef,
 );
+
+/**
+ * Selects dashboard alerts in mapping an obj ref to widget map.
+ *
+ * @internal
+ */
+export const selectAlertsMap = createSelector(selectAlerts, (alerts) => {
+    return newMapForObjectWithIdentity(alerts);
+});
+
+/**
+ * Selects alert or undefined by alert ref
+ *
+ * @alpha
+ */
+export const selectAlertByRef = memoize(
+    (ref: ObjRef): ((state: DashboardState) => IWidgetAlert | undefined) => {
+        return createSelector(selectAlertsMap, (alerts) => {
+            return alerts.get(ref);
+        });
+    },
+    serializeObjRef,
+);

@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { IDashboardWithReferences, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 
 // This dashboard has all setup of broken alert user specific,
@@ -16,11 +16,16 @@ export const BrokenFilterAlertsDashboardIdentifier = "abK3yl1TcTWV";
 export const BrokenFilterAlertsDashboardReferences = ReferenceRecordings.Recordings.metadata.dashboards
     .dash_abK3yl1TcTWV.obj as IDashboardWithReferences;
 
-export const BrokenFilterAlertsDashboardLayout = BrokenFilterAlertsDashboardReferences.dashboard.layout!;
+const BrokenFilterAlertsDashboardLayout = BrokenFilterAlertsDashboardReferences.dashboard.layout!;
+const alertList: IWidgetAlertDefinition[] =
+    ReferenceRecordings.Recordings.metadata.dashboards.dash_abK3yl1TcTWV.alerts;
 
 export const RemovedFiltersKpiRef: ObjRef = (
     BrokenFilterAlertsDashboardLayout.sections[0].items[0].widget as any
 ).ref;
+
+export const AlertForRemovedFiltersKpi = alertList[0];
+
 export const RemovedFiltersKpiIdentifier: string = (
     BrokenFilterAlertsDashboardLayout.sections[0].items[0].widget as any
 ).identifier;

@@ -1,8 +1,8 @@
 // (C) 2020-2021 GoodData Corporation
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { IWidgetAlertDefinition, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 
-import { createAlert, updateAlert, removeAlert, useDashboardCommand } from "../../../../model";
+import { createAlert, updateAlert, removeAlerts, useDashboardCommand } from "../../../../model";
 
 import { KpiAlertOperationStatus } from "./types";
 
@@ -51,10 +51,10 @@ export const useKpiAlertOperations = (closeAlertDialog: () => void): UseKpiAlert
         () => setUpdatingStatus("inProgress"),
     );
 
-    const onRemoveAlert = useDashboardCommand(
-        removeAlert,
+    const onRemoveAlerts = useDashboardCommand(
+        removeAlerts,
         {
-            "GDC.DASH/EVT.ALERT.REMOVED": () => {
+            "GDC.DASH/EVT.ALERTS.REMOVED": () => {
                 setRemovingStatus("idle");
                 closeAlertDialog();
             },
@@ -63,6 +63,13 @@ export const useKpiAlertOperations = (closeAlertDialog: () => void): UseKpiAlert
             },
         },
         () => setRemovingStatus("inProgress"),
+    );
+
+    const onRemoveAlert = useCallback(
+        (alert: IWidgetAlert) => {
+            onRemoveAlerts([alert.ref]);
+        },
+        [onRemoveAlerts],
     );
 
     return {

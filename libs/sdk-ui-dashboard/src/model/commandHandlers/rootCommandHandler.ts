@@ -21,7 +21,7 @@ import { moveSectionItemHandler } from "./layout/moveSectionItemHandler";
 import { removeSectionItemHandler } from "./layout/removeSectionItemHandler";
 import { undoLayoutChangesHandler } from "./layout/undoLayoutChangesHandler";
 import { createAlertHandler } from "./alerts/createAlertHandler";
-import { removeAlertHandler } from "./alerts/removeAlertHandler";
+import { removeAlertsHandler } from "./alerts/removeAlertsHandler";
 import { updateAlertHandler } from "./alerts/updateAlertHandler";
 import { createScheduledEmailHandler } from "./scheduledEmail/createScheduledEmailHandler";
 import { replaceSectionItemHandler } from "./layout/replaceSectionItemHandler";
@@ -87,7 +87,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": unhandledCommand,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
     "GDC.DASH/CMD.ALERT.UPDATE": updateAlertHandler,
-    "GDC.DASH/CMD.ALERT.REMOVE": removeAlertHandler,
+    "GDC.DASH/CMD.ALERTS.REMOVE": removeAlertsHandler,
     "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE": createScheduledEmailHandler,
     "GDC.DASH/CMD.DRILL": drillHandler,
     "GDC.DASH/CMD.DRILL.DRILL_DOWN": drillDownHandler,
