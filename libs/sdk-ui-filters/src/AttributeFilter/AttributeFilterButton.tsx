@@ -1,10 +1,11 @@
 // (C) 2021 GoodData Corporation
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAnalyticalBackend, IAttributeElement, IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
 import {
     filterAttributeElements,
+    filterObjRef,
     IAttributeFilter,
     isAttributeElementsByRef,
     isNegativeAttributeFilter,
@@ -14,7 +15,11 @@ import {
 } from "@gooddata/sdk-model";
 import { NoData } from "@gooddata/sdk-ui-kit";
 import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
-import { AttributeDropdownBody } from "./AttributeDropdown/AttributeDropdownBody";
+import {
+    AttributeDropdownBody,
+    IAttributeDropdownBodyExtendedProps,
+    IAttributeDropdownBodyProps,
+} from "./AttributeDropdown/AttributeDropdownBody";
 import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
@@ -140,6 +145,11 @@ export interface IAttributeFilterButtonOwnProps {
      * Optionally customize attribute filter with a component to be rendered if attribute elements loading fails
      */
     FilterError?: React.ComponentType<{ error?: any }>;
+
+    /**
+     * Optionally customize attribute filter body with a component to be rendered instead of default filter body.
+     */
+    renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React.ReactNode;
 }
 
 interface IAttributeFilterButtonState {
@@ -197,7 +207,7 @@ const DropdownButton: React.FC<{
 
     return (
         <div
-            className={cx("gd-attribute-filter-button", "s-attribute-filter-button", {
+            className={cx("attribute-filter-button", "s-attribute-filter", {
                 "is-active": isOpen,
                 "gd-attribute-filter-button-mobile": isMobile,
             })}
@@ -233,7 +243,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     const [resolvedPlaceholder, setPlaceholderValue] = usePlaceholder(props.connectToPlaceholder);
 
     const currentFilter = resolvedPlaceholder || props.filter;
-    const currentFilterObjRef = getObjRef(currentFilter, null);
+
+    const filterRef = filterObjRef(currentFilter);
+    const currentFilterObjRef = useMemo(() => filterRef, [stringify(filterRef)]);
 
     const getInitialSelectedOptions = (): IAttributeElement[] =>
         // the as any cast is ok here, the data will get fixed once the element load completes
@@ -400,7 +412,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 return attributes.getAttribute(displayForm.attribute);
             },
         },
-        [currentFilterObjRef, props.workspace, props.backend, props.identifier],
+        [stringify(currentFilterObjRef), props.workspace, props.backend, props.identifier],
     );
 
     useEffect(() => {
@@ -624,7 +636,46 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         !isElementsLoading() &&
         state.validOptions?.items?.length === 0;
 
+    function renderDefaultBody(bodyProps: IAttributeDropdownBodyExtendedProps) {
+        return isAllFiltered ? (
+            <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
+                {(isMobile) => (
+                    <AttributeDropdownAllFilteredOutBody
+                        parentFilterTitles={parentFilterTitles}
+                        onApplyButtonClick={onApplyButtonClicked}
+                        onCancelButtonClick={onCloseButtonClicked}
+                        isMobile={isMobile}
+                    />
+                )}
+            </MediaQuery>
+        ) : hasNoData ? (
+            <NoData noDataLabel={props.intl.formatMessage({ id: "attributesDropdown.noData" })} />
+        ) : (
+            <AttributeDropdownBody {...bodyProps} />
+        );
+    }
+
     const renderAttributeDropdown = () => {
+        const bodyProps: IAttributeDropdownBodyProps = {
+            items: state.validOptions?.items ?? [],
+            totalCount: totalCount ?? LIMIT,
+            onApplyButtonClicked,
+            onCloseButtonClicked,
+            onSelect,
+            onRangeChange,
+            onSearch,
+            selectedItems: state.selectedFilterOptions,
+            isInverted: state.isInverted,
+            isLoading:
+                (!state.validOptions?.items && isElementsLoading()) ||
+                isTotalCountLoading() ||
+                isParentFilterTitlesLoading(),
+            searchString: state.searchString,
+            applyDisabled: getNumberOfSelectedItems() === 0,
+            showItemsFilteredMessage: showItemsFilteredMessage(isElementsLoading(), resolvedParentFilters),
+            parentFilterTitles,
+        };
+
         return (
             <Dropdown
                 closeOnParentScroll={true}
@@ -645,9 +696,10 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                                 isOpen={state.isDropdownOpen}
                                 isMobile={isMobile}
                                 title={
-                                    attributeStatus === "pending" || attributeStatus === "loading"
-                                        ? getLoadingTitleIntl(props.intl)
-                                        : props.title || attribute.title
+                                    props.title ||
+                                    (attributeStatus !== "loading" && attributeStatus !== "pending")
+                                        ? attribute.title
+                                        : getLoadingTitleIntl(props.intl)
                                 }
                                 subtitleText={getSubtitle()}
                                 subtitleItemCount={state.selectedFilterOptions.length}
@@ -655,48 +707,19 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                         )}
                     </MediaQuery>
                 }
-                body={
-                    isAllFiltered ? (
-                        <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
-                            {(isMobile) => (
-                                <AttributeDropdownAllFilteredOutBody
-                                    parentFilterTitles={parentFilterTitles}
-                                    onApplyButtonClick={onApplyButtonClicked}
-                                    onCancelButtonClick={onCloseButtonClicked}
-                                    isMobile={isMobile}
-                                />
-                            )}
-                        </MediaQuery>
-                    ) : hasNoData ? (
-                        <NoData noDataLabel={props.intl.formatMessage({ id: "attributesDropdown.noData" })} />
-                    ) : (
-                        <AttributeDropdownBody
-                            items={state.validOptions?.items ?? []}
-                            totalCount={totalCount ?? LIMIT}
-                            selectedItems={state.selectedFilterOptions}
-                            isInverted={state.isInverted}
-                            isLoading={
-                                (!state.validOptions?.items && isElementsLoading()) ||
-                                isTotalCountLoading() ||
-                                isParentFilterTitlesLoading()
-                            }
-                            searchString={state.searchString}
-                            onSearch={onSearch}
-                            onSelect={onSelect}
-                            onRangeChange={onRangeChange}
-                            onApplyButtonClicked={onApplyButtonClicked}
-                            onCloseButtonClicked={onCloseButtonClicked}
-                            applyDisabled={getNumberOfSelectedItems() === 0}
-                            parentFilterTitles={parentFilterTitles}
-                            showItemsFilteredMessage={showItemsFilteredMessage(
-                                isElementsLoading(),
-                                resolvedParentFilters,
-                            )}
-                        />
-                    )
-                }
                 ref={dropdownRef}
                 onOpenStateChanged={onDropdownOpenStateChanged}
+                body={
+                    props.renderBody
+                        ? props.renderBody({
+                              ...bodyProps,
+                              isElementsLoading: !state.validOptions?.items && isElementsLoading(),
+                              isLoaded: !state.firstLoad,
+                              onConfigurationChange: () => {},
+                              attributeFilterRef: null,
+                          })
+                        : renderDefaultBody(bodyProps)
+                }
             />
         );
     };

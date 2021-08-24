@@ -1,13 +1,31 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 
 import { AttributeDropdownList } from "./AttributeDropdownList";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
-import { AttributeListItem } from "./types";
 import { AttributeDropdownItemsFilteredBody } from "./AttributeDropdownItemsFilteredBody";
+import { AttributeListItem } from "./types";
+import { IAttributeElement } from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
+import { WrappedComponentProps } from "react-intl";
 
-interface IAttributeDropdownBodyProps {
+/**
+ * @public
+ */
+export interface IAttributeDropdownListItemProps extends WrappedComponentProps {
+    isLoading?: boolean;
+    onMouseOut?: (source: any) => void;
+    onMouseOver?: (source: any) => void;
+    onOnly?: (source: any) => void;
+    onSelect?: (source: any) => void;
+    selected?: boolean;
+    source?: any;
+}
+
+/**
+ * @public
+ */
+export interface IAttributeDropdownBodyProps {
     items: AttributeListItem[];
     totalCount: number;
     selectedItems: Array<IAttributeElement>;
@@ -28,7 +46,24 @@ interface IAttributeDropdownBodyProps {
     showItemsFilteredMessage?: boolean;
 }
 
-export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
+/**
+ * @public
+ */
+export interface IAttributeDropdownBodyExtendedProps extends IAttributeDropdownBodyProps {
+    deleteFilter?: () => void;
+    isLoaded?: boolean;
+    isElementsLoading?: boolean;
+    width?: number;
+    listItemClass?: React.ComponentType<IAttributeDropdownListItemProps>;
+    maxSelectionSize?: number;
+    showConfigurationButton?: boolean;
+    onConfigurationChange?: () => void;
+    showDeleteButton?: boolean;
+    isMobile?: boolean;
+    attributeFilterRef?: ObjRef;
+}
+
+export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyExtendedProps> = ({
     items,
     totalCount,
     error,

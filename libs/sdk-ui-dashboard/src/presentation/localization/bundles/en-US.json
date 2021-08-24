@@ -434,6 +434,51 @@
         "comment": "Dialog. Export of the visualization to the file is done.",
         "limit": 0
     },
+    "attributeFilterDropdown.searchPlaceholder": {
+        "value": "Search…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "attributeFilterDropdown.emptyValue": {
+        "value": "empty value",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.dataTooLarge.headline": {
+        "value": "Too many data points to display",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.dataTooLarge.text": {
+        "value": "Try applying one or more filters to your dashboard.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.execute_protected_report.headline": {
+        "value": "You are not authorized to see this report",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.execute_protected_report.text": {
+        "value": "Contact your administrator.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.empty.headline": {
+        "value": "No data for your filter selection",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.error.headline": {
+        "value": "Sorry, we can't display this insight",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.error.text": {
+        "value": "Contact your administrator.",
+        "comment": "",
+        "limit": 0
+    },
     "options.button.bubble": {
         "value": "Export insight data",
         "comment": "Show this message when hovering on the options button",
