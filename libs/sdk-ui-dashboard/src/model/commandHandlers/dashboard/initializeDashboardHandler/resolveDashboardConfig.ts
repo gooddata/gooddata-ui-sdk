@@ -164,6 +164,7 @@ export function* resolveDashboardConfig(
         isEmbedded: config.isEmbedded ?? false,
         isExport: config.isExport ?? false,
         disableDefaultDrills: config.disableDefaultDrills ?? false,
+        enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
     };
 
     return resolvedConfig;

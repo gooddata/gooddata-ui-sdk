@@ -9,7 +9,7 @@ import {
     IDrillToLegacyDashboard,
 } from "@gooddata/sdk-backend-spi";
 
-import { DashboardContext } from "../types/commonTypes";
+import { DashboardContext, FiltersInfo } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
 import {
     IDashboardDrillEvent,
@@ -551,6 +551,10 @@ export interface DashboardDrillToCustomUrlResolved extends IDashboardEvent {
          * Resolved custom url.
          */
         readonly url: string;
+        /**
+         * Information about filters used on the dashboard.
+         */
+        readonly filtersInfo: FiltersInfo;
     };
 }
 
@@ -562,6 +566,7 @@ export function drillToCustomUrlResolved(
     url: string,
     drillDefinition: IDrillToCustomUrl,
     drillEvent: IDashboardDrillEvent,
+    filtersInfo: FiltersInfo,
     correlationId?: string,
 ): DashboardDrillToCustomUrlResolved {
     return {
@@ -572,6 +577,7 @@ export function drillToCustomUrlResolved(
             url,
             drillEvent,
             drillDefinition,
+            filtersInfo,
         },
     };
 }
@@ -660,6 +666,10 @@ export interface DashboardDrillToAttributeUrlResolved extends IDashboardEvent {
          * Resolved attribute url.
          */
         readonly url: string;
+        /**
+         * Information about filters used on the dashboard.
+         */
+        readonly filtersInfo: FiltersInfo;
     };
 }
 
@@ -671,6 +681,7 @@ export function drillToAttributeUrlResolved(
     url: string,
     drillDefinition: IDrillToAttributeUrl,
     drillEvent: IDashboardDrillEvent,
+    filtersInfo: FiltersInfo,
     correlationId?: string,
 ): DashboardDrillToAttributeUrlResolved {
     return {
@@ -681,6 +692,7 @@ export function drillToAttributeUrlResolved(
             drillEvent,
             drillDefinition,
             url,
+            filtersInfo,
         },
     };
 }

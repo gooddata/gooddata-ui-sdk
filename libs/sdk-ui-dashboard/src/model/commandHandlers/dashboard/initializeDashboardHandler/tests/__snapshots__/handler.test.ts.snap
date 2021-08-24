@@ -186,6 +186,7 @@ Object {
     "selectedOption": "THIS_MONTH",
   },
   "disableDefaultDrills": false,
+  "enableFilterValuesResolutionInDrillEvents": false,
   "isEmbedded": false,
   "isExport": false,
   "isReadOnly": false,

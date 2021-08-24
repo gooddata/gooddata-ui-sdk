@@ -128,6 +128,15 @@ export const selectDisableDefaultDrills = createSelector(selectConfig, (state) =
     return state.disableDefaultDrills ?? false;
 });
 
+/**
+ * Returns whether filter values in drill events should be resolved.
+ *
+ * @alpha
+ */
+export const selectEnableFilterValuesResolutionInDrillEvents = createSelector(selectConfig, (state) => {
+    return state.enableFilterValuesResolutionInDrillEvents ?? false;
+});
+
 //
 // FEATURE FLAGS
 //
