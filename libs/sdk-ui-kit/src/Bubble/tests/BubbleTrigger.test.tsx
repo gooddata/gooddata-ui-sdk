@@ -94,7 +94,7 @@ describe("BubbleTrigger", () => {
             instance.eventListeners().onMouseEnter();
 
             expect(instance.scheduleBubbleVisibilityChange.mock.calls[0]).toEqual([true, SHOW_DELAY]);
-            jest.runTimersToTime(SHOW_DELAY + 10);
+            jest.advanceTimersByTime(SHOW_DELAY + 10);
             expect(instance.scheduleBubbleVisibilityChange.mock.calls[1]).toEqual([false, hoverHideDelay]);
         });
 
@@ -105,7 +105,7 @@ describe("BubbleTrigger", () => {
             jest.spyOn(instance, "scheduleBubbleVisibilityChange");
             instance.eventListeners().onMouseEnter();
 
-            jest.runTimersToTime(5000);
+            jest.advanceTimersByTime(5000);
             expect(instance.scheduleBubbleVisibilityChange).toHaveBeenCalledWith(true, SHOW_DELAY);
             expect(instance.scheduleBubbleVisibilityChange).toHaveBeenCalledTimes(1);
         });
@@ -119,7 +119,7 @@ describe("BubbleTrigger", () => {
 
             instance.scheduleBubbleVisibilityChange(true);
 
-            jest.runTimersToTime(1000);
+            jest.advanceTimersByTime(1000);
             expect(instance.changeBubbleVisibility).toHaveBeenCalledWith(true);
             expect(instance.cancelBubbleVisibilityChange).toHaveBeenCalledTimes(1);
         });

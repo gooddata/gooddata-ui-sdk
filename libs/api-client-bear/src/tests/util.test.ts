@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { mockPollingRequestWithStatus } from "./utils/polling";
@@ -49,31 +49,28 @@ describe("util", () => {
             fetchMock.restore();
         });
 
-        it("should return timeout error if maxAttempts are reached", async (done) => {
+        it("should return timeout error if maxAttempts are reached", async () => {
             mockPollingRequestWithStatus(URI, runningTask, finishedTask);
 
             await handleHeadPolling(mockedXHR(), URI, () => false, options).then(null, (error: Error) => {
                 expect(error.message).toBe("Export timeout!!!");
-                done();
             });
         });
 
-        it("should return error if the status is 400", async (done) => {
+        it("should return error if the status is 400", async () => {
             mockPollingRequestWithStatus(URI, runningTask, failedTask);
 
             await handleHeadPolling(mockedXHR(), URI, isPollingDone, options).then(null, (error: Error) => {
                 expect(error.message).toBe("Bad Request");
-                done();
             });
         });
 
-        it("should return uri if the status is 200", async (done) => {
+        it("should return uri if the status is 200", async () => {
             mockPollingRequestWithStatus(URI, runningTask, finishedTask);
 
             await handleHeadPolling(mockedXHR(), URI, isPollingDone, options).then(
                 (result: GdcExport.IExportResponse) => {
                     expect(result.uri).toEqual(URI);
-                    done();
                 },
             );
         });

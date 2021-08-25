@@ -5,12 +5,7 @@ const ciBase = require("../../common/config/jest/jest.config.ci.base.js");
 module.exports = {
     ...ciBase,
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
-    /*
-     * cannot use jest-environment-enzyme nor latest jsdom from Jest 25.
-     *
-     * see: https://github.com/ag-grid/ag-grid/issues/3488
-     */
-    testEnvironment: "jest-environment-jsdom-fourteen",
+    testEnvironment: "jsdom",
     testEnvironmentOptions: {
         enzymeAdapter: "react16",
     },
