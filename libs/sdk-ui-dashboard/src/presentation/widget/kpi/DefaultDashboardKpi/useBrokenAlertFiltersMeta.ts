@@ -115,10 +115,12 @@ export function useBrokenAlertFiltersMeta({
                           attributesService.getAttributeDisplayForm(displayForm),
                       ]);
 
+                      const attribute = await attributesService.getAttribute(displayFormData.attribute);
+
                       return {
                           elements,
                           displayForm,
-                          title: displayFormData.title,
+                          title: attribute.title,
                       };
                   }),
               );
