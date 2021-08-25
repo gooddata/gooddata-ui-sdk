@@ -95,6 +95,11 @@ class RecordedElements implements IElementsQuery {
         return this;
     }
 
+    public withDateFilters(): IElementsQuery {
+        // eslint-disable-next-line no-console
+        console.warn("recorded backend does not support withDateFilters yet, ignoring...");
+        return this;
+    }
     public withAttributeFilters(): IElementsQuery {
         // eslint-disable-next-line no-console
         console.warn("recorded backend does not support withAttributeFilters yet, ignoring...");

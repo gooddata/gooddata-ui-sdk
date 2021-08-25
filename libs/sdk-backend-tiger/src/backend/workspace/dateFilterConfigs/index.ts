@@ -159,21 +159,36 @@ export class TigerWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQ
         offset: number | undefined = 0,
         limit: number | undefined,
     ): Promise<IDateFilterConfigsQueryResult> {
+        const singleItemPage = {
+            items: [DefaultDateFilterConfig],
+            offset: 0,
+            limit: 1,
+            totalCount: 1,
+        };
+
+        const goTo = (pageIndex: number) =>
+            pageIndex === 0
+                ? Promise.resolve({
+                      ...singleItemPage,
+                      next: () => Promise.resolve(emptyResult),
+                      goTo,
+                  })
+                : Promise.resolve(emptyResult);
+
         const emptyResult: IDateFilterConfigsQueryResult = {
             items: [],
             limit: 0,
             offset: 1,
             totalCount: 1,
             next: () => Promise.resolve(emptyResult),
+            goTo,
         };
 
         if (!offset && (!limit || limit > 0)) {
             return {
-                items: [DefaultDateFilterConfig],
-                offset: 0,
-                limit: 1,
-                totalCount: 1,
+                ...singleItemPage,
                 next: () => Promise.resolve(emptyResult),
+                goTo,
             };
         }
 

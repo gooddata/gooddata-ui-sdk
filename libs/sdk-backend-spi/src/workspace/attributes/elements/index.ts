@@ -83,10 +83,11 @@ export interface IElementsQueryFactory {
      * Query attribute elements used by provided filter
      *
      * @param filter - resolvable filter
+     * @param dateFilterDisplayForm - display form of resolvable filter if it is date filter
      * @returns instance that can be used to query attribute elements
      *
      */
-    forFilter(filter: FilterWithResolvableElements): IFilterElementsQuery;
+    forFilter(filter: FilterWithResolvableElements, dateFilterDisplayForm?: ObjRef): IFilterElementsQuery;
 }
 
 /**
@@ -145,6 +146,16 @@ export interface IElementsQuery {
      * @returns promise of first page of the results
      */
     query(): Promise<IElementsQueryResult>;
+
+    /**
+     * Sets the date filters that will limit the available elements
+     *
+     * @param filters - date filters limiting the elements
+     * @returns element query
+     */
+
+    // will add relativeDateFilters
+    withDateFilters(filters: IRelativeDateFilter[]): IElementsQuery;
 }
 
 /**

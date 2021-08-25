@@ -2,6 +2,7 @@
 
 exports[`bear elements forDisplayForm should load attribute elements for existing display form 1`] = `
 Object {
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "1000Bulbs.com",
@@ -93,6 +94,7 @@ Object {
 
 exports[`bear elements forDisplayForm should load attribute elements for existing display form with a limiting measure 1`] = `
 Object {
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "1000Bulbs.com",
@@ -184,6 +186,7 @@ Object {
 
 exports[`bear elements forDisplayForm should load attribute elements for existing display form with a parent filter 1`] = `
 Object {
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "14 West",
@@ -275,6 +278,7 @@ Object {
 
 exports[`bear elements forFilter should load attribute filter elements for provided negative attribute filter 1`] = `
 Object {
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "Educationly",
@@ -290,6 +294,7 @@ Object {
 
 exports[`bear elements forFilter should load attribute filter elements for provided positive attribute filter 1`] = `
 Object {
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "Educationly",
@@ -330,5 +335,58 @@ InMemoryPaging {
   "limit": 50,
   "offset": 0,
   "totalCount": 1,
+}
+`;
+
+exports[`bear elements forFilter should return correct page for given displayForm 1`] = `
+Object {
+  "goTo": [Function],
+  "items": Array [
+    Object {
+      "title": "1-888-OhioComp",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2875",
+    },
+    Object {
+      "title": "1 Source Consulting",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2871",
+    },
+  ],
+  "limit": 2,
+  "next": [Function],
+  "offset": 6,
+  "totalCount": 4846,
+}
+`;
+
+exports[`bear elements forFilter should return empty result for out-of-range page in initial request 1`] = `
+Object {
+  "goTo": [Function],
+  "items": Array [],
+  "limit": 0,
+  "next": [Function],
+  "offset": 5000,
+  "totalCount": 4846,
+}
+`;
+
+exports[`bear elements forFilter should return empty result for out-of-range page with goTo 1`] = `
+Object {
+  "goTo": [Function],
+  "items": Array [],
+  "limit": 0,
+  "next": [Function],
+  "offset": 10000,
+  "totalCount": 4846,
+}
+`;
+
+exports[`bear elements forFilter should return empty result for out-of-range page with next 1`] = `
+Object {
+  "goTo": [Function],
+  "items": Array [],
+  "limit": 6,
+  "next": [Function],
+  "offset": 4846,
+  "totalCount": 4846,
 }
 `;

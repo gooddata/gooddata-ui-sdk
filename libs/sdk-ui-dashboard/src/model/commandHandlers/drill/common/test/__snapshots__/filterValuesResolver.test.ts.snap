@@ -1,5 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`resolveFilterValues should resolve relative date filter 1`] = `
+Object {
+  "attributeFilters": Object {},
+  "dateFilters": Array [
+    Object {
+      "from": "2021-08-01",
+      "granularity": "GDC.time.date",
+      "to": "2021-08-04",
+    },
+  ],
+}
+`;
+
 exports[`resolveFilterValues should resolved ALL attribute filter to empty values 1`] = `
 Object {
   "attributeFilters": Object {

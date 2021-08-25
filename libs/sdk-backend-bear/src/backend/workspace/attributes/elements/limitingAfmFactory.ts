@@ -12,6 +12,7 @@ import {
     areObjRefsEqual,
     objRefToString,
     IMeasure,
+    IRelativeDateFilter,
 } from "@gooddata/sdk-model";
 import { IElementsQueryAttributeFilter, NotSupported } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
@@ -35,8 +36,9 @@ export class LimitingAfmFactory {
     public getAfm = async (
         filters: IElementsQueryAttributeFilter[] | undefined,
         measures: IMeasure[] | undefined,
+        relativeDateFilters: IRelativeDateFilter[] | undefined,
     ): Promise<GdcExecuteAFM.IAfm | undefined> => {
-        if (!filters?.length && !measures?.length) {
+        if (!filters?.length && !measures?.length && !relativeDateFilters?.length) {
             return undefined;
         }
 
@@ -52,6 +54,9 @@ export class LimitingAfmFactory {
 
         const measuresPart = measures?.length ? measures.map(convertMeasure) : undefined;
 
+        const mergedFiltersPart = filtersPart &&
+            relativeDateFilters && [...filtersPart, ...relativeDateFilters];
+
         return {
             attributes: [
                 {
@@ -59,7 +64,7 @@ export class LimitingAfmFactory {
                     displayForm: toBearRef(this.displayFormRef),
                 },
             ],
-            filters: filtersPart,
+            filters: mergedFiltersPart || filtersPart || relativeDateFilters,
             measures: measuresPart,
         };
     };

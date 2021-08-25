@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import range from "lodash/range";
 import { InMemoryPaging } from "../paging";
 
@@ -50,5 +50,21 @@ describe("InMemoryPaging", () => {
         expect(pager.offset).toEqual(125);
         // and there is no items
         expect(pager.items.length).toBe(0);
+    });
+
+    it("should return specific page", async () => {
+        const pager = new InMemoryPaging<number>(Items, 10, 0);
+
+        const changed = await pager.goTo(5);
+        expect(changed.offset).toEqual(50);
+        expect(changed.items.length).toBe(10);
+    });
+
+    it("should return empty page if page out of range", async () => {
+        const pager = new InMemoryPaging<number>(Items, 10, 0);
+
+        const changed = await pager.goTo(500);
+        expect(changed.offset).toEqual(125);
+        expect(changed.items.length).toBe(0);
     });
 });

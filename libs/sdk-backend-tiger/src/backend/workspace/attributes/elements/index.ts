@@ -22,6 +22,7 @@ import {
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { TigerAuthenticatedCallGuard } from "../../../../types";
+import { getRelativeDateFilterShiftedValues } from "./date";
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -59,6 +60,10 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     }
 
     public withAttributeFilters(): IElementsQuery {
+        throw new NotSupported("not supported");
+    }
+
+    public withDateFilters(): IElementsQuery {
         throw new NotSupported("not supported");
     }
 
@@ -103,12 +108,20 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         const { count, total, offset: serverOffset } = paging;
         const hasNextPage = serverOffset + count < total;
 
+        const goTo = (pageIndex: number) => {
+            const hasRequestedPage = pageIndex * count < total;
+            return hasRequestedPage
+                ? this.queryWorker(pageIndex * count, limit, options)
+                : Promise.resolve(emptyResult);
+        };
+
         const emptyResult: IElementsQueryResult = {
             items: [],
             limit,
             offset,
             totalCount: 0,
             next: () => Promise.resolve(emptyResult),
+            goTo,
         };
 
         return {
@@ -124,6 +137,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
             next: hasNextPage
                 ? () => this.queryWorker(offset + count, limit, options)
                 : () => Promise.resolve(emptyResult),
+            goTo,
         };
     }
 }
@@ -177,21 +191,13 @@ class TigerWorkspaceFilterElementsQuery implements IFilterElementsQuery {
     }
 
     private async queryDateFilterElements(): Promise<IElementsQueryResult> {
-        // TODO INE replace by real implementation
-        const emptyResult: IElementsQueryResult = {
-            items: [],
-            limit: 0,
-            offset: 0,
-            totalCount: 0,
-            next: () => Promise.resolve(emptyResult),
-        };
+        const relativeDateFilters = getRelativeDateFilterShiftedValues(new Date(), this.filter as any);
 
-        return Promise.resolve({
-            items: [],
-            limit: 0,
-            offset: 0,
-            totalCount: 0,
-            next: () => Promise.resolve(emptyResult),
-        });
+        const items: IAttributeElement[] = relativeDateFilters.map((relativeDateFilter: string) => ({
+            title: relativeDateFilter,
+            uri: relativeDateFilter,
+        }));
+
+        return Promise.resolve(new InMemoryPaging<IAttributeElement>(items, this.limit, this.offset));
     }
 }
