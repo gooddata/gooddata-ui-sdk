@@ -163,7 +163,7 @@ export const getObjRef = (filter: IAttributeFilter, identifier: string): ObjRef 
 
 export const getValidElementsFilters = (
     parentFilters: IAttributeFilter[],
-    overAttribute: ObjRef | ((parentFilter: IAttributeFilter) => ObjRef),
+    overAttribute: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef),
 ): IElementsQueryAttributeFilter[] => {
     if (!parentFilters || !overAttribute) {
         return [];
@@ -178,10 +178,10 @@ export const getValidElementsFilters = (
                 isAttributeElementsByRef(filterAttributeElements(parentFilter))
             );
         })
-        .map((attributeFilter) => {
+        .map((attributeFilter, index) => {
             return {
                 attributeFilter,
-                overAttribute: overAttributeGetter(attributeFilter),
+                overAttribute: overAttributeGetter(attributeFilter, index),
             };
         });
 };

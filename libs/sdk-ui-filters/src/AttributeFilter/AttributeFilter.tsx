@@ -92,7 +92,7 @@ export interface IAttributeFilterProps {
      * You can either provide an {@link @gooddata/sdk-model#ObjRef} which will be used for all the parent filters,
      * or you can provide a function that will be called for each parent filter to determine the respective over attribute.
      */
-    parentFilterOverAttribute?: ObjRef | ((parentFilter: IAttributeFilter) => ObjRef);
+    parentFilterOverAttribute?: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
 
     /**
      * Specify function which will be called when user clicks 'Apply' button. The function will receive the current
