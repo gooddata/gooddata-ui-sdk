@@ -63,7 +63,7 @@
         "@gooddata/reference-workspace": "^8.8.0-alpha.7",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.18.4",
-        "@types/jest": "^26.0.12",
+        "@types/jest": "^27.0.1",
         "@types/json-stable-stringify": "^1.0.32",
         "@types/lodash": "^4.14.158",
         "@types/lru-cache": "^5.1.0",
@@ -80,10 +80,10 @@
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^3.1.4",
         "eslint-plugin-sonarjs": "^0.9.1",
-        "jest": "^26.4.2",
+        "jest": "^27.0.6",
         "jest-junit": "^3.0.0",
         "prettier": "~2.3.0",
-        "ts-jest": "^26.3.0",
+        "ts-jest": "^27.0.5",
         "typescript": "4.0.2"
     }
 }

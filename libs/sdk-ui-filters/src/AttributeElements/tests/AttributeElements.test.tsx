@@ -10,7 +10,7 @@ import { AttributeElements } from "../AttributeElements";
 /*
  * TODO: find a common place for this; possibly test support lib?
  */
-const waitForAsync = () => new Promise((resolve: (...args: any[]) => void) => setImmediate(resolve));
+const waitForAsync = () => new Promise((resolve: (...args: any[]) => void) => setTimeout(resolve, 0));
 
 describe("AttributeElements", () => {
     const backend = recordedBackend(ReferenceRecordings.Recordings);

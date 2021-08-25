@@ -238,7 +238,7 @@ describe("fetch", () => {
             const handleRequest = jest.fn(() => Promise.resolve());
             const promise = handlePolling("/some/url", { pollDelay: () => 1000 }, handleRequest);
 
-            jest.runTimersToTime(1000); // ms
+            jest.advanceTimersByTime(1000); // ms
             expect(handleRequest).toHaveBeenCalledTimes(1);
 
             return promise;
