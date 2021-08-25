@@ -18,7 +18,6 @@ module.exports = {
   }
 };
 
-const TYPESCRIPT_VERSION = "4.0.2";
 const JSDOM_VERSION = "^27.0.6";
 
 /**
@@ -30,11 +29,6 @@ const JSDOM_VERSION = "^27.0.6";
  * The return value is the updated object.
  */
 function readPackage(packageJson, context) {
-  if (packageJson.name === '@microsoft/api-extractor') {
-    // context.log('Overwriting api-extract typescript version to ' + TYPESCRIPT_VERSION);
-    packageJson.dependencies['typescript'] = TYPESCRIPT_VERSION;
-  }
-
   // this is needed as the jest-environment-enzyme is essentially unmaintained and Jest 27 requires latest jsdom
   // without this test abort with error stemming from this change: https://github.com/facebook/jest/pull/9428
   if (packageJson.name === 'jest-environment-enzyme') {
