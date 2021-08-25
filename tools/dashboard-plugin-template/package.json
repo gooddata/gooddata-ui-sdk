@@ -94,7 +94,7 @@
         "case-sensitive-paths-webpack-plugin": "^2.4.0",
         "concurrently": "^6.0.2",
         "css-loader": "^5.2.4",
-        "dependency-cruiser": "^9.9.5",
+        "dependency-cruiser": "^10.1.1",
         "dotenv-webpack": "^7.0.2",
         "dotenv": "^8.2.0",
         "enzyme": "^3.10.0",
