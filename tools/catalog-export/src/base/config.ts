@@ -6,6 +6,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants";
 import { CatalogExportConfig } from "./types";
+import { OptionValues } from "commander";
 
 function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
     return {
@@ -27,21 +28,21 @@ function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG):
     };
 }
 
-function retrieveConfigFromObject(obj: Record<string, any>): CatalogExportConfig {
+function retrieveConfigFromObject(obj: OptionValues): CatalogExportConfig {
     return {
-        hostname: obj?.hostname ?? null,
-        projectId: obj?.projectId ?? null,
-        projectName: obj?.projectName ?? null,
-        workspaceId: obj?.workspaceId ?? null,
-        workspaceName: obj?.workspaceName ?? null,
-        username: obj?.username ?? null,
-        password: obj?.password ?? null,
-        output: obj?.output ?? null,
-        backend: obj?.backend ?? "bear",
+        hostname: obj.hostname ?? null,
+        projectId: obj.projectId ?? null,
+        projectName: obj.projectName ?? null,
+        workspaceId: obj.workspaceId ?? null,
+        workspaceName: obj.workspaceName ?? null,
+        username: obj.username ?? null,
+        password: obj.password ?? null,
+        output: obj.output ?? null,
+        backend: obj.backend ?? "bear",
     };
 }
 
-export function getConfigFromProgram(obj: object, prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
+export function getConfigFromOptions(obj: OptionValues, prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
     return mergeConfigs(retrieveConfigFromObject(obj), prevConfig);
 }
 

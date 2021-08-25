@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { getConfigFromProgram } from "../config";
+import { getConfigFromOptions } from "../config";
 import { CatalogExportConfig } from "../types";
 
 describe("getConfigFromProgram", () => {
@@ -34,9 +34,9 @@ describe("getConfigFromProgram", () => {
 
     it.each(TEST_DATA)("should %s", (_, input: any, defaultOptions: CatalogExportConfig | null) => {
         if (!defaultOptions) {
-            expect(getConfigFromProgram(input)).toMatchSnapshot();
+            expect(getConfigFromOptions(input)).toMatchSnapshot();
         } else {
-            expect(getConfigFromProgram(input, defaultOptions)).toMatchSnapshot();
+            expect(getConfigFromOptions(input, defaultOptions)).toMatchSnapshot();
         }
     });
 });

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // (C) 2020-2021 GoodData Corporation
 
-import program from "commander";
+import { program } from "commander";
 import * as process from "process";
 import * as pkg from "../package.json";
 import { autoBuild, devConsole } from "./devConsole/action";

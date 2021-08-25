@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // (C) 2007-2021 GoodData Corporation
 
-import program from "commander";
+import { program } from "commander";
 import ora from "ora";
 import chalk from "chalk";
 import * as pkg from "../package.json";
@@ -11,7 +11,7 @@ import pmap from "p-map";
 import { log, logError, logInfo, logSuccess } from "./cli/loggers";
 import { clearLine, clearTerminal } from "./cli/clear";
 import { promptPassword, promptProjectId, promptUsername } from "./cli/prompts";
-import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
+import { getConfigFromConfigFile, getConfigFromOptions } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_BACKEND } from "./base/constants";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types";
 import { generateAllFiles } from "./codegen";
@@ -147,15 +147,16 @@ async function run() {
     clearTerminal();
     logInfo(`GoodData Mock Handling Tool v${pkg.version}`);
 
-    if (program.acceptUntrustedSsl) {
+    const options = program.opts();
+    if (options.acceptUntrustedSsl) {
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     }
 
-    const configFilePath = program.config || DEFAULT_CONFIG_FILE_NAME;
+    const configFilePath = options.config || DEFAULT_CONFIG_FILE_NAME;
 
     logInfo(`Reading config from ${configFilePath}`);
 
-    const partialConfig = getConfigFromConfigFile(configFilePath, getConfigFromProgram(program));
+    const partialConfig = getConfigFromConfigFile(configFilePath, getConfigFromOptions(options));
     const { recordingDir } = partialConfig;
 
     if (!recordingDir) {
@@ -197,8 +198,8 @@ async function run() {
         const backend = getOrInitBackend(
             fullConfig.username!,
             fullConfig.password!,
-            program.hostname || DEFAULT_HOSTNAME,
-            program.backend || DEFAULT_BACKEND,
+            options.hostname || DEFAULT_HOSTNAME,
+            options.backend || DEFAULT_BACKEND,
         );
 
         const newRecordings = await captureRecordings(incompleteRecordings, backend, fullConfig);

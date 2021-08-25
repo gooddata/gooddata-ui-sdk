@@ -123,7 +123,8 @@ export class PackageBuilder implements IEventListener {
             this.eventBus.post(
                 buildFinished({
                     packageName,
-                    exitCode,
+                    // exitCode may be null if the rsync was interrupted by a signal; treat that as error
+                    exitCode: exitCode ?? 1,
                     stdoutPath,
                     stderrPath,
                     duration,

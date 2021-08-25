@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 // (C) 2007-2021 GoodData Corporation
-import program from "commander";
+import { program } from "commander";
 import chalk from "chalk";
 import * as path from "path";
 import * as pkg from "../package.json";
 import { logBox, logError, logSuccess, logWarn, printHeader } from "./cli/loggers";
 import { clearTerminal } from "./cli/clear";
 import { requestFilePath } from "./cli/prompts";
-import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
+import { getConfigFromConfigFile, getConfigFromOptions } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants";
 import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types";
 import { exportMetadataToCatalog } from "./exports/metaToCatalog";
@@ -60,12 +60,13 @@ async function run() {
     clearTerminal();
     printHeader(pkg.version);
 
-    if (program.acceptUntrustedSsl) {
+    const options = program.opts();
+    if (options.acceptUntrustedSsl) {
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     }
 
-    const configFilePath = program.config || DEFAULT_CONFIG_FILE_NAME;
-    const mergedConfig = getConfigFromConfigFile(configFilePath, getConfigFromProgram(program));
+    const configFilePath = options.config || DEFAULT_CONFIG_FILE_NAME;
+    const mergedConfig = getConfigFromConfigFile(configFilePath, getConfigFromOptions(options));
     const { output, backend } = mergedConfig;
 
     try {

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // (C) 2020 GoodData Corporation
 require("dotenv").config();
-const program = require("commander");
+const { program } = require("commander");
 const axios = require("axios").default;
 const fs = require("fs").promises;
 const path = require("path");
@@ -62,7 +62,7 @@ const main = async () => {
         password = process.env.GD_PASSWORD,
         outputDir = process.env.OUTPUT_DIR || DEFAULT_OUTPUT_DIR,
         outputFile = process.env.OUTPUT_FILE || DEFAULT_OUTPUT_FILE,
-    } = program;
+    } = program.opts();
 
     if (!baseUrl) {
         console.error("You must provide a baseUrl.");

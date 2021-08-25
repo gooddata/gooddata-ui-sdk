@@ -10,13 +10,13 @@ import { PackagePublisher } from "./pipeline/publisher";
 import { SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types";
 import { NoopPublisher } from "./pipeline/noopPublisher";
 
-export async function devConsole(targetDir: string): Promise<number> {
+export async function devConsole(targetDir: string): Promise<void> {
     const sourceDescriptor = await getSourceDescriptor(
         (pkg) => !pkg.projectFolder.startsWith("examples") && !pkg.projectFolder.startsWith("skel"),
     );
 
     if (!sourceDescriptor) {
-        return 1;
+        return;
     }
 
     const targetDescriptor = getTargetDescriptor(targetDir, sourceDescriptor);
@@ -24,7 +24,7 @@ export async function devConsole(targetDir: string): Promise<number> {
     if (!targetDescriptor.dependencies.length) {
         console.info("The target project does not have any dependencies on the SDK. There is nothing to do.");
 
-        return 1;
+        return;
     }
 
     /*
@@ -45,8 +45,6 @@ export async function devConsole(targetDir: string): Promise<number> {
      */
     GlobalEventBus.post(sourceInitialized(sourceDescriptor));
     GlobalEventBus.post(targetSelected(targetDescriptor));
-
-    return 0;
 }
 
 function createInPlaceTargetDescriptor(source: SourceDescriptor): TargetDescriptor {
@@ -65,13 +63,13 @@ function createInPlaceTargetDescriptor(source: SourceDescriptor): TargetDescript
     };
 }
 
-export async function autoBuild(): Promise<number> {
+export async function autoBuild(): Promise<void> {
     const sourceDescriptor = await getSourceDescriptor(
         (pkg) => !pkg.projectFolder.startsWith("examples") && !pkg.projectFolder.startsWith("skel"),
     );
 
     if (!sourceDescriptor) {
-        return 1;
+        return;
     }
 
     /*
@@ -92,6 +90,4 @@ export async function autoBuild(): Promise<number> {
      */
     GlobalEventBus.post(sourceInitialized(sourceDescriptor));
     GlobalEventBus.post(targetSelected(createInPlaceTargetDescriptor(sourceDescriptor)));
-
-    return 0;
 }
