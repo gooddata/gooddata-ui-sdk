@@ -78,6 +78,7 @@ libs/**/src/**/*.jsx
 libs/**/ci/
 tools/**/ci/
 skel/**/ci/
+examples/**/ci/
 
 # As a precaution to accidentally leaking secrets, the .npmrc located in repo root is ignored. Do not remove.
 /.npmrc
