@@ -54,7 +54,7 @@ export {
 } from "./state/filterContext/filterContextSelectors";
 export {
     // Core drills
-    selectInsightWidgeImplicitDrillDownsByRef,
+    selectInsightWidgetImplicitDrillDownsByRef,
     selectInsightWidgetImplicitDrillsByRef,
     selectInsightWidgetDrillableItems,
     selectInsightWidgetImplicitDrillsAndDrillDownsByRef,

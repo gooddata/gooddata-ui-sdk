@@ -396,7 +396,7 @@ export interface ChangeDrillableItems extends IDashboardCommand {
  * @alpha
  * @param drillableItems - reference to the drillable items or predicates that enables insight/kpi drilling.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
- * @returns drill down command
+ * @returns change drillable items command
  */
 export function changeDrillableItems(
     drillableItems: ExplicitDrill[],

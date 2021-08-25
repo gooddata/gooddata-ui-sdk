@@ -46,6 +46,7 @@ import {
     useDashboardAsyncRender,
     useDashboardUserInteraction,
     selectDisableDefaultDrills,
+    selectDrillableItems,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
@@ -57,7 +58,6 @@ import { IKpiAlertResult, IKpiResult } from "./types";
 import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
 import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
 import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
-import { selectDrillableItems } from "../../../../model/state/drill/drillSelectors";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;

@@ -3,7 +3,6 @@ import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import {
-    IFilter,
     insightFilters,
     insightSetFilters,
     insightVisualizationUrl,
@@ -101,15 +100,20 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(
         objRefToString(widget.ref),
     );
-    const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
-        if (isLoading) {
-            onRequestAsyncRender();
-        } else {
-            onResolveAsyncRender();
-        }
-        setIsVisualizationLoading(isLoading);
-        onLoadingChanged?.({ isLoading });
-    }, []);
+    const handleLoadingChanged = useCallback<OnLoadingChanged>(
+        ({ isLoading }) => {
+            if (isLoading) {
+                onRequestAsyncRender();
+                // if we started loading, any previous vis error is obsolete at this point, get rid of it
+                setVisualizationError(undefined);
+            } else {
+                onResolveAsyncRender();
+            }
+            setIsVisualizationLoading(isLoading);
+            onLoadingChanged?.({ isLoading });
+        },
+        [onLoadingChanged],
+    );
 
     /// Filtering
     const {
@@ -118,7 +122,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         error: filtersError,
     } = useWidgetFiltersQuery(widget, insight && insightFilters(insight));
 
-    const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight as IFilter[]); // TODO how to type this better?
+    const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight);
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
         insight: insightWithAddedFilters ?? insight,
         widget,

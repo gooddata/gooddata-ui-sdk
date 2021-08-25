@@ -1,5 +1,4 @@
 // (C) 2021 GoodData Corporation
-// import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import memoize from "lodash/memoize";
 import stringify from "json-stable-stringify";
 

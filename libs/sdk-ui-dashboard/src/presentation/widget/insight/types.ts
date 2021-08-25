@@ -2,13 +2,7 @@
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
-import {
-    IErrorProps,
-    ILoadingProps,
-    OnError,
-    OnExportReady,
-    OnLoadingChanged,
-} from "@gooddata/sdk-ui";
+import { IErrorProps, ILoadingProps, OnError, OnExportReady, OnLoadingChanged } from "@gooddata/sdk-ui";
 import {
     OnDrillDownSuccess,
     OnDrillToAttributeUrlSuccess,

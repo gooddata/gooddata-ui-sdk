@@ -2,7 +2,6 @@
 import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
 import { IInsight, ObjRef } from "@gooddata/sdk-model";
-import { DrillToLegacyDashboard } from "../../model/commands/drill";
 import {
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
@@ -18,6 +17,7 @@ import {
     IDrillDownDefinition,
 } from "../../types";
 import {
+    DrillToLegacyDashboard,
     DashboardCommandFailed,
     DashboardDrillResolved,
     DashboardDrillDownResolved,

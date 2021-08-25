@@ -96,8 +96,14 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                 >
                     <WithDrillSelect insight={props.insight} onDrillDownSuccess={onDrillDown}>
                         {({ onDrill }) => {
-                            return <DrillDialogInsight {...props} onDrill={onDrill}      onLoadingChanged={handleLoadingChanged}
-                            onExportReady={handleExportReady} />;
+                            return (
+                                <DrillDialogInsight
+                                    {...props}
+                                    onDrill={onDrill}
+                                    onLoadingChanged={handleLoadingChanged}
+                                    onExportReady={handleExportReady}
+                                />
+                            );
                         }}
                     </WithDrillSelect>
                 </DrillDialog>

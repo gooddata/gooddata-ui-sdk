@@ -228,6 +228,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
             serializableCheck: {
                 ignoredActions: nonSerializableEventsAndCommands,
                 ignoredActionPaths: ["ctx"],
+                // drillableItems can be functions (header predicates)
                 ignoredPaths: ["drill.drillableItems"],
             },
         }),

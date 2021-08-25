@@ -824,3 +824,13 @@ export function drillableItemsChanged(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDrillableItemsChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDrillableItemsChanged = eventGuard<DashboardDrillableItemsChanged>(
+    "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
+);

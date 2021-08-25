@@ -108,7 +108,7 @@ function getDrillDefinitionsWithPredicates(
 /**
  * @internal
  */
-export const selectInsightWidgeImplicitDrillDownsByRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectInsightWidgetImplicitDrillDownsByRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectDrillTargetsByWidgetRef(ref),
         selectAttributesWithDrillDown,
@@ -134,7 +134,7 @@ export const selectInsightWidgetImplicitDrillsByRef = createMemoizedSelector((re
 export const selectInsightWidgetImplicitDrillsAndDrillDownsByRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectInsightWidgetImplicitDrillsByRef(ref),
-        selectInsightWidgeImplicitDrillDownsByRef(ref),
+        selectInsightWidgetImplicitDrillDownsByRef(ref),
         (widgetImplicitDrills, widgetImplicitDrillDownDrills) => {
             return [...widgetImplicitDrills, ...widgetImplicitDrillDownDrills];
         },
@@ -142,7 +142,7 @@ export const selectInsightWidgetImplicitDrillsAndDrillDownsByRef = createMemoize
 );
 
 const selectInsightWidgetDrillDownImplicitDrillPredicates = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(selectInsightWidgeImplicitDrillDownsByRef(ref), (widgetDrillDownImplicitDrills) => {
+    createSelector(selectInsightWidgetImplicitDrillDownsByRef(ref), (widgetDrillDownImplicitDrills) => {
         return flatMap(widgetDrillDownImplicitDrills, (implicitDrill) => implicitDrill.predicates);
     }),
 );

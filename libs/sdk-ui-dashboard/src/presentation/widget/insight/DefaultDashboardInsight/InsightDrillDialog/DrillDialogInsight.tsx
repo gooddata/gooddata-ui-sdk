@@ -2,7 +2,7 @@
 import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
-import { IFilter, insightFilters, insightSetFilters, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { insightFilters, insightSetFilters, insightVisualizationUrl } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IntlWrapper,
@@ -94,7 +94,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         error: filtersError,
     } = useWidgetFiltersQuery(widget, insight && insightFilters(insight));
 
-    const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight as IFilter[]); // TODO how to type this better?
+    const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight);
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
         insight: insightWithAddedFilters ?? insight,
         widget,
