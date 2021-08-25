@@ -385,13 +385,16 @@ export interface SetAttributeFilterParent extends IDashboardCommand {
 
 /**
  * Creates the SetAttributeFilterParent command. Dispatching this command will result in setting a parent-child
- * relationship between two filters.
+ * relationship between two dashboard attribute filters.
  *
  * When an attribute filter has a parent set up, the attribute elements that will be available in the child
- * filter will be influenced by the selection in the parent. Only elements which have a link over some attributes
- * to the parent filter will be available for selection in the child filter.
+ * filter will be influenced by the selection in the parent. The child filter will show only those elements
+ * for which a link exists to the selected elements in the parent.
  *
- * TODO: fix the docs
+ * Take for example a model where there are continent and country attributes. You add continent and
+ * country as filters onto a dashboard and establish parent-child relationship between them. When users select
+ * some continents in the filter, the country filter will only show elements for countries on the selected
+ * contents.
  *
  * @param filterLocalId - local id of filter that will be a child in the relationship
  * @param parentFilter - definition of the relationship to parent, this contains local id of the parent filter and
@@ -451,7 +454,7 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
  * Filters will be matched via display form ref, duplicities will be omitted.
  *
  * @alpha
- * @param selection - attribute filters and date filter to apply.
+ * @param filters - attribute filters and date filter to apply.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns change filter selection command
  */

@@ -4,12 +4,18 @@ import { DashboardContext } from "../../types/commonTypes";
 import { ReplaceSectionItem } from "../../commands";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
-import { put, select } from "redux-saga/effects";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation";
 import { layoutActions } from "../../state/layout";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
 import { DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout";
+import {
+    validateAndNormalizeWidgetItems,
+    validateAndResolveItemFilterSettings,
+} from "./validation/itemValidation";
+import { batchActions } from "redux-batched-actions";
+import { insightsActions } from "../../state/insights";
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;
@@ -64,7 +70,6 @@ function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
     };
 }
 
-// TODO: this needs to handle calculation of the date dataset to use for the item
 export function* replaceSectionItemHandler(
     ctx: DashboardContext,
     cmd: ReplaceSectionItem,
@@ -76,19 +81,37 @@ export function* replaceSectionItemHandler(
         stash: yield select(selectStash),
     };
     const { itemToReplace, stashValidationResult } = validateAndResolve(commandCtx);
-    const { sectionIndex, itemIndex, stashIdentifier } = cmd.payload;
+    const { sectionIndex, itemIndex, stashIdentifier, autoResolveDateFilterDataset } = cmd.payload;
+
+    const normalizationResult: SagaReturnType<typeof validateAndNormalizeWidgetItems> = yield call(
+        validateAndNormalizeWidgetItems,
+        ctx,
+        stashValidationResult,
+        cmd,
+    );
+
+    const itemsToAdd: SagaReturnType<typeof validateAndResolveItemFilterSettings> = yield call(
+        validateAndResolveItemFilterSettings,
+        ctx,
+        cmd,
+        normalizationResult,
+        autoResolveDateFilterDataset,
+    );
 
     yield put(
-        layoutActions.replaceSectionItem({
-            sectionIndex,
-            itemIndex,
-            newItems: stashValidationResult.resolved,
-            stashIdentifier,
-            usedStashes: stashValidationResult.existing,
-            undo: {
-                cmd,
-            },
-        }),
+        batchActions([
+            insightsActions.addInsights(normalizationResult.resolvedInsights.loaded),
+            layoutActions.replaceSectionItem({
+                sectionIndex,
+                itemIndex,
+                newItems: itemsToAdd,
+                stashIdentifier,
+                usedStashes: stashValidationResult.existing,
+                undo: {
+                    cmd,
+                },
+            }),
+        ]),
     );
 
     return layoutSectionItemReplaced(

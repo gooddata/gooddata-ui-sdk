@@ -30,6 +30,9 @@ You can also view our [live examples](https://gdui-examples.herokuapp.com/login)
 3.  Build: `rush build`
 4.  Read the [contribution guide](./docs/contributing.md)
 
+**HINT**: The repository includes the `.envrc` configuration file for [direnv](https://direnv.net/); you can use this
+to auto-nvm-use the correct node.js installation every time you enter the `gooddata-ui-sdk` directory.
+
 ### After you pull latest changes
 
 Always run `rush install`; this will make sure all the dependencies from the lock file will be installed in all

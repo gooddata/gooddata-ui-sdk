@@ -659,7 +659,7 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
 }
 
-// @internal
+// @internal (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
 
 // @alpha (undocumented)
@@ -1290,7 +1290,7 @@ export type DashboardSelector<TResult> = (state: DashboardState) => TResult;
 // @alpha
 export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<TResult>) => TResult;
 
-// @alpha
+// @alpha (undocumented)
 export type DashboardState = {
     loading: LoadingState;
     backendCapabilities: BackendCapabilitiesState;
@@ -2740,13 +2740,14 @@ export interface ReplaceSectionItem extends IDashboardCommand {
         readonly itemIndex: number;
         readonly item: DashboardItemDefinition;
         readonly stashIdentifier?: StashedDashboardItemsId;
+        readonly autoResolveDateFilterDataset?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM";
 }
 
 // @alpha
-export function replaceSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): ReplaceSectionItem;
+export function replaceSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, stashIdentifier?: StashedDashboardItemsId, autoResolveDateFilterDataset?: boolean, correlationId?: string): ReplaceSectionItem;
 
 // @alpha (undocumented)
 export interface RequestAsyncRender extends IDashboardCommand {

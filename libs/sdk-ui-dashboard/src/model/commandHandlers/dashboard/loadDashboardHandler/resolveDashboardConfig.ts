@@ -32,8 +32,13 @@ function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigs
         .dateFilterConfigs()
         .withLimit(1)
         .query()
-        .catch((_) => {
-            // TODO: add log
+        .catch((e) => {
+            // eslint-disable-next-line no-console
+            console.log(
+                "An error has occurred while loading date filter config. Will fall back to default date filter config.",
+                e,
+            );
+
             return undefined;
         });
 }

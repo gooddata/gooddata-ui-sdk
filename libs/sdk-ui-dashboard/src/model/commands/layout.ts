@@ -361,6 +361,19 @@ export interface ReplaceSectionItem extends IDashboardCommand {
          * If no stashIdentifier provided, then the old item will be thrown away.
          */
         readonly stashIdentifier?: StashedDashboardItemsId;
+
+        /**
+         * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of the KPI
+         * or insight widget that will be used to replace item on a dashboard.
+         *
+         * This is by default disabled. Meaning date filtering will be enabled only if the KPI or Insight widget
+         * already specifies dateDataset. If the dateDataset is `undefined` the widget will not be filtered
+         * by dashboard's date filter.
+         *
+         * When you turn on this option, then the dashboard will automatically resolve date dataset for those
+         * KPI and Insight widgets that have it `undefined`.
+         */
+        readonly autoResolveDateFilterDataset?: boolean;
     };
 }
 
@@ -372,6 +385,9 @@ export interface ReplaceSectionItem extends IDashboardCommand {
  * @param itemIndex - index of item within the section
  * @param item - new item definition
  * @param stashIdentifier - optionally specify identifier of stash where the old item should be stored
+ * @param autoResolveDateFilterDataset - optionally specify whether dashboard should auto-resolve date dataset
+ *  to use for date filtering of KPI or insight widget that is replacing the existing item; default is disabled
+ *  meaning date filtering will be enabled only for those KPI or Insight widgets that already specify dateDataset.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -382,6 +398,7 @@ export function replaceSectionItem(
     itemIndex: number,
     item: DashboardItemDefinition,
     stashIdentifier?: StashedDashboardItemsId,
+    autoResolveDateFilterDataset?: boolean,
     correlationId?: string,
 ): ReplaceSectionItem {
     return {
@@ -391,6 +408,7 @@ export function replaceSectionItem(
             sectionIndex,
             itemIndex,
             item,
+            autoResolveDateFilterDataset,
             stashIdentifier,
         },
     };

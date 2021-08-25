@@ -13,7 +13,14 @@ import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures";
-import { TestKpiPlaceholderItem } from "../../../tests/fixtures/Layout.fixtures";
+import {
+    TestInsightItem,
+    testItemWithDateDataset,
+    testItemWithFilterIgnoreList,
+    TestKpiPlaceholderItem,
+} from "../../../tests/fixtures/Layout.fixtures";
+import { uriRef } from "@gooddata/sdk-model";
+import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
 
 describe("replace section item handler", () => {
     describe("for any dashboard", () => {
@@ -32,6 +39,7 @@ describe("replace section item handler", () => {
                     0,
                     TestKpiPlaceholderItem,
                     undefined,
+                    false,
                     TestCorrelation,
                 ),
                 "GDC.DASH/EVT.COMMAND.FAILED",
@@ -43,7 +51,7 @@ describe("replace section item handler", () => {
 
         it("should fail if bad item index is provided", async () => {
             const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                replaceSectionItem(0, 4, TestKpiPlaceholderItem, undefined, TestCorrelation),
+                replaceSectionItem(0, 4, TestKpiPlaceholderItem, undefined, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -53,7 +61,7 @@ describe("replace section item handler", () => {
 
         it("should fail if bad stash identifier is provided", async () => {
             const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                replaceSectionItem(0, 0, "InvalidStashIdentifier", undefined, TestCorrelation),
+                replaceSectionItem(0, 0, "InvalidStashIdentifier", undefined, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 
@@ -146,6 +154,51 @@ describe("replace section item handler", () => {
             expect(stash[TestStash]).toEqual([SecondSectionSecondItem]);
         });
 
+        it("should resolve insight used in the replacing item and store that insight in state", async () => {
+            const event: DashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
+                replaceSectionItem(1, 0, TestInsightItem, undefined, false, TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
+            );
+
+            expect(event.payload.items).toEqual([TestInsightItem]);
+            const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
+            expect(insight).toBeDefined();
+        });
+
+        it("should fail if attempting to add insight widget with bad date dataset setting", async () => {
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                replaceSectionItem(
+                    1,
+                    0,
+                    testItemWithDateDataset(TestInsightItem, uriRef("does-not-exist")),
+                    undefined,
+                    false,
+                    TestCorrelation,
+                ),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if attempting to add insight widget with bad filter ignore list", async () => {
+            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+                replaceSectionItem(
+                    1,
+                    0,
+                    testItemWithFilterIgnoreList(TestInsightItem, [uriRef("does-not-exist")]),
+                    undefined,
+                    false,
+                    TestCorrelation,
+                ),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
         it("should be undoable", async () => {
             /*
              * the scenario to undo is where first item is replaced & stashed and then second item is replaced
@@ -185,7 +238,7 @@ describe("replace section item handler", () => {
 
         it("should emit correct events", async () => {
             await Tester.dispatchAndWaitFor(
-                replaceSectionItem(1, 0, TestKpiPlaceholderItem, TestStash, TestCorrelation),
+                replaceSectionItem(1, 0, TestKpiPlaceholderItem, TestStash, false, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
             );
 

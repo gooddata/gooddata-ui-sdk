@@ -73,12 +73,16 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED",
 ];
 
-/**
- * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
- *  dynamically such thing is not possible. Beware.. even if we get the inference working, the api-extractor
- *  will have problems if just the type gets exported unless the value from which it is inferred is exported
- *  as well.
+/*
+ * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
+ * however since this code creates store dynamically such thing is not possible.
  *
+ * Beware.. even if we get the inference working through the use of some throw-away internal, the
+ * api-extractor will have problems if just the inferred types gets exported unless the value
+ * from which it is inferred is exported as well.
+ */
+
+/**
  * @internal
  */
 export type DashboardDispatch = Dispatch<AnyAction>;

@@ -101,7 +101,6 @@ export function* loadDashboardHandler(
                 }),
                 alertsActions.setAlerts(alerts),
                 filterContextActions.setFilterContext(filterContextDefinition),
-                // TODO: move code that catches errors in layout
                 layoutActions.setLayout(dashboardLayout),
                 dateFilterConfigActions.setDateFilterConfig({
                     dateFilterConfig: dashboard.dateFilterConfig,
