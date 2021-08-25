@@ -9,4 +9,6 @@ module.exports = {
         "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.ts",
     },
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+    testEnvironment: "jsdom",
+    setupFilesAfterEnv: ["<rootDir>/jest.setup.ts", "jest-enzyme"],
 };

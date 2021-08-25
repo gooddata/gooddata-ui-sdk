@@ -19,6 +19,7 @@ module.exports = {
 };
 
 const TYPESCRIPT_VERSION = "4.0.2";
+const JSDOM_VERSION = "^27.0.6";
 
 /**
  * This hook is invoked during installation before a package's dependencies
@@ -32,6 +33,13 @@ function readPackage(packageJson, context) {
   if (packageJson.name === '@microsoft/api-extractor') {
     // context.log('Overwriting api-extract typescript version to ' + TYPESCRIPT_VERSION);
     packageJson.dependencies['typescript'] = TYPESCRIPT_VERSION;
+  }
+
+  // this is needed as the jest-environment-enzyme is essentially unmaintained and Jest 27 requires latest jsdom
+  // without this test abort with error stemming from this change: https://github.com/facebook/jest/pull/9428
+  if (packageJson.name === 'jest-environment-enzyme') {
+    // context.log('Overwriting JSDOM version of jest-environment-enzyme to ' + JSDOM_VERSION);
+    packageJson.dependencies['jest-environment-jsdom'] = JSDOM_VERSION;
   }
 
   // bump node-forge dependency of heroku-exec-utils to a safer version to fix audit (heroku-exec-utils does not use any of the functions missing in node-forge 0.10.0)
