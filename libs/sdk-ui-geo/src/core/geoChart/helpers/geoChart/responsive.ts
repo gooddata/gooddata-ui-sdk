@@ -6,6 +6,8 @@ import { IColorLegendSize } from "@gooddata/sdk-ui-vis-commons";
  */
 const MIN_WIDTH_TO_RENDER_LEGEND_WITH_TITLES = 260;
 const MIN_WIDTH_TO_RENDER_CIRCLE_SIZE_LEGEND = 330;
+// We keep this as two separate constants because they handle different things
+const MIN_WIDTH_TO_RENDER_MIDDLE_CIRCLE_IN_CIRCLE_SIZE_LEGEND = 410;
 const MIN_WIDTH_TO_RENDER_LARGE_COLOR_LEGEND = 410;
 
 function shouldRenderLegendTitles(width: number | undefined): boolean {
@@ -85,4 +87,12 @@ export function shouldRenderCircleLegendInsidePopUp(
     renderPopUp: boolean | undefined,
 ): boolean {
     return !shouldRenderWholeCircleLegend(width) && Boolean(renderPopUp);
+}
+
+export function shouldRenderMiddleCircle(width: number | undefined, ignoreSmallSize: boolean): boolean {
+    return (
+        ignoreSmallSize ||
+        (shouldRenderWholeCircleLegend(width) &&
+            (width ? width >= MIN_WIDTH_TO_RENDER_MIDDLE_CIRCLE_IN_CIRCLE_SIZE_LEGEND : true))
+    );
 }

@@ -19,6 +19,7 @@ describe("PushpinSizeLegend", () => {
             numericSymbols: ["k", "M", "G", "T", "P", "E"],
             measureName: "population",
             isSmall: false,
+            showMiddleCircle: true,
         };
         const wrapper = createComponent(props);
         expect(wrapper.hasClass("s-pushpin-size-legend")).toBe(true);
@@ -36,6 +37,7 @@ describe("PushpinSizeLegend", () => {
             numericSymbols: ["k", "M", "G", "T", "P", "E"],
             measureName: "population",
             isSmall: false,
+            showMiddleCircle: true,
         };
         const wrapper = createComponent(props);
         expect(wrapper.hasClass("s-pushpin-size-legend")).toBe(false);
@@ -49,12 +51,13 @@ describe("PushpinSizeLegend", () => {
             numericSymbols: ["k", "M", "G", "T", "P", "E"],
             measureName: "population",
             isSmall: false,
+            showMiddleCircle: true,
         };
         const wrapper = createComponent(props);
         expect(wrapper.hasClass("s-pushpin-size-legend")).toBe(false);
     });
 
-    it("should not render middle circle if isSmall is true", () => {
+    it("should not render middle circle if showMiddleCircle is false regardless of isSmall", () => {
         const sizes: number[] = [10, 6, 4, 5, 20, 20, 4];
         const props = {
             sizes,
@@ -62,20 +65,22 @@ describe("PushpinSizeLegend", () => {
             numericSymbols: ["k", "M", "G", "T", "P", "E"],
             measureName: "population",
             isSmall: true,
+            showMiddleCircle: false,
         };
         const wrapper = createComponent(props);
         expect(wrapper.find(".pushpin-size-legend-circle").at(0).find(".circle-value").text()).toEqual("4");
         expect(wrapper.find(".pushpin-size-legend-circle").at(1).find(".circle-value").text()).toEqual("20");
     });
 
-    it("should render middle circle if isSmall is false", () => {
+    it("should render middle circle if showMiddleCircle is true regardless of isSmall", () => {
         const sizes: number[] = [10, 6, 4, 5, 20, 20, 4];
         const props = {
             sizes,
             format: "#,##0.00",
             numericSymbols: ["k", "M", "G", "T", "P", "E"],
             measureName: "population",
-            isSmall: false,
+            isSmall: true,
+            showMiddleCircle: true,
         };
         const wrapper = createComponent(props);
         expect(wrapper.find(".pushpin-size-legend-circle").at(1).find(".circle-value").text()).toEqual("10");
