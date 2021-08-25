@@ -13,12 +13,15 @@ import {
 } from "./DashboardAttributeFilterPropsContext";
 import { IDashboardAttributeFilterProps } from "./types";
 import { AttributeFilterBody } from "./dashboardDropdownBody/AttributeFilterBody";
+import { useParentFilters } from "./useParentFilters";
 
 /**
  * @internal
  */
 export const DefaultDashboardAttributeFilterInner = (): JSX.Element => {
     const { filter, onFilterChanged } = useDashboardAttributeFilterProps();
+    const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
+
     return (
         <AttributeFilterButton
             // TODO: https://jira.intgdc.com/browse/RAIL-2174
@@ -36,6 +39,8 @@ export const DefaultDashboardAttributeFilterInner = (): JSX.Element => {
             renderBody={(filterBodyProps: IAttributeDropdownBodyExtendedProps) => {
                 return <AttributeFilterBody {...filterBodyProps} />;
             }}
+            parentFilters={parentFilters}
+            parentFilterOverAttribute={parentFilterOverAttribute}
         />
     );
 };

@@ -4,7 +4,7 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeFilterContextSelection } from "../../commands";
 import { filterContextActions } from "../../state/filterContext";
-import { makeSelectFilterContextAttributeFilterByDisplayForm } from "../../state/filterContext/filterContextSelectors";
+import { selectFilterContextAttributeFilterByDisplayForm } from "../../state/filterContext/filterContextSelectors";
 import { batchActions } from "redux-batched-actions";
 import { AnyAction } from "@reduxjs/toolkit";
 import { dispatchFilterContextChanged } from "./common";
@@ -31,15 +31,12 @@ export function* changeFilterContextSelectionHandler(
 
     const [attributeFilters, [dateFilter]] = partition(uniqueFilters, isAttributeFilter);
 
-    const selectFilterByDisplayForm = makeSelectFilterContextAttributeFilterByDisplayForm();
-
     const updateActions: AnyAction[] = [];
     for (const attributeFilter of attributeFilters) {
         const filterRef = filterObjRef(attributeFilter);
-        const dashboardFilter: ReturnType<typeof selectFilterByDisplayForm> = yield select(
-            selectFilterByDisplayForm,
-            filterRef,
-        );
+        const dashboardFilter: ReturnType<
+            ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>
+        > = yield select(selectFilterContextAttributeFilterByDisplayForm(filterRef));
 
         if (dashboardFilter) {
             updateActions.push(
