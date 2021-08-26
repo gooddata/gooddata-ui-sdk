@@ -8,7 +8,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
-import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
+import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { useIntl } from "react-intl";
 
 import {
@@ -285,7 +285,10 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
         [props.DashboardAttributeFilterComponentFactory],
     );
 
-    return (
+    const isThemeLoading = useThemeIsLoading();
+    const hasThemeProvider = isThemeLoading !== undefined;
+
+    let dashboardRender = (
         <DashboardStoreProvider
             dashboardRef={props.dashboardRef}
             backend={props.backend}
@@ -296,37 +299,45 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
         >
             <ToastMessageContextProvider>
                 <ExportDialogContextProvider>
-                    <ThemeProvider
-                        theme={props.theme}
-                        modifier={props.themeModifier ?? defaultDashboardThemeModifier}
+                    <DashboardComponentsProvider
+                        ErrorComponent={props.ErrorComponent ?? DefaultError}
+                        LoadingComponent={props.LoadingComponent ?? DefaultLoading}
+                        LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
+                        InsightComponent={props.InsightComponent ?? DefaultDashboardInsightInner}
+                        KpiComponent={props.KpiComponent ?? DefaultDashboardKpiInner}
+                        WidgetComponent={props.WidgetComponent ?? DefaultDashboardWidgetInner}
+                        ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
+                        MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
+                        TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
+                        TitleComponent={props.TitleComponent ?? DefaultTitleInner}
+                        ScheduledEmailDialogComponent={
+                            props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
+                        }
+                        DashboardAttributeFilterComponentFactory={attributeFilterFactory}
+                        DashboardDateFilterComponent={
+                            props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
+                        }
+                        FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBarInner}
                     >
-                        <DashboardComponentsProvider
-                            ErrorComponent={props.ErrorComponent ?? DefaultError}
-                            LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                            LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
-                            InsightComponent={props.InsightComponent ?? DefaultDashboardInsightInner}
-                            KpiComponent={props.KpiComponent ?? DefaultDashboardKpiInner}
-                            WidgetComponent={props.WidgetComponent ?? DefaultDashboardWidgetInner}
-                            ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
-                            MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
-                            TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
-                            TitleComponent={props.TitleComponent ?? DefaultTitleInner}
-                            ScheduledEmailDialogComponent={
-                                props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
-                            }
-                            DashboardAttributeFilterComponentFactory={attributeFilterFactory}
-                            DashboardDateFilterComponent={
-                                props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
-                            }
-                            FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBarInner}
-                        >
-                            <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
-                                <DashboardLoading {...props} />
-                            </DashboardConfigProvider>
-                        </DashboardComponentsProvider>
-                    </ThemeProvider>
+                        <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
+                            <DashboardLoading {...props} />
+                        </DashboardConfigProvider>
+                    </DashboardComponentsProvider>
                 </ExportDialogContextProvider>
             </ToastMessageContextProvider>
         </DashboardStoreProvider>
     );
+
+    if (props.theme || !hasThemeProvider) {
+        dashboardRender = (
+            <ThemeProvider
+                theme={props.theme}
+                modifier={props.themeModifier ?? defaultDashboardThemeModifier}
+            >
+                {dashboardRender}
+            </ThemeProvider>
+        );
+    }
+
+    return dashboardRender;
 };

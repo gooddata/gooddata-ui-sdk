@@ -48,7 +48,7 @@ export interface IThemeProviderProps {
 
     /**
      * Flag determining whether the complementary palette is enabled or not. If set to false, complementary
-     * palette is discarted.
+     * palette is discarded.
      * Useful for applications not yet fully supporting dark-based themes achievable with the complementary palette.
      */
     enableComplementaryPalette?: boolean;
