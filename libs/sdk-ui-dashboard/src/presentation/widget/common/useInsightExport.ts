@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import invariant from "ts-invariant";
 import { GoodDataSdkError, IExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { selectPermissions, selectSettings, useDashboardSelector } from "../../../model";
@@ -14,6 +14,7 @@ export const useInsightExport = (config: {
     exportFunction: IExportFunction | undefined;
 }) => {
     const { error, exportFunction, isLoading, title } = config;
+    const [isExporting, setIsExporting] = useState(false);
 
     const settings = useDashboardSelector(selectSettings);
     const permissions = useDashboardSelector(selectPermissions);
@@ -21,22 +22,21 @@ export const useInsightExport = (config: {
     const exportHandler = useExportHandler();
     const { openDialog, closeDialog } = useExportDialogContext();
 
-    const isExportEnabled = settings.enableKPIDashboardExport && permissions.canExportReport;
-    const isRawExportEnabled = isExportEnabled && permissions.canExecuteRaw;
-
     const onExportCSV = useCallback(() => {
+        setIsExporting(true);
         const exportConfig: IExtendedExportConfig = {
             format: "csv",
             title,
         };
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
-        exportHandler(exportFunction, exportConfig);
+        exportHandler(exportFunction, exportConfig).then(() => setIsExporting(false));
     }, [exportFunction, title]);
 
     const onExportXLSX = useCallback(() => {
         openDialog({
             onSubmit: ({ includeFilterContext, mergeHeaders }) => {
+                setIsExporting(true);
                 // if this bombs there is an issue with the logic enabling the buttons
                 invariant(exportFunction);
                 closeDialog();
@@ -45,7 +45,7 @@ export const useInsightExport = (config: {
                     mergeHeaders,
                     includeFilterContext,
                     title,
-                });
+                }).then(() => setIsExporting(false));
             },
             includeFilterContext: Boolean(settings?.activeFiltersByDefault ?? true),
             mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
@@ -53,8 +53,13 @@ export const useInsightExport = (config: {
         });
     }, [settings, title, exportFunction, closeDialog]);
 
-    const exportCSVEnabled = Boolean(!isNonExportableError(error) && !isLoading && isRawExportEnabled);
-    const exportXLSXEnabled = Boolean(!isNonExportableError(error) && !isLoading && isExportEnabled);
+    const isExportEnabled = Boolean(settings.enableKPIDashboardExport && permissions.canExportReport);
+    const isRawExportEnabled = Boolean(isExportEnabled && permissions.canExecuteRaw);
+
+    const isExportAllowed = !isExporting && !isNonExportableError(error) && !isLoading;
+
+    const exportCSVEnabled = isExportAllowed && isRawExportEnabled;
+    const exportXLSXEnabled = isExportAllowed && isExportEnabled;
 
     return {
         exportCSVEnabled,

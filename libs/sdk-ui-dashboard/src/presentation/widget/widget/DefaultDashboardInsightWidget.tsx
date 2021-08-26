@@ -93,6 +93,11 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
     });
 
+    const onExportCSVWrapped = useCallback(() => {
+        setIsMenuOpen(false);
+        onExportCSV();
+    }, [onExportCSV]);
+
     const onExportXLSXWrapped = useCallback(() => {
         setIsMenuOpen(false);
         onExportXLSX();
@@ -131,7 +136,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                             exportFunction={exportFunction}
                             bubbleMessageKey={bubbleMessageKey}
                             exportCSVDisabled={!exportCSVEnabled}
-                            onExportCSV={onExportCSV}
+                            onExportCSV={onExportCSVWrapped}
                             exportXLSXDisabled={!exportXLSXEnabled}
                             onExportXLSX={onExportXLSXWrapped}
                         />

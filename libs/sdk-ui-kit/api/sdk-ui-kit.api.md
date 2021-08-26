@@ -627,6 +627,9 @@ export interface IBubbleProps {
     className?: string;
     // (undocumented)
     closeOnOutsideClick?: boolean;
+    ignoreClicksOn?: any[];
+    // (undocumented)
+    ignoreClicksOnByClass?: string[];
     // (undocumented)
     onClose?: () => void;
     // (undocumented)
