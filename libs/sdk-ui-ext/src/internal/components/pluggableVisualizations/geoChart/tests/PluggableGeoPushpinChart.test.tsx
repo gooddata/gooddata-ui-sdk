@@ -94,6 +94,9 @@ describe("PluggableGeoPushpinChart", () => {
                             type: "attribute",
                             aggregation: null,
                             attribute: "attr.stage.iswon",
+                            dfRef: {
+                                uri: "a2/df",
+                            },
                         },
                     ],
                 },
@@ -189,6 +192,9 @@ describe("PluggableGeoPushpinChart", () => {
                         {
                             aggregation: null,
                             attribute: "attr.owner.department",
+                            dfRef: {
+                                uri: "a1/df",
+                            },
                             localIdentifier: "a1",
                             type: "attribute",
                         },

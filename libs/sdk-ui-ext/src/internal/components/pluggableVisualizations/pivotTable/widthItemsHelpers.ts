@@ -13,6 +13,7 @@ import {
 
 import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization";
 import {
+    areObjRefsEqual,
     attributeLocalId,
     bucketAttributes,
     IInsightDefinition,
@@ -38,18 +39,28 @@ const isMeasureWidthItemMatchedByFilter = (
 const matchesMeasureColumnWidthItemFilters = (
     widthItem: IMeasureColumnWidthItem,
     filters: IBucketFilter[],
-): boolean =>
-    filters.every((filter) => {
-        if (isAttributeFilter(filter)) {
+    columnAttributes: IBucketItem[],
+): boolean => {
+    return filters
+        .filter(isAttributeFilter)
+        .filter((filter) =>
+            columnAttributes.some((columnBucketItem) =>
+                areObjRefsEqual(columnBucketItem.dfRef, filter.displayFormRef),
+            ),
+        )
+        .every((filter) => {
             const shouldBeMatched = !filter.isInverted;
             return shouldBeMatched === isMeasureWidthItemMatchedByFilter(widthItem, filter);
-        }
-        return true;
-    });
+        });
+};
 
-const matchesWidthItemFilters = (widthItem: ColumnWidthItem, filters: IBucketFilter[]): boolean => {
+const matchesWidthItemFilters = (
+    widthItem: ColumnWidthItem,
+    filters: IBucketFilter[],
+    columnAttributes: IBucketItem[],
+): boolean => {
     if (isMeasureColumnWidthItem(widthItem)) {
-        return matchesMeasureColumnWidthItemFilters(widthItem, filters);
+        return matchesMeasureColumnWidthItemFilters(widthItem, filters, columnAttributes);
     }
     return true;
 };
@@ -117,6 +128,7 @@ function adaptWidthItemsToPivotTable(
     columnAttributeLocalIdentifiers: string[],
     filters: IBucketFilter[],
     firstColumnAttributeAdded: boolean,
+    columnAttributes: IBucketItem[],
 ): ColumnWidthItem[] {
     if (!originalColumnWidths) {
         return originalColumnWidths;
@@ -143,7 +155,7 @@ function adaptWidthItemsToPivotTable(
             }
 
             if (
-                matchesWidthItemFilters(filteredMeasureColumnWidthItem, filters) &&
+                matchesWidthItemFilters(filteredMeasureColumnWidthItem, filters, columnAttributes) &&
                 widthItemLocatorsHaveProperLength(
                     filteredMeasureColumnWidthItem,
                     measureLocalIdentifiers.length,
@@ -209,6 +221,7 @@ export function adaptReferencePointWidthItemsToPivotTable(
         filteredColumnAttributeLocalIdentifiers,
         filters,
         firstColumnAttributeAdded,
+        columnAttributes,
     );
 }
 
@@ -232,5 +245,6 @@ export function adaptMdObjectWidthItemsToPivotTable(
         columnAttributeLocalIdentifiers,
         [],
         false,
+        [],
     );
 }

@@ -24,6 +24,38 @@ import {
 } from "./sortMocks";
 import { getMockReferencePoint } from "./mockReferencePoint";
 
+const createAttributeBucketItem = (localIdentifier: string, attributeName: string): IBucketItem => ({
+    aggregation: null,
+    showInPercent: null,
+    operator: null,
+    operandLocalIdentifiers: null,
+    granularity: null,
+    masterLocalIdentifier: null,
+    localIdentifier,
+    showOnSecondaryAxis: null,
+    type: "attribute",
+    filters: [],
+    attribute: attributeName,
+    dfRef: uriRef(`${attributeName}/df`),
+});
+
+const accountRowId = "d0f1043a2eec42daac004a10c41afdd5";
+const accountRow = createAttributeBucketItem(accountRowId, "attr.account");
+
+const countryRowId = "6d523113ca754409a8b685736e7fe32b";
+const countryRow = createAttributeBucketItem(countryRowId, "attr.country");
+
+const productRowId = "38f1d87b8b7c42c1b9a37395a24f7313";
+const productRow = createAttributeBucketItem(productRowId, "attr.product");
+
+const departmentColumnId = "93n48x63mn8c73nhd83jhd83jd83";
+const departmentColumn = createAttributeBucketItem(departmentColumnId, "attr.department");
+
+const countryColumnId = "9w9j3k4jh6k36kj6h5k7h4k3h8990k9j";
+const countryColumn = createAttributeBucketItem(countryColumnId, "attr.country");
+const germanyElement1Uri = "/attr.country/elements?id=1";
+const polandElement2Uri = "/attr.country/elements?id=2";
+
 describe("adaptReferencePointSortItemsToPivotTable", () => {
     const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
     const mockPivotTableReferencePoint: IExtendedReferencePoint = getMockReferencePoint(
@@ -64,37 +96,14 @@ describe("adaptReferencePointSortItemsToPivotTable", () => {
 });
 
 describe("addDefaultSort", () => {
-    const rowFor = (localIdentifier: string, attributeName: string): IBucketItem => ({
-        aggregation: null,
-        showInPercent: null,
-        operator: null,
-        operandLocalIdentifiers: null,
-        granularity: null,
-        masterLocalIdentifier: null,
-        localIdentifier,
-        showOnSecondaryAxis: null,
-        type: "attribute",
-        filters: [],
-        attribute: attributeName,
-    });
-
-    const accountRowId = "d0f1043a2eec42daac004a10c41afdd5";
-    const accountRow = rowFor(accountRowId, "attr.account");
-
-    const countryRowId = "6d523113ca754409a8b685736e7fe32b";
-    const countryRow = rowFor(countryRowId, "attr.country");
-
-    const productRowId = "38f1d87b8b7c42c1b9a37395a24f7313";
-    const productRow = rowFor(productRowId, "attr.product");
-
-    const sortFor = (localId: string, direction: SortDirection): ISortItem => ({
+    const sortForAttribute = (attributeLocalIdentifier: string, direction: SortDirection): ISortItem => ({
         attributeSortItem: {
-            attributeIdentifier: localId,
+            attributeIdentifier: attributeLocalIdentifier,
             direction,
         },
     });
 
-    const defaultSortFor = (localId: string): ISortItem => sortFor(localId, "asc");
+    const defaultSortFor = (localId: string): ISortItem => sortForAttribute(localId, "asc");
 
     describe("with no filters specified", () => {
         it("should not add the default sort if no row is specified", () => {
@@ -128,9 +137,9 @@ describe("addDefaultSort", () => {
             expect(actual).toEqual(expected);
         });
         it("should not change sorts when there is a desc sort on the first item", () => {
-            const expected = [sortFor(countryRowId, "desc")];
+            const expected = [sortForAttribute(countryRowId, "desc")];
             const actual = addDefaultSort(
-                [sortFor(countryRowId, "desc")],
+                [sortForAttribute(countryRowId, "desc")],
                 [],
                 [countryRow, accountRow],
                 [countryRow],
@@ -138,9 +147,9 @@ describe("addDefaultSort", () => {
             expect(actual).toEqual(expected);
         });
         it("should not change sorts when there is a desc sort on the second item", () => {
-            const expected = [sortFor(countryRowId, "desc")];
+            const expected = [sortForAttribute(countryRowId, "desc")];
             const actual = addDefaultSort(
-                [sortFor(countryRowId, "desc")],
+                [sortForAttribute(countryRowId, "desc")],
                 [],
                 [accountRow, countryRow, productRow],
                 [accountRow, countryRow],
@@ -148,9 +157,9 @@ describe("addDefaultSort", () => {
             expect(actual).toEqual(expected);
         });
         it("should not change sorts when there is an asc sort on the second item", () => {
-            const expected = [sortFor(countryRowId, "asc")];
+            const expected = [sortForAttribute(countryRowId, "asc")];
             const actual = addDefaultSort(
-                [sortFor(countryRowId, "asc")],
+                [sortForAttribute(countryRowId, "asc")],
                 [],
                 [accountRow, countryRow, productRow],
                 [accountRow, countryRow],
@@ -175,78 +184,126 @@ describe("addDefaultSort", () => {
         });
     });
 
-    it("should add default sort if existing measure sort is not visible due to filters (RAIL-1275)", () => {
-        const expected = [sortFor(accountRowId, "asc")];
-        const uri = "/gdc/md/mockproject/obj/attr.country/elements?id=1";
+    describe("with filters specified", () => {
         const measureSort: IMeasureSortItem = {
             measureSortItem: {
                 direction: "asc",
                 locators: [
                     {
                         attributeLocatorItem: {
-                            attributeIdentifier: "attr.country",
-                            element: uri,
+                            attributeIdentifier: countryColumnId,
+                            element: germanyElement1Uri,
                         },
                     },
                 ],
             },
         };
-        const filterElement: IBucketFilterElement = {
-            title: "Matching",
-            uri,
-        };
-        const actual = addDefaultSort(
-            [measureSort],
-            [
-                {
-                    attribute: "irrelevant",
-                    displayFormRef: uriRef("irrelevant/attribute/df/uri"),
-                    isInverted: true,
-                    selectedElements: [filterElement],
-                    totalElementsCount: 4,
-                },
-            ],
-            [accountRow, countryRow, productRow],
-            [accountRow, countryRow],
-        );
-        expect(actual).toEqual(expected);
-    });
 
-    it("should add default sort if the functionality is suspended by flag (TNT-166)", () => {
-        const uri = "/gdc/md/mockproject/obj/attr.country/elements?id=1";
-        const measureSort: IMeasureSortItem = {
-            measureSortItem: {
-                direction: "asc",
-                locators: [
-                    {
-                        attributeLocatorItem: {
-                            attributeIdentifier: "attr.country",
-                            element: uri,
-                        },
-                    },
-                ],
-            },
-        };
-        const filterElement: IBucketFilterElement = {
-            title: "Matching",
-            uri,
-        };
-        const actual = addDefaultSort(
-            [measureSort],
-            [
+        const allCountriesExceptGermanyFilter: IBucketFilter = {
+            attribute: countryColumn.attribute,
+            displayFormRef: countryColumn.dfRef,
+            isInverted: true,
+            selectedElements: [
                 {
-                    attribute: "irrelevant",
-                    displayFormRef: uriRef("irrelevant/attribute/df/uri"),
-                    isInverted: true,
-                    selectedElements: [filterElement],
-                    totalElementsCount: 4,
+                    title: "Germany",
+                    uri: germanyElement1Uri,
                 },
             ],
-            [accountRow, countryRow, productRow],
-            [accountRow, countryRow],
-            true,
-        );
-        expect(actual).toEqual([measureSort]);
+            totalElementsCount: 4,
+        };
+
+        const onlyPolandFilter: IBucketFilter = {
+            attribute: countryColumn.attribute,
+            displayFormRef: countryColumn.dfRef,
+            isInverted: false,
+            selectedElements: [
+                {
+                    title: "Poland",
+                    uri: polandElement2Uri,
+                },
+            ],
+            totalElementsCount: 4,
+        };
+
+        it("should add default sort if existing measure sort is not visible due to negative filter", () => {
+            const actual = addDefaultSort(
+                [measureSort],
+                [allCountriesExceptGermanyFilter],
+                [accountRow, departmentColumn, productRow],
+                [accountRow, departmentColumn],
+                [countryColumn],
+            );
+            expect(actual).toEqual([sortForAttribute(accountRowId, "asc")]);
+        });
+
+        it("should add default sort if existing measure sort is not visible due to positive filter", () => {
+            const actual = addDefaultSort(
+                [measureSort],
+                [onlyPolandFilter],
+                [accountRow, departmentColumn, productRow],
+                [accountRow, departmentColumn],
+                [countryColumn],
+            );
+            expect(actual).toEqual([sortForAttribute(accountRowId, "asc")]);
+        });
+
+        it("should add default sort if filter is unrelated with the column attribute and tableSortingCheckDisabled is true", () => {
+            const actual = addDefaultSort(
+                [measureSort],
+                [allCountriesExceptGermanyFilter],
+                [accountRow, departmentColumn, productRow],
+                [accountRow, departmentColumn],
+                [
+                    {
+                        localIdentifier: "another_attribute_local_identifier",
+                        dfRef: uriRef("another/attribute/df/uri"),
+                    },
+                ],
+                true,
+            );
+            expect(actual).toEqual([measureSort]);
+        });
+
+        it("should add default sort if there is no attribute in the column bucket and tableSortingCheckDisabled is true", () => {
+            const actual = addDefaultSort(
+                [measureSort],
+                [allCountriesExceptGermanyFilter],
+                [accountRow, departmentColumn, productRow],
+                [accountRow, departmentColumn],
+                [],
+                true,
+            );
+            expect(actual).toEqual([measureSort]);
+        });
+
+        it("should not add default sort if filter is unrelated with the column attribute and tableSortingCheckDisabled is false", () => {
+            const actual = addDefaultSort(
+                [measureSort],
+                [allCountriesExceptGermanyFilter],
+                [accountRow, departmentColumn, productRow],
+                [accountRow, departmentColumn],
+                [
+                    {
+                        localIdentifier: "another_attribute_local_identifier",
+                        dfRef: uriRef("another/attribute/df/uri"),
+                    },
+                ],
+                false,
+            );
+            expect(actual).toEqual([sortForAttribute(accountRowId, "asc")]);
+        });
+
+        it("should not add default sort if there is no attribute in the column bucket and tableSortingCheckDisabled is false", () => {
+            const actual = addDefaultSort(
+                [measureSort],
+                [allCountriesExceptGermanyFilter],
+                [accountRow, departmentColumn, productRow],
+                [accountRow, departmentColumn],
+                [],
+                false,
+            );
+            expect(actual).toEqual([sortForAttribute(accountRowId, "asc")]);
+        });
     });
 });
 
@@ -261,6 +318,7 @@ describe("isSortItemVisible", () => {
                     },
                 },
                 [],
+                [],
             );
             const expected = true;
             expect(actual).toEqual(expected);
@@ -272,8 +330,8 @@ describe("isSortItemVisible", () => {
             selectedElements: IBucketFilterElement[],
             isInverted: boolean,
         ): IBucketFilter => ({
-            attribute: "irrelevant",
-            displayFormRef: uriRef("irrelevant/attribute/df/uri"),
+            attribute: countryColumn.attribute,
+            displayFormRef: countryColumn.dfRef,
             isInverted,
             totalElementsCount: 5,
             selectedElements,
@@ -287,7 +345,7 @@ describe("isSortItemVisible", () => {
                 locators: [
                     {
                         attributeLocatorItem: {
-                            attributeIdentifier: "foo",
+                            attributeIdentifier: countryColumnId,
                             element: matchingUri,
                         },
                     },
@@ -319,61 +377,79 @@ describe("isSortItemVisible", () => {
         };
 
         it("should return true when no filters are specified", () => {
-            const actual = isSortItemVisible(sortItem, []);
-            const expected = true;
-            expect(actual).toEqual(expected);
-        });
-        it('should return true when empty "notIn" filter is specified', () => {
-            const actual = isSortItemVisible(sortItem, [createFilterBucketItem([], true)]);
-            const expected = true;
-            expect(actual).toEqual(expected);
-        });
-        it('should return false when "notIn" filter with matching element is specified', () => {
-            const actual = isSortItemVisible(sortItem, [
-                createFilterBucketItem([matchingFilterElement], true),
-            ]);
-            const expected = false;
-            expect(actual).toEqual(expected);
-        });
-        it('should return true when "notIn" filter without matching element is specified', () => {
-            const actual = isSortItemVisible(sortItem, [
-                createFilterBucketItem([notMatchingFilterElement], true),
-            ]);
-            const expected = true;
-            expect(actual).toEqual(expected);
+            const actual = isSortItemVisible(sortItem, [], [countryColumn]);
+
+            expect(actual).toBe(true);
         });
 
-        it('should return false when empty "in" filter is specified', () => {
-            const actual = isSortItemVisible(sortItem, [createFilterBucketItem([], false)]);
-            const expected = false;
-            expect(actual).toEqual(expected);
+        it('should return true when empty "notIn" filter is specified', () => {
+            const actual = isSortItemVisible(sortItem, [createFilterBucketItem([], true)], [countryColumn]);
+
+            expect(actual).toBe(true);
         });
-        it('should return true when "in" filter with matching element is specified', () => {
-            const actual = isSortItemVisible(sortItem, [
-                createFilterBucketItem([matchingFilterElement], false),
-            ]);
-            const expected = true;
-            expect(actual).toEqual(expected);
-        });
-        it('should return false when "in" filter without matching element is specified', () => {
-            const actual = isSortItemVisible(sortItem, [
-                createFilterBucketItem([notMatchingFilterElement], false),
-            ]);
-            const expected = false;
-            expect(actual).toEqual(expected);
-        });
-        it("should return true when filter is MVF", () => {
-            const actual = isSortItemVisible(sortItem, [measureValueFilter]);
-            expect(actual).toEqual(true);
-        });
-        it('should return true when "notIn" filter with matching element is specified but the check should not be performed', () => {
+
+        it('should return false when "notIn" filter with matching element is specified', () => {
             const actual = isSortItemVisible(
                 sortItem,
                 [createFilterBucketItem([matchingFilterElement], true)],
+                [countryColumn],
+            );
+
+            expect(actual).toBe(false);
+        });
+
+        it('should return true when "notIn" filter with matching element is specified but the attribute is not in columns and tableSortingCheckDisabled is true', () => {
+            const actual = isSortItemVisible(
+                sortItem,
+                [createFilterBucketItem([matchingFilterElement], true)],
+                [departmentColumn],
                 true,
             );
-            const expected = true;
-            expect(actual).toEqual(expected);
+
+            expect(actual).toBe(true);
+        });
+
+        it('should return false when "notIn" filter with matching element is specified but the attribute is not in columns and tableSortingCheckDisabled is false', () => {
+            const actual = isSortItemVisible(
+                sortItem,
+                [createFilterBucketItem([matchingFilterElement], true)],
+                [departmentColumn],
+                false,
+            );
+
+            expect(actual).toBe(false);
+        });
+
+        it('should return true when "notIn" filter without matching element is specified', () => {
+            const actual = isSortItemVisible(
+                sortItem,
+                [createFilterBucketItem([notMatchingFilterElement], true)],
+                [countryColumn],
+            );
+
+            expect(actual).toBe(true);
+        });
+
+        it('should return false when empty "in" filter is specified', () => {
+            const actual = isSortItemVisible(sortItem, [createFilterBucketItem([], false)], [countryColumn]);
+
+            expect(actual).toBe(false);
+        });
+
+        it('should return true when "in" filter with matching element is specified', () => {
+            const actual = isSortItemVisible(
+                sortItem,
+                [createFilterBucketItem([matchingFilterElement], false)],
+                [countryColumn],
+            );
+
+            expect(actual).toBe(true);
+        });
+
+        it("should return true when filter is MVF", () => {
+            const actual = isSortItemVisible(sortItem, [measureValueFilter], [countryColumn]);
+
+            expect(actual).toBe(true);
         });
     });
 });

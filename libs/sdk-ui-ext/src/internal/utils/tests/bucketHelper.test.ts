@@ -257,12 +257,18 @@ describe("getAllAttributeItemsWithPreference", () => {
                 type: "attribute",
                 aggregation: null,
                 attribute: "attr.owner.department",
+                dfRef: {
+                    uri: "a1/df",
+                },
             },
             {
                 localIdentifier: "a2",
                 type: "attribute",
                 aggregation: null,
                 attribute: "attr.stage.iswon",
+                dfRef: {
+                    uri: "a2/df",
+                },
             },
         ]);
     });
@@ -277,6 +283,9 @@ describe("getAttributeItems", () => {
                 type: "attribute",
                 aggregation: null,
                 attribute: "attr.stage.iswon",
+                dfRef: {
+                    uri: "a2/df",
+                },
             },
         ]);
     });

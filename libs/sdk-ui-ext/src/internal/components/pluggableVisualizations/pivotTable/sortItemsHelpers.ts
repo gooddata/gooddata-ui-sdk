@@ -3,6 +3,7 @@
 // removes attribute sortItems with invalid identifiers
 // removes measure sortItems with invalid identifiers and invalid number of locators
 import {
+    areObjRefsEqual,
     attributeLocalId,
     bucketAttributes,
     bucketsFind,
@@ -128,7 +129,8 @@ export function addDefaultSort(
     sortItems: ISortItem[],
     filters: IBucketFilter[],
     rowAttributes: IBucketItem[],
-    previousRowAttributes?: IBucketItem[],
+    previousRowAttributes: IBucketItem[],
+    columnAttributes: IBucketItem[] = [],
     tableSortingCheckDisabled?: boolean,
 ): ISortItem[] {
     // cannot construct default sort without a row
@@ -140,7 +142,7 @@ export function addDefaultSort(
     const firstRow = rowAttributes[0];
     const previousFirstRow = previousRowAttributes && previousRowAttributes[0];
     const hasVisibleCustomSort = sortItems.some((sortItem) => {
-        if (!isSortItemVisible(sortItem, filters, tableSortingCheckDisabled)) {
+        if (!isSortItemVisible(sortItem, filters, columnAttributes, tableSortingCheckDisabled)) {
             return false;
         }
         // non attribute sort is definitely custom
@@ -183,25 +185,33 @@ function isMeasureSortItemMatchedByFilter(sortItem: IMeasureSortItem, filter: IA
         : false;
 }
 
-function isMeasureSortItemVisible(sortItem: IMeasureSortItem, filters: IBucketFilter[]): boolean {
-    return filters.reduce((isVisible, filter) => {
-        if (isAttributeFilter(filter)) {
-            const shouldBeMatched = !filter.isInverted;
-            return isVisible && shouldBeMatched === isMeasureSortItemMatchedByFilter(sortItem, filter);
-        }
-        return isVisible;
-    }, true);
+function isMeasureSortItemVisible(
+    sortItem: IMeasureSortItem,
+    filters: IBucketFilter[],
+    columnAttributes: IBucketItem[],
+    tableSortingCheckDisabled?: boolean,
+): boolean {
+    let appliedFilters = filters.filter(isAttributeFilter);
+    if (tableSortingCheckDisabled) {
+        appliedFilters = appliedFilters.filter((filter) =>
+            columnAttributes.some((columnBucketItem) =>
+                areObjRefsEqual(columnBucketItem.dfRef, filter.displayFormRef),
+            ),
+        );
+    }
+    return appliedFilters.every((filter) => {
+        const shouldBeMatched = !filter.isInverted;
+        return shouldBeMatched === isMeasureSortItemMatchedByFilter(sortItem, filter);
+    });
 }
 
 export function isSortItemVisible(
     sortItem: ISortItem,
     filters: IBucketFilter[],
-    tableSortingCheckDisabled: boolean = false,
+    columnAttributes: IBucketItem[],
+    tableSortingCheckDisabled?: boolean,
 ): boolean {
-    return (
-        tableSortingCheckDisabled ||
-        (isAttributeSort(sortItem)
-            ? isAttributeSortItemVisible(sortItem, filters)
-            : isMeasureSortItemVisible(sortItem, filters))
-    );
+    return isAttributeSort(sortItem)
+        ? isAttributeSortItemVisible(sortItem, filters)
+        : isMeasureSortItemVisible(sortItem, filters, columnAttributes, tableSortingCheckDisabled);
 }

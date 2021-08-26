@@ -209,6 +209,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 filters,
                 rowAttributes,
                 previousRowAttributes,
+                columnAttributes,
                 tableSortingCheckDisabled(this.settings),
             ),
             ...controlsObj,

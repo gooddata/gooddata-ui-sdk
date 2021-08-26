@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { IBucketItem } from "../../../../interfaces/Visualization";
+import { IBucketFilter, IBucketItem } from "../../../../interfaces/Visualization";
 
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import {
@@ -15,6 +15,7 @@ import {
 } from "./widthItemsMock";
 import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { uriRef } from "@gooddata/sdk-model";
 
 describe("adaptReferencePointWidthItemsToPivotTable", () => {
     const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
@@ -37,11 +38,6 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
         const previousRowAttributes: IBucketItem[] = sourceReferencePoint.buckets[1].items;
         const previousColumnAttributes: IBucketItem[] = sourceReferencePoint.buckets[2].items;
 
-        const expectedColumnWidthItems: ColumnWidthItem[] = [
-            validAttributeColumnWidthItem,
-            validMeasureColumnWidthItem,
-        ];
-
         const result = adaptReferencePointWidthItemsToPivotTable(
             sourceColumnWidths,
             measures,
@@ -52,7 +48,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
         );
 
-        expect(result).toEqual(expectedColumnWidthItems);
+        expect(result).toEqual([validAttributeColumnWidthItem, validMeasureColumnWidthItem]);
     });
 
     it("should remove invalid items and keep allMeasureColumnWidthItem", () => {
@@ -60,15 +56,8 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             ...sourceColumnWidths,
             validAllMeasureColumnWidthItem,
         ];
-
         const previousRowAttributes: IBucketItem[] = sourceReferencePoint.buckets[1].items;
         const previousColumnAttributes: IBucketItem[] = sourceReferencePoint.buckets[2].items;
-
-        const expectedColumnWidthItems: ColumnWidthItem[] = [
-            validAttributeColumnWidthItem,
-            validMeasureColumnWidthItem,
-            validAllMeasureColumnWidthItem,
-        ];
 
         const result = adaptReferencePointWidthItemsToPivotTable(
             sourceColumnWidthsWithAllMeasure,
@@ -80,13 +69,15 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
         );
 
-        expect(result).toEqual(expectedColumnWidthItems);
+        expect(result).toEqual([
+            validAttributeColumnWidthItem,
+            validMeasureColumnWidthItem,
+            validAllMeasureColumnWidthItem,
+        ]);
     });
 
     it("should keep allMeasureColumnWidthItem when some measures left", () => {
         const sourceColumnWidthsWithAllMeasure: ColumnWidthItem[] = [validAllMeasureColumnWidthItem];
-
-        const expectedColumnWidthItems: ColumnWidthItem[] = [validAllMeasureColumnWidthItem];
 
         const result = adaptReferencePointWidthItemsToPivotTable(
             sourceColumnWidthsWithAllMeasure,
@@ -98,13 +89,11 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
         );
 
-        expect(result).toEqual(expectedColumnWidthItems);
+        expect(result).toEqual([validAllMeasureColumnWidthItem]);
     });
 
     it("should remove allMeasureColumnWidthItem when no measures left", () => {
         const sourceColumnWidthsWithAllMeasure: ColumnWidthItem[] = [validAllMeasureColumnWidthItem];
-
-        const expectedColumnWidthItems: ColumnWidthItem[] = [];
 
         const result = adaptReferencePointWidthItemsToPivotTable(
             sourceColumnWidthsWithAllMeasure,
@@ -116,13 +105,11 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
         );
 
-        expect(result).toEqual(expectedColumnWidthItems);
+        expect(result).toEqual([]);
     });
 
     it("should keep weakMeasureColumnWidthItem when some measures left", () => {
         const sourceColumnWidthsWithWeakMeasure: ColumnWidthItem[] = [validWeakMeasureColumnWidthItem];
-
-        const expectedColumnWidthItems: ColumnWidthItem[] = [validWeakMeasureColumnWidthItem];
 
         const result = adaptReferencePointWidthItemsToPivotTable(
             sourceColumnWidthsWithWeakMeasure,
@@ -134,18 +121,16 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
         );
 
-        expect(result).toEqual(expectedColumnWidthItems);
+        expect(result).toEqual([validWeakMeasureColumnWidthItem]);
     });
 
     it("should transform measureWidthItem to weakMeasureColumnWidthItem when first column attribute added", () => {
-        const sourceColumnWidthsWithweakMeasure: ColumnWidthItem[] = [
+        const sourceColumnWidthsWithWeakMeasure: ColumnWidthItem[] = [
             invalidMeasureColumnWidthItemLocatorsTooShort,
         ];
 
-        const expectedColumnWidthItems: ColumnWidthItem[] = [validWeakMeasureColumnWidthItem];
-
         const result = adaptReferencePointWidthItemsToPivotTable(
-            sourceColumnWidthsWithweakMeasure,
+            sourceColumnWidthsWithWeakMeasure,
             measures,
             [],
             columnAttributes,
@@ -154,19 +139,17 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
         );
 
-        expect(result).toEqual(expectedColumnWidthItems);
+        expect(result).toEqual([validWeakMeasureColumnWidthItem]);
     });
 
-    it("should remove attributeWidhtItem when attribute is located on column", () => {
-        const sourceColumnWidhtsWithAttributeColumn: ColumnWidthItem[] = [
+    it("should remove attributeWidthItem when attribute is not located on column", () => {
+        const sourceColumnWidthsWithAttributeColumn: ColumnWidthItem[] = [
             validAttributeColumnWidthItem,
             validWeakMeasureColumnWidthItem,
         ];
 
-        const expectedColumnWidthItems: ColumnWidthItem[] = [validWeakMeasureColumnWidthItem];
-
         const result = adaptReferencePointWidthItemsToPivotTable(
-            sourceColumnWidhtsWithAttributeColumn,
+            sourceColumnWidthsWithAttributeColumn,
             measures,
             [],
             columnAttributes,
@@ -175,6 +158,64 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
         );
 
-        expect(result).toEqual(expectedColumnWidthItems);
+        expect(result).toEqual([validWeakMeasureColumnWidthItem]);
+    });
+
+    it("should remove attributeWidthItem when measure column is filtered out by filter", () => {
+        const sourceColumnWidthsWithAttributeColumn: ColumnWidthItem[] = [validMeasureColumnWidthItem];
+
+        const filter: IBucketFilter = {
+            attribute: "a2",
+            displayFormRef: uriRef("a2/df"),
+            isInverted: true,
+            selectedElements: [
+                {
+                    title: "1234",
+                    uri: "/gdc/md/PROJECTID/obj/2210/elements?id=1234",
+                },
+            ],
+            totalElementsCount: 4,
+        };
+
+        const result = adaptReferencePointWidthItemsToPivotTable(
+            sourceColumnWidthsWithAttributeColumn,
+            measures,
+            rowAttributes,
+            columnAttributes,
+            [],
+            [],
+            [filter],
+        );
+
+        expect(result).toEqual([]);
+    });
+
+    it("should not remove attributeWidthItem when measure column is not filtered out by filter", () => {
+        const sourceColumnWidthsWithAttributeColumn: ColumnWidthItem[] = [validMeasureColumnWidthItem];
+
+        const filter: IBucketFilter = {
+            attribute: "a2",
+            displayFormRef: uriRef("a2/df"),
+            isInverted: false,
+            selectedElements: [
+                {
+                    title: "1234",
+                    uri: "/gdc/md/PROJECTID/obj/2210/elements?id=1234",
+                },
+            ],
+            totalElementsCount: 4,
+        };
+
+        const result = adaptReferencePointWidthItemsToPivotTable(
+            sourceColumnWidthsWithAttributeColumn,
+            measures,
+            rowAttributes,
+            columnAttributes,
+            [],
+            [],
+            [filter],
+        );
+
+        expect(result).toEqual([validMeasureColumnWidthItem]);
     });
 });

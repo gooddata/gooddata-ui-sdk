@@ -47,6 +47,9 @@ Object {
         Object {
           "aggregation": null,
           "attribute": "attr.owner.department",
+          "dfRef": Object {
+            "uri": "a1/df",
+          },
           "localIdentifier": "a1",
           "type": "attribute",
         },

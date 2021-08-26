@@ -335,17 +335,20 @@ export const attributeItems: IBucketItem[] = [
         type: "attribute",
         aggregation: null,
         attribute: "attr.owner.department",
+        dfRef: uriRef("a1/df"),
     },
     {
         localIdentifier: "a2",
         type: "attribute",
         aggregation: null,
         attribute: "attr.stage.iswon",
+        dfRef: uriRef("a2/df"),
     },
     {
         localIdentifier: "a3",
         type: "attribute",
         attribute: "attr.owner.region",
+        dfRef: uriRef("a3/df"),
     },
 ];
 
