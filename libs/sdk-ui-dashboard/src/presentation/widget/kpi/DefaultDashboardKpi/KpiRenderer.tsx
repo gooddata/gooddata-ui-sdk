@@ -38,7 +38,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     errorHelp,
 }) => {
     const onPrimaryValueClick = useCallback(() => {
-        if (!isDrillable || !onDrill || !kpiResult) {
+        if (!isDrillable || !onDrill || !kpiResult?.measureDescriptor) {
             return;
         }
         return onDrill({
