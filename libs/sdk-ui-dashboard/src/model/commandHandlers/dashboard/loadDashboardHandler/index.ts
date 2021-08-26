@@ -24,7 +24,10 @@ import { batchActions } from "redux-batched-actions";
 import { loadUser } from "./loadUser";
 import { userActions } from "../../../state/user";
 import { metaActions } from "../../../state/meta";
-import { dashboardFilterContextDefinition } from "../../../../_staging/dashboard/dashboardFilterContext";
+import {
+    dashboardFilterContextDefinition,
+    dashboardFilterContextIdentity,
+} from "../../../../_staging/dashboard/dashboardFilterContext";
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout";
 import { loadDashboardList } from "./loadDashboardList";
 import { listedDashboardsActions } from "../../../state/listedDashboards";
@@ -80,6 +83,7 @@ export function* loadDashboardHandler(
             dashboard,
             effectiveDateFilterConfig.config,
         );
+        const filterContextIdentity = dashboardFilterContextIdentity(dashboard);
 
         const dashboardLayout = dashboardLayoutSanitize(
             dashboard.layout ?? EmptyDashboardLayout,
@@ -100,7 +104,10 @@ export function* loadDashboardHandler(
                     measures: catalog.measures(),
                 }),
                 alertsActions.setAlerts(alerts),
-                filterContextActions.setFilterContext(filterContextDefinition),
+                filterContextActions.setFilterContext({
+                    filterContextDefinition,
+                    filterContextIdentity,
+                }),
                 layoutActions.setLayout(dashboardLayout),
                 dateFilterConfigActions.setDateFilterConfig({
                     dateFilterConfig: dashboard.dateFilterConfig,

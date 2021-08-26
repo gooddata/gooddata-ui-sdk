@@ -8,7 +8,7 @@ import {
     drillToDashboardRequested,
     drillToDashboardResolved,
 } from "../../events/drill";
-import { selectFilterContext } from "../../state/filterContext/filterContextSelectors";
+import { selectFilterContextDefinition } from "../../state/filterContext/filterContextSelectors";
 import { selectWidgetByRef } from "../../state/layout/layoutSelectors";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IDashboardFilter } from "../../../types";
@@ -44,7 +44,9 @@ export function* drillToDashboardHandler(
         ),
     );
 
-    const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
+    const filterContext: ReturnType<typeof selectFilterContextDefinition> = yield select(
+        selectFilterContextDefinition,
+    );
     const widget: IInsightWidget = yield select(selectWidgetByRef(cmd.payload.drillEvent.widgetRef!));
     const widgetFilters = filterContextToFiltersForWidget(filterContext, widget);
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(

@@ -47,7 +47,8 @@ export {
 } from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
 export {
-    selectFilterContext,
+    selectFilterContextDefinition,
+    selectFilterContextIdentity,
     selectFilterContextFilters,
     selectFilterContextDateFilter,
     selectFilterContextAttributeFilters,

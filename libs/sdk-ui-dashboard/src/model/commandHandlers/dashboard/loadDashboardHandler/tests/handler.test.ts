@@ -6,7 +6,7 @@ import { selectConfig } from "../../../../state/config/configSelectors";
 import { selectPermissions } from "../../../../state/permissions/permissionsSelectors";
 import { EmptyDashboardIdentifier } from "../../../../tests/fixtures/Dashboard.fixtures";
 import { selectLayout } from "../../../../state/layout/layoutSelectors";
-import { selectFilterContext } from "../../../../state/filterContext/filterContextSelectors";
+import { selectFilterContextDefinition } from "../../../../state/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 
 describe("load dashboard handler", () => {
@@ -85,7 +85,7 @@ describe("load dashboard handler", () => {
         });
 
         it("should add default filter context for an empty dashboard", () => {
-            const filterContext = selectFilterContext(Tester.state());
+            const filterContext = selectFilterContextDefinition(Tester.state());
 
             expect(filterContext).toMatchSnapshot();
         });

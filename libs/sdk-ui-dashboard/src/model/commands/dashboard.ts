@@ -77,7 +77,7 @@ export interface SaveDashboard extends IDashboardCommand {
  *
  * @param identifier - optionally specify identifier to set for the saved dashboard. If specified, the
  *  identifier will be used only during the initial save of a new dashboard. When the SaveDashboard is called
- *  of a dashboard that already exists on a backend, then the identifier will be ignored. If no identifier
+ *  and a dashboard already exists on a backend, then the identifier will be ignored. If no identifier
  *  is specified for the initial save, then the identifier will be generated.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
