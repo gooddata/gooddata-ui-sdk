@@ -99,15 +99,6 @@ interface IKpiResultsProps {
 type IKpiProps = IKpiResultsProps & IKpiExecutorProps & WrappedComponentProps;
 
 const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
-    const currentUser = useDashboardSelector(selectUser);
-    const permissions = useDashboardSelector(selectPermissions);
-    const settings = useDashboardSelector(selectSettings);
-    const { LoadingComponent } = useDashboardComponentsContext({
-        LoadingComponent: props.LoadingComponent,
-    });
-    const drillableItems = useDashboardSelector(selectDrillableItems);
-    const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
-
     const {
         backend,
         workspace,
@@ -131,6 +122,15 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
         disableDrillUnderline,
         intl,
     } = props;
+
+    const currentUser = useDashboardSelector(selectUser);
+    const permissions = useDashboardSelector(selectPermissions);
+    const settings = useDashboardSelector(selectSettings);
+    const { LoadingComponent } = useDashboardComponentsContext({
+        LoadingComponent: props.LoadingComponent,
+    });
+    const drillableItems = useDashboardSelector(selectDrillableItems);
+    const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
 
     const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget.ref);
 
