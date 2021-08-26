@@ -28,11 +28,11 @@ storiesOf(`${FilterStories}/AttributeFilterButton`, module)
             {
                 closed: {},
                 opened: {
-                    clickSelector: ".s-attribute-filter-button",
+                    clickSelector: ".s-attribute-filter",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 "select-all": {
-                    clickSelectors: [".s-attribute-filter-button", ".s-select_all"],
+                    clickSelectors: [".s-attribute-filter", ".s-select_all"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
@@ -53,11 +53,11 @@ storiesOf(`${FilterStories}/AttributeFilterButton`, module)
             {
                 closed: {},
                 opened: {
-                    clickSelector: ".s-attribute-filter-button",
+                    clickSelector: ".s-attribute-filter",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 "select-all": {
-                    clickSelectors: [".s-attribute-filter-button", ".s-select_all"],
+                    clickSelectors: [".s-attribute-filter", ".s-select_all"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
