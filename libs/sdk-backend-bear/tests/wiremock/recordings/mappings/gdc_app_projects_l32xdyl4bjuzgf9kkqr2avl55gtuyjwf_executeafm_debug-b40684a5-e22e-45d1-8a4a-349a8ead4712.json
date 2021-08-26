@@ -1,0 +1,41 @@
+{
+    "id": "b40684a5-e22e-45d1-8a4a-349a8ead4712",
+    "name": "gdc_app_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_executeafm_debug",
+    "request": {
+        "url": "/gdc/app/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/executeAfm/debug",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"execution\":{\"afm\":{\"attributes\":[{\"localIdentifier\":\"a1\",\"displayForm\":{\"identifier\":\"label.account.id\"}}],\"measures\":[{\"localIdentifier\":\"m_aangOxLSeztu\",\"definition\":{\"measure\":{\"item\":{\"identifier\":\"aangOxLSeztu\"}}}}]}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"reportDefinitionWithInlinedMetrics\":{\"content\":{\"format\":\"grid\",\"filters\":[],\"grid\":{\"columns\":[\"metricGroup\"],\"rows\":[{\"attribute\":{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"alias\":\"\",\"totals\":[]}}],\"metrics\":[{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271\",\"alias\":\"Amount\",\"format\":\"$#,##0.00\"}],\"sort\":{\"columns\":[],\"rows\":[]},\"columnWidths\":[]}},\"meta\":{\"category\":\"reportDefinitionWithInlinedMetrics\",\"title\":\"Untitled\"}}}",
+        "headers": {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json;charset=utf-8",
+            "Date": "Fri, 27 Aug 2021 12:09:34 GMT",
+            "Server": "GoodData WebApp",
+            "X-GDC-REQUEST-TIME": "39",
+            "X-GDC-REQUEST": "2UkisLWiopfRIWXw",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "b40684a5-e22e-45d1-8a4a-349a8ead4712",
+    "persistent": true,
+    "insertionIndex": 24
+}

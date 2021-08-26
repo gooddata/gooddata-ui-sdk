@@ -1,0 +1,35 @@
+{
+    "id": "3675ba55-a2a4-4b0c-9c7d-7420a028236d",
+    "name": "gdc_account_profile_9a4a028462b504f7ebe71d3c6a6e5786",
+    "request": {
+        "url": "/gdc/account/profile/9a4a028462b504f7ebe71d3c6a6e5786",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2019-11-11 15:13:10\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"777307001\",\"login\":\"ivan.nejezchleb@gooddata.com\",\"lastName\":\"Nejezchleb\",\"firstName\":\"Ivan\",\"created\":\"2017-02-10 13:00:41\",\"country\":null,\"companyName\":\"GoodData\",\"email\":\"ivan.nejezchleb@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/9a4a028462b504f7ebe71d3c6a6e5786\",\"projects\":\"/gdc/account/profile/9a4a028462b504f7ebe71d3c6a6e5786/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/9a4a028462b504f7ebe71d3c6a6e5786/auditEvents\"}}}",
+        "headers": {
+            "content-type": "application/json;charset=utf-8",
+            "date": "Fri, 27 Aug 2021 12:09:27 GMT",
+            "x-envoy-upstream-service-time": "8",
+            "server": "undefined",
+            "X-GDC-REQUEST-TIME": "11",
+            "X-GDC-REQUEST": "EjBnEqbajgL5FgdP",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "3675ba55-a2a4-4b0c-9c7d-7420a028236d",
+    "persistent": true,
+    "insertionIndex": 4
+}

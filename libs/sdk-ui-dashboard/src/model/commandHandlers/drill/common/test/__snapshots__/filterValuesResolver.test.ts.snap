@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`resolveFilterValues should resolved multiple attribute filters 1`] = `
+Object {
+  "attributeFilters": Object {
+    "label.owner.department": Object {
+      "/gdc/md/referenceworkspace/obj/1088/elements?id=460487": "Direct Sales",
+    },
+    "label.product.id.name": Object {
+      "/gdc/md/referenceworkspace/obj/1054/elements?id=165847": "Educationly",
+    },
+  },
+  "dateFilters": Array [],
+}
+`;
+
 exports[`resolveFilterValues should return resolved absolute date limits 1`] = `
 Object {
   "attributeFilters": Object {},
@@ -10,5 +24,27 @@ Object {
       "to": "2020-02-01",
     },
   ],
+}
+`;
+
+exports[`resolveFilterValues should return resolved attribute filter elements by value 1`] = `
+Object {
+  "attributeFilters": Object {
+    "label.product.id.name": Object {
+      "/gdc/md/referenceworkspace/obj/1054/elements?id=165847": "Educationly",
+    },
+  },
+  "dateFilters": Array [],
+}
+`;
+
+exports[`resolveFilterValues should return resolved attribute filters elements by ref 1`] = `
+Object {
+  "attributeFilters": Object {
+    "label.product.id.name": Object {
+      "/gdc/md/referenceworkspace/obj/1054/elements?id=165678": "CompuSci",
+    },
+  },
+  "dateFilters": Array [],
 }
 `;

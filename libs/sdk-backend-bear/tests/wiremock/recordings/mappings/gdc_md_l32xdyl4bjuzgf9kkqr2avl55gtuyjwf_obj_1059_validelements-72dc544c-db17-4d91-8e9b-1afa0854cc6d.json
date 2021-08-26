@@ -1,0 +1,42 @@
+{
+    "id": "72dc544c-db17-4d91-8e9b-1afa0854cc6d",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059/validElements?limit=20&offset=0",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"validElementsRequest\":{}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements-72dc544c-db17-4d91-8e9b-1afa0854cc6d.json",
+        "headers": {
+            "date": "Fri, 27 Aug 2021 12:09:34 GMT",
+            "server": "undefined",
+            "content-type": "application/json;charset=UTF-8",
+            "x-envoy-upstream-service-time": "38",
+            "X-GDC-REQUEST-TIME": "43",
+            "X-GDC-REQUEST": "SGA97Sn4gsWpd4lE",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "72dc544c-db17-4d91-8e9b-1afa0854cc6d",
+    "persistent": true,
+    "insertionIndex": 18
+}
