@@ -8,6 +8,7 @@ import { stringUtils } from "@gooddata/util";
 import { IWidget, widgetRef } from "@gooddata/sdk-backend-spi";
 
 import { OptionsMenuItem } from "./OptionsMenuItem";
+import { DOWNLOADER_ID } from "../../../../_staging/fileUtils/downloadFile";
 
 export interface IOptionsMenuProps extends WrappedComponentProps {
     exportFunction: IExportFunction | undefined;
@@ -21,6 +22,8 @@ export interface IOptionsMenuProps extends WrappedComponentProps {
 }
 
 const alignPoints: IAlignPoint[] = [{ align: "bc tr", offset: { x: 2, y: 0 } }];
+
+const ignoredOutsideClickClasses = [`#${DOWNLOADER_ID}`];
 
 const OptionsMenuCore: React.FC<IOptionsMenuProps> = ({
     bubbleMessageKey = "",
@@ -43,6 +46,9 @@ const OptionsMenuCore: React.FC<IOptionsMenuProps> = ({
             alignPoints={alignPoints}
             className="bubble-light options-menu-bubble s-options-menu-bubble"
             closeOnOutsideClick
+            // we need to ignore the "clicks" on the hidden downloader link to prevent the menu from closing
+            // when the download starts (if the user opened it again before the download was ready)
+            ignoreClicksOnByClass={ignoredOutsideClickClasses}
             onClose={hideOptionsMenu}
         >
             <ItemsWrapper smallItemsSpacing>

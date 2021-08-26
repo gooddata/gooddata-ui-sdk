@@ -61,6 +61,13 @@ export interface IBubbleProps {
     arrowStyle?: React.CSSProperties;
     className?: string;
     closeOnOutsideClick?: boolean;
+
+    /**
+     * Array of refs where user clicks should be ignored
+     * and bubble should not be closed by clicking on them
+     */
+    ignoreClicksOn?: any[];
+    ignoreClicksOnByClass?: string[];
     onClose?: () => void;
     onMouseEnter?: () => void;
     onMouseLeave?: () => void;
@@ -179,6 +186,8 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
                 closeOnParentScroll
                 closeOnMouseDrag
                 closeOnOutsideClick={this.props.closeOnOutsideClick}
+                ignoreClicksOn={this.props.ignoreClicksOn}
+                ignoreClicksOnByClass={this.props.ignoreClicksOnByClass}
                 onClose={this.props.onClose}
             >
                 <div
