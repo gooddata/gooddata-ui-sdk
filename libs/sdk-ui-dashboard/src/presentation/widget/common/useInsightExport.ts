@@ -43,7 +43,7 @@ export const useInsightExport = (config: {
                 exportHandler(exportFunction, {
                     format: "xlsx",
                     mergeHeaders,
-                    showFilters: includeFilterContext,
+                    includeFilterContext,
                     title,
                 });
             },
