@@ -4,12 +4,7 @@ import invariant from "ts-invariant";
 import React from "react";
 import { ContentRect } from "react-measure";
 
-import {
-    convertDrillableItemsToPredicates,
-    IDrillableItem,
-    OnFiredDrillEvent,
-    IHeaderPredicate,
-} from "@gooddata/sdk-ui";
+import { convertDrillableItemsToPredicates, OnFiredDrillEvent, ExplicitDrill } from "@gooddata/sdk-ui";
 import { IChartConfig, OnLegendReady } from "../interfaces";
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder";
 import { getHighchartsOptions } from "./chartTypes/_chartCreators/highChartsCreators";
@@ -48,7 +43,7 @@ export interface IChartTransformationProps extends WrappedComponentProps {
     height: number;
     width: number;
     config: IChartConfig;
-    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems: ExplicitDrill[];
     locale: string;
 
     dataView: IDataView;

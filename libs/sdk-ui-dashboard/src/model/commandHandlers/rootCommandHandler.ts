@@ -32,8 +32,9 @@ import { drillToInsightHandler } from "./drill/drillToInsightHandler";
 import { drillToCustomUrlHandler } from "./drill/drillToCustomUrlHandler";
 import { drillToAttributeUrlHandler } from "./drill/drillToAttributeUrlHandler";
 import { drillToDashboardHandler } from "./drill/drillToDashboardHandler";
-import { changeFilterContextSelectionHandler } from "./filterContext/changeFilterContextSelectionHandler";
+import { changeDrillableItemsHandler } from "./drill/changeDrillableItemsHandler";
 import { drillToLegacyDashboardHandler } from "./drill/drillToLegacyDashboardHandler";
+import { changeFilterContextSelectionHandler } from "./filterContext/changeFilterContextSelectionHandler";
 import { addDrillTargetsHandler } from "./drillTargets/addDrillTargetsHandler";
 import { requestAsyncRenderHandler } from "./render/requestAsyncRenderHandler";
 import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler";
@@ -96,6 +97,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL": drillToAttributeUrlHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL": drillToCustomUrlHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD": drillToLegacyDashboardHandler,
+    "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE": changeDrillableItemsHandler,
     "GDC.DASH/CMD.DRILL_TARGETS.ADD": addDrillTargetsHandler,
     "GDC.DASH/CMD.RENDER.ASYNC.REQUEST": requestAsyncRenderHandler,
     "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE": resolveAsyncRenderHandler,

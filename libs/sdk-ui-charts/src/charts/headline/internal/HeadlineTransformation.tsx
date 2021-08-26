@@ -4,8 +4,7 @@ import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IChartConfig } from "../../../interfaces";
 import {
-    IHeaderPredicate,
-    IDrillableItem,
+    ExplicitDrill,
     IDrillEventCallback,
     convertDrillableItemsToPredicates,
     fireDrillEvent,
@@ -20,7 +19,7 @@ import noop from "lodash/noop";
 
 export interface IHeadlineTransformationProps {
     dataView: IDataView;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
     config?: IChartConfig;
 
     onDrill?: IDrillEventCallback;

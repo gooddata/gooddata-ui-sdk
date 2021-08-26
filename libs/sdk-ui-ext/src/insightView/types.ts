@@ -7,8 +7,7 @@ import {
     ILocale,
     ILoadingProps,
     IErrorProps,
-    IDrillableItem,
-    IHeaderPredicate,
+    ExplicitDrill,
     IVisualizationCallbacks,
 } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
@@ -51,7 +50,7 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     /**
      * Configure chart drillability; e.g. which parts of the charts can be clicked.
      */
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
 
     /**
      * Configure color palette to use for the chart. If you do not specify this, then the palette will be

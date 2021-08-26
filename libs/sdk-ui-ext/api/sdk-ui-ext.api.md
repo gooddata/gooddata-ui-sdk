@@ -8,6 +8,7 @@
 
 import { AnalyticalBackendError } from '@gooddata/sdk-backend-spi';
 import { DrillDefinition } from '@gooddata/sdk-backend-spi';
+import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
@@ -22,13 +23,11 @@ import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSize } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-backend-spi';
 import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
-import { IDrillableItem } from '@gooddata/sdk-ui';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IGeoConfig } from '@gooddata/sdk-ui-geo';
-import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IInsightWidget } from '@gooddata/sdk-backend-spi';
@@ -355,7 +354,7 @@ export interface IDashboardViewProps {
     config?: IDashboardViewConfig;
     dashboard: ObjRef | string;
     disableThemeLoading?: boolean;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
     ErrorComponent?: React.ComponentType<IErrorProps>;
     execConfig?: IExecutionConfig;
     filters?: Array<IDashboardFilter | FilterContextItem>;
@@ -443,7 +442,7 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     backend?: IAnalyticalBackend;
     colorPalette?: IColorPalette;
     config?: IChartConfig | IGeoConfig | IPivotTableConfig | any;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
     execConfig?: IExecutionConfig;
     executeByReference?: boolean;

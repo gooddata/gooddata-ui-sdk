@@ -5,6 +5,7 @@ import {
     DashboardCommandFailed,
     drillToDashboard,
     useDashboardCommandProcessing,
+    DrillToDashboard,
 } from "../../../model";
 
 /**
@@ -13,7 +14,7 @@ import {
 export interface UseDrillToDashboardProps {
     onSuccess?: (event: DashboardDrillToDashboardResolved) => void;
     onError?: (event: DashboardCommandFailed) => void;
-    onBeforeRun?: () => void;
+    onBeforeRun?: (cmd: DrillToDashboard) => void;
 }
 
 /**

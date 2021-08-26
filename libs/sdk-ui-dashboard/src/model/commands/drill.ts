@@ -8,6 +8,7 @@ import {
     IDrillToLegacyDashboard,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
+import { ExplicitDrill } from "@gooddata/sdk-ui";
 import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
 
 /**
@@ -363,6 +364,49 @@ export function drillToLegacyDashboard(
         payload: {
             drillDefinition,
             drillEvent,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * @alpha
+ */
+export interface ChangeDrillableItems extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE";
+    readonly payload: {
+        /**
+         * Additional items that can enable drilling of the widgets.
+         * If the item (identifier/uri/predicate) matches attribute or measure in the widget, widget drilling will be enabled.
+         *
+         * Note: These items has lower priority than the configured widget drills or drill down.
+         *       You can disable configured widget drills and drill down by setting {@link DashboardConfig} disableDefaultDrills property to true.
+         */
+        readonly drillableItems: ExplicitDrill[];
+    };
+}
+
+/**
+ * Creates the {@link ChangeDrillableItems} command.
+ * Dispatching this command will result into enabling drilling of the widgets, if they match some of the drillable item definition/predicate.
+ *
+ * @alpha
+ * @param drillableItems - reference to the drillable items or predicates that enables insight/kpi drilling.
+ * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns change drillable items command
+ */
+export function changeDrillableItems(
+    drillableItems: ExplicitDrill[],
+    correlationId?: string,
+): ChangeDrillableItems {
+    return {
+        type: "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE",
+        correlationId,
+        payload: {
+            drillableItems,
         },
     };
 }

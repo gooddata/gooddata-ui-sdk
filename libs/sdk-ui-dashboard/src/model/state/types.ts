@@ -10,6 +10,7 @@ import { PermissionsState } from "./permissions/permissionsState";
 import { IListedDashboard, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { CatalogState } from "./catalog/catalogState";
 import { UserState } from "./user/userState";
+import { DrillState } from "./drill/drillState";
 import { DashboardMetaState } from "./meta/metaState";
 import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState";
 import { IDrillTargets } from "./drillTargets/drillTargetsTypes";
@@ -37,6 +38,7 @@ export type DashboardState = {
     catalog: CatalogState;
     user: UserState;
     meta: DashboardMetaState;
+    drill: DrillState;
     // Entities
     insights: EntityState<IInsight>;
     alerts: EntityState<IWidgetAlert>;

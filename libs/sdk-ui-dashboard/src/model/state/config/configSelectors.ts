@@ -118,6 +118,16 @@ export const selectIsExport = createSelector(selectConfig, (state) => {
     return state.isExport;
 });
 
+/**
+ * Returns whether the default drills configured on the widgets or implicit drills (eg. drill down) are disabled.
+ * This option does not affect drilling enabled by drillableItems.
+ *
+ * @alpha
+ */
+export const selectDisableDefaultDrills = createSelector(selectConfig, (state) => {
+    return state.disableDefaultDrills ?? false;
+});
+
 //
 // FEATURE FLAGS
 //

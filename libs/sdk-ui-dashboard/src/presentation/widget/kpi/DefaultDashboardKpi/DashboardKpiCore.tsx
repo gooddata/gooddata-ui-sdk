@@ -28,7 +28,6 @@ export const DashboardKpiCore = (props: DashboardKpiProps): JSX.Element => {
         alert,
         filters,
         onFiltersChange,
-        drillableItems,
         onDrill,
         onError,
         backend: customBackend,
@@ -91,7 +90,6 @@ export const DashboardKpiCore = (props: DashboardKpiProps): JSX.Element => {
             onFiltersChange={onFiltersChange}
             onDrill={onDrill}
             onError={handleError}
-            drillableItems={drillableItems}
             separators={separators}
             disableDrillUnderline={settings.disableKpiDashboardHeadlineUnderline}
             backend={backend}

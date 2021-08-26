@@ -27,14 +27,7 @@ import {
     areObjRefsEqual,
     objRefToString,
 } from "@gooddata/sdk-model";
-import {
-    IDrillableItem,
-    IErrorProps,
-    IHeaderPredicate,
-    ILoadingProps,
-    OnError,
-    VisType,
-} from "@gooddata/sdk-ui";
+import { ExplicitDrill, IErrorProps, ILoadingProps, OnError, VisType } from "@gooddata/sdk-ui";
 import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import {
     IDashboardFilter,
@@ -68,7 +61,7 @@ interface IDashboardRendererProps {
     filters?: FilterContextItem[];
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
     filterContext?: IFilterContext | ITempFilterContext;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
     onDrill?: OnFiredDashboardViewDrillEvent;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;

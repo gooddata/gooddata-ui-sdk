@@ -3,7 +3,6 @@ import React from "react";
 
 import { DashboardKpiPropsProvider, useDashboardKpiProps } from "../DashboardKpiPropsContext";
 import { DashboardKpiProps } from "../types";
-import { DefaultDashboardKpiWithDrillableItems } from "./DefaultDashboardKpiWithDrillableItems";
 import { DefaultDashboardKpiWithDrills } from "./DefaultDashboardKpiWithDrills";
 
 /**
@@ -12,11 +11,7 @@ import { DefaultDashboardKpiWithDrills } from "./DefaultDashboardKpiWithDrills";
 export const DefaultDashboardKpiInner = (): JSX.Element => {
     const props = useDashboardKpiProps();
 
-    return props.drillableItems?.length ? (
-        <DefaultDashboardKpiWithDrillableItems {...props} />
-    ) : (
-        <DefaultDashboardKpiWithDrills {...props} />
-    );
+    return <DefaultDashboardKpiWithDrills {...props} />;
 };
 
 /**

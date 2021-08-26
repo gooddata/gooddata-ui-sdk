@@ -2,8 +2,7 @@
 import React from "react";
 
 import { IDashboardInsightProps } from "../types";
-import { DefaultDashboardInsightWithDrillableItems } from "./DefaultDashboardInsightWithDrillableItems";
-import { DefaultDashboardInsightWithDrillDialog } from "./DefaultDashboardInsightWithDrillDialog";
+import { DashboardInsightWithDrillDialog } from "./DashboardInsightWithDrillDialog";
 import { DashboardInsightPropsProvider, useDashboardInsightProps } from "../DashboardInsightPropsContext";
 
 /**
@@ -12,11 +11,7 @@ import { DashboardInsightPropsProvider, useDashboardInsightProps } from "../Dash
 export const DefaultDashboardInsightInner = (): JSX.Element => {
     const props = useDashboardInsightProps();
 
-    return props.drillableItems?.length ? (
-        <DefaultDashboardInsightWithDrillableItems {...props} />
-    ) : (
-        <DefaultDashboardInsightWithDrillDialog {...props} />
-    );
+    return <DashboardInsightWithDrillDialog {...props} />;
 };
 
 /**

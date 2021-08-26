@@ -1,7 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 
-import { IDrillableItem, OnFiredDrillEvent } from "./DrillEvents";
-import { IHeaderPredicate } from "../headerMatching/HeaderPredicate";
+import { ExplicitDrill, OnFiredDrillEvent } from "./DrillEvents";
 import React from "react";
 import { IErrorProps } from "../react/ErrorComponent";
 import { ILoadingProps } from "../react/LoadingComponent";
@@ -34,7 +33,7 @@ export interface IVisualizationProps {
     /**
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
      */
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
 
     /**
      * React component to display in the event when there is an error with either obtaining the data from

@@ -10,22 +10,12 @@ import {
     OnExportReady,
     OnLoadingChanged,
 } from "@gooddata/sdk-ui";
-
-import {
-    OnDashboardDrill,
-    OnDrillDown,
-    OnDrillToAttributeUrl,
-    OnDrillToCustomUrl,
-    OnDrillToDashboard,
-    OnDrillToInsight,
-} from "../../../../drill";
-import { IntlWrapper } from "../../../../localization";
-import { DefaultDashboardInsightWithDrillSelect } from "../DefaultDashboardInsightWithDrillSelect";
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile";
-
-import { DrillDialog } from "./DrillDialog";
-import { useDashboardDrillTargetsLocal } from "../useDashboardDrillTargets";
 import { useInsightExport } from "../../../common";
+import { OnDrillDownSuccess, WithDrillSelect } from "../../../../drill";
+import { IntlWrapper } from "../../../../localization";
+import { DrillDialog } from "./DrillDialog";
+import { DrillDialogInsight } from "./DrillDialogInsight";
 
 /**
  * @internal
@@ -35,12 +25,7 @@ export interface InsightDrillDialogProps {
     breadcrumbs: string[];
     widget: IInsightWidget;
     insight: IInsight;
-    onDrill?: OnDashboardDrill;
-    onDrillDown?: OnDrillDown;
-    onDrillToInsight?: OnDrillToInsight;
-    onDrillToDashboard?: OnDrillToDashboard;
-    onDrillToAttributeUrl?: OnDrillToAttributeUrl;
-    onDrillToCustomUrl?: OnDrillToCustomUrl;
+    onDrillDown?: OnDrillDownSuccess;
     onClose: () => void;
     onBackButtonClick: () => void;
 }
@@ -54,24 +39,9 @@ const overlayIgnoredClasses = [
 ];
 
 export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element => {
-    const {
-        locale,
-        breadcrumbs,
-        widget,
-        insight,
-        onDrill,
-        onClose,
-        onBackButtonClick,
-        onDrillDown,
-        onDrillToAttributeUrl,
-        onDrillToCustomUrl,
-        onDrillToDashboard,
-        onDrillToInsight,
-    } = props;
+    const { locale, breadcrumbs, insight, onClose, onBackButtonClick, onDrillDown } = props;
 
     const isMobileDevice = useMediaQuery("mobileDevice");
-
-    const { drillTargets, onAvailableDrillTargetsReceived } = useDashboardDrillTargetsLocal();
 
     const [error, setError] = useState<GoodDataSdkError | undefined>();
     const [isLoading, setIsLoading] = useState(false);
@@ -124,22 +94,18 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                     onExportCSV={onExportCSV}
                     isLoading={isLoading}
                 >
-                    <DefaultDashboardInsightWithDrillSelect
-                        insight={insight}
-                        widget={widget}
-                        disableWidgetImplicitDrills
-                        onDrill={onDrill}
-                        onDrillDown={onDrillDown}
-                        onDrillToAttributeUrl={onDrillToAttributeUrl}
-                        onDrillToCustomUrl={onDrillToCustomUrl}
-                        onDrillToDashboard={onDrillToDashboard}
-                        onDrillToInsight={onDrillToInsight}
-                        drillTargets={drillTargets}
-                        onAvailableDrillTargetsReceived={onAvailableDrillTargetsReceived}
-                        onError={setError}
-                        onLoadingChanged={handleLoadingChanged}
-                        onExportReady={handleExportReady}
-                    />
+                    <WithDrillSelect insight={props.insight} onDrillDownSuccess={onDrillDown}>
+                        {({ onDrill }) => {
+                            return (
+                                <DrillDialogInsight
+                                    {...props}
+                                    onDrill={onDrill}
+                                    onLoadingChanged={handleLoadingChanged}
+                                    onExportReady={handleExportReady}
+                                />
+                            );
+                        }}
+                    </WithDrillSelect>
                 </DrillDialog>
             </IntlWrapper>
         </OverlayComponent>

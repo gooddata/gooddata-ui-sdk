@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import React, { ComponentType } from "react";
 import { FilterContextItem, IAnalyticalBackend, IKpiWidget, IWidgetAlert } from "@gooddata/sdk-backend-spi";
-import { IErrorProps, ILoadingProps, IDrillableItem, IHeaderPredicate, OnError } from "@gooddata/sdk-ui";
+import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../types";
 
 ///
@@ -41,11 +41,6 @@ export interface DashboardKpiProps {
      * (e.g. to apply filters of a KPI alert to the whole dashboard)
      */
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
-
-    /**
-     * Configure drillability; e.g. which parts of the visualization can be interacted with.
-     */
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 
     /**
      * Called when user triggers a drill on a visualization.

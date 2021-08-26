@@ -9,7 +9,7 @@ import CustomEventPolyfill from "custom-event";
 import findIndex from "lodash/findIndex";
 import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory";
 import {
-    IDrillableItem,
+    ExplicitDrill,
     IDrillEventIntersectionElement,
     isDrillableItemIdentifier,
     isDrillableItemUri,
@@ -37,10 +37,8 @@ export function isSomeHeaderPredicateMatched(
 /**
  * @internal
  */
-export function convertDrillableItemsToPredicates(
-    drillableItems: Array<IDrillableItem | IHeaderPredicate>,
-): IHeaderPredicate[] {
-    return drillableItems.map((drillableItem: IDrillableItem | IHeaderPredicate) => {
+export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[]): IHeaderPredicate[] {
+    return drillableItems.map((drillableItem: ExplicitDrill) => {
         if (isDrillableItemUri(drillableItem)) {
             return uriMatch(drillableItem.uri);
         } else if (isDrillableItemIdentifier(drillableItem)) {

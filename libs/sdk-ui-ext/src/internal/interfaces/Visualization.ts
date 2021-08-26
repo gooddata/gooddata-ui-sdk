@@ -16,9 +16,8 @@ import {
     ChartType,
     ErrorCodes,
     GoodDataSdkError,
-    IDrillableItem,
+    ExplicitDrill,
     IDrillEvent,
-    IHeaderPredicate,
     ILocale,
     IPushData,
     IVisualizationCallbacks,
@@ -46,7 +45,7 @@ export interface IVisConstruct {
 }
 
 export interface ICustomProps {
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
     totalsEditAllowed?: boolean;
 }
 

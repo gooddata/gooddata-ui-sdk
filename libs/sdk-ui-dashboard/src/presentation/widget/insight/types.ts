@@ -2,23 +2,14 @@
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
+import { IErrorProps, ILoadingProps, OnError, OnExportReady, OnLoadingChanged } from "@gooddata/sdk-ui";
 import {
-    IAvailableDrillTargets,
-    IDrillableItem,
-    IErrorProps,
-    IHeaderPredicate,
-    ILoadingProps,
-    OnError,
-    OnExportReady,
-    OnLoadingChanged,
-} from "@gooddata/sdk-ui";
-import {
-    OnDashboardDrill,
-    OnDrillDown,
-    OnDrillToAttributeUrl,
-    OnDrillToCustomUrl,
-    OnDrillToDashboard,
-    OnDrillToInsight,
+    OnDrillDownSuccess,
+    OnDrillToAttributeUrlSuccess,
+    OnDrillToCustomUrlSuccess,
+    OnDrillToDashboardSuccess,
+    OnDrillToInsightSuccess,
+    OnWidgetDrill,
 } from "../../drill/types";
 
 ///
@@ -47,18 +38,12 @@ export interface IDashboardInsightProps {
     backend?: IAnalyticalBackend;
     workspace?: string;
 
-    disableWidgetImplicitDrills?: boolean;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    drillTargets?: IAvailableDrillTargets;
-
-    onAvailableDrillTargetsReceived?: (availableDrillTargets?: IAvailableDrillTargets) => void;
-
-    onDrill?: OnDashboardDrill;
-    onDrillDown?: OnDrillDown;
-    onDrillToInsight?: OnDrillToInsight;
-    onDrillToDashboard?: OnDrillToDashboard;
-    onDrillToAttributeUrl?: OnDrillToAttributeUrl;
-    onDrillToCustomUrl?: OnDrillToCustomUrl;
+    onDrill?: OnWidgetDrill;
+    onDrillDown?: OnDrillDownSuccess;
+    onDrillToInsight?: OnDrillToInsightSuccess;
+    onDrillToDashboard?: OnDrillToDashboardSuccess;
+    onDrillToAttributeUrl?: OnDrillToAttributeUrlSuccess;
+    onDrillToCustomUrl?: OnDrillToCustomUrlSuccess;
 
     onError?: OnError;
     onLoadingChanged?: OnLoadingChanged;

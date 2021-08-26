@@ -3,6 +3,7 @@
 import {
     DashboardDrillToCustomUrlResolved,
     DashboardCommandFailed,
+    DrillToCustomUrl,
     drillToCustomUrl,
     useDashboardCommandProcessing,
 } from "../../../model";
@@ -13,7 +14,7 @@ import {
 export interface UseDrillToCustomUrlProps {
     onSuccess?: (event: DashboardDrillToCustomUrlResolved) => void;
     onError?: (event: DashboardCommandFailed) => void;
-    onBeforeRun?: () => void;
+    onBeforeRun?: (cmd: DrillToCustomUrl) => void;
 }
 
 /**

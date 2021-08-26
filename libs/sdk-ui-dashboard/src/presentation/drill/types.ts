@@ -5,72 +5,114 @@ import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import {
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
-    IDrillToDashboard,
     IDrillToInsight,
     IListedDashboard,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
 } from "@gooddata/sdk-backend-spi";
 import {
-    DashboardDrillDefinition,
     DashboardDrillContext,
+    DashboardDrillDefinition,
     IDashboardDrillEvent,
-    IDashboardFilter,
     IDrillDownDefinition,
 } from "../../types";
+import {
+    DrillToLegacyDashboard,
+    DashboardCommandFailed,
+    DashboardDrillResolved,
+    DashboardDrillDownResolved,
+    DashboardDrillToInsightResolved,
+    DashboardDrillToDashboardResolved,
+    DashboardDrillToAttributeUrlResolved,
+    DashboardDrillToCustomUrlResolved,
+    Drill,
+    DrillDown,
+    DrillToInsight,
+    DrillToDashboard,
+    DrillToAttributeUrl,
+    DrillToCustomUrl,
+    DashboardDrillToLegacyDashboardResolved,
+} from "../../model";
 
 /**
  * @internal
  */
-export type OnDashboardDrill = (
-    drillEvent: IDashboardDrillEvent,
-    drillContext: DashboardDrillContext,
-) => void;
+export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
 
 /**
  * @internal
  */
-export type OnDrillDown = (context: {
-    drillDefinition: IDrillDownDefinition;
-    drillEvent: IDashboardDrillEvent;
-    insight: IInsight;
-}) => void;
+export type OnDashboardDrillError = (event: DashboardCommandFailed) => void;
 
 /**
  * @internal
  */
-export type OnDrillToInsight = (context: {
-    drillDefinition: IDrillToInsight;
-    drillEvent: IDashboardDrillEvent;
-    insight: IInsight;
-}) => void;
+export type OnDashboardDrill = (cmd: Drill) => void;
 
 /**
  * @internal
  */
-export type OnDrillToDashboard = (context: {
-    drillDefinition: IDrillToDashboard;
-    drillEvent: IDashboardDrillEvent;
-    filters: IDashboardFilter[];
-}) => void;
+export type OnDashboardDrillSuccess = (event: DashboardDrillResolved) => void;
 
 /**
  * @internal
  */
-export type OnDrillToAttributeUrl = (context: {
-    drillDefinition: IDrillToAttributeUrl;
-    drillEvent: IDashboardDrillEvent;
-    url: string;
-}) => void;
+export type OnDrillDown = (cmd: DrillDown) => void;
 
 /**
  * @internal
  */
-export type OnDrillToCustomUrl = (context: {
-    drillDefinition: IDrillToCustomUrl;
-    drillEvent: IDashboardDrillEvent;
-    url: string;
-}) => void;
+export type OnDrillDownSuccess = (event: DashboardDrillDownResolved) => void;
+
+/**
+ * @internal
+ */
+export type OnDrillToInsight = (cmd: DrillToInsight) => void;
+
+/**
+ * @internal
+ */
+export type OnDrillToInsightSuccess = (event: DashboardDrillToInsightResolved) => void;
+
+/**
+ * @internal
+ */
+export type OnDrillToDashboard = (cmd: DrillToDashboard) => void;
+
+/**
+ * @internal
+ */
+export type OnDrillToDashboardSuccess = (event: DashboardDrillToDashboardResolved) => void;
+
+/**
+ * @internal
+ */
+export type OnDrillToAttributeUrl = (cmd: DrillToAttributeUrl) => void;
+
+/**
+ * @internal
+ */
+export type OnDrillToAttributeUrlSuccess = (event: DashboardDrillToAttributeUrlResolved) => void;
+
+/**
+ * @internal
+ */
+export type OnDrillToCustomUrl = (cmd: DrillToCustomUrl) => void;
+
+/**
+ * @internal
+ */
+export type OnDrillToCustomUrlSuccess = (event: DashboardDrillToCustomUrlResolved) => void;
+
+/**
+ * @internal
+ */
+export type OnDrillToLegacyDashboard = (cmd: DrillToLegacyDashboard) => void;
+
+/**
+ * @internal
+ */
+export type OnDrillToLegacyDashboardSuccess = (event: DashboardDrillToLegacyDashboardResolved) => void;
 
 /**
  * @internal

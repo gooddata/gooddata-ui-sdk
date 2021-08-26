@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { createSelector } from "@reduxjs/toolkit";
 import {
     insightFilters,
     insightSetFilters,
@@ -10,15 +11,13 @@ import {
 import {
     GoodDataSdkError,
     IntlWrapper,
-    IPushData,
     OnError,
     OnLoadingChanged,
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
-
-import { useDashboardComponentsContext } from "../../../dashboardContexts";
+import { useDashboardComponentsContext } from "../../../../dashboardContexts";
 import {
     useDashboardSelector,
     selectColorPalette,
@@ -27,23 +26,42 @@ import {
     selectSeparators,
     selectSettings,
     selectIsExport,
+    selectDrillableItems,
     useDashboardAsyncRender,
     useDashboardEventDispatch,
     insightWidgetExecutionFailed,
-} from "../../../../model";
-
-import { useResolveDashboardInsightProperties } from "./useResolveDashboardInsightProperties";
+} from "../../../../../model";
+import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties";
+import { IDashboardInsightProps } from "../../types";
+import { useWidgetFiltersQuery } from "../../../common";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
-import { IDashboardInsightProps } from "../types";
-import { useWidgetFiltersQuery } from "../../common";
-import { CustomError } from "./CustomError/CustomError";
+import { CustomError } from "../CustomError/CustomError";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
+
+const selectCommonDashboardInsightProps = createSelector(
+    [selectLocale, selectSettings, selectColorPalette],
+    (locale, settings, colorPalette) => ({
+        locale,
+        settings,
+        colorPalette,
+    }),
+);
+
+const selectChartConfig = createSelector(
+    [selectMapboxToken, selectSeparators, selectDrillableItems, selectIsExport],
+    (mapboxToken, separators, drillableItems, isExport) => ({
+        mapboxToken,
+        separators,
+        forceDisableDrillOnAxes: !drillableItems, // to keep in line with KD, enable axes drilling only if using explicit drills
+        isExportMode: isExport,
+    }),
+);
 
 /**
  * @internal
  */
-export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element => {
+export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => {
     const {
         insight,
         widget,
@@ -51,57 +69,37 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
         clientWidth,
         backend,
         workspace,
-        disableWidgetImplicitDrills,
-        drillableItems,
-        onDrill,
         onError,
-        ErrorComponent: CustomErrorComponent,
-        LoadingComponent: CustomLoadingComponent,
-        drillTargets,
-        onAvailableDrillTargetsReceived,
+        onDrill: onDrillFn,
         onLoadingChanged,
         onExportReady,
+        ErrorComponent: CustomErrorComponent,
+        LoadingComponent: CustomLoadingComponent,
     } = props;
 
+    // Custom components
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
     });
 
+    // Context
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
 
-    const separators = useDashboardSelector(selectSeparators);
-    const mapboxToken = useDashboardSelector(selectMapboxToken);
-    const locale = useDashboardSelector(selectLocale);
-    const settings = useDashboardSelector(selectSettings);
-    const colorPalette = useDashboardSelector(selectColorPalette);
-    const isExport = useDashboardSelector(selectIsExport);
-
     const dispatchEvent = useDashboardEventDispatch();
 
-    const {
-        result: filtersForInsight,
-        status: filtersStatus,
-        error: filtersError,
-    } = useWidgetFiltersQuery(widget, insight && insightFilters(insight));
+    // State props
+    const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
+    const chartConfig = useDashboardSelector(selectChartConfig);
 
+    // Loading and rendering
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | undefined>();
 
     const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(
         objRefToString(widget.ref),
     );
-
-    const handlePushData = useCallback(
-        (data: IPushData): void => {
-            if (onAvailableDrillTargetsReceived && data?.availableDrillTargets) {
-                onAvailableDrillTargetsReceived(data.availableDrillTargets);
-            }
-        },
-        [onAvailableDrillTargetsReceived],
-    );
-
     const handleLoadingChanged = useCallback<OnLoadingChanged>(
         ({ isLoading }) => {
             if (isLoading) {
@@ -117,41 +115,26 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
         [onLoadingChanged],
     );
 
-    const handleError = useCallback<OnError>(
-        (error) => {
-            setVisualizationError(error);
-            dispatchEvent(insightWidgetExecutionFailed(error));
-            onError?.(error);
-        },
-        [onError, dispatchEvent],
-    );
+    /// Filtering
+    const {
+        result: filtersForInsight,
+        status: filtersStatus,
+        error: filtersError,
+    } = useWidgetFiltersQuery(widget, insight && insightFilters(insight));
 
     const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight);
-
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
         insight: insightWithAddedFilters ?? insight,
         widget,
     });
 
-    const { drillableItems: drillableItemsToUse, handleDrill } = useDashboardInsightDrills({
-        insight: insightWithAddedWidgetProperties,
+    const { drillableItems, onDrill, onPushData } = useDashboardInsightDrills({
         widget,
-        disableWidgetImplicitDrills,
-        drillableItems,
-        drillTargets,
-        onDrill,
+        insight,
+        onDrill: onDrillFn,
     });
 
-    const chartConfig = useMemo(
-        () => ({
-            mapboxToken,
-            separators,
-            forceDisableDrillOnAxes: !drillableItems, // to keep in line with KD, enable axes drilling only if using explicit drills
-            isExportMode: isExport,
-        }),
-        [separators, mapboxToken, drillableItems, isExport],
-    );
-
+    // CSS
     const insightPositionStyle: CSSProperties = useMemo(() => {
         return {
             width: "100%",
@@ -163,6 +146,16 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
                 insight && insightVisualizationUrl(insight).includes("headline") ? "relative" : "absolute",
         };
     }, [insight]);
+
+    // Error handling
+    const handleError = useCallback<OnError>(
+        (error) => {
+            setVisualizationError(error);
+            dispatchEvent(insightWidgetExecutionFailed(error));
+            onError?.(error);
+        },
+        [onError, dispatchEvent],
+    );
 
     const error = filtersError ?? visualizationError;
 
@@ -184,15 +177,15 @@ export const DashboardInsightCore = (props: IDashboardInsightProps): JSX.Element
                             insight={insightWithAddedWidgetProperties}
                             backend={effectiveBackend}
                             workspace={effectiveWorkspace}
-                            drillableItems={drillableItemsToUse}
-                            onDrill={handleDrill}
+                            drillableItems={drillableItems}
+                            onDrill={onDrill}
                             config={chartConfig}
                             onLoadingChanged={handleLoadingChanged}
                             locale={locale}
                             settings={settings as IUserWorkspaceSettings}
                             colorPalette={colorPalette}
                             onError={handleError}
-                            pushData={handlePushData}
+                            pushData={onPushData}
                             ErrorComponent={ErrorComponent}
                             LoadingComponent={LoadingComponent}
                             onExportReady={onExportReady}

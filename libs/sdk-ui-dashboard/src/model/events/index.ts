@@ -64,20 +64,21 @@ import {
     DashboardRenderResolved,
 } from "./render";
 import {
-    DashboardDrillDownResolved,
-    DashboardDrillToAttributeUrlResolved,
-    DashboardDrillToCustomUrlResolved,
-    DashboardDrillToDashboardResolved,
-    DashboardDrillToInsightResolved,
-    DashboardDrillToLegacyDashboardResolved,
+    DashboardDrillRequested,
     DashboardDrillResolved,
     DashboardDrillDownRequested,
+    DashboardDrillDownResolved,
     DashboardDrillToAttributeUrlRequested,
+    DashboardDrillToAttributeUrlResolved,
     DashboardDrillToCustomUrlRequested,
-    DashboardDrillToDashboardRequested,
+    DashboardDrillToCustomUrlResolved,
     DashboardDrillToInsightRequested,
+    DashboardDrillToInsightResolved,
+    DashboardDrillToDashboardRequested,
+    DashboardDrillToDashboardResolved,
     DashboardDrillToLegacyDashboardRequested,
-    DashboardDrillRequested,
+    DashboardDrillToLegacyDashboardResolved,
+    DashboardDrillableItemsChanged,
 } from "./drill";
 
 export {
@@ -203,28 +204,29 @@ export {
 } from "./alerts";
 export { DashboardScheduledEmailCreated, isDashboardScheduledEmailCreated } from "./scheduledEmail";
 export {
-    DashboardDrillDownRequested,
-    DashboardDrillToAttributeUrlRequested,
-    DashboardDrillToCustomUrlRequested,
-    DashboardDrillToDashboardRequested,
-    DashboardDrillToInsightRequested,
-    DashboardDrillToLegacyDashboardRequested,
     DashboardDrillRequested,
+    DashboardDrillResolved,
+    DashboardDrillDownRequested,
+    DashboardDrillDownResolved,
+    DashboardDrillToAttributeUrlRequested,
+    DashboardDrillToAttributeUrlResolved,
+    DashboardDrillToCustomUrlRequested,
+    DashboardDrillToCustomUrlResolved,
+    DashboardDrillToInsightRequested,
+    DashboardDrillToInsightResolved,
+    DashboardDrillToDashboardRequested,
+    DashboardDrillToDashboardResolved,
+    DashboardDrillToLegacyDashboardRequested,
+    DashboardDrillToLegacyDashboardResolved,
+    DashboardDrillableItemsChanged,
+    drillRequested,
+    drillResolved,
     drillDownRequested,
     drillToAttributeUrlRequested,
     drillToCustomUrlRequested,
     drillToDashboardRequested,
     drillToInsightRequested,
     drillToLegacyDashboardRequested,
-    drillRequested,
-    DashboardDrillResolved,
-    drillResolved,
-    DashboardDrillDownResolved,
-    DashboardDrillToAttributeUrlResolved,
-    DashboardDrillToCustomUrlResolved,
-    DashboardDrillToDashboardResolved,
-    DashboardDrillToInsightResolved,
-    DashboardDrillToLegacyDashboardResolved,
     drillDownResolved,
     drillToAttributeUrlResolved,
     drillToCustomUrlResolved,
@@ -245,6 +247,7 @@ export {
     isDashboardDrillToInsightResolved,
     isDashboardDrillToLegacyDashboardRequested,
     isDashboardDrillToLegacyDashboardResolved,
+    drillableItemsChanged,
 } from "./drill";
 
 export { DrillTargetsAdded, drillTargetsAdded, isDrillTargetsAdded } from "./drillTargets";
@@ -332,7 +335,8 @@ export type DashboardEvents =
     | DashboardDrillToDashboardRequested
     | DashboardDrillToInsightRequested
     | DashboardDrillToLegacyDashboardRequested
-    | DashboardDrillRequested;
+    | DashboardDrillRequested
+    | DashboardDrillableItemsChanged;
 
 /**
  * Creates DashboardEvent predicate that test whether the provided event matches it.

@@ -1,6 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 
 import {
+    Drill,
     DashboardDrillResolved,
     DashboardCommandFailed,
     drill,
@@ -13,7 +14,7 @@ import {
 export interface UseDrillProps {
     onSuccess?: (event: DashboardDrillResolved) => void;
     onError?: (event: DashboardCommandFailed) => void;
-    onBeforeRun?: () => void;
+    onBeforeRun?: (cmd: Drill) => void;
 }
 
 /**

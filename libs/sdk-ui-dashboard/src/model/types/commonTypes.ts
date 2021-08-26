@@ -98,6 +98,14 @@ export type DashboardConfig = {
      * Defaults to false.
      */
     isExport?: boolean;
+
+    /**
+     * Disables default dashboard drills - drills configured and stored on the widgets, or implicit drills (eg. drill down).
+     * This property has no effect for drills enabled by drillableItems set by {@link ChangeDrillableItems} command.
+     *
+     * Defaults to false.
+     */
+    disableDefaultDrills?: boolean;
 };
 
 /**

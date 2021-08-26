@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
-
 import {
+    DrillToLegacyDashboard,
     DashboardDrillToLegacyDashboardResolved,
     DashboardCommandFailed,
     drillToLegacyDashboard,
@@ -13,7 +13,7 @@ import {
 export interface UseDrillToLegacyDashboardProps {
     onSuccess?: (event: DashboardDrillToLegacyDashboardResolved) => void;
     onError?: (event: DashboardCommandFailed) => void;
-    onBeforeRun?: () => void;
+    onBeforeRun?: (cmd: DrillToLegacyDashboard) => void;
 }
 
 /**

@@ -15,14 +15,7 @@ import {
     IWidget,
     FilterContextItem,
 } from "@gooddata/sdk-backend-spi";
-import {
-    IDrillableItem,
-    IHeaderPredicate,
-    IErrorProps,
-    ILoadingProps,
-    OnError,
-    VisType,
-} from "@gooddata/sdk-ui";
+import { ExplicitDrill, IErrorProps, ILoadingProps, OnError, VisType } from "@gooddata/sdk-ui";
 import { KpiView } from "./KpiView";
 import { InsightRenderer } from "./InsightRenderer/InsightRenderer";
 import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "../../internal";
@@ -36,7 +29,7 @@ export type IDashboardWidgetRendererProps = {
     workspace?: string;
     filters?: FilterContextItem[];
     filterContext: IFilterContext | ITempFilterContext;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
     onDrill?: OnFiredDashboardViewDrillEvent;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;

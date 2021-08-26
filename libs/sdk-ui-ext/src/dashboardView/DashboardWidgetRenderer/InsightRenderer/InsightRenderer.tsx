@@ -20,9 +20,8 @@ import {
 import {
     GoodDataSdkError,
     IAvailableDrillTargetAttribute,
-    IDrillableItem,
+    ExplicitDrill,
     IErrorProps,
-    IHeaderPredicate,
     ILoadingProps,
     ILocale,
     IntlWrapper,
@@ -59,7 +58,7 @@ interface IInsightRendererProps {
     workspace?: string;
     filters?: FilterContextItem[];
     filterContext?: IFilterContext | ITempFilterContext;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: ExplicitDrill[];
     onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
     ErrorComponent: React.ComponentType<IErrorProps>;

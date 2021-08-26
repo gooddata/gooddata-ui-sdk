@@ -1,30 +1,22 @@
 // (C) 2020 GoodData Corporation
 import React, { useState } from "react";
-import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import last from "lodash/last";
-
-import { selectLocale, selectWidgetByRef, useDashboardSelector } from "../../../../model";
-import { DrillStep, OnDashboardDrill, getDrillDownAttributeTitle } from "../../../drill";
+import { selectLocale, useDashboardSelector } from "../../../../model";
+import { DrillStep, getDrillDownAttributeTitle } from "../../../drill";
 import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types";
-
-import { DefaultDashboardInsightWithDrillSelect } from "./DefaultDashboardInsightWithDrillSelect";
-import { InsightDrillDialog } from "./InsightDrillDialog";
-import { useDashboardDrillTargets } from "./useDashboardDrillTargets";
 import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/drillingUtils";
+import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect";
+import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog";
 import { IDashboardInsightProps } from "../types";
 
 /**
  * @internal
  */
-export const DefaultDashboardInsightWithDrillDialog = (props: IDashboardInsightProps): JSX.Element => {
+export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): JSX.Element => {
     const [drillSteps, setDrillSteps] = useState<DrillStep[]>([]);
-
-    const { drillTargets, onAvailableDrillTargetsReceived } = useDashboardDrillTargets({
-        widgetRef: props.widget.ref,
-    });
-
     const activeDrillStep = last(drillSteps);
     const insight = activeDrillStep?.insight;
+    const widget = props.widget;
 
     const breadcrumbs = drillSteps
         .filter((s) => isDrillDownDefinition(s.drillDefinition))
@@ -35,10 +27,6 @@ export const DefaultDashboardInsightWithDrillDialog = (props: IDashboardInsightP
             ),
         );
 
-    const widget = useDashboardSelector(selectWidgetByRef(activeDrillStep?.drillEvent.widgetRef)) as
-        | IInsightWidget
-        | undefined;
-
     const locale = useDashboardSelector(selectLocale);
 
     const setNextDrillStep = (drillStep: DrillStep) => {
@@ -47,19 +35,13 @@ export const DefaultDashboardInsightWithDrillDialog = (props: IDashboardInsightP
 
     const goBack = () => setDrillSteps(([firstDrill]) => [firstDrill]);
     const onClose = () => setDrillSteps([]);
-    const onDrill: OnDashboardDrill = (drillEvent, drillContext) => {
-        props.onDrill?.(drillEvent, drillContext);
-    };
 
     return (
         <>
-            <DefaultDashboardInsightWithDrillSelect
+            <DashboardInsightWithDrillSelect
                 {...props}
-                onDrillDown={setNextDrillStep}
-                onDrillToInsight={setNextDrillStep}
-                onDrill={onDrill}
-                drillTargets={drillTargets}
-                onAvailableDrillTargetsReceived={onAvailableDrillTargetsReceived}
+                onDrillDown={(evt) => setNextDrillStep(evt.payload)}
+                onDrillToInsight={(evt) => setNextDrillStep(evt.payload)}
             />
             {activeDrillStep && (
                 <InsightDrillDialog
@@ -67,9 +49,7 @@ export const DefaultDashboardInsightWithDrillDialog = (props: IDashboardInsightP
                     breadcrumbs={breadcrumbs}
                     widget={widget!}
                     insight={insight!}
-                    onDrill={onDrill}
-                    onDrillDown={setNextDrillStep}
-                    onDrillToInsight={setNextDrillStep}
+                    onDrillDown={(evt) => setNextDrillStep(evt.payload)}
                     onBackButtonClick={goBack}
                     onClose={onClose}
                 />

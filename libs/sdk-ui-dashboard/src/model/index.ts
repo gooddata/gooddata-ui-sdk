@@ -37,6 +37,7 @@ export {
     selectIsEmbedded,
     selectIsExport,
     selectPlatformEdition,
+    selectDisableDefaultDrills,
 } from "./state/config/configSelectors";
 export { PermissionsState } from "./state/permissions/permissionsState";
 export {
@@ -51,6 +52,17 @@ export {
     selectFilterContextDateFilter,
     selectFilterContextAttributeFilters,
 } from "./state/filterContext/filterContextSelectors";
+export {
+    // Core drills
+    selectInsightWidgetImplicitDrillDownsByRef,
+    selectInsightWidgetImplicitDrillsByRef,
+    selectInsightWidgetDrillableItems,
+    selectInsightWidgetImplicitDrillsAndDrillDownsByRef,
+    // Local drills
+    selectImplicitDrillDownsByAvailableDrillTargets,
+    selectDrillableItemsByAvailableDrillTargets,
+    IImplicitDrillWithPredicates,
+} from "./state/widgetDrills/widgetDrillSelectors";
 
 export { UndoEnhancedState, UndoEntry } from "./state/_infra/undoEnhancer";
 export { LayoutState, LayoutStash } from "./state/layout/layoutState";
@@ -63,6 +75,7 @@ export {
     selectAllInsightWidgets,
     selectAllKpiWidgets,
     selectIsLayoutEmpty,
+    selectWidgetDrills,
 } from "./state/layout/layoutSelectors";
 export { DateFilterConfigState } from "./state/dateFilterConfig/dateFilterConfigState";
 export {
@@ -90,6 +103,8 @@ export {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
 } from "./state/catalog/catalogSelectors";
+export { selectDrillableItems } from "./state/drill/drillSelectors";
+export { DrillState } from "./state/drill/drillState";
 export { AlertsState } from "./state/alerts/alertsState";
 export {
     selectAlerts,
