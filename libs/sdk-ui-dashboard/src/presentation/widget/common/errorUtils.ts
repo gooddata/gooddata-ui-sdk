@@ -12,9 +12,15 @@ import { isEmptyAfm } from "@gooddata/sdk-ui-ext/dist/internal";
 import { typesUtils } from "@gooddata/util";
 
 /**
+ * Returns true if the provided error should prevent exports.
+ *
+ * @remarks Some errors are still ok with respect to exports (e.g. negative values in a pie chart) and these
+ * should not prevent exports. However, errors detected by this function really make potential exports
+ * nonsensical and should lead to exports being disabled.
+ *
  * @internal
  */
-export const isExportableError = typesUtils.combineGuards(
+export const isNonExportableError = typesUtils.combineGuards(
     isUnknownSdkError,
     isBadRequest,
     isNoDataSdkError,

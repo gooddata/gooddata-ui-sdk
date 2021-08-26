@@ -5,7 +5,7 @@ import { GoodDataSdkError, IExportFunction, IExtendedExportConfig } from "@goodd
 import { selectPermissions, selectSettings, useDashboardSelector } from "../../../model";
 import { useExportHandler } from "./useExportHandler";
 import { useExportDialogContext } from "../../dashboardContexts";
-import { isExportableError } from "./errorUtils";
+import { isNonExportableError } from "./errorUtils";
 
 export const useInsightExport = (config: {
     title: string;
@@ -53,10 +53,8 @@ export const useInsightExport = (config: {
         });
     }, [settings, title, exportFunction, closeDialog]);
 
-    const exportCSVEnabled = Boolean(
-        (!error || isExportableError(error)) && !isLoading && isRawExportEnabled,
-    );
-    const exportXLSXEnabled = Boolean((!error || isExportableError(error)) && !isLoading && isExportEnabled);
+    const exportCSVEnabled = Boolean(!isNonExportableError(error) && !isLoading && isRawExportEnabled);
+    const exportXLSXEnabled = Boolean(!isNonExportableError(error) && !isLoading && isExportEnabled);
 
     return {
         exportCSVEnabled,
