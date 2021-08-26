@@ -1211,7 +1211,7 @@ export interface DashboardLoaded extends IDashboardEvent {
 }
 
 // @alpha (undocumented)
-export type DashboardMeta = Pick<IDashboard, "ref" | "title" | "description" | "created" | "updated" | "isLocked" | "uri" | "identifier">;
+export type DashboardMeta = Omit<IDashboard, "filterContext" | "layout" | "dateFilterConfig">;
 
 // @alpha (undocumented)
 export interface DashboardMetaState {
@@ -2926,16 +2926,25 @@ export const selectColorPalette: OutputSelector<DashboardState, IColorPalette, (
 export const selectConfig: OutputSelector<DashboardState, ResolvedDashboardConfig, (res: ConfigState) => ResolvedDashboardConfig>;
 
 // @alpha
+export const selectDashboardId: OutputSelector<DashboardState, string, (res: Pick<IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "tags" | "created">) => string>;
+
+// @alpha
 export const selectDashboardIdRef: OutputSelector<DashboardState, IdentifierRef, (res: string) => IdentifierRef>;
 
 // @internal (undocumented)
 export const selectDashboardLoading: OutputSelector<DashboardState, LoadingState, (res: DashboardState) => LoadingState>;
 
 // @alpha
-export const selectDashboardRef: OutputSelector<DashboardState, ObjRef, (res: Pick<IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => ObjRef>;
+export const selectDashboardMetadata: OutputSelector<DashboardState, Pick<IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "tags" | "created">, (res: DashboardMetaState) => Pick<IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "tags" | "created">>;
 
 // @alpha
-export const selectDashboardTitle: OutputSelector<DashboardState, string, (res: Pick<IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "created">) => string>;
+export const selectDashboardRef: OutputSelector<DashboardState, ObjRef, (res: Pick<IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "tags" | "created">) => ObjRef>;
+
+// @alpha
+export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: Pick<IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "tags" | "created">) => string[] | undefined>;
+
+// @alpha
+export const selectDashboardTitle: OutputSelector<DashboardState, string, (res: Pick<IDashboard, "title" | "description" | "ref" | "uri" | "updated" | "identifier" | "isLocked" | "tags" | "created">) => string>;
 
 // @alpha
 export const selectDashboardUriRef: OutputSelector<DashboardState, UriRef, (res: string) => UriRef>;

@@ -10,19 +10,18 @@ const selectSelf = createSelector(
 );
 
 /**
- * Returns dashboard's metadata. It is expected that the selector is called only after the filter
- * context state is correctly initialized. Invocations before initialization lead to invariant errors.
+ * Selects dashboard's metadata.
  *
  * @alpha
  */
-const selectDashboardMetadata = createSelector(selectSelf, (state) => {
+export const selectDashboardMetadata = createSelector(selectSelf, (state) => {
     invariant(state.meta, "attempting to access uninitialized meta state");
 
     return state.meta!;
 });
 
 /**
- * Returns current dashboard ref.
+ * Selects current dashboard ref.
  *
  * @alpha
  */
@@ -31,7 +30,7 @@ export const selectDashboardRef = createSelector(selectDashboardMetadata, (state
 });
 
 /**
- * Returns current dashboard identifier.
+ * Selects current dashboard identifier.
  *
  * @alpha
  */
@@ -40,7 +39,7 @@ export const selectDashboardId = createSelector(selectDashboardMetadata, (state)
 });
 
 /**
- * Returns current dashboard uri.
+ * Selects current dashboard uri.
  *
  * @alpha
  */
@@ -49,7 +48,7 @@ const selectDashboardUri = createSelector(selectDashboardMetadata, (state) => {
 });
 
 /**
- * Returns current dashboard id ref.
+ * Selects current dashboard id ref.
  *
  * @alpha
  */
@@ -58,7 +57,7 @@ export const selectDashboardIdRef = createSelector(selectDashboardId, (id) => {
 });
 
 /**
- * Returns current dashboard uri ref.
+ * Selects current dashboard uri ref.
  *
  * @alpha
  */
@@ -67,10 +66,19 @@ export const selectDashboardUriRef = createSelector(selectDashboardUri, (uri) =>
 });
 
 /**
- * Returns current dashboard title.
+ * Selects current dashboard title.
  *
  * @alpha
  */
 export const selectDashboardTitle = createSelector(selectDashboardMetadata, (state) => {
     return state.title;
+});
+
+/**
+ * Selects dashboard tags.
+ *
+ * @alpha
+ */
+export const selectDashboardTags = createSelector(selectDashboardMetadata, (state) => {
+    return state.tags;
 });

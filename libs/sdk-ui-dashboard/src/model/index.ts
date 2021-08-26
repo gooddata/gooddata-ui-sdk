@@ -116,10 +116,13 @@ export { UserState } from "./state/user/userState";
 export { selectUser } from "./state/user/userSelectors";
 export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
 export {
+    selectDashboardMetadata,
     selectDashboardRef,
     selectDashboardUriRef,
     selectDashboardTitle,
     selectDashboardIdRef,
+    selectDashboardTags,
+    selectDashboardId,
 } from "./state/meta/metaSelectors";
 export {
     selectListedDashboards,

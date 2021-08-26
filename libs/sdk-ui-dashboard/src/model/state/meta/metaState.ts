@@ -5,10 +5,7 @@ import { IDashboard } from "@gooddata/sdk-backend-spi";
 /**
  * @alpha
  */
-export type DashboardMeta = Pick<
-    IDashboard,
-    "ref" | "title" | "description" | "created" | "updated" | "isLocked" | "uri" | "identifier"
->;
+export type DashboardMeta = Omit<IDashboard, "filterContext" | "layout" | "dateFilterConfig">;
 
 /**
  * @alpha

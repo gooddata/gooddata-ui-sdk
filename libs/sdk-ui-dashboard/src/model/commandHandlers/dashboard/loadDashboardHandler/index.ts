@@ -117,6 +117,7 @@ export function* loadDashboardHandler(
                     description: dashboard.description,
                     created: dashboard.created,
                     isLocked: dashboard.isLocked,
+                    tags: dashboard.tags,
                 }),
                 listedDashboardsActions.setListedDashboards(listedDashboards),
             ],
