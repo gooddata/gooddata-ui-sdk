@@ -1,0 +1,3 @@
+---
+pre_scan_script: ./common/scripts/fossa-pre-scan.sh
+skip_install_deps: true # skip installation, we handle that in the pre_scan_script
