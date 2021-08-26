@@ -1,9 +1,10 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
 import compact from "lodash/compact";
 import isNil from "lodash/isNil";
 import isNumber from "lodash/isNumber";
+import flowRight from "lodash/flowRight";
 import round from "lodash/round";
 import {
     IAnalyticalBackend,
@@ -17,6 +18,7 @@ import {
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
     isMeasureFormatInPercent,
+    measureLocalId,
     ObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -24,26 +26,25 @@ import {
     convertDrillableItemsToPredicates,
     createNumberJsFormatter,
     DataViewFacade,
+    GoodDataSdkError,
     IDataSeries,
     IDrillEventContext,
     ILoadingProps,
     isSomeHeaderPredicateMatched,
     NoDataSdkError,
     OnError,
-    useExecutionDataView,
+    withBackend,
+    withExecution,
 } from "@gooddata/sdk-ui";
 
-import {
-    filterContextItemsToFiltersForWidget,
-    filterContextToFiltersForWidget,
-} from "../../../../converters";
+import { filterContextItemsToFiltersForWidget } from "../../../../converters";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
 import {
     selectPermissions,
     selectSettings,
     selectUser,
-    useDashboardSelector,
     useDashboardAsyncRender,
+    useDashboardSelector,
     useDashboardUserInteraction,
     selectDisableDefaultDrills,
     selectDrillableItems,
@@ -85,68 +86,62 @@ interface IKpiExecutorProps {
     LoadingComponent?: React.ComponentType<ILoadingProps>;
 }
 
-const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
-    dashboardRef,
-    kpiWidget,
-    primaryMeasure,
-    secondaryMeasure,
-    alert,
-    effectiveFilters,
-    onFiltersChange,
-    onDrill,
-    onError,
-    backend,
-    workspace,
-    separators,
-    disableDrillUnderline,
-    intl,
-    isReadOnly,
-    LoadingComponent: CustomLoadingComponent,
-}) => {
+interface IKpiResultsProps {
+    backend: IAnalyticalBackend;
+    result?: DataViewFacade;
+    error?: GoodDataSdkError;
+    isLoading?: boolean;
+    alertExecutionResult?: DataViewFacade;
+    alertExecutionError?: GoodDataSdkError;
+    isAlertExecutionLoading?: boolean;
+}
+
+type IKpiProps = IKpiResultsProps & IKpiExecutorProps & WrappedComponentProps;
+
+const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const currentUser = useDashboardSelector(selectUser);
     const permissions = useDashboardSelector(selectPermissions);
     const settings = useDashboardSelector(selectSettings);
+    const { LoadingComponent } = useDashboardComponentsContext({
+        LoadingComponent: props.LoadingComponent,
+    });
     const drillableItems = useDashboardSelector(selectDrillableItems);
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
 
-    const { LoadingComponent } = useDashboardComponentsContext({
-        LoadingComponent: CustomLoadingComponent,
-    });
-
-    const { error, result, status } = useExecutionDataView({
-        execution: {
-            seriesBy: compact([primaryMeasure, secondaryMeasure]),
-            filters: effectiveFilters,
-        },
+    const {
         backend,
         workspace,
-    });
+        dashboardRef,
+        kpiWidget,
+        primaryMeasure,
+        secondaryMeasure,
+        separators,
+        effectiveFilters,
+        result,
+        alert,
+        alertExecutionResult,
+        error,
+        alertExecutionError,
+        isLoading,
+        isAlertExecutionLoading,
+        onDrill,
+        onError,
+        onFiltersChange,
+        isReadOnly,
+        disableDrillUnderline,
+        intl,
+    } = props;
 
     const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget.ref);
 
     const isAlertBroken = !!brokenAlertsBasicInfo?.length;
 
-    const {
-        error: alertError,
-        result: alertResult,
-        status: alertStatus,
-    } = useExecutionDataView({
-        execution: {
-            seriesBy: [primaryMeasure],
-            filters: alert
-                ? filterContextToFiltersForWidget(alert.filterContext, kpiWidget) ?? []
-                : effectiveFilters,
-        },
-        backend,
-        workspace,
-    });
-
     useEffect(() => {
-        const err = error ?? alertError;
+        const err = error ?? alertExecutionError;
         if (err) {
             onError?.(err);
         }
-    }, [error, alertError]);
+    }, [error, alertExecutionError]);
 
     const handleOnDrill = useCallback(
         (drillContext: IDrillEventContext): ReturnType<OnFiredDashboardViewDrillEvent> => {
@@ -174,26 +169,29 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
     );
 
     useEffect(() => {
-        if (status === "loading") {
+        if (isLoading) {
             onRequestAsyncRender();
-        } else if (status === "success" || status === "error") {
+        } else {
             onResolveAsyncRender();
         }
-    }, [status, onRequestAsyncRender, onResolveAsyncRender]);
+    }, [isLoading, onRequestAsyncRender, onResolveAsyncRender]);
 
     const { kpiAlertDialogClosed, kpiAlertDialogOpened } = useDashboardUserInteraction();
 
-    if (status === "loading" || status === "pending") {
+    if (isLoading) {
         return <LoadingComponent />;
     }
 
-    const kpiResult = getKpiResult(result, primaryMeasure, secondaryMeasure, separators);
-    const kpiAlertResult = getKpiAlertResult(alertResult, primaryMeasure, separators);
+    const kpiResult = !result?.dataView.totalCount[0]
+        ? getNoDataKpiResult(result, primaryMeasure)
+        : getKpiResult(result, primaryMeasure, secondaryMeasure, separators);
+    const kpiAlertResult = getKpiAlertResult(alertExecutionResult, primaryMeasure, separators);
     const { isThresholdRepresentingPercent, thresholdPlaceholder } = getAlertThresholdInfo(kpiResult, intl);
 
     const predicates = convertDrillableItemsToPredicates(drillableItems);
     const isDrillable =
         kpiResult &&
+        kpiResult?.measureDescriptor &&
         result &&
         status !== "error" &&
         (disableDefaultDrills
@@ -225,7 +223,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
             canSetAlert={canSetAlert}
             isReadOnlyMode={isReadOnly}
             alertExecutionError={
-                alertError ??
+                alertExecutionError ??
                 /*
                  * if alert is broken, behave as if its execution yielded no data (which is true, we do not execute it)
                  * context: the problem is alerts on KPIs without dateDataset, their date filters are invalid
@@ -237,7 +235,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
             }
             isLoading={false /* content is always loaded at this point */}
             isAlertLoading={false /* alerts are always loaded at this point */}
-            isAlertExecutionLoading={alertStatus === "loading"}
+            isAlertExecutionLoading={isAlertExecutionLoading}
             isAlertBroken={isAlertBroken}
             isAlertDialogOpen={isAlertDialogOpen}
             onAlertDialogOpenClick={() => {
@@ -322,7 +320,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
                                   )
                             : undefined
                     }
-                    isAlertLoading={alertStatus === "loading"}
+                    isAlertLoading={isAlertExecutionLoading}
                     alertDeletingStatus={kpiAlertOperations.removingStatus}
                     alertSavingStatus={alertSavingStatus}
                     alertUpdatingStatus={alertSavingStatus}
@@ -356,12 +354,46 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
         </DashboardItemWithKpiAlert>
     );
 };
-
 /**
  * Executes the given measures and displays them as KPI
  * @internal
  */
-export const KpiExecutor = injectIntl(KpiExecutorCore);
+export const KpiExecutor = flowRight(
+    injectIntl,
+    withBackend,
+    withExecution({
+        execution: (props: IKpiExecutorProps) => {
+            const { backend, workspace, effectiveFilters, primaryMeasure } = props;
+
+            return backend.workspace(workspace).execution().forItems([primaryMeasure], effectiveFilters);
+        },
+        exportTitle: "",
+        loadOnMount: true,
+    }),
+    (WrappedComponent: React.ComponentType<Partial<IKpiProps>>) => {
+        const withAlertProps = ({ result, error, isLoading, ...props }: IKpiResultsProps) => (
+            <WrappedComponent
+                alertExecutionResult={result}
+                alertExecutionError={error}
+                isAlertExecutionLoading={isLoading}
+                {...props}
+            />
+        );
+        return withAlertProps;
+    },
+    withExecution({
+        execution: (props: IKpiProps) => {
+            const { backend, workspace, primaryMeasure, secondaryMeasure, effectiveFilters } = props;
+
+            return backend
+                .workspace(workspace)
+                .execution()
+                .forItems(compact([primaryMeasure, secondaryMeasure]), effectiveFilters);
+        },
+        exportTitle: "",
+        loadOnMount: true,
+    }),
+)(KpiExecutorCore);
 
 function getSeriesResult(series: IDataSeries | undefined): number | null {
     if (!series) {
@@ -379,6 +411,23 @@ function getSeriesResult(series: IDataSeries | undefined): number | null {
     }
 
     return Number.parseFloat(value);
+}
+
+function getNoDataKpiResult(
+    result: DataViewFacade | undefined,
+    primaryMeasure: IMeasure,
+): IKpiResult | undefined {
+    if (!result) {
+        return;
+    }
+
+    return {
+        measureDescriptor: undefined,
+        measureFormat: result.meta().measureDescriptor(measureLocalId(primaryMeasure))?.measureHeaderItem
+            ?.format,
+        measureResult: undefined,
+        measureForComparisonResult: undefined,
+    };
 }
 
 function getKpiResult(
@@ -412,14 +461,18 @@ function getKpiAlertResult(
     const alertSeries = result?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
     return alertSeries
         ? {
-              measureFormat: alertSeries.firstForMeasure(primaryMeasure).measureFormat(),
-              measureResult: getSeriesResult(alertSeries.firstForMeasure(primaryMeasure))!,
+              measureFormat: alertSeries.count
+                  ? alertSeries.firstForMeasure(primaryMeasure).measureFormat()
+                  : undefined,
+              measureResult: alertSeries.count
+                  ? getSeriesResult(alertSeries.firstForMeasure(primaryMeasure))!
+                  : 0,
           }
         : undefined;
 }
 
 function getAlertThresholdInfo(kpiResult: IKpiResult | undefined, intl: IntlShape) {
-    const isThresholdRepresentingPercent = kpiResult
+    const isThresholdRepresentingPercent = kpiResult?.measureFormat
         ? isMeasureFormatInPercent(kpiResult.measureFormat)
         : false;
 

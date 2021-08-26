@@ -2,14 +2,14 @@
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 
 export interface IKpiResult {
-    measureFormat: string;
-    measureResult: number;
+    measureFormat: string | undefined;
+    measureResult: number | undefined;
     measureForComparisonResult?: number;
-    measureDescriptor: IMeasureDescriptor;
+    measureDescriptor: IMeasureDescriptor | undefined;
 }
 
 export interface IKpiAlertResult {
-    measureFormat: string;
+    measureFormat: string | undefined;
     measureResult: number;
 }
 
