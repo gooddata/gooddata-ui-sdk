@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 08 Jul 2021 09:09:51 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Aug 2021 13:55:29 GMT and should not be manually modified.
+
+## 8.5.1
+Thu, 26 Aug 2021 13:55:29 GMT
+
+### Updates
+
+- Some redundant token requests prevented.
 
 ## 8.5.0
 Thu, 08 Jul 2021 09:09:51 GMT

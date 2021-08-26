@@ -2,6 +2,18 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.5.1",
+      "tag": "@gooddata/sdk-ui-all_v8.5.1",
+      "date": "Thu, 26 Aug 2021 13:55:29 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Some redundant token requests prevented."
+          }
+        ]
+      }
+    },
+    {
       "version": "8.5.0",
       "tag": "@gooddata/sdk-ui-all_v8.5.0",
       "date": "Thu, 08 Jul 2021 09:09:51 GMT",
