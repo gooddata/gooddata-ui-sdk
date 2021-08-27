@@ -47,7 +47,8 @@ export {
 } from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
 export {
-    selectFilterContext,
+    selectFilterContextDefinition,
+    selectFilterContextIdentity,
     selectFilterContextFilters,
     selectFilterContextDateFilter,
     selectFilterContextAttributeFilters,
@@ -114,12 +115,15 @@ export {
 } from "./state/alerts/alertsSelectors";
 export { UserState } from "./state/user/userState";
 export { selectUser } from "./state/user/userSelectors";
-export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
+export { DashboardMetaState, DashboardDescriptor } from "./state/meta/metaState";
 export {
     selectDashboardRef,
     selectDashboardUriRef,
     selectDashboardTitle,
+    selectDashboardDescription,
     selectDashboardIdRef,
+    selectDashboardTags,
+    selectDashboardId,
 } from "./state/meta/metaSelectors";
 export {
     selectListedDashboards,

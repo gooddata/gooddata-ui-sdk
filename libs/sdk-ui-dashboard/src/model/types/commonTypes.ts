@@ -162,9 +162,10 @@ export type DashboardContext = {
     workspace: string;
 
     /**
-     * Dashboard that should be loaded into the store.
+     * Dashboard that should be loaded into the store. If the dashboardRef is not specified, then this indicates
+     * the dashboard should be initialized with empty state (new dashboard).
      */
-    dashboardRef: ObjRef;
+    dashboardRef?: ObjRef;
 
     /**
      * Client identifier - it's required, if the backend implementation supports it and workspace is provisioned via LCM.

@@ -18,15 +18,43 @@ const selectSelf = createSelector(
 );
 
 /**
- * This selector returns dashboard's filter context. It is expected that the selector is called only after the filter
+ * This selector returns dashboard's filter context definition. It is expected that the selector is called only after the filter
  * context state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
  * @alpha
  */
-export const selectFilterContext = createSelector(selectSelf, (filterContextState) => {
-    invariant(filterContextState.filterContext, "attempting to access uninitialized filter context state");
+export const selectFilterContextDefinition = createSelector(selectSelf, (filterContextState) => {
+    invariant(
+        filterContextState.filterContextDefinition,
+        "attempting to access uninitialized filter context state",
+    );
 
-    return filterContextState.filterContext!;
+    return filterContextState.filterContextDefinition!;
+});
+
+/**
+ * Selects dashboard's filter context identity.
+ *
+ * The identity may be undefined in two circumstances:
+ *
+ * -  a new, yet unsaved dashboard; the filter context is saved together with the dashboard and after the
+ *    save the identity will be known and added
+ * -  export of an existing, saved dashboard; during the export the dashboard receives a temporary
+ *    filter context that represents values of filters at the time the export was initiated - which may
+ *    be different from what is saved in the filter context itself. that temporary context is not
+ *    persistent and lives only for that particular export operation.
+ *
+ * @alpha
+ */
+export const selectFilterContextIdentity = createSelector(selectSelf, (filterContextState) => {
+    // this is intentional; want to fail fast when trying to access an optional identity of filter context \
+    // but there is actually no filter context initialized for the dashboard
+    invariant(
+        filterContextState.filterContextDefinition,
+        "attempting to access uninitialized filter context state",
+    );
+
+    return filterContextState.filterContextIdentity;
 });
 
 /**
@@ -36,7 +64,7 @@ export const selectFilterContext = createSelector(selectSelf, (filterContextStat
  * @alpha
  */
 export const selectFilterContextFilters = createSelector(
-    selectFilterContext,
+    selectFilterContextDefinition,
     (filterContext): FilterContextItem[] => filterContext.filters,
 );
 

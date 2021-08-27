@@ -18,7 +18,7 @@ export interface RequestAsyncRender extends IDashboardCommand {
  * Notify the dashboard about async rendering of the component.
  *
  * Mechanism is following:
- * - You must request async rendering for at least 1 component within 2 seconds of the {@link DashboardLoaded} event.
+ * - You must request async rendering for at least 1 component within 2 seconds of the {@link DashboardInitialized} event.
  *   (If you do not register any asynchronous rendering, after 2 seconds the dashboard will announce that it is rendered.)
  * - You can request async rendering for any number of components. Requests are valid if the first rule is met
  *   and not all asynchronous renderings have been resolved and the maximum timeout (60s by default) has not elapsed.

@@ -27,7 +27,7 @@ export interface IDashboardStoreProviderProps {
     /**
      * Reference of the persisted dashboard to render.
      */
-    dashboardRef: ObjRef;
+    dashboardRef?: ObjRef;
 
     /**
      * Optionally specify event handlers to register at the dashboard creation time.

@@ -14,18 +14,23 @@ import { eventGuard } from "./util";
 //
 
 /**
- * This event is emitted when a dashboard is successfully loaded. It contains contextual information and then
- * the dashboard.
+ * This event is emitted when a dashboard is successfully initialized. The event contains contextual information
+ * such as the resolved DashboardConfig and the permissions in effect for the current user and current workspace.
+ *
+ * If the initialization loaded an existing, persisted dashboard then the dashboard object will be included in
+ * the event.
+ *
+ * If the initialization created a new, empty dashboard then dashboard object will be undefined.
  *
  * @alpha
  */
-export interface DashboardLoaded extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.LOADED";
+export interface DashboardInitialized extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INITIALIZED";
     readonly payload: {
         /**
          * Loaded dashboard.
          */
-        readonly dashboard: IDashboard;
+        readonly dashboard?: IDashboard;
 
         /**
          * Insights used on the dashboard.
@@ -47,16 +52,16 @@ export interface DashboardLoaded extends IDashboardEvent {
     };
 }
 
-export function dashboardLoaded(
+export function dashboardInitialized(
     ctx: DashboardContext,
-    dashboard: IDashboard,
+    dashboard: IDashboard | undefined,
     insights: IInsight[],
     config: DashboardConfig,
     permissions: IWorkspacePermissions,
     correlationId?: string,
-): DashboardLoaded {
+): DashboardInitialized {
     return {
-        type: "GDC.DASH/EVT.LOADED",
+        type: "GDC.DASH/EVT.INITIALIZED",
         ctx,
         correlationId,
         payload: {
@@ -69,12 +74,12 @@ export function dashboardLoaded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLoaded}.
+ * Tests whether the provided object is an instance of {@link DashboardInitialized}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardLoaded = eventGuard<DashboardLoaded>("GDC.DASH/EVT.LOADED");
+export const isDashboardInitialized = eventGuard<DashboardInitialized>("GDC.DASH/EVT.INITIALIZED");
 
 //
 //

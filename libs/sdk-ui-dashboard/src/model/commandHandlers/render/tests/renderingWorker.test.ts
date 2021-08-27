@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { loadDashboard } from "../../../commands";
+import { initializeDashboard } from "../../../commands";
 import { DashboardTester } from "../../../tests/DashboardTester";
 import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures";
 import { requestAsyncRender, resolveAsyncRender } from "../../../commands/render";
@@ -27,7 +27,7 @@ describe("renderingWorker", () => {
         it("should emit render resolved, when async rendering is still running, but the maximum timeout reached", async () => {
             const componentId = "component";
             await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.dispatch(requestAsyncRender(componentId));
             await Tester.waitFor("GDC.DASH/EVT.RENDER.RESOLVED", maxTimeout);
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
@@ -53,7 +53,7 @@ describe("renderingWorker", () => {
 
         it("should emit render resolved, when no async rendering is requested during the asyncRenderRequestedTimeout", async () => {
             await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             await Tester.waitFor("GDC.DASH/EVT.RENDER.RESOLVED", asyncRenderRequestedTimeout);
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
         });
@@ -61,7 +61,7 @@ describe("renderingWorker", () => {
         it("should emit render resolved, when async renderings are resolved during the asyncRenderRequestedTimeout", async () => {
             const componentId = "component";
             await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.dispatch(requestAsyncRender(componentId));
             Tester.dispatch(resolveAsyncRender(componentId));
             await Tester.waitFor("GDC.DASH/EVT.RENDER.RESOLVED", asyncRenderRequestedTimeout);
@@ -71,7 +71,7 @@ describe("renderingWorker", () => {
         it("should emit render resolved after async rendering resolution", async () => {
             const componentId = "component";
             await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.dispatch(requestAsyncRender(componentId));
             await Tester.wait(asyncRenderRequestedTimeout);
             Tester.dispatch(resolveAsyncRender(componentId));
@@ -82,7 +82,7 @@ describe("renderingWorker", () => {
         it("should emit render resolved after async rendering resolution, even if the component requested async rendering multiple times before the resolution", async () => {
             const componentId = "component";
             await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.dispatch(requestAsyncRender(componentId));
             await Tester.wait(asyncRenderRequestedTimeout);
             Tester.dispatch(requestAsyncRender(componentId));
@@ -94,7 +94,7 @@ describe("renderingWorker", () => {
         it("should not emit render resolved, when async rendering is not resolved", async () => {
             const componentId = "component";
             await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.dispatch(requestAsyncRender(componentId));
             await Tester.wait(asyncRenderRequestedTimeout);
             await expect(
@@ -108,7 +108,7 @@ describe("renderingWorker", () => {
             const componentId2 = "component2";
             const componentId3 = "component3";
             await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.dispatch(requestAsyncRender(componentId));
             await Tester.wait(asyncRenderRequestedTimeout);
             Tester.dispatch(requestAsyncRender(componentId2));
@@ -124,7 +124,7 @@ describe("renderingWorker", () => {
         it("should accept new async rendering request, when it's fired within time limit after resolution", async () => {
             const componentId = "component";
             await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.dispatch(requestAsyncRender(componentId));
             await Tester.wait(asyncRenderRequestedTimeout);
             Tester.dispatch(resolveAsyncRender(componentId));

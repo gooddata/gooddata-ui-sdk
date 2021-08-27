@@ -5,7 +5,7 @@ import { select } from "redux-saga/effects";
 
 import { IDashboardCommand } from "../../commands/base";
 import { filterContextChanged } from "../../events/filters";
-import { selectFilterContext } from "../../state/filterContext/filterContextSelectors";
+import { selectFilterContextDefinition } from "../../state/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../types/commonTypes";
 import { dispatchDashboardEvent } from "../../state/_infra/eventDispatcher";
 
@@ -13,7 +13,9 @@ export function* dispatchFilterContextChanged(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
 ): SagaIterator<void> {
-    const filterContext: ReturnType<typeof selectFilterContext> = yield select(selectFilterContext);
+    const filterContext: ReturnType<typeof selectFilterContextDefinition> = yield select(
+        selectFilterContextDefinition,
+    );
 
     yield dispatchDashboardEvent(filterContextChanged(ctx, filterContext, cmd.correlationId));
 }

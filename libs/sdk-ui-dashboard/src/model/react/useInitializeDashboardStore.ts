@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
 import { createDashboardStore, ReduxedDashboardStore } from "../state/dashboardStore";
-import { InitialLoadCorrelationId, loadDashboard } from "../commands/dashboard";
+import { InitialLoadCorrelationId, initializeDashboard } from "../commands/dashboard";
 import { objectUtils } from "@gooddata/util";
 import { IDashboardStoreProviderProps } from "./types";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker";
@@ -57,7 +57,7 @@ export const useInitializeDashboardStore = (
                 backgroundWorkers,
             });
             dashStore.store.dispatch(
-                loadDashboard(props.config, props.permissions, InitialLoadCorrelationId),
+                initializeDashboard(props.config, props.permissions, InitialLoadCorrelationId),
             );
             return setDashboardStore(dashStore);
         }

@@ -51,9 +51,10 @@ export interface IDashboardProps {
     workspace?: string;
 
     /**
-     * Reference of the persisted dashboard to render.
+     * Reference of the persisted dashboard to render. If you do not specify any reference, then the
+     * component will render a default, empty dashboard.
      */
-    dashboardRef: ObjRef;
+    dashboardRef?: ObjRef;
 
     /**
      * Configuration that can be used to modify dashboard features, capabilities and behavior.

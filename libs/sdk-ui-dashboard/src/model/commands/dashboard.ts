@@ -16,8 +16,8 @@ export const InitialLoadCorrelationId = "initialLoad";
  *
  * @alpha
  */
-export interface LoadDashboard extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.LOAD";
+export interface InitializeDashboard extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INITIALIZE";
     readonly payload: {
         readonly config?: DashboardConfig;
         readonly permissions?: IWorkspacePermissions;
@@ -25,9 +25,20 @@ export interface LoadDashboard extends IDashboardCommand {
 }
 
 /**
- * Creates the LoadDashboard command. Dispatching this command will result in the load of all
+ * Creates the InitializeDashboard command. Dispatching this command will result in the load of all
  * the essential data from the backend and initializing the state of Dashboard to a point where the
  * dashboard can be rendered.
+ *
+ * Note that the command takes the dashboard to initialize from context - from the properties of the Dashboard
+ * component in which it runs:
+ *
+ * -  If Dashboard component is referencing an existing, persisted dashboard, then the dashboard will be loaded and
+ *    rendered.
+ *
+ * -  If Dashboard component does not reference any dashboard, then the component will initialize for an empty
+ *    dashboard with default filter setup.
+ *
+ * In both cases the essential configuration, permissions and additional metadata gets loaded from the backend.
  *
  * @param config - optionally specify configuration to use for for the Dashboard; you MAY provide partial configuration.
  *  During the LoadDashboard processing the Dashboard component will resolve all the missing parts by reading them
@@ -40,13 +51,13 @@ export interface LoadDashboard extends IDashboardCommand {
  *
  * @alpha
  */
-export function loadDashboard(
+export function initializeDashboard(
     config?: DashboardConfig,
     permissions?: IWorkspacePermissions,
     correlationId?: string,
-): LoadDashboard {
+): InitializeDashboard {
     return {
-        type: "GDC.DASH/CMD.LOAD",
+        type: "GDC.DASH/CMD.INITIALIZE",
         correlationId,
         payload: {
             config,
@@ -64,9 +75,6 @@ export function loadDashboard(
  */
 export interface SaveDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SAVE";
-    readonly payload: {
-        readonly identifier?: string;
-    };
 }
 
 /**
@@ -75,22 +83,15 @@ export interface SaveDashboard extends IDashboardCommand {
  *
  * The command will not have any effect if dashboard is not initialized or is empty.
  *
- * @param identifier - optionally specify identifier to set for the saved dashboard. If specified, the
- *  identifier will be used only during the initial save of a new dashboard. When the SaveDashboard is called
- *  of a dashboard that already exists on a backend, then the identifier will be ignored. If no identifier
- *  is specified for the initial save, then the identifier will be generated.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
-
+ *
  * @alpha
  */
-export function saveDashboard(identifier?: string, correlationId?: string): SaveDashboard {
+export function saveDashboard(correlationId?: string): SaveDashboard {
     return {
         type: "GDC.DASH/CMD.SAVE",
         correlationId,
-        payload: {
-            identifier,
-        },
     };
 }
 
@@ -104,7 +105,6 @@ export function saveDashboard(identifier?: string, correlationId?: string): Save
 export interface SaveDashboardAs extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SAVEAS";
     readonly payload: {
-        readonly identifier?: string;
         readonly title?: string;
     };
 }
@@ -117,23 +117,16 @@ export interface SaveDashboardAs extends IDashboardCommand {
  * Upon success, a copy of the dashboard will be persisted on the backend. The context of the dashboard component
  * that processed the command is unchanged - it still works with the original dashboard.
  *
- * @param identifier - identifier to assign to the newly created dashboard; if not specified a random identifier
- *  will be generated
  * @param title - new title for the dashboard; if not specified, the title of original dashboard will be used
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
-export function saveDashboardAs(
-    identifier?: string,
-    title?: string,
-    correlationId?: string,
-): SaveDashboardAs {
+export function saveDashboardAs(title?: string, correlationId?: string): SaveDashboardAs {
     return {
         type: "GDC.DASH/CMD.SAVEAS",
         correlationId,
         payload: {
-            identifier,
             title,
         },
     };

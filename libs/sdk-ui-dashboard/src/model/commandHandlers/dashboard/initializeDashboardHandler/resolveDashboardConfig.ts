@@ -13,7 +13,7 @@ import { IColorPalette } from "@gooddata/sdk-model";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig";
 import { getValidDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";
 import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion";
-import { LoadDashboard } from "../../../commands/dashboard";
+import { InitializeDashboard } from "../../../commands/dashboard";
 import { dateFilterValidationFailed } from "../../../events/dashboard";
 import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
 import {
@@ -55,7 +55,7 @@ function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
     return backend.workspace(workspace).styling().getColorPalette();
 }
 
-function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig, cmd: LoadDashboard) {
+function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig, cmd: InitializeDashboard) {
     if (config.dateFilterConfig !== undefined) {
         return config.dateFilterConfig;
     }
@@ -115,7 +115,7 @@ function resolveColorPalette(ctx: DashboardContext, config: DashboardConfig): Pr
  */
 export function* resolveDashboardConfig(
     ctx: DashboardContext,
-    cmd: LoadDashboard,
+    cmd: InitializeDashboard,
 ): SagaIterator<ResolvedDashboardConfig> {
     const {
         payload: { config = {} },

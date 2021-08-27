@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import {
     IDashboard,
+    IDashboardObjectIdentity,
     IDateFilterConfig,
     IFilterContextDefinition,
     isDashboardAttributeFilter,
@@ -46,6 +47,29 @@ export function dashboardFilterContextDefinition(
     }
 
     return dashboardFilterContextSanitize(filterContext);
+}
+
+/**
+ * Given a dashboard, this function will return identity information about the filter context used by the dashboard.
+ *
+ * If the dashboard has no filter context or a temporary filter context (used during exports) the identity
+ * will be undefined. This should be indication to the caller that whatever the filter context the dashboard
+ * is working with is not persisted.
+ *
+ * @param dashboard - dashboard to get filter context from.
+ */
+export function dashboardFilterContextIdentity(dashboard: IDashboard): IDashboardObjectIdentity | undefined {
+    const { filterContext } = dashboard;
+
+    if (!filterContext || isTempFilterContext(filterContext) || !filterContext.ref) {
+        return undefined;
+    }
+
+    return {
+        ref: filterContext.ref,
+        uri: filterContext.uri,
+        identifier: filterContext.identifier,
+    };
 }
 
 /**

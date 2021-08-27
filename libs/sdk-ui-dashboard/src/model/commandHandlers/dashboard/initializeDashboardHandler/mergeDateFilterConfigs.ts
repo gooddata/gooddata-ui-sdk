@@ -4,7 +4,7 @@ import { IDashboardDateFilterConfig, IDateFilterConfig } from "@gooddata/sdk-bac
 
 import { mergeDateFilterConfigs } from "../../../../_staging/dateFilterConfig/merge";
 import { validateDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";
-import { LoadDashboard } from "../../../commands/dashboard";
+import { InitializeDashboard } from "../../../commands/dashboard";
 import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
 import { dateFilterValidationFailed } from "../../../events/dashboard";
 import { DashboardContext } from "../../../types/commonTypes";
@@ -16,7 +16,7 @@ export type DateFilterMergeResult = {
 
 export function* mergeDateFilterConfigWithOverrides(
     ctx: DashboardContext,
-    cmd: LoadDashboard,
+    cmd: InitializeDashboard,
     config: IDateFilterConfig,
     dashboardOverrides?: IDashboardDateFilterConfig,
 ): SagaIterator<DateFilterMergeResult> {

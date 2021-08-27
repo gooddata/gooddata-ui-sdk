@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester";
 import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures";
-import { addLayoutSection, loadDashboard } from "../../commands";
+import { addLayoutSection, initializeDashboard } from "../../commands";
 import { InsightDateDatasets, queryDateDatasetsForInsight } from "../../queries";
 import { IInsight, insightRef } from "@gooddata/sdk-model";
 import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
@@ -24,7 +24,7 @@ function datasetsDigest(
 
 describe("query insight date datasets", () => {
     async function addTestSection(tester: DashboardTester, insight: IInsight) {
-        await tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+        await tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
         await tester.dispatchAndWaitFor(
             addLayoutSection(-1, TestSectionHeader, [createTestInsightItem(insight)]),
             "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",

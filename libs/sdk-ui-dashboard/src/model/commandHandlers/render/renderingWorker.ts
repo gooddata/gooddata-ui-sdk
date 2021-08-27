@@ -73,7 +73,7 @@ export function newRenderingWorker(
             yield put(renderRequested(ctx, correlationId));
 
             // Wait for the dashboard initialization.
-            yield take("GDC.DASH/EVT.LOADED");
+            yield take("GDC.DASH/EVT.INITIALIZED");
 
             // Collect async rendering requests.
             const asyncRenderTasks = yield call(collectAsyncRenderTasks, config);

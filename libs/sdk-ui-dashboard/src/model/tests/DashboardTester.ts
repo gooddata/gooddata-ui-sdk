@@ -9,7 +9,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DashboardEvents, DashboardEventType } from "../events";
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
 import noop from "lodash/noop";
-import { DashboardCommandType, LoadDashboard, loadDashboard } from "../commands";
+import { DashboardCommandType, InitializeDashboard, initializeDashboard } from "../commands";
 import { IDashboardQuery } from "../queries";
 import { QueryEnvelope, QueryEnvelopeActionTypeName } from "../state/_infra/queryProcessing";
 import { IDashboardQueryService } from "../state/_infra/queryService";
@@ -131,7 +131,7 @@ export class DashboardTester {
      * You may additionally influence how the different query services behave (typically to stub/mock the service)
      *
      * @param identifier
-     * @param queryServices
+     * @param testerConfig
      * @param backendConfig
      */
     public static forRecording(
@@ -143,6 +143,26 @@ export class DashboardTester {
             backend: recordedBackend(ReferenceRecordings.Recordings, backendConfig),
             workspace: "reference-workspace",
             dashboardRef: idRef(identifier),
+        };
+
+        return new DashboardTester(ctx, testerConfig);
+    }
+
+    /**
+     * Creates an instance of DashboardTester set up to run tests on top of an empty, freshly initialized dashboard.
+     *
+     * You may additionally influence how the different query services behave (typically to stub/mock the service)
+     *
+     * @param testerConfig
+     * @param backendConfig
+     */
+    public static forNewDashboard(
+        testerConfig?: DashboardTesterConfig,
+        backendConfig?: RecordedBackendConfig,
+    ): DashboardTester {
+        const ctx: DashboardContext = {
+            backend: recordedBackend(ReferenceRecordings.Recordings, backendConfig),
+            workspace: "reference-workspace",
         };
 
         return new DashboardTester(ctx, testerConfig);
@@ -323,9 +343,9 @@ export type PreloadedTesterOptions = {
     /**
      * Customize the load command.
      *
-     * Default is plain command created by `loadDashboard()`.
+     * Default is plain command created by `initializeDashboard()`.
      */
-    loadCommand?: LoadDashboard;
+    initCommand?: InitializeDashboard;
 
     /**
      * Customize recorded backend configuration.
@@ -373,18 +393,20 @@ export type PreloadedTesterOptions = {
  */
 export function preloadedTesterFactory(
     onLoaded: (tester: DashboardTester) => void | Promise<void>,
-    identifier: Identifier,
+    identifier?: Identifier,
     options: PreloadedTesterOptions = {},
 ): (done: jest.DoneCallback) => void {
-    const { loadCommand = loadDashboard(), queryServices, backendConfig } = options;
+    const { initCommand = initializeDashboard(), queryServices, backendConfig } = options;
 
     return (done: jest.DoneCallback): void => {
-        const tester = DashboardTester.forRecording(identifier, { queryServices }, backendConfig);
+        const tester = identifier
+            ? DashboardTester.forRecording(identifier, { queryServices }, backendConfig)
+            : DashboardTester.forNewDashboard({ queryServices }, backendConfig);
 
-        tester.dispatch(loadCommand);
+        tester.dispatch(initCommand);
 
         tester
-            .waitFor("GDC.DASH/EVT.LOADED")
+            .waitFor("GDC.DASH/EVT.INITIALIZED")
             .then(() => Promise.resolve(onLoaded(tester)).then(() => tester.resetMonitors()))
             .then(() => done())
             .catch((err) => {

@@ -24,6 +24,7 @@ import {
 } from "../../../model";
 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail";
+import { invariant } from "ts-invariant";
 
 interface UseScheduledEmailResult {
     /**
@@ -110,6 +111,11 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
 
     // Bear model expects that all refs are sanitized to uriRefs.
     const dashboardUriRef = useDashboardSelector(selectDashboardUriRef);
+    // if this bombs then the controller code is bugged because it should not even allow to get
+    // to this point for dashboards that are not persisted. scheduling is not possible for such
+    // dashboards and so the respective menus to trigger the scheduling must not be present
+    invariant(dashboardUriRef, "attempting to schedule email for unsaved dashboard");
+
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const currentUser = useDashboardSelector(selectUser);
     const locale = useDashboardSelector(selectLocale);

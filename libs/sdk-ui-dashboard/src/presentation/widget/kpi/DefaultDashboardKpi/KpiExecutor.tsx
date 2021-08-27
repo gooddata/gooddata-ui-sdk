@@ -59,9 +59,10 @@ import { IKpiAlertResult, IKpiResult } from "./types";
 import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
 import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
 import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
+import { invariant } from "ts-invariant";
 
 interface IKpiExecutorProps {
-    dashboardRef: ObjRef;
+    dashboardRef?: ObjRef;
     kpiWidget: IKpiWidget;
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
@@ -267,6 +268,11 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                                 ),
                             });
                         }
+
+                        // alerts are not possible when the dashboard is not yet persisted. if the code bombs here
+                        // then it means we use view-mode KPI widget in edit-mode dashboard - there is a configuration
+                        // customization error somewhere.
+                        invariant(dashboardRef, "attempting to create alert of an unsaved dashboard");
 
                         return kpiAlertOperations.onCreateAlert({
                             dashboard: dashboardRef,
