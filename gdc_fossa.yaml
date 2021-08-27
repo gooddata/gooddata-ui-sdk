@@ -1,0 +1,6 @@
+---
+# use a special image with newer Node.JS so that RUsh does not complain about old Node.JS that is on the default FOSSA image
+scan_image: "harbor.intgdc.com/tools/gdc-fossa-cli-frontend-node:node-12.22.5-yarn-1.22.4"
+pre_scan_script: ./common/scripts/fossa-pre-scan.sh
+# skip installation, we handle that in the pre_scan_script so that rush is run properly (FOSSA cannot do that by itself)
+skip_install_deps: true
