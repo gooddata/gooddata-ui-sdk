@@ -11,7 +11,7 @@ import {
     isKpiWidget,
     IWidget,
 } from "@gooddata/sdk-backend-spi";
-import { isInsightPlaceholderWidget, isKpiPlaceholderWidget } from "../../types/layoutTypes";
+import { ExtendedDashboardWidget } from "../../types/layoutTypes";
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
@@ -55,9 +55,12 @@ export const selectLayout = createSelector(selectSelf, (layoutState: LayoutState
     return layoutState.layout;
 });
 
-function isItemWithBaseWidget(obj: IDashboardLayoutItem<unknown>): obj is IDashboardLayoutItem {
+function isItemWithBaseWidget(
+    obj: IDashboardLayoutItem<ExtendedDashboardWidget>,
+): obj is IDashboardLayoutItem<IWidget> {
     const widget = obj.widget;
-    return !!widget && !isKpiPlaceholderWidget(widget) && !isInsightPlaceholderWidget(widget);
+
+    return isInsightWidget(widget) || isKpiWidget(widget);
 }
 
 /**
@@ -70,7 +73,7 @@ function isItemWithBaseWidget(obj: IDashboardLayoutItem<unknown>): obj is IDashb
  * @internal
  */
 export const selectBasicLayout = createSelector(selectLayout, (layout) => {
-    const dashboardLayout: IDashboardLayout = {
+    const dashboardLayout: IDashboardLayout<IWidget> = {
         ...layout,
         sections: layout.sections.map((section) => {
             return {

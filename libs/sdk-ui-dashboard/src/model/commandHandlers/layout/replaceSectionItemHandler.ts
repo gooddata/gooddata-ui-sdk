@@ -16,13 +16,13 @@ import {
 } from "./validation/itemValidation";
 import { batchActions } from "redux-batched-actions";
 import { insightsActions } from "../../state/insights";
-import { DashboardItemDefinition } from "../../types/layoutTypes";
+import { InternalDashboardItemDefinition } from "../../types/layoutTypes";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;
     cmd: ReplaceSectionItem;
-    items: DashboardItemDefinition[];
+    items: InternalDashboardItemDefinition[];
     layout: ReturnType<typeof selectLayout>;
     stash: ReturnType<typeof selectStash>;
 };

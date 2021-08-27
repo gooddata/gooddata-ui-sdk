@@ -46,11 +46,11 @@ function extractContentFromWidget(
  * @param insightsById - list of insights available; insight widgets will be resolved using this
  * @param settings - settings that may impact the sizing
  */
-function dashboardLayoutItemSanitize(
-    item: IDashboardLayoutItem,
+function dashboardLayoutItemSanitize<T = IDashboardWidget>(
+    item: IDashboardLayoutItem<T>,
     insightsById: Record<string, IInsight>,
     settings: ISettings,
-): IDashboardLayoutItem | undefined {
+): IDashboardLayoutItem<T> | undefined {
     const {
         widget,
         size: { xl },
@@ -99,11 +99,11 @@ function dashboardLayoutItemSanitize(
  * @param insights - existing insights that are referenced by the layout's widgets
  * @param settings - current settings; these may influence sizing of the widgets
  */
-export function dashboardLayoutSanitize(
-    layout: IDashboardLayout,
+export function dashboardLayoutSanitize<T = IDashboardWidget>(
+    layout: IDashboardLayout<T>,
     insights: IInsight[],
     settings: ISettings,
-): IDashboardLayout {
+): IDashboardLayout<T> {
     const insightsById: Record<string, IInsight> = keyBy(insights, (insight) =>
         serializeObjRef(insightRef(insight)),
     );

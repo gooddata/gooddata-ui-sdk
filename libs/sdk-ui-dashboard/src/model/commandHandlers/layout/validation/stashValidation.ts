@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 
 import {
-    DashboardItemDefinition,
     ExtendedDashboardItem,
+    InternalDashboardItemDefinition,
     isStashedDashboardItemsId,
     StashedDashboardItemsId,
 } from "../../../types/layoutTypes";
@@ -52,7 +52,7 @@ export type ItemResolutionResult = {
  */
 export function validateAndResolveStashedItems(
     stash: LayoutStash,
-    itemDefinitions: ReadonlyArray<DashboardItemDefinition>,
+    itemDefinitions: ReadonlyArray<InternalDashboardItemDefinition>,
 ): ItemResolutionResult {
     const result: ItemResolutionResult = {
         missing: [],

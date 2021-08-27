@@ -1,6 +1,11 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardLayoutItem, IDashboardLayoutSection, IDashboardWidget } from "@gooddata/sdk-backend-spi";
+import {
+    IDashboardLayoutItem,
+    IDashboardLayoutSection,
+    IWidget,
+    IWidgetDefinition,
+} from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -38,12 +43,12 @@ export function isInsightPlaceholderWidget(obj: unknown): obj is InsightPlacehol
 }
 
 /**
- * Extension of the default {@link @gooddata/sdk-backend-spi#DashboardWidget} type to also include view-only
+ * Extension of the default {@link @gooddata/sdk-backend-spi#IWidget} type to also include view-only
  * widget types for KPI placeholder and Insight placeholder.
  *
  * @alpha
  */
-export type ExtendedDashboardWidget = IDashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
+export type ExtendedDashboardWidget = IWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
 
 /**
  * Specialization of the IDashboardLayoutItem which also includes the extended dashboard widgets - KPI and
@@ -51,7 +56,7 @@ export type ExtendedDashboardWidget = IDashboardWidget | KpiPlaceholderWidget | 
  *
  * @alpha
  */
-export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget>;
+export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
 
 /**
  * Identifier of a stashed dashboard items. When removing one or more item, the caller may decide to 'stash' these items
@@ -85,7 +90,21 @@ export type RelativeIndex = number;
  *
  * @alpha
  */
-export type DashboardItemDefinition = ExtendedDashboardItem | StashedDashboardItemsId;
+export type DashboardItemDefinition =
+    | ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition>
+    | StashedDashboardItemsId;
+
+/**
+ * This type should be used in handlers that add new items onto dashboard.
+ *
+ * First thing those handlers need to do is to assign a temporary identity to all new KPI and Insight widget
+ * definitions -> thus ensure that anything that gets added onto a dashboard has identifier and can be referenced.
+ *
+ * This type narrows down the DashboardItemDefinition to contain just KPI and Insight widgets that have identity.
+ *
+ * @internal
+ */
+export type InternalDashboardItemDefinition = ExtendedDashboardItem | StashedDashboardItemsId;
 
 /**
  * Dashboard layout section that can contain extended set of items - including KPI and Insight placeholders.

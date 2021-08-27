@@ -6,7 +6,7 @@ import { AddLayoutSection } from "../../commands";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { DashboardItemDefinition, ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
+import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes";
 import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
 import { DashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/layout";
@@ -25,7 +25,7 @@ import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
 type AddLayoutSectionContext = {
     readonly ctx: DashboardContext;
     readonly cmd: AddLayoutSection;
-    readonly initialItems: DashboardItemDefinition[];
+    readonly initialItems: InternalDashboardItemDefinition[];
     readonly layout: ReturnType<typeof selectLayout>;
     readonly stash: ReturnType<typeof selectStash>;
     readonly availableInsights: ReturnType<typeof selectInsightsMap>;

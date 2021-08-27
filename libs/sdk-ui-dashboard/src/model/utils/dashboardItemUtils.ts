@@ -1,5 +1,9 @@
 // (C) 2021 GoodData Corporation
-import { DashboardItemDefinition, ExtendedDashboardItem } from "../types/layoutTypes";
+import {
+    DashboardItemDefinition,
+    ExtendedDashboardItem,
+    InternalDashboardItemDefinition,
+} from "../types/layoutTypes";
 import { idRef, ObjRef } from "@gooddata/sdk-model";
 import {
     IDashboardObjectIdentity,
@@ -65,7 +69,7 @@ export function isTemporaryIdentity(obj: IDashboardObjectIdentity): boolean {
  */
 export function addTemporaryIdentityToWidgets(
     items: ReadonlyArray<DashboardItemDefinition>,
-): DashboardItemDefinition[] {
+): InternalDashboardItemDefinition[] {
     return items.map((item) => {
         if (!isDashboardLayoutItem(item)) {
             return item;
@@ -80,7 +84,7 @@ export function addTemporaryIdentityToWidgets(
                     ...item.widget,
                     ...temporaryIdentity,
                 },
-            };
+            } as any;
         }
 
         return item;

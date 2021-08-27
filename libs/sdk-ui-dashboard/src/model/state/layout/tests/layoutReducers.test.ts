@@ -12,13 +12,14 @@ import {
     SimpleDashboardLayout,
     SimpleSortedTableWidgetRef,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import { ExtendedDashboardWidget } from "../../../types/layoutTypes";
 
 describe("layout slice reducer", () => {
     function createLayoutSliceInitialState(layout?: IDashboardLayout): LayoutState {
         const copyOfLayout = cloneDeep(layout);
 
         return {
-            layout: copyOfLayout,
+            layout: copyOfLayout as IDashboardLayout<ExtendedDashboardWidget>,
             stash: {},
             ...InitialUndoState,
         };

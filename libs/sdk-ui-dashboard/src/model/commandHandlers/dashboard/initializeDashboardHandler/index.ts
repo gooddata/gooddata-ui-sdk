@@ -8,7 +8,7 @@ import { insightsActions } from "../../../state/insights";
 import { layoutActions } from "../../../state/layout";
 import { loadingActions } from "../../../state/loading";
 import { DashboardContext } from "../../../types/commonTypes";
-import { IDashboardLayout, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout, IDashboardWithReferences, IWidget } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig";
 import { configActions } from "../../../state/config";
 import { PromiseFnReturnType } from "../../../types/sagas";
@@ -44,7 +44,7 @@ function loadDashboardFromBackend(
     return backend.workspace(workspace).dashboards().getDashboardWithReferences(dashboardRef);
 }
 
-const EmptyDashboardLayout: IDashboardLayout = {
+const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",
     sections: [],
 };
@@ -94,8 +94,15 @@ function* loadExistingDashboard(
     );
     const filterContextIdentity = dashboardFilterContextIdentity(dashboard);
 
+    /*
+     * NOTE: cannot do without the cast here. The layout in IDashboard is parameterized with IDashboardWidget
+     * which also includes KPI and Insight widget definitions = those without identity. That is however
+     * not valid: any widget for a persisted dashboard must have identity.
+     *
+     * Also note, nested layouts are not yet supported
+     */
     const dashboardLayout = dashboardLayoutSanitize(
-        dashboard.layout ?? EmptyDashboardLayout,
+        (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
         references.insights,
         config.settings,
     );

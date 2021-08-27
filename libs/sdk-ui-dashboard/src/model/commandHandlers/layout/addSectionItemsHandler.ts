@@ -6,7 +6,7 @@ import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation";
-import { DashboardItemDefinition, ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
+import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
@@ -24,7 +24,7 @@ import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;
     readonly cmd: AddSectionItems;
-    readonly items: DashboardItemDefinition[];
+    readonly items: InternalDashboardItemDefinition[];
     readonly layout: ReturnType<typeof selectLayout>;
     readonly stash: ReturnType<typeof selectStash>;
     readonly availableInsights: ReturnType<typeof selectInsightsMap>;
