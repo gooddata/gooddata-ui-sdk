@@ -78,14 +78,21 @@ export function useDashboardPdfExporter({
         dashboard: dashboardToExport,
         filters: filtersToExport,
         onError: (error) => {
+            // reset the dashboard to allow follow-up exports of the same dashboard
             setDashboardToExport(undefined);
             onError?.(error);
         },
         onSuccess: (url) => {
             downloadFile(url);
             onSuccess?.(url);
+            // reset the dashboard to allow follow-up exports of the same dashboard
+            setDashboardToExport(undefined);
         },
-        onCancel,
+        onCancel: () => {
+            // reset the dashboard to allow follow-up exports of the same dashboard
+            setDashboardToExport(undefined);
+            onCancel?.();
+        },
         onLoading,
         onPending,
     });
