@@ -41,37 +41,28 @@ export type QueryProcessingModule = {
  */
 export const QueryEnvelopeActionTypeName = "@@QUERY.ENVELOPE";
 
-/**
- * @internal
- */
-export type QueryEnvelopeEventHandlers = {
-    onStart: (query: any) => void;
-    onSuccess: (result: any) => void;
+type QueryEnvelopeEventHandlers<TQuery extends IDashboardQuery> = {
+    onStart: (query: TQuery) => void;
+    onSuccess: (result: IDashboardQueryResult<TQuery>) => void;
     onError: (err: Error) => void;
 };
 
-/**
- * @internal
- */
-export type QueryEnvelope = Readonly<QueryEnvelopeEventHandlers> & {
+type QueryEnvelope<TQuery extends IDashboardQuery> = Readonly<QueryEnvelopeEventHandlers<TQuery>> & {
     readonly type: typeof QueryEnvelopeActionTypeName;
     readonly query: IDashboardQuery;
 };
 
-/**
- * @internal
- */
-export function isQueryEnvelope(obj: unknown): obj is QueryEnvelope {
-    return !!obj && (obj as QueryEnvelope).type === QueryEnvelopeActionTypeName;
+function isQueryEnvelope(obj: unknown): obj is QueryEnvelope<any> {
+    return !!obj && (obj as QueryEnvelope<any>).type === QueryEnvelopeActionTypeName;
 }
 
 /**
  * @internal
  */
-export function queryEnvelope<TResult>(
-    query: IDashboardQuery<TResult>,
-    eventHandlers?: Partial<QueryEnvelopeEventHandlers>,
-): QueryEnvelope {
+export function queryEnvelope<TQuery extends IDashboardQuery>(
+    query: TQuery,
+    eventHandlers?: Partial<QueryEnvelopeEventHandlers<TQuery>>,
+): QueryEnvelope<TQuery> {
     return {
         type: QueryEnvelopeActionTypeName,
         query,
@@ -81,13 +72,16 @@ export function queryEnvelope<TResult>(
     };
 }
 
+/**
+ * @internal
+ */
 export function queryEnvelopeWithPromise<TQuery extends IDashboardQuery>(
     query: TQuery,
 ): {
     promise: Promise<IDashboardQueryResult<TQuery>>;
-    envelope: QueryEnvelope;
+    envelope: QueryEnvelope<TQuery>;
 } {
-    const queryEnvelopeEventHandlers: Partial<QueryEnvelopeEventHandlers> = {};
+    const queryEnvelopeEventHandlers: Partial<QueryEnvelopeEventHandlers<TQuery>> = {};
 
     const promise = new Promise<IDashboardQueryResult<TQuery>>((resolve, reject) => {
         queryEnvelopeEventHandlers.onSuccess = resolve;
@@ -105,7 +99,7 @@ export function queryEnvelopeWithPromise<TQuery extends IDashboardQuery>(
 function* processQuery(
     service: IDashboardQueryService<any, any>,
     ctx: DashboardContext,
-    envelope: QueryEnvelope,
+    envelope: QueryEnvelope<any>,
 ) {
     const {
         query,
@@ -168,12 +162,8 @@ function* processQuery(
     }
 }
 
-function ensureQueryWrappedInEnvelope(action: Action): QueryEnvelope {
-    if (action.type === QueryEnvelopeActionTypeName) {
-        return action as QueryEnvelope;
-    }
-
-    return queryEnvelope(action);
+function ensureQueryWrappedInEnvelope(action: Action): QueryEnvelope<any> {
+    return isQueryEnvelope(action) ? action : queryEnvelope(action);
 }
 
 /**
