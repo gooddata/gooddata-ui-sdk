@@ -4,7 +4,9 @@ import {
     IDashboardLayoutItem,
     IDashboardLayoutSectionHeader,
     IInsightWidget,
+    IInsightWidgetDefinition,
     IKpiWidget,
+    IKpiWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
 import { idRef, IInsight, insightId, isObjRef, ObjRef } from "@gooddata/sdk-model";
 import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures";
@@ -37,13 +39,13 @@ export const TestInsightPlaceholderItem: IDashboardLayoutItem<InsightPlaceholder
         },
     },
 };
-export const TestInsightItem: IDashboardLayoutItem<IInsightWidget> = createTestInsightItem(
+export const TestInsightItem: IDashboardLayoutItem<IInsightWidgetDefinition> = createTestInsightItem(
     PivotTableWithRowAndColumnAttributes,
 );
 
 export function createTestInsightItem(
     insightOrInsightRef: IInsight | ObjRef,
-): IDashboardLayoutItem<IInsightWidget> {
+): IDashboardLayoutItem<IInsightWidgetDefinition> {
     const insightRef = isObjRef(insightOrInsightRef)
         ? insightOrInsightRef
         : idRef(insightId(insightOrInsightRef), "insight");
@@ -53,9 +55,6 @@ export function createTestInsightItem(
         widget: {
             type: "insight",
             insight: insightRef,
-            ref: idRef("newWidget"),
-            uri: "newWidgetUri",
-            identifier: "newWidgetIdentifier",
             ignoreDashboardFilters: [],
             drills: [],
             title: "Test Insight Item",
@@ -69,10 +68,9 @@ export function createTestInsightItem(
     };
 }
 
-export function testItemWithDateDataset<T extends IInsightWidget | IKpiWidget>(
-    item: IDashboardLayoutItem<T>,
-    dataset: ObjRef,
-): IDashboardLayoutItem<T> {
+export function testItemWithDateDataset<
+    T extends IInsightWidget | IKpiWidget | IInsightWidgetDefinition | IKpiWidgetDefinition,
+>(item: IDashboardLayoutItem<T>, dataset: ObjRef): IDashboardLayoutItem<T> {
     return {
         ...item,
         widget: {
@@ -82,10 +80,9 @@ export function testItemWithDateDataset<T extends IInsightWidget | IKpiWidget>(
     } as IDashboardLayoutItem<T>;
 }
 
-export function testItemWithFilterIgnoreList<T extends IInsightWidget | IKpiWidget>(
-    item: IDashboardLayoutItem<T>,
-    displayForms: ObjRef[],
-): IDashboardLayoutItem<T> {
+export function testItemWithFilterIgnoreList<
+    T extends IInsightWidget | IKpiWidget | IInsightWidgetDefinition | IKpiWidgetDefinition,
+>(item: IDashboardLayoutItem<T>, displayForms: ObjRef[]): IDashboardLayoutItem<T> {
     return {
         ...item,
         widget: {

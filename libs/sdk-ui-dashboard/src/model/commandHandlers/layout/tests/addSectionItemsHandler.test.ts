@@ -34,12 +34,11 @@ describe("add section items handler", () => {
         );
 
         it("should load and add insight when adding insight widget", async () => {
-            const event: DashboardLayoutSectionItemsAdded = await Tester.dispatchAndWaitFor(
+            await Tester.dispatchAndWaitFor(
                 addSectionItem(0, 0, TestInsightItem, false, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
             );
 
-            expect(event.payload.itemsAdded).toEqual([TestInsightItem]);
             const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
             expect(insight).toBeDefined();
         });

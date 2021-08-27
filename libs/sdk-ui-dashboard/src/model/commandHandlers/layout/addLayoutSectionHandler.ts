@@ -6,7 +6,7 @@ import { AddLayoutSection } from "../../commands";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
+import { DashboardItemDefinition, ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
 import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
 import { DashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/layout";
@@ -20,10 +20,12 @@ import {
     validateAndNormalizeWidgetItems,
     validateAndResolveItemFilterSettings,
 } from "./validation/itemValidation";
+import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
 
 type AddLayoutSectionContext = {
     readonly ctx: DashboardContext;
     readonly cmd: AddLayoutSection;
+    readonly initialItems: DashboardItemDefinition[];
     readonly layout: ReturnType<typeof selectLayout>;
     readonly stash: ReturnType<typeof selectStash>;
     readonly availableInsights: ReturnType<typeof selectInsightsMap>;
@@ -34,8 +36,9 @@ function validateAndResolveItems(commandCtx: AddLayoutSectionContext): ItemResol
         ctx,
         layout,
         stash,
+        initialItems,
         cmd: {
-            payload: { index, initialItems = [] },
+            payload: { index },
         },
     } = commandCtx;
 
@@ -66,9 +69,13 @@ export function* addLayoutSectionHandler(
     ctx: DashboardContext,
     cmd: AddLayoutSection,
 ): SagaIterator<DashboardLayoutSectionAdded> {
+    const {
+        payload: { initialItems = [] },
+    } = cmd;
     const commandCtx: AddLayoutSectionContext = {
         ctx,
         cmd,
+        initialItems: addTemporaryIdentityToWidgets(initialItems),
         layout: yield select(selectLayout),
         stash: yield select(selectStash),
         availableInsights: yield select(selectInsightsMap),
