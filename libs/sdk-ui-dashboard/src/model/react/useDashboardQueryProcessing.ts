@@ -1,5 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { v4 as uuid } from "uuid";
 import { GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import {
@@ -8,9 +9,10 @@ import {
     isDashboardQueryFailed,
     isDashboardQueryRejected,
 } from "../events";
-import { DashboardQueries } from "../queries";
+import { DashboardQueries, IDashboardQueryResult } from "../queries";
 
-import { useDashboardQuery } from "./useDashboardQuery";
+import { queryAndWaitFor } from "./queryAndWaitFor";
+import { useDashboardDispatch } from "./DashboardStoreProvider";
 
 /**
  * @internal
@@ -23,7 +25,6 @@ export type QueryProcessingStatus = "running" | "success" | "error" | "rejected"
 export const useDashboardQueryProcessing = <
     TQuery extends DashboardQueries,
     TQueryCreatorArgs extends any[],
-    TResult,
 >({
     queryCreator,
     onSuccess,
@@ -32,25 +33,47 @@ export const useDashboardQueryProcessing = <
     onBeforeRun,
 }: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
-    onSuccess?: (result: TResult) => void;
+    onSuccess?: (result: IDashboardQueryResult<TQuery>) => void;
     onError?: (event: DashboardQueryFailed) => void;
     onRejected?: (event: DashboardQueryRejected) => void;
     onBeforeRun?: (query: TQuery) => void;
 }): {
     run: (...args: TQueryCreatorArgs) => void;
     status?: QueryProcessingStatus;
-    result?: TResult;
+    result?: IDashboardQueryResult<TQuery>;
     error?: GoodDataSdkError;
 } => {
     const [state, setState] = useState<{
-        result: TResult | undefined;
+        result: IDashboardQueryResult<TQuery> | undefined;
         status: QueryProcessingStatus;
         error: GoodDataSdkError | undefined;
     }>();
-    const run = useDashboardQuery(
-        queryCreator,
-        {
-            onError: (e) => {
+
+    const dispatch = useDashboardDispatch();
+
+    const run = useCallback((...args: TQueryCreatorArgs) => {
+        let query = queryCreator(...args);
+
+        if (!query.correlationId) {
+            query = {
+                ...query,
+                correlationId: uuid(),
+            };
+        }
+
+        setState({
+            status: "running",
+            result: undefined,
+            error: undefined,
+        });
+        onBeforeRun?.(query);
+
+        queryAndWaitFor(dispatch, query)
+            .then((result) => {
+                setState({ status: "success", result, error: undefined });
+                onSuccess?.(result);
+            })
+            .catch((e) => {
                 if (isDashboardQueryFailed(e)) {
                     setState({
                         status: "error",
@@ -62,22 +85,8 @@ export const useDashboardQueryProcessing = <
                     setState({ status: "rejected", result: undefined, error: undefined });
                     onRejected?.(e);
                 }
-            },
-            onSuccess: (result: TResult) => {
-                setState({ status: "success", result: result, error: undefined });
-                onSuccess?.(result);
-            },
-        },
-
-        (cmd) => {
-            setState({
-                status: "running",
-                result: undefined,
-                error: undefined,
             });
-            onBeforeRun?.(cmd);
-        },
-    );
+    }, []);
 
     return {
         run,

@@ -3,7 +3,7 @@
 import { IDashboardQueryService } from "./queryService";
 import { Saga, SagaIterator } from "redux-saga";
 import { actionChannel, call, getContext, spawn, take } from "redux-saga/effects";
-import { IDashboardQuery } from "../../queries";
+import { IDashboardQuery, IDashboardQueryResult } from "../../queries";
 import { DashboardContext } from "../../types/commonTypes";
 import keyBy from "lodash/keyBy";
 import { Action, CombinedState, combineReducers, Reducer } from "@reduxjs/toolkit";
@@ -81,13 +81,15 @@ export function queryEnvelope<TResult>(
     };
 }
 
-export function queryEnvelopeWithPromise<TResult>(query: IDashboardQuery<TResult>): {
-    promise: Promise<TResult>;
+export function queryEnvelopeWithPromise<TQuery extends IDashboardQuery>(
+    query: TQuery,
+): {
+    promise: Promise<IDashboardQueryResult<TQuery>>;
     envelope: QueryEnvelope;
 } {
     const queryEnvelopeEventHandlers: Partial<QueryEnvelopeEventHandlers> = {};
 
-    const promise = new Promise<TResult>((resolve, reject) => {
+    const promise = new Promise<IDashboardQueryResult<TQuery>>((resolve, reject) => {
         queryEnvelopeEventHandlers.onSuccess = resolve;
         queryEnvelopeEventHandlers.onError = reject;
     });

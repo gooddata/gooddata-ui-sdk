@@ -87,7 +87,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
  */
 
 /**
- * @internal
+ * @alpha
  */
 export type DashboardDispatch = Dispatch<AnyAction>;
 

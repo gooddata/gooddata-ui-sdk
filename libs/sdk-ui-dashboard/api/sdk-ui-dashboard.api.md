@@ -677,7 +677,7 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
 // @alpha (undocumented)
 export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags">;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
 
 // @alpha
@@ -1937,6 +1937,9 @@ export interface IDashboardQuery<_TResult = any> {
     readonly type: DashboardQueryType;
 }
 
+// @alpha
+export type IDashboardQueryResult<T> = T extends IDashboardQuery<infer TResult> ? TResult : never;
+
 // @internal (undocumented)
 export interface IDashboardStoreProviderProps {
     backend?: IAnalyticalBackend;
@@ -2573,6 +2576,9 @@ export interface PermissionsState {
     // (undocumented)
     permissions?: IWorkspacePermissions;
 }
+
+// @alpha
+export function queryAndWaitFor<TQuery extends DashboardQueries>(dispatch: DashboardDispatch, query: TQuery): Promise<IDashboardQueryResult<TQuery>>;
 
 // @alpha
 export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
@@ -3608,24 +3614,17 @@ export const useDashboardKpiProps: () => DashboardKpiProps;
 // @alpha (undocumented)
 export const useDashboardLayoutProps: () => DashboardLayoutProps;
 
-// @alpha
-export const useDashboardQuery: <TQuery extends DashboardQueries, TArgs extends any[]>(queryCreator: (...args: TArgs) => TQuery, eventHandlers?: {
-    onStart?: ((query: TQuery) => void) | undefined;
-    onSuccess?: ((result: any) => void) | undefined;
-    onError?: ((err: Error) => void) | undefined;
-} | undefined, onBeforeRun?: ((command: TQuery) => void) | undefined) => (...args: TArgs) => void;
-
 // @internal (undocumented)
-export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryCreatorArgs extends any[], TResult>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
+export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryCreatorArgs extends any[]>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
-    onSuccess?: ((result: TResult) => void) | undefined;
+    onSuccess?: ((result: IDashboardQueryResult<TQuery>) => void) | undefined;
     onError?: ((event: DashboardQueryFailed) => void) | undefined;
     onRejected?: ((event: DashboardQueryRejected) => void) | undefined;
     onBeforeRun?: ((query: TQuery) => void) | undefined;
 }) => {
     run: (...args: TQueryCreatorArgs) => void;
     status?: "error" | "running" | "success" | "rejected" | undefined;
-    result?: TResult | undefined;
+    result?: IDashboardQueryResult<TQuery> | undefined;
     error?: GoodDataSdkError | undefined;
 };
 
