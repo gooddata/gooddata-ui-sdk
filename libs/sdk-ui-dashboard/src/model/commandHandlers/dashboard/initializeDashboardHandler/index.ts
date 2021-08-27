@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
-import { LoadDashboard } from "../../../commands/dashboard";
-import { DashboardLoaded, dashboardLoaded } from "../../../events/dashboard";
+import { InitializeDashboard } from "../../../commands/dashboard";
+import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard";
 import { filterContextActions } from "../../../state/filterContext";
 import { insightsActions } from "../../../state/insights";
 import { layoutActions } from "../../../state/layout";
@@ -33,7 +33,7 @@ import { loadDashboardList } from "./loadDashboardList";
 import { listedDashboardsActions } from "../../../state/listedDashboards";
 import { backendCapabilitiesActions } from "../../../state/backendCapabilities";
 import { ObjRef } from "@gooddata/sdk-model";
-import { invalidArgumentsProvided } from "../../../events/general";
+import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext";
 
 function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -51,12 +51,12 @@ const EmptyDashboardLayout: IDashboardLayout = {
 
 type DashboardLoadResult = {
     batch: BatchAction;
-    event: DashboardLoaded;
+    event: DashboardInitialized;
 };
 
 function* loadExistingDashboard(
     ctx: DashboardContext,
-    cmd: LoadDashboard,
+    cmd: InitializeDashboard,
     dashboardRef: ObjRef,
 ): SagaIterator<DashboardLoadResult> {
     const { backend } = ctx;
@@ -129,9 +129,9 @@ function* loadExistingDashboard(
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
         ],
-        "@@GDC.DASH/BATCH.LOAD",
+        "@@GDC.DASH/BATCH.INIT.EXISTING",
     );
-    const event = dashboardLoaded(
+    const event = dashboardInitialized(
         ctx,
         dashboard,
         references.insights,
@@ -146,10 +146,66 @@ function* loadExistingDashboard(
     };
 }
 
-export function* loadDashboardHandler(
+function* initializeNewDashboard(
     ctx: DashboardContext,
-    cmd: LoadDashboard,
-): SagaIterator<DashboardLoaded> {
+    cmd: InitializeDashboard,
+): SagaIterator<DashboardLoadResult> {
+    const { backend } = ctx;
+
+    const [config, permissions, catalog, user, listedDashboards]: [
+        SagaReturnType<typeof resolveDashboardConfig>,
+        SagaReturnType<typeof resolvePermissions>,
+        PromiseFnReturnType<typeof loadCatalog>,
+        PromiseFnReturnType<typeof loadUser>,
+        PromiseFnReturnType<typeof loadDashboardList>,
+    ] = yield all([
+        call(resolveDashboardConfig, ctx, cmd),
+        call(resolvePermissions, ctx, cmd),
+        call(loadCatalog, ctx),
+        call(loadUser, ctx),
+        call(loadDashboardList, ctx),
+    ]);
+
+    const batch: BatchAction = batchActions(
+        [
+            backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
+            configActions.setConfig(config),
+            userActions.setUser(user),
+            permissionsActions.setPermissions(permissions),
+            catalogActions.setCatalogItems({
+                attributes: catalog.attributes(),
+                dateDatasets: catalog.dateDatasets(),
+                facts: catalog.facts(),
+                measures: catalog.measures(),
+            }),
+            alertsActions.setAlerts([]),
+            filterContextActions.setFilterContext({
+                filterContextDefinition: createDefaultFilterContext(config.dateFilterConfig),
+            }),
+            layoutActions.setLayout(EmptyDashboardLayout),
+            dateFilterConfigActions.setDateFilterConfig({
+                dateFilterConfig: undefined,
+                effectiveDateFilterConfig: config.dateFilterConfig,
+                isUsingDashboardOverrides: false,
+            }),
+            insightsActions.setInsights([]),
+            metaActions.setMeta({}),
+            listedDashboardsActions.setListedDashboards(listedDashboards),
+        ],
+        "@@GDC.DASH/BATCH.INIT.NEW",
+    );
+    const event = dashboardInitialized(ctx, undefined, [], config, permissions, cmd.correlationId);
+
+    return {
+        batch,
+        event,
+    };
+}
+
+export function* initializeDashboardHandler(
+    ctx: DashboardContext,
+    cmd: InitializeDashboard,
+): SagaIterator<DashboardInitialized> {
     const { dashboardRef } = ctx;
     try {
         yield put(loadingActions.setLoadingStart());
@@ -159,7 +215,7 @@ export function* loadDashboardHandler(
         if (dashboardRef) {
             result = yield call(loadExistingDashboard, ctx, cmd, dashboardRef);
         } else {
-            throw invalidArgumentsProvided(ctx, cmd, "Creating new dashboard is not yet supported.");
+            result = yield call(initializeNewDashboard, ctx, cmd);
         }
 
         yield put(result.batch);

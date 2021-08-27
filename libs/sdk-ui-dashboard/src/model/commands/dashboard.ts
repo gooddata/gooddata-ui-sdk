@@ -16,8 +16,8 @@ export const InitialLoadCorrelationId = "initialLoad";
  *
  * @alpha
  */
-export interface LoadDashboard extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.LOAD";
+export interface InitializeDashboard extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INITIALIZE";
     readonly payload: {
         readonly config?: DashboardConfig;
         readonly permissions?: IWorkspacePermissions;
@@ -25,9 +25,20 @@ export interface LoadDashboard extends IDashboardCommand {
 }
 
 /**
- * Creates the LoadDashboard command. Dispatching this command will result in the load of all
+ * Creates the InitializeDashboard command. Dispatching this command will result in the load of all
  * the essential data from the backend and initializing the state of Dashboard to a point where the
  * dashboard can be rendered.
+ *
+ * Note that the command takes the dashboard to initialize from context - from the properties of the Dashboard
+ * component in which it runs:
+ *
+ * -  If Dashboard component is referencing an existing, persisted dashboard, then the dashboard will be loaded and
+ *    rendered.
+ *
+ * -  If Dashboard component does not reference any dashboard, then the component will initialize for an empty
+ *    dashboard with default filter setup.
+ *
+ * In both cases the essential configuration, permissions and additional metadata gets loaded from the backend.
  *
  * @param config - optionally specify configuration to use for for the Dashboard; you MAY provide partial configuration.
  *  During the LoadDashboard processing the Dashboard component will resolve all the missing parts by reading them
@@ -40,13 +51,13 @@ export interface LoadDashboard extends IDashboardCommand {
  *
  * @alpha
  */
-export function loadDashboard(
+export function initializeDashboard(
     config?: DashboardConfig,
     permissions?: IWorkspacePermissions,
     correlationId?: string,
-): LoadDashboard {
+): InitializeDashboard {
     return {
-        type: "GDC.DASH/CMD.LOAD",
+        type: "GDC.DASH/CMD.INITIALIZE",
         correlationId,
         payload: {
             config,

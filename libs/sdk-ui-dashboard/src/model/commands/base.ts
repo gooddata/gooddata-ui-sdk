@@ -5,7 +5,7 @@
  * @alpha
  */
 export type DashboardCommandType =
-    | "GDC.DASH/CMD.LOAD"
+    | "GDC.DASH/CMD.INITIALIZE"
     | "GDC.DASH/CMD.SAVE"
     | "GDC.DASH/CMD.SAVEAS"
     | "GDC.DASH/CMD.RESET"

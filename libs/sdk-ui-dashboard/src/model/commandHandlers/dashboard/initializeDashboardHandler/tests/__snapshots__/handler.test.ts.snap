@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`load dashboard handler for an empty dashboard should add default filter context for an empty dashboard 1`] = `
+exports[`initialize dashboard handler for a new dashboard should initialize new dashboard with default filter context 1`] = `
 Object {
   "description": "",
   "filters": Array [
@@ -17,14 +17,38 @@ Object {
 }
 `;
 
-exports[`load dashboard handler for an empty dashboard should add default layout for an empty dashboard 1`] = `
+exports[`initialize dashboard handler for a new dashboard should initialize new dashboard with default layout 1`] = `
 Object {
   "sections": Array [],
   "type": "IDashboardLayout",
 }
 `;
 
-exports[`load dashboard handler for any dashboard should resolve config props that can be obtained from backend 1`] = `
+exports[`initialize dashboard handler for an empty dashboard should add default filter context for an empty dashboard 1`] = `
+Object {
+  "description": "",
+  "filters": Array [
+    Object {
+      "dateFilter": Object {
+        "from": 0,
+        "granularity": "GDC.time.month",
+        "to": 0,
+        "type": "relative",
+      },
+    },
+  ],
+  "title": "filterContext",
+}
+`;
+
+exports[`initialize dashboard handler for an empty dashboard should add default layout for an empty dashboard 1`] = `
+Object {
+  "sections": Array [],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`initialize dashboard handler for any dashboard should resolve config props that can be obtained from backend 1`] = `
 Object {
   "colorPalette": Array [],
   "dateFilterConfig": Object {
@@ -176,7 +200,7 @@ Object {
 }
 `;
 
-exports[`load dashboard handler for any dashboard should resolve permissions if none provided 1`] = `
+exports[`initialize dashboard handler for any dashboard should resolve permissions if none provided 1`] = `
 Object {
   "canAccessWorkbench": true,
   "canCreateAnalyticalDashboard": true,
@@ -198,7 +222,7 @@ Object {
 }
 `;
 
-exports[`load dashboard handler should emit events in correct order and carry-over correlationId 1`] = `
+exports[`initialize dashboard handler should emit events in correct order and carry-over correlationId 1`] = `
 Array [
   Object {
     "correlationId": "renderCorrelation",
@@ -210,7 +234,7 @@ Array [
   },
   Object {
     "correlationId": undefined,
-    "type": "GDC.DASH/EVT.LOADED",
+    "type": "GDC.DASH/EVT.INITIALIZED",
   },
 ]
 `;

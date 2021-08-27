@@ -1,6 +1,12 @@
 // (C) 2021 GoodData Corporation
 
-import { LoadDashboard, RenameDashboard, ResetDashboard, SaveDashboard, SaveDashboardAs } from "./dashboard";
+import {
+    InitializeDashboard,
+    RenameDashboard,
+    ResetDashboard,
+    SaveDashboard,
+    SaveDashboardAs,
+} from "./dashboard";
 import { TriggerEvent } from "./events";
 import {
     AddAttributeFilter,
@@ -56,8 +62,8 @@ import { RequestAsyncRender, ResolveAsyncRender } from "./render";
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
 export {
     InitialLoadCorrelationId,
-    LoadDashboard,
-    loadDashboard,
+    InitializeDashboard,
+    initializeDashboard,
     SaveDashboardAs,
     saveDashboardAs,
     SaveDashboard,
@@ -183,7 +189,7 @@ export { AddDrillTargets, addDrillTargets } from "./drillTargets";
  * @alpha
  */
 export type DashboardCommands =
-    | LoadDashboard
+    | InitializeDashboard
     | SaveDashboard
     | SaveDashboardAs
     | RenameDashboard

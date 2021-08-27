@@ -222,7 +222,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
             )}
             kpiAlertResult={kpiAlertResult}
             canSetAlert={canSetAlert}
-            isReadOnlyMode={isReadOnly || dashboardRef === undefined}
+            isReadOnlyMode={isReadOnly}
             alertExecutionError={
                 alertExecutionError ??
                 /*
@@ -269,9 +269,9 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                             });
                         }
 
-                        // if this bombs then the controller code is bugged because it should not even allow to get
-                        // to this point for dashboards that are not persisted. scheduling is not possible for such
-                        // dashboards and so the respective menus to trigger the scheduling must not be present
+                        // alerts are not possible when the dashboard is not yet persisted. if the code bombs here
+                        // then it means we use view-mode KPI widget in edit-mode dashboard - there is a configuration
+                        // customization error somewhere.
                         invariant(dashboardRef, "attempting to create alert of an unsaved dashboard");
 
                         return kpiAlertOperations.onCreateAlert({

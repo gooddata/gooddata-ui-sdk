@@ -4,7 +4,7 @@ import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixture
 import { MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries";
 import { measureItem } from "@gooddata/sdk-model";
 import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
-import { loadDashboard } from "../../commands";
+import { initializeDashboard } from "../../commands";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import {
     MockAvailabilityWithDifferentRelevance,
@@ -32,7 +32,7 @@ describe("query measure date datasets", () => {
                 },
             );
 
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
 
             const result: MeasureDateDatasets = await Tester.query(
                 queryDateDatasetsForMeasure(measureItem(ReferenceLdm.Won)),
@@ -53,7 +53,7 @@ describe("query measure date datasets", () => {
                 },
             );
 
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
 
             const result: MeasureDateDatasets = await Tester.query(
                 queryDateDatasetsForMeasure(measureItem(ReferenceLdm.Won)),

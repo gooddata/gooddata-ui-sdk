@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { changeKpiWidgetMeasure, loadDashboard } from "../../../commands";
+import { changeKpiWidgetMeasure, initializeDashboard } from "../../../commands";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { measureItem, uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed, DashboardKpiWidgetMeasureChanged } from "../../../events";
@@ -118,7 +118,7 @@ describe("change KPI widget measure handler", () => {
 
         it("should keep existing date dataset if it is available for the new metric", async () => {
             const Tester = DashboardTester.forRecording(ComplexDashboardIdentifier);
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.resetMonitors();
 
             const originalWidget = selectWidgetByRef(WidgetWithDateDataset.ref)(Tester.state());
@@ -140,7 +140,7 @@ describe("change KPI widget measure handler", () => {
                     },
                 },
             );
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.resetMonitors();
 
             const originalWidget = selectWidgetByRef(WidgetWithDateDataset.ref)(Tester.state());
@@ -157,7 +157,7 @@ describe("change KPI widget measure handler", () => {
 
         it("should emit correct events", async () => {
             const Tester = DashboardTester.forRecording(ComplexDashboardIdentifier);
-            await Tester.dispatchAndWaitFor(loadDashboard(), "GDC.DASH/EVT.LOADED");
+            await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.resetMonitors();
 
             await Tester.dispatchAndWaitFor(
