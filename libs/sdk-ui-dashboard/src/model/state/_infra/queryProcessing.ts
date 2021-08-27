@@ -44,13 +44,61 @@ export const QueryEnvelopeActionTypeName = "@@QUERY.ENVELOPE";
 /**
  * @internal
  */
-export type QueryEnvelope = {
+export type QueryEnvelopeEventHandlers = {
+    onStart: (query: any) => void;
+    onSuccess: (result: any) => void;
+    onError: (err: Error) => void;
+};
+
+/**
+ * @internal
+ */
+export type QueryEnvelope = Readonly<QueryEnvelopeEventHandlers> & {
     readonly type: typeof QueryEnvelopeActionTypeName;
     readonly query: IDashboardQuery;
-    readonly onStart: (query: any) => void;
-    readonly onSuccess: (result: any) => void;
-    readonly onError: (err: Error) => void;
 };
+
+/**
+ * @internal
+ */
+export function isQueryEnvelope(obj: unknown): obj is QueryEnvelope {
+    return !!obj && (obj as QueryEnvelope).type === QueryEnvelopeActionTypeName;
+}
+
+/**
+ * @internal
+ */
+export function queryEnvelope<TResult>(
+    query: IDashboardQuery<TResult>,
+    eventHandlers?: Partial<QueryEnvelopeEventHandlers>,
+): QueryEnvelope {
+    return {
+        type: QueryEnvelopeActionTypeName,
+        query,
+        onError: eventHandlers?.onError ?? noop,
+        onStart: eventHandlers?.onStart ?? noop,
+        onSuccess: eventHandlers?.onSuccess ?? noop,
+    };
+}
+
+export function queryEnvelopeWithPromise<TResult>(query: IDashboardQuery<TResult>): {
+    promise: Promise<TResult>;
+    envelope: QueryEnvelope;
+} {
+    const queryEnvelopeEventHandlers: Partial<QueryEnvelopeEventHandlers> = {};
+
+    const promise = new Promise<TResult>((resolve, reject) => {
+        queryEnvelopeEventHandlers.onSuccess = resolve;
+        queryEnvelopeEventHandlers.onError = reject;
+    });
+
+    const envelope = queryEnvelope(query, queryEnvelopeEventHandlers);
+
+    return {
+        promise,
+        envelope,
+    };
+}
 
 function* processQuery(
     service: IDashboardQueryService<any, any>,
@@ -123,13 +171,7 @@ function ensureQueryWrappedInEnvelope(action: Action): QueryEnvelope {
         return action as QueryEnvelope;
     }
 
-    return {
-        type: QueryEnvelopeActionTypeName,
-        query: action,
-        onStart: noop,
-        onSuccess: noop,
-        onError: noop,
-    };
+    return queryEnvelope(action);
 }
 
 /**

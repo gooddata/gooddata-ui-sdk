@@ -2,11 +2,9 @@
 import { useCallback } from "react";
 import { v4 as uuid } from "uuid";
 
-import { DashboardEvents } from "../events";
-import { DashboardEventHandler } from "../events/eventHandler";
 import { DashboardQueries } from "../queries";
+import { queryEnvelope } from "../state/_infra/queryProcessing";
 
-import { useDashboardEventsContext } from "./DashboardEventsContext";
 import { useDashboardDispatch } from "./DashboardStoreProvider";
 
 /**
@@ -17,7 +15,7 @@ import { useDashboardDispatch } from "./DashboardStoreProvider";
  * If no correlationId is provided, it's auto-generated.
 
  * @param queryCreator - query factory
- * @param eventHandlers - record with eventTypes as keys and relevant callbacks as values
+ * @param eventHandlers - event handlers for the query
  * @param onBeforeRun - optionally provide callback that will be called before dispatching the query
  * @returns callback that dispatches the query, registers relevant event handlers and unregisters them
  *          when an event that matches the correlation ID and one of the specified event types occurs
@@ -26,59 +24,28 @@ import { useDashboardDispatch } from "./DashboardStoreProvider";
 export const useDashboardQuery = <TQuery extends DashboardQueries, TArgs extends any[]>(
     queryCreator: (...args: TArgs) => TQuery,
     eventHandlers?: {
-        [eventType in
-            | "GDC.DASH/EVT.QUERY.FAILED"
-            | "GDC.DASH/EVT.QUERY.REJECTED"
-            | "GDC.DASH/EVT.QUERY.STARTED"
-            | "GDC.DASH/EVT.QUERY.COMPLETED"]?: (
-            event: Extract<DashboardEvents, { type: eventType }>,
-        ) => void;
+        onStart?: (query: TQuery) => void;
+        onSuccess?: (result: any) => void;
+        onError?: (err: Error) => void;
     },
     onBeforeRun?: (command: TQuery) => void,
 ): ((...args: TArgs) => void) => {
     const dispatch = useDashboardDispatch();
-    const { registerHandler, unregisterHandler } = useDashboardEventsContext();
 
     const run = useCallback((...args: TArgs) => {
         let query = queryCreator(...args);
 
-        const correlationId = query.correlationId ?? uuid();
-
         if (!query.correlationId) {
             query = {
                 ...query,
-                correlationId,
+                correlationId: uuid(),
             };
         }
 
-        const dashboardEventHandlers = eventHandlers
-            ? Object.keys(eventHandlers).map((eventType) => {
-                  const dashboardEventHandler: DashboardEventHandler = {
-                      eval: (eT) => eT.type === eventType,
-                      handler: (event) => {
-                          if (event.correlationId === correlationId) {
-                              unregisterHandlers();
-                              eventHandlers[eventType](event);
-                          }
-                      },
-                  };
-
-                  return dashboardEventHandler;
-              })
-            : [];
-
-        dashboardEventHandlers.forEach((handler) => {
-            registerHandler(handler);
-        });
-
-        function unregisterHandlers() {
-            dashboardEventHandlers.forEach((handler) => {
-                unregisterHandler(handler);
-            });
-        }
+        const envelopedQuery = queryEnvelope(query, eventHandlers);
 
         onBeforeRun?.(query);
-        dispatch(query);
+        dispatch(envelopedQuery);
     }, []);
 
     return run;

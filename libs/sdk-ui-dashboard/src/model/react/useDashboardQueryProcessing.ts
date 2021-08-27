@@ -2,7 +2,12 @@
 import { useState } from "react";
 import { GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { DashboardQueryCompleted, DashboardQueryFailed, DashboardQueryRejected } from "../events";
+import {
+    DashboardQueryFailed,
+    DashboardQueryRejected,
+    isDashboardQueryFailed,
+    isDashboardQueryRejected,
+} from "../events";
 import { DashboardQueries } from "../queries";
 
 import { useDashboardQuery } from "./useDashboardQuery";
@@ -27,7 +32,7 @@ export const useDashboardQueryProcessing = <
     onBeforeRun,
 }: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
-    onSuccess?: (event: DashboardQueryCompleted<TQuery, TResult>) => void;
+    onSuccess?: (result: TResult) => void;
     onError?: (event: DashboardQueryFailed) => void;
     onRejected?: (event: DashboardQueryRejected) => void;
     onBeforeRun?: (query: TQuery) => void;
@@ -45,23 +50,25 @@ export const useDashboardQueryProcessing = <
     const run = useDashboardQuery(
         queryCreator,
         {
-            "GDC.DASH/EVT.QUERY.COMPLETED": (event: DashboardQueryCompleted<TQuery, TResult>) => {
-                setState({ status: "success", result: event.payload.result, error: undefined });
-                onSuccess?.(event);
+            onError: (e) => {
+                if (isDashboardQueryFailed(e)) {
+                    setState({
+                        status: "error",
+                        result: undefined,
+                        error: new UnexpectedSdkError(e.payload.message, e.payload.error),
+                    });
+                    onError?.(e);
+                } else if (isDashboardQueryRejected(e)) {
+                    setState({ status: "rejected", result: undefined, error: undefined });
+                    onRejected?.(e);
+                }
             },
-            "GDC.DASH/EVT.QUERY.FAILED": (event: DashboardQueryFailed) => {
-                setState({
-                    status: "error",
-                    result: undefined,
-                    error: new UnexpectedSdkError(event.payload.message, event.payload.error),
-                });
-                onError?.(event);
-            },
-            "GDC.DASH/EVT.QUERY.REJECTED": (event: DashboardQueryRejected) => {
-                setState({ status: "rejected", result: undefined, error: undefined });
-                onRejected?.(event);
+            onSuccess: (result: TResult) => {
+                setState({ status: "success", result: result, error: undefined });
+                onSuccess?.(result);
             },
         },
+
         (cmd) => {
             setState({
                 status: "running",
