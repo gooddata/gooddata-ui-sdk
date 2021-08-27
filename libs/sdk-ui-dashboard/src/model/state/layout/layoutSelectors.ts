@@ -57,7 +57,7 @@ export const selectLayout = createSelector(selectSelf, (layoutState: LayoutState
 
 function isItemWithBaseWidget(obj: IDashboardLayoutItem<unknown>): obj is IDashboardLayoutItem {
     const widget = obj.widget;
-    return !isKpiPlaceholderWidget(widget) && !isInsightPlaceholderWidget(widget);
+    return !!widget && !isKpiPlaceholderWidget(widget) && !isInsightPlaceholderWidget(widget);
 }
 
 /**
