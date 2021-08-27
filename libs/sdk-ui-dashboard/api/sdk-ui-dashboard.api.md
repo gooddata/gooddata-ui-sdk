@@ -2115,7 +2115,11 @@ export interface IResolvedDateFilterValue {
 // @alpha
 export interface IResolvedFilterValues {
     // (undocumented)
-    [filterStringRef: string]: IResolvedAttributeFilterValues | ResolvedDateFilterValues;
+    attributeFilters: {
+        [filterStringRef: string]: IResolvedAttributeFilterValues;
+    };
+    // (undocumented)
+    dateFilters: ResolvedDateFilterValues;
 }
 
 // @alpha
@@ -2828,7 +2832,7 @@ export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxTok
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
 
 // @alpha
-export function resolveFilterValues(filters: ResolvableFilter[]): Promise<IResolvedFilterValues>;
+export function resolveFilterValues(filters: ResolvableFilter[], backend?: IAnalyticalBackend, workspace?: string): Promise<IResolvedFilterValues>;
 
 // @alpha
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;

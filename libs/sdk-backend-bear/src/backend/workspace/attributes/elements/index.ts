@@ -6,20 +6,38 @@ import {
     IElementsQueryResult,
     IAttributeElement,
     IElementsQueryAttributeFilter,
+    IFilterElementsQuery,
+    FilterWithResolvableElements,
 } from "@gooddata/sdk-backend-spi";
-import { IMeasure, ObjRef } from "@gooddata/sdk-model";
+import {
+    filterObjRef,
+    IAttributeFilter,
+    IRelativeDateFilter,
+    IMeasure,
+    ObjRef,
+    isAttributeFilter,
+    filterAttributeElements,
+    isAttributeElementsByRef,
+    IAttributeElementsByValue,
+    IAttributeElementsByRef,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { BearAuthenticatedCallGuard } from "../../../../types/auth";
 import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { LimitingAfmFactory } from "./limitingAfmFactory";
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 
 export class BearWorkspaceElements implements IElementsQueryFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
     public forDisplayForm(ref: ObjRef): IElementsQuery {
         return new BearWorkspaceElementsQuery(this.authCall, ref, this.workspace);
+    }
+
+    public forFilter(filter: IAttributeFilter | IRelativeDateFilter): IFilterElementsQuery {
+        return new BearWorkspaceFilterElementsQuery(this.authCall, filter, this.workspace);
     }
 }
 
@@ -121,5 +139,72 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
                 ? () => this.queryWorker(offset + count, limit, options)
                 : () => Promise.resolve(emptyResult),
         };
+    }
+}
+
+class BearWorkspaceFilterElementsQuery implements IFilterElementsQuery {
+    private limit: number = 50;
+    private offset: number = 0;
+    private elementsQuery: IElementsQuery;
+
+    constructor(
+        private readonly authCall: BearAuthenticatedCallGuard,
+        private filter: FilterWithResolvableElements,
+        private readonly workspace: string,
+    ) {
+        const ref = filterObjRef(filter);
+        this.elementsQuery = new BearWorkspaceElementsQuery(this.authCall, ref, this.workspace);
+    }
+
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    public withLimit(limit: number): IFilterElementsQuery {
+        invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
+        this.limit = limit;
+        return this;
+    }
+
+    public withOffset(offset: number): IFilterElementsQuery {
+        this.offset = offset;
+        return this;
+    }
+
+    public async query(): Promise<IElementsQueryResult> {
+        if (isAttributeFilter(this.filter)) {
+            const selectedElements = filterAttributeElements(this.filter);
+            if (isAttributeElementsByRef(selectedElements)) {
+                return this.resultForElementsByRef(selectedElements);
+            }
+            return this.resultForElementsByValue(selectedElements);
+        } else {
+            console.log("relativeDateFilter"); // eslint-disable-line no-console
+            return (
+                this.elementsQuery
+                    // TODO add date filter into the request via new elementsQuery method
+                    .query()
+            );
+        }
+    }
+
+    private async resultForElementsByRef(selectedElements: IAttributeElementsByRef) {
+        return this.elementsQuery
+            .withOptions({
+                uris: selectedElements.uris,
+            })
+            .withOffset(this.offset)
+            .withLimit(this.limit)
+            .query();
+    }
+
+    private async resultForElementsByValue(
+        selectedElements: IAttributeElementsByValue,
+    ): Promise<IElementsQueryResult> {
+        const items = selectedElements.values.map(
+            (element): IAttributeElement => ({
+                title: element,
+                uri: element,
+            }),
+        );
+
+        return Promise.resolve(new InMemoryPaging<IAttributeElement>(items, this.limit, this.offset));
     }
 }

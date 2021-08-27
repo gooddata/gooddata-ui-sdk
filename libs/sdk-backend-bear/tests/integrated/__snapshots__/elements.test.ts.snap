@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`bear elements should load attribute elements for existing display form 1`] = `
+exports[`bear elements forDisplayForm should load attribute elements for existing display form 1`] = `
 Object {
   "items": Array [
     Object {
@@ -91,7 +91,7 @@ Object {
 }
 `;
 
-exports[`bear elements should load attribute elements for existing display form with a limiting measure 1`] = `
+exports[`bear elements forDisplayForm should load attribute elements for existing display form with a limiting measure 1`] = `
 Object {
   "items": Array [
     Object {
@@ -182,7 +182,7 @@ Object {
 }
 `;
 
-exports[`bear elements should load attribute elements for existing display form with a parent filter 1`] = `
+exports[`bear elements forDisplayForm should load attribute elements for existing display form with a parent filter 1`] = `
 Object {
   "items": Array [
     Object {
@@ -270,5 +270,55 @@ Object {
   "next": [Function],
   "offset": 0,
   "totalCount": 2952,
+}
+`;
+
+exports[`bear elements forFilter should load attribute filter elements for provided negative attribute filter 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "title": "Educationly",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165847",
+    },
+  ],
+  "limit": 1,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`bear elements forFilter should load attribute filter elements for provided positive attribute filter 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "title": "Educationly",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165847",
+    },
+  ],
+  "limit": 1,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`bear elements forFilter should return attribute filter elements for provided attribute filter with elements by value 1`] = `
+InMemoryPaging {
+  "all": Array [
+    Object {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "items": Array [
+    Object {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "limit": 50,
+  "offset": 0,
+  "totalCount": 1,
 }
 `;

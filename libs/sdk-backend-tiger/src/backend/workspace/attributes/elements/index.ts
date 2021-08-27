@@ -1,4 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     IElementsQueryFactory,
     IElementsQuery,
@@ -7,8 +8,18 @@ import {
     UnexpectedError,
     NotSupported,
     IAttributeElement,
+    FilterWithResolvableElements,
+    IFilterElementsQuery,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, isIdentifierRef } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    isIdentifierRef,
+    IAttributeFilter,
+    IRelativeDateFilter,
+    isAttributeFilter,
+    filterAttributeElements,
+    isAttributeElementsByRef,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { TigerAuthenticatedCallGuard } from "../../../../types";
 
@@ -17,6 +28,9 @@ export class TigerWorkspaceElements implements IElementsQueryFactory {
 
     public forDisplayForm(ref: ObjRef): IElementsQuery {
         return new TigerWorkspaceElementsQuery(this.authCall, ref, this.workspace);
+    }
+    public forFilter(filter: FilterWithResolvableElements): IFilterElementsQuery {
+        return new TigerWorkspaceFilterElementsQuery(this.authCall, filter);
     }
 }
 
@@ -111,5 +125,73 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 ? () => this.queryWorker(offset + count, limit, options)
                 : () => Promise.resolve(emptyResult),
         };
+    }
+}
+
+class TigerWorkspaceFilterElementsQuery implements IFilterElementsQuery {
+    private limit: number = 100;
+    private offset: number = 0;
+
+    constructor(
+        _authCall: TigerAuthenticatedCallGuard,
+        private readonly filter: IAttributeFilter | IRelativeDateFilter,
+    ) {}
+
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    public withLimit(limit: number): IFilterElementsQuery {
+        invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
+
+        this.limit = limit;
+
+        return this;
+    }
+
+    public withOffset(offset: number): IFilterElementsQuery {
+        this.offset = offset;
+        return this;
+    }
+
+    public async query(): Promise<IElementsQueryResult> {
+        if (isAttributeFilter(this.filter)) {
+            return this.queryAttributeFilterElements();
+        } else {
+            return this.queryDateFilterElements();
+        }
+    }
+
+    private async queryAttributeFilterElements(): Promise<IElementsQueryResult> {
+        const selectedElements = filterAttributeElements(this.filter) || { values: [] };
+        // Tiger supports only elements by value, but KD sends them in format of elementsByRef so we need to handle both formats in the same way
+        const values = isAttributeElementsByRef(selectedElements)
+            ? selectedElements.uris
+            : selectedElements.values;
+
+        const elements = values.map(
+            (element): IAttributeElement => ({
+                title: element,
+                uri: element,
+            }),
+        );
+
+        return Promise.resolve(new InMemoryPaging<IAttributeElement>(elements, this.limit, this.offset));
+    }
+
+    private async queryDateFilterElements(): Promise<IElementsQueryResult> {
+        // TODO INE replace by real implementation
+        const emptyResult: IElementsQueryResult = {
+            items: [],
+            limit: 0,
+            offset: 0,
+            totalCount: 0,
+            next: () => Promise.resolve(emptyResult),
+        };
+
+        return Promise.resolve({
+            items: [],
+            limit: 0,
+            offset: 0,
+            totalCount: 0,
+            next: () => Promise.resolve(emptyResult),
+        });
     }
 }
