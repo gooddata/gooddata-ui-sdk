@@ -2835,21 +2835,16 @@ export function revertLastLayoutChange(correlationId?: string): UndoLayoutChange
 // @alpha (undocumented)
 export interface SaveDashboard extends IDashboardCommand {
     // (undocumented)
-    readonly payload: {
-        readonly identifier?: string;
-    };
-    // (undocumented)
     readonly type: "GDC.DASH/CMD.SAVE";
 }
 
 // @alpha
-export function saveDashboard(identifier?: string, correlationId?: string): SaveDashboard;
+export function saveDashboard(correlationId?: string): SaveDashboard;
 
 // @alpha (undocumented)
 export interface SaveDashboardAs extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly identifier?: string;
         readonly title?: string;
     };
     // (undocumented)
@@ -2857,7 +2852,7 @@ export interface SaveDashboardAs extends IDashboardCommand {
 }
 
 // @alpha
-export function saveDashboardAs(identifier?: string, title?: string, correlationId?: string): SaveDashboardAs;
+export function saveDashboardAs(title?: string, correlationId?: string): SaveDashboardAs;
 
 // @internal (undocumented)
 export const ScheduledEmailDialog: () => JSX.Element;
