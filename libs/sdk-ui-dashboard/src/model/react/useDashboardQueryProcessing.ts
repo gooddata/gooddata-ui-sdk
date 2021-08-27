@@ -51,42 +51,45 @@ export const useDashboardQueryProcessing = <
 
     const dispatch = useDashboardDispatch();
 
-    const run = useCallback((...args: TQueryCreatorArgs) => {
-        let query = queryCreator(...args);
+    const run = useCallback(
+        (...args: TQueryCreatorArgs) => {
+            let query = queryCreator(...args);
 
-        if (!query.correlationId) {
-            query = {
-                ...query,
-                correlationId: uuid(),
-            };
-        }
+            if (!query.correlationId) {
+                query = {
+                    ...query,
+                    correlationId: uuid(),
+                };
+            }
 
-        setState({
-            status: "running",
-            result: undefined,
-            error: undefined,
-        });
-        onBeforeRun?.(query);
-
-        queryAndWaitFor(dispatch, query)
-            .then((result) => {
-                setState({ status: "success", result, error: undefined });
-                onSuccess?.(result);
-            })
-            .catch((e) => {
-                if (isDashboardQueryFailed(e)) {
-                    setState({
-                        status: "error",
-                        result: undefined,
-                        error: new UnexpectedSdkError(e.payload.message, e.payload.error),
-                    });
-                    onError?.(e);
-                } else if (isDashboardQueryRejected(e)) {
-                    setState({ status: "rejected", result: undefined, error: undefined });
-                    onRejected?.(e);
-                }
+            setState({
+                status: "running",
+                result: undefined,
+                error: undefined,
             });
-    }, []);
+            onBeforeRun?.(query);
+
+            queryAndWaitFor(dispatch, query)
+                .then((result) => {
+                    setState({ status: "success", result, error: undefined });
+                    onSuccess?.(result);
+                })
+                .catch((e) => {
+                    if (isDashboardQueryFailed(e)) {
+                        setState({
+                            status: "error",
+                            result: undefined,
+                            error: new UnexpectedSdkError(e.payload.message, e.payload.error),
+                        });
+                        onError?.(e);
+                    } else if (isDashboardQueryRejected(e)) {
+                        setState({ status: "rejected", result: undefined, error: undefined });
+                        onRejected?.(e);
+                    }
+                });
+        },
+        [queryCreator, onSuccess, onError, onRejected, onBeforeRun],
+    );
 
     return {
         run,
