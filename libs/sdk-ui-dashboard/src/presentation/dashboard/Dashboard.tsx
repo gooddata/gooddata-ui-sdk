@@ -163,16 +163,34 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
         },
     });
 
+    /*
+     * exports and scheduling are not available when rendering a dashboard that is not persisted.
+     * this can happen when a new dashboard is created and is being edited.
+     *
+     * the setup of menu items available in the menu needs to reflect this.
+     */
     const defaultOnScheduleEmailing = useCallback(() => {
+        if (!dashboardRef) {
+            return;
+        }
+
         setIsScheduleEmailingDialogOpen(true);
-    }, []);
+    }, [dashboardRef]);
 
     const defaultOnExportToPdf = useCallback(() => {
+        if (!dashboardRef) {
+            return;
+        }
+
         exportDashboard(dashboardRef, filters);
     }, [exportDashboard, dashboardRef, filters]);
 
-    const defaultMenuItems = useMemo<IMenuButtonItem[]>(
-        () => [
+    const defaultMenuItems = useMemo<IMenuButtonItem[]>(() => {
+        if (!dashboardRef) {
+            return [];
+        }
+
+        return [
             {
                 type: "button",
                 itemId: "pdf-export-item", // careful, this is also used as a selector in tests, do not change
@@ -185,9 +203,8 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
                 itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
                 onClick: defaultOnScheduleEmailing,
             },
-        ],
-        [defaultOnScheduleEmailing, defaultOnExportToPdf],
-    );
+        ];
+    }, [defaultOnScheduleEmailing, defaultOnExportToPdf, dashboardRef]);
 
     const onScheduleEmailingError = useCallback(() => {
         setIsScheduleEmailingDialogOpen(false);

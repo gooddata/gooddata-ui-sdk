@@ -115,12 +115,12 @@ export {
 } from "./state/alerts/alertsSelectors";
 export { UserState } from "./state/user/userState";
 export { selectUser } from "./state/user/userSelectors";
-export { DashboardMeta, DashboardMetaState } from "./state/meta/metaState";
+export { DashboardMetaState, DashboardDescriptor } from "./state/meta/metaState";
 export {
-    selectDashboardMetadata,
     selectDashboardRef,
     selectDashboardUriRef,
     selectDashboardTitle,
+    selectDashboardDescription,
     selectDashboardIdRef,
     selectDashboardTags,
     selectDashboardId,

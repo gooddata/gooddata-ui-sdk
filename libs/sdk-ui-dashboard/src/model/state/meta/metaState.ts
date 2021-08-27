@@ -5,13 +5,34 @@ import { IDashboard } from "@gooddata/sdk-backend-spi";
 /**
  * @alpha
  */
-export type DashboardMeta = Omit<IDashboard, "filterContext" | "layout" | "dateFilterConfig">;
+export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags">;
+
+export const EmptyDashboardDescriptor: DashboardDescriptor = {
+    title: "",
+    description: "",
+};
 
 /**
  * @alpha
  */
 export interface DashboardMetaState {
-    meta?: DashboardMeta;
+    /**
+     * This property contains current state of the dashboard's descriptive metadata. This descriptor can
+     * be modified by the dashboard component and the new values will be used during save.
+     */
+    descriptor?: DashboardDescriptor;
+
+    /**
+     * This property contains the IDashboard object that is persisted on the backend and that is used
+     * to derive the rest of the dashboard state in the component.
+     *
+     * The persisted dashboard is updated only during the initial load or during SaveDashboard or
+     * SaveAsDashboard command processing (which essentially flush the current dashboard state to backend)
+     */
+    persistedDashboard?: IDashboard;
 }
 
-export const metaInitialState: DashboardMetaState = { meta: undefined };
+export const metaInitialState: DashboardMetaState = {
+    descriptor: EmptyDashboardDescriptor,
+    persistedDashboard: undefined,
+};

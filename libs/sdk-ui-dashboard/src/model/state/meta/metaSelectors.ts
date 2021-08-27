@@ -10,68 +10,109 @@ const selectSelf = createSelector(
 );
 
 /**
- * Selects dashboard's metadata.
+ * Selects dashboard's descriptor.
  *
- * @alpha
+ * @internal
  */
-export const selectDashboardMetadata = createSelector(selectSelf, (state) => {
-    invariant(state.meta, "attempting to access uninitialized meta state");
+export const selectDashboardDescriptor = createSelector(selectSelf, (state) => {
+    invariant(state.descriptor, "attempting to access uninitialized meta state");
 
-    return state.meta!;
+    return state.descriptor!;
 });
 
 /**
- * Selects current dashboard ref.
+ * Selects persisted IDashboard object - that is the IDashboard object that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
  *
- * @alpha
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ *
+ * @internal
  */
-export const selectDashboardRef = createSelector(selectDashboardMetadata, (state) => {
-    return state.ref;
+export const selectPersistedDashboard = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard;
 });
 
 /**
- * Selects current dashboard identifier.
+ * Selects ref of the persisted dashboard object that backs and is rendered-by the dashboard component.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
  *
  * @alpha
  */
-export const selectDashboardId = createSelector(selectDashboardMetadata, (state) => {
-    return state.identifier;
+export const selectDashboardRef = createSelector(selectPersistedDashboard, (state) => {
+    return state?.ref;
 });
 
 /**
- * Selects current dashboard uri.
+ * Selects identifier of the persisted dashboard object that backs and is rendered-by the dashboard component.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
  *
  * @alpha
  */
-const selectDashboardUri = createSelector(selectDashboardMetadata, (state) => {
-    return state.uri;
+export const selectDashboardId = createSelector(selectPersistedDashboard, (state) => {
+    return state?.identifier;
 });
 
 /**
- * Selects current dashboard id ref.
+ * Selects URI of the persisted dashboard object that backs and is rendered-by the dashboard component.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ *
+ * @alpha
+ */
+const selectDashboardUri = createSelector(selectPersistedDashboard, (state) => {
+    return state?.uri;
+});
+
+/**
+ * Selects idRef of the persisted dashboard object that backs and is rendered-by the dashboard component.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
  *
  * @alpha
  */
 export const selectDashboardIdRef = createSelector(selectDashboardId, (id) => {
-    return idRef(id, "analyticalDashboard");
+    return id ? idRef(id, "analyticalDashboard") : undefined;
 });
 
 /**
- * Selects current dashboard uri ref.
+ * Selects uriRef of the persisted dashboard object that backs and is rendered-by the dashboard component.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
  *
  * @alpha
  */
 export const selectDashboardUriRef = createSelector(selectDashboardUri, (uri) => {
-    return uriRef(uri);
+    return uri ? uriRef(uri) : undefined;
 });
+
+//
+//
+//
 
 /**
  * Selects current dashboard title.
  *
  * @alpha
  */
-export const selectDashboardTitle = createSelector(selectDashboardMetadata, (state) => {
+export const selectDashboardTitle = createSelector(selectDashboardDescriptor, (state) => {
     return state.title;
+});
+
+/**
+ * Selects current dashboard description.
+ *
+ * @alpha
+ */
+export const selectDashboardDescription = createSelector(selectDashboardDescriptor, (state) => {
+    return state.description;
 });
 
 /**
@@ -79,6 +120,6 @@ export const selectDashboardTitle = createSelector(selectDashboardMetadata, (sta
  *
  * @alpha
  */
-export const selectDashboardTags = createSelector(selectDashboardMetadata, (state) => {
+export const selectDashboardTags = createSelector(selectDashboardDescriptor, (state) => {
     return state.tags;
 });

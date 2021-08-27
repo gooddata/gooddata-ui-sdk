@@ -59,9 +59,10 @@ import { IKpiAlertResult, IKpiResult } from "./types";
 import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
 import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
 import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
+import { invariant } from "ts-invariant";
 
 interface IKpiExecutorProps {
-    dashboardRef: ObjRef;
+    dashboardRef?: ObjRef;
     kpiWidget: IKpiWidget;
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
@@ -221,7 +222,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
             )}
             kpiAlertResult={kpiAlertResult}
             canSetAlert={canSetAlert}
-            isReadOnlyMode={isReadOnly}
+            isReadOnlyMode={isReadOnly || dashboardRef === undefined}
             alertExecutionError={
                 alertExecutionError ??
                 /*
@@ -267,6 +268,11 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                                 ),
                             });
                         }
+
+                        // if this bombs then the controller code is bugged because it should not even allow to get
+                        // to this point for dashboards that are not persisted. scheduling is not possible for such
+                        // dashboards and so the respective menus to trigger the scheduling must not be present
+                        invariant(dashboardRef, "attempting to create alert of an unsaved dashboard");
 
                         return kpiAlertOperations.onCreateAlert({
                             dashboard: dashboardRef,
