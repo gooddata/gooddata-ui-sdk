@@ -8,6 +8,7 @@ import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { dispatchDashboardEvent } from "../state/_infra/eventDispatcher";
 import { commandRejected, internalErrorOccurred, isDashboardCommandFailed } from "../events/general";
+import { saveDashboardHandler } from './dashboard/saveDashboardHandler';
 import { changeDateFilterSelectionHandler } from "./filterContext/dateFilter/changeDateFilterSelectionHandler";
 import { addAttributeFilterHandler } from "./filterContext/attributeFilter/addAttributeFilterHandler";
 import { removeAttributeFiltersHandler } from "./filterContext/attributeFilter/removeAttributeFiltersHandler";
@@ -55,7 +56,7 @@ const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
 } = {
     "GDC.DASH/CMD.INITIALIZE": initializeDashboardHandler,
-    "GDC.DASH/CMD.SAVE": unhandledCommand,
+    "GDC.DASH/CMD.SAVE": saveDashboardHandler,
     "GDC.DASH/CMD.SAVEAS": unhandledCommand,
     "GDC.DASH/CMD.RESET": unhandledCommand,
     "GDC.DASH/CMD.RENAME": unhandledCommand,

@@ -3,7 +3,9 @@
 import {
     IDashboardLayout,
     IDashboardLayoutItem,
+    IDashboardObjectIdentity,
     IDashboardWidget,
+    isDashboardLayout,
     ISettings,
     isInsightWidget,
     isKpiWidget,
@@ -12,11 +14,12 @@ import {
 import { IInsight, insightRef, serializeObjRef } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
 import keyBy from "lodash/keyBy";
-import { InvariantError } from "ts-invariant";
+import invariant, { InvariantError } from "ts-invariant";
 import {
     MeasurableWidgetContent,
     validateDashboardLayoutWidgetSize,
 } from "../../presentation/layout/DefaultDashboardLayoutRenderer";
+import { ObjRefMap } from "../metadata/objRefMap";
 
 function extractContentFromWidget(
     widget: IDashboardWidget,
@@ -121,5 +124,155 @@ export function dashboardLayoutSanitize<T = IDashboardWidget>(
     return {
         ...layout,
         sections: sanitizedSections,
+    };
+}
+
+/**
+ * Mapping between dashboard object identities. This is typically used to map between temporary identity assigned
+ * to a dashboard object as it is added onto a dashboard and the persistent identity of the object once it
+ * it saved by the backend.
+ */
+export type IdentityMapping = {
+    original: IDashboardObjectIdentity;
+    updated: IDashboardObjectIdentity;
+};
+
+/**
+ * Creates {@link ObjRefMap} containing identity mapping..
+ */
+function newIdentityMapping(items: ReadonlyArray<IdentityMapping>): ObjRefMap<IdentityMapping> {
+    const map = new ObjRefMap<IdentityMapping>({
+        type: "insight",
+        strictTypeCheck: false,
+        idExtract: (e) => e.original.identifier,
+        uriExtract: (e) => e.original.uri,
+        refExtract: (e) => e.original.ref,
+    });
+
+    return map.fromItems(items);
+}
+
+function getWidgetIdentity(widget: any | undefined): IDashboardObjectIdentity | undefined {
+    const { ref, uri, identifier } = widget ?? {};
+
+    if (!ref || !uri || !identifier) {
+        return;
+    }
+
+    return {
+        ref,
+        uri,
+        identifier,
+    };
+}
+
+function getIdentityMapping<T extends IDashboardWidget>(
+    original: IDashboardLayout<T>,
+    updated: IDashboardLayout<T>,
+): IdentityMapping[] {
+    const result: IdentityMapping[] = [];
+
+    original.sections.forEach((section, sectionIdx) => {
+        const updatedSection = updated.sections[sectionIdx];
+        invariant(updatedSection);
+
+        section.items.forEach((item, itemIdx) => {
+            const updatedItem = updatedSection.items[itemIdx];
+            invariant(updatedItem);
+
+            if (isDashboardLayout(item.widget)) {
+                invariant(isDashboardLayout(updatedItem.widget));
+
+                result.push(...getIdentityMapping(item.widget, updatedItem.widget));
+            } else {
+                const originalIdentity = getWidgetIdentity(item.widget);
+                const updatedIdentity = getWidgetIdentity(updatedItem.widget);
+
+                invariant(originalIdentity && updatedIdentity);
+
+                result.push({
+                    original: originalIdentity,
+                    updated: updatedIdentity,
+                });
+            }
+        });
+    });
+
+    return result;
+}
+
+/**
+ * Given two layouts, this function construct mapping between widget identities between the original and the
+ * updated layout.
+ *
+ * Note that this function does not really verify that the layouts are effectively the same and differ just
+ * in the widget identities. It checks that for each item in the original layout, there is item at the same
+ * position in the updated layout. It can happen that two different layouts will be processed by this
+ * function without errors.
+ *
+ * @param original - original layout, the original widget identities will be picked from here
+ * @param updated - updated layout, the updated widget identities will be picked from here
+ * @returns map between original widget identity and updated widget identity
+ */
+export function dashboardLayoutWidgetIdentityMap<T extends IDashboardWidget>(
+    original: IDashboardLayout<T>,
+    updated: IDashboardLayout<T>,
+): ObjRefMap<IdentityMapping> {
+    const result: IdentityMapping[] = getIdentityMapping(original, updated);
+
+    return newIdentityMapping(result);
+}
+
+export type DashboardObjectIdentityPredicate = (identity: IDashboardObjectIdentity) => boolean;
+
+/**
+ * Given a layout, this function will go through all of it's item's widgets and remove widget's identity if
+ * the provided predicate function evaluates true for the identity.
+ *
+ * A new layout with updated widgets will be returned.
+ *
+ * @param layout - layout to process
+ * @param identityPredicate - function to evaluate for each widget identity; if this function returns true, the
+ *  widget's identity will be removed
+ */
+export function dashboardLayoutRemoveIdentity<T extends IDashboardWidget>(
+    layout: IDashboardLayout<T>,
+    identityPredicate: DashboardObjectIdentityPredicate,
+): IDashboardLayout {
+    const updatedSections = layout.sections.map((section) => {
+        const updatedItems: IDashboardLayoutItem[] = section.items.map((item) => {
+            if (isDashboardLayout(item.widget)) {
+                return {
+                    ...item,
+                    widget: dashboardLayoutRemoveIdentity(layout, identityPredicate),
+                };
+            } else {
+                const identity = getWidgetIdentity(item.widget);
+
+                if (!identity || identityPredicate(identity)) {
+                    return item;
+                }
+
+                return {
+                    ...item,
+                    widget: {
+                        ...item.widget,
+                        ref: undefined,
+                        uri: undefined,
+                        identifier: undefined,
+                    },
+                } as any;
+            }
+        });
+
+        return {
+            ...section,
+            items: updatedItems,
+        };
+    });
+
+    return {
+        ...layout,
+        sections: updatedSections,
     };
 }

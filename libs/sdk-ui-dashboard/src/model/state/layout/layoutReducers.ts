@@ -12,7 +12,7 @@ import {
     isKpiWidget,
 } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
-import { undoReducer, withUndo } from "../_infra/undoEnhancer";
+import { resetUndoReducer, undoReducer, withUndo } from "../_infra/undoEnhancer";
 import {
     ExtendedDashboardItem,
     ExtendedDashboardLayoutSection,
@@ -25,6 +25,8 @@ import { areObjRefsEqual, ObjRef, VisualizationProperties } from "@gooddata/sdk-
 import { WidgetHeader } from "../../types/widgetTypes";
 import flatMap from "lodash/flatMap";
 import { Draft } from "immer";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
+import { IdentityMapping } from "../../../_staging/dashboard/dashboardLayout";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 
@@ -34,6 +36,41 @@ type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 
 const setLayout: LayoutReducer<IDashboardLayout<ExtendedDashboardWidget>> = (state, action) => {
     state.layout = action.payload;
+};
+
+//
+//
+//
+
+function recurseLayoutAndUpdateWidgetIds(
+    layout: Draft<IDashboardLayout<ExtendedDashboardWidget>>,
+    mapping: ObjRefMap<IdentityMapping>,
+) {
+    layout.sections.forEach((section) => {
+        section.items.forEach((item) => {
+            const widget = item.widget;
+
+            if (!isInsightWidget(widget) && !isKpiWidget(widget)) {
+                return;
+            }
+
+            const { updated: newIdentity } = mapping.get(widget.ref) ?? {};
+
+            if (!newIdentity) {
+                return;
+            }
+
+            widget.ref = newIdentity.ref;
+            widget.uri = newIdentity.uri;
+            widget.identifier = newIdentity.identifier;
+        });
+    });
+}
+
+const updateWidgetIdentities: LayoutReducer<ObjRefMap<IdentityMapping>> = (state, action) => {
+    invariant(state.layout);
+
+    recurseLayoutAndUpdateWidgetIds(state.layout, action.payload);
 };
 
 //
@@ -399,6 +436,7 @@ const replaceKpiWidgetComparison: LayoutReducer<ReplaceKpiWidgetComparison> = (s
 
 export const layoutReducers = {
     setLayout,
+    updateWidgetIdentities,
     addSection: withUndo(addSection),
     removeSection: withUndo(removeSection),
     moveSection: withUndo(moveSection),
@@ -415,4 +453,5 @@ export const layoutReducers = {
     replaceKpiWidgetMeasure: withUndo(replaceKpiWidgetMeasure),
     replaceKpiWidgetComparison: withUndo(replaceKpiWidgetComparison),
     undoLayout: undoReducer,
+    clearLayoutHistory: resetUndoReducer,
 };

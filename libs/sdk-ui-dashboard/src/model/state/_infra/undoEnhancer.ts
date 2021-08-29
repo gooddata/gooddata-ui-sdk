@@ -186,6 +186,15 @@ export const undoReducer = <TState extends UndoEnhancedState>(
     });
 };
 
+/**
+ * A reducer to reset the undo state. This will clear the undo stack (the 'history').
+ *
+ * @param state - undo enhanced state whose undo to reset
+ */
+export const resetUndoReducer = <TState extends UndoEnhancedState>(state: Draft<TState>): void => {
+    state._undo = InitialUndoState._undo;
+};
+
 export type UndoableCommand<TCmd extends IDashboardCommand = IDashboardCommand> = {
     /**
      * Command that can be un-done.

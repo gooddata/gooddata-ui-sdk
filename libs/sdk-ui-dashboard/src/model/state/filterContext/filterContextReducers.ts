@@ -49,6 +49,16 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
     state.filterContextIdentity = filterContextIdentity;
 };
 
+type SetFilterContextIdentityPayload = {
+    filterContextIdentity?: IDashboardObjectIdentity;
+};
+const updateFilterContextIdentity: FilterContextReducer<PayloadAction<SetFilterContextIdentityPayload>> = (
+    state,
+    action,
+) => {
+    state.filterContextIdentity = action.payload.filterContextIdentity;
+};
+
 export interface IUpsertDateFilterAllTimePayload {
     readonly type: "allTime";
 }
@@ -237,6 +247,7 @@ const setAttributeFilterParents: FilterContextReducer<PayloadAction<ISetAttribut
 
 export const filterContextReducers = {
     setFilterContext,
+    updateFilterContextIdentity,
     addAttributeFilter,
     removeAttributeFilter,
     moveAttributeFilter,
