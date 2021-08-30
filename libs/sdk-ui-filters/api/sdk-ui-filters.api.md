@@ -98,7 +98,7 @@ export const defaultDateFilterOptions: IDateFilterOptionsByType;
 // @public (undocumented)
 export interface EmptyListItem {
     // (undocumented)
-    empty: boolean;
+    empty: true;
 }
 
 // @public
@@ -467,6 +467,12 @@ export interface IRankingFilterProps {
 
 // @public
 export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFilterOption;
+
+// @public (undocumented)
+export const isEmptyListItem: (item: Partial<AttributeListItem>) => item is EmptyListItem;
+
+// @public (undocumented)
+export const isNonEmptyListItem: (item: Partial<AttributeListItem>) => item is IAttributeElement;
 
 // @public
 export const isRelativeDateFilterOption: (obj: unknown) => obj is RelativeDateFilterOption;

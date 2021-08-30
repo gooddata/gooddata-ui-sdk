@@ -20,7 +20,11 @@ import { IntlWrapper } from "../../../localization";
 import min from "lodash/min";
 import max from "lodash/max";
 import isEmpty from "lodash/isEmpty";
-import { IAttributeDropdownBodyExtendedProps } from "@gooddata/sdk-ui-filters";
+import {
+    AttributeListItem,
+    IAttributeDropdownBodyExtendedProps,
+    isEmptyListItem,
+} from "@gooddata/sdk-ui-filters";
 import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 import AttributeDropdownListItem from "./AttributeDropdownListItem";
 
@@ -61,14 +65,21 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
         "gd-flex-row-container-mobile": isMobile,
     });
 
-    const getElementsList = (items: IAttributeElement[], emptyString: string) => {
+    const getElementsList = (items: AttributeListItem[], emptyString: string) => {
         return items.map((item) => {
-            return !isEmpty(item?.title)
-                ? item
-                : {
+            // for empty list items return an empty object -> this causes the underlying list to render an empty row (without checkboxes)
+            if (isEmptyListItem(item)) {
+                return {} as any;
+            }
+
+            // set "empty value" title only to items that have empty title but not URL
+            // this is to distinguish between elements that have not been loaded yet and those who have and have empty title
+            return isEmpty(item?.title) && !isEmpty(item?.uri)
+                ? {
                       ...item,
                       title: emptyString,
-                  };
+                  }
+                : item;
         });
     };
 
@@ -100,7 +111,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
             onRangeChange={props.onRangeChange}
             isInverted={props.isInverted}
             items={getElementsList(
-                props.items as IAttributeElement[],
+                props.items,
                 intl.formatMessage({ id: "attributeFilterDropdown.emptyValue" }),
             )}
             listItemClass={AttributeDropdownListItem}
