@@ -1,9 +1,10 @@
-// (C) 2019-2020 GoodData Corporation
-import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
+// (C) 2019-2021 GoodData Corporation
+import { GdcMetadata, GdcMetadataObject, GdcVisualizationObject } from "@gooddata/api-model-bear";
 import {
     IMeasureExpressionToken,
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
+    IMeasureReferencing,
     IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -13,14 +14,16 @@ import replace from "lodash/fp/replace";
 import uniq from "lodash/fp/uniq";
 import {
     convertMetadataObject,
+    convertMetadataObjectXrefEntry,
     SupportedMetadataObject,
     SupportedWrappedMetadataObject,
 } from "../../../convertors/fromBackend/MetaConverter";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { objRefToUri } from "../../../utils/api";
+import { getObjectIdFromUri, objRefToUri } from "../../../utils/api";
 import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
+import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
 
 export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -153,5 +156,40 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
         });
 
         return measure;
+    }
+
+    async getMeasureReferencingObjects(ref: ObjRef): Promise<IMeasureReferencing> {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
+        const objectId = getObjectIdFromUri(uri);
+
+        const measures = await this.authCall(async (sdk) => {
+            const usedBy = await sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
+                `/gdc/md/${this.workspace}/usedby2/${objectId}?types=metric`,
+            );
+
+            return usedBy.entries.map((entry: GdcMetadata.IObjectXrefEntry) =>
+                convertMetadataObjectXrefEntry("measure", entry),
+            );
+        });
+
+        const visualizations = await this.authCall(async (sdk) => {
+            const usedBy = await sdk.xhr.getParsed<{ entries: GdcVisualizationObject.IVisualization[] }>(
+                `/gdc/md/${this.workspace}/usedby2/${objectId}?types=visualizationObject`,
+            );
+
+            return usedBy.entries;
+        });
+
+        const insights = visualizations.map((visualization) =>
+            convertVisualization(
+                visualization,
+                visualization.visualizationObject.content.visualizationClass.uri,
+            ),
+        );
+
+        return Promise.resolve({
+            measures: measures,
+            insights: insights,
+        });
     }
 }

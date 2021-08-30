@@ -377,6 +377,7 @@ export {
     metadataObjectId,
     IDashboardMetadataObject,
     isDashboardMetadataObject,
+    IMeasureReferencing,
 } from "./workspace/fromModel/ldm/metadata";
 
 export {

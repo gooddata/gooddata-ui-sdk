@@ -1,5 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 import { IMetadataObject, IMetadataObjectBase, isMetadataObject } from "../types";
+import { IInsight } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -44,6 +45,16 @@ export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBas
  * @public
  */
 export type IMeasureMetadataObjectDefinition = IMetadataObjectDefinition & IMeasureMetadataObjectBase;
+
+/**
+ * Contains information about objects that may be referencing an measure. {@link IWorkspaceMeasuresService.getMeasureReferencingObjects} function.
+ *
+ * @public
+ */
+export interface IMeasureReferencing {
+    measures?: IMetadataObject[];
+    insights?: IInsight[];
+}
 
 /**
  * Tests whether the provided object is of type {@link IMeasureMetadataObject}.

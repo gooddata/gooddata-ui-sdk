@@ -954,6 +954,14 @@ export interface IMeasureMetadataObjectBase {
 // @public
 export type IMeasureMetadataObjectDefinition = IMetadataObjectDefinition & IMeasureMetadataObjectBase;
 
+// @public
+export interface IMeasureReferencing {
+    // (undocumented)
+    insights?: IInsight[];
+    // (undocumented)
+    measures?: IMetadataObject[];
+}
+
 // @public (undocumented)
 export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIdentity {
 }
@@ -1814,6 +1822,7 @@ export interface IWorkspaceMeasuresService {
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
+    getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
 }
 
