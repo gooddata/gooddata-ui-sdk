@@ -45,6 +45,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/EVT.COMMAND.FAILED",
     "GDC.DASH/EVT.QUERY.FAILED",
     "@@QUERY.ENVELOPE" as any,
+    "@@COMMAND.ENVELOPE" as any,
     // Execution failed events have the actual error in them
     "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
     "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",

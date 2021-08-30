@@ -1,6 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { actionChannel, call, getContext, take } from "redux-saga/effects";
+import noop from "lodash/noop";
+
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
@@ -108,6 +110,133 @@ function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
 }
 
 /**
+ * @internal
+ */
+export const CommandEnvelopeActionTypeName = "@@COMMAND.ENVELOPE";
+
+type CommandEnvelopeEventHandlers<TCommand extends IDashboardCommand> = {
+    onStart: (command: TCommand) => void;
+    onSuccess: () => void;
+    onError: (err: Error) => void;
+};
+
+type CommandEnvelope<TCommand extends IDashboardCommand> = Readonly<
+    CommandEnvelopeEventHandlers<TCommand>
+> & {
+    readonly type: typeof CommandEnvelopeActionTypeName;
+    readonly command: TCommand;
+};
+
+export function commandEnvelope<TCommand extends IDashboardCommand>(
+    command: TCommand,
+    eventHandlers?: Partial<CommandEnvelopeEventHandlers<TCommand>>,
+): CommandEnvelope<TCommand> {
+    return {
+        type: CommandEnvelopeActionTypeName,
+        command,
+        onError: eventHandlers?.onError ?? noop,
+        onStart: eventHandlers?.onStart ?? noop,
+        onSuccess: eventHandlers?.onSuccess ?? noop,
+    };
+}
+
+/**
+ * @internal
+ */
+export function commandEnvelopeWithPromise<TCommand extends IDashboardCommand>(
+    command: TCommand,
+): {
+    promise: Promise<void>;
+    envelope: CommandEnvelope<TCommand>;
+} {
+    const commandEnvelopeEventHandlers: Partial<CommandEnvelopeEventHandlers<TCommand>> = {};
+
+    const promise = new Promise<void>((resolve, reject) => {
+        commandEnvelopeEventHandlers.onSuccess = resolve;
+        commandEnvelopeEventHandlers.onError = reject;
+    });
+
+    const envelope = commandEnvelope(command, commandEnvelopeEventHandlers);
+
+    return {
+        promise,
+        envelope,
+    };
+}
+
+function isCommandEnvelope(obj: unknown): obj is CommandEnvelope<any> {
+    return !!obj && (obj as CommandEnvelope<any>).type === CommandEnvelopeActionTypeName;
+}
+
+function ensureCommandWrappedInEnvelope(
+    action: DashboardCommands | CommandEnvelope<DashboardCommands>,
+): CommandEnvelope<any> {
+    return isCommandEnvelope(action) ? action : commandEnvelope(action as DashboardCommands);
+}
+
+function* processCommand(
+    ctx: DashboardContext,
+    envelope: CommandEnvelope<DashboardCommands>,
+): SagaIterator<void> {
+    const {
+        command,
+        command: { type, correlationId },
+    } = envelope;
+    const correlationIdForLog = correlationId ?? "(no correlationId provided)";
+
+    const commandHandler = DefaultCommandHandlers[envelope.command.type] ?? unhandledCommand;
+
+    try {
+        try {
+            envelope.onStart(command);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.warn(
+                `An error has occurred while calling onStart function provided for ${type}@${correlationIdForLog} processing:`,
+                e,
+            );
+        }
+
+        const result = yield call(commandHandler, ctx, command);
+
+        if (isDashboardEvent(result)) {
+            yield dispatchDashboardEvent(result);
+        }
+
+        try {
+            envelope.onSuccess();
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.warn(
+                `An error has occurred while calling onSuccess function provided for ${type}@${correlationIdForLog} processing`,
+                e,
+            );
+        }
+    } catch (e) {
+        try {
+            envelope.onError(e);
+        } catch (ne) {
+            // eslint-disable-next-line no-console
+            console.warn(
+                `An error has occurred while calling onError function provided for ${type}@${correlationIdForLog} processing:`,
+                ne,
+            );
+        }
+
+        if (isDashboardCommandFailed(e)) {
+            yield dispatchDashboardEvent(e);
+        } else {
+            // Errors during command handling should be caught and addressed in the handler, possibly with a
+            // more meaningful error message. If the error bubbles up to here then there are holes in error
+            // handling or something is seriously messed up.
+            yield dispatchDashboardEvent(
+                internalErrorOccurred(ctx, command, `Internal error has occurred while handling ${type}`, e),
+            );
+        }
+    }
+}
+
+/**
  * Root command handler is the central point through which all command processing is done. The handler registers
  * for all actions starting with `GDC.DASH/CMD` === all dashboard commands.
  *
@@ -115,35 +244,16 @@ function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
  * prevent loss of commands.
  */
 export function* rootCommandHandler(): SagaIterator<void> {
-    const commandChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.DASH/CMD"));
+    const commandChannel = yield actionChannel(
+        (action: any) =>
+            action.type === CommandEnvelopeActionTypeName || action.type.startsWith("GDC.DASH/CMD"),
+    );
 
     while (true) {
-        const command: DashboardCommands = yield take(commandChannel);
-        const dashboardContext: DashboardContext = yield getContext("dashboardContext");
-        const commandHandler = DefaultCommandHandlers[command.type] ?? unhandledCommand;
+        const command: DashboardCommands | CommandEnvelope<DashboardCommands> = yield take(commandChannel);
+        const envelope = ensureCommandWrappedInEnvelope(command);
+        const ctx: DashboardContext = yield getContext("dashboardContext");
 
-        try {
-            const result = yield call(commandHandler, dashboardContext, command);
-
-            if (isDashboardEvent(result)) {
-                yield dispatchDashboardEvent(result);
-            }
-        } catch (e) {
-            if (isDashboardCommandFailed(e)) {
-                yield dispatchDashboardEvent(e);
-            } else {
-                // Errors during command handling should be caught and addressed in the handler, possibly with a
-                // more meaningful error message. If the error bubbles up to here then there are holes in error
-                // handling or something is seriously messed up.
-                yield dispatchDashboardEvent(
-                    internalErrorOccurred(
-                        dashboardContext,
-                        command,
-                        `Internal error has occurred while handling ${command.type}`,
-                        e,
-                    ),
-                );
-            }
-        }
+        yield call(processCommand, ctx, envelope);
     }
 }
