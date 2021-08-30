@@ -27,6 +27,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 import AttributeDropdownListItem from "./AttributeDropdownListItem";
+import { selectLocale, useDashboardSelector } from "../../../../model";
 
 const MAX_SELECTION_SIZE = 500;
 const MAX_LIST_HEIGHT = 392;
@@ -183,8 +184,10 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
 };
 
 export const AttributeFilterBody: React.FC<IAttributeDropdownBodyExtendedProps> = (props) => {
+    const locale = useDashboardSelector(selectLocale);
+
     return (
-        <IntlWrapper>
+        <IntlWrapper locale={locale}>
             <AttributeFilterBodyCore {...props} />
         </IntlWrapper>
     );

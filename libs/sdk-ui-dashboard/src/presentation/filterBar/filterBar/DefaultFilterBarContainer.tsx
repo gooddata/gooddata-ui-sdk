@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Measure from "react-measure";
 
 import { IntlWrapper } from "../../localization";
+import { selectLocale, useDashboardSelector } from "../../../model";
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton";
 
 // TODO: this will probably need to be customizable so that custom filter components work
@@ -51,8 +52,10 @@ const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
  * @internal
  */
 export const DefaultFilterBarContainer: React.FC = ({ children }) => {
+    const locale = useDashboardSelector(selectLocale);
+
     return (
-        <IntlWrapper>
+        <IntlWrapper locale={locale}>
             <DefaultFilterBarContainerCore>{children}</DefaultFilterBarContainerCore>
         </IntlWrapper>
     );

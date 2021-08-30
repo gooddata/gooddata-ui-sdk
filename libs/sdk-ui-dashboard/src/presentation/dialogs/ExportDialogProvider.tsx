@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
-import { ExportDialog } from "@gooddata/sdk-ui-kit";
 import React, { useCallback } from "react";
+import { useIntl } from "react-intl";
+import { ExportDialog } from "@gooddata/sdk-ui-kit";
 import { useExportDialogContext } from "../dashboardContexts";
 
 /**
@@ -8,6 +9,7 @@ import { useExportDialogContext } from "../dashboardContexts";
  */
 export const ExportDialogProvider: React.FC = () => {
     const { closeDialog, dialogConfig, isOpen } = useExportDialogContext();
+    const intl = useIntl();
     const { onClose: originalOnClose } = dialogConfig;
 
     const onClose = useCallback(() => {
@@ -15,5 +17,18 @@ export const ExportDialogProvider: React.FC = () => {
         closeDialog();
     }, [originalOnClose, closeDialog]);
 
-    return isOpen ? <ExportDialog {...dialogConfig} onClose={onClose} onCancel={closeDialog} /> : null;
+    return isOpen ? (
+        <ExportDialog
+            {...dialogConfig}
+            headline={intl.formatMessage({ id: "dialogs.export.headline" })}
+            cancelButtonText={intl.formatMessage({ id: "cancel" })}
+            submitButtonText={intl.formatMessage({ id: "dialogs.export.submit" })}
+            filterContextText={intl.formatMessage({ id: "dialogs.export.includeFilters" })}
+            filterContextTitle={intl.formatMessage({ id: "dialogs.export.filters" })}
+            mergeHeadersText={intl.formatMessage({ id: "dialogs.export.mergeHeaders" })}
+            mergeHeadersTitle={intl.formatMessage({ id: "dialogs.export.cells" })}
+            onClose={onClose}
+            onCancel={closeDialog}
+        />
+    ) : null;
 };
