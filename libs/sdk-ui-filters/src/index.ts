@@ -21,7 +21,12 @@ export {
     IAttributeDropdownBodyExtendedProps,
     IAttributeDropdownListItemProps,
 } from "./AttributeFilter/AttributeDropdown/AttributeDropdownBody";
-export { AttributeListItem, EmptyListItem } from "./AttributeFilter/AttributeDropdown/types";
+export {
+    AttributeListItem,
+    EmptyListItem,
+    isEmptyListItem,
+    isNonEmptyListItem,
+} from "./AttributeFilter/AttributeDropdown/types";
 export {
     DateFilter,
     IDateFilterCallbackProps,

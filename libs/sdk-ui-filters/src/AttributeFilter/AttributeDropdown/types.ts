@@ -7,13 +7,22 @@ export const emptyListItem: EmptyListItem = { empty: true };
  * @public
  */
 export interface EmptyListItem {
-    empty: boolean;
+    empty: true;
 }
 /**
  * @public
  */
 export type AttributeListItem = IAttributeElement | EmptyListItem;
 
+/**
+ * @public
+ */
+export const isEmptyListItem = (item: Partial<AttributeListItem>): item is EmptyListItem =>
+    item && (item as EmptyListItem).empty;
+
+/**
+ * @public
+ */
 export const isNonEmptyListItem = (item: Partial<AttributeListItem>): item is IAttributeElement =>
     item && !(item as EmptyListItem).empty;
 

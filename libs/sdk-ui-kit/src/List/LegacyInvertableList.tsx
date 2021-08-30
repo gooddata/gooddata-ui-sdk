@@ -247,7 +247,7 @@ export class LegacyInvertableList<T> extends Component<
 
     /**
      * If change in selection happens to select all or unselect all items it is converted
-     * to the respective empty selectionj.
+     * to the respective empty selection.
      */
     private notifyUpstreamOfSelectionChange(newSelection: Array<T>) {
         const { itemsCount } = this.props;
