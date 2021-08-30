@@ -38,6 +38,7 @@ export {
     selectIsExport,
     selectPlatformEdition,
     selectDisableDefaultDrills,
+    selectEnableFilterValuesResolutionInDrillEvents,
 } from "./state/config/configSelectors";
 export { PermissionsState } from "./state/permissions/permissionsState";
 export {
@@ -143,6 +144,7 @@ export {
     DashboardContext,
     ObjectAvailabilityConfig,
     DashboardConfig,
+    FiltersInfo,
     ResolvedDashboardConfig,
     ResolvableFilter,
     ResolvedDateFilterValues,

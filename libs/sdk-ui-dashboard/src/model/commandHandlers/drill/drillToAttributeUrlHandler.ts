@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call, put, SagaReturnType } from "redux-saga/effects";
+import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
 import { DrillToAttributeUrl } from "../../commands/drill";
 import {
@@ -9,6 +9,7 @@ import {
     drillToAttributeUrlResolved,
 } from "../../events/drill";
 import { resolveDrillToAttributeUrl } from "./resolveDrillToAttributeUrl";
+import { getDrillToUrlFiltersWithResolvedValues } from "./getDrillToUrlFilters";
 
 export function* drillToAttributeUrlHandler(
     ctx: DashboardContext,
@@ -23,18 +24,20 @@ export function* drillToAttributeUrlHandler(
         ),
     );
 
-    const resolvedUrl: SagaReturnType<typeof resolveDrillToAttributeUrl> = yield call(
-        resolveDrillToAttributeUrl,
-        cmd.payload.drillDefinition,
-        cmd.payload.drillEvent,
-        ctx,
-    );
+    const [resolvedUrl, filtersInfo]: [
+        SagaReturnType<typeof resolveDrillToAttributeUrl>,
+        SagaReturnType<typeof getDrillToUrlFiltersWithResolvedValues>,
+    ] = yield all([
+        call(resolveDrillToAttributeUrl, cmd.payload.drillDefinition, cmd.payload.drillEvent, ctx),
+        call(getDrillToUrlFiltersWithResolvedValues, ctx, cmd.payload.drillEvent.widgetRef!),
+    ]);
 
     return drillToAttributeUrlResolved(
         ctx,
         resolvedUrl!,
         cmd.payload.drillDefinition,
         cmd.payload.drillEvent,
+        filtersInfo,
         cmd.correlationId,
     );
 }

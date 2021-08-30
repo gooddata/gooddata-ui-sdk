@@ -7,6 +7,8 @@ import {
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
     IRelativeDateFilter,
+    isAttributeFilter,
+    isDateFilter,
     LocalIdRef,
     ObjRef,
 } from "@gooddata/sdk-model";
@@ -21,6 +23,15 @@ export type IDashboardFilter =
     | IRelativeDateFilter
     | IPositiveAttributeFilter
     | INegativeAttributeFilter;
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardFilter}.
+ *
+ * @alpha
+ */
+export function isDashboardFilter(obj: unknown): obj is IDashboardFilter {
+    return isAttributeFilter(obj) || isDateFilter(obj);
+}
 
 /**
  * Supported dashboard drill definitions.

@@ -106,6 +106,13 @@ export type DashboardConfig = {
      * Defaults to false.
      */
     disableDefaultDrills?: boolean;
+
+    /**
+     * If set to true, filter values will resolve in drill events.
+     *
+     * Defaults to false.
+     */
+    enableFilterValuesResolutionInDrillEvents?: boolean;
 };
 
 /**
@@ -217,3 +224,13 @@ export interface IResolvedFilterValues {
  * @alpha
  */
 export type ResolvableFilter = IDashboardFilter;
+
+/**
+ * Contains information about dashboard filters.
+ *
+ * @alpha
+ */
+export type FiltersInfo = {
+    filters: IDashboardFilter[];
+    resolvedFilterValues?: IResolvedFilterValues;
+};

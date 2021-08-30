@@ -636,6 +636,7 @@ export type DashboardConfig = {
     isEmbedded?: boolean;
     isExport?: boolean;
     disableDefaultDrills?: boolean;
+    enableFilterValuesResolutionInDrillEvents?: boolean;
 };
 
 // @alpha
@@ -763,6 +764,7 @@ export interface DashboardDrillToAttributeUrlResolved extends IDashboardEvent {
         readonly drillEvent: IDashboardDrillEvent;
         readonly drillDefinition: IDrillToAttributeUrl;
         readonly url: string;
+        readonly filtersInfo: FiltersInfo;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED";
@@ -786,6 +788,7 @@ export interface DashboardDrillToCustomUrlResolved extends IDashboardEvent {
         readonly drillEvent: IDashboardDrillEvent;
         readonly drillDefinition: IDrillToCustomUrl;
         readonly url: string;
+        readonly filtersInfo: FiltersInfo;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED";
@@ -1591,7 +1594,7 @@ export function drillToAttributeUrl(drillDefinition: IDrillToAttributeUrl, drill
 export function drillToAttributeUrlRequested(ctx: DashboardContext, drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToAttributeUrlRequested;
 
 // @alpha (undocumented)
-export function drillToAttributeUrlResolved(ctx: DashboardContext, url: string, drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToAttributeUrlResolved;
+export function drillToAttributeUrlResolved(ctx: DashboardContext, url: string, drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, filtersInfo: FiltersInfo, correlationId?: string): DashboardDrillToAttributeUrlResolved;
 
 // @alpha (undocumented)
 export interface DrillToCustomUrl extends IDashboardCommand {
@@ -1611,7 +1614,7 @@ export function drillToCustomUrl(drillDefinition: IDrillToCustomUrl, drillEvent:
 export function drillToCustomUrlRequested(ctx: DashboardContext, drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToCustomUrlRequested;
 
 // @alpha (undocumented)
-export function drillToCustomUrlResolved(ctx: DashboardContext, url: string, drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToCustomUrlResolved;
+export function drillToCustomUrlResolved(ctx: DashboardContext, url: string, drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, filtersInfo: FiltersInfo, correlationId?: string): DashboardDrillToCustomUrlResolved;
 
 // @alpha (undocumented)
 export interface DrillToDashboard extends IDashboardCommand {
@@ -1759,6 +1762,12 @@ export interface FilterOpUnignoreAttributeFilter extends FilterOp {
     // (undocumented)
     type: "unignoreAttributeFilter";
 }
+
+// @alpha
+export type FiltersInfo = {
+    filters: IDashboardFilter[];
+    resolvedFilterValues?: IResolvedFilterValues;
+};
 
 // @internal (undocumented)
 export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string;
@@ -2229,6 +2238,9 @@ export function isDashboardEvent(obj: unknown): obj is IDashboardEvent;
 
 // @alpha
 export function isDashboardEventOrCustomDashboardEvent(obj: unknown): obj is IDashboardEvent | ICustomDashboardEvent;
+
+// @alpha
+export function isDashboardFilter(obj: unknown): obj is IDashboardFilter;
 
 // @alpha
 export const isDashboardFilterContextChanged: (obj: unknown) => obj is DashboardFilterContextChanged;
@@ -3012,6 +3024,9 @@ export const selectEffectiveDateFilterTitle: OutputSelector<DashboardState, stri
 
 // @alpha
 export const selectEnableCompanyLogoInEmbeddedUI: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @alpha
+export const selectEnableFilterValuesResolutionInDrillEvents: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha
 export const selectEnableKPIDashboardSchedule: OutputSelector<DashboardState, boolean | undefined, (res: ResolvedDashboardConfig) => boolean | undefined>;
