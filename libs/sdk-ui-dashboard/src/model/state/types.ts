@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { EntityState } from "@reduxjs/toolkit";
+import { AnyAction, Dispatch, EntityState } from "@reduxjs/toolkit";
 import { IInsight } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState";
 import { FilterContextState } from "./filterContext/filterContextState";
@@ -54,3 +54,8 @@ export type DashboardState = {
         [queryName: string]: any;
     };
 };
+
+/**
+ * @alpha
+ */
+export type DashboardDispatch = Dispatch<AnyAction>;

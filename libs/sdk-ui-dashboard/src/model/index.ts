@@ -12,8 +12,7 @@
  * -  all commands, their types & command factories
  */
 
-export { DashboardDispatch } from "./state/dashboardStore";
-export { DashboardState } from "./state/types";
+export { DashboardDispatch, DashboardState } from "./state/types";
 
 export { selectDashboardLoading } from "./state/loading/loadingSelectors";
 export { LoadingState } from "./state/loading/loadingState";

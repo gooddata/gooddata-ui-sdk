@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { DashboardQueries, IDashboardQueryResult } from "../queries";
-import { DashboardDispatch } from "../state/dashboardStore";
+import { DashboardDispatch } from "../state/types";
 import { queryEnvelopeWithPromise } from "../state/_infra/queryProcessing";
 
 /**

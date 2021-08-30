@@ -1,9 +1,7 @@
 // (C) 2021 GoodData Corporation
 import {
-    AnyAction,
     combineReducers,
     configureStore,
-    Dispatch,
     EnhancedStore,
     getDefaultMiddleware,
     Middleware,
@@ -86,11 +84,6 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
  * api-extractor will have problems if just the inferred types gets exported unless the value
  * from which it is inferred is exported as well.
  */
-
-/**
- * @alpha
- */
-export type DashboardDispatch = Dispatch<AnyAction>;
 
 /**
  * @internal

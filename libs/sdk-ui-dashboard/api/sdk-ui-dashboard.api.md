@@ -866,7 +866,7 @@ export type DashboardEventBody<T extends IDashboardEvent | ICustomDashboardEvent
 // @alpha
 export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> = {
     eval: (event: DashboardEvents | ICustomDashboardEvent) => boolean;
-    handler: (event: TEvents, dispatchCommand: (command: DashboardCommands) => void, stateSelect: DashboardSelectorEvaluator) => void;
+    handler: (event: TEvents, dashboardDispatch: Dispatch<AnyAction>, stateSelect: DashboardSelectorEvaluator) => void;
 };
 
 // @alpha (undocumented)
@@ -3253,19 +3253,7 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     commandCreator: (...args: TCommandCreatorArgs) => TCommand;
     successEvent: TSuccessEventType;
     errorEvent: TErrorEventType;
-    onSuccess?: ((event: Extract<DashboardInitialized, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardSaved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardCopySaved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardRenamed, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardWasReset, {
-        type: TSuccessEventType;
-    }> | Extract<DateFilterValidationFailed, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardCommandFailed, {
+    onSuccess?: ((event: Extract<DashboardCommandFailed, {
         type: TSuccessEventType;
     }> | Extract<DashboardCommandRejected, {
         type: TSuccessEventType;
@@ -3276,6 +3264,18 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     }> | Extract<DashboardQueryStarted, {
         type: TSuccessEventType;
     }> | Extract<DashboardQueryCompleted<any, any>, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInitialized, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardSaved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardCopySaved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardRenamed, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardWasReset, {
+        type: TSuccessEventType;
+    }> | Extract<DateFilterValidationFailed, {
         type: TSuccessEventType;
     }> | Extract<DashboardDateFilterSelectionChanged, {
         type: TSuccessEventType;
@@ -3386,19 +3386,7 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     }> | Extract<DashboardDrillableItemsChanged, {
         type: TSuccessEventType;
     }>) => void) | undefined;
-    onError?: ((event: Extract<DashboardInitialized, {
-        type: TErrorEventType;
-    }> | Extract<DashboardSaved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardCopySaved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardRenamed, {
-        type: TErrorEventType;
-    }> | Extract<DashboardWasReset, {
-        type: TErrorEventType;
-    }> | Extract<DateFilterValidationFailed, {
-        type: TErrorEventType;
-    }> | Extract<DashboardCommandFailed, {
+    onError?: ((event: Extract<DashboardCommandFailed, {
         type: TErrorEventType;
     }> | Extract<DashboardCommandRejected, {
         type: TErrorEventType;
@@ -3409,6 +3397,18 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     }> | Extract<DashboardQueryStarted, {
         type: TErrorEventType;
     }> | Extract<DashboardQueryCompleted<any, any>, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInitialized, {
+        type: TErrorEventType;
+    }> | Extract<DashboardSaved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardCopySaved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardRenamed, {
+        type: TErrorEventType;
+    }> | Extract<DashboardWasReset, {
+        type: TErrorEventType;
+    }> | Extract<DateFilterValidationFailed, {
         type: TErrorEventType;
     }> | Extract<DashboardDateFilterSelectionChanged, {
         type: TErrorEventType;
