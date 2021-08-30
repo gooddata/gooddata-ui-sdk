@@ -160,7 +160,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             filter: `metrics.id==${id}`, // RSQL format of querying data
         };
 
-        const insights = await this.authCall((client) =>
+        const insights = this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(
                 client,
                 client.workspaceObjects.getAllEntitiesVisualizationObjects,
@@ -168,13 +168,15 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                     workspaceId: this.workspace,
                 },
                 { query: filterReferencingObj as any }, // return only measures that have a link to the given id in their visualizationObjects
-            ).then(MetadataUtilities.mergeEntitiesResults),
+            )
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((insights) => insights.data.map(visualizationObjectsItemToInsight)),
         );
 
         const filterReferencingObjX = {
             filter: `metric.id==${id}`, // RSQL format of querying data
         };
-        const measures = await this.authCall((client) =>
+        const measures = this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(
                 client,
                 client.workspaceObjects.getAllEntitiesMetrics,
@@ -183,12 +185,19 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                     include: ["metrics"],
                 },
                 { query: filterReferencingObjX as any }, // return only measures that have a link to the given id in their visualizationObjects
-            ).then(MetadataUtilities.mergeEntitiesResults),
+            )
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((measures) =>
+                    (measures.included as JsonApiMetricOutWithLinks[]).map(convertMetricFromBackend),
+                ),
         );
 
-        return Promise.resolve({
-            measures: (measures.included as JsonApiMetricOutWithLinks[]).map(convertMetricFromBackend),
-            insights: insights.data.map(visualizationObjectsItemToInsight),
+        const request = Promise.all([insights, measures]);
+        return request.then(([insights, measures]) => {
+            return {
+                insights,
+                measures,
+            };
         });
     };
 }

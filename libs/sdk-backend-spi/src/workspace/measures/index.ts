@@ -46,7 +46,7 @@ export interface IWorkspaceMeasuresService {
     deleteMeasure(measureRef: ObjRef): Promise<void>;
 
     /**
-     * Get all metadata objects which uses specified object(ie. object is used by these objects) by a given reference.
+     * Get all metadata objects which uses specified object (ie. object is used by these objects) by a given reference.
      *
      * @param measureRef - ref of the measure to check
      * @returns promise of references
