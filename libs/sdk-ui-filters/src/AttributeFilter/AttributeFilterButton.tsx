@@ -307,7 +307,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     items,
                 );
 
-                const validOptions = resolvedParentFilters ? newElements : mergedValidElements;
+                const validOptions = resolvedParentFilters?.length ? newElements : mergedValidElements;
 
                 setState({
                     ...state,
