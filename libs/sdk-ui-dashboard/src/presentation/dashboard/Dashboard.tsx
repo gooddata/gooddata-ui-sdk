@@ -44,8 +44,8 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
     DashboardStoreProvider,
-    useDashboardCommand,
     changeFilterContextSelection,
+    useDispatchDashboardCommand,
 } from "../../model";
 import {
     DefaultScheduledEmailDialogInner,
@@ -255,7 +255,7 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
 
 const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const locale = useDashboardSelector(selectLocale);
-    const onFiltersChange = useDashboardCommand(changeFilterContextSelection);
+    const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
 
     return (
         <IntlWrapper locale={locale}>

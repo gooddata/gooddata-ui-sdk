@@ -11,7 +11,7 @@ import { Middleware, PayloadAction } from "@reduxjs/toolkit";
 import noop from "lodash/noop";
 import { DashboardCommandType, InitializeDashboard, initializeDashboard } from "../commands";
 import { IDashboardQuery } from "../queries";
-import { QueryEnvelope, QueryEnvelopeActionTypeName } from "../state/_infra/queryProcessing";
+import { queryEnvelopeWithPromise } from "../state/_infra/queryProcessing";
 import { IDashboardQueryService } from "../state/_infra/queryService";
 import { newRenderingWorker, RenderingWorkerConfiguration } from "../commandHandlers/render/renderingWorker";
 
@@ -202,23 +202,7 @@ export class DashboardTester {
      * @param action - query action
      */
     public query<TResult>(action: IDashboardQuery<TResult>): Promise<TResult> {
-        const partialEnvelope = {
-            onStart: noop,
-            onSuccess: noop,
-            onError: noop,
-        };
-
-        const promise = new Promise<TResult>((resolve, reject) => {
-            partialEnvelope.onSuccess = resolve;
-            partialEnvelope.onError = reject;
-        });
-
-        const envelope: QueryEnvelope = {
-            type: QueryEnvelopeActionTypeName,
-            query: action,
-            ...partialEnvelope,
-        };
-
+        const { envelope, promise } = queryEnvelopeWithPromise(action);
         this.reduxedStore.store.dispatch(envelope);
         return promise;
     }

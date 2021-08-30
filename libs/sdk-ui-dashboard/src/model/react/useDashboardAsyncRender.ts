@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import { useCallback } from "react";
-import { useDashboardCommand } from "./useDashboardCommand";
 import { requestAsyncRender, resolveAsyncRender } from "../commands/render";
+import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand";
 
 /**
  * @internal
@@ -40,8 +40,8 @@ export interface UseDashboardAsyncRender {
  * @returns callbacks
  */
 export const useDashboardAsyncRender = (id: string): UseDashboardAsyncRender => {
-    const requestDashboardAsyncRender = useDashboardCommand(requestAsyncRender);
-    const resolveDashboardAsyncRender = useDashboardCommand(resolveAsyncRender);
+    const requestDashboardAsyncRender = useDispatchDashboardCommand(requestAsyncRender);
+    const resolveDashboardAsyncRender = useDispatchDashboardCommand(resolveAsyncRender);
 
     const onRequestAsyncRender = useCallback(() => {
         requestDashboardAsyncRender(id);

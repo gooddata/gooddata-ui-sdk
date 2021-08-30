@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
-import { DashboardCommands } from "../commands";
+import { AnyAction, Dispatch } from "@reduxjs/toolkit";
+
 import { DashboardState } from "../state/types";
 import { ICustomDashboardEvent, isDashboardEvent } from "./base";
 import { DashboardEvents } from "./index";
@@ -24,12 +25,12 @@ export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashb
      * The actual event handling function. This will be called if the eval function returns true.
      *
      * @param event - event to handle
-     * @param dispatchCommand - callback to dispatch any dashboard command
+     * @param dashboardDispatch - the dispatch object of the dashboard store use dot dispatch commands or queries
      * @param stateSelect - callback to execute arbitrary selectors against the dashboard state
      */
     handler: (
         event: TEvents,
-        dispatchCommand: (command: DashboardCommands) => void,
+        dashboardDispatch: Dispatch<AnyAction>,
         stateSelect: DashboardSelectorEvaluator,
     ) => void;
 };

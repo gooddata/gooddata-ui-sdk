@@ -2,7 +2,14 @@
 import { useCallback, useState } from "react";
 import { IWidgetAlertDefinition, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 
-import { createAlert, updateAlert, removeAlerts, useDashboardCommand } from "../../../../model";
+import {
+    createAlert,
+    updateAlert,
+    removeAlerts,
+    dispatchAndWaitFor,
+    useDashboardDispatch,
+    DashboardCommands,
+} from "../../../../model";
 
 import { KpiAlertOperationStatus } from "./types";
 
@@ -18,52 +25,33 @@ interface UseKpiAlertOperations {
     removingStatus: KpiAlertOperationStatus;
 }
 
+function useKpiAlertOperation<TCommand extends DashboardCommands, TArgs extends any[]>(
+    commandCreator: (...args: TArgs) => TCommand,
+    onSuccess: () => void,
+): [status: KpiAlertOperationStatus, run: (...args: TArgs) => void] {
+    const [status, setStatus] = useState<KpiAlertOperationStatus>("idle");
+    const dispatch = useDashboardDispatch();
+
+    const run = useCallback(
+        (...args: Parameters<typeof commandCreator>) => {
+            setStatus("inProgress");
+            dispatchAndWaitFor(dispatch, commandCreator(...args))
+                .then(() => {
+                    setStatus("idle");
+                    onSuccess();
+                })
+                .catch(() => setStatus("error"));
+        },
+        [onSuccess],
+    );
+
+    return [status, run];
+}
+
 export const useKpiAlertOperations = (closeAlertDialog: () => void): UseKpiAlertOperations => {
-    const [creatingStatus, setCreatingStatus] = useState<KpiAlertOperationStatus>("idle");
-    const [updatingStatus, setUpdatingStatus] = useState<KpiAlertOperationStatus>("idle");
-    const [removingStatus, setRemovingStatus] = useState<KpiAlertOperationStatus>("idle");
-
-    const onCreateAlert = useDashboardCommand(
-        createAlert,
-        {
-            "GDC.DASH/EVT.ALERT.CREATED": () => {
-                setCreatingStatus("idle");
-                closeAlertDialog();
-            },
-            "GDC.DASH/EVT.COMMAND.FAILED": () => {
-                setCreatingStatus("error");
-            },
-        },
-        () => setCreatingStatus("inProgress"),
-    );
-
-    const onUpdateAlert = useDashboardCommand(
-        updateAlert,
-        {
-            "GDC.DASH/EVT.ALERT.UPDATED": () => {
-                setUpdatingStatus("idle");
-                closeAlertDialog();
-            },
-            "GDC.DASH/EVT.COMMAND.FAILED": () => {
-                setUpdatingStatus("error");
-            },
-        },
-        () => setUpdatingStatus("inProgress"),
-    );
-
-    const onRemoveAlerts = useDashboardCommand(
-        removeAlerts,
-        {
-            "GDC.DASH/EVT.ALERTS.REMOVED": () => {
-                setRemovingStatus("idle");
-                closeAlertDialog();
-            },
-            "GDC.DASH/EVT.COMMAND.FAILED": () => {
-                setRemovingStatus("error");
-            },
-        },
-        () => setRemovingStatus("inProgress"),
-    );
+    const [creatingStatus, onCreateAlert] = useKpiAlertOperation(createAlert, closeAlertDialog);
+    const [updatingStatus, onUpdateAlert] = useKpiAlertOperation(updateAlert, closeAlertDialog);
+    const [removingStatus, onRemoveAlerts] = useKpiAlertOperation(removeAlerts, closeAlertDialog);
 
     const onRemoveAlert = useCallback(
         (alert: IWidgetAlert) => {

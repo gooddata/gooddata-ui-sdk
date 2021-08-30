@@ -678,7 +678,7 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
 // @alpha (undocumented)
 export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags">;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
 
 // @alpha
@@ -869,7 +869,7 @@ export type DashboardEventBody<T extends IDashboardEvent | ICustomDashboardEvent
 // @alpha
 export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> = {
     eval: (event: DashboardEvents | ICustomDashboardEvent) => boolean;
-    handler: (event: TEvents, dispatchCommand: (command: DashboardCommands) => void, stateSelect: DashboardSelectorEvaluator) => void;
+    handler: (event: TEvents, dashboardDispatch: Dispatch<AnyAction>, stateSelect: DashboardSelectorEvaluator) => void;
 };
 
 // @alpha (undocumented)
@@ -1502,6 +1502,9 @@ export function disableInsightWidgetDateFilter(ref: ObjRef, correlationId?: stri
 // @alpha
 export function disableKpiWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
 
+// @alpha
+export function dispatchAndWaitFor<TCommand extends DashboardCommands>(dispatch: DashboardDispatch, command: TCommand): Promise<void>;
+
 // @alpha (undocumented)
 export interface Drill extends IDashboardCommand {
     // (undocumented)
@@ -1945,6 +1948,9 @@ export interface IDashboardQuery<_TResult = any> {
     readonly correlationId?: string;
     readonly type: DashboardQueryType;
 }
+
+// @alpha
+export type IDashboardQueryResult<T> = T extends IDashboardQuery<infer TResult> ? TResult : never;
 
 // @internal (undocumented)
 export interface IDashboardStoreProviderProps {
@@ -2585,6 +2591,9 @@ export interface PermissionsState {
     // (undocumented)
     permissions?: IWorkspacePermissions;
 }
+
+// @alpha
+export function queryAndWaitFor<TQuery extends DashboardQueries>(dispatch: DashboardDispatch, query: TQuery): Promise<IDashboardQueryResult<TQuery>>;
 
 // @alpha
 export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
@@ -3254,95 +3263,12 @@ export const useDashboardAsyncRender: (id: string) => UseDashboardAsyncRender;
 // @alpha (undocumented)
 export const useDashboardAttributeFilterProps: () => IDashboardAttributeFilterProps;
 
-// @alpha
-export const useDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand, eventHandlers?: {
-    "GDC.DASH/EVT.COMMAND.FAILED"?: ((event: DashboardCommandFailed) => void) | undefined;
-    "GDC.DASH/EVT.COMMAND.REJECTED"?: ((event: DashboardCommandRejected) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.FAILED"?: ((event: DashboardQueryFailed) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.REJECTED"?: ((event: DashboardQueryRejected) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.STARTED"?: ((event: DashboardQueryStarted) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.COMPLETED"?: ((event: DashboardQueryCompleted<any, any>) => void) | undefined;
-    "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED"?: ((event: DashboardUserInteractionTriggered) => void) | undefined;
-    "GDC.DASH/EVT.INITIALIZED"?: ((event: DashboardInitialized) => void) | undefined;
-    "GDC.DASH/EVT.SAVED"?: ((event: DashboardSaved) => void) | undefined;
-    "GDC.DASH/EVT.COPY_SAVED"?: ((event: DashboardCopySaved) => void) | undefined;
-    "GDC.DASH/EVT.RENAMED"?: ((event: DashboardRenamed) => void) | undefined;
-    "GDC.DASH/EVT.RESET"?: ((event: DashboardWasReset) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED"?: ((event: DateFilterValidationFailed) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED"?: ((event: DashboardDateFilterSelectionChanged) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED"?: ((event: DashboardAttributeFilterAdded) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED"?: ((event: DashboardAttributeFilterRemoved) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED"?: ((event: DashboardAttributeFilterMoved) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED"?: ((event: DashboardAttributeFilterSelectionChanged) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED"?: ((event: DashboardAttributeFilterParentChanged) => void) | undefined;
-    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED"?: ((event: DashboardFilterContextChanged) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED"?: ((event: DashboardLayoutSectionAdded) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED"?: ((event: DashboardLayoutSectionMoved) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED"?: ((event: DashboardLayoutSectionRemoved) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED"?: ((event: DashboardLayoutSectionHeaderChanged) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED"?: ((event: DashboardLayoutSectionItemsAdded) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED"?: ((event: DashboardLayoutSectionItemReplaced) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED"?: ((event: DashboardLayoutSectionItemMoved) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED"?: ((event: DashboardLayoutSectionItemRemoved) => void) | undefined;
-    "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED"?: ((event: DashboardLayoutChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED"?: ((event: DashboardKpiWidgetHeaderChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED"?: ((event: DashboardKpiWidgetMeasureChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED"?: ((event: DashboardKpiWidgetFilterSettingsChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED"?: ((event: DashboardKpiWidgetComparisonChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED"?: ((event: DashboardKpiWidgetChanged) => void) | undefined;
-    "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED"?: ((event: DashboardKpiWidgetExecutionFailed) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED"?: ((event: DashboardInsightWidgetHeaderChanged) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED"?: ((event: DashboardInsightWidgetFilterSettingsChanged) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED"?: ((event: DashboardInsightWidgetVisPropertiesChanged) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED"?: ((event: DashboardInsightWidgetInsightSwitched) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED"?: ((event: DashboardInsightWidgetDrillsModified) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED"?: ((event: DashboardInsightWidgetDrillsRemoved) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED"?: ((event: DashboardInsightWidgetChanged) => void) | undefined;
-    "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED"?: ((event: DashboardInsightWidgetExecutionFailed) => void) | undefined;
-    "GDC.DASH/EVT.ALERT.CREATED"?: ((event: DashboardAlertCreated) => void) | undefined;
-    "GDC.DASH/EVT.ALERT.UPDATED"?: ((event: DashboardAlertUpdated) => void) | undefined;
-    "GDC.DASH/EVT.ALERTS.REMOVED"?: ((event: DashboardAlertsRemoved) => void) | undefined;
-    "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED"?: ((event: DashboardScheduledEmailCreated) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.REQUESTED"?: ((event: DashboardDrillRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.RESOLVED"?: ((event: DashboardDrillResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED"?: ((event: DashboardDrillDownRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED"?: ((event: DashboardDrillDownResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED"?: ((event: DashboardDrillToInsightRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED"?: ((event: DashboardDrillToInsightResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED"?: ((event: DashboardDrillToDashboardRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED"?: ((event: DashboardDrillToDashboardResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED"?: ((event: DashboardDrillToAttributeUrlRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED"?: ((event: DashboardDrillToAttributeUrlResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED"?: ((event: DashboardDrillToCustomUrlRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED"?: ((event: DashboardDrillToCustomUrlResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED"?: ((event: DashboardDrillToLegacyDashboardRequested) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED"?: ((event: DashboardDrillToLegacyDashboardResolved) => void) | undefined;
-    "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED"?: ((event: DashboardDrillableItemsChanged) => void) | undefined;
-    "GDC.DASH/EVT.DRILL_TARGETS.ADDED"?: ((event: never) => void) | undefined;
-    "GDC.DASH/EVT.RENDER.REQUESTED"?: ((event: DashboardRenderRequested) => void) | undefined;
-    "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED"?: ((event: DashboardAsyncRenderRequested) => void) | undefined;
-    "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED"?: ((event: DashboardAsyncRenderResolved) => void) | undefined;
-    "GDC.DASH/EVT.RENDER.RESOLVED"?: ((event: DashboardRenderResolved) => void) | undefined;
-} | undefined, onBeforeRun?: ((command: TCommand) => void) | undefined) => (...args: TArgs) => void;
-
 // @internal (undocumented)
 export const useDashboardCommandProcessing: <TCommand extends DashboardCommands, TCommandCreatorArgs extends any[], TSuccessEventType extends DashboardEventType, TErrorEventType extends DashboardEventType>({ commandCreator, successEvent, errorEvent, onSuccess, onError, onBeforeRun, }: {
     commandCreator: (...args: TCommandCreatorArgs) => TCommand;
     successEvent: TSuccessEventType;
     errorEvent: TErrorEventType;
-    onSuccess?: ((event: Extract<DashboardInitialized, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardSaved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardCopySaved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardRenamed, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardWasReset, {
-        type: TSuccessEventType;
-    }> | Extract<DateFilterValidationFailed, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardCommandFailed, {
+    onSuccess?: ((event: Extract<DashboardCommandFailed, {
         type: TSuccessEventType;
     }> | Extract<DashboardCommandRejected, {
         type: TSuccessEventType;
@@ -3353,6 +3279,18 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     }> | Extract<DashboardQueryStarted, {
         type: TSuccessEventType;
     }> | Extract<DashboardQueryCompleted<any, any>, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInitialized, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardSaved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardCopySaved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardRenamed, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardWasReset, {
+        type: TSuccessEventType;
+    }> | Extract<DateFilterValidationFailed, {
         type: TSuccessEventType;
     }> | Extract<DashboardDateFilterSelectionChanged, {
         type: TSuccessEventType;
@@ -3463,19 +3401,7 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     }> | Extract<DashboardDrillableItemsChanged, {
         type: TSuccessEventType;
     }>) => void) | undefined;
-    onError?: ((event: Extract<DashboardInitialized, {
-        type: TErrorEventType;
-    }> | Extract<DashboardSaved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardCopySaved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardRenamed, {
-        type: TErrorEventType;
-    }> | Extract<DashboardWasReset, {
-        type: TErrorEventType;
-    }> | Extract<DateFilterValidationFailed, {
-        type: TErrorEventType;
-    }> | Extract<DashboardCommandFailed, {
+    onError?: ((event: Extract<DashboardCommandFailed, {
         type: TErrorEventType;
     }> | Extract<DashboardCommandRejected, {
         type: TErrorEventType;
@@ -3486,6 +3412,18 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     }> | Extract<DashboardQueryStarted, {
         type: TErrorEventType;
     }> | Extract<DashboardQueryCompleted<any, any>, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInitialized, {
+        type: TErrorEventType;
+    }> | Extract<DashboardSaved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardCopySaved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardRenamed, {
+        type: TErrorEventType;
+    }> | Extract<DashboardWasReset, {
+        type: TErrorEventType;
+    }> | Extract<DateFilterValidationFailed, {
         type: TErrorEventType;
     }> | Extract<DashboardDateFilterSelectionChanged, {
         type: TErrorEventType;
@@ -3623,25 +3561,17 @@ export const useDashboardKpiProps: () => DashboardKpiProps;
 // @alpha (undocumented)
 export const useDashboardLayoutProps: () => DashboardLayoutProps;
 
-// @alpha
-export const useDashboardQuery: <TQuery extends DashboardQueries, TArgs extends any[]>(queryCreator: (...args: TArgs) => TQuery, eventHandlers?: {
-    "GDC.DASH/EVT.QUERY.FAILED"?: ((event: DashboardQueryFailed) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.REJECTED"?: ((event: DashboardQueryRejected) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.STARTED"?: ((event: DashboardQueryStarted) => void) | undefined;
-    "GDC.DASH/EVT.QUERY.COMPLETED"?: ((event: DashboardQueryCompleted<any, any>) => void) | undefined;
-} | undefined, onBeforeRun?: ((command: TQuery) => void) | undefined) => (...args: TArgs) => void;
-
 // @internal (undocumented)
-export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryCreatorArgs extends any[], TResult>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
+export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryCreatorArgs extends any[]>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
-    onSuccess?: ((event: DashboardQueryCompleted<TQuery, TResult>) => void) | undefined;
+    onSuccess?: ((result: IDashboardQueryResult<TQuery>) => void) | undefined;
     onError?: ((event: DashboardQueryFailed) => void) | undefined;
     onRejected?: ((event: DashboardQueryRejected) => void) | undefined;
     onBeforeRun?: ((query: TQuery) => void) | undefined;
 }) => {
     run: (...args: TQueryCreatorArgs) => void;
     status?: "error" | "running" | "success" | "rejected" | undefined;
-    result?: TResult | undefined;
+    result?: IDashboardQueryResult<TQuery> | undefined;
     error?: GoodDataSdkError | undefined;
 };
 
@@ -3657,6 +3587,9 @@ export const useDashboardUserInteraction: () => {
 
 // @internal (undocumented)
 export const useDashboardWidgetProps: () => DashboardWidgetProps;
+
+// @alpha
+export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => (...args: TArgs) => void;
 
 // @internal (undocumented)
 export const useDrill: ({ onSuccess, onError, onBeforeRun }?: UseDrillProps) => {
