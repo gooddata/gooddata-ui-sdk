@@ -61,6 +61,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         workspace,
         onError,
         onDrill: onDrillFn,
+        onExportReady,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
     } = props;
@@ -155,6 +156,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                             settings={settings as IUserWorkspaceSettings}
                             colorPalette={colorPalette}
                             onError={handleError}
+                            onExportReady={onExportReady}
                             pushData={onPushData}
                             ErrorComponent={ErrorComponent}
                             LoadingComponent={LoadingComponent}
