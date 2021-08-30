@@ -11,7 +11,7 @@ import {
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { InsightError, InsightRenderer } from "@gooddata/sdk-ui-ext";
+import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts";
 import {
     useDashboardSelector,
@@ -27,6 +27,7 @@ import { IDashboardInsightProps } from "../../types";
 import { useWidgetFiltersQuery } from "../../../common";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties";
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills";
+import { CustomError } from "../CustomError/CustomError";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 
@@ -57,10 +58,12 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         insight,
         widget,
         clientHeight,
+        clientWidth,
         backend,
         workspace,
         onError,
         onDrill: onDrillFn,
+        onExportReady,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
     } = props;
@@ -135,11 +138,11 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                 <IntlWrapper locale={locale}>
                     {(filtersStatus === "running" || isVisualizationLoading) && <LoadingComponent />}
                     {error && (
-                        <InsightError
+                        <CustomError
                             error={error}
-                            ErrorComponent={ErrorComponent}
-                            clientHeight={settings?.enableKDWidgetCustomHeight ? clientHeight : undefined}
-                            height={null} // make sure the error is aligned to the top (this is the behavior in gdc-dashboards)
+                            isCustomWidgetHeightEnabled={!!settings?.enableKDWidgetCustomHeight}
+                            height={clientHeight}
+                            width={clientWidth}
                         />
                     )}
                     {filtersStatus === "success" && (
@@ -155,6 +158,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                             settings={settings as IUserWorkspaceSettings}
                             colorPalette={colorPalette}
                             onError={handleError}
+                            onExportReady={onExportReady}
                             pushData={onPushData}
                             ErrorComponent={ErrorComponent}
                             LoadingComponent={LoadingComponent}
