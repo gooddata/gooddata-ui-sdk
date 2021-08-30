@@ -102,6 +102,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                                     onDrill={onDrill}
                                     onLoadingChanged={handleLoadingChanged}
                                     onExportReady={handleExportReady}
+                                    onError={setError}
                                 />
                             );
                         }}
