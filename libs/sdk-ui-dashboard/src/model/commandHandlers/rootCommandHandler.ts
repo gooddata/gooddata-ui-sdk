@@ -29,7 +29,7 @@ import { createScheduledEmailHandler } from "./scheduledEmail/createScheduledEma
 import { replaceSectionItemHandler } from "./layout/replaceSectionItemHandler";
 import { isDashboardEvent } from "../events/base";
 import { drillHandler } from "./drill/drillHandler";
-import { drillDownHandler } from "./drill/drilDownHandler";
+import { drillDownHandler } from "./drill/drillDownHandler";
 import { drillToInsightHandler } from "./drill/drillToInsightHandler";
 import { drillToCustomUrlHandler } from "./drill/drillToCustomUrlHandler";
 import { drillToAttributeUrlHandler } from "./drill/drillToAttributeUrlHandler";
