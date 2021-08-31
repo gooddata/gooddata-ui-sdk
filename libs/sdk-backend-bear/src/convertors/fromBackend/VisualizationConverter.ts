@@ -18,7 +18,7 @@ import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import omit from "lodash/omit";
-import { GdcVisualizationObject } from "@gooddata/api-model-bear";
+import { GdcMetadata, GdcVisualizationObject } from "@gooddata/api-model-bear";
 import { convertReferencesToUris } from "./ReferenceConverter";
 import { deserializeProperties, serializeProperties } from "./PropertiesConverter";
 import { fromBearRef, fromScopedBearRef } from "./ObjRefConverter";
@@ -231,6 +231,25 @@ export const convertVisualization = (
             updated: meta.updated,
             isLocked: meta.locked,
             tags: meta.tags?.split(" ").filter(Boolean) ?? [],
+        },
+    };
+};
+
+export const convertListedVisualization = (visualizationLink: GdcMetadata.IObjectLink): IInsight => {
+    const ref = uriRef(visualizationLink.link);
+
+    return {
+        insight: {
+            identifier: visualizationLink.identifier || "",
+            title: visualizationLink.title || "",
+            uri: visualizationLink.link,
+            ref: ref,
+            properties: [],
+            sorts: [],
+            visualizationUrl: "",
+            buckets: [],
+            filters: [],
+            tags: [],
         },
     };
 };
