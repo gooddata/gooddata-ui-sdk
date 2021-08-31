@@ -27,16 +27,7 @@ Object {
 exports[`initialize dashboard handler for an empty dashboard should add default filter context for an empty dashboard 1`] = `
 Object {
   "description": "",
-  "filters": Array [
-    Object {
-      "dateFilter": Object {
-        "from": 0,
-        "granularity": "GDC.time.month",
-        "to": 0,
-        "type": "relative",
-      },
-    },
-  ],
+  "filters": Array [],
   "title": "filterContext",
 }
 `;
