@@ -35,7 +35,7 @@ export function dashboardFilterContextDefinition(
     const { filterContext } = dashboard;
 
     if (!filterContext) {
-        return createDefaultFilterContext(dateFilterConfig);
+        return createDefaultFilterContext(dateFilterConfig, !dashboard.ref);
     }
 
     if (isTempFilterContext(filterContext)) {
