@@ -248,6 +248,7 @@ export {
     isDashboardDrillToLegacyDashboardRequested,
     isDashboardDrillToLegacyDashboardResolved,
     drillableItemsChanged,
+    isDashboardDrillableItemsChanged,
 } from "./drill";
 
 export { DrillTargetsAdded, drillTargetsAdded, isDrillTargetsAdded } from "./drillTargets";

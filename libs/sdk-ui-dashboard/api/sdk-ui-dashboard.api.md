@@ -57,6 +57,7 @@ import { IDrillToInsight } from '@gooddata/sdk-backend-spi';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-backend-spi';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { IFilter } from '@gooddata/sdk-model';
+import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
@@ -80,11 +81,13 @@ import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-backend-spi';
+import { ITempFilterContext } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IUser } from '@gooddata/sdk-backend-spi';
 import { IWidget } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
+import { IWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoizedFunction } from 'lodash';
@@ -1703,6 +1706,9 @@ export const FilterBar: () => JSX.Element;
 // @internal (undocumented)
 export const FilterBarPropsProvider: React_2.FC<IFilterBarProps>;
 
+// @internal
+export function filterContextItemsToFiltersForWidget(filterContextItems: FilterContextItem[], widget: IWidgetDefinition): IDashboardFilter[];
+
 // @alpha (undocumented)
 export interface FilterContextSelection {
     readonly attributeFilters?: Array<AttributeFilterSelection>;
@@ -1714,6 +1720,9 @@ export interface FilterContextState {
     filterContextDefinition?: IFilterContextDefinition;
     filterContextIdentity?: IDashboardObjectIdentity;
 }
+
+// @internal
+export function filterContextToFiltersForWidget(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, widget: IWidgetDefinition): IDashboardFilter[];
 
 // @alpha (undocumented)
 export interface FilterOp {
@@ -2196,6 +2205,9 @@ export const isDashboardCopySaved: (obj: unknown) => obj is DashboardCopySaved;
 
 // @alpha
 export const isDashboardDateFilterSelectionChanged: (obj: unknown) => obj is DashboardDateFilterSelectionChanged;
+
+// @alpha
+export const isDashboardDrillableItemsChanged: (obj: unknown) => obj is DashboardDrillableItemsChanged;
 
 // @alpha
 export const isDashboardDrillDownRequested: (obj: unknown) => obj is DashboardDrillDownRequested;
