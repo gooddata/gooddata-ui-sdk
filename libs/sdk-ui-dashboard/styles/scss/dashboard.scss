@@ -384,3 +384,54 @@
 .dash-item-action-widget-options-active {
     display: block;
 }
+
+.dash-section {
+    overflow: hidden;
+    margin-bottom: 40px;
+    padding: 20px;
+    border-bottom: 1px solid $gd-border-color;
+
+    &:last-of-type {
+        border-bottom: none;
+    }
+}
+
+.dash-section-kpis {
+    max-width: 100vw;
+
+    @media #{$xsmall-only}, #{$small-only} {
+        margin: 0;
+        padding: 5px;
+    }
+}
+
+.dash-section-header {
+    margin-bottom: 20px;
+
+    @media #{$xsmall-only}, #{$small-only} {
+        text-align: center;
+    }
+
+    &:empty {
+        display: none;
+    }
+
+    h2 {
+        margin-bottom: 0.25em;
+        color: $gd-color-dark;
+    }
+
+    p {
+        color: $gd-color-state-blank;
+    }
+}
+
+.visualization-content {
+    position: relative;
+    flex: 1 1 auto;
+}
+
+.insight-view-visualization {
+    flex: 1 1 auto;
+    height: 100%;
+}
