@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 
-import { selectIsExport, useDashboardSelector } from "../../../model";
+import { selectIsExport, selectLocale, useDashboardSelector } from "../../../model";
 import { IntlWrapper } from "../../localization";
 import { ButtonBar, ButtonBarPropsProvider } from "../buttonBar";
 import { MenuButton, MenuButtonPropsProvider } from "../menuButton";
@@ -38,13 +38,14 @@ const TopBarCore = (): JSX.Element => {
  */
 export const DefaultTopBarInner = (): JSX.Element => {
     const isExport = useDashboardSelector(selectIsExport);
+    const locale = useDashboardSelector(selectLocale);
 
     if (isExport) {
         return <HiddenTopBar />;
     }
 
     return (
-        <IntlWrapper>
+        <IntlWrapper locale={locale}>
             <TopBarCore />
         </IntlWrapper>
     );

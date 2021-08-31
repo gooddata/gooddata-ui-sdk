@@ -14,6 +14,7 @@ import {
 import { IDashboardAttributeFilterProps } from "./types";
 import { AttributeFilterBody } from "./dashboardDropdownBody/AttributeFilterBody";
 import { useParentFilters } from "./useParentFilters";
+import { selectLocale, useDashboardSelector } from "../../../model";
 
 /**
  * @internal
@@ -21,6 +22,7 @@ import { useParentFilters } from "./useParentFilters";
 export const DefaultDashboardAttributeFilterInner = (): JSX.Element => {
     const { filter, onFilterChanged } = useDashboardAttributeFilterProps();
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
+    const locale = useDashboardSelector(selectLocale);
 
     return (
         <AttributeFilterButton
@@ -41,6 +43,7 @@ export const DefaultDashboardAttributeFilterInner = (): JSX.Element => {
             }}
             parentFilters={parentFilters}
             parentFilterOverAttribute={parentFilterOverAttribute}
+            locale={locale}
         />
     );
 };

@@ -19,6 +19,36 @@
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
         "limit": 0
     },
+    "dialogs.export.cells": {
+        "value": "CELLS",
+        "comment": "Cells of the table that is going to be exported to file",
+        "limit": 0
+    },
+    "dialogs.export.filters": {
+        "value": "INSIGHT CONTEXT",
+        "comment": "The filters that are applied to the report",
+        "limit": 0
+    },
+    "dialogs.export.includeFilters": {
+        "value": "Include applied filters",
+        "comment": "Include the applied filters to the exported file",
+        "limit": 0
+    },
+    "dialogs.export.headline": {
+        "value": "Export to XLSX",
+        "comment": "Export data to XLSX file",
+        "limit": 0
+    },
+    "dialogs.export.mergeHeaders": {
+        "value": "Keep attribute cells merged",
+        "comment": "Merge the similar cells of the table into one when exporting table to the file.",
+        "limit": 0
+    },
+    "dialogs.export.submit": {
+        "value": "Export",
+        "comment": "Start to export data to file",
+        "limit": 0
+    },
     "dialogs.schedule.email.submit.success": {
         "value": "Success! Your dashboard is scheduled for emailing.",
         "comment": "",
