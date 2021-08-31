@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
 import compact from "lodash/compact";
+import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import isNumber from "lodash/isNumber";
 import flowRight from "lodash/flowRight";
@@ -133,7 +134,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const drillableItems = useDashboardSelector(selectDrillableItems);
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
 
-    const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget.ref);
+    const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget, alert);
 
     const isAlertBroken = !!brokenAlertsBasicInfo?.length;
 
@@ -375,6 +376,13 @@ export const KpiExecutor = flowRight(
         },
         exportTitle: "",
         loadOnMount: true,
+        shouldRefetch: (prevProps, nextProps) => {
+            return (
+                prevProps.alert !== nextProps.alert ||
+                !isEqual(prevProps.primaryMeasure, nextProps.primaryMeasure) ||
+                !isEqual(prevProps.effectiveFilters, nextProps.effectiveFilters)
+            );
+        },
     }),
     (WrappedComponent: React.ComponentType<Partial<IKpiProps>>) => {
         const withAlertProps = ({ result, error, isLoading, ...props }: IKpiResultsProps) => (
@@ -398,6 +406,13 @@ export const KpiExecutor = flowRight(
         },
         exportTitle: "",
         loadOnMount: true,
+        shouldRefetch: (prevProps, nextProps) => {
+            return (
+                !isEqual(prevProps.primaryMeasure, nextProps.primaryMeasure) ||
+                !isEqual(prevProps.secondaryMeasure, nextProps.secondaryMeasure) ||
+                !isEqual(prevProps.effectiveFilters, nextProps.effectiveFilters)
+            );
+        },
     }),
 )(KpiExecutorCore);
 
