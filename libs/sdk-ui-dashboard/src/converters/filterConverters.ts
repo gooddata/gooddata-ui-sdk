@@ -35,7 +35,7 @@ export function filterContextToFiltersForWidget(
 }
 
 /**
- * Gets {@link IDashboardFilter} items for filters specified as {@link FilterContextItem} instances.
+ * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
  *
  * @param filterContextItems - filter context items to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
