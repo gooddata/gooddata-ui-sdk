@@ -186,13 +186,17 @@ class BearWorkspaceFilterElementsQuery implements IFilterElementsQuery {
     }
 
     private async resultForElementsByRef(selectedElements: IAttributeElementsByRef) {
-        return this.elementsQuery
-            .withOptions({
-                uris: selectedElements.uris,
-            })
-            .withOffset(this.offset)
-            .withLimit(this.limit)
-            .query();
+        if (selectedElements.uris.length) {
+            return this.elementsQuery
+                .withOptions({
+                    uris: selectedElements.uris,
+                })
+                .withOffset(this.offset)
+                .withLimit(this.limit)
+                .query();
+        }
+        // Filter with empty selection resolves to empty values
+        return Promise.resolve(new InMemoryPaging<IAttributeElement>([], this.limit, this.offset));
     }
 
     private async resultForElementsByValue(
