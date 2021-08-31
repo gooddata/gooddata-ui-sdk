@@ -121,7 +121,11 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         error: filtersError,
     } = useWidgetFiltersQuery(widget, insight && insightFilters(insight));
 
-    const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight);
+    const insightWithAddedFilters = useMemo(
+        () => insightSetFilters(insight, filtersForInsight),
+        [insight, filtersForInsight],
+    );
+
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
         insight: insightWithAddedFilters ?? insight,
         widget,
@@ -150,7 +154,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                 // Now, it works differently for the Headline - parent container adapts to Headline size.
                 isPositionRelative ? "relative" : "absolute",
         };
-    }, [insight]);
+    }, [isPositionRelative]);
 
     // Error handling
     const handleError = useCallback<OnError>(
