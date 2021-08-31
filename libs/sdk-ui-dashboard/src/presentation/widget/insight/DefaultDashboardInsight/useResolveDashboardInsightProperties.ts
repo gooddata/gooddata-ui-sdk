@@ -1,6 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import { useMemo } from "react";
-import merge from "lodash/merge";
+import isArray from "lodash/isArray";
+import mergeWith from "lodash/mergeWith";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
 
@@ -43,7 +44,21 @@ export const useResolveDashboardInsightProperties = (
         };
 
         const fromInsight = insightProperties(insight);
-        const merged = merge({}, fromInsight, fromWidgetWithZoomingHandled);
+        const merged = mergeWith(
+            {},
+            fromInsight,
+            fromWidgetWithZoomingHandled,
+            (currentValue, incomingValue) => {
+                /**
+                 * Replace arrays instead of merging them. This is important for column sizing for example,
+                 * where widget might provide an empty array to override the custom column sizes defined on the insight level.
+                 */
+                if (isArray(currentValue)) {
+                    return incomingValue;
+                }
+                // for other types fall back to the default merging strategy by returning nothing
+            },
+        );
 
         return insightSetProperties(insight, merged);
     }, [insight, widget.properties, settings]);
