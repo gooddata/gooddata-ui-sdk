@@ -3,8 +3,10 @@ import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace
 import {
     attributeDisplayFormRef,
     IAbsoluteDateFilter,
+    INegativeAttributeFilter,
     IPositiveAttributeFilter,
     newAbsoluteDateFilter,
+    newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -58,6 +60,18 @@ describe("resolveFilterValues", () => {
         });
 
         const result = await resolveFilterValues([attributeFilter1, attributeFilter2], backend, workspace);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("should resolved ALL attribute filter to empty values", async () => {
+        const backend = recordedBackend(ReferenceRecordings.Recordings);
+        const workspace = "referenceworkspace";
+        const testAttributeRef = attributeDisplayFormRef(ReferenceLdm.Product.Name);
+        const allAttributeFilter: INegativeAttributeFilter = newNegativeAttributeFilter(testAttributeRef, {
+            values: [],
+        });
+
+        const result = await resolveFilterValues([allAttributeFilter], backend, workspace);
         expect(result).toMatchSnapshot();
     });
 });

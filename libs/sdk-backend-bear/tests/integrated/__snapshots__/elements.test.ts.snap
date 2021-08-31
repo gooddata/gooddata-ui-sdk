@@ -303,6 +303,16 @@ Object {
 }
 `;
 
+exports[`bear elements forFilter should load no attribute filter elements for provided ALL attribute filter 1`] = `
+InMemoryPaging {
+  "all": Array [],
+  "items": Array [],
+  "limit": 50,
+  "offset": 0,
+  "totalCount": 0,
+}
+`;
+
 exports[`bear elements forFilter should return attribute filter elements for provided attribute filter with elements by value 1`] = `
 InMemoryPaging {
   "all": Array [

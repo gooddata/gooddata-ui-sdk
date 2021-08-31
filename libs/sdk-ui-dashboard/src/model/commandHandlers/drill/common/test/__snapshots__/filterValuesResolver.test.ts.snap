@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`resolveFilterValues should resolved ALL attribute filter to empty values 1`] = `
+Object {
+  "attributeFilters": Object {
+    "label.product.id.name": Object {},
+  },
+  "dateFilters": Array [],
+}
+`;
+
 exports[`resolveFilterValues should resolved multiple attribute filters 1`] = `
 Object {
   "attributeFilters": Object {

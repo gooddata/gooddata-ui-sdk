@@ -106,6 +106,21 @@ describe("bear elements", () => {
             expect(result).toMatchSnapshot();
         });
 
+        it("should load no attribute filter elements for provided ALL attribute filter", async () => {
+            const testAttributeRef = attributeDisplayFormRef(ReferenceLdm.Product.Name);
+            const allAttributeFilter = newNegativeAttributeFilter(testAttributeRef, {
+                uris: [],
+            });
+            const result = await backend
+                .workspace(testWorkspace())
+                .attributes()
+                .elements()
+                .forFilter(allAttributeFilter)
+                .query();
+
+            expect(result).toMatchSnapshot();
+        });
+
         it("should return attribute filter elements for provided attribute filter with elements by value", async () => {
             const testAttributeRef = attributeDisplayFormRef(ReferenceLdm.Product.Name);
             const attributeFilter = newNegativeAttributeFilter(testAttributeRef, {
