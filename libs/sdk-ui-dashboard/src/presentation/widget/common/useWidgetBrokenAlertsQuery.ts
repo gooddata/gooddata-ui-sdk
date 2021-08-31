@@ -1,32 +1,25 @@
 // (C) 2020-2021 GoodData Corporation
 import { useEffect } from "react";
-import { ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { IKpiWidget, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 
 import {
     queryWidgetBrokenAlerts,
     IBrokenAlertFilterBasicInfo,
     QueryProcessingStatus,
     useDashboardQueryProcessing,
-    selectAlertByWidgetRef,
     useDashboardSelector,
-    selectWidgetByRef,
     selectFilterContextFilters,
 } from "../../../model";
 
 export const useWidgetBrokenAlertsQuery = (
-    widgetRef: ObjRef,
+    widget: IKpiWidget,
+    alert: IWidgetAlert | undefined,
 ): {
     result?: IBrokenAlertFilterBasicInfo[];
     status?: QueryProcessingStatus;
     error?: GoodDataSdkError;
 } => {
-    const alertSelector = selectAlertByWidgetRef(widgetRef);
-    const alert = useDashboardSelector(alertSelector);
-
-    const widgetSelector = selectWidgetByRef(widgetRef);
-    const widget = useDashboardSelector(widgetSelector);
-
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
 
     const {
@@ -41,12 +34,12 @@ export const useWidgetBrokenAlertsQuery = (
     const effectiveFilters = result as IBrokenAlertFilterBasicInfo[];
 
     useEffect(() => {
-        if (widgetRef) {
-            runBrokenAlertsQuery(widgetRef);
+        if (widget.ref) {
+            runBrokenAlertsQuery(widget.ref);
         }
-        // queryWidgetBrokenAlerts as a parameter it needs just widgetRef but internally result depends on alert, widget, dashboardFilters
+        // queryWidgetBrokenAlerts as a parameter it needs just widget.ref but internally result depends on alert, widget, dashboardFilters
         // we have to call query every time when this dependency changed to get fresh results
-    }, [widgetRef, alert, widget, dashboardFilters]);
+    }, [alert, widget, dashboardFilters]);
 
     return {
         result: effectiveFilters,
