@@ -90,6 +90,7 @@ options = {
             "src/converters",
             "src/logUserInteraction",
             "src/model",
+            "src/presentation/constants",
             "src/presentation/dashboardContexts",
             "src/presentation/drill",
             "src/presentation/drill/types.ts",

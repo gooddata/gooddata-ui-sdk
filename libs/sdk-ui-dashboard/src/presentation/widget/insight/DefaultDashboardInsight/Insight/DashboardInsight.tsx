@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useMemo, useState, CSSProperties } from "react";
+import React, { CSSProperties, useCallback, useMemo, useState } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import {
@@ -19,26 +19,24 @@ import {
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts";
 import {
-    useDashboardSelector,
+    insightWidgetExecutionFailed,
     selectColorPalette,
+    selectDrillableItems,
+    selectIsExport,
     selectLocale,
     selectMapboxToken,
     selectSeparators,
     selectSettings,
-    selectIsExport,
-    selectDrillableItems,
     useDashboardAsyncRender,
     useDashboardEventDispatch,
-    insightWidgetExecutionFailed,
+    useDashboardSelector,
 } from "../../../../../model";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties";
 import { IDashboardInsightProps } from "../../types";
 import { useWidgetFiltersQuery } from "../../../common";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
 import { CustomError } from "../CustomError/CustomError";
-
-const DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH = 180;
-const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
+import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants";
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],
@@ -167,8 +165,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const error = filtersError ?? visualizationError;
 
     return (
-        <div style={insightStyle}>
-            <div style={insightPositionStyle}>
+        <div className="visualization-content">
+            <div className="gd-visualization-content" style={insightPositionStyle}>
                 <IntlWrapper locale={locale}>
                     {(filtersStatus === "running" || isVisualizationLoading) && <LoadingComponent />}
                     {error && (
@@ -180,23 +178,28 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                         />
                     )}
                     {filtersStatus === "success" && (
-                        <InsightRenderer
-                            insight={insightWithAddedWidgetProperties}
-                            backend={effectiveBackend}
-                            workspace={effectiveWorkspace}
-                            drillableItems={drillableItems}
-                            onDrill={onDrill}
-                            config={chartConfig}
-                            onLoadingChanged={handleLoadingChanged}
-                            locale={locale}
-                            settings={settings as IUserWorkspaceSettings}
-                            colorPalette={colorPalette}
-                            onError={handleError}
-                            pushData={onPushData}
-                            ErrorComponent={ErrorComponent}
-                            LoadingComponent={LoadingComponent}
-                            onExportReady={onExportReady}
-                        />
+                        <div
+                            className="insight-view-visualization"
+                            style={isVisualizationLoading ? { height: 0 } : undefined}
+                        >
+                            <InsightRenderer
+                                insight={insightWithAddedWidgetProperties}
+                                backend={effectiveBackend}
+                                workspace={effectiveWorkspace}
+                                drillableItems={drillableItems}
+                                onDrill={onDrill}
+                                config={chartConfig}
+                                onLoadingChanged={handleLoadingChanged}
+                                locale={locale}
+                                settings={settings as IUserWorkspaceSettings}
+                                colorPalette={colorPalette}
+                                onError={handleError}
+                                pushData={onPushData}
+                                ErrorComponent={ErrorComponent}
+                                LoadingComponent={LoadingComponent}
+                                onExportReady={onExportReady}
+                            />
+                        </div>
                     )}
                 </IntlWrapper>
             </div>
