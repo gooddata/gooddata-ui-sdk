@@ -17,11 +17,14 @@ import {
     getDashboardLayoutWidgetMaxGridHeight,
     validateDashboardLayoutWidgetSize,
 } from "../sizing";
-import { ALL_SCREENS } from "../..";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT, DASHBOARD_LAYOUT_VIS_TYPE } from "../../constants";
 import { VisType } from "@gooddata/sdk-ui";
 import { DashboardLayoutBuilder } from "../../builder/layout";
 import { idRef, newInsightDefinition } from "@gooddata/sdk-model";
+import {
+    ALL_SCREENS,
+    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
+    DASHBOARD_LAYOUT_VIS_TYPE,
+} from "../../../../constants";
 
 export const allVisTypes: VisType[] = [
     "area",

@@ -17,18 +17,7 @@ export {
     IDashboardLayoutGridRowRenderer,
     IDashboardLayoutRenderProps,
 } from "./interfaces";
-export {
-    ALL_SCREENS,
-    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-    DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH,
-    DASHBOARD_LAYOUT_VIS_TYPE,
-    SCREEN_BREAKPOINT_LG,
-    SCREEN_BREAKPOINT_MD,
-    SCREEN_BREAKPOINT_SM,
-    SCREEN_BREAKPOINT_XL,
-    SCREEN_BREAKPOINT_XS,
-    SCREEN_BREAKPOINT_XXL,
-} from "./constants";
+
 export { DashboardLayout } from "./DashboardLayout";
 export { DashboardLayoutItem, IDashboardLayoutItemProps } from "./DashboardLayoutItem";
 export { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer";

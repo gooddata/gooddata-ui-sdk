@@ -7,8 +7,8 @@ import {
     IDashboardLayoutItemsFacade,
     IDashboardLayoutSectionFacade,
 } from "./interfaces";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../constants";
 import invariant from "ts-invariant";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../constants";
 
 /**
  * @alpha

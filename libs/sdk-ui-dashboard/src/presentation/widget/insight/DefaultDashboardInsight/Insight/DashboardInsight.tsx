@@ -37,6 +37,7 @@ import { useWidgetFiltersQuery } from "../../../common";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
 import { CustomError } from "../CustomError/CustomError";
 
+const DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH = 180;
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 
 const selectCommonDashboardInsightProps = createSelector(
@@ -134,6 +135,12 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         onDrill: onDrillFn,
     });
 
+    const isPositionRelative =
+        insight &&
+        insightVisualizationUrl(insight).includes("headline") &&
+        clientWidth &&
+        clientWidth < DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH;
+
     // CSS
     const insightPositionStyle: CSSProperties = useMemo(() => {
         return {
@@ -143,7 +150,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                 // Headline violates the layout contract.
                 // It should fit parent height and adapt to it as other visualizations.
                 // Now, it works differently for the Headline - parent container adapts to Headline size.
-                insight && insightVisualizationUrl(insight).includes("headline") ? "relative" : "absolute",
+                isPositionRelative ? "relative" : "absolute",
         };
     }, [insight]);
 
