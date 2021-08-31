@@ -29,6 +29,8 @@ export function* getDrillToUrlFiltersWithResolvedValues(
         const resolvedFilterValues: SagaReturnType<typeof resolveFilterValues> = yield call(
             resolveFilterValues,
             filters,
+            ctx.backend,
+            ctx.workspace,
         );
 
         return { filters, resolvedFilterValues };
