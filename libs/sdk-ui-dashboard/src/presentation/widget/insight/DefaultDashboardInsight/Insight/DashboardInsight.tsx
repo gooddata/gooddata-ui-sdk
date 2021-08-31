@@ -36,8 +36,8 @@ import { IDashboardInsightProps } from "../../types";
 import { useWidgetFiltersQuery } from "../../../common";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
 import { CustomError } from "../CustomError/CustomError";
-import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../layout/DefaultDashboardLayoutRenderer";
 
+const DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH = 180;
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 
 const selectCommonDashboardInsightProps = createSelector(

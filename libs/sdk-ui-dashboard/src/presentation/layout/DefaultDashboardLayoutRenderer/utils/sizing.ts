@@ -23,13 +23,6 @@ import {
 import invariant from "ts-invariant";
 import { IInsightDefinition, isInsight } from "@gooddata/sdk-model";
 
-import {
-    ALL_SCREENS,
-    DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
-    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-    DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
-    GRID_ROW_HEIGHT_IN_PX,
-} from "../constants";
 import { DashboardLayoutFacade } from "../facade/layout";
 import { IDashboardLayoutItemFacade } from "../facade/interfaces";
 import { DashboardLayoutBuilder } from "./../builder/layout";
@@ -42,6 +35,13 @@ import {
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext/dist/internal/components/pluggableVisualizations/constants";
+import {
+    ALL_SCREENS,
+    DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
+    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
+    DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
+    GRID_ROW_HEIGHT_IN_PX,
+} from "../../../constants";
 
 /**
  * Unify dashboard layout items height for all screens.

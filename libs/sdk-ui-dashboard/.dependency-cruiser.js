@@ -55,6 +55,7 @@ options = {
         ]),
         depCruiser.moduleWithDependencies("layout", "src/presentation/layout", [
             "src/model",
+            "src/presentation/constants",
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
             "src/presentation/presentationComponents",

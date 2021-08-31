@@ -5,7 +5,6 @@ import { ScreenSize, IDashboardLayout } from "@gooddata/sdk-backend-spi";
 import { DashboardLayoutSection } from "./DashboardLayoutSection";
 import { IDashboardLayoutRenderProps } from "./interfaces";
 import cx from "classnames";
-import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "./constants";
 import { DashboardLayoutFacade } from "./facade/layout";
 import {
     getResizedItemPositions,
@@ -13,6 +12,7 @@ import {
     getLayoutWithoutGridHeights,
 } from "./utils/sizing";
 import isEqual from "lodash/isEqual";
+import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
 

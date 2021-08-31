@@ -1,3 +1,5 @@
+// (C) 2021 GoodData Corporation
+
 // (C) 2019-2021 GoodData Corporation
 import { Configuration } from "react-grid-system";
 import { ScreenSize } from "@gooddata/sdk-backend-spi";
