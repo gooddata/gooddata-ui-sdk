@@ -68,8 +68,8 @@ export interface IDashboardItemWithKpiAlertProps {
      */
     suppressAlertTriggered?: boolean;
 
-    children: (params: { clientWidth: number; clientHeight: number }) => React.ReactNode;
-    renderHeadline: (clientHeight: number) => React.ReactNode;
+    children: (params: { clientWidth?: number; clientHeight?: number }) => React.ReactNode;
+    renderHeadline: (clientHeight?: number) => React.ReactNode;
     renderAlertDialog: () => React.ReactNode;
 }
 

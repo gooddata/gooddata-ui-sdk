@@ -8,11 +8,11 @@ export interface IDashboardItemBaseProps {
     /**
      * Render prop for the content itself.
      */
-    children: (params: { clientWidth: number; clientHeight: number }) => React.ReactNode;
+    children: (params: { clientWidth?: number; clientHeight?: number }) => React.ReactNode;
     /**
      * Render prop for the item headline.
      */
-    renderHeadline?: (clientHeight: number) => React.ReactNode;
+    renderHeadline?: (clientHeight?: number) => React.ReactNode;
     /**
      * Render prop for content rendered inside the main content before the visualization container.
      */
