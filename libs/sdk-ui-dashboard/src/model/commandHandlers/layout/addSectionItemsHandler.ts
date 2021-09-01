@@ -6,7 +6,7 @@ import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation";
-import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
+import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
 import { layoutActions } from "../../state/layout";
@@ -19,10 +19,12 @@ import {
     validateAndNormalizeWidgetItems,
     validateAndResolveItemFilterSettings,
 } from "./validation/itemValidation";
+import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;
     readonly cmd: AddSectionItems;
+    readonly items: InternalDashboardItemDefinition[];
     readonly layout: ReturnType<typeof selectLayout>;
     readonly stash: ReturnType<typeof selectStash>;
     readonly availableInsights: ReturnType<typeof selectInsightsMap>;
@@ -33,8 +35,9 @@ function validateAndResolveItems(commandCtx: AddSectionItemsContext) {
         ctx,
         layout,
         stash,
+        items,
         cmd: {
-            payload: { sectionIndex, itemIndex, items },
+            payload: { sectionIndex, itemIndex },
         },
     } = commandCtx;
     if (!validateSectionExists(layout, sectionIndex)) {
@@ -77,9 +80,13 @@ export function* addSectionItemsHandler(
     ctx: DashboardContext,
     cmd: AddSectionItems,
 ): SagaIterator<DashboardLayoutSectionItemsAdded> {
+    const {
+        payload: { items },
+    } = cmd;
     const commandCtx: AddSectionItemsContext = {
         ctx,
         cmd,
+        items: addTemporaryIdentityToWidgets(items),
         layout: yield select(selectLayout),
         stash: yield select(selectStash),
         availableInsights: yield select(selectInsightsMap),

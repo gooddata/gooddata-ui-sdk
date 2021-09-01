@@ -16,10 +16,13 @@ import {
 } from "./validation/itemValidation";
 import { batchActions } from "redux-batched-actions";
 import { insightsActions } from "../../state/insights";
+import { InternalDashboardItemDefinition } from "../../types/layoutTypes";
+import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;
     cmd: ReplaceSectionItem;
+    items: InternalDashboardItemDefinition[];
     layout: ReturnType<typeof selectLayout>;
     stash: ReturnType<typeof selectStash>;
 };
@@ -28,8 +31,9 @@ function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
     const {
         ctx,
         cmd: {
-            payload: { sectionIndex, itemIndex, item },
+            payload: { sectionIndex, itemIndex },
         },
+        items,
         layout,
         stash,
     } = commandCtx;
@@ -52,7 +56,7 @@ function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
         );
     }
 
-    const stashValidationResult = validateAndResolveStashedItems(stash, [item]);
+    const stashValidationResult = validateAndResolveStashedItems(stash, items);
 
     if (!isEmpty(stashValidationResult.missing)) {
         throw invalidArgumentsProvided(
@@ -74,9 +78,13 @@ export function* replaceSectionItemHandler(
     ctx: DashboardContext,
     cmd: ReplaceSectionItem,
 ): SagaIterator<DashboardLayoutSectionItemReplaced> {
+    const {
+        payload: { item },
+    } = cmd;
     const commandCtx: ReplaceSectionItemContext = {
         ctx,
         cmd,
+        items: addTemporaryIdentityToWidgets([item]),
         layout: yield select(selectLayout),
         stash: yield select(selectStash),
     };

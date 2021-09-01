@@ -21,6 +21,7 @@ import {
     TestKpiPlaceholderItem,
 } from "../../../tests/fixtures/Layout.fixtures";
 import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures";
+import { IWidgetBase } from "@gooddata/sdk-backend-spi";
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {
@@ -86,12 +87,11 @@ describe("add layout section handler", () => {
         });
 
         it("should load and add insight when adding new section insight widget", async () => {
-            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+            await Tester.dispatchAndWaitFor(
                 addLayoutSection(0, {}, [TestInsightItem], false, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
 
-            expect(event.payload.section.items).toEqual([TestInsightItem]);
             const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
             expect(insight).toBeDefined();
         });
@@ -102,9 +102,9 @@ describe("add layout section handler", () => {
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
 
-            expect(event.payload.section.items).toEqual([
-                testItemWithDateDataset(TestInsightItem, ActivityDateDatasetRef),
-            ]);
+            expect((event.payload.section.items[0].widget as IWidgetBase).dateDataSet).toEqual(
+                ActivityDateDatasetRef,
+            );
         });
 
         it("should be undoable and revert to empty layout", async () => {

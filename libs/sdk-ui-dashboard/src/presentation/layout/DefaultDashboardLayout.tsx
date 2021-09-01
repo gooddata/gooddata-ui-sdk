@@ -1,6 +1,13 @@
 // (C) 2020 GoodData Corporation
 import React, { useMemo } from "react";
-import { isWidget, widgetId, widgetUri, isInsightWidget, IDashboardLayout } from "@gooddata/sdk-backend-spi";
+import {
+    isWidget,
+    widgetId,
+    widgetUri,
+    isInsightWidget,
+    IDashboardLayout,
+    IDashboardWidget,
+} from "@gooddata/sdk-backend-spi";
 import {
     ObjRef,
     IInsight,
@@ -27,7 +34,8 @@ import {
     DashboardLayout,
     DashboardLayoutBuilder,
     DashboardLayoutItemModifications,
-    DashboardLayoutItemsSelector,
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutItemsFacade,
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
 import { DashboardLayoutPropsProvider, useDashboardLayoutProps } from "./DashboardLayoutPropsContext";
@@ -67,8 +75,11 @@ function getDashboardLayoutForExport(layout: IDashboardLayout): IDashboardLayout
     return dashLayout.build();
 }
 
-const selectAllItemsWithInsights: DashboardLayoutItemsSelector = (items) =>
-    items.filter((item) => item.isInsightWidgetItem());
+function selectAllItemsWithInsights<TWidget = IDashboardWidget>(
+    items: IDashboardLayoutItemsFacade<TWidget>,
+): IDashboardLayoutItemFacade<TWidget>[] | IDashboardLayoutItemFacade<TWidget> | undefined {
+    return items.filter((item) => item.isInsightWidgetItem());
+}
 
 /**
  * @internal
@@ -146,9 +157,10 @@ export const DefaultDashboardLayout = (props: DashboardLayoutProps): JSX.Element
 /**
  * Ensure that areObjRefsEqual() and other predicates will be working with uncontrolled user ref inputs in custom layout transformation and/or custom widget/item renderers
  */
-const polluteWidgetRefsWithBothIdAndUri =
-    (getInsightByRef: (insightRef: ObjRef) => IInsight | undefined): DashboardLayoutItemModifications =>
-    (item) =>
+function polluteWidgetRefsWithBothIdAndUri<TWidget = IDashboardWidget>(
+    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
+): DashboardLayoutItemModifications<TWidget> {
+    return (item) =>
         item.widget((c) => {
             let updatedContent = c;
             if (isWidget(updatedContent)) {
@@ -175,13 +187,13 @@ const polluteWidgetRefsWithBothIdAndUri =
 
             return updatedContent;
         });
+}
 
-const validateItemsSize =
-    (
-        getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
-        enableKDWidgetCustomHeight: boolean,
-    ): DashboardLayoutItemModifications =>
-    (item) => {
+function validateItemsSize<TWidget = IDashboardWidget>(
+    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
+    enableKDWidgetCustomHeight: boolean,
+): DashboardLayoutItemModifications<TWidget> {
+    return (item) => {
         const widget = item.facade().widget();
         if (isInsightWidget(widget)) {
             const insight = getInsightByRef(widget.insight);
@@ -216,3 +228,4 @@ const validateItemsSize =
         }
         return item;
     };
+}

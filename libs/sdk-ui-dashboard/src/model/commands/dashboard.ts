@@ -105,7 +105,16 @@ export function saveDashboard(correlationId?: string): SaveDashboard {
 export interface SaveDashboardAs extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SAVEAS";
     readonly payload: {
+        /**
+         * Specify new title for the dashboard that will be created during the Save As operation.
+         */
         readonly title?: string;
+
+        /**
+         * Indicate whether the dashboard component should switch to the copy of the dashboard or whether
+         * it should stay on the current dashboard.
+         */
+        readonly switchToCopy?: boolean;
     };
 }
 
@@ -118,16 +127,23 @@ export interface SaveDashboardAs extends IDashboardCommand {
  * that processed the command is unchanged - it still works with the original dashboard.
  *
  * @param title - new title for the dashboard; if not specified, the title of original dashboard will be used
+ * @param switchToCopy - optionally indicate whether the dashboard component should switch to the dashboard that will
+ *  be created during save-as; the default is false
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
-export function saveDashboardAs(title?: string, correlationId?: string): SaveDashboardAs {
+export function saveDashboardAs(
+    title?: string,
+    switchToCopy?: boolean,
+    correlationId?: string,
+): SaveDashboardAs {
     return {
         type: "GDC.DASH/CMD.SAVEAS",
         correlationId,
         payload: {
             title,
+            switchToCopy,
         },
     };
 }

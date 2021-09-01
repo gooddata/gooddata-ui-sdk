@@ -155,12 +155,11 @@ describe("replace section item handler", () => {
         });
 
         it("should resolve insight used in the replacing item and store that insight in state", async () => {
-            const event: DashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
+            await Tester.dispatchAndWaitFor(
                 replaceSectionItem(1, 0, TestInsightItem, undefined, false, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
             );
 
-            expect(event.payload.items).toEqual([TestInsightItem]);
             const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
             expect(insight).toBeDefined();
         });

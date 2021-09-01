@@ -44,7 +44,6 @@ import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-backend-spi';
-import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { Identifier } from '@gooddata/sdk-model';
@@ -999,7 +998,7 @@ export interface DashboardInsightWidgetVisPropertiesChanged extends IDashboardEv
 }
 
 // @alpha
-export type DashboardItemDefinition = ExtendedDashboardItem | StashedDashboardItemsId;
+export type DashboardItemDefinition = ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition> | StashedDashboardItemsId;
 
 // @internal (undocumented)
 export const DashboardKpi: () => JSX.Element;
@@ -1692,13 +1691,13 @@ export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, 
 export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha
-export type ExtendedDashboardItem = IDashboardLayoutItem<ExtendedDashboardWidget>;
+export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
 
 // @alpha
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @alpha
-export type ExtendedDashboardWidget = IDashboardWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
+export type ExtendedDashboardWidget = IWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
 
 // @internal (undocumented)
 export const FilterBar: () => JSX.Element;
@@ -2884,13 +2883,14 @@ export interface SaveDashboardAs extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly title?: string;
+        readonly switchToCopy?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.SAVEAS";
 }
 
 // @alpha
-export function saveDashboardAs(title?: string, correlationId?: string): SaveDashboardAs;
+export function saveDashboardAs(title?: string, switchToCopy?: boolean, correlationId?: string): SaveDashboardAs;
 
 // @internal (undocumented)
 export const ScheduledEmailDialog: () => JSX.Element;
@@ -2929,7 +2929,7 @@ export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICat
 export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendCapabilities, (res: BackendCapabilitiesState) => IBackendCapabilities>;
 
 // @internal
-export const selectBasicLayout: OutputSelector<DashboardState, IDashboardLayout<IDashboardWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => IDashboardLayout<IDashboardWidget>>;
+export const selectBasicLayout: OutputSelector<DashboardState, IDashboardLayout<IWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => IDashboardLayout<IWidget>>;
 
 // @alpha
 export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
@@ -3151,7 +3151,7 @@ export const selectSeparators: OutputSelector<DashboardState, ISeparators, (res:
 export const selectSettings: OutputSelector<DashboardState, ISettings, (res: ResolvedDashboardConfig) => ISettings>;
 
 // @internal
-export const selectStash: OutputSelector<DashboardState, Record<string, ExtendedDashboardItem[]>, (res: LayoutState) => Record<string, ExtendedDashboardItem[]>>;
+export const selectStash: OutputSelector<DashboardState, Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>, (res: LayoutState) => Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>>;
 
 // @alpha
 export const selectUser: OutputSelector<DashboardState, IUser, (res: UserState) => IUser>;

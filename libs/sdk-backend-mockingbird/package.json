@@ -52,7 +52,8 @@
         "@gooddata/sdk-model": "^8.6.0-alpha.65",
         "lodash": "^4.17.19",
         "ts-invariant": "^0.7.3",
-        "tslib": "^2.0.0"
+        "tslib": "^2.0.0",
+        "uuid": "^8.3.2"
     },
     "devDependencies": {
         "@gooddata/api-model-bear": "^8.6.0-alpha.65",
@@ -62,6 +63,7 @@
         "@microsoft/api-extractor": "^7.18.4",
         "@types/jest": "^26.0.12",
         "@types/lodash": "^4.14.158",
+        "@types/uuid": "^8.3.0",
         "@typescript-eslint/eslint-plugin": "^4.14.2",
         "@typescript-eslint/parser": "^4.14.2",
         "concurrently": "^6.0.2",
