@@ -46,6 +46,8 @@ import {
     DashboardStoreProvider,
     changeFilterContextSelection,
     useDispatchDashboardCommand,
+    useDashboardCommandProcessing,
+    exportDashboardToPdf,
 } from "../../model";
 import {
     DefaultScheduledEmailDialogInner,
@@ -62,10 +64,10 @@ import {
     IMenuButtonItem,
 } from "../topBar";
 
-import { useDashboardPdfExporter } from "./hooks/useDashboardPdfExporter";
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { IDashboardProps } from "./types";
 import { ExportDialogProvider } from "../dialogs";
+import { downloadFile } from "../../_staging/fileUtils/downloadFile";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -124,7 +126,7 @@ const useTopBar = () => {
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
 const DashboardHeader = (props: IDashboardProps): JSX.Element => {
-    const { dashboardRef, backend, workspace } = props;
+    const { dashboardRef } = props;
     const intl = useIntl();
 
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
@@ -134,21 +136,23 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     const [isScheduleEmailingDialogOpen, setIsScheduleEmailingDialogOpen] = useState(false);
 
     const lastExportMessageId = useRef("");
-    const { exportDashboard } = useDashboardPdfExporter({
-        backend,
-        workspace,
-        onLoading: () => {
+    const { run: exportDashboard } = useDashboardCommandProcessing({
+        commandCreator: exportDashboardToPdf,
+        successEvent: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        onBeforeRun: () => {
             lastExportMessageId.current = addProgress(
                 { id: "messages.exportResultStart" },
                 // make sure the message stays there until removed by either success or error
                 { duration: 0 },
             );
         },
-        onSuccess: () => {
+        onSuccess: (e) => {
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
             }
             addSuccess({ id: "messages.exportResultSuccess" });
+            downloadFile(e.payload.resultUri);
         },
         onError: (err) => {
             if (lastExportMessageId.current) {
@@ -182,8 +186,8 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
             return;
         }
 
-        exportDashboard(dashboardRef, filters);
-    }, [exportDashboard, dashboardRef, filters]);
+        exportDashboard();
+    }, [exportDashboard, dashboardRef]);
 
     const defaultMenuItems = useMemo<IMenuButtonItem[]>(() => {
         if (!dashboardRef) {

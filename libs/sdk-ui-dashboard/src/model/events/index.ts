@@ -6,6 +6,8 @@ import {
     DashboardCopySaved,
     DashboardRenamed,
     DashboardWasReset,
+    DashboardExportToPdfResolved,
+    DashboardExportToPdfRequested,
 } from "./dashboard";
 import {
     DashboardCommandFailed,
@@ -98,12 +100,16 @@ export {
     DashboardCopySaved,
     DashboardRenamed,
     DashboardWasReset,
+    DashboardExportToPdfRequested,
+    DashboardExportToPdfResolved,
     isDashboardCopySaved,
     isDashboardInitialized,
     isDashboardRenamed,
     isDashboardSaved,
     isDashboardWasReset,
     isDateFilterValidationFailed,
+    isDashboardExportToPdfRequested,
+    isDashboardExportToPdfResolved,
 } from "./dashboard";
 export {
     DashboardCommandRejected,
@@ -284,6 +290,8 @@ export type DashboardEvents =
     | DashboardCopySaved
     | DashboardRenamed
     | DashboardWasReset
+    | DashboardExportToPdfRequested
+    | DashboardExportToPdfResolved
     | DashboardRenderRequested
     | DashboardAsyncRenderRequested
     | DashboardAsyncRenderResolved

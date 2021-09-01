@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`export dashboard to PDF handler should emit events in correct order and carry-over correlationId 1`] = `
+Array [
+  Object {
+    "correlationId": "correlation-id",
+    "type": "GDC.DASH/EVT.EXPORT.PDF.REQUESTED",
+  },
+  Object {
+    "correlationId": "correlation-id",
+    "type": "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
+  },
+]
+`;

@@ -310,3 +310,78 @@ export function dateFilterValidationFailed(
 export const isDateFilterValidationFailed = eventGuard<DateFilterValidationFailed>(
     "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
 );
+
+//
+//
+//
+
+/**
+ * This event is emitted at the start of the 'dashboard export to PDF' command processing.
+ *
+ * @alpha
+ */
+export interface DashboardExportToPdfRequested extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.EXPORT.PDF.REQUESTED";
+}
+
+export function dashboardExportToPdfRequested(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardExportToPdfRequested {
+    return {
+        type: "GDC.DASH/EVT.EXPORT.PDF.REQUESTED",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardExportToPdfRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardExportToPdfRequested = eventGuard<DashboardExportToPdfRequested>(
+    "GDC.DASH/EVT.EXPORT.PDF.REQUESTED",
+);
+
+/**
+ * This event is emitted at the end of successful 'dashboard export to PDF' command processing.
+ * In its payload, there is an uri of the resulting PDF file.
+ *
+ * @alpha
+ */
+export interface DashboardExportToPdfResolved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED";
+    readonly payload: {
+        /**
+         * URI of the resulting file that can be used to download it.
+         */
+        readonly resultUri: string;
+    };
+}
+
+export function dashboardExportToPdfResolved(
+    ctx: DashboardContext,
+    resultUri: string,
+    correlationId?: string,
+): DashboardExportToPdfResolved {
+    return {
+        type: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
+        ctx,
+        correlationId,
+        payload: {
+            resultUri,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardExportToPdfResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardExportToPdfResolved = eventGuard<DashboardExportToPdfResolved>(
+    "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
+);

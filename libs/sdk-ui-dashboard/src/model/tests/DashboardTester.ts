@@ -177,7 +177,7 @@ export class DashboardTester {
         /*
          * Clearing monitored actions is essential to allow sane usage in tests that need fire a command and wait
          * for the same type of event multiple times. Monitored actions is what is used to wait in the `waitFor`
-         * method. Without the clearning, the second `waitFor` would bail out immediately and return the very first
+         * method. Without the clearing, the second `waitFor` would bail out immediately and return the very first
          * captured event.
          */
         this.monitoredActions = {};
