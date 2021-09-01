@@ -3,7 +3,10 @@ import React from "react";
 import Measure from "react-measure";
 
 interface IDashboardItemContentWrapperProps {
-    children: (params: { clientWidth: number; clientHeight: number }) => React.ReactNode;
+    children: (params: {
+        clientWidth: number | undefined;
+        clientHeight: number | undefined;
+    }) => React.ReactNode;
 }
 
 export const DashboardItemContentWrapper: React.FC<IDashboardItemContentWrapperProps> = ({ children }) => {
@@ -13,8 +16,8 @@ export const DashboardItemContentWrapper: React.FC<IDashboardItemContentWrapperP
                 return (
                     <div className="dash-item-content-wrapper" ref={measureRef}>
                         {children({
-                            clientWidth: contentRect.client?.width ?? 0,
-                            clientHeight: contentRect.client?.height ?? 0,
+                            clientWidth: contentRect.client?.width,
+                            clientHeight: contentRect.client?.height,
                         })}
                     </div>
                 );
