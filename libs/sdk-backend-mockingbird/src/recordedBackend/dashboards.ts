@@ -9,34 +9,74 @@ import {
     IListedDashboard,
     IScheduledMail,
     IScheduledMailDefinition,
+    isFilterContextDefinition,
+    isInsightWidget,
+    isInsightWidgetDefinition,
+    isKpiWidgetDefinition,
     IWidget,
     IWidgetAlert,
     IWidgetAlertCount,
     IWidgetAlertDefinition,
     IWidgetReferences,
     IWorkspaceDashboardsService,
+    IWorkspaceInsightsService,
     NotSupported,
     SupportedWidgetReferenceTypes,
     UnexpectedResponseError,
+    walkLayout,
 } from "@gooddata/sdk-backend-spi";
-import { IFilter, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, idRef, IFilter, IInsight, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
+import cloneDeep from "lodash/cloneDeep";
+import isEqual from "lodash/isEqual";
 import values from "lodash/values";
 import { DashboardRecording, RecordingIndex } from "./types";
+import { v4 as uuidv4 } from "uuid";
+import isEmpty from "lodash/isEmpty";
+
+function isDashboardRecording(obj: unknown): obj is DashboardRecording {
+    return !isEmpty(obj) && (obj as any).obj !== undefined;
+}
 
 export class RecordedDashboards implements IWorkspaceDashboardsService {
-    public constructor(public readonly workspace: string, private readonly recordings: RecordingIndex) {}
+    private localDashboards: IDashboard[] = [];
+    public constructor(
+        public readonly workspace: string,
+        private readonly insights: IWorkspaceInsightsService,
+        private readonly recordings: RecordingIndex,
+    ) {}
 
-    private findDashboardRecording(ref: ObjRef): DashboardRecording | undefined {
-        return values(this.recordings.metadata?.dashboards ?? {}).find((recording) => {
+    private findDashboardRecording(ref: ObjRef): DashboardRecording | IDashboard | undefined {
+        const recordedDashboard = values(this.recordings.metadata?.dashboards ?? {}).find((recording) => {
             const {
                 obj: { dashboard },
             } = recording;
 
             return isIdentifierRef(ref) ? ref.identifier === dashboard.identifier : ref.uri === dashboard.uri;
         });
+
+        if (recordedDashboard) {
+            return recordedDashboard;
+        }
+
+        return this.localDashboards.find((dashboard) => {
+            return isIdentifierRef(ref) ? ref.identifier === dashboard.identifier : ref.uri === dashboard.uri;
+        });
     }
 
-    public getDashboards(): Promise<IListedDashboard[]> {
+    private addOrUpdateLocalDashboard(dashboard: IDashboard): void {
+        const ref = dashboard.ref;
+        const idx = this.localDashboards.findIndex((dashboard) => {
+            return isIdentifierRef(ref) ? ref.identifier === dashboard.identifier : ref.uri === dashboard.uri;
+        });
+
+        if (idx >= 0) {
+            this.localDashboards = this.localDashboards.splice(idx, 1, dashboard);
+        } else {
+            this.localDashboards.push(dashboard);
+        }
+    }
+
+    public getDashboards = (): Promise<IListedDashboard[]> => {
         const result = values(this.recordings.metadata?.dashboards ?? {}).map((recording) => {
             const {
                 obj: { dashboard },
@@ -54,9 +94,9 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         });
 
         return Promise.resolve(result);
-    }
+    };
 
-    public getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> {
+    public getDashboard = (ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> => {
         if (filterContextRef) {
             throw new NotSupported("recorded backend does not support filter context override");
         }
@@ -67,23 +107,31 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             return Promise.reject(new UnexpectedResponseError("Not Found", 404, {}));
         }
 
-        return Promise.resolve(recording.obj.dashboard);
-    }
+        if (isDashboardRecording(recording)) {
+            return Promise.resolve(recording.obj.dashboard);
+        }
 
-    public getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]> {
+        return Promise.resolve(recording);
+    };
+
+    public getDashboardWidgetAlertsForCurrentUser = (ref: ObjRef): Promise<IWidgetAlert[]> => {
         const recording = this.findDashboardRecording(ref);
 
         if (!recording) {
             return Promise.reject(new UnexpectedResponseError("Not Found", 404, {}));
         }
 
-        return Promise.resolve(recording.alerts);
-    }
+        if (isDashboardRecording(recording)) {
+            return Promise.resolve(recording.alerts);
+        }
 
-    public getDashboardWithReferences(
+        return Promise.resolve([]);
+    };
+
+    public getDashboardWithReferences = async (
         ref: ObjRef,
         filterContextRef?: ObjRef,
-    ): Promise<IDashboardWithReferences> {
+    ): Promise<IDashboardWithReferences> => {
         if (filterContextRef) {
             throw new NotSupported("recorded backend does not support filter context override");
         }
@@ -94,8 +142,94 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             return Promise.reject(new UnexpectedResponseError("Not Found", 404, {}));
         }
 
-        return Promise.resolve(recording.obj);
-    }
+        if (isDashboardRecording(recording)) {
+            return Promise.resolve(recording.obj);
+        }
+
+        const insightsPromise: Array<Promise<IInsight>> = [];
+        walkLayout(recording.layout!, {
+            widgetCallback: (widget) => {
+                if (isInsightWidgetDefinition(widget) || isInsightWidget(widget)) {
+                    insightsPromise.push(this.insights.getInsight(widget.insight));
+                }
+            },
+        });
+
+        const insights = await Promise.all(insightsPromise);
+
+        return Promise.resolve({
+            dashboard: recording,
+            references: {
+                insights,
+            },
+        });
+    };
+
+    public createDashboard = (dashboard: IDashboardDefinition): Promise<IDashboard> => {
+        const emptyDashboard: IDashboardDefinition = {
+            description: "",
+            filterContext: undefined,
+            title: "",
+        };
+
+        return this.updateDashboard(emptyDashboard as IDashboard, dashboard);
+    };
+
+    public updateDashboard = async (
+        dashboard: IDashboard,
+        updatedDashboard: IDashboardDefinition,
+    ): Promise<IDashboard> => {
+        if (!areObjRefsEqual(dashboard.ref, updatedDashboard.ref)) {
+            throw new Error("Cannot update dashboard with different refs!");
+        } else if (isEqual(dashboard, updatedDashboard)) {
+            return dashboard;
+        }
+
+        let savedDashboard: Partial<IDashboard> = cloneDeep(updatedDashboard) as Partial<IDashboard>;
+
+        if (!savedDashboard.ref) {
+            const newId = uuidv4();
+
+            savedDashboard = {
+                ...savedDashboard,
+                identifier: newId,
+                uri: newId,
+                ref: idRef(newId),
+                created: "2021-01-01 01:01:00",
+                updated: "2021-01-01 01:01:00",
+            };
+        }
+
+        if (isFilterContextDefinition(savedDashboard.filterContext)) {
+            const newId = uuidv4();
+
+            savedDashboard = {
+                ...savedDashboard,
+                filterContext: {
+                    ...savedDashboard.filterContext,
+                    identifier: newId,
+                    uri: newId,
+                    ref: idRef(newId),
+                },
+            };
+        }
+
+        walkLayout(savedDashboard.layout!, {
+            widgetCallback: (widget) => {
+                if (isKpiWidgetDefinition(widget) || isInsightWidgetDefinition(widget)) {
+                    const newId = uuidv4();
+
+                    (widget as any).identifier = newId;
+                    (widget as any).uri = newId;
+                    (widget as any).ref = idRef(newId);
+                }
+            },
+        });
+
+        this.addOrUpdateLocalDashboard(savedDashboard as IDashboard);
+
+        return savedDashboard as IDashboard;
+    };
 
     //
     //
@@ -128,10 +262,6 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     // unsupported from down here
     //
 
-    public createDashboard(_dashboard: IDashboardDefinition): Promise<IDashboard> {
-        throw new NotSupported("recorded backend does not support this call");
-    }
-
     public createScheduledMail(
         _scheduledMail: IScheduledMailDefinition,
         _exportFilterContext?: IFilterContextDefinition,
@@ -156,13 +286,6 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     }
 
     public exportDashboardToPdf(_ref: ObjRef, _filters?: FilterContextItem[]): Promise<string> {
-        throw new NotSupported("recorded backend does not support this call");
-    }
-
-    public updateDashboard(
-        _dashboard: IDashboard,
-        _updatedDashboard: IDashboardDefinition,
-    ): Promise<IDashboard> {
         throw new NotSupported("recorded backend does not support this call");
     }
 

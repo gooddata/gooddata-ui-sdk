@@ -132,6 +132,8 @@ function recordedWorkspace(
     recordings: RecordingIndex = {},
     implConfig: RecordedBackendConfig,
 ): IAnalyticalWorkspace {
+    const insightsService = new RecordedInsights(recordings, implConfig.useRefType ?? "uri");
+
     return {
         workspace,
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
@@ -153,10 +155,10 @@ function recordedWorkspace(
             return new RecordedFacts();
         },
         insights(): IWorkspaceInsightsService {
-            return new RecordedInsights(recordings, implConfig.useRefType ?? "uri");
+            return insightsService;
         },
         dashboards(): IWorkspaceDashboardsService {
-            return new RecordedDashboards(this.workspace, recordings);
+            return new RecordedDashboards(this.workspace, insightsService, recordings);
         },
         settings(): IWorkspaceSettingsService {
             return {
