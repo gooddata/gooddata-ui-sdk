@@ -1,28 +1,26 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboard, IDashboardDefinition } from '@gooddata/sdk-backend-spi';
-import { BatchAction, batchActions } from 'redux-batched-actions';
-import { SagaIterator } from 'redux-saga';
-import { call, put, SagaReturnType, select } from 'redux-saga/effects';
-import {
-    DashboardContext,
-    DashboardCopySaved,
-    SaveDashboardAs,
-    selectBasicLayout,
-    selectDateFilterConfigOverrides,
-    selectFilterContextDefinition
-} from '../..';
-import { dashboardFilterContextIdentity } from '../../../_staging/dashboard/dashboardFilterContext';
+import { IDashboard, IDashboardDefinition } from "@gooddata/sdk-backend-spi";
+import { BatchAction, batchActions } from "redux-batched-actions";
+import { SagaIterator } from "redux-saga";
+import { call, put, SagaReturnType, select, setContext } from "redux-saga/effects";
+import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext";
 import {
     dashboardLayoutRemoveIdentity,
-    dashboardLayoutWidgetIdentityMap
-} from '../../../_staging/dashboard/dashboardLayout';
-import { dashboardCopySaved } from '../../events/dashboard';
-import { filterContextActions } from '../../state/filterContext';
-import { layoutActions } from '../../state/layout';
-import { metaActions } from '../../state/meta';
-import { selectDashboardDescriptor } from '../../state/meta/metaSelectors';
-import { PromiseFnReturnType } from '../../types/sagas';
+    dashboardLayoutWidgetIdentityMap,
+} from "../../../_staging/dashboard/dashboardLayout";
+import { SaveDashboardAs } from "../../commands/dashboard";
+import { DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard";
+import { filterContextActions } from "../../state/filterContext";
+import { selectFilterContextDefinition } from "../../state/filterContext/filterContextSelectors";
+import { layoutActions } from "../../state/layout";
+import { selectBasicLayout } from "../../state/layout/layoutSelectors";
+import { metaActions } from "../../state/meta";
+import { selectDashboardDescriptor } from "../../state/meta/metaSelectors";
+import { DashboardContext } from "../../types/commonTypes";
+import { PromiseFnReturnType } from "../../types/sagas";
+import { selectDateFilterConfigOverrides } from "../../state/dateFilterConfig/dateFilterConfigSelectors";
+import { alertsActions } from "../../state/alerts";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;
@@ -44,7 +42,7 @@ type DashboardSaveAsContext = {
 };
 
 type DashboardSaveAsResult = {
-    batch: BatchAction;
+    batch?: BatchAction;
     dashboard: IDashboard;
 };
 
@@ -53,7 +51,7 @@ function createDashboard(ctx: DashboardContext, saveAsCtx: DashboardSaveAsContex
 }
 
 function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<DashboardSaveAsContext> {
-    const {title} = cmd.payload;
+    const { title } = cmd.payload;
     const titleProp = title ? { title } : {};
     const dashboardDescriptor: ReturnType<typeof selectDashboardDescriptor> = yield select(
         selectDashboardDescriptor,
@@ -75,6 +73,8 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         dateFilterConfig,
     };
 
+    // remove widget identity from all widgets; according to the SPI contract, this will result in
+    // creation of new widgets
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,
         ...titleProp,
@@ -92,7 +92,18 @@ function* saveAs(
     ctx: DashboardContext,
     saveAsCtx: DashboardSaveAsContext,
 ): SagaIterator<DashboardSaveAsResult> {
-    const dashboard: PromiseFnReturnType<typeof createDashboard> = yield call(createDashboard, ctx, saveAsCtx);
+    const dashboard: PromiseFnReturnType<typeof createDashboard> = yield call(
+        createDashboard,
+        ctx,
+        saveAsCtx,
+    );
+
+    if (!saveAsCtx.cmd.payload.switchToCopy) {
+        return {
+            dashboard,
+        };
+    }
+
     const identityMapping = dashboardLayoutWidgetIdentityMap(
         saveAsCtx.dashboardFromState.layout!,
         dashboard.layout!,
@@ -101,6 +112,7 @@ function* saveAs(
     const batch = batchActions(
         [
             metaActions.setMeta({ dashboard }),
+            alertsActions.setAlerts([]),
             filterContextActions.updateFilterContextIdentity({
                 filterContextIdentity: dashboardFilterContextIdentity(dashboard),
             }),
@@ -124,10 +136,24 @@ export function* saveAsDashboardHandler(
         createDashboardSaveAsContext,
         cmd,
     );
+    const {
+        payload: { switchToCopy },
+    } = cmd;
     const result: SagaReturnType<typeof saveAs> = yield call(saveAs, ctx, saveAsCtx);
     const { dashboard, batch } = result;
 
-    yield put(batch);
+    if (batch) {
+        yield put(batch);
+    }
+
+    if (switchToCopy) {
+        yield setContext({
+            dashboardContext: {
+                ...ctx,
+                dashboardRef: dashboard.ref,
+            },
+        });
+    }
 
     return dashboardCopySaved(ctx, dashboard, cmd.correlationId);
 }

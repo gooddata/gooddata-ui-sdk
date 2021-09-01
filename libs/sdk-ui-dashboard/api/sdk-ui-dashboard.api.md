@@ -2883,13 +2883,14 @@ export interface SaveDashboardAs extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         readonly title?: string;
+        readonly switchToCopy?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.SAVEAS";
 }
 
 // @alpha
-export function saveDashboardAs(title?: string, correlationId?: string): SaveDashboardAs;
+export function saveDashboardAs(title?: string, switchToCopy?: boolean, correlationId?: string): SaveDashboardAs;
 
 // @internal (undocumented)
 export const ScheduledEmailDialog: () => JSX.Element;
