@@ -10,12 +10,19 @@ import { IMeasureMetadataObject } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 import { isInheritedObject } from "./utils";
 
+/**
+ * Type guard checking whether object is an instance of JsonApiMetricOutDocument.
+ */
+function isJsonApiMetricOutDocument(obj: unknown): obj is JsonApiMetricOutDocument {
+    return (obj as JsonApiMetricOutDocument).data !== undefined;
+}
+
 export function convertMetricFromBackend(
     data: JsonApiMetricOutDocument | JsonApiMetricOutWithLinks,
 ): IMeasureMetadataObject {
     let id: string;
     let attributes: JsonApiMetricInAttributes;
-    if ("data" in data) {
+    if (isJsonApiMetricOutDocument(data)) {
         id = data.data.id;
         attributes = data.data.attributes;
     } else {
