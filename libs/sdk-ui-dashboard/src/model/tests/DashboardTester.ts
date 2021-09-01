@@ -9,7 +9,12 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DashboardEvents, DashboardEventType } from "../events";
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
 import noop from "lodash/noop";
-import { DashboardCommandType, InitializeDashboard, initializeDashboard } from "../commands";
+import {
+    DashboardCommands,
+    DashboardCommandType,
+    InitializeDashboard,
+    initializeDashboard,
+} from "../commands";
 import { IDashboardQuery } from "../queries";
 import { queryEnvelopeWithPromise } from "../state/_infra/queryProcessing";
 import { IDashboardQueryService } from "../state/_infra/queryService";
@@ -168,7 +173,7 @@ export class DashboardTester {
         return new DashboardTester(ctx, testerConfig);
     }
 
-    public dispatch(action: PayloadAction<any>): void {
+    public dispatch(action: DashboardCommands | PayloadAction<any>): void {
         /*
          * Clearing monitored actions is essential to allow sane usage in tests that need fire a command and wait
          * for the same type of event multiple times. Monitored actions is what is used to wait in the `waitFor`
@@ -187,7 +192,7 @@ export class DashboardTester {
      * @param timeout - timeout after which the wait fails, default is 1000
      */
     public dispatchAndWaitFor(
-        action: PayloadAction<any>,
+        action: DashboardCommands | PayloadAction<any>,
         actionType: DashboardEventType | DashboardCommandType | string,
         timeout: number = 1000,
     ): Promise<any> {
