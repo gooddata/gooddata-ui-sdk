@@ -45,7 +45,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         private readonly recordings: RecordingIndex,
     ) {}
 
-    private findDashboardRecording(ref: ObjRef): DashboardRecording | IDashboard | undefined {
+    private findRecordingOrLocalDashboard(ref: ObjRef): DashboardRecording | IDashboard | undefined {
         const recordedDashboard = values(this.recordings.metadata?.dashboards ?? {}).find((recording) => {
             const {
                 obj: { dashboard },
@@ -101,7 +101,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             throw new NotSupported("recorded backend does not support filter context override");
         }
 
-        const recording = this.findDashboardRecording(ref);
+        const recording = this.findRecordingOrLocalDashboard(ref);
 
         if (!recording) {
             return Promise.reject(new UnexpectedResponseError("Not Found", 404, {}));
@@ -115,7 +115,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     };
 
     public getDashboardWidgetAlertsForCurrentUser = (ref: ObjRef): Promise<IWidgetAlert[]> => {
-        const recording = this.findDashboardRecording(ref);
+        const recording = this.findRecordingOrLocalDashboard(ref);
 
         if (!recording) {
             return Promise.reject(new UnexpectedResponseError("Not Found", 404, {}));
@@ -136,7 +136,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             throw new NotSupported("recorded backend does not support filter context override");
         }
 
-        const recording = this.findDashboardRecording(ref);
+        const recording = this.findRecordingOrLocalDashboard(ref);
 
         if (!recording) {
             return Promise.reject(new UnexpectedResponseError("Not Found", 404, {}));

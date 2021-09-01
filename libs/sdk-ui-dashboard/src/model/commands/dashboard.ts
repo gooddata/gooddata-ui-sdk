@@ -128,7 +128,7 @@ export interface SaveDashboardAs extends IDashboardCommand {
  *
  * @param title - new title for the dashboard; if not specified, the title of original dashboard will be used
  * @param switchToCopy - optionally indicate whether the dashboard component should switch to the dashboard that will
- *  be created during save-as.
+ *  be created during save-as; the default is false
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
