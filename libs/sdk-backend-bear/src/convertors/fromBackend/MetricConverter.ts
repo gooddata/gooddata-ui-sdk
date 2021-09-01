@@ -25,3 +25,15 @@ export function convertMetricFromBackend(metric: IMetric): IMeasureMetadataObjec
             .unlisted(Boolean(meta.unlisted)),
     );
 }
+
+export function convertListedMetric(metricLink: GdcMetadata.IObjectLink): IMeasureMetadataObject {
+    const ref = uriRef(metricLink.link);
+
+    return newMeasureMetadataObject(ref, (m) =>
+        m
+            .id(metricLink.identifier!)
+            .uri(metricLink.link as string)
+            .title(metricLink.title || "")
+            .description(metricLink.summary || ""),
+    );
+}

@@ -1,7 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IMeasureExpressionToken } from "../fromModel/ldm/measure";
-import { IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "../fromModel/ldm/metadata";
+import {
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    IMeasureReferencing,
+} from "../fromModel/ldm/metadata";
 
 /**
  * Service for create, update or delete measures and querying additional measures data.
@@ -40,4 +44,12 @@ export interface IWorkspaceMeasuresService {
      * @returns promise of undefined
      */
     deleteMeasure(measureRef: ObjRef): Promise<void>;
+
+    /**
+     * Get all metadata objects which uses specified object (ie. object is used by these objects) by a given reference.
+     *
+     * @param measureRef - ref of the measure to check
+     * @returns promise of references
+     */
+    getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
 }

@@ -1,9 +1,10 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
 import {
     IMeasureExpressionToken,
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
+    IMeasureReferencing,
     IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -16,11 +17,15 @@ import {
     SupportedMetadataObject,
     SupportedWrappedMetadataObject,
 } from "../../../convertors/fromBackend/MetaConverter";
-import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
+import {
+    convertListedMetric,
+    convertMetricFromBackend,
+} from "../../../convertors/fromBackend/MetricConverter";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { objRefToUri } from "../../../utils/api";
 import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
+import { convertListedVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
 
 export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -153,5 +158,23 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
         });
 
         return measure;
+    }
+
+    async getMeasureReferencingObjects(ref: ObjRef): Promise<IMeasureReferencing> {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
+
+        const data = await this.authCall((sdk) =>
+            sdk.md.getObjectUsedBy(this.workspace, uri, {
+                types: ["metric", "visualizationObject"],
+                nearest: true,
+            }),
+        );
+
+        return Promise.resolve({
+            measures: data.filter((item) => item.category === "metric").map(convertListedMetric),
+            insights: data
+                .filter((item) => item.category === "visualizationObject")
+                .map(convertListedVisualization),
+        });
     }
 }

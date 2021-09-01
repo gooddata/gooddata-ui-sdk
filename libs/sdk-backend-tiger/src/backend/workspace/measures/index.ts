@@ -4,6 +4,7 @@ import {
     IMeasureExpressionToken,
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
+    IMeasureReferencing,
 } from "@gooddata/sdk-backend-spi";
 import {
     JsonApiAttributeOut,
@@ -13,6 +14,8 @@ import {
     JsonApiMetricOutDocument,
     jsonApiHeaders,
     JsonApiMetricInTypeEnum,
+    MetadataUtilities,
+    JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
@@ -21,6 +24,7 @@ import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToIdentifier } from "../../../utils/api";
 import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
 import { v4 as uuidv4 } from "uuid";
+import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
 
 export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -149,4 +153,51 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             });
         });
     }
+
+    public getMeasureReferencingObjects = async (ref: ObjRef): Promise<IMeasureReferencing> => {
+        const id = await objRefToIdentifier(ref, this.authCall);
+        const filterReferencingObj = {
+            filter: `metrics.id==${id}`, // RSQL format of querying data
+        };
+
+        const insights = this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(
+                client,
+                client.workspaceObjects.getAllEntitiesVisualizationObjects,
+                {
+                    workspaceId: this.workspace,
+                },
+                { query: filterReferencingObj as any }, // return only measures that have a link to the given id in their visualizationObjects
+            )
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((insights) => insights.data.map(visualizationObjectsItemToInsight)),
+        );
+
+        const filterReferencingObjX = {
+            filter: `metric.id==${id}`, // RSQL format of querying data
+        };
+        const measures = this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(
+                client,
+                client.workspaceObjects.getAllEntitiesMetrics,
+                {
+                    workspaceId: this.workspace,
+                    include: ["metrics"],
+                },
+                { query: filterReferencingObjX as any }, // return only measures that have a link to the given id in their visualizationObjects
+            )
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((measures) =>
+                    (measures.included as JsonApiMetricOutWithLinks[]).map(convertMetricFromBackend),
+                ),
+        );
+
+        const request = Promise.all([insights, measures]);
+        return request.then(([insights, measures]) => {
+            return {
+                insights,
+                measures,
+            };
+        });
+    };
 }

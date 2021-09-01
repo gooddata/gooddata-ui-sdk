@@ -14,6 +14,7 @@ import {
     IMeasureMetadataObjectDefinition,
     isMeasureMetadataObject,
     isMeasureMetadataObjectDefinition,
+    IMeasureReferencing,
 } from "./measure";
 import { IMetadataObject, IMetadataObjectBase, IMetadataObjectIdentity, isMetadataObject } from "./types";
 import { isVariableMetadataObject, IVariableMetadataObject } from "./variable";
@@ -41,6 +42,7 @@ export {
     isVariableMetadataObject,
     IDashboardMetadataObject,
     isDashboardMetadataObject,
+    IMeasureReferencing,
 };
 
 /**
