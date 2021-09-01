@@ -44,6 +44,9 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/EVT.QUERY.FAILED",
     "@@QUERY.ENVELOPE" as any,
     "@@COMMAND.ENVELOPE" as any,
+    "@@GDC.DASH.SAVE_NEW",
+    "@@GDC.DASH.SAVE_EXISTING",
+    "@@GDC.DASH.SAVE_AS",
     // Execution failed events have the actual error in them
     "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
     "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",
@@ -74,6 +77,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE",
     "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
     "meta/setDrillableItems",
+    "layout/updateWidgetIdentities",
 ];
 
 /*

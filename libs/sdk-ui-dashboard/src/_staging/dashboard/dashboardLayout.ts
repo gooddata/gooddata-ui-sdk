@@ -249,7 +249,7 @@ export function dashboardLayoutRemoveIdentity<T extends IDashboardWidget>(
             } else {
                 const identity = getWidgetIdentity(item.widget);
 
-                if (!identity || identityPredicate(identity)) {
+                if (!identity || !identityPredicate(identity)) {
                     return item;
                 }
 

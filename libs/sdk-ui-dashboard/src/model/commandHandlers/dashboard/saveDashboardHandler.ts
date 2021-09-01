@@ -177,7 +177,7 @@ export function* saveDashboardHandler(
     const isNewDashboard = saveCtx.persistedDashboard === undefined;
     let result: DashboardSaveResult;
 
-    if (!isNewDashboard) {
+    if (isNewDashboard) {
         result = yield call(save, ctx, saveCtx, createDashboard, "@@GDC.DASH.SAVE_NEW");
     } else {
         result = yield call(save, ctx, saveCtx, updateDashboard, "@@GDC.DASH.SAVE_EXISTING");
