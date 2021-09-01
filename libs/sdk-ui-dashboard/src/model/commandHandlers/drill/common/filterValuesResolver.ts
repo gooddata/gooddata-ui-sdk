@@ -2,6 +2,8 @@
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 import {
+    attributeElementsCount,
+    filterAttributeElements,
     filterObjRef,
     IAttributeFilter,
     IDateFilter,
@@ -18,6 +20,8 @@ import {
     ResolvableFilter,
     IResolvedDateFilterValue,
 } from "../../../types/commonTypes";
+
+const MAX_ELEMENTS_COUNT_PER_REQUEST = 500; // should cover all attribute filters created by UI where we have 500 elements limit
 
 /**
  * Resolves filter values
@@ -91,11 +95,19 @@ async function resolveAttributeFilterValues(
     backend: IAnalyticalBackend,
     workspace: string,
 ): Promise<IResolvedAttributeFilterValues> {
+    const result: IResolvedAttributeFilterValues = {};
     const attributesService = backend.workspace(workspace).attributes();
     const elementsQuery = attributesService.elements().forFilter(filter);
-    let elementsPage = await elementsQuery.query();
+    const selectedElements = filterAttributeElements(filter);
+    const selectedElementsCount = attributeElementsCount(selectedElements);
+    // nothing to resolve at all (eg. ALL filter)
+    if (selectedElementsCount === 0) {
+        return result;
+    }
+    const requestLimit = Math.min(selectedElementsCount, MAX_ELEMENTS_COUNT_PER_REQUEST);
+    let elementsPage = await elementsQuery.withLimit(requestLimit).query();
     const elements: IAttributeElement[] = [];
-    const result: IResolvedAttributeFilterValues = {};
+
     while (!isEmpty(elementsPage.items)) {
         elements.push(...elementsPage.items);
         elementsPage = await elementsPage.next();
