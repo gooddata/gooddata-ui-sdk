@@ -26,6 +26,7 @@ import {
     ModifyDrillsForInsightWidget,
     RefreshInsightWidget,
     RemoveDrillsForInsightWidget,
+    ExportInsightWidget,
 } from "./insight";
 import {
     ChangeKpiWidgetComparison,
@@ -182,6 +183,8 @@ export {
     RemoveDrillsSelector,
     RefreshInsightWidget,
     refreshInsightWidget,
+    ExportInsightWidget,
+    exportInsightWidget,
 } from "./insight";
 
 export { RequestAsyncRender, ResolveAsyncRender } from "./render";
@@ -229,6 +232,7 @@ export type DashboardCommands =
     | ModifyDrillsForInsightWidget
     | RemoveDrillsForInsightWidget
     | RefreshInsightWidget
+    | ExportInsightWidget
     | CreateAlert
     | UpdateAlert
     | RemoveAlerts

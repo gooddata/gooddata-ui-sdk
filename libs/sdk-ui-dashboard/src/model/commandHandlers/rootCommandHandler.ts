@@ -53,6 +53,7 @@ import { triggerEventHandler } from "./events/triggerEventHandler";
 import { changeKpiWidgetMeasureHandler } from "./widgets/changeKpiWidgetMeasureHandler";
 import { changeKpiWidgetComparisonHandler } from "./widgets/changeKpiWidgetComparisonHandler";
 import { exportDashboardToPdfHandler } from "./dashboard/exportDashboardToPdfHandler";
+import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -92,6 +93,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": modifyDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": removeDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": unhandledCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT": exportInsightWidgetHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
     "GDC.DASH/CMD.ALERT.UPDATE": updateAlertHandler,
     "GDC.DASH/CMD.ALERTS.REMOVE": removeAlertsHandler,

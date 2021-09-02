@@ -5,6 +5,7 @@ import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { DashboardState } from "../types";
 import { createMemoizedSelector } from "../_infra/selectors";
 import { widgetExecutionsAdapter } from "./widgetExecutionsEntityAdapter";
+import { IWidgetExecution } from "./types";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -13,14 +14,23 @@ const selectSelf = createSelector(
 
 const adapterSelectors = widgetExecutionsAdapter.getSelectors(selectSelf);
 
-const selectWidgetExecutions = adapterSelectors.selectAll;
+const selectWidgetExecutionEntities = adapterSelectors.selectEntities;
 
 /**
  * @internal
  */
 export const selectWidgetExecutionByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(selectWidgetExecutions, (widgetExecutions) => {
+    createSelector(selectWidgetExecutionEntities, (widgetExecutions): IWidgetExecution | undefined => {
         const key = serializeObjRef(ref);
         return widgetExecutions[key];
+    }),
+);
+
+/**
+ * @internal
+ */
+export const selectCanWidgetBeExportedByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectWidgetExecutionByWidgetRef(ref), (widgetExecution): boolean => {
+        return !!widgetExecution?.executionResult;
     }),
 );
