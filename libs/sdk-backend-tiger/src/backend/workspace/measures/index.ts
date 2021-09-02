@@ -15,7 +15,6 @@ import {
     jsonApiHeaders,
     JsonApiMetricInTypeEnum,
     MetadataUtilities,
-    JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
@@ -167,7 +166,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                 {
                     workspaceId: this.workspace,
                 },
-                { query: filterReferencingObj as any }, // return only measures that have a link to the given id in their visualizationObjects
+                { query: filterReferencingObj as any }, // return only visualizationObjects that have a link to the given measure
             )
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then((insights) => insights.data.map(visualizationObjectsItemToInsight)),
@@ -181,12 +180,10 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                     workspaceId: this.workspace,
                     include: ["metrics"],
                 },
-                { query: filterReferencingObj as any }, // return only measures that have a link to the given id in their visualizationObjects
+                { query: filterReferencingObj as any }, // return only measures that have a link to the given  measure
             )
                 .then(MetadataUtilities.mergeEntitiesResults)
-                .then((measures) =>
-                    (measures.included as JsonApiMetricOutWithLinks[]).map(convertMetricFromBackend),
-                ),
+                .then((measures) => measures.data.map(convertMetricFromBackend)),
         );
 
         const request = Promise.all([insights, measures]);
