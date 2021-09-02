@@ -173,9 +173,6 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                 .then((insights) => insights.data.map(visualizationObjectsItemToInsight)),
         );
 
-        const filterReferencingObjX = {
-            filter: `metric.id==${id}`, // RSQL format of querying data
-        };
         const measures = this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(
                 client,
@@ -184,7 +181,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                     workspaceId: this.workspace,
                     include: ["metrics"],
                 },
-                { query: filterReferencingObjX as any }, // return only measures that have a link to the given id in their visualizationObjects
+                { query: filterReferencingObj as any }, // return only measures that have a link to the given id in their visualizationObjects
             )
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then((measures) =>
