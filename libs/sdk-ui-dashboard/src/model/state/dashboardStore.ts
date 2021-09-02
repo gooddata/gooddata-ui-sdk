@@ -55,6 +55,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/CMD.EVENT.TRIGGER",
     // Drill commands & events contain non-serializable dataView
     "GDC.DASH/CMD.DRILL",
+    "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT",
     "GDC.DASH/EVT.DRILL.REQUESTED",
     "GDC.DASH/EVT.DRILL.RESOLVED",
     "GDC.DASH/CMD.DRILL.DRILL_DOWN",
@@ -79,7 +80,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
     "meta/setDrillableItems",
     "layout/updateWidgetIdentities",
-    "widgetExecutions/upsertExecution",
+    "executionResults/upsertExecutionResult",
 ];
 
 /*
@@ -232,7 +233,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                     // drillableItems can be functions (header predicates)
                     "drill.drillableItems",
                     // executions can have Errors stored, also some decorated execution results are non-serializable too
-                    "_widgetExecutions",
+                    "executionResults",
                 ],
             },
         }),

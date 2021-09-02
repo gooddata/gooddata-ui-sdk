@@ -65,6 +65,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         onError,
         onDrill: onDrillFn,
         onExportReady,
+        onLoadingChanged,
         pushData,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
@@ -90,6 +91,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
         setIsVisualizationLoading(isLoading);
+        onLoadingChanged?.({ isLoading });
     }, []);
 
     /// Filtering
@@ -156,23 +158,28 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                         />
                     )}
                     {filtersStatus === "success" && (
-                        <InsightRenderer
-                            insight={insightWithAddedWidgetProperties}
-                            backend={effectiveBackend}
-                            workspace={effectiveWorkspace}
-                            drillableItems={drillableItems}
-                            onDrill={onDrill}
-                            config={chartConfig}
-                            onLoadingChanged={handleLoadingChanged}
-                            locale={locale}
-                            settings={settings as IUserWorkspaceSettings}
-                            colorPalette={colorPalette}
-                            onError={handleError}
-                            onExportReady={onExportReady}
-                            pushData={handlePushData}
-                            ErrorComponent={ErrorComponent}
-                            LoadingComponent={LoadingComponent}
-                        />
+                        <div
+                            className="insight-view-visualization"
+                            style={isVisualizationLoading || error ? { height: 0 } : undefined}
+                        >
+                            <InsightRenderer
+                                insight={insightWithAddedWidgetProperties}
+                                backend={effectiveBackend}
+                                workspace={effectiveWorkspace}
+                                drillableItems={drillableItems}
+                                onDrill={onDrill}
+                                config={chartConfig}
+                                onLoadingChanged={handleLoadingChanged}
+                                locale={locale}
+                                settings={settings as IUserWorkspaceSettings}
+                                colorPalette={colorPalette}
+                                onError={handleError}
+                                onExportReady={onExportReady}
+                                pushData={handlePushData}
+                                ErrorComponent={ErrorComponent}
+                                LoadingComponent={LoadingComponent}
+                            />
+                        </div>
                     )}
                 </IntlWrapper>
             </div>

@@ -1,7 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
 
 import { DashboardState } from "../types";
 import { createMemoizedSelector } from "../_infra/selectors";
@@ -44,12 +43,9 @@ export const selectExecutionResultByRef = createMemoizedSelector((ref: ObjRef) =
  */
 export const selectIsExecutionResultReadyForExportByRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(selectExecutionResultByRef(ref), selectWidgetByRef(ref), (widgetExecution): boolean => {
-        invariant(
-            widgetExecution,
-            `Attempting to get export status of execution result for ref: ${serializeObjRef(
-                ref,
-            )} which was not found.`,
-        );
+        if (!widgetExecution) {
+            return false;
+        }
 
         const { isLoading, error, executionResult } = widgetExecution;
         return !!executionResult && !isLoading && !isNonExportableError(error);

@@ -54,6 +54,7 @@ import { changeKpiWidgetMeasureHandler } from "./widgets/changeKpiWidgetMeasureH
 import { changeKpiWidgetComparisonHandler } from "./widgets/changeKpiWidgetComparisonHandler";
 import { exportDashboardToPdfHandler } from "./dashboard/exportDashboardToPdfHandler";
 import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler";
+import { upsertExecutionResultHandler } from "./executionResults/upsertExecutionResultHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -65,6 +66,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.RENAME": unhandledCommand,
     "GDC.DASH/CMD.EXPORT.PDF": exportDashboardToPdfHandler,
     "GDC.DASH/CMD.EVENT.TRIGGER": triggerEventHandler,
+    "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT": upsertExecutionResultHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION": changeFilterContextSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION": changeDateFilterSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD": addAttributeFilterHandler,

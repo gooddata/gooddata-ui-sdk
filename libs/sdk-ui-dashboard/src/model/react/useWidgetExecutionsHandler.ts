@@ -1,48 +1,33 @@
 // (C) 2021 GoodData Corporation
 import { useCallback } from "react";
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 import { IPushData, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 
-import { executionResultsActions } from "../state/executionResults";
-
-import { useDashboardDispatch } from "./DashboardStoreProvider";
+import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand";
+import { setExecutionResultData, setExecutionResultError, setExecutionResultLoading } from "../commands";
 
 /**
  * Provides callbacks to integrate with the executionResults slice.
  * @internal
  */
 export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
-    const dispatch = useDashboardDispatch();
-    const id = serializeObjRef(widgetRef);
+    const startLoading = useDispatchDashboardCommand(setExecutionResultLoading);
+    const setData = useDispatchDashboardCommand(setExecutionResultData);
+    const setError = useDispatchDashboardCommand(setExecutionResultError);
 
-    // TODO change to command
     const onError = useCallback<OnError>(
         (error) => {
-            dispatch(
-                executionResultsActions.upsertExecutionResult({
-                    isLoading: false,
-                    id,
-                    error,
-                    executionResult: undefined,
-                }),
-            );
+            setError(widgetRef, error);
         },
-        [id],
+        [widgetRef],
     );
 
     const onSuccess = useCallback(
         (executionResult: IExecutionResult) => {
-            dispatch(
-                executionResultsActions.upsertExecutionResult({
-                    isLoading: false,
-                    id,
-                    error: undefined,
-                    executionResult,
-                }),
-            );
+            setData(widgetRef, executionResult);
         },
-        [id],
+        [widgetRef],
     );
 
     const onPushData = useCallback(
@@ -51,30 +36,16 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
                 onSuccess(data.dataView.result);
             }
         },
-        [id, onSuccess],
+        [widgetRef, onSuccess],
     );
 
     const onLoadingChanged = useCallback<OnLoadingChanged>(
         ({ isLoading }) => {
             if (isLoading) {
-                dispatch(
-                    executionResultsActions.upsertExecutionResult({
-                        isLoading: true,
-                        id,
-                        error: undefined,
-                        executionResult: undefined,
-                    }),
-                );
-            } else {
-                dispatch(
-                    executionResultsActions.upsertExecutionResult({
-                        isLoading: false,
-                        id,
-                    }),
-                );
+                startLoading(widgetRef);
             }
         },
-        [id],
+        [widgetRef],
     );
 
     return {

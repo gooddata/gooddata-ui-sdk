@@ -9,6 +9,7 @@ import {
     ExportDashboardToPdf,
 } from "./dashboard";
 import { TriggerEvent } from "./events";
+import { UpsertExecutionResult } from "./executionResults";
 import {
     AddAttributeFilter,
     ChangeAttributeFilterSelection,
@@ -144,6 +145,12 @@ export {
     changeDrillableItems,
 } from "./drill";
 export {
+    UpsertExecutionResult,
+    setExecutionResultData,
+    setExecutionResultError,
+    setExecutionResultLoading,
+} from "./executionResults";
+export {
     ChangeKpiWidgetHeader,
     changeKpiWidgetHeader,
     ChangeKpiWidgetMeasure,
@@ -202,6 +209,7 @@ export type DashboardCommands =
     | ResetDashboard
     | ExportDashboardToPdf
     | TriggerEvent
+    | UpsertExecutionResult
     | RequestAsyncRender
     | ResolveAsyncRender
     | ChangeFilterContextSelection

@@ -21,8 +21,6 @@ import {
 import { DashboardContext } from "../../types/commonTypes";
 import { createExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { PromiseFnReturnType } from "../../types/sagas";
-import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
-import { validateExistingInsightWidget } from "./validation/widgetValidations";
 
 async function performExport(
     executionResult: IExecutionResult,
@@ -66,9 +64,6 @@ export function* exportInsightWidgetHandler(
     const { config, ref } = cmd.payload;
 
     yield put(insightWidgetExportRequested(ctx, ref, config));
-
-    const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
-    validateExistingInsightWidget(widgets, cmd, ctx);
 
     const isExportable: ReturnType<ReturnType<typeof selectIsExecutionResultReadyForExportByRef>> =
         yield select(selectIsExecutionResultReadyForExportByRef(ref));
