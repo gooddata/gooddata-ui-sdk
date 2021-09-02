@@ -149,6 +149,18 @@ export class XhrModule {
     }
 
     /**
+     * Clears the indicator that is making the XHR module to perform token requests before making
+     * the actual call. The module may get into this state typically during the application initialization
+     * when the session is not yet authenticated.
+     *
+     * Calling this method will clear that indicator, ensuring that the next call will be called without
+     * the leading call to token (which will typically fail).
+     */
+    public ensureNoLeadingTokenRequest(): void {
+        this.tokenRequest = null;
+    }
+
+    /**
      * Back compatible method for setting common XHR settings
      *
      * Usually in our apps we used beforeSend ajax callback to set the X-GDC-REQUEST header with unique ID.

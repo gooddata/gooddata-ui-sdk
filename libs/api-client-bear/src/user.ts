@@ -292,10 +292,18 @@ export class UserModule {
     }
 
     /**
-     * Initiates SPI SAML SSO
+     * Initiates SPI SAML SSO.
+     *
      * @param relayState URL of the page where the user is redirected after a successful login
      */
     public initiateSamlSso(relayState: string): Promise<void> {
+        /*
+         * make sure code does not try to get new token before initiating the SAML; the token request would
+         * fail and prevent the samlrequest call; there is no point in getting token anyway because it is just
+         * now that the client is initializing the session security context.
+         */
+        this.xhr.ensureNoLeadingTokenRequest();
+
         return this.xhr
             .get(`/gdc/account/samlrequest?${qs.stringify({ relayState })}`)
             .then((data) => data.getData())
