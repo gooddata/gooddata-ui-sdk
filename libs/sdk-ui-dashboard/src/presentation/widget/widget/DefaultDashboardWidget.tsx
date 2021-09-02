@@ -1,9 +1,8 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { isWidget, isDashboardWidget, UnexpectedError, isInsightWidget } from "@gooddata/sdk-backend-spi";
 
-import { selectAlerts, useDashboardSelector } from "../../../model";
+import { selectAlertByWidgetRef, useDashboardSelector } from "../../../model";
 import { DashboardItem } from "../../presentationComponents";
 
 import { DashboardWidgetProps } from "./types";
@@ -17,11 +16,10 @@ import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget";
  */
 export const DefaultDashboardWidgetInner = (): JSX.Element => {
     const { onError, onFiltersChange, screen, widget } = useDashboardWidgetProps();
-    const alerts = useDashboardSelector(selectAlerts);
 
-    const alert = isWidget(widget)
-        ? alerts?.find((alert) => areObjRefsEqual(alert.widget, widget.ref))
-        : undefined;
+    const widgetRef = widget?.ref;
+    const alertSelector = selectAlertByWidgetRef(widgetRef!);
+    const alert = useDashboardSelector(alertSelector);
 
     if (!isDashboardWidget) {
         throw new UnexpectedError(
