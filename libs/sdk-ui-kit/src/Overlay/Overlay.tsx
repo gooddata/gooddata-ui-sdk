@@ -224,6 +224,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             left: alignment.left,
             top: alignment.top,
             zIndex,
+            visibility: this.isAligned() ? undefined : "hidden",
         };
     };
 
