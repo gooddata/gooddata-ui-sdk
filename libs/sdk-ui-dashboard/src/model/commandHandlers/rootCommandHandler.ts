@@ -120,23 +120,23 @@ function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
  */
 export const CommandEnvelopeActionTypeName = "@@COMMAND.ENVELOPE";
 
-type CommandEnvelopeEventHandlers<TCommand extends IDashboardCommand> = {
+type CommandEnvelopeEventHandlers<TCommand extends IDashboardCommand, TResult> = {
     onStart: (command: TCommand) => void;
-    onSuccess: () => void;
+    onSuccess: (result: TResult) => void;
     onError: (err: Error) => void;
 };
 
-type CommandEnvelope<TCommand extends IDashboardCommand> = Readonly<
-    CommandEnvelopeEventHandlers<TCommand>
+type CommandEnvelope<TCommand extends IDashboardCommand, TResult> = Readonly<
+    CommandEnvelopeEventHandlers<TCommand, TResult>
 > & {
     readonly type: typeof CommandEnvelopeActionTypeName;
     readonly command: TCommand;
 };
 
-export function commandEnvelope<TCommand extends IDashboardCommand>(
+export function commandEnvelope<TCommand extends IDashboardCommand, TResult>(
     command: TCommand,
-    eventHandlers?: Partial<CommandEnvelopeEventHandlers<TCommand>>,
-): CommandEnvelope<TCommand> {
+    eventHandlers?: Partial<CommandEnvelopeEventHandlers<TCommand, TResult>>,
+): CommandEnvelope<TCommand, TResult> {
     return {
         type: CommandEnvelopeActionTypeName,
         command,
@@ -149,15 +149,15 @@ export function commandEnvelope<TCommand extends IDashboardCommand>(
 /**
  * @internal
  */
-export function commandEnvelopeWithPromise<TCommand extends IDashboardCommand>(
+export function commandEnvelopeWithPromise<TCommand extends IDashboardCommand, TResult>(
     command: TCommand,
 ): {
-    promise: Promise<void>;
-    envelope: CommandEnvelope<TCommand>;
+    promise: Promise<TResult>;
+    envelope: CommandEnvelope<TCommand, TResult>;
 } {
-    const commandEnvelopeEventHandlers: Partial<CommandEnvelopeEventHandlers<TCommand>> = {};
+    const commandEnvelopeEventHandlers: Partial<CommandEnvelopeEventHandlers<TCommand, TResult>> = {};
 
-    const promise = new Promise<void>((resolve, reject) => {
+    const promise = new Promise<TResult>((resolve, reject) => {
         commandEnvelopeEventHandlers.onSuccess = resolve;
         commandEnvelopeEventHandlers.onError = reject;
     });
@@ -170,19 +170,19 @@ export function commandEnvelopeWithPromise<TCommand extends IDashboardCommand>(
     };
 }
 
-function isCommandEnvelope(obj: unknown): obj is CommandEnvelope<any> {
-    return !!obj && (obj as CommandEnvelope<any>).type === CommandEnvelopeActionTypeName;
+function isCommandEnvelope(obj: unknown): obj is CommandEnvelope<any, any> {
+    return !!obj && (obj as CommandEnvelope<any, any>).type === CommandEnvelopeActionTypeName;
 }
 
 function ensureCommandWrappedInEnvelope(
-    action: DashboardCommands | CommandEnvelope<DashboardCommands>,
-): CommandEnvelope<any> {
+    action: DashboardCommands | CommandEnvelope<DashboardCommands, any>,
+): CommandEnvelope<DashboardCommands, any> {
     return isCommandEnvelope(action) ? action : commandEnvelope(action as DashboardCommands);
 }
 
 function* processCommand(
     ctx: DashboardContext,
-    envelope: CommandEnvelope<DashboardCommands>,
+    envelope: CommandEnvelope<DashboardCommands, any>,
 ): SagaIterator<void> {
     const {
         command,
@@ -210,7 +210,7 @@ function* processCommand(
         }
 
         try {
-            envelope.onSuccess();
+            envelope.onSuccess(result);
         } catch (e) {
             // eslint-disable-next-line no-console
             console.warn(
@@ -256,7 +256,9 @@ export function* rootCommandHandler(): SagaIterator<void> {
     );
 
     while (true) {
-        const command: DashboardCommands | CommandEnvelope<DashboardCommands> = yield take(commandChannel);
+        const command: DashboardCommands | CommandEnvelope<DashboardCommands, any> = yield take(
+            commandChannel,
+        );
         const envelope = ensureCommandWrappedInEnvelope(command);
         const ctx: DashboardContext = yield getContext("dashboardContext");
 

@@ -14,6 +14,7 @@ import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
 import { DateFilterType } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
+import { Dictionary } from '@reduxjs/toolkit';
 import { Dispatch } from '@reduxjs/toolkit';
 import { DrillDefinition } from '@gooddata/sdk-backend-spi';
 import { EntityState } from '@reduxjs/toolkit';
@@ -1525,7 +1526,7 @@ export function disableInsightWidgetDateFilter(ref: ObjRef, correlationId?: stri
 export function disableKpiWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha
-export function dispatchAndWaitFor<TCommand extends DashboardCommands>(dispatch: DashboardDispatch, command: TCommand): Promise<void>;
+export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(dispatch: DashboardDispatch, command: TCommand): Promise<TResult>;
 
 // @alpha (undocumented)
 export interface Drill extends IDashboardCommand {
@@ -2441,6 +2442,18 @@ export interface ITopBarProps {
     titleProps: ITitleProps;
 }
 
+// @internal (undocumented)
+export interface IWidgetExecution {
+    // (undocumented)
+    error?: GoodDataSdkError;
+    // (undocumented)
+    executionResult?: IExecutionResult;
+    // (undocumented)
+    isLoading: boolean;
+    // (undocumented)
+    widgetRef: ObjRef;
+}
+
 // @alpha (undocumented)
 export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kpiAlertDialogOpened", {
     alreadyHasAlert: boolean;
@@ -3210,6 +3223,9 @@ export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<Dash
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined, (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined>;
+
+// @internal (undocumented)
+export const selectWidgetExecutionByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IWidgetExecution | undefined, (res: Dictionary<IWidgetExecution>) => IWidgetExecution | undefined>;
 
 // @internal
 export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<IWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => ObjRefMap<IWidget>>;

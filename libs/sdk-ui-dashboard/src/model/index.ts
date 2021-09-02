@@ -134,6 +134,8 @@ export {
     selectDrillTargets,
 } from "./state/drillTargets/drillTargetsSelectors";
 export { IDrillTargets } from "./state/drillTargets/drillTargetsTypes";
+export { selectWidgetExecutionByWidgetRef } from "./state/widgetExecutions/widgetExecutionsSelectors";
+export { IWidgetExecution } from "./state/widgetExecutions/types";
 
 export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta";

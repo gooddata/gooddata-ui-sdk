@@ -25,12 +25,3 @@ export const selectWidgetExecutionByWidgetRef = createMemoizedSelector((ref: Obj
         return widgetExecutions[key];
     }),
 );
-
-/**
- * @internal
- */
-export const selectCanWidgetBeExportedByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(selectWidgetExecutionByWidgetRef(ref), (widgetExecution): boolean => {
-        return !!widgetExecution?.executionResult;
-    }),
-);
