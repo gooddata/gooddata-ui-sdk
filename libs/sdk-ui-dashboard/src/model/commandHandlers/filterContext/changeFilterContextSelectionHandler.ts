@@ -69,6 +69,8 @@ export function* changeFilterContextSelectionHandler(
             };
         }
         updateActions.push(filterContextActions.upsertDateFilter(upsertPayload));
+    } else {
+        updateActions.push(filterContextActions.upsertDateFilter({ type: "allTime" }));
     }
 
     yield put(batchActions(updateActions));

@@ -279,6 +279,33 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         };
     });
 
+    useEffect(() => {
+        const initialSelection = getInitialSelectedOptions();
+        const initialIsInverted = getInitialIsInverted();
+
+        setState((prevValue) => {
+            let resultState = prevValue;
+
+            if (!isEqual(prevValue.selectedFilterOptions, initialSelection)) {
+                resultState = {
+                    ...resultState,
+                    selectedFilterOptions: initialSelection,
+                    prevSelectedFilterOptions: initialSelection,
+                };
+            }
+
+            if (prevValue.isInverted !== initialIsInverted) {
+                resultState = {
+                    ...resultState,
+                    isInverted: initialIsInverted,
+                    prevIsInverted: initialIsInverted,
+                };
+            }
+            // if no change returning prevValue effectively skips the setState
+            return resultState;
+        });
+    }, [currentFilter]);
+
     const dropdownRef = useRef<Dropdown>(null);
     const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
 
