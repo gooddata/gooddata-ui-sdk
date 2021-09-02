@@ -3,19 +3,14 @@ import React, { useCallback, useState } from "react";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight, insightTitle } from "@gooddata/sdk-model";
 import { FullScreenOverlay, Overlay, useMediaQuery } from "@gooddata/sdk-ui-kit";
-import {
-    GoodDataSdkError,
-    IExportFunction,
-    ILocale,
-    OnExportReady,
-    OnLoadingChanged,
-} from "@gooddata/sdk-ui";
+import { ILocale, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile";
 import { useInsightExport } from "../../../common";
 import { OnDrillDownSuccess, WithDrillSelect } from "../../../../drill";
 import { IntlWrapper } from "../../../../localization";
 import { DrillDialog } from "./DrillDialog";
 import { DrillDialogInsight } from "./DrillDialogInsight";
+import { DRILL_MODAL_EXECUTION_PSEUDO_REF, useWidgetExecutionsHandler } from "../../../../../model";
 
 /**
  * @internal
@@ -43,29 +38,20 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
 
     const isMobileDevice = useMediaQuery("mobileDevice");
 
-    const [error, setError] = useState<GoodDataSdkError | undefined>();
     const [isLoading, setIsLoading] = useState(false);
-    const [exportFunction, setExportFunction] = useState<IExportFunction | undefined>();
+
+    const executionsHandler = useWidgetExecutionsHandler(DRILL_MODAL_EXECUTION_PSEUDO_REF);
 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
-        if (isLoading) {
-            setError(undefined);
-        }
-
         setIsLoading(isLoading);
-    }, []);
-
-    const handleExportReady = useCallback<OnExportReady>((newExportFunction) => {
-        setExportFunction(() => newExportFunction); // for functions in state, we always need to use the extra lambda
+        executionsHandler.onLoadingChanged({ isLoading });
     }, []);
 
     const modalTitle = insightTitle(insight);
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
-        error,
-        exportFunction,
-        isLoading,
         title: modalTitle,
+        widgetRef: DRILL_MODAL_EXECUTION_PSEUDO_REF,
     });
 
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;
@@ -87,7 +73,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                     onBackButtonClick={onBackButtonClick}
                     onCloseDialog={onClose}
                     breadcrumbs={breadcrumbs}
-                    exportAvailable={!!exportFunction}
+                    exportAvailable={exportXLSXEnabled || exportCSVEnabled}
                     exportXLSXEnabled={exportXLSXEnabled}
                     exportCSVEnabled={exportCSVEnabled}
                     onExportXLSX={onExportXLSX}
@@ -101,8 +87,8 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                                     {...props}
                                     onDrill={onDrill}
                                     onLoadingChanged={handleLoadingChanged}
-                                    onExportReady={handleExportReady}
-                                    onError={setError}
+                                    onError={executionsHandler.onError}
+                                    pushData={executionsHandler.onPushData}
                                 />
                             );
                         }}

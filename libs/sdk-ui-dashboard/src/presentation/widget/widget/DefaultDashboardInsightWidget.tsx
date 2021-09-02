@@ -4,16 +4,9 @@ import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { areObjRefsEqual, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { IInsightWidget, ScreenSize, widgetTitle } from "@gooddata/sdk-backend-spi";
-import { IExportFunction, OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
+import { OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
 
-import {
-    dispatchAndWaitFor,
-    exportInsightWidget,
-    selectInsights,
-    selectWidgetExecutionByWidgetRef,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model";
+import { selectInsights, selectWidgetExecutionByWidgetRef, useDashboardSelector } from "../../../model";
 import {
     DashboardItem,
     DashboardItemHeadline,
@@ -25,7 +18,7 @@ import { DashboardInsightPropsProvider } from "../insight/DashboardInsightPropsC
 import { DashboardInsight } from "../insight/DashboardInsight";
 import { OptionsButton } from "./OptionsMenu/OptionsButton";
 import { OptionsMenu } from "./OptionsMenu/OptionsMenu";
-import { isDataError } from "../common";
+import { isDataError } from "../../../_staging/errors/errorPredicates";
 import { useInsightExport } from "../common/useInsightExport";
 
 interface IDefaultDashboardInsightWidgetProps {
@@ -51,17 +44,9 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
 
     const execution = useDashboardSelector(selectWidgetExecutionByWidgetRef(widget.ref));
-    const dispatch = useDashboardDispatch();
-
-    const exportFunction = useCallback<IExportFunction>(
-        (configToUse) => dispatchAndWaitFor(dispatch, exportInsightWidget(widget.ref, configToUse)),
-        [widget.ref],
-    );
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
-        error: execution?.error,
-        isLoading: !!execution?.isLoading,
-        exportFunction,
+        widgetRef: widget.ref,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
     });
 

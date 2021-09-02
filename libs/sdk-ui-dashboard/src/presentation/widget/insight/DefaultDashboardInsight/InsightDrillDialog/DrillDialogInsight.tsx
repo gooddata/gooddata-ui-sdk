@@ -6,6 +6,7 @@ import { insightFilters, insightSetFilters, insightVisualizationUrl } from "@goo
 import {
     GoodDataSdkError,
     IntlWrapper,
+    IPushData,
     OnError,
     OnLoadingChanged,
     useBackendStrict,
@@ -64,6 +65,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         onError,
         onDrill: onDrillFn,
         onExportReady,
+        pushData,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
     } = props;
@@ -108,6 +110,14 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         insight,
         onDrill: onDrillFn,
     });
+
+    const handlePushData = useCallback(
+        (data: IPushData) => {
+            onPushData(data);
+            pushData?.(data);
+        },
+        [onPushData, pushData],
+    );
 
     // CSS
     const insightPositionStyle: CSSProperties = useMemo(() => {
@@ -159,7 +169,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                             colorPalette={colorPalette}
                             onError={handleError}
                             onExportReady={onExportReady}
-                            pushData={onPushData}
+                            pushData={handlePushData}
                             ErrorComponent={ErrorComponent}
                             LoadingComponent={LoadingComponent}
                         />

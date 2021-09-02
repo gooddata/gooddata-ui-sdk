@@ -1542,6 +1542,9 @@ export interface Drill extends IDashboardCommand {
 // @alpha
 export function drill(drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): Drill;
 
+// @internal
+export const DRILL_MODAL_EXECUTION_PSEUDO_REF: IdentifierRef;
+
 // @alpha (undocumented)
 export function drillableItemsChanged(ctx: DashboardContext, drillableItems: ExplicitDrill[], correlationId?: string): DashboardDrillableItemsChanged;
 
@@ -1960,6 +1963,8 @@ export interface IDashboardInsightProps {
     onExportReady?: OnExportReady;
     // (undocumented)
     onLoadingChanged?: OnLoadingChanged;
+    // (undocumented)
+    pushData?: (data: IPushData) => void;
     // (undocumented)
     widget: IInsightWidget;
     // (undocumented)
@@ -3226,6 +3231,12 @@ export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<Das
 
 // @internal (undocumented)
 export const selectWidgetExecutionByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IWidgetExecution | undefined, (res: Dictionary<IWidgetExecution>) => IWidgetExecution | undefined>;
+
+// @internal (undocumented)
+export const selectWidgetIsExportableToCsvByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: IWorkspacePermissions, res3: ISettings) => boolean>;
+
+// @internal (undocumented)
+export const selectWidgetIsExportableToXlsxByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: IWorkspacePermissions, res3: ISettings) => boolean>;
 
 // @internal
 export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<IWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => ObjRefMap<IWidget>>;
