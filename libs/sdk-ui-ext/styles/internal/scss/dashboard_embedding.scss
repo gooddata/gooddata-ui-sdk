@@ -244,15 +244,17 @@
 }
 
 // in dashboard view we need to tweak the positioning a bit as there is no options button
-.gd-dashboard-view-widget {
-    .gd-bubble-trigger-zoom-out {
-        top: -12px;
-        right: 0;
-    }
-    .viz-zoom-out {
-        top: 0;
-        left: 0;
-        cursor: pointer;
+.gd-dashboard-view {
+    .gd-dashboard-view-widget {
+        .gd-bubble-trigger-zoom-out {
+            top: -12px;
+            right: 0;
+        }
+        .viz-zoom-out {
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
     }
 }
 
