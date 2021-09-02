@@ -545,6 +545,8 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         if (this.getGroupRows()) {
             this.internal.table.initializeStickyRow();
         }
+
+        this.internal.table.setTooltipFields();
     };
 
     private onFirstDataRendered = async (_event: AgGridEvent) => {
