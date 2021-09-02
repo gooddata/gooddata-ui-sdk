@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
@@ -39,6 +39,7 @@ export const useDashboardQueryProcessing = <
     onBeforeRun?: (query: TQuery) => void;
 }): {
     run: (...args: TQueryCreatorArgs) => void;
+    cancel: () => void;
     status?: QueryProcessingStatus;
     result?: IDashboardQueryResult<TQuery>;
     error?: GoodDataSdkError;
@@ -48,11 +49,15 @@ export const useDashboardQueryProcessing = <
         status: QueryProcessingStatus;
         error: GoodDataSdkError | undefined;
     }>();
-
+    const canceled = useRef(false);
     const dispatch = useDashboardDispatch();
 
     const run = useCallback(
         (...args: TQueryCreatorArgs) => {
+            if (canceled.current) {
+                return;
+            }
+
             let query = queryCreator(...args);
 
             if (!query.correlationId) {
@@ -62,37 +67,49 @@ export const useDashboardQueryProcessing = <
                 };
             }
 
-            setState({
-                status: "running",
-                result: undefined,
-                error: undefined,
-            });
+            if (!canceled.current) {
+                setState({
+                    status: "running",
+                    result: undefined,
+                    error: undefined,
+                });
+            }
+
             onBeforeRun?.(query);
 
             queryAndWaitFor(dispatch, query)
                 .then((result) => {
-                    setState({ status: "success", result, error: undefined });
-                    onSuccess?.(result);
+                    if (!canceled.current) {
+                        setState({ status: "success", result, error: undefined });
+                        onSuccess?.(result);
+                    }
                 })
                 .catch((e) => {
-                    if (isDashboardQueryFailed(e)) {
-                        setState({
-                            status: "error",
-                            result: undefined,
-                            error: new UnexpectedSdkError(e.payload.message, e.payload.error),
-                        });
-                        onError?.(e);
-                    } else if (isDashboardQueryRejected(e)) {
-                        setState({ status: "rejected", result: undefined, error: undefined });
-                        onRejected?.(e);
+                    if (!canceled.current) {
+                        if (isDashboardQueryFailed(e)) {
+                            setState({
+                                status: "error",
+                                result: undefined,
+                                error: new UnexpectedSdkError(e.payload.message, e.payload.error),
+                            });
+                            onError?.(e);
+                        } else if (isDashboardQueryRejected(e)) {
+                            setState({ status: "rejected", result: undefined, error: undefined });
+                            onRejected?.(e);
+                        }
                     }
                 });
         },
         [queryCreator, onSuccess, onError, onRejected, onBeforeRun],
     );
 
+    const cancel = useCallback(() => {
+        canceled.current = true;
+    }, []);
+
     return {
         run,
+        cancel,
         ...state,
     };
 };

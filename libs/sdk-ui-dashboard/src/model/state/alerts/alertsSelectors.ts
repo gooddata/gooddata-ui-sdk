@@ -43,7 +43,7 @@ const selectAlertsMapByWidgetRefs = createSelector(selectAlerts, selectWidgetsMa
         invariant(widget, "Alert widget is missing in state widgets");
 
         const result: IWidgetAlertMapItem = {
-            identifier: widget.uri,
+            identifier: widget.identifier,
             uri: widget.uri,
             ref: widget.ref,
             alert,

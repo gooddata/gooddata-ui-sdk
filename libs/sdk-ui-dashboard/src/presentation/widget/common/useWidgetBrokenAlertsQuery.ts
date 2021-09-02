@@ -24,6 +24,7 @@ export const useWidgetBrokenAlertsQuery = (
 
     const {
         run: runBrokenAlertsQuery,
+        cancel,
         result,
         status,
         error,
@@ -37,6 +38,11 @@ export const useWidgetBrokenAlertsQuery = (
         if (widget.ref) {
             runBrokenAlertsQuery(widget.ref);
         }
+
+        return () => {
+            cancel();
+        };
+
         // queryWidgetBrokenAlerts as a parameter it needs just widget.ref but internally result depends on alert, widget, dashboardFilters
         // we have to call query every time when this dependency changed to get fresh results
     }, [alert, widget, dashboardFilters]);
