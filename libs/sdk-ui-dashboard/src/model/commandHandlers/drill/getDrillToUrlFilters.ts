@@ -14,7 +14,8 @@ export function* getDrillToUrlFiltersWithResolvedValues(
     ctx: DashboardContext,
     widgetRef: ObjRef,
 ): SagaIterator<FiltersInfo> {
-    const query = queryWidgetFilters(widgetRef);
+    // empty widgetFilterOverrides array is passed to override all insight filters
+    const query = queryWidgetFilters(widgetRef, []);
     const effectiveFilters: SagaReturnType<typeof QueryWidgetFiltersService.generator> = yield call(
         QueryWidgetFiltersService.generator,
         ctx,
