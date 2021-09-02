@@ -209,3 +209,31 @@ export function resetDashboard(correlationId?: string): ResetDashboard {
         correlationId,
     };
 }
+
+//
+//
+//
+
+/**
+ * @alpha
+ */
+export interface ExportDashboardToPdf extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.EXPORT.PDF";
+}
+
+/**
+ * Creates the {@link ExportDashboardToPdf} command. Dispatching this command will result in a request to export
+ * the dashboard to a PDF file. If successful, an instance of {@link DashboardExportToPdfResolved} will be emitted
+ * with the URL of the resulting file.
+ *
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function exportDashboardToPdf(correlationId?: string): ExportDashboardToPdf {
+    return {
+        type: "GDC.DASH/CMD.EXPORT.PDF",
+        correlationId,
+    };
+}

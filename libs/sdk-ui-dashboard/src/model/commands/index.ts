@@ -6,6 +6,7 @@ import {
     ResetDashboard,
     SaveDashboard,
     SaveDashboardAs,
+    ExportDashboardToPdf,
 } from "./dashboard";
 import { TriggerEvent } from "./events";
 import {
@@ -72,6 +73,8 @@ export {
     renameDashboard,
     ResetDashboard,
     resetDashboard,
+    ExportDashboardToPdf,
+    exportDashboardToPdf,
 } from "./dashboard";
 export { TriggerEvent, triggerEvent } from "./events";
 export {
@@ -194,6 +197,7 @@ export type DashboardCommands =
     | SaveDashboardAs
     | RenameDashboard
     | ResetDashboard
+    | ExportDashboardToPdf
     | TriggerEvent
     | RequestAsyncRender
     | ResolveAsyncRender

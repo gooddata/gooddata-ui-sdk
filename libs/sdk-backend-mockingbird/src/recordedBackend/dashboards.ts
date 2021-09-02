@@ -258,6 +258,10 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         throw new NotSupported("recorded backend does not support this call");
     }
 
+    public exportDashboardToPdf(_ref: ObjRef, _filters?: FilterContextItem[]): Promise<string> {
+        return Promise.resolve("/example/export.pdf");
+    }
+
     //
     // unsupported from down here
     //
@@ -283,10 +287,6 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
     public deleteWidgetAlerts(_refs: ObjRef[]): Promise<void> {
         return Promise.resolve();
-    }
-
-    public exportDashboardToPdf(_ref: ObjRef, _filters?: FilterContextItem[]): Promise<string> {
-        throw new NotSupported("recorded backend does not support this call");
     }
 
     public updateWidgetAlert(_alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert> {
