@@ -135,12 +135,13 @@ export {
 } from "./state/drillTargets/drillTargetsSelectors";
 export { IDrillTargets } from "./state/drillTargets/drillTargetsTypes";
 export {
-    selectWidgetExecutionByWidgetRef,
-    selectWidgetIsExportableToCsvByWidgetRef,
-    selectWidgetIsExportableToXlsxByWidgetRef,
-} from "./state/widgetExecutions/widgetExecutionsSelectors";
-export { IWidgetExecution } from "./state/widgetExecutions/types";
-export { DRILL_MODAL_EXECUTION_PSEUDO_REF } from "./state/widgetExecutions/constants";
+    selectExecutionResult,
+    selectExecutionResultByRef,
+    selectIsExecutionResultExportableToCsvByRef,
+    selectIsExecutionResultExportableToXlsxByRef,
+    selectIsExecutionResultReadyForExportByRef,
+} from "./state/executionResults/executionResultsSelectors";
+export { IExecutionResultEnvelope } from "./state/executionResults/types";
 
 export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta";

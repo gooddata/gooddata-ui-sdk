@@ -5,8 +5,8 @@ import { IExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
 import {
     selectSettings,
     useDashboardSelector,
-    selectWidgetIsExportableToCsvByWidgetRef,
-    selectWidgetIsExportableToXlsxByWidgetRef,
+    selectIsExecutionResultExportableToCsvByRef,
+    selectIsExecutionResultExportableToXlsxByRef,
     useDashboardDispatch,
     dispatchAndWaitFor,
     exportInsightWidget,
@@ -25,8 +25,8 @@ export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) =
         [widgetRef],
     );
 
-    const isExportableToCsv = useDashboardSelector(selectWidgetIsExportableToCsvByWidgetRef(widgetRef));
-    const isExportableToXlsx = useDashboardSelector(selectWidgetIsExportableToXlsxByWidgetRef(widgetRef));
+    const isExportableToCsv = useDashboardSelector(selectIsExecutionResultExportableToCsvByRef(widgetRef));
+    const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
 
     const settings = useDashboardSelector(selectSettings);
 

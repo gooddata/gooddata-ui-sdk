@@ -13,14 +13,16 @@ import {
     insightWidgetExportResolved,
 } from "../../events/insight";
 import {
-    selectWidgetExecutionByWidgetRef,
-    selectWidgetIsExportableToCsvByWidgetRef,
-    selectWidgetIsExportableToXlsxByWidgetRef,
-    selectWidgetIsReadyForExportByWidgetRef,
-} from "../../state/widgetExecutions/widgetExecutionsSelectors";
+    selectExecutionResultByRef,
+    selectIsExecutionResultReadyForExportByRef,
+    selectIsExecutionResultExportableToCsvByRef,
+    selectIsExecutionResultExportableToXlsxByRef,
+} from "../../state/executionResults/executionResultsSelectors";
 import { DashboardContext } from "../../types/commonTypes";
 import { createExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { PromiseFnReturnType } from "../../types/sagas";
+import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
+import { validateExistingInsightWidget } from "./validation/widgetValidations";
 
 async function performExport(
     executionResult: IExecutionResult,
@@ -39,11 +41,11 @@ function* validateSettingsAndPermissions(
 
     let canExport = false;
     if (config.format === "csv") {
-        canExport = yield select(selectWidgetIsExportableToCsvByWidgetRef(ref));
+        canExport = yield select(selectIsExecutionResultExportableToCsvByRef(ref));
     }
 
     if (config.format === "xlsx") {
-        canExport = yield select(selectWidgetIsExportableToXlsxByWidgetRef(ref));
+        canExport = yield select(selectIsExecutionResultExportableToXlsxByRef(ref));
     }
 
     if (!canExport) {
@@ -65,9 +67,11 @@ export function* exportInsightWidgetHandler(
 
     yield put(insightWidgetExportRequested(ctx, ref, config));
 
-    const isExportable: ReturnType<ReturnType<typeof selectWidgetIsReadyForExportByWidgetRef>> = yield select(
-        selectWidgetIsReadyForExportByWidgetRef(ref),
-    );
+    const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
+    validateExistingInsightWidget(widgets, cmd, ctx);
+
+    const isExportable: ReturnType<ReturnType<typeof selectIsExecutionResultReadyForExportByRef>> =
+        yield select(selectIsExecutionResultReadyForExportByRef(ref));
 
     if (!isExportable) {
         throw invalidArgumentsProvided(
@@ -79,16 +83,16 @@ export function* exportInsightWidgetHandler(
 
     yield call(validateSettingsAndPermissions, ctx, cmd);
 
-    const execution: ReturnType<ReturnType<typeof selectWidgetExecutionByWidgetRef>> = yield select(
-        selectWidgetExecutionByWidgetRef(ref),
+    const executionEnvelope: ReturnType<ReturnType<typeof selectExecutionResultByRef>> = yield select(
+        selectExecutionResultByRef(ref),
     );
 
     // executionResult must be defined at this point
-    invariant(execution?.executionResult);
+    invariant(executionEnvelope?.executionResult);
 
     const resultUri: PromiseFnReturnType<typeof performExport> = yield call(
         performExport,
-        execution.executionResult,
+        executionEnvelope.executionResult,
         config,
     );
 

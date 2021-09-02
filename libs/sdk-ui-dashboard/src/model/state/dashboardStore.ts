@@ -27,7 +27,7 @@ import { userSliceReducer } from "./user";
 import { metaSliceReducer } from "./meta";
 import { DashboardState } from "./types";
 import { AllQueryServices } from "../queryServices";
-import { widgetExecutionsSliceReducer } from "./widgetExecutions";
+import { executionResultsSliceReducer } from "./executionResults";
 import { createQueryProcessingModule } from "./_infra/queryProcessing";
 import { IDashboardQueryService } from "./_infra/queryService";
 import values from "lodash/values";
@@ -256,8 +256,8 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         meta: metaSliceReducer,
         drill: drillSliceReducer,
         listedDashboards: listedDashboardsSliceReducer,
+        executionResults: executionResultsSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
-        _widgetExecutions: widgetExecutionsSliceReducer,
     });
 
     const store = configureStore({

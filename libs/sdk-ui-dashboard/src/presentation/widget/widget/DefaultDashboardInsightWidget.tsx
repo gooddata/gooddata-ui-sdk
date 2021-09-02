@@ -6,7 +6,7 @@ import { areObjRefsEqual, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { IInsightWidget, ScreenSize, widgetTitle } from "@gooddata/sdk-backend-spi";
 import { OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
 
-import { selectInsights, selectWidgetExecutionByWidgetRef, useDashboardSelector } from "../../../model";
+import { selectInsights, selectExecutionResultByRef, useDashboardSelector } from "../../../model";
 import {
     DashboardItem,
     DashboardItemHeadline,
@@ -43,7 +43,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const insight = insights.find((i) => areObjRefsEqual(i.insight.ref, widget.insight))!;
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
 
-    const execution = useDashboardSelector(selectWidgetExecutionByWidgetRef(widget.ref));
+    const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
         widgetRef: widget.ref,

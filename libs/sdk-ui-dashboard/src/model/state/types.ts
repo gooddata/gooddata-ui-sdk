@@ -14,6 +14,7 @@ import { DrillState } from "./drill/drillState";
 import { DashboardMetaState } from "./meta/metaState";
 import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState";
 import { IDrillTargets } from "./drillTargets/drillTargetsTypes";
+import { IExecutionResultEnvelope } from "./executionResults/types";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -44,6 +45,10 @@ export type DashboardState = {
     alerts: EntityState<IWidgetAlert>;
     drillTargets: EntityState<IDrillTargets>;
     listedDashboards: EntityState<IListedDashboard>;
+    /**
+     * Part of state where execution results of the individual widgets are stored.
+     */
+    executionResults: EntityState<IExecutionResultEnvelope>;
 
     /**
      * Part of state where the different dashboard component queries may cache their results.
@@ -53,13 +58,6 @@ export type DashboardState = {
     _queryCache: {
         [queryName: string]: any;
     };
-
-    /**
-     * Part of state where execution results of the individual widgets are stored.
-     *
-     * @internal
-     */
-    _widgetExecutions: EntityState<any>;
 };
 
 /**

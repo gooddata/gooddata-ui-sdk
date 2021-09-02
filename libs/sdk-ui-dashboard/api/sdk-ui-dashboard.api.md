@@ -1352,10 +1352,10 @@ export type DashboardState = {
     alerts: EntityState<IWidgetAlert>;
     drillTargets: EntityState<IDrillTargets>;
     listedDashboards: EntityState<IListedDashboard>;
+    executionResults: EntityState<IExecutionResultEnvelope>;
     _queryCache: {
         [queryName: string]: any;
     };
-    _widgetExecutions: EntityState<any>;
 };
 
 // @internal (undocumented)
@@ -1541,9 +1541,6 @@ export interface Drill extends IDashboardCommand {
 
 // @alpha
 export function drill(drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): Drill;
-
-// @internal
-export const DRILL_MODAL_EXECUTION_PSEUDO_REF: IdentifierRef;
 
 // @alpha (undocumented)
 export function drillableItemsChanged(ctx: DashboardContext, drillableItems: ExplicitDrill[], correlationId?: string): DashboardDrillableItemsChanged;
@@ -2054,6 +2051,18 @@ export interface IDrillToUrlPlaceholder {
 }
 
 // @alpha (undocumented)
+export interface IExecutionResultEnvelope {
+    // (undocumented)
+    error?: GoodDataSdkError;
+    // (undocumented)
+    executionResult?: IExecutionResult;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isLoading: boolean;
+}
+
+// @alpha (undocumented)
 export interface IFilterBarProps {
     filters: FilterContextItem[];
     onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
@@ -2445,18 +2454,6 @@ export interface ITopBarProps {
     menuButtonProps: IMenuButtonProps;
     // (undocumented)
     titleProps: ITitleProps;
-}
-
-// @internal (undocumented)
-export interface IWidgetExecution {
-    // (undocumented)
-    error?: GoodDataSdkError;
-    // (undocumented)
-    executionResult?: IExecutionResult;
-    // (undocumented)
-    isLoading: boolean;
-    // (undocumented)
-    widgetRef: ObjRef;
 }
 
 // @alpha (undocumented)
@@ -3122,6 +3119,12 @@ export const selectEnableKPIDashboardSchedule: OutputSelector<DashboardState, bo
 // @alpha
 export const selectEnableKPIDashboardScheduleRecipients: OutputSelector<DashboardState, boolean | undefined, (res: ResolvedDashboardConfig) => boolean | undefined>;
 
+// @alpha (undocumented)
+export const selectExecutionResult: (state: DashboardState, id: string | number) => IExecutionResultEnvelope | undefined;
+
+// @alpha (undocumented)
+export const selectExecutionResultByRef: (ref: ObjRef) => OutputSelector<DashboardState, IExecutionResultEnvelope | undefined, (res: Dictionary<IExecutionResultEnvelope>) => IExecutionResultEnvelope | undefined>;
+
 // @alpha
 export const selectFilterContextAttributeFilters: OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem[]) => IDashboardAttributeFilter[]>;
 
@@ -3178,6 +3181,15 @@ export const selectInsightWidgetImplicitDrillsByRef: (ref: ObjRef) => OutputSele
 // @alpha
 export const selectIsEmbedded: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
+// @alpha (undocumented)
+export const selectIsExecutionResultExportableToCsvByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: IWorkspacePermissions, res3: ISettings) => boolean>;
+
+// @alpha (undocumented)
+export const selectIsExecutionResultExportableToXlsxByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: IWorkspacePermissions, res3: ISettings) => boolean>;
+
+// @alpha (undocumented)
+export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: IExecutionResultEnvelope | undefined, res2: IKpiWidget | IInsightWidget | undefined) => boolean>;
+
 // @internal
 export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
@@ -3228,15 +3240,6 @@ export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<Dash
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined, (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined>;
-
-// @internal (undocumented)
-export const selectWidgetExecutionByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IWidgetExecution | undefined, (res: Dictionary<IWidgetExecution>) => IWidgetExecution | undefined>;
-
-// @internal (undocumented)
-export const selectWidgetIsExportableToCsvByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: IWorkspacePermissions, res3: ISettings) => boolean>;
-
-// @internal (undocumented)
-export const selectWidgetIsExportableToXlsxByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: IWorkspacePermissions, res3: ISettings) => boolean>;
 
 // @internal
 export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<IWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => ObjRefMap<IWidget>>;
