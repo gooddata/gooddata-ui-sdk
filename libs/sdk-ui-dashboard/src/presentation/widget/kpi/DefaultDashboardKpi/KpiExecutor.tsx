@@ -49,6 +49,7 @@ import {
     useDashboardUserInteraction,
     selectDisableDefaultDrills,
     selectDrillableItems,
+    useWidgetExecutionsHandler,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
@@ -138,12 +139,29 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
 
     const isAlertBroken = !!brokenAlertsBasicInfo?.length;
 
+    const executionsHandler = useWidgetExecutionsHandler(kpiWidget.ref);
+
     useEffect(() => {
         const err = error ?? alertExecutionError;
         if (err) {
             onError?.(err);
         }
+        // for executions we care only about KPI errors
+        if (error) {
+            executionsHandler.onError(error);
+        }
     }, [error, alertExecutionError]);
+
+    useEffect(() => {
+        if (result) {
+            // empty data is considered an error here
+            if (result.rawData().isEmpty()) {
+                executionsHandler.onError(new NoDataSdkError());
+            } else {
+                executionsHandler.onSuccess(result.result());
+            }
+        }
+    }, [result]);
 
     const handleOnDrill = useCallback(
         (drillContext: IDrillEventContext): ReturnType<OnFiredDashboardViewDrillEvent> => {
@@ -176,6 +194,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
         } else {
             onResolveAsyncRender();
         }
+        executionsHandler.onLoadingChanged({ isLoading: !!isLoading });
     }, [isLoading, onRequestAsyncRender, onResolveAsyncRender]);
 
     const { kpiAlertDialogClosed, kpiAlertDialogOpened } = useDashboardUserInteraction();

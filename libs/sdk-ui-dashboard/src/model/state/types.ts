@@ -53,6 +53,13 @@ export type DashboardState = {
     _queryCache: {
         [queryName: string]: any;
     };
+
+    /**
+     * Part of state where execution results of the individual widgets are stored.
+     *
+     * @internal
+     */
+    _widgetExecutions: EntityState<any>;
 };
 
 /**

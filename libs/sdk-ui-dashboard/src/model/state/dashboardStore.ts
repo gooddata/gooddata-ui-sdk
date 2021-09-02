@@ -27,6 +27,7 @@ import { userSliceReducer } from "./user";
 import { metaSliceReducer } from "./meta";
 import { DashboardState } from "./types";
 import { AllQueryServices } from "../queryServices";
+import { widgetExecutionsSliceReducer } from "./widgetExecutions";
 import { createQueryProcessingModule } from "./_infra/queryProcessing";
 import { IDashboardQueryService } from "./_infra/queryService";
 import values from "lodash/values";
@@ -78,6 +79,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
     "meta/setDrillableItems",
     "layout/updateWidgetIdentities",
+    "widgetExecutions/upsertExecution",
 ];
 
 /*
@@ -226,8 +228,12 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
             serializableCheck: {
                 ignoredActions: nonSerializableEventsAndCommands,
                 ignoredActionPaths: ["ctx"],
-                // drillableItems can be functions (header predicates)
-                ignoredPaths: ["drill.drillableItems"],
+                ignoredPaths: [
+                    // drillableItems can be functions (header predicates)
+                    "drill.drillableItems",
+                    // executions can have Errors stored, also some decorated execution results are non-serializable too
+                    "_widgetExecutions",
+                ],
             },
         }),
         ...(config.additionalMiddleware ? [config.additionalMiddleware] : []),
@@ -251,6 +257,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         drill: drillSliceReducer,
         listedDashboards: listedDashboardsSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
+        _widgetExecutions: widgetExecutionsSliceReducer,
     });
 
     const store = configureStore({

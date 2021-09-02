@@ -34,6 +34,7 @@ import { listedDashboardsActions } from "../../../state/listedDashboards";
 import { backendCapabilitiesActions } from "../../../state/backendCapabilities";
 import { ObjRef } from "@gooddata/sdk-model";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext";
+import { widgetExecutionsActions } from "../../../state/widgetExecutions";
 
 function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -198,6 +199,7 @@ function* initializeNewDashboard(
             insightsActions.setInsights([]),
             metaActions.setMeta({}),
             listedDashboardsActions.setListedDashboards(listedDashboards),
+            widgetExecutionsActions.clearAllExecutions(),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
     );

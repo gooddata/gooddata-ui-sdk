@@ -55,6 +55,7 @@ import { IDrillToDashboard } from '@gooddata/sdk-backend-spi';
 import { IDrillToInsight } from '@gooddata/sdk-backend-spi';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-backend-spi';
 import { IErrorProps } from '@gooddata/sdk-ui';
+import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
@@ -75,6 +76,7 @@ import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
+import { IPushData } from '@gooddata/sdk-ui';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
@@ -1351,6 +1353,7 @@ export type DashboardState = {
     _queryCache: {
         [queryName: string]: any;
     };
+    _widgetExecutions: EntityState<any>;
 };
 
 // @internal (undocumented)
@@ -3794,6 +3797,14 @@ export const useTitleProps: () => ITitleProps;
 
 // @alpha (undocumented)
 export const useTopBarProps: () => ITopBarProps;
+
+// @internal
+export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
+    onLoadingChanged: OnLoadingChanged;
+    onError: OnError;
+    onSuccess: (executionResult: IExecutionResult) => void;
+    onPushData: (data: IPushData) => void;
+};
 
 // @alpha
 export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;
