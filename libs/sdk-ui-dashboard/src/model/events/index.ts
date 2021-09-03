@@ -43,7 +43,9 @@ import {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetHeaderChanged,
     DashboardKpiWidgetMeasureChanged,
+    DashboardKpiWidgetExecutionStarted,
     DashboardKpiWidgetExecutionFailed,
+    DashboardKpiWidgetExecutionSucceeded,
 } from "./kpi";
 import {
     DashboardInsightWidgetChanged,
@@ -53,7 +55,9 @@ import {
     DashboardInsightWidgetHeaderChanged,
     DashboardInsightWidgetInsightSwitched,
     DashboardInsightWidgetVisPropertiesChanged,
+    DashboardInsightWidgetExecutionStarted,
     DashboardInsightWidgetExecutionFailed,
+    DashboardInsightWidgetExecutionSucceeded,
     DashboardInsightWidgetExportRequested,
     DashboardInsightWidgetExportResolved,
 } from "./insight";
@@ -173,11 +177,17 @@ export {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetComparisonChanged,
     DashboardKpiWidgetChanged,
+    DashboardKpiWidgetExecutionStarted,
     DashboardKpiWidgetExecutionFailed,
+    DashboardKpiWidgetExecutionSucceeded,
+    kpiWidgetExecutionStarted,
     kpiWidgetExecutionFailed,
+    kpiWidgetExecutionSucceeded,
     isDashboardKpiWidgetChanged,
     isDashboardKpiWidgetComparisonChanged,
+    isDashboardKpiWidgetExecutionStarted,
     isDashboardKpiWidgetExecutionFailed,
+    isDashboardKpiWidgetExecutionSucceeded,
     isDashboardKpiWidgetFilterSettingsChanged,
     isDashboardKpiWidgetHeaderChanged,
     isDashboardKpiWidgetMeasureChanged,
@@ -191,14 +201,20 @@ export {
     DashboardInsightWidgetDrillsModified,
     DashboardInsightWidgetDrillsRemoved,
     DashboardInsightWidgetChanged,
+    DashboardInsightWidgetExecutionStarted,
     DashboardInsightWidgetExecutionFailed,
+    DashboardInsightWidgetExecutionSucceeded,
     DashboardInsightWidgetExportRequested,
     DashboardInsightWidgetExportResolved,
+    insightWidgetExecutionStarted,
     insightWidgetExecutionFailed,
+    insightWidgetExecutionSucceeded,
     isDashboardInsightWidgetChanged,
     isDashboardInsightWidgetDrillsModified,
     isDashboardInsightWidgetDrillsRemoved,
+    isDashboardInsightWidgetExecutionStarted,
     isDashboardInsightWidgetExecutionFailed,
+    isDashboardInsightWidgetExecutionSucceeded,
     isDashboardInsightWidgetFilterSettingsChanged,
     isDashboardInsightWidgetHeaderChanged,
     isDashboardInsightWidgetInsightSwitched,
@@ -324,7 +340,9 @@ export type DashboardEvents =
     | DashboardKpiWidgetFilterSettingsChanged
     | DashboardKpiWidgetComparisonChanged
     | DashboardKpiWidgetChanged
+    | DashboardKpiWidgetExecutionStarted
     | DashboardKpiWidgetExecutionFailed
+    | DashboardKpiWidgetExecutionSucceeded
     | DashboardInsightWidgetHeaderChanged
     | DashboardInsightWidgetFilterSettingsChanged
     | DashboardInsightWidgetVisPropertiesChanged
@@ -332,7 +350,9 @@ export type DashboardEvents =
     | DashboardInsightWidgetDrillsModified
     | DashboardInsightWidgetDrillsRemoved
     | DashboardInsightWidgetChanged
+    | DashboardInsightWidgetExecutionStarted
     | DashboardInsightWidgetExecutionFailed
+    | DashboardInsightWidgetExecutionSucceeded
     | DashboardInsightWidgetExportRequested
     | DashboardInsightWidgetExportResolved
     | DashboardAlertCreated

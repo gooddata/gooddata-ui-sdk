@@ -404,6 +404,47 @@ export const isDashboardInsightWidgetChanged = eventGuard<DashboardInsightWidget
 //
 
 /**
+ * This event is emitted after execution of an insight widget starts.
+ *
+ * @alpha
+ */
+export interface DashboardInsightWidgetExecutionStarted extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_STARTED";
+    readonly payload: {
+        widgetRef: ObjRef;
+        insightRef: ObjRef;
+    };
+}
+
+/**
+ * @alpha
+ */
+export function insightWidgetExecutionStarted(
+    widgetRef: ObjRef,
+    insightRef: ObjRef,
+    correlationId?: string,
+): DashboardEventBody<DashboardInsightWidgetExecutionStarted> {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_STARTED",
+        correlationId,
+        payload: {
+            insightRef,
+            widgetRef,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetExecutionStarted}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetExecutionStarted = eventGuard<DashboardInsightWidgetExecutionStarted>(
+    "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_STARTED",
+);
+
+/**
  * This event is emitted after execution of an insight widget fails.
  *
  * @alpha
@@ -412,6 +453,8 @@ export interface DashboardInsightWidgetExecutionFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED";
     readonly payload: {
         error: GoodDataSdkError;
+        widgetRef: ObjRef;
+        insightRef: ObjRef;
     };
 }
 
@@ -419,6 +462,8 @@ export interface DashboardInsightWidgetExecutionFailed extends IDashboardEvent {
  * @alpha
  */
 export function insightWidgetExecutionFailed(
+    widgetRef: ObjRef,
+    insightRef: ObjRef,
     error: GoodDataSdkError,
     correlationId?: string,
 ): DashboardEventBody<DashboardInsightWidgetExecutionFailed> {
@@ -426,6 +471,8 @@ export function insightWidgetExecutionFailed(
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
         correlationId,
         payload: {
+            insightRef,
+            widgetRef,
             error,
         },
     };
@@ -440,6 +487,46 @@ export function insightWidgetExecutionFailed(
 export const isDashboardInsightWidgetExecutionFailed = eventGuard<DashboardInsightWidgetExecutionFailed>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
 );
+
+/**
+ * This event is emitted after execution of an insight widget succeeds.
+ *
+ * @alpha
+ */
+export interface DashboardInsightWidgetExecutionSucceeded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_SUCCEEDED";
+    readonly payload: {
+        widgetRef: ObjRef;
+        insightRef: ObjRef;
+    };
+}
+
+/**
+ * @alpha
+ */
+export function insightWidgetExecutionSucceeded(
+    widgetRef: ObjRef,
+    insightRef: ObjRef,
+    correlationId?: string,
+): DashboardEventBody<DashboardInsightWidgetExecutionSucceeded> {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_SUCCEEDED",
+        correlationId,
+        payload: {
+            insightRef,
+            widgetRef,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetExecutionSucceeded}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetExecutionSucceeded =
+    eventGuard<DashboardInsightWidgetExecutionSucceeded>("GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_SUCCEEDED");
 
 //
 //

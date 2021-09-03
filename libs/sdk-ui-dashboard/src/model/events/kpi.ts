@@ -301,6 +301,44 @@ export const isDashboardKpiWidgetChanged = eventGuard<DashboardKpiWidgetChanged>
 //
 
 /**
+ * This event is emitted after execution of a KPI widget starts.
+ *
+ * @alpha
+ */
+export interface DashboardKpiWidgetExecutionStarted extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_STARTED";
+    readonly payload: {
+        widgetRef: ObjRef;
+    };
+}
+
+/**
+ * @alpha
+ */
+export function kpiWidgetExecutionStarted(
+    widgetRef: ObjRef,
+    correlationId?: string,
+): DashboardEventBody<DashboardKpiWidgetExecutionStarted> {
+    return {
+        type: "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_STARTED",
+        correlationId,
+        payload: {
+            widgetRef,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetExecutionStarted}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetExecutionStarted = eventGuard<DashboardKpiWidgetExecutionStarted>(
+    "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_STARTED",
+);
+
+/**
  * This event is emitted after execution of a KPI widget fails.
  *
  * @alpha
@@ -308,6 +346,7 @@ export const isDashboardKpiWidgetChanged = eventGuard<DashboardKpiWidgetChanged>
 export interface DashboardKpiWidgetExecutionFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED";
     readonly payload: {
+        widgetRef: ObjRef;
         error: GoodDataSdkError;
     };
 }
@@ -316,6 +355,7 @@ export interface DashboardKpiWidgetExecutionFailed extends IDashboardEvent {
  * @alpha
  */
 export function kpiWidgetExecutionFailed(
+    widgetRef: ObjRef,
     error: GoodDataSdkError,
     correlationId?: string,
 ): DashboardEventBody<DashboardKpiWidgetExecutionFailed> {
@@ -323,6 +363,7 @@ export function kpiWidgetExecutionFailed(
         type: "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",
         correlationId,
         payload: {
+            widgetRef,
             error,
         },
     };
@@ -336,4 +377,42 @@ export function kpiWidgetExecutionFailed(
  */
 export const isDashboardKpiWidgetExecutionFailed = eventGuard<DashboardKpiWidgetExecutionFailed>(
     "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",
+);
+
+/**
+ * This event is emitted after execution of a KPI widget succeeds.
+ *
+ * @alpha
+ */
+export interface DashboardKpiWidgetExecutionSucceeded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_SUCCEEDED";
+    readonly payload: {
+        widgetRef: ObjRef;
+    };
+}
+
+/**
+ * @alpha
+ */
+export function kpiWidgetExecutionSucceeded(
+    widgetRef: ObjRef,
+    correlationId?: string,
+): DashboardEventBody<DashboardKpiWidgetExecutionSucceeded> {
+    return {
+        type: "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_SUCCEEDED",
+        correlationId,
+        payload: {
+            widgetRef,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetExecutionSucceeded}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetExecutionSucceeded = eventGuard<DashboardKpiWidgetExecutionSucceeded>(
+    "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_SUCCEEDED",
 );

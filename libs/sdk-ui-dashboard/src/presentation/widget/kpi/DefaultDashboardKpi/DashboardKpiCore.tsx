@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback } from "react";
-import { OnError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import React from "react";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
 
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
@@ -11,8 +11,6 @@ import {
     selectFilterContextFilters,
     selectSettings,
     selectDashboardRef,
-    useDashboardEventDispatch,
-    kpiWidgetExecutionFailed,
 } from "../../../../model";
 import { DashboardKpiProps } from "../types";
 
@@ -52,16 +50,6 @@ export const DashboardKpiCore = (props: DashboardKpiProps): JSX.Element => {
     const separators = useDashboardSelector(selectSeparators);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
-    const dispatchEvent = useDashboardEventDispatch();
-
-    const handleError = useCallback<OnError>(
-        (error) => {
-            dispatchEvent(kpiWidgetExecutionFailed(error));
-            onError?.(error);
-        },
-        [onError, dispatchEvent],
-    );
-
     const kpiData = useKpiData({
         kpiWidget,
         backend,
@@ -89,7 +77,7 @@ export const DashboardKpiCore = (props: DashboardKpiProps): JSX.Element => {
             effectiveFilters={kpiData.result.effectiveFilters}
             onFiltersChange={onFiltersChange}
             onDrill={onDrill}
-            onError={handleError}
+            onError={onError}
             separators={separators}
             disableDrillUnderline={settings.disableKpiDashboardHeadlineUnderline}
             backend={backend}

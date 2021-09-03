@@ -13,6 +13,7 @@ import {
     ISeparators,
     IUserWorkspaceSettings,
     IWidgetAlert,
+    widgetRef,
 } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
@@ -50,6 +51,10 @@ import {
     selectDisableDefaultDrills,
     selectDrillableItems,
     useWidgetExecutionsHandler,
+    kpiWidgetExecutionSucceeded,
+    useDashboardEventDispatch,
+    kpiWidgetExecutionStarted,
+    kpiWidgetExecutionFailed,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
@@ -135,15 +140,18 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const drillableItems = useDashboardSelector(selectDrillableItems);
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
 
+    const dispatchEvent = useDashboardEventDispatch();
+
     const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget, alert);
 
     const isAlertBroken = !!brokenAlertsBasicInfo?.length;
 
-    const executionsHandler = useWidgetExecutionsHandler(kpiWidget.ref);
+    const executionsHandler = useWidgetExecutionsHandler(widgetRef(kpiWidget));
 
     useEffect(() => {
         const err = error ?? alertExecutionError;
         if (err) {
+            dispatchEvent(kpiWidgetExecutionFailed(widgetRef(kpiWidget), err));
             onError?.(err);
         }
         // for executions we care only about KPI errors
@@ -154,12 +162,13 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
 
     useEffect(() => {
         if (result) {
-            // empty data is considered an error here
+            // empty data is considered an error for execution handling
             if (result.rawData().isEmpty()) {
                 executionsHandler.onError(new NoDataSdkError());
             } else {
                 executionsHandler.onSuccess(result.result());
             }
+            dispatchEvent(kpiWidgetExecutionSucceeded(widgetRef(kpiWidget)));
         }
     }, [result]);
 
@@ -173,7 +182,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                 dataView: result.dataView,
                 drillContext,
                 drillDefinitions: kpiWidget.drills,
-                widgetRef: kpiWidget.ref,
+                widgetRef: widgetRef(kpiWidget),
             });
         },
         [onDrill, result, kpiWidget],
@@ -185,12 +194,13 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const canSetAlert = permissions?.canCreateScheduledMail;
 
     const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(
-        objRefToString(kpiWidget.ref),
+        objRefToString(widgetRef(kpiWidget)),
     );
 
     useEffect(() => {
         if (isLoading) {
             onRequestAsyncRender();
+            dispatchEvent(kpiWidgetExecutionStarted(widgetRef(kpiWidget)));
         } else {
             onResolveAsyncRender();
         }
@@ -296,7 +306,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
 
                         return kpiAlertOperations.onCreateAlert({
                             dashboard: dashboardRef,
-                            widget: kpiWidget.ref,
+                            widget: widgetRef(kpiWidget),
                             threshold,
                             whenTriggered,
                             isTriggered: evaluateAlertTriggered(
