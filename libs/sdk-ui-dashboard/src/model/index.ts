@@ -191,6 +191,8 @@ export {
     isBrokenAlertAttributeFilterInfo,
 } from "./types/alertTypes";
 
+export { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes";
+
 export * from "./commands";
 export * from "./events";
 export * from "./queries";

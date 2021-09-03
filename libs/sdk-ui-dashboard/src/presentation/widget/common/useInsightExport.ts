@@ -21,7 +21,14 @@ export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) =
 
     const dispatch = useDashboardDispatch();
     const exportFunction = useCallback<IExportFunction>(
-        (configToUse) => dispatchAndWaitFor(dispatch, exportInsightWidget(widgetRef, configToUse)),
+        (configToUse) =>
+            dispatchAndWaitFor(
+                dispatch,
+                exportInsightWidget(widgetRef, {
+                    ...configToUse,
+                    format: configToUse.format === "xlsx" ? "xlsx" : "csv",
+                }),
+            ),
         [widgetRef],
     );
 

@@ -4,7 +4,7 @@ import { IDashboardCommand } from "./base";
 import { isObjRef, ObjRef, ObjRefInScope, VisualizationProperties } from "@gooddata/sdk-model";
 import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
 import { InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
-import { IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { IExportConfig } from "../types/exportTypes";
 
 /**
  * @alpha
@@ -570,7 +570,7 @@ export interface ExportInsightWidget extends IDashboardCommand {
         /**
          * Options for the export.
          */
-        readonly config: IExtendedExportConfig;
+        readonly config: IExportConfig;
     };
 }
 
@@ -586,7 +586,7 @@ export interface ExportInsightWidget extends IDashboardCommand {
  */
 export function exportInsightWidget(
     ref: ObjRef,
-    config: IExtendedExportConfig,
+    config: IExportConfig,
     correlationId?: string,
 ): ExportInsightWidget {
     return {

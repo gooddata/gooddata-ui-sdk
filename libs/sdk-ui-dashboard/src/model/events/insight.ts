@@ -7,12 +7,13 @@ import {
     IInsightWidget,
     IInsightWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
-import { GoodDataSdkError, IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { DashboardEventBody, IDashboardEvent } from "./base";
 import { WidgetHeader } from "../types/widgetTypes";
 import { DashboardContext } from "../types/commonTypes";
 import { eventGuard } from "./util";
+import { IExportConfig } from "../types/exportTypes";
 
 /**
  * This event is emitted when the header of an insight widget changed. The new value of the header (title)
@@ -453,7 +454,7 @@ export interface DashboardInsightWidgetExportRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED";
     readonly payload: {
         ref: ObjRef;
-        config: IExtendedExportConfig;
+        config: IExportConfig;
     };
 }
 
@@ -463,7 +464,7 @@ export interface DashboardInsightWidgetExportRequested extends IDashboardEvent {
 export function insightWidgetExportRequested(
     ctx: DashboardContext,
     ref: ObjRef,
-    config: IExtendedExportConfig,
+    config: IExportConfig,
     correlationId?: string,
 ): DashboardInsightWidgetExportRequested {
     return {
