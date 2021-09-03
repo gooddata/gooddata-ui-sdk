@@ -63,7 +63,7 @@ export function* exportInsightWidgetHandler(
 ): SagaIterator<DashboardInsightWidgetExportResolved> {
     const { config, ref } = cmd.payload;
 
-    yield put(insightWidgetExportRequested(ctx, ref, config));
+    yield put(insightWidgetExportRequested(ctx, ref, config, cmd.correlationId));
 
     const isExportable: ReturnType<ReturnType<typeof selectIsExecutionResultReadyForExportByRef>> =
         yield select(selectIsExecutionResultReadyForExportByRef(ref));
@@ -91,5 +91,5 @@ export function* exportInsightWidgetHandler(
         config,
     );
 
-    return insightWidgetExportResolved(ctx, resultUri);
+    return insightWidgetExportResolved(ctx, resultUri, cmd.correlationId);
 }

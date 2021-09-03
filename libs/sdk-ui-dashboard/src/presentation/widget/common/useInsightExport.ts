@@ -2,6 +2,8 @@
 import { useCallback, useState } from "react";
 import invariant from "ts-invariant";
 import { IExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { v4 as uuid } from "uuid";
+
 import {
     selectSettings,
     useDashboardSelector,
@@ -24,10 +26,14 @@ export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) =
         (configToUse) =>
             dispatchAndWaitFor(
                 dispatch,
-                exportInsightWidget(widgetRef, {
-                    ...configToUse,
-                    format: configToUse.format === "xlsx" ? "xlsx" : "csv",
-                }),
+                exportInsightWidget(
+                    widgetRef,
+                    {
+                        ...configToUse,
+                        format: configToUse.format === "xlsx" ? "xlsx" : "csv",
+                    },
+                    uuid(),
+                ),
             ),
         [widgetRef],
     );
@@ -62,6 +68,7 @@ export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) =
                     format: "xlsx",
                     mergeHeaders,
                     includeFilterContext,
+                    showFilters: includeFilterContext,
                     title,
                 }).then(() => setIsExporting(false));
             },
