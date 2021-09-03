@@ -13,6 +13,7 @@ import { DashboardEventBody, IDashboardEvent } from "./base";
 import { WidgetHeader } from "../types/widgetTypes";
 import { DashboardContext } from "../types/commonTypes";
 import { eventGuard } from "./util";
+import { IExportConfig } from "../types/exportTypes";
 
 /**
  * This event is emitted when the header of an insight widget changed. The new value of the header (title)
@@ -438,4 +439,94 @@ export function insightWidgetExecutionFailed(
  */
 export const isDashboardInsightWidgetExecutionFailed = eventGuard<DashboardInsightWidgetExecutionFailed>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
+);
+
+//
+//
+//
+
+/**
+ * This event is emitted after export of an insight widget is requested.
+ *
+ * @alpha
+ */
+export interface DashboardInsightWidgetExportRequested extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED";
+    readonly payload: {
+        ref: ObjRef;
+        config: IExportConfig;
+    };
+}
+
+/**
+ * @alpha
+ */
+export function insightWidgetExportRequested(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    config: IExportConfig,
+    correlationId?: string,
+): DashboardInsightWidgetExportRequested {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            config,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetExportRequested}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetExportRequested = eventGuard<DashboardInsightWidgetExportRequested>(
+    "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED",
+);
+
+/**
+ * This event is emitted after export of an insight widget is resolved.
+ *
+ * @alpha
+ */
+export interface DashboardInsightWidgetExportResolved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED";
+    readonly payload: {
+        /**
+         * URI of the resulting file that can be used to download it.
+         */
+        resultUri: string;
+    };
+}
+
+/**
+ * @alpha
+ */
+export function insightWidgetExportResolved(
+    ctx: DashboardContext,
+    resultUri: string,
+    correlationId?: string,
+): DashboardInsightWidgetExportResolved {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED",
+        ctx,
+        correlationId,
+        payload: {
+            resultUri,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetExportResolved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetExportResolved = eventGuard<DashboardInsightWidgetExportResolved>(
+    "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED",
 );

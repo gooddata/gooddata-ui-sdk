@@ -11,6 +11,7 @@ import {
 import {
     GoodDataSdkError,
     IntlWrapper,
+    IPushData,
     OnError,
     OnLoadingChanged,
     useBackendStrict,
@@ -30,6 +31,7 @@ import {
     useDashboardAsyncRender,
     useDashboardEventDispatch,
     useDashboardSelector,
+    useWidgetExecutionsHandler,
 } from "../../../../../model";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties";
 import { IDashboardInsightProps } from "../../types";
@@ -87,6 +89,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const effectiveWorkspace = useWorkspaceStrict(workspace);
 
     const dispatchEvent = useDashboardEventDispatch();
+    const executionsHandler = useWidgetExecutionsHandler(widget.ref);
 
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
@@ -108,10 +111,11 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             } else {
                 onResolveAsyncRender();
             }
+            executionsHandler.onLoadingChanged({ isLoading });
             setIsVisualizationLoading(isLoading);
             onLoadingChanged?.({ isLoading });
         },
-        [onLoadingChanged],
+        [onLoadingChanged, executionsHandler.onLoadingChanged],
     );
 
     /// Filtering
@@ -136,6 +140,14 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         insight,
         onDrill: onDrillFn,
     });
+
+    const handlePushData = useCallback(
+        (data: IPushData): void => {
+            onPushData(data);
+            executionsHandler.onPushData(data);
+        },
+        [onPushData, executionsHandler.onPushData],
+    );
 
     const isPositionRelative =
         insight &&
@@ -162,8 +174,9 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             setVisualizationError(error);
             dispatchEvent(insightWidgetExecutionFailed(error));
             onError?.(error);
+            executionsHandler.onError(error);
         },
-        [onError, dispatchEvent],
+        [onError, dispatchEvent, executionsHandler.onError],
     );
 
     const error = filtersError ?? visualizationError;
@@ -198,7 +211,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                                 settings={settings as IUserWorkspaceSettings}
                                 colorPalette={colorPalette}
                                 onError={handleError}
-                                pushData={onPushData}
+                                pushData={handlePushData}
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
                                 onExportReady={onExportReady}

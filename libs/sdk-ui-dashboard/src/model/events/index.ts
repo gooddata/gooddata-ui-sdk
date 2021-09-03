@@ -54,6 +54,8 @@ import {
     DashboardInsightWidgetInsightSwitched,
     DashboardInsightWidgetVisPropertiesChanged,
     DashboardInsightWidgetExecutionFailed,
+    DashboardInsightWidgetExportRequested,
+    DashboardInsightWidgetExportResolved,
 } from "./insight";
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertsRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
@@ -190,6 +192,8 @@ export {
     DashboardInsightWidgetDrillsRemoved,
     DashboardInsightWidgetChanged,
     DashboardInsightWidgetExecutionFailed,
+    DashboardInsightWidgetExportRequested,
+    DashboardInsightWidgetExportResolved,
     insightWidgetExecutionFailed,
     isDashboardInsightWidgetChanged,
     isDashboardInsightWidgetDrillsModified,
@@ -199,6 +203,8 @@ export {
     isDashboardInsightWidgetHeaderChanged,
     isDashboardInsightWidgetInsightSwitched,
     isDashboardInsightWidgetVisPropertiesChanged,
+    isDashboardInsightWidgetExportRequested,
+    isDashboardInsightWidgetExportResolved,
 } from "./insight";
 export {
     DashboardAlertCreated,
@@ -327,6 +333,8 @@ export type DashboardEvents =
     | DashboardInsightWidgetDrillsRemoved
     | DashboardInsightWidgetChanged
     | DashboardInsightWidgetExecutionFailed
+    | DashboardInsightWidgetExportRequested
+    | DashboardInsightWidgetExportResolved
     | DashboardAlertCreated
     | DashboardAlertsRemoved
     | DashboardAlertUpdated

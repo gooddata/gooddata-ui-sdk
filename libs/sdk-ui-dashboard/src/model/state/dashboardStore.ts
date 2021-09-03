@@ -27,6 +27,7 @@ import { userSliceReducer } from "./user";
 import { metaSliceReducer } from "./meta";
 import { DashboardState } from "./types";
 import { AllQueryServices } from "../queryServices";
+import { executionResultsSliceReducer } from "./executionResults";
 import { createQueryProcessingModule } from "./_infra/queryProcessing";
 import { IDashboardQueryService } from "./_infra/queryService";
 import values from "lodash/values";
@@ -54,6 +55,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/CMD.EVENT.TRIGGER",
     // Drill commands & events contain non-serializable dataView
     "GDC.DASH/CMD.DRILL",
+    "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT",
     "GDC.DASH/EVT.DRILL.REQUESTED",
     "GDC.DASH/EVT.DRILL.RESOLVED",
     "GDC.DASH/CMD.DRILL.DRILL_DOWN",
@@ -78,6 +80,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
     "meta/setDrillableItems",
     "layout/updateWidgetIdentities",
+    "executionResults/upsertExecutionResult",
 ];
 
 /*
@@ -226,8 +229,12 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
             serializableCheck: {
                 ignoredActions: nonSerializableEventsAndCommands,
                 ignoredActionPaths: ["ctx"],
-                // drillableItems can be functions (header predicates)
-                ignoredPaths: ["drill.drillableItems"],
+                ignoredPaths: [
+                    // drillableItems can be functions (header predicates)
+                    "drill.drillableItems",
+                    // executions can have Errors stored, also some decorated execution results are non-serializable too
+                    "executionResults",
+                ],
             },
         }),
         ...(config.additionalMiddleware ? [config.additionalMiddleware] : []),
@@ -250,6 +257,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         meta: metaSliceReducer,
         drill: drillSliceReducer,
         listedDashboards: listedDashboardsSliceReducer,
+        executionResults: executionResultsSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
     });
 

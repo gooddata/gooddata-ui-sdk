@@ -6,6 +6,7 @@ import { insightFilters, insightSetFilters, insightVisualizationUrl } from "@goo
 import {
     GoodDataSdkError,
     IntlWrapper,
+    IPushData,
     OnError,
     OnLoadingChanged,
     useBackendStrict,
@@ -64,6 +65,8 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         onError,
         onDrill: onDrillFn,
         onExportReady,
+        onLoadingChanged,
+        pushData,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
     } = props;
@@ -88,6 +91,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
         setIsVisualizationLoading(isLoading);
+        onLoadingChanged?.({ isLoading });
     }, []);
 
     /// Filtering
@@ -108,6 +112,14 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         insight,
         onDrill: onDrillFn,
     });
+
+    const handlePushData = useCallback(
+        (data: IPushData) => {
+            onPushData(data);
+            pushData?.(data);
+        },
+        [onPushData, pushData],
+    );
 
     // CSS
     const insightPositionStyle: CSSProperties = useMemo(() => {
@@ -146,23 +158,28 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                         />
                     )}
                     {filtersStatus === "success" && (
-                        <InsightRenderer
-                            insight={insightWithAddedWidgetProperties}
-                            backend={effectiveBackend}
-                            workspace={effectiveWorkspace}
-                            drillableItems={drillableItems}
-                            onDrill={onDrill}
-                            config={chartConfig}
-                            onLoadingChanged={handleLoadingChanged}
-                            locale={locale}
-                            settings={settings as IUserWorkspaceSettings}
-                            colorPalette={colorPalette}
-                            onError={handleError}
-                            onExportReady={onExportReady}
-                            pushData={onPushData}
-                            ErrorComponent={ErrorComponent}
-                            LoadingComponent={LoadingComponent}
-                        />
+                        <div
+                            className="insight-view-visualization"
+                            style={isVisualizationLoading || error ? { height: 0 } : undefined}
+                        >
+                            <InsightRenderer
+                                insight={insightWithAddedWidgetProperties}
+                                backend={effectiveBackend}
+                                workspace={effectiveWorkspace}
+                                drillableItems={drillableItems}
+                                onDrill={onDrill}
+                                config={chartConfig}
+                                onLoadingChanged={handleLoadingChanged}
+                                locale={locale}
+                                settings={settings as IUserWorkspaceSettings}
+                                colorPalette={colorPalette}
+                                onError={handleError}
+                                onExportReady={onExportReady}
+                                pushData={handlePushData}
+                                ErrorComponent={ErrorComponent}
+                                LoadingComponent={LoadingComponent}
+                            />
+                        </div>
                     )}
                 </IntlWrapper>
             </div>

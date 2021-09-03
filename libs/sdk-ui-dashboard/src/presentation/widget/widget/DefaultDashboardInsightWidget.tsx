@@ -4,16 +4,9 @@ import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { areObjRefsEqual, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { IInsightWidget, ScreenSize, widgetTitle } from "@gooddata/sdk-backend-spi";
-import {
-    GoodDataSdkError,
-    IExportFunction,
-    OnError,
-    OnExportReady,
-    OnLoadingChanged,
-    VisType,
-} from "@gooddata/sdk-ui";
+import { OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
 
-import { selectInsights, useDashboardSelector } from "../../../model";
+import { selectInsights, selectExecutionResultByRef, useDashboardSelector } from "../../../model";
 import {
     DashboardItem,
     DashboardItemHeadline,
@@ -25,7 +18,7 @@ import { DashboardInsightPropsProvider } from "../insight/DashboardInsightPropsC
 import { DashboardInsight } from "../insight/DashboardInsight";
 import { OptionsButton } from "./OptionsMenu/OptionsButton";
 import { OptionsMenu } from "./OptionsMenu/OptionsMenu";
-import { isDataError } from "../common";
+import { isDataError } from "../../../_staging/errors/errorPredicates";
 import { useInsightExport } from "../common/useInsightExport";
 
 interface IDefaultDashboardInsightWidgetProps {
@@ -46,52 +39,20 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const insights = useDashboardSelector(selectInsights);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [exportFunction, setExportFunction] = useState<IExportFunction | undefined>();
-
-    // insight rendering status - needed for showing/hiding export options
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<GoodDataSdkError | undefined>();
-
-    const handleLoadingChanged = useCallback<OnLoadingChanged>(
-        ({ isLoading }) => {
-            setIsLoading(isLoading);
-            onLoadingChanged?.({ isLoading });
-            if (isLoading) {
-                setError(undefined);
-            }
-        },
-        [onLoadingChanged],
-    );
-
-    const handleError = useCallback<OnError>(
-        (newError) => {
-            setError(newError);
-            onError?.(newError);
-        },
-        [onError],
-    );
 
     const insight = insights.find((i) => areObjRefsEqual(i.insight.ref, widget.insight))!;
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
 
-    const handleExportReady = useCallback<OnExportReady>(
-        (newExportFunction) => {
-            setExportFunction(() => newExportFunction); // for functions in state, we always need to use the extra lambda
-            onExportReady?.(newExportFunction);
-        },
-        [onExportReady],
-    );
-
-    const bubbleMessageKey = isDataError(error)
-        ? "options.menu.unsupported.error"
-        : "options.menu.unsupported.loading";
+    const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
-        error,
-        isLoading,
-        exportFunction,
+        widgetRef: widget.ref,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
     });
+
+    const bubbleMessageKey = isDataError(execution?.error)
+        ? "options.menu.unsupported.error"
+        : "options.menu.unsupported.loading";
 
     const onExportCSVWrapped = useCallback(() => {
         setIsMenuOpen(false);
@@ -133,7 +94,6 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         <OptionsMenu
                             widget={widget}
                             hideOptionsMenu={() => setIsMenuOpen(false)}
-                            exportFunction={exportFunction}
                             bubbleMessageKey={bubbleMessageKey}
                             exportCSVDisabled={!exportCSVEnabled}
                             onExportCSV={onExportCSVWrapped}
@@ -149,9 +109,9 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         clientWidth={clientWidth}
                         insight={insight!}
                         widget={widget}
-                        onExportReady={handleExportReady}
-                        onLoadingChanged={handleLoadingChanged}
-                        onError={handleError}
+                        onExportReady={onExportReady}
+                        onLoadingChanged={onLoadingChanged}
+                        onError={onError}
                     >
                         <DashboardInsight />
                     </DashboardInsightPropsProvider>

@@ -134,6 +134,14 @@ export {
     selectDrillTargets,
 } from "./state/drillTargets/drillTargetsSelectors";
 export { IDrillTargets } from "./state/drillTargets/drillTargetsTypes";
+export {
+    selectExecutionResult,
+    selectExecutionResultByRef,
+    selectIsExecutionResultExportableToCsvByRef,
+    selectIsExecutionResultExportableToXlsxByRef,
+    selectIsExecutionResultReadyForExportByRef,
+} from "./state/executionResults/executionResultsSelectors";
+export { IExecutionResultEnvelope } from "./state/executionResults/types";
 
 export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta";
@@ -182,6 +190,8 @@ export {
     isBrokenAlertDateFilterInfo,
     isBrokenAlertAttributeFilterInfo,
 } from "./types/alertTypes";
+
+export { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes";
 
 export * from "./commands";
 export * from "./events";

@@ -10,3 +10,4 @@ export { IDashboardStoreProviderProps } from "./types";
 export { queryAndWaitFor } from "./queryAndWaitFor";
 export { dispatchAndWaitFor } from "./dispatchAndWaitFor";
 export { useDispatchDashboardCommand } from "./useDispatchDashboardCommand";
+export { useWidgetExecutionsHandler } from "./useWidgetExecutionsHandler";

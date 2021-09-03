@@ -2,7 +2,6 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { objRefToString } from "@gooddata/sdk-model";
-import { IExportFunction } from "@gooddata/sdk-ui";
 import { Bubble, IAlignPoint, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 import { IWidget, widgetRef } from "@gooddata/sdk-backend-spi";
@@ -11,7 +10,6 @@ import { OptionsMenuItem } from "./OptionsMenuItem";
 import { DOWNLOADER_ID } from "../../../../_staging/fileUtils/downloadFile";
 
 export interface IOptionsMenuProps extends WrappedComponentProps {
-    exportFunction: IExportFunction | undefined;
     bubbleMessageKey?: string;
     widget: IWidget;
     exportCSVDisabled?: boolean;

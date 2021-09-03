@@ -1,23 +1,47 @@
 // (C) 2021 GoodData Corporation
 import { useCallback, useState } from "react";
 import invariant from "ts-invariant";
-import { GoodDataSdkError, IExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
-import { selectPermissions, selectSettings, useDashboardSelector } from "../../../model";
+import { IExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { v4 as uuid } from "uuid";
+
+import {
+    selectSettings,
+    useDashboardSelector,
+    selectIsExecutionResultExportableToCsvByRef,
+    selectIsExecutionResultExportableToXlsxByRef,
+    useDashboardDispatch,
+    dispatchAndWaitFor,
+    exportInsightWidget,
+} from "../../../model";
 import { useExportHandler } from "./useExportHandler";
 import { useExportDialogContext } from "../../dashboardContexts";
-import { isNonExportableError } from "./errorUtils";
+import { ObjRef } from "@gooddata/sdk-model";
 
-export const useInsightExport = (config: {
-    title: string;
-    error: GoodDataSdkError | undefined;
-    isLoading: boolean;
-    exportFunction: IExportFunction | undefined;
-}) => {
-    const { error, exportFunction, isLoading, title } = config;
+export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) => {
+    const { title, widgetRef } = config;
     const [isExporting, setIsExporting] = useState(false);
 
+    const dispatch = useDashboardDispatch();
+    const exportFunction = useCallback<IExportFunction>(
+        (configToUse) =>
+            dispatchAndWaitFor(
+                dispatch,
+                exportInsightWidget(
+                    widgetRef,
+                    {
+                        ...configToUse,
+                        format: configToUse.format === "xlsx" ? "xlsx" : "csv",
+                    },
+                    uuid(),
+                ),
+            ),
+        [widgetRef],
+    );
+
+    const isExportableToCsv = useDashboardSelector(selectIsExecutionResultExportableToCsvByRef(widgetRef));
+    const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
+
     const settings = useDashboardSelector(selectSettings);
-    const permissions = useDashboardSelector(selectPermissions);
 
     const exportHandler = useExportHandler();
     const { openDialog, closeDialog } = useExportDialogContext();
@@ -44,6 +68,7 @@ export const useInsightExport = (config: {
                     format: "xlsx",
                     mergeHeaders,
                     includeFilterContext,
+                    showFilters: includeFilterContext,
                     title,
                 }).then(() => setIsExporting(false));
             },
@@ -53,13 +78,8 @@ export const useInsightExport = (config: {
         });
     }, [settings, title, exportFunction, closeDialog]);
 
-    const isExportEnabled = Boolean(settings.enableKPIDashboardExport && permissions.canExportReport);
-    const isRawExportEnabled = Boolean(isExportEnabled && permissions.canExecuteRaw);
-
-    const isExportAllowed = !isExporting && !isNonExportableError(error) && !isLoading;
-
-    const exportCSVEnabled = isExportAllowed && isRawExportEnabled;
-    const exportXLSXEnabled = isExportAllowed && isExportEnabled;
+    const exportCSVEnabled = !isExporting && isExportableToCsv;
+    const exportXLSXEnabled = !isExporting && isExportableToXlsx;
 
     return {
         exportCSVEnabled,

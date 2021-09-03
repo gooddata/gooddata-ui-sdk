@@ -12,11 +12,11 @@ import { DashboardDispatch } from "../state/types";
  * @returns Promise of the command resolution
  * @alpha
  */
-export async function dispatchAndWaitFor<TCommand extends DashboardCommands>(
+export async function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(
     dispatch: DashboardDispatch,
     command: TCommand,
-): Promise<void> {
-    const { promise, envelope } = commandEnvelopeWithPromise(command);
+): Promise<TResult> {
+    const { promise, envelope } = commandEnvelopeWithPromise<TCommand, TResult>(command);
 
     dispatch(envelope);
 

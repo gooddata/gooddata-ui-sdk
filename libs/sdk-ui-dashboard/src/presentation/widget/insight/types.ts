@@ -2,7 +2,14 @@
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
-import { IErrorProps, ILoadingProps, OnError, OnExportReady, OnLoadingChanged } from "@gooddata/sdk-ui";
+import {
+    IErrorProps,
+    ILoadingProps,
+    IPushData,
+    OnError,
+    OnExportReady,
+    OnLoadingChanged,
+} from "@gooddata/sdk-ui";
 import {
     OnDrillDownSuccess,
     OnDrillToAttributeUrlSuccess,
@@ -48,6 +55,7 @@ export interface IDashboardInsightProps {
     onError?: OnError;
     onLoadingChanged?: OnLoadingChanged;
     onExportReady?: OnExportReady;
+    pushData?: (data: IPushData) => void;
 
     ErrorComponent?: ComponentType<IErrorProps>;
     LoadingComponent?: ComponentType<ILoadingProps>;

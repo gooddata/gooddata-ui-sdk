@@ -19,7 +19,7 @@ export interface TriggerEvent extends IDashboardCommand {
 }
 
 /**
- * Creates an {@link TriggerEvent} event.
+ * Creates an {@link TriggerEvent} command.
  *
  * @alpha
  */

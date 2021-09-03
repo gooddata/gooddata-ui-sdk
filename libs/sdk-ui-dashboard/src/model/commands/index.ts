@@ -9,6 +9,7 @@ import {
     ExportDashboardToPdf,
 } from "./dashboard";
 import { TriggerEvent } from "./events";
+import { UpsertExecutionResult } from "./executionResults";
 import {
     AddAttributeFilter,
     ChangeAttributeFilterSelection,
@@ -26,6 +27,7 @@ import {
     ModifyDrillsForInsightWidget,
     RefreshInsightWidget,
     RemoveDrillsForInsightWidget,
+    ExportInsightWidget,
 } from "./insight";
 import {
     ChangeKpiWidgetComparison,
@@ -143,6 +145,12 @@ export {
     changeDrillableItems,
 } from "./drill";
 export {
+    UpsertExecutionResult,
+    setExecutionResultData,
+    setExecutionResultError,
+    setExecutionResultLoading,
+} from "./executionResults";
+export {
     ChangeKpiWidgetHeader,
     changeKpiWidgetHeader,
     ChangeKpiWidgetMeasure,
@@ -182,6 +190,8 @@ export {
     RemoveDrillsSelector,
     RefreshInsightWidget,
     refreshInsightWidget,
+    ExportInsightWidget,
+    exportInsightWidget,
 } from "./insight";
 
 export { RequestAsyncRender, ResolveAsyncRender } from "./render";
@@ -199,6 +209,7 @@ export type DashboardCommands =
     | ResetDashboard
     | ExportDashboardToPdf
     | TriggerEvent
+    | UpsertExecutionResult
     | RequestAsyncRender
     | ResolveAsyncRender
     | ChangeFilterContextSelection
@@ -229,6 +240,7 @@ export type DashboardCommands =
     | ModifyDrillsForInsightWidget
     | RemoveDrillsForInsightWidget
     | RefreshInsightWidget
+    | ExportInsightWidget
     | CreateAlert
     | UpdateAlert
     | RemoveAlerts

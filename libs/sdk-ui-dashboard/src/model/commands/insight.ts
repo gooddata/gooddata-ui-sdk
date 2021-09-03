@@ -4,6 +4,7 @@ import { IDashboardCommand } from "./base";
 import { isObjRef, ObjRef, ObjRefInScope, VisualizationProperties } from "@gooddata/sdk-model";
 import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
 import { InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
+import { IExportConfig } from "../types/exportTypes";
 
 /**
  * @alpha
@@ -547,6 +548,52 @@ export function refreshInsightWidget(ref: ObjRef, correlationId?: string): Refre
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH",
         correlationId,
         payload: {
+            ref,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * @alpha
+ */
+export interface ExportInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT";
+    readonly payload: {
+        /**
+         * Reference to Insight Widget to export.
+         */
+        readonly ref: ObjRef;
+        /**
+         * Options for the export.
+         */
+        readonly config: IExportConfig;
+    };
+}
+
+/**
+ * Creates the ExportInsightWidget command. Dispatching this command will result in exporting of the widget to a CSV of XLSX file.
+ *
+ * @param ref - reference to the Insight widget to refresh
+ * @param config - configuration of the export operation
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function exportInsightWidget(
+    ref: ObjRef,
+    config: IExportConfig,
+    correlationId?: string,
+): ExportInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT",
+        correlationId,
+        payload: {
+            config,
             ref,
         },
     };
