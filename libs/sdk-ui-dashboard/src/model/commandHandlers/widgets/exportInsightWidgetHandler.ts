@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-import { serializeObjRef } from "@gooddata/sdk-model";
+import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 
@@ -29,6 +29,23 @@ async function performExport(
     const exporter = createExportFunction(executionResult);
     const result = await exporter(config);
     return result.uri;
+}
+
+function* validateIsExportable(
+    ctx: DashboardContext,
+    cmd: ExportInsightWidget,
+    ref: ObjRef,
+): SagaIterator<void> {
+    const isExportable: ReturnType<ReturnType<typeof selectIsExecutionResultReadyForExportByRef>> =
+        yield select(selectIsExecutionResultReadyForExportByRef(ref));
+
+    if (!isExportable) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `The widget with ref: ${serializeObjRef(ref)} cannot be exported at the moment.`,
+        );
+    }
 }
 
 function* validateSettingsAndPermissions(
@@ -65,17 +82,7 @@ export function* exportInsightWidgetHandler(
 
     yield put(insightWidgetExportRequested(ctx, ref, config, cmd.correlationId));
 
-    const isExportable: ReturnType<ReturnType<typeof selectIsExecutionResultReadyForExportByRef>> =
-        yield select(selectIsExecutionResultReadyForExportByRef(ref));
-
-    if (!isExportable) {
-        throw invalidArgumentsProvided(
-            ctx,
-            cmd,
-            `The widget with ref: ${serializeObjRef(ref)} cannot be exported at the moment.`,
-        );
-    }
-
+    yield call(validateIsExportable, ctx, cmd, ref);
     yield call(validateSettingsAndPermissions, ctx, cmd);
 
     const executionEnvelope: ReturnType<ReturnType<typeof selectExecutionResultByRef>> = yield select(
