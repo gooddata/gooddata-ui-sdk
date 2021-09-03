@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import flow from "lodash/flow";
 import map from "lodash/fp/map";
 import sortBy from "lodash/fp/sortBy";
@@ -132,12 +132,18 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
             ),
         );
 
+        const goTo = (index: number) =>
+            index * count < totalCount!
+                ? this.getInsights({ ...options, offset: index * count })
+                : Promise.resolve(emptyResult);
+
         const emptyResult: IInsightsQueryResult = {
             items: [],
             limit: count,
             offset: totalCount!,
             totalCount: totalCount!,
             next: () => Promise.resolve(emptyResult),
+            goTo,
         };
 
         const hasNextPage = offset + count < totalCount!;
@@ -150,6 +156,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
             next: hasNextPage
                 ? () => this.getInsights({ ...options, offset: offset + count })
                 : () => Promise.resolve(emptyResult),
+            goTo,
         };
     };
 

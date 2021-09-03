@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 import {
@@ -8,9 +9,11 @@ import {
     IAttributeFilter,
     IDateFilter,
     isAbsoluteDateFilter,
-    isAttributeFilter,
     isDateFilter,
     objRefToString,
+    isAttributeFilter,
+    IRelativeDateFilter,
+    isObjRef,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
 
@@ -49,19 +52,13 @@ export async function resolveFilterValues(
                     }),
                 );
             }
+
+            invariant(backend, `backend needs to be provided for this type of filter: ${filter}`);
+            invariant(workspace, `workspace needs to be provided for this type of filter: ${filter}`);
             if (isAttributeFilter(filter)) {
-                invariant(backend, `backend needs to be provided for this type of filter: ${filter}`);
-                invariant(workspace, `workspace needs to be provided for this type of filter: ${filter}`);
                 return resolveAttributeFilterValues(filter, backend, workspace);
             } else {
-                // TODO handle relative date filter resolution
-                return new Promise<IResolvedDateFilterValue>((resolve) =>
-                    resolve({
-                        from: "01-01-2021",
-                        to: "01-01-2021",
-                        granularity: "GDC.time.date",
-                    }),
-                );
+                return resolveRelativeDateFilterValues(filter, backend, workspace);
             }
         },
     );
@@ -88,6 +85,45 @@ export async function resolveFilterValues(
             return result;
         }, resolvedValuesMap);
     });
+}
+
+async function resolveRelativeDateFilterValues(
+    filter: IRelativeDateFilter,
+    backend: IAnalyticalBackend,
+    workspace: string,
+) {
+    let foundDayDisplayForm;
+    if (isObjRef(filter.relativeDateFilter.dataSet)) {
+        const dataSet = await backend
+            ?.workspace(workspace)
+            .catalog()
+            .forDataset(filter.relativeDateFilter.dataSet)
+            .load();
+
+        if (dataSet.dateDatasets) {
+            const dateDataSetAttributes = dataSet.dateDatasets()[0].dateAttributes;
+            const foundDayAttribute = dateDataSetAttributes.find(
+                (dateDataSetAttr) => dateDataSetAttr.granularity === "GDC.time.date",
+            );
+            foundDayDisplayForm = foundDayAttribute && foundDayAttribute.defaultDisplayForm;
+        }
+    }
+
+    const attributesService = backend.workspace(workspace).attributes();
+    const elementsQuery = attributesService.elements().forFilter(filter, foundDayDisplayForm?.ref);
+    const elements = await elementsQuery.query();
+    // check for next page to see if we need to use skipped response
+    const hasNextPage = elements.limit + elements.offset < elements.totalCount;
+    // last page of the response to get last element
+    const result = hasNextPage
+        ? await elements.goTo(Math.floor(elements.totalCount / elements.limit))
+        : elements;
+
+    return {
+        from: elements.items[0].title,
+        to: getLastTitle(result.items),
+        granularity: filter.relativeDateFilter.granularity,
+    };
 }
 
 async function resolveAttributeFilterValues(
@@ -138,4 +174,8 @@ function getResolvedFilterValues(
         return array[index];
     }
     return array[index];
+}
+
+function getLastTitle(items: IAttributeElement[]): string {
+    return items[items.length - 1].title;
 }

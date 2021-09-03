@@ -708,6 +708,7 @@ export interface IDrillToLegacyDashboard extends IDrill {
 export interface IElementsQuery {
     query(): Promise<IElementsQueryResult>;
     withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
+    withDateFilters(filters: IRelativeDateFilter[]): IElementsQuery;
     withLimit(limit: number): IElementsQuery;
     withMeasures(measures: IMeasure[]): IElementsQuery;
     withOffset(offset: number): IElementsQuery;
@@ -725,7 +726,7 @@ export interface IElementsQueryAttributeFilter {
 // @public
 export interface IElementsQueryFactory {
     forDisplayForm(ref: ObjRef): IElementsQuery;
-    forFilter(filter: FilterWithResolvableElements): IFilterElementsQuery;
+    forFilter(filter: FilterWithResolvableElements, dateFilterDisplayForm?: ObjRef): IFilterElementsQuery;
 }
 
 // @public
@@ -1037,6 +1038,7 @@ export interface IOrganizations {
 
 // @public
 export interface IPagedResource<TItem> {
+    goTo(pageIndex: number): Promise<IPagedResource<TItem>>;
     // (undocumented)
     readonly items: TItem[];
     // (undocumented)

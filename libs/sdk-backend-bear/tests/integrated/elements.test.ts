@@ -135,5 +135,58 @@ describe("bear elements", () => {
 
             expect(result).toMatchSnapshot();
         });
+
+        it("should return correct page for given displayForm", async () => {
+            const result = await backend
+                .workspace(testWorkspace())
+                .attributes()
+                .elements()
+                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .withLimit(2)
+                .query();
+
+            const page = await result.goTo(3);
+            expect(page).toMatchSnapshot();
+        });
+
+        it("should return empty result for out-of-range page in initial request", async () => {
+            const result = await backend
+                .workspace(testWorkspace())
+                .attributes()
+                .elements()
+                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .withLimit(100)
+                .withOffset(5000)
+                .query();
+
+            expect(result).toMatchSnapshot();
+        });
+
+        it("should return empty result for out-of-range page with goTo", async () => {
+            const result = await backend
+                .workspace(testWorkspace())
+                .attributes()
+                .elements()
+                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .withLimit(100)
+                .query();
+
+            const page = await result.goTo(100);
+            expect(page).toMatchSnapshot();
+        });
+
+        it("should return empty result for out-of-range page with next", async () => {
+            const result = await backend
+                .workspace(testWorkspace())
+                .attributes()
+                .elements()
+                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .withLimit(100)
+                .withOffset(4840)
+                .query();
+
+            const page = await result.next();
+            expect(page).toMatchSnapshot();
+        });
     });
 });

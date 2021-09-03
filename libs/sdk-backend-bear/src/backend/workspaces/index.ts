@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IWorkspacesQueryFactory, IWorkspacesQuery, IWorkspacesQueryResult } from "@gooddata/sdk-backend-spi";
 import { convertUserProject } from "../../convertors/toBackend/WorkspaceConverter";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
@@ -59,6 +59,10 @@ class BearWorkspaceQuery implements IWorkspacesQuery {
         const { totalCount, count } = paging;
 
         const hasNextPage = serverOffset + count < totalCount;
+        const goTo = (index: number) =>
+            index * count < totalCount
+                ? this.queryWorker(index * count, limit, search)
+                : Promise.resolve(emptyResult);
 
         const emptyResult: IWorkspacesQueryResult = {
             search,
@@ -67,6 +71,7 @@ class BearWorkspaceQuery implements IWorkspacesQuery {
             offset: totalCount,
             totalCount,
             next: () => Promise.resolve(emptyResult),
+            goTo,
         };
 
         return {
@@ -81,6 +86,7 @@ class BearWorkspaceQuery implements IWorkspacesQuery {
             next: hasNextPage
                 ? () => this.queryWorker(offset + count, limit, search)
                 : () => Promise.resolve(emptyResult),
+            goTo,
         };
     }
 }

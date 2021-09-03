@@ -587,6 +587,8 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
     // (undocumented)
     protected readonly all: T[];
     // (undocumented)
+    goTo(pageIndex: number): Promise<IPagedResource<T>>;
+    // (undocumented)
     readonly items: T[];
     // (undocumented)
     readonly limit: number;

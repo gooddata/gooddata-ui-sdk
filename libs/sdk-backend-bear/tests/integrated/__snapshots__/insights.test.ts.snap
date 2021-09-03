@@ -1,0 +1,1767 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bear insights should load empty insights for out-of-range page 1`] = `
+Object {
+  "goTo": [Function],
+  "items": Array [],
+  "limit": 23,
+  "next": [Function],
+  "offset": 23,
+  "totalCount": 23,
+}
+`;
+
+exports[`bear insights should load insights 1`] = `
+Object {
+  "goTo": [Function],
+  "items": Array [
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
+                      },
+                    },
+                  },
+                  "localIdentifier": "be5a1422542e4ef397e2ca225fc0c942",
+                  "title": "_Snapshot [EOP]",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "4b54261af5064ffaa4f93f1916b45e27",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+                  },
+                  "localIdentifier": "56971915069f4702a5f8948b4b479860",
+                },
+              },
+            ],
+            "localIdentifier": "stack",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "acCgxKCchupK",
+        "isLocked": undefined,
+        "properties": Object {
+          "controls": Object {
+            "grid": Object {
+              "enabled": false,
+            },
+            "legend": Object {
+              "enabled": false,
+            },
+            "xaxis": Object {
+              "visible": true,
+            },
+            "yaxis": Object {
+              "visible": true,
+            },
+          },
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1275",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "Test Bar Chart",
+        "updated": "2021-06-30 14:25:21",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1275",
+        "visualizationUrl": "local:column",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                      },
+                    },
+                  },
+                  "localIdentifier": "1d6f7c1c254e475d9fd708cd55e39273",
+                  "title": "Amount",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "92b17b262bff43718fad6271d95115ee",
+                  "title": "Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                  },
+                  "localIdentifier": "3d9849004f5b4bb5bf95232f291f152f",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "daa575d4a7024907839b01f6e7828b4c",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+                  },
+                  "localIdentifier": "e51db698edec473e955fff19e1b29a19",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "acFU8WHNe2JJ",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "3d9849004f5b4bb5bf95232f291f152f",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1281",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "3d9849004f5b4bb5bf95232f291f152f",
+              "direction": "asc",
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "my insight",
+        "updated": "2020-02-17 13:06:25",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1281",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                      },
+                    },
+                  },
+                  "localIdentifier": "1d6f7c1c254e475d9fd708cd55e39273",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                  },
+                  "localIdentifier": "3d9849004f5b4bb5bf95232f291f152f",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "daa575d4a7024907839b01f6e7828b4c",
+                },
+              },
+            ],
+            "localIdentifier": "stack",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "abKVazWBbnx5",
+        "isLocked": undefined,
+        "properties": Object {},
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1282",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "my heatmap",
+        "updated": "2020-02-17 13:07:45",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1282",
+        "visualizationUrl": "local:heatmap",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                      },
+                    },
+                  },
+                  "localIdentifier": "1d6f7c1c254e475d9fd708cd55e39273",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                  },
+                  "localIdentifier": "3d9849004f5b4bb5bf95232f291f152f",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "daa575d4a7024907839b01f6e7828b4c",
+                },
+              },
+            ],
+            "localIdentifier": "segment",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "aaTVeHZ6e5mB",
+        "isLocked": undefined,
+        "properties": Object {
+          "controls": Object {
+            "legend": Object {
+              "enabled": false,
+            },
+          },
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1283",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "my treemap",
+        "updated": "2020-02-17 13:09:46",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1283",
+        "visualizationUrl": "local:treemap",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "computeRatio": false,
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                      },
+                    },
+                  },
+                  "localIdentifier": "1d6f7c1c254e475d9fd708cd55e39273",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "computeRatio": false,
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "92b17b262bff43718fad6271d95115ee",
+                  "title": "Won",
+                },
+              },
+            ],
+            "localIdentifier": "secondary_measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/547",
+                  },
+                  "localIdentifier": "ddefdd501a0c401b8e87812df2ca3ef7",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "ab2Va4rig3Cf",
+        "isLocked": undefined,
+        "properties": Object {
+          "controls": Object {
+            "dualAxis": true,
+            "legend": Object {
+              "enabled": false,
+            },
+            "primaryChartType": "column",
+            "secondaryChartType": "line",
+            "secondary_yaxis": Object {
+              "measures": Array [
+                "92b17b262bff43718fad6271d95115ee",
+              ],
+            },
+          },
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1284",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "my line chart",
+        "updated": "2020-02-17 13:09:29",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1284",
+        "visualizationUrl": "local:combo2",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                      },
+                    },
+                  },
+                  "localIdentifier": "3e3446657936495984e00bef44476d58",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "abHzIZtmcyj1",
+        "isLocked": undefined,
+        "properties": Object {},
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1293",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "test 2",
+        "updated": "2020-02-24 11:33:37",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1293",
+        "visualizationUrl": "local:column",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                      },
+                    },
+                  },
+                  "localIdentifier": "b3ca9b6f12464d17bc28b9334abb3d46",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "aa7PW2uGdxgt",
+        "isLocked": undefined,
+        "properties": Object {},
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1295",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "test",
+        "updated": "2020-03-19 11:04:51",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1295",
+        "visualizationUrl": "local:column",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "aggregation": "sum",
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "1efdcdfefecb465fb6bee274df905f35",
+                  "title": "Sum of Days to Close",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+                  },
+                  "localIdentifier": "454ca1db05c646e291fad2dd0f7d4174",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [
+          Object {
+            "relativeDateFilter": Object {
+              "dataSet": Object {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557",
+              },
+              "from": -29,
+              "granularity": "GDC.time.date",
+              "to": 0,
+            },
+          },
+        ],
+        "identifier": "aagaIzlMbxR9",
+        "isLocked": undefined,
+        "properties": Object {},
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1297",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "Test insight",
+        "updated": "2021-06-01 20:54:13",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1297",
+        "visualizationUrl": "local:column",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "aggregation": "count",
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070",
+                      },
+                    },
+                  },
+                  "format": "#,##0",
+                  "localIdentifier": "4ef30246921f4a418df162cae2120741",
+                  "title": "Count of Activity",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+                  },
+                  "localIdentifier": "907cc40939644b50b9c01a4bb0763ca8",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "aaPaKGXCd61w",
+        "isLocked": undefined,
+        "properties": Object {},
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1305",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "test",
+        "updated": "2020-07-28 07:11:17",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1305",
+        "visualizationUrl": "local:column",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "aggregation": "count",
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
+                      },
+                    },
+                  },
+                  "format": "#,##0",
+                  "localIdentifier": "a4cd2b878a7048c8b9811dabedae61a6",
+                  "title": "Count of Account",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "ab7aDKZAbdBg",
+        "isLocked": undefined,
+        "properties": Object {},
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1306",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "test",
+        "updated": "2020-07-28 07:12:16",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1306",
+        "visualizationUrl": "local:column",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "aggregation": "sum",
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "736827c3354b4df1b4a14c29f41c460b",
+                  "title": "Sum of Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
+                  },
+                  "localIdentifier": "6331f1126ad54235b2bc3147801a7a42",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
+                  },
+                  "localIdentifier": "efee91542a184cacbee736b0c0e61eda",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "8734593581994749847508ffaf4ad8d4",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                  },
+                  "localIdentifier": "49f10f86354849eb9be459d72b25ff5e",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [
+          Object {
+            "relativeDateFilter": Object {
+              "dataSet": Object {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557",
+              },
+              "from": undefined,
+              "granularity": "GDC.time.year",
+              "to": undefined,
+            },
+          },
+        ],
+        "identifier": "aaii8nYodE4p",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "6331f1126ad54235b2bc3147801a7a42",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1307",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "6331f1126ad54235b2bc3147801a7a42",
+              "direction": "asc",
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "Longer Table",
+        "updated": "2021-06-28 09:34:46",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1307",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "computeRatio": false,
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
+                  "title": "Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                  },
+                  "localIdentifier": "3b196b9f8de04b61ba37762fa28fcf4f",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+                  },
+                  "localIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "ab2pdQnmiqo5",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "measureSortItem": Object {
+                "direction": "desc",
+                "locators": Array [
+                  Object {
+                    "attributeLocatorItem": Object {
+                      "attributeIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                      "element": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088/elements?id=460487",
+                    },
+                  },
+                  Object {
+                    "measureLocatorItem": Object {
+                      "measureIdentifier": "31c22194386b408aa80ab90b966e85a7",
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1308",
+        },
+        "sorts": Array [
+          Object {
+            "measureSortItem": Object {
+              "direction": "desc",
+              "locators": Array [
+                Object {
+                  "attributeLocatorItem": Object {
+                    "attributeIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                    "element": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088/elements?id=460487",
+                  },
+                },
+                Object {
+                  "measureLocatorItem": Object {
+                    "measureIdentifier": "31c22194386b408aa80ab90b966e85a7",
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "Simple Sorted Table",
+        "updated": "2020-08-16 20:07:15",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1308",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "0ac5aaf1f86940e4aad88016ae6bb4f8",
+                  "title": "Won",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                      },
+                    },
+                  },
+                  "localIdentifier": "e5e7e8a107a64aab955b6daba4b2e9d0",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                  },
+                  "localIdentifier": "6d0039fca1c44eb6ad56a2f45d244082",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "acKwfO4Yg9yo",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "measureSortItem": Object {
+                "direction": "desc",
+                "locators": Array [
+                  Object {
+                    "attributeLocatorItem": Object {
+                      "attributeIdentifier": "6d0039fca1c44eb6ad56a2f45d244082",
+                      "element": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678",
+                    },
+                  },
+                  Object {
+                    "measureLocatorItem": Object {
+                      "measureIdentifier": "e5e7e8a107a64aab955b6daba4b2e9d0",
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1311",
+        },
+        "sorts": Array [
+          Object {
+            "measureSortItem": Object {
+              "direction": "desc",
+              "locators": Array [
+                Object {
+                  "attributeLocatorItem": Object {
+                    "attributeIdentifier": "6d0039fca1c44eb6ad56a2f45d244082",
+                    "element": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678",
+                  },
+                },
+                Object {
+                  "measureLocatorItem": Object {
+                    "measureIdentifier": "e5e7e8a107a64aab955b6daba4b2e9d0",
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "test insight",
+        "updated": "2020-08-12 10:29:13",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1311",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "aggregation": "sum",
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "40d82100ff864b13b3eae3f4b93b0d89",
+                  "title": "Sum of Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
+                  },
+                  "localIdentifier": "c98ec98c664442e1b5bb583b28779dbb",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "abkBnI1zd28W",
+        "isLocked": undefined,
+        "properties": Object {},
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1313",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "test insight",
+        "updated": "2020-08-12 10:59:20",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1313",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "aggregation": "sum",
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "465345e2e6e048589b4568c7a77a23ee",
+                  "title": "Sum of Amount",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "6dc42ca10dd4436e9543bfd3229f1224",
+                  "title": "Won",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "aggregation": "sum",
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "604a13612d0b4b56976b2b88a892f6e0",
+                  "title": "Sum of Velocity",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                  },
+                  "localIdentifier": "acbb06aeeb454f93a98a018b4a7fe01c",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "aegg7T2lgUh7",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "acbb06aeeb454f93a98a018b4a7fe01c",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1361",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "acbb06aeeb454f93a98a018b4a7fe01c",
+              "direction": "asc",
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "table with multiple measures",
+        "updated": "2021-06-01 22:16:33",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1361",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+                  "title": "Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [
+          Object {
+            "positiveAttributeFilter": Object {
+              "displayForm": Object {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+              },
+              "in": Object {
+                "uris": Array [
+                  "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088/elements?id=460490",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "aaA8OrDqeYbN",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1395",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+              "direction": "asc",
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "Insight with own attribute filter",
+        "updated": "2021-07-23 11:42:40",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1395",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+                  "title": "Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [
+          Object {
+            "absoluteDateFilter": Object {
+              "dataSet": Object {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557",
+              },
+              "from": "2010-01-01",
+              "to": "2011-01-01",
+            },
+          },
+        ],
+        "identifier": "abQ8wcaMfKnD",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1396",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+              "direction": "asc",
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "Insight with own date filter",
+        "updated": "2021-07-23 11:43:28",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1396",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+                  "title": "Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [
+          Object {
+            "rankingFilter": Object {
+              "attributes": undefined,
+              "measure": Object {
+                "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+              },
+              "operator": "TOP",
+              "value": 1,
+            },
+          },
+        ],
+        "identifier": "acY8CSf4bjDP",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1401",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+              "direction": "asc",
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "Insight with own ranking filter",
+        "updated": "2021-07-23 11:46:24",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1401",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+                  "title": "Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [
+          Object {
+            "measureValueFilter": Object {
+              "condition": Object {
+                "comparison": Object {
+                  "operator": "GREATER_THAN_OR_EQUAL_TO",
+                  "value": 15000000,
+                },
+              },
+              "measure": Object {
+                "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+              },
+            },
+          },
+        ],
+        "identifier": "aea8whgCavlB",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1402",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+              "direction": "asc",
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "Insight with own measure value filter",
+        "updated": "2021-07-23 11:46:59",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1402",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [
+                        Object {
+                          "absoluteDateFilter": Object {
+                            "dataSet": Object {
+                              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557",
+                            },
+                            "from": "2011-01-01",
+                            "to": "2012-01-01",
+                          },
+                        },
+                      ],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+                  "title": "Won, Closed: Jan 1, 2011 - Jan 1, 2012",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "abD8NTsMizAs",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1405",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+              "direction": "asc",
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "Insight with all measures filtered by date",
+        "updated": "2021-07-23 11:57:57",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1405",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [
+                        Object {
+                          "absoluteDateFilter": Object {
+                            "dataSet": Object {
+                              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557",
+                            },
+                            "from": "2011-01-01",
+                            "to": "2012-01-01",
+                          },
+                        },
+                      ],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                      },
+                    },
+                  },
+                  "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+                  "title": "Won, Closed: Jan 1, 2011 - Jan 1, 2012",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270",
+                      },
+                    },
+                  },
+                  "localIdentifier": "9e71305775c54f329571d653d27f057d",
+                  "title": "Win Rate",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "acN8vxIwh5gI",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1406",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+              "direction": "asc",
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "Insight with some measures filtered by date",
+        "updated": "2021-07-23 11:58:15",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1406",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
+                      },
+                    },
+                  },
+                  "localIdentifier": "8e874c44107d41809d0d5e7bbd1c19ff",
+                  "title": "# Of Opportunities",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
+                  },
+                  "localIdentifier": "a75a78a7e2194c339b4f6b8694777803",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "acSQJgNjhBhi",
+        "isLocked": undefined,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "a75a78a7e2194c339b4f6b8694777803",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1419",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "a75a78a7e2194c339b4f6b8694777803",
+              "direction": "asc",
+            },
+          },
+        ],
+        "tags": Array [],
+        "title": "drillToAttributeUrl",
+        "updated": "2021-08-10 14:52:45",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1419",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273",
+                      },
+                    },
+                  },
+                  "localIdentifier": "e0ac9104b73c4d729d2872dce656e41e",
+                  "title": "Probability",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+        ],
+        "filters": Array [],
+        "identifier": "aclJqJXpbSQq",
+        "isLocked": undefined,
+        "properties": Object {},
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1447",
+        },
+        "sorts": Array [],
+        "tags": Array [],
+        "title": "Insight new",
+        "updated": "2021-08-30 13:58:34",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1447",
+        "visualizationUrl": "local:table",
+      },
+    },
+  ],
+  "limit": 23,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 23,
+}
+`;

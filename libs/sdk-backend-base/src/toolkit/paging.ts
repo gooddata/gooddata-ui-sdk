@@ -36,4 +36,12 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
 
         return new InMemoryPaging(this.all, this.limit, this.offset + this.items.length);
     }
+
+    public async goTo(pageIndex: number): Promise<IPagedResource<T>> {
+        if (this.items.length === 0) {
+            return this;
+        }
+
+        return new InMemoryPaging(this.all, this.limit, pageIndex * this.items.length);
+    }
 }

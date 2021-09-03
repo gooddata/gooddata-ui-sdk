@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { GdcExtendedDateFilters } from "@gooddata/api-model-bear";
@@ -50,6 +50,10 @@ export class BearWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQu
         } = data;
 
         const hasNextPage = serverOffset + count < totalCount!;
+        const goTo = (index: number) =>
+            index * count < totalCount!
+                ? this.queryWorker(index * count, limit)
+                : Promise.resolve(emptyResult);
 
         const emptyResult: IDateFilterConfigsQueryResult = {
             items: [],
@@ -57,6 +61,7 @@ export class BearWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQu
             offset: totalCount!,
             totalCount: totalCount!,
             next: () => Promise.resolve(emptyResult),
+            goTo,
         };
 
         return {
@@ -67,6 +72,7 @@ export class BearWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQu
             next: hasNextPage
                 ? () => this.queryWorker(offset + count, limit)
                 : () => Promise.resolve(emptyResult),
+            goTo,
         };
     }
 }

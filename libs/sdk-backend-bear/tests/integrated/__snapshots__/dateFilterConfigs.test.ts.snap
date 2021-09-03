@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bear dateFilterConfigs should load date filter configs 1`] = `
+Object {
+  "goTo": [Function],
+  "items": Array [
+    Object {
+      "absoluteForm": Object {
+        "localIdentifier": "absoluteForm",
+        "type": "absoluteForm",
+        "visible": true,
+      },
+      "absolutePresets": undefined,
+      "allTime": Object {
+        "localIdentifier": "allTime",
+        "type": "allTime",
+        "visible": true,
+      },
+      "ref": Object {
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/12",
+      },
+      "relativeForm": Object {
+        "availableGranularities": Array [
+          "GDC.time.week_us",
+          "GDC.time.month",
+          "GDC.time.year",
+          "GDC.time.quarter",
+          "GDC.time.date",
+        ],
+        "localIdentifier": "relativeForm",
+        "type": "relativeForm",
+        "visible": true,
+      },
+      "relativePresets": Array [
+        Object {
+          "from": -6,
+          "granularity": "GDC.time.date",
+          "localIdentifier": "relative_last_7_days",
+          "to": 0,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": -29,
+          "granularity": "GDC.time.date",
+          "localIdentifier": "relative_last_30_days",
+          "to": 0,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": -89,
+          "granularity": "GDC.time.date",
+          "localIdentifier": "relative_last_90_days",
+          "to": 0,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": 0,
+          "granularity": "GDC.time.week_us",
+          "localIdentifier": "relative_this_week",
+          "to": 0,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": -1,
+          "granularity": "GDC.time.week_us",
+          "localIdentifier": "relative_last_week",
+          "to": -1,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": -1,
+          "granularity": "GDC.time.week_us",
+          "localIdentifier": "relative_last_two_weeks",
+          "to": 0,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": 0,
+          "granularity": "GDC.time.month",
+          "localIdentifier": "relative_this_month",
+          "to": 0,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": -1,
+          "granularity": "GDC.time.month",
+          "localIdentifier": "relative_last_month",
+          "to": -1,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": -11,
+          "granularity": "GDC.time.month",
+          "localIdentifier": "relative_last_12_months",
+          "to": 0,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": 0,
+          "granularity": "GDC.time.quarter",
+          "localIdentifier": "relative_this_quarter",
+          "to": 0,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": -1,
+          "granularity": "GDC.time.quarter",
+          "localIdentifier": "relative_last_quarter",
+          "to": -1,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": -3,
+          "granularity": "GDC.time.quarter",
+          "localIdentifier": "relative_last_4_quarters",
+          "to": 0,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": 0,
+          "granularity": "GDC.time.year",
+          "localIdentifier": "relative_this_year",
+          "to": 0,
+          "type": "relativePreset",
+          "visible": true,
+        },
+        Object {
+          "from": -1,
+          "granularity": "GDC.time.year",
+          "localIdentifier": "relative_last_year",
+          "to": -1,
+          "type": "relativePreset",
+          "visible": true,
+        },
+      ],
+      "selectedOption": "relative_this_month",
+    },
+  ],
+  "limit": 1,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`bear dateFilterConfigs should load empty date filter configs for out-of-range page 1`] = `
+Object {
+  "goTo": [Function],
+  "items": Array [],
+  "limit": 1,
+  "next": [Function],
+  "offset": 1,
+  "totalCount": 1,
+}
+`;

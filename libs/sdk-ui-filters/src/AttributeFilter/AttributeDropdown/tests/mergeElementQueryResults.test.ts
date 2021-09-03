@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 
 import { mergeElementQueryResults } from "../mergeElementQueryResults";
@@ -17,6 +17,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: jest.fn(),
+            goTo: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -33,6 +34,7 @@ describe("mergeElementQueryResults", () => {
             items: [],
             limit: 1,
             next: jest.fn(),
+            goTo: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -46,6 +48,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: jest.fn(),
+            goTo: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -67,6 +70,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: jest.fn(),
+            goTo: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -80,6 +84,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: jest.fn(),
+            goTo: jest.fn(),
             offset: 1,
             totalCount: 2,
         };
@@ -97,6 +102,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: incoming.next,
+            goTo: incoming.goTo,
             offset: 1,
             totalCount: 2,
         };
@@ -116,6 +122,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: jest.fn(),
+            goTo: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -129,6 +136,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: jest.fn(),
+            goTo: jest.fn(),
             offset: 4,
             totalCount: 5,
         };
@@ -149,6 +157,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: incoming.next,
+            goTo: incoming.goTo,
             offset: 4,
             totalCount: 5,
         };
@@ -168,6 +177,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: jest.fn(),
+            goTo: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -181,6 +191,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: jest.fn(),
+            goTo: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -194,6 +205,7 @@ describe("mergeElementQueryResults", () => {
             ],
             limit: 1,
             next: incoming.next,
+            goTo: incoming.goTo,
             offset: 0,
             totalCount: 1,
         };
