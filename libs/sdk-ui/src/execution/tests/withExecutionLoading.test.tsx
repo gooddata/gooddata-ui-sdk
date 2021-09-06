@@ -164,6 +164,11 @@ describe("withExecution", () => {
         await createDummyPromise({ delay: 100 });
 
         expect(readAllCallback).not.toBeCalled();
-        expect(readWindowCallback).toBeCalledWith(window.offset, window.size, expect.any(Object));
+        expect(readWindowCallback).toBeCalledWith(
+            window.offset,
+            window.size,
+            expect.any(Object),
+            expect.any(String),
+        );
     });
 });
