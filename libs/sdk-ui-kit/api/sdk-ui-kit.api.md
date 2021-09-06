@@ -491,7 +491,7 @@ export const HEADER_ITEM_ID_LOAD = "gs.header.load";
 export const HEADER_ITEM_ID_MANAGE = "gs.header.manage";
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_MEASURES = "gs.header.measures";
+export const HEADER_ITEM_ID_METRICS = "gs.header.metrics";
 
 // @internal (undocumented)
 export const HEADER_ITEM_ID_REPORTS = "gs.header.reports";

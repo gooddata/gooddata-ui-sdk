@@ -27,7 +27,7 @@ export const HEADER_ITEM_ID_ANALYZE = "gs.header.analyze";
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_MEASURES = "gs.header.measures";
+export const HEADER_ITEM_ID_METRICS = "gs.header.metrics";
 /**
  * @internal
  */
@@ -165,7 +165,7 @@ function createInsightsItemsGroup(
     const measuresUrl = measuresItemUrl(workspaceId);
     pushConditionally(
         insightItemsGroup,
-        createIHeaderMenuItem(HEADER_ITEM_ID_MEASURES, "s-menu-measures", measuresUrl),
+        createIHeaderMenuItem(HEADER_ITEM_ID_METRICS, "s-menu-metrics", measuresUrl),
         hasMeasures,
     );
 
@@ -209,7 +209,7 @@ function manageItemUrl(workspaceRef: string, workspaceId: string): string {
     return `/#s=/gdc/${workspaceRef}s/${workspaceId}|dataPage|`;
 }
 function measuresItemUrl(workspaceId: string): string {
-    return `/measures/#/${workspaceId}`;
+    return `/metrics/#/${workspaceId}`;
 }
 
 function kpisItemUrl(workspaceRef: string, workspaceId: string): string {
