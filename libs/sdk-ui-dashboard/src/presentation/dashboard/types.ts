@@ -29,6 +29,7 @@ import {
     CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
 } from "../widget";
+import { CustomSaveAsDialogComponent } from "../saveAs";
 
 /**
  * @internal
@@ -158,6 +159,15 @@ export interface IDashboardProps {
      * To fall back to the default implementation, use the {@link DefaultScheduledEmailDialog} component.
      */
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
+
+    /**
+     * Optionally specify component to use for rendering the save as dialog.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useSaveAsDialogProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultSaveAsDialog} component.
+     */
+    SaveAsDialogComponent?: CustomSaveAsDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the button bar.

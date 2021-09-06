@@ -48,6 +48,7 @@ import {
     useDispatchDashboardCommand,
     useDashboardCommandProcessing,
     exportDashboardToPdf,
+    selectIsLayoutEmpty,
 } from "../../model";
 import {
     DefaultScheduledEmailDialogInner,
@@ -68,6 +69,7 @@ import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { IDashboardProps } from "./types";
 import { ExportDialogProvider } from "../dialogs";
 import { downloadFile } from "../../_staging/fileUtils/downloadFile";
+import { DefaultSaveAsDialogInner, SaveAsDialog, SaveAsDialogPropsProvider } from "../saveAs";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -128,12 +130,13 @@ const useTopBar = () => {
 const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     const { dashboardRef } = props;
     const intl = useIntl();
-
+    const isEmptyLayout = useDashboardSelector(selectIsLayoutEmpty);
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
 
     const [isScheduleEmailingDialogOpen, setIsScheduleEmailingDialogOpen] = useState(false);
+    const [isSaveAsDialogOpen, setIsSaveAsDialogOpen] = useState(false);
 
     const lastExportMessageId = useRef("");
     const { run: exportDashboard } = useDashboardCommandProcessing({
@@ -181,6 +184,14 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
         setIsScheduleEmailingDialogOpen(true);
     }, [dashboardRef]);
 
+    const defaultOnSaveAs = useCallback(() => {
+        if (!dashboardRef) {
+            return;
+        }
+
+        setIsSaveAsDialogOpen(true);
+    }, [dashboardRef]);
+
     const defaultOnExportToPdf = useCallback(() => {
         if (!dashboardRef) {
             return;
@@ -195,6 +206,14 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
         }
 
         return [
+            {
+                type: "button",
+                itemId: "save_as_menu_item", // careful, also a s- class selector, do not change
+                disabled: isEmptyLayout || !dashboardRef,
+                itemName: intl.formatMessage({ id: "options.menu.save.as" }),
+                tooltip: intl.formatMessage({ id: "options.menu.save.as.tooltip" }),
+                onClick: defaultOnSaveAs,
+            },
             {
                 type: "button",
                 itemId: "pdf-export-item", // careful, this is also used as a selector in tests, do not change
@@ -224,6 +243,20 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
         setIsScheduleEmailingDialogOpen(false);
     }, []);
 
+    const onSaveAsError = useCallback(() => {
+        setIsSaveAsDialogOpen(false);
+        addError({ id: "messages.dashboardSaveFailed" });
+    }, []);
+
+    const onSaveAsSuccess = useCallback(() => {
+        setIsSaveAsDialogOpen(false);
+        addSuccess({ id: "messages.dashboardSaveSuccess" });
+    }, []);
+
+    const onSaveAsCancel = useCallback(() => {
+        setIsSaveAsDialogOpen(false);
+    }, []);
+
     return (
         <>
             <ToastMessages />
@@ -237,6 +270,16 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
                 >
                     <ScheduledEmailDialog />
                 </ScheduledEmailDialogPropsProvider>
+            )}
+            {isSaveAsDialogOpen && (
+                <SaveAsDialogPropsProvider
+                    isVisible={isSaveAsDialogOpen}
+                    onCancel={onSaveAsCancel}
+                    onError={onSaveAsError}
+                    onSuccess={onSaveAsSuccess}
+                >
+                    <SaveAsDialog />
+                </SaveAsDialogPropsProvider>
             )}
 
             <TopBarPropsProvider
@@ -334,6 +377,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         ScheduledEmailDialogComponent={
                             props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
                         }
+                        SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialogInner}
                         DashboardAttributeFilterComponentFactory={attributeFilterFactory}
                         DashboardDateFilterComponent={
                             props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
