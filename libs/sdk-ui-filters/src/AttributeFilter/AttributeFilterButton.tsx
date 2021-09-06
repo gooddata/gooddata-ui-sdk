@@ -359,7 +359,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     props.workspace,
                     props.backend,
                     getObjRef(currentFilter, props.identifier),
-                    "",
+                    "", // we need to get all available elements count in every case possible
                     getValidElementsFilters(resolvedParentFilters, props.parentFilterOverAttribute),
                 );
             },
