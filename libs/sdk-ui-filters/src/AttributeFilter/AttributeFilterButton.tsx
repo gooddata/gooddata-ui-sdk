@@ -354,13 +354,12 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         status: originalTotalCountStatus,
     } = useCancelablePromise<number>(
         {
-            // eslint-disable-next-line
             promise: async () => {
                 return getElementTotalCount(
                     props.workspace,
                     props.backend,
                     getObjRef(currentFilter, props.identifier),
-                    state.searchString,
+                    "",
                     getValidElementsFilters(resolvedParentFilters, props.parentFilterOverAttribute),
                 );
             },
@@ -374,7 +373,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         status: totalCountStatus,
     } = useCancelablePromise<number>(
         {
-            // eslint-disable-next-line
             promise: async () => {
                 return getElementTotalCount(
                     props.workspace,
