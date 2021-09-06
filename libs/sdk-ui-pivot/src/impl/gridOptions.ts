@@ -131,5 +131,6 @@ export function createGridOptions(
         rowClass: "gd-table-row",
         rowHeight: DEFAULT_ROW_HEIGHT,
         autoSizePadding: DEFAULT_AUTOSIZE_PADDING,
+        enableBrowserTooltips: true,
     };
 }

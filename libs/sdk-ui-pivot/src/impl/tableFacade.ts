@@ -791,4 +791,14 @@ export class TableFacade {
     public isResizing = (): boolean => {
         return this.resizing;
     };
+
+    public setTooltipFields = () => {
+        invariant(this.columnApi);
+
+        const columns = this.columnApi.getAllColumns();
+        columns.forEach((col) => {
+            const colDef = col.getColDef();
+            colDef.tooltipField = colDef.field;
+        });
+    };
 }
