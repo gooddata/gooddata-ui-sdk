@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { newMeasure } from "@gooddata/sdk-model";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
@@ -54,7 +54,12 @@ describe("withEventing backend", () => {
 
         await (await prepareExecution(backend).execute()).readWindow([1, 2], [100, 1000]);
 
-        expect(successfulResultReadWindow).toHaveBeenCalledWith([1, 2], [100, 1000], expect.any(Object));
+        expect(successfulResultReadWindow).toHaveBeenCalledWith(
+            [1, 2],
+            [100, 1000],
+            expect.any(Object),
+            expect.any(String),
+        );
     });
 
     it("emits failedResultReadAll", async () => {
@@ -82,6 +87,11 @@ describe("withEventing backend", () => {
             // expected to throw
         }
 
-        expect(failedResultReadWindow).toHaveBeenCalledWith([1, 2], [100, 1000], expect.any(Object));
+        expect(failedResultReadWindow).toHaveBeenCalledWith(
+            [1, 2],
+            [100, 1000],
+            expect.any(Object),
+            expect.any(String),
+        );
     });
 });
