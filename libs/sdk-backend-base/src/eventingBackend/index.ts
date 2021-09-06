@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     IAnalyticalBackend,
     IDataView,
@@ -21,19 +21,22 @@ class WithExecutionEventing extends DecoratedPreparedExecution {
     }
 
     public execute = (): Promise<IExecutionResult> => {
-        const { beforeExecute, successfulExecute } = this.callbacks;
+        const { beforeExecute, successfulExecute, failedExecute } = this.callbacks;
 
-        if (beforeExecute) {
-            beforeExecute(this.definition);
-        }
+        beforeExecute?.(this.definition);
 
-        return super.execute().then((result) => {
-            if (successfulExecute) {
-                successfulExecute(result);
-            }
+        return super
+            .execute()
+            .then((result) => {
+                successfulExecute?.(result);
 
-            return new WithExecutionResultEventing(result, this.createNew, this.callbacks);
-        });
+                return new WithExecutionResultEventing(result, this.createNew, this.callbacks);
+            })
+            .catch((error) => {
+                failedExecute?.(error);
+
+                throw error;
+            });
     };
 
     protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
@@ -57,16 +60,12 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
 
         return promisedDataView
             .then((res) => {
-                if (successfulResultReadAll) {
-                    successfulResultReadAll(res);
-                }
+                successfulResultReadAll?.(res);
 
                 return res;
             })
             .catch((e) => {
-                if (failedResultReadAll) {
-                    failedResultReadAll(e);
-                }
+                failedResultReadAll?.(e);
 
                 throw e;
             });
@@ -79,16 +78,12 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
 
         return promisedDataView
             .then((res) => {
-                if (successfulResultReadWindow) {
-                    successfulResultReadWindow(offset, size, res);
-                }
+                successfulResultReadWindow?.(offset, size, res);
 
                 return res;
             })
             .catch((e) => {
-                if (failedResultReadWindow) {
-                    failedResultReadWindow(offset, size, e);
-                }
+                failedResultReadWindow?.(offset, size, e);
 
                 throw e;
             });
@@ -114,6 +109,13 @@ export type AnalyticalBackendCallbacks = {
      * @param result - execution result (mind that this contains definition already)
      */
     successfulExecute?: (result: IExecutionResult) => void;
+
+    /**
+     * Called when the execute ends with an error.
+     *
+     * @param error - error from the underlying backend, contractually this should be an instance of AnalyticalBackendError
+     */
+    failedExecute?: (error: any) => void;
 
     /**
      * Called when IExecuteResult.readAll() successfully completes.

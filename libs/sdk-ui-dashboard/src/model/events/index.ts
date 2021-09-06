@@ -43,9 +43,6 @@ import {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetHeaderChanged,
     DashboardKpiWidgetMeasureChanged,
-    DashboardKpiWidgetExecutionStarted,
-    DashboardKpiWidgetExecutionFailed,
-    DashboardKpiWidgetExecutionSucceeded,
 } from "./kpi";
 import {
     DashboardInsightWidgetChanged,
@@ -55,12 +52,14 @@ import {
     DashboardInsightWidgetHeaderChanged,
     DashboardInsightWidgetInsightSwitched,
     DashboardInsightWidgetVisPropertiesChanged,
-    DashboardInsightWidgetExecutionStarted,
-    DashboardInsightWidgetExecutionFailed,
-    DashboardInsightWidgetExecutionSucceeded,
     DashboardInsightWidgetExportRequested,
     DashboardInsightWidgetExportResolved,
 } from "./insight";
+import {
+    DashboardWidgetExecutionStarted,
+    DashboardWidgetExecutionSucceeded,
+    DashboardWidgetExecutionFailed,
+} from "./widget";
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertsRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
 import { DashboardUserInteractionTriggered } from "./userInteraction";
@@ -177,17 +176,8 @@ export {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetComparisonChanged,
     DashboardKpiWidgetChanged,
-    DashboardKpiWidgetExecutionStarted,
-    DashboardKpiWidgetExecutionFailed,
-    DashboardKpiWidgetExecutionSucceeded,
-    kpiWidgetExecutionStarted,
-    kpiWidgetExecutionFailed,
-    kpiWidgetExecutionSucceeded,
     isDashboardKpiWidgetChanged,
     isDashboardKpiWidgetComparisonChanged,
-    isDashboardKpiWidgetExecutionStarted,
-    isDashboardKpiWidgetExecutionFailed,
-    isDashboardKpiWidgetExecutionSucceeded,
     isDashboardKpiWidgetFilterSettingsChanged,
     isDashboardKpiWidgetHeaderChanged,
     isDashboardKpiWidgetMeasureChanged,
@@ -201,20 +191,11 @@ export {
     DashboardInsightWidgetDrillsModified,
     DashboardInsightWidgetDrillsRemoved,
     DashboardInsightWidgetChanged,
-    DashboardInsightWidgetExecutionStarted,
-    DashboardInsightWidgetExecutionFailed,
-    DashboardInsightWidgetExecutionSucceeded,
     DashboardInsightWidgetExportRequested,
     DashboardInsightWidgetExportResolved,
-    insightWidgetExecutionStarted,
-    insightWidgetExecutionFailed,
-    insightWidgetExecutionSucceeded,
     isDashboardInsightWidgetChanged,
     isDashboardInsightWidgetDrillsModified,
     isDashboardInsightWidgetDrillsRemoved,
-    isDashboardInsightWidgetExecutionStarted,
-    isDashboardInsightWidgetExecutionFailed,
-    isDashboardInsightWidgetExecutionSucceeded,
     isDashboardInsightWidgetFilterSettingsChanged,
     isDashboardInsightWidgetHeaderChanged,
     isDashboardInsightWidgetInsightSwitched,
@@ -222,6 +203,17 @@ export {
     isDashboardInsightWidgetExportRequested,
     isDashboardInsightWidgetExportResolved,
 } from "./insight";
+export {
+    DashboardWidgetExecutionStarted,
+    DashboardWidgetExecutionSucceeded,
+    DashboardWidgetExecutionFailed,
+    isDashboardWidgetExecutionStarted,
+    isDashboardWidgetExecutionSucceeded,
+    isDashboardWidgetExecutionFailed,
+    widgetExecutionStarted,
+    widgetExecutionSucceeded,
+    widgetExecutionFailed,
+} from "./widget";
 export {
     DashboardAlertCreated,
     DashboardAlertsRemoved,
@@ -340,9 +332,6 @@ export type DashboardEvents =
     | DashboardKpiWidgetFilterSettingsChanged
     | DashboardKpiWidgetComparisonChanged
     | DashboardKpiWidgetChanged
-    | DashboardKpiWidgetExecutionStarted
-    | DashboardKpiWidgetExecutionFailed
-    | DashboardKpiWidgetExecutionSucceeded
     | DashboardInsightWidgetHeaderChanged
     | DashboardInsightWidgetFilterSettingsChanged
     | DashboardInsightWidgetVisPropertiesChanged
@@ -350,11 +339,11 @@ export type DashboardEvents =
     | DashboardInsightWidgetDrillsModified
     | DashboardInsightWidgetDrillsRemoved
     | DashboardInsightWidgetChanged
-    | DashboardInsightWidgetExecutionStarted
-    | DashboardInsightWidgetExecutionFailed
-    | DashboardInsightWidgetExecutionSucceeded
     | DashboardInsightWidgetExportRequested
     | DashboardInsightWidgetExportResolved
+    | DashboardWidgetExecutionStarted
+    | DashboardWidgetExecutionSucceeded
+    | DashboardWidgetExecutionFailed
     | DashboardAlertCreated
     | DashboardAlertsRemoved
     | DashboardAlertUpdated

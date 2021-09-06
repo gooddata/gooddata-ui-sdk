@@ -51,10 +51,6 @@ import {
     selectDisableDefaultDrills,
     selectDrillableItems,
     useWidgetExecutionsHandler,
-    kpiWidgetExecutionSucceeded,
-    useDashboardEventDispatch,
-    kpiWidgetExecutionStarted,
-    kpiWidgetExecutionFailed,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
@@ -140,8 +136,6 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const drillableItems = useDashboardSelector(selectDrillableItems);
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
 
-    const dispatchEvent = useDashboardEventDispatch();
-
     const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget, alert);
 
     const isAlertBroken = !!brokenAlertsBasicInfo?.length;
@@ -151,7 +145,6 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     useEffect(() => {
         const err = error ?? alertExecutionError;
         if (err) {
-            dispatchEvent(kpiWidgetExecutionFailed(widgetRef(kpiWidget), err));
             onError?.(err);
         }
         // for executions we care only about KPI errors
@@ -168,7 +161,6 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
             } else {
                 executionsHandler.onSuccess(result.result());
             }
-            dispatchEvent(kpiWidgetExecutionSucceeded(widgetRef(kpiWidget)));
         }
     }, [result]);
 
@@ -200,7 +192,6 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     useEffect(() => {
         if (isLoading) {
             onRequestAsyncRender();
-            dispatchEvent(kpiWidgetExecutionStarted(widgetRef(kpiWidget)));
         } else {
             onResolveAsyncRender();
         }

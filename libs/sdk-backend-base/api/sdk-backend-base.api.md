@@ -101,6 +101,7 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
 export type AnalyticalBackendCallbacks = {
     beforeExecute?: (def: IExecutionDefinition) => void;
     successfulExecute?: (result: IExecutionResult) => void;
+    failedExecute?: (error: any) => void;
     successfulResultReadAll?: (dataView: IDataView) => void;
     failedResultReadAll?: (error: any) => void;
     successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView) => void;

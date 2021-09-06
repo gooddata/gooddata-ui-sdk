@@ -4,7 +4,6 @@ import { IUserWorkspaceSettings, widgetRef } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import {
     insightFilters,
-    insightRef,
     insightSetFilters,
     insightVisualizationUrl,
     objRefToString,
@@ -19,11 +18,9 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
+
 import { useDashboardComponentsContext } from "../../../../dashboardContexts";
 import {
-    insightWidgetExecutionFailed,
-    insightWidgetExecutionStarted,
-    insightWidgetExecutionSucceeded,
     selectColorPalette,
     selectDrillableItems,
     selectIsExport,
@@ -111,7 +108,6 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                 onRequestAsyncRender();
                 // if we started loading, any previous vis error is obsolete at this point, get rid of it
                 setVisualizationError(undefined);
-                dispatchEvent(insightWidgetExecutionStarted(widgetRef(widget), insightRef(insight)));
             } else {
                 onResolveAsyncRender();
             }
@@ -149,7 +145,6 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         (data: IPushData): void => {
             onPushData(data);
             executionsHandler.onPushData(data);
-            dispatchEvent(insightWidgetExecutionSucceeded(widgetRef(widget), insightRef(insight)));
         },
         [onPushData, executionsHandler.onPushData],
     );
@@ -177,7 +172,6 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const handleError = useCallback<OnError>(
         (error) => {
             setVisualizationError(error);
-            dispatchEvent(insightWidgetExecutionFailed(widgetRef(widget), insightRef(insight), error));
             onError?.(error);
             executionsHandler.onError(error);
         },
