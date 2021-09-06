@@ -9,9 +9,8 @@ import {
     ILegacyKpi,
     IMeasureMetadataObject,
 } from "@gooddata/sdk-backend-spi";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { DashboardEventBody, IDashboardEvent } from "./base";
+import { IDashboardEvent } from "./base";
 import { WidgetHeader } from "../types/widgetTypes";
 import { DashboardContext } from "../types/commonTypes";
 import { eventGuard } from "./util";
@@ -294,46 +293,4 @@ export function kpiWidgetChanged(
  */
 export const isDashboardKpiWidgetChanged = eventGuard<DashboardKpiWidgetChanged>(
     "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED",
-);
-
-//
-//
-//
-
-/**
- * This event is emitted after execution of a KPI widget fails.
- *
- * @alpha
- */
-export interface DashboardKpiWidgetExecutionFailed extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED";
-    readonly payload: {
-        error: GoodDataSdkError;
-    };
-}
-
-/**
- * @alpha
- */
-export function kpiWidgetExecutionFailed(
-    error: GoodDataSdkError,
-    correlationId?: string,
-): DashboardEventBody<DashboardKpiWidgetExecutionFailed> {
-    return {
-        type: "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",
-        correlationId,
-        payload: {
-            error,
-        },
-    };
-}
-
-/**
- * Tests whether the provided object is an instance of {@link DashboardKpiWidgetExecutionFailed}.
- *
- * @param obj - object to test
- * @alpha
- */
-export const isDashboardKpiWidgetExecutionFailed = eventGuard<DashboardKpiWidgetExecutionFailed>(
-    "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",
 );

@@ -1,8 +1,23 @@
 // (C) 2020 GoodData Corporation
-import React from "react";
-import { isWidget, isDashboardWidget, UnexpectedError, isInsightWidget } from "@gooddata/sdk-backend-spi";
+import React, { useMemo } from "react";
+import {
+    IDataView,
+    isWidget,
+    isDashboardWidget,
+    UnexpectedError,
+    isInsightWidget,
+} from "@gooddata/sdk-backend-spi";
+import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
+import { withEventing } from "@gooddata/sdk-backend-base";
 
-import { selectAlertByWidgetRef, useDashboardSelector } from "../../../model";
+import {
+    selectAlertByWidgetRef,
+    useDashboardEventDispatch,
+    useDashboardSelector,
+    widgetExecutionFailed,
+    widgetExecutionStarted,
+    widgetExecutionSucceeded,
+} from "../../../model";
 import { DashboardItem } from "../../presentationComponents";
 
 import { DashboardWidgetProps } from "./types";
@@ -15,11 +30,46 @@ import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget";
  * @internal
  */
 export const DefaultDashboardWidgetInner = (): JSX.Element => {
-    const { onError, onFiltersChange, screen, widget } = useDashboardWidgetProps();
+    const { onError, onFiltersChange, screen, widget, backend } = useDashboardWidgetProps();
 
     const widgetRef = widget?.ref;
     const alertSelector = selectAlertByWidgetRef(widgetRef!);
     const alert = useDashboardSelector(alertSelector);
+
+    const dispatchEvent = useDashboardEventDispatch();
+    const effectiveBackend = useBackendStrict(backend);
+
+    const backendWithEventing = useMemo(() => {
+        // use a flag to report only the first result of the execution as per the events documented API
+        let hasReportedResult = false;
+        const onSuccess = (dataView: IDataView, executionId: string) => {
+            if (!hasReportedResult) {
+                dispatchEvent(widgetExecutionSucceeded(widgetRef!, dataView, executionId));
+                hasReportedResult = true;
+            }
+        };
+        const onError = (error: any, executionId: string) => {
+            if (!hasReportedResult) {
+                dispatchEvent(widgetExecutionFailed(widgetRef!, convertError(error), executionId));
+                hasReportedResult = true;
+            }
+        };
+        return withEventing(effectiveBackend, {
+            beforeExecute: (def, executionId) => {
+                hasReportedResult = false;
+                dispatchEvent(widgetExecutionStarted(widgetRef!, def, executionId));
+            },
+            successfulResultReadAll: onSuccess,
+            successfulResultReadWindow: (_offset, _limit, dataView, executionId) => {
+                onSuccess(dataView, executionId);
+            },
+            failedExecute: onError,
+            failedResultReadAll: onError,
+            failedResultReadWindow: (_offset, _limit, error, executionId) => {
+                onError(error, executionId);
+            },
+        });
+    }, [effectiveBackend, dispatchEvent]);
 
     if (!isDashboardWidget) {
         throw new UnexpectedError(
@@ -28,21 +78,23 @@ export const DefaultDashboardWidgetInner = (): JSX.Element => {
     }
 
     if (isWidget(widget)) {
-        if (isInsightWidget(widget)) {
-            return <DefaultDashboardInsightWidget widget={widget} screen={screen} />;
-        }
-
         return (
-            <DashboardItem className="type-kpi" screen={screen}>
-                <DashboardKpiPropsProvider
-                    kpiWidget={widget}
-                    alert={alert}
-                    onFiltersChange={onFiltersChange}
-                    onError={onError}
-                >
-                    <DashboardKpi />
-                </DashboardKpiPropsProvider>
-            </DashboardItem>
+            <BackendProvider backend={backendWithEventing}>
+                {isInsightWidget(widget) ? (
+                    <DefaultDashboardInsightWidget widget={widget} screen={screen} />
+                ) : (
+                    <DashboardItem className="type-kpi" screen={screen}>
+                        <DashboardKpiPropsProvider
+                            kpiWidget={widget}
+                            alert={alert}
+                            onFiltersChange={onFiltersChange}
+                            onError={onError}
+                        >
+                            <DashboardKpi />
+                        </DashboardKpiPropsProvider>
+                    </DashboardItem>
+                )}
+            </BackendProvider>
         );
     }
 

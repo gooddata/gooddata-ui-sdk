@@ -43,7 +43,6 @@ import {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetHeaderChanged,
     DashboardKpiWidgetMeasureChanged,
-    DashboardKpiWidgetExecutionFailed,
 } from "./kpi";
 import {
     DashboardInsightWidgetChanged,
@@ -53,10 +52,14 @@ import {
     DashboardInsightWidgetHeaderChanged,
     DashboardInsightWidgetInsightSwitched,
     DashboardInsightWidgetVisPropertiesChanged,
-    DashboardInsightWidgetExecutionFailed,
     DashboardInsightWidgetExportRequested,
     DashboardInsightWidgetExportResolved,
 } from "./insight";
+import {
+    DashboardWidgetExecutionStarted,
+    DashboardWidgetExecutionSucceeded,
+    DashboardWidgetExecutionFailed,
+} from "./widget";
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertsRemoved } from "./alerts";
 import { DashboardScheduledEmailCreated } from "./scheduledEmail";
 import { DashboardUserInteractionTriggered } from "./userInteraction";
@@ -173,11 +176,8 @@ export {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetComparisonChanged,
     DashboardKpiWidgetChanged,
-    DashboardKpiWidgetExecutionFailed,
-    kpiWidgetExecutionFailed,
     isDashboardKpiWidgetChanged,
     isDashboardKpiWidgetComparisonChanged,
-    isDashboardKpiWidgetExecutionFailed,
     isDashboardKpiWidgetFilterSettingsChanged,
     isDashboardKpiWidgetHeaderChanged,
     isDashboardKpiWidgetMeasureChanged,
@@ -191,14 +191,11 @@ export {
     DashboardInsightWidgetDrillsModified,
     DashboardInsightWidgetDrillsRemoved,
     DashboardInsightWidgetChanged,
-    DashboardInsightWidgetExecutionFailed,
     DashboardInsightWidgetExportRequested,
     DashboardInsightWidgetExportResolved,
-    insightWidgetExecutionFailed,
     isDashboardInsightWidgetChanged,
     isDashboardInsightWidgetDrillsModified,
     isDashboardInsightWidgetDrillsRemoved,
-    isDashboardInsightWidgetExecutionFailed,
     isDashboardInsightWidgetFilterSettingsChanged,
     isDashboardInsightWidgetHeaderChanged,
     isDashboardInsightWidgetInsightSwitched,
@@ -206,6 +203,17 @@ export {
     isDashboardInsightWidgetExportRequested,
     isDashboardInsightWidgetExportResolved,
 } from "./insight";
+export {
+    DashboardWidgetExecutionStarted,
+    DashboardWidgetExecutionSucceeded,
+    DashboardWidgetExecutionFailed,
+    isDashboardWidgetExecutionStarted,
+    isDashboardWidgetExecutionSucceeded,
+    isDashboardWidgetExecutionFailed,
+    widgetExecutionStarted,
+    widgetExecutionSucceeded,
+    widgetExecutionFailed,
+} from "./widget";
 export {
     DashboardAlertCreated,
     DashboardAlertsRemoved,
@@ -324,7 +332,6 @@ export type DashboardEvents =
     | DashboardKpiWidgetFilterSettingsChanged
     | DashboardKpiWidgetComparisonChanged
     | DashboardKpiWidgetChanged
-    | DashboardKpiWidgetExecutionFailed
     | DashboardInsightWidgetHeaderChanged
     | DashboardInsightWidgetFilterSettingsChanged
     | DashboardInsightWidgetVisPropertiesChanged
@@ -332,9 +339,11 @@ export type DashboardEvents =
     | DashboardInsightWidgetDrillsModified
     | DashboardInsightWidgetDrillsRemoved
     | DashboardInsightWidgetChanged
-    | DashboardInsightWidgetExecutionFailed
     | DashboardInsightWidgetExportRequested
     | DashboardInsightWidgetExportResolved
+    | DashboardWidgetExecutionStarted
+    | DashboardWidgetExecutionSucceeded
+    | DashboardWidgetExecutionFailed
     | DashboardAlertCreated
     | DashboardAlertsRemoved
     | DashboardAlertUpdated

@@ -1,4 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
+import { v4 as uuid } from "uuid";
 import {
     IAnalyticalBackend,
     IDataView,
@@ -6,8 +8,8 @@ import {
     IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
+
 import { decoratedBackend } from "../decoratedBackend";
-import isEmpty from "lodash/isEmpty";
 import {
     DecoratedExecutionFactory,
     DecoratedExecutionResult,
@@ -21,19 +23,23 @@ class WithExecutionEventing extends DecoratedPreparedExecution {
     }
 
     public execute = (): Promise<IExecutionResult> => {
-        const { beforeExecute, successfulExecute } = this.callbacks;
+        const { beforeExecute, successfulExecute, failedExecute } = this.callbacks;
+        const executionId = uuid();
 
-        if (beforeExecute) {
-            beforeExecute(this.definition);
-        }
+        beforeExecute?.(this.definition, executionId);
 
-        return super.execute().then((result) => {
-            if (successfulExecute) {
-                successfulExecute(result);
-            }
+        return super
+            .execute()
+            .then((result) => {
+                successfulExecute?.(result, executionId);
 
-            return new WithExecutionResultEventing(result, this.createNew, this.callbacks);
-        });
+                return new WithExecutionResultEventing(result, this.createNew, this.callbacks, executionId);
+            })
+            .catch((error) => {
+                failedExecute?.(error, executionId);
+
+                throw error;
+            });
     };
 
     protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
@@ -46,6 +52,7 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
         decorated: IExecutionResult,
         wrapper: PreparedExecutionWrapper,
         private readonly callbacks: AnalyticalBackendCallbacks,
+        private readonly executionId: string,
     ) {
         super(decorated, wrapper);
     }
@@ -57,16 +64,12 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
 
         return promisedDataView
             .then((res) => {
-                if (successfulResultReadAll) {
-                    successfulResultReadAll(res);
-                }
+                successfulResultReadAll?.(res, this.executionId);
 
                 return res;
             })
             .catch((e) => {
-                if (failedResultReadAll) {
-                    failedResultReadAll(e);
-                }
+                failedResultReadAll?.(e, this.executionId);
 
                 throw e;
             });
@@ -79,16 +82,12 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
 
         return promisedDataView
             .then((res) => {
-                if (successfulResultReadWindow) {
-                    successfulResultReadWindow(offset, size, res);
-                }
+                successfulResultReadWindow?.(offset, size, res, this.executionId);
 
                 return res;
             })
             .catch((e) => {
-                if (failedResultReadWindow) {
-                    failedResultReadWindow(offset, size, e);
-                }
+                failedResultReadWindow?.(offset, size, e, this.executionId);
 
                 throw e;
             });
@@ -105,29 +104,41 @@ export type AnalyticalBackendCallbacks = {
      * Called before prepared execution's execute() is called.
      *
      * @param def - definition that will be used for the execution
+     * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
      */
-    beforeExecute?: (def: IExecutionDefinition) => void;
+    beforeExecute?: (def: IExecutionDefinition, executionId: string) => void;
 
     /**
      * Called when the execute successfully completes.
      *
      * @param result - execution result (mind that this contains definition already)
+     * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
      */
-    successfulExecute?: (result: IExecutionResult) => void;
+    successfulExecute?: (result: IExecutionResult, executionId: string) => void;
+
+    /**
+     * Called when the execute ends with an error.
+     *
+     * @param error - error from the underlying backend, contractually this should be an instance of AnalyticalBackendError
+     * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
+     */
+    failedExecute?: (error: any, executionId: string) => void;
 
     /**
      * Called when IExecuteResult.readAll() successfully completes.
      *
      * @param dataView - data view (mind that this contains definition and result already)
+     * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
      */
-    successfulResultReadAll?: (dataView: IDataView) => void;
+    successfulResultReadAll?: (dataView: IDataView, executionId: string) => void;
 
     /**
      * Called when IExecuteResult.readAll() ends with an error.
      *
      * @param error - error from the underlying backend, contractually this should be an instance of AnalyticalBackendError
+     * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
      */
-    failedResultReadAll?: (error: any) => void;
+    failedResultReadAll?: (error: any, executionId: string) => void;
 
     /**
      * Called when IExecuteResult.readWindow() successfully completes. The function is called with the requested
@@ -136,8 +147,14 @@ export type AnalyticalBackendCallbacks = {
      * @param offset - *requested window offset, the actual offset may differ, actual offset is in data view
      * @param size - *request* window size, the actual size may differ, actual size is in data view
      * @param dataView - data view (mind that this contains definition and result already)
+     * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
      */
-    successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView) => void;
+    successfulResultReadWindow?: (
+        offset: number[],
+        size: number[],
+        dataView: IDataView,
+        executionId: string,
+    ) => void;
 
     /**
      * Called when IExecuteResult.readWindow() ends with an error. The function is called with the requested
@@ -146,8 +163,9 @@ export type AnalyticalBackendCallbacks = {
      * @param offset - *requested window offset, the actual offset may differ, actual offset is in data view
      * @param size - *request* window size, the actual size may differ, actual size is in data view
      * @param error - error from the underlying backend, contractually this should be an instance of AnalyticalBackendError
+     * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
      */
-    failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
+    failedResultReadWindow?: (offset: number[], size: number[], error: any, executionId: string) => void;
 };
 
 /**

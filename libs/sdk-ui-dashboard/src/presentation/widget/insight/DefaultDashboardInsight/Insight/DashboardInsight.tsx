@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { CSSProperties, useCallback, useMemo, useState } from "react";
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IUserWorkspaceSettings, widgetRef } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import {
     insightFilters,
@@ -18,9 +18,9 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
+
 import { useDashboardComponentsContext } from "../../../../dashboardContexts";
 import {
-    insightWidgetExecutionFailed,
     selectColorPalette,
     selectDrillableItems,
     selectIsExport,
@@ -89,7 +89,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const effectiveWorkspace = useWorkspaceStrict(workspace);
 
     const dispatchEvent = useDashboardEventDispatch();
-    const executionsHandler = useWidgetExecutionsHandler(widget.ref);
+    const executionsHandler = useWidgetExecutionsHandler(widgetRef(widget));
 
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
@@ -100,7 +100,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | undefined>();
 
     const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(
-        objRefToString(widget.ref),
+        objRefToString(widgetRef(widget)),
     );
     const handleLoadingChanged = useCallback<OnLoadingChanged>(
         ({ isLoading }) => {
@@ -172,7 +172,6 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const handleError = useCallback<OnError>(
         (error) => {
             setVisualizationError(error);
-            dispatchEvent(insightWidgetExecutionFailed(error));
             onError?.(error);
             executionsHandler.onError(error);
         },

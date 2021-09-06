@@ -7,9 +7,8 @@ import {
     IInsightWidget,
     IInsightWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { DashboardEventBody, IDashboardEvent } from "./base";
+import { IDashboardEvent } from "./base";
 import { WidgetHeader } from "../types/widgetTypes";
 import { DashboardContext } from "../types/commonTypes";
 import { eventGuard } from "./util";
@@ -397,48 +396,6 @@ export function insightWidgetChanged(
  */
 export const isDashboardInsightWidgetChanged = eventGuard<DashboardInsightWidgetChanged>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED",
-);
-
-//
-//
-//
-
-/**
- * This event is emitted after execution of an insight widget fails.
- *
- * @alpha
- */
-export interface DashboardInsightWidgetExecutionFailed extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED";
-    readonly payload: {
-        error: GoodDataSdkError;
-    };
-}
-
-/**
- * @alpha
- */
-export function insightWidgetExecutionFailed(
-    error: GoodDataSdkError,
-    correlationId?: string,
-): DashboardEventBody<DashboardInsightWidgetExecutionFailed> {
-    return {
-        type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
-        correlationId,
-        payload: {
-            error,
-        },
-    };
-}
-
-/**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetExecutionFailed}.
- *
- * @param obj - object to test
- * @alpha
- */
-export const isDashboardInsightWidgetExecutionFailed = eventGuard<DashboardInsightWidgetExecutionFailed>(
-    "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
 );
 
 //
