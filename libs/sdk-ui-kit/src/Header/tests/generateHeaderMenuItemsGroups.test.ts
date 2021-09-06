@@ -503,9 +503,9 @@ describe("generateHeaderMenuItemsGroups", () => {
                     key: "gs.header.analyze",
                 },
                 {
-                    className: "s-menu-measures",
-                    href: "/measures/#/TestWorkspaceId",
-                    key: "gs.header.measures",
+                    className: "s-menu-metrics",
+                    href: "/metrics/#/TestWorkspaceId",
+                    key: "gs.header.metrics",
                 },
                 {
                     className: "s-menu-load",
