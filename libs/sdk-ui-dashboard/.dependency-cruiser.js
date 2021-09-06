@@ -24,6 +24,7 @@ options = {
                 "src/presentation/layout",
                 "src/presentation/localization",
                 "src/presentation/scheduledEmail",
+                "src/presentation/saveAs",
                 "src/presentation/topBar",
                 "src/presentation/widget",
             ],
@@ -32,6 +33,7 @@ options = {
             "src/presentation/filterBar/types.ts",
             "src/presentation/layout/types.ts",
             "src/presentation/scheduledEmail/types.ts",
+            "src/presentation/saveAs/types.ts",
             "src/presentation/topBar/types.ts",
             "src/presentation/widget/types.ts",
         ]),
@@ -78,6 +80,13 @@ options = {
         depCruiser.moduleWithDependencies("scheduledEmail", "src/presentation/scheduledEmail", [
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
+            "src/presentation/constants/*",
+            "src/model",
+        ]),
+        depCruiser.moduleWithDependencies("saveAs", "src/presentation/saveAs", [
+            "src/presentation/dashboardContexts",
+            "src/presentation/localization",
+            "src/presentation/constants/*",
             "src/model",
         ]),
         depCruiser.moduleWithDependencies("topBar", "src/presentation/topBar", [

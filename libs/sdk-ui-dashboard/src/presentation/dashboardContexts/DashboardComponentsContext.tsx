@@ -21,7 +21,7 @@ import {
     CustomFilterBarComponent,
 } from "../filterBar/types";
 import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
-import { CustomSaveAsDialogComponent } from "../saveAs";
+import { CustomSaveAsDialogComponent } from "../saveAs/types";
 
 /**
  * @internal
