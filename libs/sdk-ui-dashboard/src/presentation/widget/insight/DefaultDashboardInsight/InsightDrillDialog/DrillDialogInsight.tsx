@@ -58,8 +58,6 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
     const {
         insight,
         widget,
-        clientHeight,
-        clientWidth,
         backend,
         workspace,
         onError,
@@ -152,9 +150,8 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                     {error && (
                         <CustomError
                             error={error}
-                            isCustomWidgetHeightEnabled={!!settings?.enableKDWidgetCustomHeight}
-                            height={clientHeight}
-                            width={clientWidth}
+                            // drill dialog does not measure its size but is always large enough to fit the full content
+                            forceFullContent
                         />
                     )}
                     {filtersStatus === "success" && (

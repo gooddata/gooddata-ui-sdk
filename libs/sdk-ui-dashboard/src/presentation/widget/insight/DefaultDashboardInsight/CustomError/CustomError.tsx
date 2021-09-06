@@ -18,6 +18,7 @@ interface ICustomErrorProps {
     height?: number;
     width?: number;
     isCustomWidgetHeightEnabled?: boolean;
+    forceFullContent?: boolean;
 }
 
 export const CustomError: React.FC<ICustomErrorProps> = ({
@@ -25,8 +26,10 @@ export const CustomError: React.FC<ICustomErrorProps> = ({
     height,
     width,
     isCustomWidgetHeightEnabled,
+    forceFullContent,
 }) => {
-    const fullContent = isCustomWidgetHeightEnabled ? shouldRenderFullContent(height, width) : true;
+    const fullContent =
+        forceFullContent || (isCustomWidgetHeightEnabled ? shouldRenderFullContent(height, width) : true);
     if (isProtectedReport(error)) {
         return <ExecuteProtectedError fullContent={fullContent} />;
     } else if (isDataTooLargeToDisplay(error)) {
