@@ -1,6 +1,4 @@
-// (C) 2020 GoodData Corporation
-
-export const DASHBOARD_TITLE_MAX_LENGTH = 255;
+// (C) 2020-2021 GoodData Corporation
 
 export const PLATFORM_DATE_FORMAT = "yyyy-MM-dd";
 
