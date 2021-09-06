@@ -2,6 +2,7 @@
 
 import { IExecutionDefinition, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { IDataView } from "@gooddata/sdk-backend-spi";
 
 import { DashboardEventBody, IDashboardEvent } from "./base";
 import { eventGuard } from "./util";
@@ -14,7 +15,13 @@ import { eventGuard } from "./util";
 export interface DashboardWidgetExecutionStarted extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED";
     readonly payload: {
+        /**
+         * Reference to the widget that this event relates to.
+         */
         widgetRef: ObjRef;
+        /**
+         * Instance of {@link @gooddata/sdk-model#IExecutionDefinition} that the widget executed.
+         */
         executionDefinition: IExecutionDefinition;
     };
 }
@@ -55,7 +62,13 @@ export const isDashboardWidgetExecutionStarted = eventGuard<DashboardWidgetExecu
 export interface DashboardWidgetExecutionFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED";
     readonly payload: {
+        /**
+         * Instance of {@link @gooddata/sdk-ui#GoodDataSdkError} with the information about the error the related execution failed with.
+         */
         error: GoodDataSdkError;
+        /**
+         * Reference to the widget that this event relates to.
+         */
         widgetRef: ObjRef;
     };
 }
@@ -96,6 +109,13 @@ export const isDashboardWidgetExecutionFailed = eventGuard<DashboardWidgetExecut
 export interface DashboardWidgetExecutionSucceeded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED";
     readonly payload: {
+        /**
+         * Instance of {@link @gooddata/sdk-backend-spi#IDataView} with the data the widget first requested.
+         */
+        dataView: IDataView;
+        /**
+         * Reference to the widget that this event relates to.
+         */
         widgetRef: ObjRef;
     };
 }
@@ -105,12 +125,14 @@ export interface DashboardWidgetExecutionSucceeded extends IDashboardEvent {
  */
 export function widgetExecutionSucceeded(
     widgetRef: ObjRef,
+    dataView: IDataView,
     correlationId?: string,
 ): DashboardEventBody<DashboardWidgetExecutionSucceeded> {
     return {
         type: "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED",
         correlationId,
         payload: {
+            dataView,
             widgetRef,
         },
     };

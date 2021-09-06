@@ -8,7 +8,6 @@
 /// <reference types="react" />
 
 import { Action } from '@reduxjs/toolkit';
-import { AnalyticalBackendError } from '@gooddata/sdk-backend-spi';
 import { AnyAction } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
@@ -46,6 +45,7 @@ import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-backend-spi';
+import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { Identifier } from '@gooddata/sdk-model';
@@ -1388,7 +1388,7 @@ export const DashboardWidget: () => JSX.Element;
 export interface DashboardWidgetExecutionFailed extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        error: AnalyticalBackendError;
+        error: GoodDataSdkError;
         widgetRef: ObjRef;
     };
     // (undocumented)
@@ -1410,6 +1410,7 @@ export interface DashboardWidgetExecutionStarted extends IDashboardEvent {
 export interface DashboardWidgetExecutionSucceeded extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
+        dataView: IDataView;
         widgetRef: ObjRef;
     };
     // (undocumented)
@@ -3935,13 +3936,13 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 };
 
 // @alpha (undocumented)
-export function widgetExecutionFailed(widgetRef: ObjRef, error: AnalyticalBackendError, correlationId?: string): DashboardEventBody<DashboardWidgetExecutionFailed>;
+export function widgetExecutionFailed(widgetRef: ObjRef, error: GoodDataSdkError, correlationId?: string): DashboardEventBody<DashboardWidgetExecutionFailed>;
 
 // @alpha (undocumented)
 export function widgetExecutionStarted(widgetRef: ObjRef, executionDefinition: IExecutionDefinition, correlationId?: string): DashboardEventBody<DashboardWidgetExecutionStarted>;
 
 // @alpha (undocumented)
-export function widgetExecutionSucceeded(widgetRef: ObjRef, correlationId?: string): DashboardEventBody<DashboardWidgetExecutionSucceeded>;
+export function widgetExecutionSucceeded(widgetRef: ObjRef, dataView: IDataView, correlationId?: string): DashboardEventBody<DashboardWidgetExecutionSucceeded>;
 
 // @alpha
 export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;

@@ -1,8 +1,13 @@
 // (C) 2020 GoodData Corporation
 import React, { useMemo } from "react";
-import { isWidget, isDashboardWidget, UnexpectedError, isInsightWidget } from "@gooddata/sdk-backend-spi";
+import {
+    IDataView,
+    isWidget,
+    isDashboardWidget,
+    UnexpectedError,
+    isInsightWidget,
+} from "@gooddata/sdk-backend-spi";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { withEventing } from "@gooddata/sdk-backend-base";
 
 import {
@@ -35,16 +40,34 @@ export const DefaultDashboardWidgetInner = (): JSX.Element => {
     const effectiveBackend = useBackendStrict(backend);
 
     const backendWithEventing = useMemo(() => {
-        const onStart = (def: IExecutionDefinition) => dispatchEvent(widgetExecutionStarted(widgetRef!, def));
-        const onSuccess = () => dispatchEvent(widgetExecutionSucceeded(widgetRef!));
-        const onError = (error: any) => dispatchEvent(widgetExecutionFailed(widgetRef!, convertError(error)));
+        // use a flag to report only the first result of the execution as per the events documented API
+        let hasReportedResult = false;
+        const onSuccess = (dataView: IDataView, executionId: string) => {
+            if (!hasReportedResult) {
+                dispatchEvent(widgetExecutionSucceeded(widgetRef!, dataView, executionId));
+                hasReportedResult = true;
+            }
+        };
+        const onError = (error: any, executionId: string) => {
+            if (!hasReportedResult) {
+                dispatchEvent(widgetExecutionFailed(widgetRef!, convertError(error), executionId));
+                hasReportedResult = true;
+            }
+        };
         return withEventing(effectiveBackend, {
-            beforeExecute: onStart,
+            beforeExecute: (def, executionId) => {
+                hasReportedResult = false;
+                dispatchEvent(widgetExecutionStarted(widgetRef!, def, executionId));
+            },
             successfulResultReadAll: onSuccess,
-            successfulResultReadWindow: onSuccess,
+            successfulResultReadWindow: (_offset, _limit, dataView, executionId) => {
+                onSuccess(dataView, executionId);
+            },
             failedExecute: onError,
             failedResultReadAll: onError,
-            failedResultReadWindow: onError,
+            failedResultReadWindow: (_offset, _limit, error, executionId) => {
+                onError(error, executionId);
+            },
         });
     }, [effectiveBackend, dispatchEvent]);
 
