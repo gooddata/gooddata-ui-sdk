@@ -349,11 +349,32 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     );
 
     const {
+        error: originalTotalCountError,
+        result: originalTotalCount,
+        status: originalTotalCountStatus,
+    } = useCancelablePromise<number>(
+        {
+            // eslint-disable-next-line
+            promise: async () => {
+                return getElementTotalCount(
+                    props.workspace,
+                    props.backend,
+                    getObjRef(currentFilter, props.identifier),
+                    state.searchString,
+                    getValidElementsFilters(resolvedParentFilters, props.parentFilterOverAttribute),
+                );
+            },
+        },
+        [props.backend, props.workspace, props.identifier, stringify(resolvedParentFilters), currentFilter],
+    );
+
+    const {
         error: totalCountError,
         result: totalCount,
         status: totalCountStatus,
     } = useCancelablePromise<number>(
         {
+            // eslint-disable-next-line
             promise: async () => {
                 return getElementTotalCount(
                     props.workspace,
@@ -494,6 +515,10 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const isTotalCountLoading = () => {
         return totalCountStatus === "pending" || totalCountStatus === "loading";
+    };
+
+    const isOriginalTotalCountLoading = () => {
+        return originalTotalCountStatus === "pending" || originalTotalCountStatus === "loading";
     };
 
     const isParentFilterTitlesLoading = () => {
@@ -655,7 +680,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const getNumberOfSelectedItems = () => {
         if (state.isInverted) {
-            return totalCount - state.selectedFilterOptions.length;
+            return originalTotalCount - state.selectedFilterOptions.length;
         }
 
         return state.selectedFilterOptions.length;
@@ -700,7 +725,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             isLoading:
                 (!state.validOptions?.items && isElementsLoading()) ||
                 isTotalCountLoading() ||
-                isParentFilterTitlesLoading(),
+                isParentFilterTitlesLoading() ||
+                isOriginalTotalCountLoading(),
             searchString: state.searchString,
             applyDisabled: getNumberOfSelectedItems() === 0,
             showItemsFilteredMessage: showItemsFilteredMessage(isElementsLoading(), resolvedParentFilters),
@@ -757,13 +783,18 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const { FilterError } = props;
 
-    return elementsError || attributeError || totalCountError || parentFilterTitlesError ? (
+    return elementsError ||
+        attributeError ||
+        totalCountError ||
+        parentFilterTitlesError ||
+        originalTotalCountError ? (
         <FilterError
             error={
                 elementsError?.message ??
                 attributeError?.message ??
                 totalCountError?.message ??
                 parentFilterTitlesError?.message ??
+                originalTotalCountError?.message ??
                 "Unknown error"
             }
         />
