@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { IDashboard } from "@gooddata/sdk-backend-spi";
 import {
     CommandProcessingStatus,
@@ -57,6 +57,7 @@ export interface UseSaveAsProps {
 }
 
 export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
+    const [isDashboardSaving, setIsDashboardSaving] = useState(false);
     const { onSubmit, onSubmitSuccess, onSubmitError } = props;
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
@@ -68,12 +69,15 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         successEvent: "GDC.DASH/EVT.COPY_SAVED",
         onError: (event) => {
+            setIsDashboardSaving(false);
             onSubmitError?.(event.payload.error);
         },
         onSuccess: (event) => {
+            setIsDashboardSaving(false);
             onSubmitSuccess?.(event.payload.dashboard);
         },
         onBeforeRun: (cmd) => {
+            setIsDashboardSaving(true);
             onSubmit?.(cmd.payload.title!, cmd.payload.switchToCopy);
         },
     });
@@ -88,7 +92,7 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
         isScheduleEmailsEnabled,
         isKpiWidgetEnabled: capabilities.supportsKpiWidget ?? false,
         isDashboardLoaded: true,
-        isDashboardSaving: false,
+        isDashboardSaving,
         handleSaveAs,
         saveAsStatus: saveAsCommandProcessing.status,
     };

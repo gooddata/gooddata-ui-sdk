@@ -48,9 +48,10 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "@@GDC.DASH.SAVE_NEW",
     "@@GDC.DASH.SAVE_EXISTING",
     "@@GDC.DASH.SAVE_AS",
-    // Execution failed events have the actual error in them
-    "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
-    "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",
+    // Execution events have errors, execution definitions etc. in them
+    "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED",
+    "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED",
+    "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED",
     // Custom events may contain whatever
     "GDC.DASH/CMD.EVENT.TRIGGER",
     // Drill commands & events contain non-serializable dataView
