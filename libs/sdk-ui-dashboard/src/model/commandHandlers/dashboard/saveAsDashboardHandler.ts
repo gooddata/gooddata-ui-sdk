@@ -10,7 +10,11 @@ import {
     dashboardLayoutWidgetIdentityMap,
 } from "../../../_staging/dashboard/dashboardLayout";
 import { SaveDashboardAs } from "../../commands/dashboard";
-import { DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard";
+import {
+    DashboardSaveCopyResolved,
+    dashboardSaveCopyRequested,
+    dashboardSaveCopyResolved,
+} from "../../events/dashboard";
 import { filterContextActions } from "../../state/filterContext";
 import { selectFilterContextDefinition } from "../../state/filterContext/filterContextSelectors";
 import { layoutActions } from "../../state/layout";
@@ -131,7 +135,8 @@ function* saveAs(
 export function* saveAsDashboardHandler(
     ctx: DashboardContext,
     cmd: SaveDashboardAs,
-): SagaIterator<DashboardCopySaved> {
+): SagaIterator<DashboardSaveCopyResolved> {
+    yield put(dashboardSaveCopyRequested(ctx, cmd.correlationId));
     const saveAsCtx: SagaReturnType<typeof createDashboardSaveAsContext> = yield call(
         createDashboardSaveAsContext,
         cmd,
@@ -155,5 +160,5 @@ export function* saveAsDashboardHandler(
         });
     }
 
-    return dashboardCopySaved(ctx, dashboard, cmd.correlationId);
+    return dashboardSaveCopyResolved(ctx, dashboard, cmd.correlationId);
 }

@@ -1,9 +1,11 @@
 // (C) 2021 GoodData Corporation
 import {
     DashboardInitialized,
-    DashboardSaved,
+    DashboardSaveCopyRequested,
+    DashboardSaveCopyResolved,
+    DashboardSaveRequested,
+    DashboardSaveResolved,
     DateFilterValidationFailed,
-    DashboardCopySaved,
     DashboardRenamed,
     DashboardWasReset,
     DashboardExportToPdfResolved,
@@ -101,16 +103,20 @@ export {
     DateFilterValidationFailed,
     DateFilterValidationResult,
     DashboardInitialized,
-    DashboardSaved,
-    DashboardCopySaved,
+    DashboardSaveCopyRequested,
+    DashboardSaveCopyResolved,
+    DashboardSaveRequested,
+    DashboardSaveResolved,
     DashboardRenamed,
     DashboardWasReset,
     DashboardExportToPdfRequested,
     DashboardExportToPdfResolved,
-    isDashboardCopySaved,
+    isDashboardSaveCopyRequested,
+    isDashboardSaveCopyResolved,
+    isDashboardSaveRequested,
+    isDashboardSaveResolved,
     isDashboardInitialized,
     isDashboardRenamed,
-    isDashboardSaved,
     isDashboardWasReset,
     isDateFilterValidationFailed,
     isDashboardExportToPdfRequested,
@@ -300,8 +306,10 @@ export type DashboardEvents =
     | DashboardQueryRejected
     | DashboardQueryStarted
     | DashboardQueryCompleted<any, any>
-    | DashboardSaved
-    | DashboardCopySaved
+    | DashboardSaveCopyRequested
+    | DashboardSaveCopyResolved
+    | DashboardSaveRequested
+    | DashboardSaveResolved
     | DashboardRenamed
     | DashboardWasReset
     | DashboardExportToPdfRequested

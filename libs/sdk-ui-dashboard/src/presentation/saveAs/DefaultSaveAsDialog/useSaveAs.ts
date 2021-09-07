@@ -67,7 +67,7 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
     const saveAsCommandProcessing = useDashboardCommandProcessing({
         commandCreator: saveDashboardAs,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        successEvent: "GDC.DASH/EVT.COPY_SAVED",
+        successEvent: "GDC.DASH/EVT.SAVE_COPY_RESOLVED",
         onError: (event) => {
             setIsDashboardSaving(false);
             onSubmitError?.(event.payload.error);

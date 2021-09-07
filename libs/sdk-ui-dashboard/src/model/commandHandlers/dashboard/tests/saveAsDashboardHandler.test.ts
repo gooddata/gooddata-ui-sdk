@@ -3,7 +3,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { addLayoutSection, saveDashboard, saveDashboardAs } from "../../../commands";
 import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { DashboardCopySaved, DashboardSaved } from "../../../events";
+import { DashboardSaveCopyResolved, DashboardSaveResolved } from "../../../events";
 import { selectBasicLayout } from "../../../state/layout/layoutSelectors";
 import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils";
 import { selectFilterContextIdentity } from "../../../state/filterContext/filterContextSelectors";
@@ -35,17 +35,17 @@ describe("save as dashboard handler", () => {
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
 
-            const initialSaveEvent: DashboardSaved = await Tester.dispatchAndWaitFor(
+            const initialSaveEvent: DashboardSaveResolved = await Tester.dispatchAndWaitFor(
                 saveDashboard(),
-                "GDC.DASH/EVT.SAVED",
+                "GDC.DASH/EVT.SAVE_RESOLVED",
             );
 
             expect(initialSaveEvent.payload.newDashboard).toEqual(true);
             const originalState = Tester.state();
 
-            const event: DashboardCopySaved = await Tester.dispatchAndWaitFor(
+            const event: DashboardSaveCopyResolved = await Tester.dispatchAndWaitFor(
                 saveDashboardAs(TestDashboardTitle, true),
-                "GDC.DASH/EVT.COPY_SAVED",
+                "GDC.DASH/EVT.SAVE_COPY_RESOLVED",
             );
 
             expect(event.payload.dashboard.ref).not.toEqual(initialSaveEvent.payload.dashboard.ref);
@@ -75,17 +75,17 @@ describe("save as dashboard handler", () => {
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
 
-            const initialSaveEvent: DashboardSaved = await Tester.dispatchAndWaitFor(
+            const initialSaveEvent: DashboardSaveResolved = await Tester.dispatchAndWaitFor(
                 saveDashboard(),
-                "GDC.DASH/EVT.SAVED",
+                "GDC.DASH/EVT.SAVE_RESOLVED",
             );
 
             expect(initialSaveEvent.payload.newDashboard).toEqual(true);
             const originalState = Tester.state();
 
-            const event: DashboardCopySaved = await Tester.dispatchAndWaitFor(
+            const event: DashboardSaveCopyResolved = await Tester.dispatchAndWaitFor(
                 saveDashboardAs(TestDashboardTitle, false),
-                "GDC.DASH/EVT.COPY_SAVED",
+                "GDC.DASH/EVT.SAVE_COPY_RESOLVED",
             );
 
             expect(event.payload.dashboard.ref).not.toEqual(initialSaveEvent.payload.dashboard.ref);
@@ -106,7 +106,7 @@ describe("save as dashboard handler", () => {
         it("should emit correct events", async () => {
             await Tester.dispatchAndWaitFor(
                 saveDashboardAs("My Dashboard Copy", false, TestCorrelation),
-                "GDC.DASH/EVT.COPY_SAVED",
+                "GDC.DASH/EVT.SAVE_COPY_RESOLVED",
             );
 
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();

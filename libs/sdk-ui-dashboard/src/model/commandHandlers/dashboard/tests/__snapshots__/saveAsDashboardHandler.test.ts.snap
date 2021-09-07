@@ -4,7 +4,11 @@ exports[`save as dashboard handler for a new dashboard should emit correct event
 Array [
   Object {
     "correlationId": "testCorrelationId",
-    "type": "GDC.DASH/EVT.COPY_SAVED",
+    "type": "GDC.DASH/EVT.SAVE_COPY_REQUESTED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.SAVE_COPY_RESOLVED",
   },
 ]
 `;
