@@ -19,13 +19,18 @@ describe("dashboardFilterContextDefinition", () => {
         expect(filterContext.filters).toBeDefined();
     });
 
-    it("should retain filter context if included in the dashboard", () => {
+    it("should remove identity from persisted filter context", () => {
         const filterContext = dashboardFilterContextDefinition(
             SimpleDashboardWithReferences.dashboard,
             defaultDateFilterConfig,
         );
 
-        expect(filterContext).toEqual(SimpleDashboardWithReferences.dashboard.filterContext);
+        expect(filterContext).toEqual({
+            ...SimpleDashboardWithReferences.dashboard.filterContext,
+            ref: undefined,
+            uri: undefined,
+            identifier: undefined,
+        });
     });
 });
 

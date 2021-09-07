@@ -202,14 +202,16 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
         if (isFilterContextDefinition(savedDashboard.filterContext)) {
             const newId = uuidv4();
+            // use either existing identity and default to new identity
+            const { identifier = newId, uri = newId, ref = idRef(newId) } = savedDashboard.filterContext;
 
             savedDashboard = {
                 ...savedDashboard,
                 filterContext: {
                     ...savedDashboard.filterContext,
-                    identifier: newId,
-                    uri: newId,
-                    ref: idRef(newId),
+                    identifier,
+                    uri,
+                    ref,
                 },
             };
         }

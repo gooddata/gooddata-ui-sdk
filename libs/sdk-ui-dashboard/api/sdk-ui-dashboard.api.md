@@ -487,6 +487,9 @@ export type CustomFilterBarComponent = ComponentType;
 export type CustomMenuButtonComponent = ComponentType;
 
 // @alpha (undocumented)
+export type CustomSaveAsDialogComponent = ComponentType;
+
+// @alpha (undocumented)
 export type CustomScheduledEmailDialogComponent = ComponentType;
 
 // @alpha (undocumented)
@@ -1537,6 +1540,12 @@ export const DefaultMenuButton: (props: IMenuButtonProps) => JSX.Element;
 export const DefaultMenuButtonInner: () => JSX.Element | null;
 
 // @alpha (undocumented)
+export const DefaultSaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultSaveAsDialogInner: () => JSX.Element | null;
+
+// @alpha (undocumented)
 export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element;
 
 // @internal (undocumented)
@@ -2028,6 +2037,7 @@ export interface IDashboardProps {
     MenuButtonComponent?: CustomMenuButtonComponent;
     menuButtonConfig?: IMenuButtonConfiguration;
     permissions?: IWorkspacePermissions;
+    SaveAsDialogComponent?: CustomSaveAsDialogComponent;
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
     theme?: ITheme;
     themeModifier?: (theme: ITheme) => ITheme;
@@ -2241,6 +2251,15 @@ export interface IResolvedFilterValues {
     };
     // (undocumented)
     dateFilters: ResolvedDateFilterValues;
+}
+
+// @alpha (undocumented)
+export interface ISaveAsDialogProps {
+    isVisible?: boolean;
+    onCancel?: () => void;
+    onError?: (error: GoodDataSdkError) => void;
+    onSubmit?: (title: string, switchToCopy?: boolean) => void;
+    onSuccess?: (dashboard: IDashboard) => void;
 }
 
 // @alpha
@@ -2986,6 +3005,12 @@ export function resolveFilterValues(filters: ResolvableFilter[], backend?: IAnal
 
 // @alpha
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;
+
+// @internal (undocumented)
+export const SaveAsDialog: () => JSX.Element;
+
+// @internal (undocumented)
+export const SaveAsDialogPropsProvider: React_2.FC<ISaveAsDialogProps>;
 
 // @alpha (undocumented)
 export interface SaveDashboard extends IDashboardCommand {
@@ -3917,6 +3942,9 @@ export interface UserState {
     // (undocumented)
     user?: IUser;
 }
+
+// @alpha (undocumented)
+export const useSaveAsDialogProps: () => ISaveAsDialogProps;
 
 // @alpha (undocumented)
 export const useScheduledEmailDialogProps: () => IScheduledEmailDialogProps;

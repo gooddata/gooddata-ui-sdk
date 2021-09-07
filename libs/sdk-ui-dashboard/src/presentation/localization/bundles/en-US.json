@@ -1,4 +1,29 @@
 {
+    "messages.longSaving": {
+        "value": "Saving is taking longer than expected, please wait…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "messages.dashboardSaveSuccess": {
+        "value": "Great. We saved your dashboard.",
+        "comment": "",
+        "limit": 0
+    },
+    "options.menu.save.as": {
+        "value": "Save as new",
+        "comment": "Save As New Dashboard",
+        "limit": 0
+    },
+    "options.menu.save.as.tooltip": {
+        "value": "Empty dashboard cannot be saved.",
+        "comment": "Empty dashboard cannot be saved.",
+        "limit": 0
+    },
+    "messages.dashboardSaveFailed": {
+        "value": "Failed to save dashboard, please try again.",
+        "comment": "",
+        "limit": 0
+    },
     "filterBar.showAll": {
         "value": "Show all",
         "comment": "",
@@ -56,6 +81,41 @@
     },
     "dialogs.schedule.email.submit.error": {
         "value": "Failed to schedule the dashboard. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.save.as.new.title": {
+        "value": "Save dashboard as new",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.save.as.new.desc": {
+        "value": "Give your new dashboard a new descriptive name, so it's easier to find it later on.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.save.as.new.default.title": {
+        "value": "Copy of {title}",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.save.as.new.alertsAndEmailsMessage": {
+        "value": "Alerts and email schedules will not be duplicated",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.save.as.new.alertsMessage": {
+        "value": "Alerts will not be duplicated",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.save.as.new.emailsMessage": {
+        "value": "Email schedules will not be duplicated",
+        "comment": "",
+        "limit": 0
+    },
+    "create.dashboard": {
+        "value": "Create dashboard",
         "comment": "",
         "limit": 0
     },

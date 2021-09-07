@@ -21,6 +21,7 @@ import {
     CustomFilterBarComponent,
 } from "../filterBar/types";
 import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { CustomSaveAsDialogComponent } from "../saveAs/types";
 
 /**
  * @internal
@@ -37,6 +38,7 @@ interface IDashboardComponentsContext {
     TitleComponent: CustomTitleComponent;
     TopBarComponent: CustomTopBarComponent;
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
+    SaveAsDialogComponent: CustomSaveAsDialogComponent;
     DashboardAttributeFilterComponentFactory: (
         filter: IDashboardAttributeFilter,
     ) => CustomDashboardAttributeFilterComponent;
@@ -65,6 +67,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     TitleComponent: ThrowMissingComponentError("TitleComponent"),
     TopBarComponent: ThrowMissingComponentError("TopBarComponent"),
     ScheduledEmailDialogComponent: ThrowMissingComponentError("ScheduledEmailDialogComponent"),
+    SaveAsDialogComponent: ThrowMissingComponentError("SaveAsDialogComponent"),
     DashboardAttributeFilterComponentFactory: ThrowMissingComponentError(
         "DashboardAttributeFilterComponentFactory",
     ),

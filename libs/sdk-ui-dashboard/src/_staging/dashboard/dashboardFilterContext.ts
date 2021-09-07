@@ -46,7 +46,12 @@ export function dashboardFilterContextDefinition(
         };
     }
 
-    return dashboardFilterContextSanitize(filterContext);
+    return {
+        ...dashboardFilterContextSanitize(filterContext),
+        ref: undefined,
+        uri: undefined,
+        identifier: undefined,
+    };
 }
 
 /**

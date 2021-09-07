@@ -7,13 +7,7 @@ import { ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import memoize from "lodash/memoize";
 
-import {
-    DEFAULT_REPEAT_PERIOD,
-    REPEAT_EXECUTE_ON,
-    REPEAT_FREQUENCIES,
-    REPEAT_TYPES,
-    DASHBOARD_TITLE_MAX_LENGTH,
-} from "../constants";
+import { DEFAULT_REPEAT_PERIOD, REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../constants";
 import {
     IScheduleEmailRecipient,
     IScheduleEmailRepeat,
@@ -41,6 +35,7 @@ import { DateTime } from "./DateTime";
 import { Attachment } from "./Attachment";
 import { RecipientsSelect } from "./RecipientsSelect/RecipientsSelect";
 import { IntlWrapper } from "../../../localization";
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../constants/dashboard";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
