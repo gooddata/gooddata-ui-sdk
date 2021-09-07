@@ -6,7 +6,6 @@ Object {
   "dateFilters": Array [
     Object {
       "from": "2021-08-01",
-      "granularity": "GDC.time.date",
       "to": "2021-08-04",
     },
   ],
@@ -42,7 +41,6 @@ Object {
   "dateFilters": Array [
     Object {
       "from": "2020-01-01",
-      "granularity": "GDC.time.date",
       "to": "2020-02-01",
     },
   ],

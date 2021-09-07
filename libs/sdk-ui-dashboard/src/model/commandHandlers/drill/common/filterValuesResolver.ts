@@ -48,7 +48,6 @@ export async function resolveFilterValues(
                     resolve({
                         from: filter.absoluteDateFilter.from,
                         to: filter.absoluteDateFilter.to,
-                        granularity: "GDC.time.date",
                     }),
                 );
             }
@@ -122,7 +121,6 @@ async function resolveRelativeDateFilterValues(
     return {
         from: elements.items[0].title,
         to: getLastTitle(result.items),
-        granularity: filter.relativeDateFilter.granularity,
     };
 }
 

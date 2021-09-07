@@ -2238,8 +2238,6 @@ export interface IResolvedDateFilterValue {
     // (undocumented)
     from: string;
     // (undocumented)
-    granularity: string;
-    // (undocumented)
     to: string;
 }
 
