@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAnalyticalBackend, IAttributeElement, IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
@@ -576,12 +576,15 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     /**
      * callbacks
      */
-    const onSearch = debounce((query: string) => {
-        setState({
-            ...state,
-            searchString: query,
-        });
-    }, 500);
+    const onSearch = useCallback(
+        debounce((query: string) => {
+            setState({
+                ...state,
+                searchString: query,
+            });
+        }, 500),
+        [],
+    );
 
     const createFilter = (filter: IAttributeFilter, emptyFilter = false) => {
         const useUriElements = filter && isAttributeElementsByRef(filterAttributeElements(filter));
@@ -723,6 +726,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             isLoading:
                 (!state.validOptions?.items && isElementsLoading()) ||
                 isTotalCountLoading() ||
+                isOriginalTotalCountLoading() ||
                 isParentFilterTitlesLoading() ||
                 isOriginalTotalCountLoading(),
             searchString: state.searchString,
@@ -769,7 +773,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                         ? props.renderBody({
                               ...bodyProps,
                               isElementsLoading: !state.validOptions?.items && isElementsLoading(),
-                              isLoaded: !state.firstLoad,
+                              isLoaded: !isOriginalTotalCountLoading(),
                               onConfigurationChange: () => {},
                               attributeFilterRef: null,
                           })
