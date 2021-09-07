@@ -3775,7 +3775,6 @@ export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQue
     onBeforeRun?: ((query: TQuery) => void) | undefined;
 }) => {
     run: (...args: TQueryCreatorArgs) => void;
-    cancel: () => void;
     status?: "error" | "running" | "success" | "rejected" | undefined;
     result?: IDashboardQueryResult<TQuery> | undefined;
     error?: GoodDataSdkError | undefined;

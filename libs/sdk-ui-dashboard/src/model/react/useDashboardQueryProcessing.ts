@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
@@ -39,7 +39,6 @@ export const useDashboardQueryProcessing = <
     onBeforeRun?: (query: TQuery) => void;
 }): {
     run: (...args: TQueryCreatorArgs) => void;
-    cancel: () => void;
     status?: QueryProcessingStatus;
     result?: IDashboardQueryResult<TQuery>;
     error?: GoodDataSdkError;
@@ -103,13 +102,16 @@ export const useDashboardQueryProcessing = <
         [queryCreator, onSuccess, onError, onRejected, onBeforeRun],
     );
 
-    const cancel = useCallback(() => {
-        canceled.current = true;
+    // cancel any "in-flight" queries once the parent component is unmounting to prevent react warnings
+    // about updating unmounted components
+    useEffect(() => {
+        return () => {
+            canceled.current = true;
+        };
     }, []);
 
     return {
         run,
-        cancel,
         ...state,
     };
 };
