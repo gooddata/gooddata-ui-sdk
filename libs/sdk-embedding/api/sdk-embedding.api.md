@@ -312,8 +312,6 @@ export namespace EmbeddedGdc {
         // (undocumented)
         from: string;
         // (undocumented)
-        granularity: string;
-        // (undocumented)
         to: string;
     }
     export interface IResolvedFilterValues {
