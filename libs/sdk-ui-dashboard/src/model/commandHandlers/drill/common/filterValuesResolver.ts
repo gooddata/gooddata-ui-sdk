@@ -116,7 +116,7 @@ async function resolveRelativeDateFilterValues(
     const hasNextPage = elements.limit + elements.offset < elements.totalCount;
     // last page of the response to get last element
     const result = hasNextPage
-        ? await elements.goTo(Math.floor((elements.totalCount - 1) / elements.limit))
+        ? await elements.goTo(Math.ceil(elements.totalCount / elements.limit) - 1)
         : elements;
 
     return {
