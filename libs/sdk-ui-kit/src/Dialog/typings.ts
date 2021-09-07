@@ -1,5 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
+import React from "react";
 import { ArrowOffsets } from "../Bubble";
 import { IAlignPoint } from "../typings/positioning";
 
@@ -9,15 +10,18 @@ import { IAlignPoint } from "../typings/positioning";
 export interface IDialogBaseProps {
     children?: React.ReactNode;
     className?: string;
-    /**
-     * className will be placed to the container, which wraps overlay background and dialog content elements
-     */
-    containerClassName?: string;
     displayCloseButton?: boolean;
     submitOnEnterKey?: boolean;
     onCancel?: (data?: any) => void;
     onClose?: (data?: any) => void;
     onSubmit?: (data?: any) => void;
+    /**
+     * These properties will be placed to the container, which wraps overlay background and dialog content elements
+     */
+    containerClassName?: string;
+    onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 /**
