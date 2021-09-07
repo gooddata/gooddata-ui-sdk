@@ -772,7 +772,7 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     submitButtonTooltipText?: string;
     // (undocumented)
-    warning?: string | React.ReactElement;
+    warning?: string | React_2.ReactElement;
 }
 
 // @internal (undocumented)
@@ -856,7 +856,7 @@ export interface IDateTimeConfigOptions {
 // @internal (undocumented)
 export interface IDialogBaseProps {
     // (undocumented)
-    children?: React.ReactNode;
+    children?: React_2.ReactNode;
     // (undocumented)
     className?: string;
     containerClassName?: string;
@@ -865,7 +865,13 @@ export interface IDialogBaseProps {
     // (undocumented)
     onCancel?: (data?: any) => void;
     // (undocumented)
+    onClick?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
     onClose?: (data?: any) => void;
+    // (undocumented)
+    onMouseOver?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
+    onMouseUp?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     // (undocumented)
     onSubmit?: (data?: any) => void;
     // (undocumented)
