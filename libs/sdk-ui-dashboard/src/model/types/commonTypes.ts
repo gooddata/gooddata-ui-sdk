@@ -196,7 +196,6 @@ export interface IResolvedAttributeFilterValues {
  * @alpha
  */
 export interface IResolvedDateFilterValue {
-    granularity: string;
     from: string;
     to: string;
 }
