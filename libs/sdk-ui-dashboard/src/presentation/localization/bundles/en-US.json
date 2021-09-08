@@ -49,10 +49,16 @@
         "comment": "Cells of the table that is going to be exported to file",
         "limit": 0
     },
-    "dialogs.export.filters": {
+    "dialogs.export.filters|insight": {
         "value": "INSIGHT CONTEXT",
         "comment": "The filters that are applied to the report",
         "limit": 0
+    },
+    "dialogs.export.filters|report": {
+        "value": "REPORT CONTEXT",
+        "comment": "The filters that are applied to the report",
+        "limit": 0,
+        "translate": false
     },
     "dialogs.export.includeFilters": {
         "value": "Include applied filters",
@@ -514,10 +520,16 @@
         "comment": "Error dialog. Exporting insight to the file fails.",
         "limit": 0
     },
-    "messages.exportResultRestrictedError": {
+    "messages.exportResultRestrictedError|insight": {
         "value": "You cannot export this insight because it contains restricted data.",
         "comment": "Error dialog. Exporting insight to the file fails because contains restricted data.",
         "limit": 0
+    },
+    "messages.exportResultRestrictedError|report": {
+        "value": "You cannot export this report because it contains restricted data.",
+        "comment": "Error dialog. Exporting report to the file fails because contains restricted data.",
+        "limit": 0,
+        "translate": false
     },
     "messages.exportResultStart": {
         "value": "Export in progress",
@@ -564,20 +576,32 @@
         "comment": "",
         "limit": 0
     },
-    "visualization.error.headline": {
+    "visualization.error.headline|insight": {
         "value": "Sorry, we can't display this insight",
         "comment": "",
         "limit": 0
+    },
+    "visualization.error.headline|report": {
+        "value": "Sorry, we can't display this report",
+        "comment": "",
+        "limit": 0,
+        "translate": false
     },
     "visualization.error.text": {
         "value": "Contact your administrator.",
         "comment": "",
         "limit": 0
     },
-    "options.button.bubble": {
+    "options.button.bubble|insight": {
         "value": "Export insight data",
         "comment": "Show this message when hovering on the options button",
         "limit": 0
+    },
+    "options.button.bubble|report": {
+        "value": "Export report data",
+        "comment": "Show this message when hovering on the options button",
+        "limit": 0,
+        "translate": false
     },
     "options.menu.export.CSV": {
         "value": "CSV",
@@ -589,19 +613,37 @@
         "comment": "Export to file with XLSX extension.",
         "limit": 0
     },
-    "options.menu.unsupported.error": {
+    "options.menu.unsupported.error|insight": {
         "value": "The insight cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
         "comment": "Error popup. Insight cannot be exported to the file because of wrong setting of filters, measures or attributes.",
         "limit": 0
     },
-    "options.menu.unsupported.loading": {
+    "options.menu.unsupported.error|report": {
+        "value": "The report cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
+        "comment": "Error popup. Report cannot be exported to the file because of wrong setting of filters, measures or attributes.",
+        "limit": 0,
+        "translate": false
+    },
+    "options.menu.unsupported.loading|insight": {
         "value": "The insight cannot be exported at the moment.",
         "comment": "Error popup. Insight cannot be exported to the file.",
         "limit": 0
     },
-    "export.defaultTitle": {
+    "options.menu.unsupported.loading|report": {
+        "value": "The report cannot be exported at the moment.",
+        "comment": "Error popup. Report cannot be exported to the file.",
+        "limit": 0,
+        "translate": false
+    },
+    "export.defaultTitle|insight": {
         "value": "Untitled insight",
         "comment": "Default title for exported file",
         "limit": 0
+    },
+    "export.defaultTitle|report": {
+        "value": "Untitled report",
+        "comment": "Default title for exported file",
+        "limit": 0,
+        "translate": false
     }
 }

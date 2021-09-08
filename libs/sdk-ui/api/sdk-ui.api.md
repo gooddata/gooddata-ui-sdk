@@ -55,6 +55,7 @@ import { ISeparators as ISeparators_2 } from '@gooddata/numberjs';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
@@ -1002,7 +1003,7 @@ export interface IIdentifierWithTags {
 // @internal (undocumented)
 export interface IIntlWrapperProps {
     // (undocumented)
-    locale: string;
+    locale?: string;
 }
 
 // @public
@@ -1077,12 +1078,7 @@ export const IntlTranslationsProvider: React_2.FC<WithIntlProps<ITranslationsPro
 };
 
 // @internal (undocumented)
-export class IntlWrapper extends React_2.PureComponent<IIntlWrapperProps> {
-    // (undocumented)
-    static defaultProps: IIntlWrapperProps;
-    // (undocumented)
-    render(): React_2.ReactNode;
-}
+export const IntlWrapper: React_2.FC<IIntlWrapperProps>;
 
 // @public
 export type IPlaceholder<T> = {
@@ -1268,6 +1264,21 @@ export interface ITranslationsComponentProps {
     intl: IntlShape;
     // (undocumented)
     numericSymbols: string[];
+}
+
+// @beta (undocumented)
+export interface ITranslationsCustomizationContextProviderProps {
+    translations: Record<string, string>;
+    translationsCustomizationIsLoading: boolean;
+}
+
+// @beta (undocumented)
+export interface ITranslationsCustomizationProviderProps {
+    backend?: IAnalyticalBackend;
+    customize?(translations: Record<string, string>, settings?: IWorkspaceSettings): Record<string, string>;
+    render(translations: Record<string, string>): JSX.Element;
+    translations: Record<string, string>;
+    workspace?: string;
 }
 
 // @internal (undocumented)
@@ -1473,6 +1484,9 @@ export const OverTimeComparisonTypes: {
     NOTHING: "nothing";
 };
 
+// @beta (undocumented)
+export const pickCorrectInsightWording: (translations: Record<string, string>, settings?: IWorkspaceSettings | undefined) => Record<string, string>;
+
 // @public
 export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
 
@@ -1528,6 +1542,12 @@ export type TableType = "table";
 
 // @public
 export type TotalsOrPlaceholders = ValuesOrPlaceholders<ITotal>;
+
+// @beta (undocumented)
+export const TranslationsCustomizationContextProvider: React_2.FC<ITranslationsCustomizationContextProviderProps>;
+
+// @beta
+export const TranslationsCustomizationProvider: React_2.FC<ITranslationsCustomizationProviderProps>;
 
 // @internal (undocumented)
 export class TranslationsProvider extends React_2.PureComponent<ITranslationsProviderProps> {
@@ -1760,6 +1780,9 @@ export type WithLoadingResult = {
     isLoading: boolean;
     reload: () => void;
 };
+
+// @beta (undocumented)
+export function withTranslationsCustomization<T>(Component: React_2.ComponentType<T>): React_2.ComponentType<Omit<T, "translationsCustomizationIsLoading" | "translations">>;
 
 // @internal
 export function withWorkspace<T extends {

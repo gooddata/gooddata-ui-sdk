@@ -304,40 +304,76 @@
         "comment": "Do not translate HTML markup enclosed in <>. Do not translate {icons}. Translate words 'view by'.",
         "limit": 0
     },
-    "dashboard.bucket.category_view_by_warning": {
+    "dashboard.bucket.category_view_by_warning|insight": {
         "value": "To view by another attribute, an insight can have only one measure",
         "comment": "",
         "limit": 0
+    },
+    "dashboard.bucket.category_view_by_warning|report": {
+        "value": "To view by another attribute, a report can have only one measure",
+        "comment": "",
+        "limit": 0,
+        "translate": false
     },
     "dashboard.bucket.view_stack_by_warning": {
         "value": "To add additional attribute, remove {icons} from <span class=\"stack-by\">stack by</span>",
         "comment": "Do not translate HTML markup enclosed in <>.  Do not translate {icons}. Translate words 'stack by'.",
         "limit": 0
     },
-    "dashboard.bucket.category_stack_by_warning": {
+    "dashboard.bucket.category_stack_by_warning|insight": {
         "value": "To stack by, an insight can have only one measure",
         "comment": "",
         "limit": 0
     },
-    "dashboard.bucket.stack_view_by_warning": {
+    "dashboard.bucket.category_stack_by_warning|report": {
+        "value": "To stack by, a report can have only one measure",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.bucket.stack_view_by_warning|insight": {
         "value": "To stack by, an insight can have only one attribute in view by",
         "comment": "",
         "limit": 0
     },
-    "dashboard.bucket.measure_stack_by_warning": {
+    "dashboard.bucket.stack_view_by_warning|report": {
+        "value": "To stack by, a report can have only one attribute in view by",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.bucket.measure_stack_by_warning|insight": {
         "value": "To stack by an attribute, an insight can have only one measure",
         "comment": "",
         "limit": 0
     },
-    "dashboard.bucket.category_category_by_warning": {
+    "dashboard.bucket.measure_stack_by_warning|report": {
+        "value": "To stack by an attribute, a report can have only one measure",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.bucket.category_category_by_warning|insight": {
         "value": "To view by, an insight can have only one measure",
         "comment": "",
         "limit": 0
     },
-    "dashboard.bucket.category_segment_by_warning": {
+    "dashboard.bucket.category_category_by_warning|report": {
+        "value": "To view by, a report can have only one measure",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.bucket.category_segment_by_warning|insight": {
         "value": "To segment by, an insight can have only one measure",
         "comment": "",
         "limit": 0
+    },
+    "dashboard.bucket.category_segment_by_warning|report": {
+        "value": "To segment by, a report can have only one measure",
+        "comment": "",
+        "limit": 0,
+        "translate": false
     },
     "previous_year": {
         "value": "previous year",
@@ -359,15 +395,27 @@
         "comment": "",
         "limit": 0
     },
-    "dashboard.error.missing_primary_bucket_item.heading": {
+    "dashboard.error.missing_primary_bucket_item.heading|insight": {
         "value": "No primary measure in your insight",
         "comment": "",
         "limit": 0
     },
-    "dashboard.error.missing_primary_bucket_item.text": {
+    "dashboard.error.missing_primary_bucket_item.heading|report": {
+        "value": "No primary measure in your report",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.error.missing_primary_bucket_item.text|insight": {
         "value": "Add a primary measure to your insight, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "",
         "limit": 0
+    },
+    "dashboard.error.missing_primary_bucket_item.text|report": {
+        "value": "Add a primary measure to your report, or switch to table.\nOnce done, you'll be able to save it.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
     },
     "dashboard.xirr.error.invalid_buckets.heading": {
         "value": "Incomplete configuration",
@@ -384,15 +432,27 @@
         "comment": "The user has a dashboard that contains no widgets.",
         "limit": 0
     },
-    "dashboard.error.empty.text": {
+    "dashboard.error.empty.text|insight": {
         "value": "All insights were removed.",
         "comment": "The user has a dashboard that contains no widgets.",
         "limit": 0
     },
-    "dashboardView.error.empty.text": {
+    "dashboard.error.empty.text|report": {
+        "value": "All reports were removed.",
+        "comment": "The user has a dashboard that contains no widgets.",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboardView.error.empty.text|insight": {
         "value": "All insights were removed or the dashboard was saved empty.",
         "comment": "The user has a dashboard that contains no widgets.",
         "limit": 0
+    },
+    "dashboardView.error.empty.text|report": {
+        "value": "All reports were removed or the dashboard was saved empty.",
+        "comment": "The user has a dashboard that contains no widgets.",
+        "limit": 0,
+        "translate": false
     },
     "dashboard.embedded.error.empty.heading": {
         "value": "No widgets in the dashboard",
@@ -409,15 +469,27 @@
         "comment": "",
         "limit": 0
     },
-    "properties.config.not_applicable": {
+    "properties.config.not_applicable|insight": {
         "value": "Configuration Panel is not applicable for this configuration of the insight",
         "comment": "",
         "limit": 0
     },
-    "properties.not_applicable": {
+    "properties.config.not_applicable|report": {
+        "value": "Configuration Panel is not applicable for this configuration of the report",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "properties.not_applicable|insight": {
         "value": "Property is not applicable for this configuration of the insight",
         "comment": "",
         "limit": 0
+    },
+    "properties.not_applicable|report": {
+        "value": "Property is not applicable for this configuration of the report",
+        "comment": "",
+        "limit": 0,
+        "translate": false
     },
     "properties.auto_placeholder": {
         "value": "auto",
@@ -794,15 +866,27 @@
         "comment": "",
         "limit": 0
     },
-    "properties.colors.unsupported": {
+    "properties.colors.unsupported|insight": {
         "value": "There are no colors for this configuration of the insight",
         "comment": "",
         "limit": 0
     },
-    "export_unsupported.colors": {
+    "properties.colors.unsupported|report": {
+        "value": "There are no colors for this configuration of the report",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "export_unsupported.colors|insight": {
         "value": "The insight is not compatible with custom colors. To open the insight as a report, click Reset Colors in Configuration —> Colors.",
         "comment": "",
         "limit": 0
+    },
+    "export_unsupported.colors|report": {
+        "value": "The report is not compatible with custom colors. Click Reset Colors in Configuration —> Colors.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
     },
     "dashboard.bucket.measures_title.bullet": {
         "value": "Measure",

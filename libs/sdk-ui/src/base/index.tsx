@@ -166,7 +166,16 @@ export {
     ITranslationsProviderOwnProps,
     ITranslationsProviderProps,
 } from "./localization/TranslationsProvider";
+// FIXME: temp build fix
 export { createIntlMock, withIntl } from "./localization/intlUtils";
+export {
+    ITranslationsCustomizationContextProviderProps,
+    TranslationsCustomizationContextProvider,
+    withTranslationsCustomization,
+    ITranslationsCustomizationProviderProps,
+    TranslationsCustomizationProvider,
+    pickCorrectInsightWording,
+} from "./localization/TranslationsCustomizationProvider";
 
 /*
  * Header matching & predicates

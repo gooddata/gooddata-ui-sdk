@@ -59,15 +59,27 @@
         "comment": "Total of type 'Rollup' where 'Total' is hint and synonym. Showed in menu before adding to table.",
         "limit": 0
     },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": {
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf|insight": {
         "value": "Rollup (Total) aggregation is not available when filtering the insight by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because measure value filters are configured for the pivot.",
         "limit": 0
     },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": {
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf|report": {
+        "value": "Rollup (Total) aggregation is not available when filtering the report by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
+        "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because measure value filters are configured for the pivot.",
+        "limit": 0,
+        "translate": false
+    },
+    "visualizations.totals.dropdown.tooltip.nat.disabled.ranking|insight": {
         "value": "Rollup (Total) aggregation is not available when filtering the insight by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because ranking filters are configured for the pivot.",
         "limit": 0
+    },
+    "visualizations.totals.dropdown.tooltip.nat.disabled.ranking|report": {
+        "value": "Rollup (Total) aggregation is not available when filtering the report by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
+        "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because ranking filters are configured for the pivot.",
+        "limit": 0,
+        "translate": false
     },
     "visualizations.totals.dropdown.title.med": {
         "value": "Median",
@@ -144,10 +156,16 @@
         "comment": "",
         "limit": 0
     },
-    "visualization.ErrorMessageGeneric": {
+    "visualization.ErrorMessageGeneric|insight": {
         "value": "Sorry, we can't display this insight",
         "comment": "",
         "limit": 0
+    },
+    "visualization.ErrorMessageGeneric|report": {
+        "value": "Sorry, we can't display this report",
+        "comment": "",
+        "limit": 0,
+        "translate": false
     },
     "visualization.ErrorDescriptionGeneric": {
         "value": "Contact your administrator.",
@@ -184,20 +202,38 @@
         "comment": "",
         "limit": 0
     },
-    "visualization.ErrorDescriptionUnauthorized": {
+    "visualization.ErrorDescriptionUnauthorized|insight": {
         "value": "Sorry you don't have access to this insight. Login or ask your administrator to grant you permissions.",
         "comment": "",
         "limit": 0
     },
-    "visualization.ErrorMessageNotFound": {
+    "visualization.ErrorDescriptionUnauthorized|report": {
+        "value": "Sorry you don't have access to this report. Login or ask your administrator to grant you permissions.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "visualization.ErrorMessageNotFound|insight": {
         "value": "Sorry, we can't find this insight",
         "comment": "",
         "limit": 0
     },
-    "visualization.ErrorDescriptionNotFound": {
+    "visualization.ErrorMessageNotFound|report": {
+        "value": "Sorry, we can't find this report",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "visualization.ErrorDescriptionNotFound|insight": {
         "value": "The insight with this URL does not exist.",
         "comment": "",
         "limit": 0
+    },
+    "visualization.ErrorDescriptionNotFound|report": {
+        "value": "The report with this URL does not exist.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
     },
     "visualization.ErrorDescriptionMissingMapboxToken": {
         "value": "The Geochart configuration requires a valid API access token.",
@@ -1016,15 +1052,27 @@
         "comment": "Option describing all records.",
         "limit": 0
     },
-    "rankingFilter.allRecords.tooltip": {
+    "rankingFilter.allRecords.tooltip|insight": {
         "value": "Apply the filter to all attributes in the insight.",
         "comment": "Explanation of 'All' option.",
         "limit": 0
     },
-    "rankingFilter.attributeDropdown.oneAttributeTooltip": {
+    "rankingFilter.allRecords.tooltip|report": {
+        "value": "Apply the filter to all attributes in the report.",
+        "comment": "Explanation of 'All' option.",
+        "limit": 0,
+        "translate": false
+    },
+    "rankingFilter.attributeDropdown.oneAttributeTooltip|insight": {
         "value": "The insight is sliced only by one attribute. The filter will apply to all its values.",
         "comment": "Tooltip when no options are available for attribute dropdown.",
         "limit": 0
+    },
+    "rankingFilter.attributeDropdown.oneAttributeTooltip|report": {
+        "value": "The report is sliced only by one attribute. The filter will apply to all its values.",
+        "comment": "Tooltip when no options are available for attribute dropdown.",
+        "limit": 0,
+        "translate": false
     },
     "rankingFilter.outOf": {
         "value": "Out of",
@@ -1071,10 +1119,16 @@
         "comment": "Do not translate placeholder {value}, {attribute}, and {measure} or HTML markup enclosed in <>. Title describing ranking direction, number of values, attribute granularity, and measure ranking is based on. Example: 'Bottom 5 out of Product based on Revenue'",
         "limit": 0
     },
-    "rankingFilter.valueTooltip": {
+    "rankingFilter.valueTooltip|insight": {
         "value": "If multiple items have the same value, the filter shows all items with this value. The insight may then display more items than the number set.",
         "comment": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter.",
         "limit": 0
+    },
+    "rankingFilter.valueTooltip|report": {
+        "value": "If multiple items have the same value, the filter shows all items with this value. The report may then display more items than the number set.",
+        "comment": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter.",
+        "limit": 0,
+        "translate": false
     },
     "attributesDropdown.allItemsFiltered": {
         "value": "All items are filtered out",
