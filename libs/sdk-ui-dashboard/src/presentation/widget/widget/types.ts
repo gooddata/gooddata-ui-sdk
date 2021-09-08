@@ -30,7 +30,7 @@ export interface DashboardWidgetProps {
     onDrill?: OnFiredDashboardViewDrillEvent;
 
     onError?: OnError;
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onFiltersChange?: (filters: IDashboardFilter[], resetOthers?: boolean) => void;
     /**
      * Callback that the component MUST call when the widget is clicked.
      */

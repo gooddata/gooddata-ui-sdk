@@ -284,13 +284,14 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
         filters: IDashboardFilter_2[];
+        resetOthers: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION";
 }
 
 // @alpha
-export function changeFilterContextSelection(filters: IDashboardFilter_2[], correlationId?: string): ChangeFilterContextSelection;
+export function changeFilterContextSelection(filters: IDashboardFilter_2[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
 
 // @alpha (undocumented)
 export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
@@ -1067,7 +1068,7 @@ export interface DashboardKpiProps {
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
     onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onFiltersChange?: (filters: IDashboardFilter[], resetOthers?: boolean) => void;
     workspace?: string;
 }
 
@@ -1455,7 +1456,7 @@ export interface DashboardWidgetProps {
     // (undocumented)
     onError?: OnError;
     // (undocumented)
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onFiltersChange?: (filters: IDashboardFilter[], resetOthers?: boolean) => void;
     onWidgetClicked?: () => void;
     // (undocumented)
     screen: ScreenSize;

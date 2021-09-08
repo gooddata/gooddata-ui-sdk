@@ -443,6 +443,10 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
          * Filters to apply to the current dashboard filter context.
          */
         filters: IDashboardFilter[];
+        /**
+         * Should filters not mentioned in the payload reset to All items selected? Defaults to false.
+         */
+        resetOthers: boolean;
     };
 }
 
@@ -455,11 +459,13 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
  *
  * @alpha
  * @param filters - attribute filters and date filter to apply.
+ * @param resetOthers - should filters not mentioned in the payload reset to All items selected? Defaults to false.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns change filter selection command
  */
 export function changeFilterContextSelection(
     filters: IDashboardFilter[],
+    resetOthers: boolean = false,
     correlationId?: string,
 ): ChangeFilterContextSelection {
     return {
@@ -467,6 +473,7 @@ export function changeFilterContextSelection(
         correlationId,
         payload: {
             filters,
+            resetOthers,
         },
     };
 }

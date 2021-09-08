@@ -79,7 +79,7 @@ interface IKpiExecutorProps {
      * the filters ignored for execution)
      */
     allFilters?: IDashboardFilter[];
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onFiltersChange?: (filters: IDashboardFilter[], resetOthers?: boolean) => void;
     onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
     backend: IAnalyticalBackend;
@@ -344,6 +344,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                                           alert?.filterContext?.filters ?? [],
                                           kpiWidget,
                                       ),
+                                      true,
                                   )
                             : undefined
                     }

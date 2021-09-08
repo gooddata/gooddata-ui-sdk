@@ -40,7 +40,7 @@ export interface DashboardKpiProps {
      * Optionally, specify a callback that will be triggered when the filters should be changed.
      * (e.g. to apply filters of a KPI alert to the whole dashboard)
      */
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onFiltersChange?: (filters: IDashboardFilter[], resetOthers?: boolean) => void;
 
     /**
      * Called when user triggers a drill on a visualization.

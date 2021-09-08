@@ -4,7 +4,10 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeFilterContextSelection } from "../../commands";
 import { filterContextActions } from "../../state/filterContext";
-import { selectFilterContextAttributeFilterByDisplayForm } from "../../state/filterContext/filterContextSelectors";
+import {
+    selectFilterContextAttributeFilterByDisplayForm,
+    selectFilterContextAttributeFilters,
+} from "../../state/filterContext/filterContextSelectors";
 import { batchActions } from "redux-batched-actions";
 import { AnyAction } from "@reduxjs/toolkit";
 import { dispatchFilterContextChanged } from "./common";
@@ -25,13 +28,14 @@ export function* changeFilterContextSelectionHandler(
     ctx: DashboardContext,
     cmd: ChangeFilterContextSelection,
 ): SagaIterator<void> {
-    const { filters } = cmd.payload;
+    const { filters, resetOthers } = cmd.payload;
 
     const uniqueFilters = uniqBy(filters, flow(filterObjRef, objRefToString));
 
     const [attributeFilters, [dateFilter]] = partition(uniqueFilters, isAttributeFilter);
 
     const updateActions: AnyAction[] = [];
+    const handledLocalIds = new Set<string>();
     for (const attributeFilter of attributeFilters) {
         const filterRef = filterObjRef(attributeFilter);
         const dashboardFilter: ReturnType<
@@ -46,7 +50,25 @@ export function* changeFilterContextSelectionHandler(
                     negativeSelection: isNegativeAttributeFilter(attributeFilter),
                 }),
             );
+            handledLocalIds.add(dashboardFilter.attributeFilter.localIdentifier!);
         }
+    }
+
+    if (resetOthers) {
+        const currentAttributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+            selectFilterContextAttributeFilters,
+        );
+
+        // for filters that have not been handled by the loop above, create a clear selection actions
+        currentAttributeFilters
+            .filter((filter) => !handledLocalIds.has(filter.attributeFilter.localIdentifier!))
+            .forEach((filter) => {
+                updateActions.push(
+                    filterContextActions.clearAttributeFilterSelection({
+                        filterLocalId: filter.attributeFilter.localIdentifier!,
+                    }),
+                );
+            });
     }
 
     if (dateFilter) {

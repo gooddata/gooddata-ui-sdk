@@ -16,7 +16,12 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { FilterContextState } from "./filterContextState";
-import { attributeElementsIsEmpty, IAttributeElements, ObjRef } from "@gooddata/sdk-model";
+import {
+    attributeElementsIsEmpty,
+    IAttributeElements,
+    isAttributeElementsByRef,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 
@@ -245,6 +250,35 @@ const setAttributeFilterParents: FilterContextReducer<PayloadAction<ISetAttribut
     ).attributeFilter.filterElementsBy = [...parentFilters];
 };
 
+export interface IClearAttributeFilterSelectionPayload {
+    readonly filterLocalId: string;
+}
+
+const clearAttributeFilterSelection: FilterContextReducer<
+    PayloadAction<IClearAttributeFilterSelectionPayload>
+> = (state, action) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+
+    const { filterLocalId } = action.payload;
+
+    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+    );
+
+    invariant(currentFilterIndex >= 0, "Attempt to clear selection of a non-existing filter");
+
+    const currentFilter = state.filterContextDefinition.filters[
+        currentFilterIndex
+    ] as IDashboardAttributeFilter;
+
+    currentFilter.attributeFilter.negativeSelection = true;
+    currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
+        currentFilter.attributeFilter.attributeElements,
+    )
+        ? { uris: [] }
+        : { values: [] };
+};
+
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
@@ -253,5 +287,6 @@ export const filterContextReducers = {
     moveAttributeFilter,
     updateAttributeFilterSelection,
     setAttributeFilterParents,
+    clearAttributeFilterSelection,
     upsertDateFilter,
 };
