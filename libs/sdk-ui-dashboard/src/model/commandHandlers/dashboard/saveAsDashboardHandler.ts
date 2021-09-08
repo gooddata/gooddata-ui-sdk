@@ -11,7 +11,6 @@ import {
 } from "../../../_staging/dashboard/dashboardLayout";
 import { SaveDashboardAs } from "../../commands/dashboard";
 import { DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard";
-import { dashboardCommandStarted } from "../../events/general";
 import { filterContextActions } from "../../state/filterContext";
 import { selectFilterContextDefinition } from "../../state/filterContext/filterContextSelectors";
 import { layoutActions } from "../../state/layout";
@@ -135,7 +134,6 @@ export function* saveAsDashboardHandler(
     cmd: SaveDashboardAs,
 ): SagaIterator<DashboardCopySaved> {
     try {
-        yield put(dashboardCommandStarted(ctx, cmd));
         yield put(savingActions.setSavingStart());
         const saveAsCtx: SagaReturnType<typeof createDashboardSaveAsContext> = yield call(
             createDashboardSaveAsContext,

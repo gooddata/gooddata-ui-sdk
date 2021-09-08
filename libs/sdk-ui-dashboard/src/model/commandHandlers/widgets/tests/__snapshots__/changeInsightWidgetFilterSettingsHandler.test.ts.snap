@@ -3,6 +3,10 @@
 exports[`change insight widget filter settings handler for replace settings operation should emit correct events 1`] = `
 Array [
   Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.QUERY.STARTED",
   },

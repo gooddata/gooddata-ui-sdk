@@ -14,7 +14,6 @@ import { IDashboard, IDashboardDefinition, IDashboardObjectIdentity } from "@goo
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { DashboardSaved, dashboardSaved } from "../../events/dashboard";
-import { dashboardCommandStarted } from "../../events/general";
 import { metaActions } from "../../state/meta";
 import { filterContextActions } from "../../state/filterContext";
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext";
@@ -172,7 +171,6 @@ export function* saveDashboardHandler(
     cmd: SaveDashboard,
 ): SagaIterator<DashboardSaved> {
     try {
-        yield put(dashboardCommandStarted(ctx, cmd));
         yield put(savingActions.setSavingStart());
         const saveCtx: SagaReturnType<typeof createDashboardSaveContext> = yield call(
             createDashboardSaveContext,

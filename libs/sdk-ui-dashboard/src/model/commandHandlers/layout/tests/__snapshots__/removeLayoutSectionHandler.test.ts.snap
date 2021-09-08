@@ -4,6 +4,10 @@ exports[`remove layout section handler for any dashboard should emit the correct
 Array [
   Object {
     "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
   },
 ]

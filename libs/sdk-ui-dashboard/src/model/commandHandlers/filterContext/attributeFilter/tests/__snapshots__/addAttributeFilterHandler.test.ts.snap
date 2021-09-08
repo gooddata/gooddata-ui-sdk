@@ -4,6 +4,10 @@ exports[`addAttributeFilterHandler should emit the appropriate events for added 
 Array [
   Object {
     "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelation",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
   },
   Object {
@@ -15,6 +19,10 @@ Array [
 
 exports[`addAttributeFilterHandler should emit the appropriate events when trying to add a duplicate attribute filter 1`] = `
 Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
   Object {
     "correlationId": "testCorrelation",
     "type": "GDC.DASH/EVT.COMMAND.FAILED",

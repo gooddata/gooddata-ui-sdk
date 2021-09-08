@@ -4,6 +4,10 @@ exports[`add section items handler for dashboard with existing sections should e
 Array [
   Object {
     "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
   },
 ]

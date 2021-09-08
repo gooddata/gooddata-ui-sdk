@@ -3,6 +3,10 @@
 exports[`change KPI widget measure handler for KPI with date dataset should emit correct events 1`] = `
 Array [
   Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.QUERY.STARTED",
   },
@@ -19,6 +23,10 @@ Array [
 
 exports[`change KPI widget measure handler for any KPI should emit correct events 1`] = `
 Array [
+  Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
   Object {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",

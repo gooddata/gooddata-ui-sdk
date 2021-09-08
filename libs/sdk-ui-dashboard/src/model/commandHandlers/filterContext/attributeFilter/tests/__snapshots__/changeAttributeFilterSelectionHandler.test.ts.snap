@@ -4,6 +4,10 @@ exports[`changeAttributeFilterSelectionHandler.test should emit the appropriate 
 Array [
   Object {
     "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelation",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED",
   },
   Object {
@@ -15,6 +19,10 @@ Array [
 
 exports[`changeAttributeFilterSelectionHandler.test should emit the appropriate events when trying to change a non-existent attribute filter 1`] = `
 Array [
+  Object {
+    "correlationId": "testCorrelation",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
   Object {
     "correlationId": "testCorrelation",
     "type": "GDC.DASH/EVT.COMMAND.FAILED",

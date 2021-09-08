@@ -4,6 +4,10 @@ exports[`export dashboard to PDF handler should emit events in correct order and
 Array [
   Object {
     "correlationId": "correlation-id",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "correlation-id",
     "type": "GDC.DASH/EVT.EXPORT.PDF.REQUESTED",
   },
   Object {
