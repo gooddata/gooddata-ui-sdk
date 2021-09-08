@@ -1362,6 +1362,7 @@ export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<T
 // @alpha (undocumented)
 export type DashboardState = {
     loading: LoadingState;
+    saving: SavingState;
     backendCapabilities: BackendCapabilitiesState;
     config: ConfigState;
     permissions: PermissionsState;
@@ -3055,6 +3056,13 @@ export interface SaveDashboardAs extends IDashboardCommand {
 // @alpha
 export function saveDashboardAs(title?: string, switchToCopy?: boolean, correlationId?: string): SaveDashboardAs;
 
+// @alpha (undocumented)
+export type SavingState = {
+    saving: boolean;
+    result?: boolean;
+    error?: Error;
+};
+
 // @internal (undocumented)
 export const ScheduledEmailDialog: () => JSX.Element;
 
@@ -3135,6 +3143,9 @@ export const selectDashboardLoading: OutputSelector<DashboardState, LoadingState
 
 // @alpha
 export const selectDashboardRef: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: IDashboard | undefined) => UriRef | IdentifierRef | undefined>;
+
+// @internal (undocumented)
+export const selectDashboardSaving: OutputSelector<DashboardState, SavingState, (res: DashboardState) => SavingState>;
 
 // @alpha
 export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: Pick<IDashboard, "title" | "description" | "tags">) => string[] | undefined>;
@@ -3276,6 +3287,9 @@ export const selectInsightWidgetImplicitDrillsAndDrillDownsByRef: (ref: ObjRef) 
 
 // @internal (undocumented)
 export const selectInsightWidgetImplicitDrillsByRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res: IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined) => IImplicitDrillWithPredicates[]>;
+
+// @alpha (undocumented)
+export const selectIsDashboardSaving: OutputSelector<DashboardState, boolean, (res: SavingState) => boolean>;
 
 // @alpha
 export const selectIsEmbedded: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;

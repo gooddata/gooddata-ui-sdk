@@ -25,6 +25,7 @@ import {
 } from "../../../_staging/dashboard/dashboardLayout";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils";
 import { layoutActions } from "../../state/layout";
+import { savingActions } from "../../state/saving";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;
@@ -170,32 +171,39 @@ export function* saveDashboardHandler(
     ctx: DashboardContext,
     cmd: SaveDashboard,
 ): SagaIterator<DashboardSaved> {
-    yield put(dashboardCommandStarted(ctx, cmd));
-    const saveCtx: SagaReturnType<typeof createDashboardSaveContext> = yield call(
-        createDashboardSaveContext,
-        cmd,
-    );
-    const isNewDashboard = saveCtx.persistedDashboard === undefined;
-    let result: DashboardSaveResult;
+    try {
+        yield put(dashboardCommandStarted(ctx, cmd));
+        yield put(savingActions.setSavingStart());
+        const saveCtx: SagaReturnType<typeof createDashboardSaveContext> = yield call(
+            createDashboardSaveContext,
+            cmd,
+        );
+        const isNewDashboard = saveCtx.persistedDashboard === undefined;
+        let result: DashboardSaveResult;
 
-    if (isNewDashboard) {
-        result = yield call(save, ctx, saveCtx, createDashboard, "@@GDC.DASH.SAVE_NEW");
-    } else {
-        result = yield call(save, ctx, saveCtx, updateDashboard, "@@GDC.DASH.SAVE_EXISTING");
+        if (isNewDashboard) {
+            result = yield call(save, ctx, saveCtx, createDashboard, "@@GDC.DASH.SAVE_NEW");
+        } else {
+            result = yield call(save, ctx, saveCtx, updateDashboard, "@@GDC.DASH.SAVE_EXISTING");
+        }
+
+        const { dashboard, batch } = result;
+
+        yield put(batch);
+
+        if (isNewDashboard) {
+            yield setContext({
+                dashboardContext: {
+                    ...ctx,
+                    dashboardRef: dashboard.ref,
+                },
+            });
+        }
+
+        yield put(savingActions.setSavingSuccess());
+        return dashboardSaved(ctx, dashboard, isNewDashboard, cmd.correlationId);
+    } catch (e: any) {
+        yield put(savingActions.setSavingError(e));
+        throw e;
     }
-
-    const { dashboard, batch } = result;
-
-    yield put(batch);
-
-    if (isNewDashboard) {
-        yield setContext({
-            dashboardContext: {
-                ...ctx,
-                dashboardRef: dashboard.ref,
-            },
-        });
-    }
-
-    return dashboardSaved(ctx, dashboard, isNewDashboard, cmd.correlationId);
 }

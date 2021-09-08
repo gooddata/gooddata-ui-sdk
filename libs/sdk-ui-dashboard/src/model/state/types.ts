@@ -2,6 +2,7 @@
 import { AnyAction, Dispatch, EntityState } from "@reduxjs/toolkit";
 import { IInsight } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState";
+import { SavingState } from "./saving/savingState";
 import { FilterContextState } from "./filterContext/filterContextState";
 import { LayoutState } from "./layout/layoutState";
 import { ConfigState } from "./config/configState";
@@ -30,6 +31,7 @@ import { IExecutionResultEnvelope } from "./executionResults/types";
  */
 export type DashboardState = {
     loading: LoadingState;
+    saving: SavingState;
     backendCapabilities: BackendCapabilitiesState;
     config: ConfigState;
     permissions: PermissionsState;

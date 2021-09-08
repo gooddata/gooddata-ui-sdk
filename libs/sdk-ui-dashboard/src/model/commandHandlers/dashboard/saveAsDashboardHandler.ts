@@ -22,6 +22,7 @@ import { DashboardContext } from "../../types/commonTypes";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { selectDateFilterConfigOverrides } from "../../state/dateFilterConfig/dateFilterConfigSelectors";
 import { alertsActions } from "../../state/alerts";
+import { savingActions } from "../../state/saving";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;
@@ -133,29 +134,36 @@ export function* saveAsDashboardHandler(
     ctx: DashboardContext,
     cmd: SaveDashboardAs,
 ): SagaIterator<DashboardCopySaved> {
-    yield put(dashboardCommandStarted(ctx, cmd));
-    const saveAsCtx: SagaReturnType<typeof createDashboardSaveAsContext> = yield call(
-        createDashboardSaveAsContext,
-        cmd,
-    );
-    const {
-        payload: { switchToCopy },
-    } = cmd;
-    const result: SagaReturnType<typeof saveAs> = yield call(saveAs, ctx, saveAsCtx);
-    const { dashboard, batch } = result;
+    try {
+        yield put(dashboardCommandStarted(ctx, cmd));
+        yield put(savingActions.setSavingStart());
+        const saveAsCtx: SagaReturnType<typeof createDashboardSaveAsContext> = yield call(
+            createDashboardSaveAsContext,
+            cmd,
+        );
+        const {
+            payload: { switchToCopy },
+        } = cmd;
+        const result: SagaReturnType<typeof saveAs> = yield call(saveAs, ctx, saveAsCtx);
+        const { dashboard, batch } = result;
 
-    if (batch) {
-        yield put(batch);
+        if (batch) {
+            yield put(batch);
+        }
+
+        if (switchToCopy) {
+            yield setContext({
+                dashboardContext: {
+                    ...ctx,
+                    dashboardRef: dashboard.ref,
+                },
+            });
+        }
+
+        yield put(savingActions.setSavingSuccess());
+        return dashboardCopySaved(ctx, dashboard, cmd.correlationId);
+    } catch (e: any) {
+        yield put(savingActions.setSavingError(e));
+        throw e;
     }
-
-    if (switchToCopy) {
-        yield setContext({
-            dashboardContext: {
-                ...ctx,
-                dashboardRef: dashboard.ref,
-            },
-        });
-    }
-
-    return dashboardCopySaved(ctx, dashboard, cmd.correlationId);
 }

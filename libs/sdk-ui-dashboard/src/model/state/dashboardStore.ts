@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import { filterContextSliceReducer } from "./filterContext";
 import { layoutSliceReducer } from "./layout";
 import { loadingSliceReducer } from "./loading";
+import { savingSliceReducer } from "./saving";
 import { insightsSliceReducer } from "./insights";
 import { createRootEventEmitter } from "./_infra/rootEventEmitter";
 import { DashboardEventHandler } from "../events/eventHandler";
@@ -244,6 +245,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
 
     const rootReducer = combineReducers({
         loading: loadingSliceReducer,
+        saving: savingSliceReducer,
         backendCapabilities: backendCapabilitiesSliceReducer,
         config: configSliceReducer,
         permissions: permissionsSliceReducer,

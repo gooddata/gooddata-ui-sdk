@@ -16,6 +16,8 @@ export { DashboardDispatch, DashboardState } from "./state/types";
 
 export { selectDashboardLoading } from "./state/loading/loadingSelectors";
 export { LoadingState } from "./state/loading/loadingState";
+export { selectDashboardSaving, selectIsDashboardSaving } from "./state/saving/savingSelectors";
+export { SavingState } from "./state/saving/savingState";
 export { BackendCapabilitiesState } from "./state/backendCapabilities/backendCapabilitiesState";
 export { selectBackendCapabilities } from "./state/backendCapabilities/backendCapabilitiesSelectors";
 export { ConfigState } from "./state/config/configState";
