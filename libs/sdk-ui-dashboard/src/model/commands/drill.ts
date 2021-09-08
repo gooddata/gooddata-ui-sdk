@@ -410,3 +410,19 @@ export function changeDrillableItems(
         },
     };
 }
+
+//
+//
+//
+
+/**
+ * @alpha
+ */
+export type DashboardDrillCommand =
+    | Drill
+    | DrillDown
+    | DrillToAttributeUrl
+    | DrillToCustomUrl
+    | DrillToDashboard
+    | DrillToInsight
+    | DrillToLegacyDashboard;

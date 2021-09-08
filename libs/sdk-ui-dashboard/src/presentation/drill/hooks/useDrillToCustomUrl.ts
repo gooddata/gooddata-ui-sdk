@@ -13,7 +13,7 @@ import {
  */
 export interface UseDrillToCustomUrlProps {
     onSuccess?: (event: DashboardDrillToCustomUrlResolved) => void;
-    onError?: (event: DashboardCommandFailed) => void;
+    onError?: (event: DashboardCommandFailed<DrillToCustomUrl>) => void;
     onBeforeRun?: (cmd: DrillToCustomUrl) => void;
 }
 

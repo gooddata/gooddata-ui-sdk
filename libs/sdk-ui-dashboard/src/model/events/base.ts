@@ -8,6 +8,7 @@ import { DashboardContext } from "../types/commonTypes";
 export type DashboardEventType =
     | "GDC.DASH/EVT.COMMAND.FAILED"
     | "GDC.DASH/EVT.COMMAND.REJECTED"
+    | "GDC.DASH/EVT.COMMAND.STARTED"
     | "GDC.DASH/EVT.QUERY.FAILED"
     | "GDC.DASH/EVT.QUERY.REJECTED"
     | "GDC.DASH/EVT.QUERY.STARTED"

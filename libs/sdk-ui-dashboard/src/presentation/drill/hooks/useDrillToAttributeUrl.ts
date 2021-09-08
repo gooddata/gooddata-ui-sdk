@@ -13,7 +13,7 @@ import {
  */
 export interface UseDrillToAttributeUrlProps {
     onSuccess?: (event: DashboardDrillToAttributeUrlResolved) => void;
-    onError?: (event: DashboardCommandFailed) => void;
+    onError?: (event: DashboardCommandFailed<DrillToAttributeUrl>) => void;
     onBeforeRun?: (cmd: DrillToAttributeUrl) => void;
 }
 
