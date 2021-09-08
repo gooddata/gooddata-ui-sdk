@@ -42,6 +42,7 @@ import { DashboardCommandType } from "../commands";
 import { drillSliceReducer } from "./drill";
 
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType)[] = [
+    "GDC.DASH/EVT.COMMAND.STARTED",
     "GDC.DASH/EVT.COMMAND.FAILED",
     "GDC.DASH/EVT.QUERY.FAILED",
     "@@QUERY.ENVELOPE" as any,
