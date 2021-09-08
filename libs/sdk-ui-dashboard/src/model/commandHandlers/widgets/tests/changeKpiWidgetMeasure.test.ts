@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { changeKpiWidgetMeasure, initializeDashboard } from "../../../commands";
+import { ChangeKpiWidgetMeasure, changeKpiWidgetMeasure, initializeDashboard } from "../../../commands";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { measureItem, uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed, DashboardKpiWidgetMeasureChanged } from "../../../events";
@@ -69,7 +69,7 @@ describe("change KPI widget measure handler", () => {
         });
 
         it("should fail if widget does not exist", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<ChangeKpiWidgetMeasure> = await Tester.dispatchAndWaitFor(
                 changeKpiWidgetMeasure(
                     uriRef("does-not-exist"),
                     measureItem(ReferenceLdm.Won),
@@ -84,7 +84,7 @@ describe("change KPI widget measure handler", () => {
         });
 
         it("should fail if measure does not exist", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<ChangeKpiWidgetMeasure> = await Tester.dispatchAndWaitFor(
                 changeKpiWidgetMeasure(
                     WidgetWithNoFilters.ref,
                     uriRef("does-not-exist"),

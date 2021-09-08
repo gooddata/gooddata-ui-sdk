@@ -2,7 +2,7 @@
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { changeInsightWidgetVisProperties } from "../../../commands";
+import { ChangeInsightWidgetVisProperties, changeInsightWidgetVisProperties } from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetVisPropertiesChanged } from "../../../events";
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
@@ -90,20 +90,22 @@ describe("change insight widget vis properties handler", () => {
 
         it("should fail if trying to change properties of KPI widget", async () => {
             const ref = ComplexDashboardWidgets.FirstSection.FirstKpi.ref;
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                changeInsightWidgetVisProperties(ref, TestProperties, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ChangeInsightWidgetVisProperties> =
+                await Tester.dispatchAndWaitFor(
+                    changeInsightWidgetVisProperties(ref, TestProperties, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toEqual("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
         it("should fail if trying to vis properties of non-existent widget", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                changeInsightWidgetVisProperties(uriRef("missing"), TestProperties, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ChangeInsightWidgetVisProperties> =
+                await Tester.dispatchAndWaitFor(
+                    changeInsightWidgetVisProperties(uriRef("missing"), TestProperties, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toEqual("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);

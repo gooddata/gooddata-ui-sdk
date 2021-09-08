@@ -2,7 +2,7 @@
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { changeInsightWidgetHeader } from "../../../commands";
+import { ChangeInsightWidgetHeader, changeInsightWidgetHeader } from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetHeaderChanged } from "../../../events";
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
@@ -63,7 +63,7 @@ describe("change insight widget header handler", () => {
 
         it("should fail if trying to change title of KPI widget", async () => {
             const ref = ComplexDashboardWidgets.FirstSection.FirstKpi.ref;
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<ChangeInsightWidgetHeader> = await Tester.dispatchAndWaitFor(
                 changeInsightWidgetHeader(ref, TestHeader, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -73,7 +73,7 @@ describe("change insight widget header handler", () => {
         });
 
         it("should fail if trying to change title of non-existent widget", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<ChangeInsightWidgetHeader> = await Tester.dispatchAndWaitFor(
                 changeInsightWidgetHeader(uriRef("missing"), TestHeader, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

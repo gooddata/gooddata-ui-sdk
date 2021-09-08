@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { moveLayoutSection, undoLayoutChanges } from "../../../commands";
+import { MoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands";
 import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionMoved } from "../../../events";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
@@ -21,7 +21,7 @@ describe("move section command handler", () => {
 
         it("should fail if bad section index specified", async () => {
             const originalLayout = selectLayout(Tester.state());
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(originalLayout.sections.length, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -31,7 +31,7 @@ describe("move section command handler", () => {
         });
 
         it("should fail if no move would happen", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(2, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

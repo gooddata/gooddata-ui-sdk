@@ -2,6 +2,7 @@
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import {
+    ChangeInsightWidgetFilterSettings,
     disableInsightWidgetDateFilter,
     enableInsightWidgetDateFilter,
     ignoreFilterOnInsightWidget,
@@ -87,16 +88,17 @@ describe("change insight widget filter settings handler", () => {
         });
 
         it("should fail if bad date dataset ref is provided", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                replaceInsightWidgetFilterSettings(
-                    TestWidgetRef,
-                    {
-                        dateDatasetForFiltering: idRef("does not exist"),
-                    },
-                    TestCorrelation,
-                ),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings> =
+                await Tester.dispatchAndWaitFor(
+                    replaceInsightWidgetFilterSettings(
+                        TestWidgetRef,
+                        {
+                            dateDatasetForFiltering: idRef("does not exist"),
+                        },
+                        TestCorrelation,
+                    ),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toEqual("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -131,32 +133,34 @@ describe("change insight widget filter settings handler", () => {
         });
 
         it("should fail if non-existent display form is provided", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                replaceInsightWidgetFilterSettings(
-                    TestWidgetRef,
-                    {
-                        ignoreAttributeFilters: [uriRef("does not exist")],
-                    },
-                    TestCorrelation,
-                ),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings> =
+                await Tester.dispatchAndWaitFor(
+                    replaceInsightWidgetFilterSettings(
+                        TestWidgetRef,
+                        {
+                            ignoreAttributeFilters: [uriRef("does not exist")],
+                        },
+                        TestCorrelation,
+                    ),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toEqual("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
         });
 
         it("should fail if display form not used for filtering is provided", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                replaceInsightWidgetFilterSettings(
-                    TestWidgetRef,
-                    {
-                        ignoreAttributeFilters: [attributeDisplayFormRef(ReferenceLdm.Account.Default)],
-                    },
-                    TestCorrelation,
-                ),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings> =
+                await Tester.dispatchAndWaitFor(
+                    replaceInsightWidgetFilterSettings(
+                        TestWidgetRef,
+                        {
+                            ignoreAttributeFilters: [attributeDisplayFormRef(ReferenceLdm.Account.Default)],
+                        },
+                        TestCorrelation,
+                    ),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toEqual("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);

@@ -7,7 +7,12 @@ import {
     DashboardLayoutSectionItemRemoved,
     DashboardLayoutSectionRemoved,
 } from "../../../events";
-import { eagerRemoveSectionItem, removeSectionItem, undoLayoutChanges } from "../../../commands/layout";
+import {
+    eagerRemoveSectionItem,
+    RemoveSectionItem,
+    removeSectionItem,
+    undoLayoutChanges,
+} from "../../../commands/layout";
 import { selectLayout, selectStash } from "../../../state/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import {
@@ -27,7 +32,7 @@ describe("remove layout section item handler", () => {
 
         it("should fail if bad section index specified", async () => {
             const layout = selectLayout(Tester.state());
-            const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const fail: DashboardCommandFailed<RemoveSectionItem> = await Tester.dispatchAndWaitFor(
                 removeSectionItem(layout.sections.length, 0, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -37,7 +42,7 @@ describe("remove layout section item handler", () => {
         });
 
         it("should fail if bad item index specified", async () => {
-            const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const fail: DashboardCommandFailed<RemoveSectionItem> = await Tester.dispatchAndWaitFor(
                 removeSectionItem(0, 4, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

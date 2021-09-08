@@ -7,7 +7,7 @@ import {
     DashboardLayoutChanged,
     DashboardLayoutSectionHeaderChanged,
 } from "../../../events";
-import { changeLayoutSectionHeader, undoLayoutChanges } from "../../../commands";
+import { ChangeLayoutSectionHeader, changeLayoutSectionHeader, undoLayoutChanges } from "../../../commands";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 
@@ -136,7 +136,7 @@ describe("change layout section header handler", () => {
         it("should fail if bad section index provided", async () => {
             const originalLayout = selectLayout(Tester.state());
 
-            const failed: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const failed: DashboardCommandFailed<ChangeLayoutSectionHeader> = await Tester.dispatchAndWaitFor(
                 changeLayoutSectionHeader(originalLayout.sections.length, FullHeader, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

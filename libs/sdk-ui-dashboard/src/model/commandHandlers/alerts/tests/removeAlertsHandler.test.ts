@@ -2,7 +2,7 @@
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { idRef, uriRef } from "@gooddata/sdk-model";
-import { removeAlerts } from "../../../commands/alerts";
+import { RemoveAlerts, removeAlerts } from "../../../commands/alerts";
 import {
     BrokenFilterAlertsDashboardIdentifier,
     AlertForRemovedFiltersKpi,
@@ -71,7 +71,7 @@ describe("removeDrillsForInsightWidgetHandler", () => {
 
     describe("validate", () => {
         it("should fail if trying to remove non-existent alert", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<RemoveAlerts> = await Tester.dispatchAndWaitFor(
                 removeAlerts([uriRef("missing")], TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

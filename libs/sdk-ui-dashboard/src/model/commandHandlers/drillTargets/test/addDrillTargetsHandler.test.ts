@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { addDrillTargets } from "../../../commands/drillTargets";
+import { AddDrillTargets, addDrillTargets } from "../../../commands/drillTargets";
 import { DrillTargetsAdded } from "../../../events/drillTargets";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
@@ -37,7 +37,7 @@ describe("addDrillTargetsHandler", () => {
     });
 
     it("should fail when trying to add drill targets for non-existing widget", async () => {
-        const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+        const event: DashboardCommandFailed<AddDrillTargets> = await Tester.dispatchAndWaitFor(
             addDrillTargets(uriRef("bogus"), availableDrillTargetsMock, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );
@@ -47,7 +47,7 @@ describe("addDrillTargetsHandler", () => {
     });
 
     it("should fail when trying to add drill targets for kpi widget", async () => {
-        const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+        const event: DashboardCommandFailed<AddDrillTargets> = await Tester.dispatchAndWaitFor(
             addDrillTargets(KpiWidgetRef, availableDrillTargetsMock, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );
