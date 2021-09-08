@@ -86,41 +86,13 @@ export const isDashboardInitialized = eventGuard<DashboardInitialized>("GDC.DASH
 //
 
 /**
- * This event is emitted at the start of dashboard save command processing.
- *
- * @alpha
- */
-export interface DashboardSaveRequested extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.SAVE_REQUESTED";
-}
-
-export function dashboardSaveRequested(
-    ctx: DashboardContext,
-    correlationId?: string,
-): DashboardSaveRequested {
-    return {
-        type: "GDC.DASH/EVT.SAVE_REQUESTED",
-        ctx,
-        correlationId,
-    };
-}
-
-/**
- * Tests whether the provided object is an instance of {@link DashboardSaveRequested}.
- *
- * @param obj - object to test
- * @alpha
- */
-export const isDashboardSaveRequested = eventGuard<DashboardSaveRequested>("GDC.DASH/EVT.SAVE_REQUESTED");
-
-/**
  * This event is emitted at the end of successful dashboard save command processing. At this point, the
  * dashboard state is persisted on the backend.
  *
  * @alpha
  */
-export interface DashboardSaveResolved extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.SAVE_RESOLVED";
+export interface DashboardSaved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.SAVED";
     readonly payload: {
         /**
          * Definition of the saved dashboard.
@@ -135,14 +107,14 @@ export interface DashboardSaveResolved extends IDashboardEvent {
     };
 }
 
-export function dashboardSaveResolved(
+export function dashboardSaved(
     ctx: DashboardContext,
     dashboard: IDashboard,
     newDashboard: boolean,
     correlationId?: string,
-): DashboardSaveResolved {
+): DashboardSaved {
     return {
-        type: "GDC.DASH/EVT.SAVE_RESOLVED",
+        type: "GDC.DASH/EVT.SAVED",
         ctx,
         correlationId,
         payload: {
@@ -153,46 +125,16 @@ export function dashboardSaveResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardSaveResolved}.
+ * Tests whether the provided object is an instance of {@link DashboardSaved}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardSaveResolved = eventGuard<DashboardSaveResolved>("GDC.DASH/EVT.SAVE_RESOLVED");
+export const isDashboardSaved = eventGuard<DashboardSaved>("GDC.DASH/EVT.SAVED");
 
 //
 //
 //
-
-/**
- * This event is emitted at the start of 'dashboard save as' command processing.
- *
- * @alpha
- */
-export interface DashboardSaveCopyRequested extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.SAVE_COPY_REQUESTED";
-}
-
-export function dashboardSaveCopyRequested(
-    ctx: DashboardContext,
-    correlationId?: string,
-): DashboardSaveCopyRequested {
-    return {
-        type: "GDC.DASH/EVT.SAVE_COPY_REQUESTED",
-        ctx,
-        correlationId,
-    };
-}
-
-/**
- * Tests whether the provided object is an instance of {@link DashboardSaveCopyRequested}.
- *
- * @param obj - object to test
- * @alpha
- */
-export const isDashboardSaveCopyRequested = eventGuard<DashboardSaveCopyRequested>(
-    "GDC.DASH/EVT.SAVE_COPY_REQUESTED",
-);
 
 /**
  * This event is emitted at the end of successful 'dashboard save as' command processing. At this point, a new
@@ -200,8 +142,8 @@ export const isDashboardSaveCopyRequested = eventGuard<DashboardSaveCopyRequeste
  *
  * @alpha
  */
-export interface DashboardSaveCopyResolved extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.SAVE_COPY_RESOLVED";
+export interface DashboardCopySaved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.COPY_SAVED";
     readonly payload: {
         /**
          * Definition of the newly created dashboard copy.
@@ -210,13 +152,13 @@ export interface DashboardSaveCopyResolved extends IDashboardEvent {
     };
 }
 
-export function dashboardSaveCopyResolved(
+export function dashboardCopySaved(
     ctx: DashboardContext,
     dashboard: IDashboard,
     correlationId?: string,
-): DashboardSaveCopyResolved {
+): DashboardCopySaved {
     return {
-        type: "GDC.DASH/EVT.SAVE_COPY_RESOLVED",
+        type: "GDC.DASH/EVT.COPY_SAVED",
         ctx,
         correlationId,
         payload: {
@@ -226,14 +168,12 @@ export function dashboardSaveCopyResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardSaveCopyResolved}.
+ * Tests whether the provided object is an instance of {@link DashboardCopySaved}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardSaveCopyResolved = eventGuard<DashboardSaveCopyResolved>(
-    "GDC.DASH/EVT.SAVE_COPY_RESOLVED",
-);
+export const isDashboardCopySaved = eventGuard<DashboardCopySaved>("GDC.DASH/EVT.COPY_SAVED");
 
 //
 //

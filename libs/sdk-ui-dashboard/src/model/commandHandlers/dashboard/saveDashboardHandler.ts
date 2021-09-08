@@ -13,7 +13,8 @@ import { selectDateFilterConfigOverrides } from "../../state/dateFilterConfig/da
 import { IDashboard, IDashboardDefinition, IDashboardObjectIdentity } from "@gooddata/sdk-backend-spi";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { PromiseFnReturnType } from "../../types/sagas";
-import { DashboardSaveResolved, dashboardSaveRequested, dashboardSaveResolved } from "../../events/dashboard";
+import { DashboardSaved, dashboardSaved } from "../../events/dashboard";
+import { dashboardCommandStarted } from "../../events/general";
 import { metaActions } from "../../state/meta";
 import { filterContextActions } from "../../state/filterContext";
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext";
@@ -168,8 +169,8 @@ function* save(
 export function* saveDashboardHandler(
     ctx: DashboardContext,
     cmd: SaveDashboard,
-): SagaIterator<DashboardSaveResolved> {
-    yield put(dashboardSaveRequested(ctx, cmd.correlationId));
+): SagaIterator<DashboardSaved> {
+    yield put(dashboardCommandStarted(ctx, cmd));
     const saveCtx: SagaReturnType<typeof createDashboardSaveContext> = yield call(
         createDashboardSaveContext,
         cmd,
@@ -196,5 +197,5 @@ export function* saveDashboardHandler(
         });
     }
 
-    return dashboardSaveResolved(ctx, dashboard, isNewDashboard, cmd.correlationId);
+    return dashboardSaved(ctx, dashboard, isNewDashboard, cmd.correlationId);
 }
