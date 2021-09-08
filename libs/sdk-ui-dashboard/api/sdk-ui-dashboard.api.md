@@ -418,6 +418,9 @@ export function changeLayoutSectionHeader(index: number, header: IDashboardLayou
 // @alpha
 export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection;
 
+// @alpha
+export function commandFailedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<DashboardCommandFailed<TCommand>>["handler"]): DashboardEventHandler<DashboardCommandFailed<TCommand>>;
+
 // @alpha (undocumented)
 export type CommandProcessingMeta = {
     readonly uuid: string;
@@ -425,6 +428,9 @@ export type CommandProcessingMeta = {
 
 // @internal (undocumented)
 export type CommandProcessingStatus = "running" | "success" | "error";
+
+// @alpha
+export function commandStartedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<DashboardCommandStarted<TCommand>>["handler"]): DashboardEventHandler<DashboardCommandStarted<TCommand>>;
 
 // @alpha (undocumented)
 export interface ConfigState {

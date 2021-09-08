@@ -204,5 +204,7 @@ export {
     anyEventHandler,
     anyDashboardEventHandler,
     singleEventTypeHandler,
+    commandStartedEventHandler,
+    commandFailedEventHandler,
 } from "./events/eventHandler";
 export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory";
