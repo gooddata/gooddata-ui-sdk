@@ -219,7 +219,7 @@ export function newCatalogMeasureMap(
     strictTypeCheck: boolean = false,
 ): ObjRefMap<ICatalogMeasure> {
     const map = new ObjRefMap<ICatalogMeasure>({
-        type: "dataSet",
+        type: "measure",
         strictTypeCheck,
         idExtract: (i) => i.measure.id,
         uriExtract: (i) => i.measure.uri,
