@@ -81,8 +81,6 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "meta/setDrillableItems",
     "layout/updateWidgetIdentities",
     "executionResults/upsertExecutionResult",
-    "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED",
-    "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED",
 ];
 
 /*
