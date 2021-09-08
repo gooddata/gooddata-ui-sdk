@@ -1,11 +1,14 @@
 // (C) 2020-2021 GoodData Corporation
 import { useCallback, useRef } from "react";
 import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
-import { IExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 
-type ExportHandler = (exportFunction: IExportFunction, exportConfig: IExtendedExportConfig) => Promise<void>;
+type ExportHandler = (
+    exportFunction: (config: IExtendedExportConfig) => Promise<string>,
+    exportConfig: IExtendedExportConfig,
+) => Promise<void>;
 
 export const useExportHandler = (): ExportHandler => {
     const { addProgress, addSuccess, addError, removeMessage } = useToastMessage();
@@ -18,14 +21,14 @@ export const useExportHandler = (): ExportHandler => {
                 { duration: 0 },
             );
 
-            const exportResult = await exportFunction(exportConfig);
+            const exportResultUri = await exportFunction(exportConfig);
 
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
             }
             addSuccess({ id: "messages.exportResultSuccess" });
 
-            downloadFile(exportResult.uri);
+            downloadFile(exportResultUri);
         } catch (err) {
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
