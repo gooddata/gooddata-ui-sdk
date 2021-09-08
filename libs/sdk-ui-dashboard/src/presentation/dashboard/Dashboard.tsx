@@ -205,13 +205,17 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
             return [];
         }
 
+        const isSaveAsDisabled = isEmptyLayout || !dashboardRef;
+
         return [
             {
                 type: "button",
                 itemId: "save_as_menu_item", // careful, also a s- class selector, do not change
-                disabled: isEmptyLayout || !dashboardRef,
+                disabled: isSaveAsDisabled,
                 itemName: intl.formatMessage({ id: "options.menu.save.as" }),
-                tooltip: intl.formatMessage({ id: "options.menu.save.as.tooltip" }),
+                tooltip: isSaveAsDisabled
+                    ? intl.formatMessage({ id: "options.menu.save.as.tooltip" })
+                    : undefined,
                 onClick: defaultOnSaveAs,
             },
             {
