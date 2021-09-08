@@ -2,7 +2,7 @@
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { changeKpiWidgetComparison, KpiWidgetComparison } from "../../../commands";
+import { ChangeKpiWidgetComparison, changeKpiWidgetComparison, KpiWidgetComparison } from "../../../commands";
 import { DashboardCommandFailed, DashboardKpiWidgetComparisonChanged } from "../../../events";
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
 import { uriRef } from "@gooddata/sdk-model";
@@ -91,7 +91,7 @@ describe("change KPI widget comparison handler", () => {
 
         it("should fail if trying to change title of insight widget", async () => {
             const ref = ComplexDashboardWidgets.SecondSection.FirstTable.ref;
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<ChangeKpiWidgetComparison> = await Tester.dispatchAndWaitFor(
                 changeKpiWidgetComparison(ref, TestComparisonWithDirection, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -101,7 +101,7 @@ describe("change KPI widget comparison handler", () => {
         });
 
         it("should fail if trying to change title of non-existent widget", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<ChangeKpiWidgetComparison> = await Tester.dispatchAndWaitFor(
                 changeKpiWidgetComparison(uriRef("missing"), TestComparisonWithDirection, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

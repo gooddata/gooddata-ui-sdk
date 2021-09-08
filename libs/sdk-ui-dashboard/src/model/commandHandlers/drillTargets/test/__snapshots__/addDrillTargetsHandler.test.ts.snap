@@ -6,6 +6,10 @@ exports[`addDrillTargetsHandler should emit the appropriate events for add drill
 Array [
   Object {
     "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
   },
 ]

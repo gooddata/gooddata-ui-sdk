@@ -13,7 +13,7 @@ import {
  */
 export interface UseDrillToInsightProps {
     onSuccess?: (event: DashboardDrillToInsightResolved) => void;
-    onError?: (event: DashboardCommandFailed) => void;
+    onError?: (event: DashboardCommandFailed<DrillToInsight>) => void;
     onBeforeRun?: (cmd: DrillToInsight) => void;
 }
 

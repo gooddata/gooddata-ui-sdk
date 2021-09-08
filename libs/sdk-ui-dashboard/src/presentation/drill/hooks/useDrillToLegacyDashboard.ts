@@ -12,7 +12,7 @@ import {
  */
 export interface UseDrillToLegacyDashboardProps {
     onSuccess?: (event: DashboardDrillToLegacyDashboardResolved) => void;
-    onError?: (event: DashboardCommandFailed) => void;
+    onError?: (event: DashboardCommandFailed<DrillToLegacyDashboard>) => void;
     onBeforeRun?: (cmd: DrillToLegacyDashboard) => void;
 }
 

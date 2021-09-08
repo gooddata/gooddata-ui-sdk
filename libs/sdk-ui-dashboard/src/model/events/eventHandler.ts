@@ -1,9 +1,16 @@
 // (C) 2021 GoodData Corporation
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
+import { IDashboardCommand } from "../commands";
 
 import { DashboardState } from "../state/types";
 import { ICustomDashboardEvent, isDashboardEvent } from "./base";
 import { DashboardEvents } from "./index";
+import {
+    DashboardCommandStarted,
+    DashboardCommandFailed,
+    isDashboardCommandFailed,
+    isDashboardCommandStarted,
+} from "./general";
 
 /**
  * Event handlers can be registered for a dashboard. All events that occur during dashboard processing will be
@@ -74,6 +81,40 @@ export function singleEventTypeHandler(
 ): DashboardEventHandler {
     return {
         eval: (e) => e.type === type,
+        handler,
+    };
+}
+
+/**
+ * Creates a {@link DashboardEventHandler} instance that will be invoked for a DashboardCommandStarted of a particular command.
+ *
+ * @param type - the type of command the DashboardCommandStarted of which this handler should trigger for
+ * @param handler - the actual event handling function
+ * @alpha
+ */
+export function commandStartedEventHandler<TCommand extends IDashboardCommand>(
+    type: TCommand["type"],
+    handler: DashboardEventHandler<DashboardCommandStarted<TCommand>>["handler"],
+): DashboardEventHandler<DashboardCommandStarted<TCommand>> {
+    return {
+        eval: (e) => isDashboardCommandStarted(e) && e.payload.command.type === type,
+        handler,
+    };
+}
+
+/**
+ * Creates a {@link DashboardEventHandler} instance that will be invoked for a DashboardCommandFailed of a particular command.
+ *
+ * @param type - the type of command the DashboardCommandFailed of which this handler should trigger for
+ * @param handler - the actual event handling function
+ * @alpha
+ */
+export function commandFailedEventHandler<TCommand extends IDashboardCommand>(
+    type: TCommand["type"],
+    handler: DashboardEventHandler<DashboardCommandFailed<TCommand>>["handler"],
+): DashboardEventHandler<DashboardCommandFailed<TCommand>> {
+    return {
+        eval: (e) => isDashboardCommandFailed(e) && e.payload.command.type === type,
         handler,
     };
 }

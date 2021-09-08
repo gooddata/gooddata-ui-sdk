@@ -4,6 +4,10 @@ exports[`removeDrillsForInsightWidgetHandler remove should emit the appropriate 
 Array [
   Object {
     "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED",
   },
 ]

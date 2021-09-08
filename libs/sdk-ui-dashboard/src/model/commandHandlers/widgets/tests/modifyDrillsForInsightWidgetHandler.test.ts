@@ -3,7 +3,11 @@
 import cloneDeep from "lodash/cloneDeep";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { addDrillTargets, modifyDrillsForInsightWidget } from "../../../commands";
+import {
+    addDrillTargets,
+    ModifyDrillsForInsightWidget,
+    modifyDrillsForInsightWidget,
+} from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetDrillsModified } from "../../../events";
 import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
@@ -180,10 +184,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
         it("should fail if trying to modify/add drills of non-existent widget", async () => {
             const drills = [DrillToDashboardFromProductAttributeDefinition];
 
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(uriRef("missing"), drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(uriRef("missing"), drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -192,10 +197,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
         it("should fail if trying to modify/add drills of kpi widget", async () => {
             const drills = [DrillToDashboardFromProductAttributeDefinition];
 
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(KpiWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(KpiWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -209,10 +215,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 addDrillTargets(SimpleSortedTableWidgetRef, undefined as any, TestCorrelation),
             );
 
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -230,10 +237,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             invalidAttributeOriginDrill.origin = invalidAttributeOrigin;
             const drills = [invalidAttributeOriginDrill];
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -251,10 +259,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             invalidMeasureOriginDrill.origin = invalidAttributeOrigin;
             const drills = [invalidMeasureOriginDrill];
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -265,10 +274,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             invalidTargetDrill.target = uriRef("missing");
 
             const drills = [invalidTargetDrill];
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -279,10 +289,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             invalidTargetDrill.target = idRef("missing");
 
             const drills = [invalidTargetDrill];
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -293,10 +304,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             invalidTargetDrill.target = uriRef("missing");
 
             const drills = [invalidTargetDrill];
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -307,10 +319,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             invalidTargetDrill.target = idRef("missing");
 
             const drills = [invalidTargetDrill];
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -321,10 +334,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             invalidTargetDrill.target.url = "http://www.site.org?dep={attribute_title(label.owner.missing)}";
 
             const drills = [invalidTargetDrill];
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -336,10 +350,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             const drills = [invalidTargetDisplayForm];
 
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -351,10 +366,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             const drills = [invalidTargetDisplayForm];
 
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);
@@ -369,10 +385,11 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             const drills = [invalidTargetDisplayForm];
 
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.reason).toBe("USER_ERROR");
             expect(event.correlationId).toEqual(TestCorrelation);

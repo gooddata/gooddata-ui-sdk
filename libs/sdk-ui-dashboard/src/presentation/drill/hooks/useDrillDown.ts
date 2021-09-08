@@ -13,7 +13,7 @@ import {
  */
 export interface UseDrillDownProps {
     onSuccess?: (event: DashboardDrillDownResolved) => void;
-    onError?: (event: DashboardCommandFailed) => void;
+    onError?: (event: DashboardCommandFailed<DrillDown>) => void;
     onBeforeRun?: (cmd: DrillDown) => void;
 }
 

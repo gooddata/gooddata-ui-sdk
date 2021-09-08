@@ -3,7 +3,7 @@
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
 import { DashboardCommandFailed, DashboardLayoutSectionItemsAdded } from "../../../events";
-import { addSectionItem, undoLayoutChanges } from "../../../commands";
+import { addSectionItem, AddSectionItems, undoLayoutChanges } from "../../../commands";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
 import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
 import { uriRef } from "@gooddata/sdk-model";
@@ -57,7 +57,7 @@ describe("add section items handler", () => {
         it("should fail if bad section is provided", async () => {
             const originalLayout = selectLayout(Tester.state());
 
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<AddSectionItems> = await Tester.dispatchAndWaitFor(
                 addSectionItem(
                     originalLayout.sections.length,
                     0,
@@ -73,7 +73,7 @@ describe("add section items handler", () => {
         });
 
         it("should fail if bad item index is provided", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<AddSectionItems> = await Tester.dispatchAndWaitFor(
                 addSectionItem(0, 4, TestKpiPlaceholderItem, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -83,7 +83,7 @@ describe("add section items handler", () => {
         });
 
         it("should fail if attempting to add item with non-existent insight", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<AddSectionItems> = await Tester.dispatchAndWaitFor(
                 addSectionItem(0, 4, createTestInsightItem(uriRef("does-not-exist")), false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -93,7 +93,7 @@ describe("add section items handler", () => {
         });
 
         it("should fail if bad stash identifier is provided", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<AddSectionItems> = await Tester.dispatchAndWaitFor(
                 addSectionItem(0, -1, TestStash, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

@@ -10,7 +10,7 @@ import {
     DashboardLayoutChanged,
     DashboardLayoutSectionRemoved,
 } from "../../../events";
-import { removeLayoutSection, undoLayoutChanges } from "../../../commands";
+import { RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands";
 import { selectLayout, selectStash } from "../../../state/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 
@@ -24,7 +24,7 @@ describe("remove layout section handler", () => {
         );
 
         it("should fail the command", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<RemoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 removeLayoutSection(0, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -102,7 +102,7 @@ describe("remove layout section handler", () => {
 
         it("should fail command if the section does not exist", async () => {
             const originalLayout = selectLayout(Tester.state());
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<RemoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 removeLayoutSection(originalLayout.sections.length, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

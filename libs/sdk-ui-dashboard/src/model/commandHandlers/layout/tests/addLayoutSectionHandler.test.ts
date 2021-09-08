@@ -6,7 +6,7 @@ import {
     TestCorrelation,
     TestStash,
 } from "../../../tests/fixtures/Dashboard.fixtures";
-import { addLayoutSection, undoLayoutChanges } from "../../../commands";
+import { AddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../commands";
 import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionAdded } from "../../../events";
 import { selectLayout } from "../../../state/layout/layoutSelectors";
 import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
@@ -133,7 +133,7 @@ describe("add layout section handler", () => {
         });
 
         it("should fail if bad section placement index is provided", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<AddLayoutSection> = await Tester.dispatchAndWaitFor(
                 addLayoutSection(1, undefined, undefined, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -143,7 +143,7 @@ describe("add layout section handler", () => {
         });
 
         it("should fail if attempting to add item with non-existent insight", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<AddLayoutSection> = await Tester.dispatchAndWaitFor(
                 addLayoutSection(
                     0,
                     {},
@@ -159,7 +159,7 @@ describe("add layout section handler", () => {
         });
 
         it("should fail if attempting to add insight widget with bad date dataset setting", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<AddLayoutSection> = await Tester.dispatchAndWaitFor(
                 addLayoutSection(
                     0,
                     {},
@@ -175,7 +175,7 @@ describe("add layout section handler", () => {
         });
 
         it("should fail if attempting to add insight widget with bad filter ignore list", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<AddLayoutSection> = await Tester.dispatchAndWaitFor(
                 addLayoutSection(
                     0,
                     {},
@@ -191,7 +191,7 @@ describe("add layout section handler", () => {
         });
 
         it("should fail if bad stash identifier is provided", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<AddLayoutSection> = await Tester.dispatchAndWaitFor(
                 addLayoutSection(0, undefined, [TestStash], false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

@@ -2,7 +2,7 @@
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { moveSectionItem, undoLayoutChanges } from "../../../commands";
+import { MoveLayoutSection, moveSectionItem, undoLayoutChanges } from "../../../commands";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
@@ -25,7 +25,7 @@ describe("move layout section item handler", () => {
         );
 
         it("should fail if bad source section index is provided", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(2, 0, -1, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -35,7 +35,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should fail if bad source item index is provided", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(0, 4, -1, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -46,7 +46,7 @@ describe("move layout section item handler", () => {
 
         it("should fail if bad target section index is provided", async () => {
             const originalLayout = selectLayout(Tester.state());
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(0, 0, originalLayout.sections.length, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -56,7 +56,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should fail if bad target item index is provided", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(0, 0, 0, 4, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -66,7 +66,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should fail if no move would happen", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(0, 0, 0, 0, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -76,7 +76,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should fail if no move would happen using relative index", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(0, 3, 0, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

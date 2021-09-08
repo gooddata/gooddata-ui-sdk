@@ -25,6 +25,7 @@ import {
     selectLocale,
     useDashboardSelector,
     selectDisableDefaultDrills,
+    DashboardDrillCommand,
 } from "../../../model";
 import { DashboardDrillDefinition, IDashboardDrillEvent, isDrillDownDefinition } from "../../../types";
 import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils";
@@ -91,7 +92,7 @@ export function WithDrillSelect({
         onDrillToDashboardSuccess,
         onDrillToAttributeUrlSuccess,
         onDrillToCustomUrlSuccess,
-        onError: (e: DashboardCommandFailed) => onError?.(e.payload.error),
+        onError: (e: DashboardCommandFailed<DashboardDrillCommand>) => onError?.(e.payload.error),
     });
 
     const onSelect = useCallback(

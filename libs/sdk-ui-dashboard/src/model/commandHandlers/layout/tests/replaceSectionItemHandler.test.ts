@@ -6,7 +6,7 @@ import {
     DashboardLayoutChanged,
     DashboardLayoutSectionItemReplaced,
 } from "../../../events";
-import { replaceSectionItem, undoLayoutChanges } from "../../../commands";
+import { ReplaceSectionItem, replaceSectionItem, undoLayoutChanges } from "../../../commands";
 import { selectLayout, selectStash } from "../../../state/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import {
@@ -33,7 +33,7 @@ describe("replace section item handler", () => {
 
         it("should fail if bad section index is provided", async () => {
             const originalLayout = selectLayout(Tester.state());
-            const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const fail: DashboardCommandFailed<ReplaceSectionItem> = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(
                     originalLayout.sections.length,
                     0,
@@ -50,7 +50,7 @@ describe("replace section item handler", () => {
         });
 
         it("should fail if bad item index is provided", async () => {
-            const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const fail: DashboardCommandFailed<ReplaceSectionItem> = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(0, 4, TestKpiPlaceholderItem, undefined, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -60,7 +60,7 @@ describe("replace section item handler", () => {
         });
 
         it("should fail if bad stash identifier is provided", async () => {
-            const fail: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const fail: DashboardCommandFailed<ReplaceSectionItem> = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(0, 0, "InvalidStashIdentifier", undefined, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -165,7 +165,7 @@ describe("replace section item handler", () => {
         });
 
         it("should fail if attempting to add insight widget with bad date dataset setting", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<ReplaceSectionItem> = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(
                     1,
                     0,
@@ -182,7 +182,7 @@ describe("replace section item handler", () => {
         });
 
         it("should fail if attempting to add insight widget with bad filter ignore list", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+            const event: DashboardCommandFailed<ReplaceSectionItem> = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(
                     1,
                     0,

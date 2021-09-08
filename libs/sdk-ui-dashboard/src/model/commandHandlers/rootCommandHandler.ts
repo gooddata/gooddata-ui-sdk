@@ -7,7 +7,12 @@ import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandl
 import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { dispatchDashboardEvent } from "../state/_infra/eventDispatcher";
-import { commandRejected, internalErrorOccurred, isDashboardCommandFailed } from "../events/general";
+import {
+    commandRejected,
+    dashboardCommandStarted,
+    internalErrorOccurred,
+    isDashboardCommandFailed,
+} from "../events/general";
 import { saveAsDashboardHandler } from "./dashboard/saveAsDashboardHandler";
 import { saveDashboardHandler } from "./dashboard/saveDashboardHandler";
 import { changeDateFilterSelectionHandler } from "./filterContext/dateFilter/changeDateFilterSelectionHandler";
@@ -195,6 +200,7 @@ function* processCommand(
     const commandHandler = DefaultCommandHandlers[envelope.command.type] ?? unhandledCommand;
 
     try {
+        yield dispatchDashboardEvent(dashboardCommandStarted(ctx, envelope.command));
         try {
             envelope.onStart(command);
         } catch (e) {
@@ -220,7 +226,7 @@ function* processCommand(
                 e,
             );
         }
-    } catch (e) {
+    } catch (e: any) {
         try {
             envelope.onError(e);
         } catch (ne) {

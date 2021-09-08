@@ -2,7 +2,6 @@
 import { DashboardContext } from "../../types/commonTypes";
 import { SaveDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
-import { DashboardSaved } from "../../events";
 import { selectBasicLayout } from "../../state/layout/layoutSelectors";
 import { call, put, SagaReturnType, select, setContext } from "redux-saga/effects";
 import {
@@ -14,7 +13,7 @@ import { selectDateFilterConfigOverrides } from "../../state/dateFilterConfig/da
 import { IDashboard, IDashboardDefinition, IDashboardObjectIdentity } from "@gooddata/sdk-backend-spi";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { PromiseFnReturnType } from "../../types/sagas";
-import { dashboardSaved } from "../../events/dashboard";
+import { DashboardSaved, dashboardSaved } from "../../events/dashboard";
 import { metaActions } from "../../state/meta";
 import { filterContextActions } from "../../state/filterContext";
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext";
@@ -25,6 +24,7 @@ import {
 } from "../../../_staging/dashboard/dashboardLayout";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils";
 import { layoutActions } from "../../state/layout";
+import { savingActions } from "../../state/saving";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;
@@ -170,31 +170,38 @@ export function* saveDashboardHandler(
     ctx: DashboardContext,
     cmd: SaveDashboard,
 ): SagaIterator<DashboardSaved> {
-    const saveCtx: SagaReturnType<typeof createDashboardSaveContext> = yield call(
-        createDashboardSaveContext,
-        cmd,
-    );
-    const isNewDashboard = saveCtx.persistedDashboard === undefined;
-    let result: DashboardSaveResult;
+    try {
+        yield put(savingActions.setSavingStart());
+        const saveCtx: SagaReturnType<typeof createDashboardSaveContext> = yield call(
+            createDashboardSaveContext,
+            cmd,
+        );
+        const isNewDashboard = saveCtx.persistedDashboard === undefined;
+        let result: DashboardSaveResult;
 
-    if (isNewDashboard) {
-        result = yield call(save, ctx, saveCtx, createDashboard, "@@GDC.DASH.SAVE_NEW");
-    } else {
-        result = yield call(save, ctx, saveCtx, updateDashboard, "@@GDC.DASH.SAVE_EXISTING");
+        if (isNewDashboard) {
+            result = yield call(save, ctx, saveCtx, createDashboard, "@@GDC.DASH.SAVE_NEW");
+        } else {
+            result = yield call(save, ctx, saveCtx, updateDashboard, "@@GDC.DASH.SAVE_EXISTING");
+        }
+
+        const { dashboard, batch } = result;
+
+        yield put(batch);
+
+        if (isNewDashboard) {
+            yield setContext({
+                dashboardContext: {
+                    ...ctx,
+                    dashboardRef: dashboard.ref,
+                },
+            });
+        }
+
+        yield put(savingActions.setSavingSuccess());
+        return dashboardSaved(ctx, dashboard, isNewDashboard, cmd.correlationId);
+    } catch (e: any) {
+        yield put(savingActions.setSavingError(e));
+        throw e;
     }
-
-    const { dashboard, batch } = result;
-
-    yield put(batch);
-
-    if (isNewDashboard) {
-        yield setContext({
-            dashboardContext: {
-                ...ctx,
-                dashboardRef: dashboard.ref,
-            },
-        });
-    }
-
-    return dashboardSaved(ctx, dashboard, isNewDashboard, cmd.correlationId);
 }

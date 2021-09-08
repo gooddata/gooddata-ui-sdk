@@ -135,6 +135,7 @@ export {
     DrillToInsight,
     DrillToLegacyDashboard,
     ChangeDrillableItems,
+    DashboardDrillCommand,
     drill,
     drillDown,
     drillToAttributeUrl,

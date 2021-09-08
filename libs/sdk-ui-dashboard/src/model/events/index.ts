@@ -2,8 +2,8 @@
 import {
     DashboardInitialized,
     DashboardSaved,
-    DateFilterValidationFailed,
     DashboardCopySaved,
+    DateFilterValidationFailed,
     DashboardRenamed,
     DashboardWasReset,
     DashboardExportToPdfResolved,
@@ -12,6 +12,7 @@ import {
 import {
     DashboardCommandFailed,
     DashboardCommandRejected,
+    DashboardCommandStarted,
     DashboardQueryCompleted,
     DashboardQueryFailed,
     DashboardQueryRejected,
@@ -107,19 +108,21 @@ export {
     DashboardWasReset,
     DashboardExportToPdfRequested,
     DashboardExportToPdfResolved,
+    isDashboardSaved,
     isDashboardCopySaved,
     isDashboardInitialized,
     isDashboardRenamed,
-    isDashboardSaved,
     isDashboardWasReset,
     isDateFilterValidationFailed,
     isDashboardExportToPdfRequested,
     isDashboardExportToPdfResolved,
 } from "./dashboard";
 export {
+    DashboardCommandStarted,
     DashboardCommandRejected,
     DashboardCommandFailed,
     ActionFailedErrorReason,
+    isDashboardCommandStarted,
     isDashboardCommandFailed,
     DashboardQueryRejected,
     DashboardQueryFailed,
@@ -294,7 +297,8 @@ export {
 export type DashboardEvents =
     | DashboardInitialized
     | DateFilterValidationFailed
-    | DashboardCommandFailed
+    | DashboardCommandStarted<any>
+    | DashboardCommandFailed<any>
     | DashboardCommandRejected
     | DashboardQueryFailed
     | DashboardQueryRejected

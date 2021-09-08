@@ -222,6 +222,10 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
   },
   Object {

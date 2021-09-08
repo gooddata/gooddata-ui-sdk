@@ -7,6 +7,7 @@ import {
     selectBackendCapabilities,
     selectDashboardTitle,
     selectEnableKPIDashboardSchedule,
+    selectIsDashboardSaving,
     selectLocale,
     useDashboardCommandProcessing,
     useDashboardSelector,
@@ -62,6 +63,7 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const isScheduleEmailsEnabled = useDashboardSelector(selectEnableKPIDashboardSchedule) ?? false;
     const capabilities = useDashboardSelector(selectBackendCapabilities);
+    const isDashboardSaving = useDashboardSelector(selectIsDashboardSaving);
 
     const saveAsCommandProcessing = useDashboardCommandProcessing({
         commandCreator: saveDashboardAs,
@@ -88,7 +90,7 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
         isScheduleEmailsEnabled,
         isKpiWidgetEnabled: capabilities.supportsKpiWidget ?? false,
         isDashboardLoaded: true,
-        isDashboardSaving: false,
+        isDashboardSaving,
         handleSaveAs,
         saveAsStatus: saveAsCommandProcessing.status,
     };

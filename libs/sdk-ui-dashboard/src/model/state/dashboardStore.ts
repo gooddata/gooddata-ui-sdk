@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import { filterContextSliceReducer } from "./filterContext";
 import { layoutSliceReducer } from "./layout";
 import { loadingSliceReducer } from "./loading";
+import { savingSliceReducer } from "./saving";
 import { insightsSliceReducer } from "./insights";
 import { createRootEventEmitter } from "./_infra/rootEventEmitter";
 import { DashboardEventHandler } from "../events/eventHandler";
@@ -41,6 +42,7 @@ import { DashboardCommandType } from "../commands";
 import { drillSliceReducer } from "./drill";
 
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType)[] = [
+    "GDC.DASH/EVT.COMMAND.STARTED",
     "GDC.DASH/EVT.COMMAND.FAILED",
     "GDC.DASH/EVT.QUERY.FAILED",
     "@@QUERY.ENVELOPE" as any,
@@ -48,9 +50,10 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "@@GDC.DASH.SAVE_NEW",
     "@@GDC.DASH.SAVE_EXISTING",
     "@@GDC.DASH.SAVE_AS",
-    // Execution failed events have the actual error in them
-    "GDC.DASH/EVT.INSIGHT_WIDGET.EXECUTION_FAILED",
-    "GDC.DASH/EVT.KPI_WIDGET.EXECUTION_FAILED",
+    // Execution events have errors, execution definitions etc. in them
+    "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED",
+    "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED",
+    "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED",
     // Custom events may contain whatever
     "GDC.DASH/CMD.EVENT.TRIGGER",
     // Drill commands & events contain non-serializable dataView
@@ -243,6 +246,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
 
     const rootReducer = combineReducers({
         loading: loadingSliceReducer,
+        saving: savingSliceReducer,
         backendCapabilities: backendCapabilitiesSliceReducer,
         config: configSliceReducer,
         permissions: permissionsSliceReducer,

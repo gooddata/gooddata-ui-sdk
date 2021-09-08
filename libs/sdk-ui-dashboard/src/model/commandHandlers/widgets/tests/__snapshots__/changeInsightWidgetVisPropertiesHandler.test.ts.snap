@@ -4,6 +4,10 @@ exports[`change insight widget vis properties handler for dashboard with KPIs an
 Array [
   Object {
     "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED",
   },
 ]

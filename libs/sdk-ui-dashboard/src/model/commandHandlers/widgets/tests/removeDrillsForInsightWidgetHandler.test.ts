@@ -5,6 +5,7 @@ import { TestCorrelation, BeforeTestCorrelation } from "../../../tests/fixtures/
 import {
     addDrillTargets,
     modifyDrillsForInsightWidget,
+    RemoveDrillsForInsightWidget,
     removeDrillsForInsightWidget,
 } from "../../../commands";
 import { localIdRef, uriRef } from "@gooddata/sdk-model";
@@ -97,10 +98,11 @@ describe("removeDrillsForInsightWidgetHandler", () => {
 
     describe("validate", () => {
         it("should fail if trying to remove drills of non-existent widget", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                removeDrillsForInsightWidget(uriRef("missing"), [fromMeasureLocalIdRef], TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<RemoveDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    removeDrillsForInsightWidget(uriRef("missing"), [fromMeasureLocalIdRef], TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.message).toMatchSnapshot();
             expect(event.payload.reason).toMatchSnapshot();
@@ -108,10 +110,11 @@ describe("removeDrillsForInsightWidgetHandler", () => {
         });
 
         it("should fail if trying to remove drills of kpi widget", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                removeDrillsForInsightWidget(KpiWidgetRef, [fromMeasureLocalIdRef], TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<RemoveDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    removeDrillsForInsightWidget(KpiWidgetRef, [fromMeasureLocalIdRef], TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.message).toMatchSnapshot();
             expect(event.payload.reason).toMatchSnapshot();
@@ -119,14 +122,15 @@ describe("removeDrillsForInsightWidgetHandler", () => {
         });
 
         it("should fail if trying to remove drills where origin is not specified by localIdRef", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                removeDrillsForInsightWidget(
-                    SimpleSortedTableWidgetRef,
-                    [uriRef("not-valid-ref")],
-                    TestCorrelation,
-                ),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<RemoveDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    removeDrillsForInsightWidget(
+                        SimpleSortedTableWidgetRef,
+                        [uriRef("not-valid-ref")],
+                        TestCorrelation,
+                    ),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.message).toMatchSnapshot();
             expect(event.payload.reason).toMatchSnapshot();
@@ -134,14 +138,15 @@ describe("removeDrillsForInsightWidgetHandler", () => {
         });
 
         it("should fail if trying to remove drills where origin missing in widget drills", async () => {
-            const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-                removeDrillsForInsightWidget(
-                    SimpleSortedTableWidgetRef,
-                    [localIdRef("missing")],
-                    TestCorrelation,
-                ),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const event: DashboardCommandFailed<RemoveDrillsForInsightWidget> =
+                await Tester.dispatchAndWaitFor(
+                    removeDrillsForInsightWidget(
+                        SimpleSortedTableWidgetRef,
+                        [localIdRef("missing")],
+                        TestCorrelation,
+                    ),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(event.payload.message).toMatchSnapshot();
             expect(event.payload.reason).toMatchSnapshot();

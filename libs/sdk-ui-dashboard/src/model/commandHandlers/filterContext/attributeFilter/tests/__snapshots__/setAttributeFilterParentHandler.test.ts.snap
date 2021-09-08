@@ -4,6 +4,10 @@ exports[`setAttributeFilterParentHandler should emit the appropriate events for 
 Array [
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",
   },
   Object {
@@ -15,6 +19,10 @@ Array [
 
 exports[`setAttributeFilterParentHandler should emit the appropriate events when trying to set parent of a non-existent attribute filter 1`] = `
 Array [
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
   Object {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.FAILED",

@@ -4,6 +4,10 @@ exports[`change layout section header handler for any dashboard should emit the 
 Array [
   Object {
     "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
   },
 ]

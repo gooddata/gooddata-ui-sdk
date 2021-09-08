@@ -32,6 +32,7 @@ import {
     DrillToAttributeUrl,
     DrillToCustomUrl,
     DashboardDrillToLegacyDashboardResolved,
+    DashboardDrillCommand,
 } from "../../model";
 
 /**
@@ -42,7 +43,7 @@ export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: Das
 /**
  * @internal
  */
-export type OnDashboardDrillError = (event: DashboardCommandFailed) => void;
+export type OnDashboardDrillError = (event: DashboardCommandFailed<DashboardDrillCommand>) => void;
 
 /**
  * @internal

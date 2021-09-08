@@ -8,6 +8,10 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
   },
   Object {
@@ -16,7 +20,15 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
@@ -24,7 +36,15 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
@@ -45,6 +65,10 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
   },
   Object {
@@ -53,7 +77,7 @@ Array [
   },
   Object {
     "correlationId": undefined,
-    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
@@ -61,7 +85,23 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
@@ -69,7 +109,15 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
@@ -90,6 +138,10 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
   },
   Object {
@@ -98,7 +150,15 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
@@ -119,6 +179,10 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
   },
   Object {
@@ -127,11 +191,23 @@ Array [
   },
   Object {
     "correlationId": undefined,
-    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
@@ -152,6 +228,10 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
   },
   Object {
@@ -160,7 +240,15 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
@@ -178,6 +266,10 @@ Array [
   Object {
     "correlationId": "correlation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
@@ -204,11 +296,19 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
   },
   Object {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
@@ -225,11 +325,19 @@ Array [
   },
   Object {
     "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
   },
   Object {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.INITIALIZED",
+  },
+  Object {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,

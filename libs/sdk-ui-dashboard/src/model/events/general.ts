@@ -7,6 +7,45 @@ import { IDashboardCommand } from "../commands";
 import { eventGuard } from "./util";
 
 /**
+ * This event is emitted when a particular command processing starts.
+ *
+ * @alpha
+ */
+export interface DashboardCommandStarted<TCommand extends IDashboardCommand> extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.COMMAND.STARTED";
+    readonly payload: {
+        /**
+         * The command that started processing.
+         */
+        readonly command: TCommand;
+    };
+}
+
+export function dashboardCommandStarted<TCommand extends IDashboardCommand>(
+    ctx: DashboardContext,
+    command: TCommand,
+): DashboardCommandStarted<TCommand> {
+    return {
+        type: "GDC.DASH/EVT.COMMAND.STARTED",
+        ctx,
+        correlationId: command.correlationId,
+        payload: {
+            command,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardCommandStarted}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardCommandStarted = eventGuard<DashboardCommandStarted<any>>(
+    "GDC.DASH/EVT.COMMAND.STARTED",
+);
+
+/**
  * @alpha
  */
 export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
@@ -21,7 +60,7 @@ export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
  *
  * @alpha
  */
-export interface DashboardCommandFailed extends IDashboardEvent {
+export interface DashboardCommandFailed<TCommand extends IDashboardCommand> extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COMMAND.FAILED";
     readonly payload: {
         /**
@@ -42,16 +81,16 @@ export interface DashboardCommandFailed extends IDashboardEvent {
         /**
          * The command that failed.
          */
-        readonly command: IDashboardCommand;
+        readonly command: TCommand;
     };
 }
 
-export function internalErrorOccurred(
+export function internalErrorOccurred<TCommand extends IDashboardCommand>(
     ctx: DashboardContext,
-    command: IDashboardCommand,
+    command: TCommand,
     message: string,
     error?: Error,
-): DashboardCommandFailed {
+): DashboardCommandFailed<TCommand> {
     return {
         type: "GDC.DASH/EVT.COMMAND.FAILED",
         ctx,
@@ -65,11 +104,11 @@ export function internalErrorOccurred(
     };
 }
 
-export function invalidArgumentsProvided(
+export function invalidArgumentsProvided<TCommand extends IDashboardCommand>(
     ctx: DashboardContext,
-    command: IDashboardCommand,
+    command: TCommand,
     message: string,
-): DashboardCommandFailed {
+): DashboardCommandFailed<TCommand> {
     return {
         type: "GDC.DASH/EVT.COMMAND.FAILED",
         ctx,
@@ -88,7 +127,9 @@ export function invalidArgumentsProvided(
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardCommandFailed = eventGuard<DashboardCommandFailed>("GDC.DASH/EVT.COMMAND.FAILED");
+export const isDashboardCommandFailed = eventGuard<DashboardCommandFailed<any>>(
+    "GDC.DASH/EVT.COMMAND.FAILED",
+);
 
 //
 //
