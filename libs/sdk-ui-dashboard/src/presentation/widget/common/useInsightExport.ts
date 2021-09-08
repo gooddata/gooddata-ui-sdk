@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { useCallback, useState } from "react";
 import invariant from "ts-invariant";
-import { IExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { v4 as uuid } from "uuid";
 
 import {
@@ -12,6 +12,8 @@ import {
     useDashboardDispatch,
     dispatchAndWaitFor,
     exportInsightWidget,
+    ExportInsightWidget,
+    DashboardInsightWidgetExportResolved,
 } from "../../../model";
 import { useExportHandler } from "./useExportHandler";
 import { useExportDialogContext } from "../../dashboardContexts";
@@ -22,9 +24,9 @@ export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) =
     const [isExporting, setIsExporting] = useState(false);
 
     const dispatch = useDashboardDispatch();
-    const exportFunction = useCallback<IExportFunction>(
-        (configToUse) =>
-            dispatchAndWaitFor(
+    const exportFunction = useCallback(
+        (configToUse: IExtendedExportConfig) =>
+            dispatchAndWaitFor<ExportInsightWidget, DashboardInsightWidgetExportResolved>(
                 dispatch,
                 exportInsightWidget(
                     widgetRef,
@@ -34,7 +36,7 @@ export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) =
                     },
                     uuid(),
                 ),
-            ),
+            ).then((result) => result.payload.resultUri),
         [widgetRef],
     );
 
