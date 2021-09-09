@@ -3,11 +3,12 @@ import {
     DateFilterGranularity,
     DateFilterType,
     DateString,
+    FilterContextItem,
     IDashboardAttributeFilterParent,
 } from "@gooddata/sdk-backend-spi";
 import { IAttributeElements, ObjRef } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
-import { IDashboardFilter } from "@gooddata/sdk-ui-ext";
+import { IDashboardFilter } from "../../types";
 
 /**
  * @alpha
@@ -442,9 +443,9 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
         /**
          * Filters to apply to the current dashboard filter context.
          */
-        filters: IDashboardFilter[];
+        filters: (IDashboardFilter | FilterContextItem)[];
         /**
-         * Should filters not mentioned in the payload reset to All items selected? Defaults to false.
+         * Should filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
          */
         resetOthers: boolean;
     };
@@ -459,12 +460,12 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
  *
  * @alpha
  * @param filters - attribute filters and date filter to apply.
- * @param resetOthers - should filters not mentioned in the payload reset to All items selected? Defaults to false.
+ * @param resetOthers - should filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns change filter selection command
  */
 export function changeFilterContextSelection(
-    filters: IDashboardFilter[],
+    filters: (IDashboardFilter | FilterContextItem)[],
     resetOthers: boolean = false,
     correlationId?: string,
 ): ChangeFilterContextSelection {

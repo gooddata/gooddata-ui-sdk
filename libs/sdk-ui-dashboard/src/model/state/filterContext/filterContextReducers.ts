@@ -84,6 +84,10 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
         isDashboardDateFilter(item),
     );
 
+    /**
+     * TODO: This will cause problems once we support dateDataset-specific date filters (then, we might want
+     * to keep even the all time filters to carry the information about the selected dateDataset).
+     */
     if (action.payload.type === "allTime") {
         if (existingFilterIndex >= 0) {
             // if allTime remove the date filter altogether

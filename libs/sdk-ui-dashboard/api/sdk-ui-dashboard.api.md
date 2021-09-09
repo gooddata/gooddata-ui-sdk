@@ -39,7 +39,6 @@ import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-backend-spi';
-import { IDashboardFilter as IDashboardFilter_2 } from '@gooddata/sdk-ui-ext';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
@@ -283,7 +282,7 @@ export function changeDrillableItems(drillableItems: ExplicitDrill[], correlatio
 export interface ChangeFilterContextSelection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        filters: IDashboardFilter_2[];
+        filters: (IDashboardFilter | FilterContextItem)[];
         resetOthers: boolean;
     };
     // (undocumented)
@@ -291,7 +290,7 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
 }
 
 // @alpha
-export function changeFilterContextSelection(filters: IDashboardFilter_2[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
+export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
 
 // @alpha (undocumented)
 export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
