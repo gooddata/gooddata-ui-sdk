@@ -250,33 +250,35 @@ const setAttributeFilterParents: FilterContextReducer<PayloadAction<ISetAttribut
     ).attributeFilter.filterElementsBy = [...parentFilters];
 };
 
-export interface IClearAttributeFilterSelectionPayload {
-    readonly filterLocalId: string;
+export interface IClearAttributeFiltersSelectionPayload {
+    readonly filterLocalIds: string[];
 }
 
-const clearAttributeFilterSelection: FilterContextReducer<
-    PayloadAction<IClearAttributeFilterSelectionPayload>
+const clearAttributeFiltersSelection: FilterContextReducer<
+    PayloadAction<IClearAttributeFiltersSelectionPayload>
 > = (state, action) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const { filterLocalIds } = action.payload;
 
-    const { filterLocalId } = action.payload;
+    filterLocalIds.forEach((filterLocalId) => {
+        invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+        const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+            (item) =>
+                isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+        );
 
-    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
-        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
-    );
+        invariant(currentFilterIndex >= 0, "Attempt to clear selection of a non-existing filter");
 
-    invariant(currentFilterIndex >= 0, "Attempt to clear selection of a non-existing filter");
+        const currentFilter = state.filterContextDefinition.filters[
+            currentFilterIndex
+        ] as IDashboardAttributeFilter;
 
-    const currentFilter = state.filterContextDefinition.filters[
-        currentFilterIndex
-    ] as IDashboardAttributeFilter;
-
-    currentFilter.attributeFilter.negativeSelection = true;
-    currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
-        currentFilter.attributeFilter.attributeElements,
-    )
-        ? { uris: [] }
-        : { values: [] };
+        currentFilter.attributeFilter.negativeSelection = true;
+        currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
+            currentFilter.attributeFilter.attributeElements,
+        )
+            ? { uris: [] }
+            : { values: [] };
+    });
 };
 
 export const filterContextReducers = {
@@ -287,6 +289,6 @@ export const filterContextReducers = {
     moveAttributeFilter,
     updateAttributeFilterSelection,
     setAttributeFilterParents,
-    clearAttributeFilterSelection,
+    clearAttributeFiltersSelection,
     upsertDateFilter,
 };

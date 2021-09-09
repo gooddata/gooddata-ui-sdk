@@ -60,15 +60,16 @@ export function* changeFilterContextSelectionHandler(
         );
 
         // for filters that have not been handled by the loop above, create a clear selection actions
-        currentAttributeFilters
-            .filter((filter) => !handledLocalIds.has(filter.attributeFilter.localIdentifier!))
-            .forEach((filter) => {
-                updateActions.push(
-                    filterContextActions.clearAttributeFilterSelection({
-                        filterLocalId: filter.attributeFilter.localIdentifier!,
-                    }),
-                );
-            });
+        const unhandledFilters = currentAttributeFilters.filter(
+            (filter) => !handledLocalIds.has(filter.attributeFilter.localIdentifier!),
+        );
+        if (unhandledFilters.length > 0) {
+            updateActions.push(
+                filterContextActions.clearAttributeFiltersSelection({
+                    filterLocalIds: unhandledFilters.map((filter) => filter.attributeFilter.localIdentifier!),
+                }),
+            );
+        }
     }
 
     if (dateFilter) {
