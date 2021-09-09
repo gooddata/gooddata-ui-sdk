@@ -1127,6 +1127,9 @@ export const isAbsoluteDateFilterForm: (obj: unknown) => obj is IAbsoluteDateFil
 export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateFilterPreset;
 
 // @alpha
+export function isAllTimeDashboardDateFilter(obj: unknown): boolean;
+
+// @alpha
 export const isAllTimeDateFilterOption: (obj: unknown) => obj is IAllTimeDateFilterOption;
 
 // @public
@@ -1926,6 +1929,15 @@ export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMet
 
 // @public
 export const metadataObjectId: (metadataObject: MetadataObject) => string;
+
+// @alpha
+export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString): IDashboardDateFilter;
+
+// @alpha
+export function newAllTimeDashboardDateFilter(): IDashboardDateFilter;
+
+// @alpha
+export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number): IDashboardDateFilter;
 
 // @public
 export class NoDataError extends AnalyticalBackendError {

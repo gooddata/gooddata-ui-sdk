@@ -16,7 +16,12 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { FilterContextState } from "./filterContextState";
-import { attributeElementsIsEmpty, IAttributeElements, ObjRef } from "@gooddata/sdk-model";
+import {
+    attributeElementsIsEmpty,
+    IAttributeElements,
+    isAttributeElementsByRef,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 
@@ -79,6 +84,10 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
         isDashboardDateFilter(item),
     );
 
+    /**
+     * TODO: This will cause problems once we support dateDataset-specific date filters (then, we might want
+     * to keep even the all time filters to carry the information about the selected dateDataset).
+     */
     if (action.payload.type === "allTime") {
         if (existingFilterIndex >= 0) {
             // if allTime remove the date filter altogether
@@ -245,6 +254,37 @@ const setAttributeFilterParents: FilterContextReducer<PayloadAction<ISetAttribut
     ).attributeFilter.filterElementsBy = [...parentFilters];
 };
 
+export interface IClearAttributeFiltersSelectionPayload {
+    readonly filterLocalIds: string[];
+}
+
+const clearAttributeFiltersSelection: FilterContextReducer<
+    PayloadAction<IClearAttributeFiltersSelectionPayload>
+> = (state, action) => {
+    const { filterLocalIds } = action.payload;
+
+    filterLocalIds.forEach((filterLocalId) => {
+        invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+        const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+            (item) =>
+                isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+        );
+
+        invariant(currentFilterIndex >= 0, "Attempt to clear selection of a non-existing filter");
+
+        const currentFilter = state.filterContextDefinition.filters[
+            currentFilterIndex
+        ] as IDashboardAttributeFilter;
+
+        currentFilter.attributeFilter.negativeSelection = true;
+        currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
+            currentFilter.attributeFilter.attributeElements,
+        )
+            ? { uris: [] }
+            : { values: [] };
+    });
+};
+
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
@@ -253,5 +293,6 @@ export const filterContextReducers = {
     moveAttributeFilter,
     updateAttributeFilterSelection,
     setAttributeFilterParents,
+    clearAttributeFiltersSelection,
     upsertDateFilter,
 };

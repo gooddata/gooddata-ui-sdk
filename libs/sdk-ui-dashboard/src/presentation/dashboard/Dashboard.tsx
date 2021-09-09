@@ -306,6 +306,7 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
 
 const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const locale = useDashboardSelector(selectLocale);
+
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
 
     return (

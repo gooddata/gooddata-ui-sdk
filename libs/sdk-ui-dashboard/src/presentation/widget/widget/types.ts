@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import { ComponentType } from "react";
-import { IAnalyticalBackend, IWidget, ScreenSize } from "@gooddata/sdk-backend-spi";
+import { FilterContextItem, IAnalyticalBackend, IWidget, ScreenSize } from "@gooddata/sdk-backend-spi";
 import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
 
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../types";
@@ -30,7 +30,7 @@ export interface DashboardWidgetProps {
     onDrill?: OnFiredDashboardViewDrillEvent;
 
     onError?: OnError;
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     /**
      * Callback that the component MUST call when the widget is clicked.
      */

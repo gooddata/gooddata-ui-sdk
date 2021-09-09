@@ -1,6 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import { ObjRef, isObjRef, IAttributeElements } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
+import isNil from "lodash/isNil";
 import { IDashboardObjectIdentity } from "./common";
 import { DateFilterGranularity, DateString } from "../dateFilterConfigs/types";
 
@@ -124,6 +125,69 @@ export interface IDashboardDateFilter {
  */
 export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter {
     return !isEmpty(obj) && !!(obj as IDashboardDateFilter).dateFilter;
+}
+
+/**
+ * Creates a new relative dashboard date filter.
+ *
+ * @param granularity - granularity of the filters (month, year, etc.)
+ * @param from - start of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
+ * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
+ * @alpha
+ */
+export function newRelativeDashboardDateFilter(
+    granularity: DateFilterGranularity,
+    from: number,
+    to: number,
+): IDashboardDateFilter {
+    return {
+        dateFilter: {
+            type: "relative",
+            granularity,
+            from,
+            to,
+        },
+    };
+}
+
+/**
+ * Creates a new absolute dashboard date filter.
+ *
+ * @param from - start of the interval in ISO-8601 calendar date format
+ * @param to - end of the interval in ISO-8601 calendar date format
+ * @alpha
+ */
+export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString): IDashboardDateFilter {
+    return {
+        dateFilter: {
+            type: "absolute",
+            granularity: "GDC.time.date",
+            from,
+            to,
+        },
+    };
+}
+
+/**
+ * Creates a new all time date filter. This filter is used to indicate that there should be no filtering on the dates.
+ *
+ * @alpha
+ */
+export function newAllTimeDashboardDateFilter(): IDashboardDateFilter {
+    return {
+        dateFilter: {
+            type: "relative",
+            granularity: "GDC.time.date",
+        },
+    };
+}
+
+/**
+ * Type-guard testing whether the provided object is an All time dashboard date filter.
+ * @alpha
+ */
+export function isAllTimeDashboardDateFilter(obj: unknown): boolean {
+    return isDashboardDateFilter(obj) && isNil(obj.dateFilter.from) && isNil(obj.dateFilter.to);
 }
 
 /**

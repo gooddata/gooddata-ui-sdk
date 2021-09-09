@@ -39,7 +39,6 @@ import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-backend-spi';
-import { IDashboardFilter as IDashboardFilter_2 } from '@gooddata/sdk-ui-ext';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
@@ -283,14 +282,15 @@ export function changeDrillableItems(drillableItems: ExplicitDrill[], correlatio
 export interface ChangeFilterContextSelection extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        filters: IDashboardFilter_2[];
+        filters: (IDashboardFilter | FilterContextItem)[];
+        resetOthers: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION";
 }
 
 // @alpha
-export function changeFilterContextSelection(filters: IDashboardFilter_2[], correlationId?: string): ChangeFilterContextSelection;
+export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
 
 // @alpha (undocumented)
 export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
@@ -1067,7 +1067,7 @@ export interface DashboardKpiProps {
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
     onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     workspace?: string;
 }
 
@@ -1156,7 +1156,7 @@ export interface DashboardLayoutProps {
     // (undocumented)
     onError?: OnError;
     // (undocumented)
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
 }
 
 // @internal (undocumented)
@@ -1455,7 +1455,7 @@ export interface DashboardWidgetProps {
     // (undocumented)
     onError?: OnError;
     // (undocumented)
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     onWidgetClicked?: () => void;
     // (undocumented)
     screen: ScreenSize;
