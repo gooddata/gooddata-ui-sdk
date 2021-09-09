@@ -166,6 +166,16 @@ export interface ISettings {
      */
     enableInsightToReport?: boolean;
 
+    /**
+     * Enable implicit drillToAttributeURL
+     */
+    enableClickableAttributeURL?: boolean;
+
+    /**
+     * Enable implicit drill down
+     */
+    enableKPIDashboardImplicitDrillDown?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

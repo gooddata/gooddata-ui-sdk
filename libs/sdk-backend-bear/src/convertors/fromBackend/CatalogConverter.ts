@@ -106,10 +106,17 @@ export const convertAttribute = (
         ? uriRef(attributeData.attribute.content.drillDownStepAttributeDF)
         : undefined;
 
+    const drillDownLink = attributeData.attribute.content.linkAttributeDF
+        ? uriRef(attributeData.attribute.content.linkAttributeDF)
+        : undefined;
+
     return newCatalogAttribute((catalogA) =>
         catalogA
             .attribute(attrRef, (a) => {
-                return a.modify(commonCatalogItemModifications(attribute)).drillDownStep(drillDownStep);
+                return a
+                    .modify(commonCatalogItemModifications(attribute))
+                    .drillDownStep(drillDownStep)
+                    .drillToAttributeLink(drillDownLink);
             })
             .defaultDisplayForm(convertDisplayForm(defaultDisplayForm, attrRef))
             .displayForms(attributeDisplayForms)

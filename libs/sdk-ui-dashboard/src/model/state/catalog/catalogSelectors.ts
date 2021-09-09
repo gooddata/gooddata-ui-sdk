@@ -72,6 +72,13 @@ export const selectAttributesWithDrillDown = createSelector(
     },
 );
 
+export const selectAttributesWithDisplayFormLink = createSelector(
+    [selectCatalogAttributes],
+    (attributes = []) => {
+        return attributes.filter((attr) => attr.attribute.drillToAttributeLink);
+    },
+);
+
 /**
  * Selects all date datasets in the catalog as a mapping of obj ref to date dataset.
  *

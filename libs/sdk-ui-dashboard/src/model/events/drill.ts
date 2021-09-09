@@ -670,6 +670,11 @@ export interface DashboardDrillToAttributeUrlResolved extends IDashboardEvent {
          * Information about filters used on the dashboard.
          */
         readonly filtersInfo: FiltersInfo;
+
+        /**
+         * drill is implicit generated on the fly base on metadata model or configured by user
+         */
+        readonly isImplicit: boolean;
     };
 }
 
@@ -682,6 +687,7 @@ export function drillToAttributeUrlResolved(
     drillDefinition: IDrillToAttributeUrl,
     drillEvent: IDashboardDrillEvent,
     filtersInfo: FiltersInfo,
+    isImplicit: boolean,
     correlationId?: string,
 ): DashboardDrillToAttributeUrlResolved {
     return {
@@ -693,6 +699,7 @@ export function drillToAttributeUrlResolved(
             drillDefinition,
             url,
             filtersInfo,
+            isImplicit,
         },
     };
 }

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import identity from "lodash/identity";
 import { MetadataObjectBuilder } from "./factory";
 import { IAttributeDisplayFormMetadataObject, IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
@@ -17,6 +17,13 @@ export class AttributeMetadataObjectBuilder<
     public drillDownStep(ref: ObjRef | undefined): this {
         if (ref) {
             this.item.drillDownStep = ref;
+        }
+        return this;
+    }
+
+    public drillToAttributeLink(ref: ObjRef | undefined): this {
+        if (ref) {
+            this.item.drillToAttributeLink = ref;
         }
         return this;
     }

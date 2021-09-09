@@ -1223,6 +1223,7 @@ export namespace GdcMetadata {
             displayForms: IAttributeDisplayForm[];
             type?: string;
             drillDownStepAttributeDF?: Uri;
+            linkAttributeDF?: Uri;
         };
     }
     // (undocumented)
