@@ -8,6 +8,7 @@ import isNumber from "lodash/isNumber";
 import flowRight from "lodash/flowRight";
 import round from "lodash/round";
 import {
+    FilterContextItem,
     IAnalyticalBackend,
     IKpiWidget,
     ISeparators,
@@ -79,7 +80,7 @@ interface IKpiExecutorProps {
      * the filters ignored for execution)
      */
     allFilters?: IDashboardFilter[];
-    onFiltersChange?: (filters: IDashboardFilter[], resetOthers?: boolean) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
     backend: IAnalyticalBackend;

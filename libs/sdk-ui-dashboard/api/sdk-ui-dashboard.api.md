@@ -1067,7 +1067,7 @@ export interface DashboardKpiProps {
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
     onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
-    onFiltersChange?: (filters: IDashboardFilter[], resetOthers?: boolean) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     workspace?: string;
 }
 
@@ -1156,7 +1156,7 @@ export interface DashboardLayoutProps {
     // (undocumented)
     onError?: OnError;
     // (undocumented)
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
 }
 
 // @internal (undocumented)
@@ -1455,7 +1455,7 @@ export interface DashboardWidgetProps {
     // (undocumented)
     onError?: OnError;
     // (undocumented)
-    onFiltersChange?: (filters: IDashboardFilter[], resetOthers?: boolean) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     onWidgetClicked?: () => void;
     // (undocumented)
     screen: ScreenSize;

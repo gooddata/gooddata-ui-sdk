@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import { IDrillEvent, OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
+// TODO consider adding FilterContextItem to this union so that user can use either sdk-model or FilterContextItem variants of the filters
 /**
  * Supported dashboard filter type.
  * @beta
