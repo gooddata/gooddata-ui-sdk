@@ -231,6 +231,10 @@ export {
     isDashboardDateFilterReference,
     IFilterContextBase,
     dashboardFilterReferenceObjRef,
+    isAllTimeDashboardDateFilter,
+    newAbsoluteDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+    newRelativeDashboardDateFilter,
 } from "./workspace/dashboards/filterContext";
 export {
     IDashboardLayout,
