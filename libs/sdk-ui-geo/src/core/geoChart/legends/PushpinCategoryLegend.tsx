@@ -16,6 +16,7 @@ export const HEIGHT_OF_SIZE_LEGEND = 161;
 export interface IPushpinCategoryLegendProps {
     containerId: string;
     hasSizeLegend: boolean;
+    isSizeLegendVisible?: boolean;
     contentRect: ContentRect;
     categoryItems?: IPushpinCategoryLegendItem[];
     format?: string;
@@ -34,10 +35,10 @@ export interface IPushpinCategoryLegendProps {
 }
 
 export default function PushpinCategoryLegend(props: IPushpinCategoryLegendProps): JSX.Element {
-    const { contentRect, hasSizeLegend, isFluidLegend, renderPopUp } = props;
+    const { contentRect, hasSizeLegend, isFluidLegend, renderPopUp, isSizeLegendVisible = true } = props;
 
     if (renderPopUp) {
-        return <GeoPopUpLegend {...props} />;
+        return <GeoPopUpLegend {...props} isSizeLegendVisible={isSizeLegendVisible} />;
     }
 
     return (
@@ -108,13 +109,14 @@ function GeoPopUpLegend(props: IPushpinCategoryLegendProps): JSX.Element {
         customComponent,
         customComponentName,
         hasSizeLegend,
+        isSizeLegendVisible,
     } = props;
 
     return (
         <PopUpLegend
             series={categoryItems}
             onLegendItemClick={onItemClick}
-            maxRows={hasSizeLegend && maxRows ? maxRows - 1 : maxRows}
+            maxRows={hasSizeLegend && isSizeLegendVisible && maxRows ? maxRows - 1 : maxRows}
             name={name}
             containerId={containerId}
             customComponent={customComponent}
