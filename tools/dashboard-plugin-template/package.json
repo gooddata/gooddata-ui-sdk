@@ -45,11 +45,11 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-bear": "^8.6.0-alpha.75",
-        "@gooddata/sdk-backend-spi": "^8.6.0-alpha.75",
-        "@gooddata/sdk-model": "^8.6.0-alpha.75",
-        "@gooddata/sdk-ui": "^8.6.0-alpha.75",
-        "@gooddata/sdk-ui-ext": "^8.6.0-alpha.75",
+        "@gooddata/sdk-backend-bear": "^8.6.0-alpha.76",
+        "@gooddata/sdk-backend-spi": "^8.6.0-alpha.76",
+        "@gooddata/sdk-model": "^8.6.0-alpha.76",
+        "@gooddata/sdk-ui": "^8.6.0-alpha.76",
+        "@gooddata/sdk-ui-ext": "^8.6.0-alpha.76",
         "lodash": "^4.17.19",
         "react": "^16.10.0",
         "react-dom": "^16.10.0",
