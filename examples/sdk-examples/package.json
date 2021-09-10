@@ -133,7 +133,7 @@
         "validate": "npm run eslint && npm run prettier-check",
         "validate-ci": "npm run eslint-ci && npm run prettier-check",
         "test": "jest --watch",
-        "test-once": "jest --passWithNoTests",
+        "test-once": "jest --maxWorkers=${JEST_MAX_WORKERS:-'45%'} --passWithNoTests",
         "examples?": "# Default is the public access proxy, other options: npm run examples [sec,secure,stg,stg2,stg3,demo,developer or URL]",
         "examples": "bash scripts/run-examples.sh",
         "build": "bash scripts/build-examples.sh ${EXAMPLES_BUILD_TYPE}",

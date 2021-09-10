@@ -44,7 +44,7 @@
         "dev": "bash scripts/build.sh --dev-watch",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "test": "jest --watch",
-        "test-once": "jest --passWithNoTests",
+        "test-once": "jest --maxWorkers=${JEST_MAX_WORKERS:-'45%'} --passWithNoTests",
         "test-once-with-coverage": "jest --passWithNoTests --coverage=true",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --passWithNoTests --config jest.ci.js",
         "eslint": "eslint $npm_package_config_eslint",
