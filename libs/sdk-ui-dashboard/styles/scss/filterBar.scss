@@ -16,6 +16,33 @@
     }
 }
 
+.gd-dash-header-wrapper {
+    z-index: 100;
+    transition: left $sidebar-transition-length;
+
+    .is-dashboard-loading & {
+        z-index: 0;
+        animation-delay: 1s;
+        animation-duration: $sidebar-transition-length;
+        animation-fill-mode: forwards;
+        opacity: 0;
+    }
+}
+
+.is-sticky {
+    .dash-nav,
+    .gd-dash-header-wrapper {
+        @media #{$medium-up} {
+            animation: sticky-intro 1ms;
+        }
+    }
+
+    .dash-nav {
+        z-index: 1;
+        width: $sidebar-width;
+    }
+}
+
 .dash-filters-visible {
     overflow-y: hidden;
     padding: 0 15px;
