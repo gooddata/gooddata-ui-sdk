@@ -109,53 +109,188 @@ export interface AFM {
 }
 
 // @public
-export class AfmControllerApi extends LabelElementsBaseApi implements AfmControllerApiInterface {
+export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApiInterface {
+    computeLabelElements(params: {
+        workspaceId: string;
+        label: string;
+        sortOrder?: "ASC" | "DESC";
+        complementFilter?: boolean;
+        patternFilter?: string;
+        exactFilter?: Array<string>;
+        offset?: number;
+        limit?: number;
+        dataSamplingPercentage?: number;
+        skipCache?: boolean;
+    }, options?: any): AxiosPromise<ElementsResponse>;
     computeReport(params: {
         workspaceId: string;
         afmExecution: AfmExecution;
         skipCache?: boolean;
         timestamp?: string;
     }, options?: any): AxiosPromise<AfmExecutionResponse>;
+    computeValidObjects(params: {
+        workspaceId: string;
+        afmValidObjectsQuery: AfmValidObjectsQuery;
+    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
+    explainAFM(params: {
+        workspaceId: string;
+        afmExecution: AfmExecution;
+        explainType?: string;
+    }, options?: any): AxiosPromise<any>;
+    retrieveResult(params: {
+        workspaceId: string;
+        resultId: string;
+        offset?: Array<number>;
+        limit?: Array<number>;
+    }, options?: any): AxiosPromise<ExecutionResult>;
 }
 
 // @public
-export const AfmControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
+export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
+    computeLabelElements(params: {
+        workspaceId: string;
+        label: string;
+        sortOrder?: "ASC" | "DESC" | undefined;
+        complementFilter?: boolean | undefined;
+        patternFilter?: string | undefined;
+        exactFilter?: string[] | undefined;
+        offset?: number | undefined;
+        limit?: number | undefined;
+        dataSamplingPercentage?: number | undefined;
+        skipCache?: boolean | undefined;
+    }, options?: any): LabelElementsRequestArgs;
     computeReport(params: {
         workspaceId: string;
         afmExecution: AfmExecution;
         skipCache?: boolean | undefined;
         timestamp?: string | undefined;
     }, options?: any): LabelElementsRequestArgs;
+    computeValidObjects(params: {
+        workspaceId: string;
+        afmValidObjectsQuery: AfmValidObjectsQuery;
+    }, options?: any): LabelElementsRequestArgs;
+    explainAFM(params: {
+        workspaceId: string;
+        afmExecution: AfmExecution;
+        explainType?: string | undefined;
+    }, options?: any): LabelElementsRequestArgs;
+    retrieveResult(params: {
+        workspaceId: string;
+        resultId: string;
+        offset?: number[] | undefined;
+        limit?: number[] | undefined;
+    }, options?: any): LabelElementsRequestArgs;
 };
 
 // @public
-export const AfmControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    computeLabelElements(params: {
+        workspaceId: string;
+        label: string;
+        sortOrder?: "ASC" | "DESC";
+        complementFilter?: boolean;
+        patternFilter?: string;
+        exactFilter?: Array<string>;
+        offset?: number;
+        limit?: number;
+        dataSamplingPercentage?: number;
+        skipCache?: boolean;
+    }, options?: any): AxiosPromise<ElementsResponse>;
     computeReport(params: {
         workspaceId: string;
         afmExecution: AfmExecution;
         skipCache?: boolean;
         timestamp?: string;
     }, options?: any): AxiosPromise<AfmExecutionResponse>;
+    computeValidObjects(params: {
+        workspaceId: string;
+        afmValidObjectsQuery: AfmValidObjectsQuery;
+    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
+    explainAFM(params: {
+        workspaceId: string;
+        afmExecution: AfmExecution;
+        explainType?: string;
+    }, options?: any): AxiosPromise<any>;
+    retrieveResult(params: {
+        workspaceId: string;
+        resultId: string;
+        offset?: Array<number>;
+        limit?: Array<number>;
+    }, options?: any): AxiosPromise<ExecutionResult>;
 };
 
 // @public
-export const AfmControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
+export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
+    computeLabelElements(params: {
+        workspaceId: string;
+        label: string;
+        sortOrder?: "ASC" | "DESC";
+        complementFilter?: boolean;
+        patternFilter?: string;
+        exactFilter?: Array<string>;
+        offset?: number;
+        limit?: number;
+        dataSamplingPercentage?: number;
+        skipCache?: boolean;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<ElementsResponse>;
     computeReport(params: {
         workspaceId: string;
         afmExecution: AfmExecution;
         skipCache?: boolean;
         timestamp?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AfmExecutionResponse>;
+    computeValidObjects(params: {
+        workspaceId: string;
+        afmValidObjectsQuery: AfmValidObjectsQuery;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AfmValidObjectsResponse>;
+    explainAFM(params: {
+        workspaceId: string;
+        afmExecution: AfmExecution;
+        explainType?: string;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<any>;
+    retrieveResult(params: {
+        workspaceId: string;
+        resultId: string;
+        offset?: Array<number>;
+        limit?: Array<number>;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<ExecutionResult>;
 };
 
 // @public
-export interface AfmControllerApiInterface {
+export interface AfmActionsApiInterface {
+    computeLabelElements(params: {
+        workspaceId: string;
+        label: string;
+        sortOrder?: "ASC" | "DESC";
+        complementFilter?: boolean;
+        patternFilter?: string;
+        exactFilter?: Array<string>;
+        offset?: number;
+        limit?: number;
+        dataSamplingPercentage?: number;
+        skipCache?: boolean;
+    }, options?: any): AxiosPromise<ElementsResponse>;
     computeReport(params: {
         workspaceId: string;
         afmExecution: AfmExecution;
         skipCache?: boolean;
         timestamp?: string;
     }, options?: any): AxiosPromise<AfmExecutionResponse>;
+    computeValidObjects(params: {
+        workspaceId: string;
+        afmValidObjectsQuery: AfmValidObjectsQuery;
+    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
+    explainAFM(params: {
+        workspaceId: string;
+        afmExecution: AfmExecution;
+        explainType?: string;
+    }, options?: any): AxiosPromise<any>;
+    retrieveResult(params: {
+        workspaceId: string;
+        resultId: string;
+        offset?: Array<number>;
+        limit?: Array<number>;
+    }, options?: any): AxiosPromise<ExecutionResult>;
 }
 
 // @public
@@ -168,51 +303,6 @@ export interface AfmExecution {
 // @public
 export interface AfmExecutionResponse {
     executionResponse: ExecutionResponse;
-}
-
-// @public
-export class AfmExplainControllerApi extends LabelElementsBaseApi implements AfmExplainControllerApiInterface {
-    explainAFM(params: {
-        workspaceId: string;
-        afmExecution: AfmExecution;
-        explainType?: string;
-    }, options?: any): AxiosPromise<any>;
-}
-
-// @public
-export const AfmExplainControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
-    explainAFM(params: {
-        workspaceId: string;
-        afmExecution: AfmExecution;
-        explainType?: string | undefined;
-    }, options?: any): LabelElementsRequestArgs;
-};
-
-// @public
-export const AfmExplainControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
-    explainAFM(params: {
-        workspaceId: string;
-        afmExecution: AfmExecution;
-        explainType?: string;
-    }, options?: any): AxiosPromise<any>;
-};
-
-// @public
-export const AfmExplainControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
-    explainAFM(params: {
-        workspaceId: string;
-        afmExecution: AfmExecution;
-        explainType?: string;
-    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<any>;
-};
-
-// @public
-export interface AfmExplainControllerApiInterface {
-    explainAFM(params: {
-        workspaceId: string;
-        afmExecution: AfmExecution;
-        explainType?: string;
-    }, options?: any): AxiosPromise<any>;
 }
 
 // @public
@@ -700,6 +790,8 @@ export interface DeclarativeDataset {
 
 // @public
 export interface DeclarativeDataSource {
+    cachePath?: Array<string>;
+    enableCaching?: boolean;
     id: string;
     name: string;
     password?: string;
@@ -722,6 +814,10 @@ export enum DeclarativeDataSourceTypeEnum {
     ADS = "ADS",
     // (undocumented)
     BIGQUERY = "BIGQUERY",
+    // (undocumented)
+    DREMIO = "DREMIO",
+    // (undocumented)
+    DRILL = "DRILL",
     // (undocumented)
     MSSQL = "MSSQL",
     // (undocumented)
@@ -979,91 +1075,10 @@ interface Element_2 {
 export { Element_2 as Element }
 
 // @public
-export class ElementsControllerApi extends LabelElementsBaseApi implements ElementsControllerApiInterface {
-    computeLabelElements(params: {
-        workspaceId: string;
-        label: string;
-        sortOrder?: "ASC" | "DESC";
-        includeTotalWithoutFilters?: boolean;
-        complementFilter?: boolean;
-        patternFilter?: string;
-        offset?: number;
-        limit?: number;
-        dataSamplingPercentage?: number;
-        skipCache?: boolean;
-    }, options?: any): AxiosPromise<ElementsResponse>;
-}
-
-// @public
-export const ElementsControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
-    computeLabelElements(params: {
-        workspaceId: string;
-        label: string;
-        sortOrder?: "ASC" | "DESC" | undefined;
-        includeTotalWithoutFilters?: boolean | undefined;
-        complementFilter?: boolean | undefined;
-        patternFilter?: string | undefined;
-        offset?: number | undefined;
-        limit?: number | undefined;
-        dataSamplingPercentage?: number | undefined;
-        skipCache?: boolean | undefined;
-    }, options?: any): LabelElementsRequestArgs;
-};
-
-// @public
-export const ElementsControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
-    computeLabelElements(params: {
-        workspaceId: string;
-        label: string;
-        sortOrder?: "ASC" | "DESC";
-        includeTotalWithoutFilters?: boolean;
-        complementFilter?: boolean;
-        patternFilter?: string;
-        offset?: number;
-        limit?: number;
-        dataSamplingPercentage?: number;
-        skipCache?: boolean;
-    }, options?: any): AxiosPromise<ElementsResponse>;
-};
-
-// @public
-export const ElementsControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
-    computeLabelElements(params: {
-        workspaceId: string;
-        label: string;
-        sortOrder?: "ASC" | "DESC";
-        includeTotalWithoutFilters?: boolean;
-        complementFilter?: boolean;
-        patternFilter?: string;
-        offset?: number;
-        limit?: number;
-        dataSamplingPercentage?: number;
-        skipCache?: boolean;
-    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<ElementsResponse>;
-};
-
-// @public
-export interface ElementsControllerApiInterface {
-    computeLabelElements(params: {
-        workspaceId: string;
-        label: string;
-        sortOrder?: "ASC" | "DESC";
-        includeTotalWithoutFilters?: boolean;
-        complementFilter?: boolean;
-        patternFilter?: string;
-        offset?: number;
-        limit?: number;
-        dataSamplingPercentage?: number;
-        skipCache?: boolean;
-    }, options?: any): AxiosPromise<ElementsResponse>;
-}
-
-// @public
 export interface ElementsResponse {
     elements: Array<Element_2>;
     paging: Paging;
     primaryLabel: ObjectIdentifier;
-    totalCountWithoutFilters?: number;
 }
 
 // @public
@@ -4542,18 +4557,9 @@ export enum JsonApiACLOutWithLinksTypeEnum {
 
 // @public
 export interface JsonApiAnalyticalDashboardIn {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
     type: JsonApiAnalyticalDashboardInTypeEnum;
-}
-
-// @public
-export interface JsonApiAnalyticalDashboardInAttributes {
-    areRelationsValid?: boolean;
-    content?: object;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
 }
 
 // @public
@@ -4581,10 +4587,19 @@ export enum JsonApiAnalyticalDashboardLinkageTypeEnum {
 
 // @public
 export interface JsonApiAnalyticalDashboardOut {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
     relationships?: JsonApiAnalyticalDashboardOutRelationships;
     type: JsonApiAnalyticalDashboardOutTypeEnum;
+}
+
+// @public
+export interface JsonApiAnalyticalDashboardOutAttributes {
+    areRelationsValid?: boolean;
+    content?: object;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
 }
 
 // @public
@@ -4652,7 +4667,7 @@ export enum JsonApiAnalyticalDashboardOutTypeEnum {
 
 // @public
 export interface JsonApiAnalyticalDashboardOutWithLinks {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
     links?: ObjectLinks;
     relationships?: JsonApiAnalyticalDashboardOutRelationships;
@@ -4964,9 +4979,19 @@ export interface JsonApiDatasetOutList {
 
 // @public
 export interface JsonApiDatasetOutRelationships {
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     references?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
+}
+
+// @public
+export interface JsonApiDatasetOutRelationshipsAttributes {
+    data: Array<JsonApiAttributeLinkage>;
+}
+
+// @public
+export interface JsonApiDatasetOutRelationshipsFacts {
+    data: Array<JsonApiFactLinkage>;
 }
 
 // @public
@@ -5002,6 +5027,8 @@ export interface JsonApiDataSourceIn {
 
 // @public
 export interface JsonApiDataSourceInAttributes {
+    cachePath?: Array<string>;
+    enableCaching?: boolean;
     name: string;
     password?: string;
     schema: string;
@@ -5017,6 +5044,10 @@ export enum JsonApiDataSourceInAttributesTypeEnum {
     ADS = "ADS",
     // (undocumented)
     BIGQUERY = "BIGQUERY",
+    // (undocumented)
+    DREMIO = "DREMIO",
+    // (undocumented)
+    DRILL = "DRILL",
     // (undocumented)
     MSSQL = "MSSQL",
     // (undocumented)
@@ -5051,6 +5082,8 @@ export interface JsonApiDataSourceOut {
 
 // @public
 export interface JsonApiDataSourceOutAttributes {
+    cachePath?: Array<string>;
+    enableCaching?: boolean;
     name: string;
     schema: string;
     type: JsonApiDataSourceOutAttributesTypeEnum;
@@ -5064,6 +5097,10 @@ export enum JsonApiDataSourceOutAttributesTypeEnum {
     ADS = "ADS",
     // (undocumented)
     BIGQUERY = "BIGQUERY",
+    // (undocumented)
+    DREMIO = "DREMIO",
+    // (undocumented)
+    DRILL = "DRILL",
     // (undocumented)
     MSSQL = "MSSQL",
     // (undocumented)
@@ -5260,7 +5297,7 @@ export enum JsonApiFactOutWithLinksTypeEnum {
 
 // @public
 export interface JsonApiFilterContextIn {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
     type: JsonApiFilterContextInTypeEnum;
 }
@@ -5290,7 +5327,7 @@ export enum JsonApiFilterContextLinkageTypeEnum {
 
 // @public
 export interface JsonApiFilterContextOut {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
     relationships?: JsonApiFilterContextOutRelationships;
     type: JsonApiFilterContextOutTypeEnum;
@@ -5315,14 +5352,9 @@ export interface JsonApiFilterContextOutList {
 
 // @public
 export interface JsonApiFilterContextOutRelationships {
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     datasets?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-}
-
-// @public
-export interface JsonApiFilterContextOutRelationshipsAttributes {
-    data: Array<JsonApiAttributeLinkage>;
 }
 
 // @public
@@ -5333,7 +5365,7 @@ export enum JsonApiFilterContextOutTypeEnum {
 
 // @public
 export interface JsonApiFilterContextOutWithLinks {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
     links?: ObjectLinks;
     relationships?: JsonApiFilterContextOutRelationships;
@@ -5429,24 +5461,9 @@ export enum JsonApiLabelOutWithLinksTypeEnum {
 
 // @public
 export interface JsonApiMetricIn {
-    attributes: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricOutAttributes;
     id: string;
     type: JsonApiMetricInTypeEnum;
-}
-
-// @public
-export interface JsonApiMetricInAttributes {
-    areRelationsValid?: boolean;
-    content: JsonApiMetricInAttributesContent;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
-}
-
-// @public
-export interface JsonApiMetricInAttributesContent {
-    format?: string;
-    maql: string;
 }
 
 // @public
@@ -5474,10 +5491,25 @@ export enum JsonApiMetricLinkageTypeEnum {
 
 // @public
 export interface JsonApiMetricOut {
-    attributes: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricOutAttributes;
     id: string;
     relationships?: JsonApiMetricOutRelationships;
     type: JsonApiMetricOutTypeEnum;
+}
+
+// @public
+export interface JsonApiMetricOutAttributes {
+    areRelationsValid?: boolean;
+    content: JsonApiMetricOutAttributesContent;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface JsonApiMetricOutAttributesContent {
+    format?: string;
+    maql: string;
 }
 
 // @public
@@ -5499,15 +5531,10 @@ export interface JsonApiMetricOutList {
 
 // @public
 export interface JsonApiMetricOutRelationships {
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
-}
-
-// @public
-export interface JsonApiMetricOutRelationshipsFacts {
-    data: Array<JsonApiFactLinkage>;
 }
 
 // @public
@@ -5518,7 +5545,7 @@ export enum JsonApiMetricOutTypeEnum {
 
 // @public
 export interface JsonApiMetricOutWithLinks {
-    attributes: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricOutAttributes;
     id: string;
     links?: ObjectLinks;
     relationships?: JsonApiMetricOutRelationships;
@@ -5771,7 +5798,7 @@ export type JsonApiUserToOneLinkage = JsonApiUserLinkage;
 
 // @public
 export interface JsonApiVisualizationObjectIn {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
     type: JsonApiVisualizationObjectInTypeEnum;
 }
@@ -5801,7 +5828,7 @@ export enum JsonApiVisualizationObjectLinkageTypeEnum {
 
 // @public
 export interface JsonApiVisualizationObjectOut {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
     relationships?: JsonApiVisualizationObjectOutRelationships;
     type: JsonApiVisualizationObjectOutTypeEnum;
@@ -5826,9 +5853,9 @@ export interface JsonApiVisualizationObjectOutList {
 
 // @public
 export interface JsonApiVisualizationObjectOutRelationships {
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     datasets?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
 }
@@ -5841,7 +5868,7 @@ export enum JsonApiVisualizationObjectOutTypeEnum {
 
 // @public
 export interface JsonApiVisualizationObjectOutWithLinks {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
     links?: ObjectLinks;
     relationships?: JsonApiVisualizationObjectOutRelationships;
@@ -5856,32 +5883,15 @@ export enum JsonApiVisualizationObjectOutWithLinksTypeEnum {
 
 // @public
 export interface JsonApiWorkspaceDataFilterIn {
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
     type: JsonApiWorkspaceDataFilterInTypeEnum;
-}
-
-// @public
-export interface JsonApiWorkspaceDataFilterInAttributes {
-    columnName?: string;
-    description?: string;
-    title?: string;
 }
 
 // @public
 export interface JsonApiWorkspaceDataFilterInDocument {
     data: JsonApiWorkspaceDataFilterIn;
-}
-
-// @public
-export interface JsonApiWorkspaceDataFilterInRelationships {
-    filterSettings?: JsonApiWorkspaceDataFilterInRelationshipsFilterSettings;
-}
-
-// @public
-export interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings {
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 
 // @public
@@ -5904,10 +5914,17 @@ export enum JsonApiWorkspaceDataFilterLinkageTypeEnum {
 
 // @public
 export interface JsonApiWorkspaceDataFilterOut {
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
     type: JsonApiWorkspaceDataFilterOutTypeEnum;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterOutAttributes {
+    columnName?: string;
+    description?: string;
+    title?: string;
 }
 
 // @public
@@ -5925,6 +5942,16 @@ export interface JsonApiWorkspaceDataFilterOutList {
 }
 
 // @public
+export interface JsonApiWorkspaceDataFilterOutRelationships {
+    filterSettings?: JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings {
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
+}
+
+// @public
 export enum JsonApiWorkspaceDataFilterOutTypeEnum {
     // (undocumented)
     WorkspaceDataFilter = "workspaceDataFilter"
@@ -5932,10 +5959,10 @@ export enum JsonApiWorkspaceDataFilterOutTypeEnum {
 
 // @public
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
     type: JsonApiWorkspaceDataFilterOutWithLinksTypeEnum;
 }
 
@@ -6193,9 +6220,6 @@ export class LayoutApi extends MetadataBaseApi implements LayoutApiInterface {
     }, options?: any): AxiosPromise<DeclarativeWorkspaceModel>;
     getWorkspacesLayout(params: {}, options?: any): AxiosPromise<DeclarativeWorkspaces>;
     putDataSourcesLayout(params: {
-        declarativeUsersUserGroups: DeclarativeUsersUserGroups;
-    }, options?: any): AxiosPromise<void>;
-    putDataSourcesLayout1(params: {
         declarativeDataSources: DeclarativeDataSources;
     }, options?: any): AxiosPromise<void>;
     putUserGroupsLayout(params: {
@@ -6203,6 +6227,9 @@ export class LayoutApi extends MetadataBaseApi implements LayoutApiInterface {
     }, options?: any): AxiosPromise<void>;
     putUsersLayout(params: {
         declarativeUsers: DeclarativeUsers;
+    }, options?: any): AxiosPromise<void>;
+    putUsersUserGroupsLayout(params: {
+        declarativeUsersUserGroups: DeclarativeUsersUserGroups;
     }, options?: any): AxiosPromise<void>;
     putWorkspaceLayout(params: {
         workspaceId: string;
@@ -6253,9 +6280,6 @@ export const LayoutApiAxiosParamCreator: (configuration?: MetadataConfiguration 
     }, options?: any): MetadataRequestArgs;
     getWorkspacesLayout(params: {}, options?: any): MetadataRequestArgs;
     putDataSourcesLayout(params: {
-        declarativeUsersUserGroups: DeclarativeUsersUserGroups;
-    }, options?: any): MetadataRequestArgs;
-    putDataSourcesLayout1(params: {
         declarativeDataSources: DeclarativeDataSources;
     }, options?: any): MetadataRequestArgs;
     putUserGroupsLayout(params: {
@@ -6263,6 +6287,9 @@ export const LayoutApiAxiosParamCreator: (configuration?: MetadataConfiguration 
     }, options?: any): MetadataRequestArgs;
     putUsersLayout(params: {
         declarativeUsers: DeclarativeUsers;
+    }, options?: any): MetadataRequestArgs;
+    putUsersUserGroupsLayout(params: {
+        declarativeUsersUserGroups: DeclarativeUsersUserGroups;
     }, options?: any): MetadataRequestArgs;
     putWorkspaceLayout(params: {
         workspaceId: string;
@@ -6313,9 +6340,6 @@ export const LayoutApiFactory: (configuration?: MetadataConfiguration | undefine
     }, options?: any): AxiosPromise<DeclarativeWorkspaceModel>;
     getWorkspacesLayout(params: {}, options?: any): AxiosPromise<DeclarativeWorkspaces>;
     putDataSourcesLayout(params: {
-        declarativeUsersUserGroups: DeclarativeUsersUserGroups;
-    }, options?: any): AxiosPromise<void>;
-    putDataSourcesLayout1(params: {
         declarativeDataSources: DeclarativeDataSources;
     }, options?: any): AxiosPromise<void>;
     putUserGroupsLayout(params: {
@@ -6323,6 +6347,9 @@ export const LayoutApiFactory: (configuration?: MetadataConfiguration | undefine
     }, options?: any): AxiosPromise<void>;
     putUsersLayout(params: {
         declarativeUsers: DeclarativeUsers;
+    }, options?: any): AxiosPromise<void>;
+    putUsersUserGroupsLayout(params: {
+        declarativeUsersUserGroups: DeclarativeUsersUserGroups;
     }, options?: any): AxiosPromise<void>;
     putWorkspaceLayout(params: {
         workspaceId: string;
@@ -6373,9 +6400,6 @@ export const LayoutApiFp: (configuration?: MetadataConfiguration | undefined) =>
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeWorkspaceModel>;
     getWorkspacesLayout(params: {}, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeWorkspaces>;
     putDataSourcesLayout(params: {
-        declarativeUsersUserGroups: DeclarativeUsersUserGroups;
-    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
-    putDataSourcesLayout1(params: {
         declarativeDataSources: DeclarativeDataSources;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
     putUserGroupsLayout(params: {
@@ -6383,6 +6407,9 @@ export const LayoutApiFp: (configuration?: MetadataConfiguration | undefined) =>
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
     putUsersLayout(params: {
         declarativeUsers: DeclarativeUsers;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+    putUsersUserGroupsLayout(params: {
+        declarativeUsersUserGroups: DeclarativeUsersUserGroups;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
     putWorkspaceLayout(params: {
         workspaceId: string;
@@ -6433,9 +6460,6 @@ export interface LayoutApiInterface {
     }, options?: any): AxiosPromise<DeclarativeWorkspaceModel>;
     getWorkspacesLayout(params: {}, options?: any): AxiosPromise<DeclarativeWorkspaces>;
     putDataSourcesLayout(params: {
-        declarativeUsersUserGroups: DeclarativeUsersUserGroups;
-    }, options?: any): AxiosPromise<void>;
-    putDataSourcesLayout1(params: {
         declarativeDataSources: DeclarativeDataSources;
     }, options?: any): AxiosPromise<void>;
     putUserGroupsLayout(params: {
@@ -6443,6 +6467,9 @@ export interface LayoutApiInterface {
     }, options?: any): AxiosPromise<void>;
     putUsersLayout(params: {
         declarativeUsers: DeclarativeUsers;
+    }, options?: any): AxiosPromise<void>;
+    putUsersUserGroupsLayout(params: {
+        declarativeUsersUserGroups: DeclarativeUsersUserGroups;
     }, options?: any): AxiosPromise<void>;
     putWorkspaceLayout(params: {
         workspaceId: string;
@@ -8094,56 +8121,6 @@ export enum RelativeDateFilterBodyGranularityEnum {
 }
 
 // @public
-export class ResultControllerApi extends LabelElementsBaseApi implements ResultControllerApiInterface {
-    retrieveResult(params: {
-        workspaceId: string;
-        resultId: string;
-        offset?: Array<number>;
-        limit?: Array<number>;
-    }, options?: any): AxiosPromise<ExecutionResult>;
-}
-
-// @public
-export const ResultControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
-    retrieveResult(params: {
-        workspaceId: string;
-        resultId: string;
-        offset?: number[] | undefined;
-        limit?: number[] | undefined;
-    }, options?: any): LabelElementsRequestArgs;
-};
-
-// @public
-export const ResultControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
-    retrieveResult(params: {
-        workspaceId: string;
-        resultId: string;
-        offset?: Array<number>;
-        limit?: Array<number>;
-    }, options?: any): AxiosPromise<ExecutionResult>;
-};
-
-// @public
-export const ResultControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
-    retrieveResult(params: {
-        workspaceId: string;
-        resultId: string;
-        offset?: Array<number>;
-        limit?: Array<number>;
-    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<ExecutionResult>;
-};
-
-// @public
-export interface ResultControllerApiInterface {
-    retrieveResult(params: {
-        workspaceId: string;
-        resultId: string;
-        offset?: Array<number>;
-        limit?: Array<number>;
-    }, options?: any): AxiosPromise<ExecutionResult>;
-}
-
-// @public
 export interface ResultDimension {
     headers: Array<MeasureGroupHeader | AttributeHeader>;
 }
@@ -8231,19 +8208,19 @@ export interface SortKeyValueValue {
 }
 
 // @public (undocumented)
-export const tigerAfmExplainClientFactory: (axios: AxiosInstance) => AfmExplainControllerApiInterface;
+export const tigerAfmExplainClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "explainAFM">;
 
 // @public
 export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 
 // @public
-export const tigerExecutionClientFactory: (axios: AxiosInstance) => AfmControllerApiInterface;
+export const tigerExecutionClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeReport">;
 
 // @public
-export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => ResultControllerApiInterface;
+export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "retrieveResult">;
 
 // @public (undocumented)
-export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => ElementsControllerApiInterface;
+export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeLabelElements">;
 
 // @public (undocumented)
 export const tigerLayoutClientFactory: (axios: AxiosInstance) => LayoutApiInterface;
@@ -8252,7 +8229,7 @@ export const tigerLayoutClientFactory: (axios: AxiosInstance) => LayoutApiInterf
 export const tigerOrganizationObjectsClientFactory: (axios: AxiosInstance) => OrganizationModelControllerApiInterface;
 
 // @public (undocumented)
-export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => ValidObjectsControllerApiInterface;
+export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeValidObjects">;
 
 // @public (undocumented)
 export const tigerWorkspaceObjectsClientFactory: (axios: AxiosInstance) => WorkspaceObjectControllerApiInterface;
@@ -8465,46 +8442,6 @@ export interface UserModelControllerApiInterface {
 export const ValidateRelationsHeader: {
     "X-GDC-VALIDATE-RELATIONS": string;
 };
-
-// @public
-export class ValidObjectsControllerApi extends LabelElementsBaseApi implements ValidObjectsControllerApiInterface {
-    computeValidObjects(params: {
-        workspaceId: string;
-        afmValidObjectsQuery: AfmValidObjectsQuery;
-    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
-}
-
-// @public
-export const ValidObjectsControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
-    computeValidObjects(params: {
-        workspaceId: string;
-        afmValidObjectsQuery: AfmValidObjectsQuery;
-    }, options?: any): LabelElementsRequestArgs;
-};
-
-// @public
-export const ValidObjectsControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
-    computeValidObjects(params: {
-        workspaceId: string;
-        afmValidObjectsQuery: AfmValidObjectsQuery;
-    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
-};
-
-// @public
-export const ValidObjectsControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
-    computeValidObjects(params: {
-        workspaceId: string;
-        afmValidObjectsQuery: AfmValidObjectsQuery;
-    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AfmValidObjectsResponse>;
-};
-
-// @public
-export interface ValidObjectsControllerApiInterface {
-    computeValidObjects(params: {
-        workspaceId: string;
-        afmValidObjectsQuery: AfmValidObjectsQuery;
-    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
-}
 
 // @public (undocumented)
 export namespace VisualizationObjectModelV1 {

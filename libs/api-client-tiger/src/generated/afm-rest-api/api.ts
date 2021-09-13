@@ -770,12 +770,6 @@ export interface ElementsResponse {
      * @memberof ElementsResponse
      */
     paging: Paging;
-    /**
-     * Total count of items ignoring all filters (using on ```project``` and  ```label``` from request).
-     * @type {number}
-     * @memberof ElementsResponse
-     */
-    totalCountWithoutFilters?: number;
 }
 /**
  * Contains information about the error.
@@ -1954,11 +1948,156 @@ export enum TotalFunction {
 }
 
 /**
- * AfmControllerApi - axios parameter creator
+ * ActionsApi - axios parameter creator
  * @export
  */
-export const AfmControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values.
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} label Requested label.
+         * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
+         * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60;
+         * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
+         * @param {Array<string>} [exactFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title exactly matches one of &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60;.
+         * @param {number} [offset] Request page with this offset.
+         * @param {number} [limit] Return only this number of items.
+         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeLabelElements(
+            params: {
+                workspaceId: string;
+                label: string;
+                sortOrder?: "ASC" | "DESC";
+                complementFilter?: boolean;
+                patternFilter?: string;
+                exactFilter?: Array<string>;
+                offset?: number;
+                limit?: number;
+                dataSamplingPercentage?: number;
+                skipCache?: boolean;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const {
+                workspaceId,
+                label,
+                sortOrder,
+                complementFilter,
+                patternFilter,
+                exactFilter,
+                offset,
+                limit,
+                dataSamplingPercentage,
+                skipCache,
+            } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling computeLabelElements.",
+                );
+            }
+            // verify required parameter 'label' is not null or undefined
+            if (label === null || label === undefined) {
+                throw new RequiredError(
+                    "label",
+                    "Required parameter label was null or undefined when calling computeLabelElements.",
+                );
+            }
+            const localVarPath =
+                `/api/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (label !== undefined) {
+                if (typeof label === "object") {
+                    addFlattenedObjectTo(label, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["label"] = label;
+                }
+            }
+
+            if (sortOrder !== undefined) {
+                if (typeof sortOrder === "object") {
+                    addFlattenedObjectTo(sortOrder, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sortOrder"] = sortOrder;
+                }
+            }
+
+            if (complementFilter !== undefined) {
+                if (typeof complementFilter === "object") {
+                    addFlattenedObjectTo(complementFilter, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["complementFilter"] = complementFilter;
+                }
+            }
+
+            if (patternFilter !== undefined) {
+                if (typeof patternFilter === "object") {
+                    addFlattenedObjectTo(patternFilter, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["patternFilter"] = patternFilter;
+                }
+            }
+
+            if (exactFilter) {
+                localVarQueryParameter["exactFilter"] = exactFilter;
+            }
+
+            if (offset !== undefined) {
+                if (typeof offset === "object") {
+                    addFlattenedObjectTo(offset, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["offset"] = offset;
+                }
+            }
+
+            if (limit !== undefined) {
+                if (typeof limit === "object") {
+                    addFlattenedObjectTo(limit, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["limit"] = limit;
+                }
+            }
+
+            if (dataSamplingPercentage !== undefined) {
+                if (typeof dataSamplingPercentage === "object") {
+                    addFlattenedObjectTo(dataSamplingPercentage, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["dataSamplingPercentage"] = dataSamplingPercentage;
+                }
+            }
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
          * @summary Executes analytical request and returns link to the result
@@ -2032,151 +2171,68 @@ export const AfmControllerApiAxiosParamCreator = function (configuration?: Confi
                 options: localVarRequestOptions,
             };
         },
-    };
-};
-
-/**
- * AfmControllerApi - functional programming interface
- * @export
- */
-export const AfmControllerApiFp = function (configuration?: Configuration) {
-    return {
         /**
-         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
-         * @summary Executes analytical request and returns link to the result
+         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
          * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {string} [timestamp]
+         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        computeReport(
+        computeValidObjects(
             params: {
                 workspaceId: string;
-                afmExecution: AfmExecution;
-                skipCache?: boolean;
-                timestamp?: string;
+                afmValidObjectsQuery: AfmValidObjectsQuery;
             },
             options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmExecutionResponse> {
-            const localVarAxiosArgs = AfmControllerApiAxiosParamCreator(configuration).computeReport(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
+        ): RequestArgs {
+            const { workspaceId, afmValidObjectsQuery } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling computeValidObjects.",
+                );
+            }
+            // verify required parameter 'afmValidObjectsQuery' is not null or undefined
+            if (afmValidObjectsQuery === null || afmValidObjectsQuery === undefined) {
+                throw new RequiredError(
+                    "afmValidObjectsQuery",
+                    "Required parameter afmValidObjectsQuery was null or undefined when calling computeValidObjects.",
+                );
+            }
+            const localVarPath =
+                `/api/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof afmValidObjectsQuery !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(afmValidObjectsQuery !== undefined ? afmValidObjectsQuery : {})
+                : afmValidObjectsQuery || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
             };
         },
-    };
-};
-
-/**
- * AfmControllerApi - factory interface
- * @export
- */
-export const AfmControllerApiFactory = function (
-    configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    return {
-        /**
-         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
-         * @summary Executes analytical request and returns link to the result
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {string} [timestamp]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeReport(
-            params: {
-                workspaceId: string;
-                afmExecution: AfmExecution;
-                skipCache?: boolean;
-                timestamp?: string;
-            },
-            options?: any,
-        ): AxiosPromise<AfmExecutionResponse> {
-            return AfmControllerApiFp(configuration).computeReport(params, options)(axios, basePath);
-        },
-    };
-};
-
-/**
- * AfmControllerApi - interface
- * @export
- * @interface AfmControllerApi
- */
-export interface AfmControllerApiInterface {
-    /**
-     * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
-     * @summary Executes analytical request and returns link to the result
-     * @param {string} workspaceId Workspace identifier
-     * @param {AfmExecution} afmExecution
-     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-     * @param {string} [timestamp]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AfmControllerApiInterface
-     */
-    computeReport(
-        params: {
-            workspaceId: string;
-            afmExecution: AfmExecution;
-            skipCache?: boolean;
-            timestamp?: string;
-        },
-        options?: any,
-    ): AxiosPromise<AfmExecutionResponse>;
-}
-
-/**
- * AfmControllerApi - object-oriented interface
- * @export
- * @class AfmControllerApi
- * @extends {BaseAPI}
- */
-export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterface {
-    /**
-     * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
-     * @summary Executes analytical request and returns link to the result
-     * @param {string} workspaceId Workspace identifier
-     * @param {AfmExecution} afmExecution
-     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-     * @param {string} [timestamp]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AfmControllerApi
-     */
-    public computeReport(
-        params: {
-            workspaceId: string;
-            afmExecution: AfmExecution;
-            skipCache?: boolean;
-            timestamp?: string;
-        },
-        options?: any,
-    ) {
-        return AfmControllerApiFp(this.configuration).computeReport(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-}
-
-/**
- * AfmExplainControllerApi - axios parameter creator
- * @export
- */
-export const AfmExplainControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
         /**
          * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
          * @summary AFM explain resource.
@@ -2248,487 +2304,6 @@ export const AfmExplainControllerApiAxiosParamCreator = function (configuration?
                 options: localVarRequestOptions,
             };
         },
-    };
-};
-
-/**
- * AfmExplainControllerApi - functional programming interface
- * @export
- */
-export const AfmExplainControllerApiFp = function (configuration?: Configuration) {
-    return {
-        /**
-         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
-         * @summary AFM explain resource.
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        explainAFM(
-            params: {
-                workspaceId: string;
-                afmExecution: AfmExecution;
-                explainType?: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any> {
-            const localVarAxiosArgs = AfmExplainControllerApiAxiosParamCreator(configuration).explainAFM(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    };
-};
-
-/**
- * AfmExplainControllerApi - factory interface
- * @export
- */
-export const AfmExplainControllerApiFactory = function (
-    configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    return {
-        /**
-         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
-         * @summary AFM explain resource.
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        explainAFM(
-            params: {
-                workspaceId: string;
-                afmExecution: AfmExecution;
-                explainType?: string;
-            },
-            options?: any,
-        ): AxiosPromise<any> {
-            return AfmExplainControllerApiFp(configuration).explainAFM(params, options)(axios, basePath);
-        },
-    };
-};
-
-/**
- * AfmExplainControllerApi - interface
- * @export
- * @interface AfmExplainControllerApi
- */
-export interface AfmExplainControllerApiInterface {
-    /**
-     * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
-     * @summary AFM explain resource.
-     * @param {string} workspaceId Workspace identifier
-     * @param {AfmExecution} afmExecution
-     * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AfmExplainControllerApiInterface
-     */
-    explainAFM(
-        params: {
-            workspaceId: string;
-            afmExecution: AfmExecution;
-            explainType?: string;
-        },
-        options?: any,
-    ): AxiosPromise<any>;
-}
-
-/**
- * AfmExplainControllerApi - object-oriented interface
- * @export
- * @class AfmExplainControllerApi
- * @extends {BaseAPI}
- */
-export class AfmExplainControllerApi extends BaseAPI implements AfmExplainControllerApiInterface {
-    /**
-     * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
-     * @summary AFM explain resource.
-     * @param {string} workspaceId Workspace identifier
-     * @param {AfmExecution} afmExecution
-     * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AfmExplainControllerApi
-     */
-    public explainAFM(
-        params: {
-            workspaceId: string;
-            afmExecution: AfmExecution;
-            explainType?: string;
-        },
-        options?: any,
-    ) {
-        return AfmExplainControllerApiFp(this.configuration).explainAFM(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-}
-
-/**
- * ElementsControllerApi - axios parameter creator
- * @export
- */
-export const ElementsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values.
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} label Requested label.
-         * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
-         * @param {boolean} [includeTotalWithoutFilters] Specify if &#x60;&#x60;&#x60;totalCountWithoutFilters&#x60;&#x60;&#x60; should be returned.
-         * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60;
-         * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
-         * @param {number} [offset] Request page with this offset.
-         * @param {number} [limit] Return only this number of items.
-         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeLabelElements(
-            params: {
-                workspaceId: string;
-                label: string;
-                sortOrder?: "ASC" | "DESC";
-                includeTotalWithoutFilters?: boolean;
-                complementFilter?: boolean;
-                patternFilter?: string;
-                offset?: number;
-                limit?: number;
-                dataSamplingPercentage?: number;
-                skipCache?: boolean;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const {
-                workspaceId,
-                label,
-                sortOrder,
-                includeTotalWithoutFilters,
-                complementFilter,
-                patternFilter,
-                offset,
-                limit,
-                dataSamplingPercentage,
-                skipCache,
-            } = params;
-            // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling computeLabelElements.",
-                );
-            }
-            // verify required parameter 'label' is not null or undefined
-            if (label === null || label === undefined) {
-                throw new RequiredError(
-                    "label",
-                    "Required parameter label was null or undefined when calling computeLabelElements.",
-                );
-            }
-            const localVarPath =
-                `/api/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (label !== undefined) {
-                if (typeof label === "object") {
-                    addFlattenedObjectTo(label, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["label"] = label;
-                }
-            }
-
-            if (sortOrder !== undefined) {
-                if (typeof sortOrder === "object") {
-                    addFlattenedObjectTo(sortOrder, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sortOrder"] = sortOrder;
-                }
-            }
-
-            if (includeTotalWithoutFilters !== undefined) {
-                if (typeof includeTotalWithoutFilters === "object") {
-                    addFlattenedObjectTo(includeTotalWithoutFilters, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["includeTotalWithoutFilters"] = includeTotalWithoutFilters;
-                }
-            }
-
-            if (complementFilter !== undefined) {
-                if (typeof complementFilter === "object") {
-                    addFlattenedObjectTo(complementFilter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["complementFilter"] = complementFilter;
-                }
-            }
-
-            if (patternFilter !== undefined) {
-                if (typeof patternFilter === "object") {
-                    addFlattenedObjectTo(patternFilter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["patternFilter"] = patternFilter;
-                }
-            }
-
-            if (offset !== undefined) {
-                if (typeof offset === "object") {
-                    addFlattenedObjectTo(offset, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["offset"] = offset;
-                }
-            }
-
-            if (limit !== undefined) {
-                if (typeof limit === "object") {
-                    addFlattenedObjectTo(limit, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["limit"] = limit;
-                }
-            }
-
-            if (dataSamplingPercentage !== undefined) {
-                if (typeof dataSamplingPercentage === "object") {
-                    addFlattenedObjectTo(dataSamplingPercentage, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["dataSamplingPercentage"] = dataSamplingPercentage;
-                }
-            }
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * ElementsControllerApi - functional programming interface
- * @export
- */
-export const ElementsControllerApiFp = function (configuration?: Configuration) {
-    return {
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values.
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} label Requested label.
-         * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
-         * @param {boolean} [includeTotalWithoutFilters] Specify if &#x60;&#x60;&#x60;totalCountWithoutFilters&#x60;&#x60;&#x60; should be returned.
-         * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60;
-         * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
-         * @param {number} [offset] Request page with this offset.
-         * @param {number} [limit] Return only this number of items.
-         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeLabelElements(
-            params: {
-                workspaceId: string;
-                label: string;
-                sortOrder?: "ASC" | "DESC";
-                includeTotalWithoutFilters?: boolean;
-                complementFilter?: boolean;
-                patternFilter?: string;
-                offset?: number;
-                limit?: number;
-                dataSamplingPercentage?: number;
-                skipCache?: boolean;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ElementsResponse> {
-            const localVarAxiosArgs = ElementsControllerApiAxiosParamCreator(
-                configuration,
-            ).computeLabelElements(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    };
-};
-
-/**
- * ElementsControllerApi - factory interface
- * @export
- */
-export const ElementsControllerApiFactory = function (
-    configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    return {
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values.
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} label Requested label.
-         * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
-         * @param {boolean} [includeTotalWithoutFilters] Specify if &#x60;&#x60;&#x60;totalCountWithoutFilters&#x60;&#x60;&#x60; should be returned.
-         * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60;
-         * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
-         * @param {number} [offset] Request page with this offset.
-         * @param {number} [limit] Return only this number of items.
-         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeLabelElements(
-            params: {
-                workspaceId: string;
-                label: string;
-                sortOrder?: "ASC" | "DESC";
-                includeTotalWithoutFilters?: boolean;
-                complementFilter?: boolean;
-                patternFilter?: string;
-                offset?: number;
-                limit?: number;
-                dataSamplingPercentage?: number;
-                skipCache?: boolean;
-            },
-            options?: any,
-        ): AxiosPromise<ElementsResponse> {
-            return ElementsControllerApiFp(configuration).computeLabelElements(params, options)(
-                axios,
-                basePath,
-            );
-        },
-    };
-};
-
-/**
- * ElementsControllerApi - interface
- * @export
- * @interface ElementsControllerApi
- */
-export interface ElementsControllerApiInterface {
-    /**
-     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-     * @summary Listing of label values.
-     * @param {string} workspaceId Workspace identifier
-     * @param {string} label Requested label.
-     * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
-     * @param {boolean} [includeTotalWithoutFilters] Specify if &#x60;&#x60;&#x60;totalCountWithoutFilters&#x60;&#x60;&#x60; should be returned.
-     * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60;
-     * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
-     * @param {number} [offset] Request page with this offset.
-     * @param {number} [limit] Return only this number of items.
-     * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ElementsControllerApiInterface
-     */
-    computeLabelElements(
-        params: {
-            workspaceId: string;
-            label: string;
-            sortOrder?: "ASC" | "DESC";
-            includeTotalWithoutFilters?: boolean;
-            complementFilter?: boolean;
-            patternFilter?: string;
-            offset?: number;
-            limit?: number;
-            dataSamplingPercentage?: number;
-            skipCache?: boolean;
-        },
-        options?: any,
-    ): AxiosPromise<ElementsResponse>;
-}
-
-/**
- * ElementsControllerApi - object-oriented interface
- * @export
- * @class ElementsControllerApi
- * @extends {BaseAPI}
- */
-export class ElementsControllerApi extends BaseAPI implements ElementsControllerApiInterface {
-    /**
-     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-     * @summary Listing of label values.
-     * @param {string} workspaceId Workspace identifier
-     * @param {string} label Requested label.
-     * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
-     * @param {boolean} [includeTotalWithoutFilters] Specify if &#x60;&#x60;&#x60;totalCountWithoutFilters&#x60;&#x60;&#x60; should be returned.
-     * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60;
-     * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
-     * @param {number} [offset] Request page with this offset.
-     * @param {number} [limit] Return only this number of items.
-     * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ElementsControllerApi
-     */
-    public computeLabelElements(
-        params: {
-            workspaceId: string;
-            label: string;
-            sortOrder?: "ASC" | "DESC";
-            includeTotalWithoutFilters?: boolean;
-            complementFilter?: boolean;
-            patternFilter?: string;
-            offset?: number;
-            limit?: number;
-            dataSamplingPercentage?: number;
-            skipCache?: boolean;
-        },
-        options?: any,
-    ) {
-        return ElementsControllerApiFp(this.configuration).computeLabelElements(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-}
-
-/**
- * ResultControllerApi - axios parameter creator
- * @export
- */
-export const ResultControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
         /**
          * Gets a single execution result.
          * @summary Get a single execution result
@@ -2798,11 +2373,138 @@ export const ResultControllerApiAxiosParamCreator = function (configuration?: Co
 };
 
 /**
- * ResultControllerApi - functional programming interface
+ * ActionsApi - functional programming interface
  * @export
  */
-export const ResultControllerApiFp = function (configuration?: Configuration) {
+export const ActionsApiFp = function (configuration?: Configuration) {
     return {
+        /**
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values.
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} label Requested label.
+         * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
+         * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60;
+         * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
+         * @param {Array<string>} [exactFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title exactly matches one of &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60;.
+         * @param {number} [offset] Request page with this offset.
+         * @param {number} [limit] Return only this number of items.
+         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeLabelElements(
+            params: {
+                workspaceId: string;
+                label: string;
+                sortOrder?: "ASC" | "DESC";
+                complementFilter?: boolean;
+                patternFilter?: string;
+                exactFilter?: Array<string>;
+                offset?: number;
+                limit?: number;
+                dataSamplingPercentage?: number;
+                skipCache?: boolean;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ElementsResponse> {
+            const localVarAxiosArgs = ActionsApiAxiosParamCreator(configuration).computeLabelElements(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+         * @summary Executes analytical request and returns link to the result
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {string} [timestamp]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeReport(
+            params: {
+                workspaceId: string;
+                afmExecution: AfmExecution;
+                skipCache?: boolean;
+                timestamp?: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmExecutionResponse> {
+            const localVarAxiosArgs = ActionsApiAxiosParamCreator(configuration).computeReport(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeValidObjects(
+            params: {
+                workspaceId: string;
+                afmValidObjectsQuery: AfmValidObjectsQuery;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidObjectsResponse> {
+            const localVarAxiosArgs = ActionsApiAxiosParamCreator(configuration).computeValidObjects(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+         * @summary AFM explain resource.
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        explainAFM(
+            params: {
+                workspaceId: string;
+                afmExecution: AfmExecution;
+                explainType?: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any> {
+            const localVarAxiosArgs = ActionsApiAxiosParamCreator(configuration).explainAFM(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
         /**
          * Gets a single execution result.
          * @summary Get a single execution result
@@ -2822,7 +2524,7 @@ export const ResultControllerApiFp = function (configuration?: Configuration) {
             },
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult> {
-            const localVarAxiosArgs = ResultControllerApiAxiosParamCreator(configuration).retrieveResult(
+            const localVarAxiosArgs = ActionsApiAxiosParamCreator(configuration).retrieveResult(
                 params,
                 options,
             );
@@ -2838,15 +2540,105 @@ export const ResultControllerApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * ResultControllerApi - factory interface
+ * ActionsApi - factory interface
  * @export
  */
-export const ResultControllerApiFactory = function (
+export const ActionsApiFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,
 ) {
     return {
+        /**
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values.
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} label Requested label.
+         * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
+         * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60;
+         * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
+         * @param {Array<string>} [exactFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title exactly matches one of &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60;.
+         * @param {number} [offset] Request page with this offset.
+         * @param {number} [limit] Return only this number of items.
+         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeLabelElements(
+            params: {
+                workspaceId: string;
+                label: string;
+                sortOrder?: "ASC" | "DESC";
+                complementFilter?: boolean;
+                patternFilter?: string;
+                exactFilter?: Array<string>;
+                offset?: number;
+                limit?: number;
+                dataSamplingPercentage?: number;
+                skipCache?: boolean;
+            },
+            options?: any,
+        ): AxiosPromise<ElementsResponse> {
+            return ActionsApiFp(configuration).computeLabelElements(params, options)(axios, basePath);
+        },
+        /**
+         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+         * @summary Executes analytical request and returns link to the result
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {string} [timestamp]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeReport(
+            params: {
+                workspaceId: string;
+                afmExecution: AfmExecution;
+                skipCache?: boolean;
+                timestamp?: string;
+            },
+            options?: any,
+        ): AxiosPromise<AfmExecutionResponse> {
+            return ActionsApiFp(configuration).computeReport(params, options)(axios, basePath);
+        },
+        /**
+         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeValidObjects(
+            params: {
+                workspaceId: string;
+                afmValidObjectsQuery: AfmValidObjectsQuery;
+            },
+            options?: any,
+        ): AxiosPromise<AfmValidObjectsResponse> {
+            return ActionsApiFp(configuration).computeValidObjects(params, options)(axios, basePath);
+        },
+        /**
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+         * @summary AFM explain resource.
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        explainAFM(
+            params: {
+                workspaceId: string;
+                afmExecution: AfmExecution;
+                explainType?: string;
+            },
+            options?: any,
+        ): AxiosPromise<any> {
+            return ActionsApiFp(configuration).explainAFM(params, options)(axios, basePath);
+        },
         /**
          * Gets a single execution result.
          * @summary Get a single execution result
@@ -2866,17 +2658,107 @@ export const ResultControllerApiFactory = function (
             },
             options?: any,
         ): AxiosPromise<ExecutionResult> {
-            return ResultControllerApiFp(configuration).retrieveResult(params, options)(axios, basePath);
+            return ActionsApiFp(configuration).retrieveResult(params, options)(axios, basePath);
         },
     };
 };
 
 /**
- * ResultControllerApi - interface
+ * ActionsApi - interface
  * @export
- * @interface ResultControllerApi
+ * @interface ActionsApi
  */
-export interface ResultControllerApiInterface {
+export interface ActionsApiInterface {
+    /**
+     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+     * @summary Listing of label values.
+     * @param {string} workspaceId Workspace identifier
+     * @param {string} label Requested label.
+     * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
+     * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60;
+     * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
+     * @param {Array<string>} [exactFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title exactly matches one of &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60;.
+     * @param {number} [offset] Request page with this offset.
+     * @param {number} [limit] Return only this number of items.
+     * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
+     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    computeLabelElements(
+        params: {
+            workspaceId: string;
+            label: string;
+            sortOrder?: "ASC" | "DESC";
+            complementFilter?: boolean;
+            patternFilter?: string;
+            exactFilter?: Array<string>;
+            offset?: number;
+            limit?: number;
+            dataSamplingPercentage?: number;
+            skipCache?: boolean;
+        },
+        options?: any,
+    ): AxiosPromise<ElementsResponse>;
+
+    /**
+     * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+     * @summary Executes analytical request and returns link to the result
+     * @param {string} workspaceId Workspace identifier
+     * @param {AfmExecution} afmExecution
+     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+     * @param {string} [timestamp]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    computeReport(
+        params: {
+            workspaceId: string;
+            afmExecution: AfmExecution;
+            skipCache?: boolean;
+            timestamp?: string;
+        },
+        options?: any,
+    ): AxiosPromise<AfmExecutionResponse>;
+
+    /**
+     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+     * @summary Valid objects
+     * @param {string} workspaceId Workspace identifier
+     * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    computeValidObjects(
+        params: {
+            workspaceId: string;
+            afmValidObjectsQuery: AfmValidObjectsQuery;
+        },
+        options?: any,
+    ): AxiosPromise<AfmValidObjectsResponse>;
+
+    /**
+     * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+     * @summary AFM explain resource.
+     * @param {string} workspaceId Workspace identifier
+     * @param {AfmExecution} afmExecution
+     * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    explainAFM(
+        params: {
+            workspaceId: string;
+            afmExecution: AfmExecution;
+            explainType?: string;
+        },
+        options?: any,
+    ): AxiosPromise<any>;
+
     /**
      * Gets a single execution result.
      * @summary Get a single execution result
@@ -2886,7 +2768,7 @@ export interface ResultControllerApiInterface {
      * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ResultControllerApiInterface
+     * @memberof ActionsApiInterface
      */
     retrieveResult(
         params: {
@@ -2900,12 +2782,116 @@ export interface ResultControllerApiInterface {
 }
 
 /**
- * ResultControllerApi - object-oriented interface
+ * ActionsApi - object-oriented interface
  * @export
- * @class ResultControllerApi
+ * @class ActionsApi
  * @extends {BaseAPI}
  */
-export class ResultControllerApi extends BaseAPI implements ResultControllerApiInterface {
+export class ActionsApi extends BaseAPI implements ActionsApiInterface {
+    /**
+     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+     * @summary Listing of label values.
+     * @param {string} workspaceId Workspace identifier
+     * @param {string} label Requested label.
+     * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
+     * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60;
+     * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
+     * @param {Array<string>} [exactFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title exactly matches one of &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60;.
+     * @param {number} [offset] Request page with this offset.
+     * @param {number} [limit] Return only this number of items.
+     * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
+     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public computeLabelElements(
+        params: {
+            workspaceId: string;
+            label: string;
+            sortOrder?: "ASC" | "DESC";
+            complementFilter?: boolean;
+            patternFilter?: string;
+            exactFilter?: Array<string>;
+            offset?: number;
+            limit?: number;
+            dataSamplingPercentage?: number;
+            skipCache?: boolean;
+        },
+        options?: any,
+    ) {
+        return ActionsApiFp(this.configuration).computeLabelElements(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+     * @summary Executes analytical request and returns link to the result
+     * @param {string} workspaceId Workspace identifier
+     * @param {AfmExecution} afmExecution
+     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+     * @param {string} [timestamp]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public computeReport(
+        params: {
+            workspaceId: string;
+            afmExecution: AfmExecution;
+            skipCache?: boolean;
+            timestamp?: string;
+        },
+        options?: any,
+    ) {
+        return ActionsApiFp(this.configuration).computeReport(params, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+     * @summary Valid objects
+     * @param {string} workspaceId Workspace identifier
+     * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public computeValidObjects(
+        params: {
+            workspaceId: string;
+            afmValidObjectsQuery: AfmValidObjectsQuery;
+        },
+        options?: any,
+    ) {
+        return ActionsApiFp(this.configuration).computeValidObjects(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+     * @summary AFM explain resource.
+     * @param {string} workspaceId Workspace identifier
+     * @param {AfmExecution} afmExecution
+     * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public explainAFM(
+        params: {
+            workspaceId: string;
+            afmExecution: AfmExecution;
+            explainType?: string;
+        },
+        options?: any,
+    ) {
+        return ActionsApiFp(this.configuration).explainAFM(params, options)(this.axios, this.basePath);
+    }
+
     /**
      * Gets a single execution result.
      * @summary Get a single execution result
@@ -2915,7 +2901,7 @@ export class ResultControllerApi extends BaseAPI implements ResultControllerApiI
      * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ResultControllerApi
+     * @memberof ActionsApi
      */
     public retrieveResult(
         params: {
@@ -2926,202 +2912,6 @@ export class ResultControllerApi extends BaseAPI implements ResultControllerApiI
         },
         options?: any,
     ) {
-        return ResultControllerApiFp(this.configuration).retrieveResult(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-}
-
-/**
- * ValidObjectsControllerApi - axios parameter creator
- * @export
- */
-export const ValidObjectsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidObjects(
-            params: {
-                workspaceId: string;
-                afmValidObjectsQuery: AfmValidObjectsQuery;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { workspaceId, afmValidObjectsQuery } = params;
-            // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling computeValidObjects.",
-                );
-            }
-            // verify required parameter 'afmValidObjectsQuery' is not null or undefined
-            if (afmValidObjectsQuery === null || afmValidObjectsQuery === undefined) {
-                throw new RequiredError(
-                    "afmValidObjectsQuery",
-                    "Required parameter afmValidObjectsQuery was null or undefined when calling computeValidObjects.",
-                );
-            }
-            const localVarPath =
-                `/api/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof afmValidObjectsQuery !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmValidObjectsQuery !== undefined ? afmValidObjectsQuery : {})
-                : afmValidObjectsQuery || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * ValidObjectsControllerApi - functional programming interface
- * @export
- */
-export const ValidObjectsControllerApiFp = function (configuration?: Configuration) {
-    return {
-        /**
-         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidObjects(
-            params: {
-                workspaceId: string;
-                afmValidObjectsQuery: AfmValidObjectsQuery;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidObjectsResponse> {
-            const localVarAxiosArgs = ValidObjectsControllerApiAxiosParamCreator(
-                configuration,
-            ).computeValidObjects(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    };
-};
-
-/**
- * ValidObjectsControllerApi - factory interface
- * @export
- */
-export const ValidObjectsControllerApiFactory = function (
-    configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    return {
-        /**
-         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidObjects(
-            params: {
-                workspaceId: string;
-                afmValidObjectsQuery: AfmValidObjectsQuery;
-            },
-            options?: any,
-        ): AxiosPromise<AfmValidObjectsResponse> {
-            return ValidObjectsControllerApiFp(configuration).computeValidObjects(params, options)(
-                axios,
-                basePath,
-            );
-        },
-    };
-};
-
-/**
- * ValidObjectsControllerApi - interface
- * @export
- * @interface ValidObjectsControllerApi
- */
-export interface ValidObjectsControllerApiInterface {
-    /**
-     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
-     * @summary Valid objects
-     * @param {string} workspaceId Workspace identifier
-     * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ValidObjectsControllerApiInterface
-     */
-    computeValidObjects(
-        params: {
-            workspaceId: string;
-            afmValidObjectsQuery: AfmValidObjectsQuery;
-        },
-        options?: any,
-    ): AxiosPromise<AfmValidObjectsResponse>;
-}
-
-/**
- * ValidObjectsControllerApi - object-oriented interface
- * @export
- * @class ValidObjectsControllerApi
- * @extends {BaseAPI}
- */
-export class ValidObjectsControllerApi extends BaseAPI implements ValidObjectsControllerApiInterface {
-    /**
-     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
-     * @summary Valid objects
-     * @param {string} workspaceId Workspace identifier
-     * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ValidObjectsControllerApi
-     */
-    public computeValidObjects(
-        params: {
-            workspaceId: string;
-            afmValidObjectsQuery: AfmValidObjectsQuery;
-        },
-        options?: any,
-    ) {
-        return ValidObjectsControllerApiFp(this.configuration).computeValidObjects(params, options)(
-            this.axios,
-            this.basePath,
-        );
+        return ActionsApiFp(this.configuration).retrieveResult(params, options)(this.axios, this.basePath);
     }
 }

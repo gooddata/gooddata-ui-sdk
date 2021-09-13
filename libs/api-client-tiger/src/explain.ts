@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { AxiosInstance } from "axios";
-import { AfmExplainControllerApi, AfmExplainControllerApiInterface } from "./generated/afm-rest-api";
+import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api";
 
-export const tigerAfmExplainClientFactory = (axios: AxiosInstance): AfmExplainControllerApiInterface =>
-    new AfmExplainControllerApi({}, "", axios);
+export const tigerAfmExplainClientFactory = (axios: AxiosInstance): Pick<ActionsApiInterface, "explainAFM"> =>
+    new ActionsApi({}, "", axios);

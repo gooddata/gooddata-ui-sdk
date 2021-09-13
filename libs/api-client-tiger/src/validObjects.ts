@@ -1,6 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { AxiosInstance } from "axios";
-import { ValidObjectsControllerApi, ValidObjectsControllerApiInterface } from "./generated/afm-rest-api";
+import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api";
 
-export const tigerValidObjectsClientFactory = (axios: AxiosInstance): ValidObjectsControllerApiInterface =>
-    new ValidObjectsControllerApi({}, "", axios);
+export const tigerValidObjectsClientFactory = (
+    axios: AxiosInstance,
+): Pick<ActionsApiInterface, "computeValidObjects"> => new ActionsApi({}, "", axios);

@@ -10,10 +10,16 @@
             "description": "GoodData.CN endpoint"
         }
     ],
+    "tags": [
+        {
+            "name": "actions",
+            "description": "| execution of some form of computation (RPC over JSON)"
+        }
+    ],
     "paths": {
         "/api/actions/workspaces/{workspaceId}/execution/afm/execute": {
             "post": {
-                "tags": ["afm-controller"],
+                "tags": ["actions"],
                 "summary": "Executes analytical request and returns link to the result",
                 "description": "AFM is a combination of attributes, measures and filters that describe a query you want to execute.",
                 "operationId": "computeReport",
@@ -74,7 +80,7 @@
         },
         "/api/actions/workspaces/{workspaceId}/execution/afm/explain": {
             "post": {
-                "tags": ["afm-explain-controller"],
+                "tags": ["actions"],
                 "summary": "AFM explain resource.",
                 "description": "The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.",
                 "operationId": "explainAFM",
@@ -126,7 +132,7 @@
         },
         "/api/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects": {
             "post": {
-                "tags": ["validObjects-controller"],
+                "tags": ["actions"],
                 "summary": "Valid objects",
                 "description": "Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.",
                 "operationId": "computeValidObjects",
@@ -168,7 +174,7 @@
         },
         "/api/actions/workspaces/{workspaceId}/execution/collectLabelElements": {
             "get": {
-                "tags": ["elements-controller"],
+                "tags": ["actions"],
                 "summary": "Listing of label values.",
                 "description": "Returns paged list of elements (values) of given label satisfying given filtering criteria.",
                 "operationId": "computeLabelElements",
@@ -204,19 +210,9 @@
                         }
                     },
                     {
-                        "name": "includeTotalWithoutFilters",
-                        "in": "query",
-                        "description": "Specify if ```totalCountWithoutFilters``` should be returned.",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "default": false
-                        }
-                    },
-                    {
                         "name": "complementFilter",
                         "in": "query",
-                        "description": "Inverse filter:\n* ```false``` - return items matching ```patternFilter```\n* ```true``` - return items not matching ```patternFilter```",
+                        "description": "Inverse filter:\n* ```false``` - return items matching ```patternFilter``` and ```exactFilter```\n* ```true``` - return items not matching ```patternFilter``` and ```exactFilter```",
                         "required": false,
                         "schema": {
                             "type": "boolean",
@@ -230,6 +226,18 @@
                         "required": false,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exactFilter",
+                        "in": "query",
+                        "description": "Return only items, whose ```label``` title exactly matches one of ```filter```.",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     },
                     {
@@ -293,7 +301,7 @@
         },
         "/api/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}": {
             "get": {
-                "tags": ["result-controller"],
+                "tags": ["actions"],
                 "summary": "Get a single execution result",
                 "description": "Gets a single execution result.",
                 "operationId": "retrieveResult",
@@ -1520,11 +1528,6 @@
                     },
                     "paging": {
                         "$ref": "#/components/schemas/Paging"
-                    },
-                    "totalCountWithoutFilters": {
-                        "type": "integer",
-                        "description": "Total count of items ignoring all filters (using on ```project``` and  ```label``` from request).",
-                        "format": "int32"
                     }
                 }
             },
