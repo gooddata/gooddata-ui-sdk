@@ -73,7 +73,7 @@ export {
     ExecutionFactoryUpgradingToExecByReference,
 } from "./toolkit/execution";
 
-export { InMemoryPaging, enhanceWithAll, getAllPagesOf } from "./toolkit/paging";
+export { InMemoryPaging, enhanceWithAll } from "./toolkit/paging";
 
 export { customBackend } from "./customBackend";
 

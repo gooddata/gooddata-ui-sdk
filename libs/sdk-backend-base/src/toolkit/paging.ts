@@ -81,19 +81,6 @@ async function getAllPagesOfInner<T>(
 }
 
 /**
- * Given a paged result, this function will retrieve all pages from the backend concatenated to a single array.
- *
- * @param pagedResource - the paged resource to get all the pages of
- * @public
- */
-export async function getAllPagesOf<T>(
-    pagedResourcePromise: Promise<Omit<IPagedResource<T>, "all" | "allSorted">>,
-): Promise<T[]> {
-    const pagedResource = await pagedResourcePromise;
-    return getAllPagesOfInner(pagedResource);
-}
-
-/**
  * Given a paged result, this function will enhance it with the `all` implementation.
  *
  * @param pagedResource - paged resource to enhance
