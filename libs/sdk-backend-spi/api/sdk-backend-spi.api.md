@@ -1038,6 +1038,8 @@ export interface IOrganizations {
 
 // @public
 export interface IPagedResource<TItem> {
+    all(): Promise<TItem[]>;
+    allSorted(compareFn: (a: TItem, b: TItem) => number): Promise<TItem[]>;
     goTo(pageIndex: number): Promise<IPagedResource<TItem>>;
     // (undocumented)
     readonly items: TItem[];

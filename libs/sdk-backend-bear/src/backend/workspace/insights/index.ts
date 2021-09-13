@@ -32,6 +32,7 @@ import { objRefToUri, objRefsToUris, getObjectIdFromUri } from "../../../utils/a
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { InsightReferencesQuery } from "./insightReferences";
 import { appendFilters } from "./filterMerging";
+import { enhanceWithAll } from "@gooddata/sdk-backend-base";
 
 export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -137,18 +138,18 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
                 ? this.getInsights({ ...options, offset: index * count })
                 : Promise.resolve(emptyResult);
 
-        const emptyResult: IInsightsQueryResult = {
+        const emptyResult: IInsightsQueryResult = enhanceWithAll({
             items: [],
             limit: count,
             offset: totalCount!,
             totalCount: totalCount!,
             next: () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
 
         const hasNextPage = offset + count < totalCount!;
 
-        return {
+        return enhanceWithAll({
             items: insights,
             limit: count,
             offset,
@@ -157,7 +158,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
                 ? () => this.getInsights({ ...options, offset: offset + count })
                 : () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
     };
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {

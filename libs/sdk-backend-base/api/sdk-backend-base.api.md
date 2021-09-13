@@ -489,6 +489,9 @@ export function dummyBackendEmptyData(): IAnalyticalBackend;
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
+// @internal
+export function enhanceWithAll<TItem, TResource extends Omit<IPagedResource<TItem>, "all" | "allSorted">>(pagedResource: TResource): TResource & IPagedResource<TItem>;
+
 // @alpha (undocumented)
 export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) => IExecutionFactory;
 
@@ -584,9 +587,13 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
 
 // @internal
 export class InMemoryPaging<T> implements IPagedResource<T> {
-    constructor(all: T[], limit?: number, offset?: number);
+    constructor(allItems: T[], limit?: number, offset?: number);
     // (undocumented)
-    protected readonly all: T[];
+    all(): Promise<T[]>;
+    // (undocumented)
+    protected readonly allItems: T[];
+    // (undocumented)
+    allSorted(compareFn: (a: T, b: T) => number): Promise<T[]>;
     // (undocumented)
     goTo(pageIndex: number): Promise<IPagedResource<T>>;
     // (undocumented)

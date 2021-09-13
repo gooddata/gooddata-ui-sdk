@@ -4,6 +4,7 @@ import invariant from "ts-invariant";
 import { GdcExtendedDateFilters } from "@gooddata/api-model-bear";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertDateFilterConfig } from "../../../convertors/fromBackend/DateFilterConfigConverter";
+import { enhanceWithAll } from "@gooddata/sdk-backend-base";
 
 export class BearWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQuery {
     private limit: number | undefined;
@@ -55,16 +56,16 @@ export class BearWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQu
                 ? this.queryWorker(index * count, limit)
                 : Promise.resolve(emptyResult);
 
-        const emptyResult: IDateFilterConfigsQueryResult = {
+        const emptyResult: IDateFilterConfigsQueryResult = enhanceWithAll({
             items: [],
             limit: count,
             offset: totalCount!,
             totalCount: totalCount!,
             next: () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
 
-        return {
+        return enhanceWithAll({
             items: items.map(convertDateFilterConfig),
             limit: count,
             offset: serverOffset,
@@ -73,6 +74,6 @@ export class BearWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQu
                 ? () => this.queryWorker(offset + count, limit)
                 : () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
     }
 }

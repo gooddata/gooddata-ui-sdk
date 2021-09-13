@@ -1,4 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
+import { enhanceWithAll } from "@gooddata/sdk-backend-base";
 import {
     IDateFilterConfig,
     IDateFilterConfigsQuery,
@@ -166,30 +167,32 @@ export class TigerWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQ
             totalCount: 1,
         };
 
-        const goTo = (pageIndex: number) =>
+        const goTo = (pageIndex: number): Promise<IDateFilterConfigsQueryResult> =>
             pageIndex === 0
-                ? Promise.resolve({
-                      ...singleItemPage,
-                      next: () => Promise.resolve(emptyResult),
-                      goTo,
-                  })
+                ? Promise.resolve(
+                      enhanceWithAll({
+                          ...singleItemPage,
+                          next: () => Promise.resolve(emptyResult),
+                          goTo,
+                      }),
+                  )
                 : Promise.resolve(emptyResult);
 
-        const emptyResult: IDateFilterConfigsQueryResult = {
+        const emptyResult: IDateFilterConfigsQueryResult = enhanceWithAll({
             items: [],
             limit: 0,
             offset: 1,
             totalCount: 1,
             next: () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
 
         if (!offset && (!limit || limit > 0)) {
-            return {
+            return enhanceWithAll({
                 ...singleItemPage,
                 next: () => Promise.resolve(emptyResult),
                 goTo,
-            };
+            });
         }
 
         return emptyResult;
