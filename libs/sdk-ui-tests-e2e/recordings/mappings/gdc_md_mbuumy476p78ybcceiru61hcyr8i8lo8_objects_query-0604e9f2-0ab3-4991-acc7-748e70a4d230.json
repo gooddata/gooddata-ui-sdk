@@ -1,0 +1,21 @@
+{
+    "id": "0604e9f2-0ab3-4991-acc7-748e70a4d230",
+    "name": "gdc_md_mbuumy476p78ybcceiru61hcyr8i8lo8_objects_query",
+    "request": {
+        "url": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/objects/query?category=kpiAlert&author=%2Fgdc%2Faccount%2Fprofile%2Fb4ca6d6ec31ff764130a13893950091c&limit=50",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"paging\":{\"offset\":0,\"count\":0},\"items\":[]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "0604e9f2-0ab3-4991-acc7-748e70a4d230",
+    "persistent": true,
+    "insertionIndex": 71
+}

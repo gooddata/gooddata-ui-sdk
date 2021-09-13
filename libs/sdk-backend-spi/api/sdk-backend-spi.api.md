@@ -255,8 +255,8 @@ export interface IAttributeElementExpressionToken {
 // @public
 export interface IAttributeMetadataObject extends IMetadataObject {
     displayForms: IAttributeDisplayFormMetadataObject[];
-    drillDownLink?: ObjRef;
     drillDownStep?: ObjRef;
+    drillToAttributeLink?: ObjRef;
     // (undocumented)
     type: "attribute";
 }
