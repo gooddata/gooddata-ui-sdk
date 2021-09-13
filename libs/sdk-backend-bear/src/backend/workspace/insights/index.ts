@@ -92,7 +92,6 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     ): Promise<{
         [key: string]: string;
     }> => {
-        // get also deprecated visClasses in case some insights use them
         const visualizationClasses = await this.getVisualizationClasses(options);
         return visualizationClasses.reduce((acc, el) => {
             if (!el.visualizationClass.uri) {
@@ -106,6 +105,17 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
+        // get also deprecated visClasses in case some insights use them
+        const visualizationClassUrlByVisualizationClassUri =
+            await this.getVisualizationClassesByVisualizationClassUri({ includeDeprecated: true });
+
+        return this.getInsightsInner(options ?? {}, visualizationClassUrlByVisualizationClassUri);
+    };
+
+    private getInsightsInner = async (
+        options: IInsightsQueryOptions,
+        visualizationClassUrlByVisualizationClassUri: Record<string, string>,
+    ): Promise<IInsightsQueryResult> => {
         const mergedOptions = { ...options, getTotalCount: true };
         const defaultLimit = 50;
         const {
@@ -120,10 +130,6 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
             }),
         );
 
-        // get also deprecated visClasses in case some insights use them
-        const visualizationClassUrlByVisualizationClassUri =
-            await this.getVisualizationClassesByVisualizationClassUri({ includeDeprecated: true });
-
         const insights = visualizations.map((visualization) =>
             convertVisualization(
                 visualization,
@@ -135,7 +141,10 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
 
         const goTo = (index: number) =>
             index * count < totalCount!
-                ? this.getInsights({ ...options, offset: index * count })
+                ? this.getInsightsInner(
+                      { ...options, offset: index * count },
+                      visualizationClassUrlByVisualizationClassUri,
+                  )
                 : Promise.resolve(emptyResult);
 
         const emptyResult: IInsightsQueryResult = enhanceWithAll({
@@ -155,7 +164,11 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
             offset,
             totalCount: totalCount!,
             next: hasNextPage
-                ? () => this.getInsights({ ...options, offset: offset + count })
+                ? () =>
+                      this.getInsightsInner(
+                          { ...options, offset: offset + count },
+                          visualizationClassUrlByVisualizationClassUri,
+                      )
                 : () => Promise.resolve(emptyResult),
             goTo,
         });
