@@ -4,7 +4,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../../tests/Dashb
 import { DashboardInitialized } from "../../../../events";
 import { selectConfig } from "../../../../state/config/configSelectors";
 import { selectPermissions } from "../../../../state/permissions/permissionsSelectors";
-import { EmptyDashboardIdentifier } from "../../../../tests/fixtures/Dashboard.fixtures";
+import { EmptyDashboardIdentifier, TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
 import { selectLayout } from "../../../../state/layout/layoutSelectors";
 import {
     selectFilterContextDefinition,
@@ -60,7 +60,7 @@ describe("initialize dashboard handler", () => {
                 },
                 SimpleDashboardIdentifier,
                 {
-                    initCommand: initializeDashboard(undefined, undefined, "testCorrelation"),
+                    initCommand: initializeDashboard(undefined, undefined, TestCorrelation),
                 },
             ),
         );

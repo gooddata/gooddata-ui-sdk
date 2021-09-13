@@ -3,6 +3,7 @@ import { moveAttributeFilter } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { selectFilterContextAttributeFilters } from "../../../../state/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
+import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
 
 describe("moveAttributeFilterHandler", () => {
     let Tester: DashboardTester;
@@ -16,7 +17,7 @@ describe("moveAttributeFilterHandler", () => {
         const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
             .localIdentifier!;
 
-        Tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1, "testCorrelation"));
+        Tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1, TestCorrelation));
 
         await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
@@ -27,7 +28,7 @@ describe("moveAttributeFilterHandler", () => {
         const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
             .localIdentifier!;
 
-        Tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1, "testCorrelation"));
+        Tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1, TestCorrelation));
 
         await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
@@ -39,7 +40,7 @@ describe("moveAttributeFilterHandler", () => {
     });
 
     it("should emit the appropriate events when trying to move a non-existent attribute filter", async () => {
-        Tester.dispatch(moveAttributeFilter("NON EXISTENT LOCAL ID", 1, "testCorrelation"));
+        Tester.dispatch(moveAttributeFilter("NON EXISTENT LOCAL ID", 1, TestCorrelation));
 
         await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
 
@@ -49,7 +50,7 @@ describe("moveAttributeFilterHandler", () => {
     it("should NOT alter the attribute filter state when trying to move a non-existent attribute filter", async () => {
         const originalFilters = selectFilterContextAttributeFilters(Tester.state());
 
-        Tester.dispatch(moveAttributeFilter("NON EXISTENT LOCAL ID", 1, "testCorrelation"));
+        Tester.dispatch(moveAttributeFilter("NON EXISTENT LOCAL ID", 1, TestCorrelation));
 
         await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
 
@@ -60,7 +61,7 @@ describe("moveAttributeFilterHandler", () => {
         const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
             .localIdentifier!;
 
-        Tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1000, "testCorrelation"));
+        Tester.dispatch(moveAttributeFilter(firstFilterLocalId, 1000, TestCorrelation));
 
         await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
 

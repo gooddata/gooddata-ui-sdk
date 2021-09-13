@@ -3,6 +3,7 @@ import { changeDateFilterSelection, clearDateFilterSelection } from "../../../..
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { selectFilterContextDateFilter } from "../../../../state/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
+import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
 
 describe("changeDateFilterSelectionHandler", () => {
     let Tester: DashboardTester;
@@ -14,7 +15,7 @@ describe("changeDateFilterSelectionHandler", () => {
 
     it("should emit the appropriate events for changed date filter", async () => {
         Tester.dispatch(
-            changeDateFilterSelection("relative", "GDC.time.month", -3, 0, "someLocalId", "testCorrelation"),
+            changeDateFilterSelection("relative", "GDC.time.month", -3, 0, "someLocalId", TestCorrelation),
         );
         await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
