@@ -312,7 +312,7 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     return (
         <IntlWrapper locale={locale}>
             <div className="gd-dashboards-root">
-                <div className="dash-header-wrapper">
+                <div className="gd-dash-header-wrapper">
                     <DashboardHeader {...props} />
                 </div>
                 <div className="gd-flex-item-stretch dash-section dash-section-kpis">
