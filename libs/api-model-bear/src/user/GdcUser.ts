@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { BooleanAsString, Timestamp, Email, Uri, TimeIso8601, DateString } from "../aliases";
 import { GdcMetadata } from "../meta/GdcMetadata";
 
@@ -33,6 +33,10 @@ export namespace GdcUser {
             domain?: Uri;
             auditEvents?: Uri;
         };
+    }
+
+    export interface IWrappedAccountSetting {
+        accountSetting: IAccountSetting;
     }
 
     export interface IProfileSetting {

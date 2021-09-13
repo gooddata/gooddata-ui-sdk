@@ -4,6 +4,13 @@
 
 ```ts
 
+import { IUser } from '@gooddata/sdk-model';
+import { userFullName } from '@gooddata/sdk-model';
+
+export { IUser }
+
+export { userFullName }
+
 
 export * from "@gooddata/sdk-backend-spi";
 export * from "@gooddata/sdk-model";

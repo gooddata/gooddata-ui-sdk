@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IVisualizationClass,
@@ -51,9 +51,10 @@ export interface IWorkspaceInsightsService {
      * Request insight for the given reference
      *
      * @param ref - insight reference
+     * @param loadUserData - Optionally specify if information about the users that created/modified the insights should be loaded for each insight. Defaults to false.
      * @returns promise of insight
      */
-    getInsight(ref: ObjRef): Promise<IInsight>;
+    getInsight(ref: ObjRef, loadUserData?: boolean): Promise<IInsight>;
 
     /**
      * Queries workspace insights, optionally using various criteria and paging settings.
@@ -198,6 +199,12 @@ export interface IInsightsQueryOptions {
      * Optionally filter insights by their title
      */
     title?: string;
+
+    /**
+     * Optionally specify if information about the users that created/modified the insights should be loaded for each insight.
+     * Defaults to false.
+     */
+    loadUserData?: boolean;
 }
 
 /**

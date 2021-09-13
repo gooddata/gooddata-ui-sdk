@@ -13,6 +13,8 @@ import {
     IRankingFilter,
     IMeasureValueFilter,
     uriRef,
+    serializeObjRef,
+    IUser,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
@@ -211,6 +213,7 @@ const resolveReferences = (
 export const convertVisualization = (
     visualization: GdcVisualizationObject.IVisualization,
     visualizationClassUri: string,
+    userMap?: Record<string, IUser>,
 ): IInsight => {
     const withResolvedReferences = resolveReferences(visualization.visualizationObject);
     const { content, meta } = withResolvedReferences;
@@ -228,7 +231,10 @@ export const convertVisualization = (
             title: meta.title,
             uri: meta.uri!,
             visualizationUrl: visualizationClassUri,
+            created: meta.created,
+            createdBy: meta.author ? userMap?.[serializeObjRef(uriRef(meta.author))] : undefined,
             updated: meta.updated,
+            updatedBy: meta.contributor ? userMap?.[serializeObjRef(uriRef(meta.contributor))] : undefined,
             isLocked: meta.locked,
             tags: meta.tags?.split(" ").filter(Boolean) ?? [],
         },
@@ -250,6 +256,8 @@ export const convertListedVisualization = (visualizationLink: GdcMetadata.IObjec
             buckets: [],
             filters: [],
             tags: [],
+            created: visualizationLink.created,
+            updated: visualizationLink.updated,
         },
     };
 };

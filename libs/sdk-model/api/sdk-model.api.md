@@ -481,7 +481,9 @@ export type IInsight = IInsightDefinition & {
         uri: string;
         ref: ObjRef;
         created?: string;
+        createdBy?: IUser;
         updated?: string;
+        updatedBy?: IUser;
         isLocked?: boolean;
     };
 };
@@ -588,6 +590,9 @@ export function insightBuckets(insight: IInsightDefinition, ...ids: string[]): I
 // @public
 export function insightCreated(insight: IInsight): string | undefined;
 
+// @public
+export function insightCreatedBy(insight: IInsight): IUser | undefined;
+
 // @internal
 export class InsightDefinitionBuilder {
     constructor(visualizationUrl: string);
@@ -683,6 +688,9 @@ export function insightTotals(insight: IInsightDefinition): ITotal[];
 
 // @public
 export function insightUpdated(insight: IInsight): string | undefined;
+
+// @public
+export function insightUpdatedBy(insight: IInsight): IUser | undefined;
 
 // @public
 export function insightUri(insight: IInsight): string;
@@ -956,6 +964,16 @@ export interface ITotal {
     attributeIdentifier: Identifier;
     measureIdentifier: Identifier;
     type: TotalType;
+}
+
+// @public
+export interface IUser {
+    email?: string;
+    firstName?: string;
+    fullName?: string;
+    lastName?: string;
+    login: string;
+    ref: ObjRef;
 }
 
 // @public
@@ -1320,6 +1338,9 @@ export type UriRef = {
 
 // @public
 export function uriRef(uri: Uri): UriRef;
+
+// @public
+export function userFullName(user: IUser): string | undefined;
 
 // @public
 export function visClassId(vc: IVisualizationClass): string;

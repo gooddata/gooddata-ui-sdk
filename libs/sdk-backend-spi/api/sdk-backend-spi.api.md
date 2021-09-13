@@ -22,6 +22,7 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
+import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -830,6 +831,7 @@ export interface IInsightReferencing {
 export interface IInsightsQueryOptions {
     author?: string;
     limit?: number;
+    loadUserData?: boolean;
     offset?: number;
     orderBy?: InsightOrdering;
     title?: string;
@@ -1605,14 +1607,8 @@ export interface ITotalDescriptor {
     };
 }
 
-// @alpha
-export interface IUser {
-    email?: string;
-    firstName?: string;
-    fullName?: string;
-    lastName?: string;
-    login: string;
-    ref: ObjRef;
+// @alpha @deprecated
+export interface IUser extends IUser_2 {
 }
 
 // @public
@@ -1826,7 +1822,7 @@ export interface IWorkspaceFactsService {
 export interface IWorkspaceInsightsService {
     createInsight(insight: IInsightDefinition): Promise<IInsight>;
     deleteInsight(ref: ObjRef): Promise<void>;
-    getInsight(ref: ObjRef): Promise<IInsight>;
+    getInsight(ref: ObjRef, loadUserData?: boolean): Promise<IInsight>;
     getInsightReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
     getInsightReferencingObjects(ref: ObjRef): Promise<IInsightReferencing>;
     getInsights(options?: IInsightsQueryOptions): Promise<IInsightsQueryResult>;
@@ -2028,7 +2024,7 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
     readonly responseBody: unknown;
 }
 
-// @alpha
+// @alpha @deprecated
 export function userFullName(user: IUser): string | undefined;
 
 // @public

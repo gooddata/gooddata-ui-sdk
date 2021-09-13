@@ -7,6 +7,7 @@ import {
     IWorkspaceInsightsService,
     SupportedInsightReferenceTypes,
     UnexpectedError,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -67,6 +68,12 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
+        if (options?.loadUserData) {
+            throw new NotSupported(
+                "Tiger backend does not support the 'loadUserData' option of getInsights.",
+            );
+        }
+
         const orderBy = options?.orderBy;
         const usesOrderingByUpdated = !orderBy || orderBy === "updated";
         const optionsToUse: MetadataGetEntitiesOptions = {
@@ -118,7 +125,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         return new InMemoryPaging(sanitizedOrder, options?.limit ?? 50, options?.offset ?? 0);
     };
 
-    public getInsight = async (ref: ObjRef): Promise<IInsight> => {
+    public getInsight = async (ref: ObjRef, loadUserData = false): Promise<IInsight> => {
+        if (loadUserData) {
+            throw new NotSupported("Tiger backend does not support the 'loadUserData' option of getInsight.");
+        }
         const id = await objRefToIdentifier(ref, this.authCall);
         const response = await this.authCall((client) =>
             client.workspaceObjects.getEntityVisualizationObjects(

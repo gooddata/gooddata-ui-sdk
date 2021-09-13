@@ -336,7 +336,9 @@ export {
     insightUri,
     insightIsLocked,
     insightCreated,
+    insightCreatedBy,
     insightUpdated,
+    insightUpdatedBy,
     insightTotals,
     insightFilters,
     insightVisualizationUrl,
@@ -352,6 +354,8 @@ export {
     visClassId,
     visClassUri,
 } from "./insight";
+
+export { IUser, userFullName } from "./user";
 
 export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory";
 
