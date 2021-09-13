@@ -522,6 +522,9 @@ export type ExtractBuilderType<TBuilder> = TBuilder extends IBuilder<infer TItem
 export class FactMetadataObjectBuilder<T extends IFactMetadataObject = IFactMetadataObject> extends MetadataObjectBuilder<T> {
 }
 
+// @public
+export function getAllPagesOf<T>(pagedResourcePromise: Promise<Omit<IPagedResource<T>, "all" | "allSorted">>): Promise<T[]>;
+
 // @beta
 export class GroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase> extends Builder<T> implements IGroupableCatalogItemBuilder<T> {
     // (undocumented)
