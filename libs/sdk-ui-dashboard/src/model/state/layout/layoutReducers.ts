@@ -8,6 +8,7 @@ import {
     ILegacyKpiComparisonDirection,
     ILegacyKpiComparisonTypeComparison,
     InsightDrillDefinition,
+    isDashboardDateFilterReference,
     isInsightWidget,
     isKpiWidget,
 } from "@gooddata/sdk-backend-spi";
@@ -376,6 +377,41 @@ const replaceWidgetFilterSettings: LayoutReducer<ReplaceWidgetFilterSettings> = 
 //
 //
 
+type RemoveIgnoredAttributeFilter = {
+    displayFormRefs: ObjRef[];
+};
+
+const removeIgnoredAttributeFilter: LayoutReducer<RemoveIgnoredAttributeFilter> = (state, action) => {
+    invariant(state.layout);
+
+    const { displayFormRefs } = action.payload;
+
+    state.layout.sections.forEach((section) => {
+        section.items.forEach((item) => {
+            const widget = item.widget;
+
+            if (isInsightWidget(widget) || isKpiWidget(widget)) {
+                const updatedFilters = widget.ignoreDashboardFilters.filter((filter) => {
+                    if (isDashboardDateFilterReference(filter)) {
+                        return true;
+                    }
+
+                    return (
+                        displayFormRefs.find((removed) => areObjRefsEqual(removed, filter.displayForm)) ===
+                        undefined
+                    );
+                });
+
+                widget.ignoreDashboardFilters = updatedFilters;
+            }
+        });
+    });
+};
+
+//
+//
+//
+
 type ReplaceWidgetDateDataset = {
     ref: ObjRef;
     dateDataSet?: ObjRef;
@@ -437,6 +473,7 @@ const replaceKpiWidgetComparison: LayoutReducer<ReplaceKpiWidgetComparison> = (s
 export const layoutReducers = {
     setLayout,
     updateWidgetIdentities,
+    removeIgnoredAttributeFilter,
     addSection: withUndo(addSection),
     removeSection: withUndo(removeSection),
     moveSection: withUndo(moveSection),

@@ -13,6 +13,7 @@ import { selectFilterContextAttributeFilters } from "../../../state/filterContex
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
 import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
+import { layoutActions } from "../../../state/layout";
 
 export function* removeAttributeFiltersHandler(
     ctx: DashboardContext,
@@ -62,6 +63,10 @@ export function* removeAttributeFiltersHandler(
             // remove filter itself
             filterContextActions.removeAttributeFilter({
                 filterLocalId: removedFilter.attributeFilter.localIdentifier!,
+            }),
+            // house-keeping: ensure the removed attribute filter disappears from widget ignore lists
+            layoutActions.removeIgnoredAttributeFilter({
+                displayFormRefs: [removedFilter.attributeFilter.displayForm],
             }),
         ]);
 
