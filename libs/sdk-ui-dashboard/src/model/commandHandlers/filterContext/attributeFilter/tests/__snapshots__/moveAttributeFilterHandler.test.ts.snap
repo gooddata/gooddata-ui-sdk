@@ -3,15 +3,15 @@
 exports[`moveAttributeFilterHandler should emit the appropriate events for moved attribute filter 1`] = `
 Array [
   Object {
-    "correlationId": "testCorrelation",
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
-    "correlationId": "testCorrelation",
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED",
   },
   Object {
-    "correlationId": "testCorrelation",
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
@@ -20,11 +20,11 @@ Array [
 exports[`moveAttributeFilterHandler should emit the appropriate events when trying to move a non-existent attribute filter 1`] = `
 Array [
   Object {
-    "correlationId": "testCorrelation",
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
-    "correlationId": "testCorrelation",
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.FAILED",
   },
 ]
@@ -33,11 +33,11 @@ Array [
 exports[`moveAttributeFilterHandler should emit the appropriate events when trying to move an attribute filter to an invalid index 1`] = `
 Array [
   Object {
-    "correlationId": "testCorrelation",
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
-    "correlationId": "testCorrelation",
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.FAILED",
   },
 ]

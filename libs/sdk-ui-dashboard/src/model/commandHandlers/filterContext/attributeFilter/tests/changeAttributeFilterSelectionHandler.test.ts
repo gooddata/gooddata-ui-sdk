@@ -3,6 +3,7 @@ import { changeAttributeFilterSelection } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { selectFilterContextAttributeFilters } from "../../../../state/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
+import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
 
 describe("changeAttributeFilterSelectionHandler.test", () => {
     let Tester: DashboardTester;
@@ -21,7 +22,7 @@ describe("changeAttributeFilterSelectionHandler.test", () => {
                 firstFilterLocalId,
                 { uris: ["testing/uri"] },
                 "NOT_IN",
-                "testCorrelation",
+                TestCorrelation,
             ),
         );
 
@@ -39,7 +40,7 @@ describe("changeAttributeFilterSelectionHandler.test", () => {
                 firstFilterLocalId,
                 { uris: ["testing/uri"] },
                 "NOT_IN",
-                "testCorrelation",
+                TestCorrelation,
             ),
         );
 
@@ -58,7 +59,7 @@ describe("changeAttributeFilterSelectionHandler.test", () => {
                 "NON EXISTENT LOCAL ID",
                 { uris: ["testing/uri"] },
                 "NOT_IN",
-                "testCorrelation",
+                TestCorrelation,
             ),
         );
 
@@ -75,7 +76,7 @@ describe("changeAttributeFilterSelectionHandler.test", () => {
                 "NON EXISTENT LOCAL ID",
                 { uris: ["testing/uri"] },
                 "NOT_IN",
-                "testCorrelation",
+                TestCorrelation,
             ),
         );
 
