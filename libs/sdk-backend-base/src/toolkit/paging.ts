@@ -59,10 +59,13 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
  *
  * @param pagedResource - the paged resource to get all the pages of
  */
-async function getAllPagesOf<T>(pagedResource: Omit<IPagedResource<T>, "all" | "allSorted">): Promise<T[]> {
+async function getAllPagesOfInner<T>(
+    pagedResource: Omit<IPagedResource<T>, "all" | "allSorted">,
+): Promise<T[]> {
     const results: T[] = [];
     const pageSize = pagedResource.limit;
-    let currentPage = await pagedResource.goTo(0);
+    // if the paged resource is already at the 0 offset, use it directly to save a duplicate request
+    let currentPage = pagedResource.offset !== 0 ? await pagedResource.goTo(0) : pagedResource;
 
     // eslint-disable-next-line no-constant-condition
     while (true) {
@@ -78,6 +81,19 @@ async function getAllPagesOf<T>(pagedResource: Omit<IPagedResource<T>, "all" | "
 }
 
 /**
+ * Given a paged result, this function will retrieve all pages from the backend concatenated to a single array.
+ *
+ * @param pagedResource - the paged resource to get all the pages of
+ * @public
+ */
+export async function getAllPagesOf<T>(
+    pagedResourcePromise: Promise<Omit<IPagedResource<T>, "all" | "allSorted">>,
+): Promise<T[]> {
+    const pagedResource = await pagedResourcePromise;
+    return getAllPagesOfInner(pagedResource);
+}
+
+/**
  * Given a paged result, this function will enhance it with the `all` implementation.
  *
  * @param pagedResource - paged resource to enhance
@@ -88,7 +104,7 @@ export function enhanceWithAll<TItem, TResource extends Omit<IPagedResource<TIte
 ): TResource & IPagedResource<TItem> {
     return {
         ...pagedResource,
-        all: () => getAllPagesOf(pagedResource),
-        allSorted: (compareFn) => getAllPagesOf(pagedResource).then((items) => items.sort(compareFn)),
+        all: () => getAllPagesOfInner(pagedResource),
+        allSorted: (compareFn) => getAllPagesOfInner(pagedResource).then((items) => items.sort(compareFn)),
     };
 }
