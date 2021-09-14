@@ -1,15 +1,12 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { useTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 
-interface ILoadingEqualizerProps {
-    theme?: ITheme;
-}
+const LoadingEqualizer: React.FC = () => {
+    const theme = useTheme();
 
-const LoadingEqualizer: React.FC<ILoadingEqualizerProps> = ({ theme }) => {
     return (
         <div className="gd-loading-equalizer-wrap">
             <div className="gd-loading-equalizer gd-loading-equalizer-fade">
@@ -23,4 +20,7 @@ const LoadingEqualizer: React.FC<ILoadingEqualizerProps> = ({ theme }) => {
     );
 };
 
-export default withTheme(LoadingEqualizer);
+/**
+ * @internal
+ */
+export const ThemedLoadingEqualizer = withTheme(LoadingEqualizer);
