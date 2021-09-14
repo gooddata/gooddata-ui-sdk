@@ -89,11 +89,11 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         if (!isIdentifierRef(ref)) {
             throw new UnexpectedError("Tiger backend does not allow referencing objects by URI");
         }
-
         const response = await this.authCall((client) => {
             const elementsRequest: Parameters<typeof client.labelElements.computeLabelElements>[0] = {
                 ...(options?.complement && { complementFilter: options.complement }),
                 ...(options?.filter && { patternFilter: options.filter }),
+                ...(options?.uris && { exactFilter: options.uris }),
                 ...(options?.order && { sortOrder: options.order === "asc" ? "ASC" : "DESC" }),
                 limit,
                 offset,

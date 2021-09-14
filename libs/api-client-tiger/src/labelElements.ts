@@ -1,8 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { AxiosInstance } from "axios";
 import {
-    ElementsControllerApi,
-    ElementsControllerApiInterface,
+    ActionsApi,
+    ActionsApiInterface,
     Configuration,
     ConfigurationParameters,
 } from "./generated/afm-rest-api";
@@ -15,5 +15,6 @@ export {
     RequestArgs as LabelElementsRequestArgs,
 };
 
-export const tigerLabelElementsClientFactory = (axios: AxiosInstance): ElementsControllerApiInterface =>
-    new ElementsControllerApi({}, "", axios);
+export const tigerLabelElementsClientFactory = (
+    axios: AxiosInstance,
+): Pick<ActionsApiInterface, "computeLabelElements"> => new ActionsApi({}, "", axios);

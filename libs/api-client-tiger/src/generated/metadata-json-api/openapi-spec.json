@@ -17,7 +17,7 @@
         },
         {
             "name": "layout",
-            "description": "| all-in-one declarative interface (set [PUT] &amp; read [GET] over JSON)"
+            "description": "| all-in-one declarative interface (set [PUT] & read [GET] over JSON)"
         },
         {
             "name": "actions",
@@ -49,7 +49,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -166,7 +166,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -228,7 +228,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -300,7 +300,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -341,7 +341,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -387,7 +387,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -447,7 +447,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -511,7 +511,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -582,7 +582,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -670,7 +670,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -735,7 +735,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -783,7 +783,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -829,7 +829,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -885,7 +885,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -920,7 +920,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1034,7 +1034,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1093,7 +1093,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1162,7 +1162,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1199,7 +1199,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1315,7 +1315,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1376,7 +1376,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1447,7 +1447,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1492,7 +1492,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1592,7 +1592,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1645,7 +1645,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1683,7 +1683,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1818,7 +1818,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1898,7 +1898,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -1970,7 +1970,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2016,7 +2016,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2179,7 +2179,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2271,7 +2271,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2364,7 +2364,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2411,7 +2411,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2507,7 +2507,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2585,7 +2585,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2680,7 +2680,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2759,7 +2759,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2855,7 +2855,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -2933,7 +2933,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3080,7 +3080,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3164,7 +3164,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3249,7 +3249,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3296,7 +3296,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3392,7 +3392,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3470,7 +3470,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3617,7 +3617,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3701,7 +3701,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3786,7 +3786,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3832,7 +3832,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -3979,7 +3979,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -4063,7 +4063,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -4148,7 +4148,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -4195,7 +4195,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -4291,7 +4291,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -4369,7 +4369,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -4516,7 +4516,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -4600,7 +4600,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -4685,7 +4685,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser.You can specify any object parameter and parameter of related entity up to 2nd level (for example title=='Some Title';description=='desc')",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
                         "schema": {
                             "type": "string"
                         },
@@ -5026,9 +5026,9 @@
             },
             "put": {
                 "tags": ["layout"],
-                "summary": "Put all data sources",
-                "description": "Set all data sources including related physical model.",
-                "operationId": "putDataSourcesLayout",
+                "summary": "Put all users and user groups",
+                "description": "Define all users and user groups with theirs properties.",
+                "operationId": "putUsersUserGroupsLayout",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -5041,7 +5041,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Defined all data sources."
+                        "description": "Defined all users and user groups."
                     }
                 }
             }
@@ -5049,7 +5049,7 @@
         "/api/layout/userGroups": {
             "get": {
                 "tags": ["layout"],
-                "summary": "Get all users",
+                "summary": "Get all user groups",
                 "description": "Retrieve all user-groups eventually with parent group.",
                 "operationId": "getUserGroupsLayout",
                 "responses": {
@@ -5151,7 +5151,7 @@
                 "tags": ["layout"],
                 "summary": "Put all data sources",
                 "description": "Set all data sources including related physical model.",
-                "operationId": "putDataSourcesLayout_1",
+                "operationId": "putDataSourcesLayout",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -5737,7 +5737,9 @@
                                     "ADS",
                                     "BIGQUERY",
                                     "MSSQL",
-                                    "PRESTO"
+                                    "PRESTO",
+                                    "DREMIO",
+                                    "DRILL"
                                 ]
                             },
                             "url": {
@@ -5754,6 +5756,15 @@
                             },
                             "token": {
                                 "type": "string"
+                            },
+                            "enableCaching": {
+                                "type": "boolean"
+                            },
+                            "cachePath": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
                             }
                         }
                     }
@@ -5805,7 +5816,9 @@
                                     "ADS",
                                     "BIGQUERY",
                                     "MSSQL",
-                                    "PRESTO"
+                                    "PRESTO",
+                                    "DREMIO",
+                                    "DRILL"
                                 ]
                             },
                             "url": {
@@ -5816,6 +5829,15 @@
                             },
                             "username": {
                                 "type": "string"
+                            },
+                            "enableCaching": {
+                                "type": "boolean"
+                            },
+                            "cachePath": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
                             }
                         }
                     }
@@ -6183,27 +6205,27 @@
                 },
                 "description": "JSON:API representation of workspace entity."
             },
-            "JsonApiAnalyticalDashboardInDocument": {
+            "JsonApiCookieSecurityConfigurationInDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardIn"
+                        "$ref": "#/components/schemas/JsonApiCookieSecurityConfigurationIn"
                     }
                 }
             },
-            "JsonApiAnalyticalDashboardIn": {
+            "JsonApiCookieSecurityConfigurationIn": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "analyticalDashboard",
-                        "enum": ["analyticalDashboard"]
+                        "example": "cookieSecurityConfiguration",
+                        "enum": ["cookieSecurityConfiguration"]
                     },
                     "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -6211,36 +6233,276 @@
                     "attributes": {
                         "type": "object",
                         "properties": {
-                            "title": {
+                            "lastRotation": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "rotationInterval": {
+                                "type": "string",
+                                "description": "Length of interval between automatic rotations expressed in format of ISO 8601 duration",
+                                "example": "P30D"
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of cookieSecurityConfiguration entity."
+            },
+            "JsonApiCookieSecurityConfigurationOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiCookieSecurityConfigurationOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
+            },
+            "JsonApiCookieSecurityConfigurationOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "cookieSecurityConfiguration",
+                        "enum": ["cookieSecurityConfiguration"]
+                    },
+                    "id": {
+                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "lastRotation": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "rotationInterval": {
+                                "type": "string",
+                                "description": "Length of interval between automatic rotations expressed in format of ISO 8601 duration",
+                                "example": "P30D"
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of cookieSecurityConfiguration entity."
+            },
+            "JsonApiOrganizationInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiOrganizationIn"
+                    }
+                }
+            },
+            "JsonApiOrganizationIn": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "organization",
+                        "enum": ["organization"]
+                    },
+                    "id": {
+                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
                                 "type": "string"
                             },
-                            "description": {
+                            "hostname": {
                                 "type": "string"
                             },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
+                            "oauthIssuerLocation": {
+                                "type": "string"
+                            },
+                            "oauthClientId": {
+                                "type": "string"
+                            },
+                            "oauthClientSecret": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of organization entity."
+            },
+            "JsonApiOrganizationOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiOrganizationOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiACLOutIncludes"
+                        }
+                    }
+                }
+            },
+            "JsonApiOrganizationOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "organization",
+                        "enum": ["organization"]
+                    },
+                    "id": {
+                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "hostname": {
+                                "type": "string"
+                            },
+                            "oauthIssuerLocation": {
+                                "type": "string"
+                            },
+                            "oauthClientId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "bootstrapUser": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserToOneLinkage"
+                                    }
                                 }
                             },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "content": {
+                            "bootstrapUserGroup": {
+                                "required": ["data"],
                                 "type": "object",
-                                "description": "Free-form JSON content.",
-                                "example": {
-                                    "identifier": {
-                                        "id": "label.leaf",
-                                        "type": "label"
-                                    },
-                                    "someBoolProp": false
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserGroupToOneLinkage"
+                                    }
                                 }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of analyticalDashboard entity."
+                "description": "JSON:API representation of organization entity."
+            },
+            "JsonApiUserGroupToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiUserGroupLinkage"
+                    }
+                ]
+            },
+            "JsonApiUserToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiUserLinkage"
+                    }
+                ]
+            },
+            "JsonApiApiTokenInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiApiTokenIn"
+                    }
+                }
+            },
+            "JsonApiApiTokenIn": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "apiToken",
+                        "enum": ["apiToken"]
+                    },
+                    "id": {
+                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    }
+                },
+                "description": "JSON:API representation of apiToken entity."
+            },
+            "JsonApiApiTokenOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
+            },
+            "JsonApiApiTokenOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "apiToken",
+                        "enum": ["apiToken"]
+                    },
+                    "id": {
+                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "bearerToken": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of apiToken entity."
             },
             "JsonApiAnalyticalDashboardOutIncludes": {
                 "oneOf": [
@@ -6519,24 +6781,45 @@
                     "$ref": "#/components/schemas/JsonApiVisualizationObjectLinkage"
                 }
             },
-            "JsonApiFilterContextInDocument": {
+            "JsonApiAttributeOutIncludes": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                    }
+                ]
+            },
+            "JsonApiAttributeOutDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiFilterContextIn"
+                        "$ref": "#/components/schemas/JsonApiAttributeOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiAttributeOutIncludes"
+                        }
                     }
                 }
             },
-            "JsonApiFilterContextIn": {
+            "JsonApiAttributeOut": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "filterContext",
-                        "enum": ["filterContext"]
+                        "example": "attribute",
+                        "enum": ["attribute"]
                     },
                     "id": {
                         "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
@@ -6559,24 +6842,345 @@
                                     "type": "string"
                                 }
                             },
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR"
+                                ]
+                            },
                             "areRelationsValid": {
                                 "type": "boolean"
-                            },
-                            "content": {
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "required": ["data"],
                                 "type": "object",
-                                "description": "Free-form JSON content.",
-                                "example": {
-                                    "identifier": {
-                                        "id": "label.leaf",
-                                        "type": "label"
-                                    },
-                                    "someBoolProp": false
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiDatasetToOneLinkage"
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiLabelToManyLinkage"
+                                    }
                                 }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of filterContext entity."
+                "description": "JSON:API representation of attribute entity."
+            },
+            "JsonApiDatasetToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDatasetLinkage"
+                    }
+                ]
+            },
+            "JsonApiDatasetOutIncludes": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                    }
+                ]
+            },
+            "JsonApiDatasetOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiDatasetOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDatasetOutIncludes"
+                        }
+                    }
+                }
+            },
+            "JsonApiDatasetOut": {
+                "required": ["attributes", "id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dataset",
+                        "enum": ["dataset"]
+                    },
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "required": ["type"],
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["NORMAL", "DATE"]
+                            },
+                            "grain": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["id", "type"],
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": ["attribute", "dataset"]
+                                        }
+                                    }
+                                }
+                            },
+                            "referenceProperties": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["identifier", "multivalue", "sourceColumns"],
+                                    "type": "object",
+                                    "properties": {
+                                        "identifier": {
+                                            "$ref": "#/components/schemas/DatasetReferenceIdentifier"
+                                        },
+                                        "multivalue": {
+                                            "type": "boolean"
+                                        },
+                                        "sourceColumns": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "dataSourceTableId": {
+                                "type": "string"
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAttributeToManyLinkage"
+                                    }
+                                }
+                            },
+                            "facts": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiFactToManyLinkage"
+                                    }
+                                }
+                            },
+                            "references": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiDatasetToManyLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of dataset entity."
+            },
+            "DatasetReferenceIdentifier": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["dataset"]
+                    }
+                }
+            },
+            "JsonApiAttributeLinkage": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["attribute"]
+                    }
+                },
+                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
+            },
+            "JsonApiAttributeToManyLinkage": {
+                "type": "array",
+                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "items": {
+                    "$ref": "#/components/schemas/JsonApiAttributeLinkage"
+                }
+            },
+            "JsonApiFactLinkage": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["fact"]
+                    }
+                },
+                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
+            },
+            "JsonApiFactToManyLinkage": {
+                "type": "array",
+                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "items": {
+                    "$ref": "#/components/schemas/JsonApiFactLinkage"
+                }
+            },
+            "JsonApiFactOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiFactOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                        }
+                    }
+                }
+            },
+            "JsonApiFactOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "fact",
+                        "enum": ["fact"]
+                    },
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "sourceColumn": {
+                                "type": "string"
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiDatasetToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of fact entity."
             },
             "JsonApiFilterContextOutIncludes": {
                 "oneOf": [
@@ -6693,45 +7297,35 @@
                 },
                 "description": "JSON:API representation of filterContext entity."
             },
-            "JsonApiAttributeLinkage": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["attribute"]
-                    }
-                },
-                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
-            },
-            "JsonApiAttributeToManyLinkage": {
-                "type": "array",
-                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "items": {
-                    "$ref": "#/components/schemas/JsonApiAttributeLinkage"
-                }
-            },
-            "JsonApiMetricInDocument": {
+            "JsonApiLabelOutDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiMetricIn"
+                        "$ref": "#/components/schemas/JsonApiLabelOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                        }
                     }
                 }
             },
-            "JsonApiMetricIn": {
-                "required": ["attributes", "id", "type"],
+            "JsonApiLabelOut": {
+                "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "metric",
-                        "enum": ["metric"]
+                        "example": "label",
+                        "enum": ["label"]
                     },
                     "id": {
                         "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
@@ -6740,7 +7334,6 @@
                         "example": "id1"
                     },
                     "attributes": {
-                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -6755,25 +7348,42 @@
                                     "type": "string"
                                 }
                             },
-                            "areRelationsValid": {
+                            "primary": {
                                 "type": "boolean"
                             },
-                            "content": {
-                                "required": ["maql"],
+                            "sourceColumn": {
+                                "type": "string"
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "attribute": {
+                                "required": ["data"],
                                 "type": "object",
                                 "properties": {
-                                    "format": {
-                                        "type": "string"
-                                    },
-                                    "maql": {
-                                        "type": "string"
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAttributeToOneLinkage"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of metric entity."
+                "description": "JSON:API representation of label entity."
+            },
+            "JsonApiAttributeToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAttributeLinkage"
+                    }
+                ]
             },
             "JsonApiMetricOutIncludes": {
                 "oneOf": [
@@ -6903,86 +7513,6 @@
                     }
                 },
                 "description": "JSON:API representation of metric entity."
-            },
-            "JsonApiFactLinkage": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["fact"]
-                    }
-                },
-                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
-            },
-            "JsonApiFactToManyLinkage": {
-                "type": "array",
-                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "items": {
-                    "$ref": "#/components/schemas/JsonApiFactLinkage"
-                }
-            },
-            "JsonApiVisualizationObjectInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiVisualizationObjectIn"
-                    }
-                }
-            },
-            "JsonApiVisualizationObjectIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "visualizationObject",
-                        "enum": ["visualizationObject"]
-                    },
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content.",
-                                "example": {
-                                    "identifier": {
-                                        "id": "label.leaf",
-                                        "type": "label"
-                                    },
-                                    "someBoolProp": false
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of visualizationObject entity."
             },
             "JsonApiVisualizationObjectOutIncludes": {
                 "oneOf": [
@@ -7123,24 +7653,35 @@
                 },
                 "description": "JSON:API representation of visualizationObject entity."
             },
-            "JsonApiWorkspaceDataFilterInDocument": {
+            "JsonApiWorkspaceDataFilterSettingOutDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterIn"
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
+                        }
                     }
                 }
             },
-            "JsonApiWorkspaceDataFilterIn": {
+            "JsonApiWorkspaceDataFilterSettingOut": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "workspaceDataFilter",
-                        "enum": ["workspaceDataFilter"]
+                        "example": "workspaceDataFilterSetting",
+                        "enum": ["workspaceDataFilterSetting"]
                     },
                     "id": {
                         "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
@@ -7157,29 +7698,32 @@
                             "description": {
                                 "type": "string"
                             },
-                            "columnName": {
-                                "type": "string"
+                            "filterValues": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
                             }
                         }
                     },
                     "relationships": {
                         "type": "object",
                         "properties": {
-                            "filterSettings": {
+                            "workspaceDataFilter": {
                                 "required": ["data"],
                                 "type": "object",
                                 "properties": {
                                     "data": {
-                                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingToManyLinkage"
+                                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterToOneLinkage"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of workspaceDataFilter entity."
+                "description": "JSON:API representation of workspaceDataFilterSetting entity."
             },
-            "JsonApiWorkspaceDataFilterSettingLinkage": {
+            "JsonApiWorkspaceDataFilterLinkage": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
@@ -7188,17 +7732,19 @@
                     },
                     "type": {
                         "type": "string",
-                        "enum": ["workspaceDataFilterSetting"]
+                        "enum": ["workspaceDataFilter"]
                     }
                 },
                 "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
             },
-            "JsonApiWorkspaceDataFilterSettingToManyLinkage": {
-                "type": "array",
-                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "items": {
-                    "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingLinkage"
-                }
+            "JsonApiWorkspaceDataFilterToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterLinkage"
+                    }
+                ]
             },
             "JsonApiWorkspaceDataFilterOutDocument": {
                 "required": ["data"],
@@ -7267,6 +7813,54 @@
                 },
                 "description": "JSON:API representation of workspaceDataFilter entity."
             },
+            "JsonApiWorkspaceDataFilterSettingLinkage": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["workspaceDataFilterSetting"]
+                    }
+                },
+                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
+            },
+            "JsonApiWorkspaceDataFilterSettingToManyLinkage": {
+                "type": "array",
+                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "items": {
+                    "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingLinkage"
+                }
+            },
+            "JsonApiDataSourceTableOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDataSourceTableOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiDataSourceTableOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDataSourceTableOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
             "JsonApiAnalyticalDashboardOutWithLinks": {
                 "allOf": [
                     {
@@ -7312,16 +7906,6 @@
                     }
                 ]
             },
-            "JsonApiAttributeOutIncludes": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                    }
-                ]
-            },
             "JsonApiAttributeOutList": {
                 "required": ["data"],
                 "type": "object",
@@ -7347,97 +7931,6 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiAttributeOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "attribute",
-                        "enum": ["attribute"]
-                    },
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "granularity": {
-                                "type": "string",
-                                "enum": [
-                                    "MINUTE",
-                                    "HOUR",
-                                    "DAY",
-                                    "WEEK",
-                                    "MONTH",
-                                    "QUARTER",
-                                    "YEAR",
-                                    "MINUTE_OF_HOUR",
-                                    "HOUR_OF_DAY",
-                                    "DAY_OF_WEEK",
-                                    "DAY_OF_MONTH",
-                                    "DAY_OF_YEAR",
-                                    "WEEK_OF_YEAR",
-                                    "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR"
-                                ]
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "dataset": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiDatasetToOneLinkage"
-                                    }
-                                }
-                            },
-                            "labels": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiLabelToManyLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of attribute entity."
-            },
-            "JsonApiDatasetToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDatasetLinkage"
-                    }
-                ]
-            },
             "JsonApiDatasetOutWithLinks": {
                 "allOf": [
                     {
@@ -7445,19 +7938,6 @@
                     },
                     {
                         "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiDatasetOutIncludes": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
                     }
                 ]
             },
@@ -7485,135 +7965,6 @@
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiDatasetOut": {
-                "required": ["attributes", "id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dataset",
-                        "enum": ["dataset"]
-                    },
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "required": ["type"],
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": ["NORMAL", "DATE"]
-                            },
-                            "grain": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["id", "type"],
-                                    "type": "object",
-                                    "properties": {
-                                        "id": {
-                                            "type": "string"
-                                        },
-                                        "type": {
-                                            "type": "string",
-                                            "enum": ["attribute", "dataset"]
-                                        }
-                                    }
-                                }
-                            },
-                            "referenceProperties": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["identifier", "multivalue", "sourceColumns"],
-                                    "type": "object",
-                                    "properties": {
-                                        "identifier": {
-                                            "$ref": "#/components/schemas/DatasetReferenceIdentifier"
-                                        },
-                                        "multivalue": {
-                                            "type": "boolean"
-                                        },
-                                        "sourceColumns": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "dataSourceTableId": {
-                                "type": "string"
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "attributes": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiAttributeToManyLinkage"
-                                    }
-                                }
-                            },
-                            "facts": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiFactToManyLinkage"
-                                    }
-                                }
-                            },
-                            "references": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiDatasetToManyLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of dataset entity."
-            },
-            "DatasetReferenceIdentifier": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["dataset"]
-                    }
-                }
             },
             "JsonApiFactOutWithLinks": {
                 "allOf": [
@@ -7649,62 +8000,6 @@
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiFactOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "fact",
-                        "enum": ["fact"]
-                    },
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "sourceColumn": {
-                                "type": "string"
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "dataset": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiDatasetToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of fact entity."
             },
             "JsonApiFilterContextOutWithLinks": {
                 "allOf": [
@@ -7775,74 +8070,6 @@
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiLabelOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "label",
-                        "enum": ["label"]
-                    },
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "primary": {
-                                "type": "boolean"
-                            },
-                            "sourceColumn": {
-                                "type": "string"
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "attribute": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiAttributeToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of label entity."
-            },
-            "JsonApiAttributeToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAttributeLinkage"
-                    }
-                ]
             },
             "JsonApiMetricOutWithLinks": {
                 "allOf": [
@@ -7949,79 +8176,6 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiWorkspaceDataFilterSettingOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "workspaceDataFilterSetting",
-                        "enum": ["workspaceDataFilterSetting"]
-                    },
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "filterValues": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "workspaceDataFilter": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of workspaceDataFilterSetting entity."
-            },
-            "JsonApiWorkspaceDataFilterLinkage": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["workspaceDataFilter"]
-                    }
-                },
-                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
-            },
-            "JsonApiWorkspaceDataFilterToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterLinkage"
-                    }
-                ]
-            },
             "JsonApiWorkspaceDataFilterOutWithLinks": {
                 "allOf": [
                     {
@@ -8057,54 +8211,27 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiDataSourceTableOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDataSourceTableOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiDataSourceTableOutList": {
+            "JsonApiAnalyticalDashboardInDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDataSourceTableOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiCookieSecurityConfigurationInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiCookieSecurityConfigurationIn"
+                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardIn"
                     }
                 }
             },
-            "JsonApiCookieSecurityConfigurationIn": {
+            "JsonApiAnalyticalDashboardIn": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "cookieSecurityConfiguration",
-                        "enum": ["cookieSecurityConfiguration"]
+                        "example": "analyticalDashboard",
+                        "enum": ["analyticalDashboard"]
                     },
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -8112,44 +8239,58 @@
                     "attributes": {
                         "type": "object",
                         "properties": {
-                            "lastRotation": {
-                                "type": "string",
-                                "format": "date-time"
+                            "title": {
+                                "type": "string"
                             },
-                            "rotationInterval": {
-                                "type": "string",
-                                "description": "Length of interval between automatic rotations expressed in format of ISO 8601 duration",
-                                "example": "P30D"
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content.",
+                                "example": {
+                                    "identifier": {
+                                        "id": "label.leaf",
+                                        "type": "label"
+                                    },
+                                    "someBoolProp": false
+                                }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of cookieSecurityConfiguration entity."
+                "description": "JSON:API representation of analyticalDashboard entity."
             },
-            "JsonApiCookieSecurityConfigurationOutDocument": {
+            "JsonApiFilterContextInDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiCookieSecurityConfigurationOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
+                        "$ref": "#/components/schemas/JsonApiFilterContextIn"
                     }
                 }
             },
-            "JsonApiCookieSecurityConfigurationOut": {
+            "JsonApiFilterContextIn": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "cookieSecurityConfiguration",
-                        "enum": ["cookieSecurityConfiguration"]
+                        "example": "filterContext",
+                        "enum": ["filterContext"]
                     },
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -8157,100 +8298,119 @@
                     "attributes": {
                         "type": "object",
                         "properties": {
-                            "lastRotation": {
-                                "type": "string",
-                                "format": "date-time"
+                            "title": {
+                                "type": "string"
                             },
-                            "rotationInterval": {
-                                "type": "string",
-                                "description": "Length of interval between automatic rotations expressed in format of ISO 8601 duration",
-                                "example": "P30D"
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content.",
+                                "example": {
+                                    "identifier": {
+                                        "id": "label.leaf",
+                                        "type": "label"
+                                    },
+                                    "someBoolProp": false
+                                }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of cookieSecurityConfiguration entity."
+                "description": "JSON:API representation of filterContext entity."
             },
-            "JsonApiOrganizationInDocument": {
+            "JsonApiMetricInDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiOrganizationIn"
+                        "$ref": "#/components/schemas/JsonApiMetricIn"
                     }
                 }
             },
-            "JsonApiOrganizationIn": {
-                "required": ["id", "type"],
+            "JsonApiMetricIn": {
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "organization",
-                        "enum": ["organization"]
+                        "example": "metric",
+                        "enum": ["metric"]
                     },
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
-                            "name": {
+                            "title": {
                                 "type": "string"
                             },
-                            "hostname": {
+                            "description": {
                                 "type": "string"
                             },
-                            "oauthIssuerLocation": {
-                                "type": "string"
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
                             },
-                            "oauthClientId": {
-                                "type": "string"
+                            "areRelationsValid": {
+                                "type": "boolean"
                             },
-                            "oauthClientSecret": {
-                                "type": "string"
+                            "content": {
+                                "required": ["maql"],
+                                "type": "object",
+                                "properties": {
+                                    "format": {
+                                        "type": "string"
+                                    },
+                                    "maql": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of organization entity."
+                "description": "JSON:API representation of metric entity."
             },
-            "JsonApiOrganizationOutDocument": {
+            "JsonApiVisualizationObjectInDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiOrganizationOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiACLOutIncludes"
-                        }
+                        "$ref": "#/components/schemas/JsonApiVisualizationObjectIn"
                     }
                 }
             },
-            "JsonApiOrganizationOut": {
+            "JsonApiVisualizationObjectIn": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "organization",
-                        "enum": ["organization"]
+                        "example": "visualizationObject",
+                        "enum": ["visualizationObject"]
                     },
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -8258,16 +8418,72 @@
                     "attributes": {
                         "type": "object",
                         "properties": {
-                            "name": {
+                            "title": {
                                 "type": "string"
                             },
-                            "hostname": {
+                            "description": {
                                 "type": "string"
                             },
-                            "oauthIssuerLocation": {
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content.",
+                                "example": {
+                                    "identifier": {
+                                        "id": "label.leaf",
+                                        "type": "label"
+                                    },
+                                    "someBoolProp": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of visualizationObject entity."
+            },
+            "JsonApiWorkspaceDataFilterInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterIn"
+                    }
+                }
+            },
+            "JsonApiWorkspaceDataFilterIn": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "workspaceDataFilter",
+                        "enum": ["workspaceDataFilter"]
+                    },
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
                                 "type": "string"
                             },
-                            "oauthClientId": {
+                            "description": {
+                                "type": "string"
+                            },
+                            "columnName": {
                                 "type": "string"
                             }
                         }
@@ -8275,46 +8491,46 @@
                     "relationships": {
                         "type": "object",
                         "properties": {
-                            "bootstrapUser": {
+                            "filterSettings": {
                                 "required": ["data"],
                                 "type": "object",
                                 "properties": {
                                     "data": {
-                                        "$ref": "#/components/schemas/JsonApiUserToOneLinkage"
-                                    }
-                                }
-                            },
-                            "bootstrapUserGroup": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiUserGroupToOneLinkage"
+                                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingToManyLinkage"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of organization entity."
+                "description": "JSON:API representation of workspaceDataFilter entity."
             },
-            "JsonApiUserGroupToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
+            "JsonApiApiTokenOutWithLinks": {
+                "allOf": [
                     {
-                        "$ref": "#/components/schemas/JsonApiUserGroupLinkage"
+                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
                     }
                 ]
             },
-            "JsonApiUserToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiUserLinkage"
+            "JsonApiApiTokenOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiApiTokenOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
                     }
-                ]
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiACLOutWithLinks": {
                 "allOf": [
@@ -8479,200 +8695,6 @@
                         "items": {
                             "$ref": "#/components/schemas/JsonApiWorkspaceOutWithLinks"
                         }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiApiTokenInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiApiTokenIn"
-                    }
-                }
-            },
-            "JsonApiApiTokenIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "apiToken",
-                        "enum": ["apiToken"]
-                    },
-                    "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    }
-                },
-                "description": "JSON:API representation of apiToken entity."
-            },
-            "JsonApiApiTokenOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    }
-                }
-            },
-            "JsonApiApiTokenOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "apiToken",
-                        "enum": ["apiToken"]
-                    },
-                    "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "bearerToken": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of apiToken entity."
-            },
-            "JsonApiAttributeOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiAttributeOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAttributeOutIncludes"
-                        }
-                    }
-                }
-            },
-            "JsonApiDatasetOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiDatasetOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDatasetOutIncludes"
-                        }
-                    }
-                }
-            },
-            "JsonApiFactOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiFactOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                        }
-                    }
-                }
-            },
-            "JsonApiLabelOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiLabelOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                        }
-                    }
-                }
-            },
-            "JsonApiWorkspaceDataFilterSettingOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
-                        }
-                    }
-                }
-            },
-            "JsonApiApiTokenOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiApiTokenOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiApiTokenOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
@@ -9565,7 +9587,9 @@
                             "ADS",
                             "BIGQUERY",
                             "MSSQL",
-                            "PRESTO"
+                            "PRESTO",
+                            "DREMIO",
+                            "DRILL"
                         ]
                     },
                     "url": {
@@ -9592,6 +9616,19 @@
                         "type": "string",
                         "description": "Token as an alternative to username and password.",
                         "example": "Bigquery service account JSON. Encode it using base64!"
+                    },
+                    "enableCaching": {
+                        "type": "boolean",
+                        "description": "Enable caching of intermediate results.",
+                        "example": false
+                    },
+                    "cachePath": {
+                        "type": "array",
+                        "description": "Path to schema, where intermediate caches are stored.",
+                        "example": "[ \"dfs\", \"data\" ]. Example used in Apache Drill.",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     "pdm": {
                         "$ref": "#/components/schemas/DeclarativeTables"
