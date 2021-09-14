@@ -46,11 +46,11 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
     }
 
     public async all(): Promise<T[]> {
-        return this.allItems;
+        return [...this.allItems];
     }
 
     public async allSorted(compareFn: (a: T, b: T) => number): Promise<T[]> {
-        return this.allItems.sort(compareFn);
+        return [...this.allItems].sort(compareFn);
     }
 }
 
