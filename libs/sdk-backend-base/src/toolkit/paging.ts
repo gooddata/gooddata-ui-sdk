@@ -83,6 +83,8 @@ async function getAllPagesOfInner<T>(
 /**
  * Given a paged result, this function will enhance it with the `all` implementation.
  *
+ * @remarks TODO: FET-847 avoid the need for this function
+ *
  * @param pagedResource - paged resource to enhance
  * @internal
  */
