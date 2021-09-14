@@ -37,6 +37,7 @@ import { ObjRef, serializeObjRef } from "../objRef";
 import flatMap from "lodash/flatMap";
 import uniqBy from "lodash/uniqBy";
 import { IUser } from "../user";
+import { IAuditable } from "../base/metadata";
 
 /**
  * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
@@ -48,7 +49,7 @@ import { IUser } from "../user";
  * @public
  */
 export type IInsight = IInsightDefinition & {
-    insight: {
+    insight: IAuditable & {
         /**
          * Unique identifier of the Insight
          */
@@ -63,26 +64,6 @@ export type IInsight = IInsightDefinition & {
          * Object to use when referencing insight.
          */
         ref: ObjRef;
-
-        /**
-         * Last update date - YYYY-MM-DD HH:mm:ss
-         */
-        created?: string;
-
-        /**
-         * User id of the user that created the insight.
-         */
-        createdBy?: IUser;
-
-        /**
-         * Last update date - YYYY-MM-DD HH:mm:ss
-         */
-        updated?: string;
-
-        /**
-         * User id of the user that last modified the insight.
-         */
-        updatedBy?: IUser;
 
         /**
          * Insight is locked for editing & deleting

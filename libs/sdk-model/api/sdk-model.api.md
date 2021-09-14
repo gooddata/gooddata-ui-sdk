@@ -374,6 +374,14 @@ export interface IAttributeSortItem {
 }
 
 // @public
+export interface IAuditable {
+    created?: string;
+    createdBy?: IUser;
+    updated?: string;
+    updatedBy?: IUser;
+}
+
+// @public
 export interface IBucket {
     // (undocumented)
     items: IAttributeOrMeasure[];
@@ -476,14 +484,10 @@ export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttri
 
 // @public
 export type IInsight = IInsightDefinition & {
-    insight: {
+    insight: IAuditable & {
         identifier: string;
         uri: string;
         ref: ObjRef;
-        created?: string;
-        createdBy?: IUser;
-        updated?: string;
-        updatedBy?: IUser;
         isLocked?: boolean;
     };
 };
