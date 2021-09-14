@@ -2,6 +2,8 @@
 
 exports[`bear elements forDisplayForm should load attribute elements for existing display form 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [
     Object {
@@ -94,6 +96,8 @@ Object {
 
 exports[`bear elements forDisplayForm should load attribute elements for existing display form with a limiting measure 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [
     Object {
@@ -186,6 +190,8 @@ Object {
 
 exports[`bear elements forDisplayForm should load attribute elements for existing display form with a parent filter 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [
     Object {
@@ -278,6 +284,8 @@ Object {
 
 exports[`bear elements forFilter should load attribute filter elements for provided negative attribute filter 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [
     Object {
@@ -294,6 +302,8 @@ Object {
 
 exports[`bear elements forFilter should load attribute filter elements for provided positive attribute filter 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [
     Object {
@@ -310,7 +320,7 @@ Object {
 
 exports[`bear elements forFilter should load no attribute filter elements for provided ALL attribute filter 1`] = `
 InMemoryPaging {
-  "all": Array [],
+  "allItems": Array [],
   "items": Array [],
   "limit": 50,
   "offset": 0,
@@ -320,7 +330,7 @@ InMemoryPaging {
 
 exports[`bear elements forFilter should return attribute filter elements for provided attribute filter with elements by value 1`] = `
 InMemoryPaging {
-  "all": Array [
+  "allItems": Array [
     Object {
       "title": "Educationly",
       "uri": "Educationly",
@@ -340,6 +350,8 @@ InMemoryPaging {
 
 exports[`bear elements forFilter should return correct page for given displayForm 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [
     Object {
@@ -360,6 +372,8 @@ Object {
 
 exports[`bear elements forFilter should return empty result for out-of-range page in initial request 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [],
   "limit": 0,
@@ -371,6 +385,8 @@ Object {
 
 exports[`bear elements forFilter should return empty result for out-of-range page with goTo 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [],
   "limit": 0,
@@ -382,6 +398,8 @@ Object {
 
 exports[`bear elements forFilter should return empty result for out-of-range page with next 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [],
   "limit": 6,

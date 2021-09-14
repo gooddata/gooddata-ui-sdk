@@ -18,6 +18,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: jest.fn(),
             goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -35,6 +37,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: jest.fn(),
             goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -49,6 +53,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: jest.fn(),
             goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -71,6 +77,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: jest.fn(),
             goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -85,6 +93,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: jest.fn(),
             goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
             offset: 1,
             totalCount: 2,
         };
@@ -103,6 +113,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: incoming.next,
             goTo: incoming.goTo,
+            all: incoming.all,
+            allSorted: incoming.allSorted,
             offset: 1,
             totalCount: 2,
         };
@@ -123,6 +135,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: jest.fn(),
             goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -137,6 +151,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: jest.fn(),
             goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
             offset: 4,
             totalCount: 5,
         };
@@ -158,6 +174,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: incoming.next,
             goTo: incoming.goTo,
+            all: incoming.all,
+            allSorted: incoming.allSorted,
             offset: 4,
             totalCount: 5,
         };
@@ -178,6 +196,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: jest.fn(),
             goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -192,6 +212,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: jest.fn(),
             goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
             offset: 0,
             totalCount: 1,
         };
@@ -206,6 +228,8 @@ describe("mergeElementQueryResults", () => {
             limit: 1,
             next: incoming.next,
             goTo: incoming.goTo,
+            all: incoming.all,
+            allSorted: incoming.allSorted,
             offset: 0,
             totalCount: 1,
         };
