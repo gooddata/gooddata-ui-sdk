@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { MetadataModule } from "./metadata";
 import { XhrModule } from "./xhr";
 import { UserModule } from "./user";
@@ -26,6 +26,8 @@ export interface ICopyDashboardOptions {
     name?: string;
     /** optional, default value of summary is (current dashboard summary) */
     summary?: string;
+    /** optional, default value of tags is (current dashboard tags) */
+    tags?: string;
     /** optional, if true, the isLocked flag will be cleared for the newly created dashboard, defaults to false */
     clearLockedFlag?: boolean;
 }
@@ -126,6 +128,9 @@ export class MetadataModuleExt {
      *          - copyKpi {boolean} choose whether dashboard is cloned with new Kpi reference
      *          - copyVisObj {boolean} choose whether visualization widget is cloned with new visualization object reference
      *          - name {string} optional - choose name, default value is "Copy of (old title of the dashboard)"
+     *          - summary {string} - choose summary, default is the summary of the original dashboard
+     *          - tags {string} - choose tags, default is the tags of the original dashboard
+     *          - clearLockedFlag {boolean} - if true, the isLocked flag will be cleared for the newly created dashboard, defaults to false
      * @returns {string} uri of cloned dashboard
      * @experimental
      */
@@ -152,11 +157,6 @@ export class MetadataModuleExt {
             visWidgetUris.push(...Array.from(visWidgetMap.values()));
             const translator = createTranslator(kpiMap, visWidgetMap);
             const updatedContent = updateContent(analyticalDashboard, translator, filterContext);
-            const dashboardTitle = this.getDashboardName(analyticalDashboard.meta.title, options.name);
-            const dashboardSummary = this.getDashboardSummary(
-                analyticalDashboard.meta.summary,
-                options.summary,
-            );
 
             const duplicateDashboard: GdcDashboard.IWrappedAnalyticalDashboard = {
                 analyticalDashboard: {
@@ -168,8 +168,9 @@ export class MetadataModuleExt {
                     },
                     meta: {
                         ...getSanitizedMeta(dashboardDetails.analyticalDashboard.meta, options),
-                        title: dashboardTitle,
-                        summary: dashboardSummary,
+                        title: options.name ?? `Copy of ${analyticalDashboard.meta.title}`,
+                        summary: options.summary ?? analyticalDashboard.meta.summary ?? "",
+                        tags: options.tags ?? analyticalDashboard.meta.tags,
                     },
                 },
             };
@@ -215,22 +216,6 @@ export class MetadataModuleExt {
                 },
             },
         });
-    }
-
-    private getDashboardName(originalName: string, newName?: string): string {
-        if (newName !== undefined) {
-            return newName;
-        }
-        return `Copy of ${originalName}`;
-    }
-
-    private getDashboardSummary(originalSummary?: string, newSummary?: string): string {
-        if (newSummary !== undefined) {
-            return newSummary;
-        } else if (originalSummary !== undefined) {
-            return originalSummary;
-        }
-        return "";
     }
 
     private async duplicateOrKeepKpis(
