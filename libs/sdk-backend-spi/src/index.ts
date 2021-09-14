@@ -70,6 +70,7 @@ export {
 export { IWorkspaceSettingsService } from "./workspace/settings";
 
 export {
+    IGetInsightOptions,
     IGetVisualizationClassesOptions,
     IWorkspaceInsightsService,
     InsightOrdering,

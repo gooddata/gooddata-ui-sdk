@@ -8,6 +8,7 @@ import {
     SupportedInsightReferenceTypes,
     UnexpectedError,
     NotSupported,
+    IGetInsightOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -125,8 +126,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         return new InMemoryPaging(sanitizedOrder, options?.limit ?? 50, options?.offset ?? 0);
     };
 
-    public getInsight = async (ref: ObjRef, loadUserData = false): Promise<IInsight> => {
-        if (loadUserData) {
+    public getInsight = async (ref: ObjRef, options: IGetInsightOptions = {}): Promise<IInsight> => {
+        if (options.loadUserData) {
             throw new NotSupported("Tiger backend does not support the 'loadUserData' option of getInsight.");
         }
         const id = await objRefToIdentifier(ref, this.authCall);

@@ -807,6 +807,11 @@ export interface IFilterElementsQuery {
 }
 
 // @public
+export interface IGetInsightOptions {
+    loadUserData?: boolean;
+}
+
+// @public
 export interface IGetVisualizationClassesOptions {
     includeDeprecated?: boolean;
 }
@@ -1822,7 +1827,7 @@ export interface IWorkspaceFactsService {
 export interface IWorkspaceInsightsService {
     createInsight(insight: IInsightDefinition): Promise<IInsight>;
     deleteInsight(ref: ObjRef): Promise<void>;
-    getInsight(ref: ObjRef, loadUserData?: boolean): Promise<IInsight>;
+    getInsight(ref: ObjRef, options?: IGetInsightOptions): Promise<IInsight>;
     getInsightReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
     getInsightReferencingObjects(ref: ObjRef): Promise<IInsightReferencing>;
     getInsights(options?: IInsightsQueryOptions): Promise<IInsightsQueryResult>;

@@ -13,7 +13,6 @@ import {
     IRankingFilter,
     IMeasureValueFilter,
     uriRef,
-    serializeObjRef,
     IUser,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
@@ -213,7 +212,7 @@ const resolveReferences = (
 export const convertVisualization = (
     visualization: GdcVisualizationObject.IVisualization,
     visualizationClassUri: string,
-    userMap?: Record<string, IUser>,
+    userMap?: Map<string, IUser>,
 ): IInsight => {
     const withResolvedReferences = resolveReferences(visualization.visualizationObject);
     const { content, meta } = withResolvedReferences;
@@ -232,9 +231,9 @@ export const convertVisualization = (
             uri: meta.uri!,
             visualizationUrl: visualizationClassUri,
             created: meta.created,
-            createdBy: meta.author ? userMap?.[serializeObjRef(uriRef(meta.author))] : undefined,
+            createdBy: meta.author ? userMap?.get(meta.author) : undefined,
             updated: meta.updated,
-            updatedBy: meta.contributor ? userMap?.[serializeObjRef(uriRef(meta.contributor))] : undefined,
+            updatedBy: meta.contributor ? userMap?.get(meta.contributor) : undefined,
             isLocked: meta.locked,
             tags: meta.tags?.split(" ").filter(Boolean) ?? [],
         },

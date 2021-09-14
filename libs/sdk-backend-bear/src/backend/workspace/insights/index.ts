@@ -1,10 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
-import compact from "lodash/compact";
 import flatMap from "lodash/flatMap";
 import flow from "lodash/flow";
 import map from "lodash/fp/map";
 import sortBy from "lodash/fp/sortBy";
-import uniq from "lodash/uniq";
 import {
     IGetVisualizationClassesOptions,
     IInsightsQueryOptions,
@@ -13,6 +11,7 @@ import {
     IInsightReferencing,
     IWorkspaceInsightsService,
     SupportedInsightReferenceTypes,
+    IGetInsightOptions,
 } from "@gooddata/sdk-backend-spi";
 import { GdcVisualizationClass, GdcVisualizationObject, GdcMetadata } from "@gooddata/api-model-bear";
 import { IGetObjectsByQueryOptions } from "@gooddata/api-client-bear";
@@ -26,21 +25,18 @@ import {
     IFilter,
     insightFilters,
     insightSetFilters,
-    serializeObjRef,
-    uriRef,
     IUser,
 } from "@gooddata/sdk-model";
 import { convertVisualizationClass } from "../../../convertors/fromBackend/VisualizationClassConverter";
 import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
 import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
 import { convertInsight, convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter";
-import { objRefToUri, objRefsToUris, getObjectIdFromUri } from "../../../utils/api";
+import { objRefToUri, objRefsToUris, getObjectIdFromUri, updateUserMap } from "../../../utils/api";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { InsightReferencesQuery } from "./insightReferences";
 import { appendFilters } from "./filterMerging";
 import { enhanceWithAll } from "@gooddata/sdk-backend-base";
-import { GdcUser } from "@gooddata/api-model-bear";
-import { convertUser } from "../../../convertors/fromBackend/UsersConverter";
+import { getVisualizationUserUris } from "../../../utils/metadata";
 
 export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -79,12 +75,12 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
         )(visualizationClassesResult);
     };
 
-    public getInsight = async (ref: ObjRef, loadUserData = false): Promise<IInsight> => {
+    public getInsight = async (ref: ObjRef, options: IGetInsightOptions = {}): Promise<IInsight> => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const visualization = await this.authCall((sdk) => sdk.md.getVisualization(uri));
 
-        const userMap = loadUserData
-            ? await this.updateUserMap({}, BearWorkspaceInsights.getUserMapUpdateData(visualization))
+        const userMap = options.loadUserData
+            ? await updateUserMap(new Map(), getVisualizationUserUris(visualization), this.authCall)
             : undefined;
 
         const visClassResult: any[] = await this.authCall((sdk) =>
@@ -121,13 +117,13 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
         const visualizationClassUrlByVisualizationClassUri =
             await this.getVisualizationClassesByVisualizationClassUri({ includeDeprecated: true });
 
-        return this.getInsightsInner(options ?? {}, visualizationClassUrlByVisualizationClassUri, {});
+        return this.getInsightsInner(options ?? {}, visualizationClassUrlByVisualizationClassUri, new Map());
     };
 
     private getInsightsInner = async (
         options: IInsightsQueryOptions,
         visualizationClassUrlByVisualizationClassUri: Record<string, string>,
-        userMap: Record<string, IUser>,
+        userMap: Map<string, IUser>,
     ): Promise<IInsightsQueryResult> => {
         const mergedOptions = { ...options, getTotalCount: true };
         const defaultLimit = 50;
@@ -145,10 +141,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
 
         // only load the user data if explicitly asked to do so
         const updatedUserMap = options.loadUserData
-            ? await this.updateUserMap(
-                  userMap,
-                  flatMap(visualizations, BearWorkspaceInsights.getUserMapUpdateData),
-              )
+            ? await updateUserMap(userMap, flatMap(visualizations, getVisualizationUserUris), this.authCall)
             : userMap;
 
         const insights = visualizations.map((visualization) =>
@@ -196,41 +189,6 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
                 : () => Promise.resolve(emptyResult),
             goTo,
         });
-    };
-
-    private static getUserMapUpdateData(visualization: GdcVisualizationObject.IVisualization): string[] {
-        return compact([
-            visualization.visualizationObject.meta.author,
-            visualization.visualizationObject.meta.contributor,
-        ]);
-    }
-
-    /**
-     * Gets an updated userMap loading information for any missing users.
-     */
-    private updateUserMap = async (
-        userMap: Record<string, IUser>,
-        requestedUserUris: string[],
-    ): Promise<Record<string, IUser>> => {
-        const usersToLoad = requestedUserUris.filter((uri) => !userMap[serializeObjRef(uriRef(uri))]);
-        const uniqueUsersToLoad = uniq(usersToLoad);
-
-        const results = await Promise.all(
-            uniqueUsersToLoad.map((uri) => {
-                return this.authCall(async (sdk): Promise<IUser> => {
-                    const result = await sdk.xhr.getParsed<GdcUser.IWrappedAccountSetting>(uri);
-                    return convertUser(result.accountSetting);
-                });
-            }),
-        );
-
-        const updatedUserMap = {
-            ...userMap,
-        };
-
-        results.forEach((result) => (updatedUserMap[serializeObjRef(result.ref)] = result));
-
-        return updatedUserMap;
     };
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {

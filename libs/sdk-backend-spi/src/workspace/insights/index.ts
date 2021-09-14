@@ -51,10 +51,10 @@ export interface IWorkspaceInsightsService {
      * Request insight for the given reference
      *
      * @param ref - insight reference
-     * @param loadUserData - Optionally specify if information about the users that created/modified the insights should be loaded for each insight. Defaults to false.
+     * @param options - optionally specify additional options
      * @returns promise of insight
      */
-    getInsight(ref: ObjRef, loadUserData?: boolean): Promise<IInsight>;
+    getInsight(ref: ObjRef, options?: IGetInsightOptions): Promise<IInsight>;
 
     /**
      * Queries workspace insights, optionally using various criteria and paging settings.
@@ -202,6 +202,19 @@ export interface IInsightsQueryOptions {
 
     /**
      * Optionally specify if information about the users that created/modified the insights should be loaded for each insight.
+     * Defaults to false.
+     */
+    loadUserData?: boolean;
+}
+
+/**
+ * Configuration options for getting a single insight.
+ *
+ * @public
+ */
+export interface IGetInsightOptions {
+    /**
+     * Optionally specify if information about the users that created/modified the insight should be loaded.
      * Defaults to false.
      */
     loadUserData?: boolean;

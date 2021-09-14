@@ -46,7 +46,7 @@ export { AnonymousAuthProvider }
 
 // @internal
 export const BackendToBearConvertors: {
-    convertVisualization: (visualization: GdcVisualizationObject.IVisualization, visualizationClassUri: string, userMap?: Record<string, IUser> | undefined) => IInsight;
+    convertVisualization: (visualization: GdcVisualizationObject.IVisualization, visualizationClassUri: string, userMap?: Map<string, IUser> | undefined) => IInsight;
     convertReferencesToUris: ReferenceConverter;
     convertFilterContext: (filterContext: GdcFilterContext.IWrappedFilterContext) => IFilterContextDefinition | IFilterContext;
     convertFilterContextItem: (filterContextItem: GdcFilterContext.FilterContextItem) => FilterContextItem;
