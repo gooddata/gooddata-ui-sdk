@@ -3,6 +3,7 @@
 exports[`dashboard converter convert dashboard should convert dashboard with export temp filter context 1`] = `
 Object {
   "created": "2020-05-05 00:00:00",
+  "createdBy": undefined,
   "dateFilterConfig": undefined,
   "description": "",
   "filterContext": Object {
@@ -22,6 +23,7 @@ Object {
   "tags": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
+  "updatedBy": undefined,
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
 }
 `;
@@ -29,6 +31,7 @@ Object {
 exports[`dashboard converter convert dashboard should convert dashboard with extended date filters config 1`] = `
 Object {
   "created": "2020-05-05 00:00:00",
+  "createdBy": undefined,
   "dateFilterConfig": Object {
     "addPresets": undefined,
     "filterName": "Filter",
@@ -49,6 +52,7 @@ Object {
   "tags": Array [],
   "title": "dashboardWithExtendedDateFilterConfig",
   "updated": "2020-05-05 10:10:10",
+  "updatedBy": undefined,
   "uri": "/gdc/md/obj/dashboardWithExtendedDateFilterConfig",
 }
 `;
@@ -56,6 +60,7 @@ Object {
 exports[`dashboard converter convert dashboard should convert dashboard with filter context 1`] = `
 Object {
   "created": "2020-05-05 00:00:00",
+  "createdBy": undefined,
   "dateFilterConfig": undefined,
   "description": "",
   "filterContext": Object {
@@ -132,6 +137,7 @@ Object {
   "tags": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
+  "updatedBy": undefined,
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
 }
 `;
@@ -139,6 +145,7 @@ Object {
 exports[`dashboard converter convert dashboard should convert dashboard with layout 1`] = `
 Object {
   "created": "2020-05-05 00:00:00",
+  "createdBy": undefined,
   "dateFilterConfig": undefined,
   "description": "",
   "filterContext": undefined,
@@ -288,6 +295,7 @@ Object {
   "tags": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
+  "updatedBy": undefined,
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
 }
 `;
@@ -295,6 +303,7 @@ Object {
 exports[`dashboard converter convert dashboard should convert dashboard with layout with custom gridHeight 1`] = `
 Object {
   "created": "2020-05-05 00:00:00",
+  "createdBy": undefined,
   "dateFilterConfig": undefined,
   "description": "",
   "filterContext": undefined,
@@ -447,6 +456,7 @@ Object {
   "tags": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
+  "updatedBy": undefined,
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
 }
 `;
@@ -454,6 +464,7 @@ Object {
 exports[`dashboard converter convert dashboard should convert dashboard without layout, and create implicit layout 1`] = `
 Object {
   "created": "2020-05-05 00:00:00",
+  "createdBy": undefined,
   "dateFilterConfig": undefined,
   "description": "",
   "filterContext": undefined,
@@ -603,6 +614,7 @@ Object {
   "tags": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
+  "updatedBy": undefined,
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
 }
 `;
@@ -610,6 +622,7 @@ Object {
 exports[`dashboard converter convert dashboard should convert empty dashboard 1`] = `
 Object {
   "created": "2020-05-05 00:00:00",
+  "createdBy": undefined,
   "dateFilterConfig": undefined,
   "description": "",
   "filterContext": undefined,
@@ -622,6 +635,7 @@ Object {
   "tags": Array [],
   "title": "emptyDashboard",
   "updated": "2020-05-05 10:10:10",
+  "updatedBy": undefined,
   "uri": "/gdc/md/obj/emptyDashboard",
 }
 `;
@@ -629,6 +643,7 @@ Object {
 exports[`dashboard converter convert dashboard should override dashboard filter context with export filter context 1`] = `
 Object {
   "created": "2020-05-05 00:00:00",
+  "createdBy": undefined,
   "dateFilterConfig": undefined,
   "description": "",
   "filterContext": Object {
@@ -650,6 +665,7 @@ Object {
   "tags": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
+  "updatedBy": undefined,
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
 }
 `;

@@ -13,6 +13,7 @@ import {
     IDashboardWithReferences,
     IFilterContext,
     IFilterContextDefinition,
+    IGetDashboardOptions,
     IListedDashboard,
     isFilterContext,
     isFilterContextDefinition,
@@ -45,7 +46,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
     // Public methods
-    public getDashboards = async (): Promise<IListedDashboard[]> => {
+    public getDashboards = async (options?: IGetDashboardOptions): Promise<IListedDashboard[]> => {
+        if (options?.loadUserData) {
+            throw new NotSupported(
+                "Tiger backend does not support the 'loadUserData' option of getDashboards.",
+            );
+        }
+
         const result = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
@@ -60,7 +67,17 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return convertAnalyticalDashboardToListItems(result);
     };
 
-    public getDashboard = async (ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> => {
+    public getDashboard = async (
+        ref: ObjRef,
+        filterContextRef?: ObjRef,
+        options?: IGetDashboardOptions,
+    ): Promise<IDashboard> => {
+        if (options?.loadUserData) {
+            throw new NotSupported(
+                "Tiger backend does not support the 'loadUserData' option of getDashboard.",
+            );
+        }
+
         const filterContextByRef = filterContextRef
             ? await this.getFilterContext(filterContextRef)
             : undefined;
@@ -92,7 +109,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public getDashboardWithReferences = async (
         ref: ObjRef,
         filterContextRef?: ObjRef,
+        options?: IGetDashboardOptions,
     ): Promise<IDashboardWithReferences> => {
+        if (options?.loadUserData) {
+            throw new NotSupported(
+                "Tiger backend does not support the 'loadUserData' option of getDashboardWithReferences.",
+            );
+        }
+
         const filterContextByRef = filterContextRef
             ? await this.getFilterContext(filterContextRef)
             : undefined;

@@ -1,10 +1,23 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IFilter, ObjRef } from "@gooddata/sdk-model";
 import { IListedDashboard, IDashboard, IDashboardDefinition, IDashboardWithReferences } from "./dashboard";
 import { IWidgetAlert, IWidgetAlertDefinition, IWidgetAlertCount } from "./alert";
 import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
 import { IFilterContextDefinition, FilterContextItem } from "./filterContext";
 import { IWidget, SupportedWidgetReferenceTypes, IWidgetReferences } from "./widget";
+
+/**
+ * Configuration options for getting dashboards.
+ *
+ * @alpha
+ */
+export interface IGetDashboardOptions {
+    /**
+     * Optionally specify if information about the users that created/modified the dashboard should be loaded.
+     * Defaults to false.
+     */
+    loadUserData?: boolean;
+}
 
 /**
  * Service to list, create and update analytical dashboards
@@ -17,9 +30,10 @@ export interface IWorkspaceDashboardsService {
     /**
      * Queries workspace dashboards
      *
+     * @param options - optionally specify additional options
      * @returns promise of list of the dashboards
      */
-    getDashboards(): Promise<IListedDashboard[]>;
+    getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
 
     /**
      * Load dashboard by it's reference,
@@ -29,9 +43,10 @@ export interface IWorkspaceDashboardsService {
      * @param ref - dashboard ref
      * @param filterContextRef - Override dashboard filter context with the custom filter context
      * (This allows to modify filter context when exporting the dashboard)
+     * @param options - optionally specify additional options
      * @returns promise of the dashboard
      */
-    getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
+    getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
 
     /**
      * Like getDashboard with loading reference objects
@@ -39,9 +54,14 @@ export interface IWorkspaceDashboardsService {
      * @param ref - dashboard ref
      * @param filterContextRef - Override dashboard filter context with the custom filter context
      * (This allows to modify filter context when exporting the dashboard)
+     * @param options - optionally specify additional options
      * @returns promise of the dashboard and references
      */
-    getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboardWithReferences>;
+    getDashboardWithReferences(
+        ref: ObjRef,
+        filterContextRef?: ObjRef,
+        options?: IGetDashboardOptions,
+    ): Promise<IDashboardWithReferences>;
 
     /**
      * Create and save dashboard for the provided dashboard definition

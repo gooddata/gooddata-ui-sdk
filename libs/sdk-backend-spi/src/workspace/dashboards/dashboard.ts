@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { ObjRef, Identifier, IInsight } from "@gooddata/sdk-model";
+import { ObjRef, IAuditable, Identifier, IInsight } from "@gooddata/sdk-model";
 import { IDashboardLayout } from "./layout";
 import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
 import { IDashboardObjectIdentity } from "./common";
@@ -103,16 +103,16 @@ export interface IDashboardBase {
  * and optionally extended date filter config.
  * @alpha
  */
-export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
+export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity, IAuditable {
     /**
      * Created date
      */
-    readonly created: string;
+    readonly created: string; // left here even though in IAuditable to not break (IAuditable#created is optional)
 
     /**
      * Updated date
      */
-    readonly updated: string;
+    readonly updated: string; // left here even though in IAuditable to not break (IAuditable#updated is optional)
 
     /**
      * The layout of the dashboard determines the dashboard widgets {@link IWidget} and where they are rendered
@@ -160,7 +160,7 @@ export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboard
  * for the full definition see {@link IDashboard}
  * @alpha
  */
-export interface IListedDashboard {
+export interface IListedDashboard extends IAuditable {
     /**
      * Dashboard object ref
      */
@@ -189,12 +189,12 @@ export interface IListedDashboard {
     /**
      * Created date
      */
-    readonly created: string;
+    readonly created: string; // left here even though in IAuditable to not break (IAuditable#created is optional)
 
     /**
      * Updated date
      */
-    readonly updated: string;
+    readonly updated: string; // left here even though in IAuditable to not break (IAuditable#updated is optional)
 
     /**
      * Dashboard tags.

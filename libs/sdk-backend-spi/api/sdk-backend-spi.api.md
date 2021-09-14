@@ -9,6 +9,7 @@ import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAuditable } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
@@ -354,7 +355,7 @@ export interface ICatalogMeasure extends IGroupableCatalogItemBase {
 }
 
 // @alpha
-export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
+export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity, IAuditable {
     readonly created: string;
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | ITempFilterContext;
@@ -806,6 +807,11 @@ export interface IFilterElementsQuery {
     withOffset(offset: number): IFilterElementsQuery;
 }
 
+// @alpha
+export interface IGetDashboardOptions {
+    loadUserData?: boolean;
+}
+
 // @public
 export interface IGetInsightOptions {
     loadUserData?: boolean;
@@ -923,7 +929,7 @@ export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
 }
 
 // @alpha
-export interface IListedDashboard {
+export interface IListedDashboard extends IAuditable {
     readonly created: string;
     readonly description: string;
     readonly identifier: string;
@@ -1785,10 +1791,10 @@ export interface IWorkspaceDashboardsService {
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
-    getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
-    getDashboards(): Promise<IListedDashboard[]>;
+    getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
+    getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
-    getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboardWithReferences>;
+    getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboardWithReferences>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
