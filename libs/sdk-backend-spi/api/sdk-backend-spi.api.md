@@ -9,7 +9,8 @@ import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
-import { IAuditable } from '@gooddata/sdk-model';
+import { IAuditableDates } from '@gooddata/sdk-model';
+import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
@@ -355,12 +356,10 @@ export interface ICatalogMeasure extends IGroupableCatalogItemBase {
 }
 
 // @alpha
-export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity, IAuditable {
-    readonly created: string;
+export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout;
-    readonly updated: string;
 }
 
 // @alpha
@@ -929,14 +928,12 @@ export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
 }
 
 // @alpha
-export interface IListedDashboard extends IAuditable {
-    readonly created: string;
+export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
     readonly description: string;
     readonly identifier: string;
     readonly ref: ObjRef;
     readonly tags?: string[];
     readonly title: string;
-    readonly updated: string;
     readonly uri: string;
 }
 

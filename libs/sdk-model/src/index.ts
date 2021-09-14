@@ -11,7 +11,7 @@
  * @packageDocumentation
  */
 export { DateAttributeGranularity, DateGranularity, AllTimeGranularity } from "./base/dateGranularities";
-export { IAuditable } from "./base/metadata";
+export { IAuditable, IAuditableDates, IAuditableUsers } from "./base/metadata";
 export { ComparatorDirection, IComparator } from "./base/comparators";
 
 export {

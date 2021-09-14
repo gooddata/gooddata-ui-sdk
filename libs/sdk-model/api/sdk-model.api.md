@@ -377,10 +377,17 @@ export interface IAttributeSortItem {
 }
 
 // @public
-export interface IAuditable {
+export type IAuditable = IAuditableDates & IAuditableUsers;
+
+// @public
+export interface IAuditableDates {
     created?: string;
-    createdBy?: IUser;
     updated?: string;
+}
+
+// @public
+export interface IAuditableUsers {
+    createdBy?: IUser;
     updatedBy?: IUser;
 }
 
