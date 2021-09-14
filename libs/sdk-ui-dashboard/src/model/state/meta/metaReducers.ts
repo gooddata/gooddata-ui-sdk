@@ -3,6 +3,7 @@
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { DashboardMetaState, EmptyDashboardDescriptor } from "./metaState";
 import { IDashboard } from "@gooddata/sdk-backend-spi";
+import invariant from "ts-invariant";
 
 type MetaReducer<A extends Action> = CaseReducer<DashboardMetaState, A>;
 
@@ -19,9 +20,16 @@ const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
               description: dashboard.description,
               tags: dashboard.tags,
           }
-        : EmptyDashboardDescriptor;
+        : { ...EmptyDashboardDescriptor };
+};
+
+const setDashboardTitle: MetaReducer<PayloadAction<string>> = (state, action) => {
+    invariant(state.descriptor);
+
+    state.descriptor.title = action.payload;
 };
 
 export const metaReducers = {
     setMeta,
+    setDashboardTitle,
 };
