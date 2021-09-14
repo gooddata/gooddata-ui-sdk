@@ -29,6 +29,7 @@ import { useWidgetFiltersQuery } from "../../../common";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties";
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills";
 import { CustomError } from "../CustomError/CustomError";
+import LoadingEqualizer from "../../../../presentationComponents/LoadingEqualizer";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 
@@ -72,7 +73,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
     // Custom components
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
         ErrorComponent: CustomErrorComponent,
-        LoadingComponent: CustomLoadingComponent,
+        LoadingComponent: CustomLoadingComponent ?? LoadingEqualizer,
     });
 
     // Context
