@@ -1,6 +1,11 @@
 // (C) 2020-2021 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
-import { FilterContextItem, isDashboardAttributeFilter, IWidget } from "@gooddata/sdk-backend-spi";
+import {
+    FilterContextItem,
+    isDashboardAttributeFilter,
+    isInsightWidget,
+    IWidget,
+} from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, filterObjRef, IFilter, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import stringify from "json-stable-stringify";
@@ -101,8 +106,12 @@ function useNonIgnoredFilters(widget: IWidget | undefined) {
 
     useEffect(() => {
         if (widget) {
-            // set [] as filter overrides to ignore filters on insights -> this way we get only the dashboard level filters
-            run(widget, []);
+            if (isInsightWidget(widget)) {
+                // set [] as filter overrides to ignore filters on insights -> this way we get only the dashboard level filters
+                run(widget, []);
+            } else {
+                run(widget);
+            }
         }
     }, [widget, filtersDigest(dashboardFilters, widgetIgnoresDateFilter)]);
 
