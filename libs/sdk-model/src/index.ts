@@ -11,6 +11,8 @@
  * @packageDocumentation
  */
 export { DateAttributeGranularity, DateGranularity, AllTimeGranularity } from "./base/dateGranularities";
+export { IAuditable, IAuditableDates, IAuditableUsers } from "./base/metadata";
+export { ComparatorDirection, IComparator } from "./base/comparators";
 
 export {
     IAttribute,
@@ -336,7 +338,9 @@ export {
     insightUri,
     insightIsLocked,
     insightCreated,
+    insightCreatedBy,
     insightUpdated,
+    insightUpdatedBy,
     insightTotals,
     insightFilters,
     insightVisualizationUrl,
@@ -352,6 +356,16 @@ export {
     visClassId,
     visClassUri,
 } from "./insight";
+
+export { IUser, userFullName } from "./user";
+
+export {
+    insightCreatedComparator,
+    insightCreatedByComparator,
+    insightTitleComparator,
+    insightUpdatedComparator,
+    insightUpdatedByComparator,
+} from "./insight/comparators";
 
 export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory";
 

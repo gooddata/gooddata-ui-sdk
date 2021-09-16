@@ -191,6 +191,9 @@ export function colorPaletteItemToRgb(item: IColorPaletteItem): string;
 // @public
 export function colorPaletteToColors(palette: IColorPalette): string[];
 
+// @public
+export type ComparatorDirection = "asc" | "desc";
+
 // @public (undocumented)
 export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
 
@@ -374,6 +377,21 @@ export interface IAttributeSortItem {
 }
 
 // @public
+export type IAuditable = IAuditableDates & IAuditableUsers;
+
+// @public
+export interface IAuditableDates {
+    created?: string;
+    updated?: string;
+}
+
+// @public
+export interface IAuditableUsers {
+    createdBy?: IUser;
+    updatedBy?: IUser;
+}
+
+// @public
 export interface IBucket {
     // (undocumented)
     items: IAttributeOrMeasure[];
@@ -412,6 +430,9 @@ export interface IColorPaletteItem {
     // (undocumented)
     guid: string;
 }
+
+// @public
+export type IComparator<T> = (a: T, b: T) => number;
 
 // @public (undocumented)
 export interface IComparisonCondition {
@@ -476,12 +497,10 @@ export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttri
 
 // @public
 export type IInsight = IInsightDefinition & {
-    insight: {
+    insight: IAuditable & {
         identifier: string;
         uri: string;
         ref: ObjRef;
-        created?: string;
-        updated?: string;
         isLocked?: boolean;
     };
 };
@@ -588,6 +607,15 @@ export function insightBuckets(insight: IInsightDefinition, ...ids: string[]): I
 // @public
 export function insightCreated(insight: IInsight): string | undefined;
 
+// @public
+export function insightCreatedBy(insight: IInsight): IUser | undefined;
+
+// @alpha (undocumented)
+export const insightCreatedByComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
+
+// @alpha (undocumented)
+export const insightCreatedComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
+
 // @internal
 export class InsightDefinitionBuilder {
     constructor(visualizationUrl: string);
@@ -678,11 +706,23 @@ export function insightTags(insight: IInsightDefinition): string[];
 // @public
 export function insightTitle(insight: IInsightDefinition): string;
 
+// @alpha (undocumented)
+export const insightTitleComparator: (direction: ComparatorDirection) => IComparator<IInsightDefinition>;
+
 // @public
 export function insightTotals(insight: IInsightDefinition): ITotal[];
 
 // @public
 export function insightUpdated(insight: IInsight): string | undefined;
+
+// @public
+export function insightUpdatedBy(insight: IInsight): IUser | undefined;
+
+// @alpha (undocumented)
+export const insightUpdatedByComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
+
+// @alpha (undocumented)
+export const insightUpdatedComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
 
 // @public
 export function insightUri(insight: IInsight): string;
@@ -956,6 +996,16 @@ export interface ITotal {
     attributeIdentifier: Identifier;
     measureIdentifier: Identifier;
     type: TotalType;
+}
+
+// @public
+export interface IUser {
+    email?: string;
+    firstName?: string;
+    fullName?: string;
+    lastName?: string;
+    login: string;
+    ref: ObjRef;
 }
 
 // @public
@@ -1320,6 +1370,9 @@ export type UriRef = {
 
 // @public
 export function uriRef(uri: Uri): UriRef;
+
+// @public
+export function userFullName(user: IUser): string | undefined;
 
 // @public
 export function visClassId(vc: IVisualizationClass): string;

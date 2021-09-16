@@ -176,7 +176,7 @@ export namespace GdcCatalog {
     } | {
         expression: string;
     };
-    {};
+        {};
 }
 
 // @public (undocumented)
@@ -2446,6 +2446,11 @@ export namespace GdcUser {
         uri: Uri;
     }
     // (undocumented)
+    export interface IWrappedAccountSetting {
+        // (undocumented)
+        accountSetting: IAccountSetting;
+    }
+    // (undocumented)
     export interface IZendesk4Integration {
         // (undocumented)
         active: boolean;
@@ -2913,6 +2918,5 @@ export type Timestamp = string;
 
 // @public (undocumented)
 export type Uri = string;
-
 
 ```

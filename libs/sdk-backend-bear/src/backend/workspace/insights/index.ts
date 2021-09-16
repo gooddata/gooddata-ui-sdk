@@ -1,4 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
+import flatMap from "lodash/flatMap";
 import flow from "lodash/flow";
 import map from "lodash/fp/map";
 import sortBy from "lodash/fp/sortBy";
@@ -10,6 +11,7 @@ import {
     IInsightReferencing,
     IWorkspaceInsightsService,
     SupportedInsightReferenceTypes,
+    IGetInsightOptions,
 } from "@gooddata/sdk-backend-spi";
 import { GdcVisualizationClass, GdcVisualizationObject, GdcMetadata } from "@gooddata/api-model-bear";
 import { IGetObjectsByQueryOptions } from "@gooddata/api-client-bear";
@@ -23,15 +25,18 @@ import {
     IFilter,
     insightFilters,
     insightSetFilters,
+    IUser,
 } from "@gooddata/sdk-model";
 import { convertVisualizationClass } from "../../../convertors/fromBackend/VisualizationClassConverter";
 import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
 import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
 import { convertInsight, convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter";
-import { objRefToUri, objRefsToUris, getObjectIdFromUri } from "../../../utils/api";
+import { objRefToUri, objRefsToUris, getObjectIdFromUri, updateUserMap } from "../../../utils/api";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { InsightReferencesQuery } from "./insightReferences";
 import { appendFilters } from "./filterMerging";
+import { enhanceWithAll } from "@gooddata/sdk-backend-base";
+import { getVisualizationUserUris } from "../../../utils/metadata";
 
 export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -70,9 +75,13 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
         )(visualizationClassesResult);
     };
 
-    public getInsight = async (ref: ObjRef): Promise<IInsight> => {
+    public getInsight = async (ref: ObjRef, options: IGetInsightOptions = {}): Promise<IInsight> => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const visualization = await this.authCall((sdk) => sdk.md.getVisualization(uri));
+
+        const userMap = options.loadUserData
+            ? await updateUserMap(new Map(), getVisualizationUserUris(visualization), this.authCall)
+            : undefined;
 
         const visClassResult: any[] = await this.authCall((sdk) =>
             sdk.md.getObjects(this.workspace, [
@@ -83,7 +92,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
         const visClass = visClassResult[0];
         const visualizationClassUri = visClass.visualizationClass.content.url;
 
-        return convertVisualization(visualization, visualizationClassUri);
+        return convertVisualization(visualization, visualizationClassUri, userMap);
     };
 
     public getVisualizationClassesByVisualizationClassUri = async (
@@ -91,7 +100,6 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     ): Promise<{
         [key: string]: string;
     }> => {
-        // get also deprecated visClasses in case some insights use them
         const visualizationClasses = await this.getVisualizationClasses(options);
         return visualizationClasses.reduce((acc, el) => {
             if (!el.visualizationClass.uri) {
@@ -105,6 +113,18 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
+        // get also deprecated visClasses in case some insights use them
+        const visualizationClassUrlByVisualizationClassUri =
+            await this.getVisualizationClassesByVisualizationClassUri({ includeDeprecated: true });
+
+        return this.getInsightsInner(options ?? {}, visualizationClassUrlByVisualizationClassUri, new Map());
+    };
+
+    private getInsightsInner = async (
+        options: IInsightsQueryOptions,
+        visualizationClassUrlByVisualizationClassUri: Record<string, string>,
+        userMap: Map<string, IUser>,
+    ): Promise<IInsightsQueryResult> => {
         const mergedOptions = { ...options, getTotalCount: true };
         const defaultLimit = 50;
         const {
@@ -119,9 +139,10 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
             }),
         );
 
-        // get also deprecated visClasses in case some insights use them
-        const visualizationClassUrlByVisualizationClassUri =
-            await this.getVisualizationClassesByVisualizationClassUri({ includeDeprecated: true });
+        // only load the user data if explicitly asked to do so
+        const updatedUserMap = options.loadUserData
+            ? await updateUserMap(userMap, flatMap(visualizations, getVisualizationUserUris), this.authCall)
+            : userMap;
 
         const insights = visualizations.map((visualization) =>
             convertVisualization(
@@ -129,35 +150,45 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
                 visualizationClassUrlByVisualizationClassUri[
                     visualization.visualizationObject.content.visualizationClass.uri
                 ],
+                updatedUserMap,
             ),
         );
 
         const goTo = (index: number) =>
             index * count < totalCount!
-                ? this.getInsights({ ...options, offset: index * count })
+                ? this.getInsightsInner(
+                      { ...options, offset: index * count },
+                      visualizationClassUrlByVisualizationClassUri,
+                      updatedUserMap,
+                  )
                 : Promise.resolve(emptyResult);
 
-        const emptyResult: IInsightsQueryResult = {
+        const emptyResult: IInsightsQueryResult = enhanceWithAll({
             items: [],
             limit: count,
             offset: totalCount!,
             totalCount: totalCount!,
             next: () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
 
         const hasNextPage = offset + count < totalCount!;
 
-        return {
+        return enhanceWithAll({
             items: insights,
             limit: count,
             offset,
             totalCount: totalCount!,
             next: hasNextPage
-                ? () => this.getInsights({ ...options, offset: offset + count })
+                ? () =>
+                      this.getInsightsInner(
+                          { ...options, offset: offset + count },
+                          visualizationClassUrlByVisualizationClassUri,
+                          updatedUserMap,
+                      )
                 : () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
     };
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {

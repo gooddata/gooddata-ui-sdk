@@ -1,4 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
+import { enhanceWithAll } from "@gooddata/sdk-backend-base";
 import { IWorkspacesQueryFactory, IWorkspacesQuery, IWorkspacesQueryResult } from "@gooddata/sdk-backend-spi";
 import { convertUserProject } from "../../convertors/toBackend/WorkspaceConverter";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
@@ -64,7 +65,7 @@ class BearWorkspaceQuery implements IWorkspacesQuery {
                 ? this.queryWorker(index * count, limit, search)
                 : Promise.resolve(emptyResult);
 
-        const emptyResult: IWorkspacesQueryResult = {
+        const emptyResult: IWorkspacesQueryResult = enhanceWithAll({
             search,
             items: [],
             limit: count,
@@ -72,9 +73,9 @@ class BearWorkspaceQuery implements IWorkspacesQuery {
             totalCount,
             next: () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
 
-        return {
+        return enhanceWithAll({
             search,
             items: items.map((workspace) => {
                 const descriptor = convertUserProject(workspace);
@@ -87,6 +88,6 @@ class BearWorkspaceQuery implements IWorkspacesQuery {
                 ? () => this.queryWorker(offset + count, limit, search)
                 : () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
     }
 }

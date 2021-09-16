@@ -111,12 +111,12 @@ class WorkspacesInMemoryPaging
     implements IWorkspacesQueryResult
 {
     constructor(
-        all: IAnalyticalWorkspace[],
+        allItems: IAnalyticalWorkspace[],
         limit = 50,
         offset = 0,
         public readonly search: string | undefined = undefined,
     ) {
-        super(all, limit, offset);
+        super(allItems, limit, offset);
     }
 
     public async next(): Promise<IWorkspacesQueryResult> {
@@ -125,7 +125,7 @@ class WorkspacesInMemoryPaging
         }
 
         return new WorkspacesInMemoryPaging(
-            this.all,
+            this.allItems,
             this.limit,
             this.offset + this.items.length,
             this.search,

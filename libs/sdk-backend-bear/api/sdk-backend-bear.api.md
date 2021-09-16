@@ -37,6 +37,7 @@ import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
 import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
+import { IUser } from '@gooddata/sdk-model';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 import { VisualizationProperties } from '@gooddata/sdk-model';
@@ -45,7 +46,7 @@ export { AnonymousAuthProvider }
 
 // @internal
 export const BackendToBearConvertors: {
-    convertVisualization: (visualization: GdcVisualizationObject.IVisualization, visualizationClassUri: string) => IInsight;
+    convertVisualization: (visualization: GdcVisualizationObject.IVisualization, visualizationClassUri: string, userMap?: Map<string, IUser> | undefined) => IInsight;
     convertReferencesToUris: ReferenceConverter;
     convertFilterContext: (filterContext: GdcFilterContext.IWrappedFilterContext) => IFilterContextDefinition | IFilterContext;
     convertFilterContextItem: (filterContextItem: GdcFilterContext.FilterContextItem) => FilterContextItem;

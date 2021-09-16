@@ -36,6 +36,8 @@ import identity from "lodash/identity";
 import { ObjRef, serializeObjRef } from "../objRef";
 import flatMap from "lodash/flatMap";
 import uniqBy from "lodash/uniqBy";
+import { IUser } from "../user";
+import { IAuditable } from "../base/metadata";
 
 /**
  * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
@@ -47,7 +49,7 @@ import uniqBy from "lodash/uniqBy";
  * @public
  */
 export type IInsight = IInsightDefinition & {
-    insight: {
+    insight: IAuditable & {
         /**
          * Unique identifier of the Insight
          */
@@ -62,16 +64,6 @@ export type IInsight = IInsightDefinition & {
          * Object to use when referencing insight.
          */
         ref: ObjRef;
-
-        /**
-         * Last update date - YYYY-MM-DD HH:mm:ss
-         */
-        created?: string;
-
-        /**
-         * Last update date - YYYY-MM-DD HH:mm:ss
-         */
-        updated?: string;
 
         /**
          * Insight is locked for editing & deleting
@@ -529,6 +521,19 @@ export function insightCreated(insight: IInsight): string | undefined {
 }
 
 /**
+ * Gets the user that created the insight
+ *
+ * @param insight - insight
+ * @returns string
+ * @public
+ */
+export function insightCreatedBy(insight: IInsight): IUser | undefined {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.createdBy;
+}
+
+/**
  * Gets the date of the last insight update
  *
  * @param insight - insight
@@ -539,6 +544,19 @@ export function insightUpdated(insight: IInsight): string | undefined {
     invariant(insight, "insight must be specified");
 
     return insight.insight.updated;
+}
+
+/**
+ * Gets the user that last updated the insight
+ *
+ * @param insight - insight
+ * @returns string
+ * @public
+ */
+export function insightUpdatedBy(insight: IInsight): IUser | undefined {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.updatedBy;
 }
 
 /**

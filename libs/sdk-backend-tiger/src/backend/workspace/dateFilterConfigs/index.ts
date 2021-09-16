@@ -1,4 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     IDateFilterConfig,
     IDateFilterConfigsQuery,
@@ -152,46 +153,6 @@ export class TigerWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQ
     }
 
     public async query(): Promise<IDateFilterConfigsQueryResult> {
-        return this.queryWorker(this.offset, this.limit);
-    }
-
-    private async queryWorker(
-        offset: number | undefined = 0,
-        limit: number | undefined,
-    ): Promise<IDateFilterConfigsQueryResult> {
-        const singleItemPage = {
-            items: [DefaultDateFilterConfig],
-            offset: 0,
-            limit: 1,
-            totalCount: 1,
-        };
-
-        const goTo = (pageIndex: number) =>
-            pageIndex === 0
-                ? Promise.resolve({
-                      ...singleItemPage,
-                      next: () => Promise.resolve(emptyResult),
-                      goTo,
-                  })
-                : Promise.resolve(emptyResult);
-
-        const emptyResult: IDateFilterConfigsQueryResult = {
-            items: [],
-            limit: 0,
-            offset: 1,
-            totalCount: 1,
-            next: () => Promise.resolve(emptyResult),
-            goTo,
-        };
-
-        if (!offset && (!limit || limit > 0)) {
-            return {
-                ...singleItemPage,
-                next: () => Promise.resolve(emptyResult),
-                goTo,
-            };
-        }
-
-        return emptyResult;
+        return new InMemoryPaging([DefaultDateFilterConfig], this.limit, this.offset);
     }
 }

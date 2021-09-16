@@ -2190,7 +2190,7 @@ export const InsightListItem: React_2.ForwardRefExoticComponent<Pick<IInsightLis
 export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
 
 // @internal (undocumented)
-export const InvertableList: React_2.ForwardRefExoticComponent<Pick<IInvertableListProps<unknown>, "height" | "width" | "tagName" | "className" | "onSelect" | "isLoading" | "items" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "renderLimitHit" | "renderNoItems" | "renderLoading" | "getItemKey" | "noItemsFound" | "showSearchField" | "smallSearch" | "actionsAsCheckboxes" | "searchPlaceholder" | "searchString" | "onSearch"> & {
+export const InvertableList: React_2.ForwardRefExoticComponent<Pick<IInvertableListProps<unknown>, "height" | "width" | "tagName" | "items" | "className" | "onSelect" | "isLoading" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "renderLimitHit" | "renderNoItems" | "renderLoading" | "getItemKey" | "noItemsFound" | "showSearchField" | "smallSearch" | "actionsAsCheckboxes" | "searchPlaceholder" | "searchString" | "onSearch"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IInvertableListProps<unknown>>;
@@ -2683,7 +2683,7 @@ export const Messages: React_2.FC<IMessagesProps>;
 export type MessageType = "success" | "progress" | "error" | "warning";
 
 // @internal (undocumented)
-export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelectListProps<unknown>, "height" | "width" | "tagName" | "isSelected" | "items" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "isSearching" | "selectAllCheckbox" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "onSelectAll" | "onSelectNone"> & {
+export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelectListProps<unknown>, "height" | "width" | "tagName" | "items" | "isSelected" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "isSearching" | "selectAllCheckbox" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "onSelectAll" | "onSelectNone"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;

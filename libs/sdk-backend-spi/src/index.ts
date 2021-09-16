@@ -70,6 +70,7 @@ export {
 export { IWorkspaceSettingsService } from "./workspace/settings";
 
 export {
+    IGetInsightOptions,
     IGetVisualizationClassesOptions,
     IWorkspaceInsightsService,
     InsightOrdering,
@@ -167,7 +168,7 @@ export { IWorkspaceMeasuresService } from "./workspace/measures";
 
 export { IWorkspaceFactsService } from "./workspace/facts";
 
-export { IWorkspaceDashboardsService } from "./workspace/dashboards";
+export { IWorkspaceDashboardsService, IGetDashboardOptions } from "./workspace/dashboards";
 export { IDashboardObjectIdentity } from "./workspace/dashboards/common";
 export {
     DrillDefinition,

@@ -1,7 +1,13 @@
 // (C) 2019-2021 GoodData Corporation
+import { GdcUser } from "@gooddata/api-model-bear";
 import { IAuthenticatedPrincipal, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { Identifier, isIdentifierRef, isUriRef, IUser, ObjRef, Uri } from "@gooddata/sdk-model";
 import last from "lodash/last";
-import { Identifier, isIdentifierRef, isUriRef, ObjRef, Uri } from "@gooddata/sdk-model";
+import uniq from "lodash/uniq";
+import invariant from "ts-invariant";
+
+import { convertUser } from "../convertors/fromBackend/UsersConverter";
+
 import { BearAuthenticatedCallGuard } from "../types/auth";
 
 /**
@@ -179,4 +185,33 @@ export const objRefsToIdentifiers = async (
     authCall: BearAuthenticatedCallGuard,
 ): Promise<Identifier[]> => {
     return Promise.all(refs.map((ref) => objRefToIdentifier(ref, authCall)));
+};
+
+/**
+ * Gets an updated userMap loading information for any missing users. The map is keyed by the user URI.
+ */
+export const updateUserMap = async (
+    userMap: Map<string, IUser>,
+    requestedUserUris: string[],
+    authCall: BearAuthenticatedCallGuard,
+): Promise<Map<string, IUser>> => {
+    const usersToLoad = requestedUserUris.filter((uri) => !userMap.has(uri));
+    const uniqueUsersToLoad = uniq(usersToLoad);
+
+    const results = await Promise.all(
+        uniqueUsersToLoad.map((uri) => {
+            return authCall(async (sdk): Promise<IUser> => {
+                const result = await sdk.xhr.getParsed<GdcUser.IWrappedAccountSetting>(uri);
+                return convertUser(result.accountSetting);
+            });
+        }),
+    );
+
+    results.forEach((result) => {
+        const uri = isUriRef(result.ref) ? result.ref.uri : undefined;
+        invariant(uri, "User must have uri in bear backend instances.");
+        userMap.set(uri, result);
+    });
+
+    return userMap;
 };

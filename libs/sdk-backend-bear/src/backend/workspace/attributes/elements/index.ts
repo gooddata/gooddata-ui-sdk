@@ -28,7 +28,7 @@ import { BearAuthenticatedCallGuard } from "../../../../types/auth";
 import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { LimitingAfmFactory } from "./limitingAfmFactory";
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { enhanceWithAll, InMemoryPaging } from "@gooddata/sdk-backend-base";
 
 export class BearWorkspaceElements implements IElementsQueryFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -141,16 +141,16 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
         const hasNextPage = serverOffset + count < total;
         const goTo = (pageIndex: number) => this.queryWorker(pageIndex * count, limit, options);
 
-        const emptyResult: IElementsQueryResult = {
+        const emptyResult: IElementsQueryResult = enhanceWithAll({
             items: [],
             limit: count,
             offset: total,
             totalCount: total,
             next: () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
 
-        return {
+        return enhanceWithAll({
             items: items.map((element: { element: IAttributeElement }) => element.element),
             limit: count,
             offset: serverOffset,
@@ -159,7 +159,7 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
                 ? () => this.queryWorker(offset + count, limit, options)
                 : () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
     }
 }
 

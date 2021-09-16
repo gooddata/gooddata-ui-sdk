@@ -16,3 +16,7 @@ export * from "@gooddata/sdk-ui-geo";
 export * from "@gooddata/sdk-ui-pivot";
 export * from "@gooddata/sdk-ui-filters";
 export * from "@gooddata/sdk-ui-ext";
+
+// override IUser, userFullName that are both in model and SPI so that the model version is used
+import { IUser, userFullName } from "@gooddata/sdk-model";
+export { IUser, userFullName };

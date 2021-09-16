@@ -2,6 +2,8 @@
 
 exports[`bear dateFilterConfigs should load date filter configs 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [
     Object {
@@ -157,6 +159,8 @@ Object {
 
 exports[`bear dateFilterConfigs should load empty date filter configs for out-of-range page 1`] = `
 Object {
+  "all": [Function],
+  "allSorted": [Function],
   "goTo": [Function],
   "items": Array [],
   "limit": 1,

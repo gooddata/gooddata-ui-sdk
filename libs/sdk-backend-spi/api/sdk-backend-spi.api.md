@@ -9,6 +9,8 @@ import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAuditableDates } from '@gooddata/sdk-model';
+import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
@@ -22,6 +24,7 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
+import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -353,12 +356,10 @@ export interface ICatalogMeasure extends IGroupableCatalogItemBase {
 }
 
 // @alpha
-export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
-    readonly created: string;
+export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout;
-    readonly updated: string;
 }
 
 // @alpha
@@ -805,6 +806,16 @@ export interface IFilterElementsQuery {
     withOffset(offset: number): IFilterElementsQuery;
 }
 
+// @alpha
+export interface IGetDashboardOptions {
+    loadUserData?: boolean;
+}
+
+// @public
+export interface IGetInsightOptions {
+    loadUserData?: boolean;
+}
+
 // @public
 export interface IGetVisualizationClassesOptions {
     includeDeprecated?: boolean;
@@ -830,6 +841,7 @@ export interface IInsightReferencing {
 export interface IInsightsQueryOptions {
     author?: string;
     limit?: number;
+    loadUserData?: boolean;
     offset?: number;
     orderBy?: InsightOrdering;
     title?: string;
@@ -916,14 +928,12 @@ export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
 }
 
 // @alpha
-export interface IListedDashboard {
-    readonly created: string;
+export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
     readonly description: string;
     readonly identifier: string;
     readonly ref: ObjRef;
     readonly tags?: string[];
     readonly title: string;
-    readonly updated: string;
     readonly uri: string;
 }
 
@@ -1038,6 +1048,8 @@ export interface IOrganizations {
 
 // @public
 export interface IPagedResource<TItem> {
+    all(): Promise<TItem[]>;
+    allSorted(compareFn: (a: TItem, b: TItem) => number): Promise<TItem[]>;
     goTo(pageIndex: number): Promise<IPagedResource<TItem>>;
     // (undocumented)
     readonly items: TItem[];
@@ -1603,14 +1615,8 @@ export interface ITotalDescriptor {
     };
 }
 
-// @alpha
-export interface IUser {
-    email?: string;
-    firstName?: string;
-    fullName?: string;
-    lastName?: string;
-    login: string;
-    ref: ObjRef;
+// @alpha @deprecated
+export interface IUser extends IUser_2 {
 }
 
 // @public
@@ -1782,10 +1788,10 @@ export interface IWorkspaceDashboardsService {
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
-    getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
-    getDashboards(): Promise<IListedDashboard[]>;
+    getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
+    getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
-    getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboardWithReferences>;
+    getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboardWithReferences>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
@@ -1824,7 +1830,7 @@ export interface IWorkspaceFactsService {
 export interface IWorkspaceInsightsService {
     createInsight(insight: IInsightDefinition): Promise<IInsight>;
     deleteInsight(ref: ObjRef): Promise<void>;
-    getInsight(ref: ObjRef): Promise<IInsight>;
+    getInsight(ref: ObjRef, options?: IGetInsightOptions): Promise<IInsight>;
     getInsightReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
     getInsightReferencingObjects(ref: ObjRef): Promise<IInsightReferencing>;
     getInsights(options?: IInsightsQueryOptions): Promise<IInsightsQueryResult>;
@@ -2026,7 +2032,7 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
     readonly responseBody: unknown;
 }
 
-// @alpha
+// @alpha @deprecated
 export function userFullName(user: IUser): string | undefined;
 
 // @public

@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { enhanceWithAll, InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     IElementsQueryFactory,
     IElementsQuery,
@@ -115,16 +115,16 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 : Promise.resolve(emptyResult);
         };
 
-        const emptyResult: IElementsQueryResult = {
+        const emptyResult: IElementsQueryResult = enhanceWithAll({
             items: [],
             limit,
             offset,
             totalCount: 0,
             next: () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
 
-        return {
+        return enhanceWithAll({
             items: elements.map(
                 (element): IAttributeElement => ({
                     title: element.title,
@@ -138,7 +138,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 ? () => this.queryWorker(offset + count, limit, options)
                 : () => Promise.resolve(emptyResult),
             goTo,
-        };
+        });
     }
 }
 

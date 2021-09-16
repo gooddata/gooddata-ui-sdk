@@ -9,7 +9,7 @@ import {
     GdcVisualizationObject,
     GdcVisualizationClass,
 } from "@gooddata/api-model-bear";
-import { uriRef } from "@gooddata/sdk-model";
+import { IUser, uriRef } from "@gooddata/sdk-model";
 import keyBy from "lodash/keyBy";
 import {
     IListedDashboard,
@@ -25,14 +25,19 @@ import { convertLayout, createImplicitDashboardLayout } from "./layout";
 import { DashboardDependency, BearDashboardDependency } from "./types";
 import { convertVisualizationWidget, convertKpi } from "./widget";
 
-export const convertListedDashboard = (dashboardLink: GdcMetadata.IObjectLink): IListedDashboard => ({
+export const convertListedDashboard = (
+    dashboardLink: GdcMetadata.IObjectLink,
+    userMap?: Map<string, IUser>,
+): IListedDashboard => ({
     ref: uriRef(dashboardLink.link),
     identifier: dashboardLink.identifier!,
     uri: dashboardLink.link,
     title: dashboardLink.title!,
     description: dashboardLink.summary!,
     updated: dashboardLink.updated!,
+    updatedBy: dashboardLink.contributor ? userMap?.get(dashboardLink.contributor) : undefined,
     created: dashboardLink.created!,
+    createdBy: dashboardLink.author ? userMap?.get(dashboardLink.author) : undefined,
     // filter takes care of multiple spaces and also the base scenario ("" ~> [])
     tags: dashboardLink.tags?.split(" ").filter(Boolean) ?? [],
 });
@@ -66,9 +71,10 @@ export const convertDashboard = (
     dependencies: BearDashboardDependency[],
     visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[] = [],
     exportFilterContextUri?: string,
+    userMap?: Map<string, IUser>,
 ): IDashboard => {
     const {
-        meta: { summary, created, updated, identifier, uri, title, locked, tags },
+        meta: { summary, created, author, updated, contributor, identifier, uri, title, locked, tags },
         content: { layout, filterContext, dateFilterConfig, widgets: widgetsUris },
     } = dashboard.analyticalDashboard;
 
@@ -95,7 +101,9 @@ export const convertDashboard = (
         ref: uriRef(uri!),
 
         created: created!,
+        createdBy: author ? userMap?.get(author) : undefined,
         updated: updated!,
+        updatedBy: contributor ? userMap?.get(contributor) : undefined,
         isLocked: !!locked,
 
         dateFilterConfig: dateFilterConfig && convertDashboardDateFilterConfig(dateFilterConfig),

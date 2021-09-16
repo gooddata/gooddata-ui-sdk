@@ -29,8 +29,9 @@ import {
     widgetType,
     IDashboardLayout,
     IDashboardWithReferences,
+    IGetDashboardOptions,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, areObjRefsEqual, uriRef, objRefToString, IFilter } from "@gooddata/sdk-model";
+import { ObjRef, areObjRefsEqual, uriRef, objRefToString, IFilter, IUser } from "@gooddata/sdk-model";
 import {
     GdcDashboard,
     GdcMetadata,
@@ -44,6 +45,8 @@ import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter";
 import * as toSdkModel from "../../../convertors/fromBackend/DashboardConverter";
 import clone from "lodash/clone";
+import compact from "lodash/compact";
+import flatMap from "lodash/flatMap";
 import flatten from "lodash/flatten";
 import isEqual from "lodash/isEqual";
 import set from "lodash/set";
@@ -52,6 +55,7 @@ import {
     objRefsToUris,
     getObjectIdFromUri,
     userUriFromAuthenticatedPrincipalWithAnonymous,
+    updateUserMap,
 } from "../../../utils/api";
 import keyBy from "lodash/keyBy";
 import { BearWorkspaceInsights } from "../insights";
@@ -59,6 +63,7 @@ import { WidgetReferencesQuery } from "./widgetReferences";
 import invariant from "ts-invariant";
 import { resolveWidgetFilters } from "./widgetFilters";
 import { sanitizeFilterContext } from "./filterContexts";
+import { getAnalyticalDashboardUserUris } from "../../../utils/metadata";
 
 type DashboardDependencyCategory = Extract<
     GdcMetadata.ObjectCategory,
@@ -81,16 +86,24 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     // Public methods
 
-    public getDashboards = async (): Promise<IListedDashboard[]> => {
+    public getDashboards = async (options: IGetDashboardOptions = {}): Promise<IListedDashboard[]> => {
         const dashboardsObjectLinks = await this.authCall((sdk) =>
             sdk.md.getAnalyticalDashboards(this.workspace),
         );
-        return dashboardsObjectLinks.map(toSdkModel.convertListedDashboard);
+        const userMap: Map<string, IUser> = options.loadUserData
+            ? await updateUserMap(
+                  new Map(),
+                  compact(flatMap(dashboardsObjectLinks, (link) => [link.author, link.contributor])),
+                  this.authCall,
+              )
+            : new Map();
+        return dashboardsObjectLinks.map((link) => toSdkModel.convertListedDashboard(link, userMap));
     };
 
     public getDashboard = async (
         dashboardRef: ObjRef,
         exportFilterContextRef?: ObjRef,
+        options: IGetDashboardOptions = {},
     ): Promise<IDashboard> => {
         const exportFilterContextUri = exportFilterContextRef
             ? await objRefToUri(exportFilterContextRef, this.workspace, this.authCall)
@@ -109,11 +122,16 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             bearDependencies.push(bearExportFilterContext);
         }
 
+        const userMap: Map<string, IUser> = options.loadUserData
+            ? await updateUserMap(new Map(), getAnalyticalDashboardUserUris(bearDashboard), this.authCall)
+            : new Map();
+
         return toSdkModel.convertDashboard(
             bearDashboard,
             bearDependencies,
             bearVisualizationClasses,
             exportFilterContextUri,
+            userMap,
         );
     };
 
@@ -682,8 +700,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     public async getDashboardWithReferences(
         ref: ObjRef,
         filterContextRef?: ObjRef,
+        options: IGetDashboardOptions = {},
     ): Promise<IDashboardWithReferences> {
-        const dashboard = await this.getDashboard(ref, filterContextRef);
+        const dashboard = await this.getDashboard(ref, filterContextRef, options);
         const dependencies = (await this.getBearDashboardDependencies(ref, [
             "visualizationObject",
         ])) as GdcVisualizationObject.IVisualization[];
