@@ -61,6 +61,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run prettier-check"
     },
     "dependencies": {
+        "@aaronhayes/react-use-hubspot-form": "^2.0.1",
         "@gooddata/goodstrap": "^70.3.0",
         "@gooddata/numberjs": "^3.2.5",
         "@gooddata/sdk-backend-spi": "^8.7.0-alpha.2",

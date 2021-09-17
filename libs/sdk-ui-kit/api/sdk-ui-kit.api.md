@@ -516,6 +516,9 @@ export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHead
     WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
 };
 
+// @public (undocumented)
+export const HubspotConversionTouchPointDialog: React_2.FC<IHubspotConversionTouchPointDialogBaseProps>;
+
 // @internal (undocumented)
 export interface IAlignPoint {
     // (undocumented)
@@ -1303,6 +1306,26 @@ export interface IHeaderWorkspacePickerProps {
     totalWorkspacesCount?: number;
     // (undocumented)
     workspaces?: IHeaderWorkspace[];
+}
+
+// @public (undocumented)
+export interface IHubspotConversionTouchPointDialogBaseProps {
+    cancelButtonText?: string;
+    dialogTitle?: string;
+    hubspotFormId: string;
+    hubspotPortalId: string;
+    onClose: () => void;
+    onFormSubmitted?: () => void;
+    selectedValue?: string;
+    showCancelButton?: boolean;
+    targetId?: string;
+    values?: IHubspotFormValue;
+}
+
+// @public (undocumented)
+export interface IHubspotFormValue {
+    // (undocumented)
+    [key: string]: string | number | boolean;
 }
 
 // @internal (undocumented)

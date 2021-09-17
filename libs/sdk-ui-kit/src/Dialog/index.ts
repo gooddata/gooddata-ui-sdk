@@ -7,3 +7,8 @@ export { DialogBase } from "./DialogBase";
 export { ExportDialog } from "./ExportDialog";
 export { ExportDialogBase } from "./ExportDialogBase";
 export { CommunityEditionDialog, ICommunityEditionDialogProps } from "./CommunityEditionDialog";
+export { HubspotConversionTouchPointDialog } from "./HubspotConversionTouchPointDialog";
+export {
+    IHubspotConversionTouchPointDialogBaseProps,
+    IHubspotFormValue,
+} from "./HubspotConversionTouchPointDialogBase";

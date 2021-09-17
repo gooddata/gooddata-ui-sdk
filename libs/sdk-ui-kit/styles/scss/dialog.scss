@@ -240,3 +240,200 @@
         }
     }
 }
+
+/* Conversion touch point Dialog
+   ========================================================================== */
+.overlay.gd-dialog.conversion-touch-point-dialog {
+    width: 320px;
+    height: 340px;
+
+    @media screen and (max-width: 400px) {
+        width: 290px;
+    }
+
+    .conversion-touch-point-dialog-wrapper {
+        position: relative;
+    }
+
+    h3 {
+        font-weight: 900;
+        font-size: 20px;
+        margin: 0 0 25px;
+    }
+
+    .gd-button-secondary {
+        position: absolute;
+        right: 85px;
+        bottom: 0;
+    }
+}
+
+.overlay.gd-dialog.conversion-touch-point-dialog .hubspot-form {
+    .hs-form-field {
+        label {
+            font-size: 14px;
+            line-height: 14px;
+            color: #464e56;
+        }
+
+        .input {
+            margin-top: 10px;
+        }
+    }
+
+    ul.inputs-list {
+        list-style-type: none;
+        margin: 0 0 15px 0;
+        padding: 0 0 0 5px;
+    }
+
+    .hs-form-radio {
+        margin-bottom: 0;
+    }
+
+    textarea.hs-input {
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 92px;
+        resize: vertical;
+        margin: 0;
+        padding: 6px 7px 5px;
+        border: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+        box-shadow: inset 0 1px 1px 0 rgba(31, 53, 74, 0.15);
+        line-height: normal;
+        vertical-align: middle;
+        color: var(--gd-palette-complementary-8, #464e56);
+        background: var(--gd-palette-complementary-0, #fff);
+        font-size: 14px;
+        font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+        font-weight: 200;
+        transition-property: all;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-in-out;
+        border-radius: 3px;
+
+        &:hover {
+            border-color: #b1c1d1;
+        }
+
+        &:focus {
+            outline: 0;
+            border-color: var(--gd-palette-primary-base, #14b2e2);
+            box-shadow: inset 0 1px 1px 0 rgba(31, 53, 74, 0.2);
+        }
+    }
+
+    .hs-form-radio-display {
+        position: relative;
+        display: inline-block;
+        height: 20px;
+        padding: 0 10px 0 23px;
+        line-height: 20px;
+        margin-left: -3px;
+
+        &:hover,
+        &:active {
+            & span::before {
+                border-color: #94a1ad;
+                box-shadow: inset 0 1px 2px 0 rgba(31, 53, 74, 0.25);
+            }
+        }
+
+        input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            &:checked ~ span::before {
+                border-color: transparent;
+                background-color: #14b2e2;
+            }
+            &:checked ~ span::after {
+                transform: scale(1);
+            }
+        }
+
+        span {
+            line-height: inherit;
+            vertical-align: middle;
+            color: #464e56;
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                box-sizing: content-box;
+                cursor: pointer;
+            }
+
+            &::before {
+                top: 0;
+                left: 3px;
+                width: 12px;
+                height: 12px;
+                border: 1px solid #b1c1d1;
+                transition: all 0.2s;
+                background-color: #fff;
+                border-radius: 50%;
+            }
+
+            &::after {
+                top: 4px;
+                left: 7px;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background-color: #fff;
+                transform: scale(0);
+                transition: transform 0.2s;
+            }
+        }
+    }
+
+    .hs-submit {
+        margin-top: 30px;
+        text-align: right;
+
+        input[type="submit"] {
+            position: relative;
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 14px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            outline: 0;
+            border-radius: var(--gd-button-borderRadius, 3px);
+            box-shadow: var(--gd-button-dropShadow, 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.09));
+            font: 700 14px/20px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+            white-space: nowrap;
+            vertical-align: middle;
+            text-align: left;
+            text-transform: var(--gd-button-textCapitalization, none);
+            color: var(--gd-palette-complementary-0, #fff);
+            background: var(--gd-palette-primary-base, #14b2e2);
+            cursor: pointer;
+            transition: all 0.25s ease-in-out;
+
+            &:hover {
+                box-shadow: 0 1px 1px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+                    inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+                background: var(--gd-palette-primary-base-d06, #129cc6);
+            }
+
+            &:focus {
+                box-shadow: var(--gd-button-dropShadow, 0 0 3px 1px)
+                        var(--gd-palette-primary-focus, rgba(41, 190, 236, 0.6)),
+                    var(--gd-button-dropShadow, 0 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+                    inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+            }
+
+            &:active {
+                box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
+                background: var(--gd-palette-primary-base-d06, #129cc6);
+                background-image: linear-gradient(
+                    to top,
+                    var(--gd-palette-primary-base-d12, #0f86aa),
+                    var(--gd-palette-primary-base-d06, #129cc6)
+                );
+            }
+        }
+    }
+}
