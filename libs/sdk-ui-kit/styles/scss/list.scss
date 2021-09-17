@@ -70,6 +70,7 @@ $menu-item-icon-width: 30px;
         text-overflow: ellipsis;
 
         &.gd-selection-list {
+            max-width: 40px;
             font-weight: bold;
         }
     }
