@@ -4,16 +4,16 @@ import { call, put, select } from "redux-saga/effects";
 import { FilterContextItem } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../../types/commonTypes";
-import { ExportDashboardToPdf } from "../../../commands";
+import { DashboardContext } from "../../types/commonTypes";
+import { ExportDashboardToPdf } from "../../commands";
 import {
     dashboardExportToPdfRequested,
     DashboardExportToPdfResolved,
     dashboardExportToPdfResolved,
-} from "../../../events/dashboard";
-import { selectDashboardRef } from "../../../state/meta/metaSelectors";
-import { invalidArgumentsProvided } from "../../../events/general";
-import { selectFilterContextFilters } from "../../../state/filterContext/filterContextSelectors";
+} from "../../events/dashboard";
+import { selectDashboardRef } from "../../state/meta/metaSelectors";
+import { invalidArgumentsProvided } from "../../events/general";
+import { selectFilterContextFilters } from "../../state/filterContext/filterContextSelectors";
 
 function exportDashboardToPdf(
     ctx: DashboardContext,

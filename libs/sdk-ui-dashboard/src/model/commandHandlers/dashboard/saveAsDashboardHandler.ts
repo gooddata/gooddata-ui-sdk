@@ -149,17 +149,21 @@ export function* saveAsDashboardHandler(
             yield put(batch);
         }
 
+        let context: DashboardContext = ctx;
+
         if (switchToCopy) {
+            context = {
+                ...ctx,
+                dashboardRef: dashboard.ref,
+            };
+
             yield setContext({
-                dashboardContext: {
-                    ...ctx,
-                    dashboardRef: dashboard.ref,
-                },
+                dashboardContext: context,
             });
         }
 
         yield put(savingActions.setSavingSuccess());
-        return dashboardCopySaved(ctx, dashboard, cmd.correlationId);
+        return dashboardCopySaved(context, dashboard, cmd.correlationId);
     } catch (e: any) {
         yield put(savingActions.setSavingError(e));
         throw e;

@@ -50,6 +50,7 @@ describe("save as dashboard handler", () => {
 
             expect(event.payload.dashboard.ref).not.toEqual(initialSaveEvent.payload.dashboard.ref);
             expect(event.payload.dashboard.title).toEqual(TestDashboardTitle);
+            expect(event.ctx.dashboardRef).not.toEqual(initialSaveEvent.ctx.dashboardRef);
             const newState = Tester.state();
 
             const originalLayout = selectBasicLayout(originalState);
