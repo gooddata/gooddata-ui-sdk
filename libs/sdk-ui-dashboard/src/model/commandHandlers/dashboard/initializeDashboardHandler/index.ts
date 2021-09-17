@@ -33,7 +33,7 @@ import { loadDashboardList } from "./loadDashboardList";
 import { listedDashboardsActions } from "../../../state/listedDashboards";
 import { backendCapabilitiesActions } from "../../../state/backendCapabilities";
 import { ObjRef } from "@gooddata/sdk-model";
-import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext";
+import { actionsToInitializeNewDashboard, EmptyDashboardLayout } from "../common/stateInitializers";
 import { executionResultsActions } from "../../../state/executionResults";
 
 function loadDashboardFromBackend(
@@ -44,11 +44,6 @@ function loadDashboardFromBackend(
 
     return backend.workspace(workspace).dashboards().getDashboardWithReferences(dashboardRef);
 }
-
-const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
-    type: "IDashboardLayout",
-    sections: [],
-};
 
 type DashboardLoadResult = {
     batch: BatchAction;
@@ -186,20 +181,9 @@ function* initializeNewDashboard(
                 facts: catalog.facts(),
                 measures: catalog.measures(),
             }),
-            alertsActions.setAlerts([]),
-            filterContextActions.setFilterContext({
-                filterContextDefinition: createDefaultFilterContext(config.dateFilterConfig),
-            }),
-            layoutActions.setLayout(EmptyDashboardLayout),
-            dateFilterConfigActions.setDateFilterConfig({
-                dateFilterConfig: undefined,
-                effectiveDateFilterConfig: config.dateFilterConfig,
-                isUsingDashboardOverrides: false,
-            }),
-            insightsActions.setInsights([]),
-            metaActions.setMeta({}),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             executionResultsActions.clearAllExecutionResults(),
+            ...actionsToInitializeNewDashboard(config.dateFilterConfig),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
     );

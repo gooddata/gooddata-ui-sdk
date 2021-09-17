@@ -217,6 +217,34 @@ export function resetDashboard(correlationId?: string): ResetDashboard {
 /**
  * @alpha
  */
+export interface DeleteDashboard extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.DELETE";
+}
+
+/**
+ * Creates the DeleteDashboard command. Dispatching this command will result in removal of the currently
+ * rendered dashboard from analytical backend and reverting the dashboard component to an 'empty' state where
+ * it is initialized to create a new dashboard.
+ *
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function deleteDashboard(correlationId?: string): DeleteDashboard {
+    return {
+        type: "GDC.DASH/CMD.DELETE",
+        correlationId,
+    };
+}
+
+//
+//
+//
+
+/**
+ * @alpha
+ */
 export interface ExportDashboardToPdf extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXPORT.PDF";
 }

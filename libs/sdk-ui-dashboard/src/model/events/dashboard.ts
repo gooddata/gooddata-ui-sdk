@@ -263,6 +263,50 @@ export const isDashboardWasReset = eventGuard<DashboardWasReset>("GDC.DASH/EVT.R
 //
 
 /**
+ * This event is emitted at the end of successful 'dashboard delete' command processing. At this point,
+ * the dashboard no longer exist on the backend and the component is reset to a state when it shows
+ * an empty dashboard.
+ *
+ * @alpha
+ */
+export interface DashboardDeleted extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DELETED";
+    readonly payload: {
+        /**
+         * Dashboard that was deleted.
+         */
+        readonly dashboard: IDashboard;
+    };
+}
+
+export function dashboardDeleted(
+    ctx: DashboardContext,
+    dashboard: IDashboard,
+    correlationId?: string,
+): DashboardDeleted {
+    return {
+        type: "GDC.DASH/EVT.DELETED",
+        ctx,
+        correlationId,
+        payload: {
+            dashboard,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDeleted}
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDeleted = eventGuard<DashboardDeleted>("GDC.DASH/EVT.DELETED");
+
+//
+//
+//
+
+/**
  * @alpha
  */
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
