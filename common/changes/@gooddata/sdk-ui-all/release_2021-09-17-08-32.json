@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Support for data sampling in Charts and dashboard view through execution configuration was added. Note: This is only valid for Tiger backend with Vertica datasource.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "letuananh1996@gmail.com"
+}
