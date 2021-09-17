@@ -3,12 +3,10 @@ import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard";
-import { filterContextActions } from "../../../state/filterContext";
 import { insightsActions } from "../../../state/insights";
-import { layoutActions } from "../../../state/layout";
 import { loadingActions } from "../../../state/loading";
 import { DashboardContext } from "../../../types/commonTypes";
-import { IDashboardLayout, IDashboardWithReferences, IWidget } from "@gooddata/sdk-backend-spi";
+import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig";
 import { configActions } from "../../../state/config";
 import { PromiseFnReturnType } from "../../../types/sagas";
@@ -23,17 +21,14 @@ import { alertsActions } from "../../../state/alerts";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { loadUser } from "./loadUser";
 import { userActions } from "../../../state/user";
-import { metaActions } from "../../../state/meta";
-import {
-    dashboardFilterContextDefinition,
-    dashboardFilterContextIdentity,
-} from "../../../../_staging/dashboard/dashboardFilterContext";
-import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout";
 import { loadDashboardList } from "./loadDashboardList";
 import { listedDashboardsActions } from "../../../state/listedDashboards";
 import { backendCapabilitiesActions } from "../../../state/backendCapabilities";
 import { ObjRef } from "@gooddata/sdk-model";
-import { actionsToInitializeNewDashboard, EmptyDashboardLayout } from "../common/stateInitializers";
+import {
+    actionsToInitializeExistingDashboard,
+    actionsToInitializeNewDashboard,
+} from "../common/stateInitializers";
 import { executionResultsActions } from "../../../state/executionResults";
 
 function loadDashboardFromBackend(
@@ -75,32 +70,16 @@ function* loadExistingDashboard(
         call(loadDashboardList, ctx),
     ]);
 
-    const { dashboard, references } = dashboardWithReferences;
+    const {
+        dashboard,
+        references: { insights },
+    } = dashboardWithReferences;
     const effectiveDateFilterConfig: DateFilterMergeResult = yield call(
         mergeDateFilterConfigWithOverrides,
         ctx,
         cmd,
         config.dateFilterConfig!,
         dashboard.dateFilterConfig,
-    );
-
-    const filterContextDefinition = dashboardFilterContextDefinition(
-        dashboard,
-        effectiveDateFilterConfig.config,
-    );
-    const filterContextIdentity = dashboardFilterContextIdentity(dashboard);
-
-    /*
-     * NOTE: cannot do without the cast here. The layout in IDashboard is parameterized with IDashboardWidget
-     * which also includes KPI and Insight widget definitions = those without identity. That is however
-     * not valid: any widget for a persisted dashboard must have identity.
-     *
-     * Also note, nested layouts are not yet supported
-     */
-    const dashboardLayout = dashboardLayoutSanitize(
-        (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
-        references.insights,
-        config.settings,
     );
 
     const batch: BatchAction = batchActions(
@@ -115,33 +94,24 @@ function* loadExistingDashboard(
                 facts: catalog.facts(),
                 measures: catalog.measures(),
             }),
+            ...actionsToInitializeExistingDashboard(
+                dashboard,
+                insights,
+                config.settings,
+                effectiveDateFilterConfig.config,
+            ),
             alertsActions.setAlerts(alerts),
-            filterContextActions.setFilterContext({
-                filterContextDefinition,
-                filterContextIdentity,
-            }),
-            layoutActions.setLayout(dashboardLayout),
+            insightsActions.setInsights(insights),
             dateFilterConfigActions.setDateFilterConfig({
                 dateFilterConfig: dashboard.dateFilterConfig,
                 effectiveDateFilterConfig: effectiveDateFilterConfig.config,
                 isUsingDashboardOverrides: effectiveDateFilterConfig.source === "dashboard",
             }),
-            insightsActions.setInsights(references.insights),
-            metaActions.setMeta({
-                dashboard,
-            }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
         ],
         "@@GDC.DASH/BATCH.INIT.EXISTING",
     );
-    const event = dashboardInitialized(
-        ctx,
-        dashboard,
-        references.insights,
-        config,
-        permissions,
-        cmd.correlationId,
-    );
+    const event = dashboardInitialized(ctx, dashboard, insights, config, permissions, cmd.correlationId);
 
     return {
         batch,
@@ -184,6 +154,11 @@ function* initializeNewDashboard(
             listedDashboardsActions.setListedDashboards(listedDashboards),
             executionResultsActions.clearAllExecutionResults(),
             ...actionsToInitializeNewDashboard(config.dateFilterConfig),
+            dateFilterConfigActions.setDateFilterConfig({
+                dateFilterConfig: undefined,
+                effectiveDateFilterConfig: config.dateFilterConfig,
+                isUsingDashboardOverrides: false,
+            }),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
     );

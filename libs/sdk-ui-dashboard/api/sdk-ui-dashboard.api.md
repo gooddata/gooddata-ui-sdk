@@ -1408,7 +1408,7 @@ export interface DashboardUserInteractionTriggered extends IDashboardEvent {
 export interface DashboardWasReset extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        dashboard: IDashboard;
+        dashboard?: IDashboard;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.RESET";

@@ -231,13 +231,17 @@ export const isDashboardRenamed = eventGuard<DashboardRenamed>("GDC.DASH/EVT.REN
 export interface DashboardWasReset extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RESET";
     readonly payload: {
-        dashboard: IDashboard;
+        /**
+         * Persisted state to which the dashboard was reset. If a new (not yet saved) dashboard was reset
+         * then this property will be undefined.
+         */
+        dashboard?: IDashboard;
     };
 }
 
 export function dashboardWasReset(
     ctx: DashboardContext,
-    dashboard: IDashboard,
+    dashboard: IDashboard | undefined,
     correlationId?: string,
 ): DashboardWasReset {
     return {

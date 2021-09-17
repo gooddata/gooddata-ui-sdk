@@ -62,6 +62,7 @@ import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler
 import { upsertExecutionResultHandler } from "./executionResults/upsertExecutionResultHandler";
 import { renameDashboardHandler } from "./dashboard/renameDashboardHandler";
 import { deleteDashboardHandler } from "./dashboard/deleteDashboardHandler";
+import { resetDashboardHandler } from "./dashboard/resetDashboardHandler";
 
 const DefaultCommandHandlers: {
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
@@ -69,7 +70,7 @@ const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INITIALIZE": initializeDashboardHandler,
     "GDC.DASH/CMD.SAVE": saveDashboardHandler,
     "GDC.DASH/CMD.SAVEAS": saveAsDashboardHandler,
-    "GDC.DASH/CMD.RESET": unhandledCommand,
+    "GDC.DASH/CMD.RESET": resetDashboardHandler,
     "GDC.DASH/CMD.RENAME": renameDashboardHandler,
     "GDC.DASH/CMD.DELETE": deleteDashboardHandler,
     "GDC.DASH/CMD.EXPORT.PDF": exportDashboardToPdfHandler,

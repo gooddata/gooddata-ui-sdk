@@ -7,6 +7,7 @@ import {
     IDrillToCustomUrl,
     IKpiWidget,
     IListedDashboard,
+    IFilterContext,
 } from "@gooddata/sdk-backend-spi";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
@@ -16,6 +17,8 @@ export const SimpleDashboardIdentifier = "aaRaEZRWdRpQ";
 export const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
     .dash_aaRaEZRWdRpQ.obj as IDashboardWithReferences;
 export const SimpleDashboardLayout = SimpleDashboardWithReferences.dashboard.layout!;
+export const SimpleDashboardFilterContext = SimpleDashboardWithReferences.dashboard
+    .filterContext as IFilterContext;
 
 /**
  * drillToAttributeUrl on simple dashboard

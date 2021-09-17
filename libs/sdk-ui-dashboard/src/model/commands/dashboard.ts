@@ -194,9 +194,13 @@ export interface ResetDashboard extends IDashboardCommand {
 
 /**
  * Creates the ResetDashboard command. Dispatching this command will result in dropping all in-memory modifications
- * of the dashboard and reverting to a state after the initial LoadCommand.
+ * of the dashboard and reverting to a state that is persisted on the backend. In other words reset will get
+ * dashboard to a state after the last save.
  *
- * Note: reset dashboard will not reload dashboard data from backend.
+ * Note: if a dashboard is not saved on a backend, then reset will clear the dashboard to an empty state.
+ *
+ * Limitation: reset command will have no impact on alerts or scheduled emails. These entites are persisted outside
+ * of the dashboard and have their own lifecycle.
  *
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
