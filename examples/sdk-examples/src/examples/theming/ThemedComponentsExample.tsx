@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button, ExportDialog } from "@gooddata/sdk-ui-kit";
-import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
+import { ThemeProvider, useTheme, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
@@ -11,26 +11,26 @@ import { DateFilterComponentExample } from "../dateFilter/DateFilterComponentExa
 import { Ldm, LdmExt } from "../../ldm";
 import { customTheme } from "../../constants/customTheme";
 
-const style = {
-    color: "var(--gd-palette-complementary-8, #464e56)",
-    backgroundColor: "var(--gd-palette-complementary-0, #fff)",
-};
-
 export const ThemeProviderExample: React.FC = () => {
     return (
-        <div className="s-theme-provider" style={style}>
-            <ThemeProvider theme={customTheme}>
-                <ThemedComponentsExample />
-            </ThemeProvider>
-        </div>
+        <ThemeProvider theme={customTheme}>
+            <ThemedComponentsExample />
+        </ThemeProvider>
     );
 };
 
 const ThemedComponentsExample: React.FC = () => {
     const themeIsLoading = useThemeIsLoading();
+    const theme = useTheme();
+
+    const style = {
+        color: theme?.palette?.complementary?.c8 ?? "#464e56",
+        backgroundColor: theme?.palette?.complementary?.c0 ?? "#fff",
+    };
+
     const [showExportDialog, setShowExportDialog] = useState(false);
     return (
-        <div className="s-themed-components">
+        <div className="s-themed-components" style={style}>
             {themeIsLoading ? (
                 <div>...</div>
             ) : (
