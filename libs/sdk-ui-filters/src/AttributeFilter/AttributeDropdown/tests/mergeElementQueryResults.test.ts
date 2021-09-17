@@ -124,6 +124,76 @@ describe("mergeElementQueryResults", () => {
         expect(actual).toEqual(expected);
     });
 
+    it("should handle appending to non-empty current elements without a hole with overlap", () => {
+        const current: IElementsQueryResult = {
+            items: [
+                {
+                    title: "Foo",
+                    uri: "some/uri",
+                },
+                {
+                    title: "Bar",
+                    uri: "some/uri",
+                },
+            ],
+            limit: 2,
+            next: jest.fn(),
+            goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
+            offset: 0,
+            totalCount: 3,
+        };
+
+        const incoming: IElementsQueryResult = {
+            items: [
+                {
+                    title: "Bar",
+                    uri: "some/uri",
+                },
+                {
+                    title: "Baz",
+                    uri: "some/uri",
+                },
+            ],
+            limit: 2,
+            next: jest.fn(),
+            goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
+            offset: 1,
+            totalCount: 3,
+        };
+
+        const expected: IElementsQueryResult = {
+            items: [
+                {
+                    title: "Foo",
+                    uri: "some/uri",
+                },
+                {
+                    title: "Bar",
+                    uri: "some/uri",
+                },
+                {
+                    title: "Baz",
+                    uri: "some/uri",
+                },
+            ],
+            limit: 2,
+            next: incoming.next,
+            goTo: incoming.goTo,
+            all: incoming.all,
+            allSorted: incoming.allSorted,
+            offset: 1,
+            totalCount: 3,
+        };
+
+        const actual = mergeElementQueryResults(current, incoming);
+
+        expect(actual).toEqual(expected);
+    });
+
     it("should handle appending to non-empty current elements with a hole", () => {
         const current: IElementsQueryResult = {
             items: [
@@ -237,5 +307,43 @@ describe("mergeElementQueryResults", () => {
         const actual = mergeElementQueryResults(current, incoming);
 
         expect(actual).toEqual(expected);
+    });
+
+    it("should handle appending to non-empty current elements with a hole for huge holes (RAIL-3728)", () => {
+        const current: IElementsQueryResult = {
+            items: [
+                {
+                    title: "Foo",
+                    uri: "some/uri",
+                },
+            ],
+            limit: 1,
+            next: jest.fn(),
+            goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
+            offset: 0,
+            totalCount: 250_000,
+        };
+
+        const incoming: IElementsQueryResult = {
+            items: [
+                {
+                    title: "Bar",
+                    uri: "some/uri",
+                },
+            ],
+            limit: 1,
+            next: jest.fn(),
+            goTo: jest.fn(),
+            all: jest.fn(),
+            allSorted: jest.fn(),
+            offset: 240_000,
+            totalCount: 250_000,
+        };
+
+        const actual = mergeElementQueryResults(current, incoming);
+
+        expect(actual.items[240_000]).toEqual(incoming.items[0]);
     });
 });
