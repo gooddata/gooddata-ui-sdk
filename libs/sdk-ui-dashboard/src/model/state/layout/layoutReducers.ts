@@ -37,6 +37,8 @@ type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 
 const setLayout: LayoutReducer<IDashboardLayout<ExtendedDashboardWidget>> = (state, action) => {
     state.layout = action.payload;
+
+    resetUndoReducer(state);
 };
 
 //
