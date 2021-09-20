@@ -60,7 +60,8 @@ export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
  *
  * @alpha
  */
-export interface DashboardCommandFailed<TCommand extends IDashboardCommand> extends IDashboardEvent {
+export interface DashboardCommandFailed<TCommand extends IDashboardCommand = IDashboardCommand>
+    extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COMMAND.FAILED";
     readonly payload: {
         /**

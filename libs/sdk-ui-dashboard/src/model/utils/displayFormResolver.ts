@@ -30,14 +30,17 @@ export type DisplayFormResolutionResult = {
  *
  * @param ctx dashboard context in which the resolution is done
  * @param refs ObjRefs of display forms; the type of ObjRef can be either uri or id ref, the function will resolve it regardless
+ * @param displayForms optionally specify mapping of display forms to use for in-memory resolution of refs to metadata objects; if
+ *  not specified, the generator will retrieve all catalog display forms from state
  */
 export function* resolveDisplayFormMetadata(
     ctx: DashboardContext,
     refs: ObjRef[],
+    displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): SagaIterator<DisplayFormResolutionResult> {
-    const catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
-        selectAllCatalogDisplayFormsMap,
-    );
+    const catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = displayForms
+        ? displayForms
+        : yield select(selectAllCatalogDisplayFormsMap);
 
     const resolvedDisplayForms: IAttributeDisplayFormMetadataObject[] = [];
     const tryLoadDisplayForms: ObjRef[] = [];

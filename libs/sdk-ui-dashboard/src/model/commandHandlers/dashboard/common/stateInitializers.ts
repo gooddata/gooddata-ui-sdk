@@ -2,6 +2,7 @@
 
 import { PayloadAction } from "@reduxjs/toolkit";
 import {
+    IAttributeDisplayFormMetadataObject,
     IDashboard,
     IDashboardLayout,
     IDateFilterConfig,
@@ -20,6 +21,11 @@ import {
     dashboardFilterContextIdentity,
 } from "../../../../_staging/dashboard/dashboardFilterContext";
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout";
+import { SagaIterator } from "redux-saga";
+import { resolveFilterDisplayForms } from "../../../utils/filterResolver";
+import { call } from "redux-saga/effects";
+import { DashboardContext } from "../../../types/commonTypes";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",
@@ -39,6 +45,7 @@ export function actionsToInitializeNewDashboard(
         alertsActions.setAlerts([]),
         filterContextActions.setFilterContext({
             filterContextDefinition: createDefaultFilterContext(dateFilterConfig),
+            attributeFilterDisplayForms: [],
         }),
         layoutActions.setLayout(EmptyDashboardLayout),
         insightsActions.setInsights([]),
@@ -50,9 +57,13 @@ export function actionsToInitializeNewDashboard(
  * Returns a list of actions which when processed will initialize filter context, layout and meta parts
  * of the state for an existing dashboard.
  *
- * This function will perform the essential cleanup and sanitization of the input dashboard and use the
- * sanitized values to initialize the state.
+ * This generator will perform the essential cleanup, sanitization and resolution on top of of the input
+ * dashboard and use the sanitized values to initialize the state:
  *
+ * -  Layout sizing sanitization happens here
+ * -  Resolution of attribute filter display forms happens here (this may be async)
+ *
+ * @param ctx - dashboard context in which the initialization is done
  * @param dashboard - dashboard to create initialization actions for
  * @param insights - insights used on the dashboard; note that this function will not create actions to store
  *  these insights in the state; it uses the insights to perform sanitization of the dashboard layout
@@ -61,15 +72,25 @@ export function actionsToInitializeNewDashboard(
  * @param dateFilterConfig - effective date filter config to use; note that this function will not store
  *  the date filter config anywhere; it uses the config during filter context sanitization & determining
  *  which date option is selected
+ * @param displayForms - optionally specify display forms that should be used for in-memory resolution of
+ *  attribute filter display forms to metadata objects
  */
-export function actionsToInitializeExistingDashboard(
+export function* actionsToInitializeExistingDashboard(
+    ctx: DashboardContext,
     dashboard: IDashboard,
     insights: IInsight[],
     settings: ISettings,
     dateFilterConfig: IDateFilterConfig,
-): Array<PayloadAction<any>> {
+    displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+): SagaIterator<Array<PayloadAction<any>>> {
     const filterContextDefinition = dashboardFilterContextDefinition(dashboard, dateFilterConfig);
     const filterContextIdentity = dashboardFilterContextIdentity(dashboard);
+    const attributeFilterDisplayForms = yield call(
+        resolveFilterDisplayForms,
+        ctx,
+        filterContextDefinition.filters,
+        displayForms,
+    );
 
     /*
      * NOTE: cannot do without the cast here. The layout in IDashboard is parameterized with IDashboardWidget
@@ -88,6 +109,7 @@ export function actionsToInitializeExistingDashboard(
         filterContextActions.setFilterContext({
             filterContextDefinition,
             filterContextIdentity,
+            attributeFilterDisplayForms,
         }),
         layoutActions.setLayout(dashboardLayout),
         metaActions.setMeta({

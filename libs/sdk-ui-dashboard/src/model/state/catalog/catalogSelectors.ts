@@ -10,10 +10,10 @@ import {
     newCatalogAttributeMap,
     newCatalogDateDatasetMap,
     newCatalogMeasureMap,
-    newDisplayFormMap,
 } from "../../../_staging/metadata/objRefMap";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
 import { DashboardState } from "../types";
+import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -92,15 +92,7 @@ export const selectAllCatalogDateDatasetsMap = createSelector(
 export const selectAllCatalogDisplayFormsMap = createSelector(
     [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
     (attributes, dateDatasets, capabilities) => {
-        const nonDateDisplayForms = flatMap(attributes, (a) => [...a.displayForms, ...a.geoPinDisplayForms]);
-        const dateDisplayForms = flatMap(dateDatasets, (d) =>
-            flatMap(d.dateAttributes, (a) => a.attribute.displayForms),
-        );
-
-        return newDisplayFormMap(
-            [...nonDateDisplayForms, ...dateDisplayForms],
-            capabilities.hasTypeScopedIdentifiers,
-        );
+        return createDisplayFormMap(attributes, dateDatasets, capabilities.hasTypeScopedIdentifiers);
     },
 );
 

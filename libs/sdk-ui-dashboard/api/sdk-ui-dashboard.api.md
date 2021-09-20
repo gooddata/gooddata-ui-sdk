@@ -1276,7 +1276,7 @@ export interface DashboardMetaState {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryInsightWidgetFilters | QueryWidgetBrokenAlerts;
+export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryInsightWidgetFilters | QueryWidgetBrokenAlerts | QueryFilterContextDisplayForms;
 
 // @alpha
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>, TResult> extends IDashboardEvent {
@@ -1318,7 +1318,7 @@ export interface DashboardQueryStarted extends IDashboardEvent {
 }
 
 // @alpha (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.FILTER_CONTEXT.DISPLAY_FORMS";
 
 // @alpha
 export interface DashboardRenamed extends IDashboardEvent {
@@ -1787,6 +1787,11 @@ export const FilterBar: () => JSX.Element;
 
 // @internal (undocumented)
 export const FilterBarPropsProvider: React_2.FC<IFilterBarProps>;
+
+// @alpha (undocumented)
+export interface FilterContextDisplayForms {
+    readonly displayForms: IAttributeDisplayFormMetadataObject[];
+}
 
 // @internal
 export function filterContextItemsToFiltersForWidget(filterContextItems: FilterContextItem[], widget: IWidgetDefinition): IDashboardFilter[];
@@ -2748,6 +2753,15 @@ export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, cor
 // @alpha
 export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: string): QueryMeasureDateDatasets;
 
+// @alpha (undocumented)
+export interface QueryFilterContextDisplayForms extends IDashboardQuery<FilterContextDisplayForms> {
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.FILTER_CONTEXT.DISPLAY_FORMS";
+}
+
+// @alpha
+export function queryFilterContextDisplayForms(correlationId?: string): QueryFilterContextDisplayForms;
+
 // @alpha
 export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
     // (undocumented)
@@ -3233,6 +3247,13 @@ export const selectFilterContextDateFilter: OutputSelector<DashboardState, IDash
 
 // @alpha
 export const selectFilterContextDefinition: OutputSelector<DashboardState, IFilterContextDefinition, (res: FilterContextState) => IFilterContextDefinition>;
+
+// @alpha
+export const selectFilterContextDisplayForms: OutputSelector<DashboardState, FilterContextDisplayForms, (res: {
+status: "error" | "loading" | "success";
+result?: FilterContextDisplayForms | undefined;
+error?: string | undefined;
+} | undefined) => FilterContextDisplayForms>;
 
 // @alpha
 export const selectFilterContextFilters: OutputSelector<DashboardState, FilterContextItem[], (res: IFilterContextDefinition) => FilterContextItem[]>;

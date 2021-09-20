@@ -1,6 +1,10 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardObjectIdentity, IFilterContextDefinition } from "@gooddata/sdk-backend-spi";
+import {
+    IAttributeDisplayFormMetadataObject,
+    IDashboardObjectIdentity,
+    IFilterContextDefinition,
+} from "@gooddata/sdk-backend-spi";
 
 /**
  * @alpha
@@ -23,9 +27,15 @@ export interface FilterContextState {
      *    persistent and lives only for that particular export operation.
      */
     filterContextIdentity?: IDashboardObjectIdentity;
+
+    /**
+     * Display form metadata objects for all attribute filters in the `filterContextDefinition`
+     */
+    attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
 }
 
 export const filterContextInitialState: FilterContextState = {
     filterContextDefinition: undefined,
     filterContextIdentity: undefined,
+    attributeFilterDisplayForms: undefined,
 };

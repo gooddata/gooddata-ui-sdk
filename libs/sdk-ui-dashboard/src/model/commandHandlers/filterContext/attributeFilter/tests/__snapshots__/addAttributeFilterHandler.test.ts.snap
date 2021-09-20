@@ -18,20 +18,6 @@ Array [
 ]
 `;
 
-exports[`addAttributeFilterHandler should emit the appropriate events when trying to add a duplicate attribute filter 1`] = `
-Array [
-  Object {
-    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD",
-    "correlationId": "testCorrelationId",
-    "type": "GDC.DASH/EVT.COMMAND.STARTED",
-  },
-  Object {
-    "correlationId": "testCorrelationId",
-    "type": "GDC.DASH/EVT.COMMAND.FAILED",
-  },
-]
-`;
-
 exports[`addAttributeFilterHandler should set the attribute filter in state when it is added 1`] = `
 Object {
   "attributeFilter": Object {

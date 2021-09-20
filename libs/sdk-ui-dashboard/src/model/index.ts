@@ -59,6 +59,8 @@ export {
     selectFilterContextFilters,
     selectFilterContextDateFilter,
     selectFilterContextAttributeFilters,
+    selectAttributeFilterDisplayFormsMap,
+    selectAttributeFilterDisplayForms,
 } from "./state/filterContext/filterContextSelectors";
 export {
     // Core drills

@@ -4,7 +4,7 @@ import { ResetDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { DashboardWasReset } from "../../events";
 import { selectPersistedDashboard } from "../../state/meta/metaSelectors";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { dashboardWasReset } from "../../events/dashboard";
 import { selectInsights } from "../../state/insights/insightsSelectors";
 import { selectEffectiveDateFilterConfig } from "../../state/dateFilterConfig/dateFilterConfigSelectors";
@@ -43,7 +43,14 @@ export function* resetDashboardHandler(
             selectEffectiveDateFilterConfig,
         );
 
-        batch = actionsToInitializeExistingDashboard(persistedDashboard, insights, settings, effectiveConfig);
+        batch = yield call(
+            actionsToInitializeExistingDashboard,
+            ctx,
+            persistedDashboard,
+            insights,
+            settings,
+            effectiveConfig,
+        );
     } else {
         /*
          * For dashboard that is not persisted, the dashboard component is reset to an 'empty' state.
