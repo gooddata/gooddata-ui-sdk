@@ -221,6 +221,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

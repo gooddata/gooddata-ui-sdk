@@ -5,6 +5,7 @@ exports[`changeDateFilterSelectionHandler should clear date filter in the state 
 exports[`changeDateFilterSelectionHandler should emit the appropriate events for changed date filter 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

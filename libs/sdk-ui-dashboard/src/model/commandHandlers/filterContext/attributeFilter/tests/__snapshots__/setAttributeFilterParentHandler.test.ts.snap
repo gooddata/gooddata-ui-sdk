@@ -3,6 +3,7 @@
 exports[`setAttributeFilterParentHandler should emit the appropriate events for valid set attribute filter parent command 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENT",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -20,6 +21,7 @@ Array [
 exports[`setAttributeFilterParentHandler should emit the appropriate events when trying to set parent of a non-existent attribute filter 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENT",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

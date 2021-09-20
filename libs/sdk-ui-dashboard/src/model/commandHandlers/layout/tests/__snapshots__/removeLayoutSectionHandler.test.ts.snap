@@ -3,6 +3,7 @@
 exports[`remove layout section handler for any dashboard should emit the correct events 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

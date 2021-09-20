@@ -3,6 +3,7 @@
 exports[`removeAttributeFilterHandler should emit the appropriate events for removed attribute filter 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -20,6 +21,7 @@ Array [
 exports[`removeAttributeFilterHandler should emit the appropriate events when trying to remove a non-existent attribute filter 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

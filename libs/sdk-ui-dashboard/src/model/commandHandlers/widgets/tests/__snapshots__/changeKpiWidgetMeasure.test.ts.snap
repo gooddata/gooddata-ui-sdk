@@ -3,15 +3,18 @@
 exports[`change KPI widget measure handler for KPI with date dataset should emit correct events 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",
     "type": "GDC.DASH/EVT.QUERY.STARTED",
   },
   Object {
     "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",
     "type": "GDC.DASH/EVT.QUERY.COMPLETED",
   },
   Object {
@@ -24,6 +27,7 @@ Array [
 exports[`change KPI widget measure handler for any KPI should emit correct events 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

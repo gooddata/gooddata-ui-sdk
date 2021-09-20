@@ -3,6 +3,7 @@
 exports[`changeAttributeFilterSelectionHandler.test should emit the appropriate events for changed attribute filter selection 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -20,6 +21,7 @@ Array [
 exports[`changeAttributeFilterSelectionHandler.test should emit the appropriate events when trying to change a non-existent attribute filter 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

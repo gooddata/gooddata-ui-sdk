@@ -3,6 +3,7 @@
 exports[`remove layout section item handler for dashboard with existing sections should emit correct events during eager removal 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

@@ -1310,6 +1310,10 @@ export interface DashboardQueryRejected extends IDashboardEvent {
 // @alpha
 export interface DashboardQueryStarted extends IDashboardEvent {
     // (undocumented)
+    readonly payload: {
+        readonly query: IDashboardQuery;
+    };
+    // (undocumented)
     readonly type: "GDC.DASH/EVT.QUERY.STARTED";
 }
 

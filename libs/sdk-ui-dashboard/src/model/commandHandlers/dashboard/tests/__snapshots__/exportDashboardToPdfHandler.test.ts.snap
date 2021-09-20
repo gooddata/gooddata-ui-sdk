@@ -3,6 +3,7 @@
 exports[`export dashboard to PDF handler should emit events in correct order and carry-over correlationId 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.EXPORT.PDF",
     "correlationId": "correlation-id",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

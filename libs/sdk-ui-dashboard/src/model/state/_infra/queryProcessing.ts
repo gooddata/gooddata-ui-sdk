@@ -122,7 +122,7 @@ function* processQuery(
             );
         }
 
-        yield dispatchDashboardEvent(queryStarted(ctx, correlationId));
+        yield dispatchDashboardEvent(queryStarted(ctx, query, correlationId));
 
         const result: SagaIterator<typeof service.generator> = yield call(
             service.generator,

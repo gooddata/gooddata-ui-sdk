@@ -3,6 +3,7 @@
 exports[`removeDrillsForInsightWidgetHandler remove should emit the appropriate events for remove alerts and propagate correlationId 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.ALERTS.REMOVE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

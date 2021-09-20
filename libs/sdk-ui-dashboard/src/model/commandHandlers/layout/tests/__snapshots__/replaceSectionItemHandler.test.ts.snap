@@ -3,6 +3,7 @@
 exports[`replace section item handler for dashboard with existing sections should emit correct events 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
