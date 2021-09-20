@@ -245,7 +245,7 @@ function createQueryCacheSlice<TQuery extends IDashboardQuery<TResult>, TResult>
  */
 export interface IDashboardQueryService<TQuery extends IDashboardQuery<TResult>, TResult> {
     name: DashboardQueryType;
-    generator: (ctx: DashboardContext, query: TQuery) => SagaIterator<TResult>;
+    generator: (ctx: DashboardContext, query: TQuery, refresh: boolean) => SagaIterator<TResult>;
     cache?: QueryCache<TQuery, TResult>;
 }
 
@@ -266,13 +266,17 @@ export function createCachedQueryService<TQuery extends IDashboardQuery<TResult>
 ): Required<IDashboardQueryService<TQuery, TResult>> {
     const queryCache = createQueryCacheSlice<TQuery, TResult>(queryName, queryToCacheKey);
 
-    function* generatorWithQueryCache(ctx: DashboardContext, query: TQuery): SagaIterator<TResult> {
+    function* generatorWithQueryCache(
+        ctx: DashboardContext,
+        query: TQuery,
+        refresh = false,
+    ): SagaIterator<TResult> {
         const cacheKey = queryToCacheKey(query);
         const cachedResult: QueryCacheEntryResult<TResult> | undefined = yield select(
             queryCache.selectById(cacheKey),
         );
 
-        if (cachedResult && cachedResult.result) {
+        if (cachedResult && cachedResult.result && !refresh) {
             return cachedResult.result;
         }
 

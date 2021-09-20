@@ -74,6 +74,7 @@ function* loadExistingDashboard(
         dashboard,
         references: { insights },
     } = dashboardWithReferences;
+
     const effectiveDateFilterConfig: DateFilterMergeResult = yield call(
         mergeDateFilterConfigWithOverrides,
         ctx,

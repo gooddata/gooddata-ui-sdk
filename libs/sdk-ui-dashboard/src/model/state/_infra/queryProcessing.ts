@@ -50,6 +50,7 @@ type QueryEnvelopeEventHandlers<TQuery extends IDashboardQuery> = {
 type QueryEnvelope<TQuery extends IDashboardQuery> = Readonly<QueryEnvelopeEventHandlers<TQuery>> & {
     readonly type: typeof QueryEnvelopeActionTypeName;
     readonly query: IDashboardQuery;
+    readonly refresh?: boolean;
 };
 
 function isQueryEnvelope(obj: unknown): obj is QueryEnvelope<any> {
@@ -62,10 +63,12 @@ function isQueryEnvelope(obj: unknown): obj is QueryEnvelope<any> {
 export function queryEnvelope<TQuery extends IDashboardQuery>(
     query: TQuery,
     eventHandlers?: Partial<QueryEnvelopeEventHandlers<TQuery>>,
+    refresh: boolean = false,
 ): QueryEnvelope<TQuery> {
     return {
         type: QueryEnvelopeActionTypeName,
         query,
+        refresh,
         onError: eventHandlers?.onError ?? noop,
         onStart: eventHandlers?.onStart ?? noop,
         onSuccess: eventHandlers?.onSuccess ?? noop,
@@ -77,6 +80,7 @@ export function queryEnvelope<TQuery extends IDashboardQuery>(
  */
 export function queryEnvelopeWithPromise<TQuery extends IDashboardQuery>(
     query: TQuery,
+    refresh: boolean = false,
 ): {
     promise: Promise<IDashboardQueryResult<TQuery>>;
     envelope: QueryEnvelope<TQuery>;
@@ -88,7 +92,7 @@ export function queryEnvelopeWithPromise<TQuery extends IDashboardQuery>(
         queryEnvelopeEventHandlers.onError = reject;
     });
 
-    const envelope = queryEnvelope(query, queryEnvelopeEventHandlers);
+    const envelope = queryEnvelope(query, queryEnvelopeEventHandlers, refresh);
 
     return {
         promise,
@@ -124,6 +128,7 @@ function* processQuery(
             service.generator,
             ctx,
             envelope.query,
+            envelope.refresh ?? false,
         );
 
         try {

@@ -2,30 +2,26 @@
 
 import { call, select, SagaReturnType } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IFilter, ObjRef } from "@gooddata/sdk-model";
 import { selectEnableFilterValuesResolutionInDrillEvents } from "../../state/config/configSelectors";
 import { DashboardContext, FiltersInfo } from "../../types/commonTypes";
 import { resolveFilterValues } from "./common/filterValuesResolver";
 import { queryWidgetFilters } from "../../queries";
-import { QueryWidgetFiltersService } from "../../queryServices/queryWidgetFilters";
 import { isDashboardFilter } from "../../../types";
+import { query } from "../../state/_infra/queryCall";
 
 export function* getDrillToUrlFiltersWithResolvedValues(
     ctx: DashboardContext,
     widgetRef: ObjRef,
 ): SagaIterator<FiltersInfo> {
     // empty widgetFilterOverrides array is passed to override all insight filters
-    const query = queryWidgetFilters(widgetRef, []);
-    const effectiveFilters: SagaReturnType<typeof QueryWidgetFiltersService.generator> = yield call(
-        QueryWidgetFiltersService.generator,
-        ctx,
-        query,
-    );
+    const effectiveFilters: IFilter[] = yield call(query, queryWidgetFilters(widgetRef, []));
     const filters = effectiveFilters.filter(isDashboardFilter);
 
     const enableFilterValuesResolutionInDrillEvents: SagaReturnType<
         typeof selectEnableFilterValuesResolutionInDrillEvents
     > = yield select(selectEnableFilterValuesResolutionInDrillEvents);
+
     if (enableFilterValuesResolutionInDrillEvents) {
         const resolvedFilterValues: SagaReturnType<typeof resolveFilterValues> = yield call(
             resolveFilterValues,
