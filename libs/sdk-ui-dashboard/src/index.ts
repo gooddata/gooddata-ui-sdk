@@ -5,7 +5,9 @@
 
 // exported only for api-extractor's sake
 export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
-export { ObjRefMap, ObjRefMapConfig } from "./_staging/metadata/objRefMap";
+
+// ObjRefMap & factories will be part of the public API.. although in different package
+export { ObjRefMap, ObjRefMapConfig, newDisplayFormMap } from "./_staging/metadata/objRefMap";
 
 // TODO remove export after values resolver call from KD is obsolete
 export { resolveFilterValues } from "./model/commandHandlers/drill/common/filterValuesResolver";

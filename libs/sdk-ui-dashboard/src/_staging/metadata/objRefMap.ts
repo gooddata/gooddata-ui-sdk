@@ -171,6 +171,7 @@ const metadataObjectExtractors = {
  *
  * @param items - items to add into mapping
  * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ * @alpha
  */
 export function newCatalogDateDatasetMap(
     items: ReadonlyArray<ICatalogDateDataset>,
@@ -192,6 +193,7 @@ export function newCatalogDateDatasetMap(
  *
  * @param items - items to add into mapping
  * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ * @alpha
  */
 export function newCatalogAttributeMap(
     items: ReadonlyArray<ICatalogAttribute | ICatalogDateAttribute>,
@@ -213,6 +215,7 @@ export function newCatalogAttributeMap(
  *
  * @param items - items to add into mapping
  * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ * @alpha
  */
 export function newCatalogMeasureMap(
     items: ReadonlyArray<ICatalogMeasure>,
@@ -234,6 +237,7 @@ export function newCatalogMeasureMap(
  *
  * @param items - items to add into map
  * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ * @alpha
  */
 export function newDisplayFormMap(
     items: ReadonlyArray<IAttributeDisplayFormMetadataObject>,
@@ -253,6 +257,7 @@ export function newDisplayFormMap(
  *
  * @param items - items to add into map
  * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ * @alpha
  */
 export function newAttributeMap(
     items: IAttributeMetadataObject[],
@@ -279,6 +284,7 @@ export function newAttributeMap(
  * @param items - items to insert
  * @param type - type of objects, may be undefined
  * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ * @alpha
  */
 export function newMapForObjectWithIdentity<T extends { identifier: Identifier; uri: string; ref: ObjRef }>(
     items: T[],
@@ -301,6 +307,7 @@ export function newMapForObjectWithIdentity<T extends { identifier: Identifier; 
  *
  * @param items - items to add into mapping
  * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ * @alpha
  */
 export function newInsightMap(
     items: ReadonlyArray<IInsight>,
