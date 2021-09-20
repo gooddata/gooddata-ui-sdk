@@ -185,3 +185,30 @@ export const selectPlatformEdition = createSelector(selectConfig, (state) => {
 export const selectEnableCompanyLogoInEmbeddedUI = createSelector(selectConfig, (state) => {
     return state.settings?.enableCompanyLogoInEmbeddedUI ?? false;
 });
+
+/**
+ * Returns whether the export to pdf is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableKPIDashboardExportPDF = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKPIDashboardExportPDF ?? false;
+});
+
+/**
+ * Returns whether the drill to dashboard is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableKPIDashboardDrillToDashboard = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKPIDashboardDrillToDashboard ?? false;
+});
+
+/**
+ * Returns whether the save as new dashboard functionality is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableKPIDashboardSaveAsNew = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKPIDashboardSaveAsNew ?? false;
+});

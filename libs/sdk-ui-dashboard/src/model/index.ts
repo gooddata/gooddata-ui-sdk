@@ -40,12 +40,17 @@ export {
     selectPlatformEdition,
     selectDisableDefaultDrills,
     selectEnableFilterValuesResolutionInDrillEvents,
+    selectEnableKPIDashboardExportPDF,
+    selectEnableKPIDashboardDrillToDashboard,
+    selectEnableKPIDashboardSaveAsNew,
 } from "./state/config/configSelectors";
 export { PermissionsState } from "./state/permissions/permissionsState";
 export {
     selectPermissions,
     selectCanListUsersInWorkspace,
     selectCanManageWorkspace,
+    selectCanExportReport,
+    selectCanCreateAnalyticalDashboard,
 } from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
 export {
@@ -125,6 +130,7 @@ export {
     selectDashboardDescription,
     selectDashboardIdRef,
     selectDashboardTags,
+    selectDashboardUri,
     selectDashboardId,
 } from "./state/meta/metaSelectors";
 export {
@@ -144,6 +150,9 @@ export {
     selectIsExecutionResultReadyForExportByRef,
 } from "./state/executionResults/executionResultsSelectors";
 export { IExecutionResultEnvelope } from "./state/executionResults/types";
+export { UiState } from "./state/ui/uiState";
+export { selectIsScheduleEmailDialogOpen } from "./state/ui/uiSelectors";
+export { uiActions } from "./state/ui";
 
 export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta";

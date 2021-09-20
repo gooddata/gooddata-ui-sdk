@@ -26,7 +26,7 @@ export const selectPermissions = createSelector(selectSelf, (filterContextState)
  * @alpha
  */
 export const selectCanListUsersInWorkspace = createSelector(selectPermissions, (state) => {
-    return state?.canListUsersInProject;
+    return state?.canListUsersInProject ?? false;
 });
 
 /**
@@ -35,5 +35,23 @@ export const selectCanListUsersInWorkspace = createSelector(selectPermissions, (
  * @alpha
  */
 export const selectCanManageWorkspace = createSelector(selectPermissions, (state) => {
-    return state?.canManageProject;
+    return state?.canManageProject ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to export the report.
+ *
+ * @alpha
+ */
+export const selectCanExportReport = createSelector(selectPermissions, (state) => {
+    return state?.canExportReport ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to create the analytical dashboard.
+ *
+ * @alpha
+ */
+export const selectCanCreateAnalyticalDashboard = createSelector(selectPermissions, (state) => {
+    return state?.canCreateAnalyticalDashboard ?? false;
 });

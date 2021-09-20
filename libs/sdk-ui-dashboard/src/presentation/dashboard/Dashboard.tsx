@@ -49,6 +49,8 @@ import {
     useDashboardCommandProcessing,
     exportDashboardToPdf,
     selectIsLayoutEmpty,
+    uiActions,
+    selectIsScheduleEmailDialogOpen,
 } from "../../model";
 import {
     DefaultScheduledEmailDialogInner,
@@ -135,7 +137,11 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     const { title, onTitleChanged } = useTopBar();
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
 
-    const [isScheduleEmailingDialogOpen, setIsScheduleEmailingDialogOpen] = useState(false);
+    const dispatch = useDashboardDispatch();
+    const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
+    const openScheduleEmailingDialog = () => dispatch(uiActions.openScheduleEmailDialog());
+    const closeScheduleEmailingDialog = () => dispatch(uiActions.closeScheduleEmailDialog());
+
     const [isSaveAsDialogOpen, setIsSaveAsDialogOpen] = useState(false);
 
     const lastExportMessageId = useRef("");
@@ -181,7 +187,7 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
             return;
         }
 
-        setIsScheduleEmailingDialogOpen(true);
+        openScheduleEmailingDialog();
     }, [dashboardRef]);
 
     const defaultOnSaveAs = useCallback(() => {
@@ -234,17 +240,17 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     }, [defaultOnScheduleEmailing, defaultOnExportToPdf, dashboardRef]);
 
     const onScheduleEmailingError = useCallback(() => {
-        setIsScheduleEmailingDialogOpen(false);
+        closeScheduleEmailingDialog();
         addError({ id: "dialogs.schedule.email.submit.error" });
     }, []);
 
     const onScheduleEmailingSuccess = useCallback(() => {
-        setIsScheduleEmailingDialogOpen(false);
+        closeScheduleEmailingDialog();
         addSuccess({ id: "dialogs.schedule.email.submit.success" });
     }, []);
 
     const onScheduleEmailingCancel = useCallback(() => {
-        setIsScheduleEmailingDialogOpen(false);
+        closeScheduleEmailingDialog();
     }, []);
 
     const onSaveAsError = useCallback(() => {

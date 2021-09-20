@@ -75,6 +75,7 @@ options = {
             "src/converters",
             "src/logUserInteraction",
             "src/model",
+            "src/model/events/widget.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/presentation/scheduledEmail", [
@@ -99,6 +100,7 @@ options = {
             "src/converters",
             "src/logUserInteraction",
             "src/model",
+            "src/model/events/widget.ts",
             "src/presentation/constants",
             "src/presentation/dashboardContexts",
             "src/presentation/drill",

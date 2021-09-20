@@ -10,16 +10,13 @@ import {
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
 
+import { selectAlertByWidgetRef, useDashboardEventDispatch, useDashboardSelector } from "../../../model";
+import { DashboardItem } from "../../presentationComponents";
 import {
-    selectAlertByWidgetRef,
-    useDashboardEventDispatch,
-    useDashboardSelector,
     widgetExecutionFailed,
     widgetExecutionStarted,
     widgetExecutionSucceeded,
-} from "../../../model";
-import { DashboardItem } from "../../presentationComponents";
-
+} from "../../../model/events/widget";
 import { DashboardWidgetProps } from "./types";
 import { DashboardWidgetPropsProvider, useDashboardWidgetProps } from "./DashboardWidgetPropsContext";
 import { DashboardKpiPropsProvider } from "../kpi/DashboardKpiPropsContext";
