@@ -371,6 +371,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             eventHandlers={props.eventHandlers}
             config={props.config}
             permissions={props.permissions}
+            onStateChange={props.onStateChange}
         >
             <ToastMessageContextProvider>
                 <ExportDialogContextProvider>

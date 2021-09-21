@@ -9,7 +9,7 @@ import {
 import { ObjRef } from "@gooddata/sdk-model";
 import { IErrorProps, ILoadingProps } from "@gooddata/sdk-ui";
 
-import { DashboardConfig, DashboardEventHandler } from "../../model";
+import { DashboardConfig, DashboardDispatch, DashboardEventHandler, DashboardState } from "../../model";
 import {
     CustomDashboardAttributeFilterComponent,
     CustomDashboardDateFilterComponent,
@@ -278,4 +278,9 @@ export interface IDashboardProps {
      * the "theme" prop.
      */
     themeModifier?: (theme: ITheme) => ITheme;
+
+    /**
+     * Optionally specify callback that will be called each time the state changes.
+     */
+    onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
 }

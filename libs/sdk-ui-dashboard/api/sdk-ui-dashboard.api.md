@@ -2027,6 +2027,7 @@ export interface IDashboardProps {
     LoadingComponent?: ComponentType<ILoadingProps>;
     MenuButtonComponent?: CustomMenuButtonComponent;
     menuButtonConfig?: IMenuButtonConfiguration;
+    onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
     permissions?: IWorkspacePermissions;
     SaveAsDialogComponent?: CustomSaveAsDialogComponent;
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
@@ -2053,6 +2054,7 @@ export interface IDashboardStoreProviderProps {
     config?: DashboardConfig;
     dashboardRef?: ObjRef;
     eventHandlers?: DashboardEventHandler[];
+    onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
     permissions?: IWorkspacePermissions;
     workspace?: string;
 }
