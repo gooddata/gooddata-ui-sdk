@@ -65,7 +65,7 @@ export const selectDashboardId = createSelector(selectPersistedDashboard, (state
  *
  * @alpha
  */
-const selectDashboardUri = createSelector(selectPersistedDashboard, (state) => {
+export const selectDashboardUri = createSelector(selectPersistedDashboard, (state) => {
     return state?.uri;
 });
 

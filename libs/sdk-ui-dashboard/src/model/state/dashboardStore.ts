@@ -40,6 +40,7 @@ import { drillTargetsReducer } from "./drillTargets";
 import { DashboardEventType } from "../events";
 import { DashboardCommandType } from "../commands";
 import { drillSliceReducer } from "./drill";
+import { uiSliceReducer } from "./ui";
 
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType)[] = [
     "GDC.DASH/EVT.COMMAND.STARTED",
@@ -262,6 +263,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         drill: drillSliceReducer,
         listedDashboards: listedDashboardsSliceReducer,
         executionResults: executionResultsSliceReducer,
+        ui: uiSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
     });
 

@@ -9,6 +9,8 @@
 
 import { Action } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
+import { CaseReducer } from '@reduxjs/toolkit';
+import { CaseReducerActions } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
@@ -184,12 +186,6 @@ export function anyDashboardEventHandler(handler: DashboardEventHandler["handler
 
 // @alpha
 export function anyEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler;
-
-// @alpha (undocumented)
-export function asyncRenderRequested(id: string, ctx: DashboardContext, correlationId?: string): DashboardAsyncRenderRequested;
-
-// @alpha (undocumented)
-export function asyncRenderResolved(id: string, ctx: DashboardContext, correlationId?: string): DashboardAsyncRenderResolved;
 
 // @alpha (undocumented)
 export interface AttributeFilterSelection {
@@ -1387,6 +1383,7 @@ export type DashboardState = {
     alerts: EntityState<IWidgetAlert>;
     drillTargets: EntityState<IDrillTargets>;
     listedDashboards: EntityState<IListedDashboard>;
+    ui: UiState;
     executionResults: EntityState<IExecutionResultEnvelope>;
     _queryCache: {
         [queryName: string]: any;
@@ -1626,9 +1623,6 @@ export interface Drill extends IDashboardCommand {
 export function drill(drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): Drill;
 
 // @alpha (undocumented)
-export function drillableItemsChanged(ctx: DashboardContext, drillableItems: ExplicitDrill[], correlationId?: string): DashboardDrillableItemsChanged;
-
-// @alpha (undocumented)
 export interface DrillDown extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
@@ -1642,18 +1636,6 @@ export interface DrillDown extends IDashboardCommand {
 
 // @alpha
 export function drillDown(insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillDown;
-
-// @alpha (undocumented)
-export function drillDownRequested(ctx: DashboardContext, insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillDownRequested;
-
-// @alpha (undocumented)
-export function drillDownResolved(ctx: DashboardContext, insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillDownResolved;
-
-// @alpha (undocumented)
-export function drillRequested(ctx: DashboardContext, drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): DashboardDrillRequested;
-
-// @alpha (undocumented)
-export function drillResolved(ctx: DashboardContext, drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): DashboardDrillResolved;
 
 // @alpha (undocumented)
 export interface DrillState {
@@ -1700,12 +1682,6 @@ export interface DrillToAttributeUrl extends IDashboardCommand {
 export function drillToAttributeUrl(drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToAttributeUrl;
 
 // @alpha (undocumented)
-export function drillToAttributeUrlRequested(ctx: DashboardContext, drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToAttributeUrlRequested;
-
-// @alpha (undocumented)
-export function drillToAttributeUrlResolved(ctx: DashboardContext, url: string, drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, filtersInfo: FiltersInfo, correlationId?: string): DashboardDrillToAttributeUrlResolved;
-
-// @alpha (undocumented)
 export interface DrillToCustomUrl extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
@@ -1718,12 +1694,6 @@ export interface DrillToCustomUrl extends IDashboardCommand {
 
 // @alpha
 export function drillToCustomUrl(drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToCustomUrl;
-
-// @alpha (undocumented)
-export function drillToCustomUrlRequested(ctx: DashboardContext, drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToCustomUrlRequested;
-
-// @alpha (undocumented)
-export function drillToCustomUrlResolved(ctx: DashboardContext, url: string, drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, filtersInfo: FiltersInfo, correlationId?: string): DashboardDrillToCustomUrlResolved;
 
 // @alpha (undocumented)
 export interface DrillToDashboard extends IDashboardCommand {
@@ -1740,12 +1710,6 @@ export interface DrillToDashboard extends IDashboardCommand {
 export function drillToDashboard(drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToDashboard;
 
 // @alpha (undocumented)
-export function drillToDashboardRequested(ctx: DashboardContext, drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToDashboardRequested;
-
-// @alpha (undocumented)
-export function drillToDashboardResolved(ctx: DashboardContext, filters: IDashboardFilter[], drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToDashboardResolved;
-
-// @alpha (undocumented)
 export interface DrillToInsight extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
@@ -1760,12 +1724,6 @@ export interface DrillToInsight extends IDashboardCommand {
 export function drillToInsight(drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToInsight;
 
 // @alpha (undocumented)
-export function drillToInsightRequested(ctx: DashboardContext, insight: IInsight, drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToInsightRequested;
-
-// @alpha (undocumented)
-export function drillToInsightResolved(ctx: DashboardContext, insight: IInsight, drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToInsightResolved;
-
-// @alpha (undocumented)
 export interface DrillToLegacyDashboard extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
@@ -1778,12 +1736,6 @@ export interface DrillToLegacyDashboard extends IDashboardCommand {
 
 // @alpha
 export function drillToLegacyDashboard(drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToLegacyDashboard;
-
-// @alpha (undocumented)
-export function drillToLegacyDashboardRequested(ctx: DashboardContext, drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToLegacyDashboardRequested;
-
-// @alpha (undocumented)
-export function drillToLegacyDashboardResolved(ctx: DashboardContext, drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DashboardDrillToLegacyDashboardResolved;
 
 // @alpha
 export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
@@ -2967,12 +2919,6 @@ export interface RenameDashboard extends IDashboardCommand {
 // @alpha
 export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard;
 
-// @alpha (undocumented)
-export function renderRequested(ctx: DashboardContext, correlationId?: string): DashboardRenderRequested;
-
-// @alpha
-export function renderResolved(ctx: DashboardContext, correlationId?: string): DashboardRenderResolved;
-
 // @alpha
 export function replaceInsightWidgetFilterSettings(ref: ObjRef, settings: Omit<FilterOpReplaceAll, "type">, correlationId?: string): ChangeInsightWidgetFilterSettings;
 
@@ -3125,6 +3071,12 @@ export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendC
 export const selectBasicLayout: OutputSelector<DashboardState, IDashboardLayout<IWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => IDashboardLayout<IWidget>>;
 
 // @alpha
+export const selectCanCreateAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @alpha
+export const selectCanExportReport: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @alpha
 export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @alpha
@@ -3174,6 +3126,9 @@ export const selectDashboardTags: OutputSelector<DashboardState, string[] | unde
 
 // @alpha
 export const selectDashboardTitle: OutputSelector<DashboardState, string, (res: Pick<IDashboard, "title" | "description" | "tags">) => string>;
+
+// @alpha
+export const selectDashboardUri: OutputSelector<DashboardState, string | undefined, (res: IDashboard | undefined) => string | undefined>;
 
 // @alpha
 export const selectDashboardUriRef: OutputSelector<DashboardState, UriRef | undefined, (res: string | undefined) => UriRef | undefined>;
@@ -3244,6 +3199,15 @@ export const selectEnableCompanyLogoInEmbeddedUI: OutputSelector<DashboardState,
 
 // @alpha
 export const selectEnableFilterValuesResolutionInDrillEvents: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @alpha
+export const selectEnableKPIDashboardDrillToDashboard: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @alpha
+export const selectEnableKPIDashboardExportPDF: OutputSelector<DashboardState, string | number | boolean | object, (res: ResolvedDashboardConfig) => string | number | boolean | object>;
+
+// @alpha
+export const selectEnableKPIDashboardSaveAsNew: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha
 export const selectEnableKPIDashboardSchedule: OutputSelector<DashboardState, boolean | undefined, (res: ResolvedDashboardConfig) => boolean | undefined>;
@@ -3333,6 +3297,9 @@ export const selectIsLayoutEmpty: OutputSelector<DashboardState, boolean, (res: 
 
 // @alpha
 export const selectIsReadOnly: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @alpha (undocumented)
+export const selectIsScheduleEmailDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @alpha
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
@@ -3432,6 +3399,19 @@ export interface TriggerEvent extends IDashboardCommand {
 
 // @alpha
 export function triggerEvent(eventBody: DashboardEventBody<IDashboardEvent | ICustomDashboardEvent>, correlationId?: string): TriggerEvent;
+
+// @alpha
+export const uiActions: CaseReducerActions<    {
+openScheduleEmailDialog: CaseReducer<UiState, AnyAction>;
+closeScheduleEmailDialog: CaseReducer<UiState, AnyAction>;
+}>;
+
+// @alpha (undocumented)
+export type UiState = {
+    scheduleEmailDialog: {
+        open: boolean;
+    };
+};
 
 // @alpha
 export type UndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> = {
@@ -4021,15 +4001,6 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onSuccess: (executionResult: IExecutionResult) => void;
     onPushData: (data: IPushData) => void;
 };
-
-// @alpha (undocumented)
-export function widgetExecutionFailed(widgetRef: ObjRef, error: GoodDataSdkError, correlationId?: string): DashboardEventBody<DashboardWidgetExecutionFailed>;
-
-// @alpha (undocumented)
-export function widgetExecutionStarted(widgetRef: ObjRef, executionDefinition: IExecutionDefinition, correlationId?: string): DashboardEventBody<DashboardWidgetExecutionStarted>;
-
-// @alpha (undocumented)
-export function widgetExecutionSucceeded(widgetRef: ObjRef, dataView: IDataView, correlationId?: string): DashboardEventBody<DashboardWidgetExecutionSucceeded>;
 
 // @alpha
 export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;

@@ -16,6 +16,7 @@ import { DashboardMetaState } from "./meta/metaState";
 import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState";
 import { IDrillTargets } from "./drillTargets/drillTargetsTypes";
 import { IExecutionResultEnvelope } from "./executionResults/types";
+import { UiState } from "./ui/uiState";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -47,6 +48,12 @@ export type DashboardState = {
     alerts: EntityState<IWidgetAlert>;
     drillTargets: EntityState<IDrillTargets>;
     listedDashboards: EntityState<IListedDashboard>;
+
+    /**
+     * Ui state controllable from the outside.
+     */
+    ui: UiState;
+
     /**
      * Part of state where execution results of the individual widgets are stored.
      */
