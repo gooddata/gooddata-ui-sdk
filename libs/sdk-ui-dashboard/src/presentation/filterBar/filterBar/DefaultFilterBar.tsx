@@ -82,5 +82,9 @@ export const DefaultFilterBarInner = (): JSX.Element => {
  * @alpha
  */
 export const DefaultFilterBar = (props: IFilterBarProps): JSX.Element => {
-    return <FilterBarPropsProvider {...props}></FilterBarPropsProvider>;
+    return (
+        <FilterBarPropsProvider {...props}>
+            <DefaultFilterBarInner />
+        </FilterBarPropsProvider>
+    );
 };
