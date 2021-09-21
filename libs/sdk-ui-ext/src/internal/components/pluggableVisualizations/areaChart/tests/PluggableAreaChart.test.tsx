@@ -150,6 +150,26 @@ describe("PluggableAreaChart", () => {
                     },
                 ],
                 [
+                    "from table to area chart: no dates but 2 attributes and 2 measures",
+                    referencePointMocks.tableTotalsReferencePoint,
+                    {
+                        buckets: [
+                            referencePointMocks.tableTotalsReferencePoint.buckets[0],
+                            {
+                                localIdentifier: "view",
+                                items: referencePointMocks.tableTotalsReferencePoint.buckets[1].items.slice(
+                                    0,
+                                    1,
+                                ),
+                            },
+                            {
+                                localIdentifier: "stack",
+                                items: [],
+                            },
+                        ],
+                    },
+                ],
+                [
                     "from table to area chart: date1 in rows ans date2 columns",
                     referencePointMocks.oneDateInRowsAndOneDateInColumnsReferencePoint,
                     {

@@ -262,7 +262,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
             BucketNames.STACK,
         ]).filter((attribute) => !stacks.includes(attribute));
 
-        const maxViews = stacks.length ? 1 : viewByMaxItemCount;
+        const maxViews = stacks.length || measures.length > 1 ? 1 : viewByMaxItemCount;
         const views = allAttributesWithoutStacks.slice(0, maxViews);
 
         return {
