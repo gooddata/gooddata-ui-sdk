@@ -2,6 +2,7 @@
 import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { DashboardEventHandler } from "../events/eventHandler";
+import { DashboardDispatch, DashboardState } from "../state/types";
 import { DashboardConfig } from "../types/commonTypes";
 
 /**
@@ -54,4 +55,9 @@ export interface IDashboardStoreProviderProps {
      * logged-in user.
      */
     permissions?: IWorkspacePermissions;
+
+    /**
+     * Optionally specify callback that will be called each time the state changes.
+     */
+    onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
 }

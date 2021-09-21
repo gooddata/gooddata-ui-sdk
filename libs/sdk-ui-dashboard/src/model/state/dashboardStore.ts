@@ -26,7 +26,7 @@ import { catalogSliceReducer } from "./catalog";
 import { fork, getContext } from "redux-saga/effects";
 import { userSliceReducer } from "./user";
 import { metaSliceReducer } from "./meta";
-import { DashboardState } from "./types";
+import { DashboardState, DashboardDispatch } from "./types";
 import { AllQueryServices } from "../queryServices";
 import { executionResultsSliceReducer } from "./executionResults";
 import { createQueryProcessingModule } from "./_infra/queryProcessing";
@@ -131,6 +131,11 @@ export type DashboardStoreConfig = {
      * Background workers are processed last in the chain of all command and event processing.
      */
     backgroundWorkers: ((context: DashboardContext) => SagaIterator<void>)[];
+
+    /**
+     * Optionally specify callback that will be called each time the state changes.
+     */
+    onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
 };
 
 function* rootSaga(
@@ -271,6 +276,10 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         reducer: enableBatching(rootReducer),
         middleware,
     });
+
+    if (config.onStateChange) {
+        store.subscribe(() => config.onStateChange?.(store.getState(), store.dispatch));
+    }
 
     const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers, store.dispatch);
 
