@@ -611,7 +611,7 @@ export interface DashboardAttributeFilterSelectionChanged extends IDashboardEven
 }
 
 // @alpha
-export interface DashboardCommandFailed<TCommand extends IDashboardCommand> extends IDashboardEvent {
+export interface DashboardCommandFailed<TCommand extends IDashboardCommand = IDashboardCommand> extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
         readonly reason: ActionFailedErrorReason;
@@ -1310,6 +1310,10 @@ export interface DashboardQueryRejected extends IDashboardEvent {
 // @alpha
 export interface DashboardQueryStarted extends IDashboardEvent {
     // (undocumented)
+    readonly payload: {
+        readonly query: IDashboardQuery;
+    };
+    // (undocumented)
     readonly type: "GDC.DASH/EVT.QUERY.STARTED";
 }
 
@@ -1795,6 +1799,7 @@ export interface FilterContextSelection {
 
 // @alpha (undocumented)
 export interface FilterContextState {
+    attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
     filterContextDefinition?: IFilterContextDefinition;
     filterContextIdentity?: IDashboardObjectIdentity;
 }
@@ -2640,6 +2645,9 @@ export function newDashboardEventPredicate<T extends DashboardEvents["type"]>(ev
 }) => boolean): (event: Action) => boolean;
 
 // @alpha
+export function newDisplayFormMap(items: ReadonlyArray<IAttributeDisplayFormMetadataObject>, strictTypeCheck?: boolean): ObjRefMap<IAttributeDisplayFormMetadataObject>;
+
+// @alpha
 export const newDrillToSameDashboardHandler: (dashboardRef: ObjRef) => DashboardEventHandler<DashboardDrillToDashboardResolved>;
 
 // @alpha
@@ -3063,6 +3071,12 @@ export const selectAllInsightWidgets: OutputSelector<DashboardState, IInsightWid
 // @alpha
 export const selectAllKpiWidgets: OutputSelector<DashboardState, IKpiWidget[], (res: IWidget[]) => IKpiWidget[]>;
 
+// @alpha
+export const selectAttributeFilterDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: FilterContextState) => IAttributeDisplayFormMetadataObject[]>;
+
+// @alpha
+export const selectAttributeFilterDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res: FilterContextState) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
+
 // @alpha (undocumented)
 export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICatalogAttribute | ICatalogDateAttribute)[], (res1: ICatalogAttribute[], res2: ICatalogDateAttribute[]) => (ICatalogAttribute | ICatalogDateAttribute)[]>;
 
@@ -3301,6 +3315,9 @@ export const selectIsLayoutEmpty: OutputSelector<DashboardState, boolean, (res: 
 export const selectIsReadOnly: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha (undocumented)
+export const selectIsSaveAsDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @alpha (undocumented)
 export const selectIsScheduleEmailDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @alpha
@@ -3402,15 +3419,20 @@ export interface TriggerEvent extends IDashboardCommand {
 // @alpha
 export function triggerEvent(eventBody: DashboardEventBody<IDashboardEvent | ICustomDashboardEvent>, correlationId?: string): TriggerEvent;
 
-// @alpha
+// @internal
 export const uiActions: CaseReducerActions<    {
 openScheduleEmailDialog: CaseReducer<UiState, AnyAction>;
 closeScheduleEmailDialog: CaseReducer<UiState, AnyAction>;
+openSaveAsDialog: CaseReducer<UiState, AnyAction>;
+closeSaveAsDialog: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)
 export type UiState = {
     scheduleEmailDialog: {
+        open: boolean;
+    };
+    saveAsDialog: {
         open: boolean;
     };
 };

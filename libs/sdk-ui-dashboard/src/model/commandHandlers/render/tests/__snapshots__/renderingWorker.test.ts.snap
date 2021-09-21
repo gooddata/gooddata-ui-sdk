@@ -7,6 +7,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -19,6 +20,7 @@ Array [
     "type": "GDC.DASH/EVT.INITIALIZED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -27,6 +29,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -35,6 +38,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -43,6 +47,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -64,6 +69,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -76,6 +82,7 @@ Array [
     "type": "GDC.DASH/EVT.INITIALIZED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -84,6 +91,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -92,6 +100,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -100,6 +109,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -108,6 +118,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -116,6 +127,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -137,6 +149,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -149,6 +162,7 @@ Array [
     "type": "GDC.DASH/EVT.INITIALIZED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -157,6 +171,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -178,6 +193,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -190,6 +206,7 @@ Array [
     "type": "GDC.DASH/EVT.INITIALIZED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -198,6 +215,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -206,6 +224,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -227,6 +246,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -239,6 +259,7 @@ Array [
     "type": "GDC.DASH/EVT.INITIALIZED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -247,6 +268,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -268,6 +290,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -295,6 +318,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -307,6 +331,7 @@ Array [
     "type": "GDC.DASH/EVT.INITIALIZED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -324,6 +349,7 @@ Array [
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.INITIALIZE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
@@ -336,6 +362,7 @@ Array [
     "type": "GDC.DASH/EVT.INITIALIZED",
   },
   Object {
+    "commandType": "GDC.DASH/CMD.RENDER.ASYNC.REQUEST",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

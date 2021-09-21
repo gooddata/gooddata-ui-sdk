@@ -3,6 +3,7 @@
 exports[`removeDrillsForInsightWidgetHandler remove should emit the appropriate events for remove drill for Insight Widget command 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

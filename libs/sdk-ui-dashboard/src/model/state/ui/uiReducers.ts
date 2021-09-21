@@ -12,7 +12,17 @@ const closeScheduleEmailDialog: UiReducer = (state) => {
     state.scheduleEmailDialog.open = false;
 };
 
+const openSaveAsDialog: UiReducer = (state) => {
+    state.saveAsDialog.open = true;
+};
+
+const closeSaveAsDialog: UiReducer = (state) => {
+    state.saveAsDialog.open = false;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
+    openSaveAsDialog,
+    closeSaveAsDialog,
 };

@@ -3,6 +3,7 @@
 exports[`change layout section header handler for any dashboard should emit the correct events 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

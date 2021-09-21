@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { call, put, select } from "redux-saga/effects";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import invariant from "ts-invariant";
 import { objRefToString } from "@gooddata/sdk-model";
@@ -18,6 +18,9 @@ import { dispatchFilterContextChanged } from "../common";
 import { PromiseFnReturnType } from "../../../types/sagas";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation";
 import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
+import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver";
+import isEmpty from "lodash/isEmpty";
+import { batchActions } from "redux-batched-actions";
 
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,
@@ -44,14 +47,34 @@ export function* addAttributeFilterHandler(
         );
     }
 
+    const resolvedDisplayForm: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
+        resolveDisplayFormMetadata,
+        ctx,
+        [displayForm],
+    );
+
+    if (!isEmpty(resolvedDisplayForm.missing)) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Attempting to add filter for a non-existing display form ${objRefToString(displayForm)}.`,
+        );
+    }
+
+    const displayFormMetadata = resolvedDisplayForm.resolved.get(displayForm);
+    invariant(displayFormMetadata);
+
     yield put(
-        filterContextActions.addAttributeFilter({
-            displayForm,
-            index,
-            initialIsNegativeSelection,
-            initialSelection,
-            parentFilters,
-        }),
+        batchActions([
+            filterContextActions.addAttributeFilter({
+                displayForm,
+                index,
+                initialIsNegativeSelection,
+                initialSelection,
+                parentFilters,
+            }),
+            filterContextActions.addAttributeFilterDisplayForm(displayFormMetadata),
+        ]),
     );
 
     const addedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>> =
@@ -62,5 +85,6 @@ export function* addAttributeFilterHandler(
     yield dispatchDashboardEvent(
         attributeFilterAdded(ctx, addedFilter, cmd.payload.index, cmd.correlationId),
     );
+
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }

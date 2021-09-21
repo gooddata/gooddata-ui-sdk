@@ -30,6 +30,8 @@ import {
     actionsToInitializeNewDashboard,
 } from "../common/stateInitializers";
 import { executionResultsActions } from "../../../state/executionResults";
+import { resolveFilterDisplayForms } from "../../../utils/filterResolver";
+import { createDisplayFormMapFromCatalog } from "../../../../_staging/catalog/displayFormMap";
 
 function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -74,12 +76,23 @@ function* loadExistingDashboard(
         dashboard,
         references: { insights },
     } = dashboardWithReferences;
+
     const effectiveDateFilterConfig: DateFilterMergeResult = yield call(
         mergeDateFilterConfigWithOverrides,
         ctx,
         cmd,
         config.dateFilterConfig!,
         dashboard.dateFilterConfig,
+    );
+
+    const initActions: SagaReturnType<typeof resolveFilterDisplayForms> = yield call(
+        actionsToInitializeExistingDashboard,
+        ctx,
+        dashboard,
+        insights,
+        config.settings,
+        effectiveDateFilterConfig.config,
+        createDisplayFormMapFromCatalog(catalog),
     );
 
     const batch: BatchAction = batchActions(
@@ -94,12 +107,7 @@ function* loadExistingDashboard(
                 facts: catalog.facts(),
                 measures: catalog.measures(),
             }),
-            ...actionsToInitializeExistingDashboard(
-                dashboard,
-                insights,
-                config.settings,
-                effectiveDateFilterConfig.config,
-            ),
+            ...initActions,
             alertsActions.setAlerts(alerts),
             insightsActions.setInsights(insights),
             dateFilterConfigActions.setDateFilterConfig({
@@ -187,6 +195,7 @@ export function* initializeDashboardHandler(
         }
 
         yield put(result.batch);
+
         yield put(loadingActions.setLoadingSuccess());
 
         return result.event;

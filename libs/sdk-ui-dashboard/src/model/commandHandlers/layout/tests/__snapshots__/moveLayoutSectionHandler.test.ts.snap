@@ -3,6 +3,7 @@
 exports[`move section command handler for dashboard with three sections should emit correct event 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

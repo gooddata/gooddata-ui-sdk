@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
@@ -18,12 +18,12 @@ import {
     useDashboardComponentsContext,
 } from "../dashboardContexts";
 import {
+    CustomDashboardAttributeFilterComponent,
     DefaultDashboardAttributeFilterInner,
     DefaultDashboardDateFilterInner,
-    CustomDashboardAttributeFilterComponent,
     DefaultFilterBarInner,
-    FilterBarPropsProvider,
     FilterBar,
+    FilterBarPropsProvider,
 } from "../filterBar";
 import {
     DefaultDashboardInsightInner,
@@ -35,22 +35,23 @@ import { IntlWrapper } from "../localization";
 import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
+    changeFilterContextSelection,
     clearDateFilterSelection,
+    DashboardStoreProvider,
+    exportDashboardToPdf,
     renameDashboard,
     selectDashboardLoading,
     selectDashboardTitle,
     selectFilterContextFilters,
+    selectIsLayoutEmpty,
+    selectIsSaveAsDialogOpen,
+    selectIsScheduleEmailDialogOpen,
     selectLocale,
+    uiActions,
+    useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
-    DashboardStoreProvider,
-    changeFilterContextSelection,
     useDispatchDashboardCommand,
-    useDashboardCommandProcessing,
-    exportDashboardToPdf,
-    selectIsLayoutEmpty,
-    uiActions,
-    selectIsScheduleEmailDialogOpen,
 } from "../../model";
 import {
     DefaultScheduledEmailDialogInner,
@@ -59,12 +60,12 @@ import {
 } from "../scheduledEmail";
 import {
     DefaultButtonBarInner,
-    DefaultTitleInner,
     DefaultMenuButtonInner,
+    DefaultTitleInner,
     DefaultTopBarInner,
-    TopBarPropsProvider,
-    TopBar,
     IMenuButtonItem,
+    TopBar,
+    TopBarPropsProvider,
 } from "../topBar";
 
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
@@ -141,8 +142,9 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
     const openScheduleEmailingDialog = () => dispatch(uiActions.openScheduleEmailDialog());
     const closeScheduleEmailingDialog = () => dispatch(uiActions.closeScheduleEmailDialog());
-
-    const [isSaveAsDialogOpen, setIsSaveAsDialogOpen] = useState(false);
+    const isSaveAsDialogOpen = useDashboardSelector(selectIsSaveAsDialogOpen);
+    const openSaveAsDialog = () => dispatch(uiActions.openSaveAsDialog());
+    const closeSaveAsDialog = () => dispatch(uiActions.closeSaveAsDialog());
 
     const lastExportMessageId = useRef("");
     const { run: exportDashboard } = useDashboardCommandProcessing({
@@ -195,7 +197,7 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
             return;
         }
 
-        setIsSaveAsDialogOpen(true);
+        openSaveAsDialog();
     }, [dashboardRef]);
 
     const defaultOnExportToPdf = useCallback(() => {
@@ -254,17 +256,17 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     }, []);
 
     const onSaveAsError = useCallback(() => {
-        setIsSaveAsDialogOpen(false);
+        closeSaveAsDialog();
         addError({ id: "messages.dashboardSaveFailed" });
     }, []);
 
     const onSaveAsSuccess = useCallback(() => {
-        setIsSaveAsDialogOpen(false);
+        closeSaveAsDialog();
         addSuccess({ id: "messages.dashboardSaveSuccess" });
     }, []);
 
     const onSaveAsCancel = useCallback(() => {
-        setIsSaveAsDialogOpen(false);
+        closeSaveAsDialog();
     }, []);
 
     return (

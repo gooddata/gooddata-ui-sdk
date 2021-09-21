@@ -6,7 +6,13 @@ import { DashboardState } from "../state/types";
 import { DashboardContext } from "../types/commonTypes";
 import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DashboardEvents, DashboardEventType } from "../events";
+import {
+    DashboardEvents,
+    DashboardEventType,
+    isDashboardCommandStarted,
+    isDashboardQueryCompleted,
+    isDashboardQueryStarted,
+} from "../events";
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
 import noop from "lodash/noop";
 import {
@@ -303,6 +309,22 @@ export class DashboardTester {
      */
     public emittedEventsDigest(): ReadonlyArray<{ type: string; correlationId?: string }> {
         return this.capturedEvents.map((evt) => {
+            if (isDashboardQueryStarted(evt) || isDashboardQueryCompleted(evt)) {
+                return {
+                    type: evt.type,
+                    correlationId: evt.correlationId,
+                    queryType: evt.payload.query.type,
+                };
+            }
+
+            if (isDashboardCommandStarted(evt)) {
+                return {
+                    type: evt.type,
+                    correlationId: evt.correlationId,
+                    commandType: evt.payload.command.type,
+                };
+            }
+
             return {
                 type: evt.type,
                 correlationId: evt.correlationId,

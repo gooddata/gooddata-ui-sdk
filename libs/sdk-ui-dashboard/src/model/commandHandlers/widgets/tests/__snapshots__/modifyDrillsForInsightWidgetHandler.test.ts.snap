@@ -3,6 +3,7 @@
 exports[`modifyDrillsForInsightWidgetHandler modify should emit the appropriate events for modify drill for Insight Widget command 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },

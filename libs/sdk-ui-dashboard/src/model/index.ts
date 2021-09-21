@@ -59,6 +59,8 @@ export {
     selectFilterContextFilters,
     selectFilterContextDateFilter,
     selectFilterContextAttributeFilters,
+    selectAttributeFilterDisplayFormsMap,
+    selectAttributeFilterDisplayForms,
 } from "./state/filterContext/filterContextSelectors";
 export {
     // Core drills
@@ -151,7 +153,7 @@ export {
 } from "./state/executionResults/executionResultsSelectors";
 export { IExecutionResultEnvelope } from "./state/executionResults/types";
 export { UiState } from "./state/ui/uiState";
-export { selectIsScheduleEmailDialogOpen } from "./state/ui/uiSelectors";
+export { selectIsScheduleEmailDialogOpen, selectIsSaveAsDialogOpen } from "./state/ui/uiSelectors";
 export { uiActions } from "./state/ui";
 
 export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";

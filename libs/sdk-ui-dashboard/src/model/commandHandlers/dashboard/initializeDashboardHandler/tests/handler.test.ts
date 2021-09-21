@@ -7,6 +7,7 @@ import { selectPermissions } from "../../../../state/permissions/permissionsSele
 import { EmptyDashboardIdentifier, TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
 import { selectLayout } from "../../../../state/layout/layoutSelectors";
 import {
+    selectAttributeFilterDisplayForms,
     selectFilterContextDefinition,
     selectFilterContextIdentity,
 } from "../../../../state/filterContext/filterContextSelectors";
@@ -88,6 +89,15 @@ describe("initialize dashboard handler", () => {
             const filterContextIdentity = selectFilterContextIdentity(Tester.state());
 
             expect(filterContextIdentity).toBeDefined();
+        });
+
+        it("should resolve attribute filter display forms", () => {
+            const displayForms = selectAttributeFilterDisplayForms(Tester.state());
+
+            // no need for in-depth checking; just verify that the display forms are there
+            // and there is expected number of them (equal to number of attr filters)
+            expect(displayForms).not.toEqual([]);
+            expect(displayForms.length).toBe(2);
         });
 
         it("should store the original persisted dashboard", () => {

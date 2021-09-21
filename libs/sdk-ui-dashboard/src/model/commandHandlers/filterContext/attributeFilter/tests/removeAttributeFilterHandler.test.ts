@@ -1,7 +1,10 @@
 // (C) 2021 GoodData Corporation
 import { removeAttributeFilter } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
-import { selectFilterContextAttributeFilters } from "../../../../state/filterContext/filterContextSelectors";
+import {
+    selectAttributeFilterDisplayFormsMap,
+    selectFilterContextAttributeFilters,
+} from "../../../../state/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 import { selectLayout } from "../../../../state/layout/layoutSelectors";
 import { IDashboardAttributeFilterReference, IInsightWidget } from "@gooddata/sdk-backend-spi";
@@ -19,20 +22,40 @@ describe("removeAttributeFilterHandler", () => {
         const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
             .localIdentifier!;
 
-        Tester.dispatch(removeAttributeFilter(firstFilterLocalId, TestCorrelation));
-
-        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
+        await Tester.dispatchAndWaitFor(
+            removeAttributeFilter(firstFilterLocalId, TestCorrelation),
+            "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+        );
 
         expect(Tester.emittedEventsDigest()).toMatchSnapshot();
+    });
+
+    it("should remove resolved attribute display form metadata", async () => {
+        const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
+            .localIdentifier!;
+
+        await Tester.dispatchAndWaitFor(
+            removeAttributeFilter(firstFilterLocalId, TestCorrelation),
+            "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+        );
+
+        const displayForms = selectAttributeFilterDisplayFormsMap(Tester.state());
+        const remainingFilters = selectFilterContextAttributeFilters(Tester.state());
+
+        expect(displayForms.size).toEqual(remainingFilters.length);
+        remainingFilters.forEach((filter) => {
+            expect(displayForms.has(filter.attributeFilter.displayForm)).toBeTruthy();
+        });
     });
 
     it("should set the attribute selection in state on removed attribute filter", async () => {
         const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
             .localIdentifier!;
 
-        Tester.dispatch(removeAttributeFilter(firstFilterLocalId, TestCorrelation));
-
-        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
+        await Tester.dispatchAndWaitFor(
+            removeAttributeFilter(firstFilterLocalId, TestCorrelation),
+            "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+        );
 
         expect(selectFilterContextAttributeFilters(Tester.state()).length).toEqual(1);
         expect(
@@ -41,9 +64,10 @@ describe("removeAttributeFilterHandler", () => {
     });
 
     it("should emit the appropriate events when trying to remove a non-existent attribute filter", async () => {
-        Tester.dispatch(removeAttributeFilter("NON EXISTENT LOCAL ID", TestCorrelation));
-
-        await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
+        await Tester.dispatchAndWaitFor(
+            removeAttributeFilter("NON EXISTENT LOCAL ID", TestCorrelation),
+            "GDC.DASH/EVT.COMMAND.FAILED",
+        );
 
         expect(Tester.emittedEventsDigest()).toMatchSnapshot();
     });
@@ -51,9 +75,10 @@ describe("removeAttributeFilterHandler", () => {
     it("should NOT alter the attribute filter state when trying to remove a non-existent attribute filter", async () => {
         const originalFilters = selectFilterContextAttributeFilters(Tester.state());
 
-        Tester.dispatch(removeAttributeFilter("NON EXISTENT LOCAL ID", TestCorrelation));
-
-        await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
+        await Tester.dispatchAndWaitFor(
+            removeAttributeFilter("NON EXISTENT LOCAL ID", TestCorrelation),
+            "GDC.DASH/EVT.COMMAND.FAILED",
+        );
 
         expect(selectFilterContextAttributeFilters(Tester.state())).toEqual(originalFilters);
     });

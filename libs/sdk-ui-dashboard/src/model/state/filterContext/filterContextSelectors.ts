@@ -11,6 +11,7 @@ import {
     isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { newDisplayFormMap } from "../../../_staging/metadata/objRefMap";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -55,6 +56,34 @@ export const selectFilterContextIdentity = createSelector(selectSelf, (filterCon
     );
 
     return filterContextState.filterContextIdentity;
+});
+
+/**
+ * Selects list of display form metadata objects referenced by attribute filters.
+ *
+ * @alpha
+ */
+export const selectAttributeFilterDisplayForms = createSelector(selectSelf, (filterContextState) => {
+    invariant(
+        filterContextState.attributeFilterDisplayForms,
+        "attempting to access uninitialized filter context state",
+    );
+
+    return filterContextState.attributeFilterDisplayForms;
+});
+
+/**
+ * Selects map of display form metadata objects referenced by attribute filters.
+ *
+ * @alpha
+ */
+export const selectAttributeFilterDisplayFormsMap = createSelector(selectSelf, (filterContextState) => {
+    invariant(
+        filterContextState.attributeFilterDisplayForms,
+        "attempting to access uninitialized filter context state",
+    );
+
+    return newDisplayFormMap(filterContextState.attributeFilterDisplayForms);
 });
 
 /**

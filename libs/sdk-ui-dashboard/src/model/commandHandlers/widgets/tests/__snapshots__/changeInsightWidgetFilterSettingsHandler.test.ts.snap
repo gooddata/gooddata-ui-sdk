@@ -3,23 +3,28 @@
 exports[`change insight widget filter settings handler for replace settings operation should emit correct events 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   Object {
     "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
     "type": "GDC.DASH/EVT.QUERY.STARTED",
   },
   Object {
     "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META",
     "type": "GDC.DASH/EVT.QUERY.STARTED",
   },
   Object {
     "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META",
     "type": "GDC.DASH/EVT.QUERY.COMPLETED",
   },
   Object {
     "correlationId": undefined,
+    "queryType": "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
     "type": "GDC.DASH/EVT.QUERY.COMPLETED",
   },
   Object {

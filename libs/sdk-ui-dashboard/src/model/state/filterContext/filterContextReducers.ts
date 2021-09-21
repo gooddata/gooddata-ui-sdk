@@ -7,6 +7,7 @@ import {
     DateFilterType,
     DateString,
     FilterContextItem,
+    IAttributeDisplayFormMetadataObject,
     IDashboardAttributeFilter,
     IDashboardAttributeFilterParent,
     IDashboardObjectIdentity,
@@ -17,6 +18,7 @@ import {
 import invariant from "ts-invariant";
 import { FilterContextState } from "./filterContextState";
 import {
+    areObjRefsEqual,
     attributeElementsIsEmpty,
     IAttributeElements,
     isAttributeElementsByRef,
@@ -27,13 +29,18 @@ type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>
 
 const generateFilterLocalIdentifier = (): string => uuidv4().replace(/-/g, "");
 
+//
+//
+//
+
 type SetFilterContextPayload = {
     filterContextDefinition: IFilterContextDefinition;
+    attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[];
     filterContextIdentity?: IDashboardObjectIdentity;
 };
 
 const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPayload>> = (state, action) => {
-    const { filterContextDefinition, filterContextIdentity } = action.payload;
+    const { filterContextDefinition, filterContextIdentity, attributeFilterDisplayForms } = action.payload;
 
     state.filterContextDefinition = {
         ...filterContextDefinition,
@@ -52,17 +59,47 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
     };
 
     state.filterContextIdentity = filterContextIdentity;
+    state.attributeFilterDisplayForms = attributeFilterDisplayForms;
 };
+
+//
+//
+//
 
 type SetFilterContextIdentityPayload = {
     filterContextIdentity?: IDashboardObjectIdentity;
 };
+
 const updateFilterContextIdentity: FilterContextReducer<PayloadAction<SetFilterContextIdentityPayload>> = (
     state,
     action,
 ) => {
     state.filterContextIdentity = action.payload.filterContextIdentity;
 };
+
+//
+//
+//
+
+const removeAttributeFilterDisplayForms: FilterContextReducer<PayloadAction<ObjRef>> = (state, action) => {
+    invariant(state.attributeFilterDisplayForms, "attempting to work with uninitialized state");
+
+    state.attributeFilterDisplayForms = state.attributeFilterDisplayForms.filter((df) => {
+        return !areObjRefsEqual(df, action.payload);
+    });
+};
+
+const addAttributeFilterDisplayForm: FilterContextReducer<
+    PayloadAction<IAttributeDisplayFormMetadataObject>
+> = (state, action) => {
+    invariant(state.attributeFilterDisplayForms, "attempting to work with uninitialized state");
+
+    state.attributeFilterDisplayForms.push(action.payload);
+};
+
+//
+//
+//
 
 export interface IUpsertDateFilterAllTimePayload {
     readonly type: "allTime";
@@ -116,6 +153,10 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
     }
 };
 
+//
+//
+//
+
 export interface IUpdateAttributeFilterSelectionPayload {
     readonly filterLocalId: string;
     readonly elements: IAttributeElements;
@@ -144,6 +185,10 @@ const updateAttributeFilterSelection: FilterContextReducer<
         },
     };
 };
+
+//
+//
+//
 
 export interface IAddAttributeFilterPayload {
     readonly displayForm: ObjRef;
@@ -183,6 +228,10 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
     }
 };
 
+//
+//
+//
+
 export interface IRemoveAttributeFilterPayload {
     readonly filterLocalId: string;
 }
@@ -199,6 +248,10 @@ const removeAttributeFilter: FilterContextReducer<PayloadAction<IRemoveAttribute
         (item) => isDashboardDateFilter(item) || item.attributeFilter.localIdentifier !== filterLocalId,
     );
 };
+
+//
+//
+//
 
 export interface IMoveAttributeFilterPayload {
     readonly filterLocalId: string;
@@ -230,6 +283,10 @@ const moveAttributeFilter: FilterContextReducer<PayloadAction<IMoveAttributeFilt
     }
 };
 
+//
+//
+//
+
 export interface ISetAttributeFilterParentsPayload {
     readonly filterLocalId: string;
     readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
@@ -253,6 +310,10 @@ const setAttributeFilterParents: FilterContextReducer<PayloadAction<ISetAttribut
         state.filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter
     ).attributeFilter.filterElementsBy = [...parentFilters];
 };
+
+//
+//
+//
 
 export interface IClearAttributeFiltersSelectionPayload {
     readonly filterLocalIds: string[];
@@ -285,9 +346,15 @@ const clearAttributeFiltersSelection: FilterContextReducer<
     });
 };
 
+//
+//
+//
+
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
+    removeAttributeFilterDisplayForms,
+    addAttributeFilterDisplayForm,
     addAttributeFilter,
     removeAttributeFilter,
     moveAttributeFilter,

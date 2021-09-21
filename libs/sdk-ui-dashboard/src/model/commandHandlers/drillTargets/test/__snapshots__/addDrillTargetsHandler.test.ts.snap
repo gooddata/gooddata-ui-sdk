@@ -5,6 +5,7 @@ exports[`addDrillTargetsHandler should add drill target to the state for given w
 exports[`addDrillTargetsHandler should emit the appropriate events for add drill target 1`] = `
 Array [
   Object {
+    "commandType": "GDC.DASH/CMD.DRILL_TARGETS.ADD",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
