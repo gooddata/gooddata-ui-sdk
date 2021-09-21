@@ -7,10 +7,16 @@ export type UiState = {
     scheduleEmailDialog: {
         open: boolean;
     };
+    saveAsDialog: {
+        open: boolean;
+    };
 };
 
 export const uiInitialState: UiState = {
     scheduleEmailDialog: {
+        open: false,
+    },
+    saveAsDialog: {
         open: false,
     },
 };

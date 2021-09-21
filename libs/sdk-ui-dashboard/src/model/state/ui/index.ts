@@ -13,6 +13,7 @@ export const uiSliceReducer = uiSlice.reducer;
 
 /**
  * Actions to control ui state of the dashboard.
- * @alpha
+ *
+ * @internal
  */
 export const uiActions = uiSlice.actions;
