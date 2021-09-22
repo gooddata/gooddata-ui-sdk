@@ -2,6 +2,7 @@
 import React from "react";
 import {
     GoodDataSdkError,
+    isDataTooLargeToCompute,
     isDataTooLargeToDisplay,
     isNoDataSdkError,
     isProtectedReport,
@@ -32,7 +33,7 @@ export const CustomError: React.FC<ICustomErrorProps> = ({
         forceFullContent || (isCustomWidgetHeightEnabled ? shouldRenderFullContent(height, width) : true);
     if (isProtectedReport(error)) {
         return <ExecuteProtectedError fullContent={fullContent} />;
-    } else if (isDataTooLargeToDisplay(error)) {
+    } else if (isDataTooLargeToDisplay(error) || isDataTooLargeToCompute(error)) {
         return <DataTooLargeError fullContent={fullContent} />;
     } else if (isNoDataSdkError(error)) {
         return <NoDataError fullContent={fullContent} />;
