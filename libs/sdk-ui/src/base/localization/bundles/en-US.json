@@ -279,6 +279,11 @@
         "comment": "",
         "limit": 0
     },
+    "gs.header.upsellButtonText": {
+        "value": "Upgrade",
+        "comment": "",
+        "limit": 0
+    },
     "measure.title.suffix.same_period_year_ago": {
         "value": "SP year ago",
         "comment": "",

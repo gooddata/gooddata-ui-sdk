@@ -49,6 +49,9 @@ export interface IAppHeaderProps {
 
     helpRedirectUrl?: string;
     theme?: ITheme;
+
+    showUpsellButton?: boolean;
+    onUpsellButtonClick?: (e: React.MouseEvent) => void;
 }
 
 /**
@@ -86,4 +89,11 @@ export interface IHeaderMenuProps {
     className?: string;
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React.MouseEvent) => void;
     sections?: IHeaderMenuItem[][];
+}
+
+/**
+ * @internal
+ */
+export interface IHeaderUpsellButtonProps {
+    onUpsellButtonClick?: (e: React.MouseEvent) => void;
 }

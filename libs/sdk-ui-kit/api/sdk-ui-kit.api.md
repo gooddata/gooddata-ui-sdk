@@ -38,7 +38,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick">>;
+export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick" | "showUpsellButton">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -563,6 +563,10 @@ export interface IAppHeaderProps {
     onLogoClick?: (e: React_2.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     // (undocumented)
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
+    // (undocumented)
+    onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
+    // (undocumented)
+    showUpsellButton?: boolean;
     // (undocumented)
     theme?: ITheme;
     // (undocumented)
@@ -1262,6 +1266,12 @@ export interface IHeaderMenuProps {
 export interface IHeaderProps {
     // (undocumented)
     children: React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export interface IHeaderUpsellButtonProps {
+    // (undocumented)
+    onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
 }
 
 // @internal (undocumented)

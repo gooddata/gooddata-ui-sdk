@@ -24,6 +24,7 @@ import { IAppHeaderProps, IAppHeaderState, IHeaderMenuItem } from "./typings";
 import { HeaderHelp } from "./HeaderHelp";
 import { HeaderAccount } from "./HeaderAccount";
 import { HeaderMenu } from "./HeaderMenu";
+import { HeaderUpsellButton } from "./HeaderUpsellButton";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -324,6 +325,10 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     sections={this.props.menuItemsGroups}
                     className="gd-header-menu-horizontal"
                 />
+
+                {this.props.showUpsellButton && (
+                    <HeaderUpsellButton onUpsellButtonClick={this.props.onUpsellButtonClick} />
+                )}
 
                 {!!this.props.helpMenuItems.length && (
                     <HeaderHelp
