@@ -90,14 +90,11 @@ export class AttributeFilterButtonExample extends Component<unknown, IAttributeF
 
     public render(): React.ReactNode {
         const { filters } = this.state;
+        const filter = filters?.[0] ?? newNegativeAttributeFilter(Ldm.LocationResort, []);
 
         return (
             <div className="s-attribute-filter">
-                <AttributeFilterButton
-                    filter={newNegativeAttributeFilter(Ldm.LocationResort, [])}
-                    onApply={this.onApply}
-                    onError={this.onError}
-                />
+                <AttributeFilterButton filter={filter} onApply={this.onApply} onError={this.onError} />
                 <div style={{ height: 300 }} className="s-line-chart">
                     <LineChart
                         measures={[LdmExt.TotalSales2]}
