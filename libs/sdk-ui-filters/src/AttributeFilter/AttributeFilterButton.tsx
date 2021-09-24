@@ -669,7 +669,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         !isParentFilterTitlesLoading() &&
         !parentFilterTitles?.length &&
         !isElementsLoading() &&
-        state.validOptions?.items?.length === 0;
+        originalTotalCount === 0;
 
     function renderDefaultBody(bodyProps: IAttributeDropdownBodyExtendedProps) {
         return isAllFiltered ? (
