@@ -470,16 +470,16 @@ export type CustomDashboardAttributeFilterComponent = ComponentType;
 // @alpha (undocumented)
 export type CustomDashboardDateFilterComponent = ComponentType;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type CustomDashboardInsightComponent = ComponentType;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type CustomDashboardKpiComponent = ComponentType;
 
 // @alpha (undocumented)
 export type CustomDashboardLayoutComponent = ComponentType;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type CustomDashboardWidgetComponent = ComponentType;
 
 // @alpha (undocumented)
@@ -1924,11 +1924,44 @@ export interface IDashboardAttributeFilterProps {
     onFilterChanged: (filter: IDashboardAttributeFilter) => void;
 }
 
+// @alpha (undocumented)
+export interface IDashboardBaseProps {
+    backend?: IAnalyticalBackend;
+    config?: DashboardConfig;
+    dashboardRef?: ObjRef;
+    permissions?: IWorkspacePermissions;
+    workspace?: string;
+}
+
 // @alpha
 export interface IDashboardCommand {
     readonly correlationId?: string;
     readonly meta?: CommandProcessingMeta;
     readonly type: DashboardCommandType;
+}
+
+// @alpha (undocumented)
+export interface IDashboardCustomComponentProps {
+    ButtonBarComponent?: CustomButtonBarComponent;
+    DashboardAttributeFilterComponentFactory?: (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent | undefined;
+    DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
+    ErrorComponent?: ComponentType<IErrorProps>;
+    FilterBarComponent?: CustomFilterBarComponent;
+    InsightComponent?: CustomDashboardInsightComponent;
+    KpiComponent?: CustomDashboardKpiComponent;
+    LayoutComponent?: CustomDashboardLayoutComponent;
+    LoadingComponent?: ComponentType<ILoadingProps>;
+    MenuButtonComponent?: CustomMenuButtonComponent;
+    SaveAsDialogComponent?: CustomSaveAsDialogComponent;
+    ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
+    TitleComponent?: CustomTitleComponent;
+    TopBarComponent?: CustomTopBarComponent;
+    WidgetComponent?: CustomDashboardWidgetComponent;
+}
+
+// @alpha (undocumented)
+export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
+    menuButtonConfig?: IMenuButtonConfiguration;
 }
 
 // @alpha
@@ -1961,6 +1994,12 @@ export interface IDashboardEvent<TPayload = any> {
     };
     readonly payload?: TPayload;
     readonly type: DashboardEventType;
+}
+
+// @alpha (undocumented)
+export interface IDashboardEventing {
+    eventHandlers?: DashboardEventHandler[];
+    onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
 }
 
 // @alpha (undocumented)
@@ -2014,35 +2053,10 @@ export interface IDashboardInsightProps {
     workspace?: string;
 }
 
-// @internal (undocumented)
-export interface IDashboardProps {
-    backend?: IAnalyticalBackend;
-    ButtonBarComponent?: CustomButtonBarComponent;
+// @alpha (undocumented)
+export interface IDashboardProps extends IDashboardBaseProps, IDashboardEventing, IDashboardCustomizationProps, IDashboardThemingProps {
     // (undocumented)
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
-    config?: DashboardConfig;
-    DashboardAttributeFilterComponentFactory?: (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent | undefined;
-    DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
-    dashboardRef?: ObjRef;
-    ErrorComponent?: ComponentType<IErrorProps>;
-    eventHandlers?: DashboardEventHandler[];
-    FilterBarComponent?: CustomFilterBarComponent;
-    InsightComponent?: CustomDashboardInsightComponent;
-    KpiComponent?: CustomDashboardKpiComponent;
-    LayoutComponent?: CustomDashboardLayoutComponent;
-    LoadingComponent?: ComponentType<ILoadingProps>;
-    MenuButtonComponent?: CustomMenuButtonComponent;
-    menuButtonConfig?: IMenuButtonConfiguration;
-    onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
-    permissions?: IWorkspacePermissions;
-    SaveAsDialogComponent?: CustomSaveAsDialogComponent;
-    ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
-    theme?: ITheme;
-    themeModifier?: (theme: ITheme) => ITheme;
-    TitleComponent?: CustomTitleComponent;
-    TopBarComponent?: CustomTopBarComponent;
-    WidgetComponent?: CustomDashboardWidgetComponent;
-    workspace?: string;
 }
 
 // @alpha
@@ -2063,6 +2077,12 @@ export interface IDashboardStoreProviderProps {
     onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
     permissions?: IWorkspacePermissions;
     workspace?: string;
+}
+
+// @alpha (undocumented)
+export interface IDashboardThemingProps {
+    theme?: ITheme;
+    themeModifier?: (theme: ITheme) => ITheme;
 }
 
 // @alpha

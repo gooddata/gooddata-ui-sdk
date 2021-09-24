@@ -32,57 +32,9 @@ import {
 import { CustomSaveAsDialogComponent } from "../saveAs";
 
 /**
- * @internal
+ * @alpha
  */
-export interface IDashboardProps {
-    /**
-     * Analytical backend from which the dashboard obtains data to render.
-     *
-     * If you do not specify instance of analytical backend using this prop, then you MUST have
-     * BackendProvider up in the component tree.
-     */
-    backend?: IAnalyticalBackend;
-
-    /**
-     * Identifier of analytical workspace, from which the dashboard obtains data to render.
-     *
-     * If you do not specify workspace identifier, then you MUST have WorkspaceProvider up in the
-     * component tree.
-     */
-    workspace?: string;
-
-    /**
-     * Reference of the persisted dashboard to render. If you do not specify any reference, then the
-     * component will render a default, empty dashboard.
-     */
-    dashboardRef?: ObjRef;
-
-    /**
-     * Configuration that can be used to modify dashboard features, capabilities and behavior.
-     *
-     * If not specified, then the dashboard will retrieve and use the essential configuration from the backend.
-     */
-    config?: DashboardConfig;
-
-    /**
-     * Optionally specify permissions to use when determining availability of the different features of
-     * the dashboard component.
-     *
-     * If you do not specify permissions, the dashboard component will load permissions for the currently
-     * logged-in user.
-     */
-    permissions?: IWorkspacePermissions;
-
-    /**
-     * Optionally specify event handlers to register at the dashboard creation time.
-     *
-     * Note: all events that will be emitted during the initial load processing will have the `initialLoad`
-     * correlationId.
-     *
-     * TODO: this needs more attention.
-     */
-    eventHandlers?: DashboardEventHandler[];
-
+export interface IDashboardCustomComponentProps {
     /**
      * Component to render if embedding fails.
      * This component is also used in all the individual widgets when they have some error occur.
@@ -188,11 +140,6 @@ export interface IDashboardProps {
     MenuButtonComponent?: CustomMenuButtonComponent;
 
     /**
-     * Optionally provide custom configuration for the Menu button.
-     */
-    menuButtonConfig?: IMenuButtonConfiguration;
-
-    /**
      * Optionally specify component to use for rendering the top bar.
      *
      * @remarks
@@ -257,12 +204,22 @@ export interface IDashboardProps {
      * props might get ignored depending on your implementation.
      */
     FilterBarComponent?: CustomFilterBarComponent;
+}
 
+/**
+ * @alpha
+ */
+export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
     /**
-     *
+     * Optionally provide custom configuration for the Menu button.
      */
-    children?: JSX.Element | ((dashboard: any) => JSX.Element);
+    menuButtonConfig?: IMenuButtonConfiguration;
+}
 
+/**
+ * @alpha
+ */
+export interface IDashboardThemingProps {
     /**
      * Theme to use.
      *
@@ -278,9 +235,78 @@ export interface IDashboardProps {
      * the "theme" prop.
      */
     themeModifier?: (theme: ITheme) => ITheme;
+}
+
+/**
+ * @alpha
+ */
+export interface IDashboardBaseProps {
+    /**
+     * Analytical backend from which the dashboard obtains data to render.
+     *
+     * If you do not specify instance of analytical backend using this prop, then you MUST have
+     * BackendProvider up in the component tree.
+     */
+    backend?: IAnalyticalBackend;
+
+    /**
+     * Identifier of analytical workspace, from which the dashboard obtains data to render.
+     *
+     * If you do not specify workspace identifier, then you MUST have WorkspaceProvider up in the
+     * component tree.
+     */
+    workspace?: string;
+
+    /**
+     * Reference of the persisted dashboard to render. If you do not specify any reference, then the
+     * component will render a default, empty dashboard.
+     */
+    dashboardRef?: ObjRef;
+
+    /**
+     * Configuration that can be used to modify dashboard features, capabilities and behavior.
+     *
+     * If not specified, then the dashboard will retrieve and use the essential configuration from the backend.
+     */
+    config?: DashboardConfig;
+
+    /**
+     * Optionally specify permissions to use when determining availability of the different features of
+     * the dashboard component.
+     *
+     * If you do not specify permissions, the dashboard component will load permissions for the currently
+     * logged-in user.
+     */
+    permissions?: IWorkspacePermissions;
+}
+
+/**
+ * @alpha
+ */
+export interface IDashboardEventing {
+    /**
+     * Optionally specify event handlers to register at the dashboard creation time.
+     *
+     * Note: all events that will be emitted during the initial load processing will have the `initialLoad`
+     * correlationId.
+     *
+     * TODO: this needs more attention.
+     */
+    eventHandlers?: DashboardEventHandler[];
 
     /**
      * Optionally specify callback that will be called each time the state changes.
      */
     onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
+}
+
+/**
+ * @alpha
+ */
+export interface IDashboardProps
+    extends IDashboardBaseProps,
+        IDashboardEventing,
+        IDashboardCustomizationProps,
+        IDashboardThemingProps {
+    children?: JSX.Element | ((dashboard: any) => JSX.Element);
 }

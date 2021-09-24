@@ -55,6 +55,6 @@ export interface DashboardWidgetProps {
 ///
 
 /**
- * @internal
+ * @alpha
  */
 export type CustomDashboardWidgetComponent = ComponentType;

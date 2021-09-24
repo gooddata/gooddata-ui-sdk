@@ -9,7 +9,7 @@ import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../types
 ///
 
 /**
- * @internal
+ * @alpha
  */
 export type CustomDashboardKpiComponent = ComponentType;
 
