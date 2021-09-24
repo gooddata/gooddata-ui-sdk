@@ -250,11 +250,11 @@ export class LegacyInvertableList<T> extends Component<
      * to the respective empty selection.
      */
     private notifyUpstreamOfSelectionChange(newSelection: Array<T>) {
-        const { itemsCount } = this.props;
+        const { itemsCount, searchString } = this.props;
         let { isInverted } = this.props;
         let selection: Array<T>;
 
-        const lastItemSelected = !isInverted && newSelection.length === itemsCount;
+        const lastItemSelected = !isInverted && !searchString && newSelection.length === itemsCount;
 
         if (lastItemSelected) {
             selection = [];
