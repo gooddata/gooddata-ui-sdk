@@ -1,28 +1,52 @@
-// (C) 2019 GoodData Corporation
-import React from "react";
+// (C) 2019-2021 GoodData Corporation
+import React, { useMemo } from "react";
 import { IntlProvider, IntlShape, createIntl } from "react-intl";
-import { DefaultLocale, ILocale } from "@gooddata/sdk-ui";
+import { DefaultLocale, ILocale, pickCorrectInsightWording } from "@gooddata/sdk-ui";
 
 import { translations } from "./translations";
+import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import LRUCache from "lru-cache";
+
+const INTL_CACHE_SIZE = 20;
+const INTL_CACHE_KEY = "messages";
+const intlCache: LRUCache<string, Record<string, string>> = new LRUCache({ max: INTL_CACHE_SIZE });
 
 export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
-    return createIntl({ locale, messages: translations[locale] });
+    /**
+     * Because of issues described in the ticket FET-855, we decided to use this workaround.
+     * After the issues that are described in the ticket are solved or at least reduced,
+     * this workaround can be removed.
+     */
+    const settings = window.gdSettings as IWorkspaceSettings;
+    if (!intlCache.get(INTL_CACHE_KEY)) {
+        intlCache.set(INTL_CACHE_KEY, pickCorrectInsightWording(translations[locale], settings));
+    }
+    return createIntl({ locale, messages: intlCache.get(INTL_CACHE_KEY) });
 }
 
 interface IInternalIntlWrapperProps {
     locale?: string;
 }
 
-export class InternalIntlWrapper extends React.PureComponent<IInternalIntlWrapperProps> {
-    public static defaultProps: IInternalIntlWrapperProps = {
-        locale: DefaultLocale,
-    };
-    public render(): React.ReactNode {
-        const { locale } = this.props;
-        return (
-            <IntlProvider locale={locale} messages={translations[locale]}>
-                {this.props.children}
-            </IntlProvider>
-        );
-    }
-}
+export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
+    locale = DefaultLocale,
+    children,
+}) => {
+    /**
+     * Because of issues described in the ticket FET-855, we decided to use this workaround.
+     * After the issues that are described in the ticket are solved or at least reduced,
+     * this workaround can be removed.
+     */
+    const settings = window.gdSettings as IWorkspaceSettings;
+
+    const messages = useMemo(
+        () => pickCorrectInsightWording(translations[locale], settings),
+        [locale, settings, translations],
+    );
+
+    return (
+        <IntlProvider locale={locale} messages={messages}>
+            {children}
+        </IntlProvider>
+    );
+};

@@ -1285,6 +1285,7 @@ export interface ISettings {
     enableDrilledInsightExport?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableHidingOfDataPoints?: boolean;
+    enableInsightToReport?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
     enableKPIDashboardDrillToDashboard?: boolean;

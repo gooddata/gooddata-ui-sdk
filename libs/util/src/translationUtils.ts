@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 /**
  * Given an object containing the parsed translation bundle, this function creates a new object which contains
