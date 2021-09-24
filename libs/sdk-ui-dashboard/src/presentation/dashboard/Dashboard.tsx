@@ -4,7 +4,11 @@ import {
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    IInsightWidget,
+    IKpiWidget,
+    ILegacyKpi,
     isProtectedDataError,
+    IWidget,
 } from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
@@ -26,6 +30,7 @@ import {
     FilterBarPropsProvider,
 } from "../filterBar";
 import {
+    CustomDashboardWidgetComponent,
     DefaultDashboardInsightInner,
     DefaultDashboardKpiInner,
     DefaultDashboardWidgetInner,
@@ -73,6 +78,7 @@ import { IDashboardProps } from "./types";
 import { ExportDialogProvider } from "../dialogs";
 import { downloadFile } from "../../_staging/fileUtils/downloadFile";
 import { DefaultSaveAsDialogInner, SaveAsDialog, SaveAsDialogPropsProvider } from "../saveAs";
+import { IInsight } from "@gooddata/sdk-model";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -354,12 +360,36 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
  * @internal
  */
 export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const attributeFilterFactory = useCallback(
+    const attributeFilterProvider = useCallback(
         (filter: IDashboardAttributeFilter): CustomDashboardAttributeFilterComponent => {
-            const userSpecified = props.DashboardAttributeFilterComponentFactory?.(filter);
+            const userSpecified = props.DashboardAttributeFilterComponentProvider?.(filter);
             return userSpecified ?? DefaultDashboardAttributeFilterInner;
         },
-        [props.DashboardAttributeFilterComponentFactory],
+        [props.DashboardAttributeFilterComponentProvider],
+    );
+
+    const widgetProvider = useCallback(
+        (widget: IWidget): CustomDashboardWidgetComponent => {
+            const userSpecified = props.WidgetComponentProvider?.(widget);
+            return userSpecified ?? DefaultDashboardWidgetInner;
+        },
+        [props.WidgetComponentProvider],
+    );
+
+    const insightProvider = useCallback(
+        (insight: IInsight, widget: IInsightWidget): CustomDashboardWidgetComponent => {
+            const userSpecified = props.InsightComponentProvider?.(insight, widget);
+            return userSpecified ?? DefaultDashboardInsightInner;
+        },
+        [props.InsightComponentProvider],
+    );
+
+    const kpiProvider = useCallback(
+        (kpi: ILegacyKpi, widget: IKpiWidget): CustomDashboardWidgetComponent => {
+            const userSpecified = props.KpiComponentProvider?.(kpi, widget);
+            return userSpecified ?? DefaultDashboardKpiInner;
+        },
+        [props.KpiComponentProvider],
     );
 
     const isThemeLoading = useThemeIsLoading();
@@ -381,9 +411,9 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         ErrorComponent={props.ErrorComponent ?? DefaultError}
                         LoadingComponent={props.LoadingComponent ?? DefaultLoading}
                         LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
-                        InsightComponent={props.InsightComponent ?? DefaultDashboardInsightInner}
-                        KpiComponent={props.KpiComponent ?? DefaultDashboardKpiInner}
-                        WidgetComponent={props.WidgetComponent ?? DefaultDashboardWidgetInner}
+                        InsightComponentProvider={insightProvider}
+                        KpiComponentProvider={kpiProvider}
+                        WidgetComponentProvider={widgetProvider}
                         ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
                         MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
                         TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
@@ -392,7 +422,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                             props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
                         }
                         SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialogInner}
-                        DashboardAttributeFilterComponentFactory={attributeFilterFactory}
+                        DashboardAttributeFilterComponentProvider={attributeFilterProvider}
                         DashboardDateFilterComponent={
                             props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
                         }

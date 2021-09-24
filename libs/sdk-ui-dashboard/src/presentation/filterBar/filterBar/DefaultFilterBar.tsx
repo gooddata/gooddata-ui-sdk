@@ -31,7 +31,7 @@ export const DefaultFilterBarInner = (): JSX.Element => {
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const isExport = useDashboardSelector(selectIsExport);
-    const { DashboardAttributeFilterComponentFactory } = useDashboardComponentsContext();
+    const { DashboardAttributeFilterComponentProvider } = useDashboardComponentsContext();
 
     if (isExport) {
         return <HiddenFilterBar />;
@@ -58,7 +58,7 @@ export const DefaultFilterBarInner = (): JSX.Element => {
                 </DashboardDateFilterPropsProvider>
             </div>
             {attributeFilters.map((filter) => {
-                const AttributeFilter = DashboardAttributeFilterComponentFactory(filter);
+                const AttributeFilter = DashboardAttributeFilterComponentProvider(filter);
 
                 return (
                     <div

@@ -20,8 +20,15 @@ import {
     CustomDashboardDateFilterComponent,
     CustomFilterBarComponent,
 } from "../filterBar/types";
-import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
+import {
+    IDashboardAttributeFilter,
+    IInsightWidget,
+    IKpiWidget,
+    ILegacyKpi,
+    IWidget,
+} from "@gooddata/sdk-backend-spi";
 import { CustomSaveAsDialogComponent } from "../saveAs/types";
+import { IInsight } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -30,16 +37,16 @@ interface IDashboardComponentsContext {
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
     LayoutComponent: React.ComponentType<DashboardLayoutProps>;
-    WidgetComponent: CustomDashboardWidgetComponent;
-    InsightComponent: CustomDashboardInsightComponent;
-    KpiComponent: CustomDashboardKpiComponent;
+    WidgetComponentProvider: (widget: IWidget) => CustomDashboardWidgetComponent;
+    InsightComponentProvider: (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent;
+    KpiComponentProvider: (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
     ButtonBarComponent: CustomButtonBarComponent;
     MenuButtonComponent: CustomMenuButtonComponent;
     TitleComponent: CustomTitleComponent;
     TopBarComponent: CustomTopBarComponent;
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
-    DashboardAttributeFilterComponentFactory: (
+    DashboardAttributeFilterComponentProvider: (
         filter: IDashboardAttributeFilter,
     ) => CustomDashboardAttributeFilterComponent;
     DashboardDateFilterComponent: CustomDashboardDateFilterComponent;
@@ -59,16 +66,16 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     ErrorComponent: ThrowMissingComponentError("ErrorComponent"),
     LoadingComponent: ThrowMissingComponentError("LoadingComponent"),
     LayoutComponent: ThrowMissingComponentError("LayoutComponent"),
-    InsightComponent: ThrowMissingComponentError("InsightComponent"),
-    KpiComponent: ThrowMissingComponentError("KpiComponent"),
-    WidgetComponent: ThrowMissingComponentError("WidgetComponent"),
+    InsightComponentProvider: ThrowMissingComponentError("InsightComponent"),
+    KpiComponentProvider: ThrowMissingComponentError("KpiComponent"),
+    WidgetComponentProvider: ThrowMissingComponentError("WidgetComponent"),
     ButtonBarComponent: ThrowMissingComponentError("ButtonBarComponent"),
     MenuButtonComponent: ThrowMissingComponentError("MenuButtonComponent"),
     TitleComponent: ThrowMissingComponentError("TitleComponent"),
     TopBarComponent: ThrowMissingComponentError("TopBarComponent"),
     ScheduledEmailDialogComponent: ThrowMissingComponentError("ScheduledEmailDialogComponent"),
     SaveAsDialogComponent: ThrowMissingComponentError("SaveAsDialogComponent"),
-    DashboardAttributeFilterComponentFactory: ThrowMissingComponentError(
+    DashboardAttributeFilterComponentProvider: ThrowMissingComponentError(
         "DashboardAttributeFilterComponentFactory",
     ),
     DashboardDateFilterComponent: ThrowMissingComponentError("DashboardDateFilterComponent"),

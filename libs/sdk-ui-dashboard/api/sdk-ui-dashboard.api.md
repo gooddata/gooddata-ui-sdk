@@ -188,6 +188,9 @@ export function anyDashboardEventHandler(handler: DashboardEventHandler["handler
 export function anyEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler;
 
 // @alpha (undocumented)
+export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent | undefined;
+
+// @alpha (undocumented)
 export interface AttributeFilterSelection {
     readonly elements: IAttributeElements;
     readonly filterLocalId: string;
@@ -1943,12 +1946,12 @@ export interface IDashboardCommand {
 // @alpha (undocumented)
 export interface IDashboardCustomComponentProps {
     ButtonBarComponent?: CustomButtonBarComponent;
-    DashboardAttributeFilterComponentFactory?: (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent | undefined;
+    DashboardAttributeFilterComponentProvider?: AttributeFilterComponentProvider;
     DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
     ErrorComponent?: ComponentType<IErrorProps>;
     FilterBarComponent?: CustomFilterBarComponent;
-    InsightComponent?: CustomDashboardInsightComponent;
-    KpiComponent?: CustomDashboardKpiComponent;
+    InsightComponentProvider?: InsightComponentProvider;
+    KpiComponentProvider?: KpiComponentProvider;
     LayoutComponent?: CustomDashboardLayoutComponent;
     LoadingComponent?: ComponentType<ILoadingProps>;
     MenuButtonComponent?: CustomMenuButtonComponent;
@@ -1956,7 +1959,7 @@ export interface IDashboardCustomComponentProps {
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
     TitleComponent?: CustomTitleComponent;
     TopBarComponent?: CustomTopBarComponent;
-    WidgetComponent?: CustomDashboardWidgetComponent;
+    WidgetComponentProvider?: WidgetComponentProvider;
 }
 
 // @alpha (undocumented)
@@ -2225,6 +2228,9 @@ export type InsightAttributesMeta = {
     displayForms: ReadonlyArray<IAttributeDisplayFormMetadataObject>;
     attributes: ReadonlyArray<IAttributeMetadataObject>;
 };
+
+// @alpha (undocumented)
+export type InsightComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent | undefined;
 
 // @alpha
 export type InsightDateDatasets = {
@@ -2559,6 +2565,9 @@ export type IXlsxExportConfig = {
 export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kpiAlertDialogOpened", {
     alreadyHasAlert: boolean;
 }>;
+
+// @alpha (undocumented)
+export type KpiComponentProvider = (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent | undefined;
 
 // @alpha (undocumented)
 export type KpiPlaceholderWidget = {
@@ -4046,6 +4055,9 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onSuccess: (executionResult: IExecutionResult) => void;
     onPushData: (data: IPushData) => void;
 };
+
+// @alpha (undocumented)
+export type WidgetComponentProvider = (widget: IWidget) => CustomDashboardWidgetComponent | undefined;
 
 // @alpha
 export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;
