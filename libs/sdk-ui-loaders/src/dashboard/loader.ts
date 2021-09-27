@@ -2,10 +2,13 @@
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
-import { IDashboardBaseProps, IDashboardProps } from "../presentation";
-import { IDashboardPlugin } from "./plugin";
 import React from "react";
-import { IDashboardEngine } from "./engine";
+import {
+    IDashboardEngine,
+    IDashboardProps,
+    IDashboardPlugin,
+    IDashboardBaseProps,
+} from "@gooddata/sdk-ui-dashboard";
 
 /**
  * A result of successful load of a dashboard consists of a React component and constructed props that
@@ -66,7 +69,7 @@ export interface IDashboardLoader {
     fromClientWorkspace(clientWorkspace: IClientWorkspaceIdentifiers): IDashboardLoader;
 
     /**
-     * Optionally specify an instance of {@link IDashboardBaseProps} to use for the dashboard component.
+     * Optionally specify an instance of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} to use for the dashboard component.
      *
      * Note: the base props may also contain backend and workspace parameters. The loader can work with them.
      * If specified, they are equivalent to calling {@link IDashboardLoader.onBackend} and/or {@link IDashboardLoader.fromWorkspace}

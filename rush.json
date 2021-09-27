@@ -301,6 +301,12 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-loaders",
+            "projectFolder": "libs/sdk-ui-loaders",
+            "reviewCategory": "production",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/sdk-ui-tests-e2e",
             "projectFolder": "libs/sdk-ui-tests-e2e",
             "reviewCategory": "production",

@@ -28,4 +28,3 @@ export {
     IDashboardEventHandlers,
 } from "./plugins/plugin";
 export { IDashboardEngine } from "./plugins/engine";
-export { IDashboardLoader, DashboardLoadResult } from "./plugins/loader";

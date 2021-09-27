@@ -35,7 +35,6 @@ import { ICatalogDateAttribute } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
 import { ICatalogFact } from '@gooddata/sdk-backend-spi';
 import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
-import { IClientWorkspaceIdentifiers } from '@gooddata/sdk-ui';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
@@ -1277,14 +1276,6 @@ export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED";
 }
 
-// @alpha
-export type DashboardLoadResult = {
-    engine: IDashboardEngine;
-    DashboardComponent: React_2.ComponentType<IDashboardProps>;
-    props: IDashboardProps;
-    plugins: IDashboardPlugin[];
-};
-
 // @alpha (undocumented)
 export interface DashboardMetaState {
     descriptor?: DashboardDescriptor;
@@ -2112,16 +2103,6 @@ export interface IDashboardInsightProps {
     widget: IInsightWidget;
     // (undocumented)
     workspace?: string;
-}
-
-// @alpha (undocumented)
-export interface IDashboardLoader {
-    fromClientWorkspace(clientWorkspace: IClientWorkspaceIdentifiers): IDashboardLoader;
-    fromWorkspace(workspace: string): IDashboardLoader;
-    load(): Promise<DashboardLoadResult>;
-    onBackend(backend: IAnalyticalBackend): IDashboardLoader;
-    withAdditionalPlugins(...plugins: IDashboardPlugin[]): IDashboardLoader;
-    withBaseProps(props: IDashboardBaseProps): IDashboardLoader;
 }
 
 // @alpha
