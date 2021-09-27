@@ -175,6 +175,7 @@ export {
     ITranslationsCustomizationProviderProps,
     TranslationsCustomizationProvider,
     pickCorrectInsightWording,
+    removeAllInsightToReportTranslations,
 } from "./localization/TranslationsCustomizationProvider";
 
 /*
