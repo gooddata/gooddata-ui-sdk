@@ -178,7 +178,7 @@ describe("LegacyInvertableList", () => {
                         isInverted: false,
                         items: [visibleItems[0]],
                         itemsCount: 4,
-                        searchString: "foobar",
+                        searchString: "",
                         selection: visibleItems.slice(1),
                     }),
                 );

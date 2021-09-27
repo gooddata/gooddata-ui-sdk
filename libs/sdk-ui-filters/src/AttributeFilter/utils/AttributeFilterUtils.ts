@@ -243,13 +243,13 @@ export async function getFilterAttributeTitle(
 export function showAllFilteredMessage(
     isElementsLoading: boolean,
     parentFilters: IAttributeFilter[],
-    items: AttributeListItem[],
+    totalElementsCount: number,
 ): boolean {
     if (!parentFilters) {
         return false;
     }
     const parentFiltersEmpty = parentFilters.every((filter) => filterIsEmpty(filter));
-    return !isElementsLoading && !parentFiltersEmpty && !items?.length;
+    return !isElementsLoading && !parentFiltersEmpty && totalElementsCount === 0;
 }
 
 export function showItemsFilteredMessage(
