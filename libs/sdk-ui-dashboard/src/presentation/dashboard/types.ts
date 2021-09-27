@@ -348,10 +348,13 @@ export interface IDashboardBaseProps {
 /**
  * @alpha
  */
-export interface IDashboardProps
-    extends IDashboardBaseProps,
-        IDashboardEventing,
-        IDashboardCustomizationProps,
-        IDashboardThemingProps {
+export type IDashboardExtensionProps = IDashboardEventing &
+    IDashboardCustomizationProps &
+    IDashboardThemingProps;
+
+/**
+ * @alpha
+ */
+export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
 }

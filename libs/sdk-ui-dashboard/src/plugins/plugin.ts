@@ -1,9 +1,15 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardCustomizationProps, IDashboardEventing, IDashboardThemingProps } from "../presentation";
+import { InsightComponentProvider } from "../presentation";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
-import { DashboardEventType, IDashboardEvent } from "../model";
+import {
+    DashboardEventHandler,
+    DashboardEventHandlerFn,
+    DashboardEvents,
+    DashboardEventType,
+    ICustomDashboardEvent,
+} from "../model";
 import React from "react";
 
 /**
@@ -14,6 +20,11 @@ export interface IDashboardPluginMetadata {
      * Version of the SPI that is realized by the plugin.
      */
     readonly _spiVersion: "1.0";
+
+    /**
+     * Version of the customization APIs that this plugin requires.
+     */
+    readonly _requiresApi: "1.0";
 
     /**
      * Specify human-readable name of the plugin.
@@ -94,14 +105,113 @@ export interface IDashboardPluginContext {
     readonly pluginParameters?: any;
 }
 
+/**
+ * @alpha
+ */
 export type InitialDashboardPluginContext = Omit<IDashboardPluginContext, "pluginParameters">;
+
+/**
+ * @alpha
+ */
+export interface IDashboardInsightCustomizer {
+    /**
+     * A convenience method that will register a specific React component to use for rendering
+     * any insight that is tagged with the provided `tag`.
+     *
+     * @param tag - tag to look for on the insight
+     * @param component - component to use if the tag is found
+     * @returns self, for call chaining sakes
+     */
+    withTag(tag: string, component: React.ComponentType): IDashboardInsightCustomizer;
+
+    /**
+     * Register a provider for React components to render insights. A provider takes the insight and
+     * widget that it is part of as input and is expected to return a React component that should be
+     * used to render that insight.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the insight
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     *
+     * @remarks see the {@link IDashboardInsightCustomizer.withTag} convenience method to register components for insights
+     *  with particular tags.
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: InsightComponentProvider): IDashboardInsightCustomizer;
+}
+
+/**
+ * @alpha
+ */
+export interface IDashboardCustomizer {
+    /**
+     * Customize how rendering of insights is done.
+     */
+    insightRendering(): IDashboardInsightCustomizer;
+}
+
+/**
+ * @alpha
+ */
+export interface IDashboardEventHandlers {
+    /**
+     * Adds a handler for particular event type. Every time event of that type occurs, the provided callback
+     * function will be triggered.
+     *
+     * @param eventType - type of the event to handle; this can be either built-event event type (see {@link DashboardEventType}), a custom
+     *  event type or '*' to register handler for all events
+     * @param callback - function to call when the event occurs
+     */
+    addEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(
+        eventType: DashboardEventType | string | "*",
+        callback: DashboardEventHandlerFn<TEvents>,
+    ): IDashboardEventHandlers;
+
+    /**
+     * Removes a handler for particular event type. This is reverse operation to {@link IDashboardEventHandlers.addEventHandler}. In order for
+     * this method to remove a handler, the arguments must be the same when you added the handler.
+     *
+     * E.g. it is not possible to add a handler for all events using '*' and then subtract just one particular event
+     * from handling.
+     *
+     * @param eventType - type of the event to stop handling; this can be either built-event event type (see {@link DashboardEventType}), a custom
+     *  event type or '*' to register handler for all events
+     * @param callback  - originally registered callback function
+     */
+    removeEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(
+        eventType: DashboardEventType | string | "*",
+        callback: DashboardEventHandlerFn<TEvents>,
+    ): IDashboardEventHandlers;
+
+    /**
+     * Adds a custom event handler. This is a lower-level API where the handler can include both the function to
+     * evaluate events and the function to trigger when the evaluation succeeds.
+     *
+     * @param handler - event handler to add
+     */
+    addCustomEventHandler(handler: DashboardEventHandler): IDashboardEventHandlers;
+
+    /**
+     * Removes custom event handler. In order for successful removal the entire handler object must be
+     * exactly the same as the one that was used when you added the handler.
+     *
+     * @param handler - event handler to remove
+     */
+    removeEventCustomHandler(handler: DashboardEventHandler): IDashboardEventHandlers;
+}
 
 /**
  * This is the raw, low-level interface that the dashboard plugins need to implement. Through this interface
  * the plugin communicates its metadata and provides functions that will be used by dashboard loader to
  * obtain plugins customizations and contributions to apply on top of the Dashboard Component.
  *
- * @remarks see {@link AbstractDashboardPlugin}
+ * @remarks see {@link DashboardPluginV1}
  *
  * @alpha
  */
@@ -134,88 +244,44 @@ export interface IDashboardPlugin extends IDashboardPluginMetadata {
     parsePluginParameters?(pluginCtx: InitialDashboardPluginContext, parameters: string): any | undefined;
 
     /**
-     * This function will be called before the dashboard rendering starts. The plugin can provide its instance
-     * of {@link IDashboardCustomizationProps} that can be used to influence rendering of the different parts
-     * of the dashboard. This is how the plugin can provide implementations of custom widgets or custom
-     * visualizations.
+     * This function will be called before the dashboard rendering starts. At this point, the plugin can use
+     * the provided instance of `customize` to register its customizations and contributions to the dashboard and/or
+     * add custom event handlers.
      *
-     * The plugin MAY introspect the customization constructed so far and then return its own customization props. The
-     * merging of the customizations is not the responsibility of the plugin or this function.
-     *
-     * If this function is undefined or its return value is undefined, then this plugin does not contribute any customization - which is valid.
+     * If this function is undefined or its return value is undefined, then this plugin does not contribute
+     * any customization - which is valid.
      *
      * @param pluginCtx - context in which this plugin operates
-     * @param propsSoFar - contains customization props constructed so far during the dashboard initialization process; the
-     *  function MUST NOT modify these props. The props are provided here in case the plugin wants to introspect existing
-     *  customization and alter its own behavior based on it.
+     * @param customize - API through which you can register dashboard customizations
+     * @param handlers - an object containing event handler registration functions
      *
      * @returns this plugin's contribution to the dashboard customization props; if undefined, there is no contribution
      */
-    createCustomizationProps?(
+    register?(
         pluginCtx: IDashboardPluginContext,
-        propsSoFar: Readonly<IDashboardCustomizationProps>,
-    ): IDashboardCustomizationProps | undefined;
+        customize: IDashboardCustomizer,
+        handlers: IDashboardEventHandlers,
+    ): void;
 
     /**
-     * This function will be called before the dashboard rendering starts. The plugin can provide its instance
-     * of {@link IDashboardThemingProps} that can be used to influence the theme applied for this dashboard.
-     *
-     * The plugin MAY introspect the theme constructed so far and then return its own customization props. The
-     * merging of the theme is not the responsibility of the plugin or this function.
-     *
-     * @param pluginCtx - context in which this plugin operates
-     * @param themeSoFar - contains theme constructed so far during the dashboard initialization process; the
-     *  function MUST NOT modify these props. The props are provided here in case the plugin wants to introspect existing
-     *  customization and alter its own behavior based on it.
-     */
-    createThemingProps?(
-        pluginCtx: IDashboardPluginContext,
-        themeSoFar: Readonly<IDashboardThemingProps>,
-    ): IDashboardThemingProps | undefined;
-
-    /**
-     * This function will be called to obtain callbacks that the plugin wants to register with the dashboard.
+     * This function will be called when user navigates away from the dashboard that uses an instance of
+     * this plugin. At this point, the plugin SHOULD perform any essential cleanup.
      *
      * @param pluginCtx - context in which this plugin operates
      */
-    createEventingProps?(pluginCtx: IDashboardPluginContext): IDashboardEventing | undefined;
-
-    /**
-     * This function will be called right before the dashboard rendering starts. The plugin can provide a React
-     * component that will be added as child of the Dashboard itself. The dashboard will render this custom
-     * component right above the dashboard layout itself and below the filter bar.
-     *
-     * @param pluginCtx - context in which this plugin operates
-     */
-    getDashboardChildComponent?(pluginCtx: IDashboardPluginContext): React.ComponentType;
+    onPluginUnload?(pluginCtx: IDashboardPluginContext): void;
 }
 
+/**
+ * Abstract base class for the Dashboard Plugin.
+ *
+ * @alpha
+ */
 export abstract class DashboardPluginV1 implements IDashboardPlugin {
     public readonly _spiVersion = "1.0";
+    public readonly _requiresApi = "1.0";
     public readonly minEngineVersion = "bundled";
     public readonly maxEngineVersion = "bundled";
-    public abstract displayName: string;
-    public abstract version: string;
-
-    public createCustomizationProps(
-        _pluginCtx: IDashboardPluginContext,
-        _propsSoFar: Readonly<IDashboardCustomizationProps>,
-    ): IDashboardCustomizationProps | undefined {
-        return;
-    }
-
-    public createThemingProps(
-        _pluginCtx: IDashboardPluginContext,
-        _themeSoFar: Readonly<IDashboardThemingProps>,
-    ): IDashboardThemingProps | undefined {
-        return;
-    }
-
-    public createEventingProps(_pluginCtx: IDashboardPluginContext): IDashboardEventing | undefined {
-        return;
-    }
-
-    public on(_eventType: DashboardEventType | "*", _handler: (evt: IDashboardEvent) => void): void {}
-
-    public abstract initializeCustomizations(pluginCtx: IDashboardPluginContext): void;
+    public abstract readonly displayName: string;
+    public abstract readonly version: string;
 }
