@@ -824,6 +824,13 @@ describe("createPivotTableConfig", () => {
             undefined,
         ],
         [
+            "config with growToFit if feature flag on and environment === analyticalDesigner",
+            {},
+            "analyticalDesigner",
+            { enableTableColumnsGrowToFit: true },
+            undefined,
+        ],
+        [
             "config with manualResizing if feature flag on and configs are not defined",
             {},
             "none",

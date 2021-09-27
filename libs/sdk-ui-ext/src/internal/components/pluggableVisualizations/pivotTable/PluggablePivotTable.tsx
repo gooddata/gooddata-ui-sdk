@@ -40,7 +40,7 @@ import { render } from "react-dom";
 import ReactMeasure from "react-measure";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
+import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties";
 import {
     IBucketFilter,
     IBucketItem,
@@ -479,7 +479,7 @@ export function createPivotTableConfig(
         separators: config.separators,
     };
 
-    if (environment !== "dashboards") {
+    if (environment !== DASHBOARDS_ENVIRONMENT) {
         tableConfig = {
             ...tableConfig,
             menu: pivotTableMenuForCapabilities(capabilities, {
@@ -512,6 +512,13 @@ export function createPivotTableConfig(
         columnSizing = {
             ...columnSizing,
             columnWidths,
+        };
+    }
+
+    if (environment === ANALYTICAL_ENVIRONMENT) {
+        columnSizing = {
+            ...columnSizing,
+            growToFit: false,
         };
     }
 
