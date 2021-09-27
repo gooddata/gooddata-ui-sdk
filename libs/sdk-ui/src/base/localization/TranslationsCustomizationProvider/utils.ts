@@ -23,3 +23,19 @@ export const pickCorrectInsightWording = (
         ...modifiedTranslations,
     };
 };
+
+/**
+ * @beta
+ */
+export const removeAllInsightToReportTranslations = (
+    translations: Record<string, string>,
+): Record<string, string> => {
+    Object.keys(translations).forEach((key) => {
+        if (key.includes("|report") || key.includes("|insight")) {
+            delete translations[key];
+        }
+    });
+    return {
+        ...translations,
+    };
+};

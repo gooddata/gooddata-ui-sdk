@@ -1517,6 +1517,9 @@ export class ProtectedReportSdkError extends GoodDataSdkError {
 // @public
 export const RawExecute: React_2.ComponentClass<IRawExecuteProps, any>;
 
+// @beta (undocumented)
+export const removeAllInsightToReportTranslations: (translations: Record<string, string>) => Record<string, string>;
+
 // @beta
 export function resolveUseCancelablePromisesError<TError>(states: UseCancelablePromiseState<unknown, TError>[]): TError | undefined;
 
