@@ -84,12 +84,12 @@ export const TranslationsCustomizationProvider: React.FC<ITranslationsCustomizat
              * this workaround can be removed.
              */
             window.gdSettings = settings;
-            setTranslations(customize(translations, settings));
+            setTranslations(customize(memoizedTranslations, settings));
             setIsLoading(false);
         };
 
         fetchSettings();
-    }, [backend, workspace]);
+    }, [backend, workspace, memoizedTranslations]);
 
     return (
         <TranslationsCustomizationContextProvider
