@@ -180,13 +180,7 @@ export class AttributeDropdownCore extends React.PureComponent<
     public getElementTotalCount = async (): Promise<number> => {
         const { workspace, displayForm, parentFilters } = this.props;
 
-        return getElementTotalCount(
-            workspace,
-            this.getBackend(),
-            displayForm,
-            this.state.searchString,
-            parentFilters,
-        );
+        return getElementTotalCount(workspace, this.getBackend(), displayForm, "", parentFilters);
     };
 
     public getElements = async (): Promise<void> => {
@@ -373,8 +367,7 @@ export class AttributeDropdownCore extends React.PureComponent<
     }
 
     private renderDropdownBody(closeDropdown: () => void) {
-        const { selectedItems, isInverted, error, isLoading, validElements, searchString, totalCount } =
-            this.state;
+        const { selectedItems, isInverted, error, isLoading, validElements, searchString } = this.state;
 
         const shouldDisableApplyButton = error || isLoading || (validElements && !validElements.items.length);
         const hasTriedToLoadData = validElements && validElements.items;
@@ -382,7 +375,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         const isAllFiltered = showAllFilteredMessage(
             this.state.isLoading,
             this.props.parentFilters?.map((filter) => filter.attributeFilter),
-            validElements?.items,
+            validElements?.items.length ?? 0,
         );
 
         const isItemsFiltered = showItemsFilteredMessage(
@@ -409,7 +402,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                 isInverted={isInverted}
                 onRangeChange={this.onRangeChange}
                 selectedItems={selectedItems}
-                totalCount={totalCount ?? LIMIT}
+                totalCount={validElements?.items.length ?? LIMIT}
                 applyDisabled={shouldDisableApplyButton}
                 onSearch={this.onSearch}
                 searchString={searchString}

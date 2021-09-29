@@ -157,6 +157,7 @@ export interface IAttributeFilterButtonOwnProps {
 
 interface IAttributeFilterButtonState {
     selectedFilterOptions: IAttributeElement[];
+    appliedFilterOptions: IAttributeElement[];
     isInverted: boolean;
     firstLoad: boolean;
     searchString: string;
@@ -265,6 +266,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
         return {
             selectedFilterOptions: initialSelection,
+            appliedFilterOptions: initialSelection,
             isInverted: initialIsInverted,
             firstLoad: true,
             searchString: "",
@@ -282,10 +284,11 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         setState((prevValue) => {
             let resultState = prevValue;
 
-            if (!isEqual(prevValue.selectedFilterOptions, initialSelection)) {
+            if (!isEqual(prevValue.appliedFilterOptions, initialSelection)) {
                 resultState = {
                     ...resultState,
                     selectedFilterOptions: initialSelection,
+                    appliedFilterOptions: initialSelection,
                 };
             }
 
@@ -323,12 +326,14 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     state.selectedFilterOptions,
                     items,
                 );
+                const updatedAppliedItems = updateSelectedOptionsWithData(state.appliedFilterOptions, items);
 
                 const validOptions = resolvedParentFilters?.length ? newElements : mergedValidElements;
 
                 setState((s) => ({
                     ...s,
                     selectedFilterOptions: updatedSelectedItems,
+                    appliedFilterOptions: updatedAppliedItems,
                     validOptions: validOptions,
                     firstLoad: false,
                 }));
@@ -412,6 +417,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     ...s,
                     ...nullStateValues,
                     selectedFilterOptions: [],
+                    appliedFilterOptions: [],
                     isInverted,
                 };
             });
@@ -514,7 +520,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     const isAllFiltered = showAllFilteredMessage(
         isElementsLoading(),
         resolvedParentFilters,
-        state.validOptions?.items,
+        originalTotalCount,
     );
 
     const getSubtitle = () => {
@@ -537,7 +543,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         const displayForm = getObjRef(currentFilter, props.identifier);
         if (state.validOptions && !isNil(totalCount) && displayForm) {
             const empty = isEmpty(state.selectedFilterOptions);
-            const equal = isEqual(totalCount, state.selectedFilterOptions?.length);
+            const equal = isEqual(originalTotalCount, state.selectedFilterOptions?.length);
             const getAllPartIntl = getAllTitleIntl(props.intl, state.isInverted, empty, equal);
 
             if (!state.validOptions.totalCount && state.searchString) {
@@ -639,11 +645,14 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     };
 
     const onDropdownClosed = () => {
-        setState((s) => ({
-            ...s,
-            searchString: "",
-            isDropdownOpen: false,
-        }));
+        setState((s) => {
+            return {
+                ...s,
+                selectedFilterOptions: s.appliedFilterOptions,
+                searchString: "",
+                isDropdownOpen: false,
+            };
+        });
     };
 
     const onDropdownOpen = () => {
@@ -669,7 +678,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         !isParentFilterTitlesLoading() &&
         !parentFilterTitles?.length &&
         !isElementsLoading() &&
-        state.validOptions?.items?.length === 0;
+        originalTotalCount === 0;
 
     function renderDefaultBody(bodyProps: IAttributeDropdownBodyExtendedProps) {
         return isAllFiltered ? (
