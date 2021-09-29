@@ -3,9 +3,9 @@
 import { Dashboard, useDashboardInsightProps } from "../presentation";
 import React from "react";
 import { idRef, IInsight, insightTags, insightTitle } from "@gooddata/sdk-model";
-import { anyDashboardEventHandler, singleEventTypeHandler } from "..";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import includes from "lodash/includes";
+import { anyDashboardEventHandler, singleEventTypeHandler } from "../model/events/eventHandler";
 
 //
 //

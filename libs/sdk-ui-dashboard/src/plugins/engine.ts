@@ -1,8 +1,12 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardPlugin } from "./plugin";
+import { IDashboardPlugin, IDashboardPluginContext } from "./plugin";
 import { Dashboard, IDashboardExtensionProps, IDashboardProps } from "../presentation";
 import React, { ComponentType } from "react";
+import packageJson from "../../package.json";
+import { DashboardCustomizationBuilder } from "./customizationApis/customizationBuilder";
+import { DefaultDashboardEventHandling } from "./customizationApis/dashboardEventHandling";
+import { pluginDebugStr } from "./customizationApis/pluginUtils";
 
 /**
  * Dashboard Engine encapsulates a particular build of the `Dashboard` component and provides
@@ -25,9 +29,13 @@ export interface IDashboardEngine {
      * used as input to the dashboard component itself and thus achieve the integration of the plugins
      * into the dashboard.
      *
+     * @param pluginCtx - context in which the plugins operate
      * @param plugins - plugins to initialize
      */
-    initializePlugins(plugins: IDashboardPlugin[]): IDashboardExtensionProps;
+    initializePlugins(
+        pluginCtx: IDashboardPluginContext,
+        plugins: IDashboardPlugin[],
+    ): IDashboardExtensionProps;
 
     /**
      * Returns Dashboard component provided by this dashboard engine.
@@ -44,10 +52,33 @@ export interface IDashboardEngine {
  */
 export function newDashboardEngine(): IDashboardEngine {
     return {
-        version: "8.6.0",
-        initializePlugins(_plugins: IDashboardPlugin[]): IDashboardExtensionProps {
-            // TODO: add logic to build extension props, using customizer etc etc
-            return {};
+        version: packageJson.version,
+        initializePlugins(
+            pluginCtx: IDashboardPluginContext,
+            plugins: IDashboardPlugin[],
+        ): IDashboardExtensionProps {
+            const customizationBuilder = new DashboardCustomizationBuilder();
+            const eventRegistration = new DefaultDashboardEventHandling();
+
+            // eslint-disable-next-line no-console
+            console.log(
+                `DashboardEngine ${this.version} initializing with plugins: ${plugins
+                    .map(pluginDebugStr)
+                    .join(", ")}`,
+            );
+
+            for (const plugin of plugins) {
+                customizationBuilder.onBeforePluginRegister(plugin);
+
+                try {
+                    plugin.register(pluginCtx, customizationBuilder, eventRegistration);
+                    customizationBuilder.onAfterPluginRegister();
+                } catch (e: any) {
+                    customizationBuilder.onPluginRegisterError(e);
+                }
+            }
+
+            return customizationBuilder.build();
         },
         getDashboardComponent(): React.ComponentType<IDashboardProps> {
             return Dashboard;

@@ -136,6 +136,19 @@ export type DashboardStoreConfig = {
      * Optionally specify callback that will be called each time the state changes.
      */
     onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
+
+    /**
+     * Optionally specify callback that will be called when the dashboard eventing subsystem initializes and
+     * it is possible to register new or unregister existing event handlers.
+     *
+     * Note: these callbacks allow modification of event handlers on an existing, initialized dashboard. See
+     * {@link IDashboardEventing.eventHandlers} prop if you want to register handlers _before_ the dashboard
+     * initialization starts.
+     */
+    onEventingInitialized?: (
+        registerEventHandler: (handler: DashboardEventHandler) => void,
+        unregisterEventHandler: (handler: DashboardEventHandler) => void,
+    ) => void;
 };
 
 function* rootSaga(
@@ -282,6 +295,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
     }
 
     const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers, store.dispatch);
+    config.onEventingInitialized?.(rootEventEmitter.registerHandler, rootEventEmitter.unregisterHandler);
 
     const rootSagaTask = sagaMiddleware.run(
         rootSaga,

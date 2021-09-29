@@ -20,11 +20,13 @@ export * from "./converters";
 export {
     InitialDashboardPluginContext,
     IDashboardPlugin,
-    IDashboardInsightCustomizer,
     IDashboardPluginContext,
     DashboardPluginV1,
-    IDashboardCustomizer,
     IDashboardPluginMetadata,
-    IDashboardEventHandlers,
 } from "./plugins/plugin";
 export { IDashboardEngine, newDashboardEngine } from "./plugins/engine";
+export {
+    IDashboardEventHandling,
+    IDashboardCustomizer,
+    IDashboardInsightCustomizer,
+} from "./plugins/customizer";

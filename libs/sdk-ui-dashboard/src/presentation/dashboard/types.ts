@@ -283,6 +283,19 @@ export interface IDashboardThemingProps {
 }
 
 /**
+ * Dashboard Component eventing is divided into two major groups:
+ *
+ * 1.  Domain events describing what is happening on the dashboard or with the dashboard
+ * 2.  Infrastructural events required hook into different technical aspects of the dashboard component
+ *     implementation.
+ *
+ * Dashboard Component treats the domain events using the typical pub-sub semantics. It is possible to
+ * register any number of subscribers for the different types of events. Types of events are enumerated and
+ * each event comes with its own type describing the contents. Please see {@link @gooddata/sdk-ui-dashboard#DashboardEventType}
+ * and {@link @gooddata/sdk-ui-dashboard#DashboardEvents} to learn more.
+ *
+ * The infrastructural events are handled using callbacks. There are only few of these infr
+ *
  * @alpha
  */
 export interface IDashboardEventing {
@@ -291,13 +304,28 @@ export interface IDashboardEventing {
      *
      * Note: all events that will be emitted during the initial load processing will have the `initialLoad`
      * correlationId.
-     *
-     * TODO: this needs more attention.
      */
     eventHandlers?: DashboardEventHandler[];
 
     /**
+     * Optionally specify callback that will be called when the dashboard eventing subsystem initializes and
+     * it is possible to register new or unregister existing event handlers.
+     *
+     * Note: these callbacks allow modification of event handlers on an existing, initialized dashboard. See
+     * {@link IDashboardEventing.eventHandlers} prop if you want to register handlers _before_ the dashboard
+     * initialization starts.
+     */
+    onEventingInitialized?: (
+        registerEventHandler: (handler: DashboardEventHandler) => void,
+        unregisterEventHandler: (handler: DashboardEventHandler) => void,
+    ) => void;
+
+    /**
      * Optionally specify callback that will be called each time the state changes.
+     *
+     * Note: there is no need to use this in your own React components that you plug into the dashboard. Your
+     * React component code can use {@link @gooddata/sdk-ui-dashboard#useDashboardSelector} and
+     * {@link @gooddata/sdk-ui-dashboard#useDashboardDispatch} hooks instead.
      */
     onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
 }
