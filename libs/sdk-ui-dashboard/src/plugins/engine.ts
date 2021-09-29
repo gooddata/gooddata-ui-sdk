@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 
 import { IDashboardPlugin } from "./plugin";
-import { IDashboardExtensionProps, IDashboardProps } from "../presentation";
-import { ComponentType } from "react";
+import { Dashboard, IDashboardExtensionProps, IDashboardProps } from "../presentation";
+import React, { ComponentType } from "react";
 
 /**
  * Dashboard Engine encapsulates a particular build of the `Dashboard` component and provides
@@ -16,11 +16,6 @@ export interface IDashboardEngine {
      * Version of the dashboard engine.
      */
     readonly version: string;
-
-    /**
-     * Time when the engine was built.
-     */
-    readonly buildTime: string;
 
     /**
      * Drives initialization of loaded dashboard plugins and their registration logic. During registration,
@@ -38,4 +33,24 @@ export interface IDashboardEngine {
      * Returns Dashboard component provided by this dashboard engine.
      */
     getDashboardComponent(): ComponentType<IDashboardProps>;
+}
+
+/**
+ * A factory function to obtain an instance of {@link IDashboardEngine}. This is the main, well-known entry
+ * point to the Dashboard Engine that is used during both static and dynamic loading of the dashboard engine
+ * instances by the DashboardLoader.
+ *
+ * @alpha
+ */
+export function newDashboardEngine(): IDashboardEngine {
+    return {
+        version: "8.6.0",
+        initializePlugins(_plugins: IDashboardPlugin[]): IDashboardExtensionProps {
+            // TODO: add logic to build extension props, using customizer etc etc
+            return {};
+        },
+        getDashboardComponent(): React.ComponentType<IDashboardProps> {
+            return Dashboard;
+        },
+    };
 }

@@ -2014,7 +2014,6 @@ export interface IDashboardDrillEvent extends IDrillEvent {
 
 // @alpha
 export interface IDashboardEngine {
-    readonly buildTime: string;
     getDashboardComponent(): ComponentType<IDashboardProps>;
     initializePlugins(plugins: IDashboardPlugin[]): IDashboardExtensionProps;
     readonly version: string;
@@ -2750,6 +2749,9 @@ export interface MoveSectionItem extends IDashboardCommand {
 
 // @alpha
 export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
+
+// @alpha
+export function newDashboardEngine(): IDashboardEngine;
 
 // @alpha
 export function newDashboardEventPredicate<T extends DashboardEvents["type"]>(eventType: T, pred?: (event: DashboardEvents & {

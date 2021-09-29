@@ -22825,7 +22825,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-loaders.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-Esynp0HwqD2nOYJ+eveuNdlT5QjS87naPmwl1C1RNqT0+Zq0m7Rzpv/34SgJDn+2izYGRk8lhGdyGhuuegNn2w==, tarball: file:projects/sdk-ui-loaders.tgz}
+    resolution: {integrity: sha512-1HM1MMaqYKW99ynemxVh8o5w5zzni5clRvHNMEYbGaJoobN3cJvEYp3YbORt9miQwq/57zy5NrLlTMIkR56sDw==, tarball: file:projects/sdk-ui-loaders.tgz}
     id: file:projects/sdk-ui-loaders.tgz
     name: '@rush-temp/sdk-ui-loaders'
     version: 0.0.0
@@ -22866,6 +22866,7 @@ packages:
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
       react-intl: 3.12.1_react@16.14.0
+      ts-invariant: 0.7.3
       ts-jest: 26.5.6_jest@26.6.3+typescript@4.0.2
       tslib: 2.2.0
       typescript: 4.0.2

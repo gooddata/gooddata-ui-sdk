@@ -27,4 +27,4 @@ export {
     IDashboardPluginMetadata,
     IDashboardEventHandlers,
 } from "./plugins/plugin";
-export { IDashboardEngine } from "./plugins/engine";
+export { IDashboardEngine, newDashboardEngine } from "./plugins/engine";

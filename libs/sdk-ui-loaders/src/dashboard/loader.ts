@@ -9,6 +9,7 @@ import {
     IDashboardPlugin,
     IDashboardBaseProps,
 } from "@gooddata/sdk-ui-dashboard";
+import { ObjRef } from "../../../sdk-model/src";
 
 /**
  * A result of successful load of a dashboard consists of a React component and constructed props that
@@ -67,6 +68,13 @@ export interface IDashboardLoader {
      * @param clientWorkspace - complex identifier of the client workspace
      */
     fromClientWorkspace(clientWorkspace: IClientWorkspaceIdentifiers): IDashboardLoader;
+
+    /**
+     * Specify dashboard to load.
+     *
+     * @param dashboardRef - reference to an existing dashboard.
+     */
+    forDashboard(dashboardRef: ObjRef): IDashboardLoader;
 
     /**
      * Optionally specify an instance of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} to use for the dashboard component.

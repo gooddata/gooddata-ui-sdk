@@ -41,9 +41,9 @@
         "build-cjs": "tsc -p tsconfig.build.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
         "dev": "bash scripts/build.sh --dev-watch",
-        "test": "jest --watch",
-        "test-once": "jest",
-        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
+        "test": "jest --watch --passWithNoTests",
+        "test-once": "jest --passWithNoTests",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --passWithNoTests --ci --config jest.ci.js",
         "eslint": "eslint $npm_package_config_eslint",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
@@ -54,20 +54,22 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.8",
-        "@gooddata/sdk-ui": "^8.7.0-alpha.8",
+        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.14",
+        "@gooddata/sdk-model": "^8.7.0-alpha.14",
+        "@gooddata/sdk-ui": "^8.7.0-alpha.14",
         "lodash": "^4.17.19",
         "react-intl": "^3.6.0",
+        "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0"
     },
     "peerDependencies": {
         "react": "^16.10.0",
         "react-dom": "^16.10.0",
-        "@gooddata/sdk-ui-dashboard": "^8.7.0-alpha.8"
+        "@gooddata/sdk-ui-dashboard": "^8.7.0-alpha.14"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/sdk-ui-dashboard": "^8.7.0-alpha.8",
+        "@gooddata/sdk-ui-dashboard": "^8.7.0-alpha.14",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.18.4",
         "@types/enzyme-adapter-react-16": "^1.0.5",
