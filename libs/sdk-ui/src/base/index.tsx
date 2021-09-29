@@ -146,11 +146,13 @@ export {
     IClientWorkspaceProviderWithClientAndDataProductProps,
     IClientWorkspaceProviderWithWorkspaceProps,
     ClientWorkspaceProvider,
+    ResolvedClientWorkspaceProvider,
     useClientWorkspaceIdentifiers,
     useClientWorkspaceStatus,
     useClientWorkspaceError,
 } from "./react/ClientWorkspaceContext/ClientWorkspaceContext";
 export { IClientWorkspaceIdentifiers } from "./react/ClientWorkspaceContext/interfaces";
+export { resolveLCMWorkspaceIdentifiers } from "./react/ClientWorkspaceContext/resolveLCMWorkspaceIdentifiers";
 export { usePrevious } from "./react/usePrevious";
 /*
  * Localization exports

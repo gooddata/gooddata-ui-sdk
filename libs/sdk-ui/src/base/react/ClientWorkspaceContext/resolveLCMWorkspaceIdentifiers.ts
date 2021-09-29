@@ -2,18 +2,33 @@
 import { IClientWorkspaceIdentifiers } from "./interfaces";
 
 /**
- * @internal
+ * Resolves LCM workspace identifiers. This function will use the data product and client information
+ * and consult the backend in order to obtain identifier of workspace contains analytics for that
+ * data product & client combination.
+ *
+ * Note that at the moment only the bear Analytical Backend supports the workspace identification using
+ * LCM workspace identifiers. Attempting to use this function for other backends will yield empty
+ * result.
+ *
+ * @param backend - analytical backend to resolve client workspace identifiers on
+ * @param clientWorkspace - client workspace identifiers; must contain data product and client identifier
+ * @returns resolved IClientWorkspaceIdentifiers or an empty object if resolution is not possible
+ * @alpha
  */
 export async function resolveLCMWorkspaceIdentifiers(
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     backend: any,
-    context: IClientWorkspaceIdentifiers,
+    clientWorkspace: IClientWorkspaceIdentifiers,
 ): Promise<IClientWorkspaceIdentifiers> {
     const bootstrapResource = await getBootstrapResource(backend, {
-        clientId: context.client,
-        productId: context.dataProduct,
-        projectId: context.workspace,
+        clientId: clientWorkspace.client,
+        productId: clientWorkspace.dataProduct,
+        projectId: clientWorkspace.workspace,
     });
+
+    if (!bootstrapResource) {
+        return {};
+    }
 
     return getLCMWorkspaceIdentifiersFromBootstrapResource(bootstrapResource);
 }
