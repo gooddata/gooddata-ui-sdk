@@ -513,7 +513,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 export const ScheduledMailDialogRendererIntl = injectIntl(ScheduledMailDialogRendererUI);
 
 export const ScheduledMailDialogRenderer: React.FC<IScheduledMailDialogRendererOwnProps> = (props) => (
-    <InternalIntlWrapper locale={props.locale}>
+    <InternalIntlWrapper locale={props.locale} workspace={props.workspace}>
         <ScheduledMailDialogRendererIntl {...props} />
     </InternalIntlWrapper>
 );

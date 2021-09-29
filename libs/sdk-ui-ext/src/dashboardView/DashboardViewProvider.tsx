@@ -49,7 +49,7 @@ export const DashboardViewProvider: React.FC<IDashboardViewProviderProps> = ({
     execConfig,
 }) => {
     return (
-        <InternalIntlWrapper locale={locale}>
+        <InternalIntlWrapper locale={locale} workspace={settings.workspace}>
             <DashboardViewConfigProvider config={config}>
                 <DashboardViewExecConfigProvider execConfig={execConfig}>
                     <UserWorkspaceSettingsProvider settings={settings}>

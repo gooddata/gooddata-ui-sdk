@@ -1,7 +1,12 @@
 // (C) 2019-2021 GoodData Corporation
 import React, { useMemo } from "react";
 import { IntlProvider, IntlShape, createIntl } from "react-intl";
-import { DefaultLocale, ILocale, pickCorrectInsightWording } from "@gooddata/sdk-ui";
+import {
+    DefaultLocale,
+    ILocale,
+    pickCorrectInsightWording,
+    TranslationsCustomizationProvider,
+} from "@gooddata/sdk-ui";
 
 import { translations } from "./translations";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -26,11 +31,13 @@ export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
 
 interface IInternalIntlWrapperProps {
     locale?: string;
+    workspace?: string;
 }
 
 export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
     locale = DefaultLocale,
     children,
+    workspace,
 }) => {
     /**
      * Because of issues described in the ticket FET-855, we decided to use this workaround.
@@ -39,14 +46,30 @@ export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
      */
     const settings = window.gdSettings as IWorkspaceSettings;
 
-    const messages = useMemo(
-        () => pickCorrectInsightWording(translations[locale], settings),
-        [locale, settings, translations],
-    );
+    if (settings) {
+        const messages = useMemo(
+            () => pickCorrectInsightWording(translations[locale], settings),
+            [locale, settings, translations],
+        );
 
-    return (
-        <IntlProvider locale={locale} messages={messages}>
-            {children}
-        </IntlProvider>
-    );
+        return (
+            <IntlProvider locale={locale} messages={messages}>
+                {children}
+            </IntlProvider>
+        );
+    } else {
+        return (
+            <TranslationsCustomizationProvider
+                translations={translations[locale]}
+                workspace={workspace}
+                render={(modifiedTranslations) => {
+                    return (
+                        <IntlProvider key={locale} locale={locale} messages={modifiedTranslations}>
+                            {children}
+                        </IntlProvider>
+                    );
+                }}
+            />
+        );
+    }
 };
