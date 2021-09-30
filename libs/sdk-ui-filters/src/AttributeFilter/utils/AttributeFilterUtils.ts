@@ -7,6 +7,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IntlShape } from "react-intl";
 import isFunction from "lodash/isFunction";
+import keyBy from "lodash/keyBy";
 import {
     AttributeListItem,
     EmptyListItem,
@@ -49,8 +50,20 @@ export const getNoneTitleIntl = (intl: IntlShape): string => {
     return intl.formatMessage({ id: "gs.filterLabel.none" });
 };
 
-export const getItemsTitles = (selectedFilterOptions: IAttributeElement[]): string => {
-    return selectedFilterOptions.map((selectedOption) => selectedOption.title).join(", ");
+export const getItemsTitles = (
+    selectedFilterOptions: IAttributeElement[],
+    validOptions: IAttributeElement[],
+): string => {
+    const validOptionsByUri = keyBy(validOptions, "uri");
+    const validOptionsByTitle = keyBy(validOptions, "title");
+    return selectedFilterOptions
+        .map(
+            (selectedOption) =>
+                selectedOption.title ??
+                validOptionsByUri[selectedOption.uri]?.title ??
+                validOptionsByTitle[selectedOption.title]?.title,
+        )
+        .join(", ");
 };
 
 export const updateSelectedOptionsWithData = (
@@ -230,13 +243,13 @@ export async function getFilterAttributeTitle(
 export function showAllFilteredMessage(
     isElementsLoading: boolean,
     parentFilters: IAttributeFilter[],
-    items: AttributeListItem[],
+    totalElementsCount: number,
 ): boolean {
     if (!parentFilters) {
         return false;
     }
     const parentFiltersEmpty = parentFilters.every((filter) => filterIsEmpty(filter));
-    return !isElementsLoading && !parentFiltersEmpty && !items?.length;
+    return !isElementsLoading && !parentFiltersEmpty && totalElementsCount === 0;
 }
 
 export function showItemsFilteredMessage(

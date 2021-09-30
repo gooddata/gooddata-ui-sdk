@@ -58,7 +58,7 @@ import {
 import { stringUtils } from "@gooddata/util";
 import invariant from "ts-invariant";
 import stringify from "json-stable-stringify";
-import { IElementQueryResultWithEmptyItems } from "./AttributeDropdown/types";
+import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "./AttributeDropdown/types";
 import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdown/AttributeDropdownAllFilteredOutBody";
 
 /**
@@ -157,9 +157,9 @@ export interface IAttributeFilterButtonOwnProps {
 
 interface IAttributeFilterButtonState {
     selectedFilterOptions: IAttributeElement[];
+    appliedFilterOptions: IAttributeElement[];
     isInverted: boolean;
-    prevSelectedFilterOptions: IAttributeElement[];
-    prevIsInverted: boolean;
+    appliedIsInverted: boolean;
     firstLoad: boolean;
     searchString: string;
     offset: number;
@@ -267,9 +267,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
         return {
             selectedFilterOptions: initialSelection,
+            appliedFilterOptions: initialSelection,
             isInverted: initialIsInverted,
-            prevSelectedFilterOptions: initialSelection,
-            prevIsInverted: initialIsInverted,
+            appliedIsInverted: initialIsInverted,
             firstLoad: true,
             searchString: "",
             offset: 0,
@@ -286,11 +286,11 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         setState((prevValue) => {
             let resultState = prevValue;
 
-            if (!isEqual(prevValue.selectedFilterOptions, initialSelection)) {
+            if (!isEqual(prevValue.appliedFilterOptions, initialSelection)) {
                 resultState = {
                     ...resultState,
                     selectedFilterOptions: initialSelection,
-                    prevSelectedFilterOptions: initialSelection,
+                    appliedFilterOptions: initialSelection,
                 };
             }
 
@@ -298,7 +298,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 resultState = {
                     ...resultState,
                     isInverted: initialIsInverted,
-                    prevIsInverted: initialIsInverted,
                 };
             }
             // if no change returning prevValue effectively skips the setState
@@ -329,20 +328,17 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     state.selectedFilterOptions,
                     items,
                 );
-                const updatedPrevSelectedItems = updateSelectedOptionsWithData(
-                    state.prevSelectedFilterOptions,
-                    items,
-                );
+                const updatedAppliedItems = updateSelectedOptionsWithData(state.appliedFilterOptions, items);
 
                 const validOptions = resolvedParentFilters?.length ? newElements : mergedValidElements;
 
-                setState({
-                    ...state,
+                setState((s) => ({
+                    ...s,
                     selectedFilterOptions: updatedSelectedItems,
-                    prevSelectedFilterOptions: updatedPrevSelectedItems,
+                    appliedFilterOptions: updatedAppliedItems,
                     validOptions: validOptions,
                     firstLoad: false,
-                });
+                }));
             },
         },
         [state.validOptions, state.offset, state.limit, resolvedParentFilters],
@@ -416,21 +412,21 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             if (props.connectToPlaceholder) {
                 setPlaceholderValue(emptyFilter);
             }
-            props.onApply?.(emptyFilter, isNegativeAttributeFilter(currentFilter));
-            setState((state) => {
+            const isInverted = isNegativeAttributeFilter(currentFilter);
+            props.onApply?.(emptyFilter, isInverted);
+            setState((s) => {
                 return {
-                    ...state,
+                    ...s,
                     ...nullStateValues,
                     selectedFilterOptions: [],
-                    prevSelectedFilterOptions: [],
-                    isInverted: true,
-                    prevIsInverted: true,
+                    appliedFilterOptions: [],
+                    isInverted,
                 };
             });
         } else {
-            setState((state) => {
+            setState((s) => {
                 return {
-                    ...state,
+                    ...s,
                     ...nullStateValues,
                 };
             });
@@ -526,7 +522,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     const isAllFiltered = showAllFilteredMessage(
         isElementsLoading(),
         resolvedParentFilters,
-        state.validOptions?.items,
+        originalTotalCount,
     );
 
     const getSubtitle = () => {
@@ -549,7 +545,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         const displayForm = getObjRef(currentFilter, props.identifier);
         if (state.validOptions && !isNil(totalCount) && displayForm) {
             const empty = isEmpty(state.selectedFilterOptions);
-            const equal = isEqual(totalCount, state.selectedFilterOptions?.length);
+            const equal = isEqual(originalTotalCount, state.selectedFilterOptions?.length);
             const getAllPartIntl = getAllTitleIntl(props.intl, state.isInverted, empty, equal);
 
             if (!state.validOptions.totalCount && state.searchString) {
@@ -564,9 +560,10 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 return state.isInverted ? "" : `${getAllPartIntl}`;
             }
 
+            const validElements = state.validOptions.items.filter(isNonEmptyListItem);
             const fullTitle = state.isInverted
-                ? `${getAllPartIntl} ${getItemsTitles(state.selectedFilterOptions)}`
-                : `${getItemsTitles(state.selectedFilterOptions)}`;
+                ? `${getAllPartIntl} ${getItemsTitles(state.selectedFilterOptions, validElements)}`
+                : `${getItemsTitles(state.selectedFilterOptions, validElements)}`;
 
             return `${stringUtils.shortenText(fullTitle, { maxLength: 35 })}`;
         }
@@ -578,10 +575,10 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
      */
     const onSearch = useCallback(
         debounce((query: string) => {
-            setState({
-                ...state,
+            setState((s) => ({
+                ...s,
                 searchString: query,
-            });
+            }));
         }, 500),
         [],
     );
@@ -601,7 +598,15 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         );
     };
 
+    const backupIsInverted = () => {
+        setState((state) => ({
+            ...state,
+            appliedIsInverted: state.isInverted,
+        }));
+    };
+
     const onApply = () => {
+        backupIsInverted();
         const filter = createFilter(currentFilter);
 
         if (props.connectToPlaceholder) {
@@ -614,21 +619,21 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     };
 
     const onSelect = (selectedFilterOptions: IAttributeElement[], isInverted: boolean) => {
-        setState({
-            ...state,
+        setState((s) => ({
+            ...s,
             selectedFilterOptions: selectedFilterOptions,
             isInverted: isInverted,
-        });
+        }));
     };
 
     const onRangeChange = (_searchString: string, from: number, to: number) => {
         // only react to range changes after initial load to properly handle offset shifts on search
         if (state.validOptions) {
-            setState({
-                ...state,
+            setState((s) => ({
+                ...s,
                 offset: from,
                 limit: to - from,
-            });
+            }));
         }
     };
 
@@ -638,7 +643,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const onApplyButtonClicked = () => {
         onApply();
-        backupSelection();
     };
 
     /**
@@ -650,29 +654,23 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         }
     };
 
-    const backupSelection = () => {
-        setState({
-            ...state,
-            prevSelectedFilterOptions: state.selectedFilterOptions,
-            prevIsInverted: state.isInverted,
-        });
-    };
-
     const onDropdownClosed = () => {
-        setState({
-            ...state,
-            selectedFilterOptions: state.prevSelectedFilterOptions,
-            isInverted: state.prevIsInverted,
-            searchString: "",
-            isDropdownOpen: false,
+        setState((s) => {
+            return {
+                ...s,
+                selectedFilterOptions: s.appliedFilterOptions,
+                isInverted: s.appliedIsInverted,
+                searchString: "",
+                isDropdownOpen: false,
+            };
         });
     };
 
     const onDropdownOpen = () => {
-        setState({
-            ...state,
+        setState((s) => ({
+            ...s,
             isDropdownOpen: true,
-        });
+        }));
     };
 
     const onDropdownOpenStateChanged = (isOpen: boolean) => {
@@ -691,7 +689,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         !isParentFilterTitlesLoading() &&
         !parentFilterTitles?.length &&
         !isElementsLoading() &&
-        state.validOptions?.items?.length === 0;
+        originalTotalCount === 0;
 
     function renderDefaultBody(bodyProps: IAttributeDropdownBodyExtendedProps) {
         return isAllFiltered ? (

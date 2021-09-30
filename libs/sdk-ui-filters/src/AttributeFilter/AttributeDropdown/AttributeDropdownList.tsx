@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
-import React from "react";
+import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 import { LegacyInvertableList, LoadingMask } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";
-import { AttributeListItem } from "./types";
+import { AttributeListItem, isNonEmptyListItem } from "./types";
 
 const ITEM_HEIGHT = 28;
 export const MAX_SELECTION_SIZE = 500;
@@ -50,6 +50,11 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
         return <ListError />;
     }
 
+    const getItemKey = useCallback((i: AttributeListItem) => {
+        const isSelectionByUri = !!selectedItems[0]?.uri;
+        return isNonEmptyListItem(i) ? (isSelectionByUri ? i.uri : i.title) : "empty";
+    }, []);
+
     return (
         <LegacyInvertableList
             items={items}
@@ -69,6 +74,7 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
             height={ITEM_HEIGHT * VISIBLE_ITEMS_COUNT}
             onRangeChange={onRangeChange}
             onSelect={onSelect}
+            getItemKey={getItemKey}
         />
     );
 };

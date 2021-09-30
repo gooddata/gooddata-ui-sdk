@@ -191,7 +191,7 @@ export interface IInsightsQueryOptions {
     orderBy?: InsightOrdering;
 
     /**
-     * Optionally filter insights by their author. The value of this property is login of the author.
+     * Optionally filter insights by their author. The value of this property is URI of the author.
      */
     author?: string;
 

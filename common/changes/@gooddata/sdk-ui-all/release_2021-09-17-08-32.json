@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Support for data sampling in the charts and the DashboardView component through execution configuration was added (available only in GoodData.CN for Vertica).",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "letuananh1996@gmail.com"
+}
