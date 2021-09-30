@@ -159,6 +159,7 @@ interface IAttributeFilterButtonState {
     selectedFilterOptions: IAttributeElement[];
     appliedFilterOptions: IAttributeElement[];
     isInverted: boolean;
+    appliedIsInverted: boolean;
     firstLoad: boolean;
     searchString: string;
     offset: number;
@@ -268,6 +269,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             selectedFilterOptions: initialSelection,
             appliedFilterOptions: initialSelection,
             isInverted: initialIsInverted,
+            appliedIsInverted: initialIsInverted,
             firstLoad: true,
             searchString: "",
             offset: 0,
@@ -596,7 +598,15 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         );
     };
 
+    const backupIsInverted = () => {
+        setState((state) => ({
+            ...state,
+            appliedIsInverted: state.isInverted,
+        }));
+    };
+
     const onApply = () => {
+        backupIsInverted();
         const filter = createFilter(currentFilter);
 
         if (props.connectToPlaceholder) {
@@ -649,6 +659,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             return {
                 ...s,
                 selectedFilterOptions: s.appliedFilterOptions,
+                isInverted: s.appliedIsInverted,
                 searchString: "",
                 isDropdownOpen: false,
             };
