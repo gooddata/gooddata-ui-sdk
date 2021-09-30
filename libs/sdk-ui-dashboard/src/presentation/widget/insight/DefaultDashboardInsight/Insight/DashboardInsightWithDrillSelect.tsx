@@ -10,11 +10,18 @@ import { DashboardInsight } from "./DashboardInsight";
  * @internal
  */
 export const DashboardInsightWithDrillSelect = (props: IDashboardInsightProps): JSX.Element => {
-    const { onDrillDown, onDrillToInsight, onDrillToAttributeUrl, onDrillToCustomUrl, onDrillToDashboard } =
-        props;
+    const {
+        widget,
+        onDrillDown,
+        onDrillToInsight,
+        onDrillToAttributeUrl,
+        onDrillToCustomUrl,
+        onDrillToDashboard,
+    } = props;
 
     return (
         <WithDrillSelect
+            widgetRef={widget.ref}
             insight={props.insight}
             onDrillDownSuccess={onDrillDown}
             onDrillToInsightSuccess={onDrillToInsight}

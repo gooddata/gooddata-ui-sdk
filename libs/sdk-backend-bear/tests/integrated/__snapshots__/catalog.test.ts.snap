@@ -617,6 +617,9 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "drillToAttributeLink": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
+        },
         "id": "attr.opportunity.id",
         "production": true,
         "ref": Object {
@@ -3424,6 +3427,9 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "drillToAttributeLink": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
+        },
         "id": "attr.opportunity.id",
         "production": true,
         "ref": Object {
@@ -7349,6 +7355,9 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "drillToAttributeLink": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
+        },
         "id": "attr.opportunity.id",
         "production": true,
         "ref": Object {

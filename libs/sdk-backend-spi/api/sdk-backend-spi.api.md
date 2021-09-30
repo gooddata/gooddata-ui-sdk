@@ -256,6 +256,7 @@ export interface IAttributeElementExpressionToken {
 export interface IAttributeMetadataObject extends IMetadataObject {
     displayForms: IAttributeDisplayFormMetadataObject[];
     drillDownStep?: ObjRef;
+    drillToAttributeLink?: ObjRef;
     // (undocumented)
     type: "attribute";
 }
@@ -1279,6 +1280,7 @@ export interface ISettings {
     enableApproxCount?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;
+    enableClickableAttributeURL?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
@@ -1291,6 +1293,7 @@ export interface ISettings {
     enableKPIDashboardDrillToDashboard?: boolean;
     enableKPIDashboardDrillToInsight?: boolean;
     enableKPIDashboardDrillToURL?: boolean;
+    enableKPIDashboardImplicitDrillDown?: boolean;
     enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;

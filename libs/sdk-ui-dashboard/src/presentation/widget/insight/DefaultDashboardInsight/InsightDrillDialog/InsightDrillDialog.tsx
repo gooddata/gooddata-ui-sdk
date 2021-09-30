@@ -36,7 +36,7 @@ const overlayIgnoredClasses = [
 const DRILL_MODAL_EXECUTION_PSEUDO_REF = idRef("@@GDC_DRILL_MODAL");
 
 export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element => {
-    const { locale, breadcrumbs, insight, onClose, onBackButtonClick, onDrillDown } = props;
+    const { widget, locale, breadcrumbs, insight, onClose, onBackButtonClick, onDrillDown } = props;
 
     const isMobileDevice = useMediaQuery("mobileDevice");
 
@@ -82,7 +82,11 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                     onExportCSV={onExportCSV}
                     isLoading={isLoading}
                 >
-                    <WithDrillSelect insight={props.insight} onDrillDownSuccess={onDrillDown}>
+                    <WithDrillSelect
+                        widgetRef={widget.ref}
+                        insight={props.insight}
+                        onDrillDownSuccess={onDrillDown}
+                    >
                         {({ onDrill }) => {
                             return (
                                 <DrillDialogInsight

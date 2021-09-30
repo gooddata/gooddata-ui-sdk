@@ -29,6 +29,7 @@ import {
 import first from "lodash/first";
 import last from "lodash/last";
 import { DashboardDrillDefinition, IDrillDownDefinition, IDrillToUrlPlaceholder } from "../../types";
+import isEqual from "lodash/isEqual";
 
 interface IImplicitDrillWithPredicates {
     drillDefinition: DrillDefinition | IDrillDownDefinition;
@@ -207,4 +208,20 @@ export function getLocalIdentifierOrDie(ref: ObjRefInScope): string {
     }
 
     throw new Error("Invalid ObjRef invariant expecting LocalIdRef");
+}
+
+export function isDrillConfigured(
+    drill: DashboardDrillDefinition,
+    configuredDrills: DashboardDrillDefinition[],
+): boolean {
+    if (isDrillToLegacyDashboard(drill)) {
+        return false;
+    }
+    return configuredDrills.some((configDrill) => {
+        if (isDrillToLegacyDashboard(configDrill)) {
+            return false;
+        }
+
+        return isEqual(drill, configDrill);
+    });
 }

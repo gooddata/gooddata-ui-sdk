@@ -1,0 +1,21 @@
+{
+    "id": "e4554149-fa9f-4020-87c9-4e5b3fd66864",
+    "name": "gdc_app_projects_mbuumy476p78ybcceiru61hcyr8i8lo8_executionresults_3095589985401798144",
+    "request": {
+        "url": "/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executionResults/3095589985401798144?c=b8a160871ec3e7a2aef48d138c6c8c50&q=eAEtjr0KwjAUhV%2Bl3DoWoihtdBMEcXFRJ3FI01gjuU25TZRQ%2Bu4m0u18nB%2FOCGS%2FA%2BzugMqRlkey%0AvodHMWNyxlmfGtgBaxvJsGFYe49hU5V9xUMtpdLky9VLBuKaG8uZrd%2Bs5Ns1FDB4REEhtiM47YyK%0AcpHtP212ENqE7GqdMNlFGDXExNMSCpcieZHnS5jiG2mNxy69iUCqt%2BTOAtPOrfsvNjD9AOhoQmQ%3D%0A&offset=0&limit=1000&dimensions=1&totals=0",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"executionResult\":{\"data\":[\"87731.3528909953\"],\"paging\":{\"count\":[1],\"offset\":[0],\"total\":[1]},\"headerItems\":[[[{\"measureHeaderItem\":{\"name\":\"$ Avg Daily Total Sales\",\"order\":0}}]]]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "Cache-Control": "max-age=86400,private",
+            "vary": "Accept,origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "e4554149-fa9f-4020-87c9-4e5b3fd66864",
+    "persistent": true,
+    "insertionIndex": 87
+}

@@ -212,3 +212,21 @@ export const selectEnableKPIDashboardDrillToDashboard = createSelector(selectCon
 export const selectEnableKPIDashboardSaveAsNew = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardSaveAsNew ?? false;
 });
+
+/**
+ * Returns whether implicit drill to attributes url enabled
+ *
+ * @alpha
+ */
+export const selectEnableClickableAttributeURL = createSelector(selectConfig, (state) => {
+    return state.settings?.enableClickableAttributeURL ?? false;
+});
+
+/**
+ * Returns whether implicit drill to attributes url enabled
+ *
+ * @alpha
+ */
+export const selectEnableKPIDashboardImplicitDrillDown = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKPIDashboardImplicitDrillDown ?? false;
+});

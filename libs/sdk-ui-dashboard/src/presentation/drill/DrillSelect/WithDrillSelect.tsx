@@ -12,7 +12,7 @@ import {
     OnDrillToInsightSuccess,
 } from "../types";
 import { DrillSelectContext } from "./types";
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import {
     isDrillToCustomUrl,
     isDrillToAttributeUrl,
@@ -26,6 +26,7 @@ import {
     useDashboardSelector,
     selectDisableDefaultDrills,
     DashboardDrillCommand,
+    selectWidgetDrills,
 } from "../../../model";
 import { DashboardDrillDefinition, IDashboardDrillEvent, isDrillDownDefinition } from "../../../types";
 import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils";
@@ -35,6 +36,7 @@ import { useDrills } from "../hooks/useDrills";
  * @internal
  */
 export type WithDrillSelectProps = {
+    widgetRef: ObjRef;
     insight: IInsight;
     onDrillDownSuccess?: OnDrillDownSuccess;
     onDrillToInsightSuccess?: OnDrillToInsightSuccess;
@@ -49,6 +51,7 @@ export type WithDrillSelectProps = {
  * @internal
  */
 export function WithDrillSelect({
+    widgetRef,
     children,
     insight,
     onDrillDownSuccess,
@@ -63,6 +66,7 @@ export function WithDrillSelect({
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const locale = useDashboardSelector(selectLocale);
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills); // TODO: maybe remove?
+    const configuredDrills = useDashboardSelector(selectWidgetDrills(widgetRef));
 
     const drills = useDrills({
         onDrillSuccess: (s) => {
@@ -73,7 +77,7 @@ export function WithDrillSelect({
             const drillEvent = s.payload.drillEvent;
             const context = s.payload.drillContext;
 
-            const filteredByPriority = filterDrillFromAttributeByPriority(drillDefinitions);
+            const filteredByPriority = filterDrillFromAttributeByPriority(drillDefinitions, configuredDrills);
 
             if (filteredByPriority.length === 1) {
                 onSelect(filteredByPriority[0], drillEvent, s.correlationId);

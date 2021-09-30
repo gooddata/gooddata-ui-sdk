@@ -54,6 +54,7 @@ export const DefaultUiSettings: ISettings = {
     enableKPIDashboardDrillFromAttribute: false,
     enableDrilledInsightExport: false,
     enableFilterValuesResolution: false,
+    enableClickableAttributeURL: true,
 
     enableNewNavigationForResponsiveUi: true,
     enableDataSection: true,
