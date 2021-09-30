@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import {
+    FilterContextItem,
     IAttributeDisplayFormMetadataObject,
     IKpiWidget,
     isDashboardAttributeFilter,
@@ -18,7 +19,7 @@ import { IDashboardFilter } from "../../types";
 import { invalidQueryArguments } from "../events/general";
 import { QueryWidgetBrokenAlerts } from "../queries/widgets";
 import { selectAlertByWidgetRef } from "../state/alerts/alertsSelectors";
-import { selectFilterContextFilters } from "../state/filterContext/filterContextSelectors";
+
 import { selectWidgetByRef } from "../state/layout/layoutSelectors";
 import { createQueryService } from "../state/_infra/queryService";
 import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes";
@@ -36,7 +37,7 @@ function* queryService(
     query: QueryWidgetBrokenAlerts,
 ): SagaIterator<IBrokenAlertFilterBasicInfo[]> {
     const {
-        payload: { widgetRef },
+        payload: { widgetRef, dashboardFilters },
         correlationId,
     } = query;
 
@@ -59,10 +60,7 @@ function* queryService(
         alert,
         ctx,
     );
-    const appliedFilters: SagaReturnType<typeof getDashboardFilters> = yield call(
-        getDashboardFilters,
-        kpiWidget,
-    );
+    const appliedFilters = getDashboardFilters(kpiWidget, dashboardFilters);
 
     return getBrokenAlertFiltersBasicInfo(alert, kpiWidget, appliedFilters, displayFormsMap);
 }
@@ -122,10 +120,10 @@ function* resolveDisplayForms(
     return result.resolved;
 }
 
-function* getDashboardFilters(kpiWidget: IKpiWidget): SagaIterator<IDashboardFilter[]> {
-    const dashboardFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
-        selectFilterContextFilters,
-    );
+function getDashboardFilters(
+    kpiWidget: IKpiWidget,
+    dashboardFilters: FilterContextItem[],
+): IDashboardFilter[] {
     const allFilters = filterContextItemsToFiltersForWidget(dashboardFilters, kpiWidget);
 
     return allFilters ?? [];

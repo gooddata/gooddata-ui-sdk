@@ -2806,13 +2806,14 @@ export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFil
     // (undocumented)
     readonly payload: {
         readonly widgetRef: ObjRef;
+        readonly dashboardFilters: FilterContextItem[];
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS";
 }
 
 // @alpha
-export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): QueryWidgetBrokenAlerts;
+export function queryWidgetBrokenAlerts(widgetRef: ObjRef, dashboardFilters: FilterContextItem[], correlationId?: string): QueryWidgetBrokenAlerts;
 
 // @alpha
 export function queryWidgetFilters(widgetRef: ObjRef, widgetFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;

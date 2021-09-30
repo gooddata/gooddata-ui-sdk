@@ -35,11 +35,8 @@ export const useWidgetBrokenAlertsQuery = (
 
     useEffect(() => {
         if (widget.ref) {
-            runBrokenAlertsQuery(widget.ref);
+            runBrokenAlertsQuery(widget.ref, dashboardFilters);
         }
-
-        // queryWidgetBrokenAlerts as a parameter it needs just widget.ref but internally result depends on alert, widget, dashboardFilters
-        // we have to call query every time when this dependency changed to get fresh results
     }, [alert, widget, dashboardFilters]);
 
     return {
