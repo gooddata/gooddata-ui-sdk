@@ -23,10 +23,25 @@ describe("Drilling", () => {
             Navigation.visit("implicit-drill-to-attribute-url");
         });
 
-        it("should fire correct event after clicking on attribute", () => {
+        it("should drill to correct url after clicking on attribute", () => {
             const table = new Table(".s-dash-item");
 
             table.click(0, 0);
+
+            cy.get(".s-attribute-url").should(
+                "have.text",
+                "https://financial-services-gd.com/devops/?page=server_detail&id=27564&name=Aaron%20Clements",
+            );
+        });
+
+        it("should drill to correct url after clicking on attribute in drill modal", () => {
+            const table = new Table(".s-dash-item");
+
+            table.click(0, 1);
+
+            const drillModalTable = new Table(".s-drill-modal-dialog");
+
+            drillModalTable.click(0, 0);
 
             cy.get(".s-attribute-url").should(
                 "have.text",

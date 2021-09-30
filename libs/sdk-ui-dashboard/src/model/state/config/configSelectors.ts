@@ -219,7 +219,7 @@ export const selectEnableKPIDashboardSaveAsNew = createSelector(selectConfig, (s
  * @alpha
  */
 export const selectEnableClickableAttributeURL = createSelector(selectConfig, (state) => {
-    return state.settings?.enableClickableAttributeURL ?? false;
+    return state.settings?.enableClickableAttributeURL ?? true;
 });
 
 /**
