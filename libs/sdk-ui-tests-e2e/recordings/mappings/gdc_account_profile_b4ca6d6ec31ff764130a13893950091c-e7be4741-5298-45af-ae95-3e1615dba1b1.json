@@ -1,0 +1,21 @@
+{
+    "id": "e7be4741-5298-45af-ae95-3e1615dba1b1",
+    "name": "gdc_account_profile_b4ca6d6ec31ff764130a13893950091c",
+    "request": {
+        "url": "/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2021-06-25 11:13:07\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"12345678\",\"login\":\"ivan.mjartan@gooddata.com\",\"lastName\":\"Mjartan\",\"firstName\":\"Ivan\",\"created\":\"2018-08-08 10:09:41\",\"country\":null,\"companyName\":\"GD\",\"email\":\"ivan.mjartan@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"projects\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c/auditEvents\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=utf-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "e7be4741-5298-45af-ae95-3e1615dba1b1",
+    "persistent": true,
+    "insertionIndex": 72
+}
