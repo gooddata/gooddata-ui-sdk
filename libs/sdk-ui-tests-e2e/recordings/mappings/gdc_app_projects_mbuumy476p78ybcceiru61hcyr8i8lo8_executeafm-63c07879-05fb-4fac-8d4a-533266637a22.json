@@ -1,0 +1,28 @@
+{
+    "id": "63c07879-05fb-4fac-8d4a-533266637a22",
+    "name": "gdc_app_projects_mbuumy476p78ybcceiru61hcyr8i8lo8_executeafm",
+    "request": {
+        "url": "/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executeAfm",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"3c2bb0732dc2454189b2d454a3845318\",\"definition\":{\"measure\":{\"item\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\"}}}}],\"filters\":[{\"relativeDateFilter\":{\"dataSet\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2180\"},\"granularity\":\"GDC.time.date\",\"from\":-6,\"to\":0}}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"measureGroup\"]}]}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 201,
+        "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"$ Avg Daily Total Sales\",\"format\":\"$#,##0\",\"localIdentifier\":\"3c2bb0732dc2454189b2d454a3845318\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\",\"identifier\":\"aagJGHg1bxap\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executionResults/8506740941275003904?c=0eb82dc8eef5b321e5995e23d1079f9b&q=eAE1jsEKwjAQRH%2BlbD0Woiht9CYI4sWLehIPaRprJNuUbaKE0n83ET0%2BZoZ5I5B9D7C5AipHWu7J%0A%2Bh5uxQ9TMoLTzijYwCzbvtpsJ7QJ2dk6YbKTMGqAf%2FvQxBJrG8mwYVh7j2FVlX3FQy2l0uTLxUMG%0A4poby5mtn6zk62WcDx5RUIjrCHdLKFy6y4s8n8MUbaQ1HrtkE4FUb8kdBSanS%2Fe1a2D6ANWEQmQ%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "63c07879-05fb-4fac-8d4a-533266637a22",
+    "persistent": true,
+    "insertionIndex": 100
+}

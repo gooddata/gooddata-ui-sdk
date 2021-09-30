@@ -1,0 +1,21 @@
+{
+    "id": "0aa17dce-da93-4197-b3b4-39d5f2907a70",
+    "name": "gdc_internal_projects",
+    "request": {
+        "url": "/gdc/internal/projects/?limit=100&offset=0&userId=b4ca6d6ec31ff764130a13893950091c&projectStates=ENABLED&userState=ENABLED",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":10,\"totalCount\":10},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"demo1\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8\",\"projectUser\":\"/gdc/projects/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"dho-goodsales\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/yj8mvwtg67rdcdog5vj39xyl3k0uv9lq\",\"projectUser\":\"/gdc/projects/yj8mvwtg67rdcdog5vj39xyl3k0uv9lq/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"GoodSales/3 test\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/j1qu7grwl84bb1uwf3cz49tpkakh5fat\",\"projectUser\":\"/gdc/projects/j1qu7grwl84bb1uwf3cz49tpkakh5fat/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Tadaaaa\",\"projectTitle\":\"Ivec project 2\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/lmnivlu3sowt63jvr2mo1wlse5fyv203\",\"projectUser\":\"/gdc/projects/lmnivlu3sowt63jvr2mo1wlse5fyv203/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Ivec project new\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/giqyn2u687ahdk191r3z7qxuxu7b7d7n\",\"projectUser\":\"/gdc/projects/giqyn2u687ahdk191r3z7qxuxu7b7d7n/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"jsc-prod-gs3\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/nbdbiqquclvbim18g0eo98kerdtbfrr1\",\"projectUser\":\"/gdc/projects/nbdbiqquclvbim18g0eo98kerdtbfrr1/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"NewMDProject\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/onao6i5mwezrprltatd6lpihelbeuzxa\",\"projectUser\":\"/gdc/projects/onao6i5mwezrprltatd6lpihelbeuzxa/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"QA LIVE EXAMPLE - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/y2lwt04m1kb3r4mlclsu39tmvf935vy9\",\"projectUser\":\"/gdc/projects/y2lwt04m1kb3r4mlclsu39tmvf935vy9/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL test-do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8\",\"projectUser\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"VLK Test 2019 - development\",\"projectTitle\":\"VLK Test 2019\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/bo2qdmj8bphn27wml9tf56f60ayx70sg\",\"projectUser\":\"/gdc/projects/bo2qdmj8bphn27wml9tf56f60ayx70sg/users/b4ca6d6ec31ff764130a13893950091c\"}}}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "Accept-Encoding,origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "0aa17dce-da93-4197-b3b4-39d5f2907a70",
+    "persistent": true,
+    "insertionIndex": 85
+}

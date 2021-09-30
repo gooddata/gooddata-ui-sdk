@@ -35,7 +35,7 @@ describe("filterDrillFromAttributeByPriority", () => {
         },
     };
 
-    it("should remove duplicities configured once has priority", async () => {
+    it("should remove duplicities configured once has priority", () => {
         const drillDefinitions = [drillToAttributeUrl, drillToAttributeUrl];
         const configuredDrills = [drillToAttributeUrl];
         const expectedResult = [drillToAttributeUrl];
@@ -44,7 +44,7 @@ describe("filterDrillFromAttributeByPriority", () => {
         expect(result).toEqual(expectedResult);
     });
 
-    it("should configured once has priority", async () => {
+    it("should ignore implicit drill and return just configured drill that has priority", () => {
         const drill = cloneDeep(drillToAttributeUrl);
         drill.target.hyperlinkDisplayForm = { uri: "different df than implicit" };
 
@@ -56,7 +56,7 @@ describe("filterDrillFromAttributeByPriority", () => {
         expect(result).toEqual(expectedResult);
     });
 
-    it("should configured once has priority for its origin (Multiple origins drill)", async () => {
+    it("should return configured drill that has priority for each origin (Multiple origins drill)", () => {
         const drill = cloneDeep(drillToAttributeUrl);
         drill.target.hyperlinkDisplayForm = { uri: "different df than implicit" };
 

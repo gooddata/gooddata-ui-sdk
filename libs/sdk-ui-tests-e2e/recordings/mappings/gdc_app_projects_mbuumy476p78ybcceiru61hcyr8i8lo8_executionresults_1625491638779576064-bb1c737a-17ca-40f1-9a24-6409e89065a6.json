@@ -1,0 +1,21 @@
+{
+    "id": "bb1c737a-17ca-40f1-9a24-6409e89065a6",
+    "name": "gdc_app_projects_mbuumy476p78ybcceiru61hcyr8i8lo8_executionresults_1625491638779576064",
+    "request": {
+        "url": "/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executionResults/1625491638779576064?c=5feadabc567d826e151099aad6abe627&q=eAGlk19PwjAUxb%2FKUnhcsg0UBokxJIAhMT4IPBEeuvaK1XZdulbSkH1375gQUV9wb%2F1z%2Bru3p6cH%0AwrR0Ki%2FJeEMUWCPYg9GuINuQGCi0sU9UARmTdW6FlcAJrut9LT%2BQ4wruzVQhtQcIjtqQUIuczFlY%0A1Uf%2BEFhtqawZmy3WyWgJMwkKcrt%2BXqA82nEWKR6pzDnlb4aDYpj6jDEQxg2SV%2BZNKlKp00hnb1Gv%0AF8cRNMfLe8HvsMPSKUWNRxROpMjfJ6eOpvNr%2Bf20d4sULspCUj%2FXRi34tQzsMUHG2Zd%2FEWJShYfL%0Aq7V1LvnlXKsWk7i9UUltFDdCyqne50sLRYu3Q99HiLuM2%2FmKp3Q%2Bakat0HmwtNRCrf%2BK7Y%2BNCrPa%0AfJEm%2Fs34%2BrccpKP%2BtyrdYPKxC6ZUSB%2Bs6o8RLKmEEhUXMX7B5FGLyet2wk4Hw7CtPgE4Zz%2Bs%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"executionResult\":{\"data\":[[\"129.395924170616\"]],\"paging\":{\"count\":[1,1],\"offset\":[0,0],\"total\":[1,1]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"Aaron Clements\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339877\"}}],[{\"attributeHeaderItem\":{\"name\":\"Texas\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2210/elements?id=4436534\"}}]],[[{\"measureHeaderItem\":{\"name\":\"$ Avg Daily Total Sales\",\"order\":0}}]]]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "Cache-Control": "max-age=86400,private",
+            "vary": "Accept,origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "bb1c737a-17ca-40f1-9a24-6409e89065a6",
+    "persistent": true,
+    "insertionIndex": 118
+}
