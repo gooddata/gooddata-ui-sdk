@@ -218,7 +218,14 @@ export class XhrModule {
         if (response.status === 202 && !settings.dontPollOnResult) {
             // poll on new provided url, fallback to the original one
             // (for example validElements returns 303 first with new url which may then return 202 to poll on)
-            let finalUrl = response.url || url;
+            let responseJson;
+            try {
+                responseJson = JSON.parse(responseBody);
+            } catch (err) {
+                responseJson = {};
+            }
+
+            let finalUrl = responseJson.uri ?? response.url ?? url;
 
             const finalSettings = settings;
 
