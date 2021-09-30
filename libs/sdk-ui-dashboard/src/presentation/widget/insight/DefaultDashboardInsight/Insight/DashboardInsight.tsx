@@ -93,6 +93,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
+    const { enableKDWidgetCustomHeight } = useDashboardSelector(selectSettings);
+
     const chartConfig = useDashboardSelector(selectChartConfig);
 
     // Loading and rendering
@@ -153,7 +155,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         insight &&
         insightVisualizationUrl(insight).includes("headline") &&
         clientWidth &&
-        clientWidth < DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH;
+        clientWidth < DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH &&
+        !enableKDWidgetCustomHeight;
 
     // CSS
     const insightPositionStyle: CSSProperties = useMemo(() => {
