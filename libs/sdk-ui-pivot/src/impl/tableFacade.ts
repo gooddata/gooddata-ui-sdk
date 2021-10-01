@@ -634,7 +634,9 @@ export class TableFacade {
     };
 
     private afterOnResizeColumns = (resizingConfig: ColumnResizingConfig) => {
-        this.growToFit(resizingConfig);
+        if (resizingConfig.growToFit) {
+            this.growToFit(resizingConfig);
+        }
         const columnWidths = this.resizedColumnsStore.getColumnWidthsFromMap();
 
         resizingConfig.onColumnResized?.(columnWidths);

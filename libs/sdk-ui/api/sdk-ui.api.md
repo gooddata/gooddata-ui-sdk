@@ -1721,7 +1721,7 @@ export type VisElementType = ChartElementType | HeadlineElementType | TableEleme
 export type VisType = ChartType | HeadlineType | TableType | XirrType;
 
 // @internal (undocumented)
-export type VisualizationEnvironment = "none" | "dashboards";
+export type VisualizationEnvironment = "none" | "dashboards" | "analyticalDesigner";
 
 // @internal (undocumented)
 export function visualizationIsBetaWarning(): void;

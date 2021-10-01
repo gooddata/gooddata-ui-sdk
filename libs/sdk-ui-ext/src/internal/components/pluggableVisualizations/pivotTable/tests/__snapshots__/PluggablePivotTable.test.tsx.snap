@@ -24,6 +24,19 @@ Object {
 }
 `;
 
+exports[`createPivotTableConfig should create valid config with growToFit if feature flag on and environment === analyticalDesigner 1`] = `
+Object {
+  "columnSizing": Object {
+    "growToFit": false,
+  },
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
 exports[`createPivotTableConfig should create valid config with growToFit if feature flag on and environment === dashboards 1`] = `
 Object {
   "columnSizing": Object {

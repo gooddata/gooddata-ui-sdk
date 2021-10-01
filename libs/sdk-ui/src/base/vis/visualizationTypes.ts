@@ -105,7 +105,7 @@ export type VisElementType = ChartElementType | HeadlineElementType | TableEleme
 /**
  * @internal
  */
-export type VisualizationEnvironment = "none" | "dashboards";
+export type VisualizationEnvironment = "none" | "dashboards" | "analyticalDesigner";
 
 /**
  * @internal
