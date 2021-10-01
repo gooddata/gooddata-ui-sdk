@@ -41,7 +41,6 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToFiltersForWidget } from "../../../../converters";
-import { useDashboardComponentsContext } from "../../../dashboardContexts";
 import {
     selectPermissions,
     selectSettings,
@@ -131,9 +130,6 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const currentUser = useDashboardSelector(selectUser);
     const permissions = useDashboardSelector(selectPermissions);
     const settings = useDashboardSelector(selectSettings);
-    const { LoadingComponent } = useDashboardComponentsContext({
-        LoadingComponent: props.LoadingComponent,
-    });
     const drillableItems = useDashboardSelector(selectDrillableItems);
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
 
@@ -200,10 +196,6 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     }, [isLoading, onRequestAsyncRender, onResolveAsyncRender]);
 
     const { kpiAlertDialogClosed, kpiAlertDialogOpened } = useDashboardUserInteraction();
-
-    if (isLoading) {
-        return <LoadingComponent />;
-    }
 
     const kpiResult = !result?.dataView.totalCount[0]
         ? getNoDataKpiResult(result, primaryMeasure)
