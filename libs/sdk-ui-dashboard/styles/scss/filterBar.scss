@@ -33,6 +33,8 @@
     .dash-nav,
     .gd-dash-header-wrapper {
         @media #{$medium-up} {
+            position: fixed;
+            top: 0;
             animation: sticky-intro 1ms;
         }
     }
