@@ -79,7 +79,7 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
 
     renderValue() {
         const { isLoading, error, disableKpiDrillUnderline, enableCompactSize, clientHeight } = this.props;
-        if (isLoading) {
+        if (isLoading || this.isValueUnhandledNull()) {
             return <LoadingDots className={"kpi-value-loading gd-loading-dots-centered"} />;
         }
 
