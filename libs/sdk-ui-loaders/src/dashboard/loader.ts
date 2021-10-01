@@ -9,7 +9,7 @@ import {
     IDashboardPlugin,
     IDashboardBaseProps,
 } from "@gooddata/sdk-ui-dashboard";
-import { ObjRef } from "../../../sdk-model/src";
+import { ObjRef } from "@gooddata/sdk-model";
 
 /**
  * A result of successful load of a dashboard consists of a React component and constructed props that
@@ -39,6 +39,26 @@ export type DashboardLoadResult = {
      */
     plugins: IDashboardPlugin[];
 };
+
+/**
+ * Embedded plugin is implemented, built and linked into the application that loads the dashboard.
+ * There is no specific runtime loading and linkage required for these plugins.
+ *
+ * The lifecycle of embedded plugin is the same as other plugins
+
+ * @alpha
+ */
+export interface IEmbeddedPlugin {
+    /**
+     * Factory function to create an instance of the embedded plugin.
+     */
+    factory: () => IDashboardPlugin;
+
+    /**
+     * Parameters to use.
+     */
+    parameters?: string;
+}
 
 /**
  * @alpha
@@ -87,12 +107,24 @@ export interface IDashboardLoader {
     withBaseProps(props: IDashboardBaseProps): IDashboardLoader;
 
     /**
-     * Optionally specify additional plugins to use on top of any plugins that the dashboard is already
+     * Optionally specify embedded plugins to use on top of any plugins that the dashboard is already
      * configured to use.
+     *
+     * The embedded plugins are implemented, built and linked into the application that loads the dashboard.
+     * There is no specific runtime loading and linkage required for these plugins.
+     *
+     * The lifecycle of the embedded plugins follows the lifecycle of normal plugins that may be linked with
+     * the dashboard; instead of loading the plugin assets, the loader will call embedded plugin's
+     * factory function to obtain an instance of the actual dashboard plugin to use. From this point on,
+     * the lifecycle is the same as for normal plugins:
+     *
+     * 1.  The loader will call the onPluginLoaded, pass any parameters that may be specified for the embedded plugin
+     * 2.  Plugin registration is done same as for normal plugins
+     * 3.  The loader will call onPluginUnloaded when the dashboard containing the plugins gets unmounted
      *
      * @param plugins - extra plugins to use
      */
-    withAdditionalPlugins(...plugins: IDashboardPlugin[]): IDashboardLoader;
+    withEmbeddedPlugins(...plugins: IEmbeddedPlugin[]): IDashboardLoader;
 
     /**
      * Load the dashboard, dashboard engine and plugins that should be on the dashboard. Then performs

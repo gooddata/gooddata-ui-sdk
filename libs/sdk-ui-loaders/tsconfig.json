@@ -17,7 +17,13 @@
         "outDir": "dist",
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
-        "baseUrl": ".."
+        "baseUrl": "..",
+        "paths": {
+            "@gooddata/sdk-ui": ["sdk-ui/src"],
+            "@gooddata/sdk-model": ["sdk-model/src"],
+            "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
+            "@gooddata/sdk-ui-dashboard": ["sdk-ui-dashboard/src"]
+        }
     },
     "compileOnSave": false,
     "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*"]

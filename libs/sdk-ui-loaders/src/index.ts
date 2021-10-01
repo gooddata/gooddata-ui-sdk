@@ -4,4 +4,5 @@
  *
  */
 
-export { IDashboardLoader, DashboardLoadResult } from "./dashboard/loader";
+export { IDashboardLoader, DashboardLoadResult, IEmbeddedPlugin } from "./dashboard/loader";
+export { DashboardLoader } from "./dashboard/dashboardLoader";

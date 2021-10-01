@@ -1,12 +1,12 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardPlugin, IDashboardPluginContext } from "./plugin";
+import { IDashboardPlugin } from "./plugin";
 import { Dashboard, IDashboardExtensionProps, IDashboardProps } from "../presentation";
 import React, { ComponentType } from "react";
-import packageJson from "../../package.json";
 import { DashboardCustomizationBuilder } from "./customizationApis/customizationBuilder";
 import { DefaultDashboardEventHandling } from "./customizationApis/dashboardEventHandling";
 import { pluginDebugStr } from "./customizationApis/pluginUtils";
+import { DashboardContext } from "../model";
 
 /**
  * Dashboard Engine encapsulates a particular build of the `Dashboard` component and provides
@@ -29,13 +29,10 @@ export interface IDashboardEngine {
      * used as input to the dashboard component itself and thus achieve the integration of the plugins
      * into the dashboard.
      *
-     * @param pluginCtx - context in which the plugins operate
+     * @param ctx - dashboard context in which the plugins operate
      * @param plugins - plugins to initialize
      */
-    initializePlugins(
-        pluginCtx: IDashboardPluginContext,
-        plugins: IDashboardPlugin[],
-    ): IDashboardExtensionProps;
+    initializePlugins(ctx: DashboardContext, plugins: IDashboardPlugin[]): IDashboardExtensionProps;
 
     /**
      * Returns Dashboard component provided by this dashboard engine.
@@ -52,11 +49,12 @@ export interface IDashboardEngine {
  */
 export function newDashboardEngine(): IDashboardEngine {
     return {
-        version: packageJson.version,
-        initializePlugins(
-            pluginCtx: IDashboardPluginContext,
-            plugins: IDashboardPlugin[],
-        ): IDashboardExtensionProps {
+        // TODO: this must be filled in automatically .. somehow; the problem with getting the value from
+        //  package.json directly is that the resolveJsonModules tsconfig setting (which we need) leads to
+        //  messing up the dist&esm. tsc will include all model stuff under dist/src instead of putting it
+        //  directly under dist
+        version: "8.7.0",
+        initializePlugins(ctx: DashboardContext, plugins: IDashboardPlugin[]): IDashboardExtensionProps {
             const customizationBuilder = new DashboardCustomizationBuilder();
             const eventRegistration = new DefaultDashboardEventHandling();
 
@@ -71,7 +69,7 @@ export function newDashboardEngine(): IDashboardEngine {
                 customizationBuilder.onBeforePluginRegister(plugin);
 
                 try {
-                    plugin.register(pluginCtx, customizationBuilder, eventRegistration);
+                    plugin.register(ctx, customizationBuilder, eventRegistration);
                     customizationBuilder.onAfterPluginRegister();
                 } catch (e: any) {
                     customizationBuilder.onPluginRegisterError(e);

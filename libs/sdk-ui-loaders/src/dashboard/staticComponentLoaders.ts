@@ -1,7 +1,12 @@
 // (C) 2021 GoodData Corporation
 
 import { IDashboard } from "@gooddata/sdk-backend-spi";
-import { IDashboardEngine, IDashboardPlugin, newDashboardEngine } from "@gooddata/sdk-ui-dashboard";
+import {
+    IDashboardEngine,
+    IDashboardPlugin,
+    newDashboardEngine,
+    DashboardContext,
+} from "@gooddata/sdk-ui-dashboard";
 
 /**
  * This loader expects that a dashboard engine is build-time linked into the application and will create
@@ -25,6 +30,9 @@ export function staticDashboardEngineLoader(_dashboard: IDashboard): Promise<IDa
  * @param _dashboard - ignored
  * @internal
  */
-export function noopDashboardPluginLoader(_dashboard: IDashboard): Promise<IDashboardPlugin[]> {
+export function noopDashboardPluginLoader(
+    _ctx: DashboardContext,
+    _dashboard: IDashboard,
+): Promise<IDashboardPlugin[]> {
     return Promise.resolve([]);
 }

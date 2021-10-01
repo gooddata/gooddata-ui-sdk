@@ -10,7 +10,30 @@ import { IDashboardBaseProps } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardEngine } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardPlugin } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardProps } from '@gooddata/sdk-ui-dashboard';
+import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
+
+// @alpha (undocumented)
+export class DashboardLoader implements IDashboardLoader {
+    // (undocumented)
+    static dev(): DashboardLoader;
+    // (undocumented)
+    forDashboard: (dashboardRef: ObjRef) => IDashboardLoader;
+    // (undocumented)
+    fromClientWorkspace: (clientWorkspace: IClientWorkspaceIdentifiers) => IDashboardLoader;
+    // (undocumented)
+    fromWorkspace: (workspace: string) => IDashboardLoader;
+    // (undocumented)
+    load: () => Promise<DashboardLoadResult>;
+    // (undocumented)
+    onBackend: (backend: IAnalyticalBackend) => IDashboardLoader;
+    // (undocumented)
+    static prod(): DashboardLoader;
+    // (undocumented)
+    withBaseProps: (props: IDashboardBaseProps) => IDashboardLoader;
+    // (undocumented)
+    withEmbeddedPlugins: (...plugins: IEmbeddedPlugin[]) => IDashboardLoader;
+}
 
 // @alpha
 export type DashboardLoadResult = {
@@ -22,12 +45,19 @@ export type DashboardLoadResult = {
 
 // @alpha (undocumented)
 export interface IDashboardLoader {
+    forDashboard(dashboardRef: ObjRef): IDashboardLoader;
     fromClientWorkspace(clientWorkspace: IClientWorkspaceIdentifiers): IDashboardLoader;
     fromWorkspace(workspace: string): IDashboardLoader;
     load(): Promise<DashboardLoadResult>;
     onBackend(backend: IAnalyticalBackend): IDashboardLoader;
-    withAdditionalPlugins(...plugins: IDashboardPlugin[]): IDashboardLoader;
     withBaseProps(props: IDashboardBaseProps): IDashboardLoader;
+    withEmbeddedPlugins(...plugins: IEmbeddedPlugin[]): IDashboardLoader;
+}
+
+// @alpha
+export interface IEmbeddedPlugin {
+    factory: () => IDashboardPlugin;
+    parameters?: string;
 }
 
 // (No @packageDocumentation comment for this package)

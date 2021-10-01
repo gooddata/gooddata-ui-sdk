@@ -1,12 +1,13 @@
 // (C) 2021 GoodData Corporation
 
-import { DashboardLoadResult, IDashboardLoader } from "./loader";
+import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader";
 import {
     IDashboardBaseProps,
     IDashboardEngine,
     IDashboardPlugin,
     IDashboardExtensionProps,
     IDashboardProps,
+    DashboardContext,
 } from "@gooddata/sdk-ui-dashboard";
 import { IAnalyticalBackend, IDashboard } from "@gooddata/sdk-backend-spi";
 import {
@@ -28,7 +29,10 @@ export type DashboardEngineLoader = (dashboard: IDashboard) => Promise<IDashboar
 /**
  * @alpha
  */
-export type DashboardPluginsLoader = (dashboard: IDashboard) => Promise<IDashboardPlugin[]>;
+export type DashboardPluginsLoader = (
+    ctx: DashboardContext,
+    dashboard: IDashboard,
+) => Promise<IDashboardPlugin[]>;
 
 /**
  * @alpha
@@ -52,7 +56,7 @@ export type DashboardLoaderConfig = {
 export class DashboardLoader implements IDashboardLoader {
     private readonly config: DashboardLoaderConfig;
     private baseProps: IDashboardBaseProps = {};
-    private additionalPlugins: IDashboardPlugin[] = [];
+    private embeddedPlugins: IEmbeddedPlugin[] = [];
     private clientWorkspace: IClientWorkspaceIdentifiers | undefined = undefined;
 
     private constructor(config: DashboardLoaderConfig) {
@@ -96,8 +100,8 @@ export class DashboardLoader implements IDashboardLoader {
         return this;
     };
 
-    public withAdditionalPlugins = (...plugins: IDashboardPlugin[]): IDashboardLoader => {
-        this.additionalPlugins = plugins ?? [];
+    public withEmbeddedPlugins = (...plugins: IEmbeddedPlugin[]): IDashboardLoader => {
+        this.embeddedPlugins = plugins ?? [];
 
         return this;
     };
@@ -135,12 +139,20 @@ export class DashboardLoader implements IDashboardLoader {
 
         const dashboard = await backend.workspace(workspace).dashboards().getDashboard(dashboardRef);
         const { engineLoader, pluginLoader } = this.config;
+        const ctx: DashboardContext = {
+            backend,
+            workspace,
+            dashboardRef,
+            dataProductId: clientWorkspace?.dataProduct,
+            clientId: clientWorkspace?.client,
+        };
 
         const engine = await engineLoader(dashboard);
-        const plugins = await pluginLoader(dashboard);
+        const plugins = await pluginLoader(ctx, dashboard);
+        const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
 
-        const allPlugins = [...plugins, ...this.additionalPlugins];
-        const extensionProps: IDashboardExtensionProps = engine.initializePlugins(allPlugins);
+        const allPlugins = [...plugins, ...additionalPlugins];
+        const extensionProps: IDashboardExtensionProps = engine.initializePlugins(ctx, allPlugins);
         const props: IDashboardProps = {
             ...this.baseProps,
             ...extensionProps,
@@ -163,6 +175,18 @@ export class DashboardLoader implements IDashboardLoader {
             props,
         };
     };
+}
+
+function initializeEmbeddedPlugins(
+    ctx: DashboardContext,
+    embeddedPlugins: IEmbeddedPlugin[],
+): IDashboardPlugin[] {
+    return embeddedPlugins.map((embedded) => {
+        const plugin = embedded.factory();
+        plugin.onPluginLoaded?.(ctx, embedded.parameters);
+
+        return plugin;
+    });
 }
 
 function clientWorkspaceDashboardFactory(

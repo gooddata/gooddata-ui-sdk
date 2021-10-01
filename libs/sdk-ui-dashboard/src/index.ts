@@ -17,16 +17,11 @@ export * from "./presentation";
 export * from "./types";
 export * from "./converters";
 
-export {
-    InitialDashboardPluginContext,
-    IDashboardPlugin,
-    IDashboardPluginContext,
-    DashboardPluginV1,
-    IDashboardPluginMetadata,
-} from "./plugins/plugin";
+export { IDashboardPlugin, DashboardPluginV1, IDashboardPluginMetadata } from "./plugins/plugin";
 export { IDashboardEngine, newDashboardEngine } from "./plugins/engine";
 export {
     IDashboardEventHandling,
     IDashboardCustomizer,
     IDashboardInsightCustomizer,
+    DashboardStateChangeCallback,
 } from "./plugins/customizer";
