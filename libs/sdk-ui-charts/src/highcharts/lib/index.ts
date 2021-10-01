@@ -2,6 +2,8 @@
 // Have only one entrypoint to highcharts and drill module
 // Import this reexported variable in other files instead of direct import from highcharts
 import Highcharts from "highcharts";
+import Export from "highcharts/modules/exporting";
+import OfflineExport from "highcharts/modules/offline-exporting";
 
 export type HTMLDOMElement = Highcharts.HTMLDOMElement;
 export type SVGDOMElement = Highcharts.SVGDOMElement;
@@ -19,5 +21,8 @@ export type SeriesBubbleOptions = Highcharts.SeriesBubbleOptions;
 export type SeriesLineOptions = Highcharts.SeriesLineOptions;
 export type TooltipPositionerPointObject = Highcharts.TooltipPositionerPointObject;
 export type PointOptionsObject = Highcharts.PointOptionsObject;
+
+export const HighchartsExport = Export;
+export const HighchartsOfflineExport = OfflineExport;
 
 export default Highcharts;

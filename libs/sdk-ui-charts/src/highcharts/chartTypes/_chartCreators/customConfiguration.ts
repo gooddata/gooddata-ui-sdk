@@ -59,7 +59,16 @@ import {
 import { AXIS_LINE_COLOR } from "../_util/color";
 import { IntlShape } from "react-intl";
 import { ITheme } from "@gooddata/sdk-backend-spi";
-import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib";
+import Highcharts, {
+    HighchartsOptions,
+    XAxisOptions,
+    YAxisOptions,
+    HighchartsExport,
+    HighchartsOfflineExport,
+} from "../../lib";
+
+HighchartsExport(Highcharts);
+HighchartsOfflineExport(Highcharts);
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -1279,6 +1288,23 @@ function getZoomingAndPanningConfiguration(
         : undefined;
 }
 
+function getExportConfiguration(_chartOptions: IChartOptions, _config: any): HighchartsOptions {
+    return {
+        exporting: {
+            fallbackToExportServer: false,
+            buttons: {
+                contextButton: {
+                    className: "highcharts-contextbutton",
+                    menuClassName: "highcharts-contextmenu",
+                    menuItems: ["downloadPNG", "downloadPDF"],
+                    enabled: true,
+                },
+            },
+            enabled: true,
+        },
+    };
+}
+
 export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
     chartConfig?: IChartConfig,
@@ -1306,6 +1332,7 @@ export function getCustomizedConfiguration(
         getAxisLabelConfigurationForDualBarChart,
         getTargetCursorConfigurationForBulletChart,
         getZoomingAndPanningConfiguration,
+        getExportConfiguration,
     ];
     const commonData = configurators.reduce((config: HighchartsOptions, configurator: any) => {
         return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl, theme));

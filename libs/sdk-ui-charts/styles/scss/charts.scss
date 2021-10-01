@@ -95,3 +95,8 @@
 .gd-contrast-label text {
     fill: var(--gd-palette-complementary-9, "#000");
 }
+
+.highcharts-contextbutton,
+.highcharts-contextmenu {
+    display: none;
+}
