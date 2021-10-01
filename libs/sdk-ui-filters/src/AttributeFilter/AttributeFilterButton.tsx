@@ -24,6 +24,7 @@ import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
+import uniqBy from "lodash/uniqBy";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdown/AttributeDropdownList";
 import { mergeElementQueryResults } from "./AttributeDropdown/mergeElementQueryResults";
 import {
@@ -619,9 +620,13 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     };
 
     const onSelect = (selectedFilterOptions: IAttributeElement[], isInverted: boolean) => {
+        const newSelection = state.searchString
+            ? uniqBy([...state.appliedFilterOptions, ...selectedFilterOptions], (option) => option.uri)
+            : selectedFilterOptions;
+
         setState((s) => ({
             ...s,
-            selectedFilterOptions: selectedFilterOptions,
+            selectedFilterOptions: newSelection,
             isInverted: isInverted,
         }));
     };
