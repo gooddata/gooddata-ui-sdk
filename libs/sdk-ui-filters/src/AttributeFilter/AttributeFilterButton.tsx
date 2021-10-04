@@ -179,6 +179,12 @@ const DefaultFilterError: React.FC = injectIntl(({ intl }) => {
     return <div className="gd-message error s-button-error">{text}</div>;
 });
 
+const tooltipAlignPoints = [
+    { align: "tc bc", offset: { x: 0, y: -2 } },
+    { align: "cc tc", offset: { x: 0, y: 10 } },
+    { align: "bl tr", offset: { x: -2, y: -8 } },
+];
+
 const DropdownButton: React.FC<{
     isMobile?: boolean;
     isOpen?: boolean;
@@ -208,12 +214,6 @@ const DropdownButton: React.FC<{
 
         setDisplayItemCount(displayItemCount);
     }, [subtitle]);
-
-    const tooltipAlignPoints = [
-        { align: "tc bc", offset: { x: 0, y: -2 } },
-        { align: "cc tc", offset: { x: 0, y: 10 } },
-        { align: "bl tr", offset: { x: -2, y: -8 } },
-    ];
 
     return (
         <div
