@@ -3,7 +3,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { MoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands";
 import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionMoved } from "../../../events";
-import { selectLayout } from "../../../state/layout/layoutSelectors";
+import { selectLayout } from "../../../store/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import {
     ComplexDashboardIdentifier,

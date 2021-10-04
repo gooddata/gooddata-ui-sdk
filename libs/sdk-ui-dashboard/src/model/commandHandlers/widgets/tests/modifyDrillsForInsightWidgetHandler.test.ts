@@ -9,7 +9,7 @@ import {
     modifyDrillsForInsightWidget,
 } from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetDrillsModified } from "../../../events";
-import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
+import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
 import { DrillOrigin } from "@gooddata/sdk-backend-spi";
 import {

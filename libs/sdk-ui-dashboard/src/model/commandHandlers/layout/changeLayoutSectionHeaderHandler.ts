@@ -3,12 +3,12 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeLayoutSectionHeader } from "../../commands";
 import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout } from "../../state/layout/layoutSelectors";
+import { selectLayout } from "../../store/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import { validateSectionExists } from "./validation/layoutValidation";
 import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
 import merge from "lodash/merge";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { DashboardLayoutSectionHeaderChanged, layoutSectionHeaderChanged } from "../../events/layout";
 
 export function* changeLayoutSectionHeaderHandler(

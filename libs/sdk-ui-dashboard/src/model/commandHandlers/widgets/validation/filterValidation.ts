@@ -6,7 +6,7 @@ import {
     queryDateDatasetsForMeasure,
 } from "../../../queries";
 import { call, SagaReturnType, select } from "redux-saga/effects";
-import { query } from "../../../state/_infra/queryCall";
+import { query } from "../../../store/_infra/queryCall";
 import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { areObjRefsEqual, IInsight, ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -14,7 +14,7 @@ import { DashboardContext } from "../../../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver";
 import isEmpty from "lodash/isEmpty";
-import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
 import {
     ICatalogDateDataset,
     IDashboardAttributeFilter,

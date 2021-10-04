@@ -3,18 +3,18 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { AddSectionItems } from "../../commands";
 import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
+import { selectLayout, selectStash } from "../../store/layout/layoutSelectors";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation";
 import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps";
-import { selectInsightsMap } from "../../state/insights/insightsSelectors";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors";
 import { batchActions } from "redux-batched-actions";
-import { insightsActions } from "../../state/insights";
+import { insightsActions } from "../../store/insights";
 import {
     validateAndNormalizeWidgetItems,
     validateAndResolveItemFilterSettings,

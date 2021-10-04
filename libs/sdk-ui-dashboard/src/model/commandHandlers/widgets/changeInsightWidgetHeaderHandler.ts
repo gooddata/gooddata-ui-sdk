@@ -3,10 +3,10 @@ import { DashboardContext } from "../../types/commonTypes";
 import { ChangeInsightWidgetHeader } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { DashboardInsightWidgetHeaderChanged } from "../../events";
-import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import { validateExistingInsightWidget } from "./validation/widgetValidations";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { insightWidgetHeaderChanged } from "../../events/insight";
 
 export function* changeInsightWidgetHeaderHandler(

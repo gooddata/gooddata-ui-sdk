@@ -6,11 +6,11 @@ import invariant from "ts-invariant";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterSelectionChanged } from "../../../events/filters";
 import { ChangeAttributeFilterSelection } from "../../../commands/filters";
-import { filterContextActions } from "../../../state/filterContext";
+import { filterContextActions } from "../../../store/filterContext";
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
-import { selectFilterContextAttributeFilterByLocalId } from "../../../state/filterContext/filterContextSelectors";
-import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
+import { selectFilterContextAttributeFilterByLocalId } from "../../../store/filterContext/filterContextSelectors";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,

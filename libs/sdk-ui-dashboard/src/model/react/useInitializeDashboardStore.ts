@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { useEffect, useState } from "react";
 import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
-import { createDashboardStore, ReduxedDashboardStore } from "../state/dashboardStore";
+import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore";
 import { InitialLoadCorrelationId, initializeDashboard } from "../commands/dashboard";
 import { objectUtils } from "@gooddata/util";
 import { IDashboardStoreProviderProps } from "./types";

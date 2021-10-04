@@ -4,15 +4,15 @@ import { SagaIterator } from "redux-saga";
 import { MoveAttributeFilter } from "../../../commands/filters";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterMoved } from "../../../events/filters";
-import { filterContextActions } from "../../../state/filterContext";
+import { filterContextActions } from "../../../store/filterContext";
 import {
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilterIndexByLocalId,
     selectFilterContextFilters,
-} from "../../../state/filterContext/filterContextSelectors";
+} from "../../../store/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 
 export function* moveAttributeFilterHandler(
     ctx: DashboardContext,

@@ -4,7 +4,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { ChangeInsightWidgetVisProperties, changeInsightWidgetVisProperties } from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetVisPropertiesChanged } from "../../../events";
-import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
+import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import {

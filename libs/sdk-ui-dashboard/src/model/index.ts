@@ -17,15 +17,15 @@ export {
     DashboardState,
     DashboardSelector,
     DashboardSelectorEvaluator,
-} from "./state/types";
+} from "./store/types";
 
-export { selectDashboardLoading } from "./state/loading/loadingSelectors";
-export { LoadingState } from "./state/loading/loadingState";
-export { selectDashboardSaving, selectIsDashboardSaving } from "./state/saving/savingSelectors";
-export { SavingState } from "./state/saving/savingState";
-export { BackendCapabilitiesState } from "./state/backendCapabilities/backendCapabilitiesState";
-export { selectBackendCapabilities } from "./state/backendCapabilities/backendCapabilitiesSelectors";
-export { ConfigState } from "./state/config/configState";
+export { selectDashboardLoading } from "./store/loading/loadingSelectors";
+export { LoadingState } from "./store/loading/loadingState";
+export { selectDashboardSaving, selectIsDashboardSaving } from "./store/saving/savingSelectors";
+export { SavingState } from "./store/saving/savingState";
+export { BackendCapabilitiesState } from "./store/backendCapabilities/backendCapabilitiesState";
+export { selectBackendCapabilities } from "./store/backendCapabilities/backendCapabilitiesSelectors";
+export { ConfigState } from "./store/config/configState";
 export {
     selectConfig,
     selectLocale,
@@ -48,16 +48,16 @@ export {
     selectEnableKPIDashboardExportPDF,
     selectEnableKPIDashboardDrillToDashboard,
     selectEnableKPIDashboardSaveAsNew,
-} from "./state/config/configSelectors";
-export { PermissionsState } from "./state/permissions/permissionsState";
+} from "./store/config/configSelectors";
+export { PermissionsState } from "./store/permissions/permissionsState";
 export {
     selectPermissions,
     selectCanListUsersInWorkspace,
     selectCanManageWorkspace,
     selectCanExportReport,
     selectCanCreateAnalyticalDashboard,
-} from "./state/permissions/permissionsSelectors";
-export { FilterContextState } from "./state/filterContext/filterContextState";
+} from "./store/permissions/permissionsSelectors";
+export { FilterContextState } from "./store/filterContext/filterContextState";
 export {
     selectFilterContextDefinition,
     selectFilterContextIdentity,
@@ -66,7 +66,7 @@ export {
     selectFilterContextAttributeFilters,
     selectAttributeFilterDisplayFormsMap,
     selectAttributeFilterDisplayForms,
-} from "./state/filterContext/filterContextSelectors";
+} from "./store/filterContext/filterContextSelectors";
 export {
     // Core drills
     selectInsightWidgetImplicitDrillDownsByRef,
@@ -77,10 +77,10 @@ export {
     selectImplicitDrillDownsByAvailableDrillTargets,
     selectDrillableItemsByAvailableDrillTargets,
     IImplicitDrillWithPredicates,
-} from "./state/widgetDrills/widgetDrillSelectors";
+} from "./store/widgetDrills/widgetDrillSelectors";
 
-export { UndoEnhancedState, UndoEntry } from "./state/_infra/undoEnhancer";
-export { LayoutState, LayoutStash } from "./state/layout/layoutState";
+export { UndoEnhancedState, UndoEntry } from "./store/_infra/undoEnhancer";
+export { LayoutState, LayoutStash } from "./store/layout/layoutState";
 export {
     selectLayout,
     selectStash,
@@ -91,8 +91,8 @@ export {
     selectAllKpiWidgets,
     selectIsLayoutEmpty,
     selectWidgetDrills,
-} from "./state/layout/layoutSelectors";
-export { DateFilterConfigState } from "./state/dateFilterConfig/dateFilterConfigState";
+} from "./store/layout/layoutSelectors";
+export { DateFilterConfigState } from "./store/dateFilterConfig/dateFilterConfigState";
 export {
     selectDateFilterConfigOverrides,
     selectEffectiveDateFilterConfig,
@@ -100,14 +100,14 @@ export {
     selectEffectiveDateFilterMode,
     selectEffectiveDateFilterOptions,
     selectEffectiveDateFilterAvailableGranularities,
-} from "./state/dateFilterConfig/dateFilterConfigSelectors";
+} from "./store/dateFilterConfig/dateFilterConfigSelectors";
 export {
     selectInsights,
     selectInsightRefs,
     selectInsightsMap,
     selectInsightByRef,
-} from "./state/insights/insightsSelectors";
-export { CatalogState } from "./state/catalog/catalogState";
+} from "./store/insights/insightsSelectors";
+export { CatalogState } from "./store/catalog/catalogState";
 export {
     selectAttributesWithDrillDown,
     selectCatalogAttributes,
@@ -117,19 +117,19 @@ export {
     selectCatalogMeasures,
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
-} from "./state/catalog/catalogSelectors";
-export { selectDrillableItems } from "./state/drill/drillSelectors";
-export { DrillState } from "./state/drill/drillState";
-export { AlertsState } from "./state/alerts/alertsState";
+} from "./store/catalog/catalogSelectors";
+export { selectDrillableItems } from "./store/drill/drillSelectors";
+export { DrillState } from "./store/drill/drillState";
+export { AlertsState } from "./store/alerts/alertsState";
 export {
     selectAlerts,
     selectAlertByWidgetRef,
     selectAlertsMap,
     selectAlertByRef,
-} from "./state/alerts/alertsSelectors";
-export { UserState } from "./state/user/userState";
-export { selectUser } from "./state/user/userSelectors";
-export { DashboardMetaState, DashboardDescriptor } from "./state/meta/metaState";
+} from "./store/alerts/alertsSelectors";
+export { UserState } from "./store/user/userState";
+export { selectUser } from "./store/user/userSelectors";
+export { DashboardMetaState, DashboardDescriptor } from "./store/meta/metaState";
 export {
     selectDashboardRef,
     selectDashboardUriRef,
@@ -139,27 +139,27 @@ export {
     selectDashboardTags,
     selectDashboardUri,
     selectDashboardId,
-} from "./state/meta/metaSelectors";
+} from "./store/meta/metaSelectors";
 export {
     selectListedDashboards,
     selectListedDashboardsMap,
-} from "./state/listedDashboards/listedDashboardsSelectors";
+} from "./store/listedDashboards/listedDashboardsSelectors";
 export {
     selectDrillTargetsByWidgetRef,
     selectDrillTargets,
-} from "./state/drillTargets/drillTargetsSelectors";
-export { IDrillTargets } from "./state/drillTargets/drillTargetsTypes";
+} from "./store/drillTargets/drillTargetsSelectors";
+export { IDrillTargets } from "./store/drillTargets/drillTargetsTypes";
 export {
     selectExecutionResult,
     selectExecutionResultByRef,
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToXlsxByRef,
     selectIsExecutionResultReadyForExportByRef,
-} from "./state/executionResults/executionResultsSelectors";
-export { IExecutionResultEnvelope } from "./state/executionResults/types";
-export { UiState } from "./state/ui/uiState";
-export { selectIsScheduleEmailDialogOpen, selectIsSaveAsDialogOpen } from "./state/ui/uiSelectors";
-export { uiActions } from "./state/ui";
+} from "./store/executionResults/executionResultsSelectors";
+export { IExecutionResultEnvelope } from "./store/executionResults/types";
+export { UiState } from "./store/ui/uiState";
+export { selectIsScheduleEmailDialogOpen, selectIsSaveAsDialogOpen } from "./store/ui/uiSelectors";
+export { uiActions } from "./store/ui";
 
 export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta";

@@ -7,17 +7,17 @@ import { objRefToString } from "@gooddata/sdk-model";
 import { AddAttributeFilter } from "../../../commands/filters";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterAdded } from "../../../events/filters";
-import { filterContextActions } from "../../../state/filterContext";
+import { filterContextActions } from "../../../store/filterContext";
 import {
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilters,
-} from "../../../state/filterContext/filterContextSelectors";
+} from "../../../store/filterContext/filterContextSelectors";
 
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
 import { PromiseFnReturnType } from "../../../types/sagas";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation";
-import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver";
 import isEmpty from "lodash/isEmpty";
 import { batchActions } from "redux-batched-actions";

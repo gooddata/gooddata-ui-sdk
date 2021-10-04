@@ -4,7 +4,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { ChangeKpiWidgetComparison, changeKpiWidgetComparison, KpiWidgetComparison } from "../../../commands";
 import { DashboardCommandFailed, DashboardKpiWidgetComparisonChanged } from "../../../events";
-import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
+import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { uriRef } from "@gooddata/sdk-model";
 import {
     ComplexDashboardIdentifier,

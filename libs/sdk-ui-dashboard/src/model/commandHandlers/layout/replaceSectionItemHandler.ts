@@ -3,10 +3,10 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { ReplaceSectionItem } from "../../commands";
 import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout, selectStash } from "../../state/layout/layoutSelectors";
+import { selectLayout, selectStash } from "../../store/layout/layoutSelectors";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { validateAndResolveStashedItems } from "./validation/stashValidation";
 import isEmpty from "lodash/isEmpty";
 import { DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout";
@@ -15,7 +15,7 @@ import {
     validateAndResolveItemFilterSettings,
 } from "./validation/itemValidation";
 import { batchActions } from "redux-batched-actions";
-import { insightsActions } from "../../state/insights";
+import { insightsActions } from "../../store/insights";
 import { InternalDashboardItemDefinition } from "../../types/layoutTypes";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
 

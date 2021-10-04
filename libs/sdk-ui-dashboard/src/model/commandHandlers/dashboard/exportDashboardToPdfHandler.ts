@@ -11,9 +11,9 @@ import {
     DashboardExportToPdfResolved,
     dashboardExportToPdfResolved,
 } from "../../events/dashboard";
-import { selectDashboardRef } from "../../state/meta/metaSelectors";
+import { selectDashboardRef } from "../../store/meta/metaSelectors";
 import { invalidArgumentsProvided } from "../../events/general";
-import { selectFilterContextFilters } from "../../state/filterContext/filterContextSelectors";
+import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors";
 
 function exportDashboardToPdf(
     ctx: DashboardContext,

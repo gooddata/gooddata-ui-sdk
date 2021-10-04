@@ -3,10 +3,10 @@ import { DashboardContext } from "../../types/commonTypes";
 import { ChangeKpiWidgetComparison } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { DashboardKpiWidgetComparisonChanged } from "../../events";
-import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import { validateExistingKpiWidget } from "./validation/widgetValidations";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { kpiWidgetComparisonChanged } from "../../events/kpi";
 import { IKpiWidget } from "@gooddata/sdk-backend-spi";
 

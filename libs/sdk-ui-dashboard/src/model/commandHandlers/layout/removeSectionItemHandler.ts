@@ -2,13 +2,13 @@
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { RemoveSectionItem } from "../../commands";
-import { dispatchDashboardEvent } from "../../state/_infra/eventDispatcher";
+import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout } from "../../state/layout/layoutSelectors";
+import { selectLayout } from "../../store/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation";
 import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/layout";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
 
 type RemoveSectionItemContext = {

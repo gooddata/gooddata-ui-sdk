@@ -8,7 +8,7 @@ import {
     drillToInsightRequested,
     drillToInsightResolved,
 } from "../../events/drill";
-import { selectInsightByRef } from "../../state/insights/insightsSelectors";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors";
 import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext/dist/internal/components/pluggableVisualizations/drillDownUtil";
 
 export function* drillToInsightHandler(

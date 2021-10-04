@@ -6,15 +6,15 @@ import invariant from "ts-invariant";
 import { SetAttributeFilterParent } from "../../../commands/filters";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterParentChanged } from "../../../events/filters";
-import { filterContextActions } from "../../../state/filterContext";
+import { filterContextActions } from "../../../store/filterContext";
 import {
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilters,
-} from "../../../state/filterContext/filterContextSelectors";
+} from "../../../store/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { validateAttributeFilterParents } from "./validation/parentFiltersValidation";
 import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 
 export function* setAttributeFilterParentHandler(
     ctx: DashboardContext,

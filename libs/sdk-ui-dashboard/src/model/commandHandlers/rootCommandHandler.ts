@@ -6,7 +6,7 @@ import noop from "lodash/noop";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../commands";
-import { dispatchDashboardEvent } from "../state/_infra/eventDispatcher";
+import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher";
 import {
     commandRejected,
     dashboardCommandStarted,

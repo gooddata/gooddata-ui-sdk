@@ -8,7 +8,7 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { createCachedQueryService } from "../state/_infra/queryService";
+import { createCachedQueryService } from "../store/_infra/queryService";
 import { DashboardContext } from "../types/commonTypes";
 import { MeasureDateDatasets, QueryMeasureDateDatasets } from "../queries/kpis";
 import { call, SagaReturnType, select } from "redux-saga/effects";
@@ -18,7 +18,7 @@ import {
     sanitizeDateDatasetTitle,
     sortByRelevanceAndTitle,
 } from "../../_staging/catalog/dateDatasetOrdering";
-import { selectAllCatalogMeasuresMap } from "../state/catalog/catalogSelectors";
+import { selectAllCatalogMeasuresMap } from "../store/catalog/catalogSelectors";
 import { invalidQueryArguments } from "../events/general";
 
 export const QueryDateDatasetsForMeasureService = createCachedQueryService(

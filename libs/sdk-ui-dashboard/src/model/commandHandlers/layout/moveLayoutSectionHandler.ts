@@ -3,10 +3,10 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { MoveLayoutSection } from "../../commands";
 import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout } from "../../state/layout/layoutSelectors";
+import { selectLayout } from "../../store/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import { validateSectionExists, validateSectionPlacement } from "./validation/layoutValidation";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { DashboardLayoutSectionMoved, layoutSectionMoved } from "../../events/layout";
 import { resolveRelativeIndex } from "../../utils/arrayOps";
 

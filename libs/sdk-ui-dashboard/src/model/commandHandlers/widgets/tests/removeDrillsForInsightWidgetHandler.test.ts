@@ -9,7 +9,7 @@ import {
     removeDrillsForInsightWidget,
 } from "../../../commands";
 import { localIdRef, uriRef } from "@gooddata/sdk-model";
-import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
+import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { DashboardInsightWidgetDrillsRemoved } from "../../../events/insight";
 import { DashboardCommandFailed } from "../../../events";
 import {

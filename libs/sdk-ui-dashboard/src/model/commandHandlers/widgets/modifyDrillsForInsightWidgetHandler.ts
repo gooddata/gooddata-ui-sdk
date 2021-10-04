@@ -5,12 +5,12 @@ import { ModifyDrillsForInsightWidget } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { DashboardInsightWidgetDrillsModified, insightWidgetDrillsModified } from "../../events/insight";
-import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
 import { validateExistingInsightWidget } from "./validation/widgetValidations";
 import { getValidationData, validateDrillDefinition } from "./validation/insightDrillDefinitionValidation";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { batchActions } from "redux-batched-actions";
-import { insightsActions } from "../../state/insights";
+import { insightsActions } from "../../store/insights";
 import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils";
 
 export function* modifyDrillsForInsightWidgetHandler(

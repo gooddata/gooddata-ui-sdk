@@ -11,15 +11,15 @@ import {
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import { createCachedQueryService } from "../state/_infra/queryService";
+import { createCachedQueryService } from "../store/_infra/queryService";
 import { InsightAttributesMeta, QueryInsightAttributesMeta } from "../queries";
-import { selectInsightByRef } from "../state/insights/insightsSelectors";
+import { selectInsightByRef } from "../store/insights/insightsSelectors";
 import { call, select } from "redux-saga/effects";
 import { invalidQueryArguments } from "../events/general";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
-} from "../state/catalog/catalogSelectors";
+} from "../store/catalog/catalogSelectors";
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,

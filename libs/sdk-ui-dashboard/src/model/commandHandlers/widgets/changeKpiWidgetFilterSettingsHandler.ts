@@ -4,10 +4,10 @@ import { DashboardContext } from "../../types/commonTypes";
 import { ChangeKpiWidgetFilterSettings } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { DashboardKpiWidgetFilterSettingsChanged } from "../../events";
-import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateExistingKpiWidget } from "./validation/widgetValidations";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { IDashboardAttributeFilterReference, IKpiWidget, IWidgetBase } from "@gooddata/sdk-backend-spi";
 import { FilterValidators, processFilterOp } from "./common/filterOperations";
 import {

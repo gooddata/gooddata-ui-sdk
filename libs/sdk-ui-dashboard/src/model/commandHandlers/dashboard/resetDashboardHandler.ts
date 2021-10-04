@@ -3,13 +3,13 @@ import { DashboardContext } from "../../types/commonTypes";
 import { ResetDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { DashboardWasReset } from "../../events";
-import { selectPersistedDashboard } from "../../state/meta/metaSelectors";
+import { selectPersistedDashboard } from "../../store/meta/metaSelectors";
 import { call, put, select } from "redux-saga/effects";
 import { dashboardWasReset } from "../../events/dashboard";
-import { selectInsights } from "../../state/insights/insightsSelectors";
-import { selectEffectiveDateFilterConfig } from "../../state/dateFilterConfig/dateFilterConfigSelectors";
+import { selectInsights } from "../../store/insights/insightsSelectors";
+import { selectEffectiveDateFilterConfig } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { selectDateFilterConfig, selectSettings } from "../../state/config/configSelectors";
+import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,

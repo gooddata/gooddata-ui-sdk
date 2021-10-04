@@ -5,8 +5,8 @@ import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../types/commonTypes";
 import { RemoveAlerts } from "../../commands/alerts";
 import { alertsRemoved, DashboardAlertsRemoved } from "../../events/alerts";
-import { alertsActions } from "../../state/alerts";
-import { selectAlertsMap } from "../../state/alerts/alertsSelectors";
+import { alertsActions } from "../../store/alerts";
+import { selectAlertsMap } from "../../store/alerts/alertsSelectors";
 import { validateExistingAlerts } from "./validation/alertsValidation";
 
 function removeAlerts(ctx: DashboardContext, alertRefs: ObjRef[]): Promise<void> {

@@ -3,33 +3,33 @@ import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard";
-import { insightsActions } from "../../../state/insights";
-import { loadingActions } from "../../../state/loading";
+import { insightsActions } from "../../../store/insights";
+import { loadingActions } from "../../../store/loading";
 import { DashboardContext } from "../../../types/commonTypes";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig";
-import { configActions } from "../../../state/config";
+import { configActions } from "../../../store/config";
 import { PromiseFnReturnType } from "../../../types/sagas";
-import { dateFilterConfigActions } from "../../../state/dateFilterConfig";
+import { dateFilterConfigActions } from "../../../store/dateFilterConfig";
 import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs";
 import { resolvePermissions } from "./resolvePermissions";
-import { permissionsActions } from "../../../state/permissions";
+import { permissionsActions } from "../../../store/permissions";
 import { loadCatalog } from "./loadCatalog";
 import { loadDashboardAlerts } from "./loadDashboardAlerts";
-import { catalogActions } from "../../../state/catalog";
-import { alertsActions } from "../../../state/alerts";
+import { catalogActions } from "../../../store/catalog";
+import { alertsActions } from "../../../store/alerts";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { loadUser } from "./loadUser";
-import { userActions } from "../../../state/user";
+import { userActions } from "../../../store/user";
 import { loadDashboardList } from "./loadDashboardList";
-import { listedDashboardsActions } from "../../../state/listedDashboards";
-import { backendCapabilitiesActions } from "../../../state/backendCapabilities";
+import { listedDashboardsActions } from "../../../store/listedDashboards";
+import { backendCapabilitiesActions } from "../../../store/backendCapabilities";
 import { ObjRef } from "@gooddata/sdk-model";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "../common/stateInitializers";
-import { executionResultsActions } from "../../../state/executionResults";
+import { executionResultsActions } from "../../../store/executionResults";
 import { resolveFilterDisplayForms } from "../../../utils/filterResolver";
 import { createDisplayFormMapFromCatalog } from "../../../../_staging/catalog/displayFormMap";
 

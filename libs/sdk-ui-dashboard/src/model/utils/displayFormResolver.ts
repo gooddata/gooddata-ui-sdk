@@ -2,7 +2,7 @@
 import { ObjRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-backend-spi";
-import { selectAllCatalogDisplayFormsMap } from "../state/catalog/catalogSelectors";
+import { selectAllCatalogDisplayFormsMap } from "../store/catalog/catalogSelectors";
 import { call, select } from "redux-saga/effects";
 import { DashboardContext } from "../types/commonTypes";
 import { PromiseFnReturnType } from "../types/sagas";

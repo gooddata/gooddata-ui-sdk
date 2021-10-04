@@ -4,7 +4,7 @@ import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import isString from "lodash/isString";
-import { IExecutionResultEnvelope } from "../state/executionResults/types";
+import { IExecutionResultEnvelope } from "../store/executionResults/types";
 import { IDashboardCommand } from "./base";
 
 /**

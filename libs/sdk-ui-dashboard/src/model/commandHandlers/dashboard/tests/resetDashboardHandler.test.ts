@@ -7,15 +7,15 @@ import {
 } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import { DashboardWasReset } from "../../../events";
 import { addAttributeFilter, addLayoutSection, renameDashboard, resetDashboard } from "../../../commands";
-import { selectLayout } from "../../../state/layout/layoutSelectors";
+import { selectLayout } from "../../../store/layout/layoutSelectors";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
-import { selectDashboardTitle } from "../../../state/meta/metaSelectors";
+import { selectDashboardTitle } from "../../../store/meta/metaSelectors";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDefinition,
-} from "../../../state/filterContext/filterContextSelectors";
+} from "../../../store/filterContext/filterContextSelectors";
 
 const TestTitle = "Renamed Dashboard";
 

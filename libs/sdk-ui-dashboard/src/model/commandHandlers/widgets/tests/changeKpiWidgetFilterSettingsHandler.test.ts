@@ -12,7 +12,7 @@ import {
 } from "../../../commands";
 import { attributeDisplayFormRef, idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed, DashboardKpiWidgetFilterSettingsChanged } from "../../../events";
-import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
+import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { isDashboardAttributeFilterReference } from "@gooddata/sdk-backend-spi";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import {

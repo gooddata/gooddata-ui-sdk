@@ -11,17 +11,17 @@ import {
 } from "../../../_staging/dashboard/dashboardLayout";
 import { SaveDashboardAs } from "../../commands/dashboard";
 import { DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard";
-import { filterContextActions } from "../../state/filterContext";
-import { selectFilterContextDefinition } from "../../state/filterContext/filterContextSelectors";
-import { layoutActions } from "../../state/layout";
-import { selectBasicLayout } from "../../state/layout/layoutSelectors";
-import { metaActions } from "../../state/meta";
-import { selectDashboardDescriptor } from "../../state/meta/metaSelectors";
+import { filterContextActions } from "../../store/filterContext";
+import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors";
+import { layoutActions } from "../../store/layout";
+import { selectBasicLayout } from "../../store/layout/layoutSelectors";
+import { metaActions } from "../../store/meta";
+import { selectDashboardDescriptor } from "../../store/meta/metaSelectors";
 import { DashboardContext } from "../../types/commonTypes";
 import { PromiseFnReturnType } from "../../types/sagas";
-import { selectDateFilterConfigOverrides } from "../../state/dateFilterConfig/dateFilterConfigSelectors";
-import { alertsActions } from "../../state/alerts";
-import { savingActions } from "../../state/saving";
+import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
+import { alertsActions } from "../../store/alerts";
+import { savingActions } from "../../store/saving";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;

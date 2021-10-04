@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 
 import { Identifier, idRef } from "@gooddata/sdk-model";
-import { createDashboardStore, ReduxedDashboardStore } from "../state/dashboardStore";
-import { DashboardState } from "../state/types";
+import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore";
+import { DashboardState } from "../store/types";
 import { DashboardContext } from "../types/commonTypes";
 import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -22,8 +22,8 @@ import {
     initializeDashboard,
 } from "../commands";
 import { IDashboardQuery } from "../queries";
-import { queryEnvelopeWithPromise } from "../state/_infra/queryProcessing";
-import { IDashboardQueryService } from "../state/_infra/queryService";
+import { queryEnvelopeWithPromise } from "../store/_infra/queryProcessing";
+import { IDashboardQueryService } from "../store/_infra/queryService";
 import { newRenderingWorker, RenderingWorkerConfiguration } from "../commandHandlers/render/renderingWorker";
 
 type MonitoredAction = {

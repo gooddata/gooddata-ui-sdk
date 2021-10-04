@@ -4,7 +4,7 @@ import { DashboardContext } from "../types/commonTypes";
 import { IInsight, isInsight, isObjRef, ObjRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
-import { selectInsightsMap } from "../state/insights/insightsSelectors";
+import { selectInsightsMap } from "../store/insights/insightsSelectors";
 import { newInsightMap, ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { PromiseFnReturnType } from "../types/sagas";
 

@@ -2,20 +2,20 @@
 import { DashboardContext } from "../../types/commonTypes";
 import { SaveDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
-import { selectBasicLayout } from "../../state/layout/layoutSelectors";
+import { selectBasicLayout } from "../../store/layout/layoutSelectors";
 import { call, put, SagaReturnType, select, setContext } from "redux-saga/effects";
 import {
     selectFilterContextDefinition,
     selectFilterContextIdentity,
-} from "../../state/filterContext/filterContextSelectors";
-import { selectDashboardDescriptor, selectPersistedDashboard } from "../../state/meta/metaSelectors";
-import { selectDateFilterConfigOverrides } from "../../state/dateFilterConfig/dateFilterConfigSelectors";
+} from "../../store/filterContext/filterContextSelectors";
+import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors";
+import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
 import { IDashboard, IDashboardDefinition, IDashboardObjectIdentity } from "@gooddata/sdk-backend-spi";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { DashboardSaved, dashboardSaved } from "../../events/dashboard";
-import { metaActions } from "../../state/meta";
-import { filterContextActions } from "../../state/filterContext";
+import { metaActions } from "../../store/meta";
+import { filterContextActions } from "../../store/filterContext";
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext";
 import { invariant } from "ts-invariant";
 import {
@@ -23,8 +23,8 @@ import {
     dashboardLayoutWidgetIdentityMap,
 } from "../../../_staging/dashboard/dashboardLayout";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils";
-import { layoutActions } from "../../state/layout";
-import { savingActions } from "../../state/saving";
+import { layoutActions } from "../../store/layout";
+import { savingActions } from "../../store/saving";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;

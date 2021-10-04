@@ -2,7 +2,7 @@
 
 import { commandEnvelopeWithPromise } from "../commandHandlers/rootCommandHandler";
 import { DashboardCommands } from "../commands";
-import { DashboardDispatch } from "../state/types";
+import { DashboardDispatch } from "../store/types";
 
 /**
  * Dispatches a command and returns a promise to wait for it to get resolved.

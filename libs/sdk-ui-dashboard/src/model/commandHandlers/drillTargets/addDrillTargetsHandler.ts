@@ -3,9 +3,9 @@ import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 import { AddDrillTargets } from "../../commands/drillTargets";
 import { DrillTargetsAdded, drillTargetsAdded } from "../../events/drillTargets";
-import { drillTargetsActions } from "../../state/drillTargets";
+import { drillTargetsActions } from "../../store/drillTargets";
 import { DashboardContext } from "../../types/commonTypes";
-import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
 import { validateExistingInsightWidget } from "../widgets/validation/widgetValidations";
 
 export function* addDrillTargetsHandler(

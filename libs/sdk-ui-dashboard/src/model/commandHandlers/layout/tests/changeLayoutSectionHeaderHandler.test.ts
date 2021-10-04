@@ -8,7 +8,7 @@ import {
     DashboardLayoutSectionHeaderChanged,
 } from "../../../events";
 import { ChangeLayoutSectionHeader, changeLayoutSectionHeader, undoLayoutChanges } from "../../../commands";
-import { selectLayout } from "../../../state/layout/layoutSelectors";
+import { selectLayout } from "../../../store/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 
 const FullHeader = { title: "My Section", description: "My Section Description" };

@@ -8,12 +8,12 @@ import partition from "lodash/partition";
 import { RemoveAttributeFilters } from "../../../commands/filters";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterRemoved } from "../../../events/filters";
-import { filterContextActions } from "../../../state/filterContext";
-import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
+import { filterContextActions } from "../../../store/filterContext";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
-import { layoutActions } from "../../../state/layout";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
+import { layoutActions } from "../../../store/layout";
 
 export function* removeAttributeFiltersHandler(
     ctx: DashboardContext,

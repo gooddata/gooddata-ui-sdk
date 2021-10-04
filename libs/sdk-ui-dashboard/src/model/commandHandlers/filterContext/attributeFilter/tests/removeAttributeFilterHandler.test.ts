@@ -4,9 +4,9 @@ import { DashboardTester, preloadedTesterFactory } from "../../../../tests/Dashb
 import {
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
-} from "../../../../state/filterContext/filterContextSelectors";
+} from "../../../../store/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
-import { selectLayout } from "../../../../state/layout/layoutSelectors";
+import { selectLayout } from "../../../../store/layout/layoutSelectors";
 import { IDashboardAttributeFilterReference, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
 

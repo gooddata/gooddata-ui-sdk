@@ -26,14 +26,14 @@ import {
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
 } from "../../../queries";
-import { query } from "../../../state/_infra/queryCall";
+import { query } from "../../../store/_infra/queryCall";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
     validateDatasetForKpiWidgetDateFilter,
 } from "../../widgets/validation/filterValidation";
 import { ItemResolutionResult } from "./stashValidation";
-import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
 
 function normalizeItems(
     items: ExtendedDashboardItem[],
