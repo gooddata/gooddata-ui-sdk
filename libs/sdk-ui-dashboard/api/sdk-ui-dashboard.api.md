@@ -1994,6 +1994,7 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
 // @alpha (undocumented)
 export interface IDashboardCustomizer {
     insightRendering(): IDashboardInsightCustomizer;
+    kpiRendering(): IDashboardKpiCustomizer;
 }
 
 // @alpha
@@ -2111,6 +2112,12 @@ export interface IDashboardInsightProps {
     widget: IInsightWidget;
     // (undocumented)
     workspace?: string;
+}
+
+// @alpha (undocumented)
+export interface IDashboardKpiCustomizer {
+    withCustomDecorator(providerFactory: (next: KpiComponentProvider) => KpiComponentProvider): IDashboardKpiCustomizer;
+    withCustomProvider(provider: KpiComponentProvider): IDashboardKpiCustomizer;
 }
 
 // @alpha

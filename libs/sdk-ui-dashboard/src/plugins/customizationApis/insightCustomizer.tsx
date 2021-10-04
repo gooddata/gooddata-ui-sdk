@@ -125,6 +125,7 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
         );
     };
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
     public addTagProvider = (_tag: string, _provider: InsightComponentProvider): void => {
         // eslint-disable-next-line no-console
         this.logger.warn(
@@ -132,6 +133,7 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
         );
     };
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (_provider: InsightComponentProvider): void => {
         // eslint-disable-next-line no-console
         this.logger.warn(

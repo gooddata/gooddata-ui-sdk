@@ -1,10 +1,11 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardCustomizer, IDashboardInsightCustomizer } from "../customizer";
+import { IDashboardCustomizer, IDashboardInsightCustomizer, IDashboardKpiCustomizer } from "../customizer";
 import { IDashboardExtensionProps } from "../../presentation";
 import { DefaultInsightCustomizer } from "./insightCustomizer";
 import { DashboardCustomizationLogger } from "./customizationLogging";
 import { IDashboardPlugin } from "../plugin";
+import { DefaultKpiCustomizer } from "./kpiCustomizer";
 
 /**
  * @internal
@@ -12,6 +13,7 @@ import { IDashboardPlugin } from "../plugin";
 export class DashboardCustomizationBuilder implements IDashboardCustomizer {
     private readonly logger: DashboardCustomizationLogger = new DashboardCustomizationLogger();
     private readonly insightCustomizer: DefaultInsightCustomizer = new DefaultInsightCustomizer(this.logger);
+    private readonly kpiCustomizer: DefaultKpiCustomizer = new DefaultKpiCustomizer(this.logger);
 
     private sealCustomizers = (): void => {
         this.insightCustomizer.sealCustomizer();
@@ -19,6 +21,10 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
 
     public insightRendering = (): IDashboardInsightCustomizer => {
         return this.insightCustomizer;
+    };
+
+    public kpiRendering = (): IDashboardKpiCustomizer => {
+        return this.kpiCustomizer;
     };
 
     public onBeforePluginRegister = (plugin: IDashboardPlugin): void => {
@@ -43,6 +49,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
     public build = (): IDashboardExtensionProps => {
         const props: IDashboardExtensionProps = {
             InsightComponentProvider: this.insightCustomizer.getInsightProvider(),
+            KpiComponentProvider: this.kpiCustomizer.getKpiProvider(),
         };
 
         this.sealCustomizers();

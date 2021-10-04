@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { InsightComponentProvider } from "../presentation";
+import { InsightComponentProvider, KpiComponentProvider } from "../presentation";
 import {
     DashboardDispatch,
     DashboardEventHandler,
@@ -93,11 +93,84 @@ export interface IDashboardInsightCustomizer {
 /**
  * @alpha
  */
+export interface IDashboardKpiCustomizer {
+    /**
+     * Register a provider for React components to render insights. A provider takes the insight and
+     * widget that it is part of as input and is expected to return a React component that should be
+     * used to render that insight.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the insight
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @remarks see the {@link IDashboardInsightCustomizer.withTag} convenience method to register components for insights
+     *  with particular tags.
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: KpiComponentProvider): IDashboardKpiCustomizer;
+
+    /**
+     * Register a factory for insight decorator providers. Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (insight, widget) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         function MyCustomDecorator() {
+     *              const Decorated = next(insight, widget);
+     *
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated/>
+     *                  <div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * insight is eligible for decoration. If yes, it will add some extra text in front of the insight. Decorator
+     * defers rendering of the actual insight to the underlying provider.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomDecorator(
+        providerFactory: (next: KpiComponentProvider) => KpiComponentProvider,
+    ): IDashboardKpiCustomizer;
+}
+
+/**
+ * @alpha
+ */
 export interface IDashboardCustomizer {
     /**
      * Customize how rendering of insights is done.
      */
     insightRendering(): IDashboardInsightCustomizer;
+
+    /**
+     * Customize how rendering of KPIs is done.
+     */
+    kpiRendering(): IDashboardKpiCustomizer;
 }
 
 /**

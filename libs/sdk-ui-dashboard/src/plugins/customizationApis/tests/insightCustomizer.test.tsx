@@ -10,6 +10,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { mount } from "enzyme";
 import invariant from "ts-invariant";
 import includes from "lodash/includes";
+import { DashboardCustomizationLogger } from "../customizationLogging";
 
 //
 //
@@ -105,7 +106,10 @@ describe("insight customizer", () => {
     let Customizer: DefaultInsightCustomizer;
 
     beforeEach(() => {
-        Customizer = new DefaultInsightCustomizer(DefaultTestComponentProvider);
+        Customizer = new DefaultInsightCustomizer(
+            new DashboardCustomizationLogger(),
+            DefaultTestComponentProvider,
+        );
     });
 
     it("should fallback to rendering default component", () => {

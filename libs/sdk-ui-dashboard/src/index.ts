@@ -23,5 +23,6 @@ export {
     IDashboardEventHandling,
     IDashboardCustomizer,
     IDashboardInsightCustomizer,
+    IDashboardKpiCustomizer,
     DashboardStateChangeCallback,
 } from "./plugins/customizer";
