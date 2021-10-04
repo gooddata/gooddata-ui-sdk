@@ -24,7 +24,7 @@ import {
 ///
 
 /**
- * @internal
+ * @alpha
  */
 export type CustomDashboardInsightComponent = ComponentType;
 

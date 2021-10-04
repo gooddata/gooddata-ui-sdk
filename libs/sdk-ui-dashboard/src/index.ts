@@ -16,3 +16,13 @@ export * from "./model";
 export * from "./presentation";
 export * from "./types";
 export * from "./converters";
+
+export { IDashboardPlugin, DashboardPluginV1, IDashboardPluginMetadata } from "./plugins/plugin";
+export { IDashboardEngine, newDashboardEngine } from "./plugins/engine";
+export {
+    IDashboardEventHandling,
+    IDashboardCustomizer,
+    IDashboardInsightCustomizer,
+    IDashboardKpiCustomizer,
+    DashboardStateChangeCallback,
+} from "./plugins/customizer";

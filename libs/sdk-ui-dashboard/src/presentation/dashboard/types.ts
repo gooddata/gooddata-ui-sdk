@@ -3,10 +3,14 @@ import { ComponentType } from "react";
 import {
     IAnalyticalBackend,
     IDashboardAttributeFilter,
+    IInsightWidget,
+    IKpiWidget,
+    ILegacyKpi,
     ITheme,
+    IWidget,
     IWorkspacePermissions,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import { IErrorProps, ILoadingProps } from "@gooddata/sdk-ui";
 
 import { DashboardConfig, DashboardDispatch, DashboardEventHandler, DashboardState } from "../../model";
@@ -32,57 +36,37 @@ import {
 import { CustomSaveAsDialogComponent } from "../saveAs";
 
 /**
- * @internal
+ * @alpha
  */
-export interface IDashboardProps {
-    /**
-     * Analytical backend from which the dashboard obtains data to render.
-     *
-     * If you do not specify instance of analytical backend using this prop, then you MUST have
-     * BackendProvider up in the component tree.
-     */
-    backend?: IAnalyticalBackend;
+export type WidgetComponentProvider = (widget: IWidget) => CustomDashboardWidgetComponent | undefined;
 
-    /**
-     * Identifier of analytical workspace, from which the dashboard obtains data to render.
-     *
-     * If you do not specify workspace identifier, then you MUST have WorkspaceProvider up in the
-     * component tree.
-     */
-    workspace?: string;
+/**
+ * @alpha
+ */
+export type InsightComponentProvider = (
+    insight: IInsight,
+    widget: IInsightWidget,
+) => CustomDashboardInsightComponent | undefined;
 
-    /**
-     * Reference of the persisted dashboard to render. If you do not specify any reference, then the
-     * component will render a default, empty dashboard.
-     */
-    dashboardRef?: ObjRef;
+/**
+ * @alpha
+ */
+export type KpiComponentProvider = (
+    kpi: ILegacyKpi,
+    widget: IKpiWidget,
+) => CustomDashboardKpiComponent | undefined;
 
-    /**
-     * Configuration that can be used to modify dashboard features, capabilities and behavior.
-     *
-     * If not specified, then the dashboard will retrieve and use the essential configuration from the backend.
-     */
-    config?: DashboardConfig;
+/**
+ * @alpha
+ */
+export type AttributeFilterComponentProvider = (
+    filter: IDashboardAttributeFilter,
+) => CustomDashboardAttributeFilterComponent | undefined;
 
-    /**
-     * Optionally specify permissions to use when determining availability of the different features of
-     * the dashboard component.
-     *
-     * If you do not specify permissions, the dashboard component will load permissions for the currently
-     * logged-in user.
-     */
-    permissions?: IWorkspacePermissions;
-
-    /**
-     * Optionally specify event handlers to register at the dashboard creation time.
-     *
-     * Note: all events that will be emitted during the initial load processing will have the `initialLoad`
-     * correlationId.
-     *
-     * TODO: this needs more attention.
-     */
-    eventHandlers?: DashboardEventHandler[];
-
+/**
+ * @alpha
+ */
+export interface IDashboardCustomComponentProps {
     /**
      * Component to render if embedding fails.
      * This component is also used in all the individual widgets when they have some error occur.
@@ -109,7 +93,12 @@ export interface IDashboardProps {
     LayoutComponent?: CustomDashboardLayoutComponent;
 
     /**
-     * Optionally specify component to use for rendering widgets.
+     * Optionally specify function to obtain custom component to use for rendering a widget.
+     *
+     * -  If not provided, the default implementation {@link DefaultDashboardWidget} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardWidget}.
+     *    This is useful if you want to customize just one particular widget and keep default rendering for the
+     *    other widgets.
      *
      * @remarks
      * To access the necessary props in your component, use the {@link useDashboardWidgetProps} hook.
@@ -131,25 +120,35 @@ export interface IDashboardProps {
      * };
      * ```
      */
-    WidgetComponent?: CustomDashboardWidgetComponent;
+    WidgetComponentProvider?: WidgetComponentProvider;
 
     /**
-     * Optionally specify component to use for rendering insights.
+     * Optionally specify function to obtain custom component to use for rendering an insight.
+     *
+     * -  If not provided, the default implementation {@link DefaultDashboardInsight} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsight}.
+     *    This is useful if you want to customize just one particular insight and keep default rendering for
+     *    the other insights.
      *
      * @remarks
      * To access the necessary props in your component, use the {@link useDashboardInsightProps} hook.
      * To fall back to the default implementation, use the {@link DefaultDashboardInsight} component.
      */
-    InsightComponent?: CustomDashboardInsightComponent;
+    InsightComponentProvider?: InsightComponentProvider;
 
     /**
-     * Optionally specify component to use for rendering KPI's.
+     * Optionally specify function to obtain custom component to use for rendering a KPI.
+     *
+     * -  If not provided, the default implementation {@link DefaultDashboardKpi} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardKpi}.
+     *    This is useful if you want to customize just one particular KPI and keep default rendering for
+     *    the other insights.
      *
      * @remarks
      * To access the necessary props in your component, use the {@link useDashboardKpiProps} hook.
      * To fall back to the default implementation, use the {@link DefaultDashboardKpi} component.
      */
-    KpiComponent?: CustomDashboardKpiComponent;
+    KpiComponentProvider?: KpiComponentProvider;
 
     /**
      * Optionally specify component to use for rendering the scheduled email dialog.
@@ -186,11 +185,6 @@ export interface IDashboardProps {
      * To fall back to the default implementation, use the {@link DefaultMenuButton} component.
      */
     MenuButtonComponent?: CustomMenuButtonComponent;
-
-    /**
-     * Optionally provide custom configuration for the Menu button.
-     */
-    menuButtonConfig?: IMenuButtonConfiguration;
 
     /**
      * Optionally specify component to use for rendering the top bar.
@@ -233,9 +227,7 @@ export interface IDashboardProps {
      * To access the necessary props in your custom component, use the {@link useDashboardAttributeFilterProps} hook.
      * To fall back to the default implementation, use the {@link DefaultDashboardAttributeFilter} component.
      */
-    DashboardAttributeFilterComponentFactory?: (
-        filter: IDashboardAttributeFilter,
-    ) => CustomDashboardAttributeFilterComponent | undefined;
+    DashboardAttributeFilterComponentProvider?: AttributeFilterComponentProvider;
 
     /**
      * Optionally specify component to use for rendering the date filters.
@@ -257,12 +249,22 @@ export interface IDashboardProps {
      * props might get ignored depending on your implementation.
      */
     FilterBarComponent?: CustomFilterBarComponent;
+}
 
+/**
+ * @alpha
+ */
+export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
     /**
-     *
+     * Optionally provide custom configuration for the Menu button.
      */
-    children?: JSX.Element | ((dashboard: any) => JSX.Element);
+    menuButtonConfig?: IMenuButtonConfiguration;
+}
 
+/**
+ * @alpha
+ */
+export interface IDashboardThemingProps {
     /**
      * Theme to use.
      *
@@ -278,9 +280,109 @@ export interface IDashboardProps {
      * the "theme" prop.
      */
     themeModifier?: (theme: ITheme) => ITheme;
+}
+
+/**
+ * Dashboard Component eventing is divided into two major groups:
+ *
+ * 1.  Domain events describing what is happening on the dashboard or with the dashboard
+ * 2.  Infrastructural events required hook into different technical aspects of the dashboard component
+ *     implementation.
+ *
+ * Dashboard Component treats the domain events using the typical pub-sub semantics. It is possible to
+ * register any number of subscribers for the different types of events. Types of events are enumerated and
+ * each event comes with its own type describing the contents. Please see {@link @gooddata/sdk-ui-dashboard#DashboardEventType}
+ * and {@link @gooddata/sdk-ui-dashboard#DashboardEvents} to learn more.
+ *
+ * The infrastructural events are handled using callbacks. There are only few of these infr
+ *
+ * @alpha
+ */
+export interface IDashboardEventing {
+    /**
+     * Optionally specify event handlers to register at the dashboard creation time.
+     *
+     * Note: all events that will be emitted during the initial load processing will have the `initialLoad`
+     * correlationId.
+     */
+    eventHandlers?: DashboardEventHandler[];
+
+    /**
+     * Optionally specify callback that will be called when the dashboard eventing subsystem initializes and
+     * it is possible to register new or unregister existing event handlers.
+     *
+     * Note: these callbacks allow modification of event handlers on an existing, initialized dashboard. See
+     * {@link IDashboardEventing.eventHandlers} prop if you want to register handlers _before_ the dashboard
+     * initialization starts.
+     */
+    onEventingInitialized?: (
+        registerEventHandler: (handler: DashboardEventHandler) => void,
+        unregisterEventHandler: (handler: DashboardEventHandler) => void,
+    ) => void;
 
     /**
      * Optionally specify callback that will be called each time the state changes.
+     *
+     * Note: there is no need to use this in your own React components that you plug into the dashboard. Your
+     * React component code can use {@link @gooddata/sdk-ui-dashboard#useDashboardSelector} and
+     * {@link @gooddata/sdk-ui-dashboard#useDashboardDispatch} hooks instead.
      */
     onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
+}
+
+/**
+ * @alpha
+ */
+export interface IDashboardBaseProps {
+    /**
+     * Analytical backend from which the dashboard obtains data to render.
+     *
+     * If you do not specify instance of analytical backend using this prop, then you MUST have
+     * BackendProvider up in the component tree.
+     */
+    backend?: IAnalyticalBackend;
+
+    /**
+     * Identifier of analytical workspace, from which the dashboard obtains data to render.
+     *
+     * If you do not specify workspace identifier, then you MUST have WorkspaceProvider up in the
+     * component tree.
+     */
+    workspace?: string;
+
+    /**
+     * Reference of the persisted dashboard to render. If you do not specify any reference, then the
+     * component will render a default, empty dashboard.
+     */
+    dashboardRef?: ObjRef;
+
+    /**
+     * Configuration that can be used to modify dashboard features, capabilities and behavior.
+     *
+     * If not specified, then the dashboard will retrieve and use the essential configuration from the backend.
+     */
+    config?: DashboardConfig;
+
+    /**
+     * Optionally specify permissions to use when determining availability of the different features of
+     * the dashboard component.
+     *
+     * If you do not specify permissions, the dashboard component will load permissions for the currently
+     * logged-in user.
+     */
+    permissions?: IWorkspacePermissions;
+}
+
+/**
+ * @alpha
+ */
+export type IDashboardExtensionProps = IDashboardEventing &
+    IDashboardCustomizationProps &
+    IDashboardThemingProps;
+
+/**
+ * @alpha
+ */
+export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
+    children?: JSX.Element | ((dashboard: any) => JSX.Element);
 }

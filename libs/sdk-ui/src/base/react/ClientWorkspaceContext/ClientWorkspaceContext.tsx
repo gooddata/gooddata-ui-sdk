@@ -128,6 +128,37 @@ export const ClientWorkspaceProvider: React.FC<IClientWorkspaceProviderProps> = 
 };
 
 /**
+ * ResolvedClientWorkspaceProvider can be used as a replacement of the {@link WorkspaceProvider}, if you are accessing
+ * workspace in LCM context.
+ *
+ * This provider expects that the client workspace is already resolved on input to the provider. The provider
+ * will then establish a client workspace and workspace contexts so that the resolved information can
+ * be accessed by the children.
+ *
+ * Note: check out the {@link ClientWorkspaceProvider} for version of provider that performs the resolution of
+ * client workspace identifiers to workspace.
+ *
+ * @alpha
+ */
+export const ResolvedClientWorkspaceProvider: React.FC<IClientWorkspaceIdentifiers> = (props) => {
+    invariant(props.dataProduct);
+    invariant(props.client);
+    invariant(props.workspace);
+
+    const context: IClientWorkspaceContext = {
+        status: "success",
+        result: props,
+        error: undefined,
+    };
+
+    return (
+        <ClientWorkspaceContext.Provider value={context}>
+            <WorkspaceProvider workspace={props.workspace}>{props.children}</WorkspaceProvider>
+        </ClientWorkspaceContext.Provider>
+    );
+};
+
+/**
  * Hook to obtain loading status of the {@link ClientWorkspaceProvider} - "success", "error", "loading" or "pending".
  * @alpha
  */

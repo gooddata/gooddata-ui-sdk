@@ -1520,6 +1520,12 @@ export const RawExecute: React_2.ComponentClass<IRawExecuteProps, any>;
 // @beta (undocumented)
 export const removeAllInsightToReportTranslations: (translations: Record<string, string>) => Record<string, string>;
 
+// @alpha
+export const ResolvedClientWorkspaceProvider: React_2.FC<IClientWorkspaceIdentifiers>;
+
+// @alpha
+export function resolveLCMWorkspaceIdentifiers(backend: any, clientWorkspace: IClientWorkspaceIdentifiers): Promise<IClientWorkspaceIdentifiers>;
+
 // @beta
 export function resolveUseCancelablePromisesError<TError>(states: UseCancelablePromiseState<unknown, TError>[]): TError | undefined;
 

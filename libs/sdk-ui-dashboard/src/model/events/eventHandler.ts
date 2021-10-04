@@ -13,6 +13,15 @@ import {
 } from "./general";
 
 /**
+ * @alpha
+ */
+export type DashboardEventHandlerFn<TEvents extends DashboardEvents | ICustomDashboardEvent> = (
+    event: TEvents,
+    dashboardDispatch: Dispatch<AnyAction>,
+    stateSelect: DashboardSelectorEvaluator,
+) => void;
+
+/**
  * Event handlers can be registered for a dashboard. All events that occur during dashboard processing will be
  * evaluated against all registered handlers and if evaluation succeeds they will be dispatched to the handler
  * function.
@@ -35,11 +44,7 @@ export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashb
      * @param dashboardDispatch - the dispatch object of the dashboard store use dot dispatch commands or queries
      * @param stateSelect - callback to execute arbitrary selectors against the dashboard state
      */
-    handler: (
-        event: TEvents,
-        dashboardDispatch: Dispatch<AnyAction>,
-        stateSelect: DashboardSelectorEvaluator,
-    ) => void;
+    handler: DashboardEventHandlerFn<TEvents>;
 };
 
 /**

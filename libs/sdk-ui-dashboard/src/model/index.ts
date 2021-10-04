@@ -214,6 +214,7 @@ export {
     DashboardEventHandler,
     DashboardSelector,
     DashboardSelectorEvaluator,
+    DashboardEventHandlerFn,
     anyEventHandler,
     anyDashboardEventHandler,
     singleEventTypeHandler,
