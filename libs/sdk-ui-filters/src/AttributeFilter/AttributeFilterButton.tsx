@@ -60,6 +60,7 @@ import invariant from "ts-invariant";
 import stringify from "json-stable-stringify";
 import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "./AttributeDropdown/types";
 import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdown/AttributeDropdownAllFilteredOutBody";
+import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
 /**
  * @public
@@ -208,6 +209,12 @@ const DropdownButton: React.FC<{
         setDisplayItemCount(displayItemCount);
     }, [subtitle]);
 
+    const tooltipAlignPoints = [
+        { align: "tc bc", offset: { x: 0, y: -2 } },
+        { align: "cc tc", offset: { x: 0, y: 10 } },
+        { align: "bl tr", offset: { x: -2, y: -8 } },
+    ];
+
     return (
         <div
             className={cx("attribute-filter-button", "s-attribute-filter", {
@@ -216,7 +223,9 @@ const DropdownButton: React.FC<{
             })}
         >
             <div className="button-content">
-                <div className="button-title">{title}</div>
+                <div className="button-title">
+                    <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
+                </div>
                 <div className="button-subtitle">
                     <span className="button-selected-items" ref={subtitleSelectedItemsRef}>
                         {subtitle}
