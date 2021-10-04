@@ -40,8 +40,8 @@ export interface IAttributeDropdownBodyProps {
 
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     onRangeChange: (searchString: string, from: number, to: number) => void;
-    onApplyButtonClicked: () => void;
-    onCloseButtonClicked: () => void;
+    onApplyButtonClicked?: () => void;
+    onCloseButtonClicked?: () => void;
     parentFilterTitles?: string[];
     showItemsFilteredMessage?: boolean;
 }

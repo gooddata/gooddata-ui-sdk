@@ -148,9 +148,9 @@ export interface IAttributeDropdownBodyProps {
     // (undocumented)
     items: AttributeListItem[];
     // (undocumented)
-    onApplyButtonClicked: () => void;
+    onApplyButtonClicked?: () => void;
     // (undocumented)
-    onCloseButtonClicked: () => void;
+    onCloseButtonClicked?: () => void;
     // (undocumented)
     onRangeChange: (searchString: string, from: number, to: number) => void;
     // (undocumented)
