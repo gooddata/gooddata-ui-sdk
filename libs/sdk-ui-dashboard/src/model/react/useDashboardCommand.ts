@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 
 import { DashboardCommands } from "../commands";
 import { DashboardEvents, DashboardEventType } from "../events";
-import { DashboardEventHandler } from "../events/eventHandler";
+import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 
 import { useDashboardEventsContext } from "./DashboardEventsContext";
 import { useDashboardDispatch } from "./DashboardStoreProvider";

@@ -7,7 +7,7 @@ import {
     DashboardLayoutSectionItemReplaced,
 } from "../../../events";
 import { ReplaceSectionItem, replaceSectionItem, undoLayoutChanges } from "../../../commands";
-import { selectLayout, selectStash } from "../../../state/layout/layoutSelectors";
+import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import {
     ComplexDashboardIdentifier,
@@ -20,7 +20,7 @@ import {
     TestKpiPlaceholderItem,
 } from "../../../tests/fixtures/Layout.fixtures";
 import { uriRef } from "@gooddata/sdk-model";
-import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
+import { selectInsightByRef } from "../../../store/insights/insightsSelectors";
 
 describe("replace section item handler", () => {
     describe("for any dashboard", () => {

@@ -2,6 +2,7 @@
 
 import { DashboardStateChangeCallback, IDashboardEventHandling } from "../customizer";
 import {
+    DashboardEventEvalFn,
     DashboardEventHandler,
     DashboardEventHandlerFn,
     DashboardEvents,
@@ -23,11 +24,9 @@ const sameHandlerPredicateFactory = (other: DashboardEventHandler) => {
     };
 };
 
-// TODO: move this type to common location
-type EvalFn = (event: DashboardEvents | ICustomDashboardEvent) => boolean;
-type EvalFnCache = Map<DashboardEventType | string | "*", EvalFn>;
+type EvalFnCache = Map<DashboardEventType | string | "*", DashboardEventEvalFn>;
 
-function createEvalFn(eventType: DashboardEventType | string | "*"): EvalFn {
+function createEvalFn(eventType: DashboardEventType | string | "*"): DashboardEventEvalFn {
     if (eventType === "*") {
         return () => true;
     }
@@ -81,14 +80,14 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
      */
     private unregisterHandler: undefined | ((handler: DashboardEventHandler) => void);
 
-    private getOrCreateEvalFn = (eventType: DashboardEventType | string | "*"): EvalFn => {
+    private getOrCreateEvalFn = (eventType: DashboardEventType | string | "*"): DashboardEventEvalFn => {
         const evalFn = this.evalCache.get(eventType);
 
         if (evalFn !== undefined) {
             return evalFn;
         }
 
-        const newEvalFn: EvalFn = createEvalFn(eventType);
+        const newEvalFn: DashboardEventEvalFn = createEvalFn(eventType);
         this.evalCache.set(eventType, newEvalFn);
 
         return newEvalFn;

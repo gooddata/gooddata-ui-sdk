@@ -8,9 +8,9 @@ import { call, put, SagaReturnType, select, setContext } from "redux-saga/effect
 import { invalidArgumentsProvided } from "../../events/general";
 import { areObjRefsEqual, idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
 import { batchActions } from "redux-batched-actions";
-import { executionResultsActions } from "../../state/executionResults";
-import { selectDateFilterConfig } from "../../state/config/configSelectors";
-import { selectPersistedDashboard } from "../../state/meta/metaSelectors";
+import { executionResultsActions } from "../../store/executionResults";
+import { selectDateFilterConfig } from "../../store/config/configSelectors";
+import { selectPersistedDashboard } from "../../store/meta/metaSelectors";
 import { dashboardDeleted } from "../../events/dashboard";
 import { invariant } from "ts-invariant";
 import { actionsToInitializeNewDashboard } from "./common/stateInitializers";

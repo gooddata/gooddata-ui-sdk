@@ -17,7 +17,7 @@ import {
     selectIsExecutionResultReadyForExportByRef,
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToXlsxByRef,
-} from "../../state/executionResults/executionResultsSelectors";
+} from "../../store/executionResults/executionResultsSelectors";
 import { DashboardContext } from "../../types/commonTypes";
 import { createExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { PromiseFnReturnType } from "../../types/sagas";

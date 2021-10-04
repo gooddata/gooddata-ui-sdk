@@ -19,7 +19,7 @@ import {
 } from "../../../types/widgetTypes";
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
-import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
     return references.filter(isDashboardAttributeFilterReference).map((reference) => reference.displayForm);

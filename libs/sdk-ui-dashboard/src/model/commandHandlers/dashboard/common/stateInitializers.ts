@@ -9,12 +9,12 @@ import {
     ISettings,
     IWidget,
 } from "@gooddata/sdk-backend-spi";
-import { alertsActions } from "../../../state/alerts";
-import { filterContextActions } from "../../../state/filterContext";
+import { alertsActions } from "../../../store/alerts";
+import { filterContextActions } from "../../../store/filterContext";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext";
-import { layoutActions } from "../../../state/layout";
-import { insightsActions } from "../../../state/insights";
-import { metaActions } from "../../../state/meta";
+import { layoutActions } from "../../../store/layout";
+import { insightsActions } from "../../../store/insights";
+import { metaActions } from "../../../store/meta";
 import { IInsight } from "@gooddata/sdk-model";
 import {
     dashboardFilterContextDefinition,

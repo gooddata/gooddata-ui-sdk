@@ -8,8 +8,8 @@ import {
     drillToDashboardRequested,
     drillToDashboardResolved,
 } from "../../events/drill";
-import { selectFilterContextDefinition } from "../../state/filterContext/filterContextSelectors";
-import { selectWidgetByRef } from "../../state/layout/layoutSelectors";
+import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors";
+import { selectWidgetByRef } from "../../store/layout/layoutSelectors";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IDashboardFilter } from "../../../types";
 import { filterContextToFiltersForWidget } from "../../../converters";
@@ -27,7 +27,7 @@ import {
     ObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { selectCatalogDateAttributes } from "../../state/catalog/catalogSelectors";
+import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors";
 import uniqBy from "lodash/uniqBy";
 import flow from "lodash/flow";
 

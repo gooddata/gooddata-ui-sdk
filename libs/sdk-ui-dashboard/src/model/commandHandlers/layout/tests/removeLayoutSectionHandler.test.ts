@@ -11,7 +11,7 @@ import {
     DashboardLayoutSectionRemoved,
 } from "../../../events";
 import { RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands";
-import { selectLayout, selectStash } from "../../../state/layout/layoutSelectors";
+import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 
 describe("remove layout section handler", () => {

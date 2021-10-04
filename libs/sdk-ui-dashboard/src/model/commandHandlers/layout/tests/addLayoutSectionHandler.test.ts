@@ -8,8 +8,8 @@ import {
 } from "../../../tests/fixtures/Dashboard.fixtures";
 import { AddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../commands";
 import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionAdded } from "../../../events";
-import { selectLayout } from "../../../state/layout/layoutSelectors";
-import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
+import { selectLayout } from "../../../store/layout/layoutSelectors";
+import { selectInsightByRef } from "../../../store/insights/insightsSelectors";
 import { uriRef } from "@gooddata/sdk-model";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import {

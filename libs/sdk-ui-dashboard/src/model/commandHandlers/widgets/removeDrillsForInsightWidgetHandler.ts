@@ -5,10 +5,10 @@ import { RemoveDrillsForInsightWidget } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 import { DashboardInsightWidgetDrillsRemoved, insightWidgetDrillsRemoved } from "../../events/insight";
-import { selectWidgetsMap } from "../../state/layout/layoutSelectors";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
 import { validateExistingInsightWidget } from "./validation/widgetValidations";
 import { validateRemoveDrillsByOrigins } from "./validation/removeDrillsSelectorValidation";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils";
 
 export function* removeDrillsForInsightWidgetHandler(

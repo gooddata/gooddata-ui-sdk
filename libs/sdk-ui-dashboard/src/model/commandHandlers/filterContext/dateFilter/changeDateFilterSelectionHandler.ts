@@ -3,11 +3,11 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { ChangeDateFilterSelection } from "../../../commands/filters";
 import { dateFilterChanged } from "../../../events/filters";
-import { filterContextActions } from "../../../state/filterContext";
-import { selectFilterContextDateFilter } from "../../../state/filterContext/filterContextSelectors";
+import { filterContextActions } from "../../../store/filterContext";
+import { selectFilterContextDateFilter } from "../../../store/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../state/_infra/eventDispatcher";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,

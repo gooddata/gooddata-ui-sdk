@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-model";
 import { ICatalogDateDataset, isCatalogDateDataset } from "@gooddata/sdk-backend-spi";
 
-import { createCachedQueryService } from "../state/_infra/queryService";
+import { createCachedQueryService } from "../store/_infra/queryService";
 import { DashboardContext } from "../types/commonTypes";
 import {
     InsightAttributesMeta,
@@ -27,14 +27,14 @@ import {
     queryInsightAttributesMeta,
     QueryInsightDateDatasets,
 } from "../queries";
-import { selectInsightByRef } from "../state/insights/insightsSelectors";
+import { selectInsightByRef } from "../store/insights/insightsSelectors";
 import { invalidQueryArguments } from "../events/general";
-import { query } from "../state/_infra/queryCall";
+import { query } from "../store/_infra/queryCall";
 import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogDateAttributeToDataset,
-} from "../state/catalog/catalogSelectors";
-import { selectBackendCapabilities } from "../state/backendCapabilities/backendCapabilitiesSelectors";
+} from "../store/catalog/catalogSelectors";
+import { selectBackendCapabilities } from "../store/backendCapabilities/backendCapabilitiesSelectors";
 import { newDisplayFormMap, ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { CatalogDateAttributeWithDataset } from "../../_staging/catalog/dateAttributeWithDatasetMap";
 import {

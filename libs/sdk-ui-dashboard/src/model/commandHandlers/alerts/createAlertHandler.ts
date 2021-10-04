@@ -6,7 +6,7 @@ import { IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi"
 import { CreateAlert } from "../../commands/alerts";
 import { alertCreated, DashboardAlertCreated } from "../../events/alerts";
 import { PromiseFnReturnType } from "../../types/sagas";
-import { alertsActions } from "../../state/alerts";
+import { alertsActions } from "../../store/alerts";
 
 function createAlert(
     ctx: DashboardContext,

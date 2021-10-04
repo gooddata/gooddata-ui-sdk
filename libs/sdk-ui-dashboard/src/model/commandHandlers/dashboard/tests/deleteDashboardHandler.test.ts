@@ -5,12 +5,12 @@ import { deleteDashboard } from "../../../commands";
 import { DashboardCommandFailed, DashboardDeleted } from "../../../events";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { selectLayout } from "../../../state/layout/layoutSelectors";
-import { selectDashboardTitle, selectPersistedDashboard } from "../../../state/meta/metaSelectors";
-import { selectEffectiveDateFilterConfig } from "../../../state/dateFilterConfig/dateFilterConfigSelectors";
-import { selectDateFilterConfig } from "../../../state/config/configSelectors";
-import { selectFilterContextAttributeFilters } from "../../../state/filterContext/filterContextSelectors";
-import { selectInsights } from "../../../state/insights/insightsSelectors";
+import { selectLayout } from "../../../store/layout/layoutSelectors";
+import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors";
+import { selectEffectiveDateFilterConfig } from "../../../store/dateFilterConfig/dateFilterConfigSelectors";
+import { selectDateFilterConfig } from "../../../store/config/configSelectors";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
+import { selectInsights } from "../../../store/insights/insightsSelectors";
 
 describe("delete dashboard handler", () => {
     describe("for unsaved dashboard", () => {

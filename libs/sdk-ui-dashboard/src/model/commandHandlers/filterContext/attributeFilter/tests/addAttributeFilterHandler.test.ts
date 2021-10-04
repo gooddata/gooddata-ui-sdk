@@ -5,7 +5,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../../tests/Dashb
 import {
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
-} from "../../../../state/filterContext/filterContextSelectors";
+} from "../../../../store/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
 import { uriRef } from "@gooddata/sdk-model";

@@ -6,7 +6,7 @@ import {
     isStashedDashboardItemsId,
     StashedDashboardItemsId,
 } from "../../../types/layoutTypes";
-import { LayoutStash } from "../../../state/layout/layoutState";
+import { LayoutStash } from "../../../store/layout/layoutState";
 
 export type ItemResolutionResult = {
     /**

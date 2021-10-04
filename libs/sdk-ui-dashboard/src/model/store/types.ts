@@ -73,3 +73,16 @@ export type DashboardState = {
  * @alpha
  */
 export type DashboardDispatch = Dispatch<AnyAction>;
+
+/**
+ * Function that selects part of the Dashboard state.
+ *
+ * @alpha
+ */
+export type DashboardSelector<TResult> = (state: DashboardState) => TResult;
+/**
+ * Type of a callback that evaluates a selector function against the Dashboard state
+ *
+ * @alpha
+ */
+export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<TResult>) => TResult;

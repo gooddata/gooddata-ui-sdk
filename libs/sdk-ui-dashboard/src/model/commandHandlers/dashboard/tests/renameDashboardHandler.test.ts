@@ -3,7 +3,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import { renameDashboard } from "../../../commands";
 import { DashboardRenamed } from "../../../events";
-import { selectDashboardTitle, selectPersistedDashboard } from "../../../state/meta/metaSelectors";
+import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 
 describe("rename dashboard handler", () => {

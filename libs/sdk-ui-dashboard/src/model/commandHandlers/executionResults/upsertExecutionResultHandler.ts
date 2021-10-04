@@ -3,7 +3,7 @@ import { SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
 import { UpsertExecutionResult } from "../../commands";
-import { executionResultsActions } from "../../state/executionResults";
+import { executionResultsActions } from "../../store/executionResults";
 
 export function* upsertExecutionResultHandler(
     _ctx: DashboardContext,

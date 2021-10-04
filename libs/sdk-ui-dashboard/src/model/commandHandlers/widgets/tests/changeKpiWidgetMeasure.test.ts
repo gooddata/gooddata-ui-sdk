@@ -5,7 +5,7 @@ import { ChangeKpiWidgetMeasure, changeKpiWidgetMeasure, initializeDashboard } f
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { measureItem, uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed, DashboardKpiWidgetMeasureChanged } from "../../../events";
-import { selectWidgetByRef } from "../../../state/layout/layoutSelectors";
+import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,

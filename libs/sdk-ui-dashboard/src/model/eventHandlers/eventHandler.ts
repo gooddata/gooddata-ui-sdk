@@ -1,16 +1,16 @@
 // (C) 2021 GoodData Corporation
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 import { IDashboardCommand } from "../commands";
-
-import { DashboardState } from "../state/types";
-import { ICustomDashboardEvent, isDashboardEvent } from "./base";
-import { DashboardEvents } from "./index";
+import { DashboardSelectorEvaluator } from "../store/types";
 import {
-    DashboardCommandStarted,
+    ICustomDashboardEvent,
+    isDashboardEvent,
     DashboardCommandFailed,
+    DashboardCommandStarted,
     isDashboardCommandFailed,
     isDashboardCommandStarted,
-} from "./general";
+    DashboardEvents,
+} from "../events";
 
 /**
  * @alpha
@@ -20,6 +20,11 @@ export type DashboardEventHandlerFn<TEvents extends DashboardEvents | ICustomDas
     dashboardDispatch: Dispatch<AnyAction>,
     stateSelect: DashboardSelectorEvaluator,
 ) => void;
+
+/**
+ * @alpha
+ */
+export type DashboardEventEvalFn = (event: DashboardEvents | ICustomDashboardEvent) => boolean;
 
 /**
  * Event handlers can be registered for a dashboard. All events that occur during dashboard processing will be
@@ -35,7 +40,7 @@ export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashb
      *
      * @param event - dashboard or custom event
      */
-    eval: (event: DashboardEvents | ICustomDashboardEvent) => boolean;
+    eval: DashboardEventEvalFn;
 
     /**
      * The actual event handling function. This will be called if the eval function returns true.
@@ -123,17 +128,3 @@ export function commandFailedEventHandler<TCommand extends IDashboardCommand>(
         handler,
     };
 }
-
-/**
- * Function that selects part of the Dashboard state.
- *
- * @alpha
- */
-export type DashboardSelector<TResult> = (state: DashboardState) => TResult;
-
-/**
- * Type of a callback that evaluates a selector function against the Dashboard state
- *
- * @alpha
- */
-export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<TResult>) => TResult;

@@ -9,7 +9,7 @@ import {
     TestCorrelation,
 } from "../../../tests/fixtures/BrokenFilterAlerts.fixtures";
 import { DashboardAlertsRemoved } from "../../../events/alerts";
-import { selectAlertByRef } from "../../../state/alerts/alertsSelectors";
+import { selectAlertByRef } from "../../../store/alerts/alertsSelectors";
 import { DashboardCommandFailed } from "../../../events";
 
 describe("removeDrillsForInsightWidgetHandler", () => {

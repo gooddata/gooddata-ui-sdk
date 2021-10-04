@@ -4,7 +4,7 @@ import { AddDrillTargets, addDrillTargets } from "../../../commands/drillTargets
 import { DrillTargetsAdded } from "../../../events/drillTargets";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { selectDrillTargetsByWidgetRef } from "../../../state/drillTargets/drillTargetsSelectors";
+import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drillTargetsSelectors";
 import { uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed } from "../../../events";
 import {

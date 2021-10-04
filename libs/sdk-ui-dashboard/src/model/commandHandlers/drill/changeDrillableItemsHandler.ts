@@ -4,7 +4,7 @@ import { put } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeDrillableItems } from "../../commands/drill";
 import { DashboardDrillableItemsChanged, drillableItemsChanged } from "../../events/drill";
-import { drillActions } from "../../state/drill";
+import { drillActions } from "../../store/drill";
 
 export function* changeDrillableItemsHandler(
     ctx: DashboardContext,

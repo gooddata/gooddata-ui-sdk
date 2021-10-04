@@ -4,8 +4,8 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
 import { DashboardCommandFailed, DashboardLayoutSectionItemsAdded } from "../../../events";
 import { addSectionItem, AddSectionItems, undoLayoutChanges } from "../../../commands";
-import { selectLayout } from "../../../state/layout/layoutSelectors";
-import { selectInsightByRef } from "../../../state/insights/insightsSelectors";
+import { selectLayout } from "../../../store/layout/layoutSelectors";
+import { selectInsightByRef } from "../../../store/insights/insightsSelectors";
 import { uriRef } from "@gooddata/sdk-model";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import { ComplexDashboardIdentifier } from "../../../tests/fixtures/ComplexDashboard.fixtures";

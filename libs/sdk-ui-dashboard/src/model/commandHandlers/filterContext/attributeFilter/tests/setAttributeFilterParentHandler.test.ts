@@ -2,7 +2,7 @@
 import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 import { setAttributeFilterParent } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
-import { selectFilterContextAttributeFilters } from "../../../../state/filterContext/filterContextSelectors";
+import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 

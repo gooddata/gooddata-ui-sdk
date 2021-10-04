@@ -2,7 +2,7 @@
 import { DashboardContext } from "../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import { all, call, SagaReturnType, select } from "redux-saga/effects";
-import { createQueryService } from "../state/_infra/queryService";
+import { createQueryService } from "../store/_infra/queryService";
 import {
     areObjRefsEqual,
     filterObjRef,
@@ -26,8 +26,8 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { QueryWidgetFilters } from "../queries/widgets";
-import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../state/layout/layoutSelectors";
-import { selectInsightByRef } from "../state/insights/insightsSelectors";
+import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../store/layout/layoutSelectors";
+import { selectInsightByRef } from "../store/insights/insightsSelectors";
 import { invalidQueryArguments } from "../events/general";
 import {
     IAttributeDisplayFormMetadataObject,
@@ -40,8 +40,8 @@ import {
     IWidget,
 } from "@gooddata/sdk-backend-spi";
 import compact from "lodash/compact";
-import { selectAllCatalogDateDatasetsMap } from "../state/catalog/catalogSelectors";
-import { DashboardState } from "../state/types";
+import { selectAllCatalogDateDatasetsMap } from "../store/catalog/catalogSelectors";
+import { DashboardState } from "../store/types";
 import { resolveDisplayFormMetadata } from "../utils/displayFormResolver";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";

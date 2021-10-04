@@ -10,7 +10,7 @@ import {
 } from "../../events/drill";
 import { resolveDrillToAttributeUrl } from "./resolveDrillToAttributeUrl";
 import { getDrillToUrlFiltersWithResolvedValues } from "./getDrillToUrlFilters";
-import { selectWidgetDrills } from "../../state/layout/layoutSelectors";
+import { selectWidgetDrills } from "../../store/layout/layoutSelectors";
 import { isDrillConfigured } from "../../../_staging/drills/drillingUtils";
 
 export function* drillToAttributeUrlHandler(

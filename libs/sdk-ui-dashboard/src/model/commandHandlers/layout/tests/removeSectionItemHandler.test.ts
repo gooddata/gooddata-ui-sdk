@@ -13,7 +13,7 @@ import {
     removeSectionItem,
     undoLayoutChanges,
 } from "../../../commands/layout";
-import { selectLayout, selectStash } from "../../../state/layout/layoutSelectors";
+import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import {
     ComplexDashboardIdentifier,

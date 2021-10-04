@@ -4,7 +4,7 @@ import { RenameDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { DashboardRenamed } from "../../events";
 import { dashboardRenamed } from "../../events/dashboard";
-import { metaActions } from "../../state/meta";
+import { metaActions } from "../../store/meta";
 import { put } from "redux-saga/effects";
 
 export function* renameDashboardHandler(

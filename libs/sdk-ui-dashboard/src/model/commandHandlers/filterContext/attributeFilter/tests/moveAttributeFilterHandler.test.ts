@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { moveAttributeFilter } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
-import { selectFilterContextAttributeFilters } from "../../../../state/filterContext/filterContextSelectors";
+import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
 

@@ -6,7 +6,7 @@ import {
     getDefaultMiddleware,
     Middleware,
 } from "@reduxjs/toolkit";
-import createSagaMiddleware, { Saga, Task, SagaIterator } from "redux-saga";
+import createSagaMiddleware, { Saga, SagaIterator, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
 import { v4 as uuidv4 } from "uuid";
 import { filterContextSliceReducer } from "./filterContext";
@@ -15,7 +15,7 @@ import { loadingSliceReducer } from "./loading";
 import { savingSliceReducer } from "./saving";
 import { insightsSliceReducer } from "./insights";
 import { createRootEventEmitter } from "./_infra/rootEventEmitter";
-import { DashboardEventHandler } from "../events/eventHandler";
+import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 import { rootCommandHandler } from "../commandHandlers/rootCommandHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { configSliceReducer } from "./config";
@@ -26,7 +26,7 @@ import { catalogSliceReducer } from "./catalog";
 import { fork, getContext } from "redux-saga/effects";
 import { userSliceReducer } from "./user";
 import { metaSliceReducer } from "./meta";
-import { DashboardState, DashboardDispatch } from "./types";
+import { DashboardDispatch, DashboardState } from "./types";
 import { AllQueryServices } from "../queryServices";
 import { executionResultsSliceReducer } from "./executionResults";
 import { createQueryProcessingModule } from "./_infra/queryProcessing";
@@ -42,12 +42,10 @@ import { DashboardCommandType } from "../commands";
 import { drillSliceReducer } from "./drill";
 import { uiSliceReducer } from "./ui";
 
-const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType)[] = [
+const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType | string)[] = [
     "GDC.DASH/EVT.COMMAND.STARTED",
     "GDC.DASH/EVT.COMMAND.FAILED",
     "GDC.DASH/EVT.QUERY.FAILED",
-    "@@QUERY.ENVELOPE" as any,
-    "@@COMMAND.ENVELOPE" as any,
     "@@GDC.DASH.SAVE_NEW",
     "@@GDC.DASH.SAVE_EXISTING",
     "@@GDC.DASH.SAVE_AS",
@@ -250,7 +248,12 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
              */
             serializableCheck: {
                 ignoredActions: nonSerializableEventsAndCommands,
-                ignoredActionPaths: ["ctx"],
+                // events always include ctx
+                // various envelopes allow sending explicit callback functions that will be fired
+                // while processing the enveloped content. the envelopes are purely for 'promisification' of
+                // command or query handling, they have no impact on state; it is no problem that they
+                // have such content in them
+                ignoredActionPaths: ["ctx", "onStart", "onError", "onSuccess"],
                 ignoredPaths: [
                     // drillableItems can be functions (header predicates)
                     "drill.drillableItems",

@@ -3,11 +3,11 @@ import { all, call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeFilterContextSelection } from "../../commands";
-import { filterContextActions } from "../../state/filterContext";
+import { filterContextActions } from "../../store/filterContext";
 import {
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilters,
-} from "../../state/filterContext/filterContextSelectors";
+} from "../../store/filterContext/filterContextSelectors";
 import { batchActions } from "redux-batched-actions";
 import { AnyAction } from "@reduxjs/toolkit";
 import { dispatchFilterContextChanged } from "./common";
@@ -33,7 +33,7 @@ import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
-import { IUpsertDateFilterPayload } from "../../state/filterContext/filterContextReducers";
+import { IUpsertDateFilterPayload } from "../../store/filterContext/filterContextReducers";
 import { IDashboardFilter } from "../../../types";
 
 function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterContextItem {

@@ -7,7 +7,7 @@ import { DashboardContext } from "../../types/commonTypes";
 import { UpdateAlert } from "../../commands/alerts";
 import { alertUpdated, DashboardAlertUpdated } from "../../events/alerts";
 import { PromiseFnReturnType } from "../../types/sagas";
-import { alertsActions } from "../../state/alerts";
+import { alertsActions } from "../../store/alerts";
 
 function updateAlert(ctx: DashboardContext, alert: IWidgetAlert): Promise<IWidgetAlert> {
     const { backend, workspace } = ctx;

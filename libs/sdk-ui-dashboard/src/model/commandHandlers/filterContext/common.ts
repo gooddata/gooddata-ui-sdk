@@ -5,9 +5,9 @@ import { select } from "redux-saga/effects";
 
 import { IDashboardCommand } from "../../commands/base";
 import { filterContextChanged } from "../../events/filters";
-import { selectFilterContextDefinition } from "../../state/filterContext/filterContextSelectors";
+import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../types/commonTypes";
-import { dispatchDashboardEvent } from "../../state/_infra/eventDispatcher";
+import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,

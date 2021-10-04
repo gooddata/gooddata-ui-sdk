@@ -3,7 +3,7 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { MoveSectionItem } from "../../commands";
 import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout } from "../../state/layout/layoutSelectors";
+import { selectLayout } from "../../store/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import {
     validateItemExists,
@@ -11,7 +11,7 @@ import {
     validateSectionExists,
     validateSectionPlacement,
 } from "./validation/layoutValidation";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout";
 import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps";
 

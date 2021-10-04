@@ -3,9 +3,9 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { DashboardLayoutCommands, UndoLayoutChanges, UndoPointSelector } from "../../commands";
 import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout, selectUndoableLayoutCommands } from "../../state/layout/layoutSelectors";
+import { selectLayout, selectUndoableLayoutCommands } from "../../store/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
-import { layoutActions } from "../../state/layout";
+import { layoutActions } from "../../store/layout";
 import { DashboardLayoutChanged, layoutChanged } from "../../events/layout";
 
 /*

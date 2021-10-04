@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
-import { DashboardEventHandler } from "../events/eventHandler";
+import { DashboardEventHandler } from "./eventHandler";
 import { changeFilterContextSelection } from "../commands";
 import { newDashboardEventPredicate, DashboardDrillToDashboardResolved } from "../events";
 

@@ -2,17 +2,17 @@
 import { initializeDashboard } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { DashboardInitialized } from "../../../../events";
-import { selectConfig } from "../../../../state/config/configSelectors";
-import { selectPermissions } from "../../../../state/permissions/permissionsSelectors";
+import { selectConfig } from "../../../../store/config/configSelectors";
+import { selectPermissions } from "../../../../store/permissions/permissionsSelectors";
 import { EmptyDashboardIdentifier, TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
-import { selectLayout } from "../../../../state/layout/layoutSelectors";
+import { selectLayout } from "../../../../store/layout/layoutSelectors";
 import {
     selectAttributeFilterDisplayForms,
     selectFilterContextDefinition,
     selectFilterContextIdentity,
-} from "../../../../state/filterContext/filterContextSelectors";
+} from "../../../../store/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
-import { selectPersistedDashboard } from "../../../../state/meta/metaSelectors";
+import { selectPersistedDashboard } from "../../../../store/meta/metaSelectors";
 
 describe("initialize dashboard handler", () => {
     it("should emit event when dashboard successfully loaded", async () => {

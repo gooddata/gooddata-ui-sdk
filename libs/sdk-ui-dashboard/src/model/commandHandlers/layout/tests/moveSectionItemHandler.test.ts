@@ -8,7 +8,7 @@ import {
     DashboardLayoutChanged,
     DashboardLayoutSectionItemMoved,
 } from "../../../events";
-import { selectLayout } from "../../../state/layout/layoutSelectors";
+import { selectLayout } from "../../../store/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import {
     ComplexDashboardIdentifier,

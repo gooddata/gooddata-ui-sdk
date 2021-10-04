@@ -12,7 +12,7 @@ import {
     validateDrillDefinitionOrigin,
     validateInsightDrillDefinition,
 } from "./insightDrillDefinitionUtils";
-import { IDrillTargets } from "../../../../model/state/drillTargets/drillTargetsTypes";
+import { IDrillTargets } from "../../../store/drillTargets/drillTargetsTypes";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 import { ObjRef } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "../../../commands";
@@ -21,8 +21,8 @@ import {
     DisplayFormResolutionResult,
     resolveDisplayFormMetadata,
 } from "../../../../model/utils/displayFormResolver";
-import { selectDrillTargetsByWidgetRef } from "../../../../model/state/drillTargets/drillTargetsSelectors";
-import { selectListedDashboardsMap } from "../../../state/listedDashboards/listedDashboardsSelectors";
+import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drillTargetsSelectors";
+import { selectListedDashboardsMap } from "../../../store/listedDashboards/listedDashboardsSelectors";
 
 export function validateDrillDefinition(
     drillDefinition: InsightDrillDefinition,

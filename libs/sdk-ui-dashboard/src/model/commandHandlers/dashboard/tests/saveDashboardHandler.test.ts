@@ -4,10 +4,10 @@ import { addLayoutSection, saveDashboard } from "../../../commands";
 import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { DashboardSaved } from "../../../events";
-import { selectBasicLayout } from "../../../state/layout/layoutSelectors";
+import { selectBasicLayout } from "../../../store/layout/layoutSelectors";
 import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils";
-import { selectFilterContextIdentity } from "../../../state/filterContext/filterContextSelectors";
-import { selectPersistedDashboard } from "../../../state/meta/metaSelectors";
+import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors";
+import { selectPersistedDashboard } from "../../../store/meta/metaSelectors";
 
 describe("save dashboard handler", () => {
     describe("for a new dashboard", () => {

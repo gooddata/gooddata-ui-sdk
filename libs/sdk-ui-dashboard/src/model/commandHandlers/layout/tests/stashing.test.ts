@@ -2,7 +2,7 @@
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
 import { addLayoutSection, addSectionItem, removeLayoutSection, replaceSectionItem } from "../../../commands";
-import { selectLayout } from "../../../state/layout/layoutSelectors";
+import { selectLayout } from "../../../store/layout/layoutSelectors";
 import { removeSectionItem } from "../../../commands/layout";
 import {
     ComplexDashboardIdentifier,
