@@ -260,21 +260,28 @@ export {
     walkLayout,
 } from "./workspace/dashboards/utils";
 export {
-    IWidget,
-    IWidgetDefinition,
-    IInsightWidget,
-    IInsightWidgetBase,
-    IInsightWidgetDefinition,
+    IWidgetDescription,
+    IDrillableWidget,
+    BuiltInWidgetTypes,
+    IFilterableWidget,
+    IBaseWidget,
+} from "./workspace/dashboards/baseWidget";
+export {
+    AnalyticalWidgetType,
+    WidgetType,
+    IAnalyticalWidget,
     IKpiWidget,
     IKpiWidgetBase,
     IKpiWidgetDefinition,
-    WidgetType,
+    IInsightWidget,
+    IInsightWidgetBase,
+    IInsightWidgetDefinition,
+} from "./workspace/dashboards/analyticalWidgets";
+export {
+    IWidget,
+    IWidgetDefinition,
     isWidget,
     isWidgetDefinition,
-    isInsightWidget,
-    isInsightWidgetDefinition,
-    isKpiWidget,
-    isKpiWidgetDefinition,
     IWidgetReferences,
     SupportedWidgetReferenceTypes,
     widgetUri,
@@ -282,7 +289,10 @@ export {
     widgetRef,
     widgetTitle,
     widgetType,
-    IWidgetBase,
+    isKpiWidgetDefinition,
+    isKpiWidget,
+    isInsightWidgetDefinition,
+    isInsightWidget,
 } from "./workspace/dashboards/widget";
 export {
     ILegacyKpi,

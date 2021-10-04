@@ -1,118 +1,16 @@
 // (C) 2020-2021 GoodData Corporation
-import { ObjRef, isObjRef, ObjectType, VisualizationProperties } from "@gooddata/sdk-model";
+import { isObjRef, ObjectType, ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
-import { IDashboardFilterReference } from "./filterContext";
-import { DrillDefinition, InsightDrillDefinition, KpiDrillDefinition } from "./drills";
-import { ILegacyKpi } from "./kpi";
-import { IDashboardObjectIdentity } from "./common";
 import invariant from "ts-invariant";
 import { CatalogItem } from "../fromModel/ldm/catalog";
-
-/**
- * Temporary type to distinguish between kpi and insight
- * @alpha
- */
-export type WidgetType = "kpi" | "insight";
-
-/**
- * Widgets are insights or kpis with additional settings - drilling and alerting
- * @alpha
- */
-export interface IWidgetBase {
-    /**
-     * Widget title
-     */
-    readonly title: string;
-
-    /**
-     * Widget description
-     */
-    readonly description: string;
-
-    /**
-     * Ignore particular dashboard filters in the current widget
-     */
-    readonly ignoreDashboardFilters: IDashboardFilterReference[];
-
-    /**
-     * Date data set widget is connected to
-     */
-    readonly dateDataSet?: ObjRef;
-
-    /**
-     * Widget type - kpi or insight
-     */
-    readonly type: WidgetType;
-
-    /**
-     * Widget drills
-     */
-    readonly drills: DrillDefinition[];
-}
-
-/**
- * @alpha
- */
-export interface IKpiWidgetBase extends IWidgetBase {
-    readonly type: "kpi";
-
-    /**
-     * Temporary place for legacy kpi properties
-     */
-    readonly kpi: ILegacyKpi;
-
-    /**
-     * Drill interactions configured for the kpi widget.
-     */
-    readonly drills: KpiDrillDefinition[];
-}
-
-/**
- * @alpha
- */
-export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {}
-
-/**
- * @alpha
- */
-export interface IKpiWidgetDefinition extends IKpiWidgetBase, Partial<IDashboardObjectIdentity> {}
-
-/**
- * @alpha
- */
-export interface IInsightWidgetBase extends IWidgetBase {
-    readonly type: "insight";
-
-    /**
-     * Widget insight object reference (when widget is not kpi)
-     */
-    readonly insight: ObjRef;
-
-    /**
-     * Overrides for visualization-specific properties.
-     * Insight rendered in context of this widget
-     * will use these properties instead of its own.
-     *
-     * This is now only supported for the PivotTable.
-     *
-     */
-    readonly properties?: VisualizationProperties;
-
-    /**
-     * Drill interactions configured for the insight widget.
-     */
-    readonly drills: InsightDrillDefinition[];
-}
-
-/**
- * @alpha
- */
-export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIdentity {}
-
-/**
- * @alpha
- */
-export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {}
+import {
+    AnalyticalWidgetType,
+    IAnalyticalWidget,
+    IInsightWidget,
+    IInsightWidgetDefinition,
+    IKpiWidget,
+    IKpiWidgetDefinition,
+} from "./analyticalWidgets";
 
 /**
  * See {@link IWidget}]
@@ -165,42 +63,13 @@ export function isWidget(obj: unknown): obj is IWidget {
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IInsightWidget}.
- * @alpha
- */
-export function isInsightWidget(obj: unknown): obj is IInsightWidget {
-    return isWidget(obj) && (obj as IInsightWidget).type === "insight";
-}
-
-/**
- * Type-guard testing whether the provided object is an instance of {@link IInsightWidgetDefinition}.
- * @alpha
- */
-export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition {
-    return isWidgetDefinition(obj) && (obj as IInsightWidget).type === "insight";
-}
-
-/**
- * Type-guard testing whether the provided object is an instance of {@link IKpiWidget}.
- * @alpha
- */
-export function isKpiWidget(obj: unknown): obj is IKpiWidget {
-    return isWidget(obj) && (obj as IKpiWidget).type === "kpi";
-}
-
-/**
- * Type-guard testing whether the provided object is an instance of {@link IKpiWidget}.
- * @alpha
- */
-export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition {
-    return isWidgetDefinition(obj) && (obj as IKpiWidget).type === "kpi";
-}
-
-/**
  * @internal
  */
 function hasWidgetProps(obj: unknown): boolean {
-    return !isEmpty(obj) && ((obj as IWidgetBase).type === "kpi" || (obj as IWidgetBase).type === "insight");
+    return (
+        !isEmpty(obj) &&
+        ((obj as IAnalyticalWidget).type === "kpi" || (obj as IAnalyticalWidget).type === "insight")
+    );
 }
 
 /**
@@ -249,7 +118,7 @@ export function widgetRef(widget: IWidget): ObjRef {
  * @returns the widget type
  * @alpha
  */
-export function widgetType(widget: IWidget): WidgetType {
+export function widgetType(widget: IWidget): AnalyticalWidgetType {
     invariant(widget, "widget to get type of must be specified");
 
     return widget.type;
@@ -266,4 +135,36 @@ export function widgetTitle(widget: IWidget): string {
     invariant(widget, "widget to get title of must be specified");
 
     return widget.title;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IInsightWidget}.
+ * @alpha
+ */
+export function isInsightWidget(obj: unknown): obj is IInsightWidget {
+    return isWidget(obj) && (obj as IInsightWidget).type === "insight";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IInsightWidgetDefinition}.
+ * @alpha
+ */
+export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition {
+    return isWidgetDefinition(obj) && (obj as IInsightWidget).type === "insight";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IKpiWidget}.
+ * @alpha
+ */
+export function isKpiWidget(obj: unknown): obj is IKpiWidget {
+    return isWidget(obj) && (obj as IKpiWidget).type === "kpi";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IKpiWidget}.
+ * @alpha
+ */
+export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition {
+    return isWidgetDefinition(obj) && (obj as IKpiWidget).type === "kpi";
 }

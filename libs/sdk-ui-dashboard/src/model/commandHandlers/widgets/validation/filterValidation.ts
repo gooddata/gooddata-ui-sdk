@@ -20,7 +20,7 @@ import {
     IDashboardAttributeFilter,
     IInsightWidget,
     IKpiWidget,
-    IWidgetBase,
+    IAnalyticalWidget,
 } from "@gooddata/sdk-backend-spi";
 import { IDashboardCommand } from "../../../commands";
 
@@ -141,7 +141,7 @@ export function* validateDatasetForKpiWidgetDateFilter(
 export function* validateAttributeFiltersToIgnore(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
-    _widget: IWidgetBase,
+    _widget: IAnalyticalWidget,
     toIgnore: ObjRef[],
 ): SagaIterator<IDashboardAttributeFilter[]> {
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(

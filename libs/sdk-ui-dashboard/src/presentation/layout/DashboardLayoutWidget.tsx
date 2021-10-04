@@ -8,7 +8,7 @@ import {
     isDashboardLayout,
     isInsightWidget,
     widgetType as getWidgetType,
-    WidgetType,
+    AnalyticalWidgetType,
     isKpiWidget,
     IDashboardWidget,
 } from "@gooddata/sdk-backend-spi";
@@ -37,7 +37,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
         return insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));
     };
 
-    let widgetType: WidgetType;
+    let widgetType: AnalyticalWidgetType;
     let insight: IInsight;
     let content: IInsight | ILegacyKpi;
     const widget = item.widget();

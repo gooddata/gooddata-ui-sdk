@@ -9,7 +9,7 @@ import {
     ISettings,
     isInsightWidget,
     isKpiWidget,
-    WidgetType,
+    AnalyticalWidgetType,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight, insightRef, serializeObjRef } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
@@ -24,7 +24,7 @@ import { ObjRefMap } from "../metadata/objRefMap";
 function extractContentFromWidget(
     widget: IDashboardWidget,
     insightsById: Record<string, IInsight>,
-): { type: WidgetType; content?: MeasurableWidgetContent } {
+): { type: AnalyticalWidgetType; content?: MeasurableWidgetContent } {
     if (isInsightWidget(widget)) {
         const insightRef = widget.insight;
 

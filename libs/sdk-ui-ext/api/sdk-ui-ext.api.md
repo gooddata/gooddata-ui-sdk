@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { AnalyticalBackendError } from '@gooddata/sdk-backend-spi';
+import { AnalyticalWidgetType } from '@gooddata/sdk-backend-spi';
 import { DrillDefinition } from '@gooddata/sdk-backend-spi';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
@@ -65,7 +66,6 @@ import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { VisType } from '@gooddata/sdk-ui';
-import { WidgetType } from '@gooddata/sdk-backend-spi';
 import { WrappedComponentProps } from 'react-intl';
 
 // @beta
@@ -543,7 +543,7 @@ export function useDashboardPdfExporter({ backend, workspace, onError, onCancel,
 export function useDashboardWidgetExecution({ dashboard, widget: widgetRef, filters, backend, workspace, }: IUseDashboardWidgetExecutionConfig): UseCancelablePromiseState<IPreparedExecution, GoodDataSdkError>;
 
 // @internal (undocumented)
-export function validateDashboardLayoutWidgetSize(currentWidth: number, currentHeight: number | undefined, widgetType: WidgetType, widgetContent: MeasurableWidgetContent, settings: ISettings): {
+export function validateDashboardLayoutWidgetSize(currentWidth: number, currentHeight: number | undefined, widgetType: AnalyticalWidgetType, widgetContent: MeasurableWidgetContent, settings: ISettings): {
     validWidth: number;
     validHeight: number;
 };

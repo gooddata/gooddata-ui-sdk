@@ -9,7 +9,11 @@ import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateExistingInsightWidget } from "./validation/widgetValidations";
 import { layoutActions } from "../../store/layout";
 import { insightWidgetFilterSettingsChanged } from "../../events/insight";
-import { IDashboardAttributeFilterReference, IInsightWidget, IWidgetBase } from "@gooddata/sdk-backend-spi";
+import {
+    IDashboardAttributeFilterReference,
+    IInsightWidget,
+    IAnalyticalWidget,
+} from "@gooddata/sdk-backend-spi";
 import { FilterValidators, processFilterOp } from "./common/filterOperations";
 import {
     validateAttributeFiltersToIgnore,
@@ -42,7 +46,7 @@ export function* changeInsightWidgetFilterSettingsHandler(
     const result: SagaReturnType<typeof processFilterOp> = yield call(
         processFilterOp,
         ctx,
-        InsightWidgetFilterValidations as FilterValidators<IWidgetBase>,
+        InsightWidgetFilterValidations as FilterValidators<IAnalyticalWidget>,
         cmd,
         insightWidget,
     );
