@@ -129,7 +129,7 @@ function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
 /**
  * @internal
  */
-export const CommandEnvelopeActionTypeName = "@@COMMAND.ENVELOPE";
+export const CommandEnvelopeActionPrefix = "__C";
 
 type CommandEnvelopeEventHandlers<TCommand extends IDashboardCommand, TResult> = {
     onStart: (command: TCommand) => void;
@@ -140,7 +140,7 @@ type CommandEnvelopeEventHandlers<TCommand extends IDashboardCommand, TResult> =
 type CommandEnvelope<TCommand extends IDashboardCommand, TResult> = Readonly<
     CommandEnvelopeEventHandlers<TCommand, TResult>
 > & {
-    readonly type: typeof CommandEnvelopeActionTypeName;
+    readonly type: string;
     readonly command: TCommand;
 };
 
@@ -149,7 +149,7 @@ export function commandEnvelope<TCommand extends IDashboardCommand, TResult>(
     eventHandlers?: Partial<CommandEnvelopeEventHandlers<TCommand, TResult>>,
 ): CommandEnvelope<TCommand, TResult> {
     return {
-        type: CommandEnvelopeActionTypeName,
+        type: `${CommandEnvelopeActionPrefix}(${command.type})`,
         command,
         onError: eventHandlers?.onError ?? noop,
         onStart: eventHandlers?.onStart ?? noop,
@@ -182,7 +182,7 @@ export function commandEnvelopeWithPromise<TCommand extends IDashboardCommand, T
 }
 
 function isCommandEnvelope(obj: unknown): obj is CommandEnvelope<any, any> {
-    return !!obj && (obj as CommandEnvelope<any, any>).type === CommandEnvelopeActionTypeName;
+    return !!obj && (obj as CommandEnvelope<any, any>).type.startsWith(CommandEnvelopeActionPrefix);
 }
 
 function ensureCommandWrappedInEnvelope(
@@ -264,7 +264,8 @@ function* processCommand(
 export function* rootCommandHandler(): SagaIterator<void> {
     const commandChannel = yield actionChannel(
         (action: any) =>
-            action.type === CommandEnvelopeActionTypeName || action.type.startsWith("GDC.DASH/CMD"),
+            action.type &&
+            (action.type.startsWith(CommandEnvelopeActionPrefix) || action.type.startsWith("GDC.DASH/CMD")),
     );
 
     while (true) {

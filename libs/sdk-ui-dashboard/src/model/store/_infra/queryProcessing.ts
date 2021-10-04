@@ -39,7 +39,7 @@ export type QueryProcessingModule = {
 /**
  * @internal
  */
-export const QueryEnvelopeActionTypeName = "@@QUERY.ENVELOPE";
+export const QueryEnvelopeActionPrefix = "__Q";
 
 type QueryEnvelopeEventHandlers<TQuery extends IDashboardQuery> = {
     onStart: (query: TQuery) => void;
@@ -48,13 +48,13 @@ type QueryEnvelopeEventHandlers<TQuery extends IDashboardQuery> = {
 };
 
 type QueryEnvelope<TQuery extends IDashboardQuery> = Readonly<QueryEnvelopeEventHandlers<TQuery>> & {
-    readonly type: typeof QueryEnvelopeActionTypeName;
+    readonly type: string;
     readonly query: IDashboardQuery;
     readonly refresh?: boolean;
 };
 
 function isQueryEnvelope(obj: unknown): obj is QueryEnvelope<any> {
-    return !!obj && (obj as QueryEnvelope<any>).type === QueryEnvelopeActionTypeName;
+    return !!obj && (obj as QueryEnvelope<any>).type.startsWith(QueryEnvelopeActionPrefix);
 }
 
 /**
@@ -66,7 +66,7 @@ export function queryEnvelope<TQuery extends IDashboardQuery>(
     refresh: boolean = false,
 ): QueryEnvelope<TQuery> {
     return {
-        type: QueryEnvelopeActionTypeName,
+        type: `${QueryEnvelopeActionPrefix}(${query.type})`,
         query,
         refresh,
         onError: eventHandlers?.onError ?? noop,
@@ -201,7 +201,9 @@ export function createQueryProcessingModule(
         rootQueryProcessor: function* (): SagaIterator<void> {
             const queryChannel = yield actionChannel(
                 (action: any) =>
-                    action.type === QueryEnvelopeActionTypeName || action.type.startsWith("GDC.DASH/QUERY."),
+                    action.type &&
+                    (action.type.startsWith(QueryEnvelopeActionPrefix) ||
+                        action.type.startsWith("GDC.DASH/QUERY.")),
             );
 
             while (true) {
