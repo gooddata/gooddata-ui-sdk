@@ -220,5 +220,6 @@ export {
     singleEventTypeHandler,
     commandStartedEventHandler,
     commandFailedEventHandler,
+    DashboardEventEvalFn,
 } from "./events/eventHandler";
 export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory";
