@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
-import { DashboardEventHandler } from "../events/eventHandler";
+import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 import { DashboardDispatch, DashboardState } from "../state/types";
 import { DashboardConfig } from "../types/commonTypes";
 

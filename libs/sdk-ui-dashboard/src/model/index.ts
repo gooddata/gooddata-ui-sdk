@@ -12,7 +12,12 @@
  * -  all commands, their types & command factories
  */
 
-export { DashboardDispatch, DashboardState } from "./state/types";
+export {
+    DashboardDispatch,
+    DashboardState,
+    DashboardSelector,
+    DashboardSelectorEvaluator,
+} from "./state/types";
 
 export { selectDashboardLoading } from "./state/loading/loadingSelectors";
 export { LoadingState } from "./state/loading/loadingState";
@@ -212,8 +217,6 @@ export * from "./queries";
 export * from "./react";
 export {
     DashboardEventHandler,
-    DashboardSelector,
-    DashboardSelectorEvaluator,
     DashboardEventHandlerFn,
     anyEventHandler,
     anyDashboardEventHandler,
@@ -221,5 +224,5 @@ export {
     commandStartedEventHandler,
     commandFailedEventHandler,
     DashboardEventEvalFn,
-} from "./events/eventHandler";
+} from "./eventHandlers/eventHandler";
 export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory";

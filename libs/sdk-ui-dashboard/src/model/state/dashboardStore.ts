@@ -15,7 +15,7 @@ import { loadingSliceReducer } from "./loading";
 import { savingSliceReducer } from "./saving";
 import { insightsSliceReducer } from "./insights";
 import { createRootEventEmitter } from "./_infra/rootEventEmitter";
-import { DashboardEventHandler } from "../events/eventHandler";
+import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 import { rootCommandHandler } from "../commandHandlers/rootCommandHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { configSliceReducer } from "./config";

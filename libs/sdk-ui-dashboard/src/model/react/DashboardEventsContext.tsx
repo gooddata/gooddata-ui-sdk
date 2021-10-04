@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useMemo } from "react";
 import noop from "lodash/noop";
 
-import { DashboardEventHandler } from "../events/eventHandler";
+import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 
 /**
  * @alpha

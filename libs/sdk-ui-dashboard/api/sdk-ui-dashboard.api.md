@@ -905,9 +905,12 @@ export interface DashboardDrillToLegacyDashboardResolved extends IDashboardEvent
 // @alpha (undocumented)
 export type DashboardEventBody<T extends IDashboardEvent | ICustomDashboardEvent> = Omit<T, "ctx">;
 
+// @alpha (undocumented)
+export type DashboardEventEvalFn = (event: DashboardEvents | ICustomDashboardEvent) => boolean;
+
 // @alpha
 export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> = {
-    eval: (event: DashboardEvents | ICustomDashboardEvent) => boolean;
+    eval: DashboardEventEvalFn;
     handler: DashboardEventHandlerFn<TEvents>;
 };
 

@@ -1,16 +1,16 @@
 // (C) 2021 GoodData Corporation
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 import { IDashboardCommand } from "../commands";
-
-import { DashboardState } from "../state/types";
-import { ICustomDashboardEvent, isDashboardEvent } from "./base";
-import { DashboardEvents } from "./index";
+import { DashboardSelectorEvaluator } from "../state/types";
 import {
-    DashboardCommandStarted,
+    ICustomDashboardEvent,
+    isDashboardEvent,
     DashboardCommandFailed,
+    DashboardCommandStarted,
     isDashboardCommandFailed,
     isDashboardCommandStarted,
-} from "./general";
+    DashboardEvents,
+} from "../events";
 
 /**
  * @alpha
@@ -128,17 +128,3 @@ export function commandFailedEventHandler<TCommand extends IDashboardCommand>(
         handler,
     };
 }
-
-/**
- * Function that selects part of the Dashboard state.
- *
- * @alpha
- */
-export type DashboardSelector<TResult> = (state: DashboardState) => TResult;
-
-/**
- * Type of a callback that evaluates a selector function against the Dashboard state
- *
- * @alpha
- */
-export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<TResult>) => TResult;
