@@ -46,6 +46,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
     footer?: React.ReactNode | ((closeDropdown: () => void) => React.ReactNode);
     closeDropdown?: () => void;
+
+    scrollToSelected?: boolean;
 }
 
 /**
@@ -104,6 +106,8 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         onTabSelect,
 
         renderNoData = defaultNoData,
+
+        scrollToSelected,
         ...listProps
     } = props;
 
@@ -157,6 +161,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                                 items={items}
                                 itemsCount={itemsCount}
                                 itemHeight={isMobile ? Math.max(mobileItemHeight, itemHeight) : itemHeight}
+                                scrollToSelected={scrollToSelected}
                                 {...listProps}
                             />
                         );

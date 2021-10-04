@@ -2,7 +2,7 @@
 import React from "react";
 import CustomEvent from "custom-event";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { DropdownList } from "@gooddata/sdk-ui-kit";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 
 import ColoredItem from "./ColoredItem";
@@ -52,25 +52,25 @@ class ColoredItemsList extends React.PureComponent<IColoredItemsListProps, IColo
 
         return (
             <div ref={this.listRef}>
-                <DropdownBody
+                <DropdownList
                     width={DROPDOWN_BODY_WIDTH}
-                    isSearchFieldVisible={this.isSearchFieldVisible()}
+                    showSearch={this.isSearchFieldVisible()}
                     searchString={searchString}
                     onSearch={this.onSearch}
                     onScrollStart={this.onScroll}
                     items={items}
-                    rowItem={
+                    className="gd-colored-items-list"
+                    maxVisibleItemsCount={VISIBLE_ITEMS_COUNT}
+                    isLoading={this.props.isLoading}
+                    renderItem={({ item }) => (
                         <ColoredItem
                             colorPalette={this.props.colorPalette}
                             onSelect={this.onSelect}
                             showCustomPicker={this.props.showCustomPicker}
                             disabled={this.props.disabled}
+                            item={item}
                         />
-                    }
-                    className="gd-colored-items-list"
-                    maxVisibleItemsCount={VISIBLE_ITEMS_COUNT}
-                    disabled={this.props.disabled}
-                    isLoading={this.props.isLoading}
+                    )}
                 />
             </div>
         );

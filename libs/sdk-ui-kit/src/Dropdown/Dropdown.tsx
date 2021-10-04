@@ -1,6 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import uniqueId from "lodash/uniqueId";
+import noop from "lodash/noop";
 
 import { FullScreenOverlay, Overlay } from "../Overlay";
 import { useMediaQuery } from "../responsive/useMediaQuery";
@@ -86,6 +87,8 @@ export interface IDropdownProps {
      * Should the dropdown body be fullscreen on smaller screens? Defaults to true.
      */
     fullscreenOnMobile?: boolean;
+
+    enableEventPropagation?: boolean;
 }
 
 /**
@@ -124,6 +127,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         onOpenStateChanged,
 
         fullscreenOnMobile = true,
+        enableEventPropagation = false,
     } = props;
     const [{ isOpen, dropdownId }, setState] = useState<IDropdownState>({
         isOpen: !!openOnInit,
@@ -205,6 +209,10 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 shouldCloseOnClick={shouldCloseOnClick}
                 ignoreClicksOnByClass={ignoreClicksOnByClass}
                 onClose={closeDropdown}
+                // Overlay prevents event propagation by default using defaultProps for these
+                onClick={enableEventPropagation ? noop : undefined}
+                onMouseOver={enableEventPropagation ? noop : undefined}
+                onMouseUp={enableEventPropagation ? noop : undefined}
                 zIndex={overlayZIndex}
             >
                 <div className="overlay dropdown-body">
