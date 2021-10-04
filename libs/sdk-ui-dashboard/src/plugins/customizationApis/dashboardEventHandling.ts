@@ -25,7 +25,7 @@ const sameHandlerPredicateFactory = (other: DashboardEventHandler) => {
 
 // TODO: move this type to common location
 type EvalFn = (event: DashboardEvents | ICustomDashboardEvent) => boolean;
-type EvalFnCache = Record<DashboardEventType | string | "*", EvalFn>;
+type EvalFnCache = Map<DashboardEventType | string | "*", EvalFn>;
 
 function createEvalFn(eventType: DashboardEventType | string | "*"): EvalFn {
     if (eventType === "*") {
@@ -43,7 +43,7 @@ function createEvalFn(eventType: DashboardEventType | string | "*"): EvalFn {
 export class DefaultDashboardEventHandling implements IDashboardEventHandling {
     private registeredHandlers: DashboardEventHandler[] = [];
     private stateChangesChain: DashboardStateChangeCallback[] = [];
-    private evalCache: EvalFnCache = {};
+    private evalCache: EvalFnCache = new Map();
 
     private readonly rootStateChangesCallback: DashboardStateChangeCallback = (state, dispatch) => {
         this.stateChangesChain.forEach((cb) => {
@@ -82,14 +82,14 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
     private unregisterHandler: undefined | ((handler: DashboardEventHandler) => void);
 
     private getOrCreateEvalFn = (eventType: DashboardEventType | string | "*"): EvalFn => {
-        const evalFn = this.evalCache[eventType];
+        const evalFn = this.evalCache.get(eventType);
 
         if (evalFn !== undefined) {
             return evalFn;
         }
 
         const newEvalFn: EvalFn = createEvalFn(eventType);
-        this.evalCache[eventType] = newEvalFn;
+        this.evalCache.set(eventType, newEvalFn);
 
         return newEvalFn;
     };

@@ -18,7 +18,8 @@ export interface IDashboardPluginMetadata {
     readonly displayName: string;
 
     /**
-     * Version of the plugin.
+     * Version of the plugin. At this point, the version is included for diagnostic purposes. It may
+     * be whatever string the author sees fit. We recommend, however, to use semantic versioning.
      */
     readonly version: string;
 
@@ -115,7 +116,7 @@ export interface IDashboardPlugin extends IDashboardPluginMetadata {
      *
      * @param ctx - dashboard context into which this plugin was loaded
      */
-    onPluginUnload?(ctx: DashboardContext): void;
+    onPluginUnload?(ctx: DashboardContext): Promise<void>;
 }
 
 /**

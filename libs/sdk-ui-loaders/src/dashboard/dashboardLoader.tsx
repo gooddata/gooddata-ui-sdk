@@ -147,8 +147,7 @@ export class DashboardLoader implements IDashboardLoader {
             clientId: clientWorkspace?.client,
         };
 
-        const engine = await engineLoader(dashboard);
-        const plugins = await pluginLoader(ctx, dashboard);
+        const [engine, plugins] = await Promise.all([engineLoader(dashboard), pluginLoader(ctx, dashboard)]);
         const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
 
         const allPlugins = [...plugins, ...additionalPlugins];

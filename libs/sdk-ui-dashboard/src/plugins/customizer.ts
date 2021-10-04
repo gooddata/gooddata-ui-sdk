@@ -53,6 +53,7 @@ export interface IDashboardInsightCustomizer {
      *
      * This is best illustrated on an example:
      *
+     * @example
      * ```
      * withCustomDecorator((next) => {
      *     return (insight, widget) => {
@@ -121,15 +122,16 @@ export interface IDashboardKpiCustomizer {
      *
      * This is best illustrated on an example:
      *
+     * @example
      * ```
      * withCustomDecorator((next) => {
-     *     return (insight, widget) => {
+     *     return (kpi, widget) => {
      *         if (some_condition_to_prevent_decoration) {
      *             return undefined;
      *         }
      *
      *         function MyCustomDecorator() {
-     *              const Decorated = next(insight, widget);
+     *              const Decorated = next(kpi, widget);
      *
      *              return (
      *                  <div>

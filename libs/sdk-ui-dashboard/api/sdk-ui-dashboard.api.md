@@ -2123,7 +2123,7 @@ export interface IDashboardKpiCustomizer {
 // @alpha
 export interface IDashboardPlugin extends IDashboardPluginMetadata {
     onPluginLoaded?(ctx: DashboardContext, parameters?: string): void;
-    onPluginUnload?(ctx: DashboardContext): void;
+    onPluginUnload?(ctx: DashboardContext): Promise<void>;
     readonly _pluginVersion: "1.0";
     register(ctx: DashboardContext, customize: IDashboardCustomizer, eventing: IDashboardEventHandling): void;
 }
