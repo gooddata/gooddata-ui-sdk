@@ -30,6 +30,7 @@ import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
+import { IBaseWidget } from '@gooddata/sdk-backend-spi';
 import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateAttribute } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
@@ -1068,7 +1069,7 @@ export interface DashboardInsightWidgetVisPropertiesChanged extends IDashboardEv
 }
 
 // @alpha
-export type DashboardItemDefinition = ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition> | StashedDashboardItemsId;
+export type DashboardItemDefinition = ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition | ICustomWidgetDefinition> | StashedDashboardItemsId;
 
 // @internal (undocumented)
 export const DashboardKpi: () => JSX.Element;
@@ -1447,7 +1448,7 @@ export interface DashboardWasReset extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export const DashboardWidget: () => JSX.Element;
+export const DashboardWidget: React_2.FC;
 
 // @alpha
 export interface DashboardWidgetExecutionFailed extends IDashboardEvent {
@@ -1504,7 +1505,7 @@ export interface DashboardWidgetProps {
     showHeader?: boolean;
     showMenu?: boolean;
     // (undocumented)
-    widget?: IWidget;
+    widget?: ExtendedDashboardWidget;
     // (undocumented)
     workspace?: string;
 }
@@ -1811,7 +1812,10 @@ export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayou
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @alpha
-export type ExtendedDashboardWidget = IWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
+export type ExtendedDashboardWidget = IWidget | ICustomWidget;
+
+// @alpha
+export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string;
 
 // @internal (undocumented)
 export const FilterBar: () => JSX.Element;
@@ -1946,6 +1950,22 @@ export interface ICustomDashboardEvent<TPayload = any> {
     };
     readonly payload?: TPayload;
     readonly type: string;
+}
+
+// @alpha
+export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdentity {
+}
+
+// @alpha
+export interface ICustomWidgetBase extends IBaseWidget {
+    // (undocumented)
+    readonly customType: string;
+    // (undocumented)
+    readonly type: "customWidget";
+}
+
+// @alpha
+export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDashboardObjectIdentity> {
 }
 
 // @alpha (undocumented)
@@ -2341,8 +2361,8 @@ export type InsightDateDatasets = {
 };
 
 // @alpha (undocumented)
-export type InsightPlaceholderWidget = {
-    readonly type: "insightPlaceholder";
+export type InsightPlaceholderWidget = ICustomWidgetBase & {
+    readonly customType: "insightPlaceholder";
 };
 
 // @alpha
@@ -2398,6 +2418,12 @@ export interface IScheduledEmailDialogProps {
 
 // @alpha
 export function isCustomDashboardEvent(obj: unknown): obj is ICustomDashboardEvent;
+
+// @alpha
+export function isCustomWidget(obj: unknown): obj is ICustomWidget;
+
+// @alpha
+export function isCustomWidgetDefinition(obj: unknown): obj is ICustomWidget;
 
 // @alpha
 export const isDashboardAlertCreated: (obj: unknown) => obj is DashboardAlertCreated;
@@ -2666,8 +2692,8 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kp
 export type KpiComponentProvider = (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent | undefined;
 
 // @alpha (undocumented)
-export type KpiPlaceholderWidget = {
-    readonly type: "kpiPlaceholder";
+export type KpiPlaceholderWidget = ICustomWidgetBase & {
+    readonly customType: "kpiPlaceholder";
 };
 
 // @alpha (undocumented)
@@ -3211,9 +3237,6 @@ export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICat
 
 // @alpha
 export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendCapabilities, (res: BackendCapabilitiesState) => IBackendCapabilities>;
-
-// @internal
-export const selectBasicLayout: OutputSelector<DashboardState, IDashboardLayout<IWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => IDashboardLayout<IWidget>>;
 
 // @alpha
 export const selectCanCreateAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
@@ -4156,7 +4179,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 };
 
 // @alpha (undocumented)
-export type WidgetComponentProvider = (widget: IWidget) => CustomDashboardWidgetComponent | undefined;
+export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent | undefined;
 
 // @alpha
 export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;

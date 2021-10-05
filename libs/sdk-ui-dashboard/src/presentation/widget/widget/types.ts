@@ -1,16 +1,17 @@
 // (C) 2020-2021 GoodData Corporation
 import { ComponentType } from "react";
-import { FilterContextItem, IAnalyticalBackend, IWidget, ScreenSize } from "@gooddata/sdk-backend-spi";
+import { FilterContextItem, IAnalyticalBackend, ScreenSize } from "@gooddata/sdk-backend-spi";
 import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
 
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../types";
 import { ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
+import { ExtendedDashboardWidget } from "../../../model";
 
 /**
  * @internal
  */
 export interface DashboardWidgetProps {
-    widget?: IWidget;
+    widget?: ExtendedDashboardWidget;
     screen: ScreenSize;
     /**
      * Specify date data set to use when passing dashboard date filter to rendered visualization.

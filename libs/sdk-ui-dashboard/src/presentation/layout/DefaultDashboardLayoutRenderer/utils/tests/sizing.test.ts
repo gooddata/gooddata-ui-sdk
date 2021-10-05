@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import chunk from "lodash/chunk";
 import flatMap from "lodash/flatMap";
-import { IDashboardLayoutSize, ScreenSize, WidgetType } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayoutSize, ScreenSize, AnalyticalWidgetType } from "@gooddata/sdk-backend-spi";
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
@@ -301,7 +301,7 @@ describe("sizing", () => {
                     expect(
                         getDashboardLayoutWidgetMinGridWidth(
                             settings,
-                            widgetType as WidgetType,
+                            widgetType as AnalyticalWidgetType,
                             newInsightDefinition(`local:${visType}`),
                         ),
                     ).toBe(width);

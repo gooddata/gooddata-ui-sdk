@@ -84,7 +84,6 @@ export { LayoutState, LayoutStash } from "./store/layout/layoutState";
 export {
     selectLayout,
     selectStash,
-    selectBasicLayout,
     selectWidgetByRef,
     selectWidgetsMap,
     selectAllInsightWidgets,
@@ -178,10 +177,14 @@ export {
     IResolvedFilterValues,
 } from "./types/commonTypes";
 export {
+    ICustomWidget,
+    ICustomWidgetDefinition,
+    ICustomWidgetBase,
+    isCustomWidgetDefinition,
+    isCustomWidget,
     ExtendedDashboardItem,
+    extendedWidgetDebugStr,
     ExtendedDashboardWidget,
-    InsightPlaceholderWidget,
-    KpiPlaceholderWidget,
     DashboardItemDefinition,
     StashedDashboardItemsId,
     ExtendedDashboardLayoutSection,

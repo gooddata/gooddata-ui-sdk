@@ -122,10 +122,14 @@ describe("add section items handler", () => {
 
             expect(event.payload.sectionIndex).toEqual(1);
             expect(event.payload.startIndex).toEqual(0);
-            expect(event.payload.itemsAdded).toEqual([TestKpiPlaceholderItem]);
+            expect(event.payload.itemsAdded).toMatchObject([TestKpiPlaceholderItem]);
 
             const section = selectLayout(Tester.state()).sections[TestSectionIdx];
-            expect(section.items).toEqual([TestKpiPlaceholderItem, expect.any(Object), expect.any(Object)]);
+            expect(section.items).toMatchObject([
+                TestKpiPlaceholderItem,
+                expect.any(Object),
+                expect.any(Object),
+            ]);
         });
 
         it("should add new item in between to items in an existing section", async () => {
@@ -136,10 +140,14 @@ describe("add section items handler", () => {
 
             expect(event.payload.sectionIndex).toEqual(1);
             expect(event.payload.startIndex).toEqual(1);
-            expect(event.payload.itemsAdded).toEqual([TestKpiPlaceholderItem]);
+            expect(event.payload.itemsAdded).toMatchObject([TestKpiPlaceholderItem]);
 
             const section = selectLayout(Tester.state()).sections[TestSectionIdx];
-            expect(section.items).toEqual([expect.any(Object), TestKpiPlaceholderItem, expect.any(Object)]);
+            expect(section.items).toMatchObject([
+                expect.any(Object),
+                TestKpiPlaceholderItem,
+                expect.any(Object),
+            ]);
         });
 
         it("should add new item as last item in an existing section", async () => {
@@ -150,10 +158,14 @@ describe("add section items handler", () => {
 
             expect(event.payload.sectionIndex).toEqual(1);
             expect(event.payload.startIndex).toEqual(2);
-            expect(event.payload.itemsAdded).toEqual([TestKpiPlaceholderItem]);
+            expect(event.payload.itemsAdded).toMatchObject([TestKpiPlaceholderItem]);
 
             const section = selectLayout(Tester.state()).sections[TestSectionIdx];
-            expect(section.items).toEqual([expect.any(Object), expect.any(Object), TestKpiPlaceholderItem]);
+            expect(section.items).toMatchObject([
+                expect.any(Object),
+                expect.any(Object),
+                TestKpiPlaceholderItem,
+            ]);
         });
 
         it("should be undoable", async () => {

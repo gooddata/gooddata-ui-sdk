@@ -15,7 +15,7 @@ import {
     IDashboardLayout,
     IDashboardLayoutSection,
     isLegacyKpiWithoutComparison,
-    WidgetType,
+    AnalyticalWidgetType,
     isLegacyKpi,
     ISettings,
     ILegacyKpi,
@@ -454,7 +454,7 @@ export type MeasurableWidgetContent = IInsightDefinition | ILegacyKpi;
 
 const getSizeInfo = (
     settings: ISettings,
-    widgetType: WidgetType,
+    widgetType: AnalyticalWidgetType,
     widgetContent?: MeasurableWidgetContent,
 ): IVisualizationSizeInfo => {
     if (widgetType === "kpi") {
@@ -514,7 +514,7 @@ const getKpiSizeInfo = (settings: ISettings, kpi?: MeasurableWidgetContent): IVi
 
 export function getDashboardLayoutWidgetMinGridWidth(
     settings: ISettings,
-    widgetType: WidgetType,
+    widgetType: AnalyticalWidgetType,
     widgetContent?: MeasurableWidgetContent, // undefined for placeholders
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
@@ -523,7 +523,7 @@ export function getDashboardLayoutWidgetMinGridWidth(
 
 export function getDashboardLayoutWidgetDefaultGridWidth(
     settings: ISettings,
-    widgetType: WidgetType,
+    widgetType: AnalyticalWidgetType,
     widgetContent?: MeasurableWidgetContent, // undefined for placeholders
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
@@ -532,7 +532,7 @@ export function getDashboardLayoutWidgetDefaultGridWidth(
 
 export function getDashboardLayoutWidgetDefaultHeight(
     settings: ISettings,
-    widgetType: WidgetType,
+    widgetType: AnalyticalWidgetType,
     widgetContent?: MeasurableWidgetContent, // undefined for placeholders
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
@@ -541,7 +541,7 @@ export function getDashboardLayoutWidgetDefaultHeight(
 
 export function getDashboardLayoutWidgetMinGridHeight(
     settings: ISettings,
-    widgetType: WidgetType,
+    widgetType: AnalyticalWidgetType,
     widgetContent?: MeasurableWidgetContent,
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
@@ -550,7 +550,7 @@ export function getDashboardLayoutWidgetMinGridHeight(
 
 export function getDashboardLayoutWidgetMaxGridHeight(
     settings: ISettings,
-    widgetType: WidgetType,
+    widgetType: AnalyticalWidgetType,
     widgetContent?: MeasurableWidgetContent,
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
@@ -598,7 +598,7 @@ function removeGridHeightFromItemSize<TWidget>(item: IDashboardLayoutItem<TWidge
 export function validateDashboardLayoutWidgetSize(
     currentWidth: number,
     currentHeight: number | undefined,
-    widgetType: WidgetType,
+    widgetType: AnalyticalWidgetType,
     widgetContent: MeasurableWidgetContent,
     settings: ISettings,
 ): {

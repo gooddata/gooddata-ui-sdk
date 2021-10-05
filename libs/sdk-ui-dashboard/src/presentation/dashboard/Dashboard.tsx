@@ -8,7 +8,6 @@ import {
     IKpiWidget,
     ILegacyKpi,
     isProtectedDataError,
-    IWidget,
 } from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
@@ -44,6 +43,7 @@ import {
     clearDateFilterSelection,
     DashboardStoreProvider,
     exportDashboardToPdf,
+    ExtendedDashboardWidget,
     renameDashboard,
     selectDashboardLoading,
     selectDashboardTitle,
@@ -369,7 +369,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     );
 
     const widgetProvider = useCallback(
-        (widget: IWidget): CustomDashboardWidgetComponent => {
+        (widget: ExtendedDashboardWidget): CustomDashboardWidgetComponent => {
             const userSpecified = props.WidgetComponentProvider?.(widget);
             return userSpecified ?? DefaultDashboardWidgetInner;
         },

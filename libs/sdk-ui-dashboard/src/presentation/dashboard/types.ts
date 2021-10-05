@@ -7,13 +7,18 @@ import {
     IKpiWidget,
     ILegacyKpi,
     ITheme,
-    IWidget,
     IWorkspacePermissions,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import { IErrorProps, ILoadingProps } from "@gooddata/sdk-ui";
 
-import { DashboardConfig, DashboardDispatch, DashboardEventHandler, DashboardState } from "../../model";
+import {
+    DashboardConfig,
+    DashboardDispatch,
+    DashboardEventHandler,
+    DashboardState,
+    ExtendedDashboardWidget,
+} from "../../model";
 import {
     CustomDashboardAttributeFilterComponent,
     CustomDashboardDateFilterComponent,
@@ -38,7 +43,9 @@ import { CustomSaveAsDialogComponent } from "../saveAs";
 /**
  * @alpha
  */
-export type WidgetComponentProvider = (widget: IWidget) => CustomDashboardWidgetComponent | undefined;
+export type WidgetComponentProvider = (
+    widget: ExtendedDashboardWidget,
+) => CustomDashboardWidgetComponent | undefined;
 
 /**
  * @alpha

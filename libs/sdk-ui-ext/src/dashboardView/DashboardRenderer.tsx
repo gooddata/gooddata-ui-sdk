@@ -16,7 +16,7 @@ import {
     isInsightWidget,
     IDashboardLayout,
     widgetType as getWidgetType,
-    WidgetType,
+    AnalyticalWidgetType,
     isKpiWidget,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -207,7 +207,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
             widgetRenderer={(renderProps) => {
                 const { item, screen, DefaultWidgetRenderer } = renderProps;
                 let visType: VisType;
-                let widgetType: WidgetType;
+                let widgetType: AnalyticalWidgetType;
                 let insight: IInsight;
                 let content: IInsight | ILegacyKpi;
                 const widget = item.widget();

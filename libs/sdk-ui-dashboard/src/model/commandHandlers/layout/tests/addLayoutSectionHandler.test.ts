@@ -21,7 +21,7 @@ import {
     TestKpiPlaceholderItem,
 } from "../../../tests/fixtures/Layout.fixtures";
 import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures";
-import { IWidgetBase } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalWidget } from "@gooddata/sdk-backend-spi";
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {
@@ -80,7 +80,10 @@ describe("add layout section handler", () => {
                 addLayoutSection(0, undefined, [TestKpiPlaceholderItem, TestInsightPlaceholderItem]),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
-            expect(event.payload.section).toMatchSnapshot();
+            expect(event.payload.section.items).toMatchObject([
+                TestKpiPlaceholderItem,
+                TestInsightPlaceholderItem,
+            ]);
 
             const layout = selectLayout(Tester.state());
             expect(layout.sections[0]).toEqual(event.payload.section);
@@ -102,7 +105,7 @@ describe("add layout section handler", () => {
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
 
-            expect((event.payload.section.items[0].widget as IWidgetBase).dateDataSet).toEqual(
+            expect((event.payload.section.items[0].widget as IAnalyticalWidget).dateDataSet).toEqual(
                 ActivityDateDatasetRef,
             );
         });

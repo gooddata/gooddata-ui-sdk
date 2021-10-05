@@ -9,7 +9,7 @@ import {
     ISettings,
     isInsightWidget,
     isKpiWidget,
-    WidgetType,
+    AnalyticalWidgetType,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight, insightRef, serializeObjRef } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
@@ -24,7 +24,7 @@ import { ObjRefMap } from "../metadata/objRefMap";
 function extractContentFromWidget(
     widget: IDashboardWidget,
     insightsById: Record<string, IInsight>,
-): { type: WidgetType; content?: MeasurableWidgetContent } {
+): { type: AnalyticalWidgetType; content?: MeasurableWidgetContent } {
     if (isInsightWidget(widget)) {
         const insightRef = widget.insight;
 
@@ -58,6 +58,14 @@ function dashboardLayoutItemSanitize<T = IDashboardWidget>(
         widget,
         size: { xl },
     } = item;
+
+    // ignore items that point to no widget; this is model-level version of the fix to RAIL-3669
+    if (!widget) {
+        // eslint-disable-next-line no-console
+        console.log(`Found item ${item} that does not contain any widget. Removing from layout.`);
+
+        return undefined;
+    }
 
     // only sanitize known widget types
     if (!isInsightWidget(widget) || !isKpiWidget(widget)) {

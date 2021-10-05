@@ -12,6 +12,13 @@ const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => 
 /**
  * Selects all insights used on the dashboard.
  *
+ * Note: if you are aiming to lookup insights using an ObjRef, then you should instead use the map returned
+ * by {@link selectInsightsMap}. If you are aiming to lookup a single insight by its ref, use {@link selectInsightByRef}.
+ * Using these selectors is both faster and safer as they take ObjRef type into account and look up the insight
+ * depending on the type of the ref.
+ *
+ * @remarks see {@link selectInsightsMap} or {@link selectInsightByRef} for a faster and safer ways to get
+ * an insight by its ObjRef.
  * @alpha
  */
 export const selectInsights = entitySelectors.selectAll;

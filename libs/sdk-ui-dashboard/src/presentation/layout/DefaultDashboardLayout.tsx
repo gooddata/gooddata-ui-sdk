@@ -8,22 +8,16 @@ import {
     IDashboardLayout,
     IDashboardWidget,
 } from "@gooddata/sdk-backend-spi";
-import {
-    ObjRef,
-    IInsight,
-    insightId,
-    insightUri,
-    areObjRefsEqual,
-    objRefToString,
-} from "@gooddata/sdk-model";
+import { ObjRef, IInsight, insightId, insightUri, objRefToString } from "@gooddata/sdk-model";
 
 import {
-    selectInsights,
     selectSettings,
-    selectBasicLayout,
     useDashboardSelector,
     selectIsExport,
     selectIsLayoutEmpty,
+    selectLayout,
+    ExtendedDashboardWidget,
+    selectInsightsMap,
 } from "../../model";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 
@@ -48,7 +42,9 @@ import { DashboardLayoutPropsProvider, useDashboardLayoutProps } from "./Dashboa
  * @param layout - dashboard layout to modify
  * @returns transformed layout
  */
-function getDashboardLayoutForExport(layout: IDashboardLayout): IDashboardLayout {
+function getDashboardLayoutForExport(
+    layout: IDashboardLayout<ExtendedDashboardWidget>,
+): IDashboardLayout<ExtendedDashboardWidget> {
     const dashLayout = DashboardLayoutBuilder.for(layout);
     const layoutFacade = dashLayout.facade();
     const sections = layoutFacade.sections();
@@ -87,15 +83,15 @@ function selectAllItemsWithInsights<TWidget = IDashboardWidget>(
 export const DefaultDashboardLayoutInner = (): JSX.Element => {
     const { onFiltersChange, onDrill, onError, ErrorComponent: CustomError } = useDashboardLayoutProps();
 
-    const layout = useDashboardSelector(selectBasicLayout);
+    const layout = useDashboardSelector(selectLayout);
     const isLayoutEmpty = useDashboardSelector(selectIsLayoutEmpty);
     const settings = useDashboardSelector(selectSettings);
-    const insights = useDashboardSelector(selectInsights);
+    const insights = useDashboardSelector(selectInsightsMap);
     const { ErrorComponent } = useDashboardComponentsContext({ ErrorComponent: CustomError });
     const isExport = useDashboardSelector(selectIsExport);
 
     const getInsightByRef = (insightRef: ObjRef): IInsight | undefined => {
-        return insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));
+        return insights.get(insightRef);
     };
 
     const transformedLayout = useMemo(() => {

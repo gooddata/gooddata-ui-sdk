@@ -3,6 +3,7 @@ import {
     DashboardItemDefinition,
     ExtendedDashboardItem,
     InternalDashboardItemDefinition,
+    isCustomWidgetDefinition,
 } from "../types/layoutTypes";
 import { idRef, ObjRef } from "@gooddata/sdk-model";
 import {
@@ -75,7 +76,11 @@ export function addTemporaryIdentityToWidgets(
             return item;
         }
 
-        if (isInsightWidgetDefinition(item.widget) || isKpiWidgetDefinition(item.widget)) {
+        if (
+            isInsightWidgetDefinition(item.widget) ||
+            isKpiWidgetDefinition(item.widget) ||
+            isCustomWidgetDefinition(item.widget)
+        ) {
             const temporaryIdentity = generateTemporaryIdentityForWidget();
 
             return {

@@ -20,15 +20,10 @@ import {
     CustomDashboardDateFilterComponent,
     CustomFilterBarComponent,
 } from "../filterBar/types";
-import {
-    IDashboardAttributeFilter,
-    IInsightWidget,
-    IKpiWidget,
-    ILegacyKpi,
-    IWidget,
-} from "@gooddata/sdk-backend-spi";
+import { IDashboardAttributeFilter, IInsightWidget, IKpiWidget, ILegacyKpi } from "@gooddata/sdk-backend-spi";
 import { CustomSaveAsDialogComponent } from "../saveAs/types";
 import { IInsight } from "@gooddata/sdk-model";
+import { ExtendedDashboardWidget } from "../../model";
 
 /**
  * @internal
@@ -37,7 +32,7 @@ interface IDashboardComponentsContext {
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
     LayoutComponent: React.ComponentType<DashboardLayoutProps>;
-    WidgetComponentProvider: (widget: IWidget) => CustomDashboardWidgetComponent;
+    WidgetComponentProvider: (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
     InsightComponentProvider: (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent;
     KpiComponentProvider: (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
     ButtonBarComponent: CustomButtonBarComponent;

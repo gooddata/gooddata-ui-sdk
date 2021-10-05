@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { WidgetType } from "@gooddata/sdk-backend-spi";
+import { AnalyticalWidgetType } from "@gooddata/sdk-backend-spi";
 import { VisType } from "@gooddata/sdk-ui";
 
 const typeVisTypeCssClassMapping: {
@@ -23,7 +23,7 @@ const typeVisTypeCssClassMapping: {
     pushpin: "viz-type-pushpin",
 };
 
-export function getVisTypeCssClass(widgetType: WidgetType, type?: VisType): string {
+export function getVisTypeCssClass(widgetType: AnalyticalWidgetType, type?: VisType): string {
     if (widgetType === "kpi") {
         return "viz-type-kpi";
     }

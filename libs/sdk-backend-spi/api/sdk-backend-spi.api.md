@@ -68,6 +68,9 @@ export const AnalyticalBackendErrorTypes: {
 // @public
 export type AnalyticalBackendFactory = (config?: IAnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
 
+// @alpha
+export type AnalyticalWidgetType = "kpi" | "insight";
+
 // @public
 export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): string;
 
@@ -79,6 +82,9 @@ export type AuthenticationFlow = {
     loginUrl: string;
     returnRedirectParam: string;
 };
+
+// @alpha
+export const BuiltInWidgetTypes: string[];
 
 // @public
 export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset;
@@ -187,6 +193,12 @@ export interface IAnalyticalBackend {
 // @public
 export interface IAnalyticalBackendConfig {
     readonly hostname?: string;
+}
+
+// @alpha
+export interface IAnalyticalWidget extends IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget {
+    // (undocumented)
+    readonly type: AnalyticalWidgetType;
 }
 
 // @public
@@ -306,6 +318,11 @@ export interface IBackendCapabilities {
     supportsObjectUris?: boolean;
     supportsRankingFilter?: boolean;
     supportsRankingFilterWithMeasureValueFilter?: boolean;
+}
+
+// @alpha
+export interface IBaseWidget {
+    readonly type: string;
 }
 
 // @public
@@ -640,6 +657,11 @@ export interface IDrill {
 }
 
 // @alpha
+export interface IDrillableWidget {
+    readonly drills: DrillDefinition[];
+}
+
+// @alpha
 export interface IDrillFromAttribute extends IDrillOrigin {
     attribute: ObjRefInScope;
     type: "drillFromAttribute";
@@ -786,6 +808,12 @@ export interface IFactMetadataObject extends IMetadataObject {
 }
 
 // @alpha
+export interface IFilterableWidget {
+    readonly dateDataSet?: ObjRef;
+    readonly ignoreDashboardFilters: IDashboardFilterReference[];
+}
+
+// @alpha
 export interface IFilterContext extends IFilterContextBase, IDashboardObjectIdentity {
 }
 
@@ -856,7 +884,7 @@ export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIden
 }
 
 // @alpha (undocumented)
-export interface IInsightWidgetBase extends IWidgetBase {
+export interface IInsightWidgetBase extends IAnalyticalWidget {
     readonly drills: InsightDrillDefinition[];
     readonly insight: ObjRef;
     readonly properties?: VisualizationProperties;
@@ -873,7 +901,7 @@ export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {
 }
 
 // @alpha (undocumented)
-export interface IKpiWidgetBase extends IWidgetBase {
+export interface IKpiWidgetBase extends IAnalyticalWidget {
     readonly drills: KpiDrillDefinition[];
     readonly kpi: ILegacyKpi;
     // (undocumented)
@@ -1682,17 +1710,13 @@ export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashb
 }
 
 // @alpha
-export interface IWidgetBase {
-    readonly dateDataSet?: ObjRef;
-    readonly description: string;
-    readonly drills: DrillDefinition[];
-    readonly ignoreDashboardFilters: IDashboardFilterReference[];
-    readonly title: string;
-    readonly type: WidgetType;
-}
+export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
 
 // @alpha
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
+export interface IWidgetDescription {
+    readonly description: string;
+    readonly title: string;
+}
 
 // @alpha
 export interface IWidgetReferences {
@@ -2058,11 +2082,11 @@ export function widgetRef(widget: IWidget): ObjRef;
 // @alpha
 export function widgetTitle(widget: IWidget): string;
 
-// @alpha
-export type WidgetType = "kpi" | "insight";
+// @alpha @deprecated (undocumented)
+export type WidgetType = AnalyticalWidgetType;
 
 // @alpha
-export function widgetType(widget: IWidget): WidgetType;
+export function widgetType(widget: IWidget): AnalyticalWidgetType;
 
 // @alpha
 export function widgetUri(widget: IWidget): string;

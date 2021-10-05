@@ -66,9 +66,11 @@ function isItemWithBaseWidget(
 /**
  * This selector returns the basic dashboard layout that does not contain any client-side extensions.
  *
- * TODO: we need to get to a point where this selector is not needed. the layout component needs to recognize that the
- *  layout may contain client-side customizations. Furthermore, the dashboard saving should be enhanced so that the
- *  client-side customization can also be persisted.
+ * This selector exists because analytical backend impls are not yet ready to handle persistence of custom
+ * widgets (that may have arbitrary payloads). The selector is used only in save and saveAs command handlers,
+ * where it obtains the layout without any custom widgets and persists that. Note that the save/saveAs
+ * handlers will not wipe the custom widgets from the state during the save - so at this point the custom
+ * widgets are treated as client-side extensions.
  *
  * @internal
  */

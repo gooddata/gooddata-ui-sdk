@@ -8,7 +8,7 @@ import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateExistingKpiWidget } from "./validation/widgetValidations";
 import { layoutActions } from "../../store/layout";
-import { IDashboardAttributeFilterReference, IKpiWidget, IWidgetBase } from "@gooddata/sdk-backend-spi";
+import { IDashboardAttributeFilterReference, IKpiWidget, IAnalyticalWidget } from "@gooddata/sdk-backend-spi";
 import { FilterValidators, processFilterOp } from "./common/filterOperations";
 import {
     validateAttributeFiltersToIgnore,
@@ -42,7 +42,7 @@ export function* changeKpiWidgetFilterSettingsHandler(
     const result: SagaReturnType<typeof processFilterOp> = yield call(
         processFilterOp,
         ctx,
-        KpiWidgetFilterValidations as FilterValidators<IWidgetBase>,
+        KpiWidgetFilterValidations as FilterValidators<IAnalyticalWidget>,
         cmd,
         kpiWidget,
     );

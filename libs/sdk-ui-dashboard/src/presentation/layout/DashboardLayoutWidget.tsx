@@ -1,19 +1,22 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import {
-    IWidget,
     isWidget,
-    UnexpectedError,
     ILegacyKpi,
-    isDashboardLayout,
     isInsightWidget,
     widgetType as getWidgetType,
-    WidgetType,
+    AnalyticalWidgetType,
     isKpiWidget,
-    IDashboardWidget,
+    ISettings,
+    IDashboardLayoutSize,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IInsight, areObjRefsEqual } from "@gooddata/sdk-model";
-import { selectInsights, selectSettings, useDashboardSelector } from "../../model";
+import { IInsight } from "@gooddata/sdk-model";
+import {
+    ExtendedDashboardWidget,
+    selectInsightsMap,
+    selectSettings,
+    useDashboardSelector,
+} from "../../model";
 import { DashboardWidgetPropsProvider, DashboardWidget, DashboardWidgetProps } from "../widget";
 import {
     getDashboardLayoutItemHeight,
@@ -21,55 +24,58 @@ import {
     getDashboardLayoutWidgetDefaultHeight,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
+import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 
-/**
- * @internal
- */
-export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
-    IDashboardWidget,
-    Pick<DashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
-> = (props) => {
-    const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError } = props;
-    const insights = useDashboardSelector(selectInsights);
-    const settings = useDashboardSelector(selectSettings);
-
-    const getInsightByRef = (insightRef: ObjRef): IInsight | undefined => {
-        return insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));
-    };
-
-    let widgetType: WidgetType;
+function calculateWidgetMinHeight(
+    widget: ExtendedDashboardWidget,
+    currentSize: IDashboardLayoutSize,
+    insights: ObjRefMap<IInsight>,
+    settings: ISettings,
+): number | undefined {
+    let widgetType: AnalyticalWidgetType;
     let insight: IInsight;
     let content: IInsight | ILegacyKpi;
-    const widget = item.widget();
-    if (isDashboardLayout(widget)) {
-        throw new UnexpectedError("Nested layouts not yet supported.");
-    }
 
     if (isWidget(widget)) {
         widgetType = getWidgetType(widget);
     }
     if (isInsightWidget(widget)) {
-        insight = getInsightByRef(widget.insight)!;
+        insight = insights.get(widget.insight)!;
         content = insight;
     }
     if (isKpiWidget(widget)) {
         content = widget.kpi;
     }
 
-    const currentSize = item.size()[screen]!;
-
-    const minHeight =
+    return (
         getDashboardLayoutItemHeight(currentSize) ||
         (!currentSize.heightAsRatio
             ? getDashboardLayoutWidgetDefaultHeight(settings, widgetType!, content!)
-            : undefined);
+            : undefined)
+    );
+}
+
+/**
+ * @internal
+ */
+export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
+    ExtendedDashboardWidget,
+    Pick<DashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
+> = (props) => {
+    const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError } = props;
+    const insights = useDashboardSelector(selectInsightsMap);
+    const settings = useDashboardSelector(selectSettings);
+    // TODO: we should probably do something more meaningful when item has no widget; should that even
+    //  be allowed? undefined widget will make things explode down the line away so..
+    const widget = item.widget()!;
+    const currentSize = item.size()[screen]!;
+    const minHeight = calculateWidgetMinHeight(widget, currentSize, insights, settings);
     const height =
         currentSize.heightAsRatio && !currentSize.gridHeight
             ? getDashboardLayoutItemHeightForRatioAndScreen(currentSize, screen)
             : undefined;
 
     const allowOverflow = !!currentSize.heightAsRatio;
-
     const className = settings.enableKDWidgetCustomHeight ? "custom-height" : undefined;
 
     return (
@@ -87,7 +93,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 onDrill={onDrill}
                 onError={onError}
                 onFiltersChange={onFiltersChange}
-                widget={widget as IWidget}
+                widget={widget as ExtendedDashboardWidget}
             >
                 <DashboardWidget />
             </DashboardWidgetPropsProvider>
