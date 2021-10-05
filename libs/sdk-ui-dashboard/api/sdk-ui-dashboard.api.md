@@ -1448,7 +1448,7 @@ export interface DashboardWasReset extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export const DashboardWidget: () => JSX.Element;
+export const DashboardWidget: React_2.FC;
 
 // @alpha
 export interface DashboardWidgetExecutionFailed extends IDashboardEvent {
@@ -1505,7 +1505,7 @@ export interface DashboardWidgetProps {
     showHeader?: boolean;
     showMenu?: boolean;
     // (undocumented)
-    widget?: IWidget;
+    widget?: ExtendedDashboardWidget;
     // (undocumented)
     workspace?: string;
 }
@@ -1813,6 +1813,9 @@ export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDas
 
 // @alpha
 export type ExtendedDashboardWidget = IWidget | ICustomWidget;
+
+// @alpha
+export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string;
 
 // @internal (undocumented)
 export const FilterBar: () => JSX.Element;
@@ -3235,9 +3238,6 @@ export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICat
 // @alpha
 export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendCapabilities, (res: BackendCapabilitiesState) => IBackendCapabilities>;
 
-// @internal
-export const selectBasicLayout: OutputSelector<DashboardState, IDashboardLayout<IWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => IDashboardLayout<IWidget>>;
-
 // @alpha
 export const selectCanCreateAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
@@ -4179,7 +4179,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 };
 
 // @alpha (undocumented)
-export type WidgetComponentProvider = (widget: IWidget) => CustomDashboardWidgetComponent | undefined;
+export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent | undefined;
 
 // @alpha
 export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;

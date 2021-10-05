@@ -51,6 +51,12 @@ function createDashboard(ctx: DashboardContext, saveAsCtx: DashboardSaveAsContex
     return ctx.backend.workspace(ctx.workspace).dashboards().createDashboard(saveAsCtx.dashboardToSave);
 }
 
+/*
+ * TODO: custom widget persistence; we need a new backend capability that indicates whether the
+ *  backend can persist custom widget content (tiger can already, bear cannot). Based on that
+ *  capability, this code should use either the selectBasicLayout (that strips any custom widgets) or
+ *  selectLayout (that keeps custom widgets).
+ */
 function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<DashboardSaveAsContext> {
     const { title } = cmd.payload;
     const titleProp = title ? { title } : {};

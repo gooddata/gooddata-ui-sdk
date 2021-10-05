@@ -84,7 +84,6 @@ export { LayoutState, LayoutStash } from "./store/layout/layoutState";
 export {
     selectLayout,
     selectStash,
-    selectBasicLayout,
     selectWidgetByRef,
     selectWidgetsMap,
     selectAllInsightWidgets,
@@ -184,6 +183,7 @@ export {
     isCustomWidgetDefinition,
     isCustomWidget,
     ExtendedDashboardItem,
+    extendedWidgetDebugStr,
     ExtendedDashboardWidget,
     DashboardItemDefinition,
     StashedDashboardItemsId,

@@ -5,6 +5,7 @@ import {
     IDashboardLayoutItem,
     IDashboardLayoutSection,
     IDashboardObjectIdentity,
+    isWidget,
     IWidget,
     IWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
@@ -58,6 +59,25 @@ export function isCustomWidgetDefinition(obj: unknown): obj is ICustomWidget {
     const w = obj as ICustomWidget;
 
     return !isEmpty(w) && w.type === "customWidget" && w.customType !== undefined && w.ref === undefined;
+}
+
+/**
+ * Dumps debug information about a widget into a string.
+ *
+ * @param widget - widget to dump info from
+ * @alpha
+ */
+export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string {
+    const widgetId = `${widget.identifier}`;
+    let widgetType: string = "unknown widget type";
+
+    if (isWidget(widget)) {
+        widgetType = widget.type;
+    } else {
+        widgetType = `${widget.type}/${widget.customType}`;
+    }
+
+    return `${widgetId}(${widgetType})`;
 }
 
 /**
