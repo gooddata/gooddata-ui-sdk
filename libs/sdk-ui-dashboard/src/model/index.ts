@@ -69,12 +69,12 @@ export {
 } from "./store/filterContext/filterContextSelectors";
 export {
     // Core drills
-    selectInsightWidgetImplicitDrillDownsByRef,
-    selectInsightWidgetImplicitDrillsByRef,
-    selectInsightWidgetDrillableItems,
-    selectInsightWidgetImplicitDrillsAndDrillDownsByRef,
-    // Local drills
-    selectImplicitDrillDownsByAvailableDrillTargets,
+    selectImplicitDrillsDownByWidgetRef,
+    selectConfiguredDrillsByWidgetRef,
+    selectDrillableItemsByWidgetRef,
+    selectConfiguredAndImplicitDrillsByWidgetRef,
+    // Local drills for drill dialog
+    selectImplicitDrillsByAvailableDrillTargets,
     selectDrillableItemsByAvailableDrillTargets,
     IImplicitDrillWithPredicates,
 } from "./store/widgetDrills/widgetDrillSelectors";

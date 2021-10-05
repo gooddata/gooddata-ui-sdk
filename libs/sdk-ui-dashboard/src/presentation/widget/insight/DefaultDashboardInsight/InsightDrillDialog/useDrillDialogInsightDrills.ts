@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import isEqual from "lodash/isEqual";
 import {
     useDashboardSelector,
-    selectImplicitDrillDownsByAvailableDrillTargets,
+    selectImplicitDrillsByAvailableDrillTargets,
     selectDrillableItemsByAvailableDrillTargets,
 } from "../../../../../model";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
@@ -46,7 +46,7 @@ export const useDrillDialogInsightDrills = ({
     );
 
     const implicitDrillDefinitions = useDashboardSelector(
-        selectImplicitDrillDownsByAvailableDrillTargets(drillTargets),
+        selectImplicitDrillsByAvailableDrillTargets(drillTargets),
     );
     const drillableItems = useDashboardSelector(selectDrillableItemsByAvailableDrillTargets(drillTargets));
     const onDrill = onDrillFn

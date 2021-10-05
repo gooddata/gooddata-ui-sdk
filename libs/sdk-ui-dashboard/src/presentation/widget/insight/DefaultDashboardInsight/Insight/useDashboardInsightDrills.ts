@@ -6,8 +6,8 @@ import {
     useDashboardDispatch,
     selectDrillTargetsByWidgetRef,
     addDrillTargets,
-    selectInsightWidgetDrillableItems,
-    selectInsightWidgetImplicitDrillsAndDrillDownsByRef,
+    selectDrillableItemsByWidgetRef,
+    selectConfiguredAndImplicitDrillsByWidgetRef,
 } from "../../../../../model";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { OnWidgetDrill } from "../../../../drill/types";
@@ -46,9 +46,9 @@ export const useDashboardInsightDrills = ({
         [drillTargets],
     );
 
-    const drillableItems = useDashboardSelector(selectInsightWidgetDrillableItems(widget.ref));
+    const drillableItems = useDashboardSelector(selectDrillableItemsByWidgetRef(widget.ref));
     const implicitDrillDefinitions = useDashboardSelector(
-        selectInsightWidgetImplicitDrillsAndDrillDownsByRef(widget.ref),
+        selectConfiguredAndImplicitDrillsByWidgetRef(widget.ref),
     );
 
     const onDrill = onDrillFn
