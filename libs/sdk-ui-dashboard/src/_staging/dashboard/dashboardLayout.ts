@@ -59,6 +59,14 @@ function dashboardLayoutItemSanitize<T = IDashboardWidget>(
         size: { xl },
     } = item;
 
+    // ignore items that point to no widget; this is model-level version of the fix to RAIL-3669
+    if (!widget) {
+        // eslint-disable-next-line no-console
+        console.log(`Found item ${item} that does not contain any widget. Removing from layout.`);
+
+        return undefined;
+    }
+
     // only sanitize known widget types
     if (!isInsightWidget(widget) || !isKpiWidget(widget)) {
         return item;
