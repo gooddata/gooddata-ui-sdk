@@ -68,7 +68,7 @@ export const DefaultDashboardWidgetInner = (): JSX.Element => {
         });
     }, [effectiveBackend, dispatchEvent]);
 
-    if (!isDashboardWidget) {
+    if (!isDashboardWidget(widget)) {
         throw new UnexpectedError(
             "Cannot render custom widget with DefaultWidgetRenderer! Please handle custom widget rendering in your widgetRenderer.",
         );
