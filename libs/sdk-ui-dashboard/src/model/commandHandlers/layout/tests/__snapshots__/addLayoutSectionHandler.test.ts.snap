@@ -55,7 +55,8 @@ Object {
       },
       "type": "IDashboardLayoutItem",
       "widget": Object {
-        "type": "kpiPlaceholder",
+        "customType": "kpiPlaceholder",
+        "type": "customWidget",
       },
     },
     Object {
@@ -66,7 +67,8 @@ Object {
       },
       "type": "IDashboardLayoutItem",
       "widget": Object {
-        "type": "insightPlaceholder",
+        "customType": "insightPlaceholder",
+        "type": "customWidget",
       },
     },
   ],

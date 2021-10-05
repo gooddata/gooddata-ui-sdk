@@ -1,5 +1,4 @@
 // (C) 2021 GoodData Corporation
-import { InsightPlaceholderWidget, KpiPlaceholderWidget } from "../../types/layoutTypes";
 import {
     IDashboardLayoutItem,
     IDashboardLayoutSectionHeader,
@@ -10,13 +9,16 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { idRef, IInsight, insightId, isObjRef, ObjRef } from "@gooddata/sdk-model";
 import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures";
+import { InsightPlaceholderWidget, KpiPlaceholderWidget } from "../../../widgets/placeholders/types";
 
 export const TestSectionHeader: IDashboardLayoutSectionHeader = {
     title: "Test Section",
     description: "Section added for test purposes",
 };
-export const TestKpiPlaceholderWidget: KpiPlaceholderWidget = {
-    type: "kpiPlaceholder",
+
+const TestKpiPlaceholderWidget: KpiPlaceholderWidget = {
+    type: "customWidget",
+    customType: "kpiPlaceholder",
 };
 export const TestKpiPlaceholderItem: IDashboardLayoutItem<KpiPlaceholderWidget> = {
     type: "IDashboardLayoutItem",
@@ -27,8 +29,10 @@ export const TestKpiPlaceholderItem: IDashboardLayoutItem<KpiPlaceholderWidget> 
         },
     },
 };
-export const TestInsightPlaceholderWidget: InsightPlaceholderWidget = {
-    type: "insightPlaceholder",
+
+const TestInsightPlaceholderWidget: InsightPlaceholderWidget = {
+    type: "customWidget",
+    customType: "insightPlaceholder",
 };
 export const TestInsightPlaceholderItem: IDashboardLayoutItem<InsightPlaceholderWidget> = {
     type: "IDashboardLayoutItem",

@@ -26,3 +26,4 @@ export {
     IDashboardKpiCustomizer,
     DashboardStateChangeCallback,
 } from "./plugins/customizer";
+export { InsightPlaceholderWidget, KpiPlaceholderWidget } from "./widgets/placeholders/types";

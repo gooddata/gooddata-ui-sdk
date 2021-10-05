@@ -1,54 +1,72 @@
 // (C) 2021 GoodData Corporation
 
 import {
+    IBaseWidget,
     IDashboardLayoutItem,
     IDashboardLayoutSection,
+    IDashboardObjectIdentity,
     IWidget,
     IWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 
 /**
- * @alpha
- */
-export type KpiPlaceholderWidget = {
-    readonly type: "kpiPlaceholder";
-};
-
-/**
- * Tests whether an object is a {@link KpiPlaceholderWidget}.
+ * Base type for custom widgets. Custom widgets may extend this and add extra properties to hold widget-specific
+ * configuration.
  *
- * @param obj - object to test
  * @alpha
  */
-export function isKpiPlaceholderWidget(obj: unknown): obj is KpiPlaceholderWidget {
-    return !isEmpty(obj) && (obj as KpiPlaceholderWidget).type === "kpiPlaceholder";
+export interface ICustomWidgetBase extends IBaseWidget {
+    readonly type: "customWidget";
+    readonly customType: string;
 }
 
 /**
+ * Custom widget with assigned identity.
+ *
  * @alpha
  */
-export type InsightPlaceholderWidget = {
-    readonly type: "insightPlaceholder";
-};
+export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdentity {}
 
 /**
- * Tests whether an object is a {@link InsightPlaceholderWidget}.
+ * Definition of custom widget. The definition may not specify identity. In that case a temporary identity
+ * will be assigned to the widget as it is added onto a dashboard.
+ *
+ * @alpha
+ */
+export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDashboardObjectIdentity> {}
+
+/**
+ * Type-guard that tests whether an object is an instance of {@link ICustomWidget}.
  *
  * @param obj - object to test
  * @alpha
  */
-export function isInsightPlaceholderWidget(obj: unknown): obj is InsightPlaceholderWidget {
-    return !isEmpty(obj) && (obj as InsightPlaceholderWidget).type === "insightPlaceholder";
+export function isCustomWidget(obj: unknown): obj is ICustomWidget {
+    const w = obj as ICustomWidget;
+
+    return !isEmpty(w) && w.type === "customWidget" && w.customType !== undefined && w.ref !== undefined;
+}
+
+/**
+ * Type-guard that tests whether an object is an instance of {@link ICustomWidgetDefinition}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isCustomWidgetDefinition(obj: unknown): obj is ICustomWidget {
+    const w = obj as ICustomWidget;
+
+    return !isEmpty(w) && w.type === "customWidget" && w.customType !== undefined && w.ref === undefined;
 }
 
 /**
  * Extension of the default {@link @gooddata/sdk-backend-spi#IWidget} type to also include view-only
- * widget types for KPI placeholder and Insight placeholder.
+ * custom widget types.
  *
  * @alpha
  */
-export type ExtendedDashboardWidget = IWidget | KpiPlaceholderWidget | InsightPlaceholderWidget;
+export type ExtendedDashboardWidget = IWidget | ICustomWidget;
 
 /**
  * Specialization of the IDashboardLayoutItem which also includes the extended dashboard widgets - KPI and
@@ -91,7 +109,7 @@ export type RelativeIndex = number;
  * @alpha
  */
 export type DashboardItemDefinition =
-    | ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition>
+    | ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition | ICustomWidgetDefinition>
     | StashedDashboardItemsId;
 
 /**

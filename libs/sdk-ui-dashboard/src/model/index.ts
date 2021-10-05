@@ -178,10 +178,13 @@ export {
     IResolvedFilterValues,
 } from "./types/commonTypes";
 export {
+    ICustomWidget,
+    ICustomWidgetDefinition,
+    ICustomWidgetBase,
+    isCustomWidgetDefinition,
+    isCustomWidget,
     ExtendedDashboardItem,
     ExtendedDashboardWidget,
-    InsightPlaceholderWidget,
-    KpiPlaceholderWidget,
     DashboardItemDefinition,
     StashedDashboardItemsId,
     ExtendedDashboardLayoutSection,
