@@ -645,5 +645,15 @@
         "comment": "Default title for exported file",
         "limit": 0,
         "translate": false
+    },
+    "widget.options.menu.exportToCSV": {
+        "value": "Export to CSV",
+        "comment": "Export to file with CSV extension.",
+        "limit": 0
+    },
+    "widget.options.menu.exportToXLSX": {
+        "value": "Export to XLSX",
+        "comment": "Export to file with XLSX extension.",
+        "limit": 0
     }
 }

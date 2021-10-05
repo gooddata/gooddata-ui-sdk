@@ -119,5 +119,7 @@
     "options.menu.export.XLSX": "XLSX",
     "options.menu.unsupported.error": "La perception ne peut pas être exportée à l'heure actuelle. Essayez d'appliquer d'autres filtres ou d'utiliser d'autres mesures ou attributs.",
     "options.menu.unsupported.loading": "La perception ne peut pas être exportée à l'heure actuelle.",
-    "export.defaultTitle": "Perception sans titre"
+    "export.defaultTitle": "Perception sans titre",
+    "widget.options.menu.exportToCSV": "Exporter au format CSV",
+    "widget.options.menu.exportToXLSX": "Exporter vers XLSX"
 }

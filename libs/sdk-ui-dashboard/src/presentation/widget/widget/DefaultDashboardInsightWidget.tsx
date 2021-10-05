@@ -1,12 +1,12 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import React, { useMemo } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { insightVisualizationUrl } from "@gooddata/sdk-model";
 import { IInsightWidget, ScreenSize, widgetTitle } from "@gooddata/sdk-backend-spi";
 import { OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
 
-import { selectExecutionResultByRef, useDashboardSelector, selectInsightsMap } from "../../../model";
+import { useDashboardSelector, selectInsightsMap } from "../../../model";
 import {
     DashboardItem,
     DashboardItemHeadline,
@@ -16,10 +16,10 @@ import {
 
 import { DashboardInsightPropsProvider } from "../insight/DashboardInsightPropsContext";
 import { DashboardInsight } from "../insight/DashboardInsight";
-import { OptionsButton } from "./OptionsMenu/OptionsButton";
-import { OptionsMenu } from "./OptionsMenu/OptionsMenu";
-import { isDataError } from "../../../_staging/errors/errorPredicates";
 import { useInsightExport } from "../common/useInsightExport";
+import { useDashboardComponentsContext } from "../../dashboardContexts";
+import { DashboardInsightMenuButtonPropsProvider, DashboardInsightMenuPropsProvider } from "../insightMenu";
+import { useInsightMenu } from "./useInsightMenu";
 
 interface IDefaultDashboardInsightWidgetProps {
     widget: IInsightWidget;
@@ -38,31 +38,35 @@ const DefaultDashboardInsightWidgetCore: React.FC<
 > = ({ widget, screen, onError, onExportReady, onLoadingChanged, intl }) => {
     const insights = useDashboardSelector(selectInsightsMap);
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
     const insight = insights.get(widget.insight)!;
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
-
-    const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
         widgetRef: widget.ref,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
     });
 
-    const bubbleMessageKey = isDataError(execution?.error)
-        ? "options.menu.unsupported.error"
-        : "options.menu.unsupported.loading";
+    const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({
+        insight,
+        widget,
+        exportCSVEnabled,
+        exportXLSXEnabled,
+        onExportCSV,
+        onExportXLSX,
+    });
 
-    const onExportCSVWrapped = useCallback(() => {
-        setIsMenuOpen(false);
-        onExportCSV();
-    }, [onExportCSV]);
+    const { InsightMenuButtonComponentProvider, InsightMenuComponentProvider } =
+        useDashboardComponentsContext();
 
-    const onExportXLSXWrapped = useCallback(() => {
-        setIsMenuOpen(false);
-        onExportXLSX();
-    }, [onExportXLSX]);
+    const InsightMenuButtonComponent = useMemo(
+        () => InsightMenuButtonComponentProvider(insight, widget),
+        [InsightMenuButtonComponentProvider, insight, widget],
+    );
+
+    const InsightMenuComponent = useMemo(
+        () => InsightMenuComponentProvider(insight, widget),
+        [InsightMenuComponentProvider, insight, widget],
+    );
 
     return (
         <DashboardItem
@@ -78,12 +82,15 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                     <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
                 )}
                 renderBeforeVisualization={() => (
-                    <OptionsButton
-                        isMenuOpen={isMenuOpen}
-                        onClick={() => setIsMenuOpen(true)}
-                        visType={visType}
+                    <DashboardInsightMenuButtonPropsProvider
+                        insight={insight}
                         widget={widget}
-                    />
+                        isOpen={isMenuOpen}
+                        onClick={openMenu}
+                        items={menuItems}
+                    >
+                        <InsightMenuButtonComponent />
+                    </DashboardInsightMenuButtonPropsProvider>
                 )}
                 renderAfterContent={() => {
                     if (!isMenuOpen) {
@@ -91,15 +98,15 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                     }
 
                     return (
-                        <OptionsMenu
+                        <DashboardInsightMenuPropsProvider
+                            insight={insight}
                             widget={widget}
-                            hideOptionsMenu={() => setIsMenuOpen(false)}
-                            bubbleMessageKey={bubbleMessageKey}
-                            exportCSVDisabled={!exportCSVEnabled}
-                            onExportCSV={onExportCSVWrapped}
-                            exportXLSXDisabled={!exportXLSXEnabled}
-                            onExportXLSX={onExportXLSXWrapped}
-                        />
+                            isOpen={isMenuOpen}
+                            onClose={closeMenu}
+                            items={menuItems}
+                        >
+                            <InsightMenuComponent />
+                        </DashboardInsightMenuPropsProvider>
                     );
                 }}
             >

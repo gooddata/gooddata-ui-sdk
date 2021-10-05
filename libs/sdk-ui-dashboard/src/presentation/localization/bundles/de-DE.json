@@ -119,5 +119,7 @@
     "options.menu.export.XLSX": "XLSX",
     "options.menu.unsupported.error": "Die Betrachtung kann momentan nicht exportiert werden. Versuchen Sie andere Filter anzuwenden bzw. andere Messungen oder Attribute.",
     "options.menu.unsupported.loading": "Die Betrachtung kann momentan nicht exportiert werden. ",
-    "export.defaultTitle": "Betrachtung ohne Namen"
+    "export.defaultTitle": "Betrachtung ohne Namen",
+    "widget.options.menu.exportToCSV": "Als CSV exportieren",
+    "widget.options.menu.exportToXLSX": "Nach XLSX exportieren"
 }

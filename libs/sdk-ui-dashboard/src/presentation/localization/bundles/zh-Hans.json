@@ -119,5 +119,7 @@
     "options.menu.export.XLSX": "XLSX",
     "options.menu.unsupported.error": "目前无法导出此洞察。请使用其他筛选器，或使用其他度量或属性。",
     "options.menu.unsupported.loading": "目前无法导出此洞察。",
-    "export.defaultTitle": "无标题洞察"
+    "export.defaultTitle": "无标题洞察",
+    "widget.options.menu.exportToCSV": "导出至 CSV",
+    "widget.options.menu.exportToXLSX": "导出为 XLSX"
 }
