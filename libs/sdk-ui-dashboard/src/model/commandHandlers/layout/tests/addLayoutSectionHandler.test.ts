@@ -80,7 +80,10 @@ describe("add layout section handler", () => {
                 addLayoutSection(0, undefined, [TestKpiPlaceholderItem, TestInsightPlaceholderItem]),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
-            expect(event.payload.section).toMatchSnapshot();
+            expect(event.payload.section.items).toMatchObject([
+                TestKpiPlaceholderItem,
+                TestInsightPlaceholderItem,
+            ]);
 
             const layout = selectLayout(Tester.state());
             expect(layout.sections[0]).toEqual(event.payload.section);

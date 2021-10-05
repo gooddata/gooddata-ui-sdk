@@ -90,9 +90,9 @@ describe("replace section item handler", () => {
             );
 
             expect(event.payload.previousItem).toEqual(SecondSectionFirstItem);
-            expect(event.payload.items).toEqual([TestKpiPlaceholderItem]);
+            expect(event.payload.items).toMatchObject([TestKpiPlaceholderItem]);
             const section = selectLayout(Tester.state()).sections[1];
-            expect(section.items).toEqual([TestKpiPlaceholderItem, SecondSectionSecondItem]);
+            expect(section.items).toMatchObject([TestKpiPlaceholderItem, SecondSectionSecondItem]);
         });
 
         it("should replace existing item in section with single item", async () => {
@@ -102,9 +102,9 @@ describe("replace section item handler", () => {
             );
 
             expect(event.payload.previousItem).toEqual(ThirdSectionFirstItem);
-            expect(event.payload.items).toEqual([TestKpiPlaceholderItem]);
+            expect(event.payload.items).toMatchObject([TestKpiPlaceholderItem]);
             const section = selectLayout(Tester.state()).sections[2];
-            expect(section.items).toEqual([TestKpiPlaceholderItem]);
+            expect(section.items).toMatchObject([TestKpiPlaceholderItem]);
         });
 
         it("should replace existing item and store previous item in stash", async () => {
@@ -135,7 +135,7 @@ describe("replace section item handler", () => {
             expect(event.payload.previousItem).toEqual(SecondSectionSecondItem);
             expect(event.payload.items).toEqual([SecondSectionFirstItem]);
             const section = selectLayout(Tester.state()).sections[1];
-            expect(section.items).toEqual([TestKpiPlaceholderItem, SecondSectionFirstItem]);
+            expect(section.items).toMatchObject([TestKpiPlaceholderItem, SecondSectionFirstItem]);
         });
 
         it("should resolve stashed item first, then overwrite stash with new item", async () => {
@@ -217,7 +217,7 @@ describe("replace section item handler", () => {
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );
 
-            expect(lastReplaceUndone.payload.layout.sections[1].items).toEqual([
+            expect(lastReplaceUndone.payload.layout.sections[1].items).toMatchObject([
                 TestKpiPlaceholderItem,
                 SecondSectionSecondItem,
             ]);

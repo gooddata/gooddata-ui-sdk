@@ -42,36 +42,3 @@ Object {
   "type": "IDashboardLayoutSection",
 }
 `;
-
-exports[`add layout section handler for an empty dashboard should add a new section and initialize its items 1`] = `
-Object {
-  "header": undefined,
-  "items": Array [
-    Object {
-      "size": Object {
-        "xl": Object {
-          "gridWidth": 2,
-        },
-      },
-      "type": "IDashboardLayoutItem",
-      "widget": Object {
-        "customType": "kpiPlaceholder",
-        "type": "customWidget",
-      },
-    },
-    Object {
-      "size": Object {
-        "xl": Object {
-          "gridWidth": 2,
-        },
-      },
-      "type": "IDashboardLayoutItem",
-      "widget": Object {
-        "customType": "insightPlaceholder",
-        "type": "customWidget",
-      },
-    },
-  ],
-  "type": "IDashboardLayoutSection",
-}
-`;
