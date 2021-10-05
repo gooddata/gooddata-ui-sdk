@@ -36,6 +36,7 @@ options = {
             "src/presentation/saveAs/types.ts",
             "src/presentation/topBar/types.ts",
             "src/presentation/widget/types.ts",
+            "src/model",
         ]),
         depCruiser.moduleWithDependencies("dialogs", "src/presentation/dialogs", [
             "src/_staging/*",
@@ -56,6 +57,7 @@ options = {
             "src/presentation/localization",
         ]),
         depCruiser.moduleWithDependencies("layout", "src/presentation/layout", [
+            "src/_staging/*",
             "src/model",
             "src/presentation/constants",
             "src/presentation/dashboardContexts",
