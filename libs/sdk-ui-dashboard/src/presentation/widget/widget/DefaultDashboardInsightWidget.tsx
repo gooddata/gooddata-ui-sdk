@@ -2,11 +2,11 @@
 import React, { useCallback, useState } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { areObjRefsEqual, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { insightVisualizationUrl } from "@gooddata/sdk-model";
 import { IInsightWidget, ScreenSize, widgetTitle } from "@gooddata/sdk-backend-spi";
 import { OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
 
-import { selectInsights, selectExecutionResultByRef, useDashboardSelector } from "../../../model";
+import { selectExecutionResultByRef, useDashboardSelector, selectInsightsMap } from "../../../model";
 import {
     DashboardItem,
     DashboardItemHeadline,
@@ -36,11 +36,11 @@ interface IDefaultDashboardInsightWidgetProps {
 const DefaultDashboardInsightWidgetCore: React.FC<
     IDefaultDashboardInsightWidgetProps & WrappedComponentProps
 > = ({ widget, screen, onError, onExportReady, onLoadingChanged, intl }) => {
-    const insights = useDashboardSelector(selectInsights);
+    const insights = useDashboardSelector(selectInsightsMap);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const insight = insights.find((i) => areObjRefsEqual(i.insight.ref, widget.insight))!;
+    const insight = insights.get(widget.insight)!;
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
 
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));

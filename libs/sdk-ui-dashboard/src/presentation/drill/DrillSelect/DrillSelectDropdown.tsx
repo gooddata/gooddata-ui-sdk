@@ -14,16 +14,17 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
-import { IInsight, insightRef, insightTitle, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { IInsight, insightTitle, ObjRef } from "@gooddata/sdk-model";
 import { isDrillToUrl } from "../types";
 import { DrillSelectListBody } from "./DrillSelectListBody";
 import { getDrillDownAttributeTitle, getTotalDrillToUrlCount } from "../utils/drillDownUtils";
 import { DrillSelectContext, DrillType, DrillSelectItem } from "./types";
-import { useDashboardSelector, selectListedDashboards } from "../../../model";
+import { useDashboardSelector, selectListedDashboards, selectInsightsMap } from "../../../model";
 import { dashboardMatch } from "../utils/dashboardPredicate";
-import { selectDashboardTitle, selectInsights } from "../../../model";
+import { selectDashboardTitle } from "../../../model";
 import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;
@@ -38,7 +39,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) =
     const intl = useIntl();
     const listedDashboards = useDashboardSelector(selectListedDashboards);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
-    const insights = useDashboardSelector(selectInsights);
+    const insights = useDashboardSelector(selectInsightsMap);
 
     const drillSelectItems = useMemo(
         () =>
@@ -78,7 +79,7 @@ const getDashboardTitle = (dashboardRef: ObjRef, dashboardList: IListedDashboard
 export const createDrillSelectItems = (
     drillDefinitions: DashboardDrillDefinition[],
     drillEvent: IDrillEvent,
-    insights: IInsight[],
+    insights: ObjRefMap<IInsight>,
     dashboardList: IListedDashboard[],
     dashboardTitle: string,
     intl: IntlShape,
@@ -103,9 +104,7 @@ export const createDrillSelectItems = (
             };
         }
         if (isDrillToInsight(drillDefinition)) {
-            const targetInsight = insights.find((i) =>
-                areObjRefsEqual(drillDefinition.target, insightRef(i)),
-            );
+            const targetInsight = insights.get(drillDefinition.target);
             const title = targetInsight && insightTitle(targetInsight);
 
             return {

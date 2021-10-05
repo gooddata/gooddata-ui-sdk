@@ -12,8 +12,8 @@ import {
     isKpiWidget,
     IDashboardWidget,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IInsight, areObjRefsEqual } from "@gooddata/sdk-model";
-import { selectInsights, selectSettings, useDashboardSelector } from "../../model";
+import { IInsight } from "@gooddata/sdk-model";
+import { selectInsightsMap, selectSettings, useDashboardSelector } from "../../model";
 import { DashboardWidgetPropsProvider, DashboardWidget, DashboardWidgetProps } from "../widget";
 import {
     getDashboardLayoutItemHeight,
@@ -30,12 +30,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     Pick<DashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
 > = (props) => {
     const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError } = props;
-    const insights = useDashboardSelector(selectInsights);
+    const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
-
-    const getInsightByRef = (insightRef: ObjRef): IInsight | undefined => {
-        return insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));
-    };
 
     let widgetType: AnalyticalWidgetType;
     let insight: IInsight;
@@ -49,7 +45,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
         widgetType = getWidgetType(widget);
     }
     if (isInsightWidget(widget)) {
-        insight = getInsightByRef(widget.insight)!;
+        insight = insights.get(widget.insight)!;
         content = insight;
     }
     if (isKpiWidget(widget)) {
