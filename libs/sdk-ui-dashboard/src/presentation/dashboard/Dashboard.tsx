@@ -47,6 +47,8 @@ import {
     renameDashboard,
     selectDashboardLoading,
     selectDashboardTitle,
+    selectFilterBarExpanded,
+    selectFilterBarHeight,
     selectFilterContextFilters,
     selectIsLayoutEmpty,
     selectIsSaveAsDialogOpen,
@@ -133,6 +135,9 @@ const useTopBar = () => {
         onTitleChanged,
     };
 };
+
+// TODO: this will probably need to be customizable so that custom filter components work
+const DEFAULT_FILTER_BAR_HEIGHT = 58;
 
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
@@ -318,10 +323,33 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     );
 };
 
-const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const locale = useDashboardSelector(selectLocale);
+const DashboardMainContent: React.FC<IDashboardProps> = () => {
+    const isFilterBarExpanded = useDashboardSelector(selectFilterBarExpanded);
+    const filterBarHeight = useDashboardSelector(selectFilterBarHeight);
 
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
+
+    const dashSectionStyles = useMemo(
+        () => ({
+            marginTop: isFilterBarExpanded ? filterBarHeight - DEFAULT_FILTER_BAR_HEIGHT + "px" : undefined,
+            transition: "margin-top 0.2s",
+        }),
+        [isFilterBarExpanded, filterBarHeight],
+    );
+
+    return (
+        <div className="gd-flex-item-stretch dash-section dash-section-kpis" style={dashSectionStyles}>
+            <div className="gd-flex-container root-flex-maincontent">
+                <DashboardLayoutPropsProvider onFiltersChange={onFiltersChange}>
+                    <DashboardLayout />
+                </DashboardLayoutPropsProvider>
+            </div>
+        </div>
+    );
+};
+
+const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+    const locale = useDashboardSelector(selectLocale);
 
     return (
         <IntlWrapper locale={locale}>
@@ -329,13 +357,7 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
                 <div className="gd-dash-header-wrapper">
                     <DashboardHeader {...props} />
                 </div>
-                <div className="gd-flex-item-stretch dash-section dash-section-kpis">
-                    <div className="gd-flex-container root-flex-maincontent">
-                        <DashboardLayoutPropsProvider onFiltersChange={onFiltersChange}>
-                            <DashboardLayout />
-                        </DashboardLayoutPropsProvider>
-                    </div>
-                </div>
+                <DashboardMainContent />
             </div>
         </IntlWrapper>
     );

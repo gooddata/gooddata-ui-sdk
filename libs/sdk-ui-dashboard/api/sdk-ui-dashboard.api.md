@@ -3398,6 +3398,12 @@ export const selectExecutionResult: (state: DashboardState, id: string | number)
 // @alpha (undocumented)
 export const selectExecutionResultByRef: (ref: ObjRef) => OutputSelector<DashboardState, IExecutionResultEnvelope | undefined, (res: Dictionary<IExecutionResultEnvelope>) => IExecutionResultEnvelope | undefined>;
 
+// @alpha (undocumented)
+export const selectFilterBarExpanded: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @alpha (undocumented)
+export const selectFilterBarHeight: OutputSelector<DashboardState, number, (res: UiState) => number>;
+
 // @alpha
 export const selectFilterContextAttributeFilters: OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem[]) => IDashboardAttributeFilter[]>;
 
@@ -3577,6 +3583,14 @@ openScheduleEmailDialog: CaseReducer<UiState, AnyAction>;
 closeScheduleEmailDialog: CaseReducer<UiState, AnyAction>;
 openSaveAsDialog: CaseReducer<UiState, AnyAction>;
 closeSaveAsDialog: CaseReducer<UiState, AnyAction>;
+setFilterBarHeight: CaseReducer<UiState, {
+payload: number;
+type: string;
+}>;
+setFilterBarExpanded: CaseReducer<UiState, {
+payload: boolean;
+type: string;
+}>;
 }>;
 
 // @alpha (undocumented)
@@ -3586,6 +3600,10 @@ export type UiState = {
     };
     saveAsDialog: {
         open: boolean;
+    };
+    filterBar: {
+        height: number;
+        expanded: boolean;
     };
 };
 

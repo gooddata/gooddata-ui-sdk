@@ -10,6 +10,10 @@ export type UiState = {
     saveAsDialog: {
         open: boolean;
     };
+    filterBar: {
+        height: number;
+        expanded: boolean;
+    };
 };
 
 export const uiInitialState: UiState = {
@@ -18,5 +22,9 @@ export const uiInitialState: UiState = {
     },
     saveAsDialog: {
         open: false,
+    },
+    filterBar: {
+        height: 58,
+        expanded: false,
     },
 };

@@ -157,7 +157,12 @@ export {
 } from "./store/executionResults/executionResultsSelectors";
 export { IExecutionResultEnvelope } from "./store/executionResults/types";
 export { UiState } from "./store/ui/uiState";
-export { selectIsScheduleEmailDialogOpen, selectIsSaveAsDialogOpen } from "./store/ui/uiSelectors";
+export {
+    selectIsScheduleEmailDialogOpen,
+    selectIsSaveAsDialogOpen,
+    selectFilterBarExpanded,
+    selectFilterBarHeight,
+} from "./store/ui/uiSelectors";
 export { uiActions } from "./store/ui";
 
 export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";

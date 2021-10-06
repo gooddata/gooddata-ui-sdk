@@ -20,3 +20,13 @@ export const selectIsScheduleEmailDialogOpen = createSelector(
  * @alpha
  */
 export const selectIsSaveAsDialogOpen = createSelector(selectSelf, (state) => state.saveAsDialog.open);
+
+/**
+ * @alpha
+ */
+export const selectFilterBarHeight = createSelector(selectSelf, (state) => state.filterBar.height);
+
+/**
+ * @alpha
+ */
+export const selectFilterBarExpanded = createSelector(selectSelf, (state) => state.filterBar.expanded);
