@@ -27,7 +27,6 @@ import {
 } from "@gooddata/sdk-ui";
 import { createMemoizedSelector } from "../_infra/selectors";
 import { DashboardDrillDefinition } from "../../../types";
-/////
 import { selectWidgetDrills } from "../layout/layoutSelectors";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors";
 import {
@@ -155,7 +154,7 @@ function getDrillDefinitionsWithPredicates(
 /**
  * @internal
  */
-export const selectInsightWidgetImplicitDrillDownsByRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectImplicitDrillsDownByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectDrillTargetsByWidgetRef(ref),
         selectAttributesWithDrillDown,
@@ -178,7 +177,7 @@ export const selectInsightWidgetImplicitDrillDownsByRef = createMemoizedSelector
 /**
  * @internal
  */
-export const selectInsightWidgetImplicitDrillToUrlByRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectImplicitDrillsToUrlByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectDrillTargetsByWidgetRef(ref),
         selectAttributesWithDisplayFormLink,
@@ -198,72 +197,68 @@ export const selectInsightWidgetImplicitDrillToUrlByRef = createMemoizedSelector
 /**
  * @internal
  */
-export const selectInsightWidgetImplicitDrillsByRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectConfiguredDrillsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(selectWidgetDrills(ref), (drills = []) => {
         return getDrillDefinitionsWithPredicates(drills);
     }),
 );
 
+const selectImplicitDrillToUrlPredicates = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectImplicitDrillsToUrlByWidgetRef(ref), (drillToUrlDrills) => {
+        return flatMap(drillToUrlDrills, (drill) => drill.predicates);
+    }),
+);
+
+const selectImplicitDrillDownPredicates = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectImplicitDrillsDownByWidgetRef(ref), (drillDownDrills) => {
+        return flatMap(drillDownDrills, (drill) => drill.predicates);
+    }),
+);
+
+const selectConfiguredDrillPredicates = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectConfiguredDrillsByWidgetRef(ref), (configuredDrills = []) => {
+        return flatMap(configuredDrills, (drill) => drill.predicates);
+    }),
+);
+
 /**
  * @internal
  */
-export const selectInsightWidgetImplicitDrillsAndDrillDownsByRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectConfiguredAndImplicitDrillsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
-        selectInsightWidgetImplicitDrillsByRef(ref),
-        selectInsightWidgetImplicitDrillDownsByRef(ref),
-        selectInsightWidgetImplicitDrillToUrlByRef(ref),
-        (widgetImplicitDrills, widgetImplicitDrillDownDrills, widgetImplicitDrillToUrlDrills) => {
-            return [
-                ...widgetImplicitDrills,
-                ...widgetImplicitDrillDownDrills,
-                ...widgetImplicitDrillToUrlDrills,
-            ];
+        selectConfiguredDrillsByWidgetRef(ref),
+        selectImplicitDrillsDownByWidgetRef(ref),
+        selectImplicitDrillsToUrlByWidgetRef(ref),
+        (configuredDrills, implicitDrillDownDrills, implicitDrillToUrlDrills) => {
+            return [...configuredDrills, ...implicitDrillDownDrills, ...implicitDrillToUrlDrills];
         },
     ),
 );
 
-const selectInsightWidgetDrilImplicitDrillToUrlPredicates = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(selectInsightWidgetImplicitDrillToUrlByRef(ref), (widgetDrillDownImplicitDrills) => {
-        return flatMap(widgetDrillDownImplicitDrills, (implicitDrill) => implicitDrill.predicates);
-    }),
-);
-
-const selectInsightWidgetDrillDownImplicitDrillPredicates = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(selectInsightWidgetImplicitDrillDownsByRef(ref), (widgetDrillDownImplicitDrills) => {
-        return flatMap(widgetDrillDownImplicitDrills, (implicitDrill) => implicitDrill.predicates);
-    }),
-);
-
-const selectInsightWidgetImplicitDrillPredicates = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(selectInsightWidgetImplicitDrillsByRef(ref), (widgetImplicitDrills = []) => {
-        return flatMap(widgetImplicitDrills, (implicitDrill) => implicitDrill.predicates);
-    }),
-);
-
 /**
  * @internal
  */
-export const selectInsightWidgetDrillableItems = createMemoizedSelector((ref: ObjRef) =>
+export const selectDrillableItemsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectDisableDefaultDrills,
         selectDrillableItems,
-        selectInsightWidgetImplicitDrillPredicates(ref),
-        selectInsightWidgetDrillDownImplicitDrillPredicates(ref),
-        selectInsightWidgetDrilImplicitDrillToUrlPredicates(ref),
+        selectConfiguredDrillPredicates(ref),
+        selectImplicitDrillDownPredicates(ref),
+        selectImplicitDrillToUrlPredicates(ref),
         (
             disableDefaultDrills,
             drillableItems,
-            widgetImplicitDrills,
-            widgetImplicitDrillDownDrills,
-            widgetDrilImplicitDrillToUrl,
+            configuredDrills,
+            implicitDrillDownDrills,
+            implicitDrillToUrlDrills,
         ) => {
             const resolvedDrillableItems = [...drillableItems];
 
             if (!disableDefaultDrills) {
                 resolvedDrillableItems.push(
-                    ...widgetImplicitDrills,
-                    ...widgetImplicitDrillDownDrills,
-                    ...widgetDrilImplicitDrillToUrl,
+                    ...configuredDrills,
+                    ...implicitDrillDownDrills,
+                    ...implicitDrillToUrlDrills,
                 );
             }
 
@@ -279,7 +274,7 @@ export const selectInsightWidgetDrillableItems = createMemoizedSelector((ref: Ob
 /**
  * @internal
  */
-export const selectImplicitDrillDownsByAvailableDrillTargets = createMemoizedSelector(
+export const selectImplicitDrillsByAvailableDrillTargets = createMemoizedSelector(
     (availableDrillTargets: IAvailableDrillTargets | undefined) =>
         createSelector(
             selectAttributesWithDrillDown,
@@ -306,7 +301,7 @@ export const selectImplicitDrillDownsByAvailableDrillTargets = createMemoizedSel
 export const selectDrillableItemsByAvailableDrillTargets = createMemoizedSelector(
     (availableDrillTargets: IAvailableDrillTargets | undefined) =>
         createSelector(
-            selectImplicitDrillDownsByAvailableDrillTargets(availableDrillTargets),
+            selectImplicitDrillsByAvailableDrillTargets(availableDrillTargets),
             (implicitDrillDowns) => {
                 const drillableItems = flatMap(
                     implicitDrillDowns,

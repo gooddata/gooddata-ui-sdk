@@ -3271,6 +3271,12 @@ export const selectColorPalette: OutputSelector<DashboardState, IColorPalette, (
 // @alpha
 export const selectConfig: OutputSelector<DashboardState, ResolvedDashboardConfig, (res: ConfigState) => ResolvedDashboardConfig>;
 
+// @internal (undocumented)
+export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: IImplicitDrillWithPredicates[], res3: IImplicitDrillWithPredicates[]) => IImplicitDrillWithPredicates[]>;
+
+// @internal (undocumented)
+export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res: IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined) => IImplicitDrillWithPredicates[]>;
+
 // @alpha
 export const selectDashboardDescription: OutputSelector<DashboardState, string, (res: Pick<IDashboard, "title" | "description" | "tags">) => string>;
 
@@ -3341,6 +3347,9 @@ export const selectDrillableItems: OutputSelector<DashboardState, ExplicitDrill[
 // @internal (undocumented)
 export const selectDrillableItemsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined) => OutputSelector<DashboardState, IHeaderPredicate[], (res: IImplicitDrillWithPredicates[]) => IHeaderPredicate[]>;
 
+// @internal (undocumented)
+export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, ExplicitDrill[], (res1: boolean, res2: ExplicitDrill[], res3: IHeaderPredicate[], res4: IHeaderPredicate[], res5: IHeaderPredicate[]) => ExplicitDrill[]>;
+
 // @alpha
 export const selectDrillTargets: OutputSelector<DashboardState, ObjRefMap<IDrillTargets>, (res: IDrillTargets[]) => ObjRefMap<IDrillTargets>>;
 
@@ -3405,7 +3414,10 @@ export const selectFilterContextFilters: OutputSelector<DashboardState, FilterCo
 export const selectFilterContextIdentity: OutputSelector<DashboardState, IDashboardObjectIdentity | undefined, (res: FilterContextState) => IDashboardObjectIdentity | undefined>;
 
 // @internal (undocumented)
-export const selectImplicitDrillDownsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: (ICatalogAttribute | ICatalogDateAttribute)[], res2: ICatalogAttribute[]) => IImplicitDrillWithPredicates[]>;
+export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: (ICatalogAttribute | ICatalogDateAttribute)[], res2: ICatalogAttribute[]) => IImplicitDrillWithPredicates[]>;
+
+// @internal (undocumented)
+export const selectImplicitDrillsDownByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: (ICatalogAttribute | ICatalogDateAttribute)[], res3: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @internal
 export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => OutputSelector<DashboardState, {
@@ -3429,18 +3441,6 @@ export const selectInsights: (state: DashboardState) => IInsight[];
 
 // @alpha
 export const selectInsightsMap: OutputSelector<DashboardState, ObjRefMap<IInsight>, (res1: IInsight[], res2: IBackendCapabilities) => ObjRefMap<IInsight>>;
-
-// @internal (undocumented)
-export const selectInsightWidgetDrillableItems: (ref: ObjRef) => OutputSelector<DashboardState, ExplicitDrill[], (res1: boolean, res2: ExplicitDrill[], res3: IHeaderPredicate[], res4: IHeaderPredicate[], res5: IHeaderPredicate[]) => ExplicitDrill[]>;
-
-// @internal (undocumented)
-export const selectInsightWidgetImplicitDrillDownsByRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: (ICatalogAttribute | ICatalogDateAttribute)[], res3: boolean) => IImplicitDrillWithPredicates[]>;
-
-// @internal (undocumented)
-export const selectInsightWidgetImplicitDrillsAndDrillDownsByRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: IImplicitDrillWithPredicates[], res3: IImplicitDrillWithPredicates[]) => IImplicitDrillWithPredicates[]>;
-
-// @internal (undocumented)
-export const selectInsightWidgetImplicitDrillsByRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res: IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined) => IImplicitDrillWithPredicates[]>;
 
 // @alpha (undocumented)
 export const selectIsDashboardSaving: OutputSelector<DashboardState, boolean, (res: SavingState) => boolean>;
