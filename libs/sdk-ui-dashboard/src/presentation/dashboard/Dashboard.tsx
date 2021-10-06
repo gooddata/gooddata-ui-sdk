@@ -81,6 +81,7 @@ import { ExportDialogProvider } from "../dialogs";
 import { downloadFile } from "../../_staging/fileUtils/downloadFile";
 import { DefaultSaveAsDialogInner, SaveAsDialog, SaveAsDialogPropsProvider } from "../saveAs";
 import { IInsight } from "@gooddata/sdk-model";
+import { DEFAULT_FILTER_BAR_HEIGHT } from "../constants";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -135,9 +136,6 @@ const useTopBar = () => {
         onTitleChanged,
     };
 };
-
-// TODO: this will probably need to be customizable so that custom filter components work
-const DEFAULT_FILTER_BAR_HEIGHT = 58;
 
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body

@@ -1,5 +1,7 @@
 // (C) 2021 GoodData Corporation
 
+import { DEFAULT_FILTER_BAR_HEIGHT } from "../../../presentation/constants";
+
 /**
  * @alpha
  */
@@ -24,7 +26,7 @@ export const uiInitialState: UiState = {
         open: false,
     },
     filterBar: {
-        height: 58,
+        height: DEFAULT_FILTER_BAR_HEIGHT,
         expanded: false,
     },
 };

@@ -3401,7 +3401,7 @@ export const selectExecutionResultByRef: (ref: ObjRef) => OutputSelector<Dashboa
 // @alpha (undocumented)
 export const selectFilterBarExpanded: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export const selectFilterBarHeight: OutputSelector<DashboardState, number, (res: UiState) => number>;
 
 // @alpha

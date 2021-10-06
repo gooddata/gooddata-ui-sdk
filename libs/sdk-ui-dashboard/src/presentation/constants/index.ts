@@ -2,3 +2,4 @@
 
 export * from "./zIndex";
 export * from "./layout";
+export * from "./filterBar";

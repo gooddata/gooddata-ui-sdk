@@ -12,9 +12,7 @@ import {
     useDashboardSelector,
 } from "../../../model";
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton";
-
-// TODO: this will probably need to be customizable so that custom filter components work
-const DEFAULT_FILTER_BAR_HEIGHT = 58;
+import { DEFAULT_FILTER_BAR_HEIGHT } from "../../constants";
 
 const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
     const dispatch = useDashboardDispatch();
