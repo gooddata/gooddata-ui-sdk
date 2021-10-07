@@ -15,14 +15,10 @@ function createCatalogue() {
     return new CatalogueModule(xhr, new ExecutionModule(xhr, new MetadataModule(xhr)));
 }
 
-function isRequestInit(request: fetchMock.MockRequest): request is RequestInit {
-    return !!(request as RequestInit).body !== undefined;
-}
-
 function getRequestBody() {
-    const request = fetchMock.lastOptions();
+    const request = fetchMock.lastOptions()!;
 
-    if (isRequestInit(request) && request.body) {
+    if (request?.body) {
         return JSON.parse(request.body.toString());
     }
 

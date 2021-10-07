@@ -243,10 +243,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/fetch-mock",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@types/history",
       "allowedCategories": [ "examples" ]
     },
