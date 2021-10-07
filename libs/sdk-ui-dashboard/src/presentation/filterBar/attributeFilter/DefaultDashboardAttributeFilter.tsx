@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 import { AttributeFilterButton, IAttributeDropdownBodyExtendedProps } from "@gooddata/sdk-ui-filters";
 
 import {
@@ -23,13 +23,11 @@ export const DefaultDashboardAttributeFilterInner = (): JSX.Element => {
     const { filter, onFilterChanged } = useDashboardAttributeFilterProps();
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
+    const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
 
     return (
         <AttributeFilterButton
-            // TODO: https://jira.intgdc.com/browse/RAIL-2174
-            // AttributeFilterButton is not updated after attribute filter elements change.
-            // Same issue is in the AttributeFilter.
-            filter={dashboardAttributeFilterToAttributeFilter(filter)}
+            filter={attributeFilter}
             onApply={(newFilter) => {
                 onFilterChanged(
                     attributeFilterToDashboardAttributeFilter(
