@@ -28,6 +28,13 @@ export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex
 /**
  * @internal
  */
+export interface IListStateProps {
+    selected: number;
+}
+
+/**
+ * @internal
+ */
 export interface IListProps<T> {
     className?: string;
 
@@ -57,12 +64,39 @@ const HALF_ROW = 0.5;
 /**
  * @internal
  */
-export class List<T> extends Component<IListProps<T>> {
+export type ListProps<T> = IListProps<T> & IListStateProps;
+
+/**
+ * @internal
+ */
+export class List<T> extends Component<IListProps<T>, IListStateProps> {
+    constructor(props: ListProps<T>) {
+        super(props);
+
+        this.state = {
+            selected: null,
+        };
+    }
+
     public componentWillUnmount(): void {
         this.enablePageScrolling();
     }
 
+    public componentDidMount() {
+        const { scrollToSelected, items } = this.props;
+
+        if (scrollToSelected) {
+            items.forEach((item: any, index) => {
+                if (item && item.selected) {
+                    this.setState({ selected: index + 1 });
+                }
+            });
+        }
+    }
+
     public render(): JSX.Element {
+        const { selected } = this.state;
+
         const {
             className = "",
 
