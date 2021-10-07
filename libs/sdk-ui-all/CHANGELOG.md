@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 26 Aug 2021 13:55:29 GMT and should not be manually modified.
+This log was last generated on Thu, 07 Oct 2021 11:37:01 GMT and should not be manually modified.
+
+## 8.6.0
+Thu, 07 Oct 2021 11:37:01 GMT
+
+### Updates
+
+- Opt-in support for loading user information when loading insights and dashboards was added.
+- Support for data sampling in the charts and the DashboardView component through execution configuration was added (available only in GoodData.CN for Vertica).
 
 ## 8.5.1
 Thu, 26 Aug 2021 13:55:29 GMT

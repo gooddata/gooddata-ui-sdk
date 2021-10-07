@@ -2,6 +2,21 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.6.0",
+      "tag": "@gooddata/sdk-ui-all_v8.6.0",
+      "date": "Thu, 07 Oct 2021 11:37:01 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Opt-in support for loading user information when loading insights and dashboards was added."
+          },
+          {
+            "comment": "Support for data sampling in the charts and the DashboardView component through execution configuration was added (available only in GoodData.CN for Vertica)."
+          }
+        ]
+      }
+    },
+    {
       "version": "8.5.1",
       "tag": "@gooddata/sdk-ui-all_v8.5.1",
       "date": "Thu, 26 Aug 2021 13:55:29 GMT",
