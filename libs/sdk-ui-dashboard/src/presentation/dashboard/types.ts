@@ -35,8 +35,11 @@ import {
 } from "../topBar";
 import {
     CustomDashboardInsightComponent,
+    CustomDashboardInsightMenuButtonComponent,
+    CustomDashboardInsightMenuComponent,
     CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
+    IInsightMenuItem,
 } from "../widget";
 import { CustomSaveAsDialogComponent } from "../saveAs";
 
@@ -54,6 +57,32 @@ export type InsightComponentProvider = (
     insight: IInsight,
     widget: IInsightWidget,
 ) => CustomDashboardInsightComponent | undefined;
+
+/**
+ * @alpha
+ */
+export type InsightMenuButtonComponentProvider = (
+    insight: IInsight,
+    widget: IInsightWidget,
+) => CustomDashboardInsightMenuButtonComponent | undefined;
+
+/**
+ * @alpha
+ */
+export type InsightMenuComponentProvider = (
+    insight: IInsight,
+    widget: IInsightWidget,
+) => CustomDashboardInsightMenuComponent | undefined;
+
+/**
+ * @alpha
+ */
+export type InsightMenuItemsProvider = (
+    insight: IInsight,
+    widget: IInsightWidget,
+    defaultItems: IInsightMenuItem[],
+    closeMenu: () => void,
+) => IInsightMenuItem[];
 
 /**
  * @alpha
@@ -133,7 +162,7 @@ export interface IDashboardCustomComponentProps {
      * Optionally specify function to obtain custom component to use for rendering an insight.
      *
      * -  If not provided, the default implementation {@link DefaultDashboardInsight} will be used.
-     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsight}.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsight} will be used.
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
      *
@@ -142,6 +171,36 @@ export interface IDashboardCustomComponentProps {
      * To fall back to the default implementation, use the {@link DefaultDashboardInsight} component.
      */
     InsightComponentProvider?: InsightComponentProvider;
+
+    /**
+     * Optionally specify function to obtain custom component to use for rendering an insight menu button.
+     *
+     * -  If not provided, the default implementation {@link DefaultDashboardInsightMenuButton} will be used
+     *    if insightMenuItemsProvider property is specified, otherwise {@link LegacyDashboardInsightMenuButton} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsightMenuButton} will be used.
+     *    This is useful if you want to customize just one particular insight and keep default rendering for
+     *    the other insights.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useDashboardInsightMenuButtonProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultDashboardInsightMenuButton} component.
+     */
+    InsightMenuButtonComponentProvider?: InsightMenuButtonComponentProvider;
+
+    /**
+     * Optionally specify function to obtain custom component to use for rendering an insight menu.
+     *
+     * -  If not provided, the default implementation {@link DefaultDashboardInsightMenu} will be used
+     *    if insightMenuItemsProvider property is specified, otherwise {@link LegacyDashboardInsightMenu} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsightMenu} will be used.
+     *    This is useful if you want to customize just one particular insight and keep default rendering for
+     *    the other insights.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useDashboardInsightMenuProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultDashboardInsightMenu} component.
+     */
+    InsightMenuComponentProvider?: InsightMenuComponentProvider;
 
     /**
      * Optionally specify function to obtain custom component to use for rendering a KPI.
@@ -266,6 +325,14 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
      * Optionally provide custom configuration for the Menu button.
      */
     menuButtonConfig?: IMenuButtonConfiguration;
+
+    /**
+     * Optionally provide custom provider to change items rendered in insight menus.
+     *
+     * @remarks
+     * If the function returns an empty array, the menu will not be rendered at all.
+     */
+    insightMenuItemsProvider?: InsightMenuItemsProvider;
 }
 
 /**

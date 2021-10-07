@@ -5,6 +5,8 @@ import { IErrorProps, ILoadingProps, UnexpectedSdkError } from "@gooddata/sdk-ui
 import { DashboardLayoutProps } from "../layout/types";
 import {
     CustomDashboardInsightComponent,
+    CustomDashboardInsightMenuButtonComponent,
+    CustomDashboardInsightMenuComponent,
     CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
 } from "../widget/types";
@@ -34,6 +36,14 @@ interface IDashboardComponentsContext {
     LayoutComponent: React.ComponentType<DashboardLayoutProps>;
     WidgetComponentProvider: (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
     InsightComponentProvider: (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent;
+    InsightMenuButtonComponentProvider: (
+        insight: IInsight,
+        widget: IInsightWidget,
+    ) => CustomDashboardInsightMenuButtonComponent;
+    InsightMenuComponentProvider: (
+        insight: IInsight,
+        widget: IInsightWidget,
+    ) => CustomDashboardInsightMenuComponent;
     KpiComponentProvider: (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
     ButtonBarComponent: CustomButtonBarComponent;
     MenuButtonComponent: CustomMenuButtonComponent;
@@ -62,6 +72,8 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     LoadingComponent: ThrowMissingComponentError("LoadingComponent"),
     LayoutComponent: ThrowMissingComponentError("LayoutComponent"),
     InsightComponentProvider: ThrowMissingComponentError("InsightComponent"),
+    InsightMenuButtonComponentProvider: ThrowMissingComponentError("InsightMenuButtonComponent"),
+    InsightMenuComponentProvider: ThrowMissingComponentError("InsightMenuComponent"),
     KpiComponentProvider: ThrowMissingComponentError("KpiComponent"),
     WidgetComponentProvider: ThrowMissingComponentError("WidgetComponent"),
     ButtonBarComponent: ThrowMissingComponentError("ButtonBarComponent"),
@@ -85,10 +97,10 @@ export const useDashboardComponentsContext = (
     localComponentOverrides?: Partial<IDashboardComponentsContext>,
 ): IDashboardComponentsContext => {
     const globalComponents = useContext(DashboardComponentsContext);
-    return Object.keys(globalComponents).reduce((acc, key) => {
-        acc[key] = localComponentOverrides?.[key] ?? globalComponents[key];
-        return acc;
-    }, {} as IDashboardComponentsContext);
+    return {
+        ...globalComponents,
+        ...localComponentOverrides,
+    };
 };
 
 /**

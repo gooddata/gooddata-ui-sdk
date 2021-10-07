@@ -3,18 +3,18 @@ import React from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Item } from "@gooddata/sdk-ui-kit";
 
-interface IOptionsMenuItemProps {
+interface ILegacyInsightMenuItemProps {
     bubbleId: string;
     bubbleMessage?: string;
-    className: string;
+    className?: string;
     isDisabled?: boolean;
     title: string;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 const alignPoints: IAlignPoint[] = [{ align: "cl cr" }];
 
-export const OptionsMenuItem: React.FC<IOptionsMenuItemProps> = ({
+export const LegacyInsightMenuItem: React.FC<ILegacyInsightMenuItemProps> = ({
     bubbleId,
     className,
     isDisabled,

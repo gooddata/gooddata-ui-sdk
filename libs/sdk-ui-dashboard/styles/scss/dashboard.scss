@@ -372,6 +372,24 @@
     display: block;
 }
 
+.dash-item-action-widget-options {
+    &::before {
+        content: "...";
+        align-self: center;
+        position: relative;
+        top: -5px;
+        color: var(--gd-palette-complementary-7, #6d7680);
+        font-size: 22px;
+    }
+
+    &:hover,
+    &.dash-item-action-widget-options-active {
+        &::before {
+            color: $gd-color-white;
+        }
+    }
+}
+
 .dash-section {
     overflow: hidden;
     margin-bottom: 40px;
@@ -421,4 +439,16 @@
 .insight-view-visualization {
     flex: 1 1 auto;
     height: 100%;
+}
+
+.bubble.options-menu-bubble {
+    background-color: #fff;
+
+    .gd-menu-wrapper {
+        width: 105px;
+    }
+
+    .bubble-content {
+        padding: 0;
+    }
 }

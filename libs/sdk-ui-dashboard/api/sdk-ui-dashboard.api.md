@@ -80,6 +80,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
+import { IntlShape } from 'react-intl';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
@@ -476,6 +477,12 @@ export type CustomDashboardDateFilterComponent = ComponentType;
 
 // @alpha (undocumented)
 export type CustomDashboardInsightComponent = ComponentType;
+
+// @alpha (undocumented)
+export type CustomDashboardInsightMenuButtonComponent = ComponentType;
+
+// @alpha (undocumented)
+export type CustomDashboardInsightMenuComponent = ComponentType;
 
 // @alpha (undocumented)
 export type CustomDashboardKpiComponent = ComponentType;
@@ -965,6 +972,18 @@ export interface DashboardInitialized extends IDashboardEvent {
 
 // @internal (undocumented)
 export const DashboardInsight: () => JSX.Element;
+
+// @internal (undocumented)
+export const DashboardInsightMenu: () => JSX.Element;
+
+// @internal (undocumented)
+export const DashboardInsightMenuButton: () => JSX.Element;
+
+// @internal (undocumented)
+export const DashboardInsightMenuButtonPropsProvider: React_2.FC<IDashboardInsightMenuButtonProps>;
+
+// @internal (undocumented)
+export const DashboardInsightMenuPropsProvider: React_2.FC<IDashboardInsightMenuProps>;
 
 // @internal (undocumented)
 export const DashboardInsightPropsProvider: React_2.FC<IDashboardInsightProps>;
@@ -1570,6 +1589,18 @@ export const DefaultDashboardInsight: (props: IDashboardInsightProps) => JSX.Ele
 export const DefaultDashboardInsightInner: () => JSX.Element;
 
 // @internal (undocumented)
+export const DefaultDashboardInsightMenu: (props: IDashboardInsightMenuProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultDashboardInsightMenuButtonInner: () => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultDashboardInsightMenuInner: () => JSX.Element;
+
+// @internal (undocumented)
 export const DefaultDashboardKpi: (props: DashboardKpiProps) => JSX.Element;
 
 // @internal (undocumented)
@@ -1900,6 +1931,24 @@ export type FiltersInfo = {
 };
 
 // @internal (undocumented)
+export function getDefaultInsightMenuItems(intl: IntlShape, config: {
+    exportXLSXDisabled: boolean;
+    exportCSVDisabled: boolean;
+    onExportXLSX: () => void;
+    onExportCSV: () => void;
+    tooltipMessage: string;
+}): IInsightMenuItem[];
+
+// @internal (undocumented)
+export function getDefaultLegacyInsightMenuItems(intl: IntlShape, config: {
+    exportXLSXDisabled: boolean;
+    exportCSVDisabled: boolean;
+    onExportXLSX: () => void;
+    onExportCSV: () => void;
+    tooltipMessage: string;
+}): IInsightMenuItem[];
+
+// @internal (undocumented)
 export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string;
 
 // @alpha
@@ -1998,6 +2047,8 @@ export interface IDashboardCustomComponentProps {
     ErrorComponent?: ComponentType<IErrorProps>;
     FilterBarComponent?: CustomFilterBarComponent;
     InsightComponentProvider?: InsightComponentProvider;
+    InsightMenuButtonComponentProvider?: InsightMenuButtonComponentProvider;
+    InsightMenuComponentProvider?: InsightMenuComponentProvider;
     KpiComponentProvider?: KpiComponentProvider;
     LayoutComponent?: CustomDashboardLayoutComponent;
     LoadingComponent?: ComponentType<ILoadingProps>;
@@ -2011,6 +2062,7 @@ export interface IDashboardCustomComponentProps {
 
 // @alpha (undocumented)
 export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
+    insightMenuItemsProvider?: InsightMenuItemsProvider;
     menuButtonConfig?: IMenuButtonConfiguration;
 }
 
@@ -2095,6 +2147,34 @@ export interface IDashboardInsightCustomizer {
     withCustomDecorator(providerFactory: (next: InsightComponentProvider) => InsightComponentProvider): IDashboardInsightCustomizer;
     withCustomProvider(provider: InsightComponentProvider): IDashboardInsightCustomizer;
     withTag(tag: string, component: React_2.ComponentType): IDashboardInsightCustomizer;
+}
+
+// @internal (undocumented)
+export interface IDashboardInsightMenuButtonProps {
+    // (undocumented)
+    insight: IInsight;
+    // (undocumented)
+    isOpen: boolean;
+    // (undocumented)
+    items: IInsightMenuItem[];
+    // (undocumented)
+    onClick: () => void;
+    // (undocumented)
+    widget: IInsightWidget;
+}
+
+// @internal (undocumented)
+export interface IDashboardInsightMenuProps {
+    // (undocumented)
+    insight: IInsight;
+    // (undocumented)
+    isOpen: boolean;
+    // (undocumented)
+    items: IInsightMenuItem[];
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    widget: IInsightWidget;
 }
 
 // @internal (undocumented)
@@ -2275,6 +2355,35 @@ export interface IImplicitDrillWithPredicates {
 }
 
 // @alpha (undocumented)
+export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator;
+
+// @alpha (undocumented)
+export interface IInsightMenuItemButton {
+    className?: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    icon?: JSX.Element | string;
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    itemName: string;
+    // (undocumented)
+    onClick?: () => void;
+    tooltip?: string;
+    // (undocumented)
+    type: "button";
+}
+
+// @alpha (undocumented)
+export interface IInsightMenuItemSeparator {
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    type: "separator";
+}
+
+// @alpha (undocumented)
 export interface IMenuButtonConfiguration {
     additionalMenuItems?: ReadonlyArray<[number, IMenuButtonItem]>;
     menuItems?: ReadonlyArray<IMenuButtonItem>;
@@ -2359,6 +2468,15 @@ export type InsightDateDatasets = {
     readonly dateDatasetDisplayNames: Record<string, string>;
     readonly allAvailableDateDatasets: ICatalogDateDataset[];
 };
+
+// @alpha (undocumented)
+export type InsightMenuButtonComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuButtonComponent | undefined;
+
+// @alpha (undocumented)
+export type InsightMenuComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuComponent | undefined;
+
+// @alpha (undocumented)
+export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void) => IInsightMenuItem[];
 
 // @alpha (undocumented)
 export type InsightPlaceholderWidget = ICustomWidgetBase & {
@@ -2712,6 +2830,18 @@ export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> 
     // (undocumented)
     stash: LayoutStash;
 }
+
+// @internal (undocumented)
+export const LegacyDashboardInsightMenu: (props: IDashboardInsightMenuProps) => JSX.Element;
+
+// @internal (undocumented)
+export const LegacyDashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export const LegacyDashboardInsightMenuButtonInner: () => JSX.Element;
+
+// @internal (undocumented)
+export const LegacyDashboardInsightMenuInner: () => JSX.Element;
 
 // @alpha (undocumented)
 export type LoadingState = {
@@ -3992,6 +4122,12 @@ export const useDashboardEventDispatch: () => (eventBody: DashboardEventBody<Das
 
 // @alpha (undocumented)
 export const useDashboardEventsContext: () => IDashboardEventsContext;
+
+// @internal (undocumented)
+export const useDashboardInsightMenuButtonProps: () => IDashboardInsightMenuButtonProps;
+
+// @internal (undocumented)
+export const useDashboardInsightMenuProps: () => IDashboardInsightMenuProps;
 
 // @internal (undocumented)
 export const useDashboardInsightProps: () => IDashboardInsightProps;

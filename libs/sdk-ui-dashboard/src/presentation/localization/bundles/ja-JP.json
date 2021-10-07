@@ -119,5 +119,7 @@
     "options.menu.export.XLSX": "XLSX",
     "options.menu.unsupported.error": "現在、このインサイトはエクスポートできません。別のフィルターを適用するか、別の測定値や属性をご利用ください。",
     "options.menu.unsupported.loading": "現在、このインサイトはエクスポートできません。",
-    "export.defaultTitle": "無題の解析"
+    "export.defaultTitle": "無題の解析",
+    "widget.options.menu.exportToCSV": "CSV にエクスポート",
+    "widget.options.menu.exportToXLSX": "XLSX にエクスポート"
 }

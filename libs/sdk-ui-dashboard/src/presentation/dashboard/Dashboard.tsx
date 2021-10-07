@@ -17,6 +17,7 @@ import { useIntl } from "react-intl";
 import {
     DashboardComponentsProvider,
     DashboardConfigProvider,
+    DashboardCustomizationsProvider,
     ExportDialogContextProvider,
     useDashboardComponentsContext,
 } from "../dashboardContexts";
@@ -29,10 +30,16 @@ import {
     FilterBarPropsProvider,
 } from "../filterBar";
 import {
+    CustomDashboardInsightMenuButtonComponent,
+    CustomDashboardInsightMenuComponent,
     CustomDashboardWidgetComponent,
     DefaultDashboardInsightInner,
+    DefaultDashboardInsightMenuButtonInner,
+    DefaultDashboardInsightMenuInner,
     DefaultDashboardKpiInner,
     DefaultDashboardWidgetInner,
+    LegacyDashboardInsightMenuButtonInner,
+    LegacyDashboardInsightMenuInner,
 } from "../widget";
 import { DashboardLayout, DashboardLayoutPropsProvider, DefaultDashboardLayoutInner } from "../layout";
 import { IntlWrapper } from "../localization";
@@ -404,6 +411,30 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
         [props.InsightComponentProvider],
     );
 
+    const insightMenuButtonProvider = useCallback(
+        (insight: IInsight, widget: IInsightWidget): CustomDashboardInsightMenuButtonComponent => {
+            const userSpecified = props.InsightMenuButtonComponentProvider?.(insight, widget);
+            // if user customizes the items, always use the "new" default menu button
+            const FallbackDashboardInsightMenuButtonInner = props.insightMenuItemsProvider
+                ? DefaultDashboardInsightMenuButtonInner
+                : LegacyDashboardInsightMenuButtonInner;
+            return userSpecified ?? FallbackDashboardInsightMenuButtonInner;
+        },
+        [props.InsightMenuButtonComponentProvider],
+    );
+
+    const insightMenuProvider = useCallback(
+        (insight: IInsight, widget: IInsightWidget): CustomDashboardInsightMenuComponent => {
+            const userSpecified = props.InsightMenuComponentProvider?.(insight, widget);
+            // if user customizes the items, always use the "new" default menu
+            const FallbackDashboardInsightMenuInner = props.insightMenuItemsProvider
+                ? DefaultDashboardInsightMenuInner
+                : LegacyDashboardInsightMenuInner;
+            return userSpecified ?? FallbackDashboardInsightMenuInner;
+        },
+        [props.InsightMenuComponentProvider],
+    );
+
     const kpiProvider = useCallback(
         (kpi: ILegacyKpi, widget: IKpiWidget): CustomDashboardWidgetComponent => {
             const userSpecified = props.KpiComponentProvider?.(kpi, widget);
@@ -428,31 +459,37 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
         >
             <ToastMessageContextProvider>
                 <ExportDialogContextProvider>
-                    <DashboardComponentsProvider
-                        ErrorComponent={props.ErrorComponent ?? DefaultError}
-                        LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                        LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
-                        InsightComponentProvider={insightProvider}
-                        KpiComponentProvider={kpiProvider}
-                        WidgetComponentProvider={widgetProvider}
-                        ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
-                        MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
-                        TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
-                        TitleComponent={props.TitleComponent ?? DefaultTitleInner}
-                        ScheduledEmailDialogComponent={
-                            props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
-                        }
-                        SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialogInner}
-                        DashboardAttributeFilterComponentProvider={attributeFilterProvider}
-                        DashboardDateFilterComponent={
-                            props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
-                        }
-                        FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBarInner}
+                    <DashboardCustomizationsProvider
+                        insightMenuItemsProvider={props.insightMenuItemsProvider}
                     >
-                        <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
-                            <DashboardLoading {...props} />
-                        </DashboardConfigProvider>
-                    </DashboardComponentsProvider>
+                        <DashboardComponentsProvider
+                            ErrorComponent={props.ErrorComponent ?? DefaultError}
+                            LoadingComponent={props.LoadingComponent ?? DefaultLoading}
+                            LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
+                            InsightComponentProvider={insightProvider}
+                            InsightMenuButtonComponentProvider={insightMenuButtonProvider}
+                            InsightMenuComponentProvider={insightMenuProvider}
+                            KpiComponentProvider={kpiProvider}
+                            WidgetComponentProvider={widgetProvider}
+                            ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
+                            MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
+                            TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
+                            TitleComponent={props.TitleComponent ?? DefaultTitleInner}
+                            ScheduledEmailDialogComponent={
+                                props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
+                            }
+                            SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialogInner}
+                            DashboardAttributeFilterComponentProvider={attributeFilterProvider}
+                            DashboardDateFilterComponent={
+                                props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
+                            }
+                            FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBarInner}
+                        >
+                            <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
+                                <DashboardLoading {...props} />
+                            </DashboardConfigProvider>
+                        </DashboardComponentsProvider>
+                    </DashboardCustomizationsProvider>
                 </ExportDialogContextProvider>
             </ToastMessageContextProvider>
         </DashboardStoreProvider>

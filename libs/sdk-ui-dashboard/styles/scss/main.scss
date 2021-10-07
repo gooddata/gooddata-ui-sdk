@@ -11,3 +11,5 @@
 @import "export";
 @import "saveAsDialog";
 @import "loadingEqualizer";
+@import "configurationPanel"; // order is important here, configurationPanel must come before insightConfiguration ...
+@import "insightConfiguration";

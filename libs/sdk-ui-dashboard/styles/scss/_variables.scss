@@ -3,6 +3,19 @@
 @import "~@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables";
 @import "~@gooddata/sdk-ui-kit/styles/scss/variables";
 
+// CSS - variables
+$gd-palette-primary-base-t90: var(--gd-palette-primary-base-t90, transparentize($gd-color-highlight, 0.9));
+$gd-palette-primary-base-t85: var(--gd-palette-primary-base-t85, transparentize($gd-color-highlight, 0.85));
+$gd-palette-primary-base-t50: var(--gd-palette-primary-base-t50, transparentize($gd-color-highlight, 0.5));
+$gd-palette-primary-base-mix15-white: var(
+    --gd-palette-primary-base-mix15-white,
+    transparentize(mix($gd-color-highlight, $default-gd-color-text-light, 15%), 0.075)
+);
+$gd-palette-primary-dimmed50: var(
+    --gd-palette-primary-dimmed50,
+    mix($gd-color-highlight, $default-gd-color-white, 50%)
+);
+
 $item-border: 2px;
 $item-min-height: 178px;
 $item-inner-padding: 8px;
@@ -12,6 +25,9 @@ $item-headline-padding-vertical: 2px;
 $item-action-width: 36px;
 $widget-drop-shadow: none;
 $sidebar-width: 230px;
+
+$dialog-border: $default-bubble-light-border-base;
+$dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
 
 $transition-length: 0.2s;
 
