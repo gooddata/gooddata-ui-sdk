@@ -25,7 +25,7 @@ export {
     IInvertableListProps,
     IInvertableListRenderItemProps,
 } from "./InvertableList";
-export { List, IListProps, ListProps, IListStateProps, ScrollCallback, IRenderItemProps } from "./List";
+export { List, IListProps, ScrollCallback, IRenderItemProps } from "./List";
 export { MultiSelectList, IMultiSelectListProps, IMultiSelectRenderItemProps } from "./MultiSelectList";
 export {
     SingleSelectListItem,
