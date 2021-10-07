@@ -362,7 +362,7 @@ describe("execution", () => {
                             { headers: { "X-GDC-REQUEST": "foo" } },
                         )
                         .then(() => {
-                            const request = fetchMock.lastCall(matcher)[1] as RequestInit;
+                            const request = fetchMock.lastCall(matcher)![1]!;
                             expect(
                                 // type cast to narrow the type down to the one we know is used in this context
                                 (request.headers as Record<string, string>)?.["X-GDC-REQUEST"] ?? "",

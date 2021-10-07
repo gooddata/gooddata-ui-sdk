@@ -1,6 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import "isomorphic-fetch";
-import fetchMock, { MockRequest } from "fetch-mock";
+import fetchMock, { MockOptions } from "fetch-mock";
 import isPlainObject from "lodash/isPlainObject";
 
 import { handlePolling, originPackageHeaders, XhrModule, thisPackage } from "../xhr";
@@ -10,8 +10,8 @@ function isHashMap(obj: any): obj is { [t: string]: string } {
     return isPlainObject(obj);
 }
 
-export function getHeaderValue(request: MockRequest, name: string): string {
-    if (isHashMap(request.headers)) {
+export function getHeaderValue(request: MockOptions | RequestInit | undefined, name: string): string {
+    if (request && isHashMap(request.headers)) {
         return request.headers[name];
     }
 
@@ -73,7 +73,7 @@ describe("fetch", () => {
 
             createXhr().ajax("/some/url", { body: { foo: "bar" } });
 
-            const request = fetchMock.calls().matched[0][1] as RequestInit;
+            const request = fetchMock.calls()[0][1]!;
             expect(request.body).toBe('{"foo":"bar"}');
         });
 
@@ -270,7 +270,7 @@ describe("fetch", () => {
 
             fetchMock.get("/some/url", {
                 status: 202,
-                __redirectUrl: "/some/url2",
+                redirectUrl: "/some/url2",
             });
 
             return createXhr()
@@ -388,9 +388,9 @@ describe("fetch", () => {
                     },
                 })
                 .then(() => {
-                    const [url, settings] = fetchMock.lastCall("/url");
+                    const [url, settings] = fetchMock.lastCall("/url")!;
                     expect(url).toBe("/url");
-                    expect(settings.method).toBe("GET");
+                    expect(settings!.method).toBe("GET");
                     expect(getHeaderValue(settings, "Content-Type")).toBe("text/csv");
                 });
         });
@@ -404,9 +404,9 @@ describe("fetch", () => {
                     },
                 })
                 .then(() => {
-                    const [url, settings] = fetchMock.lastCall("/url");
+                    const [url, settings] = fetchMock.lastCall("/url")!;
                     expect(url).toBe("/url");
-                    expect(settings.method).toBe("POST");
+                    expect(settings!.method).toBe("POST");
                     expect(getHeaderValue(settings, "Content-Type")).toBe("text/csv");
                     expect((settings as RequestInit).body).toBe(JSON.stringify(data));
                 });
@@ -419,10 +419,10 @@ describe("fetch", () => {
 
             createXhr().ajax("/test1");
 
-            const [url, settings] = fetchMock.lastCall("/test1");
+            const [url, settings] = fetchMock.lastCall("/test1")!;
             expect(url).toBe("/test1");
-            expect(settings.credentials).toBe("same-origin");
-            expect(settings.mode).toBe("same-origin");
+            expect(settings!.credentials).toBe("same-origin");
+            expect(settings!.mode).toBe("same-origin");
         });
 
         it("should add domain before url", () => {
@@ -430,10 +430,10 @@ describe("fetch", () => {
 
             createXhr({ domain: "https://domain.tld" }).ajax("/test1");
 
-            const [url, settings] = fetchMock.lastCall("https://domain.tld/test1");
+            const [url, settings] = fetchMock.lastCall("https://domain.tld/test1")!;
             expect(url).toBe("https://domain.tld/test1");
-            expect(settings.credentials).toBe("include");
-            expect(settings.mode).toBe("cors");
+            expect(settings!.credentials).toBe("include");
+            expect(settings!.mode).toBe("cors");
         });
 
         it("should not double domain in settings url", () => {
@@ -441,10 +441,10 @@ describe("fetch", () => {
 
             createXhr({ domain: "https://domain.tld" }).ajax("https://domain.tld/test1");
 
-            const [url, settings] = fetchMock.lastCall("https://domain.tld/test1");
+            const [url, settings] = fetchMock.lastCall("https://domain.tld/test1")!;
             expect(url).toBe("https://domain.tld/test1");
-            expect(settings.credentials).toEqual("include");
-            expect(settings.mode).toEqual("cors");
+            expect(settings!.credentials).toEqual("include");
+            expect(settings!.mode).toEqual("cors");
         });
     });
 

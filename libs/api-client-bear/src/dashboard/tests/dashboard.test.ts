@@ -65,9 +65,9 @@ describe("exportDashboard", () => {
                 { pollStep: 1 },
             );
 
-            const [, options] = fetchMock.lastCall(endpoint);
-            expect(options.method).toBe("POST");
-            expect(JSON.parse(options.body as string)).toEqual({
+            const [, options] = fetchMock.lastCall(endpoint)!;
+            expect(options!.method).toBe("POST");
+            expect(JSON.parse(options!.body as string)).toEqual({
                 dashboardExport: {
                     dashboardUri: "/gdc/md/testProjectId/obj/dashboard123",
                     filters: [
@@ -118,6 +118,10 @@ describe("exportDashboard", () => {
     });
 
     describe("failed pdf export", () => {
+        afterEach(() => {
+            fetchMock.restore();
+        });
+
         it("should return error when send export request fail", async () => {
             fetchMock.post(endpoint, {
                 status: BAD_REQUEST_STATUS,
@@ -125,7 +129,7 @@ describe("exportDashboard", () => {
 
             try {
                 await dashboardExportModuleMock().exportToPdf(projectId, dashboardUri, []);
-            } catch (error) {
+            } catch (error: any) {
                 expect(error.response.status).toEqual(400);
                 expect(error.message).toEqual("Bad Request");
             }
@@ -143,7 +147,7 @@ describe("exportDashboard", () => {
 
             try {
                 await dashboardExportModuleMock().exportToPdf(projectId, dashboardUri);
-            } catch (error) {
+            } catch (error: any) {
                 expect(error.response.status).toEqual(400);
                 expect(error.message).toEqual("Bad Request");
             }

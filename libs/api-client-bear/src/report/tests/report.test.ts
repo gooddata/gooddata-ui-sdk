@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { ReportModule } from "../report";
@@ -51,8 +51,8 @@ describe("report", () => {
 
                         const [, settings] = fetchMock.lastCall(
                             `/gdc/internal/projects/${projectId}/exportResult`,
-                        );
-                        expect(JSON.parse(settings.body as string)).toEqual({
+                        )!;
+                        expect(JSON.parse(settings!.body as string)).toEqual({
                             resultExport: {
                                 executionResult: "/executionResult/1234",
                                 exportConfig: {
