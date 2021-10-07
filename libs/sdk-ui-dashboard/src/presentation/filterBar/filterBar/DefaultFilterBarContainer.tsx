@@ -1,17 +1,27 @@
 // (C) 2021 GoodData Corporation
-import React, { useState } from "react";
+import React from "react";
 import Measure from "react-measure";
 
 import { IntlWrapper } from "../../localization";
-import { selectLocale, useDashboardSelector } from "../../../model";
+import {
+    selectFilterBarExpanded,
+    selectFilterBarHeight,
+    selectLocale,
+    uiActions,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model";
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton";
-
-// TODO: this will probably need to be customizable so that custom filter components work
-const DEFAULT_FILTER_BAR_HEIGHT = 58;
+import { DEFAULT_FILTER_BAR_HEIGHT } from "../../constants";
 
 const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
-    const [filterBarHeight, setFilterBarHeight] = useState(DEFAULT_FILTER_BAR_HEIGHT);
-    const [filterBarExpanded, setFilterBarExpanded] = useState(false);
+    const dispatch = useDashboardDispatch();
+    const filterBarHeight = useDashboardSelector(selectFilterBarHeight);
+    const filterBarExpanded = useDashboardSelector(selectFilterBarExpanded);
+
+    const setFilterBarExpanded = (isExpanded: boolean) =>
+        dispatch(uiActions.setFilterBarExpanded(isExpanded));
+    const setFilterBarHeight = (height: number) => dispatch(uiActions.setFilterBarHeight(height));
 
     const onAttributeFilterBarHeightChange = (val: number) => {
         if (val !== filterBarHeight) {

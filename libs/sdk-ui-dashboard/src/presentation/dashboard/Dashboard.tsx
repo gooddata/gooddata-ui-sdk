@@ -47,6 +47,8 @@ import {
     renameDashboard,
     selectDashboardLoading,
     selectDashboardTitle,
+    selectFilterBarExpanded,
+    selectFilterBarHeight,
     selectFilterContextFilters,
     selectIsLayoutEmpty,
     selectIsSaveAsDialogOpen,
@@ -79,6 +81,7 @@ import { ExportDialogProvider } from "../dialogs";
 import { downloadFile } from "../../_staging/fileUtils/downloadFile";
 import { DefaultSaveAsDialogInner, SaveAsDialog, SaveAsDialogPropsProvider } from "../saveAs";
 import { IInsight } from "@gooddata/sdk-model";
+import { DEFAULT_FILTER_BAR_HEIGHT } from "../constants";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -318,10 +321,33 @@ const DashboardHeader = (props: IDashboardProps): JSX.Element => {
     );
 };
 
-const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const locale = useDashboardSelector(selectLocale);
+const DashboardMainContent: React.FC<IDashboardProps> = () => {
+    const isFilterBarExpanded = useDashboardSelector(selectFilterBarExpanded);
+    const filterBarHeight = useDashboardSelector(selectFilterBarHeight);
 
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
+
+    const dashSectionStyles = useMemo(
+        () => ({
+            marginTop: isFilterBarExpanded ? filterBarHeight - DEFAULT_FILTER_BAR_HEIGHT + "px" : undefined,
+            transition: "margin-top 0.2s",
+        }),
+        [isFilterBarExpanded, filterBarHeight],
+    );
+
+    return (
+        <div className="gd-flex-item-stretch dash-section dash-section-kpis" style={dashSectionStyles}>
+            <div className="gd-flex-container root-flex-maincontent">
+                <DashboardLayoutPropsProvider onFiltersChange={onFiltersChange}>
+                    <DashboardLayout />
+                </DashboardLayoutPropsProvider>
+            </div>
+        </div>
+    );
+};
+
+const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+    const locale = useDashboardSelector(selectLocale);
 
     return (
         <IntlWrapper locale={locale}>
@@ -329,13 +355,7 @@ const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
                 <div className="gd-dash-header-wrapper">
                     <DashboardHeader {...props} />
                 </div>
-                <div className="gd-flex-item-stretch dash-section dash-section-kpis">
-                    <div className="gd-flex-container root-flex-maincontent">
-                        <DashboardLayoutPropsProvider onFiltersChange={onFiltersChange}>
-                            <DashboardLayout />
-                        </DashboardLayoutPropsProvider>
-                    </div>
-                </div>
+                <DashboardMainContent />
             </div>
         </IntlWrapper>
     );
