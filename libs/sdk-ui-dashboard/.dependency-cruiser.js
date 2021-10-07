@@ -25,6 +25,7 @@ options = {
                 "src/presentation/localization",
                 "src/presentation/scheduledEmail",
                 "src/presentation/saveAs",
+                "src/presentation/constants",
                 "src/presentation/topBar",
                 "src/presentation/widget",
             ],
@@ -53,6 +54,7 @@ options = {
         depCruiser.moduleWithDependencies("filterBar", "src/presentation/filterBar", [
             "src/_staging/*",
             "src/model",
+            "src/presentation/constants",
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
         ]),
