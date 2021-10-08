@@ -97,10 +97,11 @@ export const useDashboardComponentsContext = (
     localComponentOverrides?: Partial<IDashboardComponentsContext>,
 ): IDashboardComponentsContext => {
     const globalComponents = useContext(DashboardComponentsContext);
-    return {
-        ...globalComponents,
-        ...localComponentOverrides,
-    };
+    // cannot just spread here, we only want to use overrides that are not undefined
+    return Object.keys(globalComponents).reduce((acc, key) => {
+        acc[key] = localComponentOverrides?.[key] ?? globalComponents[key];
+        return acc;
+    }, {} as IDashboardComponentsContext);
 };
 
 /**
