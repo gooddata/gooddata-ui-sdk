@@ -10,6 +10,7 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 @import "~@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @import "~@gooddata/sdk-ui-kit/styles/scss/form";
 @import "~@gooddata/sdk-ui-kit/styles/scss/button";
+@import "~@gooddata/sdk-ui-kit/styles/scss/loadingMask";
 @import "~fixed-data-table-2/dist/fixed-data-table.css";
 
 $transition-length: 0.2s;
