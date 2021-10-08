@@ -104,7 +104,11 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         error: filtersError,
     } = useWidgetFiltersQuery(widget, insight && insightFilters(insight));
 
-    const insightWithAddedFilters = insightSetFilters(insight, filtersForInsight);
+    const insightWithAddedFilters = useMemo(
+        () => insightSetFilters(insight, filtersForInsight),
+        [insight, filtersForInsight],
+    );
+
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
         insight: insightWithAddedFilters ?? insight,
         widget,
