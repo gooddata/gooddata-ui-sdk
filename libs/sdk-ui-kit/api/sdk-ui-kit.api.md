@@ -2426,6 +2426,8 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     icon?: string;
     // (undocumented)
+    info?: string;
+    // (undocumented)
     isSelected?: boolean;
     // (undocumented)
     onClick?: () => void;

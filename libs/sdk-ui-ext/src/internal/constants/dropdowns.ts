@@ -32,6 +32,16 @@ export const rotationDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.rotation.90", value: "90" },
 ];
 
+export const formatDropdownItems: ITranslatedDropdownItem[] = [
+    { title: "properties.auto_default", value: "auto" },
+    { type: "separator" },
+    {
+        title: "properties.axis.format.inherit",
+        value: "inherit",
+        info: "properties.axis.format.info.inherit",
+    },
+];
+
 export const legendPositionDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },
     { type: "separator" },

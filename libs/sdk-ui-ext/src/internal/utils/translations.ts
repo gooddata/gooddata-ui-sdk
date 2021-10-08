@@ -26,7 +26,8 @@ export function getTranslation(
 export function getTranslatedDropdownItems(dropdownItems: IDropdownItem[], intl: IntlShape): IDropdownItem[] {
     return dropdownItems.map((item: IDropdownItem) => {
         const translatedTitleProp = item.title ? { title: getTranslation(item.title, intl) } : {};
-        return { ...item, ...translatedTitleProp };
+        const translatedInfoProp = item.info ? { info: getTranslation(item.info, intl) } : {};
+        return { ...item, ...translatedTitleProp, ...translatedInfoProp };
     });
 }
 

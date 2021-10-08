@@ -8,6 +8,7 @@ export interface IDropdownItem {
     value?: string | number | boolean;
     type?: SingleSelectListItemType;
     icon?: string;
+    info?: string;
 }
 
 type TranslationKeys = keyof typeof translations;

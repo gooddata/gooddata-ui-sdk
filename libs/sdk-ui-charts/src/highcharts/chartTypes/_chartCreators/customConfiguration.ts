@@ -60,6 +60,7 @@ import { AXIS_LINE_COLOR } from "../_util/color";
 import { IntlShape } from "react-intl";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib";
+import { AxisLabelsFormatterCallbackFunction } from "highcharts";
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -179,32 +180,6 @@ function hideOverlappedLabels(chartOptions: IChartOptions): HighchartsOptions {
     }
 
     return {};
-}
-
-function getAxisPercentConfiguration<T extends XAxisOptions | YAxisOptions>(
-    axis: IAxis,
-    percentageFormatter: () => string,
-): T {
-    return (axis && isInPercent(axis.format)
-        ? {
-              labels: {
-                  formatter: percentageFormatter,
-              },
-          }
-        : {}) as unknown as T;
-}
-
-function getShowInPercentConfiguration(chartOptions: IChartOptions): HighchartsOptions {
-    const { yAxes = [], xAxes = [] } = chartOptions;
-    const percentageFormatter = partial(formatAsPercent, 100);
-
-    const xAxis = xAxes.map((axis) => getAxisPercentConfiguration<XAxisOptions>(axis, percentageFormatter));
-    const yAxis = yAxes.map((axis) => getAxisPercentConfiguration<YAxisOptions>(axis, percentageFormatter));
-
-    return {
-        xAxis,
-        yAxis,
-    };
 }
 
 function getArrowAlignment(arrowPosition: any, chartWidth: any) {
@@ -382,7 +357,7 @@ function getInteractionMessage(isDrillable: boolean, intl: IntlShape) {
     return isDrillable && intl ? `<div class="gd-viz-tooltip-interaction">${message}</div>` : "";
 }
 
-function formatLabel(value: any, format: any, config: IChartConfig = {}) {
+function formatLabel(value: any, format: string, config: IChartConfig = {}) {
     // no labels for missing values
     if (isNil(value)) {
         return null;
@@ -395,6 +370,10 @@ function formatLabel(value: any, format: any, config: IChartConfig = {}) {
 
 function labelFormatter(config?: IChartConfig) {
     return formatLabel(this.y, this.point?.format, config);
+}
+
+function axisLabelFormatter(config: IChartConfig, format: string) {
+    return this.value === 0 ? 0 : formatLabel(this.value, format, config);
 }
 
 export function percentageDataLabelFormatter(config?: IChartConfig): string {
@@ -1061,8 +1040,27 @@ function getYAxisTickConfiguration(
     };
 }
 
+export const getFormatterProperty = (
+    chartOptions: IChartOptions,
+    axisPropsKey: "yAxisProps" | "xAxisProps" | "secondary_yAxisProps" | "secondary_xAxisProps",
+    chartConfig: IChartConfig,
+    axisFormat: string,
+): { formatter?: AxisLabelsFormatterCallbackFunction } => {
+    if (isInPercent(axisFormat)) {
+        return { formatter: partial(formatAsPercent, 100) };
+    }
+
+    const useCustomFormat = chartOptions?.[axisPropsKey]?.format === "inherit" ?? false;
+    if (useCustomFormat) {
+        return { formatter: partial(axisLabelFormatter, chartConfig, axisFormat) };
+    }
+
+    return {};
+};
+
 const getYAxisConfiguration = (
     chartOptions: IChartOptions,
+    chartConfig: IChartConfig,
     axisValueColor: string,
     axisLabelColor: string,
 ): HighchartsOptions["yAxis"] => {
@@ -1097,6 +1095,8 @@ const getYAxisConfiguration = (
         const shouldCheckForEmptyCategories = isHeatmap(type) ? true : false;
         const labelsEnabled = areAxisLabelsEnabled(chartOptions, axisPropsKey, shouldCheckForEmptyCategories);
 
+        const formatter = getFormatterProperty(chartOptions, axisPropsKey, chartConfig, axis.format);
+
         const tickConfiguration = getYAxisTickConfiguration(chartOptions, axisPropsKey);
 
         const titleTextProp = visible ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
@@ -1109,6 +1109,7 @@ const getYAxisConfiguration = (
                     color: axisValueColor,
                     font: '12px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
                 },
+                ...formatter,
                 ...rotationProp,
             },
             title: {
@@ -1165,6 +1166,8 @@ const getXAxisConfiguration = (
         const shouldCheckForEmptyCategories = isScatterPlot(type) || isBubbleChart(type) ? false : true;
         const labelsEnabled = areAxisLabelsEnabled(chartOptions, axisPropsKey, shouldCheckForEmptyCategories);
 
+        const formatter = getFormatterProperty(chartOptions, axisPropsKey, chartConfig, axis.format);
+
         const tickConfiguration = getXAxisTickConfiguration(chartOptions);
         // for minimum zoom level value
         const minRange =
@@ -1193,6 +1196,7 @@ const getXAxisConfiguration = (
                     font: '12px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
                 },
                 autoRotation: [-90],
+                ...formatter,
                 ...rotationProp,
                 // Due to a bug in Highcharts & grouped-categories the autoRotation is working only with useHtml
                 // See: https://github.com/blacklabel/grouped_categories/issues/137
@@ -1235,8 +1239,7 @@ function getAxesConfiguration(
                 ...shouldExpandYAxis(chartOptions),
             },
         },
-        yAxis: getYAxisConfiguration(chartOptions, axisValueColor, axisLabelColor),
-
+        yAxis: getYAxisConfiguration(chartOptions, chartConfig, axisValueColor, axisLabelColor),
         xAxis: getXAxisConfiguration(chartOptions, chartConfig, axisValueColor, axisLabelColor),
     };
 }
@@ -1291,7 +1294,6 @@ export function getCustomizedConfiguration(
         getAxesConfiguration,
         getStackingConfiguration,
         hideOverlappedLabels,
-        getShowInPercentConfiguration,
         getDataConfiguration,
         getTooltipConfiguration,
         getHoverStyles,

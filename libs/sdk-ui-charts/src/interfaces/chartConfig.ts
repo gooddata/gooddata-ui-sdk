@@ -354,6 +354,11 @@ export interface IAxisConfig {
     max?: string;
 
     /**
+     * Customize whether to use format from measure or the default one
+     */
+    format?: string;
+
+    /**
      * Customize measures which are bound to this axis. This setting comes into play in dual-axis charts where you
      * must specify which measures are on the primary and which on the secondary axis.
      */

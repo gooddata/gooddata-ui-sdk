@@ -120,6 +120,7 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
         const isViewedBy = this.isViewedBy();
         const itemsOnAxes = countItemsOnAxes(type, controls, insight);
         const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
+        const isAxisLabelsFormatEnabled: boolean = featureFlags.enableAxisLabelFormat as boolean;
 
         return axes.map((axis: IAxisProperties) => {
             const disabled = controlsDisabled || (!axis.primary && !isViewedBy);
@@ -155,6 +156,7 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
                         axis={axis.name}
                         properties={properties}
                         pushData={pushData}
+                        showFormat={axis.primary && isAxisLabelsFormatEnabled}
                     />
                     {axis.primary && this.renderMinMax(axis.name)}
                 </ConfigSection>

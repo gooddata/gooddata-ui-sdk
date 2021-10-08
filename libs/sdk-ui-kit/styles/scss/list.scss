@@ -345,6 +345,11 @@ $menu-item-icon-width: 30px;
             @extend %collapsible-icon;
         }
     }
+
+    .gd-list-item-bubble {
+        padding-left: 3px;
+        padding-bottom: 3px;
+    }
 }
 
 .gd-list-icon {
