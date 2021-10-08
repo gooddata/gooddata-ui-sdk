@@ -1,0 +1,66 @@
+// (C) 2021 GoodData Corporation
+@import "_variables";
+
+.visualization {
+    text-align: center;
+
+    .visualization-empty {
+        width: 100;
+        height: 100%;
+    }
+
+    .info-label {
+        height: 100%;
+        margin: -5px 0 10px;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: normal;
+        color: $gd-color-state-blank;
+
+        h2,
+        p {
+            color: inherit;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: normal;
+            text-transform: uppercase;
+        }
+
+        p {
+            margin: 3px 0;
+        }
+    }
+
+    .info-label-icon {
+        margin-bottom: 10px;
+        font-size: 40px;
+    }
+
+    .info-label-icon-empty {
+        margin-bottom: 7px;
+
+        &::before {
+            content: "–";
+            font-size: 50px;
+        }
+    }
+
+    .indigo-table-component {
+        text-align: left;
+    }
+
+    .updating-overlay {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: $gd-color-white;
+        opacity: 0.6;
+        animation-name: updatingFadeIn;
+        animation-duration: 0.3s;
+    }
+}
