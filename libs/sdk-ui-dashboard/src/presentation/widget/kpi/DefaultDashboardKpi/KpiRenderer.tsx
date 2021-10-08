@@ -20,6 +20,7 @@ interface IKpiRendererProps {
     enableCompactSize?: boolean;
     error?: GoodDataSdkError;
     errorHelp?: string;
+    isLoading?: boolean;
 }
 
 /**
@@ -36,6 +37,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     enableCompactSize,
     error,
     errorHelp,
+    isLoading,
 }) => {
     const onPrimaryValueClick = useCallback(() => {
         if (!isDrillable || !onDrill || !kpiResult?.measureDescriptor) {
@@ -55,7 +57,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
 
     return (
         <KpiContent
-            isLoading={false}
+            isLoading={!!isLoading}
             kpi={kpi}
             kpiResult={kpiResult}
             isKpiUnderlineHiddenWhenClickable={disableDrillUnderline}
