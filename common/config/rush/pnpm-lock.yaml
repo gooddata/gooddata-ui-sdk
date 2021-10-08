@@ -1946,7 +1946,7 @@ packages:
       sparkline: 0.2.0
       strftime: 0.10.0
       term-img: 4.1.0
-      urijs: 1.19.6
+      urijs: 1.19.7
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -1964,7 +1964,7 @@ packages:
       inquirer: 7.3.3
       shell-escape: 0.2.0
       tslib: 1.14.1
-      urijs: 1.19.6
+      urijs: 1.19.7
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -19880,8 +19880,8 @@ packages:
       punycode: 2.1.1
     dev: false
 
-  /urijs/1.19.6:
-    resolution: {integrity: sha512-eSXsXZ2jLvGWeLYlQA3Gh36BcjF+0amo92+wHPyN1mdR8Nxf75fuEuYTd9c0a+m/vhCjRK0ESlE9YNLW+E1VEw==}
+  /urijs/1.19.7:
+    resolution: {integrity: sha512-Id+IKjdU0Hx+7Zx717jwLPsPeUqz7rAtuVBRLLs+qn+J2nf9NGITWVCxcijgYxBqe83C7sqsQPs6H1pyz3x9gA==}
     dev: false
 
   /urix/0.1.0:

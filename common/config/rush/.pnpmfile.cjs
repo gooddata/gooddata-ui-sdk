@@ -40,8 +40,8 @@ function readPackage(packageJson, context) {
   }
 
   // bump urijs dependency of @heroku-cli/plugin-apps-v5 to a safer version (it is a patch upgrade, should be safe)
-  if (packageJson.name === '@heroku-cli/plugin-apps-v5') {
-    packageJson.dependencies['urijs'] = "1.19.6";
+  if (packageJson.name === '@heroku-cli/plugin-apps-v5' || packageJson.name === '@heroku-cli/plugin-apps') {
+    packageJson.dependencies['urijs'] = "1.19.7";
   }
 
   return packageJson;
