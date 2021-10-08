@@ -10,7 +10,6 @@ import {
 } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
-    IntlWrapper,
     IPushData,
     OnError,
     OnLoadingChanged,
@@ -39,6 +38,7 @@ import { useWidgetFiltersQuery } from "../../../common";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
 import { CustomError } from "../CustomError/CustomError";
 import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants";
+import { IntlWrapper } from "../../../../localization";
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],

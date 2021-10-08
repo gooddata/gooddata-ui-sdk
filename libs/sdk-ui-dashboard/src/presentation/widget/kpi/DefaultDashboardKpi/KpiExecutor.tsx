@@ -369,6 +369,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                         enableCompactSize={enableCompactSize}
                         error={error}
                         errorHelp={intl.formatMessage({ id: "kpi.error.view" })}
+                        isLoading={props.isLoading}
                     />
                 );
             }}
