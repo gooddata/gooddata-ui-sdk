@@ -4,13 +4,13 @@ import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
-import { IColoredItem, IColoredItemDropdownItem } from "../../../../interfaces/Colors";
+import { IColoredItem } from "../../../../interfaces/Colors";
 import { getMappingHeaderName, IMappingHeader } from "@gooddata/sdk-ui";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;
     className?: string;
-    item?: IColoredItemDropdownItem;
+    item?: IColoredItem;
     onSelect?: (source: IColoredItem, color: IColor) => void;
     showCustomPicker?: boolean;
     isSelected?: boolean;
@@ -24,7 +24,7 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedCompone
     };
 
     public render() {
-        const coloredItem: IColoredItem = this.props.item ? this.props.item.source : null;
+        const coloredItem: IColoredItem = this.props.item ? this.props.item : null;
 
         if (!coloredItem) {
             return this.renderLoadingItem();
@@ -52,7 +52,7 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedCompone
     private onColorSelected = (color: IColor) => {
         const { item, onSelect } = this.props;
         if (onSelect) {
-            onSelect(item.source, color);
+            onSelect(item, color);
         }
     };
 

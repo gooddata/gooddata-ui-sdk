@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IMappingHeader, IColorAssignment } from "@gooddata/sdk-ui";
 import { IRgbColorValue, IColor, IColorPaletteItem } from "@gooddata/sdk-model";
 
@@ -11,8 +11,4 @@ export interface IColoredItem {
 export interface IColorConfiguration {
     colorAssignments: IColorAssignment[];
     colorPalette: IColorPaletteItem[];
-}
-
-export interface IColoredItemDropdownItem {
-    source: IColoredItem;
 }

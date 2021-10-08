@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 import flow from "lodash/flow";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
-import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { Dropdown } from "@gooddata/sdk-ui-kit";
 import MediaQuery from "react-responsive";
 import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces";
 import { IntlWrapper } from "@gooddata/sdk-ui";
@@ -47,17 +47,6 @@ export interface IDateFilterCoreProps {
     errors?: IExtendedDateFilterErrors;
 }
 
-const DropdownBody: React.FC<{
-    isMobile?: boolean;
-    closeDropdown?: () => void;
-    children: (props: { isMobile: boolean; closeDropdown: () => void }) => React.ReactElement<any>;
-}> = (props) => {
-    return props.children({
-        isMobile: props.isMobile,
-        closeDropdown: props.closeDropdown,
-    });
-};
-
 export const verifyDateFormat = (dateFormat: string): string => {
     try {
         // Try to format the current date to verify if dateFormat is a valid format.
@@ -92,9 +81,11 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
         <IntlWrapper locale={locale || "en-US"}>
             <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
                 {(isMobile) => {
-                    const dateFilterButton = (
+                    const dateFilterButton = (isOpen: boolean = false) => (
                         <DateFilterButtonLocalized
+                            disabled={disabled}
                             isMobile={isMobile}
+                            isOpen={isOpen}
                             dateFilterOption={applyExcludeCurrentPeriod(
                                 originalSelectedFilterOption,
                                 originalExcludeCurrentPeriod,
@@ -117,30 +108,27 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                 { align: "tr tl", offset: { x: 0, y: -50 } },
                             ]}
                             onOpenStateChanged={onDropdownOpenChanged}
-                            disabled={disabled}
-                            // Dropdown component passes "isOpen" prop automatically to the component in "button" prop
-                            // In Mobile case this is also rendered in the open dropdown
-                            button={dateFilterButton}
-                            ignoreClicksOn={[
+                            renderButton={({ isOpen, toggleDropdown }) => (
+                                <span onClick={disabled ? () => {} : toggleDropdown}>
+                                    {dateFilterButton(isOpen)}
+                                </span>
+                            )}
+                            ignoreClicksOnByClass={[
                                 ".s-do-not-close-dropdown-on-click",
                                 ".DayPicker-Day", // absolute range picker calendar items
                             ]}
-                            body={
+                            renderBody={({ closeDropdown }) => (
                                 // Dropdown component uses React.Children.map and adds special props to this component
                                 // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
-                                <DropdownBody>
-                                    {({ closeDropdown }) => (
-                                        <DateFilterBody
-                                            {...dropdownBodyProps}
-                                            filterOptions={filteredFilterOptions}
-                                            isMobile={isMobile}
-                                            closeDropdown={closeDropdown}
-                                            dateFilterButton={dateFilterButton}
-                                            dateFormat={verifiedDateFormat}
-                                        />
-                                    )}
-                                </DropdownBody>
-                            }
+                                <DateFilterBody
+                                    {...dropdownBodyProps}
+                                    filterOptions={filteredFilterOptions}
+                                    isMobile={isMobile}
+                                    closeDropdown={closeDropdown}
+                                    dateFilterButton={dateFilterButton()}
+                                    dateFormat={verifiedDateFormat}
+                                />
+                            )}
                         />
                     );
                 }}

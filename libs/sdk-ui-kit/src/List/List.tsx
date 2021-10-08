@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { Table, Column, Cell } from "fixed-data-table-2";
 import cx from "classnames";
+import memoize from "lodash/memoize";
 
 const preventDefault = (e: Event) => e.preventDefault();
 
@@ -44,6 +45,8 @@ export interface IListProps<T> {
     onScrollEnd?: ScrollCallback;
 
     compensateBorder?: boolean;
+
+    scrollToSelected?: boolean;
 }
 
 const BORDER_HEIGHT = 1;
@@ -77,6 +80,8 @@ export class List<T> extends Component<IListProps<T>> {
 
             onScrollStart,
             onScrollEnd,
+
+            scrollToSelected,
         } = this.props;
 
         const currentItemsCount =
@@ -96,6 +101,12 @@ export class List<T> extends Component<IListProps<T>> {
 
             return [rowIndex, rowIndex + visibleRange];
         };
+
+        const getItemIndex = memoize((items) => {
+            const rowIndex = items.findIndex((item: any) => item && item.selected);
+
+            return rowIndex + 1;
+        });
 
         return (
             <div
@@ -124,6 +135,7 @@ export class List<T> extends Component<IListProps<T>> {
                         }
                     }}
                     touchScrollEnabled={isTouchDevice()}
+                    scrollToRow={scrollToSelected && getItemIndex(items)}
                 >
                     <Column
                         flexGrow={1}

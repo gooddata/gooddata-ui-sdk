@@ -970,6 +970,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     renderNoData?: (props: IDropdownListNoDataRenderProps) => React_2.ReactNode;
     // (undocumented)
+    scrollToSelected?: boolean;
+    // (undocumented)
     searchFieldSize?: "small" | "normal";
     // (undocumented)
     searchPlaceholder?: string;
@@ -999,6 +1001,8 @@ export interface IDropdownProps {
     closeOnOutsideClick?: boolean;
     // (undocumented)
     closeOnParentScroll?: boolean;
+    // (undocumented)
+    enableEventPropagation?: boolean;
     fullscreenOnMobile?: boolean;
     // (undocumented)
     ignoreClicksOnByClass?: string[];
@@ -1767,6 +1771,8 @@ export interface IListProps<T> {
     onScrollStart?: ScrollCallback;
     // (undocumented)
     renderItem: (props: IRenderItemProps<T>) => React_2.ReactNode;
+    // (undocumented)
+    scrollToSelected?: boolean;
     // (undocumented)
     width?: number;
 }
