@@ -173,6 +173,8 @@ export {
     DashboardContext,
     ObjectAvailabilityConfig,
     DashboardConfig,
+    DashboardModelCustomizationFns,
+    DashboardTransformFn,
     FiltersInfo,
     ResolvedDashboardConfig,
     ResolvableFilter,

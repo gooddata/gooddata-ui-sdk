@@ -57,6 +57,7 @@ export const useInitializeDashboardStore = (
                 backgroundWorkers,
                 onStateChange: props.onStateChange,
                 onEventingInitialized: props.onEventingInitialized,
+                customizationFns: props.customizationFns,
             });
             dashStore.store.dispatch(
                 initializeDashboard(props.config, props.permissions, InitialLoadCorrelationId),

@@ -1,11 +1,19 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardCustomizer, IDashboardInsightCustomizer, IDashboardKpiCustomizer } from "../customizer";
+import {
+    IDashboardCustomizer,
+    IDashboardInsightCustomizer,
+    IDashboardKpiCustomizer,
+    IDashboardLayoutCustomizer,
+    IDashboardWidgetCustomizer,
+} from "../customizer";
 import { IDashboardExtensionProps } from "../../presentation";
 import { DefaultInsightCustomizer } from "./insightCustomizer";
 import { DashboardCustomizationLogger } from "./customizationLogging";
 import { IDashboardPlugin } from "../plugin";
 import { DefaultKpiCustomizer } from "./kpiCustomizer";
+import { DefaultWidgetCustomizer } from "./widgetCustomizer";
+import { DefaultLayoutCustomizer } from "./layoutCustomizer";
 
 /**
  * @internal
@@ -14,9 +22,14 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
     private readonly logger: DashboardCustomizationLogger = new DashboardCustomizationLogger();
     private readonly insightCustomizer: DefaultInsightCustomizer = new DefaultInsightCustomizer(this.logger);
     private readonly kpiCustomizer: DefaultKpiCustomizer = new DefaultKpiCustomizer(this.logger);
+    private readonly widgetCustomizer: DefaultWidgetCustomizer = new DefaultWidgetCustomizer(this.logger);
+    private readonly layoutCustomizer: DefaultLayoutCustomizer = new DefaultLayoutCustomizer(this.logger);
 
     private sealCustomizers = (): void => {
         this.insightCustomizer.sealCustomizer();
+        this.kpiCustomizer.sealCustomizer();
+        this.widgetCustomizer.sealCustomizer();
+        this.layoutCustomizer.sealCustomizer();
     };
 
     public insightRendering = (): IDashboardInsightCustomizer => {
@@ -25,6 +38,14 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
 
     public kpiRendering = (): IDashboardKpiCustomizer => {
         return this.kpiCustomizer;
+    };
+
+    public widgets = (): IDashboardWidgetCustomizer => {
+        return this.widgetCustomizer;
+    };
+
+    public layout = (): IDashboardLayoutCustomizer => {
+        return this.layoutCustomizer;
     };
 
     public onBeforePluginRegister = (plugin: IDashboardPlugin): void => {
@@ -50,6 +71,10 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         const props: IDashboardExtensionProps = {
             InsightComponentProvider: this.insightCustomizer.getInsightProvider(),
             KpiComponentProvider: this.kpiCustomizer.getKpiProvider(),
+            WidgetComponentProvider: this.widgetCustomizer.getWidgetComponentProvider(),
+            customizationFns: {
+                existingDashboardTransformFn: this.layoutCustomizer.getInitialDashboardTransformFn(),
+            },
         };
 
         this.sealCustomizers();

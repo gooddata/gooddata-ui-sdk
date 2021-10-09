@@ -3,7 +3,7 @@
 import { Identifier, idRef } from "@gooddata/sdk-model";
 import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore";
 import { DashboardState } from "../store/types";
-import { DashboardContext } from "../types/commonTypes";
+import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes";
 import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
@@ -36,6 +36,7 @@ type MonitoredAction = {
 type DashboardTesterConfig = {
     queryServices?: IDashboardQueryService<any, any>[];
     renderingWorkerConfig?: RenderingWorkerConfiguration;
+    customizationFns?: DashboardModelCustomizationFns;
 };
 
 export class DashboardTester {
@@ -67,6 +68,7 @@ export class DashboardTester {
             ],
             queryServices: config?.queryServices,
             backgroundWorkers: [newRenderingWorker(config?.renderingWorkerConfig)],
+            customizationFns: config?.customizationFns,
         });
     }
 

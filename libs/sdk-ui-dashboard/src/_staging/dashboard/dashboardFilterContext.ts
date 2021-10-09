@@ -28,8 +28,8 @@ import { createDefaultFilterContext } from "./defaultFilterContext";
  * @param dashboard - dashboard to get filter context from
  * @param dateFilterConfig - date filter config to use in case default filter context has to be created
  */
-export function dashboardFilterContextDefinition(
-    dashboard: IDashboard,
+export function dashboardFilterContextDefinition<TWidget>(
+    dashboard: IDashboard<TWidget>,
     dateFilterConfig: IDateFilterConfig,
 ): IFilterContextDefinition {
     const { filterContext } = dashboard;
@@ -63,7 +63,9 @@ export function dashboardFilterContextDefinition(
  *
  * @param dashboard - dashboard to get filter context from.
  */
-export function dashboardFilterContextIdentity(dashboard: IDashboard): IDashboardObjectIdentity | undefined {
+export function dashboardFilterContextIdentity<TWidget>(
+    dashboard: IDashboard<TWidget>,
+): IDashboardObjectIdentity | undefined {
     const { filterContext } = dashboard;
 
     if (!filterContext || isTempFilterContext(filterContext) || !filterContext.ref) {

@@ -8,8 +8,11 @@ import {
     DashboardEvents,
     DashboardEventType,
     DashboardState,
+    ExtendedDashboardWidget,
     ICustomDashboardEvent,
+    ICustomWidget,
 } from "../model";
+import { IDashboardLayout, IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-backend-spi";
 
 /**
  * @alpha
@@ -163,6 +166,81 @@ export interface IDashboardKpiCustomizer {
 /**
  * @alpha
  */
+export interface IDashboardWidgetCustomizer {
+    /**
+     * Adds a new custom widget type. Custom widget's can be used to render arbitrary content.
+     *
+     * @param widgetType - unique type name of the custom widget; if plugins register multiple custom
+     *  widgets for the same widget type, then the last-registered custom widget wins
+     * @param Component - React component to use for rendering of the custom widget
+     */
+    addCustomWidget(widgetType: string, Component: React.ComponentType): IDashboardWidgetCustomizer;
+}
+
+/**
+ * @alpha
+ */
+export interface IFluidLayoutCustomizer {
+    /**
+     * Adds a new section with one or more custom widgets onto the fluid layout.
+     *
+     * @param sectionIdx - index to add the new section at
+     * @param section - section to add
+     */
+    addSection(sectionIdx: number, section: IDashboardLayoutSection<ICustomWidget>): IFluidLayoutCustomizer;
+
+    /**
+     * Adds a new item containing a custom widget onto the dashboard. New item will be added to
+     * an existing section at index `sectionIdx` and within that section will be placed at `itemIdx`.
+     *
+     * Note: new items will be added into existing sections before new sections will be added using the
+     * {@link IFluidLayoutCustomizer.addSection} method. Therefore,
+     *
+     * @param sectionIdx - index of section where to add the new item
+     * @param itemIdx - index within the section where to add new item; you may specify -1 to add the
+     *  item at the end of the section
+     * @param item - item containing custom widget
+     */
+    addItem(
+        sectionIdx: number,
+        itemIdx: number,
+        item: IDashboardLayoutItem<ICustomWidget>,
+    ): IFluidLayoutCustomizer;
+}
+
+/**
+ * @alpha
+ */
+export type FluidLayoutCustomizationFn = (
+    layout: IDashboardLayout<ExtendedDashboardWidget>,
+    customizer: IFluidLayoutCustomizer,
+) => void;
+
+/**
+ * @alpha
+ */
+export interface IDashboardLayoutCustomizer {
+    /**
+     * Register customization of the fluid layout that is used to render the dashboard.
+     *
+     * At this point, you can register a function which will be called after dashboard component loads
+     * the dashboard and before it starts initializing the layout itself. The function will be called
+     * with two arguments:
+     *
+     * -  The actual dashboard layout
+     * -  Customizer that allows the plugin to add new sections or section items
+     *
+     * Your customization function may introspect the original layout and then register its customizations.
+     *
+     * @remarks If the dashboard is not rendering fluid layout, then the registered function will not
+     * be called.
+     */
+    customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
+}
+
+/**
+ * @alpha
+ */
 export interface IDashboardCustomizer {
     /**
      * Customize how rendering of insights is done.
@@ -173,6 +251,18 @@ export interface IDashboardCustomizer {
      * Customize how rendering of KPIs is done.
      */
     kpiRendering(): IDashboardKpiCustomizer;
+
+    /**
+     * Register custom widget types.
+     */
+    widgets(): IDashboardWidgetCustomizer;
+
+    /**
+     * Customize dashboard layout - this allows the plugin step in during initialization and modify
+     * the existing dashboard layout before it gets stored into dashboard component's state and
+     * before it is rendered.
+     */
+    layout(): IDashboardLayoutCustomizer;
 }
 
 /**

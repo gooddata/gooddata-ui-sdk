@@ -1,10 +1,17 @@
 // (C) 2021 GoodData Corporation
-import { IAnalyticalBackend, IDateFilterConfig, ISeparators, ISettings } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IDashboard,
+    IDateFilterConfig,
+    ISeparators,
+    ISettings,
+} from "@gooddata/sdk-backend-spi";
 import { IColorPalette, ObjRef } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys";
 import includes from "lodash/includes";
 import { IDashboardFilter } from "../../types";
+import { ExtendedDashboardWidget } from "./layoutTypes";
 
 /**
  * Dashboard component may offer users to pick objects to use on the dashboard - for instance selecting a metric
@@ -183,6 +190,31 @@ export type DashboardContext = {
      * Data product identifier - it's required, if the backend implementation supports it and workspace is provisioned via LCM.
      */
     dataProductId?: string;
+};
+
+/**
+ * @alpha
+ */
+export type DashboardTransformFn = (
+    dashboard: IDashboard<ExtendedDashboardWidget>,
+) => IDashboard<ExtendedDashboardWidget> | undefined;
+
+/**
+ * @alpha
+ */
+export type DashboardModelCustomizationFns = {
+    /**
+     * Optionally provide a function that will be used during dashboard initialization of an existing dashboard.
+     * This function will be called after the dashboard is loaded from backend and before it is dispatched for
+     * cleanup, sanitization and storage in the Dashboard component state.
+     *
+     * @remarks
+     * -  If the function is not defined, results in an error or returns `undefined`, then the original
+     *    dashboard will be used as-is.
+     * -  To test whether the dashboard object is new or existing, check for the presence of the `ref`
+     *    property; ref will only be present on an existing, persisted dashboard.
+     */
+    existingDashboardTransformFn?: DashboardTransformFn;
 };
 
 /**

@@ -17,7 +17,7 @@ import { insightsSliceReducer } from "./insights";
 import { createRootEventEmitter } from "./_infra/rootEventEmitter";
 import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 import { rootCommandHandler } from "../commandHandlers/rootCommandHandler";
-import { DashboardContext } from "../types/commonTypes";
+import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes";
 import { configSliceReducer } from "./config";
 import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
 import { permissionsSliceReducer } from "./permissions";
@@ -147,6 +147,13 @@ export type DashboardStoreConfig = {
         registerEventHandler: (handler: DashboardEventHandler) => void,
         unregisterEventHandler: (handler: DashboardEventHandler) => void,
     ) => void;
+
+    /**
+     * Optionally specify dashboard model customization functions. If specified, these will be stored inside
+     * the saga context so that the different command handlers may get a hold of the customization functions
+     * and call out to them as needed.
+     */
+    customizationFns?: DashboardModelCustomizationFns;
 };
 
 function* rootSaga(
@@ -232,6 +239,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
     const sagaMiddleware = createSagaMiddleware({
         context: {
             dashboardContext: config.sagaContext,
+            customizationFns: config.customizationFns,
         },
     });
 

@@ -16,6 +16,7 @@ import {
     DashboardConfig,
     DashboardDispatch,
     DashboardEventHandler,
+    DashboardModelCustomizationFns,
     DashboardState,
     ExtendedDashboardWidget,
 } from "../../model";
@@ -333,6 +334,12 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
      * If the function returns an empty array, the menu will not be rendered at all.
      */
     insightMenuItemsProvider?: InsightMenuItemsProvider;
+
+    /**
+     * Optionally specify customization functions. The dashboard component will call out to these functions
+     * at different points during its lifetime. See documentation of the different functions to learn more.
+     */
+    customizationFns?: DashboardModelCustomizationFns;
 }
 
 /**

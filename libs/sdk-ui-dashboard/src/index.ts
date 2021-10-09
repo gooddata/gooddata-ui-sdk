@@ -24,6 +24,10 @@ export {
     IDashboardCustomizer,
     IDashboardInsightCustomizer,
     IDashboardKpiCustomizer,
+    IDashboardLayoutCustomizer,
+    IDashboardWidgetCustomizer,
+    FluidLayoutCustomizationFn,
+    IFluidLayoutCustomizer,
     DashboardStateChangeCallback,
 } from "./plugins/customizer";
 export { InsightPlaceholderWidget, KpiPlaceholderWidget } from "./widgets/placeholders/types";
