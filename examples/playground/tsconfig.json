@@ -27,6 +27,7 @@
             "@gooddata/sdk-ui-pivot": ["sdk-ui-pivot/src"],
             "@gooddata/sdk-ui-filters": ["sdk-ui-filters/src"],
             "@gooddata/sdk-ui-dashboard": ["sdk-ui-dashboard/src"],
+            "@gooddata/sdk-ui-loaders": ["sdk-ui-loaders/src"],
             "@gooddata/util": ["util/src"]
         }
     },
