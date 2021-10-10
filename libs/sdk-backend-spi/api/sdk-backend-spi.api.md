@@ -374,10 +374,10 @@ export interface ICatalogMeasure extends IGroupableCatalogItemBase {
 }
 
 // @alpha
-export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
+export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | ITempFilterContext;
-    readonly layout?: IDashboardLayout;
+    readonly layout?: IDashboardLayout<TWidget>;
 }
 
 // @alpha
@@ -456,10 +456,10 @@ export interface IDashboardDateFilterReference {
 }
 
 // @alpha
-export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboardObjectIdentity> {
+export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, Partial<IDashboardObjectIdentity> {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
-    readonly layout?: IDashboardLayout;
+    readonly layout?: IDashboardLayout<TWidget>;
 }
 
 // @alpha

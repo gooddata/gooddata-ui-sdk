@@ -1,6 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 import { ObjRef, Identifier, IInsight, IAuditableDates, IAuditableUsers } from "@gooddata/sdk-model";
-import { IDashboardLayout } from "./layout";
+import { IDashboardLayout, IDashboardWidget } from "./layout";
 import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
 import { IDashboardObjectIdentity } from "./common";
 import {
@@ -103,7 +103,7 @@ export interface IDashboardBase {
  * and optionally extended date filter config.
  * @alpha
  */
-export interface IDashboard
+export interface IDashboard<TWidget = IDashboardWidget>
     extends IDashboardBase,
         IDashboardObjectIdentity,
         Readonly<Required<IAuditableDates>>,
@@ -111,7 +111,7 @@ export interface IDashboard
     /**
      * The layout of the dashboard determines the dashboard widgets {@link IWidget} and where they are rendered
      */
-    readonly layout?: IDashboardLayout;
+    readonly layout?: IDashboardLayout<TWidget>;
 
     /**
      * Dashboard filter context, or temporary filter context
@@ -130,11 +130,13 @@ export interface IDashboard
  *
  * @alpha
  */
-export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboardObjectIdentity> {
+export interface IDashboardDefinition<TWidget = IDashboardWidget>
+    extends IDashboardBase,
+        Partial<IDashboardObjectIdentity> {
     /**
      * The layout of the dashboard determines the dashboard widgets {@link IWidget} and where they are rendered
      */
-    readonly layout?: IDashboardLayout;
+    readonly layout?: IDashboardLayout<TWidget>;
 
     /**
      * Dashboard filter context, or temporary filter context
