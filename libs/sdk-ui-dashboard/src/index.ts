@@ -16,18 +16,6 @@ export * from "./model";
 export * from "./presentation";
 export * from "./types";
 export * from "./converters";
+export * from "./plugins";
 
-export { IDashboardPlugin, DashboardPluginV1, IDashboardPluginMetadata } from "./plugins/plugin";
-export { IDashboardEngine, newDashboardEngine } from "./plugins/engine";
-export {
-    IDashboardEventHandling,
-    IDashboardCustomizer,
-    IDashboardInsightCustomizer,
-    IDashboardKpiCustomizer,
-    IDashboardLayoutCustomizer,
-    IDashboardWidgetCustomizer,
-    FluidLayoutCustomizationFn,
-    IFluidLayoutCustomizer,
-    DashboardStateChangeCallback,
-} from "./plugins/customizer";
 export { InsightPlaceholderWidget, KpiPlaceholderWidget } from "./widgets/placeholders/types";
