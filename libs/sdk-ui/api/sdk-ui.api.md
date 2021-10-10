@@ -1589,9 +1589,7 @@ export const useBackend: (backend?: IAnalyticalBackend | undefined) => IAnalytic
 export const useBackendStrict: (backend?: IAnalyticalBackend | undefined, context?: string) => IAnalyticalBackend;
 
 // @beta
-export function useCancelablePromise<TResult, TError = any>({ promise, onLoading, onPending, onCancel, onSuccess, onError, }: {
-    promise: (() => Promise<TResult>) | undefined | null;
-} & UseCancelablePromiseCallbacks<TResult, TError>, deps?: DependencyList): UseCancelablePromiseState<TResult, TError>;
+export function useCancelablePromise<TResult, TError = any>(options: UseCancelablePromiseOptions<TResult, TError>, deps?: DependencyList): UseCancelablePromiseState<TResult, TError>;
 
 // @beta
 export type UseCancelablePromiseCallbacks<TResult, TError> = {
@@ -1614,6 +1612,11 @@ export type UseCancelablePromiseLoadingState = {
     result: undefined;
     error: undefined;
     status: "loading";
+};
+
+// @beta
+export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseCallbacks<TResult, TError> & {
+    promise: (() => Promise<TResult>) | undefined | null;
 };
 
 // @beta
