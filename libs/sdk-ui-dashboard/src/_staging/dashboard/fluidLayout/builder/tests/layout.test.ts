@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout, IDashboardLayoutSection } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 import { newInsightWidget, newKpiWidget } from "@gooddata/sdk-backend-base";
 import { DashboardLayoutBuilder } from "../layout";
@@ -51,24 +51,62 @@ describe("DashboardLayoutBuilder", () => {
         });
     });
 
-    describe(".addSection()", () => {
-        it("should add a section to the end of the layout by default", () => {
-            const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection();
+    describe(".createSection()", () => {
+        it("should create a section at the end of the layout by default", () => {
+            const layoutBuilder = createEmptyDashboardLayoutBuilder().createSection();
 
             const layoutBefore = layoutBuilder.build();
-            const layoutAfter = layoutBuilder.addSection((r) => r.header({ title: "Added section" })).build();
+            const layoutAfter = layoutBuilder
+                .createSection((r) => r.header({ title: "Added section" }))
+                .build();
 
             expect(layoutBefore).toMatchSnapshot("before");
             expect(layoutAfter).toMatchSnapshot("after");
         });
 
-        it("should add a section to the provided index", () => {
-            const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection().addSection();
+        it("should create a section at the provided index", () => {
+            const layoutBuilder = createEmptyDashboardLayoutBuilder().createSection().createSection();
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder
-                .addSection((r) => r.header({ title: "Added section" }), 1)
+                .createSection((r) => r.header({ title: "Added section" }), 1)
                 .build();
+
+            expect(layoutBefore).toMatchSnapshot("before");
+            expect(layoutAfter).toMatchSnapshot("after");
+        });
+    });
+
+    describe(".addSection()", () => {
+        const testSection = (title: string): IDashboardLayoutSection<any> => {
+            return {
+                type: "IDashboardLayoutSection",
+                header: {
+                    title,
+                },
+                items: [],
+            };
+        };
+
+        it("should create a section at the end of the layout by default", () => {
+            const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection(
+                testSection("Initial section"),
+            );
+
+            const layoutBefore = layoutBuilder.build();
+            const layoutAfter = layoutBuilder.addSection(testSection("Added section")).build();
+
+            expect(layoutBefore).toMatchSnapshot("before");
+            expect(layoutAfter).toMatchSnapshot("after");
+        });
+
+        it("should create a section at the provided index", () => {
+            const layoutBuilder = createEmptyDashboardLayoutBuilder()
+                .addSection(testSection("Section 1"))
+                .addSection(testSection("Section 2"));
+
+            const layoutBefore = layoutBuilder.build();
+            const layoutAfter = layoutBuilder.addSection(testSection("Added section"), 1).build();
 
             expect(layoutBefore).toMatchSnapshot("before");
             expect(layoutAfter).toMatchSnapshot("after");
@@ -78,7 +116,7 @@ describe("DashboardLayoutBuilder", () => {
     describe(".removeSection()", () => {
         it("should remove the section from the layout", () => {
             const rowIndex = 0;
-            const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection(
+            const layoutBuilder = createEmptyDashboardLayoutBuilder().createSection(
                 (r) => r.header({ title: "Row to remove" }),
                 rowIndex,
             );
@@ -101,7 +139,7 @@ describe("DashboardLayoutBuilder", () => {
 
     describe(".modifySection()", () => {
         it("should modify the section", () => {
-            const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection((r) =>
+            const layoutBuilder = createEmptyDashboardLayoutBuilder().createSection((r) =>
                 r.header({ title: "Original section" }),
             );
 
@@ -128,9 +166,9 @@ describe("DashboardLayoutBuilder", () => {
     describe(".moveSection()", () => {
         it("should move the section", () => {
             const layoutBuilder = createEmptyDashboardLayoutBuilder()
-                .addSection((r) => r.header({ title: "Row 0" }))
-                .addSection((r) => r.header({ title: "Row 1" }))
-                .addSection((r) => r.header({ title: "Row 2" }));
+                .createSection((r) => r.header({ title: "Row 0" }))
+                .createSection((r) => r.header({ title: "Row 1" }))
+                .createSection((r) => r.header({ title: "Row 2" }));
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder.moveSection(0, 1).build();
@@ -149,7 +187,7 @@ describe("DashboardLayoutBuilder", () => {
 
     describe(".removeSections()", () => {
         it("should remove all sections by default", () => {
-            const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection().addSection();
+            const layoutBuilder = createEmptyDashboardLayoutBuilder().createSection().createSection();
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder.removeSections().build();
@@ -160,10 +198,10 @@ describe("DashboardLayoutBuilder", () => {
 
         it("should remove selected sections only", () => {
             const layoutBuilder = createEmptyDashboardLayoutBuilder()
-                .addSection((r) => r.header({ title: "Row to keep 1" }))
-                .addSection()
-                .addSection((r) => r.header({ title: "Row to keep 2" }))
-                .addSection();
+                .createSection((r) => r.header({ title: "Row to keep 1" }))
+                .createSection()
+                .createSection((r) => r.header({ title: "Row to keep 2" }))
+                .createSection();
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder
@@ -177,9 +215,9 @@ describe("DashboardLayoutBuilder", () => {
         it("should remove selected section only", () => {
             const titleOfTheRowToRemove = "Row to remove";
             const layoutBuilder = createEmptyDashboardLayoutBuilder()
-                .addSection()
-                .addSection((r) => r.header({ title: titleOfTheRowToRemove }))
-                .addSection();
+                .createSection()
+                .createSection((r) => r.header({ title: titleOfTheRowToRemove }))
+                .createSection();
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder
@@ -191,7 +229,7 @@ describe("DashboardLayoutBuilder", () => {
         });
 
         it("should not remove any section, when selection result is undefined", () => {
-            const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection();
+            const layoutBuilder = createEmptyDashboardLayoutBuilder().createSection();
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder
@@ -207,7 +245,7 @@ describe("DashboardLayoutBuilder", () => {
 
     describe(".modifySections()", () => {
         it("should modify all sections by default", () => {
-            const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection().addSection();
+            const layoutBuilder = createEmptyDashboardLayoutBuilder().createSection().createSection();
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder
@@ -220,10 +258,10 @@ describe("DashboardLayoutBuilder", () => {
 
         it("should modify selected sections only", () => {
             const layoutBuilder = createEmptyDashboardLayoutBuilder()
-                .addSection((r) => r.header({ title: "Original section" }))
-                .addSection()
-                .addSection((r) => r.header({ title: "Original section" }))
-                .addSection();
+                .createSection((r) => r.header({ title: "Original section" }))
+                .createSection()
+                .createSection((r) => r.header({ title: "Original section" }))
+                .createSection();
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder
@@ -240,9 +278,9 @@ describe("DashboardLayoutBuilder", () => {
         it("should modify selected section only", () => {
             const titleOfTheRowToModify = "Original section";
             const layoutBuilder = createEmptyDashboardLayoutBuilder()
-                .addSection()
-                .addSection((r) => r.header({ title: titleOfTheRowToModify }))
-                .addSection();
+                .createSection()
+                .createSection((r) => r.header({ title: titleOfTheRowToModify }))
+                .createSection();
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder
@@ -257,7 +295,7 @@ describe("DashboardLayoutBuilder", () => {
         });
 
         it("should not modify any section, when selection result is undefined", () => {
-            const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection();
+            const layoutBuilder = createEmptyDashboardLayoutBuilder().createSection();
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder
@@ -291,9 +329,9 @@ describe("DashboardLayoutBuilder", () => {
         const layoutBuilder = createEmptyDashboardLayoutBuilder();
 
         for (const widgetSection of widgetSections) {
-            layoutBuilder.addSection((section) => {
+            layoutBuilder.createSection((section) => {
                 for (const widget of widgetSection) {
-                    section.addItem(defaultItemXlSize, (item) => item.widget(widget));
+                    section.createItem(defaultItemXlSize, (item) => item.widget(widget));
                 }
                 return section;
             });
@@ -331,9 +369,9 @@ describe("DashboardLayoutBuilder", () => {
         const layoutBuilder = createEmptyDashboardLayoutBuilder();
 
         for (const widgetSection of widgetSections) {
-            layoutBuilder.addSection((section) => {
+            layoutBuilder.createSection((section) => {
                 for (const widget of widgetSection) {
-                    section.addItem(defaultItemXlSize, (item) => item.widget(widget));
+                    section.createItem(defaultItemXlSize, (item) => item.widget(widget));
                 }
                 return section;
             });

@@ -1,6 +1,94 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DashboardLayoutBuilder .addSection() should add a section to the end of the layout by default: after 1`] = `
+exports[`DashboardLayoutBuilder .addSection() should create a section at the end of the layout by default: after 1`] = `
+Object {
+  "sections": Array [
+    Object {
+      "header": Object {
+        "title": "Initial section",
+      },
+      "items": Array [],
+      "type": "IDashboardLayoutSection",
+    },
+    Object {
+      "header": Object {
+        "title": "Added section",
+      },
+      "items": Array [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder .addSection() should create a section at the end of the layout by default: before 1`] = `
+Object {
+  "sections": Array [
+    Object {
+      "header": Object {
+        "title": "Initial section",
+      },
+      "items": Array [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder .addSection() should create a section at the provided index: after 1`] = `
+Object {
+  "sections": Array [
+    Object {
+      "header": Object {
+        "title": "Section 1",
+      },
+      "items": Array [],
+      "type": "IDashboardLayoutSection",
+    },
+    Object {
+      "header": Object {
+        "title": "Added section",
+      },
+      "items": Array [],
+      "type": "IDashboardLayoutSection",
+    },
+    Object {
+      "header": Object {
+        "title": "Section 2",
+      },
+      "items": Array [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder .addSection() should create a section at the provided index: before 1`] = `
+Object {
+  "sections": Array [
+    Object {
+      "header": Object {
+        "title": "Section 1",
+      },
+      "items": Array [],
+      "type": "IDashboardLayoutSection",
+    },
+    Object {
+      "header": Object {
+        "title": "Section 2",
+      },
+      "items": Array [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder .createSection() should create a section at the end of the layout by default: after 1`] = `
 Object {
   "sections": Array [
     Object {
@@ -19,7 +107,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .addSection() should add a section to the end of the layout by default: before 1`] = `
+exports[`DashboardLayoutBuilder .createSection() should create a section at the end of the layout by default: before 1`] = `
 Object {
   "sections": Array [
     Object {
@@ -31,7 +119,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .addSection() should add a section to the provided index: after 1`] = `
+exports[`DashboardLayoutBuilder .createSection() should create a section at the provided index: after 1`] = `
 Object {
   "sections": Array [
     Object {
@@ -54,7 +142,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .addSection() should add a section to the provided index: before 1`] = `
+exports[`DashboardLayoutBuilder .createSection() should create a section at the provided index: before 1`] = `
 Object {
   "sections": Array [
     Object {
@@ -100,7 +188,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .modifySection() should throw error, when the section at provided index does not exist 1`] = `"Cannot modify the section - section at index 0 does not exist!"`;
+exports[`DashboardLayoutBuilder .modifySection() should throw error, when the section at provided index does not exist 1`] = `"Cannot modify the section - section at index 0 does not exist."`;
 
 exports[`DashboardLayoutBuilder .modifySections() should modify all sections by default: after 1`] = `
 Object {
@@ -328,7 +416,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .moveSection() should throw error, when the section at provided index does not exist 1`] = `"Cannot move the section - section at index 0 does not exist!"`;
+exports[`DashboardLayoutBuilder .moveSection() should throw error, when the section at provided index does not exist 1`] = `"Cannot move the section - section at index 0 does not exist."`;
 
 exports[`DashboardLayoutBuilder .removeSection() should remove the section from the layout: after 1`] = `
 Object {
@@ -352,7 +440,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .removeSection() should throw error, when the section at provided index does not exist 1`] = `"Cannot remove the section - section at index 0 does not exist!"`;
+exports[`DashboardLayoutBuilder .removeSection() should throw error, when the section at provided index does not exist 1`] = `"Cannot remove the section - section at index 0 does not exist."`;
 
 exports[`DashboardLayoutBuilder .removeSections() should not remove any section, when selection result is undefined: after 1`] = `
 Object {
@@ -530,7 +618,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder constructors .for() should throw error, when the layout is damaged 1`] = `"Provided data must be IDashboardLayout!"`;
+exports[`DashboardLayoutBuilder constructors .for() should throw error, when the layout is damaged 1`] = `"Provided data must be IDashboardLayout."`;
 
 exports[`DashboardLayoutBuilder constructors .forNewLayout() should create new empty layout 1`] = `
 Object {

@@ -1,6 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import {
     IDashboardLayout,
+    IDashboardLayoutItem,
     IDashboardLayoutSection,
     IDashboardLayoutSectionHeader,
 } from "@gooddata/sdk-backend-spi";
@@ -61,28 +62,66 @@ describe("DashboardLayoutSectionBuilder", () => {
         });
     });
 
-    describe(".addItem()", () => {
-        it("should add a item to the end of the section by default", () => {
-            const sectionBuilder = createEmptyDashboardLayoutSectionBuilder().addItem(defaultItemXlSize);
+    describe(".createItem()", () => {
+        it("should create item at the end of the section by default", () => {
+            const sectionBuilder = createEmptyDashboardLayoutSectionBuilder().createItem(defaultItemXlSize);
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder
-                .addItem(defaultItemXlSize, (i) => i.widget("Added item"))
+                .createItem(defaultItemXlSize, (i) => i.widget("Added item"))
                 .build();
 
             expect(sectionBefore).toMatchSnapshot("before");
             expect(sectionAfter).toMatchSnapshot("after");
         });
 
-        it("should add a item to the provided index", () => {
+        it("should create item at the provided index", () => {
             const sectionBuilder = createEmptyDashboardLayoutSectionBuilder()
-                .addItem(defaultItemXlSize)
-                .addItem(defaultItemXlSize);
+                .createItem(defaultItemXlSize)
+                .createItem(defaultItemXlSize);
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder
-                .addItem(defaultItemXlSize, (i) => i.widget("Added item"), 1)
+                .createItem(defaultItemXlSize, (i) => i.widget("Added item"), 1)
                 .build();
+
+            expect(sectionBefore).toMatchSnapshot("before");
+            expect(sectionAfter).toMatchSnapshot("after");
+        });
+    });
+
+    describe(".addItem()", () => {
+        const testItem = (widget: string): IDashboardLayoutItem<any> => {
+            return {
+                type: "IDashboardLayoutItem",
+                size: {
+                    xl: {
+                        gridWidth: 12,
+                    },
+                },
+                widget,
+            };
+        };
+
+        it("should add item at the end of the section by default", () => {
+            const sectionBuilder = createEmptyDashboardLayoutSectionBuilder().addItem(
+                testItem("Initial item"),
+            );
+
+            const sectionBefore = sectionBuilder.build();
+            const sectionAfter = sectionBuilder.addItem(testItem("Added item")).build();
+
+            expect(sectionBefore).toMatchSnapshot("before");
+            expect(sectionAfter).toMatchSnapshot("after");
+        });
+
+        it("should create item at the provided index", () => {
+            const sectionBuilder = createEmptyDashboardLayoutSectionBuilder()
+                .addItem(testItem("Item 1"))
+                .addItem(testItem("Item 2"));
+
+            const sectionBefore = sectionBuilder.build();
+            const sectionAfter = sectionBuilder.addItem(testItem("Added item"), 1).build();
 
             expect(sectionBefore).toMatchSnapshot("before");
             expect(sectionAfter).toMatchSnapshot("after");
@@ -94,9 +133,9 @@ describe("DashboardLayoutSectionBuilder", () => {
             const rowIndex = 0;
             const columnIndex = 0;
 
-            const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection(
+            const layoutBuilder = createEmptyDashboardLayoutBuilder().createSection(
                 (section) =>
-                    section.addItem(defaultItemXlSize, (i) => i.widget("Item to remove"), columnIndex),
+                    section.createItem(defaultItemXlSize, (i) => i.widget("Item to remove"), columnIndex),
                 rowIndex,
             );
             const sectionBuilder = DashboardLayoutSectionBuilder.for(layoutBuilder, rowIndex);
@@ -122,7 +161,7 @@ describe("DashboardLayoutSectionBuilder", () => {
     describe(".modifyItem()", () => {
         it("should modify the item", () => {
             const columnIndex = 0;
-            const sectionBuilder = createEmptyDashboardLayoutSectionBuilder().addItem(
+            const sectionBuilder = createEmptyDashboardLayoutSectionBuilder().createItem(
                 defaultItemXlSize,
                 (i) => i.widget("Original item"),
                 columnIndex,
@@ -147,9 +186,9 @@ describe("DashboardLayoutSectionBuilder", () => {
     describe(".moveItem()", () => {
         it("should move the item", () => {
             const sectionBuilder = createEmptyDashboardLayoutSectionBuilder()
-                .addItem(defaultItemXlSize, (i) => i.widget("Widget 0"))
-                .addItem(defaultItemXlSize, (i) => i.widget("Widget 1"))
-                .addItem(defaultItemXlSize, (i) => i.widget("Widget 2"));
+                .createItem(defaultItemXlSize, (i) => i.widget("Widget 0"))
+                .createItem(defaultItemXlSize, (i) => i.widget("Widget 1"))
+                .createItem(defaultItemXlSize, (i) => i.widget("Widget 2"));
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder.moveItem(0, 1).build();
@@ -170,8 +209,8 @@ describe("DashboardLayoutSectionBuilder", () => {
     describe(".removeItems()", () => {
         it("should remove all items by default", () => {
             const sectionBuilder = createEmptyDashboardLayoutSectionBuilder()
-                .addItem(defaultItemXlSize)
-                .addItem(defaultItemXlSize);
+                .createItem(defaultItemXlSize)
+                .createItem(defaultItemXlSize);
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder.removeItems().build();
@@ -182,10 +221,10 @@ describe("DashboardLayoutSectionBuilder", () => {
 
         it("should remove selected items only", () => {
             const sectionBuilder = createEmptyDashboardLayoutSectionBuilder()
-                .addItem(defaultItemXlSize, (i) => i.widget("Item to keep 1"))
-                .addItem(defaultItemXlSize)
-                .addItem(defaultItemXlSize, (i) => i.widget("Item to keep 2"))
-                .addItem(defaultItemXlSize);
+                .createItem(defaultItemXlSize, (i) => i.widget("Item to keep 1"))
+                .createItem(defaultItemXlSize)
+                .createItem(defaultItemXlSize, (i) => i.widget("Item to keep 2"))
+                .createItem(defaultItemXlSize);
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder
@@ -199,9 +238,9 @@ describe("DashboardLayoutSectionBuilder", () => {
         it("should remove selected item only", () => {
             const contentOfTheColumnToRemove = "Item to remove";
             const sectionBuilder = createEmptyDashboardLayoutSectionBuilder()
-                .addItem(defaultItemXlSize)
-                .addItem(defaultItemXlSize, (r) => r.widget(contentOfTheColumnToRemove))
-                .addItem(defaultItemXlSize);
+                .createItem(defaultItemXlSize)
+                .createItem(defaultItemXlSize, (r) => r.widget(contentOfTheColumnToRemove))
+                .createItem(defaultItemXlSize);
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder
@@ -213,7 +252,7 @@ describe("DashboardLayoutSectionBuilder", () => {
         });
 
         it("should not remove any item, when selection result is undefined", () => {
-            const sectionBuilder = createEmptyDashboardLayoutSectionBuilder().addItem(defaultItemXlSize);
+            const sectionBuilder = createEmptyDashboardLayoutSectionBuilder().createItem(defaultItemXlSize);
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder
@@ -228,8 +267,8 @@ describe("DashboardLayoutSectionBuilder", () => {
     describe(".modifyItems()", () => {
         it("should modify all items by default", () => {
             const sectionBuilder = createEmptyDashboardLayoutSectionBuilder()
-                .addItem(defaultItemXlSize)
-                .addItem(defaultItemXlSize);
+                .createItem(defaultItemXlSize)
+                .createItem(defaultItemXlSize);
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder
@@ -242,10 +281,10 @@ describe("DashboardLayoutSectionBuilder", () => {
 
         it("should modify selected items only", () => {
             const sectionBuilder = createEmptyDashboardLayoutSectionBuilder()
-                .addItem(defaultItemXlSize, (i) => i.widget("Original item"))
-                .addItem(defaultItemXlSize)
-                .addItem(defaultItemXlSize, (i) => i.widget("Original item"))
-                .addItem(defaultItemXlSize);
+                .createItem(defaultItemXlSize, (i) => i.widget("Original item"))
+                .createItem(defaultItemXlSize)
+                .createItem(defaultItemXlSize, (i) => i.widget("Original item"))
+                .createItem(defaultItemXlSize);
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder
@@ -262,9 +301,9 @@ describe("DashboardLayoutSectionBuilder", () => {
         it("should modify selected item only", () => {
             const contentOfTheColumnToModify = "Original item";
             const sectionBuilder = createEmptyDashboardLayoutSectionBuilder()
-                .addItem(defaultItemXlSize)
-                .addItem(defaultItemXlSize, (i) => i.widget(contentOfTheColumnToModify))
-                .addItem(defaultItemXlSize);
+                .createItem(defaultItemXlSize)
+                .createItem(defaultItemXlSize, (i) => i.widget(contentOfTheColumnToModify))
+                .createItem(defaultItemXlSize);
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder
@@ -279,7 +318,7 @@ describe("DashboardLayoutSectionBuilder", () => {
         });
 
         it("should not modify any item, when selection result is undefined", () => {
-            const sectionBuilder = createEmptyDashboardLayoutSectionBuilder().addItem(defaultItemXlSize);
+            const sectionBuilder = createEmptyDashboardLayoutSectionBuilder().createItem(defaultItemXlSize);
 
             const sectionBefore = sectionBuilder.build();
             const sectionAfter = sectionBuilder

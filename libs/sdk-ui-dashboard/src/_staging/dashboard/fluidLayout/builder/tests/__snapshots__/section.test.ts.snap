@@ -1,6 +1,110 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DashboardLayoutSectionBuilder .addItem() should add a item to the end of the section by default: after 1`] = `
+exports[`DashboardLayoutSectionBuilder .addItem() should add item at the end of the section by default: after 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "size": Object {
+        "xl": Object {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Initial item",
+    },
+    Object {
+      "size": Object {
+        "xl": Object {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Added item",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder .addItem() should add item at the end of the section by default: before 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "size": Object {
+        "xl": Object {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Initial item",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder .addItem() should create item at the provided index: after 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "size": Object {
+        "xl": Object {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item 1",
+    },
+    Object {
+      "size": Object {
+        "xl": Object {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Added item",
+    },
+    Object {
+      "size": Object {
+        "xl": Object {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item 2",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder .addItem() should create item at the provided index: before 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "size": Object {
+        "xl": Object {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item 1",
+    },
+    Object {
+      "size": Object {
+        "xl": Object {
+          "gridWidth": 12,
+        },
+      },
+      "type": "IDashboardLayoutItem",
+      "widget": "Item 2",
+    },
+  ],
+  "type": "IDashboardLayoutSection",
+}
+`;
+
+exports[`DashboardLayoutSectionBuilder .createItem() should create item at the end of the section by default: after 1`] = `
 Object {
   "items": Array [
     Object {
@@ -27,7 +131,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder .addItem() should add a item to the end of the section by default: before 1`] = `
+exports[`DashboardLayoutSectionBuilder .createItem() should create item at the end of the section by default: before 1`] = `
 Object {
   "items": Array [
     Object {
@@ -44,7 +148,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder .addItem() should add a item to the provided index: after 1`] = `
+exports[`DashboardLayoutSectionBuilder .createItem() should create item at the provided index: after 1`] = `
 Object {
   "items": Array [
     Object {
@@ -80,7 +184,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder .addItem() should add a item to the provided index: before 1`] = `
+exports[`DashboardLayoutSectionBuilder .createItem() should create item at the provided index: before 1`] = `
 Object {
   "items": Array [
     Object {
@@ -180,7 +284,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder .modifyItem() should throw error, when the item at provided index does not exist 1`] = `"Cannot modify the item - item at index 0 does not exist!"`;
+exports[`DashboardLayoutSectionBuilder .modifyItem() should throw error, when the item at provided index does not exist 1`] = `"Cannot modify the item - item at index 0 does not exist."`;
 
 exports[`DashboardLayoutSectionBuilder .modifyItems() should modify all items by default: after 1`] = `
 Object {
@@ -514,7 +618,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder .moveItem() should throw error, when the item at provided index does not exist 1`] = `"Cannot move the item - item at index 0 does not exist!"`;
+exports[`DashboardLayoutSectionBuilder .moveItem() should throw error, when the item at provided index does not exist 1`] = `"Cannot move the item - item at index 0 does not exist."`;
 
 exports[`DashboardLayoutSectionBuilder .removeItem() should remove the item from the section: after 1`] = `
 Object {
@@ -541,7 +645,7 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder .removeItem() should throw error, when the item at provided index does not exist 1`] = `"Cannot remove the item - item at index 0 does not exist!"`;
+exports[`DashboardLayoutSectionBuilder .removeItem() should throw error, when the item at provided index does not exist 1`] = `"Cannot remove the item - item at index 0 does not exist."`;
 
 exports[`DashboardLayoutSectionBuilder .removeItems() should not remove any item, when selection result is undefined: after 1`] = `
 Object {
@@ -746,4 +850,4 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder constructors .for() should throw error, when the section is damaged 1`] = `"Provided data must be IDashboardLayoutSection!"`;
+exports[`DashboardLayoutSectionBuilder constructors .for() should throw error, when the section is damaged 1`] = `"Provided data must be IDashboardLayoutSection."`;

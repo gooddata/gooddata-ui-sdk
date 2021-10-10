@@ -56,12 +56,12 @@ function getDashboardLayoutForExport(
     dashLayout.removeSections();
     screenSplitSections.forEach((wrappedSection) => {
         wrappedSection.items.forEach((rowSection, index) => {
-            dashLayout.addSection((section) => {
+            dashLayout.createSection((section) => {
                 rowSection.forEach((item) => {
                     if (index === 0) {
                         section.header(wrappedSection.header);
                     }
-                    section.addItem(item.size().xl, (i) => i.widget(item.widget()));
+                    section.createItem(item.size().xl, (i) => i.widget(item.widget()));
                 });
                 return section;
             });

@@ -37,7 +37,7 @@ export class DashboardLayoutBuilder<TWidget> implements IDashboardLayoutBuilder<
      * @param layout - layout to modify
      */
     public static for<TWidget>(layout: IDashboardLayout<TWidget>): IDashboardLayoutBuilder<TWidget> {
-        invariant(isDashboardLayout<TWidget>(layout), "Provided data must be IDashboardLayout!");
+        invariant(isDashboardLayout<TWidget>(layout), "Provided data must be IDashboardLayout.");
         const dashboardLayoutBuilder: IDashboardLayoutBuilder<TWidget> = new DashboardLayoutBuilder(
             DashboardLayoutFacade.for(layout),
             DashboardLayoutFacade.for,
@@ -64,7 +64,7 @@ export class DashboardLayoutBuilder<TWidget> implements IDashboardLayoutBuilder<
         }));
     }
 
-    public addSection(
+    public createSection(
         create: DashboardLayoutSectionModifications<TWidget> = identity,
         index: number = this.facade().sections().count(),
     ): this {
@@ -84,9 +84,25 @@ export class DashboardLayoutBuilder<TWidget> implements IDashboardLayoutBuilder<
         return this;
     }
 
+    public addSection(
+        section: IDashboardLayoutSection<TWidget>,
+        index: number = this.facade().sections().count(),
+    ): this {
+        this.setLayout((layout) => {
+            const updatedRows = [...layout.sections];
+            updatedRows.splice(index, 0, section);
+            return {
+                ...layout,
+                sections: updatedRows,
+            };
+        });
+
+        return this;
+    }
+
     public modifySection(index: number, modify: DashboardLayoutSectionModifications<TWidget>): this {
         const sectionFacade = this.facade().sections().section(index);
-        invariant(sectionFacade, `Cannot modify the section - section at index ${index} does not exist!`);
+        invariant(sectionFacade, `Cannot modify the section - section at index ${index} does not exist.`);
 
         DashboardLayoutSectionBuilder.for(this, index).modify(modify);
         return this;
@@ -94,7 +110,7 @@ export class DashboardLayoutBuilder<TWidget> implements IDashboardLayoutBuilder<
 
     public removeSection(index: number): this {
         const sectionFacade = this.facade().sections().section(index);
-        invariant(sectionFacade, `Cannot remove the section - section at index ${index} does not exist!`);
+        invariant(sectionFacade, `Cannot remove the section - section at index ${index} does not exist.`);
 
         return this.setLayout((layout) => {
             const updatedRows = [...layout.sections];
@@ -108,12 +124,12 @@ export class DashboardLayoutBuilder<TWidget> implements IDashboardLayoutBuilder<
 
     public moveSection(fromIndex: number, toIndex: number): this {
         const section = this.facade().sections().section(fromIndex)?.raw();
-        invariant(section, `Cannot move the section - section at index ${fromIndex} does not exist!`);
+        invariant(section, `Cannot move the section - section at index ${fromIndex} does not exist.`);
 
         const maxToIndex = Math.min(toIndex, this.facade().sections().count() - 1);
 
         this.removeSection(fromIndex);
-        this.addSection((r) => {
+        this.createSection((r) => {
             return r.setSection(section);
         }, maxToIndex);
         return this;

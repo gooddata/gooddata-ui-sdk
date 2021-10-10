@@ -25,7 +25,10 @@ export const createEmptyDashboardLayoutBuilder = (): IDashboardLayoutBuilder<any
     DashboardLayoutBuilder.forNewLayout();
 
 export const createEmptyDashboardLayoutSectionBuilder = (): IDashboardLayoutSectionBuilder<any> =>
-    DashboardLayoutSectionBuilder.for(createEmptyDashboardLayoutBuilder().addSection(), 0);
+    DashboardLayoutSectionBuilder.for(createEmptyDashboardLayoutBuilder().createSection(), 0);
 
 export const createEmptyDashboardLayoutItemBuilder = (): IDashboardLayoutItemBuilder<any> =>
-    DashboardLayoutItemBuilder.for(createEmptyDashboardLayoutSectionBuilder().addItem(defaultItemXlSize), 0);
+    DashboardLayoutItemBuilder.for(
+        createEmptyDashboardLayoutSectionBuilder().createItem(defaultItemXlSize),
+        0,
+    );
