@@ -3,7 +3,7 @@ import * as React from "react";
 import { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer";
 import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces";
-import { IDashboardLayoutItemFacade } from "./facade/interfaces";
+import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
 
 const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<unknown> = {
     index: () => 0,

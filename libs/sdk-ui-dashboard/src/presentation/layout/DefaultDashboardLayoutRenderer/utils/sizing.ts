@@ -23,9 +23,9 @@ import {
 import invariant from "ts-invariant";
 import { IInsightDefinition, isInsight } from "@gooddata/sdk-model";
 
-import { DashboardLayoutFacade } from "../facade/layout";
-import { IDashboardLayoutItemFacade } from "../facade/interfaces";
-import { DashboardLayoutBuilder } from "./../builder/layout";
+import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout";
+import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces";
+import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout";
 import { fluidLayoutDescriptor } from "../FluidLayoutDescriptor";
 import { FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/dist/internal/components/VisualizationCatalog";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext/dist/internal/interfaces/VisualizationDescriptor";
@@ -38,10 +38,10 @@ import {
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
-    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
     GRID_ROW_HEIGHT_IN_PX,
 } from "../../../constants";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/fluidLayout";
 
 /**
  * Unify dashboard layout items height for all screens.

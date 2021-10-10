@@ -5,7 +5,7 @@ import { ScreenSize, IDashboardLayout } from "@gooddata/sdk-backend-spi";
 import { DashboardLayoutSection } from "./DashboardLayoutSection";
 import { IDashboardLayoutRenderProps } from "./interfaces";
 import cx from "classnames";
-import { DashboardLayoutFacade } from "./facade/layout";
+import { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout";
 import {
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,

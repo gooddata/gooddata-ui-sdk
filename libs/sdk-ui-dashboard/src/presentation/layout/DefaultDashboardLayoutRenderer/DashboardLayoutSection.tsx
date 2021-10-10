@@ -13,7 +13,7 @@ import {
 } from "./interfaces";
 import { DashboardLayoutItem } from "./DashboardLayoutItem";
 import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer";
-import { IDashboardLayoutSectionFacade } from "./facade/interfaces";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
 import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer";
 
 /**

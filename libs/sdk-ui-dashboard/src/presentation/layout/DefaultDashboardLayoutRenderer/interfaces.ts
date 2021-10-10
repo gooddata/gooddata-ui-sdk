@@ -1,6 +1,9 @@
 // (C) 2019-2021 GoodData Corporation
 import { IDashboardWidget, IDashboardLayout, ScreenSize } from "@gooddata/sdk-backend-spi";
-import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./facade/interfaces";
+import {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutSectionFacade,
+} from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.
