@@ -3287,6 +3287,9 @@ export interface RequestAsyncRender extends IDashboardCommand {
 }
 
 // @alpha
+export function requestAsyncRender(id: string, correlationId?: string): RequestAsyncRender;
+
+// @alpha
 export function resetAttributeFilterSelection(filterLocalId: string, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @alpha (undocumented)
@@ -3310,6 +3313,9 @@ export interface ResolveAsyncRender extends IDashboardCommand {
     // (undocumented)
     readonly type: "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE";
 }
+
+// @alpha
+export function resolveAsyncRender(id: string, correlationId?: string): ResolveAsyncRender;
 
 // @alpha
 export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;

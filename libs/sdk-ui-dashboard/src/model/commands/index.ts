@@ -198,7 +198,7 @@ export {
     exportInsightWidget,
 } from "./insight";
 
-export { RequestAsyncRender, ResolveAsyncRender } from "./render";
+export { RequestAsyncRender, ResolveAsyncRender, requestAsyncRender, resolveAsyncRender } from "./render";
 
 export { AddDrillTargets, addDrillTargets } from "./drillTargets";
 

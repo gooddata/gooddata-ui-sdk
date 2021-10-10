@@ -2,7 +2,7 @@
 import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { DashboardEventHandler } from "../eventHandlers/eventHandler";
-import { DashboardDispatch, DashboardState } from "../store/types";
+import { DashboardDispatch, DashboardState } from "../store";
 import { DashboardConfig, DashboardModelCustomizationFns } from "../types/commonTypes";
 
 /**

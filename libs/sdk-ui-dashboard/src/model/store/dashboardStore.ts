@@ -16,7 +16,7 @@ import { savingSliceReducer } from "./saving";
 import { insightsSliceReducer } from "./insights";
 import { createRootEventEmitter } from "./_infra/rootEventEmitter";
 import { DashboardEventHandler } from "../eventHandlers/eventHandler";
-import { rootCommandHandler } from "../commandHandlers/rootCommandHandler";
+import { rootCommandHandler } from "./_infra/rootCommandHandler";
 import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes";
 import { configSliceReducer } from "./config";
 import { dateFilterConfigSliceReducer } from "./dateFilterConfig";

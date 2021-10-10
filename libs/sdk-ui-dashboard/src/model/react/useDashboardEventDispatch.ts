@@ -1,8 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import { useCallback } from "react";
 import invariant from "ts-invariant";
-
-import { triggerEvent } from "../commands";
 import {
     DashboardEventBody,
     DashboardEvents,
@@ -11,6 +9,7 @@ import {
 } from "../events";
 
 import { useDashboardDispatch } from "./DashboardStoreProvider";
+import { triggerEvent } from "../commands";
 
 /**
  * Convenience hook for dispatching Dashboard events.
