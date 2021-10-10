@@ -76,7 +76,13 @@ export function newDashboardEngine(): IDashboardEngine {
                 }
             }
 
-            return customizationBuilder.build();
+            const extensionProps = customizationBuilder.build();
+            const eventingProps = eventRegistration.getDashboardEventing();
+
+            return {
+                ...extensionProps,
+                ...eventingProps,
+            };
         },
         getDashboardComponent(): React.ComponentType<IDashboardProps> {
             return Dashboard;
