@@ -112,7 +112,7 @@ export class DashboardLayoutItemBuilder<TWidget> implements IDashboardLayoutItem
         const content = this.facade().widget();
         invariant(
             isInsightWidgetDefinition(content) || isInsightWidget(content),
-            "Content of the item is not a kpi widget!",
+            "Content of the item is not a kpi widget.",
         );
         this.widget(modify(InsightWidgetBuilder.for(content)).build() as unknown as TWidget);
         return this;
@@ -130,7 +130,7 @@ export class DashboardLayoutItemBuilder<TWidget> implements IDashboardLayoutItem
         const content = this.facade().widget();
         invariant(
             isKpiWidgetDefinition(content) || isKpiWidget(content),
-            "Content of the item is not a kpi widget!",
+            "Content of the item is not a kpi widget.",
         );
         this.widget(modify(KpiWidgetBuilder.for(content)).build() as unknown as TWidget);
         return this;

@@ -37,8 +37,6 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
 
     /**
      * Creates an instance of DashboardLayoutSectionBuilder for particular layout item.
-     *
-     * @param item - item to modify
      */
     public static for<TContent>(
         layoutBuilder: IDashboardLayoutBuilder<TContent>,
@@ -46,7 +44,7 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
     ): IDashboardLayoutSectionBuilder<TContent> {
         invariant(
             isDashboardLayoutSection(layoutBuilder.facade().sections().section(sectionIndex)?.raw()),
-            `Provided data must be IDashboardLayoutSection!`,
+            `Provided data must be IDashboardLayoutSection.`,
         );
 
         const sectionBuilder: IDashboardLayoutSectionBuilder<TContent> = new DashboardLayoutSectionBuilder(
@@ -67,7 +65,7 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
         }));
     }
 
-    public addItem(
+    public createItem(
         xlSize: IDashboardLayoutSize,
         create: (
             builder: IDashboardLayoutItemBuilder<TContent>,
@@ -92,9 +90,25 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
         return this;
     }
 
+    public addItem(
+        item: IDashboardLayoutItem<TContent>,
+        index: number = this.facade().items().count(),
+    ): this {
+        this.setSection((section) => {
+            const updatedItems = [...section.items];
+            updatedItems.splice(index, 0, item);
+            return {
+                ...section,
+                items: updatedItems,
+            };
+        });
+
+        return this;
+    }
+
     public modifyItem(index: number, modify: DashboardLayoutItemModifications<TContent>): this {
         const itemFacade = this.facade().items().item(index);
-        invariant(itemFacade, `Cannot modify the item - item at index ${index} does not exist!`);
+        invariant(itemFacade, `Cannot modify the item - item at index ${index} does not exist.`);
 
         DashboardLayoutItemBuilder.for(this, index).modify(modify);
         return this;
@@ -102,7 +116,7 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
 
     public removeItem(index: number): this {
         const itemFacade = this.facade().items().item(index);
-        invariant(itemFacade, `Cannot remove the item - item at index ${index} does not exist!`);
+        invariant(itemFacade, `Cannot remove the item - item at index ${index} does not exist.`);
 
         return this.setSection((section) => {
             const updatedItems = [...section.items];
@@ -116,12 +130,12 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
 
     public moveItem(fromIndex: number, toIndex: number): this {
         const itemFacade = this.facade().item(fromIndex);
-        invariant(itemFacade, `Cannot move the item - item at index ${fromIndex} does not exist!`);
+        invariant(itemFacade, `Cannot move the item - item at index ${fromIndex} does not exist.`);
 
         const maxToIndex = Math.min(toIndex, this.facade().items().count() - 1);
 
         this.removeItem(fromIndex);
-        this.addItem(itemFacade.sizeForScreen("xl")!, (c) => c.setItem(itemFacade.raw()), maxToIndex);
+        this.createItem(itemFacade.sizeForScreen("xl")!, (c) => c.setItem(itemFacade.raw()), maxToIndex);
         return this;
     }
 

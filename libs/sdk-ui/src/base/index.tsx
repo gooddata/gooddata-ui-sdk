@@ -124,6 +124,7 @@ export {
     UseCancelablePromiseStatus,
     useCancelablePromise,
     UseCancelablePromiseCallbacks,
+    UseCancelablePromiseOptions,
     UseCancelablePromiseState,
     UseCancelablePromiseErrorState,
     UseCancelablePromiseLoadingState,

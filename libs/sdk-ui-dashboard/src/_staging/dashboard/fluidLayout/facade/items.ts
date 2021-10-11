@@ -8,7 +8,7 @@ import {
     IDashboardLayoutSectionFacade,
 } from "./interfaces";
 import invariant from "ts-invariant";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../constants";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../config";
 
 /**
  * @alpha
@@ -47,7 +47,7 @@ export class DashboardLayoutItemsFacade<TWidget> implements IDashboardLayoutItem
         this.itemFacades.forEach((itemFacade) => {
             const itemSize = itemFacade.sizeForScreen(screen);
 
-            invariant(itemSize, `Item size for ${screen} screen is not defined`);
+            invariant(itemSize, `Item size for ${screen} screen is not defined.`);
 
             if (currentRowWidth + itemSize.gridWidth > DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT) {
                 renderedRows.push(currentRow);

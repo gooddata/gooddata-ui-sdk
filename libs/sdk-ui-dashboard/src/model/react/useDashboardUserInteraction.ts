@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import { useCallback } from "react";
+import { userInteractionTriggered } from "../events";
 
-import { userInteractionTriggered } from "../events/userInteraction";
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch";
 
 /**

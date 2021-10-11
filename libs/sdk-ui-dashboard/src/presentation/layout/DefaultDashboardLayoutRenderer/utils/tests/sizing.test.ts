@@ -18,13 +18,12 @@ import {
     validateDashboardLayoutWidgetSize,
 } from "../sizing";
 import { VisType } from "@gooddata/sdk-ui";
-import { DashboardLayoutBuilder } from "../../builder/layout";
-import { idRef, newInsightDefinition } from "@gooddata/sdk-model";
 import {
-    ALL_SCREENS,
+    DashboardLayoutBuilder,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-    DASHBOARD_LAYOUT_VIS_TYPE,
-} from "../../../../constants";
+} from "../../../../../_staging/dashboard/fluidLayout";
+import { idRef, newInsightDefinition } from "@gooddata/sdk-model";
+import { ALL_SCREENS, DASHBOARD_LAYOUT_VIS_TYPE } from "../../../../constants";
 
 export const allVisTypes: VisType[] = [
     "area",
@@ -149,9 +148,9 @@ describe("sizing", () => {
     describe("unifyDashboardLayoutItemHeights", () => {
         it("should unify dashboard layout column heights for various item sizes", () => {
             chunk(allVisTypes, DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT).forEach((visTypesInRow) =>
-                layoutBuilder.addSection((s) => {
+                layoutBuilder.createSection((s) => {
                     visTypesInRow.forEach((visType, index) => {
-                        s.addItem({ gridWidth: index, heightAsRatio: 50 }, (i) =>
+                        s.createItem({ gridWidth: index, heightAsRatio: 50 }, (i) =>
                             i.newInsightWidget(idRef(visType)),
                         );
                     });
@@ -166,7 +165,7 @@ describe("sizing", () => {
     describe("getLayoutWithoutGridHeights", () => {
         it("should remove gridHeight from dashboard layout item size", () => {
             const layout = DashboardLayoutBuilder.forNewLayout()
-                .addSection((s) => s.addItem({ gridWidth: 10, gridHeight: 30 }))
+                .createSection((s) => s.createItem({ gridWidth: 10, gridHeight: 30 }))
                 .build();
             expect(getLayoutWithoutGridHeights(layout)).toMatchSnapshot();
         });
@@ -312,15 +311,15 @@ describe("sizing", () => {
 
     describe("getDashboardLayoutItemMaxGridWidth", () => {
         const layoutFacade = DashboardLayoutBuilder.forNewLayout()
-            .addSection((s) =>
+            .createSection((s) =>
                 s
-                    .addItem({ gridWidth: 3 })
-                    .addItem({ gridWidth: 3 })
-                    .addItem({ gridWidth: 3 })
-                    .addItem({ gridWidth: 12 })
-                    .addItem({ gridWidth: 3 }),
+                    .createItem({ gridWidth: 3 })
+                    .createItem({ gridWidth: 3 })
+                    .createItem({ gridWidth: 3 })
+                    .createItem({ gridWidth: 12 })
+                    .createItem({ gridWidth: 3 }),
             )
-            .addSection((s) => s.addItem({ gridWidth: 4 }).addItem({ gridWidth: 2 }))
+            .createSection((s) => s.createItem({ gridWidth: 4 }).createItem({ gridWidth: 2 }))
             .facade();
 
         it("should get maximum size for a column with multiple widgets", () => {

@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import { useCallback } from "react";
-import { requestAsyncRender, resolveAsyncRender } from "../commands/render";
+import { requestAsyncRender, resolveAsyncRender } from "../commands";
 import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand";
 
 /**

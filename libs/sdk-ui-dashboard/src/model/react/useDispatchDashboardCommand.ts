@@ -1,6 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
 import { useCallback } from "react";
-
 import { DashboardCommands } from "../commands";
 
 import { useDashboardDispatch } from "./DashboardStoreProvider";

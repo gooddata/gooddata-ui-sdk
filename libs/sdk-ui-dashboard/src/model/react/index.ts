@@ -7,7 +7,5 @@ export { useDashboardQueryProcessing, QueryProcessingStatus } from "./useDashboa
 export { useDashboardUserInteraction } from "./useDashboardUserInteraction";
 export { useDashboardAsyncRender, UseDashboardAsyncRender } from "./useDashboardAsyncRender";
 export { IDashboardStoreProviderProps } from "./types";
-export { queryAndWaitFor } from "./queryAndWaitFor";
-export { dispatchAndWaitFor } from "./dispatchAndWaitFor";
 export { useDispatchDashboardCommand } from "./useDispatchDashboardCommand";
 export { useWidgetExecutionsHandler } from "./useWidgetExecutionsHandler";

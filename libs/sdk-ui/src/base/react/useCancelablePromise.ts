@@ -89,6 +89,15 @@ export type UseCancelablePromiseCallbacks<TResult, TError> = {
 };
 
 /**
+ * Options for the {@link useCancelablePromise} hook.
+ *
+ * @beta
+ */
+export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseCallbacks<TResult, TError> & {
+    promise: (() => Promise<TResult>) | undefined | null;
+};
+
+/**
  * This hook provides easy way to work with Promise.
  * You can:
  * - watch it's status (pending/loading/success/error)
@@ -99,18 +108,18 @@ export type UseCancelablePromiseCallbacks<TResult, TError> = {
  * @beta
  */
 export function useCancelablePromise<TResult, TError = any>(
-    {
+    options: UseCancelablePromiseOptions<TResult, TError>,
+    deps?: DependencyList,
+): UseCancelablePromiseState<TResult, TError> {
+    const {
         promise,
         onLoading = noop,
         onPending = noop,
         onCancel = noop,
         onSuccess = noop,
         onError = noop,
-    }: {
-        promise: (() => Promise<TResult>) | undefined | null;
-    } & UseCancelablePromiseCallbacks<TResult, TError>,
-    deps?: DependencyList,
-): UseCancelablePromiseState<TResult, TError> {
+    } = options;
+
     const getInitialState = (): UseCancelablePromiseState<TResult, TError> => ({
         result: undefined,
         error: undefined,

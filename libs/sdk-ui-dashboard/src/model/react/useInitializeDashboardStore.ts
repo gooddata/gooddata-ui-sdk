@@ -1,11 +1,11 @@
 // (C) 2021 GoodData Corporation
 import { useEffect, useState } from "react";
 import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
-import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore";
-import { InitialLoadCorrelationId, initializeDashboard } from "../commands/dashboard";
 import { objectUtils } from "@gooddata/util";
 import { IDashboardStoreProviderProps } from "./types";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker";
+import { initializeDashboard, InitialLoadCorrelationId } from "../commands";
+import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore";
 
 /**
  * This hook is responsible for properly initializing and re-initializing the dashboard redux store,
@@ -57,6 +57,7 @@ export const useInitializeDashboardStore = (
                 backgroundWorkers,
                 onStateChange: props.onStateChange,
                 onEventingInitialized: props.onEventingInitialized,
+                customizationFns: props.customizationFns,
             });
             dashStore.store.dispatch(
                 initializeDashboard(props.config, props.permissions, InitialLoadCorrelationId),

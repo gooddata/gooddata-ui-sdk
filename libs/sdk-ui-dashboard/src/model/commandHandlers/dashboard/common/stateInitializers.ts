@@ -23,9 +23,10 @@ import {
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout";
 import { SagaIterator } from "redux-saga";
 import { resolveFilterDisplayForms } from "../../../utils/filterResolver";
-import { call } from "redux-saga/effects";
-import { DashboardContext } from "../../../types/commonTypes";
+import { call, getContext } from "redux-saga/effects";
+import { DashboardContext, DashboardModelCustomizationFns } from "../../../types/commonTypes";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
+import { ExtendedDashboardWidget } from "../../../types/layoutTypes";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",
@@ -83,8 +84,17 @@ export function* actionsToInitializeExistingDashboard(
     dateFilterConfig: IDateFilterConfig,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): SagaIterator<Array<PayloadAction<any>>> {
-    const filterContextDefinition = dashboardFilterContextDefinition(dashboard, dateFilterConfig);
-    const filterContextIdentity = dashboardFilterContextIdentity(dashboard);
+    const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {
+        ...dashboard,
+        layout: (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
+    };
+
+    const customizationFns: DashboardModelCustomizationFns = yield getContext("customizationFns");
+    const customizedDashboard =
+        customizationFns?.existingDashboardTransformFn?.(sanitizedDashboard) ?? sanitizedDashboard;
+
+    const filterContextDefinition = dashboardFilterContextDefinition(customizedDashboard, dateFilterConfig);
+    const filterContextIdentity = dashboardFilterContextIdentity(customizedDashboard);
     const attributeFilterDisplayForms = yield call(
         resolveFilterDisplayForms,
         ctx,
@@ -100,7 +110,7 @@ export function* actionsToInitializeExistingDashboard(
      * Also note, nested layouts are not yet supported
      */
     const dashboardLayout = dashboardLayoutSanitize(
-        (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
+        customizedDashboard.layout ?? EmptyDashboardLayout,
         insights,
         settings,
     );

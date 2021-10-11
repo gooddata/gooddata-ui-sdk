@@ -40,8 +40,8 @@ export {
     validateDashboardLayoutWidgetSize,
     MeasurableWidgetContent,
 } from "./utils/sizing";
-export { DashboardLayoutBuilder } from "./builder/layout";
-export { DashboardLayoutFacade } from "./facade/layout";
+export { DashboardLayoutBuilder } from "../../../_staging/dashboard/fluidLayout/builder/layout";
+export { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout";
 export {
     DashboardLayoutItemModifications,
     DashboardLayoutItemsSelector,
@@ -51,13 +51,13 @@ export {
     IDashboardLayoutBuilder,
     IDashboardLayoutItemBuilder,
     IDashboardLayoutSectionBuilder,
-} from "./builder/interfaces";
+} from "../../../_staging/dashboard/fluidLayout/builder/interfaces";
 export {
     IDashboardLayoutItemFacade,
     IDashboardLayoutItemsFacade,
     IDashboardLayoutFacade,
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
-} from "./facade/interfaces";
+} from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
 
 export { fluidLayoutDescriptor } from "./FluidLayoutDescriptor";

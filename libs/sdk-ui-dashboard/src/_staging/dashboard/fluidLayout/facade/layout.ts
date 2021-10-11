@@ -20,7 +20,7 @@ export class DashboardLayoutFacade<TWidget> implements IDashboardLayoutFacade<TW
      * @param layout - layout to wrap
      */
     public static for<TWidget>(layout: IDashboardLayout<TWidget>): IDashboardLayoutFacade<TWidget> {
-        invariant(isDashboardLayout<TWidget>(layout), "Provided data must be IDashboardLayout!");
+        invariant(isDashboardLayout<TWidget>(layout), "Provided data must be IDashboardLayout.");
         return new DashboardLayoutFacade(layout);
     }
 

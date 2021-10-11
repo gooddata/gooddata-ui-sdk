@@ -1,5 +1,4 @@
 // (C) 2019-2021 GoodData Corporation
-
 import {
     IDashboardLayoutSectionHeader,
     IDashboardLayoutSize,
@@ -187,7 +186,7 @@ export interface IDashboardLayoutSectionBuilder<TWidget = IDashboardWidget> {
     header(valueOrTransform: ValueOrUpdateCallback<IDashboardLayoutSectionHeader | undefined>): this;
 
     /**
-     * Add a new item to a section.
+     * Creates a new item and adds it into a section.
      *
      * Note:
      * - This operation is non-invasive, it cannot replace an existing item.
@@ -202,11 +201,27 @@ export interface IDashboardLayoutSectionBuilder<TWidget = IDashboardWidget> {
      * @param index - index where to place the item
      * @returns this
      */
-    addItem(
+    createItem(
         xlSize: IDashboardLayoutSize,
         create?: (builder: IDashboardLayoutItemBuilder<TWidget>) => IDashboardLayoutItemBuilder<TWidget>,
         index?: number,
     ): this;
+
+    /**
+     * Adds the provided item into a section.
+     *
+     * Note:
+     * - This operation is non-invasive, it cannot replace an existing item.
+     *   This means that if there is already an existing item on the specified index,
+     *   this and all subsequent items will be moved after the added item.
+     *   If you want to replace an existing item use .modifyItem() or .modifyItems() method instead.
+     *
+     * - When no index is provided, item will be added at the end of the section.
+     *
+     * @param item - item to add
+     * @param index - index where to place the item
+     */
+    addItem(item: IDashboardLayoutItem<TWidget>, index?: number): this;
 
     /**
      * Perform modifications for the item at a specified index.
@@ -344,7 +359,7 @@ export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
     size(valueOrUpdateCallback: ValueOrUpdateCallback<IDashboardLayoutSize | undefined>): this;
 
     /**
-     * Add a new section to a layout.
+     * Creates a new section and adds it to a layout.
      *
      * Note:
      * - This operation is non-invasive, it cannot replace an existing section.
@@ -359,12 +374,29 @@ export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
      * @param index - index where to place the section
      * @returns this
      */
-    addSection(
+    createSection(
         create?: (
             builder: IDashboardLayoutSectionBuilder<TWidget>,
         ) => IDashboardLayoutSectionBuilder<TWidget>,
         index?: number,
     ): this;
+
+    /**
+     * Adds a new section to a layout.
+     *
+     * Note:
+     * - This operation is non-invasive, it cannot replace an existing section.
+     *   This means that if there is already an existing section on the specified index,
+     *   this and all subsequent sections will be moved after the added section.
+     *   If you want to replace an existing section use .modifySection() or .modifySections() method instead.
+     *
+     * - When no index is provided, section will be added at the end of the layout.
+     *
+     * @param section - section to add
+     * @param index - index where to place the section
+     * @returns this
+     */
+    addSection(section: IDashboardLayoutSection<TWidget>, index?: number): this;
 
     /**
      * Modify section at a specified index.

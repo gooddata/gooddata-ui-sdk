@@ -47,6 +47,7 @@ import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-backend-spi';
+import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
@@ -1305,6 +1306,11 @@ export interface DashboardMetaState {
     persistedDashboard?: IDashboard;
 }
 
+// @alpha (undocumented)
+export type DashboardModelCustomizationFns = {
+    existingDashboardTransformFn?: DashboardTransformFn;
+};
+
 // @alpha
 export abstract class DashboardPluginV1 implements IDashboardPlugin {
     // (undocumented)
@@ -1447,6 +1453,9 @@ export type DashboardStateChangeCallback = (state: DashboardState, dispatch: Das
 
 // @internal (undocumented)
 export const DashboardStoreProvider: React_2.FC<IDashboardStoreProviderProps>;
+
+// @alpha (undocumented)
+export type DashboardTransformFn = (dashboard: IDashboard<ExtendedDashboardWidget>) => IDashboard<ExtendedDashboardWidget> | undefined;
 
 // @alpha
 export interface DashboardUserInteractionTriggered extends IDashboardEvent {
@@ -1930,6 +1939,9 @@ export type FiltersInfo = {
     resolvedFilterValues?: IResolvedFilterValues;
 };
 
+// @alpha (undocumented)
+export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashboardWidget>, customizer: IFluidLayoutCustomizer) => void;
+
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     exportXLSXDisabled: boolean;
@@ -2062,6 +2074,7 @@ export interface IDashboardCustomComponentProps {
 
 // @alpha (undocumented)
 export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
+    customizationFns?: DashboardModelCustomizationFns;
     insightMenuItemsProvider?: InsightMenuItemsProvider;
     menuButtonConfig?: IMenuButtonConfiguration;
 }
@@ -2070,6 +2083,8 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
 export interface IDashboardCustomizer {
     insightRendering(): IDashboardInsightCustomizer;
     kpiRendering(): IDashboardKpiCustomizer;
+    layout(): IDashboardLayoutCustomizer;
+    widgets(): IDashboardWidgetCustomizer;
 }
 
 // @alpha
@@ -2223,6 +2238,11 @@ export interface IDashboardKpiCustomizer {
     withCustomProvider(provider: KpiComponentProvider): IDashboardKpiCustomizer;
 }
 
+// @alpha (undocumented)
+export interface IDashboardLayoutCustomizer {
+    customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
+}
+
 // @alpha
 export interface IDashboardPlugin extends IDashboardPluginMetadata {
     onPluginLoaded?(ctx: DashboardContext, parameters?: string): void;
@@ -2265,6 +2285,8 @@ export interface IDashboardStoreProviderProps {
     // (undocumented)
     config?: DashboardConfig;
     // (undocumented)
+    customizationFns?: DashboardModelCustomizationFns;
+    // (undocumented)
     dashboardRef?: ObjRef;
     // (undocumented)
     eventHandlers?: DashboardEventHandler[];
@@ -2282,6 +2304,11 @@ export interface IDashboardStoreProviderProps {
 export interface IDashboardThemingProps {
     theme?: ITheme;
     themeModifier?: (theme: ITheme) => ITheme;
+}
+
+// @alpha (undocumented)
+export interface IDashboardWidgetCustomizer {
+    addCustomWidget(widgetType: string, Component: React_2.ComponentType): IDashboardWidgetCustomizer;
 }
 
 // @alpha
@@ -2338,6 +2365,12 @@ export interface IFilterBarProps {
     filters: FilterContextItem[];
     onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
     onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
+}
+
+// @alpha (undocumented)
+export interface IFluidLayoutCustomizer {
+    addItem(sectionIdx: number, itemIdx: number, item: IDashboardLayoutItem<ICustomWidget>): IFluidLayoutCustomizer;
+    addSection(sectionIdx: number, section: IDashboardLayoutSection<ICustomWidget>): IFluidLayoutCustomizer;
 }
 
 // @alpha
@@ -2922,6 +2955,9 @@ export interface MoveSectionItem extends IDashboardCommand {
 export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
 
 // @alpha
+export function newCustomWidget<TExtra = void>(identifier: string, customType: string, extras?: TExtra): TExtra & ICustomWidget;
+
+// @alpha
 export function newDashboardEngine(): IDashboardEngine;
 
 // @alpha
@@ -3254,6 +3290,9 @@ export interface RequestAsyncRender extends IDashboardCommand {
 }
 
 // @alpha
+export function requestAsyncRender(id: string, correlationId?: string): RequestAsyncRender;
+
+// @alpha
 export function resetAttributeFilterSelection(filterLocalId: string, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @alpha (undocumented)
@@ -3277,6 +3316,9 @@ export interface ResolveAsyncRender extends IDashboardCommand {
     // (undocumented)
     readonly type: "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE";
 }
+
+// @alpha
+export function resolveAsyncRender(id: string, correlationId?: string): ResolveAsyncRender;
 
 // @alpha
 export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;
@@ -3408,10 +3450,10 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => Outp
 export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res: IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined) => IImplicitDrillWithPredicates[]>;
 
 // @alpha
-export const selectDashboardDescription: OutputSelector<DashboardState, string, (res: Pick<IDashboard, "title" | "description" | "tags">) => string>;
+export const selectDashboardDescription: OutputSelector<DashboardState, string, (res: Pick<IDashboard<IDashboardWidget>, "title" | "description" | "tags">) => string>;
 
 // @alpha
-export const selectDashboardId: OutputSelector<DashboardState, string | undefined, (res: IDashboard | undefined) => string | undefined>;
+export const selectDashboardId: OutputSelector<DashboardState, string | undefined, (res: IDashboard<IDashboardWidget> | undefined) => string | undefined>;
 
 // @alpha
 export const selectDashboardIdRef: OutputSelector<DashboardState, IdentifierRef | undefined, (res: string | undefined) => IdentifierRef | undefined>;
@@ -3420,19 +3462,19 @@ export const selectDashboardIdRef: OutputSelector<DashboardState, IdentifierRef 
 export const selectDashboardLoading: OutputSelector<DashboardState, LoadingState, (res: DashboardState) => LoadingState>;
 
 // @alpha
-export const selectDashboardRef: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: IDashboard | undefined) => UriRef | IdentifierRef | undefined>;
+export const selectDashboardRef: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: IDashboard<IDashboardWidget> | undefined) => UriRef | IdentifierRef | undefined>;
 
 // @internal (undocumented)
 export const selectDashboardSaving: OutputSelector<DashboardState, SavingState, (res: DashboardState) => SavingState>;
 
 // @alpha
-export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: Pick<IDashboard, "title" | "description" | "tags">) => string[] | undefined>;
+export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: Pick<IDashboard<IDashboardWidget>, "title" | "description" | "tags">) => string[] | undefined>;
 
 // @alpha
-export const selectDashboardTitle: OutputSelector<DashboardState, string, (res: Pick<IDashboard, "title" | "description" | "tags">) => string>;
+export const selectDashboardTitle: OutputSelector<DashboardState, string, (res: Pick<IDashboard<IDashboardWidget>, "title" | "description" | "tags">) => string>;
 
 // @alpha
-export const selectDashboardUri: OutputSelector<DashboardState, string | undefined, (res: IDashboard | undefined) => string | undefined>;
+export const selectDashboardUri: OutputSelector<DashboardState, string | undefined, (res: IDashboard<IDashboardWidget> | undefined) => string | undefined>;
 
 // @alpha
 export const selectDashboardUriRef: OutputSelector<DashboardState, UriRef | undefined, (res: string | undefined) => UriRef | undefined>;

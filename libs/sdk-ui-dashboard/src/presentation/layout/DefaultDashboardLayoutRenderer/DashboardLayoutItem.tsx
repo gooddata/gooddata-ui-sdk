@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-backend-spi";
 import { IDashboardLayoutItemRenderer, IDashboardLayoutWidgetRenderer } from "./interfaces";
-import { IDashboardLayoutItemFacade } from "./facade/interfaces";
+import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
 import { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer";
 import { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer";
 

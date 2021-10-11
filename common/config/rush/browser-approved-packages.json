@@ -163,6 +163,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-loaders",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-pivot",
       "allowedCategories": [ "examples", "production" ]
     },

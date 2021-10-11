@@ -44,6 +44,9 @@ export type DashboardLoadResult = {
 };
 
 // @alpha (undocumented)
+export const DashboardStub: React_2.FC<IDashboardStubProps>;
+
+// @alpha (undocumented)
 export interface IDashboardLoader {
     forDashboard(dashboardRef: ObjRef): IDashboardLoader;
     fromClientWorkspace(clientWorkspace: IClientWorkspaceIdentifiers): IDashboardLoader;
@@ -52,6 +55,16 @@ export interface IDashboardLoader {
     onBackend(backend: IAnalyticalBackend): IDashboardLoader;
     withBaseProps(props: IDashboardBaseProps): IDashboardLoader;
     withEmbeddedPlugins(...plugins: IEmbeddedPlugin[]): IDashboardLoader;
+}
+
+// @alpha (undocumented)
+export interface IDashboardStubProps extends IDashboardBaseProps {
+    // (undocumented)
+    clientWorkspace?: IClientWorkspaceIdentifiers;
+    // (undocumented)
+    extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
+    // (undocumented)
+    mode?: "prod" | "dev";
 }
 
 // @alpha
