@@ -25,8 +25,7 @@ Object {
       "uris": Array [],
     },
     "displayForm": Object {
-      "identifier": "label.product.id.name",
-      "type": "displayForm",
+      "uri": "/gdc/md/referenceworkspace/obj/1055",
     },
     "filterElementsBy": undefined,
     "localIdentifier": Any<String>,
