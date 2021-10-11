@@ -21,6 +21,7 @@ export namespace GdcMetadata {
         | "attribute"
         | "attributeDisplayForm"
         | "column"
+        | "dashboardPlugin"
         | "dataLoadingColumn"
         | "dataSet"
         | "dateFilterConfig"

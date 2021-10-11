@@ -14,6 +14,7 @@ import { GdcVisualizationClass } from "../visualizationObject/GdcVisualizationCl
 import { GdcKpi } from "../kpi/GdcKpi";
 import { GdcDataSets } from "../dataSets/GdcDataSets";
 import { GdcReport } from "../report/GdcReport";
+import { GdcDashboardPlugin } from "../dashboardPlugin/GdcDashboardPlugin";
 
 /**
  * @public
@@ -40,7 +41,8 @@ export namespace GdcMetadataObject {
         | GdcVisualizationClass.IVisualizationClass
         | GdcDataSets.IDataSet
         | GdcReport.IReport
-        | GdcReport.IReportDefinition;
+        | GdcReport.IReportDefinition
+        | GdcDashboardPlugin.IDashboardPlugin;
 
     export type WrappedObject =
         | GdcMetadata.IWrappedAttribute
@@ -63,7 +65,8 @@ export namespace GdcMetadataObject {
         | GdcVisualizationClass.IVisualizationClassWrapped
         | GdcDataSets.IWrappedDataSet
         | GdcReport.IWrappedReport
-        | GdcReport.IWrappedReportDefinition;
+        | GdcReport.IWrappedReportDefinition
+        | GdcDashboardPlugin.IWrappedDashboardPlugin;
 
     export function unwrapMetadataObject(object: WrappedObject): IObject {
         return flow(values, first)(object);
