@@ -399,6 +399,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/webpack-env",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@types/yup",
       "allowedCategories": [ "examples" ]
     },
@@ -409,6 +413,10 @@
     {
       "name": "@typescript-eslint/parser",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@welldone-software/why-did-you-render",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "async",
