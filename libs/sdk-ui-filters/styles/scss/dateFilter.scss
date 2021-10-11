@@ -2,8 +2,8 @@
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 
 @import "~@gooddata/sdk-ui-kit/styles/scss/indigoFont";
-@import "~@gooddata/goodstrap/lib/Dropdown/styles/Dropdown";
 
+@import "~@gooddata/sdk-ui-kit/styles/dropdown";
 @import "~@gooddata/sdk-ui-kit/styles/scss/list";
 @import "~@gooddata/sdk-ui-kit/styles/scss/overlay";
 @import "~@gooddata/sdk-ui-kit/styles/scss/tabs";
