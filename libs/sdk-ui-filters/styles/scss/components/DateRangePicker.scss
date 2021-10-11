@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-@import "~@gooddata/sdk-ui-kit/styles/scss/variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables.scss";
 
 $gd-date-range-picker-hover-bgcolor: $is-focused-background;
 $gd-date-range-picker-interval-bgcolor: var(--gd-palette-primary-lightest, lighten($gd-color-highlight, 45%));

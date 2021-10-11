@@ -2,11 +2,10 @@
 // TODO: for what is this path used?
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 @import "~@gooddata/sdk-ui/styles/scss/settings";
-@import "~@gooddata/sdk-ui-kit/styles/overlay";
-// TODO
-@import "~@gooddata/goodstrap/lib/core/styles/Spinner";
+@import "~@gooddata/sdk-ui-kit/styles/scss/overlay";
+@import "~@gooddata/sdk-ui-kit/styles/scss/spinner";
 @import "~@gooddata/sdk-ui-kit/styles/scss/list";
-@import "~@gooddata/sdk-ui-kit/styles/dropdown";
+@import "~@gooddata/sdk-ui-kit/styles/scss/dropdown";
 @import "~@gooddata/sdk-ui-kit/styles/scss/indigoFont";
 @import "~@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @import "~@gooddata/sdk-ui-kit/styles/scss/form";
