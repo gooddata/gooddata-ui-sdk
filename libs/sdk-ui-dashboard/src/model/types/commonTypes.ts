@@ -211,8 +211,6 @@ export type DashboardModelCustomizationFns = {
      * @remarks
      * -  If the function is not defined, results in an error or returns `undefined`, then the original
      *    dashboard will be used as-is.
-     * -  To test whether the dashboard object is new or existing, check for the presence of the `ref`
-     *    property; ref will only be present on an existing, persisted dashboard.
      */
     existingDashboardTransformFn?: DashboardTransformFn;
 };

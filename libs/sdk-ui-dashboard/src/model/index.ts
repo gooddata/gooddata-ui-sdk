@@ -30,6 +30,7 @@ export {
     ICustomWidget,
     ICustomWidgetDefinition,
     ICustomWidgetBase,
+    newCustomWidget,
     isCustomWidgetDefinition,
     isCustomWidget,
     ExtendedDashboardItem,

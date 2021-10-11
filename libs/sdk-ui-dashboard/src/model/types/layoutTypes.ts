@@ -9,6 +9,7 @@ import {
     IWidget,
     IWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
+import { idRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -36,6 +37,30 @@ export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdenti
  * @alpha
  */
 export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDashboardObjectIdentity> {}
+
+/**
+ * Creates a new custom widget.
+ *
+ * @param identifier - identifier for custom widget; once added onto a dashboard, widget will be referencable using this identifier
+ * @param customType - custom widget type
+ * @param extras - optionally provide extra data to include on the custom widget; the content of this argument can be an
+ *  arbitrary plain object
+ * @alpha
+ */
+export function newCustomWidget<TExtra = void>(
+    identifier: string,
+    customType: string,
+    extras?: TExtra,
+): TExtra & ICustomWidget {
+    return {
+        type: "customWidget",
+        customType,
+        identifier,
+        uri: `_custom_widget_uri/${identifier}`,
+        ref: idRef(identifier),
+        ...extras,
+    } as TExtra & ICustomWidget;
+}
 
 /**
  * Type-guard that tests whether an object is an instance of {@link ICustomWidget}.
@@ -73,7 +98,7 @@ export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string 
 
     if (isWidget(widget)) {
         widgetType = widget.type;
-    } else {
+    } else if (isCustomWidget(widget)) {
         widgetType = `${widget.type}/${widget.customType}`;
     }
 

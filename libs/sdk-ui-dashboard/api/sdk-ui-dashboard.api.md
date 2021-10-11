@@ -2955,6 +2955,9 @@ export interface MoveSectionItem extends IDashboardCommand {
 export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
 
 // @alpha
+export function newCustomWidget<TExtra = void>(identifier: string, customType: string, extras?: TExtra): TExtra & ICustomWidget;
+
+// @alpha
 export function newDashboardEngine(): IDashboardEngine;
 
 // @alpha

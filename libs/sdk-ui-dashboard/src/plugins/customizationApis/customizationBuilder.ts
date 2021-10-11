@@ -73,7 +73,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
             KpiComponentProvider: this.kpiCustomizer.getKpiProvider(),
             WidgetComponentProvider: this.widgetCustomizer.getWidgetComponentProvider(),
             customizationFns: {
-                existingDashboardTransformFn: this.layoutCustomizer.getInitialDashboardTransformFn(),
+                existingDashboardTransformFn: this.layoutCustomizer.getExistingDashboardTransformFn(),
             },
         };
 
