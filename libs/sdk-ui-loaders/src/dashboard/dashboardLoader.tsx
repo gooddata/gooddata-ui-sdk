@@ -4,7 +4,7 @@ import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader
 import {
     IDashboardBaseProps,
     IDashboardEngine,
-    IDashboardPlugin,
+    IDashboardPluginContract_V1,
     IDashboardExtensionProps,
     IDashboardProps,
     DashboardContext,
@@ -32,7 +32,7 @@ export type DashboardEngineLoader = (dashboard: IDashboard) => Promise<IDashboar
 export type DashboardPluginsLoader = (
     ctx: DashboardContext,
     dashboard: IDashboard,
-) => Promise<IDashboardPlugin[]>;
+) => Promise<IDashboardPluginContract_V1[]>;
 
 /**
  * @alpha
@@ -179,7 +179,7 @@ export class DashboardLoader implements IDashboardLoader {
 function initializeEmbeddedPlugins(
     ctx: DashboardContext,
     embeddedPlugins: IEmbeddedPlugin[],
-): IDashboardPlugin[] {
+): IDashboardPluginContract_V1[] {
     return embeddedPlugins.map((embedded) => {
         const plugin = embedded.factory();
         plugin.onPluginLoaded?.(ctx, embedded.parameters);

@@ -1,9 +1,9 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardPlugin } from "../plugin";
+import { IDashboardPluginContract_V1 } from "../plugin";
 import { pluginDebugStr } from "./pluginUtils";
 
-function addPluginInfoToMessage(plugin: IDashboardPlugin | undefined, message: string) {
+function addPluginInfoToMessage(plugin: IDashboardPluginContract_V1 | undefined, message: string) {
     return plugin ? `${pluginDebugStr(plugin)}: ${message}` : message;
 }
 
@@ -12,9 +12,9 @@ function addPluginInfoToMessage(plugin: IDashboardPlugin | undefined, message: s
  * information about plugin whose registration code triggered those events.
  */
 export class DashboardCustomizationLogger {
-    private currentPlugin: IDashboardPlugin | undefined;
+    private currentPlugin: IDashboardPluginContract_V1 | undefined;
 
-    public setCurrentPlugin = (plugin: IDashboardPlugin | undefined): void => {
+    public setCurrentPlugin = (plugin: IDashboardPluginContract_V1 | undefined): void => {
         this.currentPlugin = plugin;
     };
 
