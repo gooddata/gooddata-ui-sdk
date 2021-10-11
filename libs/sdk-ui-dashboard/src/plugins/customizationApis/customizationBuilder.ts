@@ -10,7 +10,7 @@ import {
 import { IDashboardExtensionProps } from "../../presentation";
 import { DefaultInsightCustomizer } from "./insightCustomizer";
 import { DashboardCustomizationLogger } from "./customizationLogging";
-import { IDashboardPlugin } from "../plugin";
+import { IDashboardPluginContract_V1 } from "../plugin";
 import { DefaultKpiCustomizer } from "./kpiCustomizer";
 import { DefaultWidgetCustomizer } from "./widgetCustomizer";
 import { DefaultLayoutCustomizer } from "./layoutCustomizer";
@@ -48,7 +48,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         return this.layoutCustomizer;
     };
 
-    public onBeforePluginRegister = (plugin: IDashboardPlugin): void => {
+    public onBeforePluginRegister = (plugin: IDashboardPluginContract_V1): void => {
         this.logger.setCurrentPlugin(plugin);
         this.logger.log("Starting registration.");
     };

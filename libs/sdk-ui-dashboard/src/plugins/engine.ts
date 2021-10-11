@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboardPlugin } from "./plugin";
+import { IDashboardPluginContract_V1 } from "./plugin";
 import { Dashboard, IDashboardExtensionProps, IDashboardProps } from "../presentation";
 import React, { ComponentType } from "react";
 import { DashboardCustomizationBuilder } from "./customizationApis/customizationBuilder";
@@ -32,7 +32,10 @@ export interface IDashboardEngine {
      * @param ctx - dashboard context in which the plugins operate
      * @param plugins - plugins to initialize
      */
-    initializePlugins(ctx: DashboardContext, plugins: IDashboardPlugin[]): IDashboardExtensionProps;
+    initializePlugins(
+        ctx: DashboardContext,
+        plugins: IDashboardPluginContract_V1[],
+    ): IDashboardExtensionProps;
 
     /**
      * Returns Dashboard component provided by this dashboard engine.
@@ -54,7 +57,10 @@ export function newDashboardEngine(): IDashboardEngine {
         //  messing up the dist&esm. tsc will include all model stuff under dist/src instead of putting it
         //  directly under dist
         version: "8.7.0",
-        initializePlugins(ctx: DashboardContext, plugins: IDashboardPlugin[]): IDashboardExtensionProps {
+        initializePlugins(
+            ctx: DashboardContext,
+            plugins: IDashboardPluginContract_V1[],
+        ): IDashboardExtensionProps {
             const customizationBuilder = new DashboardCustomizationBuilder();
             const eventRegistration = new DefaultDashboardEventHandling();
 

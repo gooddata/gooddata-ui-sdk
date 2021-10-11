@@ -6,7 +6,7 @@ import React from "react";
 import {
     IDashboardEngine,
     IDashboardProps,
-    IDashboardPlugin,
+    IDashboardPluginContract_V1,
     IDashboardBaseProps,
 } from "@gooddata/sdk-ui-dashboard";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -37,7 +37,7 @@ export type DashboardLoadResult = {
      * All plugins that will be in effect on the dashboard. The plugins are already registered and
      * their contributions are reflected in the {@link DashboardLoadResult.props}.
      */
-    plugins: IDashboardPlugin[];
+    plugins: IDashboardPluginContract_V1[];
 };
 
 /**
@@ -52,7 +52,7 @@ export interface IEmbeddedPlugin {
     /**
      * Factory function to create an instance of the embedded plugin.
      */
-    factory: () => IDashboardPlugin;
+    factory: () => IDashboardPluginContract_V1;
 
     /**
      * Parameters to use.

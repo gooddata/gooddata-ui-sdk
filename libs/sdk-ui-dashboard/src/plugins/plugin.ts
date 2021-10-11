@@ -6,7 +6,7 @@ import { DashboardContext } from "../model";
 /**
  * @alpha
  */
-export interface IDashboardPluginMetadata {
+export type DashboardPluginDescriptor = {
     /**
      * Author of the plugin. This should ideally contain name and contact (email) for the author.
      */
@@ -50,7 +50,7 @@ export interface IDashboardPluginMetadata {
      * Greatest version of the dashboard engine that this plugin supports.
      */
     readonly maxEngineVersion?: "bundled";
-}
+};
 
 /**
  * This is the raw, low-level interface that the dashboard plugins need to implement. Through this interface
@@ -61,7 +61,7 @@ export interface IDashboardPluginMetadata {
  *
  * @alpha
  */
-export interface IDashboardPlugin extends IDashboardPluginMetadata {
+export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
     /**
      * Version of the SPI that is realized by the plugin.
      */
@@ -125,7 +125,7 @@ export interface IDashboardPlugin extends IDashboardPluginMetadata {
  *
  * @alpha
  */
-export abstract class DashboardPluginV1 implements IDashboardPlugin {
+export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
     public readonly _pluginVersion = "1.0";
     public readonly minEngineVersion = "bundled";
     public readonly maxEngineVersion = "bundled";
