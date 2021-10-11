@@ -199,6 +199,8 @@ export namespace GdcDashboard {
         // (undocumented)
         layout?: GdcDashboardLayout.Layout;
         // (undocumented)
+        plugins?: IDashboardPluginLink[];
+        // (undocumented)
         widgets: string[];
     }
     // (undocumented)
@@ -220,6 +222,13 @@ export namespace GdcDashboard {
         hideOptions?: GdcExtendedDateFilters.GUID[];
         // (undocumented)
         mode: DashboardDateFilterConfigMode;
+    }
+    // (undocumented)
+    export interface IDashboardPluginLink {
+        // (undocumented)
+        parameters?: string;
+        // (undocumented)
+        type: string;
     }
     // (undocumented)
     export interface IWrappedAnalyticalDashboard {
@@ -310,6 +319,27 @@ export namespace GdcDashboardLayout {
     export type SectionHeader = ISectionHeader | ISectionDescription;
     // (undocumented)
     export type Widget = IPersistedWidget;
+}
+
+// @public (undocumented)
+export namespace GdcDashboardPlugin {
+    // (undocumented)
+    export interface IDashboardPlugin {
+        // (undocumented)
+        content: IDashboardPluginContent;
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export interface IDashboardPluginContent {
+        // (undocumented)
+        url: string;
+    }
+    // (undocumented)
+    export interface IWrappedDashboardPlugin {
+        // (undocumented)
+        dashboardPlugin: IDashboardPlugin;
+    }
 }
 
 // @public (undocumented)
