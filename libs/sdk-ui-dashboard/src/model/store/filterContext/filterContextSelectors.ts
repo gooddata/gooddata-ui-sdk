@@ -126,10 +126,15 @@ export const selectFilterContextDateFilter = createSelector(
  */
 export const selectFilterContextAttributeFilterByDisplayForm = memoize(
     (displayForm: ObjRef) =>
-        createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
-            attributeFilters.find((filter) =>
-                areObjRefsEqual(filter.attributeFilter.displayForm, displayForm),
-            ),
+        createSelector(
+            selectAttributeFilterDisplayFormsMap,
+            selectFilterContextAttributeFilters,
+            (attributeDisplayFormsMap, attributeFilters) => {
+                const df = attributeDisplayFormsMap.get(displayForm);
+                return attributeFilters.find((filter) =>
+                    areObjRefsEqual(filter.attributeFilter.displayForm, df?.ref),
+                );
+            },
         ),
     (ref) => ref && serializeObjRef(ref),
 );

@@ -67,7 +67,7 @@ export function* addAttributeFilterHandler(
     yield put(
         batchActions([
             filterContextActions.addAttributeFilter({
-                displayForm,
+                displayForm: displayFormMetadata.ref,
                 index,
                 initialIsNegativeSelection,
                 initialSelection,
