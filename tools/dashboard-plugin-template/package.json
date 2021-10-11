@@ -30,6 +30,7 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log styles/css && jest --clearCache",
         "build": "webpack --mode production --config-name harness",
+        "build-engine": "webpack --mode production --config-name dashboardEngine",
         "build-plugin": "webpack --mode production --config-name dashboardPlugin",
         "start": "webpack-cli serve --config-name harness",
         "test": "jest --watch --passWithNoTests",
@@ -49,7 +50,9 @@
         "@gooddata/sdk-backend-spi": "^8.7.0-alpha.23",
         "@gooddata/sdk-model": "^8.7.0-alpha.23",
         "@gooddata/sdk-ui": "^8.7.0-alpha.23",
+        "@gooddata/sdk-ui-dashboard": "^8.7.0-alpha.23",
         "@gooddata/sdk-ui-ext": "^8.7.0-alpha.23",
+        "@gooddata/sdk-ui-loaders": "^8.7.0-alpha.23",
         "lodash": "^4.17.19",
         "react": "^16.10.0",
         "react-dom": "^16.10.0",

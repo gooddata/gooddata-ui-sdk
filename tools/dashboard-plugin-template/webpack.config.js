@@ -52,7 +52,8 @@ module.exports = (_env, argv) => {
             extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
 
             alias: {
-                // fixes tilde imports in CSS from sdk-ui-ext
+                // fixes tilde imports in CSS from sdk-ui-* packages
+                "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),
                 "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
             },
 
@@ -91,8 +92,8 @@ module.exports = (_env, argv) => {
                     type: "asset/resource",
                 },
                 {
-                    // never tree shake ext so that the version here is also used in the plugins
-                    test: (modulePath) => /sdk-ui-ext/.test(modulePath),
+                    // never tree shake ext or dashboard so that the version here is also used in the plugins
+                    test: (modulePath) => /sdk-ui-(ext|dashboard)/.test(modulePath),
                     sideEffects: true,
                 },
                 !isProduction && {
@@ -167,6 +168,12 @@ module.exports = (_env, argv) => {
             entry: "./src/plugin/index",
             name: "dashboardPlugin",
             output: { ...commonConfig.output, path: path.join(__dirname, "dist", "dashboardPlugin") },
+        },
+        {
+            ...commonConfig,
+            entry: "./src/engine/index",
+            name: "dashboardEngine",
+            output: { ...commonConfig.output, path: path.join(__dirname, "dist", "dashboardEngine") },
         },
     ];
 };

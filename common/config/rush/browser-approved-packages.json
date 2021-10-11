@@ -144,7 +144,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-dashboard",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-ext",
@@ -164,7 +164,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-loaders",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-pivot",
