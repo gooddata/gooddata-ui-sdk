@@ -9,6 +9,7 @@ import invariant from "ts-invariant";
 import { convertUser } from "../convertors/fromBackend/UsersConverter";
 
 import { BearAuthenticatedCallGuard } from "../types/auth";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Returns a user uri. This is used in some bear client calls.
@@ -112,7 +113,10 @@ export const objRefToUri = async (
  * @param workspace - workspace id to use
  * @param authCall - call guard to perform API calls through
  * @param throwOnUnresolved - whether to throw an error if id to uri cannot be resolved for some ref; default is true
- *
+ * @returns resolved URIs; when throwOnUnresolved is true, then order of appearance of the resolved URIs
+ *  is guaranteed to match the order on the input; otherwise if throwOnUnresolved is false and some identifiers
+ *  could not be resolved, the returned array will be smaller with no indication as to which identifiers could
+ *  not be resolved
  * @internal
  */
 export const objRefsToUris = async (
@@ -121,6 +125,10 @@ export const objRefsToUris = async (
     authCall: BearAuthenticatedCallGuard,
     throwOnUnresolved: boolean = true,
 ): Promise<Uri[]> => {
+    if (isEmpty(refs)) {
+        return [];
+    }
+
     const identifiers = refs.filter(isIdentifierRef).map((filter) => filter.identifier);
     const identifiersToUrisPairs = await authCall((sdk) =>
         sdk.md.getUrisFromIdentifiers(workspace, identifiers),

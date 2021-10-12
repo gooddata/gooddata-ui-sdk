@@ -30,14 +30,27 @@ import {
     IDashboardLayout,
     IDashboardWithReferences,
     IGetDashboardOptions,
+    SupportedDashboardReferenceTypes,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
+    IDashboardPluginLink,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, areObjRefsEqual, uriRef, objRefToString, IFilter, IUser } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IFilter,
+    IInsight,
+    IUser,
+    ObjRef,
+    objRefToString,
+    uriRef,
+} from "@gooddata/sdk-model";
 import {
     GdcDashboard,
-    GdcMetadata,
+    GdcDashboardPlugin,
     GdcFilterContext,
-    GdcVisualizationClass,
+    GdcMetadata,
     GdcMetadataObject,
+    GdcVisualizationClass,
     GdcVisualizationObject,
 } from "@gooddata/api-model-bear";
 import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
@@ -51,11 +64,11 @@ import flatten from "lodash/flatten";
 import isEqual from "lodash/isEqual";
 import set from "lodash/set";
 import {
-    objRefToUri,
-    objRefsToUris,
     getObjectIdFromUri,
-    userUriFromAuthenticatedPrincipalWithAnonymous,
+    objRefsToUris,
+    objRefToUri,
     updateUserMap,
+    userUriFromAuthenticatedPrincipalWithAnonymous,
 } from "../../../utils/api";
 import keyBy from "lodash/keyBy";
 import { BearWorkspaceInsights } from "../insights";
@@ -64,6 +77,10 @@ import invariant from "ts-invariant";
 import { resolveWidgetFilters } from "./widgetFilters";
 import { sanitizeFilterContext } from "./filterContexts";
 import { getAnalyticalDashboardUserUris } from "../../../utils/metadata";
+import isEmpty from "lodash/isEmpty";
+import includes from "lodash/includes";
+import isVisualization = GdcVisualizationObject.isVisualization;
+import isDashboardPlugin = GdcDashboardPlugin.isDashboardPlugin;
 
 /**
  * Metadata object types closely related to the dashboard object.
@@ -80,6 +97,7 @@ type RelatedObjectTypes = Extract<
  */
 const DashboardComponentTypes: RelatedObjectTypes[] = ["kpi", "visualizationWidget", "filterContext"];
 
+// TODO: refactor impl into bunch of smaller classes + delegates
 export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     private insights: BearWorkspaceInsights;
 
@@ -155,19 +173,30 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     ): Promise<IDashboard> => {
         if (!areObjRefsEqual(originalDashboard.ref, updatedDashboard.ref)) {
             throw new Error("Cannot update dashboard with different refs!");
-        } else if (isEqual(originalDashboard, updatedDashboard)) {
+        }
+
+        if (isEqual(originalDashboard, updatedDashboard)) {
             return originalDashboard;
         }
 
+        // for convenience allow clients to pass plugin links also with idRefs
+        const sanitizedPlugins = updatedDashboard.plugins
+            ? await this.ensureDashboardPluginLinksHaveUris(updatedDashboard.plugins)
+            : undefined;
+        const sanitizedDashboard: IDashboard | IDashboardDefinition = {
+            ...updatedDashboard,
+            plugins: sanitizedPlugins,
+        };
+
         const [filterContext, layout] = await Promise.all([
-            this.updateFilterContext(originalDashboard.filterContext, updatedDashboard.filterContext),
-            this.updateLayoutAndWidgets(originalDashboard.layout, updatedDashboard.layout),
+            this.updateFilterContext(originalDashboard.filterContext, sanitizedDashboard.filterContext),
+            this.updateLayoutAndWidgets(originalDashboard.layout, sanitizedDashboard.layout),
         ]);
 
         // Missing refs means that the dashboard is not yet stored, so let's create it
-        if (!originalDashboard.ref && !updatedDashboard.ref) {
+        if (!originalDashboard.ref && !sanitizedDashboard.ref) {
             const createdDashboardWithSavedDependencies: IDashboardDefinition = {
-                ...updatedDashboard,
+                ...sanitizedDashboard,
                 filterContext,
                 layout,
             };
@@ -177,7 +206,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const { created, updated, ref, uri, identifier } = originalDashboard;
         const updatedDashboardWithSavedDependencies: IDashboard = {
-            ...updatedDashboard,
+            ...sanitizedDashboard,
             created, // update returns only the uri, so keep the old date
             updated, // update returns only the uri, so keep the old date
             ref,
@@ -188,7 +217,10 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         };
 
         // First we need to delete any alerts referenced by the deleted widgets
-        const deletedWidgets = this.collectDeletedWidgets(originalDashboard.layout, updatedDashboard.layout);
+        const deletedWidgets = this.collectDeletedWidgets(
+            originalDashboard.layout,
+            sanitizedDashboard.layout,
+        );
 
         const alertsToDelete = flatten(
             await Promise.all(deletedWidgets.map((widget) => this.getBearWidgetAlertsForWidget(widget))),
@@ -693,38 +725,146 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             }),
         );
         const dependenciesUris = dependenciesObjectLinks.map((objectLink) => objectLink.link);
+
         return await this.authCall((sdk) =>
             sdk.md.getObjects<toSdkModel.BearDashboardDependency>(this.workspace, dependenciesUris),
         );
+    };
+
+    private getBearDashboardReferences = async (uri: string, types: SupportedDashboardReferenceTypes[]) => {
+        const objectTypes = compact(types.map(mapDashboardReferenceTypes));
+
+        if (isEmpty(objectTypes)) {
+            return {
+                dependencies: [],
+                visClassMapping: {},
+            };
+        }
+
+        if (includes(types, "insight")) {
+            return Promise.all([
+                this.getBearDashboardDependencies(uri, objectTypes),
+                this.insights.getVisualizationClassesByVisualizationClassUri({ includeDeprecated: true }),
+            ]).then(([dependencies, visClassMapping]) => {
+                return {
+                    dependencies,
+                    visClassMapping,
+                };
+            });
+        }
+
+        return this.getBearDashboardDependencies(uri, objectTypes).then((dependencies) => {
+            return {
+                dependencies,
+                visClassMapping: {},
+            };
+        });
     };
 
     public async getDashboardWithReferences(
         ref: ObjRef,
         filterContextRef?: ObjRef,
         options: IGetDashboardOptions = {},
+        types: SupportedDashboardReferenceTypes[] = ["insight"],
     ): Promise<IDashboardWithReferences> {
         const dashboard = await this.getDashboard(ref, filterContextRef, options);
-        const dependencies = (await this.getBearDashboardDependencies(dashboard.uri, [
-            "visualizationObject",
-        ])) as GdcVisualizationObject.IVisualization[];
+        const { dependencies, visClassMapping } = await this.getBearDashboardReferences(dashboard.uri, types);
+        const insights: IInsight[] = [];
+        const plugins: IDashboardPlugin[] = [];
 
-        const visualizationClassUrlByVisualizationClassUri =
-            await this.insights.getVisualizationClassesByVisualizationClassUri({ includeDeprecated: true });
-
-        const insights = dependencies.map((visualization: GdcVisualizationObject.IVisualization) =>
-            convertVisualization(
-                visualization,
-                visualizationClassUrlByVisualizationClassUri[
-                    visualization.visualizationObject.content.visualizationClass.uri
-                ],
-            ),
-        );
+        dependencies.forEach((dep) => {
+            if (isVisualization(dep)) {
+                insights.push(
+                    convertVisualization(
+                        dep,
+                        visClassMapping[dep.visualizationObject.content.visualizationClass.uri],
+                    ),
+                );
+            } else if (isDashboardPlugin(dep)) {
+                plugins.push(toSdkModel.convertDashboardPlugin(dep));
+            }
+        });
 
         return {
             dashboard,
             references: {
                 insights,
+                plugins,
             },
         };
     }
+
+    public createDashboardPlugin = async (plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin> => {
+        const convertedPlugin = fromSdkModel.convertDashboardPlugin(plugin);
+        const savedPlugin = await this.authCall((sdk) => {
+            return sdk.md.createObject(this.workspace, convertedPlugin);
+        });
+
+        if (plugin.identifier !== undefined) {
+            // when server creates a new object, it will automatically assign identifier & ignore identifier
+            // in the POST payload. Code must do another update to hammer in the desired identifier.
+            const pluginObjectId = getObjectIdFromUri(savedPlugin.dashboardPlugin.meta.uri!);
+            savedPlugin.dashboardPlugin.meta.identifier = plugin.identifier;
+
+            await this.authCall((sdk) => {
+                return sdk.md.updateObject(this.workspace, pluginObjectId, savedPlugin);
+            });
+        }
+
+        return toSdkModel.convertDashboardPlugin(savedPlugin);
+    };
+
+    public deleteDashboardPlugin = async (ref: ObjRef): Promise<void> => {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
+
+        return this.authCall((sdk) => {
+            return sdk.md.deleteObject(uri) as Promise<never>;
+        });
+    };
+
+    public getDashboardPlugin = async (ref: ObjRef): Promise<IDashboardPlugin> => {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
+
+        return this.authCall((sdk) => {
+            return sdk.md.getObjectDetails<GdcDashboardPlugin.IWrappedDashboardPlugin>(uri);
+        }).then(toSdkModel.convertDashboardPlugin);
+    };
+
+    public getDashboardPlugins = async (): Promise<IDashboardPlugin[]> => {
+        const pluginLinks = await this.authCall((sdk) => sdk.md.getDashboardPlugins(this.workspace));
+        const pluginUris = pluginLinks.map((link) => link.link);
+
+        return this.authCall((sdk) => {
+            return sdk.md.getObjects<GdcDashboardPlugin.IWrappedDashboardPlugin>(this.workspace, pluginUris);
+        }).then((plugins) => {
+            return plugins.map(toSdkModel.convertDashboardPlugin);
+        });
+    };
+
+    private ensureDashboardPluginLinksHaveUris = async (
+        pluginLinks: IDashboardPluginLink[],
+    ): Promise<IDashboardPluginLink[]> => {
+        const resolvedUris = await objRefsToUris(
+            pluginLinks.map((p) => p.plugin),
+            this.workspace,
+            this.authCall,
+            true,
+        );
+
+        return pluginLinks.map((p, idx) => {
+            return {
+                ...p,
+                plugin: uriRef(resolvedUris[idx]),
+            };
+        });
+    };
+}
+
+function mapDashboardReferenceTypes(type: SupportedDashboardReferenceTypes): RelatedObjectTypes | undefined {
+    const mapping: { [type in SupportedDashboardReferenceTypes]: RelatedObjectTypes } = {
+        insight: "visualizationObject",
+        dashboardPlugin: "dashboardPlugin",
+    };
+
+    return mapping[type];
 }

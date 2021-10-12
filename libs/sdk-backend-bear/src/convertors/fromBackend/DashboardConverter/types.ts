@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { IWidget, IFilterContext, ITempFilterContext } from "@gooddata/sdk-backend-spi";
 import {
@@ -6,6 +6,7 @@ import {
     GdcKpi,
     GdcFilterContext,
     GdcVisualizationObject,
+    GdcDashboardPlugin,
 } from "@gooddata/api-model-bear";
 
 export type DashboardDependency = IWidget | IFilterContext | ITempFilterContext;
@@ -15,4 +16,5 @@ export type BearDashboardDependency =
     | GdcKpi.IWrappedKPI
     | GdcFilterContext.IWrappedFilterContext
     | GdcFilterContext.IWrappedTempFilterContext
-    | GdcVisualizationObject.IVisualization;
+    | GdcVisualizationObject.IVisualization
+    | GdcDashboardPlugin.IWrappedDashboardPlugin;

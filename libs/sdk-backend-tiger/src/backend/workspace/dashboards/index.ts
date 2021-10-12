@@ -10,6 +10,8 @@ import {
 import {
     IDashboard,
     IDashboardDefinition,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
     IDashboardWithReferences,
     IFilterContext,
     IFilterContextDefinition,
@@ -41,6 +43,7 @@ import {
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api";
 import { resolveWidgetFilters } from "./widgetFilters";
+import isEmpty from "lodash/isEmpty";
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -147,11 +150,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             dashboard: convertDashboard(result.data, filterContext),
             references: {
                 insights,
+                plugins: [],
             },
         };
     };
 
     public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
+        if (!isEmpty(dashboard.plugins)) {
+            throw new NotSupported("Tiger backend does not support dashboard plugins.");
+        }
+
         let filterContext;
         if (dashboard.filterContext) {
             filterContext = isFilterContextDefinition(dashboard.filterContext)
@@ -189,6 +197,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         originalDashboard: IDashboard,
         updatedDashboard: IDashboardDefinition,
     ): Promise<IDashboard> => {
+        if (!isEmpty(updatedDashboard.plugins)) {
+            throw new NotSupported("Tiger backend does not support dashboard plugins.");
+        }
+
         if (!areObjRefsEqual(originalDashboard.ref, updatedDashboard.ref)) {
             throw new Error("Cannot update dashboard with different refs!");
         } else if (isEqual(originalDashboard, updatedDashboard)) {
@@ -250,11 +262,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public exportDashboardToPdf = async () => {
-        throw new NotSupported("exportDashboardToPdf is not supported");
+        throw new NotSupported("Tiger backend does not support export to PDF.");
     };
 
     public createScheduledMail = async () => {
-        throw new NotSupported("createScheduledMail is not supported");
+        throw new NotSupported("Tiger backend does not support scheduled emails.");
     };
 
     public getScheduledMailsCountForDashboard = async () => {
@@ -268,7 +280,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public getDashboardWidgetAlertsForCurrentUser = async () => {
-        throw new NotSupported("getDashboardWidgetAlertsForCurrentUser is not supported");
+        throw new NotSupported("Tiger backend does not support alerting.");
     };
 
     public getWidgetAlertsCountForWidgets = async () => {
@@ -277,23 +289,23 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public createWidgetAlert = async () => {
-        throw new NotSupported("createWidgetAlert is not supported");
+        throw new NotSupported("Tiger backend does not support alerting.");
     };
 
     public updateWidgetAlert = async () => {
-        throw new NotSupported("updateWidgetAlert is not supported");
+        throw new NotSupported("Tiger backend does not support alerting.");
     };
 
     public deleteWidgetAlert = async () => {
-        throw new NotSupported("deleteWidgetAlert is not supported");
+        throw new NotSupported("Tiger backend does not support alerting.");
     };
 
     public deleteWidgetAlerts = async () => {
-        throw new NotSupported("deleteWidgetAlerts is not supported");
+        throw new NotSupported("Tiger backend does not support alerting.");
     };
 
     public getWidgetReferencedObjects = async () => {
-        throw new NotSupported("getWidgetReferencedObjects is not supported");
+        throw new NotSupported("Tiger backend does not support alerting.");
     };
 
     public getResolvedFiltersForWidget = async (widget: IWidget, filters: IFilter[]): Promise<IFilter[]> => {
@@ -301,6 +313,26 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             objRefsToIdentifiers(refs, this.authCall),
         );
     };
+
+    public createDashboardPlugin = (_plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin> => {
+        throw new NotSupported("Tiger backend does not support dashboard plugins.");
+    };
+
+    public deleteDashboardPlugin = (_ref: ObjRef): Promise<void> => {
+        throw new NotSupported("Tiger backend does not support dashboard plugins.");
+    };
+
+    public getDashboardPlugin = (_ref: ObjRef): Promise<IDashboardPlugin> => {
+        throw new NotSupported("Tiger backend does not support dashboard plugins.");
+    };
+
+    public getDashboardPlugins = (): Promise<IDashboardPlugin[]> => {
+        throw new NotSupported("Tiger backend does not support dashboard plugins.");
+    };
+
+    //
+    //
+    //
 
     private createFilterContext = async (
         filterContext: IFilterContextDefinition,

@@ -19,6 +19,7 @@ import {
     ITempFilterContext,
     isWidget,
     IDashboardDateFilterConfig,
+    IDashboardPluginLink,
 } from "@gooddata/sdk-backend-spi";
 import { sanitizeExportFilterContext, convertFilterContext, convertTempFilterContext } from "./filterContext";
 import { convertLayout, createImplicitDashboardLayout } from "./layout";
@@ -66,6 +67,16 @@ export const convertDashboardDateFilterConfig = (
     };
 };
 
+const convertPluginLink = (link: GdcDashboard.IDashboardPluginLink): IDashboardPluginLink => {
+    const { type, parameters } = link;
+
+    return {
+        type: "IDashboardPluginLink",
+        plugin: uriRef(type),
+        parameters,
+    };
+};
+
 export const convertDashboard = (
     dashboard: GdcDashboard.IWrappedAnalyticalDashboard,
     dependencies: BearDashboardDependency[],
@@ -75,7 +86,7 @@ export const convertDashboard = (
 ): IDashboard => {
     const {
         meta: { summary, created, author, updated, contributor, identifier, uri, title, locked, tags },
-        content: { layout, filterContext, dateFilterConfig, widgets: widgetsUris },
+        content: { layout, filterContext, dateFilterConfig, widgets: widgetsUris, plugins },
     } = dashboard.analyticalDashboard;
 
     const sdkDependencies = dependencies
@@ -116,6 +127,7 @@ export const convertDashboard = (
             ? convertLayout(layout, widgets)
             : createImplicitDashboardLayout(widgets, dependencies, visualizationClasses),
 
+        plugins: plugins?.map(convertPluginLink),
         // filter takes care of multiple spaces and also the base scenario ("" ~> [])
         tags: tags?.split(" ").filter((t) => t) ?? [],
     };
