@@ -78,7 +78,7 @@ export function* addAttributeFilterHandler(
     );
 
     const addedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>> =
-        yield select(selectFilterContextAttributeFilterByDisplayForm(cmd.payload.displayForm));
+        yield select(selectFilterContextAttributeFilterByDisplayForm(displayFormMetadata.ref));
 
     invariant(addedFilter, "Inconsistent state in attributeFilterAddCommandHandler");
 
