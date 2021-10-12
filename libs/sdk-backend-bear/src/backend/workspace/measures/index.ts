@@ -127,6 +127,7 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
                 return {
                     type: meta.type,
                     value: meta.title,
+                    id: meta.id,
                     ref: meta.ref,
                 };
             }

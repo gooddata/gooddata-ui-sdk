@@ -90,6 +90,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         return {
             type: typeMapping[objectType],
             value,
+            id: objectId,
             ref: idRef(identifier),
         };
     }
