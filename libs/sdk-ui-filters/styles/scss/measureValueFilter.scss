@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
+
 @import "~@gooddata/sdk-ui/styles/scss/settings";
-// FET-676 SVG
 @import "~@gooddata/goodstrap/lib/core/styles/SVGIcons";
 @import "~@gooddata/sdk-ui-kit/styles/scss/dropdown";
 @import "~@gooddata/sdk-ui-kit/styles/scss/indigoFont";
