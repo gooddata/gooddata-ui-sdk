@@ -1,4 +1,14 @@
 // (C) 2019 GoodData Corporation
+// this line is to avoid the TS2580 error. We do have the required dependencies but the error still happens.
+declare const require: any;
+if (process.env.WDYR === "true") {
+    // we do not want to fetch this dependency while the functionality is disabled
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const whyDidYouRender = require("@welldone-software/why-did-you-render");
+    whyDidYouRender(React, {
+        include: [/WithLoading/],
+    });
+}
 import "babel-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";

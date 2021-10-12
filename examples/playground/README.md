@@ -30,3 +30,10 @@ the `.env` file. Set the `GDC_USERNAME` and `GDC_PASSWORD` variables in the `.en
 up and will use these automatically when it needs to authenticate the session.
 
 NOTE: the `.env` file is already ignored and will not land in commit.
+
+## Run with why-did-you-render
+
+For solving re-rendering issues you can use `npm run playWithWdyr` using [why-did-you-render library]("https://www.npmjs.com/package/@welldone-software/why-did-you-render").
+
+In `src/index.ts` you can find a WDYR library configuration. This is the spot you need to update for your needs. See the
+the [option section]("https://www.npmjs.com/package/@welldone-software/why-did-you-render#options") of the documentation.

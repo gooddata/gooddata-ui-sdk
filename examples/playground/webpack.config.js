@@ -71,6 +71,7 @@ module.exports = async (env, argv) => {
             BASEPATH: JSON.stringify(basePath),
             BUILTIN_MAPBOX_TOKEN: JSON.stringify(process.env.EXAMPLE_MAPBOX_ACCESS_TOKEN || ""),
             BUILD_TYPE: JSON.stringify(backendParam),
+            WDYR: env.WDYR,
         }),
         new ForkTsCheckerWebpackPlugin({
             issue: {
