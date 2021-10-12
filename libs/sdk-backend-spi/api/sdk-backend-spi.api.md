@@ -378,6 +378,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
+    readonly plugins?: IDashboardPluginLink[];
 }
 
 // @alpha
@@ -460,6 +461,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
+    readonly plugins?: IDashboardPluginLink[];
 }
 
 // @alpha
@@ -521,10 +523,36 @@ export interface IDashboardObjectIdentity {
     readonly uri: string;
 }
 
+// @alpha (undocumented)
+export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditableDates {
+}
+
+// @alpha (undocumented)
+export interface IDashboardPluginBase {
+    readonly description?: string;
+    readonly name: string;
+    readonly tags: string[];
+    // (undocumented)
+    readonly type: "IDashboardPlugin";
+    readonly url: string;
+}
+
+// @alpha (undocumented)
+export interface IDashboardPluginDefinition extends IDashboardPluginBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @alpha
+export interface IDashboardPluginLink {
+    readonly parameters?: string;
+    readonly plugin: ObjRef;
+    // (undocumented)
+    readonly type: "IDashboardPluginLink";
+}
+
 // @alpha
 export interface IDashboardReferences {
-    // (undocumented)
     insights: IInsight[];
+    plugins: IDashboardPlugin[];
 }
 
 // @alpha
@@ -1810,17 +1838,21 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
 // @alpha
 export interface IWorkspaceDashboardsService {
     createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
+    createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
     createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition): Promise<IScheduledMail>;
     createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
     deleteDashboard(ref: ObjRef): Promise<void>;
+    deleteDashboardPlugin(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
+    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
+    getDashboardPlugins(): Promise<IDashboardPlugin[]>;
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
-    getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboardWithReferences>;
+    getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
@@ -2034,6 +2066,9 @@ export type ScheduledMailAttachment = IDashboardAttachment;
 
 // @alpha
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
+
+// @alpha (undocumented)
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;

@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
-import { ObjRef, Identifier, IInsight, IAuditableDates, IAuditableUsers } from "@gooddata/sdk-model";
+import { IAuditableDates, IAuditableUsers, Identifier, IInsight, ObjRef } from "@gooddata/sdk-model";
 import { IDashboardLayout, IDashboardWidget } from "./layout";
-import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
+import { IFilterContext, IFilterContextDefinition, ITempFilterContext } from "./filterContext";
 import { IDashboardObjectIdentity } from "./common";
 import {
     DateFilterGranularity,
@@ -94,6 +94,66 @@ export interface IDashboardBase {
 }
 
 /**
+ * @alpha
+ */
+export interface IDashboardPluginBase {
+    readonly type: "IDashboardPlugin";
+
+    /**
+     * Plugin name.
+     */
+    readonly name: string;
+
+    /**
+     * Plugin description. This is optional and may provide additional information about what
+     * the plugin does.
+     */
+    readonly description?: string;
+
+    /**
+     * Plugins may be tagged using arbitrary tags for additional categorization.
+     */
+    readonly tags: string[];
+
+    /**
+     * Fully qualified URL where the plugin entry point is hosted.
+     */
+    readonly url: string;
+}
+
+/**
+ * @alpha
+ */
+export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditableDates {}
+
+/**
+ * @alpha
+ */
+export interface IDashboardPluginDefinition extends IDashboardPluginBase, Partial<IDashboardObjectIdentity> {}
+
+/**
+ * A link between dashboard and a plugin that it uses. Optionally contains parameters that should
+ * be passed to the plugin at load time.
+ *
+ * @alpha
+ */
+export interface IDashboardPluginLink {
+    readonly type: "IDashboardPluginLink";
+
+    /**
+     * Linked plugin.
+     */
+    readonly plugin: ObjRef;
+
+    /**
+     * Optionally contains parameters that should be passed to the plugin at load time. The format
+     * and content of the parameters are fully dependent on the implementation of the plugin. If the
+     * plugin parameterization is possible, then the plugin documentation should contain the detail.
+     */
+    readonly parameters?: string;
+}
+
+/**
  * Analytical dashboard consists of widgets
  * (widgets are kpis or insights with additional settings - drilling and alerting),
  * layout (which defines rendering and ordering of these widgets),
@@ -123,6 +183,11 @@ export interface IDashboard<TWidget = IDashboardWidget>
      * Dashboard extended date filter config
      */
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
+
+    /**
+     * Plugins used on this dashboard.
+     */
+    readonly plugins?: IDashboardPluginLink[];
 }
 
 /**
@@ -140,7 +205,6 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
 
     /**
      * Dashboard filter context, or temporary filter context
-     * (temporary filter context is used to override original filter context during the export)
      */
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
 
@@ -148,6 +212,11 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Dashboard extended date filter config
      */
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
+
+    /**
+     * Plugins to use on this dashboard.
+     */
+    readonly plugins?: IDashboardPluginLink[];
 }
 
 /**
@@ -196,10 +265,19 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
 
 /**
  * Dashboard referenced objects
+ *
  * @alpha
  */
 export interface IDashboardReferences {
+    /**
+     * Referenced insights. Empty if no insights on dashboard or referenced insights were not requested.
+     */
     insights: IInsight[];
+
+    /**
+     * Referenced plugins. Empty if no plugins on dashboard or referenced plugins were not requested.
+     */
+    plugins: IDashboardPlugin[];
 }
 
 /**
