@@ -1,9 +1,11 @@
 // (C) 2007-2020 GoodData Corporation
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 
-@import "~@gooddata/goodstrap/lib/Bubble/styles/mixins";
-@import "~@gooddata/goodstrap/lib/core/styles/variables";
-@import "~@gooddata/goodstrap/lib/core/styles/mixins";
+// @import "~@gooddata/goodstrap/lib/Bubble/styles/mixins";
+// @import "~@gooddata/goodstrap/lib/core/styles/variables";
+// @import "~@gooddata/goodstrap/lib/core/styles/mixins";
+@import "~@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
 
 @import "~mapbox-gl/dist/mapbox-gl";
 
