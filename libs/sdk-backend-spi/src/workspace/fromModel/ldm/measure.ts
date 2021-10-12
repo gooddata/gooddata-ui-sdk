@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ObjectType, ObjRef } from "@gooddata/sdk-model";
 
 /**
@@ -61,6 +61,11 @@ export interface IObjectExpressionToken {
      * Title of the object
      */
     value: string;
+
+    /**
+     * Id of the object
+     */
+    id?: string;
 
     /**
      * Ref of the object

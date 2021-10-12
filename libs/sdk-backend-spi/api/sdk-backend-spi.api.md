@@ -1050,6 +1050,7 @@ export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag">;
 
 // @public
 export interface IObjectExpressionToken {
+    id?: string;
     ref: ObjRef;
     type: ObjectType;
     value: string;
