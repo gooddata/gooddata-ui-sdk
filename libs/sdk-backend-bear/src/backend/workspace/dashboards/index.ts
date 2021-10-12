@@ -65,17 +65,20 @@ import { resolveWidgetFilters } from "./widgetFilters";
 import { sanitizeFilterContext } from "./filterContexts";
 import { getAnalyticalDashboardUserUris } from "../../../utils/metadata";
 
-type DashboardDependencyCategory = Extract<
+/**
+ * Metadata object types closely related to the dashboard object.
+ */
+type RelatedObjectTypes = Extract<
     GdcMetadata.ObjectCategory,
-    "kpi" | "visualizationWidget" | "visualizationObject" | "filterContext"
+    "kpi" | "visualizationWidget" | "visualizationObject" | "filterContext" | "dashboardPlugin"
 >;
 
-const DASHBOARD_DEPENDENCIES_TYPES: DashboardDependencyCategory[] = [
-    "kpi",
-    "visualizationWidget",
-    "visualizationObject",
-    "filterContext",
-];
+/**
+ * Lists types of those metadata object that are essentially components of the dashboard object. Every time
+ * when dashboard is loaded all related objects of these types must be loaded as well as their
+ * content is integral part of the dashboard itself.
+ */
+const DashboardComponentTypes: RelatedObjectTypes[] = ["kpi", "visualizationWidget", "filterContext"];
 
 export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     private insights: BearWorkspaceInsights;
@@ -105,14 +108,15 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         exportFilterContextRef?: ObjRef,
         options: IGetDashboardOptions = {},
     ): Promise<IDashboard> => {
+        const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
         const exportFilterContextUri = exportFilterContextRef
             ? await objRefToUri(exportFilterContextRef, this.workspace, this.authCall)
             : undefined;
 
         const [bearDashboard, bearDependencies, bearExportFilterContext, bearVisualizationClasses] =
             await Promise.all([
-                this.getBearDashboard(dashboardRef),
-                this.getBearDashboardDependencies(dashboardRef),
+                this.getBearDashboard(dashboardUri),
+                this.getBearDashboardDependencies(dashboardUri, DashboardComponentTypes),
                 this.getBearExportFilterContext(exportFilterContextRef),
                 this.getBearVisualizationClasses(),
             ] as const);
@@ -385,10 +389,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     // Dashboards
 
-    private getBearDashboard = async (
-        dashboardRef: ObjRef,
-    ): Promise<GdcDashboard.IWrappedAnalyticalDashboard> => {
-        const uri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
+    private getBearDashboard = async (uri: string): Promise<GdcDashboard.IWrappedAnalyticalDashboard> => {
         return this.authCall((sdk) => sdk.md.getObjectDetails<GdcDashboard.IWrappedAnalyticalDashboard>(uri));
     };
 
@@ -398,7 +399,8 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             sdk.md.createObject(this.workspace, bearDashboard),
         );
         const createdDashboardDependencies = await this.getBearDashboardDependencies(
-            uriRef(createdBearDashboard.analyticalDashboard.meta.uri!),
+            createdBearDashboard.analyticalDashboard.meta.uri!,
+            DashboardComponentTypes,
         );
         return toSdkModel.convertDashboard(createdBearDashboard, createdDashboardDependencies);
     };
@@ -681,10 +683,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private getBearDashboardDependencies = async (
-        dashboardRef: ObjRef,
-        types = DASHBOARD_DEPENDENCIES_TYPES,
+        uri: string,
+        types: RelatedObjectTypes[],
     ): Promise<toSdkModel.BearDashboardDependency[]> => {
-        const uri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
         const dependenciesObjectLinks = await this.authCall((sdk) =>
             sdk.md.getObjectUsing(this.workspace, uri, {
                 types,
@@ -703,7 +704,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         options: IGetDashboardOptions = {},
     ): Promise<IDashboardWithReferences> {
         const dashboard = await this.getDashboard(ref, filterContextRef, options);
-        const dependencies = (await this.getBearDashboardDependencies(ref, [
+        const dependencies = (await this.getBearDashboardDependencies(dashboard.uri, [
             "visualizationObject",
         ])) as GdcVisualizationObject.IVisualization[];
 
