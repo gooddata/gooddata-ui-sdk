@@ -1,10 +1,17 @@
 // (C) 2019-2021 GoodData Corporation
 import { IFilter, ObjRef } from "@gooddata/sdk-model";
-import { IListedDashboard, IDashboard, IDashboardDefinition, IDashboardWithReferences } from "./dashboard";
-import { IWidgetAlert, IWidgetAlertDefinition, IWidgetAlertCount } from "./alert";
+import {
+    IDashboard,
+    IDashboardDefinition,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
+    IDashboardWithReferences,
+    IListedDashboard,
+} from "./dashboard";
+import { IWidgetAlert, IWidgetAlertCount, IWidgetAlertDefinition } from "./alert";
 import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
-import { IFilterContextDefinition, FilterContextItem } from "./filterContext";
-import { IWidget, SupportedWidgetReferenceTypes, IWidgetReferences } from "./widget";
+import { FilterContextItem, IFilterContextDefinition } from "./filterContext";
+import { IWidget, IWidgetReferences, SupportedWidgetReferenceTypes } from "./widget";
 
 /**
  * Configuration options for getting dashboards.
@@ -20,6 +27,11 @@ export interface IGetDashboardOptions {
 }
 
 /**
+ * @alpha
+ */
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
+
+/**
  * Service to list, create and update analytical dashboards
  *
  * @alpha
@@ -28,7 +40,7 @@ export interface IWorkspaceDashboardsService {
     readonly workspace: string;
 
     /**
-     * Queries workspace dashboards
+     * Gets all dashboards available in current workspace.
      *
      * @param options - optionally specify additional options
      * @returns promise of list of the dashboards
@@ -49,18 +61,21 @@ export interface IWorkspaceDashboardsService {
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
 
     /**
-     * Like getDashboard with loading reference objects
+     * Loads a dashboard and objects that the dashboard references.
      *
      * @param ref - dashboard ref
      * @param filterContextRef - Override dashboard filter context with the custom filter context
      * (This allows to modify filter context when exporting the dashboard)
      * @param options - optionally specify additional options
+     * @param types - types of dashboard references to load; if no types are specified, the service
+     *  must default to loading insights related to the dashboard
      * @returns promise of the dashboard and references
      */
     getDashboardWithReferences(
         ref: ObjRef,
         filterContextRef?: ObjRef,
         options?: IGetDashboardOptions,
+        types?: SupportedDashboardReferenceTypes[],
     ): Promise<IDashboardWithReferences>;
 
     /**
@@ -199,4 +214,44 @@ export interface IWorkspaceDashboardsService {
      * @returns promise with the filters with the ignored filters removed
      */
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
+
+    /**
+     * Gets all dashboard plugins registered in the current workspace.
+     */
+    getDashboardPlugins(): Promise<IDashboardPlugin[]>;
+
+    /**
+     * Load dashboard plugin by it's reference.
+     *
+     * @param ref - plugin reference
+     */
+    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
+
+    /**
+     * Creates a record about a dashboard plugin. Creating a new dashboard plugin does not impact any
+     * existing dashboards in the workspace.
+     *
+     * In order to use a plugin on a dashboard, you need to create a link between the dashboard and the
+     * plugin. Multiple dashboards may link to a single plugin; each dashboard may link to the plugin with
+     * different plugin-specific parameters.
+     *
+     * @remarks
+     * Analytical Backend only allows creating new dashboard plugins or deleting existing plugins. The goal
+     * behind this decision is to encourage safe, phased rollout of new plugin versions. You must first
+     * create a new dashboard plugin and then explicitly start using this new version on dashboards in
+     * order for changes to take effect.
+     *
+     * @param plugin - definition of plugin to create
+     */
+    createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
+
+    /**
+     * Deletes a record about a dashboard plugin from the backend.
+     *
+     * @remarks
+     * -  some backend implementations may reject to delete a dashboard plugin that is used on existing dashboards
+     *
+     * @param ref - reference to plugin to
+     */
+    deleteDashboardPlugin(ref: ObjRef): Promise<void>;
 }
