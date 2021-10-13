@@ -1,0 +1,40 @@
+{
+    "id": "75d4118b-e1e2-4c5b-87aa-dc82e5286fe8",
+    "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets",
+    "request": {
+        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/loadDateDataSets",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"dateDataSetsRequest\":{\"includeUnavailableDateDataSetsCount\":true,\"includeAvailableDateAttributes\":true,\"requiredDataSets\":{\"type\":\"ALL\"}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets-75d4118b-e1e2-4c5b-87aa-dc82e5286fe8.json",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:29:52 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "94",
+            "X-GDC-REQUEST": "87osqyNYGWP4R85R",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "75d4118b-e1e2-4c5b-87aa-dc82e5286fe8",
+    "persistent": true,
+    "insertionIndex": 23
+}

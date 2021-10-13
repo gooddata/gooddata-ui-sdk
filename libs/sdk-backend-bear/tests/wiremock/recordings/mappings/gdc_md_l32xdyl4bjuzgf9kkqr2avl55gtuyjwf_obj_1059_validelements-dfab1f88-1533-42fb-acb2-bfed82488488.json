@@ -1,0 +1,40 @@
+{
+    "id": "dfab1f88-1533-42fb-acb2-bfed82488488",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059/validElements?limit=2&offset=0",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"validElementsRequest\":{}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"validElements\":{\"paging\":{\"total\":\"4846\",\"count\":2,\"offset\":\"0\"},\"items\":[{\"element\":{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1426\",\"title\":\"1000Bulbs.com\"}},{\"element\":{\"title\":\"101 Financial\",\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1427\"}}],\"elementsMeta\":{\"filter\":\"\",\"order\":\"asc\",\"attributeDisplayForm\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"attribute\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057\"}}}",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:29:45 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "49",
+            "X-GDC-REQUEST": "a2z7XKT2DbDzihXR",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "dfab1f88-1533-42fb-acb2-bfed82488488",
+    "persistent": true,
+    "insertionIndex": 16
+}

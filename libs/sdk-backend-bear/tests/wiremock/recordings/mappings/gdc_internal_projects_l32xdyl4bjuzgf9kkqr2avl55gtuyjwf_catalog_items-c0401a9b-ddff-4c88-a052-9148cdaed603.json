@@ -1,0 +1,33 @@
+{
+    "id": "c0401a9b-ddff-4c88-a052-9148cdaed603",
+    "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_items",
+    "request": {
+        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/items?offset=0&limit=500&types=attribute%2Cmetric%2Cfact",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_items-c0401a9b-ddff-4c88-a052-9148cdaed603.json",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:29:52 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "270",
+            "X-GDC-REQUEST": "fVzjvPoCITDEC6au",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "c0401a9b-ddff-4c88-a052-9148cdaed603",
+    "persistent": true,
+    "insertionIndex": 24
+}

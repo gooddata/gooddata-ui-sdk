@@ -1,0 +1,397 @@
+{
+    "objects": {
+        "items": [
+            {
+                "visualizationClass": {
+                    "content": {
+                        "url": "local:scatter",
+                        "iconSelected": "local:scatter.selected",
+                        "orderIndex": 7.0,
+                        "checksum": "local",
+                        "icon": "local:scatter"
+                    },
+                    "meta": {
+                        "tags": "",
+                        "created": "2019-12-10 14:25:33",
+                        "title": "Scatter plot",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "updated": "2021-10-12 16:24:59",
+                        "category": "visualizationClass",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1",
+                        "summary": "",
+                        "flags": ["preloaded"],
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "identifier": "gdc.visualization.scatter"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "meta": {
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Donut chart",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2019-12-10 14:25:33",
+                        "tags": "",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/2",
+                        "updated": "2021-10-12 16:24:59",
+                        "category": "visualizationClass",
+                        "flags": ["preloaded"],
+                        "summary": "",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "identifier": "gdc.visualization.donut"
+                    },
+                    "content": {
+                        "iconSelected": "local:donut.selected",
+                        "url": "local:donut",
+                        "icon": "local:donut",
+                        "checksum": "local",
+                        "orderIndex": 10.0
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "content": {
+                        "orderIndex": 4.0,
+                        "checksum": "local",
+                        "icon": "local:area",
+                        "url": "local:area",
+                        "iconSelected": "local:area.selected"
+                    },
+                    "meta": {
+                        "identifier": "gdc.visualization.area",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "flags": ["preloaded"],
+                        "summary": "",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/3",
+                        "updated": "2021-10-12 16:24:59",
+                        "category": "visualizationClass",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Stacked Area chart",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "tags": "",
+                        "created": "2019-12-10 14:25:33"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "content": {
+                        "checksum": "local",
+                        "orderIndex": 0.0,
+                        "icon": "local:table",
+                        "url": "local:table",
+                        "iconSelected": "local:table.selected"
+                    },
+                    "meta": {
+                        "identifier": "gdc.visualization.table",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "flags": ["preloaded"],
+                        "summary": "",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4",
+                        "category": "visualizationClass",
+                        "updated": "2021-10-12 16:24:59",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Table",
+                        "tags": "",
+                        "created": "2019-12-10 14:25:33"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "content": {
+                        "icon": "local:headline",
+                        "checksum": "local",
+                        "orderIndex": 6.0,
+                        "iconSelected": "local:headline.selected",
+                        "url": "local:headline"
+                    },
+                    "meta": {
+                        "identifier": "gdc.visualization.headline",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "flags": ["preloaded"],
+                        "summary": "",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/5",
+                        "category": "visualizationClass",
+                        "updated": "2021-10-12 16:24:59",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Headline",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "tags": "",
+                        "created": "2019-12-10 14:25:33"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "meta": {
+                        "identifier": "gdc.visualization.column",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "flags": ["preloaded"],
+                        "summary": "",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/6",
+                        "updated": "2021-10-12 16:24:59",
+                        "category": "visualizationClass",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Column chart",
+                        "tags": "",
+                        "created": "2019-12-10 14:25:33"
+                    },
+                    "content": {
+                        "url": "local:column",
+                        "iconSelected": "local:column.selected",
+                        "orderIndex": 1.0,
+                        "checksum": "local",
+                        "icon": "local:column"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "content": {
+                        "iconSelected": "local:line.selected",
+                        "url": "local:line",
+                        "icon": "local:line",
+                        "orderIndex": 3.0,
+                        "checksum": "local"
+                    },
+                    "meta": {
+                        "summary": "",
+                        "flags": ["preloaded"],
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "identifier": "gdc.visualization.line",
+                        "tags": "",
+                        "created": "2019-12-10 14:25:33",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Line chart",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "category": "visualizationClass",
+                        "updated": "2021-10-12 16:24:59",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/7"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "content": {
+                        "iconSelected": "local:treemap.selected",
+                        "url": "local:treemap",
+                        "icon": "local:treemap",
+                        "checksum": "local",
+                        "orderIndex": 12.0
+                    },
+                    "meta": {
+                        "title": "Treemap",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2019-12-10 14:25:33",
+                        "tags": "",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/8",
+                        "updated": "2021-10-12 16:24:59",
+                        "category": "visualizationClass",
+                        "flags": ["preloaded"],
+                        "summary": "",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "identifier": "gdc.visualization.treemap"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "content": {
+                        "icon": "local:combo",
+                        "orderIndex": 5.0,
+                        "checksum": "local",
+                        "iconSelected": "local:combo.selected",
+                        "url": "local:combo2"
+                    },
+                    "meta": {
+                        "flags": ["preloaded"],
+                        "summary": "",
+                        "identifier": "gdc.visualization.combo",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Combo",
+                        "created": "2019-12-10 14:25:33",
+                        "tags": "",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/9",
+                        "updated": "2021-10-12 16:24:59",
+                        "category": "visualizationClass"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "content": {
+                        "url": "local:heatmap",
+                        "iconSelected": "local:heatmap.selected",
+                        "orderIndex": 13.0,
+                        "checksum": "local",
+                        "icon": "local:heatmap"
+                    },
+                    "meta": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/10",
+                        "updated": "2021-10-12 16:24:59",
+                        "category": "visualizationClass",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Heatmap",
+                        "created": "2019-12-10 14:25:33",
+                        "tags": "",
+                        "identifier": "gdc.visualization.heatmap",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "flags": ["preloaded"],
+                        "summary": ""
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "meta": {
+                        "summary": "",
+                        "flags": ["preloaded"],
+                        "identifier": "gdc.visualization.bubble",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "created": "2019-12-10 14:25:33",
+                        "tags": "",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Bubble chart",
+                        "updated": "2021-10-12 16:24:59",
+                        "category": "visualizationClass",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/11"
+                    },
+                    "content": {
+                        "icon": "local:bubble",
+                        "checksum": "local",
+                        "orderIndex": 8.0,
+                        "iconSelected": "local:bubble.selected",
+                        "url": "local:bubble"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "meta": {
+                        "flags": ["preloaded"],
+                        "summary": "",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "identifier": "gdc.visualization.pie",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Pie chart",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "tags": "",
+                        "created": "2019-12-10 14:25:33",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/13",
+                        "category": "visualizationClass",
+                        "updated": "2021-10-12 16:24:59"
+                    },
+                    "content": {
+                        "icon": "local:pie",
+                        "checksum": "local",
+                        "orderIndex": 9.0,
+                        "iconSelected": "local:pie.selected",
+                        "url": "local:pie"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "content": {
+                        "iconSelected": "local:bar.selected",
+                        "url": "local:bar",
+                        "icon": "local:bar",
+                        "checksum": "local",
+                        "orderIndex": 2.0
+                    },
+                    "meta": {
+                        "summary": "",
+                        "flags": ["preloaded"],
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "identifier": "gdc.visualization.bar",
+                        "created": "2019-12-10 14:25:33",
+                        "tags": "",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Bar chart",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "category": "visualizationClass",
+                        "updated": "2021-10-12 16:24:59",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/14"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "content": {
+                        "icon": "local:bullet",
+                        "orderIndex": 14.0,
+                        "checksum": "local",
+                        "iconSelected": "local:bullet.selected",
+                        "url": "local:bullet"
+                    },
+                    "meta": {
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "identifier": "gdc.visualization.bullet",
+                        "flags": ["preloaded"],
+                        "summary": "",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1294",
+                        "category": "visualizationClass",
+                        "updated": "2021-10-12 16:24:59",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Bullet chart",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "tags": "",
+                        "created": "2020-03-12 09:31:51"
+                    }
+                }
+            },
+            {
+                "visualizationClass": {
+                    "content": {
+                        "iconSelected": "local:pushpin.selected",
+                        "url": "local:pushpin",
+                        "icon": "local:pushpin",
+                        "checksum": "local",
+                        "orderIndex": 15.0
+                    },
+                    "meta": {
+                        "flags": ["preloaded"],
+                        "summary": "",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "identifier": "gdc.visualization.pushpin",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Geo chart (pushpins)",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "tags": "",
+                        "created": "2020-03-26 08:46:06",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1296",
+                        "category": "visualizationClass",
+                        "updated": "2021-10-12 16:24:59"
+                    }
+                }
+            }
+        ],
+        "paging": { "offset": 0, "count": 15 }
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "id": "049d6621-c310-45a7-a36f-d40c2d3fe1cc",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059/validElements?limit=100&offset=10000",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"validElementsRequest\":{}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"validElements\":{\"items\":[],\"elementsMeta\":{\"order\":\"asc\",\"attribute\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057\",\"attributeDisplayForm\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"filter\":\"\"},\"paging\":{\"offset\":\"10000\",\"total\":\"4846\",\"count\":0}}}",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:29:48 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "48",
+            "X-GDC-REQUEST": "BpjwvvqLBlKuwkTx",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "049d6621-c310-45a7-a36f-d40c2d3fe1cc",
+    "persistent": true,
+    "insertionIndex": 20
+}

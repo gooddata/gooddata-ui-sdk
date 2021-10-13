@@ -1,0 +1,40 @@
+{
+    "id": "9272944e-fa05-473d-aac2-62de3cc1d641",
+    "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets",
+    "request": {
+        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/loadDateDataSets",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"dateDataSetsRequest\":{\"includeUnavailableDateDataSetsCount\":true,\"includeAvailableDateAttributes\":true,\"includeDateGranularities\":[\"GDC.time.day_in_week\",\"GDC.time.day_in_month\",\"GDC.time.day_in_quarter\",\"GDC.time.day_in_year\",\"GDC.time.week_in_quarter\",\"GDC.time.week_in_year\",\"GDC.time.month_in_quarter\",\"GDC.time.month_in_year\",\"GDC.time.quarter_in_year\"],\"requiredDataSets\":{\"type\":\"PRODUCTION\"}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets-9272944e-fa05-473d-aac2-62de3cc1d641.json",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:29:54 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "132",
+            "X-GDC-REQUEST": "siDF317ZGE74J7KN",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "9272944e-fa05-473d-aac2-62de3cc1d641",
+    "persistent": true,
+    "insertionIndex": 28
+}
