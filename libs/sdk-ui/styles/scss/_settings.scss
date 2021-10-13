@@ -2,7 +2,10 @@
 // Here we define the breakpoints which will become the upper border for each media size.
 // The function em-calc() calculates the em-value from a px-value.
 
-@import "~@gooddata/goodstrap/lib/core/styles/foundations";
+$include-html-classes: false;
+$include-html-global-classes: false;
+
+@import "~foundation-sites/scss/foundation/components/_global.scss";
 
 $small-breakpoint: em-calc(640) !default;
 $medium-breakpoint: em-calc(1024) !default;
