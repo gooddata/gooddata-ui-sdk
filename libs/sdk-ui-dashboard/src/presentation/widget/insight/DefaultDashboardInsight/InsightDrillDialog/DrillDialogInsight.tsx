@@ -116,7 +116,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
 
     const { drillableItems, onDrill, onPushData } = useDrillDialogInsightDrills({
         widget,
-        insight,
+        insight: insightWithAddedFilters ?? insight,
         onDrill: onDrillFn,
     });
 

@@ -28,7 +28,12 @@ import {
     DashboardDrillCommand,
     selectWidgetDrills,
 } from "../../../model";
-import { DashboardDrillDefinition, IDashboardDrillEvent, isDrillDownDefinition } from "../../../types";
+import {
+    DashboardDrillContext,
+    DashboardDrillDefinition,
+    IDashboardDrillEvent,
+    isDrillDownDefinition,
+} from "../../../types";
 import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils";
 import { useDrills } from "../hooks/useDrills";
 
@@ -80,7 +85,7 @@ export function WithDrillSelect({
             const filteredByPriority = filterDrillFromAttributeByPriority(drillDefinitions, configuredDrills);
 
             if (filteredByPriority.length === 1) {
-                onSelect(filteredByPriority[0], drillEvent, s.correlationId);
+                onSelect(filteredByPriority[0], drillEvent, s.correlationId, context);
             } else if (filteredByPriority.length > 1) {
                 setDropdownProps({
                     drillDefinitions: filteredByPriority,
@@ -104,13 +109,16 @@ export function WithDrillSelect({
             drillDefinition: DashboardDrillDefinition,
             drillEvent?: IDashboardDrillEvent,
             correlationId?: string,
+            drillContext?: DashboardDrillContext,
         ) => {
             const effectiveDrillEvent = drillEvent ?? dropdownProps?.drillEvent;
             const effectiveCorrelationId = correlationId ?? dropdownProps?.correlationId;
+            const effectiveInsight = drillContext?.insight ?? insight;
+
             if (effectiveDrillEvent) {
                 if (isDrillDownDefinition(drillDefinition)) {
                     drills.drillDown.run(
-                        insight,
+                        effectiveInsight,
                         drillDefinition,
                         effectiveDrillEvent,
                         effectiveCorrelationId,
@@ -132,7 +140,7 @@ export function WithDrillSelect({
                 setIsOpen(false);
             }
         },
-        [dropdownProps],
+        [dropdownProps, insight],
     );
 
     const onClose = () => {
