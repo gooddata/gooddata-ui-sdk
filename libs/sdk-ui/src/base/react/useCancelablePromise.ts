@@ -137,11 +137,13 @@ export function useCancelablePromise<TResult, TError = any>(
             onPending();
             return;
         } else {
-            setState({
-                status: "loading",
-                result: undefined,
-                error: undefined,
-            });
+            if (state.status !== "loading") {
+                setState({
+                    result: undefined,
+                    error: undefined,
+                    status: "loading",
+                });
+            }
             onLoading();
         }
 

@@ -42,14 +42,14 @@ import {
 
 import { filterContextItemsToFiltersForWidget } from "../../../../converters";
 import {
+    selectDisableDefaultDrills,
+    selectDrillableItems,
     selectPermissions,
     selectSettings,
     selectUser,
     useDashboardAsyncRender,
     useDashboardSelector,
     useDashboardUserInteraction,
-    selectDisableDefaultDrills,
-    selectDrillableItems,
     useWidgetExecutionsHandler,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
@@ -376,6 +376,13 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
         </DashboardItemWithKpiAlert>
     );
 };
+
+class KpiExecutorCoreWrapper extends React.PureComponent<IKpiProps> {
+    render() {
+        return <KpiExecutorCore {...this.props} />;
+    }
+}
+
 /**
  * Executes the given measures and displays them as KPI
  * @internal
@@ -384,13 +391,6 @@ export const KpiExecutor = flowRight(
     injectIntl,
     withBackend,
     withExecution({
-        execution: (props: IKpiExecutorProps) => {
-            const { backend, workspace, effectiveFilters, primaryMeasure } = props;
-
-            return backend.workspace(workspace).execution().forItems([primaryMeasure], effectiveFilters);
-        },
-        exportTitle: "",
-        loadOnMount: true,
         shouldRefetch: (prevProps, nextProps) => {
             return (
                 prevProps.alert !== nextProps.alert ||
@@ -398,6 +398,13 @@ export const KpiExecutor = flowRight(
                 !isEqual(prevProps.effectiveFilters, nextProps.effectiveFilters)
             );
         },
+        execution: (props: IKpiExecutorProps) => {
+            const { backend, workspace, effectiveFilters, primaryMeasure } = props;
+
+            return backend.workspace(workspace).execution().forItems([primaryMeasure], effectiveFilters);
+        },
+        exportTitle: "",
+        loadOnMount: true,
     }),
     (WrappedComponent: React.ComponentType<Partial<IKpiProps>>) => {
         const withAlertProps = ({ result, error, isLoading, ...props }: IKpiResultsProps) => (
@@ -411,6 +418,13 @@ export const KpiExecutor = flowRight(
         return withAlertProps;
     },
     withExecution({
+        shouldRefetch: (prevProps, nextProps) => {
+            return (
+                !isEqual(prevProps.primaryMeasure, nextProps.primaryMeasure) ||
+                !isEqual(prevProps.secondaryMeasure, nextProps.secondaryMeasure) ||
+                !isEqual(prevProps.effectiveFilters, nextProps.effectiveFilters)
+            );
+        },
         execution: (props: IKpiProps) => {
             const { backend, workspace, primaryMeasure, secondaryMeasure, effectiveFilters } = props;
 
@@ -421,15 +435,8 @@ export const KpiExecutor = flowRight(
         },
         exportTitle: "",
         loadOnMount: true,
-        shouldRefetch: (prevProps, nextProps) => {
-            return (
-                !isEqual(prevProps.primaryMeasure, nextProps.primaryMeasure) ||
-                !isEqual(prevProps.secondaryMeasure, nextProps.secondaryMeasure) ||
-                !isEqual(prevProps.effectiveFilters, nextProps.effectiveFilters)
-            );
-        },
     }),
-)(KpiExecutorCore);
+)(KpiExecutorCoreWrapper);
 
 function getSeriesResult(series: IDataSeries | undefined): number | null {
     if (!series) {
