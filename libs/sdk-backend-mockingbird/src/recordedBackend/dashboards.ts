@@ -170,6 +170,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
     public createDashboard = (dashboard: IDashboardDefinition): Promise<IDashboard> => {
         const emptyDashboard: IDashboardDefinition = {
+            type: "IDashboard",
             description: "",
             filterContext: undefined,
             title: "",

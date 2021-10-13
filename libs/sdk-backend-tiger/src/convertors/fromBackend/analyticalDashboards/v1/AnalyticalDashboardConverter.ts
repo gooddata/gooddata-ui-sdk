@@ -73,6 +73,7 @@ export function convertDashboard(
     );
 
     return {
+        type: "IDashboard",
         ref: idRef(id, "analyticalDashboard"),
         identifier: id,
         uri: analyticalDashboard.links!.self,

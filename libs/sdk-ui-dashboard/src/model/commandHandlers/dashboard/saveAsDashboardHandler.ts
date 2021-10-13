@@ -72,6 +72,7 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     );
 
     const dashboardFromState: IDashboardDefinition = {
+        type: "IDashboard",
         ...dashboardDescriptor,
         filterContext: {
             ...filterContextDefinition,

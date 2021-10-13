@@ -83,16 +83,19 @@ export const dashboardTempFilterContext: ITempFilterContext = {
 };
 
 export const emptyDashboard: IDashboard = {
+    type: "IDashboard",
     ...createObjectMeta("emptyDashboard"),
     filterContext: undefined,
 };
 
 export const dashboardWithFilterContext: IDashboard = {
+    type: "IDashboard",
     ...createObjectMeta("dashboardWithFilterContext"),
     filterContext: dashboardFilterContext,
 };
 
 export const dashboardWithTempFilterContext: IDashboard = {
+    type: "IDashboard",
     ...createObjectMeta("dashboardWithTempFilterContext"),
     filterContext: dashboardTempFilterContext,
 };

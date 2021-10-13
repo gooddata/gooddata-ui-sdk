@@ -107,6 +107,7 @@ function* createDashboardSaveContext(cmd: SaveDashboard): SagaIterator<Dashboard
     };
 
     const dashboardFromState: IDashboardDefinition = {
+        type: "IDashboard",
         ...dashboardDescriptor,
         ...dashboardIdentity,
         filterContext: {

@@ -168,6 +168,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
         const emptyDashboard: IDashboardDefinition = {
+            type: "IDashboard",
             description: "",
             filterContext: undefined,
             title: "",

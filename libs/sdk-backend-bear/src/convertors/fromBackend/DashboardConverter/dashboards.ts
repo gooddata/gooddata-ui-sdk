@@ -104,6 +104,7 @@ export const convertDashboard = (
     ) as IFilterContext | ITempFilterContext | undefined;
 
     return {
+        type: "IDashboard",
         title,
         description: summary!,
 

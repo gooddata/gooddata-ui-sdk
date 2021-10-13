@@ -1,5 +1,6 @@
 {
     "dashboard": {
+        "type": "IDashboard",
         "created": "2020-07-28 06:53:19",
         "description": "",
         "filterContext": {
@@ -180,6 +181,7 @@
         "uri": "/gdc/md/referenceworkspace/obj/1304"
     },
     "references": {
+        "plugins": [],
         "insights": [
             {
                 "insight": {
