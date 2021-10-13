@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 export * from "./alerts";
 export * from "./dashboards";
 export * from "./drills";
@@ -7,3 +7,4 @@ export * from "./layout";
 export * from "./widget";
 export * from "./scheduledMails";
 export * from "./types";
+export * from "./plugin";

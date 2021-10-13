@@ -1311,8 +1311,20 @@ export type DashboardModelCustomizationFns = {
     existingDashboardTransformFn?: DashboardTransformFn;
 };
 
+// @alpha (undocumented)
+export type DashboardPluginDescriptor = {
+    readonly author: string;
+    readonly displayName: string;
+    readonly version: string;
+    readonly shortDescription?: string;
+    readonly longDescription?: string;
+    readonly debugName?: string;
+    readonly minEngineVersion: "bundled";
+    readonly maxEngineVersion?: "bundled";
+};
+
 // @alpha
-export abstract class DashboardPluginV1 implements IDashboardPlugin {
+export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
     // (undocumented)
     abstract readonly author: string;
     // (undocumented)
@@ -2111,7 +2123,7 @@ export interface IDashboardDrillEvent extends IDrillEvent {
 // @alpha
 export interface IDashboardEngine {
     getDashboardComponent(): ComponentType<IDashboardProps>;
-    initializePlugins(ctx: DashboardContext, plugins: IDashboardPlugin[]): IDashboardExtensionProps;
+    initializePlugins(ctx: DashboardContext, plugins: IDashboardPluginContract_V1[]): IDashboardExtensionProps;
     readonly version: string;
 }
 
@@ -2244,23 +2256,11 @@ export interface IDashboardLayoutCustomizer {
 }
 
 // @alpha
-export interface IDashboardPlugin extends IDashboardPluginMetadata {
+export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
     onPluginLoaded?(ctx: DashboardContext, parameters?: string): void;
     onPluginUnload?(ctx: DashboardContext): Promise<void>;
     readonly _pluginVersion: "1.0";
     register(ctx: DashboardContext, customize: IDashboardCustomizer, eventing: IDashboardEventHandling): void;
-}
-
-// @alpha (undocumented)
-export interface IDashboardPluginMetadata {
-    readonly author: string;
-    readonly debugName?: string;
-    readonly displayName: string;
-    readonly longDescription?: string;
-    readonly maxEngineVersion?: "bundled";
-    readonly minEngineVersion: "bundled";
-    readonly shortDescription?: string;
-    readonly version: string;
 }
 
 // @alpha (undocumented)

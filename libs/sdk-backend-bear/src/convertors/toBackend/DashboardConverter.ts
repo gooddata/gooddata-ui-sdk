@@ -47,6 +47,8 @@ import {
     NotSupported,
     isDrillFromAttribute,
     isDrillFromMeasure,
+    IDashboardPlugin,
+    IDashboardPluginLink,
 } from "@gooddata/sdk-backend-spi";
 import {
     GdcDashboardLayout,
@@ -57,6 +59,7 @@ import {
     GdcMetadata,
     GdcFilterContext,
     GdcScheduledMail,
+    GdcDashboardPlugin,
 } from "@gooddata/api-model-bear";
 import {
     ObjRef,
@@ -71,6 +74,7 @@ import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
 import isEmpty from "lodash/isEmpty";
 import omitBy from "lodash/omitBy";
 import { serializeProperties } from "../fromBackend/PropertiesConverter";
+import { IDashboardPluginDefinition } from "@gooddata/sdk-backend-spi";
 
 const refToUri = (ref: ObjRef) => {
     invariant(isUriRef(ref));
@@ -490,21 +494,42 @@ const convertDateFilterConfig = (
     };
 };
 
+export const convertPluginLink = (pluginLink: IDashboardPluginLink): GdcDashboard.IDashboardPluginLink => {
+    const { plugin, parameters } = pluginLink;
+
+    return {
+        type: refToUri(plugin),
+        parameters: parameters,
+    };
+};
+
 export const convertDashboard = (
     dashboard: IDashboard | IDashboardDefinition,
 ): GdcDashboard.IWrappedAnalyticalDashboard => {
-    const { filterContext, layout, ref, identifier, title, description, dateFilterConfig, isLocked, tags } =
-        dashboard;
+    const {
+        filterContext,
+        layout,
+        ref,
+        identifier,
+        title,
+        description,
+        dateFilterConfig,
+        isLocked,
+        tags,
+        plugins,
+    } = dashboard;
     const convertedLayout = layout && convertLayout(layout);
     const widgets = layout && layoutWidgets(layout);
     const dashboardUri = ref && refToUri(ref);
     const filterContextUri = filterContext?.ref && refToUri(filterContext.ref);
     const convertedDateFilterConfig = dateFilterConfig && convertDateFilterConfig(dateFilterConfig);
+    const convertedPlugins = plugins?.map(convertPluginLink);
 
     return {
         analyticalDashboard: {
             content: {
                 ...(convertedDateFilterConfig && { dateFilterConfig: convertedDateFilterConfig }),
+                ...(convertedPlugins && { plugins: convertedPlugins }),
                 filterContext: filterContextUri,
                 widgets: widgets ? widgets.filter(isWidget).map((widget) => refToUri(widget.ref)) : [],
                 layout: convertedLayout,
@@ -627,6 +652,26 @@ export const convertScheduledMail = (
                     : {}),
                 title,
                 summary: description,
+            },
+        },
+    };
+};
+
+export const convertDashboardPlugin = (
+    plugin: IDashboardPlugin | IDashboardPluginDefinition,
+): GdcDashboardPlugin.IWrappedDashboardPlugin => {
+    const { uri, identifier, name, tags, description, url } = plugin;
+
+    return {
+        dashboardPlugin: {
+            content: {
+                url,
+            },
+            meta: {
+                ...(uri ? { uri, identifier } : {}),
+                title: name,
+                summary: description,
+                tags: tags?.join(" "),
             },
         },
     };

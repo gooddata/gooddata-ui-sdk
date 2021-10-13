@@ -168,7 +168,11 @@ export { IWorkspaceMeasuresService } from "./workspace/measures";
 
 export { IWorkspaceFactsService } from "./workspace/facts";
 
-export { IWorkspaceDashboardsService, IGetDashboardOptions } from "./workspace/dashboards";
+export {
+    IWorkspaceDashboardsService,
+    IGetDashboardOptions,
+    SupportedDashboardReferenceTypes,
+} from "./workspace/dashboards";
 export { IDashboardObjectIdentity } from "./workspace/dashboards/common";
 export {
     DrillDefinition,
@@ -208,6 +212,10 @@ export {
     IDashboardDateFilterConfig,
     DashboardDateFilterConfigMode,
     IDashboardDateFilterAddedPresets,
+    IDashboardPluginBase,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
+    IDashboardPluginLink,
 } from "./workspace/dashboards/dashboard";
 export {
     IFilterContext,

@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-export { IDashboardPlugin, DashboardPluginV1, IDashboardPluginMetadata } from "./plugin";
+export { IDashboardPluginContract_V1, DashboardPluginV1, DashboardPluginDescriptor } from "./plugin";
 export { IDashboardEngine, newDashboardEngine } from "./engine";
 export {
     IDashboardEventHandling,

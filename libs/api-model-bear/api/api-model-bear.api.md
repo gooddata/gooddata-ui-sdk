@@ -199,6 +199,8 @@ export namespace GdcDashboard {
         // (undocumented)
         layout?: GdcDashboardLayout.Layout;
         // (undocumented)
+        plugins?: IDashboardPluginLink[];
+        // (undocumented)
         widgets: string[];
     }
     // (undocumented)
@@ -220,6 +222,13 @@ export namespace GdcDashboard {
         hideOptions?: GdcExtendedDateFilters.GUID[];
         // (undocumented)
         mode: DashboardDateFilterConfigMode;
+    }
+    // (undocumented)
+    export interface IDashboardPluginLink {
+        // (undocumented)
+        parameters?: string;
+        // (undocumented)
+        type: string;
     }
     // (undocumented)
     export interface IWrappedAnalyticalDashboard {
@@ -310,6 +319,29 @@ export namespace GdcDashboardLayout {
     export type SectionHeader = ISectionHeader | ISectionDescription;
     // (undocumented)
     export type Widget = IPersistedWidget;
+}
+
+// @public (undocumented)
+export namespace GdcDashboardPlugin {
+    // (undocumented)
+    export interface IDashboardPlugin {
+        // (undocumented)
+        content: IDashboardPluginContent;
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export interface IDashboardPluginContent {
+        // (undocumented)
+        url: string;
+    }
+    // (undocumented)
+    export function isDashboardPlugin(obj: unknown): obj is IWrappedDashboardPlugin;
+    // (undocumented)
+    export interface IWrappedDashboardPlugin {
+        // (undocumented)
+        dashboardPlugin: IDashboardPlugin;
+    }
 }
 
 // @public (undocumented)
@@ -1735,7 +1767,7 @@ export namespace GdcMetadata {
         theme: ITheme;
     }
     // (undocumented)
-    export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget" | "theme";
+    export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dashboardPlugin" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget" | "theme";
     // (undocumented)
     export type SortDirection = "asc" | "desc";
 }
@@ -1743,11 +1775,11 @@ export namespace GdcMetadata {
 // @public (undocumented)
 export namespace GdcMetadataObject {
     // (undocumented)
-    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcMetadata.ITheme | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject | GdcVisualizationClass.IVisualizationClass | GdcDataSets.IDataSet | GdcReport.IReport | GdcReport.IReportDefinition;
+    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcMetadata.ITheme | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject | GdcVisualizationClass.IVisualizationClass | GdcDataSets.IDataSet | GdcReport.IReport | GdcReport.IReportDefinition | GdcDashboardPlugin.IDashboardPlugin;
     // (undocumented)
     export function unwrapMetadataObject(object: WrappedObject): IObject;
     // (undocumented)
-    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcMetadata.IWrappedTheme | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet | GdcReport.IWrappedReport | GdcReport.IWrappedReportDefinition;
+    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcMetadata.IWrappedTheme | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet | GdcReport.IWrappedReport | GdcReport.IWrappedReportDefinition | GdcDashboardPlugin.IWrappedDashboardPlugin;
 }
 
 // @public

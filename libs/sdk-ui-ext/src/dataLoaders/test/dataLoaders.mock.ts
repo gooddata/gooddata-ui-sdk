@@ -34,5 +34,9 @@ export const noopWorkspaceDashboardsService: IWorkspaceDashboardsService = {
     getWidgetReferencedObjects: noop as any,
     updateDashboard: noop as any,
     updateWidgetAlert: noop as any,
+    createDashboardPlugin: noop as any,
+    deleteDashboardPlugin: noop as any,
+    getDashboardPlugin: noop as any,
+    getDashboardPlugins: noop as any,
     workspace: "workspace",
 };

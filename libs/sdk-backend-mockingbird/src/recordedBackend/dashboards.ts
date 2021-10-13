@@ -4,6 +4,8 @@ import {
     FilterContextItem,
     IDashboard,
     IDashboardDefinition,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
     IDashboardWithReferences,
     IFilterContextDefinition,
     IListedDashboard,
@@ -161,6 +163,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             dashboard: recording,
             references: {
                 insights,
+                plugins: [],
             },
         });
     };
@@ -292,6 +295,22 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     }
 
     public updateWidgetAlert(_alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public createDashboardPlugin(_plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public deleteDashboardPlugin(_ref: ObjRef): Promise<void> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public getDashboardPlugin(_ref: ObjRef): Promise<IDashboardPlugin> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public getDashboardPlugins(): Promise<IDashboardPlugin[]> {
         throw new NotSupported("recorded backend does not support this call");
     }
 }

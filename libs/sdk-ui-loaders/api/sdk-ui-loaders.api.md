@@ -8,7 +8,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IClientWorkspaceIdentifiers } from '@gooddata/sdk-ui';
 import { IDashboardBaseProps } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardEngine } from '@gooddata/sdk-ui-dashboard';
-import { IDashboardPlugin } from '@gooddata/sdk-ui-dashboard';
+import { IDashboardPluginContract_V1 } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardProps } from '@gooddata/sdk-ui-dashboard';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
@@ -40,7 +40,7 @@ export type DashboardLoadResult = {
     engine: IDashboardEngine;
     DashboardComponent: React_2.ComponentType<IDashboardProps>;
     props: IDashboardProps;
-    plugins: IDashboardPlugin[];
+    plugins: IDashboardPluginContract_V1[];
 };
 
 // @alpha (undocumented)
@@ -69,7 +69,7 @@ export interface IDashboardStubProps extends IDashboardBaseProps {
 
 // @alpha
 export interface IEmbeddedPlugin {
-    factory: () => IDashboardPlugin;
+    factory: () => IDashboardPluginContract_V1;
     parameters?: string;
 }
 

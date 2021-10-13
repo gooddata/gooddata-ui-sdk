@@ -17,6 +17,7 @@ Object {
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
   "layout": undefined,
+  "plugins": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
@@ -46,6 +47,7 @@ Object {
   "identifier": "dashboardWithExtendedDateFilterConfig",
   "isLocked": false,
   "layout": undefined,
+  "plugins": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithExtendedDateFilterConfig",
   },
@@ -131,6 +133,7 @@ Object {
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
   "layout": undefined,
+  "plugins": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
@@ -289,6 +292,7 @@ Object {
     ],
     "type": "IDashboardLayout",
   },
+  "plugins": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
@@ -450,6 +454,7 @@ Object {
     ],
     "type": "IDashboardLayout",
   },
+  "plugins": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
@@ -608,6 +613,7 @@ Object {
     ],
     "type": "IDashboardLayout",
   },
+  "plugins": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
@@ -629,6 +635,7 @@ Object {
   "identifier": "emptyDashboard",
   "isLocked": false,
   "layout": undefined,
+  "plugins": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/emptyDashboard",
   },
@@ -659,6 +666,7 @@ Object {
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
   "layout": undefined,
+  "plugins": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },

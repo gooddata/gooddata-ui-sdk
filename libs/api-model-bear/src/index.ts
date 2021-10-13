@@ -19,6 +19,7 @@ export { GdcVisualizationWidget } from "./visualizationWidget/GdcVisualizationWi
 export { GdcFilterContext } from "./filterContext/GdcFilterContext";
 export { GdcDashboardLayout } from "./dashboard/GdcDashboardLayout";
 export { GdcDashboard } from "./dashboard/GdcDashboard";
+export { GdcDashboardPlugin } from "./dashboardPlugin/GdcDashboardPlugin";
 export { GdcCatalog } from "./catalog/GdcCatalog";
 export { GdcKpi } from "./kpi/GdcKpi";
 export { GdcMetadata } from "./meta/GdcMetadata";

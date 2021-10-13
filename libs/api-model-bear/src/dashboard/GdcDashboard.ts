@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { GdcMetadata } from "../meta/GdcMetadata";
 import { GdcDashboardLayout } from "./GdcDashboardLayout";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
@@ -16,6 +16,10 @@ export namespace GdcDashboard {
     }
 
     export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
+    export interface IDashboardPluginLink {
+        type: string;
+        parameters?: string;
+    }
 
     export interface IDashboardDateFilterAddedPresets {
         absolutePresets?: GdcExtendedDateFilters.IDateFilterAbsolutePreset[];
@@ -35,5 +39,6 @@ export namespace GdcDashboard {
         filterContext?: string;
         layout?: GdcDashboardLayout.Layout;
         dateFilterConfig?: IDashboardDateFilterConfig;
+        plugins?: IDashboardPluginLink[];
     }
 }

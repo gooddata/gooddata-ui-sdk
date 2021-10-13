@@ -513,12 +513,29 @@ export class MetadataModule {
      *
      * @method getAnalyticalDashboards
      * @param {string} projectId Project identifier
-     * @return {Array} An array of analytical dashboard objects
+     * @return {Array} An array of links to analytical dashboard objects
      */
     public getAnalyticalDashboards(projectId: string): Promise<GdcMetadata.IObjectLink[]> {
         return this.xhr
             .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
                 `/gdc/md/${projectId}/query/analyticaldashboard`,
+            )
+            .then((dashboardsQuery) => {
+                return dashboardsQuery.query.entries;
+            });
+    }
+
+    /**
+     * Returns all dashboard plugins in a project specified by the given projectId
+     *
+     * @method getDashboardPlugins
+     * @param {string} projectId Project identifier
+     * @return {Array} An array of links to dashboard plugin objects
+     */
+    public getDashboardPlugins(projectId: string): Promise<GdcMetadata.IObjectLink[]> {
+        return this.xhr
+            .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
+                `/gdc/md/${projectId}/query/dashboardplugins`,
             )
             .then((dashboardsQuery) => {
                 return dashboardsQuery.query.entries;

@@ -3,7 +3,7 @@
 import { IDashboard } from "@gooddata/sdk-backend-spi";
 import {
     IDashboardEngine,
-    IDashboardPlugin,
+    IDashboardPluginContract_V1,
     newDashboardEngine,
     DashboardContext,
 } from "@gooddata/sdk-ui-dashboard";
@@ -33,6 +33,6 @@ export function staticDashboardEngineLoader(_dashboard: IDashboard): Promise<IDa
 export function noopDashboardPluginLoader(
     _ctx: DashboardContext,
     _dashboard: IDashboard,
-): Promise<IDashboardPlugin[]> {
+): Promise<IDashboardPluginContract_V1[]> {
     return Promise.resolve([]);
 }
