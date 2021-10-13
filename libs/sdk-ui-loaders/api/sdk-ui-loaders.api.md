@@ -10,6 +10,8 @@ import { IDashboardBaseProps } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardEngine } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardPluginContract_V1 } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardProps } from '@gooddata/sdk-ui-dashboard';
+import { IErrorProps } from '@gooddata/sdk-ui';
+import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
@@ -44,6 +46,13 @@ export type DashboardLoadResult = {
 };
 
 // @alpha (undocumented)
+export type DashboardLoadStatus = {
+    status: "loading" | "error" | "success";
+    result?: DashboardLoadResult;
+    error?: any;
+};
+
+// @alpha
 export const DashboardStub: React_2.FC<IDashboardStubProps>;
 
 // @alpha (undocumented)
@@ -57,14 +66,17 @@ export interface IDashboardLoader {
     withEmbeddedPlugins(...plugins: IEmbeddedPlugin[]): IDashboardLoader;
 }
 
-// @alpha (undocumented)
-export interface IDashboardStubProps extends IDashboardBaseProps {
-    // (undocumented)
+// @alpha
+export interface IDashboardLoadOptions extends IDashboardBaseProps {
     clientWorkspace?: IClientWorkspaceIdentifiers;
-    // (undocumented)
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
-    // (undocumented)
     mode?: "prod" | "dev";
+}
+
+// @alpha (undocumented)
+export interface IDashboardStubProps extends IDashboardLoadOptions {
+    ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
 }
 
 // @alpha
@@ -72,6 +84,9 @@ export interface IEmbeddedPlugin {
     factory: () => IDashboardPluginContract_V1;
     parameters?: string;
 }
+
+// @alpha
+export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoadStatus;
 
 // (No @packageDocumentation comment for this package)
 
