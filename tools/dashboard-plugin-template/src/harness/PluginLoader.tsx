@@ -7,5 +7,5 @@ import PluginFactory from "../plugin";
 const ExtraPlugins: IEmbeddedPlugin[] = [{ factory: PluginFactory }];
 
 export const PluginLoader = (): JSX.Element => {
-    return <DashboardStub dashboardRef={idRef("aeO5PVgShc0T")} mode="dev" extraPlugins={ExtraPlugins} />;
+    return <DashboardStub dashboard={idRef("aeO5PVgShc0T")} mode="dev" extraPlugins={ExtraPlugins} />;
 };
