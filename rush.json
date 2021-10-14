@@ -304,7 +304,8 @@
             "packageName": "@gooddata/sdk-ui-loaders",
             "projectFolder": "libs/sdk-ui-loaders",
             "reviewCategory": "production",
-            "shouldPublish": false
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-ui-tests-e2e",
