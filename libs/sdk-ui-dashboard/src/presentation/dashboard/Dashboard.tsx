@@ -53,6 +53,7 @@ import {
     ExtendedDashboardWidget,
     renameDashboard,
     selectDashboardLoading,
+    selectDashboardRef,
     selectDashboardTitle,
     selectFilterBarExpanded,
     selectFilterBarHeight,
@@ -146,9 +147,9 @@ const useTopBar = () => {
 
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
-const DashboardHeader = (props: IDashboardProps): JSX.Element => {
-    const { dashboardRef } = props;
+const DashboardHeader = (): JSX.Element => {
     const intl = useIntl();
+    const dashboardRef = useDashboardSelector(selectDashboardRef);
     const isEmptyLayout = useDashboardSelector(selectIsLayoutEmpty);
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
     const { title, onTitleChanged } = useTopBar();
@@ -353,14 +354,14 @@ const DashboardMainContent: React.FC<IDashboardProps> = () => {
     );
 };
 
-const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+const DashboardInner: React.FC<IDashboardProps> = () => {
     const locale = useDashboardSelector(selectLocale);
 
     return (
         <IntlWrapper locale={locale}>
             <div className="gd-dashboards-root">
                 <div className="gd-dash-header-wrapper">
-                    <DashboardHeader {...props} />
+                    <DashboardHeader />
                 </div>
                 <DashboardMainContent />
             </div>
@@ -448,7 +449,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 
     let dashboardRender = (
         <DashboardStoreProvider
-            dashboardRef={props.dashboardRef}
+            dashboard={props.dashboard}
             backend={props.backend}
             workspace={props.workspace}
             eventHandlers={props.eventHandlers}

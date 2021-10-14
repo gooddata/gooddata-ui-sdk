@@ -5,7 +5,7 @@ import { InitializeDashboard } from "../../../commands/dashboard";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard";
 import { insightsActions } from "../../../store/insights";
 import { loadingActions } from "../../../store/loading";
-import { DashboardContext } from "../../../types/commonTypes";
+import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig";
 import { configActions } from "../../../store/config";
@@ -24,7 +24,7 @@ import { userActions } from "../../../store/user";
 import { loadDashboardList } from "./loadDashboardList";
 import { listedDashboardsActions } from "../../../store/listedDashboards";
 import { backendCapabilitiesActions } from "../../../store/backendCapabilities";
-import { ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
@@ -32,12 +32,28 @@ import {
 import { executionResultsActions } from "../../../store/executionResults";
 import { resolveFilterDisplayForms } from "../../../utils/filterResolver";
 import { createDisplayFormMapFromCatalog } from "../../../../_staging/catalog/displayFormMap";
+import { getPrivateContext } from "../../../store/_infra/contexts";
 
 function loadDashboardFromBackend(
     ctx: DashboardContext,
+    privateCtx: PrivateDashboardContext,
     dashboardRef: ObjRef,
 ): Promise<IDashboardWithReferences> {
     const { backend, workspace } = ctx;
+    const { preloadedDashboard } = privateCtx;
+
+    if (preloadedDashboard && areObjRefsEqual(preloadedDashboard.ref, dashboardRef)) {
+        return backend
+            .workspace(workspace)
+            .dashboards()
+            .getDashboardReferencedObjects(preloadedDashboard, ["insight"])
+            .then((references) => {
+                return {
+                    dashboard: preloadedDashboard,
+                    references,
+                };
+            });
+    }
 
     return backend.workspace(workspace).dashboards().getDashboardWithReferences(dashboardRef);
 }
@@ -53,6 +69,7 @@ function* loadExistingDashboard(
     dashboardRef: ObjRef,
 ): SagaIterator<DashboardLoadResult> {
     const { backend } = ctx;
+    const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);
 
     const [dashboardWithReferences, config, permissions, catalog, alerts, user, listedDashboards]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
@@ -63,7 +80,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
     ] = yield all([
-        call(loadDashboardFromBackend, ctx, dashboardRef),
+        call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef),
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
         call(loadCatalog, ctx),

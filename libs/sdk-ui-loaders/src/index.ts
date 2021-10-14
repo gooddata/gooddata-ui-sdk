@@ -7,5 +7,5 @@
 export { IDashboardLoader, DashboardLoadResult, IEmbeddedPlugin } from "./dashboard/loader";
 export { DashboardLoader } from "./dashboard/dashboardLoader";
 export { DashboardStub, IDashboardStubProps } from "./dashboard/DashboardStub";
-export { IDashboardLoadOptions } from "./dashboard/types";
+export { IDashboardLoadOptions, IDashboardBasePropsForLoader } from "./dashboard/types";
 export { useDashboardLoader, DashboardLoadStatus } from "./dashboard/useDashboardLoader";

@@ -17,13 +17,13 @@ import { insightsSliceReducer } from "./insights";
 import { createRootEventEmitter } from "./_infra/rootEventEmitter";
 import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 import { rootCommandHandler } from "./_infra/rootCommandHandler";
-import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes";
+import { DashboardContext, PrivateDashboardContext } from "../types/commonTypes";
 import { configSliceReducer } from "./config";
 import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
 import { permissionsSliceReducer } from "./permissions";
 import { alertsSliceReducer } from "./alerts";
 import { catalogSliceReducer } from "./catalog";
-import { fork, getContext } from "redux-saga/effects";
+import { call, fork } from "redux-saga/effects";
 import { userSliceReducer } from "./user";
 import { metaSliceReducer } from "./meta";
 import { DashboardDispatch, DashboardState } from "./types";
@@ -41,6 +41,7 @@ import { DashboardEventType } from "../events";
 import { DashboardCommandType } from "../commands";
 import { drillSliceReducer } from "./drill";
 import { uiSliceReducer } from "./ui";
+import { getDashboardContext } from "./_infra/contexts";
 
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType | string)[] = [
     "GDC.DASH/EVT.COMMAND.STARTED",
@@ -99,36 +100,11 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
  */
 export type DashboardStore = EnhancedStore<DashboardState>;
 
-export type DashboardStoreConfig = {
-    /**
-     * Specifies context that will be hammered into the saga middleware. All sagas can then access the values
-     * from the context.
-     */
-    sagaContext: DashboardContext;
-
-    /**
-     * Optionally specify redux middleware to register into the store.
-     */
-    additionalMiddleware?: Middleware<any>;
-
+export type DashboardStoreEventing = {
     /**
      * Optionally specify event handlers to register during the initialization.
      */
     initialEventHandlers?: DashboardEventHandler[];
-
-    /**
-     * Optionally specify query service implementations. These will be used to override the default implementations
-     * and add new services.
-     */
-    queryServices?: IDashboardQueryService<any, any>[];
-
-    /**
-     * Optionally specify background workers implementations.
-     * Workers are redux-saga iterators that run on the background, they can listen to dashboard events and fire dashboard commands.
-     * All the provided workers will run in parallel on the background.
-     * Background workers are processed last in the chain of all command and event processing.
-     */
-    backgroundWorkers: ((context: DashboardContext) => SagaIterator<void>)[];
 
     /**
      * Optionally specify callback that will be called each time the state changes.
@@ -147,13 +123,54 @@ export type DashboardStoreConfig = {
         registerEventHandler: (handler: DashboardEventHandler) => void,
         unregisterEventHandler: (handler: DashboardEventHandler) => void,
     ) => void;
+};
+
+export type DashboardStoreConfig = {
+    /**
+     * Specifies context that will be hammered into the saga middleware. All sagas can then access the values
+     * from the context.
+     *
+     * Remember: `DashboardContext` is part of the public API. Do not store internals in here. If need
+     * to have internals in the context, then use the privateContext.
+     *
+     * This context is automatically passed to all command handlers, query processors and background workers.
+     * If you need to obtain the context from some other place, use the `getDashboardContext` generator
+     */
+    dashboardContext: DashboardContext;
 
     /**
-     * Optionally specify dashboard model customization functions. If specified, these will be stored inside
-     * the saga context so that the different command handlers may get a hold of the customization functions
-     * and call out to them as needed.
+     * Optionally specify private context that will be hammered into the saga middleware. Private context
+     * may contain internal global configuration / customization that needs to be available in the different
+     * parts of the model.
+     *
+     * The private context is not passed around by the infrastructure. To obtain it, use the `getPrivateContext`
+     * generator.
      */
-    customizationFns?: DashboardModelCustomizationFns;
+    privateContext?: PrivateDashboardContext;
+
+    /**
+     * Optionally specify redux middleware to register into the store.
+     */
+    additionalMiddleware?: Middleware<any>;
+
+    /**
+     * Eventing configuration to apply during store initialization.
+     */
+    eventing?: DashboardStoreEventing;
+
+    /**
+     * Optionally specify query service implementations. These will be used to override the default implementations
+     * and add new services.
+     */
+    queryServices?: IDashboardQueryService<any, any>[];
+
+    /**
+     * Optionally specify background workers implementations.
+     * Workers are redux-saga iterators that run on the background, they can listen to dashboard events and fire dashboard commands.
+     * All the provided workers will run in parallel on the background.
+     * Background workers are processed last in the chain of all command and event processing.
+     */
+    backgroundWorkers: ((context: DashboardContext) => SagaIterator<void>)[];
 };
 
 function* rootSaga(
@@ -162,7 +179,8 @@ function* rootSaga(
     queryProcessor: Saga,
     backgroundWorkers: ((context: DashboardContext) => SagaIterator<void>)[],
 ): SagaIterator<void> {
-    const dashboardContext: DashboardContext = yield getContext("dashboardContext");
+    const dashboardContext: DashboardContext = yield call(getDashboardContext);
+
     try {
         yield fork(eventEmitter);
         yield fork(commandHandler);
@@ -238,8 +256,8 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
     );
     const sagaMiddleware = createSagaMiddleware({
         context: {
-            dashboardContext: config.sagaContext,
-            customizationFns: config.customizationFns,
+            dashboardContext: config.dashboardContext,
+            privateContext: config.privateContext ?? {},
         },
     });
 
@@ -301,12 +319,14 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         middleware,
     });
 
-    if (config.onStateChange) {
-        store.subscribe(() => config.onStateChange?.(store.getState(), store.dispatch));
+    const { eventing = {} } = config;
+
+    if (eventing.onStateChange) {
+        store.subscribe(() => eventing.onStateChange?.(store.getState(), store.dispatch));
     }
 
-    const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers, store.dispatch);
-    config.onEventingInitialized?.(rootEventEmitter.registerHandler, rootEventEmitter.unregisterHandler);
+    const rootEventEmitter = createRootEventEmitter(eventing.initialEventHandlers, store.dispatch);
+    eventing.onEventingInitialized?.(rootEventEmitter.registerHandler, rootEventEmitter.unregisterHandler);
 
     const rootSagaTask = sagaMiddleware.run(
         rootSaga,

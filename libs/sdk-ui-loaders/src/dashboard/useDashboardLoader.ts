@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { useMemo, useState } from "react";
-import { IDashboardLoadOptions } from "./types";
+import { IDashboardBasePropsForLoader, IDashboardLoadOptions } from "./types";
 import {
     IClientWorkspaceIdentifiers,
     useBackendStrict,
@@ -63,11 +63,11 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
     const backend = useBackendStrict(options.backend);
     const workspace = useWorkspaceStrict(options.workspace);
     const [loadStatus, setLoadStatus] = useState(InitialStatus);
-    const { dashboardRef, config, permissions, clientWorkspace, mode, extraPlugins } = options;
-    const baseProps: IDashboardBaseProps = {
+    const { dashboard, config, permissions, clientWorkspace, mode, extraPlugins } = options;
+    const baseProps: IDashboardBasePropsForLoader = {
         backend,
         workspace,
-        dashboardRef,
+        dashboard,
         config,
         permissions,
     };
@@ -79,7 +79,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         initializeLoader(loader, baseProps, extraPluginsArr, clientWorkspace);
 
         return loader;
-    }, [backend, workspace, dashboardRef, clientWorkspace, extraPlugins]);
+    }, [backend, workspace, dashboard, clientWorkspace, extraPlugins]);
 
     useCancelablePromise(
         {

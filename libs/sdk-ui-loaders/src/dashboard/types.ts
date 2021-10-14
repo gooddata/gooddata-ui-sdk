@@ -2,12 +2,28 @@
 import { IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
 import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 import { IEmbeddedPlugin } from "./loader";
+import { ObjRef } from "@gooddata/sdk-model";
+
+/**
+ * This a specialization of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} interface in which the `dashboard` can only be provided
+ * by reference.
+ *
+ * @alpha
+ */
+export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
+    /**
+     * Optionally specify reference to an existing dashboard that should be loaded.
+     *
+     * If not provided, a new empty dashboard will be rendered.
+     */
+    dashboard?: ObjRef;
+}
 
 /**
  * Dashboard loading options
  * @alpha
  */
-export interface IDashboardLoadOptions extends IDashboardBaseProps {
+export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     /**
      * Loading mode to use.
      *

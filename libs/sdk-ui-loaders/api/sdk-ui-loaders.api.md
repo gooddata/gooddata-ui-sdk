@@ -55,6 +55,11 @@ export type DashboardLoadStatus = {
 // @alpha
 export const DashboardStub: React_2.FC<IDashboardStubProps>;
 
+// @alpha
+export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
+    dashboard?: ObjRef;
+}
+
 // @alpha (undocumented)
 export interface IDashboardLoader {
     forDashboard(dashboardRef: ObjRef): IDashboardLoader;
@@ -67,7 +72,7 @@ export interface IDashboardLoader {
 }
 
 // @alpha
-export interface IDashboardLoadOptions extends IDashboardBaseProps {
+export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     clientWorkspace?: IClientWorkspaceIdentifiers;
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
     mode?: "prod" | "dev";
