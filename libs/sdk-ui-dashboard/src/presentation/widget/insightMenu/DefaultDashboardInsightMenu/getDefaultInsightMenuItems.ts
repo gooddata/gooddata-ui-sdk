@@ -27,6 +27,7 @@ export function getDefaultInsightMenuItems(
             disabled: exportXLSXDisabled,
             tooltip: tooltipMessage,
             icon: "gd-icon-download",
+            className: "s-options-menu-export-xlsx",
         },
         {
             type: "button",
@@ -36,6 +37,7 @@ export function getDefaultInsightMenuItems(
             disabled: exportCSVDisabled,
             tooltip: tooltipMessage,
             icon: "gd-icon-download",
+            className: "s-options-menu-export-csv",
         },
     ];
 }

@@ -6,22 +6,8 @@ import { IInsightMenuItemButton } from "../../types";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr" }];
 
-function getCssClassByType(itemId: string) {
-    const itemIdFormatted = itemId.toLowerCase();
-
-    const isExportCsv = itemIdFormatted.indexOf("export") > -1 && itemIdFormatted.indexOf("csv") > -1;
-    const isExportXlsx = itemIdFormatted.indexOf("export") > -1 && itemIdFormatted.indexOf("xlsx") > -1;
-    const isExplore = itemIdFormatted.indexOf("explore") > -1;
-
-    return cx({
-        "s-options-menu-explore-insight": isExplore,
-        "s-options-menu-export-csv": isExportCsv,
-        "s-options-menu-export-xlsx": isExportXlsx,
-    });
-}
-
 export const DashboardInsightMenuItemButton: React.FC<Omit<IInsightMenuItemButton, "type">> = (props) => {
-    const { itemId, itemName, disabled, icon, onClick, tooltip } = props;
+    const { itemId, itemName, disabled, icon, onClick, tooltip, className } = props;
     const contentComponent = (
         // for JSX icons we need an extra gd-icon-wrapper class to align the icon and the text vertically
         <span className={cx({ "gd-icon-wrapper": icon && typeof icon !== "string" })}>
@@ -32,7 +18,7 @@ export const DashboardInsightMenuItemButton: React.FC<Omit<IInsightMenuItemButto
 
     if (disabled) {
         const button = (
-            <Item className={getCssClassByType(itemId)} disabled={disabled}>
+            <Item className={className} disabled={disabled}>
                 {contentComponent}
             </Item>
         );
@@ -54,7 +40,7 @@ export const DashboardInsightMenuItemButton: React.FC<Omit<IInsightMenuItemButto
         }
     } else {
         return (
-            <Item className={getCssClassByType(itemId)} onClick={onClick} disabled={disabled}>
+            <Item className={className} onClick={onClick} disabled={disabled}>
                 {contentComponent}
             </Item>
         );
