@@ -449,9 +449,10 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 
     let dashboardRender = (
         <DashboardStoreProvider
-            dashboard={props.dashboard}
             backend={props.backend}
             workspace={props.workspace}
+            dashboard={props.dashboard}
+            filterContextRef={props.filterContextRef}
             eventHandlers={props.eventHandlers}
             config={props.config}
             permissions={props.permissions}

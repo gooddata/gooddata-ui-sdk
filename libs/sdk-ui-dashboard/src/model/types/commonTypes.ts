@@ -180,6 +180,11 @@ export type DashboardContext = {
     dashboardRef?: ObjRef;
 
     /**
+     * Reference to filter context that defines filters to use on the dashboard.
+     */
+    filterContextRef?: ObjRef;
+
+    /**
      * Client identifier - it's required, if the backend implementation supports it and workspace is provisioned via LCM.
      */
     clientId?: string;

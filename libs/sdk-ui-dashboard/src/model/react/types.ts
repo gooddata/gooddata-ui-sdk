@@ -14,6 +14,7 @@ export interface IDashboardStoreProviderProps {
     backend?: IAnalyticalBackend;
     workspace?: string;
     dashboard?: ObjRef | IDashboard;
+    filterContextRef?: ObjRef;
     eventHandlers?: DashboardEventHandler[];
     config?: DashboardConfig;
     permissions?: IWorkspacePermissions;

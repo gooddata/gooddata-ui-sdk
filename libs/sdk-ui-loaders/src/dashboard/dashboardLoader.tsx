@@ -98,6 +98,13 @@ export class DashboardLoader implements IDashboardLoader {
 
     public forDashboard = (dashboardRef: ObjRef): IDashboardLoader => {
         this.baseProps.dashboard = dashboardRef;
+
+        return this;
+    };
+
+    public withFilterContext = (filterContextRef: ObjRef): IDashboardLoader => {
+        this.baseProps.filterContextRef = filterContextRef;
+
         return this;
     };
 
@@ -130,7 +137,7 @@ export class DashboardLoader implements IDashboardLoader {
     };
 
     public load = async (): Promise<DashboardLoadResult> => {
-        const { backend, dashboard } = this.baseProps;
+        const { backend, dashboard, filterContextRef } = this.baseProps;
 
         invariant(backend, "DashboardLoader is not configured with an instance of Analytical Backend.");
         invariant(dashboard, "DashboardLoader is not configured with dashboard to load.");
@@ -141,12 +148,13 @@ export class DashboardLoader implements IDashboardLoader {
         const dashboardWithPlugins: IDashboardWithReferences = await backend
             .workspace(workspace)
             .dashboards()
-            .getDashboardWithReferences(dashboard, undefined, undefined, ["dashboardPlugin"]);
+            .getDashboardWithReferences(dashboard, filterContextRef, undefined, ["dashboardPlugin"]);
         const { engineLoader, pluginLoader } = this.config;
         const ctx: DashboardContext = {
             backend,
             workspace,
             dashboardRef: dashboard,
+            filterContextRef,
             dataProductId: clientWorkspace?.dataProduct,
             clientId: clientWorkspace?.client,
         };

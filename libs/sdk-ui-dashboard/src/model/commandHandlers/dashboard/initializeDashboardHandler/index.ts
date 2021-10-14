@@ -39,7 +39,7 @@ function loadDashboardFromBackend(
     privateCtx: PrivateDashboardContext,
     dashboardRef: ObjRef,
 ): Promise<IDashboardWithReferences> {
-    const { backend, workspace } = ctx;
+    const { backend, workspace, filterContextRef } = ctx;
     const { preloadedDashboard } = privateCtx;
 
     if (preloadedDashboard && areObjRefsEqual(preloadedDashboard.ref, dashboardRef)) {
@@ -55,7 +55,10 @@ function loadDashboardFromBackend(
             });
     }
 
-    return backend.workspace(workspace).dashboards().getDashboardWithReferences(dashboardRef);
+    return backend
+        .workspace(workspace)
+        .dashboards()
+        .getDashboardWithReferences(dashboardRef, filterContextRef, undefined, ["insight"]);
 }
 
 type DashboardLoadResult = {

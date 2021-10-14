@@ -35,6 +35,8 @@ export class DashboardLoader implements IDashboardLoader {
     withBaseProps: (props: IDashboardBaseProps) => IDashboardLoader;
     // (undocumented)
     withEmbeddedPlugins: (...plugins: IEmbeddedPlugin[]) => IDashboardLoader;
+    // (undocumented)
+    withFilterContext: (filterContextRef: ObjRef) => IDashboardLoader;
 }
 
 // @alpha
@@ -69,6 +71,7 @@ export interface IDashboardLoader {
     onBackend(backend: IAnalyticalBackend): IDashboardLoader;
     withBaseProps(props: IDashboardBaseProps): IDashboardLoader;
     withEmbeddedPlugins(...plugins: IEmbeddedPlugin[]): IDashboardLoader;
+    withFilterContext(filterContextRef: ObjRef): IDashboardLoader;
 }
 
 // @alpha

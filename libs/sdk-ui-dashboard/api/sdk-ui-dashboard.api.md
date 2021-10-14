@@ -678,6 +678,7 @@ export type DashboardContext = {
     backend: IAnalyticalBackend;
     workspace: string;
     dashboardRef?: ObjRef;
+    filterContextRef?: ObjRef;
     clientId?: string;
     dataProductId?: string;
 };
@@ -2052,6 +2053,7 @@ export interface IDashboardBaseProps {
     backend?: IAnalyticalBackend;
     config?: DashboardConfig;
     dashboard?: ObjRef | IDashboard;
+    filterContextRef?: ObjRef;
     permissions?: IWorkspacePermissions;
     workspace?: string;
 }
@@ -2290,6 +2292,8 @@ export interface IDashboardStoreProviderProps {
     dashboard?: ObjRef | IDashboard;
     // (undocumented)
     eventHandlers?: DashboardEventHandler[];
+    // (undocumented)
+    filterContextRef?: ObjRef;
     // (undocumented)
     onEventingInitialized?: (registerEventHandler: (handler: DashboardEventHandler) => void, unregisterEventHandler: (handler: DashboardEventHandler) => void) => void;
     // (undocumented)
