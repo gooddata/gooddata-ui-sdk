@@ -8,6 +8,7 @@ import {
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
 } from "../dateFilterConfigs/types";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Date filter configuration mode
@@ -168,6 +169,8 @@ export interface IDashboard<TWidget = IDashboardWidget>
         IDashboardObjectIdentity,
         Readonly<Required<IAuditableDates>>,
         Readonly<IAuditableUsers> {
+    readonly type: "IDashboard";
+
     /**
      * The layout of the dashboard determines the dashboard widgets {@link IWidget} and where they are rendered
      */
@@ -198,6 +201,8 @@ export interface IDashboard<TWidget = IDashboardWidget>
 export interface IDashboardDefinition<TWidget = IDashboardWidget>
     extends IDashboardBase,
         Partial<IDashboardObjectIdentity> {
+    readonly type: "IDashboard";
+
     /**
      * The layout of the dashboard determines the dashboard widgets {@link IWidget} and where they are rendered
      */
@@ -217,6 +222,30 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Plugins to use on this dashboard.
      */
     readonly plugins?: IDashboardPluginLink[];
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboard}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isDashboard(obj: unknown): obj is IDashboard {
+    const asDash: IDashboard | undefined = obj as IDashboard;
+
+    return !isEmpty(asDash) && asDash.type === "IDashboard" && asDash.ref !== undefined;
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardDefinition}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition {
+    const asDash: IDashboard | undefined = obj as IDashboard;
+
+    return !isEmpty(asDash) && asDash.type === "IDashboard";
 }
 
 /**

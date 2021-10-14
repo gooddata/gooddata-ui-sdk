@@ -97,6 +97,18 @@ export interface IDashboardLoader {
     forDashboard(dashboardRef: ObjRef): IDashboardLoader;
 
     /**
+     * Optionally override filter context to use for the loaded dashboard.
+     *
+     * Note: Each dashboard has its own, default filter context - that filter context will be used automatically
+     * unless you override it using this call. You typically don't need to do this: filter context overrides
+     * are needed most commonly during export and scheduled exports - where application has to create point-in-time
+     * snapshot of the filters so that they can be reused during exports instead of the default filter context.
+     *
+     * @param filterContextRef - reference to filter context to use instead of the default filter context
+     */
+    withFilterContext(filterContextRef: ObjRef): IDashboardLoader;
+
+    /**
      * Optionally specify an instance of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} to use for the dashboard component.
      *
      * Note: the base props may also contain backend and workspace parameters. The loader can work with them.

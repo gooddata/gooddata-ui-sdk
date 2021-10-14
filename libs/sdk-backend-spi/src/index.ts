@@ -216,6 +216,8 @@ export {
     IDashboardPlugin,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
+    isDashboard,
+    isDashboardDefinition,
 } from "./workspace/dashboards/dashboard";
 export {
     IFilterContext,

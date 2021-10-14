@@ -23,10 +23,11 @@ import {
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout";
 import { SagaIterator } from "redux-saga";
 import { resolveFilterDisplayForms } from "../../../utils/filterResolver";
-import { call, getContext } from "redux-saga/effects";
-import { DashboardContext, DashboardModelCustomizationFns } from "../../../types/commonTypes";
+import { call } from "redux-saga/effects";
+import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 import { ExtendedDashboardWidget } from "../../../types/layoutTypes";
+import { getPrivateContext } from "../../../store/_infra/contexts";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",
@@ -89,9 +90,9 @@ export function* actionsToInitializeExistingDashboard(
         layout: (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
     };
 
-    const customizationFns: DashboardModelCustomizationFns = yield getContext("customizationFns");
+    const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);
     const customizedDashboard =
-        customizationFns?.existingDashboardTransformFn?.(sanitizedDashboard) ?? sanitizedDashboard;
+        privateCtx?.existingDashboardTransformFn?.(sanitizedDashboard) ?? sanitizedDashboard;
 
     const filterContextDefinition = dashboardFilterContextDefinition(customizedDashboard, dateFilterConfig);
     const filterContextIdentity = dashboardFilterContextIdentity(customizedDashboard);

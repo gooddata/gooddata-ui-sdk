@@ -39,6 +39,7 @@ export function dashboardFilterContextDefinition<TWidget>(
     }
 
     if (isTempFilterContext(filterContext)) {
+        // Temp filter context is not sanitized.. not sure why, but this is how KD was doing it.
         return {
             title: "filterContext",
             description: "",

@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { actionChannel, call, getContext, take } from "redux-saga/effects";
+import { actionChannel, call, take } from "redux-saga/effects";
 import noop from "lodash/noop";
 import { DashboardContext } from "../../types/commonTypes";
 import { DashboardCommands, IDashboardCommand } from "../../commands";
@@ -13,6 +13,7 @@ import {
 } from "../../events/general";
 import { isDashboardEvent } from "../../events/base";
 import { DefaultCommandHandlers } from "../../commandHandlers";
+import { getDashboardContext } from "./contexts";
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -168,7 +169,7 @@ export function* rootCommandHandler(): SagaIterator<void> {
             commandChannel,
         );
         const envelope = ensureCommandWrappedInEnvelope(command);
-        const ctx: DashboardContext = yield getContext("dashboardContext");
+        const ctx: DashboardContext = yield call(getDashboardContext);
 
         yield call(processCommand, ctx, envelope);
     }

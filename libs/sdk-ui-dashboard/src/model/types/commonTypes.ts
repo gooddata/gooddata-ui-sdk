@@ -160,8 +160,6 @@ export function isResolvedConfig(config?: DashboardConfig): config is ResolvedDa
 }
 
 /**
- * Values in this context will be available to all sagas.
- *
  * @alpha
  */
 export type DashboardContext = {
@@ -176,10 +174,15 @@ export type DashboardContext = {
     workspace: string;
 
     /**
-     * Dashboard that should be loaded into the store. If the dashboardRef is not specified, then this indicates
+     * Reference to dashboard that should be loaded into the store. If the dashboardRef is not specified, then this indicates
      * the dashboard should be initialized with empty state (new dashboard).
      */
     dashboardRef?: ObjRef;
+
+    /**
+     * Reference to filter context that defines filters to use on the dashboard.
+     */
+    filterContextRef?: ObjRef;
 
     /**
      * Client identifier - it's required, if the backend implementation supports it and workspace is provisioned via LCM.
@@ -190,6 +193,17 @@ export type DashboardContext = {
      * Data product identifier - it's required, if the backend implementation supports it and workspace is provisioned via LCM.
      */
     dataProductId?: string;
+};
+
+/**
+ * @internal
+ */
+export type PrivateDashboardContext = DashboardModelCustomizationFns & {
+    /**
+     * If specified, the dashboard initialization should use this dashboard definition instead of
+     * loading dashboard from backend.
+     */
+    preloadedDashboard?: IDashboard;
 };
 
 /**

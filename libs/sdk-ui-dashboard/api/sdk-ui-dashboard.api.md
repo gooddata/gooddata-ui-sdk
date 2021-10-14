@@ -673,11 +673,12 @@ export type DashboardConfig = {
     enableFilterValuesResolutionInDrillEvents?: boolean;
 };
 
-// @alpha
+// @alpha (undocumented)
 export type DashboardContext = {
     backend: IAnalyticalBackend;
     workspace: string;
     dashboardRef?: ObjRef;
+    filterContextRef?: ObjRef;
     clientId?: string;
     dataProductId?: string;
 };
@@ -2051,7 +2052,8 @@ export interface IDashboardAttributeFilterProps {
 export interface IDashboardBaseProps {
     backend?: IAnalyticalBackend;
     config?: DashboardConfig;
-    dashboardRef?: ObjRef;
+    dashboard?: ObjRef | IDashboard;
+    filterContextRef?: ObjRef;
     permissions?: IWorkspacePermissions;
     workspace?: string;
 }
@@ -2287,9 +2289,11 @@ export interface IDashboardStoreProviderProps {
     // (undocumented)
     customizationFns?: DashboardModelCustomizationFns;
     // (undocumented)
-    dashboardRef?: ObjRef;
+    dashboard?: ObjRef | IDashboard;
     // (undocumented)
     eventHandlers?: DashboardEventHandler[];
+    // (undocumented)
+    filterContextRef?: ObjRef;
     // (undocumented)
     onEventingInitialized?: (registerEventHandler: (handler: DashboardEventHandler) => void, unregisterEventHandler: (handler: DashboardEventHandler) => void) => void;
     // (undocumented)

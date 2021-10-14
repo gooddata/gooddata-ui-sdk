@@ -82,7 +82,7 @@
         "@gooddata/sdk-ui-filters": "^8.7.0-alpha.22",
         "@gooddata/sdk-ui-geo": "^8.7.0-alpha.22",
         "@gooddata/sdk-ui-kit": "^8.7.0-alpha.22",
-        "@gooddata/sdk-ui-loaders": "1.0.0",
+        "@gooddata/sdk-ui-loaders": "^8.7.0-alpha.22",
         "@gooddata/sdk-ui-pivot": "^8.7.0-alpha.22",
         "@gooddata/sdk-ui-theme-provider": "^8.7.0-alpha.22",
         "babel-runtime": "^6.26.0",

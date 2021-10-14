@@ -2,7 +2,7 @@
 
 import { IDashboardQueryService } from "./queryService";
 import { Saga, SagaIterator } from "redux-saga";
-import { actionChannel, call, getContext, spawn, take } from "redux-saga/effects";
+import { actionChannel, call, spawn, take } from "redux-saga/effects";
 import { IDashboardQuery, IDashboardQueryResult } from "../../queries";
 import { DashboardContext } from "../../types/commonTypes";
 import keyBy from "lodash/keyBy";
@@ -18,6 +18,7 @@ import {
     queryRejected,
     queryStarted,
 } from "../../events/general";
+import { getDashboardContext } from "./contexts";
 
 /**
  * Query processing component has multiple pieces that need to be integrated into the redux store.
@@ -209,7 +210,7 @@ export function createQueryProcessingModule(
             while (true) {
                 const query = yield take(queryChannel);
                 const envelope = ensureQueryWrappedInEnvelope(query);
-                const dashboardContext: DashboardContext = yield getContext("dashboardContext");
+                const dashboardContext: DashboardContext = yield call(getDashboardContext);
                 const service = servicesByType[envelope.query.type];
 
                 if (!service) {

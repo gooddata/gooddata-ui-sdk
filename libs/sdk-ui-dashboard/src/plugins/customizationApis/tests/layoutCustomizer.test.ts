@@ -7,6 +7,7 @@ import { ExtendedDashboardWidget } from "../../../model";
 import { idRef } from "@gooddata/sdk-model";
 
 const EmptyDashboard: IDashboard<ExtendedDashboardWidget> = {
+    type: "IDashboard",
     uri: "/1",
     identifier: "1",
     ref: idRef("1"),

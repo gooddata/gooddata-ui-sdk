@@ -6,8 +6,10 @@ import {
     IDashboardDefinition,
     IDashboardPlugin,
     IDashboardPluginDefinition,
+    IDashboardReferences,
     IDashboardWithReferences,
     IFilterContextDefinition,
+    IGetDashboardOptions,
     IListedDashboard,
     IScheduledMail,
     IScheduledMailDefinition,
@@ -23,6 +25,7 @@ import {
     IWorkspaceDashboardsService,
     IWorkspaceInsightsService,
     NotSupported,
+    SupportedDashboardReferenceTypes,
     SupportedWidgetReferenceTypes,
     UnexpectedResponseError,
     walkLayout,
@@ -34,6 +37,7 @@ import values from "lodash/values";
 import { DashboardRecording, RecordingIndex } from "./types";
 import { v4 as uuidv4 } from "uuid";
 import isEmpty from "lodash/isEmpty";
+import includes from "lodash/includes";
 
 function isDashboardRecording(obj: unknown): obj is DashboardRecording {
     return !isEmpty(obj) && (obj as any).obj !== undefined;
@@ -133,6 +137,8 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     public getDashboardWithReferences = async (
         ref: ObjRef,
         filterContextRef?: ObjRef,
+        _options?: IGetDashboardOptions,
+        types: SupportedDashboardReferenceTypes[] = ["insight"],
     ): Promise<IDashboardWithReferences> => {
         if (filterContextRef) {
             throw new NotSupported("recorded backend does not support filter context override");
@@ -145,17 +151,25 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         }
 
         if (isDashboardRecording(recording)) {
-            return Promise.resolve(recording.obj);
+            const { dashboard, references } = recording.obj;
+
+            return Promise.resolve({
+                dashboard: dashboard,
+                references: removeUnneededReferences(references, types),
+            });
         }
 
         const insightsPromise: Array<Promise<IInsight>> = [];
-        walkLayout(recording.layout!, {
-            widgetCallback: (widget) => {
-                if (isInsightWidgetDefinition(widget) || isInsightWidget(widget)) {
-                    insightsPromise.push(this.insights.getInsight(widget.insight));
-                }
-            },
-        });
+
+        if (includes(types, "insight")) {
+            walkLayout(recording.layout!, {
+                widgetCallback: (widget) => {
+                    if (isInsightWidgetDefinition(widget) || isInsightWidget(widget)) {
+                        insightsPromise.push(this.insights.getInsight(widget.insight));
+                    }
+                },
+            });
+        }
 
         const insights = await Promise.all(insightsPromise);
 
@@ -168,8 +182,18 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         });
     };
 
+    public getDashboardReferencedObjects = (
+        dashboard: IDashboard,
+        types: SupportedDashboardReferenceTypes[] = ["insight", "dashboardPlugin"],
+    ): Promise<IDashboardReferences> => {
+        const fullDashboard = this.getDashboardWithReferences(dashboard.ref, undefined, undefined, types);
+
+        return fullDashboard.then((dashboard) => dashboard.references);
+    };
+
     public createDashboard = (dashboard: IDashboardDefinition): Promise<IDashboard> => {
         const emptyDashboard: IDashboardDefinition = {
+            type: "IDashboard",
             description: "",
             filterContext: undefined,
             title: "",
@@ -313,4 +337,14 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     public getDashboardPlugins(): Promise<IDashboardPlugin[]> {
         throw new NotSupported("recorded backend does not support this call");
     }
+}
+
+function removeUnneededReferences(
+    references: IDashboardReferences,
+    types: SupportedDashboardReferenceTypes[],
+): IDashboardReferences {
+    return {
+        insights: includes(types, "insight") ? references.insights : [],
+        plugins: includes(types, "dashboardPlugin") ? references.plugins : [],
+    };
 }

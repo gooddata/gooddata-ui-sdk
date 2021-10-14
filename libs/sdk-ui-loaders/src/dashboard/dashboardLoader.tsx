@@ -2,36 +2,36 @@
 
 import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader";
 import {
-    IDashboardBaseProps,
-    IDashboardEngine,
-    IDashboardPluginContract_V1,
-    IDashboardExtensionProps,
-    IDashboardProps,
     DashboardContext,
+    IDashboardEngine,
+    IDashboardExtensionProps,
+    IDashboardPluginContract_V1,
+    IDashboardProps,
 } from "@gooddata/sdk-ui-dashboard";
-import { IAnalyticalBackend, IDashboard } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     IClientWorkspaceIdentifiers,
-    resolveLCMWorkspaceIdentifiers,
     ResolvedClientWorkspaceProvider,
+    resolveLCMWorkspaceIdentifiers,
 } from "@gooddata/sdk-ui";
 import { ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 import React from "react";
 import { noopDashboardPluginLoader, staticDashboardEngineLoader } from "./staticComponentLoaders";
+import { IDashboardBasePropsForLoader } from "./types";
 
 /**
  * @alpha
  */
-export type DashboardEngineLoader = (dashboard: IDashboard) => Promise<IDashboardEngine>;
+export type DashboardEngineLoader = (dashboard: IDashboardWithReferences) => Promise<IDashboardEngine>;
 
 /**
  * @alpha
  */
 export type DashboardPluginsLoader = (
     ctx: DashboardContext,
-    dashboard: IDashboard,
+    dashboard: IDashboardWithReferences,
 ) => Promise<IDashboardPluginContract_V1[]>;
 
 /**
@@ -55,7 +55,7 @@ export type DashboardLoaderConfig = {
  */
 export class DashboardLoader implements IDashboardLoader {
     private readonly config: DashboardLoaderConfig;
-    private baseProps: IDashboardBaseProps = {};
+    private baseProps: Partial<IDashboardBasePropsForLoader> = {};
     private embeddedPlugins: IEmbeddedPlugin[] = [];
     private clientWorkspace: IClientWorkspaceIdentifiers | undefined = undefined;
 
@@ -96,7 +96,14 @@ export class DashboardLoader implements IDashboardLoader {
     };
 
     public forDashboard = (dashboardRef: ObjRef): IDashboardLoader => {
-        this.baseProps.dashboardRef = dashboardRef;
+        this.baseProps.dashboard = dashboardRef;
+
+        return this;
+    };
+
+    public withFilterContext = (filterContextRef: ObjRef): IDashboardLoader => {
+        this.baseProps.filterContextRef = filterContextRef;
+
         return this;
     };
 
@@ -106,7 +113,7 @@ export class DashboardLoader implements IDashboardLoader {
         return this;
     };
 
-    public withBaseProps = (props: IDashboardBaseProps): IDashboardLoader => {
+    public withBaseProps = (props: IDashboardBasePropsForLoader): IDashboardLoader => {
         this.baseProps = { ...props };
 
         return this;
@@ -129,25 +136,35 @@ export class DashboardLoader implements IDashboardLoader {
     };
 
     public load = async (): Promise<DashboardLoadResult> => {
-        const { backend, dashboardRef } = this.baseProps;
+        const { backend, dashboard, filterContextRef } = this.baseProps;
 
         invariant(backend, "DashboardLoader is not configured with an instance of Analytical Backend.");
-        invariant(dashboardRef, "DashboardLoader is not configured with dashboard to load.");
+        invariant(
+            dashboard,
+            "DashboardLoader is not configured with a reference to dashboard that it should load.",
+        );
 
         const [workspace, clientWorkspace] = await this.resolveWorkspace(backend);
         invariant(workspace, "DashboardLoader is not configured with workspace to use and loader.");
 
-        const dashboard = await backend.workspace(workspace).dashboards().getDashboard(dashboardRef);
+        const dashboardWithPlugins: IDashboardWithReferences = await backend
+            .workspace(workspace)
+            .dashboards()
+            .getDashboardWithReferences(dashboard, filterContextRef, undefined, ["dashboardPlugin"]);
         const { engineLoader, pluginLoader } = this.config;
         const ctx: DashboardContext = {
             backend,
             workspace,
-            dashboardRef,
+            dashboardRef: dashboard,
+            filterContextRef,
             dataProductId: clientWorkspace?.dataProduct,
             clientId: clientWorkspace?.client,
         };
 
-        const [engine, plugins] = await Promise.all([engineLoader(dashboard), pluginLoader(ctx, dashboard)]);
+        const [engine, plugins] = await Promise.all([
+            engineLoader(dashboardWithPlugins),
+            pluginLoader(ctx, dashboardWithPlugins),
+        ]);
         const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
 
         const allPlugins = [...plugins, ...additionalPlugins];
@@ -156,6 +173,7 @@ export class DashboardLoader implements IDashboardLoader {
             ...this.baseProps,
             ...extensionProps,
             workspace,
+            dashboard: dashboardWithPlugins.dashboard,
         };
 
         /*

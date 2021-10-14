@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 import { DashboardDispatch, DashboardState } from "../store";
@@ -13,7 +13,8 @@ import { DashboardConfig, DashboardModelCustomizationFns } from "../types/common
 export interface IDashboardStoreProviderProps {
     backend?: IAnalyticalBackend;
     workspace?: string;
-    dashboardRef?: ObjRef;
+    dashboard?: ObjRef | IDashboard;
+    filterContextRef?: ObjRef;
     eventHandlers?: DashboardEventHandler[];
     config?: DashboardConfig;
     permissions?: IWorkspacePermissions;

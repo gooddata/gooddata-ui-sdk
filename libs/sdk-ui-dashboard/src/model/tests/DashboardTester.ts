@@ -58,17 +58,19 @@ export class DashboardTester {
         };
 
         this.reduxedStore = createDashboardStore({
-            sagaContext: ctx,
+            dashboardContext: ctx,
             additionalMiddleware: testerMiddleware,
-            initialEventHandlers: [
-                {
-                    eval: () => true,
-                    handler: this.eventHandler,
-                },
-            ],
+            eventing: {
+                initialEventHandlers: [
+                    {
+                        eval: () => true,
+                        handler: this.eventHandler,
+                    },
+                ],
+            },
             queryServices: config?.queryServices,
             backgroundWorkers: [newRenderingWorker(config?.renderingWorkerConfig)],
-            customizationFns: config?.customizationFns,
+            privateContext: config?.customizationFns,
         });
     }
 

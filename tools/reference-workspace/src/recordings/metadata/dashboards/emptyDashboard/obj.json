@@ -1,5 +1,6 @@
 {
     "dashboard": {
+        "type": "IDashboard",
         "created": "2021-06-12 11:06:22",
         "description": "",
         "identifier": "emptyDashboard",
@@ -11,6 +12,7 @@
         "uri": "/gdc/md/referenceworkspace/obj/2021"
     },
     "references": {
-        "insights": []
+        "insights": [],
+        "plugins": []
     }
 }

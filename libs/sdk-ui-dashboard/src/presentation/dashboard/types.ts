@@ -2,6 +2,7 @@
 import { ComponentType } from "react";
 import {
     IAnalyticalBackend,
+    IDashboard,
     IDashboardAttributeFilter,
     IInsightWidget,
     IKpiWidget,
@@ -432,10 +433,22 @@ export interface IDashboardBaseProps {
     workspace?: string;
 
     /**
-     * Reference of the persisted dashboard to render. If you do not specify any reference, then the
-     * component will render a default, empty dashboard.
+     * Specify dashboard to render; you can specify the dashboard either by reference (ObjRef) or
+     * by value (of type IDashboard).
+     *
+     * If you do not specify dashboard to render, a new default empty dashboard will be rendered.
      */
-    dashboardRef?: ObjRef;
+    dashboard?: ObjRef | IDashboard;
+
+    /**
+     * Optionally specify reference to a filter context that should be used instead of the default,
+     * built-in filter context.
+     *
+     * Note: this property only makes sense if you also specify `dashboard` by reference. If you specify
+     * dashboard by value, then the component assumes that the value also contains the desired filter context
+     * and will use it as is.
+     */
+    filterContextRef?: ObjRef;
 
     /**
      * Configuration that can be used to modify dashboard features, capabilities and behavior.

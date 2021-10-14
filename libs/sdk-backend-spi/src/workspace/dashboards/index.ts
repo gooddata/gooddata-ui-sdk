@@ -5,6 +5,7 @@ import {
     IDashboardDefinition,
     IDashboardPlugin,
     IDashboardPluginDefinition,
+    IDashboardReferences,
     IDashboardWithReferences,
     IListedDashboard,
 } from "./dashboard";
@@ -67,7 +68,7 @@ export interface IWorkspaceDashboardsService {
      * @param filterContextRef - Override dashboard filter context with the custom filter context
      * (This allows to modify filter context when exporting the dashboard)
      * @param options - optionally specify additional options
-     * @param types - types of dashboard references to load; if no types are specified, the service
+     * @param types - types of dashboard references to load; if the types are undefined, the service
      *  must default to loading insights related to the dashboard
      * @returns promise of the dashboard and references
      */
@@ -77,6 +78,18 @@ export interface IWorkspaceDashboardsService {
         options?: IGetDashboardOptions,
         types?: SupportedDashboardReferenceTypes[],
     ): Promise<IDashboardWithReferences>;
+
+    /**
+     * Get objects referenced by a given dashboard.
+     *
+     * @param dashboard - dashboard to get referenced objects for
+     * @param types - optional array of object types to include, when not specified, all supported references will
+     *  be retrieved
+     */
+    getDashboardReferencedObjects(
+        dashboard: IDashboard,
+        types?: SupportedDashboardReferenceTypes[],
+    ): Promise<IDashboardReferences>;
 
     /**
      * Create and save dashboard for the provided dashboard definition

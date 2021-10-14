@@ -10,8 +10,11 @@ import { IDashboardBaseProps } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardEngine } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardPluginContract_V1 } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardProps } from '@gooddata/sdk-ui-dashboard';
+import { IErrorProps } from '@gooddata/sdk-ui';
+import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
+import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 
 // @alpha (undocumented)
 export class DashboardLoader implements IDashboardLoader {
@@ -30,9 +33,11 @@ export class DashboardLoader implements IDashboardLoader {
     // (undocumented)
     static prod(): DashboardLoader;
     // (undocumented)
-    withBaseProps: (props: IDashboardBaseProps) => IDashboardLoader;
+    withBaseProps: (props: IDashboardBasePropsForLoader) => IDashboardLoader;
     // (undocumented)
     withEmbeddedPlugins: (...plugins: IEmbeddedPlugin[]) => IDashboardLoader;
+    // (undocumented)
+    withFilterContext: (filterContextRef: ObjRef) => IDashboardLoader;
 }
 
 // @alpha
@@ -44,7 +49,15 @@ export type DashboardLoadResult = {
 };
 
 // @alpha (undocumented)
+export type DashboardLoadStatus = UseCancelablePromiseState<DashboardLoadResult, any>;
+
+// @alpha
 export const DashboardStub: React_2.FC<IDashboardStubProps>;
+
+// @alpha
+export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
+    dashboard: ObjRef;
+}
 
 // @alpha (undocumented)
 export interface IDashboardLoader {
@@ -55,16 +68,20 @@ export interface IDashboardLoader {
     onBackend(backend: IAnalyticalBackend): IDashboardLoader;
     withBaseProps(props: IDashboardBaseProps): IDashboardLoader;
     withEmbeddedPlugins(...plugins: IEmbeddedPlugin[]): IDashboardLoader;
+    withFilterContext(filterContextRef: ObjRef): IDashboardLoader;
+}
+
+// @alpha
+export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
+    clientWorkspace?: IClientWorkspaceIdentifiers;
+    extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
+    mode?: "prod" | "dev";
 }
 
 // @alpha (undocumented)
-export interface IDashboardStubProps extends IDashboardBaseProps {
-    // (undocumented)
-    clientWorkspace?: IClientWorkspaceIdentifiers;
-    // (undocumented)
-    extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
-    // (undocumented)
-    mode?: "prod" | "dev";
+export interface IDashboardStubProps extends IDashboardLoadOptions {
+    ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
 }
 
 // @alpha
@@ -72,6 +89,9 @@ export interface IEmbeddedPlugin {
     factory: () => IDashboardPluginContract_V1;
     parameters?: string;
 }
+
+// @alpha
+export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoadStatus;
 
 // (No @packageDocumentation comment for this package)
 

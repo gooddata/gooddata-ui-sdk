@@ -6,6 +6,7 @@ import { IDashboardStoreProviderProps } from "./types";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker";
 import { initializeDashboard, InitialLoadCorrelationId } from "../commands";
 import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore";
+import { isDashboard } from "@gooddata/sdk-backend-spi";
 
 /**
  * This hook is responsible for properly initializing and re-initializing the dashboard redux store,
@@ -17,16 +18,17 @@ import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardS
 export const useInitializeDashboardStore = (
     props: IDashboardStoreProviderProps,
 ): ReduxedDashboardStore | null => {
-    const { dashboardRef } = props;
+    const { dashboard } = props;
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspace(props.workspace);
     const { client: clientId, dataProduct: dataProductId } = useClientWorkspaceIdentifiers() ?? {};
     const [dashboardStore, setDashboardStore] = useState<ReduxedDashboardStore | null>(null);
-
+    const dashboardRef = isDashboard(dashboard) ? dashboard.ref : dashboard;
     const currentInitProps = {
         backend,
         workspace,
-        dashboardRef,
+        dashboard,
+        filterContextRef: props.filterContextRef,
         clientId,
         dataProductId,
         initialEventHandlers: props.eventHandlers,
@@ -46,18 +48,24 @@ export const useInitializeDashboardStore = (
 
             // Create new store and fire load dashboard command.
             const dashStore = createDashboardStore({
-                sagaContext: {
+                dashboardContext: {
                     backend,
                     workspace: workspace!,
-                    dashboardRef: currentInitProps.dashboardRef,
+                    dashboardRef: dashboardRef,
+                    filterContextRef: currentInitProps.filterContextRef,
                     clientId: currentInitProps.clientId,
                     dataProductId: currentInitProps.dataProductId,
                 },
-                initialEventHandlers: props.eventHandlers,
+                eventing: {
+                    initialEventHandlers: props.eventHandlers,
+                    onStateChange: props.onStateChange,
+                    onEventingInitialized: props.onEventingInitialized,
+                },
                 backgroundWorkers,
-                onStateChange: props.onStateChange,
-                onEventingInitialized: props.onEventingInitialized,
-                customizationFns: props.customizationFns,
+                privateContext: {
+                    ...props.customizationFns,
+                    preloadedDashboard: isDashboard(dashboard) ? dashboard : undefined,
+                },
             });
             dashStore.store.dispatch(
                 initializeDashboard(props.config, props.permissions, InitialLoadCorrelationId),

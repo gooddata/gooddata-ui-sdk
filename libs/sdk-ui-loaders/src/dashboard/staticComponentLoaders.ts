@@ -1,11 +1,11 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboard } from "@gooddata/sdk-backend-spi";
+import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
+    DashboardContext,
     IDashboardEngine,
     IDashboardPluginContract_V1,
     newDashboardEngine,
-    DashboardContext,
 } from "@gooddata/sdk-ui-dashboard";
 
 /**
@@ -15,7 +15,7 @@ import {
  * @param _dashboard - ignored
  * @internal
  */
-export function staticDashboardEngineLoader(_dashboard: IDashboard): Promise<IDashboardEngine> {
+export function staticDashboardEngineLoader(_dashboard: IDashboardWithReferences): Promise<IDashboardEngine> {
     return Promise.resolve(newDashboardEngine());
 }
 
@@ -27,12 +27,13 @@ export function staticDashboardEngineLoader(_dashboard: IDashboard): Promise<IDa
  * with any plugin and plugins are provided to the loader using the {@link @gooddata/sdk-ui-loaders#IDashboardLoader.withAdditionalPlugins}
  * method.
  *
+ * @param _ctx - ignored
  * @param _dashboard - ignored
  * @internal
  */
 export function noopDashboardPluginLoader(
     _ctx: DashboardContext,
-    _dashboard: IDashboard,
+    _dashboard: IDashboardWithReferences,
 ): Promise<IDashboardPluginContract_V1[]> {
     return Promise.resolve([]);
 }

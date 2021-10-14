@@ -379,6 +379,8 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
+    // (undocumented)
+    readonly type: "IDashboard";
 }
 
 // @alpha
@@ -462,6 +464,8 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
+    // (undocumented)
+    readonly type: "IDashboard";
 }
 
 // @alpha
@@ -1255,6 +1259,9 @@ export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<ID
 }
 
 // @alpha
+export function isDashboard(obj: unknown): obj is IDashboard;
+
+// @alpha
 export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter;
 
 // @alpha
@@ -1265,6 +1272,9 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
 
 // @alpha
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
+
+// @alpha
+export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
 
 // @alpha
 export function isDashboardLayout<TWidget = IDashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
@@ -1850,6 +1860,7 @@ export interface IWorkspaceDashboardsService {
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
     getDashboardPlugins(): Promise<IDashboardPlugin[]>;
+    getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
