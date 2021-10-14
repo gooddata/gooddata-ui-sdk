@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "8.7.0-alpha.21",
+    "version": "8.7.0-alpha.22",
     "author": "GoodData",
     "description": "GoodData SDK - Reference Workspace for tests",
     "repository": {
@@ -40,8 +40,8 @@
         "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run prettier-write && npm run build"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.21",
-        "@gooddata/sdk-model": "^8.7.0-alpha.21",
+        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.22",
+        "@gooddata/sdk-model": "^8.7.0-alpha.22",
         "lodash": "^4.17.19",
         "tslib": "^2.0.0"
     },
