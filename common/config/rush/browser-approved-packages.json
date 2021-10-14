@@ -91,10 +91,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@gooddata/goodstrap",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@gooddata/live-examples-workspace",
       "allowedCategories": [ "production" ]
     },
