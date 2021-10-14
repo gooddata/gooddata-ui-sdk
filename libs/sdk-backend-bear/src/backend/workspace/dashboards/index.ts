@@ -131,13 +131,22 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             ? await objRefToUri(exportFilterContextRef, this.workspace, this.authCall)
             : undefined;
 
-        const [bearDashboard, bearDependencies, bearExportFilterContext, bearVisualizationClasses] =
-            await Promise.all([
-                this.getBearDashboard(dashboardUri),
-                this.getBearDashboardDependencies(dashboardUri, DashboardComponentTypes),
-                this.getBearExportFilterContext(exportFilterContextRef),
-                this.getBearVisualizationClasses(),
-            ] as const);
+        const bearDashboard = await this.getBearDashboard(dashboardUri);
+        const dependenciesToGet = [...DashboardComponentTypes];
+        const bearVisualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[] = [];
+
+        if (!bearDashboard.analyticalDashboard.content.layout) {
+            // when dashboard has no layout and only list of widgets, the conversion will build an
+            // implicit layout. in order to set sizes correctly in that layout, the code needs to have
+            // visualization objects & info about visualization classes
+            dependenciesToGet.push("visualizationObject");
+            bearVisualizationClasses.push(...(await this.getBearVisualizationClasses()));
+        }
+
+        const [bearDependencies, bearExportFilterContext] = await Promise.all([
+            this.getBearDashboardDependencies(dashboardUri, dependenciesToGet),
+            this.getBearExportFilterContext(exportFilterContextRef),
+        ] as const);
 
         if (bearExportFilterContext) {
             bearDashboard.analyticalDashboard.content.filterContext = exportFilterContextUri;
