@@ -14,6 +14,7 @@ import { IErrorProps } from '@gooddata/sdk-ui';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
+import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 
 // @alpha (undocumented)
 export class DashboardLoader implements IDashboardLoader {
@@ -32,7 +33,7 @@ export class DashboardLoader implements IDashboardLoader {
     // (undocumented)
     static prod(): DashboardLoader;
     // (undocumented)
-    withBaseProps: (props: IDashboardBaseProps) => IDashboardLoader;
+    withBaseProps: (props: IDashboardBasePropsForLoader) => IDashboardLoader;
     // (undocumented)
     withEmbeddedPlugins: (...plugins: IEmbeddedPlugin[]) => IDashboardLoader;
     // (undocumented)
@@ -48,18 +49,14 @@ export type DashboardLoadResult = {
 };
 
 // @alpha (undocumented)
-export type DashboardLoadStatus = {
-    status: "loading" | "error" | "success";
-    result?: DashboardLoadResult;
-    error?: any;
-};
+export type DashboardLoadStatus = UseCancelablePromiseState<DashboardLoadResult, any>;
 
 // @alpha
 export const DashboardStub: React_2.FC<IDashboardStubProps>;
 
 // @alpha
 export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
-    dashboard?: ObjRef;
+    dashboard: ObjRef;
 }
 
 // @alpha (undocumented)

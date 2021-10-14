@@ -5,6 +5,7 @@ import {
     IClientWorkspaceIdentifiers,
     useBackendStrict,
     useCancelablePromise,
+    UseCancelablePromiseState,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
@@ -16,22 +17,7 @@ import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader
 /**
  * @alpha
  */
-export type DashboardLoadStatus = {
-    /**
-     * Status of the dashboard loading.
-     */
-    status: "loading" | "error" | "success";
-
-    /**
-     * Load result - this will be set when status is 'success'. Undefined in all other states.
-     */
-    result?: DashboardLoadResult;
-
-    /**
-     * Load error - this will be set when status is 'error'. Undefined in all other states.
-     */
-    error?: any;
-};
+export type DashboardLoadStatus = UseCancelablePromiseState<DashboardLoadResult, any>;
 
 const InitialStatus: DashboardLoadStatus = {
     result: undefined,
@@ -96,6 +82,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
                 setLoadStatus({
                     status: "error",
                     error,
+                    result: undefined,
                 });
             },
             onSuccess: (result) => {
@@ -109,6 +96,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
                 setLoadStatus({
                     status: "success",
                     result,
+                    error: undefined,
                 });
             },
         },

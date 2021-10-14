@@ -3,7 +3,6 @@
 import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader";
 import {
     DashboardContext,
-    IDashboardBaseProps,
     IDashboardEngine,
     IDashboardExtensionProps,
     IDashboardPluginContract_V1,
@@ -56,7 +55,7 @@ export type DashboardLoaderConfig = {
  */
 export class DashboardLoader implements IDashboardLoader {
     private readonly config: DashboardLoaderConfig;
-    private baseProps: IDashboardBasePropsForLoader = {};
+    private baseProps: Partial<IDashboardBasePropsForLoader> = {};
     private embeddedPlugins: IEmbeddedPlugin[] = [];
     private clientWorkspace: IClientWorkspaceIdentifiers | undefined = undefined;
 
@@ -114,7 +113,7 @@ export class DashboardLoader implements IDashboardLoader {
         return this;
     };
 
-    public withBaseProps = (props: IDashboardBaseProps): IDashboardLoader => {
+    public withBaseProps = (props: IDashboardBasePropsForLoader): IDashboardLoader => {
         this.baseProps = { ...props };
 
         return this;
@@ -140,7 +139,10 @@ export class DashboardLoader implements IDashboardLoader {
         const { backend, dashboard, filterContextRef } = this.baseProps;
 
         invariant(backend, "DashboardLoader is not configured with an instance of Analytical Backend.");
-        invariant(dashboard, "DashboardLoader is not configured with dashboard to load.");
+        invariant(
+            dashboard,
+            "DashboardLoader is not configured with a reference to dashboard that it should load.",
+        );
 
         const [workspace, clientWorkspace] = await this.resolveWorkspace(backend);
         invariant(workspace, "DashboardLoader is not configured with workspace to use and loader.");
