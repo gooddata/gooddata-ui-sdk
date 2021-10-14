@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useEffect, useState } from "react";
-import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { IntlShape, useIntl, WrappedComponentProps } from "react-intl";
 import compact from "lodash/compact";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
@@ -124,8 +124,9 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
         onFiltersChange,
         isReadOnly,
         disableDrillUnderline,
-        intl,
     } = props;
+
+    const intl = useIntl();
 
     const currentUser = useDashboardSelector(selectUser);
     const permissions = useDashboardSelector(selectPermissions);
@@ -201,7 +202,10 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
         ? getNoDataKpiResult(result, primaryMeasure)
         : getKpiResult(result, primaryMeasure, secondaryMeasure, separators);
     const kpiAlertResult = getKpiAlertResult(alertExecutionResult, primaryMeasure, separators);
-    const { isThresholdRepresentingPercent, thresholdPlaceholder } = getAlertThresholdInfo(kpiResult, intl);
+    const { isThresholdRepresentingPercent, thresholdPlaceholder } = useMemo(
+        () => getAlertThresholdInfo(kpiResult, intl),
+        [kpiResult, intl],
+    );
 
     const predicates = convertDrillableItemsToPredicates(drillableItems);
     const isDrillable =
@@ -223,6 +227,8 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
             : kpiAlertOperations.creatingStatus === "error" || kpiAlertOperations.updatingStatus === "error"
             ? "error"
             : "idle";
+
+    const errorViewMessage = useMemo(() => intl.formatMessage({ id: "kpi.error.view" }), [intl]);
 
     return (
         <DashboardItemWithKpiAlert
@@ -368,7 +374,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                         separators={separators}
                         enableCompactSize={enableCompactSize}
                         error={error}
-                        errorHelp={intl.formatMessage({ id: "kpi.error.view" })}
+                        errorHelp={errorViewMessage}
                         isLoading={props.isLoading}
                     />
                 );
@@ -377,18 +383,12 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     );
 };
 
-class KpiExecutorCoreWrapper extends React.PureComponent<IKpiProps> {
-    render() {
-        return <KpiExecutorCore {...this.props} />;
-    }
-}
-
 /**
  * Executes the given measures and displays them as KPI
  * @internal
  */
 export const KpiExecutor = flowRight(
-    injectIntl,
+    memo,
     withBackend,
     withExecution({
         shouldRefetch: (prevProps, nextProps) => {
@@ -436,7 +436,7 @@ export const KpiExecutor = flowRight(
         exportTitle: "",
         loadOnMount: true,
     }),
-)(KpiExecutorCoreWrapper);
+)(KpiExecutorCore);
 
 function getSeriesResult(series: IDataSeries | undefined): number | null {
     if (!series) {
