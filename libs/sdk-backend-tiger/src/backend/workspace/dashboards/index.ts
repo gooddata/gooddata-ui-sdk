@@ -2,6 +2,7 @@
 import {
     isVisualizationObjectsItem,
     JsonApiAnalyticalDashboardInTypeEnum,
+    JsonApiAnalyticalDashboardOutDocument,
     JsonApiFilterContextInTypeEnum,
     jsonApiHeaders,
     MetadataUtilities,
@@ -12,6 +13,7 @@ import {
     IDashboardDefinition,
     IDashboardPlugin,
     IDashboardPluginDefinition,
+    IDashboardReferences,
     IDashboardWithReferences,
     IFilterContext,
     IFilterContextDefinition,
@@ -24,6 +26,7 @@ import {
     IWidget,
     IWorkspaceDashboardsService,
     NotSupported,
+    SupportedDashboardReferenceTypes,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, IFilter, ObjRef } from "@gooddata/sdk-model";
@@ -44,6 +47,7 @@ import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api";
 import { resolveWidgetFilters } from "./widgetFilters";
 import isEmpty from "lodash/isEmpty";
+import includes from "lodash/includes";
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -113,6 +117,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         ref: ObjRef,
         filterContextRef?: ObjRef,
         options?: IGetDashboardOptions,
+        types: SupportedDashboardReferenceTypes[] = ["insight"],
     ): Promise<IDashboardWithReferences> => {
         if (options?.loadUserData) {
             throw new NotSupported(
@@ -124,8 +129,49 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             ? await this.getFilterContext(filterContextRef)
             : undefined;
 
+        const dashboard = await this.getDashboardWithSideloads(ref, types);
+        const included = dashboard.included || [];
+        const insights = included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight);
+        const filterContext = filterContextByRef
+            ? filterContextByRef
+            : getFilterContextFromIncluded(included);
+
+        return {
+            dashboard: convertDashboard(dashboard, filterContext),
+            references: {
+                insights,
+                plugins: [],
+            },
+        };
+    };
+
+    public getDashboardReferencedObjects = (
+        dashboard: IDashboard,
+        types: SupportedDashboardReferenceTypes[] = ["insight"],
+    ): Promise<IDashboardReferences> => {
+        return this.getDashboardWithSideloads(dashboard.ref, types).then((result) => {
+            const included = result.included || [];
+
+            return {
+                insights: included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight),
+                plugins: [],
+            };
+        });
+    };
+
+    private getDashboardWithSideloads = async (
+        ref: ObjRef,
+        types: SupportedDashboardReferenceTypes[],
+    ): Promise<JsonApiAnalyticalDashboardOutDocument> => {
+        const include = ["filterContexts"];
+
+        if (includes(types, "insight")) {
+            include.push("visualizationObjects");
+        }
+
         const id = await objRefToIdentifier(ref, this.authCall);
-        const result = await this.authCall((client) => {
+
+        return this.authCall((client) => {
             return client.workspaceObjects.getEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
@@ -134,25 +180,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     headers: jsonApiHeaders,
                     params: {
-                        include: "visualizationObjects,filterContexts",
+                        include: include.join(","),
                     },
                 },
             );
-        });
-
-        const included = result.data.included || [];
-        const insights = included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight);
-        const filterContext = filterContextByRef
-            ? filterContextByRef
-            : getFilterContextFromIncluded(included);
-
-        return {
-            dashboard: convertDashboard(result.data, filterContext),
-            references: {
-                insights,
-                plugins: [],
-            },
-        };
+        }).then((result) => result.data);
     };
 
     public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {

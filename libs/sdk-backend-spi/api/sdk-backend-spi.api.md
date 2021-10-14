@@ -1274,7 +1274,7 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
 
 // @alpha
-export function isDashboardDefinition(obj: unknown): obj is IDashboard;
+export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
 
 // @alpha
 export function isDashboardLayout<TWidget = IDashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
@@ -1860,6 +1860,7 @@ export interface IWorkspaceDashboardsService {
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
     getDashboardPlugins(): Promise<IDashboardPlugin[]>;
+    getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;

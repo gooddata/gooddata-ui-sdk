@@ -26,6 +26,7 @@ export const noopWorkspaceDashboardsService: IWorkspaceDashboardsService = {
     getDashboard: noop as any,
     getDashboardWidgetAlertsForCurrentUser: noop as any,
     getDashboardWithReferences: noop as any,
+    getDashboardReferencedObjects: noop as any,
     getAllWidgetAlertsForCurrentUser: noop as any,
     getDashboards: noop as any,
     getResolvedFiltersForWidget: noop as any,

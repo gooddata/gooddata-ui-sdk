@@ -34,6 +34,7 @@ import {
     IDashboardPlugin,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
+    IDashboardReferences,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -778,6 +779,18 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         types: SupportedDashboardReferenceTypes[] = ["insight"],
     ): Promise<IDashboardWithReferences> {
         const dashboard = await this.getDashboard(ref, filterContextRef, options);
+        const references = await this.getDashboardReferencedObjects(dashboard, types);
+
+        return {
+            dashboard,
+            references,
+        };
+    }
+
+    public getDashboardReferencedObjects = async (
+        dashboard: IDashboard,
+        types: SupportedDashboardReferenceTypes[] = ["insight", "dashboardPlugin"],
+    ): Promise<IDashboardReferences> => {
         const { dependencies, visClassMapping } = await this.getBearDashboardReferences(dashboard.uri, types);
         const insights: IInsight[] = [];
         const plugins: IDashboardPlugin[] = [];
@@ -796,13 +809,10 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
 
         return {
-            dashboard,
-            references: {
-                insights,
-                plugins,
-            },
+            insights,
+            plugins,
         };
-    }
+    };
 
     public createDashboardPlugin = async (plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin> => {
         const convertedPlugin = fromSdkModel.convertDashboardPlugin(plugin);
