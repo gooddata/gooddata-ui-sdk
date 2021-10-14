@@ -92,8 +92,8 @@ module.exports = (_env, argv) => {
                     type: "asset/resource",
                 },
                 {
-                    // never tree shake ext or dashboard so that the version here is also used in the plugins
-                    test: (modulePath) => /sdk-ui-(ext|dashboard)/.test(modulePath),
+                    // never tree shake sdk-ui-dashboard so that the version here is also used in the plugins
+                    test: (modulePath) => /sdk-ui-dashboard/.test(modulePath),
                     sideEffects: true,
                 },
                 !isProduction && {
