@@ -1504,13 +1504,6 @@ packages:
       source-map-support: 0.5.19
     dev: false
 
-  /@babel/runtime-corejs2/7.14.0:
-    resolution: {integrity: sha512-btR4E8JiGlmmDI5YgirlG9z3T91rBdxnVh2YuEStrHDcekffaaIeK+CE0S4IaYUyYhMa7rFDfF2GEO79XNbLEA==}
-    dependencies:
-      core-js: 2.6.12
-      regenerator-runtime: 0.13.7
-    dev: false
-
   /@babel/runtime/7.14.0:
     resolution: {integrity: sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==}
     dependencies:
@@ -1801,49 +1794,6 @@ packages:
       linebyline: 1.3.0
     dev: false
 
-  /@gooddata/goodstrap/70.3.0_react-dom@16.14.0+react@16.14.0:
-    resolution: {integrity: sha512-qhInQ+CO84DwJ0yciaUhTekE33zxyifteXTRFeKQ+BBGnSSDcZHJYSRfM5BVRIBhhClebI94fNC+1FS9BdKEWA==}
-    peerDependencies:
-      react: ^16.5.2
-      react-dom: ^16.5.2
-    dependencies:
-      '@babel/runtime-corejs2': 7.14.0
-      '@gooddata/js-utils': 3.10.17
-      classnames: 2.3.1
-      custom-event: 1.0.1
-      element-closest-polyfill: 1.0.4
-      fixed-data-table-2: 1.2.0_react-dom@16.14.0+react@16.14.0
-      foundation-sites: 5.5.3
-      immutable: 3.8.2
-      invariant: 2.2.4
-      kefir: 3.8.8
-      lodash: 4.17.21
-      moment: 2.29.1
-      moment-timezone: 0.5.33
-      prop-types: 15.7.2
-      querystringify: 2.2.0
-      react: 16.14.0
-      react-day-picker: 7.1.10_react@16.14.0
-      react-document-title: 2.0.3_react@16.14.0
-      react-dom: 16.14.0_react@16.14.0
-      react-intl: 3.12.1_react@16.14.0
-      react-native-listener: 1.1.0
-      react-portal: 4.2.1_react@16.14.0
-      react-responsive: 3.0.0_react@16.14.0
-      react-textarea-autosize: 7.1.2_react@16.14.0
-      react-transition-group: 1.2.1_react-dom@16.14.0+react@16.14.0
-      rxjs: 6.6.7
-      tinycolor2: 1.4.2
-    dev: false
-
-  /@gooddata/js-utils/3.10.17:
-    resolution: {integrity: sha512-NiE46H5wDqAn9K/cPVKwa5BHtWaetXZ+WPa63kzHfG5S/FZqnxcirQOqKr7br7Hc3Iofyiekvnf93vO4QzmWBg==}
-    dependencies:
-      '@gooddata/typings': 2.28.0
-      js-cookie: 2.2.1
-      lodash: 4.17.21
-    dev: false
-
   /@gooddata/numberjs/3.2.5:
     resolution: {integrity: sha512-qaK9NimxrXA6mmEpGJQA7mI5hjPNaooEact5KDCKNQf6f0fVVLf6K+GtkGcUMG/0G5LNb10IAli2ck8veiiv+Q==}
     engines: {node: '>=0.6.0'}
@@ -1860,12 +1810,6 @@ packages:
       stylelint-scss: 3.19.0_stylelint@13.13.1
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@gooddata/typings/2.28.0:
-    resolution: {integrity: sha512-v8nk8b2aIy2A6h88m3ec37TSbZk8CbBQ0FSLES5zu1cGka2z/JCGgKUNnAy46z/ieuR+/8c8QzXKwXPC1t5DkQ==}
-    dependencies:
-      lodash: 4.17.21
     dev: false
 
   /@hapi/hoek/9.2.0:
@@ -6739,10 +6683,6 @@ packages:
       type-detect: 4.0.8
     dev: false
 
-  /chain-function/1.0.1:
-    resolution: {integrity: sha512-SxltgMwL9uCko5/ZCLiyG2B7R9fY4pDZUw7hJ4MhirdjBLosoDqkWABi3XMucddHdLiFJMb7PD2MZifZriuMTg==}
-    dev: false
-
   /chalk/1.1.3:
     resolution: {integrity: sha1-qBFcVeSnAv5NFQq9OHKCKn4J/Jg=}
     engines: {node: '>=0.10.0'}
@@ -11258,11 +11198,6 @@ packages:
     resolution: {integrity: sha512-mONgeNSMuyjIe0lkQPa9YhdmTv8P19IeHV0biYhcXhbd5dhdB9HSK93zBpyKjp6wersSUgT5QyU0skmejUVP2A==}
     dev: false
 
-  /immutable/3.8.2:
-    resolution: {integrity: sha1-wkOZUUVbs5kT2vKBN28VMOEErfM=}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -12759,10 +12694,6 @@ packages:
     resolution: {integrity: sha512-pZe//GGmwJndub7ZghVHz7vjb2LgC1m8B07Au3eYqeqv9emhESByMXxaEgkUkEqJe87oBbSniGYoQNIBklc7IQ==}
     dev: false
 
-  /js-cookie/2.2.1:
-    resolution: {integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==}
-    dev: false
-
   /js-object-pretty-print/0.2.0:
     resolution: {integrity: sha1-OcmBrbkS4z7mYwGsvcvV4H8gWqg=}
     dev: false
@@ -13634,12 +13565,6 @@ packages:
     resolution: {integrity: sha512-R1XhQaamUZPWLOPtp4ig5j+3jctN+skhgRmEQTUamMzmNtRG69QEirQs0NZKLtHMR7tzWpmtnS4Eqv65DcgXUA==}
     dependencies:
       escape-string-regexp: 1.0.5
-    dev: false
-
-  /matchmediaquery/0.2.1:
-    resolution: {integrity: sha1-IjxwBXk94D5HzpKxMoWnLEStos8=}
-    dependencies:
-      css-mediaquery: 0.1.2
     dev: false
 
   /matchmediaquery/0.3.1:
@@ -16022,15 +15947,6 @@ packages:
       react-popper: 1.3.11_react@16.14.0
     dev: false
 
-  /react-day-picker/7.1.10_react@16.14.0:
-    resolution: {integrity: sha512-UoI3ktYU8oN0UTxX5ZbG02TZePHh4znUGT6/h4g+tLNM1O4GGCiafqyFEIp22HYb1sCPQ4UMyw6QFcxu+lFDVQ==}
-    peerDependencies:
-      react: ~0.13.x || ~0.14.x || ^15.0.0 || ^16.0.0
-    dependencies:
-      prop-types: 15.7.2
-      react: 16.14.0
-    dev: false
-
   /react-day-picker/7.3.0_react@16.14.0:
     resolution: {integrity: sha512-t2kz0Zy4P5U4qwU5YhsBq2QGmypP8L/u+89TSnuD0h4dYKSEDQArFPWfin9gv8erV1ciR1Wzr485TMaYnI7FTw==}
     peerDependencies:
@@ -16357,18 +16273,6 @@ packages:
       resize-observer-polyfill: 1.5.1
     dev: false
 
-  /react-responsive/3.0.0_react@16.14.0:
-    resolution: {integrity: sha512-1w42433p6EvW6w3/IvIwG52ZrjPyZcZCV8wxnHTq7ZD3RiKp3IrAT/zInrYUUc2ipJEoR+4GARhwJNaIh+LD6Q==}
-    engines: {node: '>= 0.10'}
-    peerDependencies:
-      react: '*'
-    dependencies:
-      hyphenate-style-name: 1.0.4
-      matchmediaquery: 0.2.1
-      prop-types: 15.7.2
-      react: 16.14.0
-    dev: false
-
   /react-responsive/8.2.0_react@16.14.0:
     resolution: {integrity: sha512-iagCqVrw4QSjhxKp3I/YK6+ODkWY6G+YPElvdYKiUUbywwh9Ds0M7r26Fj2/7dWFFbOpcGnJE6uE7aMck8j5Qg==}
     engines: {node: '>= 0.10'}
@@ -16526,16 +16430,6 @@ packages:
       scheduler: 0.19.1
     dev: false
 
-  /react-textarea-autosize/7.1.2_react@16.14.0:
-    resolution: {integrity: sha512-uH3ORCsCa3C6LHxExExhF4jHoXYCQwE5oECmrRsunlspaDAbS4mGKNlWZqjLfInWtFQcf0o1n1jC/NGXFdUBCg==}
-    peerDependencies:
-      react: '>=0.14.0 <17.0.0'
-    dependencies:
-      '@babel/runtime': 7.14.0
-      prop-types: 15.7.2
-      react: 16.14.0
-    dev: false
-
   /react-textarea-autosize/8.3.3_807f3d8e201fbb23c29c1613533607c0:
     resolution: {integrity: sha512-2XlHXK2TDxS6vbQaoPbMOfQ8GK7+irc2fVK6QFIcC8GOnH3zI/v481n+j1L0WaPVvKxwesnY93fEfH++sus2rQ==}
     engines: {node: '>=10'}
@@ -16548,21 +16442,6 @@ packages:
       use-latest: 1.2.0_807f3d8e201fbb23c29c1613533607c0
     transitivePeerDependencies:
       - '@types/react'
-    dev: false
-
-  /react-transition-group/1.2.1_react-dom@16.14.0+react@16.14.0:
-    resolution: {integrity: sha512-CWaL3laCmgAFdxdKbhhps+c0HRGF4c+hdM4H23+FI1QBNUyx/AMeIJGWorehPNSaKnQNOAxL7PQmqMu78CDj3Q==}
-    peerDependencies:
-      react: ^15.0.0 || ^16.0.0
-      react-dom: ^15.0.0 || ^16.0.0
-    dependencies:
-      chain-function: 1.0.1
-      dom-helpers: 3.4.0
-      loose-envify: 1.4.0
-      prop-types: 15.7.2
-      react: 16.14.0
-      react-dom: 16.14.0_react@16.14.0
-      warning: 3.0.0
     dev: false
 
   /react-transition-group/2.9.0_react-dom@16.14.0+react@16.14.0:
@@ -22298,14 +22177,13 @@ packages:
     dev: false
 
   file:projects/sdk-ui-ext.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-KA564RZqWnUGPC0Zn3TCjFDjma+cTbn17I+OLGSNMMAmqGtjDwE2zOFXjtJp2UCtSyK38PpFxN/lrWUHjH9WGA==, tarball: file:projects/sdk-ui-ext.tgz}
+    resolution: {integrity: sha512-b4Xdq83sMzV9LbLgnrCtlkvuK6lB0Xx2LxYH4u+eHX13HHaLRvLWSlu9lm/UjvqHsVO7lnkSkMKosNHT8W2gYg==, tarball: file:projects/sdk-ui-ext.tgz}
     id: file:projects/sdk-ui-ext.tgz
     name: '@rush-temp/sdk-ui-ext'
     version: 0.0.0
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
-      '@gooddata/goodstrap': 70.3.0_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-documenter': 7.13.16
@@ -22381,13 +22259,12 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-lQL/lh09LI6gN9H14r31whxIoVmRZuBjeTdtVXQ2mUU4pdWXUJV0x7JThsbs+ckj/R/Kd9fc31LdimnqmQiVdA==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-6IrQ5aCmFLFveBX3OLWOMZPXbYh5gX1acPyKcaEW12xX9JWaF+jWm/USkll+lPMPIeOTUoX59LxyB9KVbJvtkA==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
-      '@gooddata/goodstrap': 70.3.0_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-documenter': 7.13.16
@@ -22464,7 +22341,6 @@ packages:
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
-      '@gooddata/goodstrap': 70.3.0_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-documenter': 7.13.16
@@ -22526,14 +22402,13 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-IzCKEM/x6kua/ri91CzUHvAjQEG0R0nffnAEoTxtEB0qgSMZ9x867/U34rh+SUZXgguw0eza7bg/lySiqsxvFQ==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-g8V+mBgEfpTm3u+8nMRMBgsYKKx2KUtjZ8Pwk9Z4CtNWWD2dnerPgIs/51Y/lEBbmB+NPKACHODdWGVSarsXlA==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
     dependencies:
       '@aaronhayes/react-use-hubspot-form': 2.0.1_react-dom@16.14.0+react@16.14.0
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
-      '@gooddata/goodstrap': 70.3.0_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-documenter': 7.13.16
@@ -22680,7 +22555,6 @@ packages:
       '@ag-grid-community/react': 22.1.2_react-dom@16.14.0+react@16.14.0
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
-      '@gooddata/goodstrap': 70.3.0_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-documenter': 7.13.16
@@ -23062,7 +22936,6 @@ packages:
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
-      '@gooddata/goodstrap': 70.3.0_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-documenter': 7.13.16
