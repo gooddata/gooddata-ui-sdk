@@ -63,10 +63,19 @@ describe("DropdownControl", () => {
             },
         ];
 
+        const itemsWithInfo: IDropdownItem[] = [
+            {
+                title: "My item with info",
+                value: "42",
+                info: "This is item info.",
+            },
+        ];
+
         it.each([
             ["item with icon", iconItems, ".s-icon"],
             ["separator item", separatorItems, ".s-list-separator"],
             ["header item", headerItems, ".s-list-header"],
+            ["item with info", itemsWithInfo, ".s-list-item-info"],
         ])("should render %s", (_testType, items: IDropdownItem[], expectedSelector: string) => {
             const wrapper = createComponent({ items });
 

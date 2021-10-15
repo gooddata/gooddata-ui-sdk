@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { AXIS } from "./axis";
 
 const BASE_PROPERTIES = ["dataLabels.visible", "grid", "legend", "colorMapping", "zoomInsight"];
@@ -19,9 +19,9 @@ const BASE_Y_AXIS_PROPERTIES = [
     "yaxis.name.position",
 ];
 
-const BASE_PRIMARY_AXIS_PROPERTIES = [...BASE_Y_AXIS_PROPERTIES, "yaxis.min", "yaxis.max"];
+const BASE_PRIMARY_AXIS_PROPERTIES = [...BASE_Y_AXIS_PROPERTIES, "yaxis.min", "yaxis.max", "yaxis.format"];
 
-const BAR_PRIMARY_AXIS_PROPERTIES = [...BASE_X_AXIS_PROPERTIES, "xaxis.min", "xaxis.max"];
+const BAR_PRIMARY_AXIS_PROPERTIES = [...BASE_X_AXIS_PROPERTIES, "xaxis.min", "xaxis.max", "xaxis.format"];
 
 const BASE_SECONDARY_AXIS_PROPERTIES = [
     "secondary_yaxis.rotation",
@@ -32,6 +32,7 @@ const BASE_SECONDARY_AXIS_PROPERTIES = [
     "secondary_yaxis.measures",
     "secondary_yaxis.name.visible",
     "secondary_yaxis.name.position",
+    "secondary_yaxis.format",
 ];
 
 const BAR_SECONDARY_AXIS_PROPERTIES = [
@@ -43,6 +44,7 @@ const BAR_SECONDARY_AXIS_PROPERTIES = [
     "secondary_xaxis.measures",
     "secondary_xaxis.name.visible",
     "secondary_xaxis.name.position",
+    "secondary_xaxis.format",
 ];
 
 export const OPTIONAL_STACKING_PROPERTIES = ["stackMeasures", "stackMeasuresToPercent"];
@@ -147,6 +149,7 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
     "xaxis.max",
     "xaxis.name.visible",
     "xaxis.name.position",
+    "xaxis.format",
 
     "yaxis.labelsEnabled",
     "yaxis.rotation",
@@ -155,6 +158,7 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
     "yaxis.max",
     "yaxis.name.visible",
     "yaxis.name.position",
+    "yaxis.format",
 ];
 
 export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
@@ -167,6 +171,7 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "xaxis.max",
     "xaxis.name.visible",
     "xaxis.name.position",
+    "xaxis.format",
 
     "yaxis.labelsEnabled",
     "yaxis.rotation",
@@ -177,6 +182,7 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "yaxis.name.position",
     "colorMapping",
     "zoomInsight",
+    "yaxis.format",
 ];
 
 export const PIECHART_SUPPORTED_PROPERTIES = [
@@ -215,6 +221,7 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
     "xaxis.max",
     "xaxis.name.visible",
     "xaxis.name.position",
+    "xaxis.format",
 
     "yaxis.rotation",
     "yaxis.labelsEnabled",

@@ -98,6 +98,7 @@ export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProp
 
 // @public (undocumented)
 export interface IAxisConfig {
+    format?: string;
     labelsEnabled?: boolean;
     max?: string;
     measures?: Identifier[];

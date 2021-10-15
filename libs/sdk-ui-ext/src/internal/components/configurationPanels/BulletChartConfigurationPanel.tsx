@@ -33,6 +33,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
         const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
         const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
+        const isAxisLabelsFormatEnabled: boolean = featureFlags.enableAxisLabelFormat as boolean;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -64,6 +65,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                             axis={"xaxis"}
                             properties={properties}
                             pushData={pushData}
+                            showFormat={isAxisLabelsFormatEnabled}
                         />
                         {this.renderMinMax("xaxis")}
                     </ConfigSection>

@@ -6,12 +6,15 @@ import { AxisType } from "../../../interfaces/AxisType";
 import LabelRotationControl from "./LabelRotationControl";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 
+import { LabelFormatControl } from "./LabelFormatControl";
+
 export interface ILabelSubsection {
     disabled: boolean;
     configPanelDisabled: boolean;
     axis: AxisType;
     properties: IVisualizationProperties;
     pushData: (data: any) => any;
+    showFormat?: boolean;
 }
 
 class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComponentProps> {
@@ -29,6 +32,15 @@ class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComp
                 toggleDisabled={this.props.disabled || !axisVisible}
                 showDisabledMessage={!this.props.configPanelDisabled && this.props.disabled}
             >
+                {this.props.showFormat && (
+                    <LabelFormatControl
+                        disabled={this.props.disabled}
+                        configPanelDisabled={this.props.configPanelDisabled}
+                        axis={this.props.axis}
+                        properties={this.props.properties}
+                        pushData={this.props.pushData}
+                    />
+                )}
                 <LabelRotationControl
                     disabled={this.props.disabled}
                     configPanelDisabled={this.props.configPanelDisabled}

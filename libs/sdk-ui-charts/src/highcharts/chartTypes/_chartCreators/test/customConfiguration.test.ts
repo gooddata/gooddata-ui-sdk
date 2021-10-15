@@ -12,6 +12,7 @@ import {
     getTooltipPositionInChartContainer,
     TOOLTIP_VIEWPORT_MARGIN_TOP,
     TOOLTIP_PADDING,
+    getFormatterProperty,
 } from "../customConfiguration";
 import { VisualizationTypes, IDrillConfig, createIntlMock } from "@gooddata/sdk-ui";
 import { immutableSet } from "../../_util/common";
@@ -1042,5 +1043,47 @@ describe("escapeCategories", () => {
                 categories: ["&lt;div&gt;sale1&lt;/div&gt;", "&lt;sale2/&gt;", "&lt;sale3&gt;&lt;/sale3&gt;"],
             },
         ]);
+    });
+});
+
+describe("getFormatterProperty", () => {
+    const chartOptions = {};
+    const axisPropsKey = "yAxisProps";
+    const chartConfig = {};
+
+    it("should return percentage formatter", () => {
+        const formatter = getFormatterProperty(chartOptions, axisPropsKey, chartConfig, "%").formatter.bind({
+            value: 0.33,
+        });
+        expect(formatter()).toEqual("33%");
+    });
+
+    it("should return custom formatter", () => {
+        const formatter = getFormatterProperty(
+            { [axisPropsKey]: { format: "inherit" } },
+            axisPropsKey,
+            chartConfig,
+            "#.##X",
+        ).formatter.bind({
+            value: 33.3333,
+        });
+        expect(formatter()).toEqual("33.33X");
+    });
+
+    it("should return custom formatter returning 0 when value is 0", () => {
+        const formatter = getFormatterProperty(
+            { [axisPropsKey]: { format: "inherit" } },
+            axisPropsKey,
+            chartConfig,
+            "#.##X",
+        ).formatter.bind({
+            value: 0,
+        });
+        expect(formatter()).toEqual(0);
+    });
+
+    it("should return no formatter", () => {
+        const formatterProperty = getFormatterProperty(chartOptions, axisPropsKey, chartConfig, "#.##");
+        expect(formatterProperty.formatter).toEqual(undefined);
     });
 });

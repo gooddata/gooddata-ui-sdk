@@ -20,6 +20,7 @@ export interface ISingleSelectListItemProps {
     icon?: string;
     type?: SingleSelectListItemType;
     className?: string;
+    info?: string;
 
     isSelected?: boolean;
 
@@ -64,6 +65,7 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
             >
                 {this.renderIcon(icon)}
                 {this.renderTitle()}
+                {this.renderInfo()}
             </div>
         );
     }
@@ -126,5 +128,26 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
 
     private renderHeaderItem = () => {
         return <div className="gd-list-item gd-list-item-header s-list-header">{this.props.title}</div>;
+    };
+
+    private renderInfo = () => {
+        if (!this.props.info) {
+            return null;
+        }
+
+        return (
+            <div className="gd-list-item-bubble s-list-item-info">
+                <BubbleHoverTrigger tagName="div" showDelay={200} hideDelay={0}>
+                    <div className="inlineBubbleHelp" />
+                    <Bubble
+                        className="bubble-primary"
+                        alignPoints={[{ align: "cr cl" }]}
+                        arrowOffsets={{ "cr cl": [15, 0] }}
+                    >
+                        {this.props.info}
+                    </Bubble>
+                </BubbleHoverTrigger>
+            </div>
+        );
     };
 }

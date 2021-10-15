@@ -576,6 +576,27 @@
         "comment": "",
         "limit": 0
     },
+    "properties.axis.format": {
+        "value": "Format",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.format.inherit": {
+        "value": "inherit",
+        "comment": "Axis format option to inherit formatting from used measure.",
+        "limit": 0
+    },
+    "properties.axis.format.info.inherit|insight": {
+        "value": "The format is inherited from the first measure in the insight.",
+        "comment": "Info text for axis format option.",
+        "limit": 0
+    },
+    "properties.axis.format.info.inherit|report": {
+        "value": "The format is inherited from the first measure in the report.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
     "properties.axis.name": {
         "value": "name",
         "comment": "Name of the axis of a chart",

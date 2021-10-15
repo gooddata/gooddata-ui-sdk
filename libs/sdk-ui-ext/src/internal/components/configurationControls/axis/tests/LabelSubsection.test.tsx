@@ -6,6 +6,7 @@ import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import LabelSubsection, { ILabelSubsection } from "../LabelSubsection";
 import LabelRotationControl from "../LabelRotationControl";
+import { LabelFormatControl } from "../LabelFormatControl";
 import ConfigSubsection from "../../../configurationControls/ConfigSubsection";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
@@ -15,6 +16,7 @@ const defaultProps: ILabelSubsection = {
     properties: {},
     axis: "xaxis",
     pushData: noop,
+    showFormat: false,
 };
 
 function createComponent(customProps: Partial<ILabelSubsection> = {}) {
@@ -77,6 +79,26 @@ describe("LabelSection render", () => {
 
         const node = wrapper.find(ConfigSubsection);
         expect(node.prop("toggleDisabled")).toBe(true);
+    });
+
+    it("should not render LabelFormatControl when showFormat prop is false", () => {
+        const wrapper = createComponent({
+            disabled: false,
+            configPanelDisabled: false,
+            showFormat: false,
+        });
+
+        expect(wrapper.find(LabelFormatControl).exists()).toBe(false);
+    });
+
+    it("should render LabelFormatControl when showFormat prop is true", () => {
+        const wrapper = createComponent({
+            disabled: false,
+            configPanelDisabled: false,
+            showFormat: true,
+        });
+
+        expect(wrapper.find(LabelFormatControl).exists()).toBe(true);
     });
 });
 
