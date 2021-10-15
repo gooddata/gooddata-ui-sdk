@@ -1,0 +1,40 @@
+{
+    "id": "68f4e076-83e6-4f56-bb9d-7cb70542ea5e",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059/validElements?limit=20&offset=0",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"validElementsRequest\":{\"restrictiveDefinitionContent\":{\"format\":\"grid\",\"filters\":[],\"grid\":{\"columns\":[\"metricGroup\"],\"rows\":[{\"attribute\":{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"alias\":\"\",\"totals\":[]}}],\"metrics\":[{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271\",\"alias\":\"Amount\",\"format\":\"$#,##0.00\"}],\"sort\":{\"columns\":[],\"rows\":[]},\"columnWidths\":[]}}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements-68f4e076-83e6-4f56-bb9d-7cb70542ea5e.json",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:29:42 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "86",
+            "X-GDC-REQUEST": "PvkS8NmHZOJ9Bos4",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "68f4e076-83e6-4f56-bb9d-7cb70542ea5e",
+    "persistent": true,
+    "insertionIndex": 13
+}

@@ -1,0 +1,40 @@
+{
+    "id": "40d2cb39-a27e-4553-941f-4959aa177345",
+    "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets",
+    "request": {
+        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/loadDateDataSets",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"dateDataSetsRequest\":{\"includeUnavailableDateDataSetsCount\":true,\"includeAvailableDateAttributes\":true,\"bucketItems\":[\"SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])\",\"SELECT (SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])) FOR PREVIOUS ([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497])\"],\"requiredDataSets\":{\"type\":\"ALL\"}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets-40d2cb39-a27e-4553-941f-4959aa177345.json",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:29:58 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "98",
+            "X-GDC-REQUEST": "8Y8BlfVgKYdaudTt",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "40d2cb39-a27e-4553-941f-4959aa177345",
+    "persistent": true,
+    "insertionIndex": 31
+}

@@ -1,0 +1,40 @@
+{
+    "id": "1659bf62-0caa-4224-a633-754bde78e61d",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_get",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/objects/get",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"get\":{\"items\":[\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"items\":[{\"attributeDisplayForm\":{\"links\":{\"elements\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059/elements\"},\"content\":{\"expression\":\"[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/33]\",\"formOf\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057\"},\"meta\":{\"isProduction\":1,\"summary\":\"\",\"identifier\":\"label.account.id\",\"deprecated\":\"0\",\"updated\":\"2020-01-16 10:56:11\",\"tags\":\"\",\"title\":\"Account\",\"created\":\"2019-12-10 14:25:39\",\"contributor\":\"/gdc/account/profile/7788d42c5640f3f7366faad04721d494\",\"category\":\"attributeDisplayForm\",\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"author\":\"/gdc/account/profile/0a781ac660f78609f6100f0125ca5358\"}}},{\"attributeDisplayForm\":{\"links\":{\"elements\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101/elements\"},\"content\":{\"formOf\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100\",\"expression\":\"[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/79]\",\"default\":1},\"meta\":{\"author\":\"/gdc/account/profile/0a781ac660f78609f6100f0125ca5358\",\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101\",\"contributor\":\"/gdc/account/profile/0a781ac660f78609f6100f0125ca5358\",\"created\":\"2019-12-10 14:25:40\",\"category\":\"attributeDisplayForm\",\"tags\":\"\",\"title\":\"Status\",\"summary\":\"\",\"isProduction\":1,\"deprecated\":\"0\",\"updated\":\"2019-12-10 14:25:40\",\"identifier\":\"label.stage.status\"}}}]}}",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:29:39 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "26",
+            "X-GDC-REQUEST": "LEwZmwt5bthY00hP",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "1659bf62-0caa-4224-a633-754bde78e61d",
+    "persistent": true,
+    "insertionIndex": 8
+}

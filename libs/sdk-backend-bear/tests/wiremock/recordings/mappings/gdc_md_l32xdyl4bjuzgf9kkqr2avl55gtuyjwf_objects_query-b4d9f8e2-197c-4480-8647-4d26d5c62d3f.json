@@ -1,0 +1,33 @@
+{
+    "id": "b4d9f8e2-197c-4480-8647-4d26d5c62d3f",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_query",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/objects/query?category=metric&limit=50",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_query-b4d9f8e2-197c-4480-8647-4d26d5c62d3f.json",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:29:52 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "45",
+            "X-GDC-REQUEST": "8LXXghvg5ujXoztI",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "b4d9f8e2-197c-4480-8647-4d26d5c62d3f",
+    "persistent": true,
+    "insertionIndex": 22
+}

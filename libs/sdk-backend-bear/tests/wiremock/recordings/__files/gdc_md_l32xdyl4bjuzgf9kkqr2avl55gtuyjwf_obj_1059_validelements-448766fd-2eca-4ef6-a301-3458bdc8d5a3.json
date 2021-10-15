@@ -1,0 +1,133 @@
+{
+    "validElements": {
+        "paging": { "count": 20, "total": "2952", "offset": "0" },
+        "elementsMeta": {
+            "filter": "",
+            "order": "asc",
+            "attributeDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+            "attribute": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057"
+        },
+        "items": [
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873",
+                    "title": "14 West"
+                }
+            },
+            {
+                "element": {
+                    "title": "1-800 Postcards",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874",
+                    "title": "1-800 We Answer"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430",
+                    "title": "1st in Video - Music World"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431",
+                    "title": "2 Wheel Bikes"
+                }
+            },
+            {
+                "element": {
+                    "title": "352 Media Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433"
+                }
+            },
+            {
+                "element": {
+                    "title": "3balls.com",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434"
+                }
+            },
+            {
+                "element": {
+                    "title": "3dCart Shopping Cart Software",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1435"
+                }
+            },
+            {
+                "element": {
+                    "title": "49er Communications",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1436"
+                }
+            },
+            {
+                "element": {
+                    "title": "614 Media Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1438"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1439",
+                    "title": "720 Strategies"
+                }
+            },
+            {
+                "element": {
+                    "title": "7-Eleven",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1440"
+                }
+            },
+            {
+                "element": {
+                    "title": "A10 Clinical Solutions",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4513"
+                }
+            },
+            {
+                "element": {
+                    "title": "A1 Pool Parts",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2888"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=16",
+                    "title": "Aaron's Sales and Lease"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1446",
+                    "title": "Aaron's Sales and Lease Ownership"
+                }
+            },
+            {
+                "element": {
+                    "title": "Abacus 24-7",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1448"
+                }
+            },
+            {
+                "element": {
+                    "title": "Able Equipment Rental",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2893"
+                }
+            },
+            {
+                "element": {
+                    "title": "Abraxas",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1451"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1452",
+                    "title": "Absolute Concrete Construction"
+                }
+            }
+        ]
+    }
+}

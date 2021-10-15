@@ -1,0 +1,1860 @@
+{
+    "objects": {
+        "items": [
+            {
+                "attribute": {
+                    "meta": {
+                        "summary": "Generic Day of the Week based on US Week (Sun-Sat)",
+                        "tags": "date day week",
+                        "category": "attribute",
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "title": "Day of Week (Sun-Sat) (Snapshot)",
+                        "identifier": "snapshot.day.in.week",
+                        "isProduction": 1,
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/673",
+                        "updated": "2019-12-10 14:25:37"
+                    },
+                    "content": {
+                        "displayForms": [
+                            {
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/704/elements"
+                                },
+                                "content": {
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/673",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/614]"
+                                },
+                                "meta": {
+                                    "summary": "DisplayForm Short (Sun).",
+                                    "tags": "",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "title": "Short (Sun) (Snapshot)",
+                                    "identifier": "snapshot.abK81lMifn6q",
+                                    "isProduction": 1,
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/704",
+                                    "updated": "2019-12-10 14:25:36"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "tags": "",
+                                    "summary": "DisplayForm Long (Sunday).",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "isProduction": 1,
+                                    "identifier": "snapshot.abO81lMifn6q",
+                                    "title": "Long (Sunday) (Snapshot)",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/706"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/616]",
+                                    "default": 2,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/673"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/706/elements"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/705",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "isProduction": 1,
+                                    "title": "Number (1=Sunday) (Snapshot)",
+                                    "identifier": "snapshot.abM81lMifn6q",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm Number (1=Sunday)."
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/705/elements"
+                                },
+                                "content": {
+                                    "default": 3,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/673",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/615]"
+                                }
+                            }
+                        ],
+                        "sort": "pk",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/559",
+                        "type": "GDC.time.day_in_week",
+                        "fk": [
+                            {
+                                "multivalue": false,
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/641"
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
+                        "pk": [{ "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/613", "type": "col" }],
+                        "direction": "asc"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "meta": {
+                        "tags": "date day quarter",
+                        "summary": "Generic day of quarter (D1, D2, ... , D92)",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "isProduction": 1,
+                        "identifier": "snapshot.day.in.quarter",
+                        "title": "Day of Quarter (Snapshot)",
+                        "updated": "2019-12-10 14:25:37",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/675"
+                    },
+                    "content": {
+                        "pk": [{ "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/621", "type": "col" }],
+                        "direction": "asc",
+                        "sort": "pk",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/559",
+                        "type": "GDC.time.day_in_quarter",
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm default.",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/710",
+                                    "isProduction": 1,
+                                    "identifier": "snapshot.ab481lMifn6q",
+                                    "title": "default (Snapshot)"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/710/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/622]",
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/675"
+                                }
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
+                        "fk": [
+                            {
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/640",
+                                "multivalue": false
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "meta": {
+                        "isProduction": 1,
+                        "identifier": "snapshot.day.in.month",
+                        "title": "Day of Month (Snapshot)",
+                        "updated": "2019-12-10 14:25:37",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/676",
+                        "tags": "date day month",
+                        "summary": "Generic day of month (D1, D2, ... , D31)",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "deprecated": "0",
+                        "category": "attribute"
+                    },
+                    "content": {
+                        "direction": "asc",
+                        "pk": [{ "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/623", "type": "col" }],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
+                        "fk": [
+                            {
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/639",
+                                "multivalue": false
+                            }
+                        ],
+                        "type": "GDC.time.day_in_month",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/559",
+                        "sort": "pk",
+                        "displayForms": [
+                            {
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/711/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/624]",
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/676"
+                                },
+                                "meta": {
+                                    "updated": "2019-12-10 14:25:36",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/711",
+                                    "isProduction": 1,
+                                    "identifier": "snapshot.aca81lMifn6q",
+                                    "title": "default (Snapshot)",
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm default."
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "meta": {
+                        "tags": "date quarter",
+                        "summary": "Quarter and Year (Q1/2010)",
+                        "created": "2010-08-02 08:13:42",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "isProduction": 1,
+                        "title": "Quarter/Year (Snapshot)",
+                        "identifier": "snapshot.quarter",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
+                        "updated": "2019-12-10 14:25:37"
+                    },
+                    "content": {
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/713",
+                        "fk": [
+                            {
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/632",
+                                "multivalue": false
+                            },
+                            {
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/647",
+                                "type": "col",
+                                "multivalue": false
+                            }
+                        ],
+                        "sort": "pk",
+                        "type": "GDC.time.quarter",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/559",
+                        "displayForms": [
+                            {
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/628]",
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
+                                    "default": 1
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/712/elements"
+                                },
+                                "meta": {
+                                    "summary": "DisplayForm US Short.",
+                                    "tags": "",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "title": "US Short (Snapshot)",
+                                    "identifier": "snapshot.aci81lMifn6q",
+                                    "isProduction": 1,
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/712",
+                                    "updated": "2019-12-10 14:25:36"
+                                }
+                            }
+                        ],
+                        "direction": "asc",
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/625" }]
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "content": {
+                        "direction": "asc",
+                        "pk": [{ "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/629", "type": "col" }],
+                        "fk": [
+                            {
+                                "multivalue": false,
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/644",
+                                "type": "col"
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
+                        "displayForms": [
+                            {
+                                "content": {
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/635]"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/713/elements"
+                                },
+                                "meta": {
+                                    "tags": "",
+                                    "summary": "DisplayForm Short (Jan 2010).",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "isProduction": 1,
+                                    "identifier": "snapshot.act81lMifn6q",
+                                    "title": "Short (Jan 2010) (Snapshot)",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/713"
+                                }
+                            },
+                            {
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/715/elements"
+                                },
+                                "content": {
+                                    "default": 2,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/637]"
+                                },
+                                "meta": {
+                                    "tags": "",
+                                    "summary": "DisplayForm Long (January 2010).",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "isProduction": 1,
+                                    "identifier": "snapshot.acx81lMifn6q",
+                                    "title": "Long (January 2010) (Snapshot)",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/715"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/714",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "isProduction": 1,
+                                    "title": "Number (1/2010) (Snapshot)",
+                                    "identifier": "snapshot.acv81lMifn6q",
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm Number (1/2010)."
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/714/elements"
+                                },
+                                "content": {
+                                    "default": 3,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/636]"
+                                }
+                            }
+                        ],
+                        "sort": "pk",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/559",
+                        "type": "GDC.time.month"
+                    },
+                    "meta": {
+                        "identifier": "snapshot.month",
+                        "title": "Month/Year (Snapshot)",
+                        "isProduction": 1,
+                        "updated": "2019-12-10 14:25:37",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
+                        "summary": "Month and Year",
+                        "tags": "date month",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "created": "2010-08-02 08:13:42",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "meta": {
+                        "summary": "Date",
+                        "tags": "date",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "identifier": "snapshot.date",
+                        "title": "Date (Snapshot)",
+                        "isProduction": 1,
+                        "updated": "2019-12-10 14:25:40",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679"
+                    },
+                    "content": {
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/638" }],
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "category": "attributeDisplayForm",
+                                    "deprecated": "0",
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "summary": "DisplayForm mm/dd/yyyy.",
+                                    "tags": "",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "title": "mm/dd/yyyy (Snapshot)",
+                                    "identifier": "snapshot.date.mmddyyyy",
+                                    "isProduction": 1
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718/elements"
+                                },
+                                "content": {
+                                    "type": "GDC.time.day_us",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/658]",
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "isProduction": 1,
+                                    "identifier": "snapshot.date.yyyymmdd",
+                                    "title": "yyyy-mm-dd (Snapshot)",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/717",
+                                    "tags": "",
+                                    "summary": "DisplayForm yyyy-mm-dd.",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/717/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/657]",
+                                    "type": "GDC.time.day",
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
+                                    "default": 2
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "isProduction": 1,
+                                    "title": "m/d/yy (no leading zeroes) (Snapshot)",
+                                    "identifier": "snapshot.date.mdyy",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/721",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "tags": "",
+                                    "summary": "DisplayForm m/d/yy (no leading zeroes).",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "category": "attributeDisplayForm",
+                                    "deprecated": "0"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/721/elements"
+                                },
+                                "content": {
+                                    "default": 3,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
+                                    "type": "GDC.time.day_us_noleading",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/661]"
+                                }
+                            },
+                            {
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/720/elements"
+                                },
+                                "content": {
+                                    "default": 4,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
+                                    "type": "GDC.time.day_us_long",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/660]"
+                                },
+                                "meta": {
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "summary": "DisplayForm Long (Mon, Jan 1, 2010).",
+                                    "tags": "",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/720",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "title": "Long (Mon, Jan 1, 2010) (Snapshot)",
+                                    "identifier": "snapshot.date.long",
+                                    "isProduction": 1
+                                }
+                            },
+                            {
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/716/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/656]",
+                                    "type": "GDC.time.day_eu",
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
+                                    "default": 5
+                                },
+                                "meta": {
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "category": "attributeDisplayForm",
+                                    "deprecated": "0",
+                                    "tags": "",
+                                    "summary": "DisplayForm dd/mm/yyyy.",
+                                    "updated": "2019-12-10 14:25:36",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/716",
+                                    "isProduction": 1,
+                                    "identifier": "snapshot.date.ddmmyyyy",
+                                    "title": "dd/mm/yyyy (Snapshot)"
+                                }
+                            },
+                            {
+                                "content": {
+                                    "default": 6,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
+                                    "type": "GDC.time.day_iso",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/659]"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/719/elements"
+                                },
+                                "meta": {
+                                    "updated": "2019-12-10 14:25:36",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/719",
+                                    "isProduction": 1,
+                                    "identifier": "snapshot.date.eddmmyyyy",
+                                    "title": "dd-mm-yyyy (Snapshot)",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm dd-mm-yyyy."
+                                }
+                            }
+                        ],
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/559",
+                        "type": "GDC.time.date",
+                        "sort": "pk",
+                        "fk": [
+                            {
+                                "multivalue": false,
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/184"
+                            }
+                        ],
+                        "direction": "asc"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "content": {
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "type": "GDC.time.year",
+                        "sort": "pk",
+                        "displayForms": [
+                            {
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/909]",
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1010/elements"
+                                },
+                                "meta": {
+                                    "summary": "DisplayForm Year.",
+                                    "tags": "",
+                                    "category": "attributeDisplayForm",
+                                    "deprecated": "0",
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "identifier": "timeline.aag81lMifn6q",
+                                    "title": "Year (Timeline)",
+                                    "isProduction": 1,
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1010"
+                                }
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1042",
+                        "fk": [
+                            {
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/956",
+                                "type": "col",
+                                "multivalue": false
+                            },
+                            {
+                                "multivalue": false,
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/964"
+                            },
+                            {
+                                "multivalue": false,
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/979"
+                            }
+                        ],
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/908" }],
+                        "direction": "asc"
+                    },
+                    "meta": {
+                        "title": "Year (Timeline)",
+                        "identifier": "timeline.year",
+                        "isProduction": 1,
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
+                        "updated": "2019-12-10 14:25:39",
+                        "summary": "Year",
+                        "tags": "date year",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "created": "2010-08-02 08:13:42",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "content": {
+                        "direction": "asc",
+                        "pk": [{ "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/910", "type": "col" }],
+                        "fk": [
+                            {
+                                "multivalue": false,
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/957"
+                            },
+                            {
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/963",
+                                "type": "col",
+                                "multivalue": false
+                            },
+                            {
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/978",
+                                "type": "col",
+                                "multivalue": false
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1042",
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm default.",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1011",
+                                    "isProduction": 1,
+                                    "identifier": "timeline.aam81lMifn6q",
+                                    "title": "default (Timeline)"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/911]",
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/993"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1011/elements"
+                                }
+                            }
+                        ],
+                        "type": "GDC.time.quarter_in_year",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "sort": "pk"
+                    },
+                    "meta": {
+                        "summary": "Generic Quarter (Q1-Q4)",
+                        "tags": "date quarter year",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "title": "Quarter (Timeline)",
+                        "identifier": "timeline.quarter.in.year",
+                        "isProduction": 1,
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/993",
+                        "updated": "2019-12-10 14:25:39"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "meta": {
+                        "updated": "2019-12-10 14:25:39",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
+                        "isProduction": 1,
+                        "identifier": "timeline.week",
+                        "title": "Week (Sun-Sat)/Year (Timeline)",
+                        "created": "2010-08-02 08:13:42",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "tags": "date week",
+                        "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010)."
+                    },
+                    "content": {
+                        "pk": [{ "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/912", "type": "col" }],
+                        "direction": "asc",
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "identifier": "timeline.aaA81lMifn6q",
+                                    "title": "Week #/Year (W1/2010) (Timeline)",
+                                    "isProduction": 1,
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1016",
+                                    "summary": "DisplayForm Week #/Year (W1/2010).",
+                                    "tags": "",
+                                    "category": "attributeDisplayForm",
+                                    "deprecated": "0",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1016/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/917]",
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
+                                    "default": 1
+                                }
+                            },
+                            {
+                                "content": {
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
+                                    "default": 2,
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/915]"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1014/elements"
+                                },
+                                "meta": {
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1014",
+                                    "identifier": "timeline.aaw81lMifn6q",
+                                    "title": "Week Starting (Timeline)",
+                                    "isProduction": 1,
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "summary": "DisplayForm Week Starting.",
+                                    "tags": ""
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1013",
+                                    "identifier": "timeline.aau81lMifn6q",
+                                    "title": "From - To (Timeline)",
+                                    "isProduction": 1,
+                                    "category": "attributeDisplayForm",
+                                    "deprecated": "0",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "summary": "DisplayForm From - To.",
+                                    "tags": ""
+                                },
+                                "content": {
+                                    "default": 3,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/914]"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1013/elements"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "isProduction": 1,
+                                    "identifier": "timeline.aay81lMifn6q",
+                                    "title": "Week #/Year (Cont.) (Timeline)",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1015",
+                                    "tags": "",
+                                    "summary": "DisplayForm Week #/Year (Cont.).",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1015/elements"
+                                },
+                                "content": {
+                                    "default": 5,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/916]"
+                                }
+                            },
+                            {
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1017/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/918]",
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
+                                    "default": 6
+                                },
+                                "meta": {
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm Wk/Qtr/Year (Cont.).",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1017",
+                                    "isProduction": 1,
+                                    "identifier": "timeline.aaC81lMifn6q",
+                                    "title": "Wk/Qtr/Year (Cont.) (Timeline)"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "isProduction": 1,
+                                    "identifier": "timeline.aas81lMifn6q",
+                                    "title": "Wk/Qtr/Year (Timeline)",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1012",
+                                    "tags": "",
+                                    "summary": "DisplayForm Wk/Qtr/Year.",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "category": "attributeDisplayForm",
+                                    "deprecated": "0"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/913]",
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
+                                    "default": 7
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1012/elements"
+                                }
+                            }
+                        ],
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "type": "GDC.time.week_us",
+                        "sort": "pk",
+                        "fk": [
+                            {
+                                "multivalue": false,
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/980",
+                                "type": "col"
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "meta": {
+                        "isProduction": 1,
+                        "title": "Week (Sun-Sat) (Timeline)",
+                        "identifier": "timeline.week.in.year",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/995",
+                        "updated": "2019-12-10 14:25:39",
+                        "tags": "date week year",
+                        "summary": "Generic Week based on US Weeks (Sun-Sat)",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "deprecated": "0",
+                        "category": "attribute"
+                    },
+                    "content": {
+                        "direction": "asc",
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/919" }],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
+                        "fk": [
+                            {
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/982",
+                                "type": "col",
+                                "multivalue": false
+                            }
+                        ],
+                        "sort": "pk",
+                        "type": "GDC.time.week_in_year",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "displayForms": [
+                            {
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1018/elements"
+                                },
+                                "content": {
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/995",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/920]"
+                                },
+                                "meta": {
+                                    "summary": "DisplayForm Number US.",
+                                    "tags": "",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "title": "Number US (Timeline)",
+                                    "identifier": "timeline.aaI81lMifn6q",
+                                    "isProduction": 1,
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1018",
+                                    "updated": "2019-12-10 14:25:39"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "meta": {
+                        "tags": "date quarter week",
+                        "summary": "Generic Week of Quarter based on US Weeks (W1, ..., W14)",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "isProduction": 1,
+                        "identifier": "timeline.week.in.quarter",
+                        "title": "Week (Sun-Sat) of Qtr (Timeline)",
+                        "updated": "2019-12-10 14:25:39",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/996"
+                    },
+                    "content": {
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/921" }],
+                        "direction": "asc",
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "summary": "DisplayForm Number US.",
+                                    "tags": "",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1019",
+                                    "identifier": "timeline.aaO81lMifn6q",
+                                    "title": "Number US (Timeline)",
+                                    "isProduction": 1
+                                },
+                                "content": {
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/996",
+                                    "default": 1,
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/922]"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1019/elements"
+                                }
+                            }
+                        ],
+                        "type": "GDC.time.week_in_quarter",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "sort": "pk",
+                        "fk": [
+                            {
+                                "multivalue": false,
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/981"
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "content": {
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1043",
+                        "fk": [
+                            {
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/960",
+                                "type": "col",
+                                "multivalue": false
+                            },
+                            {
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/975",
+                                "multivalue": false
+                            }
+                        ],
+                        "sort": "pk",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "type": "GDC.time.month_in_year",
+                        "displayForms": [
+                            {
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1028/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/935]",
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1000"
+                                },
+                                "meta": {
+                                    "summary": "DisplayForm Short (Jan).",
+                                    "tags": "",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "title": "Short (Jan) (Timeline)",
+                                    "identifier": "timeline.abm81lMifn6q",
+                                    "isProduction": 1,
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1028",
+                                    "updated": "2019-12-10 14:25:39"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1031",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "isProduction": 1,
+                                    "title": "Long (January) (Timeline)",
+                                    "identifier": "timeline.abs81lMifn6q",
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm Long (January)."
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1031/elements"
+                                },
+                                "content": {
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1000",
+                                    "default": 2,
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/938]"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "tags": "",
+                                    "summary": "DisplayForm Number (M1).",
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "isProduction": 1,
+                                    "title": "Number (M1) (Timeline)",
+                                    "identifier": "timeline.abq81lMifn6q",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1030",
+                                    "updated": "2019-12-10 14:25:39"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1030/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/937]",
+                                    "default": 3,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1000"
+                                }
+                            },
+                            {
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/936]",
+                                    "default": 4,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1000"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1029/elements"
+                                },
+                                "meta": {
+                                    "tags": "",
+                                    "summary": "DisplayForm M/Q (M1/Q1).",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "isProduction": 1,
+                                    "identifier": "timeline.abo81lMifn6q",
+                                    "title": "M/Q (M1/Q1) (Timeline)",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1029"
+                                }
+                            }
+                        ],
+                        "direction": "asc",
+                        "pk": [{ "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/934", "type": "col" }]
+                    },
+                    "meta": {
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "summary": "Generic Month",
+                        "tags": "date month year",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1000",
+                        "updated": "2019-12-10 14:25:39",
+                        "title": "Month (Timeline)",
+                        "identifier": "timeline.month.in.year",
+                        "isProduction": 1
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "meta": {
+                        "tags": "date month quarter",
+                        "summary": "Generic month of quarter (M1, M2, M3)",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "isProduction": 1,
+                        "title": "Month of Quarter (Timeline)",
+                        "identifier": "timeline.month.in.quarter",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1001",
+                        "updated": "2019-12-10 14:25:39"
+                    },
+                    "content": {
+                        "direction": "asc",
+                        "pk": [{ "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/939", "type": "col" }],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1043",
+                        "fk": [
+                            {
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/961",
+                                "multivalue": false
+                            },
+                            {
+                                "multivalue": false,
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/976"
+                            }
+                        ],
+                        "type": "GDC.time.month_in_quarter",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "sort": "pk",
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1032",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "isProduction": 1,
+                                    "title": "Number (Timeline)",
+                                    "identifier": "timeline.aby81lMifn6q",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "category": "attributeDisplayForm",
+                                    "deprecated": "0",
+                                    "tags": "",
+                                    "summary": "DisplayForm Number."
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/940]",
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1001",
+                                    "default": 1
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1032/elements"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "content": {
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/941" }],
+                        "direction": "asc",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "type": "GDC.time.day_in_year",
+                        "sort": "pk",
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm default.",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1033",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "isProduction": 1,
+                                    "title": "default (Timeline)",
+                                    "identifier": "timeline.abE81lMifn6q"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1033/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/942]",
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1002",
+                                    "default": 1
+                                }
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
+                        "fk": [
+                            {
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/973",
+                                "type": "col",
+                                "multivalue": false
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "isProduction": 1,
+                        "title": "Day of Year (Timeline)",
+                        "identifier": "timeline.day.in.year",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1002",
+                        "updated": "2019-12-10 14:25:39",
+                        "tags": "date day year",
+                        "summary": "Generic Day of the Year (D1, D2, ... , D365)",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "deprecated": "0",
+                        "category": "attribute"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "content": {
+                        "fk": [
+                            {
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/971",
+                                "type": "col",
+                                "multivalue": false
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "summary": "DisplayForm Short (Sun).",
+                                    "tags": "",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1034",
+                                    "identifier": "timeline.abK81lMifn6q",
+                                    "title": "Short (Sun) (Timeline)",
+                                    "isProduction": 1
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1034/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/944]",
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1003"
+                                }
+                            },
+                            {
+                                "content": {
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1003",
+                                    "default": 2,
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/946]"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1036/elements"
+                                },
+                                "meta": {
+                                    "summary": "DisplayForm Long (Sunday).",
+                                    "tags": "",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "identifier": "timeline.abO81lMifn6q",
+                                    "title": "Long (Sunday) (Timeline)",
+                                    "isProduction": 1,
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1036"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "identifier": "timeline.abM81lMifn6q",
+                                    "title": "Number (1=Sunday) (Timeline)",
+                                    "isProduction": 1,
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1035",
+                                    "summary": "DisplayForm Number (1=Sunday).",
+                                    "tags": "",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42"
+                                },
+                                "content": {
+                                    "default": 3,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1003",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/945]"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1035/elements"
+                                }
+                            }
+                        ],
+                        "sort": "pk",
+                        "type": "GDC.time.day_in_week",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "direction": "asc",
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/943" }]
+                    },
+                    "meta": {
+                        "updated": "2019-12-10 14:25:39",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1003",
+                        "identifier": "timeline.day.in.week",
+                        "title": "Day of Week (Sun-Sat) (Timeline)",
+                        "isProduction": 1,
+                        "category": "attribute",
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "summary": "Generic Day of the Week based on US Week (Sun-Sat)",
+                        "tags": "date day week"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "content": {
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/951" }],
+                        "direction": "asc",
+                        "sort": "pk",
+                        "type": "GDC.time.day_in_quarter",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "isProduction": 1,
+                                    "identifier": "timeline.ab481lMifn6q",
+                                    "title": "default (Timeline)",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1040",
+                                    "tags": "",
+                                    "summary": "DisplayForm default.",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "category": "attributeDisplayForm",
+                                    "deprecated": "0"
+                                },
+                                "content": {
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1005",
+                                    "default": 1,
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/952]"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1040/elements"
+                                }
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
+                        "fk": [
+                            {
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/970",
+                                "type": "col",
+                                "multivalue": false
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1005",
+                        "updated": "2019-12-10 14:25:39",
+                        "isProduction": 1,
+                        "title": "Day of Quarter (Timeline)",
+                        "identifier": "timeline.day.in.quarter",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "tags": "date day quarter",
+                        "summary": "Generic day of quarter (D1, D2, ... , D92)"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "meta": {
+                        "tags": "date day month",
+                        "summary": "Generic day of month (D1, D2, ... , D31)",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "category": "attribute",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "title": "Day of Month (Timeline)",
+                        "identifier": "timeline.day.in.month",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1006",
+                        "updated": "2019-12-10 14:25:39"
+                    },
+                    "content": {
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/953" }],
+                        "direction": "asc",
+                        "sort": "pk",
+                        "type": "GDC.time.day_in_month",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1041",
+                                    "identifier": "timeline.aca81lMifn6q",
+                                    "title": "default (Timeline)",
+                                    "isProduction": 1,
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "summary": "DisplayForm default.",
+                                    "tags": ""
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1041/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/954]",
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1006",
+                                    "default": 1
+                                }
+                            }
+                        ],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
+                        "fk": [
+                            {
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/969",
+                                "type": "col",
+                                "multivalue": false
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "content": {
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1043",
+                        "fk": [
+                            {
+                                "multivalue": false,
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/962",
+                                "type": "col"
+                            },
+                            {
+                                "multivalue": false,
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/977"
+                            }
+                        ],
+                        "sort": "pk",
+                        "type": "GDC.time.quarter",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1042",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "title": "US Short (Timeline)",
+                                    "identifier": "timeline.aci81lMifn6q",
+                                    "isProduction": 1,
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "summary": "DisplayForm US Short.",
+                                    "tags": ""
+                                },
+                                "content": {
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007",
+                                    "default": 1,
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/958]"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1042/elements"
+                                }
+                            }
+                        ],
+                        "direction": "asc",
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/955" }]
+                    },
+                    "meta": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007",
+                        "updated": "2019-12-10 14:25:39",
+                        "isProduction": 1,
+                        "title": "Quarter/Year (Timeline)",
+                        "identifier": "timeline.quarter",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "tags": "date quarter",
+                        "summary": "Quarter and Year (Q1/2010)"
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "meta": {
+                        "summary": "Month and Year",
+                        "tags": "date month",
+                        "deprecated": "0",
+                        "category": "attribute",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "identifier": "timeline.month",
+                        "title": "Month/Year (Timeline)",
+                        "isProduction": 1,
+                        "updated": "2019-12-10 14:25:39",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008"
+                    },
+                    "content": {
+                        "direction": "asc",
+                        "pk": [{ "type": "col", "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/959" }],
+                        "drillDownStepAttributeDF": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
+                        "fk": [
+                            {
+                                "multivalue": false,
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/974",
+                                "type": "col"
+                            }
+                        ],
+                        "type": "GDC.time.month",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "sort": "pk",
+                        "displayForms": [
+                            {
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/965]",
+                                    "default": 1,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1043/elements"
+                                },
+                                "meta": {
+                                    "summary": "DisplayForm Short (Jan 2010).",
+                                    "tags": "",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "title": "Short (Jan 2010) (Timeline)",
+                                    "identifier": "timeline.act81lMifn6q",
+                                    "isProduction": 1,
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1043",
+                                    "updated": "2019-12-10 14:25:39"
+                                }
+                            },
+                            {
+                                "content": {
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008",
+                                    "default": 2,
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/967]"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1045/elements"
+                                },
+                                "meta": {
+                                    "summary": "DisplayForm Long (January 2010).",
+                                    "tags": "",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "created": "2010-08-02 08:13:42",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "title": "Long (January 2010) (Timeline)",
+                                    "identifier": "timeline.acx81lMifn6q",
+                                    "isProduction": 1,
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1045",
+                                    "updated": "2019-12-10 14:25:39"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1044",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "isProduction": 1,
+                                    "title": "Number (1/2010) (Timeline)",
+                                    "identifier": "timeline.acv81lMifn6q",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm Number (1/2010)."
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1044/elements"
+                                },
+                                "content": {
+                                    "default": 3,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/966]"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "attribute": {
+                    "content": {
+                        "direction": "asc",
+                        "fk": [
+                            {
+                                "type": "col",
+                                "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/168",
+                                "multivalue": false
+                            }
+                        ],
+                        "displayForms": [
+                            {
+                                "meta": {
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "isProduction": 1,
+                                    "title": "mm/dd/yyyy (Timeline)",
+                                    "identifier": "timeline.date.mmddyyyy",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "tags": "",
+                                    "summary": "DisplayForm mm/dd/yyyy."
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048/elements"
+                                },
+                                "content": {
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/988]",
+                                    "type": "GDC.time.day_us",
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
+                                    "default": 1
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "summary": "DisplayForm yyyy-mm-dd.",
+                                    "tags": "",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1047",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "title": "yyyy-mm-dd (Timeline)",
+                                    "identifier": "timeline.date.yyyymmdd",
+                                    "isProduction": 1
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1047/elements"
+                                },
+                                "content": {
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
+                                    "default": 2,
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/987]",
+                                    "type": "GDC.time.day"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1051",
+                                    "identifier": "timeline.date.mdyy",
+                                    "title": "m/d/yy (no leading zeroes) (Timeline)",
+                                    "isProduction": 1,
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "summary": "DisplayForm m/d/yy (no leading zeroes).",
+                                    "tags": ""
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1051/elements"
+                                },
+                                "content": {
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
+                                    "default": 3,
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/991]",
+                                    "type": "GDC.time.day_us_noleading"
+                                }
+                            },
+                            {
+                                "content": {
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
+                                    "default": 4,
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/990]",
+                                    "type": "GDC.time.day_us_long"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1050/elements"
+                                },
+                                "meta": {
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "category": "attributeDisplayForm",
+                                    "deprecated": "0",
+                                    "tags": "",
+                                    "summary": "DisplayForm Long (Mon, Jan 1, 2010).",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1050",
+                                    "isProduction": 1,
+                                    "identifier": "timeline.date.long",
+                                    "title": "Long (Mon, Jan 1, 2010) (Timeline)"
+                                }
+                            },
+                            {
+                                "content": {
+                                    "type": "GDC.time.day_eu",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/986]",
+                                    "default": 5,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009"
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1046/elements"
+                                },
+                                "meta": {
+                                    "isProduction": 1,
+                                    "title": "dd/mm/yyyy (Timeline)",
+                                    "identifier": "timeline.date.ddmmyyyy",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1046",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "tags": "",
+                                    "summary": "DisplayForm dd/mm/yyyy.",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm"
+                                }
+                            },
+                            {
+                                "meta": {
+                                    "deprecated": "0",
+                                    "category": "attributeDisplayForm",
+                                    "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "created": "2010-08-02 08:13:42",
+                                    "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                                    "summary": "DisplayForm dd-mm-yyyy.",
+                                    "tags": "",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1049",
+                                    "updated": "2019-12-10 14:25:39",
+                                    "title": "dd-mm-yyyy (Timeline)",
+                                    "identifier": "timeline.date.eddmmyyyy",
+                                    "isProduction": 1
+                                },
+                                "links": {
+                                    "elements": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1049/elements"
+                                },
+                                "content": {
+                                    "type": "GDC.time.day_iso",
+                                    "expression": "[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/989]",
+                                    "default": 6,
+                                    "formOf": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009"
+                                }
+                            }
+                        ],
+                        "pk": [{ "data": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/968", "type": "col" }],
+                        "sort": "pk",
+                        "dimension": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/889",
+                        "type": "GDC.time.date"
+                    },
+                    "meta": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
+                        "updated": "2019-12-10 14:25:40",
+                        "isProduction": 1,
+                        "title": "Date (Timeline)",
+                        "identifier": "timeline.date",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2010-08-02 08:13:42",
+                        "category": "attribute",
+                        "deprecated": "0",
+                        "tags": "date",
+                        "summary": "Date"
+                    }
+                }
+            }
+        ]
+    }
+}

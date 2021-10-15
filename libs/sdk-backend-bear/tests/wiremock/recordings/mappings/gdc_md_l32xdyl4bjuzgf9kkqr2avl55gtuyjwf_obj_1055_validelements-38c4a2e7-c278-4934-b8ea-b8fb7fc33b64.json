@@ -1,0 +1,40 @@
+{
+    "id": "38c4a2e7-c278-4934-b8ea-b8fb7fc33b64",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1055_validelements",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055/validElements?limit=50&offset=0",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"validElementsRequest\":{\"uris\":[\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165847\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"validElements\":{\"items\":[{\"element\":{\"title\":\"Educationly\",\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165847\"}}],\"paging\":{\"count\":1,\"total\":\"1\",\"offset\":\"0\"},\"elementsMeta\":{\"order\":\"asc\",\"attribute\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054\",\"filter\":\"\",\"attributeDisplayForm\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055\"}}}",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:29:43 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "40",
+            "X-GDC-REQUEST": "ZhNfvi5IxF24mDsM",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "38c4a2e7-c278-4934-b8ea-b8fb7fc33b64",
+    "persistent": true,
+    "insertionIndex": 15
+}

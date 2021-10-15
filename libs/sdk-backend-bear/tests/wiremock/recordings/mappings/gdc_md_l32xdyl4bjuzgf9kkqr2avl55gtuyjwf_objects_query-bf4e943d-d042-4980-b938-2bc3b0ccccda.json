@@ -1,0 +1,33 @@
+{
+    "id": "bf4e943d-d042-4980-b938-2bc3b0ccccda",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_query",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/objects/query?category=visualizationClass&limit=50&deprecated=1",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_query-bf4e943d-d042-4980-b938-2bc3b0ccccda.json",
+        "headers": {
+            "date": "Wed, 13 Oct 2021 14:30:01 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "39",
+            "X-GDC-REQUEST": "yTOXZjRvgwYR8kRq",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "bf4e943d-d042-4980-b938-2bc3b0ccccda",
+    "persistent": true,
+    "insertionIndex": 34
+}

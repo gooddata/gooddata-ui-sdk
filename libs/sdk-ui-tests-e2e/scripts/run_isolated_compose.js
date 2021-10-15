@@ -23,7 +23,7 @@ const {
     saveRecordingsWorkspaceId,
 } = require("./recordings.js");
 const { runCypress } = require("./cypress.js");
-
+const { removeSensitiveData } = require("./remove_sensitive_data.js");
 const wiremockHost = "backend-mock:8080";
 
 async function main() {
@@ -81,6 +81,7 @@ async function main() {
             if (recording) {
                 await wiremockStopRecording(wiremockHost);
                 sanitizeCredentials();
+                removeSensitiveData();
             }
 
             childProcess.execSync(`node scripts/create_github_report.js`);
