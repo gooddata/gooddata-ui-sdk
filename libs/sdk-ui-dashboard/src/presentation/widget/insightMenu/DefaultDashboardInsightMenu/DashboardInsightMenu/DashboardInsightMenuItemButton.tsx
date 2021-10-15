@@ -7,7 +7,7 @@ import { IInsightMenuItemButton } from "../../types";
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr" }];
 
 export const DashboardInsightMenuItemButton: React.FC<Omit<IInsightMenuItemButton, "type">> = (props) => {
-    const { itemId, itemName, disabled, icon, onClick, tooltip } = props;
+    const { itemId, itemName, disabled, icon, onClick, tooltip, className } = props;
     const contentComponent = (
         // for JSX icons we need an extra gd-icon-wrapper class to align the icon and the text vertically
         <span className={cx({ "gd-icon-wrapper": icon && typeof icon !== "string" })}>
@@ -17,7 +17,11 @@ export const DashboardInsightMenuItemButton: React.FC<Omit<IInsightMenuItemButto
     );
 
     if (disabled) {
-        const button = <Item disabled={disabled}>{contentComponent}</Item>;
+        const button = (
+            <Item className={className} disabled={disabled}>
+                {contentComponent}
+            </Item>
+        );
 
         if (tooltip) {
             return (
@@ -36,7 +40,7 @@ export const DashboardInsightMenuItemButton: React.FC<Omit<IInsightMenuItemButto
         }
     } else {
         return (
-            <Item onClick={onClick} disabled={disabled}>
+            <Item className={className} onClick={onClick} disabled={disabled}>
                 {contentComponent}
             </Item>
         );
