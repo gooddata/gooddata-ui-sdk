@@ -6,6 +6,7 @@ const { ModuleFederationPlugin } = require("webpack").container;
 const { DefinePlugin, ProvidePlugin } = require("webpack");
 const path = require("path");
 const deps = require("./package.json").dependencies;
+// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const BACKEND_URL = "https://live-examples-proxy.herokuapp.com";
 const PORT = 3001;
@@ -91,11 +92,11 @@ module.exports = (_env, argv) => {
                     test: /\.(eot|woff|ttf|svg)/,
                     type: "asset/resource",
                 },
-                {
-                    // never tree shake sdk-ui-dashboard so that the version here is also used in the plugins
-                    test: (modulePath) => /sdk-ui-dashboard/.test(modulePath),
-                    sideEffects: true,
-                },
+                // {
+                //     // never tree shake sdk-ui-dashboard so that the version here is also used in the plugins
+                //     test: (modulePath) => /sdk-ui-dashboard/.test(modulePath),
+                //     sideEffects: true,
+                // },
                 !isProduction && {
                     test: /\.js$/,
                     enforce: "pre",
@@ -143,7 +144,8 @@ module.exports = (_env, argv) => {
                 SCOPE_NAME: JSON.stringify(SCOPE_NAME),
                 WORKSPACE: JSON.stringify(WORKSPACE),
             }),
-        ],
+            // process.env.BUNDLE_ANALYZER === "true" && new BundleAnalyzerPlugin(),
+        ].filter(Boolean),
     };
 
     return [

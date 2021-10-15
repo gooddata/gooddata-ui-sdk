@@ -1007,6 +1007,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "webpack-bundle-analyzer",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "webpack-cli",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
