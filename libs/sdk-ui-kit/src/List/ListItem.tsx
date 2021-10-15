@@ -44,6 +44,34 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
         this.state = { isOverflowed: false };
     }
 
+    public componentDidMount(): void {
+        this.checkOverflow();
+    }
+
+    public componentDidUpdate(): void {
+        this.checkOverflow();
+    }
+
+    private checkOverflow(): void {
+        if (this.titleRef.current) {
+            // Checks if ellipsis has been applied on title span
+            const isOverflowed = this.titleRef.current.offsetWidth < this.titleRef.current.scrollWidth;
+            if (isOverflowed !== this.state.isOverflowed) {
+                // eslint-disable-next-line react/no-did-mount-set-state
+                this.setState({
+                    isOverflowed,
+                });
+            }
+        }
+    }
+
+    private getClassNames = () => {
+        const { title, isSelected, className } = this.props;
+        const generatedSeleniumClass = `s-${stringUtils.simplifyText(title)}`;
+
+        return cx("gd-list-item", className, generatedSeleniumClass, { "is-selected": isSelected });
+    };
+
     public render(): JSX.Element {
         const { icon, onClick, onMouseOver, onMouseOut, type } = this.props;
 
@@ -68,26 +96,6 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
         );
     }
 
-    public componentDidMount(): void {
-        if (this.titleRef.current) {
-            // Checks if ellipsis has been applied on title span
-            const isOverflowed = this.titleRef.current.offsetWidth < this.titleRef.current.scrollWidth;
-            if (isOverflowed) {
-                // eslint-disable-next-line react/no-did-mount-set-state
-                this.setState({
-                    isOverflowed,
-                });
-            }
-        }
-    }
-
-    private getClassNames = () => {
-        const { title, isSelected, className } = this.props;
-        const generatedSeleniumClass = `s-${stringUtils.simplifyText(title)}`;
-
-        return cx("gd-list-item", className, generatedSeleniumClass, { "is-selected": isSelected });
-    };
-
     private renderTitle = () => {
         const { title } = this.props;
 
@@ -99,8 +107,11 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
                     {titleElement}
                     <Bubble
                         className="bubble-primary"
-                        alignPoints={[{ align: "cr cl" }]}
-                        arrowOffsets={{ "cr cl": [BUBBLE_OFFSET_X, 0] }}
+                        alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}
+                        arrowOffsets={{
+                            "cr cl": [BUBBLE_OFFSET_X, 0],
+                            "cl cr": [-BUBBLE_OFFSET_X, 0],
+                        }}
                     >
                         {title}
                     </Bubble>

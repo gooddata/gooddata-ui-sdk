@@ -2861,6 +2861,8 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     // (undocumented)
     componentDidMount(): void;
     // (undocumented)
+    componentDidUpdate(): void;
+    // (undocumented)
     render(): JSX.Element;
 }
 
