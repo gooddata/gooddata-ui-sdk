@@ -12,7 +12,7 @@
    * to temporarily restore the old behavior where everything must be rebuilt whenever pnpm-lock.json
    * is modified.
    */
-  "legacyIncrementalBuildDependencyDetection": true,
+  // "legacyIncrementalBuildDependencyDetection": true,
 
   /**
    * By default, rush passes --no-prefer-frozen-lockfile to 'pnpm install'.
