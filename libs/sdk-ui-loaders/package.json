@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-loaders",
-    "version": "8.7.0-alpha.26",
+    "version": "8.7.0-alpha.27",
     "description": "GoodData SDK Runtime Component Loaders",
     "repository": {
         "type": "git",
@@ -54,9 +54,9 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.26",
-        "@gooddata/sdk-model": "^8.7.0-alpha.26",
-        "@gooddata/sdk-ui": "^8.7.0-alpha.26",
+        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.27",
+        "@gooddata/sdk-model": "^8.7.0-alpha.27",
+        "@gooddata/sdk-ui": "^8.7.0-alpha.27",
         "lodash": "^4.17.19",
         "react-intl": "^3.6.0",
         "ts-invariant": "^0.7.3",
@@ -65,11 +65,11 @@
     "peerDependencies": {
         "react": "^16.10.0",
         "react-dom": "^16.10.0",
-        "@gooddata/sdk-ui-dashboard": "^8.7.0-alpha.26"
+        "@gooddata/sdk-ui-dashboard": "^8.7.0-alpha.27"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/sdk-ui-dashboard": "^8.7.0-alpha.26",
+        "@gooddata/sdk-ui-dashboard": "^8.7.0-alpha.27",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.18.4",
         "@types/enzyme-adapter-react-16": "^1.0.5",
