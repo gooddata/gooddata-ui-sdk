@@ -186,6 +186,7 @@ export class DashboardLoader implements IDashboardLoader {
             : clientWorkspaceDashboardFactory(engine.getDashboardComponent(), clientWorkspace);
 
         return {
+            ctx,
             engine,
             plugins: allPlugins,
             DashboardComponent,

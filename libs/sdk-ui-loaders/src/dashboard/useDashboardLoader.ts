@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IDashboardBasePropsForLoader, IDashboardLoadOptions } from "./types";
 import {
     IClientWorkspaceIdentifiers,
@@ -57,6 +57,20 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         config,
         permissions,
     };
+
+    useEffect(() => {
+        return () => {
+            if (!loadStatus || loadStatus.status !== "success") {
+                return;
+            }
+
+            const { ctx, plugins } = loadStatus.result;
+
+            plugins.forEach((plugin) => {
+                plugin.onPluginUnload?.(ctx);
+            });
+        };
+    }, []);
 
     const dashboardLoader = useMemo(() => {
         const extraPluginsArr = isArray(extraPlugins) ? extraPlugins : compact([extraPlugins]);

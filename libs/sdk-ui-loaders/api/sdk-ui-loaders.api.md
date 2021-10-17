@@ -4,6 +4,7 @@
 
 ```ts
 
+import { DashboardContext } from '@gooddata/sdk-ui-dashboard';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IClientWorkspaceIdentifiers } from '@gooddata/sdk-ui';
 import { IDashboardBaseProps } from '@gooddata/sdk-ui-dashboard';
@@ -42,6 +43,7 @@ export class DashboardLoader implements IDashboardLoader {
 
 // @alpha
 export type DashboardLoadResult = {
+    ctx: DashboardContext;
     engine: IDashboardEngine;
     DashboardComponent: React_2.ComponentType<IDashboardProps>;
     props: IDashboardProps;
