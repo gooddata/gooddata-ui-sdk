@@ -26,7 +26,7 @@ export function createRootEventEmitter(
     initialHandlers: DashboardEventHandler[] = [],
     dispatch: DashboardDispatch,
 ): EventEmitter {
-    let eventHandlers = initialHandlers;
+    let eventHandlers = [...initialHandlers];
 
     return {
         registerHandler: (handler) => {

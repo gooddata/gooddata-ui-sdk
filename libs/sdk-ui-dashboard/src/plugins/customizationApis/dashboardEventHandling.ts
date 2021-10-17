@@ -40,7 +40,10 @@ function createEvalFn(eventType: DashboardEventType | string | "*"): DashboardEv
  * @internal
  */
 export class DefaultDashboardEventHandling implements IDashboardEventHandling {
-    private registeredHandlers: DashboardEventHandler[] = [];
+    private handlers: DashboardEventHandler[] = [];
+    private initialHandlersSent: boolean = false;
+    private pendingRegistration: DashboardEventHandler[] = [];
+    private pendingUnregistration: DashboardEventHandler[] = [];
     private stateChangesChain: DashboardStateChangeCallback[] = [];
     private evalCache: EvalFnCache = new Map();
 
@@ -68,6 +71,12 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
     ) => {
         this.registerHandler = register;
         this.unregisterHandler = unregister;
+
+        this.pendingRegistration.forEach(this.registerHandler);
+        this.pendingUnregistration.forEach(this.unregisterHandler);
+
+        this.pendingRegistration = [];
+        this.pendingUnregistration = [];
     };
 
     /*
@@ -114,27 +123,82 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
             handler: callback,
         };
 
-        return this.removeEventCustomHandler(handler);
+        return this.removeCustomEventHandler(handler);
+    };
+
+    private doRegister = (handler: DashboardEventHandler) => {
+        // if engine + plugin initialization is not yet complete, there is nothing extra that has to
+        // be done because all known handlers will be sent over as initial event handlers
+        if (!this.initialHandlersSent) {
+            return;
+        }
+
+        // once the initialization is done, code must register or unregister handlers using functions
+        // provided by the dashboard component's event emitter
+
+        if (this.registerHandler === undefined) {
+            // meh, dashboard component's eventing is not yet up, code must hold onto the handlers so
+            // that they can be registered immediately after it comes up
+            this.pendingRegistration.push(handler);
+
+            const pendingIdx = findIndex(this.pendingUnregistration, sameHandlerPredicateFactory(handler));
+            if (pendingIdx > -1) {
+                this.pendingUnregistration.splice(pendingIdx, 1);
+            }
+        } else {
+            // otherwise can proceed to register the handler with the dashboard
+            this.registerHandler(handler);
+        }
     };
 
     public addCustomEventHandler = (handler: DashboardEventHandler): IDashboardEventHandling => {
-        if (findIndex(this.registeredHandlers, sameHandlerPredicateFactory(handler)) > -1) {
+        if (findIndex(this.handlers, sameHandlerPredicateFactory(handler)) > -1) {
             // eslint-disable-next-line no-console
             console.warn(`Attempting double-registration of the same handler ${handler}. Ignoring.`);
 
             return this;
         }
 
-        // keep track of registered handlers locally
-        this.registeredHandlers.push(handler);
-        // and if the dashboard is already initialized
-        this.registerHandler?.(handler);
+        // keep track of all known handlers locally
+        this.handlers.push(handler);
+        // and if needed register handler with dashboard component event emitter
+        this.doRegister(handler);
 
         return this;
     };
 
-    public removeEventCustomHandler = (handler: DashboardEventHandler): IDashboardEventHandling => {
-        const idx = findIndex(this.registeredHandlers, sameHandlerPredicateFactory(handler));
+    private doUnregister = (handler: DashboardEventHandler) => {
+        // if engine + plugin initialization is not yet complete, there is nothing extra that has to
+        // be done because all known handlers will be sent over as initial event handlers
+        if (!this.initialHandlersSent) {
+            return;
+        }
+
+        // same dilemma as with the registration; once the initialization is done, code must register or
+        // unregister handlers using functions provided by the dashboard component's event emitter
+
+        if (this.unregisterHandler === undefined) {
+            // meh, dashboard component's eventing is not yet up; now the course of action depends on
+            // whether the handler to remove was part of handlers added during initialization or
+            // after the initialization
+            const pendingIdx = findIndex(this.pendingRegistration, sameHandlerPredicateFactory(handler));
+
+            if (pendingIdx > -1) {
+                // handler to remove was added after the initialization; all that is needed is to
+                // remove it from the list of handlers that are pending the registration
+                this.pendingRegistration.splice(pendingIdx, 1);
+            } else {
+                // handler to remove was among the initially added handler; no other way than to
+                // unregister the handler once the eventing comes up
+                this.pendingUnregistration.push(handler);
+            }
+        } else {
+            this.unregisterHandler(handler);
+        }
+    };
+
+    public removeCustomEventHandler = (handler: DashboardEventHandler): IDashboardEventHandling => {
+        const idx = findIndex(this.handlers, sameHandlerPredicateFactory(handler));
 
         if (idx === -1) {
             // eslint-disable-next-line no-console
@@ -143,15 +207,14 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
             return this;
         }
 
-        // get the handler that was originally registered and is effectivelly the same as the handler
+        // get the handler that was originally registered and is effectively the same as the handler
         // to remove
-        const actuallyRegistered = this.registeredHandlers[idx];
-        // remove the handler from list of registered handlers; this is all that is needed if the
+        const actuallyRegistered = this.handlers[idx];
+        // remove the handler from list of all known handlers; this is all that is needed if the
         // dashboard is not yet initialized
-        this.registeredHandlers.splice(idx, 1);
-        // and if the dashboard is already initialized, also unregister the handler from the dashboard component
-        // itself
-        this.unregisterHandler?.(actuallyRegistered);
+        this.handlers.splice(idx, 1);
+        // and if needed unregister handler from dashboard components event emitter
+        this.doUnregister(actuallyRegistered);
 
         return this;
     };
@@ -185,8 +248,14 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
     };
 
     public getDashboardEventing(): Required<IDashboardEventing> {
+        // handlers that were registered until this method is called will be part of the initial
+        // event handlers; they will be registered with the event emitter immediately when the dashboard
+        // component infrastructure gets created
+
+        this.initialHandlersSent = true;
+
         return {
-            eventHandlers: [...this.registeredHandlers],
+            eventHandlers: [...this.handlers],
             onStateChange: this.rootStateChangesCallback,
             onEventingInitialized: this.onEventingInitialized,
         };
