@@ -396,6 +396,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
 export abstract class DecoratedSecuritySettingsService implements ISecuritySettingsService {
     protected constructor(decorated: ISecuritySettingsService);
     // (undocumented)
+    isDashboardPluginUrlValid(url: string, workspace: string): Promise<boolean>;
+    // (undocumented)
     isUrlValid(url: string, context: ValidationContext): Promise<boolean>;
     // (undocumented)
     scope: string;
@@ -821,6 +823,9 @@ export type TelemetryData = {
 
 // @public
 export function transformResultHeaders(resultHeaders: IResultHeader[][][], resultHeaderTransformer?: ResultHeaderTransformer, postProcessing?: IPostProcessing): IResultHeader[][][];
+
+// @alpha
+export function validatePluginUrlIsSane(url: string): string | undefined;
 
 // @alpha
 export type ValueOrUpdateCallback<TValue> = TValue | ((value: TValue) => TValue);

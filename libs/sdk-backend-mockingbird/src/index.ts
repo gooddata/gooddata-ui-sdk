@@ -26,6 +26,7 @@ export {
     RecordedRefType,
     SecuritySettingsUrlValidator,
     SecuritySettingsOrganizationScope,
+    SecuritySettingsPluginUrlValidator,
 } from "./recordedBackend/types";
 
 export {

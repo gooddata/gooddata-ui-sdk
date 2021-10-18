@@ -300,6 +300,23 @@ class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
         return result;
     };
 
+    public isDashboardPluginUrlValid = (url: string, workspace: string): Promise<boolean> => {
+        const scope = `plugins_${workspace}`;
+        const cache = this.getOrCreateSecuritySettingsEntry(scope).valid;
+        let result = cache.get(url);
+
+        if (!result) {
+            result = super.isDashboardPluginUrlValid(url, workspace).catch((e) => {
+                cache.del(url);
+                throw e;
+            });
+
+            cache.set(url, result);
+        }
+
+        return result;
+    };
+
     private getOrCreateSecuritySettingsEntry = (scope: string): SecuritySettingsCacheEntry => {
         const cache = this.ctx.caches.securitySettings!;
         let cacheEntry = cache.get(scope);

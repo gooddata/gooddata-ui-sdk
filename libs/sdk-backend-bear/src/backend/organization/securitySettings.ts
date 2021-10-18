@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-
+import { validatePluginUrlIsSane } from "@gooddata/sdk-backend-base";
 import { ISecuritySettingsService, ValidationContext } from "@gooddata/sdk-backend-spi";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
 
@@ -18,7 +18,7 @@ export class SecuritySettingsService implements ISecuritySettingsService {
      */
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly scope: string) {}
 
-    isUrlValid(url: string, context: ValidationContext): Promise<boolean> {
+    public isUrlValid = (url: string, context: ValidationContext): Promise<boolean> => {
         return this.authCall(async (sdk) =>
             sdk.xhr
                 .postParsed<IValidationResponse>("/gdc/securitySettings/validate", {
@@ -34,5 +34,25 @@ export class SecuritySettingsService implements ISecuritySettingsService {
                     return validationResponse.valid;
                 }),
         );
-    }
+    };
+
+    public isDashboardPluginUrlValid = async (url: string, workspace: string): Promise<boolean> => {
+        const sanitizationError = validatePluginUrlIsSane(url);
+
+        if (sanitizationError) {
+            // eslint-disable-next-line no-console
+            console.warn("Dashboard plugin URL is not valid: ", sanitizationError);
+
+            return false;
+        }
+
+        const setting = await this.authCall(async (sdk) => {
+            return sdk.project.getConfigItem(workspace, "dashboardPluginHosts");
+        });
+
+        const hostList = setting?.settingItem?.value ?? "";
+        const allowedHosts = hostList.split(";").map((entry) => entry.trim());
+
+        return allowedHosts.some((host) => url.startsWith(host));
+    };
 }

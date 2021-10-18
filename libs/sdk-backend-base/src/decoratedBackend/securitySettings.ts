@@ -15,4 +15,8 @@ export abstract class DecoratedSecuritySettingsService implements ISecuritySetti
     public isUrlValid(url: string, context: ValidationContext): Promise<boolean> {
         return this.decorated.isUrlValid(url, context);
     }
+
+    public isDashboardPluginUrlValid(url: string, workspace: string): Promise<boolean> {
+        return this.decorated.isDashboardPluginUrlValid(url, workspace);
+    }
 }

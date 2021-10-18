@@ -432,6 +432,9 @@ class DummyOrganization implements IOrganization {
             isUrlValid(_url: string, _context: ValidationContext): Promise<boolean> {
                 return Promise.resolve(true);
             },
+            isDashboardPluginUrlValid(_url: string, _workspace: string): Promise<boolean> {
+                return Promise.resolve(true);
+            },
         };
     }
 }
