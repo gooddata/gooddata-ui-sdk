@@ -14,7 +14,7 @@ function mockSensitiveData(accountSetting) {
     return modifiedAccountSetting;
 }
 
-(function removeSensitiveData() {
+function removeSensitiveData() {
     try {
         const accountProfileFiles = execSync("ls ./recordings/mappings/gdc_account_profile*").toString();
         const accountBootstrapFiles = execSync(
@@ -54,7 +54,7 @@ function mockSensitiveData(accountSetting) {
     }
 
     process.stdout.write(`Sensitive data were cleared\n`);
-})();
+}
 
 module.exports = {
     removeSensitiveData,
