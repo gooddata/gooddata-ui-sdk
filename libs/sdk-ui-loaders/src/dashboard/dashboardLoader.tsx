@@ -18,8 +18,15 @@ import { ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 import React from "react";
-import { noopDashboardPluginLoader, staticDashboardEngineLoader } from "./staticComponentLoaders";
+import {
+    noopDashboardPluginLoader,
+    staticDashboardEngineLoader,
+} from "./loadingStrategies/staticComponentLoaders";
 import { IDashboardBasePropsForLoader } from "./types";
+import {
+    adaptiveDashboardEngineLoader,
+    adaptiveDashboardPluginLoader,
+} from "./loadingStrategies/adaptiveComponentLoaders";
 
 /**
  * @alpha
@@ -50,6 +57,16 @@ export type DashboardLoaderConfig = {
     pluginLoader: DashboardPluginsLoader;
 };
 
+const StaticLoadStrategies: DashboardLoaderConfig = {
+    engineLoader: staticDashboardEngineLoader,
+    pluginLoader: noopDashboardPluginLoader,
+};
+
+const AdaptiveLoadStrategies: DashboardLoaderConfig = {
+    engineLoader: adaptiveDashboardEngineLoader,
+    pluginLoader: adaptiveDashboardPluginLoader,
+};
+
 /**
  * @alpha
  */
@@ -63,16 +80,12 @@ export class DashboardLoader implements IDashboardLoader {
         this.config = config;
     }
 
-    public static dev(): DashboardLoader {
-        return new DashboardLoader({
-            engineLoader: staticDashboardEngineLoader,
-            pluginLoader: noopDashboardPluginLoader,
-        });
+    public static staticOnly(): DashboardLoader {
+        return new DashboardLoader(StaticLoadStrategies);
     }
 
-    public static prod(): DashboardLoader {
-        // TODO: implement runtime-loaders & integrate them here
-        throw new Error("not implemented");
+    public static adaptive(): DashboardLoader {
+        return new DashboardLoader(AdaptiveLoadStrategies);
     }
 
     public onBackend = (backend: IAnalyticalBackend): IDashboardLoader => {
@@ -135,6 +148,22 @@ export class DashboardLoader implements IDashboardLoader {
         return [resolvedClientWorkspace.workspace, resolvedClientWorkspace];
     };
 
+    private loadParts = async (
+        ctx: DashboardContext,
+        dashboardWithPlugins: IDashboardWithReferences,
+        config: DashboardLoaderConfig = this.config,
+    ): Promise<[IDashboardEngine, IDashboardPluginContract_V1[]]> => {
+        const { engineLoader, pluginLoader } = config;
+        const [engine, plugins] = await Promise.all([
+            engineLoader(dashboardWithPlugins),
+            pluginLoader(ctx, dashboardWithPlugins),
+        ]);
+        const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
+        const allPlugins = [...plugins, ...additionalPlugins];
+
+        return [engine, allPlugins];
+    };
+
     public load = async (): Promise<DashboardLoadResult> => {
         const { backend, dashboard, filterContextRef } = this.baseProps;
 
@@ -151,7 +180,7 @@ export class DashboardLoader implements IDashboardLoader {
             .workspace(workspace)
             .dashboards()
             .getDashboardWithReferences(dashboard, filterContextRef, undefined, ["dashboardPlugin"]);
-        const { engineLoader, pluginLoader } = this.config;
+
         const ctx: DashboardContext = {
             backend,
             workspace,
@@ -161,14 +190,23 @@ export class DashboardLoader implements IDashboardLoader {
             clientId: clientWorkspace?.client,
         };
 
-        const [engine, plugins] = await Promise.all([
-            engineLoader(dashboardWithPlugins),
-            pluginLoader(ctx, dashboardWithPlugins),
-        ]);
-        const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
+        const pluginsAreValid = false;
+        // TODO: finish this
+        // const pluginsAreValid = validatePluginsBeforeLoading(ctx, dashboardWithPlugins);
+        // if (!pluginsAreValid) {
+        //     // eslint-disable-next-line no-console
+        //     console.error("Dashboard is configured with plugins that contain invalid URLs or " +
+        //         "are not located on allowed hosts. Loader is falling back to the " +
+        //         "statically linked dashboard without any external plugins.");
+        // }
 
-        const allPlugins = [...plugins, ...additionalPlugins];
-        const extensionProps: IDashboardExtensionProps = engine.initializePlugins(ctx, allPlugins);
+        const [engine, plugins] = await this.loadParts(
+            ctx,
+            dashboardWithPlugins,
+            !pluginsAreValid ? StaticLoadStrategies : this.config,
+        );
+        const extensionProps: IDashboardExtensionProps = engine.initializePlugins(ctx, plugins);
+
         const props: IDashboardProps = {
             ...this.baseProps,
             ...extensionProps,
@@ -186,8 +224,9 @@ export class DashboardLoader implements IDashboardLoader {
             : clientWorkspaceDashboardFactory(engine.getDashboardComponent(), clientWorkspace);
 
         return {
+            ctx,
             engine,
-            plugins: allPlugins,
+            plugins,
             DashboardComponent,
             props,
         };

@@ -312,6 +312,8 @@ export interface IDashboardEventHandling {
      * Adds a custom event handler. This is a lower-level API where the handler can include both the function to
      * evaluate events and the function to trigger when the evaluation succeeds.
      *
+     * Note: attempts to register same handler twice will be ignored.
+     *
      * @param handler - event handler to add
      * @returns self, for call chaining sakes
      */
@@ -324,7 +326,7 @@ export interface IDashboardEventHandling {
      * @param handler - event handler to remove
      * @returns self, for call chaining sakes
      */
-    removeEventCustomHandler(handler: DashboardEventHandler): IDashboardEventHandling;
+    removeCustomEventHandler(handler: DashboardEventHandler): IDashboardEventHandling;
 
     /**
      * Subscribe to state changes of the dashboard.

@@ -4,6 +4,7 @@
 
 ```ts
 
+import { DashboardContext } from '@gooddata/sdk-ui-dashboard';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IClientWorkspaceIdentifiers } from '@gooddata/sdk-ui';
 import { IDashboardBaseProps } from '@gooddata/sdk-ui-dashboard';
@@ -19,7 +20,7 @@ import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 // @alpha (undocumented)
 export class DashboardLoader implements IDashboardLoader {
     // (undocumented)
-    static dev(): DashboardLoader;
+    static adaptive(): DashboardLoader;
     // (undocumented)
     forDashboard: (dashboardRef: ObjRef) => IDashboardLoader;
     // (undocumented)
@@ -31,7 +32,7 @@ export class DashboardLoader implements IDashboardLoader {
     // (undocumented)
     onBackend: (backend: IAnalyticalBackend) => IDashboardLoader;
     // (undocumented)
-    static prod(): DashboardLoader;
+    static staticOnly(): DashboardLoader;
     // (undocumented)
     withBaseProps: (props: IDashboardBasePropsForLoader) => IDashboardLoader;
     // (undocumented)
@@ -42,6 +43,7 @@ export class DashboardLoader implements IDashboardLoader {
 
 // @alpha
 export type DashboardLoadResult = {
+    ctx: DashboardContext;
     engine: IDashboardEngine;
     DashboardComponent: React_2.ComponentType<IDashboardProps>;
     props: IDashboardProps;
@@ -75,7 +77,7 @@ export interface IDashboardLoader {
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     clientWorkspace?: IClientWorkspaceIdentifiers;
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
-    mode?: "prod" | "dev";
+    loadingMode?: "adaptive" | "staticOnly";
 }
 
 // @alpha (undocumented)

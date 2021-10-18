@@ -85,7 +85,7 @@ describe("dashboard event handling", () => {
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
-            Facade.removeEventCustomHandler(eventHandler);
+            Facade.removeCustomEventHandler(eventHandler);
             const { eventHandlers } = Facade.getDashboardEventing();
 
             expect(eventHandlers).toEqual([]);
@@ -95,7 +95,7 @@ describe("dashboard event handling", () => {
             const handler = jest.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
-            Facade.removeEventCustomHandler(eventHandler);
+            Facade.removeCustomEventHandler(eventHandler);
             const { eventHandlers } = Facade.getDashboardEventing();
 
             expect(eventHandlers).toEqual([]);
@@ -207,7 +207,7 @@ describe("dashboard event handling", () => {
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
-            Facade.removeEventCustomHandler(eventHandler);
+            Facade.removeCustomEventHandler(eventHandler);
 
             expect(registerFn).toHaveBeenCalledTimes(1);
             expect(unregisterFn).toHaveBeenCalledTimes(1);
@@ -217,7 +217,7 @@ describe("dashboard event handling", () => {
             const handler = jest.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
-            Facade.removeEventCustomHandler(eventHandler);
+            Facade.removeCustomEventHandler(eventHandler);
             expect(unregisterFn).not.toHaveBeenCalled();
         });
 

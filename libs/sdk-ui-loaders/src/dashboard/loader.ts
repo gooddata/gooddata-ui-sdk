@@ -8,6 +8,7 @@ import {
     IDashboardProps,
     IDashboardPluginContract_V1,
     IDashboardBaseProps,
+    DashboardContext,
 } from "@gooddata/sdk-ui-dashboard";
 import { ObjRef } from "@gooddata/sdk-model";
 
@@ -18,6 +19,11 @@ import { ObjRef } from "@gooddata/sdk-model";
  * @alpha
  */
 export type DashboardLoadResult = {
+    /**
+     * Context in which the loaded dashboard operates.
+     */
+    ctx: DashboardContext;
+
     /**
      * Dashboard engine that was loaded.
      */

@@ -2144,7 +2144,7 @@ export interface IDashboardEvent<TPayload = any> {
 export interface IDashboardEventHandling {
     addCustomEventHandler(handler: DashboardEventHandler): IDashboardEventHandling;
     addEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(eventType: DashboardEventType | string | "*", callback: DashboardEventHandlerFn<TEvents>): IDashboardEventHandling;
-    removeEventCustomHandler(handler: DashboardEventHandler): IDashboardEventHandling;
+    removeCustomEventHandler(handler: DashboardEventHandler): IDashboardEventHandling;
     removeEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(eventType: DashboardEventType | string | "*", callback: DashboardEventHandlerFn<TEvents>): IDashboardEventHandling;
     subscribeToStateChanges(callback: DashboardStateChangeCallback): IDashboardEventHandling;
     unsubscribeFromStateChanges(callback: DashboardStateChangeCallback): IDashboardEventHandling;

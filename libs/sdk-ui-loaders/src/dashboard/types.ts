@@ -25,17 +25,30 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     /**
      * Loading mode to use.
      *
-     * In 'dev' mode, the loader expects that it is running inside plugin development toolkit that depends
-     * on `@gooddata/sdk-ui-dashboards` and that the plugin under development is linked using the `extraPlugins`
-     * property.
+     * `staticOnly` mode
      *
-     * In 'prod' mode, the loader will dynamically load the dashboard, find what plugins are used on the dashboard and
-     * then load all bundles with the appropriate engine version and with all the necessary plugins.
+     * The loader expects that it is running inside an application that depends on the `@gooddata/sdk-ui-dashboard`
+     * package. Furthermore the loader will initialize dashboard with only those plugins that are part of
+     * the application and passed via `extraPlugins` property. Plugins that are linked with the dashboard
+     * will be ignored.
      *
-     * The loading result is same regardless of the mode - it always includes everything that you need to
-     * render a dashboard in your application.
+     * This mode is suitable during plugin development
+     *
+     * `adaptive` mode
+     *
+     * In this mode, loader will first inspect the dashboard and then act based on the dashboard setup:
+     *
+     * -  If the dashboard stored on the analytical backend is configured to use some plugins, the loader will dynamically
+     *    load the dashboard engine required by those plugins and then dynamically load the plugins.
+     *    It will then initialize the dashboard engine with the loaded plugins and any plugins that are
+     *    passed via the `extraPlugins` property.
+     *
+     * -  If the dashboard is not configured to use any plugins, the loader will fall back to `staticOnly`
+     *    behavior.
+     *
+     * Default loadingMode is `adaptive`.
      */
-    mode?: "prod" | "dev";
+    loadingMode?: "adaptive" | "staticOnly";
 
     /**
      * Optionally specify client workspace identifiers to use in order to identify exact workspace to load
