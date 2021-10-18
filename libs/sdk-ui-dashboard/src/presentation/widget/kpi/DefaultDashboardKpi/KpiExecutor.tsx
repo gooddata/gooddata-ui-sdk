@@ -228,8 +228,6 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
             ? "error"
             : "idle";
 
-    const errorViewMessage = useMemo(() => intl.formatMessage({ id: "kpi.error.view" }), [intl]);
-
     return (
         <DashboardItemWithKpiAlert
             kpi={kpiWidget}
@@ -374,7 +372,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                         separators={separators}
                         enableCompactSize={enableCompactSize}
                         error={error}
-                        errorHelp={errorViewMessage}
+                        errorHelp={intl.formatMessage({ id: "kpi.error.view" })}
                         isLoading={props.isLoading}
                     />
                 );

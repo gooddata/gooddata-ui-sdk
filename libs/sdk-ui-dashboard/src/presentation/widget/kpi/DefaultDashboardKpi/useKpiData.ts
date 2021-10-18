@@ -25,6 +25,7 @@ import invariant from "ts-invariant";
 import { filterContextItemsToFiltersForWidget } from "../../../../converters";
 import { IDashboardFilter } from "../../../../types";
 import { useWidgetFiltersQuery } from "../../common";
+import { useMemo } from "react";
 
 interface IUseKpiDataConfig {
     kpiWidget?: IKpiWidget;
@@ -55,16 +56,18 @@ export function useKpiData({
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
 
-    const { result } = useWidgetFiltersQuery(
-        kpiWidget,
-        filters && kpiWidget && filterContextItemsToFiltersForWidget(filters, kpiWidget),
+    const convertedFilters = useMemo(
+        () => filters && kpiWidget && filterContextItemsToFiltersForWidget(filters, kpiWidget),
+        [filters, kpiWidget],
     );
+
+    const { status, result } = useWidgetFiltersQuery(kpiWidget, convertedFilters);
 
     // we only put IDashboardFilters in, so we must get IDashboardFilters out as well
     const effectiveFilters = result as IDashboardFilter[] | undefined;
 
     const promise =
-        kpiWidget && dashboardFilters && effectiveFilters
+        kpiWidget && dashboardFilters && effectiveFilters && status === "success"
             ? async (): Promise<IUseKpiDataResult> => {
                   invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
