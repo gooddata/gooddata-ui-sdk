@@ -14,15 +14,23 @@ import {
 export const HubspotConversionTouchPointDialog: React.FC<IHubspotConversionTouchPointDialogBaseProps> = (
     props,
 ) => {
+    const submitButtonClasses = `hs-button primary large ${props.submitButtonClass || "s-hs-submit"}`;
+
+    const onDialogSubmit = () => {
+        const submitBtn = document.getElementsByClassName(submitButtonClasses)[0] as HTMLInputElement;
+        submitBtn?.click();
+    };
+
     return (
         <Dialog
             displayCloseButton={true}
             onCancel={props.onClose}
-            submitOnEnterKey={false}
+            submitOnEnterKey={true}
+            onSubmit={onDialogSubmit}
             className="conversion-touch-point-dialog s-conversion-touch-point-dialog"
         >
             <HubspotProvider>
-                <HubspotConversionTouchPointDialogBase {...props} />
+                <HubspotConversionTouchPointDialogBase {...props} submitButtonClass={submitButtonClasses} />
             </HubspotProvider>
         </Dialog>
     );

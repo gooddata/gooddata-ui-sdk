@@ -1332,6 +1332,7 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
     onFormSubmitted?: () => void;
     selectedValue?: string;
     showCancelButton?: boolean;
+    submitButtonClass?: string;
     targetId?: string;
     values?: IHubspotFormValue;
 }

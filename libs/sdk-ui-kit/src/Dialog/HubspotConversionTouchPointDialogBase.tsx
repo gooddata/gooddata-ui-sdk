@@ -93,6 +93,11 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
     targetId?: string;
 
     /**
+     * The custom css class for submit button
+     */
+    submitButtonClass?: string;
+
+    /**
      * Close dialog action
      */
     onClose: () => void;
@@ -117,6 +122,7 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
         cancelButtonText,
         dialogTitle,
         showCancelButton,
+        submitButtonClass,
         values = {},
         onClose,
         onFormSubmitted,
@@ -154,6 +160,7 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
         formId: hubspotFormId,
         target: `#${hubspotFormTargetId}`,
         locale: intl.locale.split("-").shift() as HubSpotFormLocale,
+        submitButtonClass,
         onFormSubmitted: onHubspotFormSubmitted,
         onFormReady: ($form: ArrayLike<IHubspotFormField> | IHubspotJqueryFormField) => {
             setIsFormReady(true);
