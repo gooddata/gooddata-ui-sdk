@@ -1326,6 +1326,7 @@ export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDas
 
 // @public
 export interface ISecuritySettingsService {
+    isDashboardPluginUrlValid(url: string, workspace: string): Promise<boolean>;
     isUrlValid(url: string, context: ValidationContext): Promise<boolean>;
     readonly scope: string;
 }

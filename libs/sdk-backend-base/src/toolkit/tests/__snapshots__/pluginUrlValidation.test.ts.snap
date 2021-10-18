@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`plugin url validation should URL with . 1`] = `"url contains reserved filename characters"`;
+
+exports[`plugin url validation should URL with .. 1`] = `"url contains reserved filename characters"`;
+
+exports[`plugin url validation should URL with data schema 1`] = `"url does not use https"`;
+
+exports[`plugin url validation should URL with http schema 1`] = `"url does not use https"`;
+
+exports[`plugin url validation should URL with javascript schema 1`] = `"url does not use https"`;
+
+exports[`plugin url validation should URL with percent encoded evil 1`] = `"url is malformed"`;
+
+exports[`plugin url validation should URL with vbscript schema 1`] = `"url does not use https"`;
+
+exports[`plugin url validation should URL without schema 1`] = `"url is malformed"`;

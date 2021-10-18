@@ -1,8 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
-import { getQueryEntries, handlePolling, getAllPagesByOffsetLimit, parseSettingItemValue } from "./util";
-import { ITimezone, IColor, IColorPalette, IFeatureFlags } from "./interfaces";
-import { IStyleSettingsResponse, IFeatureFlagsResponse } from "./apiResponsesInterfaces";
-import { XhrModule, ApiResponse, ApiError } from "./xhr";
+// (C) 2007-2021 GoodData Corporation
+import { getAllPagesByOffsetLimit, getQueryEntries, handlePolling, parseSettingItemValue } from "./util";
+import { IColor, IColorPalette, IFeatureFlags, ITimezone } from "./interfaces";
+import { IFeatureFlagsResponse, IStyleSettingsResponse } from "./apiResponsesInterfaces";
+import { ApiError, ApiResponse, XhrModule } from "./xhr";
 import { GdcProject, GdcUser } from "@gooddata/api-model-bear";
 import { stringify } from "./utils/queryString";
 
@@ -366,6 +366,28 @@ export class ProjectModule {
                     return result.settings.items;
                 }
                 return [];
+            });
+    }
+
+    /**
+     * Gets project config including project specific feature flags
+     *
+     * @param {String} projectId - A project identifier
+     * @param {String} key - config item key
+     * @return {IProjectConfigSettingItem | undefined} single setting item or undefined if item with such key does not exist
+     */
+    public getConfigItem(projectId: string, key: string): Promise<IProjectConfigSettingItem | undefined> {
+        return this.xhr
+            .get(`/gdc/app/projects/${projectId}/config/${key}`)
+            .then((apiResponse: ApiResponse) => {
+                return apiResponse.getData();
+            })
+            .catch((error: any) => {
+                if (error?.response?.status === 404) {
+                    return undefined;
+                }
+
+                throw error;
             });
     }
 

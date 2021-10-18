@@ -26,7 +26,7 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
-import { IUser } from '@gooddata/sdk-backend-spi';
+import { IUser } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceDescriptor } from '@gooddata/sdk-backend-spi';
@@ -142,6 +142,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     theme?: ITheme;
     useRefType?: RecordedRefType;
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
+    securitySettingsPluginUrlValidator?: SecuritySettingsPluginUrlValidator;
     securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
     user?: IUser;
     getCommonAttributesResponses?: Record<string, ObjRef[]>;
@@ -187,6 +188,9 @@ export type ScenarioRecording = {
 
 // @internal (undocumented)
 export type SecuritySettingsOrganizationScope = (organizationId: string) => string;
+
+// @internal (undocumented)
+export type SecuritySettingsPluginUrlValidator = (url: string, workspace: string) => boolean;
 
 // @internal (undocumented)
 export type SecuritySettingsUrlValidator = (url: string, context: ValidationContext) => boolean;

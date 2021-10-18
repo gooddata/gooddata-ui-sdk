@@ -229,6 +229,12 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                     }
                     return Promise.resolve(true);
                 },
+                isDashboardPluginUrlValid(url: string, workspace: string): Promise<boolean> {
+                    if (implConfig.securitySettingsPluginUrlValidator !== undefined) {
+                        return Promise.resolve(implConfig.securitySettingsPluginUrlValidator(url, workspace));
+                    }
+                    return Promise.resolve(true);
+                },
             };
         },
     };

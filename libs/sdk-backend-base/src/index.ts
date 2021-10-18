@@ -74,6 +74,7 @@ export {
 } from "./toolkit/execution";
 
 export { InMemoryPaging, enhanceWithAll } from "./toolkit/paging";
+export { validatePluginUrlIsSane } from "./toolkit/pluginUrlValidation";
 
 export { customBackend } from "./customBackend";
 

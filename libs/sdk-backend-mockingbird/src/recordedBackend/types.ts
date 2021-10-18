@@ -13,7 +13,6 @@ import {
     IDateFilterConfig,
     ISettings,
     ITheme,
-    IUser,
     IWidgetAlert,
     ValidationContext,
     IWorkspaceDescriptor,
@@ -24,6 +23,7 @@ import {
     IInsight,
     IVisualizationClass,
     ObjRef,
+    IUser,
 } from "@gooddata/sdk-model";
 
 /**
@@ -80,6 +80,13 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * The backend responds with `true` for every validation request when this custom validator is not setup.
      */
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
+
+    /**
+     * Specify validator that returns boolean for provided plugin URL value and workspace where the plugin is being loaded.
+     *
+     * The backend responds with `true` for every validation request when this custom validator is not setup.
+     */
+    securitySettingsPluginUrlValidator?: SecuritySettingsPluginUrlValidator;
 
     /**
      * Specify function that builds organization scope from organization ID.
@@ -186,6 +193,11 @@ export type DashboardRecording = {
  * @internal
  */
 export type SecuritySettingsUrlValidator = (url: string, context: ValidationContext) => boolean;
+
+/**
+ * @internal
+ */
+export type SecuritySettingsPluginUrlValidator = (url: string, workspace: string) => boolean;
 
 /**
  * @internal
