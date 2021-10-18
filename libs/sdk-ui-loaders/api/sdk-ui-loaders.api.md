@@ -20,7 +20,7 @@ import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 // @alpha (undocumented)
 export class DashboardLoader implements IDashboardLoader {
     // (undocumented)
-    static dev(): DashboardLoader;
+    static adaptive(): DashboardLoader;
     // (undocumented)
     forDashboard: (dashboardRef: ObjRef) => IDashboardLoader;
     // (undocumented)
@@ -32,7 +32,7 @@ export class DashboardLoader implements IDashboardLoader {
     // (undocumented)
     onBackend: (backend: IAnalyticalBackend) => IDashboardLoader;
     // (undocumented)
-    static prod(): DashboardLoader;
+    static staticOnly(): DashboardLoader;
     // (undocumented)
     withBaseProps: (props: IDashboardBasePropsForLoader) => IDashboardLoader;
     // (undocumented)
@@ -77,7 +77,7 @@ export interface IDashboardLoader {
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     clientWorkspace?: IClientWorkspaceIdentifiers;
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
-    mode?: "prod" | "dev";
+    loadingMode?: "adaptive" | "staticOnly";
 }
 
 // @alpha (undocumented)

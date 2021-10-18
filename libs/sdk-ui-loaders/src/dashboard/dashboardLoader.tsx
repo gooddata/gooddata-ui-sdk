@@ -18,8 +18,15 @@ import { ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 import React from "react";
-import { noopDashboardPluginLoader, staticDashboardEngineLoader } from "./staticComponentLoaders";
+import {
+    noopDashboardPluginLoader,
+    staticDashboardEngineLoader,
+} from "./loadingStrategies/staticComponentLoaders";
 import { IDashboardBasePropsForLoader } from "./types";
+import {
+    adaptiveDashboardEngineLoader,
+    adaptiveDashboardPluginLoader,
+} from "./loadingStrategies/adaptiveComponentLoaders";
 
 /**
  * @alpha
@@ -63,16 +70,18 @@ export class DashboardLoader implements IDashboardLoader {
         this.config = config;
     }
 
-    public static dev(): DashboardLoader {
+    public static staticOnly(): DashboardLoader {
         return new DashboardLoader({
             engineLoader: staticDashboardEngineLoader,
             pluginLoader: noopDashboardPluginLoader,
         });
     }
 
-    public static prod(): DashboardLoader {
-        // TODO: implement runtime-loaders & integrate them here
-        throw new Error("not implemented");
+    public static adaptive(): DashboardLoader {
+        return new DashboardLoader({
+            engineLoader: adaptiveDashboardEngineLoader,
+            pluginLoader: adaptiveDashboardPluginLoader,
+        });
     }
 
     public onBackend = (backend: IAnalyticalBackend): IDashboardLoader => {
