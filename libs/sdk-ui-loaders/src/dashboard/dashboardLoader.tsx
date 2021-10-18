@@ -27,6 +27,7 @@ import {
     adaptiveDashboardEngineLoader,
     adaptiveDashboardPluginLoader,
 } from "./loadingStrategies/adaptiveComponentLoaders";
+import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation";
 
 /**
  * @alpha
@@ -190,15 +191,15 @@ export class DashboardLoader implements IDashboardLoader {
             clientId: clientWorkspace?.client,
         };
 
-        const pluginsAreValid = false;
-        // TODO: finish this
-        // const pluginsAreValid = validatePluginsBeforeLoading(ctx, dashboardWithPlugins);
-        // if (!pluginsAreValid) {
-        //     // eslint-disable-next-line no-console
-        //     console.error("Dashboard is configured with plugins that contain invalid URLs or " +
-        //         "are not located on allowed hosts. Loader is falling back to the " +
-        //         "statically linked dashboard without any external plugins.");
-        // }
+        const pluginsAreValid = await validatePluginsBeforeLoading(ctx, dashboardWithPlugins);
+        if (!pluginsAreValid) {
+            // eslint-disable-next-line no-console
+            console.error(
+                "Dashboard is configured with plugins that contain invalid URLs or " +
+                    "are not located on allowed hosts. Loader is falling back to the " +
+                    "statically linked dashboard without any external plugins.",
+            );
+        }
 
         const [engine, plugins] = await this.loadParts(
             ctx,
