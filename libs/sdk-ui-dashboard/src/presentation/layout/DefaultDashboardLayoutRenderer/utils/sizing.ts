@@ -22,17 +22,19 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { IInsightDefinition, isInsight } from "@gooddata/sdk-model";
-
-import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout";
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout";
-import { IVisualizationSizeInfo, fluidLayoutDescriptor, getInsightSizeInfo } from "@gooddata/sdk-ui-ext";
 import {
+    IVisualizationSizeInfo,
+    fluidLayoutDescriptor,
+    getInsightSizeInfo,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     KPI_WIDGET_SIZE_INFO_DEFAULT,
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
-} from "@gooddata/sdk-ui-ext/dist/internal/components/pluggableVisualizations/constants";
+} from "@gooddata/sdk-ui-ext";
+
+import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout";
+import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces";
+import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,

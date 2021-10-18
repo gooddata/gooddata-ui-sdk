@@ -51,5 +51,6 @@ export { IVisualizationSizeInfo, ISizeInfo } from "./interfaces/VisualizationDes
 export { IFluidLayoutDescriptor, ILayoutDescriptor, LayoutType } from "./interfaces/LayoutDescriptor";
 
 export { addIntersectionFiltersToInsight } from "./components/pluggableVisualizations/drillDownUtil";
+export * from "./components/pluggableVisualizations/constants";
 
 export * from "./dashboardEmbedding";

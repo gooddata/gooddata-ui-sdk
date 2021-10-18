@@ -3,12 +3,18 @@ import { IVisualizationSizeInfo } from "../../interfaces/VisualizationDescriptor
 
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT = 22.5;
 export const DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT = 12;
+/**
+ * @internal
+ */
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
 
 export const MAX_VISUALIZATION_HEIGHT = 40;
 export const MIN_VISUALIZATION_HEIGHT = 12;
 export const MIDDLE_VISUALIZATION_HEIGHT = 22;
 
+/**
+ * @internal
+ */
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo = {
     width: {
         min: 4,
@@ -19,6 +25,9 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo = {
     },
 };
 
+/**
+ * @internal
+ */
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo = {
     width: {
         min: 4,
@@ -31,6 +40,9 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo = {
     },
 };
 
+/**
+ * @internal
+ */
 export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo = {
     width: {
         min: 2,
@@ -43,6 +55,9 @@ export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo = {
     },
 };
 
+/**
+ * @internal
+ */
 export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo = {
     width: {
         min: 2,

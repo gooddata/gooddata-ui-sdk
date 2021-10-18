@@ -43,6 +43,11 @@ export {
     PluggableVisualizationErrorCodes,
     PluggableVisualizationErrorType,
     addIntersectionFiltersToInsight,
+    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX,
+    INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
+    KPI_WIDGET_SIZE_INFO_DEFAULT,
+    KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
+    INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
 } from "./internal";
 
 // below functions are exported only for sdk-ui-dashboard use to avoid exporting the whole FullVisualizationCatalog

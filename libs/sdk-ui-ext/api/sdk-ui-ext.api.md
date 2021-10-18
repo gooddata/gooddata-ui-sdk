@@ -78,6 +78,9 @@ export function clearDashboardViewCaches(): void;
 // @public
 export function clearInsightViewCaches(): void;
 
+// @internal (undocumented)
+export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
+
 // @beta
 export type DashboardLayoutItemModifications<TWidget = IDashboardWidget> = (itemBuilder: IDashboardLayoutItemBuilder<TWidget>, itemFacade: IDashboardLayoutItemFacade<TWidget>) => IDashboardLayoutItemBuilder<TWidget>;
 
@@ -509,6 +512,12 @@ export interface ILayoutDescriptor {
 }
 
 // @internal (undocumented)
+export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo;
+
+// @internal (undocumented)
+export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo;
+
+// @internal (undocumented)
 export const InsightError: React_2.ForwardRefExoticComponent<Pick<IInsightErrorProps & WrappedComponentProps<"intl">, "error" | "height" | "clientHeight" | "ErrorComponent"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
@@ -593,6 +602,12 @@ export interface IWidgetPredicates {
     isWidgetWithKpiType: (comparisonType: ILegacyKpi["comparisonType"]) => boolean;
     isWidgetWithRef: (ref: ObjRef) => boolean;
 }
+
+// @internal (undocumented)
+export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo;
+
+// @internal (undocumented)
+export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo;
 
 // @alpha (undocumented)
 export type LayoutType = "fluid";
