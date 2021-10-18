@@ -5,12 +5,12 @@ import invariant from "ts-invariant";
 
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
 import {
-    useDashboardSelector,
-    selectSeparators,
-    selectIsReadOnly,
-    selectFilterContextFilters,
-    selectSettings,
     selectDashboardRef,
+    selectFilterContextFilters,
+    selectIsReadOnly,
+    selectSeparators,
+    selectSettings,
+    useDashboardSelector,
 } from "../../../../model";
 import { DashboardKpiProps } from "../types";
 

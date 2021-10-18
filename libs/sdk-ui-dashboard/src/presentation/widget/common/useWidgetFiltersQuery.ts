@@ -40,8 +40,8 @@ export const useWidgetFiltersQuery = (
     error?: GoodDataSdkError;
 } => {
     const {
-        status: nonIgnoredStatus,
-        error: nonIgnoredError,
+        status: nonIgnoredFiltersStatus,
+        error: nonIgnoredFiltersError,
         result: nonIgnoredFilters,
     } = useNonIgnoredFilters(widget);
 
@@ -52,23 +52,54 @@ export const useWidgetFiltersQuery = (
     } = useDashboardQueryProcessing({
         queryCreator: queryWidgetFilters,
         onSuccess: (result) => {
-            setEffectiveFilters(result as IFilter[]);
+            setEffectiveFiltersState({
+                filters: result as IFilter[],
+                filterQueryStatus: "success",
+            });
+        },
+        onBeforeRun: () => {
+            setEffectiveFiltersState({
+                filters: [],
+                filterQueryStatus: "running",
+            });
+        },
+        onRejected: () => {
+            setEffectiveFiltersState({
+                filters: [],
+                filterQueryStatus: "rejected",
+            });
+        },
+        onError: () => {
+            setEffectiveFiltersState({
+                filters: [],
+                filterQueryStatus: "error",
+            });
         },
     });
 
-    const [effectiveFilters, setEffectiveFilters] = useState<IFilter[]>([]);
+    const [effectiveFiltersState, setEffectiveFiltersState] = useState<{
+        filters: IFilter[];
+        filterQueryStatus?: QueryProcessingStatus;
+    }>({
+        filters: [],
+        filterQueryStatus: undefined,
+    });
 
     // only run the "full" filters query if any of the non-ignored filters has changed
     useEffect(() => {
-        if (widget) {
+        if (widget && nonIgnoredFiltersStatus === "success") {
             runFiltersQuery(widget, filters);
         }
     }, [widget, stringify(nonIgnoredFilters), filters]);
 
     return {
-        result: effectiveFilters,
-        status: combineQueryProcessingStatuses(nonIgnoredStatus, status),
-        error: nonIgnoredError ?? error,
+        result: effectiveFiltersState.filters,
+        status: combineQueryProcessingStatuses(
+            nonIgnoredFiltersStatus,
+            effectiveFiltersState?.filterQueryStatus,
+            status,
+        ),
+        error: nonIgnoredFiltersError ?? error,
     };
 };
 

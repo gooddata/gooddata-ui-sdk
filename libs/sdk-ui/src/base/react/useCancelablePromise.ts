@@ -129,19 +129,23 @@ export function useCancelablePromise<TResult, TError = any>(
 
     useEffect(() => {
         if (!promise) {
-            setState({
-                status: "pending",
-                result: undefined,
-                error: undefined,
-            });
+            if (state.status !== "pending") {
+                setState({
+                    status: "pending",
+                    result: undefined,
+                    error: undefined,
+                });
+            }
             onPending();
             return;
         } else {
-            setState({
-                status: "loading",
-                result: undefined,
-                error: undefined,
-            });
+            if (state.status !== "loading") {
+                setState({
+                    result: undefined,
+                    error: undefined,
+                    status: "loading",
+                });
+            }
             onLoading();
         }
 
