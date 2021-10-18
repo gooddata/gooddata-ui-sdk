@@ -181,6 +181,11 @@ export interface ISettings {
      */
     enableKPIDashboardImplicitDrillDown?: boolean;
 
+    /**
+     * Enable usage of Dashboard permissions
+     */
+    enableAnalyticalDashboardPermissions?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

@@ -5,11 +5,17 @@ import { IDashboard } from "@gooddata/sdk-backend-spi";
 /**
  * @alpha
  */
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags">;
+export type DashboardDescriptor = Pick<
+    IDashboard,
+    "title" | "description" | "tags" | "isLocked" | "isPrivate" | "isShared" | "isUnderStrictControl"
+>;
 
 export const EmptyDashboardDescriptor: DashboardDescriptor = {
     title: "",
     description: "",
+    isPrivate: true,
+    isShared: false,
+    isUnderStrictControl: true,
 };
 
 /**

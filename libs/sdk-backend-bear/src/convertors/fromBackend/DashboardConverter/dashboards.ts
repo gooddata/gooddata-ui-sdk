@@ -85,7 +85,21 @@ export const convertDashboard = (
     userMap?: Map<string, IUser>,
 ): IDashboard => {
     const {
-        meta: { summary, created, author, updated, contributor, identifier, uri, title, locked, tags },
+        meta: {
+            summary,
+            created,
+            author,
+            updated,
+            contributor,
+            identifier,
+            uri,
+            title,
+            locked,
+            tags,
+            unlisted,
+            sharedWithSomeone,
+            flags,
+        },
         content: { layout, filterContext, dateFilterConfig, widgets: widgetsUris, plugins },
     } = dashboard.analyticalDashboard;
 
@@ -117,6 +131,9 @@ export const convertDashboard = (
         updated: updated!,
         updatedBy: contributor ? userMap?.get(contributor) : undefined,
         isLocked: !!locked,
+        isPrivate: !!unlisted && !sharedWithSomeone,
+        isShared: (!!unlisted && !!sharedWithSomeone) || !unlisted,
+        isUnderStrictControl: flags?.findIndex((flag) => flag === "strictAccessControl") !== -1,
 
         dateFilterConfig: dateFilterConfig && convertDashboardDateFilterConfig(dateFilterConfig),
 

@@ -63,6 +63,8 @@ export const DefaultUiSettings: ISettings = {
     enableCustomColorPicker: true,
     enableAdAdditionalDateAttributes: true,
     enableAlternativeDisplayFormSelection: true,
+    enableNewAnalyticalDashboardsNavigation: false, // TODO TNT-278 switch to true for verification or New navigation rollout
+    enableAnalyticalDashboardPermissions: false,
 };
 
 /**

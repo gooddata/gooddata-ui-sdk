@@ -78,11 +78,6 @@ export interface IDashboardBase {
     readonly description: string;
 
     /**
-     * When dashboard is locked, no one other than the administrator can edit it
-     */
-    readonly isLocked?: boolean;
-
-    /**
      * Dashboard tags.
      *
      * @remarks
@@ -92,6 +87,21 @@ export interface IDashboardBase {
      * Since 8.6.0
      */
     readonly tags?: string[];
+}
+
+/**
+ * Common properties for objects with controlled access
+ * @alpha
+ */
+export interface IAccessControlAware {
+    readonly isPrivate: boolean;
+    readonly isShared: boolean;
+    readonly isUnderStrictControl: boolean;
+
+    /**
+     * When dashboard is locked, no one other than the administrator can edit it
+     */
+    readonly isLocked?: boolean;
 }
 
 /**
@@ -168,7 +178,8 @@ export interface IDashboard<TWidget = IDashboardWidget>
     extends IDashboardBase,
         IDashboardObjectIdentity,
         Readonly<Required<IAuditableDates>>,
-        Readonly<IAuditableUsers> {
+        Readonly<IAuditableUsers>,
+        IAccessControlAware {
     readonly type: "IDashboard";
 
     /**
@@ -200,6 +211,7 @@ export interface IDashboard<TWidget = IDashboardWidget>
  */
 export interface IDashboardDefinition<TWidget = IDashboardWidget>
     extends IDashboardBase,
+        IAccessControlAware,
         Partial<IDashboardObjectIdentity> {
     readonly type: "IDashboard";
 

@@ -169,6 +169,17 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
 }
 
 // @alpha
+export interface IAccessControlAware {
+    readonly isLocked?: boolean;
+    // (undocumented)
+    readonly isPrivate: boolean;
+    // (undocumented)
+    readonly isShared: boolean;
+    // (undocumented)
+    readonly isUnderStrictControl: boolean;
+}
+
+// @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
     type: AllTimeType;
 }
@@ -308,6 +319,7 @@ export interface IBackendCapabilities {
     canTransformExistingResult?: boolean;
     hasTypeScopedIdentifiers?: boolean;
     maxDimensions?: number;
+    supportsAccessControl?: boolean;
     supportsCsvUploader?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
@@ -318,6 +330,7 @@ export interface IBackendCapabilities {
     supportsObjectUris?: boolean;
     supportsRankingFilter?: boolean;
     supportsRankingFilterWithMeasureValueFilter?: boolean;
+    usesStrictAccessControl?: boolean;
 }
 
 // @alpha
@@ -374,7 +387,7 @@ export interface ICatalogMeasure extends IGroupableCatalogItemBase {
 }
 
 // @alpha
-export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
+export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
@@ -419,7 +432,6 @@ export interface IDashboardAttributeFilterReference {
 // @alpha
 export interface IDashboardBase {
     readonly description: string;
-    readonly isLocked?: boolean;
     readonly tags?: string[];
     readonly title: string;
 }
@@ -459,7 +471,7 @@ export interface IDashboardDateFilterReference {
 }
 
 // @alpha
-export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, Partial<IDashboardObjectIdentity> {
+export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
@@ -1345,6 +1357,7 @@ export interface ISettings {
     ADMeasureValueFilterNullAsZeroOption?: string;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
+    enableAnalyticalDashboardPermissions?: boolean;
     enableApproxCount?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;

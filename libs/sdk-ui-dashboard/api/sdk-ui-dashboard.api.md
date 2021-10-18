@@ -721,7 +721,7 @@ export interface DashboardDeleted extends IDashboardEvent {
 }
 
 // @alpha (undocumented)
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags">;
+export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "isLocked" | "isPrivate" | "isShared" | "isUnderStrictControl">;
 
 // @alpha (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
@@ -3455,7 +3455,7 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => Outp
 export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillToLegacyDashboard[] | InsightDrillDefinition[], res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean, res7: boolean, res8: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @alpha
-export const selectDashboardDescription: OutputSelector<DashboardState, string, (res: Pick<IDashboard<IDashboardWidget>, "title" | "description" | "tags">) => string>;
+export const selectDashboardDescription: OutputSelector<DashboardState, string, (res: Pick<IDashboard<IDashboardWidget>, "title" | "description" | "tags" | "isLocked" | "isPrivate" | "isShared" | "isUnderStrictControl">) => string>;
 
 // @alpha
 export const selectDashboardId: OutputSelector<DashboardState, string | undefined, (res: IDashboard<IDashboardWidget> | undefined) => string | undefined>;
@@ -3473,10 +3473,10 @@ export const selectDashboardRef: OutputSelector<DashboardState, UriRef | Identif
 export const selectDashboardSaving: OutputSelector<DashboardState, SavingState, (res: DashboardState) => SavingState>;
 
 // @alpha
-export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: Pick<IDashboard<IDashboardWidget>, "title" | "description" | "tags">) => string[] | undefined>;
+export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: Pick<IDashboard<IDashboardWidget>, "title" | "description" | "tags" | "isLocked" | "isPrivate" | "isShared" | "isUnderStrictControl">) => string[] | undefined>;
 
 // @alpha
-export const selectDashboardTitle: OutputSelector<DashboardState, string, (res: Pick<IDashboard<IDashboardWidget>, "title" | "description" | "tags">) => string>;
+export const selectDashboardTitle: OutputSelector<DashboardState, string, (res: Pick<IDashboard<IDashboardWidget>, "title" | "description" | "tags" | "isLocked" | "isPrivate" | "isShared" | "isUnderStrictControl">) => string>;
 
 // @alpha
 export const selectDashboardUri: OutputSelector<DashboardState, string | undefined, (res: IDashboard<IDashboardWidget> | undefined) => string | undefined>;

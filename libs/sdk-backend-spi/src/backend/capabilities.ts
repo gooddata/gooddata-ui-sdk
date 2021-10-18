@@ -117,6 +117,17 @@ export interface IBackendCapabilities {
     hasTypeScopedIdentifiers?: boolean;
 
     /**
+     * Indicates whether backend supports control of access to the MD objects
+     */
+    supportsAccessControl?: boolean;
+
+    /**
+     * Indicates whether backend supports only strict access control.
+     * It means that no one without proper permissions is able to get restricted MD object even knowing its URI.
+     */
+    usesStrictAccessControl?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

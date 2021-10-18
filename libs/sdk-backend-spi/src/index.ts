@@ -218,6 +218,7 @@ export {
     IDashboardPluginLink,
     isDashboard,
     isDashboardDefinition,
+    IAccessControlAware,
 } from "./workspace/dashboards/dashboard";
 export {
     IFilterContext,
