@@ -54,7 +54,6 @@ import {
     showItemsFilteredMessage,
     updateSelectedOptionsWithData,
 } from "./utils/AttributeFilterUtils";
-import { stringUtils } from "@gooddata/util";
 import invariant from "ts-invariant";
 import stringify from "json-stable-stringify";
 import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "./AttributeDropdown/types";
@@ -568,11 +567,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             }
 
             const validElements = state.validOptions.items.filter(isNonEmptyListItem);
-            const fullTitle = state.isInverted
+            return state.isInverted
                 ? `${getAllPartIntl} ${getItemsTitles(state.selectedFilterOptions, validElements)}`
                 : `${getItemsTitles(state.selectedFilterOptions, validElements)}`;
-
-            return `${stringUtils.shortenText(fullTitle, { maxLength: 35 })}`;
         }
         return "";
     };
