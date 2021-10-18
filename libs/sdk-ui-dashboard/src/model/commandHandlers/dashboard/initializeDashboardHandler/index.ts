@@ -58,7 +58,7 @@ function loadDashboardFromBackend(
     return backend
         .workspace(workspace)
         .dashboards()
-        .getDashboardWithReferences(dashboardRef, filterContextRef, undefined, ["insight"]);
+        .getDashboardWithReferences(dashboardRef, filterContextRef, { loadUserData: true }, ["insight"]);
 }
 
 type DashboardLoadResult = {

@@ -19,3 +19,13 @@ export const selectUser = createSelector(selectSelf, (state) => {
 
     return state.user!;
 });
+
+/**
+ * This selector returns current logged in user ref. It is expected that the
+ * selector is called only after the permission state is correctly initialized. Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectCurrentUserRef = createSelector(selectUser, (user) => {
+    return user.ref;
+});

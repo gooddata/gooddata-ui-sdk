@@ -207,7 +207,9 @@ export class DashboardLoader implements IDashboardLoader {
         const dashboardWithPlugins: IDashboardWithReferences = await backend
             .workspace(workspace)
             .dashboards()
-            .getDashboardWithReferences(dashboard, filterContextRef, undefined, ["dashboardPlugin"]);
+            .getDashboardWithReferences(dashboard, filterContextRef, { loadUserData: true }, [
+                "dashboardPlugin",
+            ]);
 
         const ctx: DashboardContext = {
             backend,

@@ -44,6 +44,7 @@ import {
     IInsightMenuItem,
 } from "../widget";
 import { CustomSaveAsDialogComponent } from "../saveAs";
+import { CustomShareDialogComponent } from "../shareDialog";
 
 /**
  * @alpha
@@ -226,6 +227,15 @@ export interface IDashboardCustomComponentProps {
      * To fall back to the default implementation, use the {@link DefaultScheduledEmailDialog} component.
      */
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
+
+    /**
+     * Optionally specify component to use for rendering the share dialog.
+     *
+     * @remarks
+     * To access the necessary props in your component, use the {@link useShareDialogProps} hook.
+     * To fall back to the default implementation, use the {@link DefaultShareDialog} component.
+     */
+    ShareDialogComponent?: CustomShareDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the save as dialog.

@@ -1,0 +1,95 @@
+// (C) 2021 GoodData Corporation
+@import "./variables";
+@import "./mixins.scss";
+@import "./Button/_variables";
+
+.gd-share-dialog-content-select {
+    margin-bottom: 15px;
+
+    .gd-share-dialog__control {
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 1px solid $button-normal-border-color;
+        box-shadow: inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.85);
+        font-size: 14px;
+        font-family: $gd-font-primary;
+        font-weight: 200;
+        line-height: normal;
+        vertical-align: middle;
+        color: $gd-color-text;
+        background: $gd-color-white;
+        transition-property: all;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-in-out;
+        border-radius: 3px;
+
+        &:hover {
+            border-color: var(--gd-palette-complementary-5, #b3b3b3);
+        }
+    }
+
+    .gd-share-dialog__control--is-focused,
+    .gd-share-dialog__control--is-focused:hover {
+        border-color: $gd-palette-primary-base;
+        outline: 0;
+        box-shadow: inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.8);
+    }
+
+    .gd-share-dialog-input {
+        display: inline-flex;
+        flex-grow: 1;
+
+        div {
+            width: 100%;
+        }
+
+        .gd-share-dialog__input {
+            margin: 0;
+            padding: 0;
+            max-height: 19px;
+            color: $gd-color-text;
+            font-size: 14px;
+
+            input {
+                // stylelint-disable-next-line declaration-no-important
+                width: 100% !important;
+                font-family: $gd-font-primary;
+            }
+        }
+    }
+
+    .gd-share-dialog__placeholder {
+        color: var(--gd-palette-complementary-6, transparentize($default-gd-color-link, 0.25));
+    }
+
+    .gd-share-dialog__menu {
+        padding: 0;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 0 0 3px 3px;
+        border-color: $gd-palette-primary-base;
+        border-top: 0;
+        border-top-color: $button-normal-border-color;
+        margin-top: -2px;
+        outline: 0;
+        box-shadow: inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.2);
+        color: $gd-color-text;
+        background-color: $gd-color-white;
+    }
+
+    .gd-share-dialog__menu-list {
+        padding-top: 0;
+        padding-bottom: 0;
+
+        .gd-share-dialog__option {
+            padding-top: 7px;
+            padding-bottom: 7px;
+        }
+
+        .gd-share-dialog__option--is-focused {
+            background: $is-focused-background;
+        }
+    }
+}

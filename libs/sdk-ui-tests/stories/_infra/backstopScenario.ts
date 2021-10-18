@@ -67,7 +67,7 @@ export interface IBackstopScenarioConfig {
      * to wait before starting clicking, then include trailing timeout here. There is also postInteractionWait; this
      * is applied _after_ the click selectors processing.
      */
-    hoverSelectors?: Array<string | number>[];
+    hoverSelectors?: Array<string | number>;
 
     /**
      * Press key in the DOM element prior to screenshot
