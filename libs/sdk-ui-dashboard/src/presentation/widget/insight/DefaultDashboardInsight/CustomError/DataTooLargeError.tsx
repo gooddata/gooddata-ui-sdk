@@ -14,7 +14,7 @@ export const DataTooLargeError: React.FC<IDataTooLargeErrorProps> = ({ fullConte
     return (
         <ErrorContainer>
             {fullContent ? (
-                <div className="info-label-icon icon-rain">
+                <div className="info-label-icon gd-icon-rain">
                     <Typography tagName="h2">
                         <FormattedHTMLMessage id="visualization.dataTooLarge.headline" />
                     </Typography>
@@ -24,7 +24,7 @@ export const DataTooLargeError: React.FC<IDataTooLargeErrorProps> = ({ fullConte
                 </div>
             ) : (
                 <CompactContentError
-                    className="icon-rain"
+                    className="gd-icon-rain"
                     headline="visualization.dataTooLarge.headline"
                     text="visualization.dataTooLarge.text"
                 />
