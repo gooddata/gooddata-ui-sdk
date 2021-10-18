@@ -567,11 +567,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             }
 
             const validElements = state.validOptions.items.filter(isNonEmptyListItem);
-            const fullTitle = state.isInverted
+            return state.isInverted
                 ? `${getAllPartIntl} ${getItemsTitles(state.selectedFilterOptions, validElements)}`
                 : `${getItemsTitles(state.selectedFilterOptions, validElements)}`;
-
-            return fullTitle;
         }
         return "";
     };
