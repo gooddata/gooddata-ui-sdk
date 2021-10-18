@@ -2,6 +2,9 @@
 import { IFluidLayoutDescriptor } from "../../interfaces/LayoutDescriptor";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT, GRID_ROW_HEIGHT_IN_PX } from "./constants";
 
+/**
+ * @alpha
+ */
 export class FluidLayoutDescriptor implements IFluidLayoutDescriptor {
     type: "fluid";
     gridColumnsCount = DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
@@ -15,4 +18,7 @@ export class FluidLayoutDescriptor implements IFluidLayoutDescriptor {
     }
 }
 
+/**
+ * @alpha
+ */
 export const fluidLayoutDescriptor = new FluidLayoutDescriptor();

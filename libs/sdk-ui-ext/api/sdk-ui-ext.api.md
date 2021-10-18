@@ -105,6 +105,29 @@ export class DashboardView extends React_2.Component<IDashboardViewProps, IDashb
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
+// @alpha (undocumented)
+export class FluidLayoutDescriptor implements IFluidLayoutDescriptor {
+    // (undocumented)
+    gridColumnsCount: number;
+    // (undocumented)
+    gridRowHeight: number;
+    // (undocumented)
+    toGridHeight(heightPx: number): number;
+    // (undocumented)
+    toHeightInPx(height: number): number;
+    // (undocumented)
+    type: "fluid";
+}
+
+// @alpha (undocumented)
+export const fluidLayoutDescriptor: FluidLayoutDescriptor;
+
+// @internal (undocumented)
+export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo;
+
+// @internal (undocumented)
+export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDashboardDrillEvent, drillDefinition: IDrillDownDefinition): IInsight;
+
 // @beta
 export interface IDashboardDrillEvent extends IDrillEvent {
     drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
@@ -403,6 +426,16 @@ export interface IDrillDownDefinition {
     type: "drillDown";
 }
 
+// @alpha
+export interface IFluidLayoutDescriptor extends ILayoutDescriptor {
+    gridColumnsCount: number;
+    gridRowHeight: number;
+    toGridHeight(heightPx: number): number;
+    toHeightInPx(height: number): number;
+    // (undocumented)
+    type: "fluid";
+}
+
 // @internal (undocumented)
 export interface IInsightErrorProps {
     // (undocumented)
@@ -456,6 +489,12 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     workspace?: string;
 }
 
+// @alpha
+export interface ILayoutDescriptor {
+    // (undocumented)
+    type: LayoutType;
+}
+
 // @internal (undocumented)
 export const InsightError: React_2.ForwardRefExoticComponent<Pick<IInsightErrorProps & WrappedComponentProps<"intl">, "error" | "height" | "clientHeight" | "ErrorComponent"> & {
     forwardedRef?: React_2.Ref<any>;
@@ -474,6 +513,16 @@ export class InsightView extends React_2.Component<IInsightViewProps> {
 
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
+
+// @alpha
+export interface ISizeInfo {
+    // (undocumented)
+    default?: number;
+    // (undocumented)
+    max?: number;
+    // (undocumented)
+    min?: number;
+}
 
 // @beta (undocumented)
 export interface IUseDashboardAlertsConfig extends UseCancelablePromiseCallbacks<IWidgetAlert[], GoodDataSdkError> {
@@ -511,6 +560,14 @@ export interface IUseDashboardWidgetExecutionConfig {
     workspace?: string;
 }
 
+// @alpha
+export interface IVisualizationSizeInfo {
+    // (undocumented)
+    height: ISizeInfo;
+    // (undocumented)
+    width: ISizeInfo;
+}
+
 // @beta
 export interface IWidgetPredicates {
     isCustomWidget: () => boolean;
@@ -520,6 +577,9 @@ export interface IWidgetPredicates {
     isWidgetWithKpiType: (comparisonType: ILegacyKpi["comparisonType"]) => boolean;
     isWidgetWithRef: (ref: ObjRef) => boolean;
 }
+
+// @alpha (undocumented)
+export type LayoutType = "fluid";
 
 // @internal (undocumented)
 export type MeasurableWidgetContent = IInsightDefinition | ILegacyKpi;

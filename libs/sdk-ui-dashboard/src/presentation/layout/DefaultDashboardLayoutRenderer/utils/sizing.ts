@@ -26,9 +26,7 @@ import { IInsightDefinition, isInsight } from "@gooddata/sdk-model";
 import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout";
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces";
 import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout";
-import { fluidLayoutDescriptor } from "../FluidLayoutDescriptor";
-import { FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/dist/internal/components/VisualizationCatalog";
-import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext/dist/internal/interfaces/VisualizationDescriptor";
+import { IVisualizationSizeInfo, fluidLayoutDescriptor, getInsightSizeInfo } from "@gooddata/sdk-ui-ext";
 import {
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     KPI_WIDGET_SIZE_INFO_DEFAULT,
@@ -470,11 +468,7 @@ const getVisualizationSizeInfo = (
 ): IVisualizationSizeInfo => {
     let sizeInfo;
     if (isInsight(insight)) {
-        sizeInfo = FullVisualizationCatalog.forInsight(insight).getSizeInfo(
-            insight,
-            fluidLayoutDescriptor,
-            settings,
-        );
+        sizeInfo = getInsightSizeInfo(insight, settings);
     }
 
     if (!sizeInfo) {
