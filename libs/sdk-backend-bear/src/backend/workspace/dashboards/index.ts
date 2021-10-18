@@ -82,6 +82,7 @@ import isEmpty from "lodash/isEmpty";
 import includes from "lodash/includes";
 import isVisualization = GdcVisualizationObject.isVisualization;
 import isDashboardPlugin = GdcDashboardPlugin.isDashboardPlugin;
+import remove from "lodash/remove";
 
 /**
  * Metadata object types closely related to the dashboard object.
@@ -791,7 +792,25 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         dashboard: IDashboard,
         types: SupportedDashboardReferenceTypes[] = ["insight", "dashboardPlugin"],
     ): Promise<IDashboardReferences> => {
-        const { dependencies, visClassMapping } = await this.getBearDashboardReferences(dashboard.uri, types);
+        const typesToGet = [...types];
+
+        // if there are no plugins linked to the dashboard then do not ask for related plugin info
+        if (isEmpty(dashboard.plugins)) {
+            remove(typesToGet, (item) => item === "dashboardPlugin");
+        }
+
+        // bail out if there is nothing to get (e.g. user asked for referenced plugins but the dashboard has none)
+        if (isEmpty(typesToGet)) {
+            return {
+                plugins: [],
+                insights: [],
+            };
+        }
+
+        const { dependencies, visClassMapping } = await this.getBearDashboardReferences(
+            dashboard.uri,
+            typesToGet,
+        );
         const insights: IInsight[] = [];
         const plugins: IDashboardPlugin[] = [];
 
