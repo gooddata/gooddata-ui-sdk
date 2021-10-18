@@ -63,6 +63,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@braintree/sanitize-url",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@formatjs/intl-pluralrules",
       "allowedCategories": [ "production" ]
     },
