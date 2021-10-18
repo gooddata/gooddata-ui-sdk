@@ -35,6 +35,13 @@ export interface IHubspotFormField {
 }
 
 /**
+ * @internal
+ */
+export interface IHubspotJqueryFormField {
+    [key: string]: ArrayLike<IHubspotFormField> | string;
+}
+
+/**
  * @public
  */
 export interface IHubspotFormValue {
@@ -148,11 +155,15 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
         target: `#${hubspotFormTargetId}`,
         locale: intl.locale.split("-").shift() as HubSpotFormLocale,
         onFormSubmitted: onHubspotFormSubmitted,
-        onFormReady: ($form: IHubspotFormField[]) => {
+        onFormReady: ($form: ArrayLike<IHubspotFormField> | IHubspotJqueryFormField) => {
             setIsFormReady(true);
+            let fields = $form;
+            if (fields["jquery"] && fields[0]?.length > 0) {
+                fields = fields[0];
+            }
             // populating the values for hidden fields
-            for (let i = 0; i < $form.length; i += 1) {
-                const inputField = $form[i];
+            for (let i = 0; i < fields.length; i += 1) {
+                const inputField = fields[i];
                 if (!inputField) {
                     continue;
                 }
