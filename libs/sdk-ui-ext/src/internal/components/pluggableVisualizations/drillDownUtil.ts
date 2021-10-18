@@ -142,6 +142,9 @@ export function reverseAndTrimIntersection(
     return getIntersectionPartAfter(reorderedIntersection, clicked);
 }
 
+/**
+ * @internal
+ */
 export function addIntersectionFiltersToInsight(
     source: IInsight,
     intersection: IDrillEventIntersectionElement[],

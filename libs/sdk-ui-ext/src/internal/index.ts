@@ -22,6 +22,7 @@ export {
     ConfigPanelClassName,
     IGdcConfig,
     PluggableVisualizationErrorCodes,
+    PluggableVisualizationErrorType,
     InvalidBucketsSdkError,
     EmptyAfmSdkError,
     PluggableVisualizationError,
@@ -48,5 +49,7 @@ export { createInternalIntl, InternalIntlWrapper } from "./utils/internalIntlPro
 
 export { IVisualizationSizeInfo, ISizeInfo } from "./interfaces/VisualizationDescriptor";
 export { IFluidLayoutDescriptor, ILayoutDescriptor, LayoutType } from "./interfaces/LayoutDescriptor";
+
+export { addIntersectionFiltersToInsight } from "./components/pluggableVisualizations/drillDownUtil";
 
 export * from "./dashboardEmbedding";

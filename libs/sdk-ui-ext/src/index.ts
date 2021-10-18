@@ -38,6 +38,11 @@ export {
     IFluidLayoutDescriptor,
     ILayoutDescriptor,
     LayoutType,
+    isEmptyAfm,
+    EmptyAfmSdkError,
+    PluggableVisualizationErrorCodes,
+    PluggableVisualizationErrorType,
+    addIntersectionFiltersToInsight,
 } from "./internal";
 
 // below functions are exported only for sdk-ui-dashboard use to avoid exporting the whole FullVisualizationCatalog

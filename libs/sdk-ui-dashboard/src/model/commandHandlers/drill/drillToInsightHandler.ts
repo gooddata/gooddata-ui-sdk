@@ -9,7 +9,7 @@ import {
     drillToInsightResolved,
 } from "../../events/drill";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors";
-import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext/dist/internal/components/pluggableVisualizations/drillDownUtil";
+import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
 
 export function* drillToInsightHandler(
     ctx: DashboardContext,

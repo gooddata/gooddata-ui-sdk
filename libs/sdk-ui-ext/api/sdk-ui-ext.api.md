@@ -25,6 +25,7 @@ import { IDashboardLayoutSize } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-backend-spi';
 import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDrillEvent } from '@gooddata/sdk-ui';
+import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
@@ -68,6 +69,9 @@ import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { VisType } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
 
+// @internal (undocumented)
+export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[]): IInsight;
+
 // @beta
 export function clearDashboardViewCaches(): void;
 
@@ -104,6 +108,15 @@ export class DashboardView extends React_2.Component<IDashboardViewProps, IDashb
 
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
+
+// @alpha (undocumented)
+export class EmptyAfmSdkError extends GoodDataSdkError {
+    constructor(cause?: Error);
+    // (undocumented)
+    getErrorCode(): string;
+    // (undocumented)
+    readonly pveType: PluggableVisualizationErrorType;
+}
 
 // @alpha (undocumented)
 export class FluidLayoutDescriptor implements IFluidLayoutDescriptor {
@@ -514,6 +527,9 @@ export class InsightView extends React_2.Component<IInsightViewProps> {
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
 
+// @alpha (undocumented)
+export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
+
 // @alpha
 export interface ISizeInfo {
     // (undocumented)
@@ -589,6 +605,15 @@ export function mergeFiltersWithDashboard(dashboard: IDashboard | undefined, add
 
 // @beta
 export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
+
+// @alpha (undocumented)
+export const PluggableVisualizationErrorCodes: {
+    INVALID_BUCKETS: string;
+    EMPTY_AFM: string;
+};
+
+// @alpha (undocumented)
+export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizationErrorCodes;
 
 // @beta
 export function useDashboard({ dashboard, backend, onCancel, onError, onLoading, onPending, onSuccess, workspace, }: IUseDashboardConfig): UseCancelablePromiseState<IDashboard, any>;
