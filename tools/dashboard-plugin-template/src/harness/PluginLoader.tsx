@@ -8,10 +8,6 @@ const ExtraPlugins: IEmbeddedPlugin[] = [{ factory: PluginFactory }];
 
 export const PluginLoader = (): JSX.Element => {
     return (
-        <DashboardStub
-            dashboard={idRef("aeO5PVgShc0T")}
-            loadingMode="staticOnly"
-            extraPlugins={ExtraPlugins}
-        />
+        <DashboardStub dashboard={idRef(DASHBOARD_ID)} loadingMode="staticOnly" extraPlugins={ExtraPlugins} />
     );
 };

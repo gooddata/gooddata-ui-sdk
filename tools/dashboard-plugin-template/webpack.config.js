@@ -7,26 +7,8 @@ const { DefinePlugin, ProvidePlugin } = require("webpack");
 const path = require("path");
 const deps = require("./package.json").dependencies;
 
-const BACKEND_URL = "https://live-examples-proxy.herokuapp.com";
 const PORT = 3001;
 const SCOPE_NAME = "plugin";
-const WORKSPACE = "xms7ga4tf3g3nzucd8380o2bev8oeknp";
-
-const proxy = {
-    "/gdc": {
-        changeOrigin: true,
-        cookieDomainRewrite: "localhost",
-        secure: false,
-        target: BACKEND_URL,
-        headers: {
-            host: BACKEND_URL,
-            origin: null,
-        },
-        onProxyReq(proxyReq) {
-            proxyReq.setHeader("accept-encoding", "identity");
-        },
-    },
-};
 
 // add all the gooddata packages that absolutely need to be shared and singletons because of contexts
 const gooddataSharePackagesEntries = Object.keys(deps)
@@ -38,6 +20,26 @@ const gooddataSharePackagesEntries = Object.keys(deps)
 
 module.exports = (_env, argv) => {
     const isProduction = argv.mode === "production";
+
+    const effectiveBackendUrl = process.env.BACKEND_URL || "https://live-examples-proxy.herokuapp.com";
+    const effectiveWorkspace = process.env.WORKSPACE || "xms7ga4tf3g3nzucd8380o2bev8oeknp";
+    const effectiveDashboardId = process.env.DASHBOARD_ID || "aeO5PVgShc0T";
+
+    const proxy = {
+        "/gdc": {
+            changeOrigin: true,
+            cookieDomainRewrite: "localhost",
+            secure: false,
+            target: effectiveBackendUrl,
+            headers: {
+                host: effectiveBackendUrl,
+                origin: null,
+            },
+            onProxyReq(proxyReq) {
+                proxyReq.setHeader("accept-encoding", "identity");
+            },
+        },
+    };
 
     const commonConfig = {
         mode: isProduction ? "production" : "development",
@@ -133,10 +135,11 @@ module.exports = (_env, argv) => {
                 process: "process/browser",
             }),
             new DefinePlugin({
-                BACKEND_URL: JSON.stringify(BACKEND_URL),
+                BACKEND_URL: JSON.stringify(effectiveBackendUrl),
                 PORT: JSON.stringify(PORT),
                 SCOPE_NAME: JSON.stringify(SCOPE_NAME),
-                WORKSPACE: JSON.stringify(WORKSPACE),
+                WORKSPACE: JSON.stringify(effectiveWorkspace),
+                DASHBOARD_ID: JSON.stringify(effectiveDashboardId),
             }),
         ],
     };
