@@ -38,14 +38,8 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
     const backend = useBackendStrict(options.backend);
     const workspace = useWorkspaceStrict(options.workspace);
     const [loadStatus, setLoadStatus] = useState(InitialStatus);
-    const { dashboard, config, permissions, clientWorkspace, loadingMode, extraPlugins } = options;
-    const baseProps: IDashboardBasePropsForLoader = {
-        backend,
-        workspace,
-        dashboard,
-        config,
-        permissions,
-    };
+    const { dashboard, filterContextRef, config, permissions, clientWorkspace, loadingMode, extraPlugins } =
+        options;
 
     useEffect(() => {
         return () => {
@@ -62,6 +56,15 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
     }, []);
 
     const dashboardLoader = useMemo(() => {
+        const baseProps: IDashboardBasePropsForLoader = {
+            backend,
+            workspace,
+            dashboard,
+            filterContextRef,
+            config,
+            permissions,
+        };
+
         const extraPluginsArr = isArray(extraPlugins) ? extraPlugins : compact([extraPlugins]);
         const loader =
             loadingMode === "staticOnly" ? DashboardLoader.staticOnly() : DashboardLoader.adaptive();
@@ -69,7 +72,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         initializeLoader(loader, baseProps, extraPluginsArr, clientWorkspace);
 
         return loader;
-    }, [backend, workspace, dashboard, clientWorkspace, extraPlugins]);
+    }, [backend, workspace, dashboard, filterContextRef, config, permissions, clientWorkspace, extraPlugins]);
 
     useCancelablePromise(
         {

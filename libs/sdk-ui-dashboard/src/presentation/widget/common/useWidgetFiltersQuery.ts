@@ -39,6 +39,14 @@ export const useWidgetFiltersQuery = (
     status?: QueryProcessingStatus;
     error?: GoodDataSdkError;
 } => {
+    const [effectiveFiltersState, setEffectiveFiltersState] = useState<{
+        filters: IFilter[];
+        filterQueryStatus?: QueryProcessingStatus;
+    }>({
+        filters: [],
+        filterQueryStatus: undefined,
+    });
+
     const {
         status: nonIgnoredFiltersStatus,
         error: nonIgnoredFiltersError,
@@ -77,20 +85,12 @@ export const useWidgetFiltersQuery = (
         },
     });
 
-    const [effectiveFiltersState, setEffectiveFiltersState] = useState<{
-        filters: IFilter[];
-        filterQueryStatus?: QueryProcessingStatus;
-    }>({
-        filters: [],
-        filterQueryStatus: undefined,
-    });
-
     // only run the "full" filters query if any of the non-ignored filters has changed
     useEffect(() => {
         if (widget && nonIgnoredFiltersStatus === "success") {
             runFiltersQuery(widget, filters);
         }
-    }, [widget, stringify(nonIgnoredFilters), filters]);
+    }, [widget, stringify(nonIgnoredFilters), filters, nonIgnoredFiltersStatus]);
 
     return {
         result: effectiveFiltersState.filters,
