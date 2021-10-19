@@ -13,6 +13,8 @@ module.exports = {
     rules: {
         // this pattern is necessary for typing saga iterator results
         "sonarjs/prefer-immediate-return": "off",
+        "react-hooks/rules-of-hooks": 2,
+        // "react-hooks/exhaustive-deps": 2,
     },
     parserOptions: { tsconfigRootDir: __dirname },
 };
