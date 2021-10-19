@@ -1,0 +1,28 @@
+{
+    "id": "dcf86764-9040-4e59-8ebb-ad11cf698626",
+    "name": "gdc_app_projects_mbuumy476p78ybcceiru61hcyr8i8lo8_executeafm",
+    "request": {
+        "url": "/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executeAfm",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"3c2bb0732dc2454189b2d454a3845318\",\"definition\":{\"measure\":{\"item\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\"}}}}],\"filters\":[{\"relativeDateFilter\":{\"dataSet\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2180\"},\"granularity\":\"GDC.time.date\",\"from\":-6,\"to\":0}}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"measureGroup\"]}]}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 201,
+        "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"$ Avg Daily Total Sales\",\"format\":\"$#,##0\",\"localIdentifier\":\"3c2bb0732dc2454189b2d454a3845318\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\",\"identifier\":\"aagJGHg1bxap\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executionResults/343935681284865984?c=152bf7c6292c69feaf32a5a005248b0c&q=eAEtjsEKwjAQRH%2BlbD0Woiht7E0QxIsX9SQ9pGmskWxTtokSSv%2FdVHqbGXZn3gikekvuIlBBCffO%0AaWdUAxlIazx2A5SPKgNUjrSczbjocxPPWdtIhg3D2nsMuyLvCx5qKZUmn29eMhDX3FjObP1mOd9v%0AY%2B%2FgEQWF%2BB3N0xIKF%2FUqzdJ0HZP%2F%2Fhwkh0%2BbHIU2IblZJ0xyFUYNMEUast8ZZSE5kfU9VNMP4vtC%0AZA%3D%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "dcf86764-9040-4e59-8ebb-ad11cf698626",
+    "persistent": true,
+    "insertionIndex": 92
+}

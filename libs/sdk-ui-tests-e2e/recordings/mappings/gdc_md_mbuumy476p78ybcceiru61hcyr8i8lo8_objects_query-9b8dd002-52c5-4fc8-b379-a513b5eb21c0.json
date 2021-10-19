@@ -1,0 +1,21 @@
+{
+    "id": "9b8dd002-52c5-4fc8-b379-a513b5eb21c0",
+    "name": "gdc_md_mbuumy476p78ybcceiru61hcyr8i8lo8_objects_query",
+    "request": {
+        "url": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/objects/query?category=metric&limit=50&offset=100",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"paging\":{\"count\":3,\"offset\":100},\"items\":[{\"metric\":{\"content\":{\"tree\":{\"content\":[{\"content\":[{\"value\":\"ewAiAGMAbwBtAG0AZQBuAHQAcwAiADoAewB9ACwAIgBmAGEAdgBvAHIAaQB0AGUAcwAiADoAewB9AH0A\",\"position\":{\"column\":21,\"line\":1},\"type\":\"string\"}],\"position\":{\"column\":21,\"line\":1},\"type\":\"expression\"}],\"position\":{\"column\":14,\"line\":1},\"type\":\"metric\"},\"expression\":\"SELECT \\\"ewAiAGMAbwBtAG0AZQBuAHQAcwAiADoAewB9ACwAIgBmAGEAdgBvAHIAaQB0AGUAcwAiADoAewB9AH0A\\\"\"},\"links\":{\"explain2\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/13999/explain2\"},\"meta\":{\"author\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/13999\",\"tags\":\"\",\"created\":\"2020-11-04 16:59:19\",\"identifier\":\"aakCzkRqcG5O\",\"deprecated\":\"0\",\"summary\":\"\",\"isProduction\":1,\"title\":\"Hackathon Storage\",\"category\":\"metric\",\"updated\":\"2020-11-05 10:33:13\",\"contributor\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"metric\":{\"content\":{\"format\":\"#,##0.00\",\"tree\":{\"content\":[{\"content\":[{\"value\":\"1\",\"position\":{\"column\":21,\"line\":1},\"type\":\"number\"}],\"position\":{\"column\":21,\"line\":1},\"type\":\"expression\"}],\"position\":{\"column\":14,\"line\":1},\"type\":\"metric\"},\"expression\":\"SELECT 1\"},\"links\":{\"explain2\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14383/explain2\"},\"meta\":{\"author\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14383\",\"tags\":\"\",\"created\":\"2021-03-03 11:51:06\",\"identifier\":\"other.id\",\"deprecated\":\"0\",\"summary\":\"meh\",\"sharedWithSomeone\":0,\"isProduction\":1,\"unlisted\":1,\"title\":\"DHO test\",\"category\":\"metric\",\"updated\":\"2021-03-03 11:51:43\",\"contributor\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"metric\":{\"content\":{\"tree\":{\"content\":[{\"content\":[{\"value\":\"1\",\"position\":{\"column\":21,\"line\":1},\"type\":\"number\"}],\"position\":{\"column\":21,\"line\":1},\"type\":\"expression\"}],\"position\":{\"column\":14,\"line\":1},\"type\":\"metric\"},\"expression\":\"SELECT 1\"},\"links\":{\"explain2\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14466/explain2\"},\"meta\":{\"locked\":1,\"author\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14466\",\"tags\":\"\",\"created\":\"2021-04-30 09:45:51\",\"identifier\":\"aabdgL0jbwHu\",\"deprecated\":\"0\",\"summary\":\"meh\",\"sharedWithSomeone\":0,\"isProduction\":1,\"unlisted\":1,\"title\":\"DHO test 2\",\"category\":\"metric\",\"updated\":\"2021-04-30 11:23:09\",\"contributor\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\"}}}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "9b8dd002-52c5-4fc8-b379-a513b5eb21c0",
+    "persistent": true,
+    "insertionIndex": 77
+}

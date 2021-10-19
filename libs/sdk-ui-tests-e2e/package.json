@@ -51,7 +51,7 @@
         "docker-build": "npm run build-scenarios && DOCKER_BUILDKIT=0 docker build --file Dockerfile -t gooddata-ui-sdk .",
         "docker-build-local": "docker build --file Dockerfile_local -t gooddata-ui-sdk .",
         "run-isolated": "docker-compose -f docker-compose-isolated.yaml up --abort-on-container-exit --exit-code-from isolated-tests --force-recreate --always-recreate-deps --renew-anon-volumes",
-        "run-isolated-record": "MODE=record npm run run-isolated-local",
+        "run-isolated-record": "MODE=record npm run run-isolated-local && node ./scripts/remove_sensitive_data.js",
         "run-isolated-local": "npm run docker-build-local && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
         "run-isolated-ci": "npm run docker-build && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
         "run-scenarios-local": "node ./scripts/run-scenarios-local.js",
