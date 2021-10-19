@@ -287,13 +287,15 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     });
 
     useEffect(() => {
-        const initialSelection = getInitialSelectedOptions();
-        const initialIsInverted = getInitialIsInverted();
-
         setState((prevValue) => {
             let resultState = prevValue;
+            const initialSelection = getInitialSelectedOptions();
+            const initialIsInverted = getInitialIsInverted();
 
-            if (!isEqual(prevValue.appliedFilterOptions, initialSelection)) {
+            if (
+                !isEqual(prevValue.appliedFilterOptions, initialSelection) ||
+                !isEqual(prevValue.selectedFilterOptions, initialSelection)
+            ) {
                 resultState = {
                     ...resultState,
                     selectedFilterOptions: initialSelection,
@@ -305,6 +307,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 resultState = {
                     ...resultState,
                     isInverted: initialIsInverted,
+                    appliedIsInverted: initialIsInverted,
                 };
             }
             // if no change returning prevValue effectively skips the setState
@@ -347,7 +350,14 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 }));
             },
         },
-        [state.validOptions, state.offset, state.limit, resolvedParentFilters],
+        [
+            state.selectedFilterOptions,
+            state.appliedFilterOptions,
+            state.validOptions,
+            state.offset,
+            state.limit,
+            resolvedParentFilters,
+        ],
     );
 
     const {
@@ -427,6 +437,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     selectedFilterOptions: [],
                     appliedFilterOptions: [],
                     isInverted,
+                    appliedIsInverted: isInverted,
                 };
             });
         } else {
