@@ -29,10 +29,6 @@ export const ConfigurationParentItems: React.FC<IConfigurationParentItemsProps> 
         [items, setItems],
     );
 
-    if (!isDependentFiltersEnabled || numberOfAttributeFilters <= 1) {
-        return null;
-    }
-
     const connectingAttributeSelectHandler = useCallback(
         (ref: ObjRef, selectedConnectingAttributeRef: ObjRef) => {
             const updatedItems = items.map((item) =>
@@ -42,6 +38,10 @@ export const ConfigurationParentItems: React.FC<IConfigurationParentItemsProps> 
         },
         [items, setItems],
     );
+
+    if (!isDependentFiltersEnabled || numberOfAttributeFilters <= 1) {
+        return null;
+    }
 
     return (
         <>
