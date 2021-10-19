@@ -7,3 +7,4 @@ declare const BACKEND_URL: string;
 declare const PORT: number;
 declare const SCOPE_NAME: string;
 declare const WORKSPACE: string;
+declare const DASHBOARD_ID: string;
