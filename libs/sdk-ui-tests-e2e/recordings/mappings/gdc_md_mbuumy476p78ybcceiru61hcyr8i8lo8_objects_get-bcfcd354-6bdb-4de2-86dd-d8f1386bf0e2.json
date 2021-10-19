@@ -1,0 +1,28 @@
+{
+    "id": "bcfcd354-6bdb-4de2-86dd-d8f1386bf0e2",
+    "name": "gdc_md_mbuumy476p78ybcceiru61hcyr8i8lo8_objects_get",
+    "request": {
+        "url": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/objects/get",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"get\":{\"items\":[\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14586\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"items\":[{\"visualizationObject\":{\"links\":{\"explain\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14586/explain\"},\"content\":{\"buckets\":[{\"localIdentifier\":\"measures\",\"items\":[{\"measure\":{\"title\":\"$ Avg Daily Total Sales\",\"localIdentifier\":\"4329964a12fd4dcebb5fb7cf7e1c915e\",\"definition\":{\"measureDefinition\":{\"item\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\"}}}}}]},{\"localIdentifier\":\"attribute\",\"items\":[{\"visualizationAttribute\":{\"localIdentifier\":\"4fea42e9279d418a8221421fe35c48cf\",\"displayForm\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2201\"}}},{\"visualizationAttribute\":{\"displayForm\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2211\"},\"localIdentifier\":\"cc490ebc21f14b13b18abc66de23173f\"}}]}],\"properties\":\"{\\\"sortItems\\\":[{\\\"attributeSortItem\\\":{\\\"attributeIdentifier\\\":\\\"4fea42e9279d418a8221421fe35c48cf\\\",\\\"direction\\\":\\\"asc\\\"}}]}\",\"visualizationClass\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/8705\"},\"filters\":[{\"positiveAttributeFilter\":{\"in\":[\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339877\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339689\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339879\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339691\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339462\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339881\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339269\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339271\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339464\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339693\"],\"displayForm\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2201\"}}}]},\"meta\":{\"title\":\"E2E table with urls\",\"deprecated\":\"0\",\"tags\":\"\",\"created\":\"2021-09-13 11:27:30\",\"identifier\":\"aab2TQsfeTzb\",\"isProduction\":1,\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14586\",\"contributor\":\"/gdc/account/profile/20fcec6a450c807208b7918da6c08352\",\"author\":\"/gdc/account/profile/20fcec6a450c807208b7918da6c08352\",\"updated\":\"2021-09-14 10:30:18\",\"summary\":\"\",\"category\":\"visualizationObject\"}}}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "bcfcd354-6bdb-4de2-86dd-d8f1386bf0e2",
+    "persistent": true,
+    "insertionIndex": 99
+}

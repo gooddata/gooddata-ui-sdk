@@ -1,6 +1,9 @@
 // (C) 2021 GoodData Corporation
 
-type LayoutType = "fluid"; // only supported layout for now
+/**
+ * @alpha
+ */
+export type LayoutType = "fluid"; // only supported layout for now
 
 /**
  * Layout descriptor.

@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { VisType } from "@gooddata/sdk-ui";
-import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX } from "@gooddata/sdk-ui-ext/dist/internal/components/pluggableVisualizations/constants";
+import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX } from "@gooddata/sdk-ui-ext";
 import { DASHBOARD_LAYOUT_VIS_TYPE } from "../../../constants";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/fluidLayout";
 

@@ -91,11 +91,6 @@ module.exports = (_env, argv) => {
                     test: /\.(eot|woff|ttf|svg)/,
                     type: "asset/resource",
                 },
-                {
-                    // never tree shake sdk-ui-dashboard so that the version here is also used in the plugins
-                    test: (modulePath) => /sdk-ui-dashboard/.test(modulePath),
-                    sideEffects: true,
-                },
                 !isProduction && {
                     test: /\.js$/,
                     enforce: "pre",

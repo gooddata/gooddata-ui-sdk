@@ -17,7 +17,7 @@ export type PluggableVisualizationFactory = (params: IVisConstruct) => IVisualiz
  *
  * @alpha
  */
-interface ISizeInfo {
+export interface ISizeInfo {
     default?: number;
     min?: number;
     max?: number;

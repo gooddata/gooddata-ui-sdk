@@ -22,6 +22,7 @@ export {
     ConfigPanelClassName,
     IGdcConfig,
     PluggableVisualizationErrorCodes,
+    PluggableVisualizationErrorType,
     InvalidBucketsSdkError,
     EmptyAfmSdkError,
     PluggableVisualizationError,
@@ -45,5 +46,11 @@ export {
 
 export { isDateFilter, isMeasureValueFilter, isAttributeFilter, isRankingFilter } from "./utils/bucketHelper";
 export { createInternalIntl, InternalIntlWrapper } from "./utils/internalIntlProvider";
+
+export { IVisualizationSizeInfo, ISizeInfo } from "./interfaces/VisualizationDescriptor";
+export { IFluidLayoutDescriptor, ILayoutDescriptor, LayoutType } from "./interfaces/LayoutDescriptor";
+
+export { addIntersectionFiltersToInsight } from "./components/pluggableVisualizations/drillDownUtil";
+export * from "./components/pluggableVisualizations/constants";
 
 export * from "./dashboardEmbedding";

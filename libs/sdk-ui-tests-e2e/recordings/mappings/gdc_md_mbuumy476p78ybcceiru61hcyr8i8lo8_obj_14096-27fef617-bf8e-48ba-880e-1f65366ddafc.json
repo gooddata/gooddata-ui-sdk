@@ -1,0 +1,21 @@
+{
+    "id": "27fef617-bf8e-48ba-880e-1f65366ddafc",
+    "name": "gdc_md_mbuumy476p78ybcceiru61hcyr8i8lo8_obj_14096",
+    "request": {
+        "url": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14096",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"theme\":{\"content\":{\"dashboards\":{\"section\":{\"title\":{\"color\":\"#3b6ba1\",\"lineColor\":\"#85abd6\"},\"description\":{\"color\":\"#85abd6\"}}}},\"meta\":{\"author\":\"/gdc/account/profile/62d4520830adb421131e4be1f4a1ce1a\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14096\",\"tags\":\"\",\"created\":\"2020-12-15 10:00:26\",\"identifier\":\"aabol4gGfsdZ\",\"deprecated\":\"0\",\"summary\":\"\",\"isProduction\":1,\"title\":\"Demo theme partial - doc for props\",\"category\":\"theme\",\"updated\":\"2021-08-31 08:47:04\",\"contributor\":\"/gdc/account/profile/62d4520830adb421131e4be1f4a1ce1a\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "27fef617-bf8e-48ba-880e-1f65366ddafc",
+    "persistent": true,
+    "insertionIndex": 76
+}

@@ -59,5 +59,3 @@ export {
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
 } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-
-export { fluidLayoutDescriptor } from "./FluidLayoutDescriptor";

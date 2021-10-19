@@ -8,7 +8,7 @@ import {
     isProtectedReport,
     isUnknownSdkError,
 } from "@gooddata/sdk-ui";
-import { isEmptyAfm } from "@gooddata/sdk-ui-ext/dist/internal";
+import { isEmptyAfm } from "@gooddata/sdk-ui-ext";
 import { typesUtils } from "@gooddata/util";
 
 /**

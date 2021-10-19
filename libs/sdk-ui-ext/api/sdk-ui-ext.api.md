@@ -25,6 +25,7 @@ import { IDashboardLayoutSize } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-backend-spi';
 import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDrillEvent } from '@gooddata/sdk-ui';
+import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
@@ -68,11 +69,17 @@ import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { VisType } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
 
+// @internal (undocumented)
+export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[]): IInsight;
+
 // @beta
 export function clearDashboardViewCaches(): void;
 
 // @public
 export function clearInsightViewCaches(): void;
+
+// @internal (undocumented)
+export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
 
 // @beta
 export type DashboardLayoutItemModifications<TWidget = IDashboardWidget> = (itemBuilder: IDashboardLayoutItemBuilder<TWidget>, itemFacade: IDashboardLayoutItemFacade<TWidget>) => IDashboardLayoutItemBuilder<TWidget>;
@@ -104,6 +111,38 @@ export class DashboardView extends React_2.Component<IDashboardViewProps, IDashb
 
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
+
+// @alpha (undocumented)
+export class EmptyAfmSdkError extends GoodDataSdkError {
+    constructor(cause?: Error);
+    // (undocumented)
+    getErrorCode(): string;
+    // (undocumented)
+    readonly pveType: PluggableVisualizationErrorType;
+}
+
+// @alpha (undocumented)
+export class FluidLayoutDescriptor implements IFluidLayoutDescriptor {
+    // (undocumented)
+    gridColumnsCount: number;
+    // (undocumented)
+    gridRowHeight: number;
+    // (undocumented)
+    toGridHeight(heightPx: number): number;
+    // (undocumented)
+    toHeightInPx(height: number): number;
+    // (undocumented)
+    type: "fluid";
+}
+
+// @alpha (undocumented)
+export const fluidLayoutDescriptor: FluidLayoutDescriptor;
+
+// @internal (undocumented)
+export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo;
+
+// @internal (undocumented)
+export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDashboardDrillEvent, drillDefinition: IDrillDownDefinition): IInsight;
 
 // @beta
 export interface IDashboardDrillEvent extends IDrillEvent {
@@ -403,6 +442,16 @@ export interface IDrillDownDefinition {
     type: "drillDown";
 }
 
+// @alpha
+export interface IFluidLayoutDescriptor extends ILayoutDescriptor {
+    gridColumnsCount: number;
+    gridRowHeight: number;
+    toGridHeight(heightPx: number): number;
+    toHeightInPx(height: number): number;
+    // (undocumented)
+    type: "fluid";
+}
+
 // @internal (undocumented)
 export interface IInsightErrorProps {
     // (undocumented)
@@ -456,6 +505,18 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     workspace?: string;
 }
 
+// @alpha
+export interface ILayoutDescriptor {
+    // (undocumented)
+    type: LayoutType;
+}
+
+// @internal (undocumented)
+export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo;
+
+// @internal (undocumented)
+export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo;
+
 // @internal (undocumented)
 export const InsightError: React_2.ForwardRefExoticComponent<Pick<IInsightErrorProps & WrappedComponentProps<"intl">, "error" | "height" | "clientHeight" | "ErrorComponent"> & {
     forwardedRef?: React_2.Ref<any>;
@@ -474,6 +535,19 @@ export class InsightView extends React_2.Component<IInsightViewProps> {
 
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
+
+// @alpha (undocumented)
+export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
+
+// @alpha
+export interface ISizeInfo {
+    // (undocumented)
+    default?: number;
+    // (undocumented)
+    max?: number;
+    // (undocumented)
+    min?: number;
+}
 
 // @beta (undocumented)
 export interface IUseDashboardAlertsConfig extends UseCancelablePromiseCallbacks<IWidgetAlert[], GoodDataSdkError> {
@@ -511,6 +585,14 @@ export interface IUseDashboardWidgetExecutionConfig {
     workspace?: string;
 }
 
+// @alpha
+export interface IVisualizationSizeInfo {
+    // (undocumented)
+    height: ISizeInfo;
+    // (undocumented)
+    width: ISizeInfo;
+}
+
 // @beta
 export interface IWidgetPredicates {
     isCustomWidget: () => boolean;
@@ -522,6 +604,15 @@ export interface IWidgetPredicates {
 }
 
 // @internal (undocumented)
+export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo;
+
+// @internal (undocumented)
+export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo;
+
+// @alpha (undocumented)
+export type LayoutType = "fluid";
+
+// @internal (undocumented)
 export type MeasurableWidgetContent = IInsightDefinition | ILegacyKpi;
 
 // @beta
@@ -529,6 +620,15 @@ export function mergeFiltersWithDashboard(dashboard: IDashboard | undefined, add
 
 // @beta
 export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
+
+// @alpha (undocumented)
+export const PluggableVisualizationErrorCodes: {
+    INVALID_BUCKETS: string;
+    EMPTY_AFM: string;
+};
+
+// @alpha (undocumented)
+export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizationErrorCodes;
 
 // @beta
 export function useDashboard({ dashboard, backend, onCancel, onError, onLoading, onPending, onSuccess, workspace, }: IUseDashboardConfig): UseCancelablePromiseState<IDashboard, any>;

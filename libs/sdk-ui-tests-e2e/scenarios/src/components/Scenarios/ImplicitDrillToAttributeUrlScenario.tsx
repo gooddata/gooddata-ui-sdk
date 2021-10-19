@@ -27,7 +27,7 @@ export const ImplicitDrillToAttributeUrlScenario: React.FC = () => {
     return (
         <>
             {attributeUrl && <div className="s-attribute-url">{attributeUrl}</div>}
-            <Dashboard dashboardRef={dashboardIdRef} eventHandlers={eventHandlers} />
+            <Dashboard dashboard={dashboardIdRef} eventHandlers={eventHandlers} />
         </>
     );
 };

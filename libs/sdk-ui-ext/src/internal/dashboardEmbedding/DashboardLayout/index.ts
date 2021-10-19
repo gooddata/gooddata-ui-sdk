@@ -71,4 +71,4 @@ export {
     IDashboardLayoutSectionsFacade,
 } from "./facade/interfaces";
 
-export { fluidLayoutDescriptor } from "./FluidLayoutDescriptor";
+export { fluidLayoutDescriptor, FluidLayoutDescriptor } from "./FluidLayoutDescriptor";

@@ -22,19 +22,19 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { IInsightDefinition, isInsight } from "@gooddata/sdk-model";
-
-import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout";
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout";
-import { fluidLayoutDescriptor } from "../FluidLayoutDescriptor";
-import { FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/dist/internal/components/VisualizationCatalog";
-import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext/dist/internal/interfaces/VisualizationDescriptor";
 import {
+    IVisualizationSizeInfo,
+    fluidLayoutDescriptor,
+    getInsightSizeInfo,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     KPI_WIDGET_SIZE_INFO_DEFAULT,
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
-} from "@gooddata/sdk-ui-ext/dist/internal/components/pluggableVisualizations/constants";
+} from "@gooddata/sdk-ui-ext";
+
+import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout";
+import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces";
+import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
@@ -470,11 +470,7 @@ const getVisualizationSizeInfo = (
 ): IVisualizationSizeInfo => {
     let sizeInfo;
     if (isInsight(insight)) {
-        sizeInfo = FullVisualizationCatalog.forInsight(insight).getSizeInfo(
-            insight,
-            fluidLayoutDescriptor,
-            settings,
-        );
+        sizeInfo = getInsightSizeInfo(insight, settings);
     }
 
     if (!sizeInfo) {

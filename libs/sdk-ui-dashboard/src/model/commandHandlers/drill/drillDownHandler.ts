@@ -4,7 +4,7 @@ import { put } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
 import { DrillDown } from "../../commands/drill";
 import { DashboardDrillDownResolved, drillDownRequested, drillDownResolved } from "../../events/drill";
-import { FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/dist/internal";
+import { getInsightWithAppliedDrillDown } from "@gooddata/sdk-ui-ext";
 
 export function* drillDownHandler(
     ctx: DashboardContext,
@@ -14,10 +14,7 @@ export function* drillDownHandler(
 
     yield put(drillDownRequested(ctx, insight, drillDefinition, drillEvent, cmd.correlationId));
 
-    const insightWithDrillDownApplied = FullVisualizationCatalog.forInsight(insight).applyDrillDown(insight, {
-        drillDefinition,
-        event: drillEvent,
-    });
+    const insightWithDrillDownApplied = getInsightWithAppliedDrillDown(insight, drillEvent, drillDefinition);
 
     return drillDownResolved(
         ctx,

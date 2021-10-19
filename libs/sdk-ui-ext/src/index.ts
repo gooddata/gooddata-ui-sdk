@@ -11,6 +11,16 @@
  * @packageDocumentation
  */
 
+import { ISettings } from "@gooddata/sdk-backend-spi";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import {
+    fluidLayoutDescriptor,
+    FullVisualizationCatalog,
+    IDashboardDrillEvent,
+    IDrillDownDefinition,
+    IVisualizationSizeInfo,
+} from "./internal";
+
 export { clearInsightViewCaches, clearDashboardViewCaches } from "./dataLoaders";
 export * from "./dashboardView";
 export * from "./insightView";
@@ -21,4 +31,43 @@ export {
     MeasurableWidgetContent,
     IDrillDownDefinition,
     isDrillDownDefinition,
+    IVisualizationSizeInfo,
+    ISizeInfo,
+    fluidLayoutDescriptor,
+    FluidLayoutDescriptor,
+    IFluidLayoutDescriptor,
+    ILayoutDescriptor,
+    LayoutType,
+    isEmptyAfm,
+    EmptyAfmSdkError,
+    PluggableVisualizationErrorCodes,
+    PluggableVisualizationErrorType,
+    addIntersectionFiltersToInsight,
+    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX,
+    INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
+    KPI_WIDGET_SIZE_INFO_DEFAULT,
+    KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
+    INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
 } from "./internal";
+
+// below functions are exported only for sdk-ui-dashboard use to avoid exporting the whole FullVisualizationCatalog
+/**
+ * @internal
+ */
+export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo {
+    return FullVisualizationCatalog.forInsight(insight).getSizeInfo(insight, fluidLayoutDescriptor, settings);
+}
+
+/**
+ * @internal
+ */
+export function getInsightWithAppliedDrillDown(
+    insight: IInsight,
+    drillEvent: IDashboardDrillEvent,
+    drillDefinition: IDrillDownDefinition,
+): IInsight {
+    return FullVisualizationCatalog.forInsight(insight).applyDrillDown(insight, {
+        drillDefinition,
+        event: drillEvent,
+    });
+}
