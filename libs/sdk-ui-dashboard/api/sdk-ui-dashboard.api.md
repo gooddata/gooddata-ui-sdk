@@ -3581,6 +3581,9 @@ export const selectFilterBarExpanded: OutputSelector<DashboardState, boolean, (r
 export const selectFilterBarHeight: OutputSelector<DashboardState, number, (res: UiState) => number>;
 
 // @alpha
+export const selectFilterContextAttributeFilterByDisplayForm: (displayForm: ObjRef) => OutputSelector<DashboardState, IDashboardAttributeFilter | undefined, (res1: ObjRefMap<IAttributeDisplayFormMetadataObject>, res2: IDashboardAttributeFilter[]) => IDashboardAttributeFilter | undefined>;
+
+// @alpha
 export const selectFilterContextAttributeFilters: OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem[]) => IDashboardAttributeFilter[]>;
 
 // @alpha
