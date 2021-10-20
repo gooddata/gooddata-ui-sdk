@@ -1,7 +1,15 @@
 // (C) 2019 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IInsight, idRef, insightTitle, insightVisualizationUrl } from "@gooddata/sdk-model";
+import {
+    IInsight,
+    idRef,
+    insightTitle,
+    insightVisualizationUrl,
+    ObjRef,
+    areObjRefsEqual,
+    insightRef,
+} from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     ILocale,
@@ -47,6 +55,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
         onLoadingChanged,
         onExportReady,
         onError,
+        onInsightLoaded,
         pushData,
 
         ErrorComponent = DefaultError,
@@ -58,6 +67,9 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
         isVisualizationLoading: false,
         visualizationError: undefined,
     });
+
+    // ref of the insight last reported by the onInsightLoaded
+    const lastReportedRef = useRef<ObjRef | undefined>();
 
     const {
         error: insightError,
@@ -71,6 +83,14 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
                 const insightData = await insightDataLoaderFactory
                     .forWorkspace(workspace)
                     .getInsight(backend, ref);
+
+                if (
+                    !lastReportedRef.current ||
+                    !areObjRefsEqual(lastReportedRef.current, insightRef(insightData))
+                ) {
+                    onInsightLoaded?.(insightData);
+                    lastReportedRef.current = insightRef(insightData);
+                }
 
                 if (executeByReference) {
                     /*
@@ -90,7 +110,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
                     .getInsightWithAddedFilters(insightData, filters ?? []);
             },
         },
-        [insight, backend, workspace, executeByReference, filters],
+        [insight, backend, workspace, executeByReference, filters, onInsightLoaded],
     );
 
     const {
