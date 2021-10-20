@@ -518,7 +518,7 @@ export class MetadataModule {
     public getAnalyticalDashboards(projectId: string): Promise<GdcMetadata.IObjectLink[]> {
         return this.xhr
             .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
-                `/gdc/md/${projectId}/query/analyticaldashboard`,
+                `/gdc/md/${projectId}/query/analyticaldashboard?showAll=0`,
             )
             .then((dashboardsQuery) => {
                 return dashboardsQuery.query.entries;

@@ -517,8 +517,7 @@ export const convertDashboard = (
         isLocked,
         tags,
         plugins,
-        isPrivate,
-        isShared,
+        shareStatus,
         isUnderStrictControl,
     } = dashboard;
     const convertedLayout = layout && convertLayout(layout);
@@ -529,7 +528,7 @@ export const convertDashboard = (
     const convertedPlugins = plugins?.map(convertPluginLink);
 
     const sharedWithSomeoneProp: Partial<GdcMetadata.IObjectMeta> =
-        isPrivate && isShared
+        shareStatus === "shared"
             ? {
                   sharedWithSomeone: 1,
               }
@@ -561,7 +560,7 @@ export const convertDashboard = (
                 summary: description,
                 locked: isLocked,
                 tags: tags?.join(" "),
-                unlisted: isPrivate ? 1 : 0,
+                unlisted: shareStatus === "public" ? 0 : 1,
                 ...sharedWithSomeoneProp,
                 ...flagsProp,
             },

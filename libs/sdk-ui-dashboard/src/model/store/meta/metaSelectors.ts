@@ -135,3 +135,12 @@ export const selectDashboardDescription = createSelector(selectDashboardDescript
 export const selectDashboardTags = createSelector(selectDashboardDescriptor, (state) => {
     return state.tags;
 });
+
+/**
+ * Selects dashboard share status.
+ *
+ * @alpha
+ */
+export const selectDashboardShareStatus = createSelector(selectDashboardDescriptor, (state) => {
+    return state.shareStatus;
+});

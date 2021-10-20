@@ -541,6 +541,16 @@
         "comment": "Dialog. Export of the visualization to the file is done.",
         "limit": 0
     },
+    "messages.sharingChangedSuccess": {
+        "value": "Sharing updated.",
+        "comment": "Global messages. Change of dashboard sharing is done.",
+        "limit": 0
+    },
+    "messages.sharingChangedError.general": {
+        "value": "Failed to update the sharing settings. Try again later.",
+        "comment": "Global messages. Change of dashboard sharing fails.",
+        "limit": 0
+    },
     "attributeFilterDropdown.searchPlaceholder": {
         "value": "Search…",
         "comment": "Use '…' as one character, not 3 dots ('...').",
@@ -654,6 +664,11 @@
     "widget.options.menu.exportToXLSX": {
         "value": "Export to XLSX",
         "comment": "Export to file with XLSX extension.",
+        "limit": 0
+    },
+    "share.button.text": {
+        "value": "Share",
+        "comment": "Text of button that opens share dialog",
         "limit": 0
     }
 }

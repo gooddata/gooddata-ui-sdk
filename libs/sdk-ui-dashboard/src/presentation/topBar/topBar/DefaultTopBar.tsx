@@ -12,8 +12,7 @@ import { ITopBarProps } from "./types";
 import { HiddenTopBar } from "./HiddenTopBar";
 
 const TopBarCore = (): JSX.Element => {
-    const { menuButtonProps, titleProps } = useTopBarProps();
-
+    const { menuButtonProps, titleProps, buttonBarProps } = useTopBarProps();
     return (
         <div className={"dash-header s-top-bar"}>
             <div className={"dash-header-inner"}>
@@ -21,8 +20,7 @@ const TopBarCore = (): JSX.Element => {
                     <Title />
                 </TitlePropsProvider>
 
-                {/* no props here for now */}
-                <ButtonBarPropsProvider>
+                <ButtonBarPropsProvider {...buttonBarProps}>
                     <ButtonBar />
                 </ButtonBarPropsProvider>
             </div>

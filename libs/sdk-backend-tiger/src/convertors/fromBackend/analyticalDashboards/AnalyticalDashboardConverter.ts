@@ -23,6 +23,7 @@ import {
     convertFilterContextFromBackend as convertFilterContextFromBackendV2,
 } from "./v2/AnalyticalDashboardConverter";
 import { idRef, ObjectType } from "@gooddata/sdk-model";
+import { isInheritedObject } from "../utils";
 
 export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
@@ -37,6 +38,9 @@ export const convertAnalyticalDashboard = (
         created: "",
         updated: "",
         tags: attributes?.tags ?? [],
+        isLocked: isInheritedObject(analyticalDashboard.id),
+        shareStatus: "public",
+        isUnderStrictControl: true,
     };
 };
 

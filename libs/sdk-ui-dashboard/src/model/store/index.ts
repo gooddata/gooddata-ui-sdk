@@ -127,6 +127,7 @@ export {
     selectDashboardTags,
     selectDashboardUri,
     selectDashboardId,
+    selectDashboardShareStatus,
 } from "./meta/metaSelectors";
 export {
     selectListedDashboards,

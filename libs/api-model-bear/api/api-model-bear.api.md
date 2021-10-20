@@ -1379,6 +1379,8 @@ export namespace GdcMetadata {
         // (undocumented)
         deprecated?: BooleanAsString;
         // (undocumented)
+        flags?: string[];
+        // (undocumented)
         help?: Uri;
         // (undocumented)
         identifier?: string;

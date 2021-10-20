@@ -80,4 +80,5 @@ export const ComplexDashboardListed: IListedDashboard = {
     updated: ComplexDashboardWithReferences.dashboard.updated,
     created: ComplexDashboardWithReferences.dashboard.created,
     tags: ComplexDashboardWithReferences.dashboard.tags,
+    shareStatus: ComplexDashboardWithReferences.dashboard.shareStatus,
 };

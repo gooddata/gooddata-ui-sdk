@@ -8,6 +8,7 @@ import {
     IKpiWidget,
     ILegacyKpi,
     isProtectedDataError,
+    ShareStatus,
 } from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
@@ -47,6 +48,7 @@ import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
     changeFilterContextSelection,
+    changeSharing,
     clearDateFilterSelection,
     DashboardStoreProvider,
     exportDashboardToPdf,
@@ -132,6 +134,8 @@ const useFilterBar = (): {
 const useTopBar = () => {
     const dispatch = useDashboardDispatch();
     const title = useDashboardSelector(selectDashboardTitle);
+    const { addSuccess, addError, removeMessage } = useToastMessage();
+    const lastSharingChangeMessageId = useRef("");
 
     const onTitleChanged = useCallback(
         (title: string) => {
@@ -140,9 +144,35 @@ const useTopBar = () => {
         [dispatch],
     );
 
+    const { run: runChangeCharing } = useDashboardCommandProcessing({
+        commandCreator: changeSharing,
+        successEvent: "GDC.DASH/EVT.SHARING.CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        onSuccess: () => {
+            if (lastSharingChangeMessageId.current) {
+                removeMessage(lastSharingChangeMessageId.current);
+            }
+            addSuccess({ id: "messages.sharingChangedSuccess" });
+        },
+        onError: () => {
+            if (lastSharingChangeMessageId.current) {
+                removeMessage(lastSharingChangeMessageId.current);
+            }
+            addError({ id: "messages.sharingChangedError.general" });
+        },
+    });
+
+    const onShareButtonClick = useCallback(
+        (newShareStatus: ShareStatus) => {
+            runChangeCharing(newShareStatus);
+        },
+        [runChangeCharing],
+    );
+
     return {
         title,
         onTitleChanged,
+        onShareButtonClick,
     };
 };
 
@@ -153,7 +183,7 @@ const DashboardHeader = (): JSX.Element => {
     const dashboardRef = useDashboardSelector(selectDashboardRef);
     const isEmptyLayout = useDashboardSelector(selectIsLayoutEmpty);
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
-    const { title, onTitleChanged } = useTopBar();
+    const { title, onTitleChanged, onShareButtonClick } = useTopBar();
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
 
     const dispatch = useDashboardDispatch();
@@ -315,6 +345,9 @@ const DashboardHeader = (): JSX.Element => {
             <TopBarPropsProvider
                 menuButtonProps={{ menuItems: defaultMenuItems }}
                 titleProps={{ title, onTitleChanged }}
+                buttonBarProps={{
+                    shareButtonProps: { onShareButtonClick },
+                }}
             >
                 <TopBar />
             </TopBarPropsProvider>

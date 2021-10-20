@@ -8,6 +8,7 @@ import {
     SaveDashboardAs,
     ExportDashboardToPdf,
     DeleteDashboard,
+    ChangeSharing,
 } from "./dashboard";
 import { TriggerEvent } from "./events";
 import { UpsertExecutionResult } from "./executionResults";
@@ -80,6 +81,8 @@ export {
     exportDashboardToPdf,
     DeleteDashboard,
     deleteDashboard,
+    ChangeSharing,
+    changeSharing,
 } from "./dashboard";
 export { TriggerEvent, triggerEvent } from "./events";
 export {
@@ -258,4 +261,5 @@ export type DashboardCommands =
     | DrillToInsight
     | DrillToLegacyDashboard
     | ChangeDrillableItems
-    | AddDrillTargets;
+    | AddDrillTargets
+    | ChangeSharing;

@@ -86,18 +86,21 @@ export const emptyDashboard: IDashboard = {
     type: "IDashboard",
     ...createObjectMeta("emptyDashboard"),
     filterContext: undefined,
+    shareStatus: "private",
 };
 
 export const dashboardWithFilterContext: IDashboard = {
     type: "IDashboard",
     ...createObjectMeta("dashboardWithFilterContext"),
     filterContext: dashboardFilterContext,
+    shareStatus: "private",
 };
 
 export const dashboardWithTempFilterContext: IDashboard = {
     type: "IDashboard",
     ...createObjectMeta("dashboardWithTempFilterContext"),
     filterContext: dashboardTempFilterContext,
+    shareStatus: "private",
 };
 
 export const widgetHeadline: IWidget = {

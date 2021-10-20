@@ -197,8 +197,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             description: "",
             filterContext: undefined,
             title: "",
-            isPrivate: true,
-            isShared: false,
+            shareStatus: "private",
             isUnderStrictControl: true,
         };
 

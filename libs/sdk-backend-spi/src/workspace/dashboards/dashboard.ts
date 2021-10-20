@@ -90,21 +90,6 @@ export interface IDashboardBase {
 }
 
 /**
- * Common properties for objects with controlled access
- * @alpha
- */
-export interface IAccessControlAware {
-    readonly isPrivate: boolean;
-    readonly isShared: boolean;
-    readonly isUnderStrictControl: boolean;
-
-    /**
-     * When dashboard is locked, no one other than the administrator can edit it
-     */
-    readonly isLocked?: boolean;
-}
-
-/**
  * @alpha
  */
 export interface IDashboardPluginBase {
@@ -162,6 +147,26 @@ export interface IDashboardPluginLink {
      * plugin parameterization is possible, then the plugin documentation should contain the detail.
      */
     readonly parameters?: string;
+}
+
+/**
+ * Object share status
+ * @alpha
+ */
+export type ShareStatus = "private" | "shared" | "public";
+
+/**
+ * Common properties for objects with controlled access
+ * @alpha
+ */
+export interface IAccessControlAware {
+    readonly shareStatus: ShareStatus;
+    readonly isUnderStrictControl?: boolean;
+
+    /**
+     * When dashboard is locked, no one other than the administrator can edit it
+     */
+    readonly isLocked?: boolean;
 }
 
 /**
@@ -266,7 +271,10 @@ export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition
  * for the full definition see {@link IDashboard}
  * @alpha
  */
-export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
+export interface IListedDashboard
+    extends Readonly<Required<IAuditableDates>>,
+        Readonly<IAuditableUsers>,
+        IAccessControlAware {
     /**
      * Dashboard object ref
      */

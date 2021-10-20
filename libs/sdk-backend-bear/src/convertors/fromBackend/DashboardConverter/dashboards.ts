@@ -20,6 +20,7 @@ import {
     isWidget,
     IDashboardDateFilterConfig,
     IDashboardPluginLink,
+    ShareStatus,
 } from "@gooddata/sdk-backend-spi";
 import { sanitizeExportFilterContext, convertFilterContext, convertTempFilterContext } from "./filterContext";
 import { convertLayout, createImplicitDashboardLayout } from "./layout";
@@ -41,6 +42,9 @@ export const convertListedDashboard = (
     createdBy: dashboardLink.author ? userMap?.get(dashboardLink.author) : undefined,
     // filter takes care of multiple spaces and also the base scenario ("" ~> [])
     tags: dashboardLink.tags?.split(" ").filter(Boolean) ?? [],
+    isLocked: !!dashboardLink.locked,
+    shareStatus: getShareStatus(!!dashboardLink.unlisted, !!dashboardLink.sharedWithSomeone),
+    isUnderStrictControl: dashboardLink.flags?.findIndex((flag) => flag === "strictAccessControl") !== -1,
 });
 
 const convertDateFilterConfigAddedPresets = (
@@ -75,6 +79,16 @@ const convertPluginLink = (link: GdcDashboard.IDashboardPluginLink): IDashboardP
         plugin: uriRef(type),
         parameters,
     };
+};
+
+const getShareStatus = (unlisted: boolean, sharedWithSomeone: boolean): ShareStatus => {
+    if (unlisted && !sharedWithSomeone) {
+        return "private";
+    } else if (unlisted && sharedWithSomeone) {
+        return "shared";
+    } else {
+        return "public";
+    }
 };
 
 export const convertDashboard = (
@@ -131,8 +145,7 @@ export const convertDashboard = (
         updated: updated!,
         updatedBy: contributor ? userMap?.get(contributor) : undefined,
         isLocked: !!locked,
-        isPrivate: !!unlisted && !sharedWithSomeone,
-        isShared: (!!unlisted && !!sharedWithSomeone) || !unlisted,
+        shareStatus: getShareStatus(!!unlisted, !!sharedWithSomeone),
         isUnderStrictControl: flags?.findIndex((flag) => flag === "strictAccessControl") !== -1,
 
         dateFilterConfig: dateFilterConfig && convertDashboardDateFilterConfig(dateFilterConfig),

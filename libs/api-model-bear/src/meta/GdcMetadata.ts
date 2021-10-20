@@ -499,6 +499,7 @@ export namespace GdcMetadata {
         unlisted?: boolean;
         isProduction?: boolean;
         sharedWithSomeone?: boolean;
+        flags?: string[];
     }
 
     export interface IGetObjectUsing {

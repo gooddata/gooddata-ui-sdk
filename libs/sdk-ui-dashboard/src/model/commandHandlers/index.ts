@@ -8,6 +8,7 @@ import { resetDashboardHandler } from "./dashboard/resetDashboardHandler";
 import { renameDashboardHandler } from "./dashboard/renameDashboardHandler";
 import { deleteDashboardHandler } from "./dashboard/deleteDashboardHandler";
 import { exportDashboardToPdfHandler } from "./dashboard/exportDashboardToPdfHandler";
+import { changeSharingHandler } from "./dashboard/changeSharingHandler";
 import { triggerEventHandler } from "./events/triggerEventHandler";
 import { upsertExecutionResultHandler } from "./executionResults/upsertExecutionResultHandler";
 import { changeFilterContextSelectionHandler } from "./filterContext/changeFilterContextSelectionHandler";
@@ -68,6 +69,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.RESET": resetDashboardHandler,
     "GDC.DASH/CMD.RENAME": renameDashboardHandler,
     "GDC.DASH/CMD.DELETE": deleteDashboardHandler,
+    "GDC.DASH/CMD.SHARING.CHANGE": changeSharingHandler,
     "GDC.DASH/CMD.EXPORT.PDF": exportDashboardToPdfHandler,
     "GDC.DASH/CMD.EVENT.TRIGGER": triggerEventHandler,
     "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT": upsertExecutionResultHandler,

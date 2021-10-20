@@ -172,11 +172,9 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
 export interface IAccessControlAware {
     readonly isLocked?: boolean;
     // (undocumented)
-    readonly isPrivate: boolean;
+    readonly isUnderStrictControl?: boolean;
     // (undocumented)
-    readonly isShared: boolean;
-    // (undocumented)
-    readonly isUnderStrictControl: boolean;
+    readonly shareStatus: ShareStatus;
 }
 
 // @alpha
@@ -1001,7 +999,7 @@ export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
 }
 
 // @alpha
-export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
+export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly description: string;
     readonly identifier: string;
     readonly ref: ObjRef;
@@ -2092,6 +2090,9 @@ export type ScheduledMailAttachment = IDashboardAttachment;
 
 // @alpha
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
+
+// @alpha
+export type ShareStatus = "private" | "shared" | "public";
 
 // @alpha (undocumented)
 export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";

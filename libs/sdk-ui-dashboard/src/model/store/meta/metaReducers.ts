@@ -19,8 +19,7 @@ const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
               title: dashboard.title,
               description: dashboard.description,
               tags: dashboard.tags,
-              isPrivate: dashboard.isPrivate,
-              isShared: dashboard.isShared,
+              shareStatus: dashboard.shareStatus,
               isUnderStrictControl: dashboard.isUnderStrictControl,
               isLocked: dashboard.isLocked,
           }

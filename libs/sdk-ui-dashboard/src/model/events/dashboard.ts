@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboard, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import { IDashboard, IWorkspacePermissions, ShareStatus } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 
 import { DateFilterConfigValidationResult } from "../../_staging/dateFilterConfig/validation";
@@ -433,3 +433,42 @@ export function dashboardExportToPdfResolved(
 export const isDashboardExportToPdfResolved = eventGuard<DashboardExportToPdfResolved>(
     "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
 );
+
+//
+//
+//
+
+/**
+ * This event is emitted at the end of successful 'change sharing status of dashboard' command processing.
+ *
+ * @alpha
+ */
+export interface DashboardSharingChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.SHARING.CHANGED";
+    readonly payload: {
+        newShareStatus: ShareStatus;
+    };
+}
+
+export function dashboardSharingChanged(
+    ctx: DashboardContext,
+    newShareStatus: ShareStatus,
+    correlationId?: string,
+): DashboardSharingChanged {
+    return {
+        type: "GDC.DASH/EVT.SHARING.CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            newShareStatus,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardSharingChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardSharingChanged = eventGuard<DashboardSharingChanged>("GDC.DASH/EVT.SHARING.CHANGED");
