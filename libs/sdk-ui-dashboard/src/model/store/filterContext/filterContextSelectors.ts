@@ -2,7 +2,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import invariant from "ts-invariant";
-import memoize from "lodash/memoize";
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
@@ -10,8 +9,9 @@ import {
     isDashboardAttributeFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { newDisplayFormMap } from "../../../_staging/metadata/objRefMap";
+import { createMemoizedSelector } from "../_infra/selectors";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -124,19 +124,17 @@ export const selectFilterContextDateFilter = createSelector(
  *
  * @alpha
  */
-export const selectFilterContextAttributeFilterByDisplayForm = memoize(
-    (displayForm: ObjRef) =>
-        createSelector(
-            selectAttributeFilterDisplayFormsMap,
-            selectFilterContextAttributeFilters,
-            (attributeDisplayFormsMap, attributeFilters) => {
-                const df = attributeDisplayFormsMap.get(displayForm);
-                return attributeFilters.find((filter) =>
-                    areObjRefsEqual(filter.attributeFilter.displayForm, df?.ref),
-                );
-            },
-        ),
-    (ref) => ref && serializeObjRef(ref),
+export const selectFilterContextAttributeFilterByDisplayForm = createMemoizedSelector((displayForm: ObjRef) =>
+    createSelector(
+        selectAttributeFilterDisplayFormsMap,
+        selectFilterContextAttributeFilters,
+        (attributeDisplayFormsMap, attributeFilters) => {
+            const df = attributeDisplayFormsMap.get(displayForm);
+            return attributeFilters.find((filter) =>
+                areObjRefsEqual(filter.attributeFilter.displayForm, df?.ref),
+            );
+        },
+    ),
 );
 
 /**
@@ -144,7 +142,7 @@ export const selectFilterContextAttributeFilterByDisplayForm = memoize(
  *
  * @alpha
  */
-export const selectFilterContextAttributeFilterByLocalId = memoize((localId: string) =>
+export const selectFilterContextAttributeFilterByLocalId = createMemoizedSelector((localId: string) =>
     createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
         attributeFilters.find((filter) => filter.attributeFilter.localIdentifier === localId),
     ),
@@ -156,7 +154,7 @@ export const selectFilterContextAttributeFilterByLocalId = memoize((localId: str
  *
  * @alpha
  */
-export const selectFilterContextAttributeFilterIndexByLocalId = memoize((localId: string) =>
+export const selectFilterContextAttributeFilterIndexByLocalId = createMemoizedSelector((localId: string) =>
     createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
         attributeFilters.findIndex((filter) => filter.attributeFilter.localIdentifier === localId),
     ),

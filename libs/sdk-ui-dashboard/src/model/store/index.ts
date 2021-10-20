@@ -48,6 +48,7 @@ export {
     selectFilterContextAttributeFilters,
     selectAttributeFilterDisplayFormsMap,
     selectAttributeFilterDisplayForms,
+    selectFilterContextAttributeFilterByDisplayForm,
 } from "./filterContext/filterContextSelectors";
 export {
     // Core drills
