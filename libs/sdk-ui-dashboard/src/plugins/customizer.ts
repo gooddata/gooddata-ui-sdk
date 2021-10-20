@@ -71,7 +71,7 @@ export interface IDashboardInsightCustomizer {
      *                  <div>
      *                      <p>My Custom Decoration</p>
      *                      <Decorated/>
-     *                  <div>
+     *                  </div>
      *              )
      *         }
      *
@@ -140,7 +140,7 @@ export interface IDashboardKpiCustomizer {
      *                  <div>
      *                      <p>My Custom Decoration</p>
      *                      <Decorated/>
-     *                  <div>
+     *                  </div>
      *              )
      *         }
      *

@@ -1,18 +1,21 @@
 // (C) 2021 GoodData Corporation
 import {
     DashboardContext,
+    DashboardEventBody,
     DashboardEvents,
     DashboardInitialized,
     DashboardSaved,
     DashboardState,
     disableInsightWidgetDateFilter,
+    ICustomDashboardEvent,
     selectInsights,
     useDashboardDispatch,
+    useDashboardEventDispatch,
 } from "../model";
 import { IDashboardCustomizer, IDashboardEventHandling } from "./customizer";
 
 import { DashboardPluginV1 } from "./plugin";
-import { IInsight, insightMeasures, measureTitle } from "@gooddata/sdk-model";
+import { idRef, IInsight, insightMeasures, measureTitle } from "@gooddata/sdk-model";
 import { InsightComponentProvider, useDashboardInsightProps } from "../presentation";
 import React, { useMemo } from "react";
 
@@ -219,5 +222,86 @@ export class PluginAddsCustomInsightDecorator extends DashboardPluginV1 {
         // register decorator that will be used during any insight rendering - regardless if using custom renderer or
         // the default renderer
         customize.insightRendering().withCustomDecorator(customDecoratorFactory);
+    }
+}
+
+//
+// Custom widgets with custom event example
+//
+
+// define type for a custom event, this one has payload with property "greeting" of type string
+type MyCustomEvent = ICustomDashboardEvent<{ greeting: string }>;
+
+const TestWidget: React.FC = () => {
+    const dispatch = useDashboardEventDispatch();
+    return (
+        <button
+            type="button"
+            onClick={() => {
+                // trigger the custom event
+                const event: DashboardEventBody<MyCustomEvent> = {
+                    // custom event names must start with `CUSTOM/EVT` prefix
+                    type: "CUSTOM/EVT/MY_EVENT",
+                    payload: {
+                        greeting: "hello",
+                    },
+                };
+                dispatch(event);
+            }}
+        >
+            Trigger custom event
+        </button>
+    );
+};
+
+export class PluginAddsCustomWidget extends DashboardPluginV1 {
+    public readonly author: string = "author@email.com";
+    public readonly displayName: string = "My Plugin Name";
+    public readonly version: string = "1.0.0";
+    public readonly debugName: string = "some-internal-name";
+    public readonly shortDescription: string =
+        "This plugin adds a new section at the end of dashboard with a custom widget there that can trigger custom events.";
+    public readonly longDescription: string = "One could specify a longer, multi-line description here.";
+
+    public register(
+        _ctx: DashboardContext,
+        customize: IDashboardCustomizer,
+        handlers: IDashboardEventHandling,
+    ): void {
+        // register custom widget type to use the TestWidgetComponent
+        customize.widgets().addCustomWidget("test", TestWidget);
+
+        // add a new section at the end of the layout
+        customize.layout().customizeFluidLayout((_layout, customizer) => {
+            customizer.addSection(-1, {
+                items: [
+                    {
+                        size: { xl: { gridWidth: 6 } },
+                        type: "IDashboardLayoutItem",
+                        widget: {
+                            // this custom type must match the type used in the addCustomWidget call
+                            customType: "test",
+                            identifier: "foo",
+                            ref: idRef("foo"),
+                            type: "customWidget",
+                            uri: "foo/bar",
+                        },
+                    },
+                ],
+                type: "IDashboardLayoutSection",
+                header: {
+                    title: "Hi from plugin",
+                },
+            });
+        });
+
+        // register handler for the custom event
+        handlers.addCustomEventHandler({
+            eval: (e) => e.type === "CUSTOM/EVT/MY_EVENT",
+            handler: (e: MyCustomEvent) => {
+                // eslint-disable-next-line no-console
+                console.log("Custom event received", e.payload?.greeting);
+            },
+        });
     }
 }
