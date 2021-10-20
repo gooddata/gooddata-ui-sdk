@@ -29,7 +29,7 @@
     }
 
     @media #{$medium-up} {
-        position: absolute;
+        position: sticky;
         top: 0;
         right: 0;
         left: 0;
