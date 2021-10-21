@@ -10,14 +10,17 @@ const Dotenv = require("dotenv-webpack");
 require("dotenv").config();
 
 const PORT = 3001;
-const SCOPE_NAME = "plugin";
 const DEFAULT_BACKEND_URL = "https://live-examples-proxy.herokuapp.com";
+const SHARE_SCOPE = "default"; // any other share scope name fail with multiple versions of react for some reason
 
 // add all the gooddata packages that absolutely need to be shared and singletons because of contexts
 const gooddataSharePackagesEntries = Object.keys(deps)
     .filter((pkg) => pkg.startsWith("@gooddata"))
     .reduce((acc, curr) => {
-        acc[curr] = { singleton: true };
+        acc[curr] = {
+            singleton: true,
+            shareScope: SHARE_SCOPE,
+        };
         return acc;
     }, {});
 
@@ -118,15 +121,19 @@ module.exports = (_env, argv) => {
                     react: {
                         import: "react", // the "react" package will be used a provided and fallback module
                         shareKey: "react", // under this name the shared module will be placed in the share scope
-                        shareScope: "default", // share scope with this name will be used
+                        shareScope: SHARE_SCOPE, // share scope with this name will be used
                         singleton: true, // only a single version of the shared module is allowed
+                        requiredVersion: "^16.10.0",
                     },
                     "react-dom": {
-                        singleton: true, // only a single version of the shared module is allowed
+                        singleton: true,
+                        shareScope: SHARE_SCOPE,
+                        requiredVersion: "^16.10.0",
                     },
                     // add all the packages that absolutely need to be shared and singletons because of contexts
                     "react-intl": {
                         singleton: true,
+                        shareScope: SHARE_SCOPE,
                     },
                     ...gooddataSharePackagesEntries,
                 },
@@ -136,7 +143,6 @@ module.exports = (_env, argv) => {
             }),
             new DefinePlugin({
                 PORT: JSON.stringify(PORT),
-                SCOPE_NAME: JSON.stringify(SCOPE_NAME),
             }),
             new Dotenv({
                 silent: true, // we are ok with the .env file not being there, do not warn about it (so that CI works)

@@ -4,4 +4,3 @@ declare let __webpack_share_scopes__: any;
 
 // config constants
 declare const PORT: number;
-declare const SCOPE_NAME: string;
