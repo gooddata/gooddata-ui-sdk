@@ -45,6 +45,12 @@ module.exports = (_env, argv) => {
         },
     };
 
+    // This has to be unique per plugin, otherwise loading multiple plugins won't work
+    // Also for some reason the folder in src needs to be called this too,
+    // otherwise multiple plugins do load but all are overwritten by the first loaded
+    // This should not be an issue though, the bootstrap of the template can perform all the renaming/string replacements.
+    const moduleFederationName = "plugin";
+
     const commonConfig = {
         mode: isProduction ? "production" : "development",
         // support IE11 only in production, in dev it is not necessary and it also would prevent hot reload
@@ -108,9 +114,9 @@ module.exports = (_env, argv) => {
         plugins: [
             new CaseSensitivePathsPlugin(),
             new ModuleFederationPlugin({
-                name: "plugin", // this is used to put the plugin on the target window scope by default
+                name: moduleFederationName, // this is used to put the plugin on the target window scope by default
                 exposes: {
-                    "./plugin": "./src/plugin",
+                    [`./${moduleFederationName}`]: `./src/${moduleFederationName}`,
                 },
 
                 // adds react as shared module
@@ -170,7 +176,7 @@ module.exports = (_env, argv) => {
         },
         {
             ...commonConfig,
-            entry: "./src/plugin/index",
+            entry: `./src/${moduleFederationName}/index`,
             name: "dashboardPlugin",
             output: { ...commonConfig.output, path: path.join(__dirname, "dist", "dashboardPlugin") },
         },
