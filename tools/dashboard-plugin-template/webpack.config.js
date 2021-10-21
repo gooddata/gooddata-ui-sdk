@@ -105,8 +105,7 @@ module.exports = (_env, argv) => {
         plugins: [
             new CaseSensitivePathsPlugin(),
             new ModuleFederationPlugin({
-                name: SCOPE_NAME,
-                filename: "plugin.js",
+                name: "plugin", // this is used to put the plugin on the target window scope by default
                 exposes: {
                     "./plugin": "./src/plugin",
                 },
