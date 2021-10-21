@@ -5,6 +5,7 @@ import uniqueId from "lodash/uniqueId";
 import cx from "classnames";
 import { FormattedMessage, injectIntl } from "react-intl";
 import { IAttributeDropdownListItemProps } from "@gooddata/sdk-ui-filters";
+import { stringUtils } from "@gooddata/util";
 
 const AttributeDropdownListItem: React.FC<IAttributeDropdownListItemProps> = (props) => {
     const { source } = props;
@@ -14,6 +15,7 @@ const AttributeDropdownListItem: React.FC<IAttributeDropdownListItemProps> = (pr
 
     const className = cx("gd-list-item", "attribute-filter-item", "has-only-visible", {
         "is-selected": props.selected,
+        [`s-${stringUtils.simplifyText(props.source.title)}`]: true,
     });
 
     function handleSelect() {
