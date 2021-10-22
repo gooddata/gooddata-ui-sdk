@@ -4,11 +4,12 @@ import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { backend } from "./backend";
 import { App } from "./App";
+import { DEFAULT_WORKSPACE } from "./constants";
 
 export const Root: React.FC = () => {
     return (
         <BackendProvider backend={backend}>
-            <WorkspaceProvider workspace={WORKSPACE}>
+            <WorkspaceProvider workspace={process.env.WORKSPACE ?? DEFAULT_WORKSPACE}>
                 <App />
             </WorkspaceProvider>
         </BackendProvider>

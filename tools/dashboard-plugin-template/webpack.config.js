@@ -6,9 +6,12 @@ const { ModuleFederationPlugin } = require("webpack").container;
 const { DefinePlugin, ProvidePlugin } = require("webpack");
 const path = require("path");
 const deps = require("./package.json").dependencies;
+const Dotenv = require("dotenv-webpack");
+require("dotenv").config();
 
 const PORT = 3001;
 const SCOPE_NAME = "plugin";
+const DEFAULT_BACKEND_URL = "https://live-examples-proxy.herokuapp.com";
 
 // add all the gooddata packages that absolutely need to be shared and singletons because of contexts
 const gooddataSharePackagesEntries = Object.keys(deps)
@@ -21,9 +24,7 @@ const gooddataSharePackagesEntries = Object.keys(deps)
 module.exports = (_env, argv) => {
     const isProduction = argv.mode === "production";
 
-    const effectiveBackendUrl = process.env.BACKEND_URL || "https://live-examples-proxy.herokuapp.com";
-    const effectiveWorkspace = process.env.WORKSPACE || "xms7ga4tf3g3nzucd8380o2bev8oeknp";
-    const effectiveDashboardId = process.env.DASHBOARD_ID || "aeO5PVgShc0T";
+    const effectiveBackendUrl = process.env.BACKEND_URL || DEFAULT_BACKEND_URL;
 
     const proxy = {
         "/gdc": {
@@ -135,11 +136,12 @@ module.exports = (_env, argv) => {
                 process: "process/browser",
             }),
             new DefinePlugin({
-                BACKEND_URL: JSON.stringify(effectiveBackendUrl),
                 PORT: JSON.stringify(PORT),
                 SCOPE_NAME: JSON.stringify(SCOPE_NAME),
-                WORKSPACE: JSON.stringify(effectiveWorkspace),
-                DASHBOARD_ID: JSON.stringify(effectiveDashboardId),
+            }),
+            new Dotenv({
+                silent: true, // we are ok with the .env file not being there, do not warn about it (so that CI works)
+                systemvars: true,
             }),
         ],
     };
