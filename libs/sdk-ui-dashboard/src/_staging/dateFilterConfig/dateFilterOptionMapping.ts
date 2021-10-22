@@ -180,7 +180,7 @@ function findDateFilterOptionById(id: string, dateFilterOptions: IDateFilterOpti
     return flattenDateFilterOptions(dateFilterOptions).find((option) => option.localIdentifier === id);
 }
 
-function findDateFilterOptionByValue(
+export function findDateFilterOptionByValue(
     dateFilter: IDashboardDateFilter,
     dateFilterOptions: IDateFilterOptionsByType,
 ) {

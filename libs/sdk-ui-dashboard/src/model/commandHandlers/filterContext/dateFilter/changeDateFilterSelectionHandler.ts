@@ -1,13 +1,21 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
-import { ChangeDateFilterSelection } from "../../../commands/filters";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
+import {
+    IDashboardDateFilter,
+    newAbsoluteDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+    newRelativeDashboardDateFilter,
+} from "@gooddata/sdk-backend-spi";
+import toNumber from "lodash/toNumber";
+import { ChangeDateFilterSelection, DateFilterSelection } from "../../../commands/filters";
 import { dateFilterChanged } from "../../../events/filters";
 import { filterContextActions } from "../../../store/filterContext";
 import { selectFilterContextDateFilter } from "../../../store/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
-import { dispatchFilterContextChanged } from "../common";
+import { canApplyDateFilter, dispatchFilterContextChanged } from "../common";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
+import { invalidArgumentsProvided } from "../../../events/general";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,
@@ -18,6 +26,18 @@ export function* changeDateFilterSelectionHandler(
         cmd.payload.granularity === "GDC.time.date" &&
         cmd.payload.from === undefined &&
         cmd.payload.to === undefined;
+
+    const canApply: SagaReturnType<typeof canApplyDateFilter> = yield call(
+        canApplyDateFilter,
+        dateFilterSelectionToDateFilter(cmd.payload),
+    );
+    if (!canApply) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Cannot apply a date filter that is invalid by the current dateFilterConfig.`,
+        );
+    }
 
     yield put(
         filterContextActions.upsertDateFilter(
@@ -41,4 +61,26 @@ export function* changeDateFilterSelectionHandler(
     );
 
     yield call(dispatchFilterContextChanged, ctx, cmd);
+}
+
+function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelection): IDashboardDateFilter {
+    if (dateFilterSelection.type === "absolute" && dateFilterSelection.from && dateFilterSelection.to) {
+        return newAbsoluteDashboardDateFilter(
+            dateFilterSelection.from.toString(),
+            dateFilterSelection.to.toString(),
+        );
+    } else if (
+        dateFilterSelection.type === "relative" &&
+        dateFilterSelection.granularity === "GDC.time.date" &&
+        dateFilterSelection.from === undefined &&
+        dateFilterSelection.to === undefined
+    ) {
+        return newAllTimeDashboardDateFilter();
+    } else {
+        return newRelativeDashboardDateFilter(
+            dateFilterSelection.granularity,
+            toNumber(dateFilterSelection.from),
+            toNumber(dateFilterSelection.to),
+        );
+    }
 }

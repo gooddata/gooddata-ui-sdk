@@ -69,7 +69,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 
 /**
  * Creates the ChangeDateFilterSelection command. Dispatching this command will result in change of dashboard's
- * date filter.
+ * date filter, or error in case of invalid update (e.g. hidden date filter option by dateFilterConfig).
  *
  * @param type - date filter type; absolute filters use exact start and end dates, while relative filters use offsets from today
  * @param granularity - granularity on which the filter works; days, weeks, months, quarters or years.
@@ -165,7 +165,8 @@ export interface AddAttributeFilter extends IDashboardCommand {
 
 /**
  * Creates the AddAttributeFilter command. Dispatching this command will result in the addition
- * of another attribute filter to the dashboard's filter bar, at desired position.
+ * of another attribute filter to the dashboard's filter bar, at desired position,
+ * or error in case of invalid update (e.g. wrong or duplicated displayForm)
  *
  * The filter will be set for the display form provided by reference. When created, the filter will be
  * no-op - all the elements will be selected.
@@ -309,7 +310,7 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
 
 /**
  * Creates the ChangeAttributeFilterSelection command. Dispatching this command will result in application
- * of element selection for the dashboard attribute filter with the provided id.
+ * of element selection for the dashboard attribute filter with the provided id, or error in case of invalid update (e.g. non-existing filterLocalId).
  *
  * The attribute elements can be provided either using their URI (primary key) or value. Together with the
  * elements you must indicate the selection type - either 'IN' or 'NOT_IN'.
@@ -457,6 +458,7 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
  *
  * Only filters that are stored in the filter context can be applied (filters that are visible in the filter bar).
  * Filters will be matched via display form ref, duplicities will be omitted.
+ * Date filter that does not match any visible option by the current date filter config will be also omitted.
  *
  * @alpha
  * @param filters - attribute filters and date filter to apply.
