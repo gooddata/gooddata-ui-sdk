@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { TargetDependency } from "../../base/types";
 import path from "path";
@@ -89,7 +89,8 @@ export class PackagePublisher implements IEventListener {
             const rsync = spawn("rsync", [...RsyncOptions, ...args], {});
             appLogInfo(`Syncing ${args[0]}`);
             rsync.on("close", (exitCode) => {
-                latch(exitCode);
+                // exitCode may be null if the rsync was interrupted by a signal; treat that as error
+                latch(exitCode ?? 1);
             });
 
             rsync.stderr?.on("data", (msg) => {

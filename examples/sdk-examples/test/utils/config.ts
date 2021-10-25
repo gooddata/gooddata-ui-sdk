@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { existsSync, readFileSync } from "fs";
 import * as path from "path";
-import program = require("commander");
+import { program } from "commander";
 import invariant from "ts-invariant";
 
 const DEFAULT_CONFIG_FILE_NAME = ".testcaferc.json";
@@ -37,7 +37,7 @@ export const requiredOptionKeys = definedOptions
     .filter((requiredOptions) => requiredOptions.isRequired)
     .map((requiredOptions) => requiredOptions.key);
 
-definedOptions.map(({ param, description }) => program.option(param, description));
+definedOptions.forEach(({ param, description }) => program.option(param, description));
 
 program.parse(process.argv);
 
@@ -52,8 +52,9 @@ const configDefaults = definedOptions
         {} as IConfig,
     );
 
+const options = program.opts();
 // get options from local config if it exists
-const configPath = path.join(process.cwd(), program.config || DEFAULT_CONFIG_FILE_NAME);
+const configPath = path.join(process.cwd(), options.config || DEFAULT_CONFIG_FILE_NAME);
 let localConfig: IConfig = {};
 const configExists = existsSync(configPath);
 
@@ -72,10 +73,10 @@ if (configExists) {
 // get options from params
 const paramOptions = definedOptionKeys.reduce(
     (setOptions, key) =>
-        program[key] !== undefined
+        options[key] !== undefined
             ? {
                   ...setOptions,
-                  [key]: program[key],
+                  [key]: options[key],
               }
             : setOptions,
     {} as IConfig,

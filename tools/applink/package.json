@@ -40,7 +40,7 @@
     "dependencies": {
         "blessed": "^0.1.81",
         "chokidar": "^3.4.2",
-        "commander": "^3.0.2",
+        "commander": "^8.1.0",
         "cross-spawn": "^7.0.3",
         "find-up": "^5.0.0",
         "json5": "^2.1.3",

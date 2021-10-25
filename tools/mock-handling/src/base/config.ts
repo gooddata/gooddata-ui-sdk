@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import identity from "lodash/identity";
 import pick from "lodash/pick";
 import pickBy from "lodash/pickBy";
@@ -6,6 +6,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants";
 import { DataRecorderConfig } from "./types";
+import { OptionValues } from "commander";
 
 function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): DataRecorderConfig {
     return {
@@ -25,19 +26,19 @@ function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): 
     };
 }
 
-function retrieveConfigFromObject(obj: Record<string, any>): DataRecorderConfig {
+function retrieveConfigFromObject(obj: OptionValues): DataRecorderConfig {
     return {
-        hostname: obj?.hostname ?? null,
-        projectId: obj?.projectId ?? null,
-        username: obj?.username ?? null,
-        password: obj?.password ?? null,
-        recordingDir: obj?.recordingDir ?? null,
-        backend: obj?.backend ?? null,
-        replaceProjectId: obj?.replaceProjectId ?? null,
+        hostname: obj.hostname ?? null,
+        projectId: obj.projectId ?? null,
+        username: obj.username ?? null,
+        password: obj.password ?? null,
+        recordingDir: obj.recordingDir ?? null,
+        backend: obj.backend ?? null,
+        replaceProjectId: obj.replaceProjectId ?? null,
     };
 }
 
-export function getConfigFromProgram(obj: object, prevConfig = DEFAULT_CONFIG): DataRecorderConfig {
+export function getConfigFromOptions(obj: OptionValues, prevConfig = DEFAULT_CONFIG): DataRecorderConfig {
     return mergeConfigs(retrieveConfigFromObject(obj), prevConfig);
 }
 
