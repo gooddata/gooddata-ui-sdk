@@ -2,6 +2,7 @@
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import { ModuleFederationIntegration } from "../types";
+import invariant from "ts-invariant";
 
 /**
  * @internal
@@ -12,14 +13,13 @@ export async function dynamicDashboardEngineLoader(
 ): Promise<IDashboardEngine> {
     const { plugins } = dashboard.references;
     if (!plugins.length) {
-        return null as any; //TODO what to do here?
+        // if this bombs, this loader was called with no plugins (which means noop version should have been used)
+        invariant(false);
     }
 
     const first = plugins[0];
 
-    const moduleName = /.*\/(.+)\.js/.exec(first.url)![1];
-
-    const loadedEngineModule = await loadEngine(moduleName, moduleFederationIntegration)();
+    const loadedEngineModule = await loadEngine(moduleNameFromUrl(first.url), moduleFederationIntegration)();
 
     const engineFactory = loadedEngineModule.default;
     return engineFactory();
@@ -42,8 +42,7 @@ export async function dynamicDashboardPluginLoader(
 
     return Promise.all(
         urls.map(async (url) => {
-            const moduleName = /.*\/(.+)\.js/.exec(url)![1];
-            const loadedModule = await loadPlugin(moduleName, moduleFederationIntegration)();
+            const loadedModule = await loadPlugin(moduleNameFromUrl(url), moduleFederationIntegration)();
             const pluginFactory = loadedModule.default;
             return pluginFactory();
         }),
@@ -65,9 +64,20 @@ export async function dynamicDashboardCommonLoader(
     const urls = plugins.map((plugin) => plugin.url);
 
     const tasks = urls.map(addScriptTag);
-    // TODO how to unload/remove the script tags once not needed?
-    // effectiveElements.current = tasks.map((task) => task.element);
+
+    // add the script tags...
     await Promise.all(tasks.map((task) => task.promise));
+
+    // ...and once they are added (and added to the global scope), remove them immediately, they are not needed anymore
+    tasks.forEach(({ element }) => {
+        document.head.removeChild(element);
+    });
+}
+
+function moduleNameFromUrl(url: string): string {
+    const moduleName = /.*\/(.+)\.js/.exec(url)?.[1];
+    invariant(moduleName, "Invalid plugin URL provided, it must point to the root .js file");
+    return moduleName;
 }
 
 function addScriptTag(url: string): { element: HTMLScriptElement; promise: Promise<void> } {
