@@ -3,7 +3,8 @@ import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import isEmpty from "lodash/isEmpty";
 import { noopDashboardPluginLoader, staticDashboardEngineLoader } from "./staticComponentLoaders";
-import { dynamicDashboardEngineLoader, dynamicDashboardPluginLoader } from "./dynamicComponentLoaders";
+import { /*dynamicDashboardEngineLoader,*/ dynamicDashboardPluginLoader } from "./dynamicComponentLoaders";
+import { ModuleFederationIntegration } from "../types";
 
 /**
  * Adaptive loader will check if there are any plugins linked with the dashboard. If so, it will use the
@@ -15,9 +16,9 @@ import { dynamicDashboardEngineLoader, dynamicDashboardPluginLoader } from "./dy
 export function adaptiveDashboardEngineLoader(
     dashboard: IDashboardWithReferences,
 ): Promise<IDashboardEngine> {
-    if (!isEmpty(dashboard.references.plugins)) {
-        return dynamicDashboardEngineLoader(dashboard);
-    }
+    // if (!isEmpty(dashboard.references.plugins)) {
+    //     return dynamicDashboardEngineLoader(dashboard);
+    // }
 
     return staticDashboardEngineLoader(dashboard);
 }
@@ -33,9 +34,10 @@ export function adaptiveDashboardEngineLoader(
 export function adaptiveDashboardPluginLoader(
     ctx: DashboardContext,
     dashboard: IDashboardWithReferences,
+    moduleFederationIntegration: ModuleFederationIntegration,
 ): Promise<IDashboardPluginContract_V1[]> {
     if (!isEmpty(dashboard.references.plugins)) {
-        return dynamicDashboardPluginLoader(ctx, dashboard);
+        return dynamicDashboardPluginLoader(ctx, dashboard, moduleFederationIntegration);
     }
 
     return noopDashboardPluginLoader(ctx, dashboard);

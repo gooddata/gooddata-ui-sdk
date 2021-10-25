@@ -67,4 +67,60 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
      * plugins must be available at compile time.
      */
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
+
+    /**
+     * Specify configuration related to the Module Federation.
+     * If loadingMode is not set to "staticOnly", this is mandatory.
+     */
+    moduleFederationIntegration?: ModuleFederationIntegration;
 }
+
+/**
+ * Module federation interop data.
+ *
+ * @remarks
+ * All of the values are added by webpack to the global scope if the Module Federation plugin is used in your app.
+ * See the following example of a webpack config for this to work:
+ * @example
+ * ```
+ * const { ModuleFederationPlugin } = require("webpack").container;
+ *
+ * // add all the gooddata packages that absolutely need to be shared and singletons because of contexts
+ * const gooddataSharePackagesEntries = Object.keys(deps)
+ *   .filter((pkg) => pkg.startsWith("@gooddata"))
+ *   .reduce((acc, curr) => {
+ *     acc[curr] = { singleton: true };
+ *     return acc;
+ *   }, {});
+ *
+ * module.exports = {
+ *   // rest of your webpack config
+ *   plugins: [
+ *     // rest of your plugins
+ *     new ModuleFederationPlugin({
+ *       shared: {
+ *         react: {
+ *             import: "react",
+ *             shareKey: "react",
+ *             singleton: true,
+ *         },
+ *         "react-dom": {
+ *             singleton: true,
+ *         },
+ *         // add all the packages that absolutely need to be shared and singletons because of contexts
+ *         "react-intl": {
+ *             singleton: true,
+ *         },
+ *         ...gooddataSharePackagesEntries,
+ *       },
+ *     }),
+ *   ]
+ * };
+ * ```
+ *
+ * @alpha
+ */
+export type ModuleFederationIntegration = {
+    __webpack_init_sharing__: (scope: string) => Promise<void>;
+    __webpack_share_scopes__: any;
+};

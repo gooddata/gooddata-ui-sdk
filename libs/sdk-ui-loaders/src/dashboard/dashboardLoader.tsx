@@ -22,7 +22,7 @@ import {
     noopDashboardPluginLoader,
     staticDashboardEngineLoader,
 } from "./loadingStrategies/staticComponentLoaders";
-import { IDashboardBasePropsForLoader } from "./types";
+import { IDashboardBasePropsForLoader, ModuleFederationIntegration } from "./types";
 import {
     adaptiveDashboardEngineLoader,
     adaptiveDashboardPluginLoader,
@@ -40,6 +40,7 @@ export type DashboardEngineLoader = (dashboard: IDashboardWithReferences) => Pro
 export type DashboardPluginsLoader = (
     ctx: DashboardContext,
     dashboard: IDashboardWithReferences,
+    moduleFederationIntegration: ModuleFederationIntegration,
 ) => Promise<IDashboardPluginContract_V1[]>;
 
 /**
@@ -76,58 +77,78 @@ export class DashboardLoader implements IDashboardLoader {
     private baseProps: Partial<IDashboardBasePropsForLoader> = {};
     private embeddedPlugins: IEmbeddedPlugin[] = [];
     private clientWorkspace: IClientWorkspaceIdentifiers | undefined = undefined;
+    private moduleFederationIntegration: ModuleFederationIntegration = {
+        __webpack_init_sharing__: () => {
+            throw new Error("Uninitialized");
+        },
+        __webpack_share_scopes__: null,
+    };
 
-    private constructor(config: DashboardLoaderConfig) {
+    private constructor(
+        config: DashboardLoaderConfig,
+        moduleFederationIntegration?: ModuleFederationIntegration,
+    ) {
         this.config = config;
+        if (moduleFederationIntegration) {
+            this.moduleFederationIntegration = moduleFederationIntegration;
+        }
     }
 
     public static staticOnly(): DashboardLoader {
         return new DashboardLoader(StaticLoadStrategies);
     }
 
-    public static adaptive(): DashboardLoader {
-        return new DashboardLoader(AdaptiveLoadStrategies);
+    /**
+     * Factory for adaptive loader.
+     *
+     * @remarks
+     * For information on how to get the value of the parameter, see {@link ModuleFederationIntegration}).
+     *
+     * @param moduleFederationIntegration - the Module Federation interoperability functions
+     */
+    public static adaptive(moduleFederationIntegration: ModuleFederationIntegration): DashboardLoader {
+        return new DashboardLoader(AdaptiveLoadStrategies, moduleFederationIntegration);
     }
 
-    public onBackend = (backend: IAnalyticalBackend): IDashboardLoader => {
+    public onBackend = (backend: IAnalyticalBackend): this => {
         this.baseProps.backend = backend;
 
         return this;
     };
 
-    public fromClientWorkspace = (clientWorkspace: IClientWorkspaceIdentifiers): IDashboardLoader => {
+    public fromClientWorkspace = (clientWorkspace: IClientWorkspaceIdentifiers): this => {
         this.clientWorkspace = clientWorkspace;
         this.baseProps.workspace = undefined;
 
         return this;
     };
 
-    public fromWorkspace = (workspace: string): IDashboardLoader => {
+    public fromWorkspace = (workspace: string): this => {
         this.baseProps.workspace = workspace;
         this.clientWorkspace = undefined;
 
         return this;
     };
 
-    public forDashboard = (dashboardRef: ObjRef): IDashboardLoader => {
+    public forDashboard = (dashboardRef: ObjRef): this => {
         this.baseProps.dashboard = dashboardRef;
 
         return this;
     };
 
-    public withFilterContext = (filterContextRef: ObjRef): IDashboardLoader => {
+    public withFilterContext = (filterContextRef: ObjRef): this => {
         this.baseProps.filterContextRef = filterContextRef;
 
         return this;
     };
 
-    public withEmbeddedPlugins = (...plugins: IEmbeddedPlugin[]): IDashboardLoader => {
+    public withEmbeddedPlugins = (...plugins: IEmbeddedPlugin[]): this => {
         this.embeddedPlugins = plugins ?? [];
 
         return this;
     };
 
-    public withBaseProps = (props: IDashboardBasePropsForLoader): IDashboardLoader => {
+    public withBaseProps = (props: IDashboardBasePropsForLoader): this => {
         this.baseProps = { ...props };
 
         return this;
@@ -157,7 +178,7 @@ export class DashboardLoader implements IDashboardLoader {
         const { engineLoader, pluginLoader } = config;
         const [engine, plugins] = await Promise.all([
             engineLoader(dashboardWithPlugins),
-            pluginLoader(ctx, dashboardWithPlugins),
+            pluginLoader(ctx, dashboardWithPlugins, this.moduleFederationIntegration),
         ]);
         const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
         const allPlugins = [...plugins, ...additionalPlugins];

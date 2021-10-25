@@ -13,6 +13,7 @@ import isArray from "lodash/isArray";
 import compact from "lodash/compact";
 import { DashboardLoader } from "./dashboardLoader";
 import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader";
+import invariant from "ts-invariant";
 
 /**
  * @alpha
@@ -38,8 +39,16 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
     const backend = useBackendStrict(options.backend);
     const workspace = useWorkspaceStrict(options.workspace);
     const [loadStatus, setLoadStatus] = useState(InitialStatus);
-    const { dashboard, filterContextRef, config, permissions, clientWorkspace, loadingMode, extraPlugins } =
-        options;
+    const {
+        dashboard,
+        filterContextRef,
+        config,
+        permissions,
+        clientWorkspace,
+        loadingMode,
+        extraPlugins,
+        moduleFederationIntegration,
+    } = options;
 
     useEffect(() => {
         return () => {
@@ -65,10 +74,19 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
             permissions,
         };
 
-        const extraPluginsArr = isArray(extraPlugins) ? extraPlugins : compact([extraPlugins]);
-        const loader =
-            loadingMode === "staticOnly" ? DashboardLoader.staticOnly() : DashboardLoader.adaptive();
+        let loader: DashboardLoader;
+        const useAdaptiveLoader = loadingMode !== "staticOnly";
+        if (useAdaptiveLoader) {
+            invariant(
+                moduleFederationIntegration,
+                "'moduleFederationIntegration' must be specified when adaptive loading mode is used.",
+            );
+            loader = DashboardLoader.adaptive(moduleFederationIntegration);
+        } else {
+            loader = DashboardLoader.staticOnly();
+        }
 
+        const extraPluginsArr = isArray(extraPlugins) ? extraPlugins : compact([extraPlugins]);
         initializeLoader(loader, baseProps, extraPluginsArr, clientWorkspace);
 
         return loader;
