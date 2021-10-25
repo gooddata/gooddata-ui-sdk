@@ -30,7 +30,6 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log styles/css && jest --clearCache",
         "build": "webpack --mode production --config-name harness",
-        "build-engine": "webpack --mode production --config-name dashboardEngine",
         "build-plugin": "webpack --mode production --config-name dashboardPlugin",
         "build-plugin-debug": "webpack --mode production --config-name dashboardPlugin --analyze",
         "start": "webpack-cli serve --config-name harness",

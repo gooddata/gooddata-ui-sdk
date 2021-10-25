@@ -37,3 +37,21 @@ export function noopDashboardPluginLoader(
 ): Promise<IDashboardPluginContract_V1[]> {
     return Promise.resolve([]);
 }
+
+/**
+ * This is a noop common loader - it ignores all configuration for the dashboard and will do nothing.
+ *
+ * This is useful for plugin development / testing purposes when the dashboard is not yet integrated
+ * with any plugin and plugins are provided to the loader using the {@link @gooddata/sdk-ui-loaders#IDashboardLoader.withAdditionalPlugins}
+ * method.
+ *
+ * @param _ctx - ignored
+ * @param _dashboard - ignored
+ * @internal
+ */
+export function noopDashboardCommonLoader(
+    _ctx: DashboardContext,
+    _dashboard: IDashboardWithReferences,
+): Promise<void> {
+    return Promise.resolve();
+}
