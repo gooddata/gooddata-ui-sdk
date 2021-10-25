@@ -15,7 +15,7 @@ import cx from "classnames";
 import { styleVariables } from "./styles/variables";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
-import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
+import { getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
 import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 import {
@@ -1046,10 +1046,6 @@ export const getFormatterProperty = (
     chartConfig: IChartConfig,
     axisFormat: string,
 ): { formatter?: AxisLabelsFormatterCallbackFunction } => {
-    if (isInPercent(axisFormat)) {
-        return { formatter: partial(formatAsPercent, 100) };
-    }
-
     const useCustomFormat = chartOptions?.[axisPropsKey]?.format === "inherit" ?? false;
     if (useCustomFormat) {
         return { formatter: partial(axisLabelFormatter, chartConfig, axisFormat) };

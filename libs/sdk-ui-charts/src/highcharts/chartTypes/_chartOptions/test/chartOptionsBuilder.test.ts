@@ -2538,16 +2538,6 @@ describe("chartOptionsBuilder", () => {
             expect(generateChartOptions.bind(this, emptyDataView, { type: "bs" })).toThrow();
         });
 
-        it('should assign format from first measure which format includes a "%" sign', () => {
-            // this recording has all but 1 measure formatted without percent
-            // one measure (second one) has format with %
-            // if there is any measure with percent formatting, then that should be used for the axis format
-            const percDv = fixtures.barChartWith3MetricsAndViewByAttributePercInFormat;
-            const expectedPercentageFormat = "#,##0.00%";
-
-            expect(generateChartOptions(percDv).yAxes[0].format).toBe(expectedPercentageFormat);
-        });
-
         it("should assign custom legend format", () => {
             expect(chartOptionsWithCustomOptions.legendLayout).toBe("vertical");
         });
@@ -2940,14 +2930,6 @@ describe("chartOptionsBuilder", () => {
 
                 expect(chartOptions.data.series[0].type).toBeUndefined();
                 expect(chartOptions.data.series[1].type).toBeUndefined();
-            });
-
-            it('should assign format from first measure which format includes a "%" sign', () => {
-                const dv = fixtures.comboChartWithTwoMeasuresViewByAttributePercformat;
-                const expectedPercentageFormat = "#,##0.00%";
-                const chartOptions = generateChartOptions(dv, { type: "combo" });
-
-                expect(chartOptions.yAxes[0].format).toBe(expectedPercentageFormat);
             });
 
             it.each([
