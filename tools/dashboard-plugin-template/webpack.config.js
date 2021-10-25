@@ -171,12 +171,12 @@ module.exports = (_env, argv) => {
                             shareKey: "react", // under this name the shared module will be placed in the share scope
                             shareScope: SHARE_SCOPE, // share scope with this name will be used
                             singleton: true, // only a single version of the shared module is allowed
-                            requiredVersion: "^16.10.0",
+                            requiredVersion: deps.react,
                         },
                         "react-dom": {
                             singleton: true,
                             shareScope: SHARE_SCOPE,
-                            requiredVersion: "^16.10.0",
+                            requiredVersion: deps["react-dom"],
                         },
                         // add all the packages that absolutely need to be shared and singletons because of contexts
                         "react-intl": {
