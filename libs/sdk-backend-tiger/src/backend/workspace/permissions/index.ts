@@ -25,6 +25,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
                 canManageDomain: true,
                 canInviteUserToProject: true,
                 canRefreshData: true,
+                canManageACL: true,
             };
         });
     }

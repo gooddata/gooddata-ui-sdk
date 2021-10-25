@@ -55,3 +55,12 @@ export const selectCanExportReport = createSelector(selectPermissions, (state) =
 export const selectCanCreateAnalyticalDashboard = createSelector(selectPermissions, (state) => {
     return state?.canCreateAnalyticalDashboard ?? false;
 });
+
+/**
+ * Returns whether the current user has permissions to manage access rights.
+ *
+ * @alpha
+ */
+export const selectCanManageACL = createSelector(selectPermissions, (state) => {
+    return state?.canManageACL ?? false;
+});

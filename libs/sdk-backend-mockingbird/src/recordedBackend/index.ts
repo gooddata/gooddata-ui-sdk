@@ -297,6 +297,7 @@ function recordedPermissionsFactory(): IWorkspacePermissionsService {
             canManageDomain: true,
             canInviteUserToProject: true,
             canRefreshData: true,
+            canManageACL: true,
         }),
     };
 }

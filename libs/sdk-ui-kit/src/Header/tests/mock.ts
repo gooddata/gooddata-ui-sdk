@@ -51,5 +51,6 @@ export const getWorkspacePermissionsMock = (
         canUploadNonProductionCSV: true,
         canInviteUserToProject: true,
         canRefreshData: true,
+        canManageACL: true,
     };
 };

@@ -43,6 +43,7 @@ export {
     selectCanManageWorkspace,
     selectCanExportReport,
     selectCanCreateAnalyticalDashboard,
+    selectCanManageACL,
 } from "./permissions/permissionsSelectors";
 export { FilterContextState } from "./filterContext/filterContextState";
 export {
