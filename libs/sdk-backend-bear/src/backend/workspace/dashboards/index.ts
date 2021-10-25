@@ -738,8 +738,10 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
         const dependenciesUris = dependenciesObjectLinks.map((objectLink) => objectLink.link);
 
-        return await this.authCall((sdk) =>
-            sdk.md.getObjects<toSdkModel.BearDashboardDependency>(this.workspace, dependenciesUris),
+        return await this.authCall(
+            (sdk) => Promise.all(dependenciesUris.map((uri) => sdk.md.getObjectDetails(uri))),
+            // use this bulk API instead when the backend is fixed (MDC-716)
+            // sdk.md.getObjects<toSdkModel.BearDashboardDependency>(this.workspace, dependenciesUris),
         );
     };
 
@@ -874,7 +876,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         const pluginUris = pluginLinks.map((link) => link.link);
 
         return this.authCall((sdk) => {
-            return sdk.md.getObjects<GdcDashboardPlugin.IWrappedDashboardPlugin>(this.workspace, pluginUris);
+            return Promise.all(pluginUris.map((url) => sdk.md.getObjectDetails(url)));
+            // use this bulk API instead when the backend is fixed (MDC-716)
+            // return sdk.md.getObjects<GdcDashboardPlugin.IWrappedDashboardPlugin>(this.workspace, pluginUris);
         }).then((plugins) => {
             return plugins.map(toSdkModel.convertDashboardPlugin);
         });
