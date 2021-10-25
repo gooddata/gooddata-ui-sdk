@@ -130,7 +130,7 @@ export const selectWidgetByRef = createMemoizedSelector((ref: ObjRef | undefined
  * @alpha
  */
 export const selectWidgetDrills = createMemoizedSelector((ref: ObjRef | undefined) =>
-    createSelector(selectWidgetByRef(ref), (widget) => widget?.drills),
+    createSelector(selectWidgetByRef(ref), (widget) => widget?.drills ?? []),
 );
 
 /**
