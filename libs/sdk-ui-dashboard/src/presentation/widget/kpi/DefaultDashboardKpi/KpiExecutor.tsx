@@ -463,7 +463,7 @@ function getNoDataKpiResult(
     }
 
     return {
-        measureDescriptor: undefined,
+        measureDescriptor: result.meta().measureDescriptor(measureLocalId(primaryMeasure)),
         measureFormat: result.meta().measureDescriptor(measureLocalId(primaryMeasure))?.measureHeaderItem
             ?.format,
         measureResult: undefined,
