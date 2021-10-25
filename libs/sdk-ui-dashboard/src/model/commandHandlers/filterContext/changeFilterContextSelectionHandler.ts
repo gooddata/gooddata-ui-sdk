@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { all, call, put, select } from "redux-saga/effects";
+import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeFilterContextSelection } from "../../commands";
@@ -10,7 +10,7 @@ import {
 } from "../../store/filterContext/filterContextSelectors";
 import { batchActions } from "redux-batched-actions";
 import { AnyAction } from "@reduxjs/toolkit";
-import { dispatchFilterContextChanged } from "./common";
+import { canApplyDateFilter, dispatchFilterContextChanged } from "./common";
 import partition from "lodash/partition";
 import uniqBy from "lodash/uniqBy";
 import { isAttributeFilter, objRefToString, filterObjRef, isRelativeDateFilter } from "@gooddata/sdk-model";
@@ -139,11 +139,19 @@ function* getAttributeFiltersUpdateActions(
     return updateActions;
 }
 
-function getDateFilterUpdateActions(
+function* getDateFilterUpdateActions(
     dateFilter: IDashboardDateFilter | undefined,
     resetOthers: boolean,
-): AnyAction[] {
+): SagaIterator<AnyAction[]> {
     if (dateFilter) {
+        const canApply: SagaReturnType<typeof canApplyDateFilter> = yield call(
+            canApplyDateFilter,
+            dateFilter,
+        );
+        if (!canApply) {
+            return [];
+        }
+
         const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
             ? { type: "allTime" }
             : {
