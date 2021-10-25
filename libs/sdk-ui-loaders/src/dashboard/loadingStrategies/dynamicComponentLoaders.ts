@@ -120,7 +120,7 @@ function loadEntry(
         const container = window[moduleName]; // or get the container somewhere else
         // Initialize the container, it may provide shared modules
         await container.init(__webpack_share_scopes__.default);
-        // the `./${moduleName}` corresponds to exposes in the dashboard-plugin-template webpack config
+        // the `./${moduleName}_ENTRY` corresponds to exposes in the dashboard-plugin-template webpack config
         const entryFactory = await window[moduleName].get(`./${moduleName}_ENTRY`);
 
         return entryFactory().default;

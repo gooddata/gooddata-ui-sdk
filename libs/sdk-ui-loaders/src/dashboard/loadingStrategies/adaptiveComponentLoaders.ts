@@ -19,6 +19,7 @@ import { ModuleFederationIntegration } from "../types";
  * dynamic loading to get the engine. Otherwise will use the static loading.
  *
  * @param dashboard - loaded dashboard
+ * @param moduleFederationIntegration - configuration related to the Module Federation
  * @internal
  */
 export function adaptiveDashboardEngineLoader(
@@ -38,6 +39,7 @@ export function adaptiveDashboardEngineLoader(
  *
  * @param ctx - context in which the dashboard operates
  * @param dashboard - loaded dashboard
+ * @param moduleFederationIntegration - configuration related to the Module Federation
  * @internal
  */
 export function adaptiveDashboardPluginLoader(
