@@ -2,7 +2,6 @@
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
-import { isMeasureFormatInPercent } from "@gooddata/sdk-model";
 import { IAxis, ISeriesItem } from "../../typings/unsafe";
 import { isBarChart, isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, unwrap } from "../_util/common";
 import { supportedDualAxesChartTypes } from "./chartCapabilities";
@@ -72,23 +71,6 @@ export function getXAxes(
     ];
 }
 
-function getMeasureFormatKey(measureGroupItems: IMeasureInAxis[]) {
-    const percentageFormat = getMeasureFormat(
-        measureGroupItems.find((measure: IMeasureInAxis) => {
-            return isMeasureFormatInPercent(getMeasureFormat(measure));
-        }),
-    );
-    return percentageFormat !== ""
-        ? {
-              format: percentageFormat,
-          }
-        : {};
-}
-
-function getMeasureFormat(measure: IMeasureInAxis) {
-    return measure?.format ?? "";
-}
-
 export function getYAxes(
     dv: DataViewFacade,
     config: IChartConfig,
@@ -154,14 +136,12 @@ export function getYAxes(
         if (firstAxis) {
             firstAxis = {
                 ...firstAxis,
-                ...getMeasureFormatKey(measuresInFirstAxis),
                 seriesIndices: measuresInFirstAxis.map(({ index }: any) => index),
             };
         }
         if (secondAxis) {
             secondAxis = {
                 ...secondAxis,
-                ...getMeasureFormatKey(measuresInSecondAxis),
                 seriesIndices: measuresInSecondAxis.map(({ index }: any) => index),
             };
         }
@@ -179,7 +159,6 @@ export function getYAxes(
                 ...firstMeasureGroupItem,
                 ...nonDualMeasureAxis,
                 seriesIndices: range(measureGroupItems.length),
-                ...getMeasureFormatKey(measureGroupItems),
             },
         ];
     }
