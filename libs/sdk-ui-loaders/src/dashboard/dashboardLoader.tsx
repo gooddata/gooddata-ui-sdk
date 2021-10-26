@@ -22,7 +22,7 @@ import {
     noopDashboardPluginLoader,
     staticDashboardEngineLoader,
 } from "./loadingStrategies/staticComponentLoaders";
-import { IDashboardBasePropsForLoader, ModuleFederationIntegration } from "./types";
+import { AdaptiveLoadOptions, IDashboardBasePropsForLoader, ModuleFederationIntegration } from "./types";
 import {
     adaptiveDashboardBeforeLoadFactory,
     adaptiveDashboardEngineLoaderFactory,
@@ -104,19 +104,6 @@ const AdaptiveLoadStrategies: DashboardLoaderConfig = {
     engineLoaderFactory: adaptiveDashboardEngineLoaderFactory,
     pluginLoaderFactory: adaptiveDashboardPluginLoaderFactory,
     beforeLoadFactory: adaptiveDashboardBeforeLoadFactory,
-};
-
-/**
- * @alpha
- */
-export type AdaptiveLoadOptions = {
-    /**
-     * The Module Federation interoperability functions.
-     *
-     * @remarks
-     * For information on how to get the value of this, see {@link ModuleFederationIntegration}).
-     */
-    moduleFederationIntegration: ModuleFederationIntegration;
 };
 
 /**
