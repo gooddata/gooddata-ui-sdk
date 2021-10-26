@@ -24,19 +24,16 @@ import {
 } from "./loadingStrategies/staticComponentLoaders";
 import { IDashboardBasePropsForLoader, ModuleFederationIntegration } from "./types";
 import {
-    adaptiveDashboardBeforeLoad,
-    adaptiveDashboardEngineLoader,
-    adaptiveDashboardPluginLoader,
+    adaptiveDashboardBeforeLoadFactory,
+    adaptiveDashboardEngineLoaderFactory,
+    adaptiveDashboardPluginLoaderFactory,
 } from "./loadingStrategies/adaptiveComponentLoaders";
 import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation";
 
 /**
  * @alpha
  */
-export type DashboardEngineLoader = (
-    dashboard: IDashboardWithReferences,
-    moduleFederationIntegration: ModuleFederationIntegration,
-) => Promise<IDashboardEngine>;
+export type DashboardEngineLoader = (dashboard: IDashboardWithReferences) => Promise<IDashboardEngine>;
 
 /**
  * @alpha
@@ -44,7 +41,6 @@ export type DashboardEngineLoader = (
 export type DashboardPluginsLoader = (
     ctx: DashboardContext,
     dashboard: IDashboardWithReferences,
-    moduleFederationIntegration: ModuleFederationIntegration,
 ) => Promise<IDashboardPluginContract_V1[]>;
 
 /**
@@ -58,35 +54,56 @@ export type DashboardBeforeLoad = (
 /**
  * @alpha
  */
+export type DashboardEngineLoaderFactory = (
+    moduleFederationIntegration: ModuleFederationIntegration,
+) => DashboardEngineLoader;
+
+/**
+ * @alpha
+ */
+export type DashboardPluginsLoaderFactory = (
+    moduleFederationIntegration: ModuleFederationIntegration,
+) => DashboardPluginsLoader;
+
+/**
+ * @alpha
+ */
+export type DashboardBeforeLoadFactory = (
+    moduleFederationIntegration: ModuleFederationIntegration,
+) => DashboardBeforeLoad;
+
+/**
+ * @alpha
+ */
 export type DashboardLoaderConfig = {
     /**
-     * Specify function that will be used to load an instance of {@link @gooddata/sdk-ui-dashboard#DashboardEngine} to
+     * Specify factory for a function that will be used to load an instance of {@link @gooddata/sdk-ui-dashboard#DashboardEngine} to
      * use for rendering dashboard.
      */
-    engineLoader: DashboardEngineLoader;
+    engineLoaderFactory: DashboardEngineLoaderFactory;
 
     /**
-     * Specify function that will be used to load instances of plugins to integrate with the dashboard engine.
+     * Specify factory for a function that will be used to load instances of plugins to integrate with the dashboard engine.
      */
-    pluginLoader: DashboardPluginsLoader;
+    pluginLoaderFactory: DashboardPluginsLoaderFactory;
 
     /**
-     * Optionally specify a function that will be called before engineLoader and pluginLoader.
+     * Optionally specify a factory for a function that will be called before engineLoader and pluginLoader.
      * @remarks
      * This function is useful if there are some steps needed for both engine and plugin loading.
      */
-    beforeLoad?: DashboardBeforeLoad;
+    beforeLoadFactory?: DashboardBeforeLoadFactory;
 };
 
 const StaticLoadStrategies: DashboardLoaderConfig = {
-    engineLoader: staticDashboardEngineLoader,
-    pluginLoader: noopDashboardPluginLoader,
+    engineLoaderFactory: () => staticDashboardEngineLoader,
+    pluginLoaderFactory: () => noopDashboardPluginLoader,
 };
 
 const AdaptiveLoadStrategies: DashboardLoaderConfig = {
-    engineLoader: adaptiveDashboardEngineLoader,
-    pluginLoader: adaptiveDashboardPluginLoader,
-    beforeLoad: adaptiveDashboardBeforeLoad,
+    engineLoaderFactory: adaptiveDashboardEngineLoaderFactory,
+    pluginLoaderFactory: adaptiveDashboardPluginLoaderFactory,
+    beforeLoadFactory: adaptiveDashboardBeforeLoadFactory,
 };
 
 /**
@@ -200,15 +217,19 @@ export class DashboardLoader implements IDashboardLoader {
         dashboardWithPlugins: IDashboardWithReferences,
         config: DashboardLoaderConfig = this.config,
     ): Promise<[IDashboardEngine, IDashboardPluginContract_V1[]]> => {
-        const { engineLoader, pluginLoader, beforeLoad } = config;
+        const { engineLoaderFactory, pluginLoaderFactory, beforeLoadFactory } = config;
 
-        if (beforeLoad) {
+        if (beforeLoadFactory) {
+            const beforeLoad = beforeLoadFactory(this.moduleFederationIntegration);
             await beforeLoad(ctx, dashboardWithPlugins);
         }
 
+        const engineLoader = engineLoaderFactory(this.moduleFederationIntegration);
+        const pluginLoader = pluginLoaderFactory(this.moduleFederationIntegration);
+
         const [engine, plugins] = await Promise.all([
-            engineLoader(dashboardWithPlugins, this.moduleFederationIntegration),
-            pluginLoader(ctx, dashboardWithPlugins, this.moduleFederationIntegration),
+            engineLoader(dashboardWithPlugins),
+            pluginLoader(ctx, dashboardWithPlugins),
         ]);
 
         const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
