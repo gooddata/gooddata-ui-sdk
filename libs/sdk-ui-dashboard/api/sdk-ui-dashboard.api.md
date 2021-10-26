@@ -3661,6 +3661,12 @@ export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => Output
 // @internal
 export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
+// @alpha (undocumented)
+export const selectIsKpiAlertHighlightedByAlertRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
+
+// @alpha (undocumented)
+export const selectIsKpiAlertOpenedByAlertRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
+
 // @alpha
 export const selectIsLayoutEmpty: OutputSelector<DashboardState, boolean, (res: IWidget[]) => boolean>;
 
@@ -3786,6 +3792,15 @@ setFilterBarExpanded: CaseReducer<UiState, {
 payload: boolean;
 type: string;
 }>;
+closeKpiAlertDialog: CaseReducer<UiState, AnyAction>;
+openKpiAlertDialog: CaseReducer<UiState, {
+payload: ObjRef;
+type: string;
+}>;
+highlightKpiAlert: CaseReducer<UiState, {
+payload: ObjRef;
+type: string;
+}>;
 }>;
 
 // @alpha (undocumented)
@@ -3799,6 +3814,10 @@ export type UiState = {
     filterBar: {
         height: number;
         expanded: boolean;
+    };
+    kpiAlerts: {
+        openedAlertRef: ObjRef | undefined;
+        highlightedAlertRef: ObjRef | undefined;
     };
 };
 

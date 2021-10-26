@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+import { ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @alpha
@@ -14,6 +15,10 @@ export type UiState = {
         height: number;
         expanded: boolean;
     };
+    kpiAlerts: {
+        openedAlertRef: ObjRef | undefined;
+        highlightedAlertRef: ObjRef | undefined;
+    };
 };
 
 export const uiInitialState: UiState = {
@@ -26,5 +31,9 @@ export const uiInitialState: UiState = {
     filterBar: {
         height: 0,
         expanded: false,
+    },
+    kpiAlerts: {
+        highlightedAlertRef: undefined,
+        openedAlertRef: undefined,
     },
 };

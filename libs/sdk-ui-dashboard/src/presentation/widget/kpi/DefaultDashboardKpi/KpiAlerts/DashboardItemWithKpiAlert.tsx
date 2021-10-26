@@ -112,6 +112,13 @@ export class DashboardItemWithKpiAlert extends Component<
         isAlertHighlighted: false,
     };
 
+    componentDidMount(): void {
+        // handle cases when this component is rendered already highlighted
+        if (this.props.isAlertHighlighted) {
+            this.updateStatePropertyForTime("isAlertHighlighted", 5000);
+        }
+    }
+
     UNSAFE_componentWillReceiveProps(nextProps: IDashboardItemWithKpiAlertProps): void {
         if (this.isKpiAlertSaved(nextProps)) {
             this.updateStatePropertyForTime("isKpiAlertAfterSaving", 1000);

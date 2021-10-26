@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import React, { memo, useCallback, useEffect, useMemo } from "react";
 import { IntlShape, useIntl, WrappedComponentProps } from "react-intl";
 import compact from "lodash/compact";
 import isEqual from "lodash/isEqual";
@@ -51,6 +51,10 @@ import {
     useDashboardUserInteraction,
     useWidgetExecutionsHandler,
     selectConfiguredDrillsByWidgetRef,
+    uiActions,
+    useDashboardDispatch,
+    selectIsKpiAlertOpenedByAlertRef,
+    selectIsKpiAlertHighlightedByAlertRef,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
@@ -133,6 +137,18 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const settings = useDashboardSelector(selectSettings);
     const drillableItems = useDashboardSelector(selectDrillableItems);
     const widgetDrills = useDashboardSelector(selectConfiguredDrillsByWidgetRef(kpiWidget.ref));
+    const isAlertDialogOpen = useDashboardSelector(selectIsKpiAlertOpenedByAlertRef(alert?.ref));
+    const isAlertHighlighted = useDashboardSelector(selectIsKpiAlertHighlightedByAlertRef(alert?.ref));
+
+    const dispatch = useDashboardDispatch();
+    const openAlertDialog = useCallback(() => {
+        if (alert?.ref) {
+            dispatch(uiActions.openKpiAlertDialog(alert.ref));
+        }
+    }, [alert]);
+    const closeAlertDialog = useCallback(() => {
+        dispatch(uiActions.closeKpiAlertDialog());
+    }, []);
 
     const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget, alert);
 
@@ -178,8 +194,6 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
         [onDrill, result, kpiWidget],
     );
 
-    const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
-    const closeAlertDialog = () => setIsAlertDialogOpen(false);
     const kpiAlertOperations = useKpiAlertOperations(closeAlertDialog);
     const canSetAlert = permissions?.canCreateScheduledMail;
 
@@ -254,9 +268,10 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
             isAlertExecutionLoading={isAlertExecutionLoading}
             isAlertBroken={isAlertBroken}
             isAlertDialogOpen={isAlertDialogOpen}
+            isAlertHighlighted={isAlertHighlighted}
             onAlertDialogOpenClick={() => {
                 kpiAlertDialogOpened(!!alert);
-                setIsAlertDialogOpen(true);
+                openAlertDialog();
             }}
             renderAlertDialog={() => (
                 <KpiAlertDialogWrapper
@@ -265,7 +280,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                     userEmail={currentUser.email!}
                     onAlertDialogCloseClick={() => {
                         kpiAlertDialogClosed();
-                        setIsAlertDialogOpen(false);
+                        closeAlertDialog();
                     }}
                     onAlertDialogDeleteClick={() => {
                         kpiAlertOperations.onRemoveAlert(alert!);
