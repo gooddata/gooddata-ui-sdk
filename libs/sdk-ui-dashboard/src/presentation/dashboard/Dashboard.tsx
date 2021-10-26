@@ -58,6 +58,7 @@ import {
     selectFilterBarExpanded,
     selectFilterBarHeight,
     selectFilterContextFilters,
+    selectIsEmbedded,
     selectIsLayoutEmpty,
     selectIsSaveAsDialogOpen,
     selectIsScheduleEmailDialogOpen,
@@ -331,13 +332,17 @@ const DashboardHeader = (): JSX.Element => {
 
 const DashboardMainContent: React.FC<IDashboardProps> = () => {
     const isFilterBarExpanded = useDashboardSelector(selectFilterBarExpanded);
+    const isEmbedded = useDashboardSelector(selectIsEmbedded);
     const filterBarHeight = useDashboardSelector(selectFilterBarHeight);
 
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
 
     const dashSectionStyles = useMemo(
         () => ({
-            marginTop: isFilterBarExpanded ? filterBarHeight - DEFAULT_FILTER_BAR_HEIGHT + "px" : undefined,
+            marginTop:
+                isFilterBarExpanded && !isEmbedded
+                    ? filterBarHeight - DEFAULT_FILTER_BAR_HEIGHT + "px"
+                    : undefined,
             transition: "margin-top 0.2s",
         }),
         [isFilterBarExpanded, filterBarHeight],
