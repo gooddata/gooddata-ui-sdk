@@ -3,6 +3,8 @@ import type { DashboardPluginDescriptor } from "@gooddata/sdk-ui-dashboard";
 
 import { MODULE_FEDERATION_NAME } from "../metadata.json";
 
+import * as packageJson from "../../package.json";
+
 type PluginEntryPoint = DashboardPluginDescriptor & {
     /**
      * Key to the module federation container where to find the engine bundle entry point.
@@ -17,7 +19,7 @@ type PluginEntryPoint = DashboardPluginDescriptor & {
 const entryPoint: PluginEntryPoint = {
     author: "<your-email>",
     displayName: "plugin",
-    version: "0.1",
+    version: packageJson.version,
     minEngineVersion: "bundled",
     maxEngineVersion: "bundled",
     // These two must fit the values in the webpack config. Do not edit them unless you know what you are doing
