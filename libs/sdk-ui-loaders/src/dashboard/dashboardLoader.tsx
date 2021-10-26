@@ -24,7 +24,7 @@ import {
 } from "./loadingStrategies/staticComponentLoaders";
 import { IDashboardBasePropsForLoader, ModuleFederationIntegration } from "./types";
 import {
-    adaptiveDashboardCommonLoader,
+    adaptiveDashboardBeforeLoad,
     adaptiveDashboardEngineLoader,
     adaptiveDashboardPluginLoader,
 } from "./loadingStrategies/adaptiveComponentLoaders";
@@ -50,7 +50,7 @@ export type DashboardPluginsLoader = (
 /**
  * @alpha
  */
-export type DashboardCommonLoader = (
+export type DashboardBeforeLoad = (
     ctx: DashboardContext,
     dashboard: IDashboardWithReferences,
 ) => Promise<void>;
@@ -75,7 +75,7 @@ export type DashboardLoaderConfig = {
      * @remarks
      * This function is useful if there are some steps needed for both engine and plugin loading.
      */
-    commonLoader?: DashboardCommonLoader;
+    beforeLoad?: DashboardBeforeLoad;
 };
 
 const StaticLoadStrategies: DashboardLoaderConfig = {
@@ -86,7 +86,20 @@ const StaticLoadStrategies: DashboardLoaderConfig = {
 const AdaptiveLoadStrategies: DashboardLoaderConfig = {
     engineLoader: adaptiveDashboardEngineLoader,
     pluginLoader: adaptiveDashboardPluginLoader,
-    commonLoader: adaptiveDashboardCommonLoader,
+    beforeLoad: adaptiveDashboardBeforeLoad,
+};
+
+/**
+ * @alpha
+ */
+export type AdaptiveLoadOptions = {
+    /**
+     * The Module Federation interoperability functions.
+     *
+     * @remarks
+     * For information on how to get the value of this, see {@link ModuleFederationIntegration}).
+     */
+    moduleFederationIntegration: ModuleFederationIntegration;
 };
 
 /**
@@ -118,16 +131,8 @@ export class DashboardLoader implements IDashboardLoader {
         return new DashboardLoader(StaticLoadStrategies);
     }
 
-    /**
-     * Factory for adaptive loader.
-     *
-     * @remarks
-     * For information on how to get the value of the parameter, see {@link ModuleFederationIntegration}).
-     *
-     * @param moduleFederationIntegration - the Module Federation interoperability functions
-     */
-    public static adaptive(moduleFederationIntegration: ModuleFederationIntegration): DashboardLoader {
-        return new DashboardLoader(AdaptiveLoadStrategies, moduleFederationIntegration);
+    public static adaptive(options: AdaptiveLoadOptions): DashboardLoader {
+        return new DashboardLoader(AdaptiveLoadStrategies, options.moduleFederationIntegration);
     }
 
     public onBackend = (backend: IAnalyticalBackend): this => {
@@ -195,10 +200,10 @@ export class DashboardLoader implements IDashboardLoader {
         dashboardWithPlugins: IDashboardWithReferences,
         config: DashboardLoaderConfig = this.config,
     ): Promise<[IDashboardEngine, IDashboardPluginContract_V1[]]> => {
-        const { engineLoader, pluginLoader, commonLoader } = config;
+        const { engineLoader, pluginLoader, beforeLoad } = config;
 
-        if (commonLoader) {
-            await commonLoader(ctx, dashboardWithPlugins);
+        if (beforeLoad) {
+            await beforeLoad(ctx, dashboardWithPlugins);
         }
 
         const [engine, plugins] = await Promise.all([

@@ -5,7 +5,7 @@
  */
 
 export { IDashboardLoader, DashboardLoadResult, IEmbeddedPlugin } from "./dashboard/loader";
-export { DashboardLoader } from "./dashboard/dashboardLoader";
+export { DashboardLoader, AdaptiveLoadOptions } from "./dashboard/dashboardLoader";
 export { DashboardStub, IDashboardStubProps } from "./dashboard/DashboardStub";
 export {
     IDashboardLoadOptions,

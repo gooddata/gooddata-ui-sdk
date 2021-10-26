@@ -62,7 +62,7 @@ export function adaptiveDashboardPluginLoader(
  * @param dashboard - loaded dashboard
  * @internal
  */
-export function adaptiveDashboardCommonLoader(
+export function adaptiveDashboardBeforeLoad(
     ctx: DashboardContext,
     dashboard: IDashboardWithReferences,
 ): Promise<void> {

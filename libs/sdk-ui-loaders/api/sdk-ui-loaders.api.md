@@ -18,8 +18,14 @@ import { default as React_2 } from 'react';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 
 // @alpha (undocumented)
+export type AdaptiveLoadOptions = {
+    moduleFederationIntegration: ModuleFederationIntegration;
+};
+
+// @alpha (undocumented)
 export class DashboardLoader implements IDashboardLoader {
-    static adaptive(moduleFederationIntegration: ModuleFederationIntegration): DashboardLoader;
+    // (undocumented)
+    static adaptive(options: AdaptiveLoadOptions): DashboardLoader;
     // (undocumented)
     forDashboard: (dashboardRef: ObjRef) => this;
     // (undocumented)
@@ -74,10 +80,10 @@ export interface IDashboardLoader {
 
 // @alpha
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
+    adaptiveLoadOptions?: AdaptiveLoadOptions;
     clientWorkspace?: IClientWorkspaceIdentifiers;
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
     loadingMode?: "adaptive" | "staticOnly";
-    moduleFederationIntegration?: ModuleFederationIntegration;
 }
 
 // @alpha (undocumented)

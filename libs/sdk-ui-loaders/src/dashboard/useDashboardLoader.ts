@@ -47,7 +47,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         clientWorkspace,
         loadingMode,
         extraPlugins,
-        moduleFederationIntegration,
+        adaptiveLoadOptions,
     } = options;
 
     useEffect(() => {
@@ -78,10 +78,10 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         const useAdaptiveLoader = loadingMode !== "staticOnly";
         if (useAdaptiveLoader) {
             invariant(
-                moduleFederationIntegration,
-                "'moduleFederationIntegration' must be specified when adaptive loading mode is used.",
+                adaptiveLoadOptions,
+                "'adaptiveLoadOptions' must be specified when adaptive loading mode is used.",
             );
-            loader = DashboardLoader.adaptive(moduleFederationIntegration);
+            loader = DashboardLoader.adaptive(adaptiveLoadOptions);
         } else {
             loader = DashboardLoader.staticOnly();
         }

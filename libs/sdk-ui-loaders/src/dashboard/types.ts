@@ -3,6 +3,7 @@ import { IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
 import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 import { IEmbeddedPlugin } from "./loader";
 import { ObjRef } from "@gooddata/sdk-model";
+import { AdaptiveLoadOptions } from "./dashboardLoader";
 
 /**
  * This a specialization of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} interface in which the `dashboard` can only be provided
@@ -69,10 +70,10 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
 
     /**
-     * Specify configuration related to the Module Federation.
+     * Specify configuration related adaptive loading.
      * If loadingMode is not set to "staticOnly", this is mandatory.
      */
-    moduleFederationIntegration?: ModuleFederationIntegration;
+    adaptiveLoadOptions?: AdaptiveLoadOptions;
 }
 
 /**
