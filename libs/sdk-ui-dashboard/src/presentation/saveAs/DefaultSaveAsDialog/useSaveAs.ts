@@ -80,9 +80,12 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
         },
     });
 
-    const handleSaveAs = useCallback((title?: string, switchToDashboard = false) => {
-        saveAsCommandProcessing.run(title, switchToDashboard);
-    }, []);
+    const handleSaveAs = useCallback(
+        (title?: string, switchToDashboard = false, useOriginalFilterContext = true) => {
+            saveAsCommandProcessing.run(title, switchToDashboard, useOriginalFilterContext);
+        },
+        [],
+    );
 
     return {
         locale,

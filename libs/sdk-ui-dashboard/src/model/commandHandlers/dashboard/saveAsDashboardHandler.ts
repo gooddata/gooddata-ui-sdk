@@ -16,7 +16,11 @@ import { selectFilterContextDefinition } from "../../store/filterContext/filterC
 import { layoutActions } from "../../store/layout";
 import { selectBasicLayout } from "../../store/layout/layoutSelectors";
 import { metaActions } from "../../store/meta";
-import { selectDashboardDescriptor } from "../../store/meta/metaSelectors";
+import {
+    selectDashboardDescriptor,
+    selectPersistedDashboard,
+    selectPersistedDashboardFilterContext,
+} from "../../store/meta/metaSelectors";
 import { DashboardContext } from "../../types/commonTypes";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
@@ -58,14 +62,23 @@ function createDashboard(ctx: DashboardContext, saveAsCtx: DashboardSaveAsContex
  *  selectLayout (that keeps custom widgets).
  */
 function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<DashboardSaveAsContext> {
-    const { title } = cmd.payload;
+    const { title, useOriginalFilterContext } = cmd.payload;
     const titleProp = title ? { title } : {};
+
     const dashboardDescriptor: ReturnType<typeof selectDashboardDescriptor> = yield select(
         selectDashboardDescriptor,
     );
-    const filterContextDefinition: ReturnType<typeof selectFilterContextDefinition> = yield select(
-        selectFilterContextDefinition,
+
+    const originalDashboardDescription: ReturnType<typeof selectPersistedDashboard> = yield select(
+        selectPersistedDashboard,
     );
+
+    const filterContextDefinition: ReturnType<typeof selectFilterContextDefinition> = yield select(
+        !useOriginalFilterContext || !originalDashboardDescription
+            ? selectFilterContextDefinition
+            : selectPersistedDashboardFilterContext,
+    );
+
     const layout: ReturnType<typeof selectBasicLayout> = yield select(selectBasicLayout);
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfigOverrides> = yield select(
         selectDateFilterConfigOverrides,

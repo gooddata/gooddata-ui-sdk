@@ -34,6 +34,18 @@ export const selectPersistedDashboard = createSelector(selectSelf, (state) => {
 });
 
 /**
+ * Selects persisted IFilterContext/ITempFilterContext - that is the IFilterContext or ITempFilterContext that
+ * was used to initialize the original filters of the dashboard component during the initial load of the
+ * dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+export const selectPersistedDashboardFilterContext = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.filterContext;
+});
+
+/**
  * Selects ref of the persisted dashboard object that backs and is rendered-by the dashboard component.
  *
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
