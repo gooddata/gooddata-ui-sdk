@@ -14,6 +14,11 @@ export interface ISettings {
     disableKpiDashboardHeadlineUnderline?: boolean;
 
     /**
+     * Disables Kpi widget drills in embedded mode.
+     */
+    hideKpiDrillInEmbedded?: boolean;
+
+    /**
      * Allows configuration of axis name position and visibility for Pluggable Visualizations.
      */
     enableAxisNameConfiguration?: boolean;

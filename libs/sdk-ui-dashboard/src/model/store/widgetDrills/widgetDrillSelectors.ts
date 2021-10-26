@@ -37,7 +37,12 @@ import { selectDrillableItems } from "../drill/drillSelectors";
 import {
     selectDisableDefaultDrills,
     selectEnableClickableAttributeURL,
+    selectEnableKPIDashboardDrillToURL,
+    selectEnableKPIDashboardDrillToInsight,
+    selectEnableKPIDashboardDrillToDashboard,
     selectEnableKPIDashboardImplicitDrillDown,
+    selectHideKpiDrillInEmbedded,
+    selectIsEmbedded,
 } from "../config/configSelectors";
 import flatMap from "lodash/flatMap";
 
@@ -198,9 +203,57 @@ export const selectImplicitDrillsToUrlByWidgetRef = createMemoizedSelector((ref:
  * @internal
  */
 export const selectConfiguredDrillsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(selectWidgetDrills(ref), (drills = []) => {
-        return getDrillDefinitionsWithPredicates(drills);
-    }),
+    createSelector(
+        selectWidgetDrills(ref),
+        selectDisableDefaultDrills,
+        selectEnableClickableAttributeURL,
+        selectEnableKPIDashboardDrillToURL,
+        selectEnableKPIDashboardDrillToInsight,
+        selectEnableKPIDashboardDrillToDashboard,
+        selectHideKpiDrillInEmbedded,
+        selectIsEmbedded,
+        (
+            drills = [],
+            disableDefaultDrills,
+            enableClickableAttributeURL,
+            enableKPIDashboardDrillToURL,
+            enableKPIDashboardDrillToInsight,
+            enableKPIDashboardDrillToDashboard,
+            hideKpiDrillInEmbedded,
+            isEmbedded,
+        ) => {
+            if (disableDefaultDrills) {
+                return [];
+            }
+
+            const filteredDrills = [...drills].filter((drill) => {
+                const drillType = drill.type;
+                switch (drillType) {
+                    case "drillToAttributeUrl": {
+                        return enableClickableAttributeURL;
+                    }
+                    case "drillToCustomUrl": {
+                        return enableKPIDashboardDrillToURL;
+                    }
+                    case "drillToDashboard": {
+                        return enableKPIDashboardDrillToDashboard;
+                    }
+                    case "drillToInsight": {
+                        return enableKPIDashboardDrillToInsight;
+                    }
+                    case "drillToLegacyDashboard": {
+                        return !(isEmbedded && hideKpiDrillInEmbedded);
+                    }
+                    default: {
+                        const unhandledType: never = drillType;
+                        throw new UnexpectedError(`Unhandled widget drill type: ${unhandledType}`);
+                    }
+                }
+            });
+
+            return getDrillDefinitionsWithPredicates(filteredDrills);
+        },
+    ),
 );
 
 const selectImplicitDrillToUrlPredicates = createMemoizedSelector((ref: ObjRef) =>

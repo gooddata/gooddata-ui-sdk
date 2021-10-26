@@ -3451,7 +3451,7 @@ export const selectConfig: OutputSelector<DashboardState, ResolvedDashboardConfi
 export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: IImplicitDrillWithPredicates[], res3: IImplicitDrillWithPredicates[]) => IImplicitDrillWithPredicates[]>;
 
 // @internal (undocumented)
-export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res: IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined) => IImplicitDrillWithPredicates[]>;
+export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillToLegacyDashboard[] | InsightDrillDefinition[], res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean, res7: boolean, res8: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @alpha
 export const selectDashboardDescription: OutputSelector<DashboardState, string, (res: Pick<IDashboard<IDashboardWidget>, "title" | "description" | "tags">) => string>;
@@ -3548,6 +3548,9 @@ export const selectEffectiveDateFilterOptions: OutputSelector<DashboardState, ID
 export const selectEffectiveDateFilterTitle: OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: IDashboardDateFilterConfig_2 | undefined) => string | undefined>;
 
 // @alpha
+export const selectEnableClickableAttributeURL: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @alpha
 export const selectEnableCompanyLogoInEmbeddedUI: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha
@@ -3557,7 +3560,16 @@ export const selectEnableFilterValuesResolutionInDrillEvents: OutputSelector<Das
 export const selectEnableKPIDashboardDrillToDashboard: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha
+export const selectEnableKPIDashboardDrillToInsight: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @alpha
+export const selectEnableKPIDashboardDrillToURL: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @alpha
 export const selectEnableKPIDashboardExportPDF: OutputSelector<DashboardState, string | number | boolean | object, (res: ResolvedDashboardConfig) => string | number | boolean | object>;
+
+// @alpha
+export const selectEnableKPIDashboardImplicitDrillDown: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha
 export const selectEnableKPIDashboardSaveAsNew: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
@@ -3597,6 +3609,9 @@ export const selectFilterContextFilters: OutputSelector<DashboardState, FilterCo
 
 // @alpha
 export const selectFilterContextIdentity: OutputSelector<DashboardState, IDashboardObjectIdentity | undefined, (res: FilterContextState) => IDashboardObjectIdentity | undefined>;
+
+// @alpha
+export const selectHideKpiDrillInEmbedded: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal (undocumented)
 export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: (ICatalogAttribute | ICatalogDateAttribute)[], res2: ICatalogAttribute[]) => IImplicitDrillWithPredicates[]>;
@@ -3697,7 +3712,7 @@ export const selectUser: OutputSelector<DashboardState, IUser, (res: UserState) 
 export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | undefined, (res: ObjRefMap<IWidget>) => IKpiWidget | IInsightWidget | undefined>;
 
 // @alpha
-export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined, (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[] | undefined>;
+export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
 
 // @internal
 export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<IWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => ObjRefMap<IWidget>>;

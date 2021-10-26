@@ -223,10 +223,37 @@ export const selectEnableClickableAttributeURL = createSelector(selectConfig, (s
 });
 
 /**
+ * Returns whether drill to url is enabled
+ *
+ * @alpha
+ */
+export const selectEnableKPIDashboardDrillToURL = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKPIDashboardDrillToURL ?? false;
+});
+
+/**
+ * Returns whether drill to insight is enabled
+ *
+ * @alpha
+ */
+export const selectEnableKPIDashboardDrillToInsight = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKPIDashboardDrillToInsight ?? false;
+});
+
+/**
  * Returns whether implicit drill to attributes url enabled
  *
  * @alpha
  */
 export const selectEnableKPIDashboardImplicitDrillDown = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardImplicitDrillDown ?? false;
+});
+
+/**
+ * Returns whether Kpi drills in embedded mode are disabled.
+ *
+ * @alpha
+ */
+export const selectHideKpiDrillInEmbedded = createSelector(selectConfig, (state) => {
+    return state.settings?.hideKpiDrillInEmbedded ?? false;
 });

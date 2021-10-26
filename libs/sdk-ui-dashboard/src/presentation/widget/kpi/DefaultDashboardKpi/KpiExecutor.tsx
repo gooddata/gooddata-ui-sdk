@@ -42,7 +42,6 @@ import {
 
 import { filterContextItemsToFiltersForWidget } from "../../../../converters";
 import {
-    selectDisableDefaultDrills,
     selectDrillableItems,
     selectPermissions,
     selectSettings,
@@ -51,6 +50,7 @@ import {
     useDashboardSelector,
     useDashboardUserInteraction,
     useWidgetExecutionsHandler,
+    selectConfiguredDrillsByWidgetRef,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
@@ -132,7 +132,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const permissions = useDashboardSelector(selectPermissions);
     const settings = useDashboardSelector(selectSettings);
     const drillableItems = useDashboardSelector(selectDrillableItems);
-    const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
+    const widgetDrills = useDashboardSelector(selectConfiguredDrillsByWidgetRef(kpiWidget.ref));
 
     const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget, alert);
 
@@ -209,14 +209,11 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
 
     const predicates = convertDrillableItemsToPredicates(drillableItems);
     const isDrillable =
-        kpiResult &&
         kpiResult?.measureDescriptor &&
         result &&
         status !== "error" &&
-        (disableDefaultDrills
-            ? isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result)
-            : kpiWidget.drills.length > 0 ||
-              isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result));
+        (isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result) ||
+            widgetDrills.length > 0);
 
     const enableCompactSize = settings.enableKDWidgetCustomHeight;
 
@@ -463,7 +460,7 @@ function getNoDataKpiResult(
     }
 
     return {
-        measureDescriptor: undefined,
+        measureDescriptor: result.meta().measureDescriptor(measureLocalId(primaryMeasure)),
         measureFormat: result.meta().measureDescriptor(measureLocalId(primaryMeasure))?.measureHeaderItem
             ?.format,
         measureResult: undefined,

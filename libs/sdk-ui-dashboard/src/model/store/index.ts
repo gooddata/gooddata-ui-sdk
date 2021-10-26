@@ -30,6 +30,11 @@ export {
     selectEnableKPIDashboardExportPDF,
     selectEnableKPIDashboardDrillToDashboard,
     selectEnableKPIDashboardSaveAsNew,
+    selectEnableClickableAttributeURL,
+    selectEnableKPIDashboardDrillToInsight,
+    selectEnableKPIDashboardDrillToURL,
+    selectEnableKPIDashboardImplicitDrillDown,
+    selectHideKpiDrillInEmbedded,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
