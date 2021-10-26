@@ -3,6 +3,7 @@ import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import { ModuleFederationIntegration } from "../types";
 import invariant from "ts-invariant";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * @internal
@@ -12,10 +13,8 @@ export async function dynamicDashboardEngineLoader(
     moduleFederationIntegration: ModuleFederationIntegration,
 ): Promise<IDashboardEngine> {
     const { plugins } = dashboard.references;
-    if (!plugins.length) {
-        // if this bombs, this loader was called with no plugins (which means noop version should have been used)
-        invariant(false);
-    }
+    // if this bombs, this loader was called with no plugins (which means noop version should have been used)
+    invariant(!isEmpty(plugins));
 
     const first = plugins[0];
 
@@ -52,7 +51,7 @@ export async function dynamicDashboardPluginLoader(
 /**
  * @internal
  */
-export async function dynamicDashboardCommonLoader(
+export async function dynamicDashboardBeforeLoad(
     _ctx: DashboardContext,
     dashboard: IDashboardWithReferences,
 ): Promise<void> {

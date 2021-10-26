@@ -39,7 +39,7 @@ export function noopDashboardPluginLoader(
 }
 
 /**
- * This is a noop common loader - it ignores all configuration for the dashboard and will do nothing.
+ * This is a noop before load - it ignores all configuration for the dashboard and will do nothing.
  *
  * This is useful for plugin development / testing purposes when the dashboard is not yet integrated
  * with any plugin and plugins are provided to the loader using the {@link @gooddata/sdk-ui-loaders#IDashboardLoader.withAdditionalPlugins}
@@ -49,7 +49,7 @@ export function noopDashboardPluginLoader(
  * @param _dashboard - ignored
  * @internal
  */
-export function noopDashboardCommonLoader(
+export function noopDashboardBeforeLoad(
     _ctx: DashboardContext,
     _dashboard: IDashboardWithReferences,
 ): Promise<void> {

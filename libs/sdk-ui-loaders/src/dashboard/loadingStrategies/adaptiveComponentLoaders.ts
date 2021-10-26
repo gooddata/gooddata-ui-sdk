@@ -3,12 +3,12 @@ import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import isEmpty from "lodash/isEmpty";
 import {
-    noopDashboardCommonLoader,
+    noopDashboardBeforeLoad,
     noopDashboardPluginLoader,
     staticDashboardEngineLoader,
 } from "./staticComponentLoaders";
 import {
-    dynamicDashboardCommonLoader,
+    dynamicDashboardBeforeLoad,
     dynamicDashboardEngineLoader,
     dynamicDashboardPluginLoader,
 } from "./dynamicComponentLoaders";
@@ -64,8 +64,8 @@ export const adaptiveDashboardBeforeLoadFactory =
     (_moduleFederationIntegration: ModuleFederationIntegration) =>
     (ctx: DashboardContext, dashboard: IDashboardWithReferences): Promise<void> => {
         if (!isEmpty(dashboard.references.plugins)) {
-            return dynamicDashboardCommonLoader(ctx, dashboard);
+            return dynamicDashboardBeforeLoad(ctx, dashboard);
         }
 
-        return noopDashboardCommonLoader(ctx, dashboard);
+        return noopDashboardBeforeLoad(ctx, dashboard);
     };

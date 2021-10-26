@@ -54,56 +54,39 @@ export type DashboardBeforeLoad = (
 /**
  * @alpha
  */
-export type DashboardEngineLoaderFactory = (
-    moduleFederationIntegration: ModuleFederationIntegration,
-) => DashboardEngineLoader;
-
-/**
- * @alpha
- */
-export type DashboardPluginsLoaderFactory = (
-    moduleFederationIntegration: ModuleFederationIntegration,
-) => DashboardPluginsLoader;
-
-/**
- * @alpha
- */
-export type DashboardBeforeLoadFactory = (
-    moduleFederationIntegration: ModuleFederationIntegration,
-) => DashboardBeforeLoad;
-
-/**
- * @alpha
- */
 export type DashboardLoaderConfig = {
     /**
-     * Specify factory for a function that will be used to load an instance of {@link @gooddata/sdk-ui-dashboard#DashboardEngine} to
+     * Specify function that will be used to load an instance of {@link @gooddata/sdk-ui-dashboard#DashboardEngine} to
      * use for rendering dashboard.
      */
-    engineLoaderFactory: DashboardEngineLoaderFactory;
+    engineLoader: DashboardEngineLoader;
 
     /**
-     * Specify factory for a function that will be used to load instances of plugins to integrate with the dashboard engine.
+     * Specify function that will be used to load instances of plugins to integrate with the dashboard engine.
      */
-    pluginLoaderFactory: DashboardPluginsLoaderFactory;
+    pluginLoader: DashboardPluginsLoader;
 
     /**
-     * Optionally specify a factory for a function that will be called before engineLoader and pluginLoader.
+     * Optionally specify a function that will be called before engineLoader and pluginLoader.
      * @remarks
      * This function is useful if there are some steps needed for both engine and plugin loading.
      */
-    beforeLoadFactory?: DashboardBeforeLoadFactory;
+    beforeLoad?: DashboardBeforeLoad;
 };
 
 const StaticLoadStrategies: DashboardLoaderConfig = {
-    engineLoaderFactory: () => staticDashboardEngineLoader,
-    pluginLoaderFactory: () => noopDashboardPluginLoader,
+    engineLoader: staticDashboardEngineLoader,
+    pluginLoader: noopDashboardPluginLoader,
 };
 
-const AdaptiveLoadStrategies: DashboardLoaderConfig = {
-    engineLoaderFactory: adaptiveDashboardEngineLoaderFactory,
-    pluginLoaderFactory: adaptiveDashboardPluginLoaderFactory,
-    beforeLoadFactory: adaptiveDashboardBeforeLoadFactory,
+const AdaptiveLoadStrategies = (
+    moduleFederationIntegration: ModuleFederationIntegration,
+): DashboardLoaderConfig => {
+    return {
+        engineLoader: adaptiveDashboardEngineLoaderFactory(moduleFederationIntegration),
+        pluginLoader: adaptiveDashboardPluginLoaderFactory(moduleFederationIntegration),
+        beforeLoad: adaptiveDashboardBeforeLoadFactory(moduleFederationIntegration),
+    };
 };
 
 /**
@@ -114,21 +97,9 @@ export class DashboardLoader implements IDashboardLoader {
     private baseProps: Partial<IDashboardBasePropsForLoader> = {};
     private embeddedPlugins: IEmbeddedPlugin[] = [];
     private clientWorkspace: IClientWorkspaceIdentifiers | undefined = undefined;
-    private moduleFederationIntegration: ModuleFederationIntegration = {
-        __webpack_init_sharing__: () => {
-            throw new Error("Uninitialized");
-        },
-        __webpack_share_scopes__: null,
-    };
 
-    private constructor(
-        config: DashboardLoaderConfig,
-        moduleFederationIntegration?: ModuleFederationIntegration,
-    ) {
+    private constructor(config: DashboardLoaderConfig) {
         this.config = config;
-        if (moduleFederationIntegration) {
-            this.moduleFederationIntegration = moduleFederationIntegration;
-        }
     }
 
     public static staticOnly(): DashboardLoader {
@@ -136,7 +107,7 @@ export class DashboardLoader implements IDashboardLoader {
     }
 
     public static adaptive(options: AdaptiveLoadOptions): DashboardLoader {
-        return new DashboardLoader(AdaptiveLoadStrategies, options.moduleFederationIntegration);
+        return new DashboardLoader(AdaptiveLoadStrategies(options.moduleFederationIntegration));
     }
 
     public onBackend = (backend: IAnalyticalBackend): this => {
@@ -204,15 +175,11 @@ export class DashboardLoader implements IDashboardLoader {
         dashboardWithPlugins: IDashboardWithReferences,
         config: DashboardLoaderConfig = this.config,
     ): Promise<[IDashboardEngine, IDashboardPluginContract_V1[]]> => {
-        const { engineLoaderFactory, pluginLoaderFactory, beforeLoadFactory } = config;
+        const { engineLoader, pluginLoader, beforeLoad } = config;
 
-        if (beforeLoadFactory) {
-            const beforeLoad = beforeLoadFactory(this.moduleFederationIntegration);
+        if (beforeLoad) {
             await beforeLoad(ctx, dashboardWithPlugins);
         }
-
-        const engineLoader = engineLoaderFactory(this.moduleFederationIntegration);
-        const pluginLoader = pluginLoaderFactory(this.moduleFederationIntegration);
 
         const [engine, plugins] = await Promise.all([
             engineLoader(dashboardWithPlugins),
