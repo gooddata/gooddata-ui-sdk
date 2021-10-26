@@ -106,7 +106,7 @@ describe("save as dashboard handler", () => {
 
         it("should emit correct events", async () => {
             await Tester.dispatchAndWaitFor(
-                saveDashboardAs("My Dashboard Copy", false, TestCorrelation),
+                saveDashboardAs("My Dashboard Copy", false, true, TestCorrelation),
                 "GDC.DASH/EVT.COPY_SAVED",
             );
 

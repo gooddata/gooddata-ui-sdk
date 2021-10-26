@@ -115,6 +115,12 @@ export interface SaveDashboardAs extends IDashboardCommand {
          * it should stay on the current dashboard.
          */
         readonly switchToCopy?: boolean;
+
+        /**
+         * Indicates whether new dashboard should use the original filter context or whether to use the one
+         * with current filter selection.
+         */
+        readonly useOriginalFilterContext?: boolean;
     };
 }
 
@@ -131,11 +137,14 @@ export interface SaveDashboardAs extends IDashboardCommand {
  *  be created during save-as; the default is false
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
+ *  @param useOriginalFilterContext - optionally indicate whether new dashboard should use original filter context
+ *  or the one with current filter selection.
  * @alpha
  */
 export function saveDashboardAs(
     title?: string,
     switchToCopy?: boolean,
+    useOriginalFilterContext?: boolean,
     correlationId?: string,
 ): SaveDashboardAs {
     return {
@@ -144,6 +153,7 @@ export function saveDashboardAs(
         payload: {
             title,
             switchToCopy,
+            useOriginalFilterContext,
         },
     };
 }

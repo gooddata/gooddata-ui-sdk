@@ -20,7 +20,7 @@ export interface ISaveAsDialogRendererOwnProps {
     isScheduleEmailsEnabled: boolean;
     locale?: string;
 
-    onSubmit: (title: string, switchToCopy?: boolean) => void;
+    onSubmit: (title: string, switchToCopy?: boolean, useOriginalFilterContext?: boolean) => void;
     onCancel?: () => void;
 }
 
@@ -75,7 +75,7 @@ export class SaveAsNewDashboardDialog extends React.PureComponent<
     onSubmit = (): void => {
         const title = this.state.dashboardTitle.trim();
         if (this.canCreateDashboard() && title !== "") {
-            this.props.onSubmit(title, true);
+            this.props.onSubmit(title, true, true);
         }
     };
 

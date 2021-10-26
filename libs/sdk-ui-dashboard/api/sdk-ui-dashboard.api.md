@@ -3357,13 +3357,14 @@ export interface SaveDashboardAs extends IDashboardCommand {
     readonly payload: {
         readonly title?: string;
         readonly switchToCopy?: boolean;
+        readonly useOriginalFilterContext?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.SAVEAS";
 }
 
 // @alpha
-export function saveDashboardAs(title?: string, switchToCopy?: boolean, correlationId?: string): SaveDashboardAs;
+export function saveDashboardAs(title?: string, switchToCopy?: boolean, useOriginalFilterContext?: boolean, correlationId?: string): SaveDashboardAs;
 
 // @alpha (undocumented)
 export type SavingState = {
