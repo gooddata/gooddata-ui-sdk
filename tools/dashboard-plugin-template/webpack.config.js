@@ -9,15 +9,20 @@ const deps = require("./package.json").dependencies;
 const Dotenv = require("dotenv-webpack");
 require("dotenv").config();
 
+const { MODULE_FEDERATION_NAME } = require("./src/metadata.json");
+
 const PORT = 3001;
-const SCOPE_NAME = "plugin";
 const DEFAULT_BACKEND_URL = "https://live-examples-proxy.herokuapp.com";
+const SHARE_SCOPE = "default"; // any other share scope name fail with multiple versions of react for some reason
 
 // add all the gooddata packages that absolutely need to be shared and singletons because of contexts
 const gooddataSharePackagesEntries = Object.keys(deps)
     .filter((pkg) => pkg.startsWith("@gooddata"))
     .reduce((acc, curr) => {
-        acc[curr] = { singleton: true };
+        acc[curr] = {
+            singleton: true,
+            shareScope: SHARE_SCOPE,
+        };
         return acc;
     }, {});
 
@@ -104,40 +109,11 @@ module.exports = (_env, argv) => {
         },
         plugins: [
             new CaseSensitivePathsPlugin(),
-            new ModuleFederationPlugin({
-                name: SCOPE_NAME,
-                filename: "plugin.js",
-                exposes: {
-                    "./plugin": "./src/plugin",
-                },
-
-                // adds react as shared module
-                // version is inferred from package.json
-                // there is no version check for the required version
-                // so it will always use the higher version found
-                shared: {
-                    react: {
-                        import: "react", // the "react" package will be used a provided and fallback module
-                        shareKey: "react", // under this name the shared module will be placed in the share scope
-                        shareScope: "default", // share scope with this name will be used
-                        singleton: true, // only a single version of the shared module is allowed
-                    },
-                    "react-dom": {
-                        singleton: true, // only a single version of the shared module is allowed
-                    },
-                    // add all the packages that absolutely need to be shared and singletons because of contexts
-                    "react-intl": {
-                        singleton: true,
-                    },
-                    ...gooddataSharePackagesEntries,
-                },
-            }),
             new ProvidePlugin({
                 process: "process/browser",
             }),
             new DefinePlugin({
                 PORT: JSON.stringify(PORT),
-                SCOPE_NAME: JSON.stringify(SCOPE_NAME),
             }),
             new Dotenv({
                 silent: true, // we are ok with the .env file not being there, do not warn about it (so that CI works)
@@ -165,15 +141,55 @@ module.exports = (_env, argv) => {
         },
         {
             ...commonConfig,
-            entry: "./src/plugin/index",
+            plugins: [
+                ...commonConfig.plugins,
+                new ModuleFederationPlugin({
+                    name: MODULE_FEDERATION_NAME, // this is used to put the plugin on the target window scope by default
+                    exposes: {
+                        /**
+                         * this is the main entry point providing info about the engine and plugin
+                         * this allows us to only load the plugin and/or engine when needed
+                         */
+                        [`./${MODULE_FEDERATION_NAME}_ENTRY`]: `./src/${MODULE_FEDERATION_NAME}_entry`,
+                        /**
+                         * this is the entry to the plugin itself
+                         */
+                        [`./${MODULE_FEDERATION_NAME}_PLUGIN`]: `./src/${MODULE_FEDERATION_NAME}`,
+                        /**
+                         * this is the entry to the engine
+                         */
+                        [`./${MODULE_FEDERATION_NAME}_ENGINE`]: `./src/${MODULE_FEDERATION_NAME}_engine`,
+                    },
+
+                    // adds react as shared module
+                    // version is inferred from package.json
+                    // there is no version check for the required version
+                    // so it will always use the higher version found
+                    shared: {
+                        react: {
+                            import: "react", // the "react" package will be used a provided and fallback module
+                            shareKey: "react", // under this name the shared module will be placed in the share scope
+                            shareScope: SHARE_SCOPE, // share scope with this name will be used
+                            singleton: true, // only a single version of the shared module is allowed
+                            requiredVersion: deps.react,
+                        },
+                        "react-dom": {
+                            singleton: true,
+                            shareScope: SHARE_SCOPE,
+                            requiredVersion: deps["react-dom"],
+                        },
+                        // add all the packages that absolutely need to be shared and singletons because of contexts
+                        "react-intl": {
+                            singleton: true,
+                            shareScope: SHARE_SCOPE,
+                        },
+                        ...gooddataSharePackagesEntries,
+                    },
+                }),
+            ],
+            entry: `./src/${MODULE_FEDERATION_NAME}/index`,
             name: "dashboardPlugin",
             output: { ...commonConfig.output, path: path.join(__dirname, "dist", "dashboardPlugin") },
-        },
-        {
-            ...commonConfig,
-            entry: "./src/engine/index",
-            name: "dashboardEngine",
-            output: { ...commonConfig.output, path: path.join(__dirname, "dist", "dashboardEngine") },
         },
     ];
 };

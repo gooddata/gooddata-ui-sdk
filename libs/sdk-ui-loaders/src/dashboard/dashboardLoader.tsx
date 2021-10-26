@@ -22,10 +22,11 @@ import {
     noopDashboardPluginLoader,
     staticDashboardEngineLoader,
 } from "./loadingStrategies/staticComponentLoaders";
-import { IDashboardBasePropsForLoader } from "./types";
+import { AdaptiveLoadOptions, IDashboardBasePropsForLoader, ModuleFederationIntegration } from "./types";
 import {
-    adaptiveDashboardEngineLoader,
-    adaptiveDashboardPluginLoader,
+    adaptiveDashboardBeforeLoadFactory,
+    adaptiveDashboardEngineLoaderFactory,
+    adaptiveDashboardPluginLoaderFactory,
 } from "./loadingStrategies/adaptiveComponentLoaders";
 import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation";
 
@@ -45,6 +46,14 @@ export type DashboardPluginsLoader = (
 /**
  * @alpha
  */
+export type DashboardBeforeLoad = (
+    ctx: DashboardContext,
+    dashboard: IDashboardWithReferences,
+) => Promise<void>;
+
+/**
+ * @alpha
+ */
 export type DashboardLoaderConfig = {
     /**
      * Specify function that will be used to load an instance of {@link @gooddata/sdk-ui-dashboard#DashboardEngine} to
@@ -56,6 +65,13 @@ export type DashboardLoaderConfig = {
      * Specify function that will be used to load instances of plugins to integrate with the dashboard engine.
      */
     pluginLoader: DashboardPluginsLoader;
+
+    /**
+     * Optionally specify a function that will be called before engineLoader and pluginLoader.
+     * @remarks
+     * This function is useful if there are some steps needed for both engine and plugin loading.
+     */
+    beforeLoad?: DashboardBeforeLoad;
 };
 
 const StaticLoadStrategies: DashboardLoaderConfig = {
@@ -63,9 +79,14 @@ const StaticLoadStrategies: DashboardLoaderConfig = {
     pluginLoader: noopDashboardPluginLoader,
 };
 
-const AdaptiveLoadStrategies: DashboardLoaderConfig = {
-    engineLoader: adaptiveDashboardEngineLoader,
-    pluginLoader: adaptiveDashboardPluginLoader,
+const AdaptiveLoadStrategies = (
+    moduleFederationIntegration: ModuleFederationIntegration,
+): DashboardLoaderConfig => {
+    return {
+        engineLoader: adaptiveDashboardEngineLoaderFactory(moduleFederationIntegration),
+        pluginLoader: adaptiveDashboardPluginLoaderFactory(moduleFederationIntegration),
+        beforeLoad: adaptiveDashboardBeforeLoadFactory(moduleFederationIntegration),
+    };
 };
 
 /**
@@ -85,49 +106,49 @@ export class DashboardLoader implements IDashboardLoader {
         return new DashboardLoader(StaticLoadStrategies);
     }
 
-    public static adaptive(): DashboardLoader {
-        return new DashboardLoader(AdaptiveLoadStrategies);
+    public static adaptive(options: AdaptiveLoadOptions): DashboardLoader {
+        return new DashboardLoader(AdaptiveLoadStrategies(options.moduleFederationIntegration));
     }
 
-    public onBackend = (backend: IAnalyticalBackend): IDashboardLoader => {
+    public onBackend = (backend: IAnalyticalBackend): this => {
         this.baseProps.backend = backend;
 
         return this;
     };
 
-    public fromClientWorkspace = (clientWorkspace: IClientWorkspaceIdentifiers): IDashboardLoader => {
+    public fromClientWorkspace = (clientWorkspace: IClientWorkspaceIdentifiers): this => {
         this.clientWorkspace = clientWorkspace;
         this.baseProps.workspace = undefined;
 
         return this;
     };
 
-    public fromWorkspace = (workspace: string): IDashboardLoader => {
+    public fromWorkspace = (workspace: string): this => {
         this.baseProps.workspace = workspace;
         this.clientWorkspace = undefined;
 
         return this;
     };
 
-    public forDashboard = (dashboardRef: ObjRef): IDashboardLoader => {
+    public forDashboard = (dashboardRef: ObjRef): this => {
         this.baseProps.dashboard = dashboardRef;
 
         return this;
     };
 
-    public withFilterContext = (filterContextRef: ObjRef): IDashboardLoader => {
+    public withFilterContext = (filterContextRef: ObjRef): this => {
         this.baseProps.filterContextRef = filterContextRef;
 
         return this;
     };
 
-    public withEmbeddedPlugins = (...plugins: IEmbeddedPlugin[]): IDashboardLoader => {
+    public withEmbeddedPlugins = (...plugins: IEmbeddedPlugin[]): this => {
         this.embeddedPlugins = plugins ?? [];
 
         return this;
     };
 
-    public withBaseProps = (props: IDashboardBasePropsForLoader): IDashboardLoader => {
+    public withBaseProps = (props: IDashboardBasePropsForLoader): this => {
         this.baseProps = { ...props };
 
         return this;
@@ -154,11 +175,17 @@ export class DashboardLoader implements IDashboardLoader {
         dashboardWithPlugins: IDashboardWithReferences,
         config: DashboardLoaderConfig = this.config,
     ): Promise<[IDashboardEngine, IDashboardPluginContract_V1[]]> => {
-        const { engineLoader, pluginLoader } = config;
+        const { engineLoader, pluginLoader, beforeLoad } = config;
+
+        if (beforeLoad) {
+            await beforeLoad(ctx, dashboardWithPlugins);
+        }
+
         const [engine, plugins] = await Promise.all([
             engineLoader(dashboardWithPlugins),
             pluginLoader(ctx, dashboardWithPlugins),
         ]);
+
         const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
         const allPlugins = [...plugins, ...additionalPlugins];
 

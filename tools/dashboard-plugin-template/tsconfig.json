@@ -16,7 +16,8 @@
         "noUnusedParameters": true,
         "outDir": "dist",
         "sourceMap": true,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "resolveJsonModule": true
     },
     "compileOnSave": false,
     "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*"]

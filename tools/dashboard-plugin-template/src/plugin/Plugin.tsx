@@ -15,9 +15,18 @@ export class Plugin extends DashboardPluginV1 {
 
     public register(
         _ctx: DashboardContext,
-        _customize: IDashboardCustomizer,
+        customize: IDashboardCustomizer,
         handlers: IDashboardEventHandling,
     ): void {
+        customize.layout().customizeFluidLayout((_layout, customizer) => {
+            customizer.addSection(-1, {
+                items: [],
+                type: "IDashboardLayoutSection",
+                header: {
+                    title: "Added from a plugin",
+                },
+            });
+        });
         handlers.addEventHandler("GDC.DASH/EVT.INITIALIZED", (evt) => {
             // eslint-disable-next-line no-console
             console.log("### Dashboard initialized", evt);

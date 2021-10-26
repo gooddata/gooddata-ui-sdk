@@ -18,27 +18,32 @@ import { default as React_2 } from 'react';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 
 // @alpha (undocumented)
+export type AdaptiveLoadOptions = {
+    moduleFederationIntegration: ModuleFederationIntegration;
+};
+
+// @alpha (undocumented)
 export class DashboardLoader implements IDashboardLoader {
     // (undocumented)
-    static adaptive(): DashboardLoader;
+    static adaptive(options: AdaptiveLoadOptions): DashboardLoader;
     // (undocumented)
-    forDashboard: (dashboardRef: ObjRef) => IDashboardLoader;
+    forDashboard: (dashboardRef: ObjRef) => this;
     // (undocumented)
-    fromClientWorkspace: (clientWorkspace: IClientWorkspaceIdentifiers) => IDashboardLoader;
+    fromClientWorkspace: (clientWorkspace: IClientWorkspaceIdentifiers) => this;
     // (undocumented)
-    fromWorkspace: (workspace: string) => IDashboardLoader;
+    fromWorkspace: (workspace: string) => this;
     // (undocumented)
     load: () => Promise<DashboardLoadResult>;
     // (undocumented)
-    onBackend: (backend: IAnalyticalBackend) => IDashboardLoader;
+    onBackend: (backend: IAnalyticalBackend) => this;
     // (undocumented)
     static staticOnly(): DashboardLoader;
     // (undocumented)
-    withBaseProps: (props: IDashboardBasePropsForLoader) => IDashboardLoader;
+    withBaseProps: (props: IDashboardBasePropsForLoader) => this;
     // (undocumented)
-    withEmbeddedPlugins: (...plugins: IEmbeddedPlugin[]) => IDashboardLoader;
+    withEmbeddedPlugins: (...plugins: IEmbeddedPlugin[]) => this;
     // (undocumented)
-    withFilterContext: (filterContextRef: ObjRef) => IDashboardLoader;
+    withFilterContext: (filterContextRef: ObjRef) => this;
 }
 
 // @alpha
@@ -75,6 +80,7 @@ export interface IDashboardLoader {
 
 // @alpha
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
+    adaptiveLoadOptions?: AdaptiveLoadOptions;
     clientWorkspace?: IClientWorkspaceIdentifiers;
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
     loadingMode?: "adaptive" | "staticOnly";
@@ -91,6 +97,12 @@ export interface IEmbeddedPlugin {
     factory: () => IDashboardPluginContract_V1;
     parameters?: string;
 }
+
+// @alpha
+export type ModuleFederationIntegration = {
+    __webpack_init_sharing__: (scope: string) => Promise<void>;
+    __webpack_share_scopes__: any;
+};
 
 // @alpha
 export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoadStatus;

@@ -63,6 +63,7 @@ import compact from "lodash/compact";
 import flatMap from "lodash/flatMap";
 import flatten from "lodash/flatten";
 import isEqual from "lodash/isEqual";
+import partition from "lodash/partition";
 import set from "lodash/set";
 import {
     getObjectIdFromUri,
@@ -736,11 +737,24 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
                 nearest: false,
             }),
         );
-        const dependenciesUris = dependenciesObjectLinks.map((objectLink) => objectLink.link);
 
-        return await this.authCall((sdk) =>
-            sdk.md.getObjects<toSdkModel.BearDashboardDependency>(this.workspace, dependenciesUris),
+        // use the bulk API for everything when the backend is fixed for plugins (MDC-716)
+        const [pluginLinks, otherLinks] = partition(
+            dependenciesObjectLinks,
+            (link) => link.category === "dashboardPlugin",
         );
+
+        return await this.authCall(async (sdk) => {
+            const [nonPlugins, plugins] = await Promise.all([
+                sdk.md.getObjects<toSdkModel.BearDashboardDependency>(
+                    this.workspace,
+                    otherLinks.map((objectLink) => objectLink.link),
+                ),
+                Promise.all(pluginLinks.map((objectLink) => sdk.md.getObjectDetails(objectLink.link))),
+            ]);
+
+            return [...nonPlugins, ...plugins];
+        });
     };
 
     private getBearDashboardReferences = async (uri: string, types: SupportedDashboardReferenceTypes[]) => {
@@ -874,7 +888,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         const pluginUris = pluginLinks.map((link) => link.link);
 
         return this.authCall((sdk) => {
-            return sdk.md.getObjects<GdcDashboardPlugin.IWrappedDashboardPlugin>(this.workspace, pluginUris);
+            return Promise.all(pluginUris.map((url) => sdk.md.getObjectDetails(url)));
+            // use this bulk API instead when the backend is fixed (MDC-716)
+            // return sdk.md.getObjects<GdcDashboardPlugin.IWrappedDashboardPlugin>(this.workspace, pluginUris);
         }).then((plugins) => {
             return plugins.map(toSdkModel.convertDashboardPlugin);
         });
