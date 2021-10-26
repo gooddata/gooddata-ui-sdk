@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { ObjRef } from "@gooddata/sdk-model";
 import { UiState } from "./uiState";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
@@ -28,6 +29,18 @@ const setFilterBarExpanded: UiReducer<PayloadAction<boolean>> = (state, action) 
     state.filterBar.expanded = action.payload;
 };
 
+const closeKpiAlertDialog: UiReducer = (state) => {
+    state.kpiAlerts.openedAlertRef = undefined;
+};
+
+const openKpiAlertDialog: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
+    state.kpiAlerts.openedAlertRef = action.payload;
+};
+
+const highlightKpiAlert: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
+    state.kpiAlerts.highlightedAlertRef = action.payload;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -35,4 +48,7 @@ export const uiReducers = {
     closeSaveAsDialog,
     setFilterBarHeight,
     setFilterBarExpanded,
+    closeKpiAlertDialog,
+    openKpiAlertDialog,
+    highlightKpiAlert,
 };
