@@ -2254,6 +2254,56 @@ export const twoMeasureBucketsReferencePoint: IReferencePoint = {
     },
 };
 
+export const bulletChartWithMeasureInPrimaryBucket: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: [],
+        },
+        {
+            localIdentifier: "tertiary_measures",
+            items: [],
+        },
+        {
+            localIdentifier: "view",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const bulletChartWithMeasureInSecondaryBucket: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [],
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(1, 2),
+        },
+        {
+            localIdentifier: "tertiary_measures",
+            items: [],
+        },
+        {
+            localIdentifier: "view",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
 export const threeMeasuresBucketsReferencePoint: IReferencePoint = {
     buckets: [
         {
