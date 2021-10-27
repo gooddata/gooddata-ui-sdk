@@ -33,7 +33,7 @@ import {
  */
 export const useWidgetFiltersQuery = (
     widget: IWidget | undefined,
-    filters: IFilter[] | undefined,
+    filters?: IFilter[],
 ): {
     result?: IFilter[];
     status?: QueryProcessingStatus;
