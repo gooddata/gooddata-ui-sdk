@@ -2,12 +2,7 @@
 import React, { CSSProperties, useCallback, useMemo, useState } from "react";
 import { IUserWorkspaceSettings, widgetRef } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
-import {
-    insightFilters,
-    insightSetFilters,
-    insightVisualizationUrl,
-    objRefToString,
-} from "@gooddata/sdk-model";
+import { insightSetFilters, insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IPushData,
@@ -125,7 +120,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         result: filtersForInsight,
         status: filtersStatus,
         error: filtersError,
-    } = useWidgetFiltersQuery(widget, insight && insightFilters(insight));
+    } = useWidgetFiltersQuery(widget);
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight, filtersForInsight),

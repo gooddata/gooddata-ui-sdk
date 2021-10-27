@@ -20,6 +20,7 @@ import {
     isRankingFilter,
     isSimpleMeasure,
     measureFilters,
+    newAllTimeFilter,
     ObjectType,
     ObjRef,
     objRefToString,
@@ -240,6 +241,13 @@ function* queryForInsightWidget(
     const widgetAwareDashboardFilters: ReturnType<typeof widgetAwareDashboardFiltersSelector> = yield select(
         widgetAwareDashboardFiltersSelector,
     );
+
+    // add all time filter explicitly in case the widgetAwareDashboardFilters are empty
+    // this will cause the all time filter to be used instead of the insight date filter
+    // if the dashboard date filter is not ignored by the widget
+    if (!widgetAwareDashboardFilters.length && widget.dateDataSet) {
+        widgetAwareDashboardFilters.push(newAllTimeFilter(widget.dateDataSet));
+    }
 
     // use the widgetFilterOverrides if specified instead of insight filters
     const effectiveInsightFilters = widgetFilterOverrides ?? insightFilters(insight);
