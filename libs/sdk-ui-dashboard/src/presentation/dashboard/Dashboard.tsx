@@ -144,7 +144,7 @@ const useTopBar = () => {
         [dispatch],
     );
 
-    const { run: runChangeCharing } = useDashboardCommandProcessing({
+    const { run: runChangeSharing } = useDashboardCommandProcessing({
         commandCreator: changeSharing,
         successEvent: "GDC.DASH/EVT.SHARING.CHANGED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
@@ -164,9 +164,9 @@ const useTopBar = () => {
 
     const onShareButtonClick = useCallback(
         (newShareStatus: ShareStatus) => {
-            runChangeCharing(newShareStatus);
+            runChangeSharing(newShareStatus);
         },
-        [runChangeCharing],
+        [runChangeSharing],
     );
 
     return {

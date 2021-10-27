@@ -151,6 +151,9 @@ export interface IDashboardPluginLink {
 
 /**
  * Object share status
+ * private - object accessible only by its creator
+ * shared - object shared with closed set of users/groups
+ * public - accessible by everyone in project
  * @alpha
  */
 export type ShareStatus = "private" | "shared" | "public";
@@ -160,7 +163,14 @@ export type ShareStatus = "private" | "shared" | "public";
  * @alpha
  */
 export interface IAccessControlAware {
+    /**
+     * Current object share status. This prop is affecting listing of object and access to it for different users
+     */
     readonly shareStatus: ShareStatus;
+    /**
+     * For backends NOT forcing strict access this prop reflects its current setting of strict access
+     * If set to true then object is not accessible via its URI for people without access rights. Otherwise object is accessible by its URI, eg. when drilling to it.
+     */
     readonly isUnderStrictControl?: boolean;
 
     /**

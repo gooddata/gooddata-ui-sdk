@@ -1,22 +1,12 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { IDashboard, IDashboardDefinition, IDashboardObjectIdentity } from "@gooddata/sdk-backend-spi";
+import { IDashboard, IDashboardDefinition, isFilterContext } from "@gooddata/sdk-backend-spi";
 
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeSharing } from "../../commands";
 import { DashboardSharingChanged, dashboardSharingChanged } from "../../events/dashboard";
-import {
-    selectDashboardDescriptor,
-    selectDashboardRef,
-    selectPersistedDashboard,
-} from "../../store/meta/metaSelectors";
-import {
-    selectFilterContextDefinition,
-    selectFilterContextIdentity,
-} from "../../store/filterContext/filterContextSelectors";
-import { selectBasicLayout } from "../../store/layout/layoutSelectors";
-import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
+import { selectDashboardRef, selectPersistedDashboard } from "../../store/meta/metaSelectors";
 import { invalidArgumentsProvided } from "../../events/general";
 import { metaActions } from "../../store/meta";
 import { BatchAction, batchActions } from "redux-batched-actions";
@@ -43,35 +33,17 @@ function* createDashboardSaveSharingContext(cmd: ChangeSharing): SagaIterator<Da
         selectPersistedDashboard,
     );
     invariant(persistedDashboard, "Cant change sharing of unsaved dashboard");
-    const dashboardIdentity: Partial<IDashboardObjectIdentity> = {
-        ref: persistedDashboard?.ref,
-        uri: persistedDashboard?.uri,
-        identifier: persistedDashboard?.identifier,
-    };
-    const dashboardDescriptor: ReturnType<typeof selectDashboardDescriptor> = yield select(
-        selectDashboardDescriptor,
-    );
-    const filterContextDefinition: ReturnType<typeof selectFilterContextDefinition> = yield select(
-        selectFilterContextDefinition,
-    );
-    const filterContextIdentity: ReturnType<typeof selectFilterContextIdentity> = yield select(
-        selectFilterContextIdentity,
-    );
-    const layout: ReturnType<typeof selectBasicLayout> = yield select(selectBasicLayout);
-    const dateFilterConfig: ReturnType<typeof selectDateFilterConfigOverrides> = yield select(
-        selectDateFilterConfigOverrides,
-    );
+    const { filterContext, ...otherDashboardProps } = persistedDashboard;
+    // ignore temp filter context to please TS as it can be present only during export
+    const filterContextProp = isFilterContext(filterContext)
+        ? {
+              filterContext,
+          }
+        : {};
 
     const dashboardFromState: IDashboardDefinition = {
-        type: "IDashboard",
-        ...dashboardDescriptor,
-        ...dashboardIdentity,
-        filterContext: {
-            ...filterContextDefinition,
-            ...filterContextIdentity,
-        },
-        layout,
-        dateFilterConfig,
+        ...otherDashboardProps,
+        ...filterContextProp,
     };
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,

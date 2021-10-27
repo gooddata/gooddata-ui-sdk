@@ -171,9 +171,7 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
 // @alpha
 export interface IAccessControlAware {
     readonly isLocked?: boolean;
-    // (undocumented)
     readonly isUnderStrictControl?: boolean;
-    // (undocumented)
     readonly shareStatus: ShareStatus;
 }
 
