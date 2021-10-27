@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { IUser } from "@gooddata/sdk-backend-spi";
+import { IUser } from "@gooddata/sdk-model";
 
 /**
  * @alpha

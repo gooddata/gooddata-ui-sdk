@@ -197,6 +197,8 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             description: "",
             filterContext: undefined,
             title: "",
+            shareStatus: "private",
+            isUnderStrictControl: true,
         };
 
         return this.updateDashboard(emptyDashboard as IDashboard, dashboard);

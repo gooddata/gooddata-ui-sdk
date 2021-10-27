@@ -78,11 +78,6 @@ export interface IDashboardBase {
     readonly description: string;
 
     /**
-     * When dashboard is locked, no one other than the administrator can edit it
-     */
-    readonly isLocked?: boolean;
-
-    /**
      * Dashboard tags.
      *
      * @remarks
@@ -155,6 +150,36 @@ export interface IDashboardPluginLink {
 }
 
 /**
+ * Object share status
+ * private - object accessible only by its creator
+ * shared - object shared with closed set of users/groups
+ * public - accessible by everyone in project
+ * @alpha
+ */
+export type ShareStatus = "private" | "shared" | "public";
+
+/**
+ * Common properties for objects with controlled access
+ * @alpha
+ */
+export interface IAccessControlAware {
+    /**
+     * Current object share status. This prop is affecting listing of object and access to it for different users
+     */
+    readonly shareStatus: ShareStatus;
+    /**
+     * For backends NOT forcing strict access this prop reflects its current setting of strict access
+     * If set to true then object is not accessible via its URI for people without access rights. Otherwise object is accessible by its URI, eg. when drilling to it.
+     */
+    readonly isUnderStrictControl?: boolean;
+
+    /**
+     * When dashboard is locked, no one other than the administrator can edit it
+     */
+    readonly isLocked?: boolean;
+}
+
+/**
  * Analytical dashboard consists of widgets
  * (widgets are kpis or insights with additional settings - drilling and alerting),
  * layout (which defines rendering and ordering of these widgets),
@@ -168,7 +193,8 @@ export interface IDashboard<TWidget = IDashboardWidget>
     extends IDashboardBase,
         IDashboardObjectIdentity,
         Readonly<Required<IAuditableDates>>,
-        Readonly<IAuditableUsers> {
+        Readonly<IAuditableUsers>,
+        IAccessControlAware {
     readonly type: "IDashboard";
 
     /**
@@ -200,6 +226,7 @@ export interface IDashboard<TWidget = IDashboardWidget>
  */
 export interface IDashboardDefinition<TWidget = IDashboardWidget>
     extends IDashboardBase,
+        IAccessControlAware,
         Partial<IDashboardObjectIdentity> {
     readonly type: "IDashboard";
 
@@ -254,7 +281,10 @@ export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition
  * for the full definition see {@link IDashboard}
  * @alpha
  */
-export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
+export interface IListedDashboard
+    extends Readonly<Required<IAuditableDates>>,
+        Readonly<IAuditableUsers>,
+        IAccessControlAware {
     /**
      * Dashboard object ref
      */

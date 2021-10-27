@@ -204,6 +204,7 @@ Object {
   "canInitData": true,
   "canInviteUserToProject": true,
   "canListUsersInProject": true,
+  "canManageACL": true,
   "canManageAnalyticalDashboard": true,
   "canManageDomain": true,
   "canManageMetric": true,

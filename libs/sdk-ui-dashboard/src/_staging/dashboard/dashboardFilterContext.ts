@@ -47,12 +47,14 @@ export function dashboardFilterContextDefinition<TWidget>(
         };
     }
 
-    return {
+    const result = {
         ...dashboardFilterContextSanitize(filterContext),
-        ref: undefined,
-        uri: undefined,
-        identifier: undefined,
     };
+    delete result.ref;
+    delete result.uri;
+    delete result.identifier;
+
+    return result;
 }
 
 /**

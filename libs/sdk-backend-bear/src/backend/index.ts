@@ -63,6 +63,8 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsHyperlinkAttributeLabels: true,
     supportsGenericDateAttributeElements: true,
     supportsExplain: false,
+    supportsAccessControl: true,
+    usesStrictAccessControl: false,
 };
 
 /**

@@ -517,6 +517,8 @@ export const convertDashboard = (
         isLocked,
         tags,
         plugins,
+        shareStatus,
+        isUnderStrictControl,
     } = dashboard;
     const convertedLayout = layout && convertLayout(layout);
     const widgets = layout && layoutWidgets(layout);
@@ -524,6 +526,19 @@ export const convertDashboard = (
     const filterContextUri = filterContext?.ref && refToUri(filterContext.ref);
     const convertedDateFilterConfig = dateFilterConfig && convertDateFilterConfig(dateFilterConfig);
     const convertedPlugins = plugins?.map(convertPluginLink);
+
+    const sharedWithSomeoneProp: Partial<GdcMetadata.IObjectMeta> =
+        shareStatus === "shared"
+            ? {
+                  sharedWithSomeone: 1,
+              }
+            : {};
+
+    const flagsProp = isUnderStrictControl
+        ? {
+              flags: ["strictAccessControl"],
+          }
+        : {};
 
     return {
         analyticalDashboard: {
@@ -545,6 +560,9 @@ export const convertDashboard = (
                 summary: description,
                 locked: isLocked,
                 tags: tags?.join(" "),
+                unlisted: shareStatus === "public" ? 0 : 1,
+                ...sharedWithSomeoneProp,
+                ...flagsProp,
             },
         },
     };

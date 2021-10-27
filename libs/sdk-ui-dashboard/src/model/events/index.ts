@@ -8,6 +8,7 @@ import {
     DashboardWasReset,
     DashboardExportToPdfResolved,
     DashboardExportToPdfRequested,
+    DashboardSharingChanged,
 } from "./dashboard";
 import {
     DashboardCommandFailed,
@@ -109,6 +110,7 @@ export {
     DashboardDeleted,
     DashboardExportToPdfRequested,
     DashboardExportToPdfResolved,
+    DashboardSharingChanged,
     isDashboardSaved,
     isDashboardCopySaved,
     isDashboardInitialized,
@@ -118,6 +120,7 @@ export {
     isDateFilterValidationFailed,
     isDashboardExportToPdfRequested,
     isDashboardExportToPdfResolved,
+    isDashboardSharingChanged,
 } from "./dashboard";
 export {
     DashboardCommandStarted,
@@ -346,7 +349,8 @@ export type DashboardEvents =
     | DashboardDrillToInsightRequested
     | DashboardDrillToLegacyDashboardRequested
     | DashboardDrillRequested
-    | DashboardDrillableItemsChanged;
+    | DashboardDrillableItemsChanged
+    | DashboardSharingChanged;
 
 /**
  * Creates DashboardEvent predicate that test whether the provided event matches it.

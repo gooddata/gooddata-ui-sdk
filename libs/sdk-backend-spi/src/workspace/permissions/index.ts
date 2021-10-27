@@ -22,7 +22,8 @@ export type WorkspacePermission =
     | "canListUsersInProject"
     | "canManageDomain"
     | "canInviteUserToProject"
-    | "canRefreshData";
+    | "canRefreshData"
+    | "canManageACL";
 
 /**
  * Dictionary of workspace permissions

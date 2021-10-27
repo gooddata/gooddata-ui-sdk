@@ -322,4 +322,5 @@ export const SimpleDashboardListed: IListedDashboard = {
     updated: SimpleDashboardWithReferences.dashboard.updated,
     created: SimpleDashboardWithReferences.dashboard.created,
     tags: SimpleDashboardWithReferences.dashboard.tags,
+    shareStatus: SimpleDashboardWithReferences.dashboard.shareStatus,
 };

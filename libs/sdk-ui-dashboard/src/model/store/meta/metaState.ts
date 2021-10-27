@@ -1,15 +1,17 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboard } from "@gooddata/sdk-backend-spi";
+import { IAccessControlAware, IDashboard } from "@gooddata/sdk-backend-spi";
 
 /**
  * @alpha
  */
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags">;
+export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags"> & IAccessControlAware;
 
 export const EmptyDashboardDescriptor: DashboardDescriptor = {
     title: "",
     description: "",
+    shareStatus: "private",
+    isUnderStrictControl: true,
 };
 
 /**

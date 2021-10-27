@@ -169,6 +169,13 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
 }
 
 // @alpha
+export interface IAccessControlAware {
+    readonly isLocked?: boolean;
+    readonly isUnderStrictControl?: boolean;
+    readonly shareStatus: ShareStatus;
+}
+
+// @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
     type: AllTimeType;
 }
@@ -308,6 +315,7 @@ export interface IBackendCapabilities {
     canTransformExistingResult?: boolean;
     hasTypeScopedIdentifiers?: boolean;
     maxDimensions?: number;
+    supportsAccessControl?: boolean;
     supportsCsvUploader?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
@@ -318,6 +326,7 @@ export interface IBackendCapabilities {
     supportsObjectUris?: boolean;
     supportsRankingFilter?: boolean;
     supportsRankingFilterWithMeasureValueFilter?: boolean;
+    usesStrictAccessControl?: boolean;
 }
 
 // @alpha
@@ -374,7 +383,7 @@ export interface ICatalogMeasure extends IGroupableCatalogItemBase {
 }
 
 // @alpha
-export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
+export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
@@ -419,7 +428,6 @@ export interface IDashboardAttributeFilterReference {
 // @alpha
 export interface IDashboardBase {
     readonly description: string;
-    readonly isLocked?: boolean;
     readonly tags?: string[];
     readonly title: string;
 }
@@ -459,7 +467,7 @@ export interface IDashboardDateFilterReference {
 }
 
 // @alpha
-export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, Partial<IDashboardObjectIdentity> {
+export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
@@ -989,7 +997,7 @@ export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
 }
 
 // @alpha
-export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers> {
+export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly description: string;
     readonly identifier: string;
     readonly ref: ObjRef;
@@ -1345,6 +1353,7 @@ export interface ISettings {
     ADMeasureValueFilterNullAsZeroOption?: string;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
+    enableAnalyticalDashboardPermissions?: boolean;
     enableApproxCount?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;
@@ -2080,6 +2089,9 @@ export type ScheduledMailAttachment = IDashboardAttachment;
 // @alpha
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
 
+// @alpha
+export type ShareStatus = "private" | "shared" | "public";
+
 // @alpha (undocumented)
 export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
 
@@ -2141,6 +2153,6 @@ export function widgetType(widget: IWidget): AnalyticalWidgetType;
 export function widgetUri(widget: IWidget): string;
 
 // @public
-export type WorkspacePermission = "canInitData" | "canUploadNonProductionCSV" | "canExecuteRaw" | "canExportReport" | "canAccessWorkbench" | "canCreateReport" | "canCreateVisualization" | "canCreateAnalyticalDashboard" | "canManageMetric" | "canManageReport" | "canManageAnalyticalDashboard" | "canManageProject" | "canCreateScheduledMail" | "canListUsersInProject" | "canManageDomain" | "canInviteUserToProject" | "canRefreshData";
+export type WorkspacePermission = "canInitData" | "canUploadNonProductionCSV" | "canExecuteRaw" | "canExportReport" | "canAccessWorkbench" | "canCreateReport" | "canCreateVisualization" | "canCreateAnalyticalDashboard" | "canManageMetric" | "canManageReport" | "canManageAnalyticalDashboard" | "canManageProject" | "canCreateScheduledMail" | "canListUsersInProject" | "canManageDomain" | "canInviteUserToProject" | "canRefreshData" | "canManageACL";
 
 ```

@@ -19,6 +19,7 @@ const EmptyDashboard: IDashboard<ExtendedDashboardWidget> = {
         type: "IDashboardLayout",
         sections: [],
     },
+    shareStatus: "private",
 };
 
 describe("layout customizer", () => {

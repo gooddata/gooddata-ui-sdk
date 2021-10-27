@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboard, IDashboardDefinition } from "@gooddata/sdk-backend-spi";
+import { IAccessControlAware, IDashboard, IDashboardDefinition } from "@gooddata/sdk-backend-spi";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select, setContext } from "redux-saga/effects";
@@ -26,6 +26,7 @@ import { PromiseFnReturnType } from "../../types/sagas";
 import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
 import { alertsActions } from "../../store/alerts";
 import { savingActions } from "../../store/saving";
+import { selectSettings } from "../../store/config/configSelectors";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;
@@ -84,6 +85,8 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         selectDateFilterConfigOverrides,
     );
 
+    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
         ...dashboardDescriptor,
@@ -94,12 +97,21 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         dateFilterConfig,
     };
 
+    const shareProp: Partial<IAccessControlAware> = settings.enableAnalyticalDashboardPermissions
+        ? {
+              isLocked: false,
+              shareStatus: "private",
+              isUnderStrictControl: true,
+          }
+        : {};
+
     // remove widget identity from all widgets; according to the SPI contract, this will result in
     // creation of new widgets
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,
         ...titleProp,
         layout: dashboardLayoutRemoveIdentity(layout, () => true),
+        ...shareProp,
     };
 
     return {

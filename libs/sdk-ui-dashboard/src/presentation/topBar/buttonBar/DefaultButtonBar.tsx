@@ -1,26 +1,34 @@
 // (C) 2021 GoodData Corporation
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 import { IButtonBarProps } from "./types";
-import { ButtonBarPropsProvider } from "./ButtonBarPropsContext";
+import { ButtonBarPropsProvider, useButtonBarProps } from "./ButtonBarPropsContext";
+import { ShareButtonPropsProvider, DefaultShareButtonInner } from "../shareButton";
 
 /**
  * @internal
  */
-export const DefaultButtonBarInner = (props: IButtonBarProps): JSX.Element | null => {
-    if (React.Children.count(props.children) > 0) {
-        return <div className="dash-control-buttons">{props.children}</div>;
-    }
-    return null;
+export const DefaultButtonBarInner = (): JSX.Element | null => {
+    const { shareButtonProps, buttons } = useButtonBarProps();
+    // TODO INE allow customization of buttons via getter from props
+    return (
+        <div className="dash-control-buttons">
+            {buttons}
+            <ShareButtonPropsProvider {...shareButtonProps}>
+                <DefaultShareButtonInner />
+            </ShareButtonPropsProvider>
+        </div>
+    );
 };
 
 /**
  * @alpha
  */
-export const DefaultButtonBar = (props: IButtonBarProps): JSX.Element => {
+export const DefaultButtonBar: React.FC<PropsWithChildren<IButtonBarProps>> = (props): JSX.Element => {
+    const { children, ...restProps } = props;
     return (
-        <ButtonBarPropsProvider>
-            <DefaultButtonBarInner {...props} />
+        <ButtonBarPropsProvider {...restProps} buttons={children}>
+            <DefaultButtonBarInner />
         </ButtonBarPropsProvider>
     );
 };

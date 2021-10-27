@@ -175,6 +175,8 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             description: "",
             filterContext: undefined,
             title: "",
+            shareStatus: "private",
+            isUnderStrictControl: false,
         };
 
         return this.updateDashboard(emptyDashboard as IDashboard, dashboard);
