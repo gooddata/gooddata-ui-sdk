@@ -306,7 +306,7 @@
         "limit": 0
     },
     "dialogs.schedule.email.time.label": {
-        "value": "First occurence:",
+        "value": "First occurrence:",
         "comment": "Translate as imperative. Date time of the schedule email.",
         "limit": 0
     },
