@@ -25,6 +25,7 @@ import { invalidArgumentsProvided } from "../../events/general";
 
 export enum DRILL_TO_URL_PLACEHOLDER {
     PROJECT_ID = "{project_id}",
+    WORKSPACE_ID = "{workspace_id}",
     INSIGHT_ID = "{insight_id}",
     WIDGET_ID = "{widget_id}",
     DASHBOARD_ID = "{dashboard_id}",
@@ -172,6 +173,7 @@ export function* getInsightIdentifiersReplacements(
 
     const replacements = [
         createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.PROJECT_ID, workspace),
+        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.WORKSPACE_ID, workspace),
         createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.DASHBOARD_ID, dashboardId),
         createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.CLIENT_ID, clientId),
         createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.DATA_PRODUCT_ID, dataProductId),
