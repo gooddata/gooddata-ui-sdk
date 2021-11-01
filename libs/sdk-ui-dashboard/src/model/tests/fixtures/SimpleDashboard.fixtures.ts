@@ -290,7 +290,7 @@ export const DrillToCustomUrlFromMeasureDefinition: IDrillToCustomUrl = {
         },
     },
     target: {
-        url: "http://www.site.org?dep={attribute_title(label.owner.department)}",
+        url: "https://www.example.org?dep={attribute_title(label.owner.department)}",
     },
 };
 
