@@ -156,6 +156,9 @@ export class PluggableBulletChart extends PluggableBaseChart {
 
         const measureBucket = insightBucket(insight, BucketNames.MEASURES);
         if (!measureBucket || bucketIsEmpty(measureBucket)) {
+            // unmount on error, AD cant recover in some scenarions
+            this.unmount();
+
             throw new InvalidBucketsSdkError();
         }
 
