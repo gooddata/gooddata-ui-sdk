@@ -1,0 +1,23 @@
+{
+    "retainLines": true,
+    "plugins": [
+        [
+            "@babel/plugin-transform-typescript",
+            {
+                "isTSX": true,
+                "allExtensions": true
+            }
+        ]
+    ],
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "modules": false,
+                "targets": {
+                    "browsers": "last 1 Chrome versions"
+                }
+            }
+        ]
+    ]
+}

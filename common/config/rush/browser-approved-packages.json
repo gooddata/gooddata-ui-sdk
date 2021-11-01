@@ -16,7 +16,7 @@
     },
     {
       "name": "@babel/cli",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/core",

@@ -21471,11 +21471,12 @@ packages:
     dev: false
 
   file:projects/plugin-toolkit.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-MOX+KyRAp0nTxS9gZ0XHBnMUmA0+uKuJnKZc/CAxRHdZLvtOrqOlfQZJQBMnGlfrxBZMmsJvfes9SUGTi5utLg==, tarball: file:projects/plugin-toolkit.tgz}
+    resolution: {integrity: sha512-21hntml1osuDHatz1JjyBFiMJkTHcykmwcT6oip1GWoN/j2n73ZzOHB81kwg5XA9gcSKTnUfjaDvvAcFpBnI4g==, tarball: file:projects/plugin-toolkit.tgz}
     id: file:projects/plugin-toolkit.tgz
     name: '@rush-temp/plugin-toolkit'
     version: 0.0.0
     dependencies:
+      '@babel/cli': 7.14.3_@babel+core@7.14.3
       '@babel/core': 7.14.3
       '@babel/plugin-transform-typescript': 7.14.4_@babel+core@7.14.3
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
