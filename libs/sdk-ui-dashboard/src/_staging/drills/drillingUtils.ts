@@ -85,9 +85,7 @@ function insightDrillDownImplicitDrills(
                 target: matchingCatalogAttribute!.attribute.drillDownStep!,
             },
             predicates: [
-                // add drillable items for both types of objRefs that the header can be
-                HeaderPredicates.identifierMatch(drill.attribute.attributeHeader.identifier),
-                HeaderPredicates.uriMatch(drill.attribute.attributeHeader.uri),
+                HeaderPredicates.localIdentifierMatch(drill.attribute.attributeHeader.localIdentifier),
             ],
         };
     });
