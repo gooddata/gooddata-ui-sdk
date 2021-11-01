@@ -947,6 +947,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "tar",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "testcafe",
       "allowedCategories": [ "examples", "production" ]
     },
