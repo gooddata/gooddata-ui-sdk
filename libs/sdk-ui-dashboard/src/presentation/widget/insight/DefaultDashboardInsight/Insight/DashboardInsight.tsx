@@ -49,7 +49,7 @@ const selectChartConfig = createSelector(
     (mapboxToken, separators, drillableItems, isExport) => ({
         mapboxToken,
         separators,
-        forceDisableDrillOnAxes: !drillableItems, // to keep in line with KD, enable axes drilling only if using explicit drills
+        forceDisableDrillOnAxes: !drillableItems?.length, // to keep in line with KD, enable axes drilling only if using explicit drills
         isExportMode: isExport,
     }),
 );
