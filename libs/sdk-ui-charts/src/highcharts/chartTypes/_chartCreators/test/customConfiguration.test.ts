@@ -15,6 +15,7 @@ import {
     getFormatterProperty,
 } from "../customConfiguration";
 import { VisualizationTypes, IDrillConfig, createIntlMock } from "@gooddata/sdk-ui";
+import { immutableSet } from "../../_util/common";
 import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,
@@ -75,6 +76,15 @@ describe("getCustomizedConfiguration", () => {
         const serie: any = result.series[0];
         const point: any = serie.data[0];
         expect(point.name).toEqual("&lt;b&gt;bbb&lt;/b&gt;");
+    });
+
+    it('should handle "%" format on axis and use label formatter', () => {
+        const chartOptionsWithFormat = immutableSet(chartOptions, "yAxes[0].format", "0.00 %");
+        const resultWithoutFormat = getCustomizedConfiguration(chartOptions);
+        const resultWithFormat = getCustomizedConfiguration(chartOptionsWithFormat);
+
+        expect(resultWithoutFormat.yAxis[0].labels.formatter).toBeUndefined();
+        expect(resultWithFormat.yAxis[0].labels.formatter).toBeDefined();
     });
 
     it("should set formatter for xAxis labels to prevent overlapping for bar chart with 90 rotation", () => {
@@ -1040,6 +1050,13 @@ describe("getFormatterProperty", () => {
     const chartOptions = {};
     const axisPropsKey = "yAxisProps";
     const chartConfig = {};
+
+    it("should return percentage formatter", () => {
+        const formatter = getFormatterProperty(chartOptions, axisPropsKey, chartConfig, "%").formatter.bind({
+            value: 0.33,
+        });
+        expect(formatter()).toEqual("33%");
+    });
 
     it("should return custom formatter", () => {
         const formatter = getFormatterProperty(
