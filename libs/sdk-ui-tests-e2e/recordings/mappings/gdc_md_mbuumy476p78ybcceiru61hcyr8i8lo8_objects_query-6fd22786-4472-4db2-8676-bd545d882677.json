@@ -1,0 +1,21 @@
+{
+    "id": "6fd22786-4472-4db2-8676-bd545d882677",
+    "name": "gdc_md_mbuumy476p78ybcceiru61hcyr8i8lo8_objects_query",
+    "request": {
+        "url": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/objects/query?offset=0&limit=1&category=dateFilterConfig&getTotalCount=1",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"items\":[{\"dateFilterConfig\":{\"meta\":{\"updated\":\"2021-05-03 18:09:02\",\"created\":\"2019-05-14 14:19:07\",\"category\":\"dateFilterConfig\",\"isProduction\":1,\"identifier\":\"defaultDateFilterConfig\",\"summary\":\"\",\"contributor\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"title\":\"DateFilterConfig\",\"deprecated\":\"0\",\"author\":\"/gdc/account/profile/187aa70b3f3ed50ba4940e7b1966367d\",\"tags\":\"\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/9112\",\"flags\":[\"preloaded\"]},\"content\":{\"relativeForm\":{\"visible\":true,\"localIdentifier\":\"relativeForm\",\"granularities\":[\"GDC.time.year\",\"GDC.time.quarter\",\"GDC.time.date\"]},\"absoluteForm\":{\"visible\":true,\"localIdentifier\":\"absoluteForm\"},\"selectedOption\":\"absoluteForm\",\"relativePresets\":[{\"granularity\":\"GDC.time.date\",\"visible\":true,\"localIdentifier\":\"relative_last_7_days\",\"to\":0,\"from\":-6},{\"localIdentifier\":\"relative_last_30_days\",\"visible\":true,\"granularity\":\"GDC.time.date\",\"from\":-29,\"to\":0},{\"from\":-89,\"to\":0,\"localIdentifier\":\"relative_last_90_days\",\"granularity\":\"GDC.time.date\",\"visible\":true},{\"to\":0,\"from\":0,\"visible\":true,\"granularity\":\"GDC.time.week_us\",\"localIdentifier\":\"relative_this_week\"},{\"from\":-1,\"to\":-1,\"localIdentifier\":\"relative_last_week\",\"visible\":true,\"granularity\":\"GDC.time.week_us\"},{\"granularity\":\"GDC.time.week_us\",\"visible\":true,\"localIdentifier\":\"relative_last_two_weeks\",\"to\":0,\"from\":-1},{\"localIdentifier\":\"relative_this_month\",\"visible\":true,\"granularity\":\"GDC.time.month\",\"from\":0,\"to\":0},{\"from\":-1,\"to\":-1,\"localIdentifier\":\"relative_last_month\",\"visible\":true,\"granularity\":\"GDC.time.month\"},{\"granularity\":\"GDC.time.month\",\"visible\":true,\"localIdentifier\":\"relative_last_12_months\",\"to\":0,\"from\":-11},{\"from\":0,\"to\":0,\"localIdentifier\":\"relative_this_quarter\",\"visible\":true,\"granularity\":\"GDC.time.quarter\"},{\"visible\":true,\"granularity\":\"GDC.time.quarter\",\"localIdentifier\":\"relative_last_quarter\",\"to\":-1,\"from\":-1},{\"visible\":true,\"granularity\":\"GDC.time.quarter\",\"localIdentifier\":\"relative_last_4_quarters\",\"to\":0,\"from\":-3},{\"to\":0,\"from\":0,\"visible\":true,\"granularity\":\"GDC.time.year\",\"localIdentifier\":\"relative_this_year\"},{\"from\":-1,\"to\":-1,\"localIdentifier\":\"relative_last_year\",\"granularity\":\"GDC.time.year\",\"visible\":true}],\"allTime\":{\"visible\":true,\"localIdentifier\":\"allTime\"}}}}],\"paging\":{\"count\":1,\"offset\":0,\"totalCount\":1}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "6fd22786-4472-4db2-8676-bd545d882677",
+    "persistent": true,
+    "insertionIndex": 103
+}

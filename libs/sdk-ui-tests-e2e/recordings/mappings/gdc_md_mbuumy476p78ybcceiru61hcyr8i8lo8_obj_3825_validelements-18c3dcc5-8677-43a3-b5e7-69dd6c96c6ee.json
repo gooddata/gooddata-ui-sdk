@@ -1,0 +1,28 @@
+{
+    "id": "18c3dcc5-8677-43a3-b5e7-69dd6c96c6ee",
+    "name": "gdc_md_mbuumy476p78ybcceiru61hcyr8i8lo8_obj_3825_validelements",
+    "request": {
+        "url": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/3825/validElements?limit=1&offset=0",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"validElementsRequest\":{\"uris\":[\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339877\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"validElements\":{\"elementsMeta\":{\"filter\":\"\",\"order\":\"asc\",\"attributeDisplayForm\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/3825\",\"attribute\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200\"},\"paging\":{\"total\":\"1\",\"count\":1,\"offset\":\"0\"},\"items\":[{\"element\":{\"title\":\"https://financial-services-gd.com/devops/?page=server_detail&id=27564&name=Aaron%20Clements\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339877\"}}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "18c3dcc5-8677-43a3-b5e7-69dd6c96c6ee",
+    "persistent": true,
+    "insertionIndex": 152
+}

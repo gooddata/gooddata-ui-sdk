@@ -84,6 +84,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "meta/setDrillableItems",
     "layout/updateWidgetIdentities",
     "executionResults/upsertExecutionResult",
+    "loadingSlice/setLoadingError",
 ];
 
 /*
