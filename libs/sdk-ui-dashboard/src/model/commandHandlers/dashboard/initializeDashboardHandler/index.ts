@@ -220,7 +220,7 @@ export function* initializeDashboardHandler(
 
         return result.event;
     } catch (e) {
-        yield put(loadingActions.setLoadingError(e.message));
+        yield put(loadingActions.setLoadingError(e));
 
         throw e;
     }
