@@ -331,7 +331,8 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
         it("should fail if trying to modify/add drillToCustomUrl with not existing display form identifier hardcoded in target", async () => {
             const invalidTargetDrill = cloneDeep(DrillToCustomUrlFromMeasureDefinition);
-            invalidTargetDrill.target.url = "http://www.site.org?dep={attribute_title(label.owner.missing)}";
+            invalidTargetDrill.target.url =
+                "https://www.example.org?dep={attribute_title(label.owner.missing)}";
 
             const drills = [invalidTargetDrill];
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =

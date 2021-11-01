@@ -56,7 +56,7 @@ function createSuitesMessage(testResults) {
     return "" + "|Status|Name|Tests|Failures|Time|\n" + "|:--:|:--|:--:|:--:|--:|\n" + result.join("\n");
 }
 
-async function main() {
+async function createGitHubReport() {
     const testResults = await getTestResults();
 
     const result =
@@ -71,4 +71,4 @@ async function main() {
     await util.promisify(fs.writeFile)(GITHUB_MESSAGE_FILE, result).catch(handleError);
 }
 
-main();
+module.exports = createGitHubReport;

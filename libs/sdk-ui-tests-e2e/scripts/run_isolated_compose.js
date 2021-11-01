@@ -6,8 +6,6 @@ This file is supposed to run within the Cypress container, controlling the execu
  */
 const dotenv = require("dotenv");
 
-const childProcess = require("child_process");
-
 const {
     wiremockStartRecording,
     wiremockStopRecording,
@@ -23,6 +21,7 @@ const {
     saveRecordingsWorkspaceId,
 } = require("./recordings.js");
 const { runCypress } = require("./cypress.js");
+const createGitHubReport = require("./create_github_report.js");
 const wiremockHost = "backend-mock:8080";
 
 async function main() {
@@ -82,7 +81,7 @@ async function main() {
                 sanitizeCredentials();
             }
 
-            childProcess.execSync(`node scripts/create_github_report.js`);
+            await createGitHubReport();
 
             process.exit(e);
         });
