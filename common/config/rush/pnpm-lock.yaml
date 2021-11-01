@@ -86,7 +86,7 @@ dependencies:
   '@rush-temp/live-examples-workspace': file:projects/live-examples-workspace.tgz_ts-node@8.10.2
   '@rush-temp/mock-handling': file:projects/mock-handling.tgz
   '@rush-temp/playground': file:projects/playground.tgz_ts-node@8.10.2
-  '@rush-temp/plugin-toolkit': file:projects/plugin-toolkit.tgz_ts-node@8.10.2
+  '@rush-temp/plugin-toolkit': file:projects/plugin-toolkit.tgz
   '@rush-temp/reference-workspace': file:projects/reference-workspace.tgz_ts-node@8.10.2
   '@rush-temp/reference-workspace-mgmt': file:projects/reference-workspace-mgmt.tgz_ts-node@8.10.2
   '@rush-temp/sdk-backend-base': file:projects/sdk-backend-base.tgz_ts-node@8.10.2
@@ -4367,6 +4367,18 @@ packages:
     resolution: {integrity: sha512-fZQQafSREFyuZcdWFAExYjBiCL7AUCdgsk80iO0q4yihYYdcIiH28CcuPTGFgLOCC8RlW49GSQxdHwZP+I7CNg==}
     dev: false
 
+  /@types/minipass/3.1.0:
+    resolution: {integrity: sha512-b2yPKwCrB8x9SB65kcCistMoe3wrYnxxt5rJSZ1kprw0uOXvhuKi9kTQ746Y+Pbqoh+9C0N4zt0ztmTnG9yg7A==}
+    dependencies:
+      '@types/node': 14.17.3
+    dev: false
+
+  /@types/mkdirp/1.0.2:
+    resolution: {integrity: sha512-o0K1tSO0Dx5X6xlU5F1D6625FawhC3dU3iqr25lluNv/+/QIVH8RLNEiVokgIZo+mz+87w/3Mkg/VvQS+J51fQ==}
+    dependencies:
+      '@types/node': 14.17.3
+    dev: false
+
   /@types/node-fetch/1.6.9:
     resolution: {integrity: sha512-n2r6WLoY7+uuPT7pnEtKJCmPUGyJ+cbyBR8Avnu4+m1nzz7DwBVuyIvvlBzCZ/nrpC7rIgb3D6pNavL7rFEa9g==}
     dependencies:
@@ -4614,6 +4626,13 @@ packages:
 
   /@types/tapable/1.0.7:
     resolution: {integrity: sha512-0VBprVqfgFD7Ehb2vd8Lh9TG3jP98gvr8rgehQqzztZNI7o8zS8Ad4jyZneKELphpuE212D8J70LnSNQSyO6bQ==}
+    dev: false
+
+  /@types/tar/6.1.0:
+    resolution: {integrity: sha512-uTZKMW7ZkdTJXX4+Bsp0ko9N7B5/NJ5wJRW14XTb6KNN+9i2NPel6iPKp8rTQahMW46BM9tM52dTeMSldB55og==}
+    dependencies:
+      '@types/minipass': 3.1.0
+      '@types/node': 14.17.3
     dev: false
 
   /@types/tern/0.23.3:
@@ -21470,9 +21489,8 @@ packages:
       - webpack-bundle-analyzer
     dev: false
 
-  file:projects/plugin-toolkit.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-21hntml1osuDHatz1JjyBFiMJkTHcykmwcT6oip1GWoN/j2n73ZzOHB81kwg5XA9gcSKTnUfjaDvvAcFpBnI4g==, tarball: file:projects/plugin-toolkit.tgz}
-    id: file:projects/plugin-toolkit.tgz
+  file:projects/plugin-toolkit.tgz:
+    resolution: {integrity: sha512-xJ4CXp86kOqx7BIfcpOZbSuQidtZ9gtqo2f4nyt391OjncrDQ2cduJiHKnOssg7HcjMurTJ7HqluoOEvQEFXaQ==, tarball: file:projects/plugin-toolkit.tgz}
     name: '@rush-temp/plugin-toolkit'
     version: 0.0.0
     dependencies:
@@ -21480,12 +21498,13 @@ packages:
       '@babel/core': 7.14.3
       '@babel/plugin-transform-typescript': 7.14.4_@babel+core@7.14.3
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
-      '@microsoft/api-documenter': 7.13.16
-      '@microsoft/api-extractor': 7.18.4
       '@types/inquirer': 7.3.1
       '@types/jest': 26.0.23
+      '@types/json-stable-stringify': 1.0.32
       '@types/lodash': 4.14.170
+      '@types/mkdirp': 1.0.2
       '@types/node': 12.20.15
+      '@types/tar': 6.1.0
       '@typescript-eslint/eslint-plugin': 4.26.1_7bd7a7858841324c95046422bb20bae5
       '@typescript-eslint/parser': 4.26.1_eslint@7.28.0+typescript@4.0.2
       chalk: 4.1.1
@@ -21502,11 +21521,15 @@ packages:
       inquirer: 7.3.3
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
+      json-stable-stringify: 1.0.1
       lodash: 4.17.21
+      mkdirp: 1.0.4
+      ora: 5.4.1
       prettier: 2.3.1
       strip-ansi: 6.0.0
       tar: 6.1.11
       ts-jest: 26.5.6_jest@26.6.3+typescript@4.0.2
+      ts-node: 8.10.2_typescript@4.0.2
       tslib: 2.2.0
       typescript: 4.0.2
     transitivePeerDependencies:
@@ -21514,7 +21537,6 @@ packages:
       - canvas
       - eslint-config-prettier
       - supports-color
-      - ts-node
       - utf-8-validate
     dev: false
 

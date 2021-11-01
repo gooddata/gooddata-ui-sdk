@@ -6,3 +6,6 @@ export type ActionOptions = {
     programOpts: OptionValues;
     commandOpts: OptionValues;
 };
+
+export type TargetBackendType = "bear" | "tiger";
+export type TargetAppFlavor = "ts" | "js";
