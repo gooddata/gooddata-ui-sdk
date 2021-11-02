@@ -1,6 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
 import { TargetAppFlavor, TargetBackendType } from "../types";
+import { hostnameValidatorFactory } from "./validators";
+import { sanitizeHostname } from "./sanitizers";
 
 export async function promptUsername(wording: string = "username"): Promise<string> {
     const usernameQuestion: DistinctQuestion = {
@@ -83,18 +85,15 @@ export async function promptHostname(isBear: boolean): Promise<string> {
     }
 
     const question: DistinctQuestion = {
-        message: "Insert your hostname. Protocol defaults to https if none is provided.",
+        message: "Enter custom hostname",
         name: "hostname",
         type: "input",
-        validate: (input) => {
-            return input.indexOf("http://") > -1 && isBear
-                ? "Provide hostname with a secure https protocol or no protocol at all."
-                : true;
-        },
+        validate: hostnameValidatorFactory(isBear),
     };
 
     const response = await prompt(question);
-    return response.hostname;
+
+    return sanitizeHostname(response.hostname);
 }
 
 export async function promptBackend(): Promise<TargetBackendType> {
