@@ -6,8 +6,12 @@ PACKAGE_DIR="$(echo $(cd $(dirname $0)/.. && pwd -P))"
 DIST_DIR="${PACKAGE_DIR}/dist"
 BABEL_BIN="${PACKAGE_DIR}/node_modules/.bin/babel"
 PRETTIER_BIN="${PACKAGE_DIR}/node_modules/.bin/prettier"
+TSNODE_BIN="${PACKAGE_DIR}/node_modules/.bin/ts-node"
+PREPARE_PACKAGE_JSON="${TSNODE_BIN} ${PACKAGE_DIR}/scripts/preparePackageJson.ts"
 
 DASHBOARD_PLUGIN_TEMPLATE_DIR="${PACKAGE_DIR}/../dashboard-plugin-template"
+JS_CONFIG_TEMPLATES="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/js/*"
+TS_CONFIG_TEMPLATES="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/ts/*"
 BUILD_DIR="${PACKAGE_DIR}/build"
 JS_BUILD_DIR="${BUILD_DIR}/dashboard-plugin-template.js"
 TS_BUILD_DIR="${BUILD_DIR}/dashboard-plugin-template.ts"
@@ -29,15 +33,19 @@ npm run build-cjs
 
 # copy sources & essential config from dashboard plugin template project
 # this will be used as-is for TypeScript template
-rsync -zarvm \
-  --include="*/" \
-  --include="src/**" \
-  --include="package.json" \
-  --include="webpack.config.js" \
-  --include=".env.template" \
-  --exclude="*" \
-  "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/" \
-  "${TS_BUILD_DIR}"
+mkdir -p "${TS_BUILD_DIR}/src"
+cp -R "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/src" "${TS_BUILD_DIR}"
+cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/package.json" "${TS_BUILD_DIR}"
+cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/webpack.config.js" "${TS_BUILD_DIR}"
+cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.env.template" "${TS_BUILD_DIR}"
+
+$PREPARE_PACKAGE_JSON remove-gd-stuff "${TS_BUILD_DIR}"
+
+# 'fork-off' the JS template build dir at this point before adding TypeScript specific configs
+cp -R "${TS_BUILD_DIR}" "${JS_BUILD_DIR}"
+
+# copy over the eslint, prettier and jest config files for the TypeScript project
+cp ${TS_CONFIG_TEMPLATES} "${TS_BUILD_DIR}"
 
 # create archive with TypeScript template
 tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
@@ -46,8 +54,10 @@ tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
 # Build dashboard-plugin-template for JavaScript
 #######################################################################
 
-# start from assets used for TypeScript template
-cp -R "${TS_BUILD_DIR}" "${JS_BUILD_DIR}"
+$PREPARE_PACKAGE_JSON remove-ts "${JS_BUILD_DIR}"
+
+# copy over the eslint, prettier and jest config files for the TypeScript project
+cp ${JS_CONFIG_TEMPLATES} "${JS_BUILD_DIR}"
 
 # transpile TypeScript files to JavaScript
 $BABEL_BIN --no-babelrc \
