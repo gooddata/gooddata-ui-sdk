@@ -20,7 +20,11 @@ const initCmd: Command = dashboardCmd
     .command("init")
     .description("Initialize a new dashboard plugin")
     .argument("[plugin-name]", "Name of the plugin to create")
-    .option("--target-dir <path>", "Path to the directory to create the plugin in", ".")
+    .option(
+        "--target-dir <path>",
+        "Path to the directory to create the plugin in. If not " +
+            "specified, program will create a new subdirectory with name derived from plugin name in the current working directory.",
+    )
     .option("--skip-install", "Skip yarn installing the plugin dependencies", false)
     .option(
         "--backend <backend>",

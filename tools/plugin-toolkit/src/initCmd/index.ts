@@ -21,7 +21,7 @@ type InitCmdActionConfig = {
     backend: TargetBackendType;
     hostname: string;
     flavor: "ts" | "js";
-    targetDir: string;
+    targetDir: string | undefined;
     skipInstall: boolean;
 };
 
@@ -86,7 +86,7 @@ async function getPluginNameAndConfig(
     validOrDie("hostname", hostname, hostnameValidatorFactory(backend));
 
     return {
-        name: kebabCase(name),
+        name: name,
         config: {
             backend,
             hostname,
@@ -120,7 +120,7 @@ function modifyPackageJson(target: string, name: string) {
 }
 
 async function prepareProject(name: string, config: InitCmdActionConfig) {
-    const target = path.resolve(config.targetDir, name);
+    const target = config.targetDir ? config.targetDir : path.resolve(process.cwd(), kebabCase(name));
 
     await unpackProject(target, config.flavor);
     modifyPackageJson(target, name);
