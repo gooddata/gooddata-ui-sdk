@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mergeWorkspaceAndUserSettings should omit ignored user setting and keep project one 1`] = `
+Object {
+  "enableAnalyticalDashboardPermissions": "projectValue",
+  "userSetting": "userValue",
+  "workspaceSetting": "projectValue",
+}
+`;
+
+exports[`mergeWorkspaceAndUserSettings should prioritize user setting over project one 1`] = `
+Object {
+  "setting": "userValue",
+  "userSetting": "userValue",
+  "workspaceSetting": "projectValue",
+}
+`;
