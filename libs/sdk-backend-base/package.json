@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-base",
-    "version": "8.7.0-alpha.42",
+    "version": "8.7.0-alpha.43",
     "author": "GoodData",
     "description": "GoodData.UI SDK - Base for backend implementations",
     "repository": {
@@ -48,8 +48,8 @@
     },
     "dependencies": {
         "@braintree/sanitize-url": "^5.0.2",
-        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.42",
-        "@gooddata/sdk-model": "^8.7.0-alpha.42",
+        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.43",
+        "@gooddata/sdk-model": "^8.7.0-alpha.43",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
         "lru-cache": "^4.1.5",
@@ -60,7 +60,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/reference-workspace": "^8.7.0-alpha.42",
+        "@gooddata/reference-workspace": "^8.7.0-alpha.43",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.18.4",
         "@types/jest": "^26.0.12",
