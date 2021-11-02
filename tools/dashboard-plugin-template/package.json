@@ -21,8 +21,7 @@
         "dist/**/*.json",
         "dist/**/*.d.ts",
         "dist/**/*.map",
-        "dist/**/*.svg",
-        "styles"
+        "dist/**/*.svg"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"

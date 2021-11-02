@@ -16,7 +16,7 @@
     },
     {
       "name": "@babel/cli",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/core",
@@ -291,6 +291,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/mkdirp",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/node",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -389,6 +393,10 @@
     {
       "name": "@types/stringify-object",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@types/tar",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "@types/tinycolor2",
@@ -704,7 +712,7 @@
     },
     {
       "name": "mkdirp",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "moment",
@@ -945,6 +953,10 @@
     {
       "name": "svgo",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "tar",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "testcafe",
