@@ -3,7 +3,7 @@ import { ActionOptions, TargetAppFlavor, TargetBackendType } from "../_base/type
 import {
     backendTypeValidator,
     flavorValidator,
-    hostnameValidatorFactory,
+    createHostnameValidator,
     pluginNameValidator,
     validOrDie,
 } from "../_base/cli/validators";
@@ -18,7 +18,7 @@ function getHostname(backend: TargetBackendType | undefined, options: ActionOpti
 
     // do the hostname validation only if the backend type is known at this point
     if (backend !== undefined) {
-        validOrDie("hostname", hostname, hostnameValidatorFactory(backend));
+        validOrDie("hostname", hostname, createHostnameValidator(backend));
     }
 
     return hostname;
@@ -90,7 +90,7 @@ export async function getInitCmdActionConfig(
     // validate hostname once again; this is to catch the case when hostname is provided as
     // option but the backend is not and user is prompted for it. the user may select backend
     // for which the protocol used in the hostname is not valid (http on bear)
-    validOrDie("hostname", hostname, hostnameValidatorFactory(backend));
+    validOrDie("hostname", hostname, createHostnameValidator(backend));
 
     return {
         name: name,

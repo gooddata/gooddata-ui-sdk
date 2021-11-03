@@ -9,7 +9,7 @@ const InvalidHostnameMessage =
 
 export type InputValidator = (value: string) => boolean | string;
 
-export function hostnameValidatorFactory(backend: TargetBackendType) {
+export function createHostnameValidator(backend: TargetBackendType) {
     return (input: string): boolean | string => {
         if (isEmpty(input)) {
             return InvalidHostnameMessage;

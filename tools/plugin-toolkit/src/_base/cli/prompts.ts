@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
 import { TargetAppFlavor, TargetBackendType } from "../types";
-import { hostnameValidatorFactory, pluginNameValidator } from "./validators";
+import { createHostnameValidator, pluginNameValidator } from "./validators";
 import { sanitizeHostname } from "./sanitizers";
 
 export async function promptUsername(wording: string = "username"): Promise<string> {
@@ -89,7 +89,7 @@ export async function promptHostname(backend: TargetBackendType): Promise<string
         message: "Enter custom hostname",
         name: "hostname",
         type: "input",
-        validate: hostnameValidatorFactory(backend),
+        validate: createHostnameValidator(backend),
     };
 
     const response = await prompt(question);
