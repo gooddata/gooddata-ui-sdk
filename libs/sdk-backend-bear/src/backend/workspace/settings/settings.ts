@@ -1,12 +1,40 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     IUserWorkspaceSettings,
+    ISettings,
 } from "@gooddata/sdk-backend-spi";
+import { IFeatureFlags } from "@gooddata/api-client-bear";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../../utils/api";
 import { ANONYMOUS_USER_SETTINGS } from "../../constants";
+
+// settings which are ignored from user level as they can be set up only for project and above levels
+// no explicit type as every string is valid key from IUserWorkspaceSettings
+const IGNORED_USER_SETTINGS = [
+    "enableAnalyticalDashboardPermissions",
+    "enableNewAnalyticalDashboardsNavigation",
+];
+
+const filterIgnoredUserSettings = (userFeatureFlags: IFeatureFlags) => {
+    const keptUserSettings = { ...userFeatureFlags };
+    for (const settingName of IGNORED_USER_SETTINGS) {
+        delete keptUserSettings[settingName];
+    }
+    return keptUserSettings;
+};
+
+export const mergeWorkspaceAndUserSettings = (
+    workspaceFeatureFlags: IFeatureFlags,
+    userFeatureFlags: IFeatureFlags,
+): ISettings => {
+    return {
+        // the order is important here, user configs with the "user" source should override the workspace settings
+        ...workspaceFeatureFlags,
+        ...filterIgnoredUserSettings(userFeatureFlags),
+    };
+};
 
 export class BearWorkspaceSettings implements IWorkspaceSettingsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -46,15 +74,12 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
             ]);
 
             const { language } = currentProfile;
-
             return {
                 userId: userLoginMd5,
                 workspace: this.workspace,
                 locale: language!,
                 separators: separators,
-                // the order is important here, user configs with the "user" source should override the workspace settings
-                ...workspaceFeatureFlags,
-                ...userFeatureFlags,
+                ...mergeWorkspaceAndUserSettings(workspaceFeatureFlags, userFeatureFlags),
             };
         });
     }
