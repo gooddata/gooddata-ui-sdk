@@ -17,18 +17,33 @@ describe("change dashboard sharing handler", () => {
 
         it("should save new dashboard share status", async () => {
             const event: DashboardSharingChanged = await Tester.dispatchAndWaitFor(
-                changeSharing("public", TestCorrelation),
+                changeSharing(
+                    {
+                        shareStatus: "public",
+                        isUnderStrictControl: false,
+                    },
+                    TestCorrelation,
+                ),
                 "GDC.DASH/EVT.SHARING.CHANGED",
             );
 
-            expect(event.payload.newShareStatus).toEqual("public");
+            expect(event.payload.newShareProps).toEqual({
+                shareStatus: "public",
+                isUnderStrictControl: false,
+            });
             const newState = Tester.state();
             expect(selectDashboardShareStatus(newState)).toEqual("public");
         });
 
         it("should emit correct events", async () => {
             await Tester.dispatchAndWaitFor(
-                changeSharing("public", TestCorrelation),
+                changeSharing(
+                    {
+                        shareStatus: "public",
+                        isUnderStrictControl: false,
+                    },
+                    TestCorrelation,
+                ),
                 "GDC.DASH/EVT.SHARING.CHANGED",
             );
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
@@ -45,7 +60,13 @@ describe("change dashboard sharing handler", () => {
 
         it("should fail", async () => {
             const event: DashboardCommandFailed<ChangeSharing> = await Tester.dispatchAndWaitFor(
-                changeSharing("public", TestCorrelation),
+                changeSharing(
+                    {
+                        shareStatus: "public",
+                        isUnderStrictControl: false,
+                    },
+                    TestCorrelation,
+                ),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
             expect(event.payload.reason).toBe("USER_ERROR");

@@ -28,6 +28,7 @@ options = {
                 "src/presentation/constants",
                 "src/presentation/topBar",
                 "src/presentation/widget",
+                "src/types.ts",
             ],
         ),
         depCruiser.moduleWithDependencies("dashboardContexts", "src/presentation/dashboardContexts", [
@@ -98,6 +99,7 @@ options = {
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
             "src/model",
+            "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("widget", "src/presentation/widget", [
             "src/_staging/*",

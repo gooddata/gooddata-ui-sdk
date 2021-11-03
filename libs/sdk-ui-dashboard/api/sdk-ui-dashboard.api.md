@@ -426,14 +426,14 @@ export function changeLayoutSectionHeader(index: number, header: IDashboardLayou
 export interface ChangeSharing extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly newShareStatus: ShareStatus;
+        readonly newShareProps: IShareProps;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.SHARING.CHANGE";
 }
 
 // @alpha
-export function changeSharing(newShareStatus: ShareStatus, correlationId?: string): ChangeSharing;
+export function changeSharing(newShareProps: IShareProps, correlationId?: string): ChangeSharing;
 
 // @alpha
 export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection;
@@ -1461,7 +1461,7 @@ export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<T
 export interface DashboardSharingChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
-        newShareStatus: ShareStatus;
+        newShareProps: IShareProps;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.SHARING.CHANGED";
@@ -2864,7 +2864,15 @@ export const isDrillTargetsAdded: (obj: unknown) => obj is DrillTargetsAdded;
 // @alpha (undocumented)
 export interface IShareButtonProps {
     // (undocumented)
-    onShareButtonClick: (newShareStatus: ShareStatus) => void;
+    onShareButtonClick: (newShareProps: IShareProps) => void;
+}
+
+// @alpha
+export interface IShareProps {
+    // (undocumented)
+    isUnderStrictControl: boolean;
+    // (undocumented)
+    shareStatus: ShareStatus;
 }
 
 // @alpha (undocumented)
