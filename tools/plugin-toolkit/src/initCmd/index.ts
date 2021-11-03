@@ -10,6 +10,7 @@ import { readJsonSync, writeAsJsonSync } from "../_base/utils";
 import { isInputValidationError } from "../_base/cli/validators";
 import { processTigerFiles } from "./processTigerFiles";
 import { getInitCmdActionConfig, InitCmdActionConfig } from "./actionConfig";
+import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles";
 
 //
 //
@@ -33,6 +34,22 @@ function modifyPackageJson(target: string, name: string) {
     writeAsJsonSync(packageJsonFile, packageJson);
 }
 
+function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): Promise<void> {
+    const { backend } = config;
+    const isTiger = backend === "tiger";
+    const replacements: FileReplacementSpec = {
+        "webpack.config.js": [
+            {
+                regex: /"\/gdc"/g,
+                value: '"/api"',
+                apply: isTiger,
+            },
+        ],
+    };
+
+    return replaceInFiles(dir, replacements);
+}
+
 async function prepareProject(config: InitCmdActionConfig) {
     const { name, targetDir, flavor, backend } = config;
     const target = targetDir ? targetDir : path.resolve(process.cwd(), kebabCase(name));
@@ -41,6 +58,7 @@ async function prepareProject(config: InitCmdActionConfig) {
     modifyPackageJson(target, name);
 
     await processTigerFiles(target, backend === "tiger");
+    await performReplacementsInFiles(target, config);
 }
 
 export async function initCmdAction(pluginName: string | undefined, options: ActionOptions): Promise<void> {
