@@ -4,7 +4,7 @@ import { logError, logInfo } from "../_base/cli/loggers";
 import { promptBackend, promptFlavor, promptHostname, promptName } from "../_base/cli/prompts";
 import kebabCase from "lodash/kebabCase";
 import * as path from "path";
-import mkdirp from "mkdirp";
+import fse from "fs-extra";
 import tar from "tar";
 import { getDashboardPluginTemplateArchive } from "../dashboard-plugin-template";
 import { readJsonSync, writeAsJsonSync } from "../_base/utils";
@@ -16,11 +16,12 @@ import {
     pluginNameValidator,
     validOrDie,
 } from "../_base/cli/validators";
+import { processTigerFiles } from "./processTigerFiles";
 
 type InitCmdActionConfig = {
     backend: TargetBackendType;
     hostname: string;
-    flavor: "ts" | "js";
+    flavor: TargetAppFlavor;
     targetDir: string | undefined;
     skipInstall: boolean;
 };
@@ -102,7 +103,7 @@ async function getPluginNameAndConfig(
 //
 
 function unpackProject(target: string, flavor: TargetAppFlavor) {
-    return mkdirp(target).then((_) => {
+    return fse.mkdirp(target).then((_) => {
         return tar.x({
             file: getDashboardPluginTemplateArchive(flavor),
             strip: 1,
@@ -124,6 +125,8 @@ async function prepareProject(name: string, config: InitCmdActionConfig) {
 
     await unpackProject(target, config.flavor);
     modifyPackageJson(target, name);
+
+    await processTigerFiles(target, config.backend === "tiger");
 }
 
 export async function initCmdAction(pluginName: string | undefined, options: ActionOptions): Promise<void> {
