@@ -297,6 +297,77 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": ["actions"],
+                "summary": "Listing of label values.",
+                "description": "Returns paged list of elements (values) of given label satisfying given filtering criteria.",
+                "operationId": "computeLabelElementsPost",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[.A-Za-z0-9_-]{1,255}$"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Request page with this offset.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Return only this number of items.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 1000
+                        }
+                    },
+                    {
+                        "name": "skip-cache",
+                        "description": "Ignore all caches during execution of current request.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ElementsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "List of label values.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ElementsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}": {
@@ -1510,6 +1581,45 @@
                     }
                 },
                 "description": "List of returned elements."
+            },
+            "ElementsRequest": {
+                "required": ["label"],
+                "type": "object",
+                "properties": {
+                    "label": {
+                        "type": "string",
+                        "description": "Requested label."
+                    },
+                    "sortOrder": {
+                        "type": "string",
+                        "description": "Sort order of returned items.\nItems are sorted by ```label``` title.",
+                        "default": "ASC",
+                        "enum": ["ASC", "DESC"]
+                    },
+                    "complementFilter": {
+                        "type": "boolean",
+                        "description": "Inverse filters:\n* ```false``` - return items matching ```patternFilter``` and ```exactFilter```\n* ```true``` - return items not matching ```patternFilter``` and ```exactFilter```",
+                        "default": false
+                    },
+                    "patternFilter": {
+                        "type": "string",
+                        "description": "Return only items, whose ```label``` title case insensitively contains ```filter``` as substring."
+                    },
+                    "exactFilter": {
+                        "type": "array",
+                        "description": "Return only items, whose ```label``` title exactly matches one of ```filter```.",
+                        "items": {
+                            "type": "string",
+                            "description": "Return only items, whose ```label``` title exactly matches one of ```filter```."
+                        }
+                    },
+                    "dataSamplingPercentage": {
+                        "type": "number",
+                        "description": "Specifies percentage of source table data scanned during the computation.",
+                        "format": "float",
+                        "default": 100
+                    }
+                }
             },
             "ElementsResponse": {
                 "required": ["elements", "paging", "primaryLabel"],

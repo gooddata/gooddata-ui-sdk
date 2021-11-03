@@ -17,4 +17,4 @@ export {
 
 export const tigerLabelElementsClientFactory = (
     axios: AxiosInstance,
-): Pick<ActionsApiInterface, "computeLabelElements"> => new ActionsApi({}, "", axios);
+): Pick<ActionsApiInterface, "computeLabelElementsPost"> => new ActionsApi({}, "", axios);

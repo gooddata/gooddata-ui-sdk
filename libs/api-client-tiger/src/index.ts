@@ -73,6 +73,8 @@ export {
     Dimension,
     DimensionHeader,
     Element,
+    ElementsRequest,
+    ElementsRequestSortOrderEnum,
     ElementsResponse,
     ErrorMessage,
     ExecutionLinks,
