@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-theme-provider",
-    "version": "8.7.0-alpha.44",
+    "version": "8.7.0-alpha.45",
     "description": "GoodData SDK - Theme provider",
     "repository": {
         "type": "git",
@@ -48,8 +48,8 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.44",
-        "@gooddata/sdk-ui": "^8.7.0-alpha.44",
+        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.45",
+        "@gooddata/sdk-ui": "^8.7.0-alpha.45",
         "lodash": "^4.17.19",
         "polished": "^3.6.7",
         "react-intl": "^3.6.0",
@@ -62,8 +62,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/sdk-backend-mockingbird": "^8.7.0-alpha.44",
-        "@gooddata/reference-workspace": "^8.7.0-alpha.44",
+        "@gooddata/sdk-backend-mockingbird": "^8.7.0-alpha.45",
+        "@gooddata/reference-workspace": "^8.7.0-alpha.45",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.18.4",
         "@types/enzyme-adapter-react-16": "^1.0.5",
