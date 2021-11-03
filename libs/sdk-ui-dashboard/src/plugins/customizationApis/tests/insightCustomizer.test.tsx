@@ -146,6 +146,20 @@ describe("insight customizer", () => {
 
             expect(renderToHtml(Customizer, TestInsightWithBothTags)).toMatchSnapshot();
         });
+
+        it("should print a warning if tag is an empty string", () => {
+            const logger = new DashboardCustomizationLogger();
+            const customizer = new DefaultInsightCustomizer(logger, DefaultTestComponentProvider);
+
+            const consoleSpy = jest.spyOn(logger, "warn");
+
+            customizer.withTag("", createTestComponent("forTag1"));
+
+            expect(consoleSpy).toHaveBeenCalled();
+
+            consoleSpy.mockReset();
+            consoleSpy.mockRestore();
+        });
     });
 
     describe("withCustomProvider", () => {

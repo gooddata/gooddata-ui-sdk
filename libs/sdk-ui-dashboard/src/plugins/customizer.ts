@@ -23,7 +23,7 @@ export interface IDashboardInsightCustomizer {
      * any insight that is tagged with the provided `tag`. If plugins register multiple providers
      * for the same tag, then the provider will be picked using 'last-win' strategy.
      *
-     * @param tag - tag to look for on the insight
+     * @param tag - tag to look for on the insight, this function will do nothing if this argument is an empty string
      * @param component - component to use if the tag is found
      * @returns self, for call chaining sakes
      */
