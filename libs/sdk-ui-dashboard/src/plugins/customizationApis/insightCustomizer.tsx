@@ -169,7 +169,14 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
         this.state = new DefaultInsightCustomizerState(logger, defaultProvider);
     }
 
-    public withTag = (tag: string, component: React.ComponentType): IDashboardInsightCustomizer => {
+    public withTag = (tag: string, component: React.ComponentType): this => {
+        if (!tag) {
+            this.logger.warn(
+                "The 'withTag' was called with an empty 'tag' parameter. This is effectively a noop.",
+            );
+            return this;
+        }
+
         const newProvider: InsightComponentProvider = (insight) => {
             if (includes(insightTags(insight), tag)) {
                 return component;
@@ -181,7 +188,7 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
         return this;
     };
 
-    public withCustomProvider = (provider: InsightComponentProvider): IDashboardInsightCustomizer => {
+    public withCustomProvider = (provider: InsightComponentProvider): this => {
         this.state.addCustomProvider(provider);
 
         return this;
@@ -189,7 +196,7 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
 
     public withCustomDecorator = (
         providerFactory: (next: InsightComponentProvider) => InsightComponentProvider,
-    ): IDashboardInsightCustomizer => {
+    ): this => {
         // snapshot current root provider
         const rootSnapshot = this.state.getRootProvider();
         // call user's factory in order to obtain the actual provider - pass the current root so that user's
