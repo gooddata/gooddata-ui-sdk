@@ -127,6 +127,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-backend-tiger",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@gooddata/sdk-embedding",
       "allowedCategories": [ "production" ]
     },
