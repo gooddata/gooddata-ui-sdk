@@ -108,7 +108,7 @@
     },
     {
       "name": "@gooddata/reference-workspace",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@gooddata/sdk-backend-base",
@@ -120,11 +120,15 @@
     },
     {
       "name": "@gooddata/sdk-backend-mockingbird",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@gooddata/sdk-backend-spi",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/sdk-backend-tiger",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "@gooddata/sdk-embedding",
@@ -247,6 +251,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/fs-extra",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/history",
       "allowedCategories": [ "examples" ]
     },
@@ -289,10 +297,6 @@
     {
       "name": "@types/mapbox-gl",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/mkdirp",
-      "allowedCategories": [ "tools" ]
     },
     {
       "name": "@types/node",
@@ -587,6 +591,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "fast-glob",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "fast-levenshtein",
       "allowedCategories": [ "production" ]
     },
@@ -597,10 +605,6 @@
     {
       "name": "fetch-mock",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "file-loader",
-      "allowedCategories": [ "examples" ]
     },
     {
       "name": "find-up",
@@ -621,6 +625,10 @@
     {
       "name": "foundation-sites",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "fs-extra",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "full-icu",
@@ -712,7 +720,7 @@
     },
     {
       "name": "mkdirp",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "moment",
@@ -777,10 +785,6 @@
     {
       "name": "raf",
       "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "raw-loader",
-      "allowedCategories": [ "examples" ]
     },
     {
       "name": "react",

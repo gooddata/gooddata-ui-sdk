@@ -1,21 +1,19 @@
 // (C) 2019-2021 GoodData Corporation
-import bearFactory, {
-    FixedLoginAndPasswordAuthProvider,
+import tigerFactory, {
+    TigerTokenAuthProvider,
     ContextDeferredAuthProvider,
-} from "@gooddata/sdk-backend-bear";
+} from "@gooddata/sdk-backend-tiger";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 function hasCredentialsSetup(): boolean {
-    return !!(process.env.GDC_USERNAME && process.env.GDC_PASSWORD);
+    return !!process.env.TIGER_API_TOKEN;
 }
 
 function getBackend(): IAnalyticalBackend {
-    const newBackend = bearFactory();
+    const newBackend = tigerFactory();
 
     if (hasCredentialsSetup()) {
-        return newBackend.withAuthentication(
-            new FixedLoginAndPasswordAuthProvider(process.env.GDC_USERNAME!, process.env.GDC_PASSWORD!),
-        );
+        return newBackend.withAuthentication(new TigerTokenAuthProvider(process.env.TIGER_API_TOKEN!));
     }
 
     return newBackend.withAuthentication(new ContextDeferredAuthProvider());

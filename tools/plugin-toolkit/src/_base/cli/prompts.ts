@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
 import { TargetAppFlavor, TargetBackendType } from "../types";
-import { hostnameValidatorFactory } from "./validators";
+import { hostnameValidatorFactory, pluginNameValidator } from "./validators";
 import { sanitizeHostname } from "./sanitizers";
 
 export async function promptUsername(wording: string = "username"): Promise<string> {
@@ -48,14 +48,15 @@ export async function promptName(object: string = "dashboard plugin"): Promise<s
         message: `What is your ${object} name?`,
         name: "name",
         type: "input",
+        validate: pluginNameValidator,
     };
 
     const response = await prompt(question);
     return response.name;
 }
 
-export async function promptHostname(isBear: boolean): Promise<string> {
-    if (isBear) {
+export async function promptHostname(backend: TargetBackendType): Promise<string> {
+    if (backend === "bear") {
         const question: DistinctQuestion = {
             message: "What is your hostname?",
             name: "hostname",
@@ -88,7 +89,7 @@ export async function promptHostname(isBear: boolean): Promise<string> {
         message: "Enter custom hostname",
         name: "hostname",
         type: "input",
-        validate: hostnameValidatorFactory(isBear),
+        validate: hostnameValidatorFactory(backend),
     };
 
     const response = await prompt(question);

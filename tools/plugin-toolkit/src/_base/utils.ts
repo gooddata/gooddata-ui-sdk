@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
 import * as fs from "fs";
+import path from "path";
 
 export function toJsonString(obj: any): string {
     // note: using json-stable-stringify is likely not a good idea in this project:
@@ -13,4 +14,18 @@ export function writeAsJsonSync(file: string, obj: object): void {
 
 export function readJsonSync(file: string): any {
     return JSON.parse(fs.readFileSync(file, { encoding: "utf-8" }));
+}
+
+/**
+ * Safely joins two path parts together.
+ *
+ * Path on windows will contain backslashes which can cause problems with Globby. This function makes sure
+ * only forward slashes are used so that Globby and node fs works properly on all platforms.
+ *
+ * @param initialPath - the first part
+ * @param relativePath - the second part
+ * @returns joined path
+ */
+export function safeJoin(initialPath: string, relativePath: string): string {
+    return path.posix.join(initialPath, relativePath).replace(/\\/g, "/");
 }

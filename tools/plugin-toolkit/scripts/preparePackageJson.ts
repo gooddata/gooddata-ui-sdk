@@ -42,6 +42,7 @@ const ExplicitTypeScriptDependencies = [
     "ts-jest",
     "ts-loader",
     "typescript",
+    "tslib",
 ];
 
 function removeGdStuff(packageJson: Record<string, any>) {
@@ -64,11 +65,12 @@ function removeGdStuff(packageJson: Record<string, any>) {
 }
 
 function removeTs(packageJson: Record<string, any>) {
-    const { devDependencies } = packageJson;
+    const { devDependencies, dependencies } = packageJson;
     const typings = keys(devDependencies).filter((dep) => dep.startsWith("@types"));
 
     [...ExplicitTypeScriptDependencies, ...typings].forEach((dep) => {
         delete devDependencies[dep];
+        delete dependencies[dep];
     });
 
     delete packageJson.typings;
