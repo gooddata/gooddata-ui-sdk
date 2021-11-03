@@ -26,11 +26,20 @@ function unpackProject(target: string, flavor: TargetAppFlavor) {
     });
 }
 
-function modifyPackageJson(target: string, name: string) {
+const TigerBackendPackage = "@gooddata/sdk-backend-tiger";
+const BearBackendPackage = "@gooddata/sdk-backend-bear";
+
+function modifyPackageJson(target: string, config: InitCmdActionConfig) {
+    const { name, backend } = config;
     const packageJsonFile = path.resolve(target, "package.json");
     const packageJson = readJsonSync(packageJsonFile);
+    const { peerDependencies, devDependencies } = packageJson;
+    const unnecessaryBackendPkg = backend === "bear" ? TigerBackendPackage : BearBackendPackage;
 
     packageJson.name = name;
+    delete peerDependencies[unnecessaryBackendPkg];
+    delete devDependencies[unnecessaryBackendPkg];
+
     writeAsJsonSync(packageJsonFile, packageJson);
 }
 
@@ -55,7 +64,7 @@ async function prepareProject(config: InitCmdActionConfig) {
     const target = targetDir ? targetDir : path.resolve(process.cwd(), kebabCase(name));
 
     await unpackProject(target, flavor);
-    modifyPackageJson(target, name);
+    modifyPackageJson(target, config);
 
     await processTigerFiles(target, backend === "tiger");
     await performReplacementsInFiles(target, config);
