@@ -1,12 +1,12 @@
 // (C) 2021 GoodData Corporation
-import { ShareStatus } from "@gooddata/sdk-backend-spi";
 import { ComponentType } from "react";
+import { IShareProps } from "../../../types";
 
 /**
  * @alpha
  */
 export interface IShareButtonProps {
-    onShareButtonClick: (newShareStatus: ShareStatus) => void;
+    onShareButtonClick: (newShareProps: IShareProps) => void;
 }
 
 /**

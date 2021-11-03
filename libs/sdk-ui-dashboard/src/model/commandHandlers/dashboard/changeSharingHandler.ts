@@ -26,8 +26,7 @@ type DashboardSaveSharingContext = {
 };
 
 function* createDashboardSaveSharingContext(cmd: ChangeSharing): SagaIterator<DashboardSaveSharingContext> {
-    const { newShareStatus } = cmd.payload;
-    const shareProp = { shareStatus: newShareStatus };
+    const { newShareProps } = cmd.payload;
 
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
         selectPersistedDashboard,
@@ -47,7 +46,7 @@ function* createDashboardSaveSharingContext(cmd: ChangeSharing): SagaIterator<Da
     };
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,
-        ...shareProp,
+        ...newShareProps,
     };
 
     return {
@@ -109,11 +108,11 @@ export function* changeSharingHandler(
     );
 
     const result: SagaReturnType<typeof saveSharing> = yield call(saveSharing, ctx, saveSharingCtx);
-    const { dashboard, batch } = result;
+    const { batch } = result;
 
     if (batch) {
         yield put(batch);
     }
 
-    return dashboardSharingChanged(ctx, dashboard.shareStatus, cmd.correlationId);
+    return dashboardSharingChanged(ctx, cmd.payload.newShareProps, cmd.correlationId);
 }

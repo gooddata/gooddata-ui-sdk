@@ -534,11 +534,16 @@ export const convertDashboard = (
               }
             : {};
 
-    const flagsProp = isUnderStrictControl
-        ? {
-              flags: ["strictAccessControl"],
-          }
-        : {};
+    let flagsProp = {};
+    if (isUnderStrictControl !== undefined) {
+        flagsProp = isUnderStrictControl
+            ? {
+                  flags: ["strictAccessControl"],
+              }
+            : {
+                  flags: [],
+              };
+    }
 
     return {
         analyticalDashboard: {

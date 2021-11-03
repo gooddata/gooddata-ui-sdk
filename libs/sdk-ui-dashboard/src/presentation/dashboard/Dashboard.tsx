@@ -8,7 +8,6 @@ import {
     IKpiWidget,
     ILegacyKpi,
     isProtectedDataError,
-    ShareStatus,
 } from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider, ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
@@ -93,6 +92,7 @@ import { downloadFile } from "../../_staging/fileUtils/downloadFile";
 import { DefaultSaveAsDialogInner, SaveAsDialog, SaveAsDialogPropsProvider } from "../saveAs";
 import { IInsight } from "@gooddata/sdk-model";
 import { DEFAULT_FILTER_BAR_HEIGHT } from "../constants";
+import { IShareProps } from "../../types";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -163,8 +163,8 @@ const useTopBar = () => {
     });
 
     const onShareButtonClick = useCallback(
-        (newShareStatus: ShareStatus) => {
-            runChangeSharing(newShareStatus);
+        (newShareProps: IShareProps) => {
+            runChangeSharing(newShareProps);
         },
         [runChangeSharing],
     );

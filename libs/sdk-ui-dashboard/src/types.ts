@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { DrillDefinition, IWidget } from "@gooddata/sdk-backend-spi";
+import { DrillDefinition, IWidget, ShareStatus } from "@gooddata/sdk-backend-spi";
 import {
     IAbsoluteDateFilter,
     IInsight,
@@ -121,4 +121,13 @@ export interface IDrillToUrlPlaceholder {
     placeholder: string;
     identifier: string;
     toBeEncoded: boolean;
+}
+
+/**
+ * @alpha
+ * All sharing props describing sharing change from share dialog in future
+ */
+export interface IShareProps {
+    shareStatus: ShareStatus;
+    isUnderStrictControl: boolean;
 }

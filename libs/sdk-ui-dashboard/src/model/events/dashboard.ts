@@ -1,9 +1,10 @@
 // (C) 2021 GoodData Corporation
 
-import { IDashboard, IWorkspacePermissions, ShareStatus } from "@gooddata/sdk-backend-spi";
+import { IDashboard, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 
 import { DateFilterConfigValidationResult } from "../../_staging/dateFilterConfig/validation";
+import { IShareProps } from "../../types";
 import { DashboardConfig, DashboardContext } from "../types/commonTypes";
 
 import { IDashboardEvent } from "./base";
@@ -446,13 +447,13 @@ export const isDashboardExportToPdfResolved = eventGuard<DashboardExportToPdfRes
 export interface DashboardSharingChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SHARING.CHANGED";
     readonly payload: {
-        newShareStatus: ShareStatus;
+        newShareProps: IShareProps;
     };
 }
 
 export function dashboardSharingChanged(
     ctx: DashboardContext,
-    newShareStatus: ShareStatus,
+    newShareProps: IShareProps,
     correlationId?: string,
 ): DashboardSharingChanged {
     return {
@@ -460,7 +461,7 @@ export function dashboardSharingChanged(
         ctx,
         correlationId,
         payload: {
-            newShareStatus,
+            newShareProps,
         },
     };
 }

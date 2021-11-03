@@ -13,20 +13,31 @@ import {
 } from "../../../model";
 
 import { HiddenShareButton } from "./HiddenShareButton";
+import { IShareProps } from "../../../types";
 
 const DefaultShareButtonCore: React.FC<WrappedComponentProps> = ({ intl }): JSX.Element | null => {
     const { onShareButtonClick } = useShareButtonProps();
     const settings = useDashboardSelector(selectSettings);
     const hasPermission = useDashboardSelector(selectCanManageACL);
     // TODO INE temp switching of share status. Will be replaced by Share dialog in TNT-257
+    // TODO INE remove this hardcoded switching of isUnderStrictControl in TNT-292
     const currentShareStatus = useDashboardSelector(selectDashboardShareStatus);
+    const newShareProps: IShareProps =
+        currentShareStatus === "private"
+            ? {
+                  shareStatus: "public",
+                  isUnderStrictControl: false,
+              }
+            : {
+                  shareStatus: "private",
+                  isUnderStrictControl: true,
+              };
+
     if (settings.enableAnalyticalDashboardPermissions && hasPermission) {
         return (
             <>
                 <Button
-                    onClick={() =>
-                        onShareButtonClick(currentShareStatus === "private" ? "public" : "private")
-                    }
+                    onClick={() => onShareButtonClick(newShareProps)}
                     value={
                         currentShareStatus === "private"
                             ? intl.formatMessage({ id: "share.button.text" })
