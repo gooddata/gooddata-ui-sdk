@@ -1,4 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
+import { ElementsRequest, ElementsRequestSortOrderEnum } from "@gooddata/api-client-tiger";
 import { enhanceWithAll, InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     IElementsQueryFactory,
@@ -90,18 +91,29 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
             throw new UnexpectedError("Tiger backend does not allow referencing objects by URI");
         }
         const response = await this.authCall((client) => {
-            const elementsRequest: Parameters<typeof client.labelElements.computeLabelElements>[0] = {
+            const elementsRequest: ElementsRequest = {
+                label: ref.identifier,
                 ...(options?.complement && { complementFilter: options.complement }),
                 ...(options?.filter && { patternFilter: options.filter }),
                 ...(options?.uris && { exactFilter: options.uris }),
-                ...(options?.order && { sortOrder: options.order === "asc" ? "ASC" : "DESC" }),
+                ...(options?.order && {
+                    sortOrder:
+                        options.order === "asc"
+                            ? ElementsRequestSortOrderEnum.ASC
+                            : ElementsRequestSortOrderEnum.DESC,
+                }),
+            };
+
+            const elementsRequestWrapped: Parameters<
+                typeof client.labelElements.computeLabelElementsPost
+            >[0] = {
                 limit,
                 offset,
-                label: ref.identifier,
+                elementsRequest,
                 workspaceId: this.workspace,
             };
 
-            return client.labelElements.computeLabelElements(elementsRequest);
+            return client.labelElements.computeLabelElementsPost(elementsRequestWrapped);
         });
 
         const { paging, elements } = response.data;

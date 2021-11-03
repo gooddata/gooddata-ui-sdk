@@ -747,6 +747,59 @@ export interface Element {
     title: string;
 }
 /**
+ *
+ * @export
+ * @interface ElementsRequest
+ */
+export interface ElementsRequest {
+    /**
+     * Requested label.
+     * @type {string}
+     * @memberof ElementsRequest
+     */
+    label: string;
+    /**
+     * Sort order of returned items. Items are sorted by ```label``` title.
+     * @type {string}
+     * @memberof ElementsRequest
+     */
+    sortOrder?: ElementsRequestSortOrderEnum;
+    /**
+     * Inverse filters: * ```false``` - return items matching ```patternFilter``` and ```exactFilter``` * ```true``` - return items not matching ```patternFilter``` and ```exactFilter```
+     * @type {boolean}
+     * @memberof ElementsRequest
+     */
+    complementFilter?: boolean;
+    /**
+     * Return only items, whose ```label``` title case insensitively contains ```filter``` as substring.
+     * @type {string}
+     * @memberof ElementsRequest
+     */
+    patternFilter?: string;
+    /**
+     * Return only items, whose ```label``` title exactly matches one of ```filter```.
+     * @type {Array<string>}
+     * @memberof ElementsRequest
+     */
+    exactFilter?: Array<string>;
+    /**
+     * Specifies percentage of source table data scanned during the computation.
+     * @type {number}
+     * @memberof ElementsRequest
+     */
+    dataSamplingPercentage?: number;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum ElementsRequestSortOrderEnum {
+    ASC = "ASC",
+    DESC = "DESC",
+}
+
+/**
  * Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging.
  * @export
  * @interface ElementsResponse
@@ -2099,6 +2152,94 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values.
+         * @param {string} workspaceId Workspace identifier
+         * @param {ElementsRequest} elementsRequest
+         * @param {number} [offset] Request page with this offset.
+         * @param {number} [limit] Return only this number of items.
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeLabelElementsPost(
+            params: {
+                workspaceId: string;
+                elementsRequest: ElementsRequest;
+                offset?: number;
+                limit?: number;
+                skipCache?: boolean;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { workspaceId, elementsRequest, offset, limit, skipCache } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling computeLabelElementsPost.",
+                );
+            }
+            // verify required parameter 'elementsRequest' is not null or undefined
+            if (elementsRequest === null || elementsRequest === undefined) {
+                throw new RequiredError(
+                    "elementsRequest",
+                    "Required parameter elementsRequest was null or undefined when calling computeLabelElementsPost.",
+                );
+            }
+            const localVarPath =
+                `/api/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                if (typeof offset === "object") {
+                    addFlattenedObjectTo(offset, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["offset"] = offset;
+                }
+            }
+
+            if (limit !== undefined) {
+                if (typeof limit === "object") {
+                    addFlattenedObjectTo(limit, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["limit"] = limit;
+                }
+            }
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof elementsRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(elementsRequest !== undefined ? elementsRequest : {})
+                : elementsRequest || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
          * @summary Executes analytical request and returns link to the result
          * @param {string} workspaceId Workspace identifier
@@ -2422,6 +2563,39 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             };
         },
         /**
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values.
+         * @param {string} workspaceId Workspace identifier
+         * @param {ElementsRequest} elementsRequest
+         * @param {number} [offset] Request page with this offset.
+         * @param {number} [limit] Return only this number of items.
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeLabelElementsPost(
+            params: {
+                workspaceId: string;
+                elementsRequest: ElementsRequest;
+                offset?: number;
+                limit?: number;
+                skipCache?: boolean;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ElementsResponse> {
+            const localVarAxiosArgs = ActionsApiAxiosParamCreator(configuration).computeLabelElementsPost(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
          * @summary Executes analytical request and returns link to the result
          * @param {string} workspaceId Workspace identifier
@@ -2583,6 +2757,29 @@ export const ActionsApiFactory = function (
             return ActionsApiFp(configuration).computeLabelElements(params, options)(axios, basePath);
         },
         /**
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values.
+         * @param {string} workspaceId Workspace identifier
+         * @param {ElementsRequest} elementsRequest
+         * @param {number} [offset] Request page with this offset.
+         * @param {number} [limit] Return only this number of items.
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeLabelElementsPost(
+            params: {
+                workspaceId: string;
+                elementsRequest: ElementsRequest;
+                offset?: number;
+                limit?: number;
+                skipCache?: boolean;
+            },
+            options?: any,
+        ): AxiosPromise<ElementsResponse> {
+            return ActionsApiFp(configuration).computeLabelElementsPost(params, options)(axios, basePath);
+        },
+        /**
          * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
          * @summary Executes analytical request and returns link to the result
          * @param {string} workspaceId Workspace identifier
@@ -2697,6 +2894,29 @@ export interface ActionsApiInterface {
             offset?: number;
             limit?: number;
             dataSamplingPercentage?: number;
+            skipCache?: boolean;
+        },
+        options?: any,
+    ): AxiosPromise<ElementsResponse>;
+
+    /**
+     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+     * @summary Listing of label values.
+     * @param {string} workspaceId Workspace identifier
+     * @param {ElementsRequest} elementsRequest
+     * @param {number} [offset] Request page with this offset.
+     * @param {number} [limit] Return only this number of items.
+     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    computeLabelElementsPost(
+        params: {
+            workspaceId: string;
+            elementsRequest: ElementsRequest;
+            offset?: number;
+            limit?: number;
             skipCache?: boolean;
         },
         options?: any,
@@ -2821,6 +3041,34 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         options?: any,
     ) {
         return ActionsApiFp(this.configuration).computeLabelElements(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+     * @summary Listing of label values.
+     * @param {string} workspaceId Workspace identifier
+     * @param {ElementsRequest} elementsRequest
+     * @param {number} [offset] Request page with this offset.
+     * @param {number} [limit] Return only this number of items.
+     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public computeLabelElementsPost(
+        params: {
+            workspaceId: string;
+            elementsRequest: ElementsRequest;
+            offset?: number;
+            limit?: number;
+            skipCache?: boolean;
+        },
+        options?: any,
+    ) {
+        return ActionsApiFp(this.configuration).computeLabelElementsPost(params, options)(
             this.axios,
             this.basePath,
         );
