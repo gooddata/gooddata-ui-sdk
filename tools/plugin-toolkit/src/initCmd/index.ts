@@ -73,7 +73,7 @@ function renamePluginDirectories(target: string, config: InitCmdActionConfig) {
 }
 
 function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): Promise<void> {
-    const { backend, hostname, pluginIdentifier, language } = config;
+    const { backend, hostname, workspace, dashboard, pluginIdentifier, language } = config;
     const isTiger = backend === "tiger";
     const replacements: FileReplacementSpec = {
         "webpack.config.js": [
@@ -87,6 +87,14 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
             {
                 regex: /BACKEND_URL=/g,
                 value: `BACKEND_URL=${hostname}`,
+            },
+            {
+                regex: /WORKSPACE=/g,
+                value: `WORKSPACE=${workspace}`,
+            },
+            {
+                regex: /DASHBOARD_ID=/g,
+                value: `DASHBOARD_ID=${dashboard}`,
             },
         ],
         src: {
@@ -146,6 +154,8 @@ export async function initCmdAction(pluginName: string | undefined, options: Act
         if (isInputValidationError(e)) {
             logError(e.message);
             process.exit(1);
+        } else {
+            logError(`An error has occurred during initialization of new project: ${e.message}`);
         }
     }
 }
