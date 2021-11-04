@@ -146,6 +146,14 @@ async function prepareProject(config: InitCmdActionConfig) {
 
 export async function initCmdAction(pluginName: string | undefined, options: ActionOptions): Promise<void> {
     try {
+        logInfo(
+            "You are about to create project for a new dashboard plugin. Please be note that the " +
+                "values of backend, hostname, workspace-id and dashboard-id options that you enter at this point " +
+                "will be used primarily during development and testing of your new plugin. You will be able to " +
+                "use the new plugin in production on other backend, workspace or dashboard regardless " +
+                "of the choices you make at this point.",
+        );
+
         const config = await getInitCmdActionConfig(pluginName, options);
 
         logInfo(`initCmdAction ${JSON.stringify(config, null, 4)}`);
