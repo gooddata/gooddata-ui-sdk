@@ -3,7 +3,7 @@ import type { DashboardPluginDescriptor } from "@gooddata/sdk-ui-dashboard";
 
 import { MODULE_FEDERATION_NAME } from "../metadata.json";
 
-import * as packageJson from "../../package.json";
+import packageJson from "../../package.json";
 
 type PluginEntryPoint = DashboardPluginDescriptor & {
     /**
@@ -17,8 +17,8 @@ type PluginEntryPoint = DashboardPluginDescriptor & {
 };
 
 const entryPoint: PluginEntryPoint = {
-    author: "<your-email>",
-    displayName: "plugin",
+    author: packageJson.author,
+    displayName: packageJson.name,
     version: packageJson.version,
     minEngineVersion: "bundled",
     maxEngineVersion: "bundled",
