@@ -1,0 +1,103 @@
+# GoodData.UI Dashboard Plugin project
+
+This is a one stop project to help you develop, test and build your own dashboard plugin. Before you start, we
+encourage you to learn more about plugins in [our documentation](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+
+In case you don't feel like reading the documentation at this point, go at least through the following quick introduction.
+
+## Quick Introduction into Dashboard Plugins
+
+Dashboard Plugins (plugins) allow developers to create extensions that alter behavior and look and feel of the
+vanilla GoodData KPI Dashboards (dashboards).
+
+Plugins are registered into the dashboard engine used to render a concrete dashboard. At the registration time the
+plugin code can use several customization APIs to:
+
+-   deliver new custom widgets to render on the dashboard
+-   alter how particular insights are rendered; this in effect allows you to inject custom data visualizations of
+    analytics computed by GoodData
+-   listen to events occurring on the dashboard
+
+When developing your own plugin, you typically create custom React components and event handlers that interact with
+the rendered dashboard using available APIs and then register those components and handlers using the customization APIs.
+
+The infrastructure within this project allows you to develop and verify your new plugin against a live, existing dashboard
+located either on GoodData platform or GoodData.CN.
+
+Once you are happy with your new plugin you have to build it using scripts included in this project and then host
+the built artifacts.
+
+After that, you can register the plugin into one or more workspaces on GoodData platform and/or GoodData.CN and
+then use the plugin on any number of dashboards
+
+_Note: GoodData currently does not provide hosting for your plugin artifacts._
+
+## Plugin development guide
+
+Building a new plugin is easy. Before you start, ensure that your `.env` file is setup correctly, including the
+environment variables that contain your authentication information (you can put them into the .env file but they
+may be defined elsewhere as well).
+
+1.  Start the development server: `{{packageManager}} start`
+
+    To verify everything works correctly, navigate to `https://localhost:3001`. You should see your existing
+    dashboard with a new empty section added at the end. The section will be titled 'Added from a plugin'.
+
+    Note: you can use `PORT` env variable to specify different port number.
+
+2.  Develop your plugin code in `src/{{pluginIdentifier}}`
+
+    The `src/{{pluginIdentifier}}/Plugin.{{language}}x` is the main plugin file where you have to register all
+    your custom content. However, you can create as many new files as you want under the `src/{{pluginIdentifier}}`
+    directory. Just make sure to never place your custom code outside of this directory.
+
+    Note: we recommend to write your plugin in TypeScript and to use a modern IDE. This way you can conveniently
+    explore the plugin customization APIs from the comfort of your development environment.
+
+3.  Build the plugin: `{{packageManager}} build-plugin`
+
+    This will build plugin artifacts under `dist/dashboardPlugin`.
+
+4.  Upload plugin artifacts to your hosting
+
+    It is paramount that you upload all files from the `dist/dashboardPlugin`.
+
+    _IMPORTANT_: your hosting must support https and your GoodData domain must include the hosting location in the list
+    of allowed hosts from where GoodData will load plugins. Your domain admin must explicitly allow the hosting
+    location before we will load any plugins from it. You may host multiple plugins in separate directories within
+    the allowed hosting location.
+
+    _GOOD IDEA_: treat plugin builds immutably. Never overwrite an already uploaded plugin artifacts. Organize your hosting
+    location so there is always unique directory that contains all plugin artifacts. This is a corner-stone of controlled,
+    phased rollout of the plugin.
+
+    _BAD IDEA_: overwriting existing plugin artifacts will immediately impact all dashboards that use the plugin, possibly
+    breaking them if you did not have chance to fully test the plugin.
+
+5.  Add plugin to one or more workspaces: `{{packageManager}} dashboard-plugin add`
+
+    TBD
+
+6.  Use plugin on a dashboard: `{{packageManager}} dashboard-plugin use`
+
+    TBD
+
+## FAQ
+
+### How do plugin dependencies work?
+
+Your plugin can depend on arbitrary third party packages at your discretion with one exception: the packages
+specified as `peerDependencies` in this project's package.json. Packages that are listed as `peerDependencies`
+will be _provided_ by the runtime environment.
+
+### Can I modify webpack config?
+
+This is generally not recommended and if needed should be approached by expert users only. In general, adding new
+loaders and _extending_ the resolve section are the safer types of changes. However we strongly discourage making
+modifications to other parts of the webpack config: changes to how the `dashboardPlugin` is built can break your
+plugin and prevent it from loading correctly.
+
+### How about Internet Explorer?
+
+GoodData applications [do not support Internet Explorer](https://help.gooddata.com/doc/enterprise/en/how-to-get-started-with-gooddata/system-requirements-and-supported-browsers) as of November 19th 2021. Thus, you
+do not have to test your plugin with Internet Explorer because at this point there is no guarantee that the GoodData KPI Dashboards application will even load with Internet Explorer.

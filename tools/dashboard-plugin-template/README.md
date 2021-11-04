@@ -1,6 +1,10 @@
 # Dashboard plugin template
 
-This package serves as a template for developing dashboard plugins. See also [`@gooddata/plugin-toolkit`](https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/plugin-toolkit).
+The contents of this package are used as a template for new dashboard plugins. The package is not published anywhere;
+its contents are bundled with the the [`@gooddata/plugin-toolkit`](https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/plugin-toolkit) CLI tool
+which is responsible for bootstrap of the new project.
+
+See build script included in the [`@gooddata/plugin-toolkit`] to see learn how the contents of this package are processed.
 
 ## License
 

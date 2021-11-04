@@ -74,7 +74,7 @@ function renamePluginDirectories(target: string, config: InitCmdActionConfig) {
 }
 
 function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): Promise<void> {
-    const { backend, hostname, workspace, dashboard, pluginIdentifier, language } = config;
+    const { backend, hostname, workspace, dashboard, pluginIdentifier, language, packageManager } = config;
     const isTiger = backend === "tiger";
     const replacements: FileReplacementSpec = {
         "webpack.config.js": [
@@ -96,6 +96,20 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
             {
                 regex: /DASHBOARD_ID=/g,
                 value: `DASHBOARD_ID=${dashboard}`,
+            },
+        ],
+        "README.md": [
+            {
+                regex: /{{packageManager}}/g,
+                value: packageManager,
+            },
+            {
+                regex: /{{pluginIdentifier}}/g,
+                value: pluginIdentifier,
+            },
+            {
+                regex: /{{language}}/g,
+                value: language,
             },
         ],
         src: {
