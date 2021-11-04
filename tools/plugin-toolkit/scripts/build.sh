@@ -68,6 +68,9 @@ $BABEL_BIN --no-babelrc \
 # remove TypeScript files
 find "${JS_BUILD_DIR}" -type f \( -iname \*.ts -o -iname \*.tsx -o -iname \*.d.js \) -exec rm -rf {} \;
 
+# rename react files to .jsx
+find "${TS_BUILD_DIR}" -type f -iname \*.tsx | cut -c $((${#TS_BUILD_DIR} + 2))- | cut -sd . -f 1 | xargs -I {} mv "${JS_BUILD_DIR}/{}.js" "${JS_BUILD_DIR}/{}.jsx"
+
 # format transpiled files as format was broken during transpile process
 $PRETTIER_BIN --write "${JS_BUILD_DIR}/**/*.{js,jsx}" \
   --parser typescript \

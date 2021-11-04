@@ -106,7 +106,7 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
                 },
             ],
             harness: {
-                [`PluginLoader.${language === "js" ? "js" : "tsx"}`]: [
+                [`PluginLoader.${language}x`]: [
                     {
                         regex: /"\.\.\/plugin"/g,
                         value: `"../${pluginIdentifier}"`,
