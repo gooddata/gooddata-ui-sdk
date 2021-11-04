@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
-import { TargetAppFlavor, TargetBackendType } from "../types";
+import { TargetAppLanguage, TargetBackendType } from "../types";
 import { createHostnameValidator, pluginNameValidator } from "./validators";
 import { sanitizeHostname } from "./sanitizers";
 
@@ -43,9 +43,31 @@ export async function promptWorkspaceId(choices: WorkspaceChoices[]): Promise<st
     return response.id;
 }
 
+export async function promptWorkspaceIdWithoutChoice(): Promise<string> {
+    const question: DistinctQuestion = {
+        type: "input",
+        name: "id",
+        message: `Enter identifier of a workspace to use during plugin development:`,
+    };
+
+    const response = await prompt(question);
+    return response.id;
+}
+
+export async function promptDashboardIdWithoutChoice(): Promise<string> {
+    const question: DistinctQuestion = {
+        type: "input",
+        name: "id",
+        message: `Enter identifier of a dashboard to use during plugin development:`,
+    };
+
+    const response = await prompt(question);
+    return response.id;
+}
+
 export async function promptName(object: string = "dashboard plugin"): Promise<string> {
     const question: DistinctQuestion = {
-        message: `What is your ${object} name?`,
+        message: `Enter ${object} name:`,
         name: "name",
         type: "input",
         validate: pluginNameValidator,
@@ -58,15 +80,12 @@ export async function promptName(object: string = "dashboard plugin"): Promise<s
 export async function promptHostname(backend: TargetBackendType): Promise<string> {
     if (backend === "bear") {
         const question: DistinctQuestion = {
-            message: "What is your hostname?",
+            message: "Select GoodData platform hostname:",
             name: "hostname",
             type: "list",
             choices: [
                 {
                     value: "https://secure.gooddata.com",
-                },
-                {
-                    value: "https://developer.na.gooddata.com",
                 },
                 {
                     value: "https://salesengineering.na.gooddata.com",
@@ -85,8 +104,9 @@ export async function promptHostname(backend: TargetBackendType): Promise<string
         }
     }
 
+    const displayName = backend === "bear" ? "GoodData platform" : "GoodData.CN";
     const question: DistinctQuestion = {
-        message: "Enter custom hostname",
+        message: `Enter ${displayName} hostname:`,
         name: "hostname",
         type: "input",
         validate: createHostnameValidator(backend),
@@ -99,12 +119,12 @@ export async function promptHostname(backend: TargetBackendType): Promise<string
 
 export async function promptBackend(): Promise<TargetBackendType> {
     const question: DistinctQuestion = {
-        message: "What is your application desired platform (backend)?",
+        message: "Select backend type that you use:",
         name: "backend",
         type: "list",
         choices: [
             {
-                name: "SaaS (codename 'Bear')",
+                name: "GoodData platform (codename 'Bear')",
                 value: "bear",
             },
             {
@@ -118,10 +138,10 @@ export async function promptBackend(): Promise<TargetBackendType> {
     return response.backend;
 }
 
-export async function promptFlavor(): Promise<TargetAppFlavor> {
+export async function promptLanguage(): Promise<TargetAppLanguage> {
     const question: DistinctQuestion = {
-        message: "What is your application desired flavor?",
-        name: "flavor",
+        message: "Select programming language that you want to use in your plugin:",
+        name: "language",
         type: "list",
         choices: [
             {
@@ -136,5 +156,5 @@ export async function promptFlavor(): Promise<TargetAppFlavor> {
     };
 
     const response = await prompt(question);
-    return response.flavor;
+    return response.language;
 }

@@ -8,4 +8,4 @@ export type ActionOptions = {
 };
 
 export type TargetBackendType = "bear" | "tiger";
-export type TargetAppFlavor = "ts" | "js";
+export type TargetAppLanguage = "ts" | "js";

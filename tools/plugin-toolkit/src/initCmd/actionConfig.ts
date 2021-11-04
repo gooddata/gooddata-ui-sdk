@@ -1,13 +1,13 @@
 // (C) 2021 GoodData Corporation
-import { ActionOptions, TargetAppFlavor, TargetBackendType } from "../_base/types";
+import { ActionOptions, TargetAppLanguage, TargetBackendType } from "../_base/types";
 import {
     backendTypeValidator,
-    flavorValidator,
+    languageValidator,
     createHostnameValidator,
     pluginNameValidator,
     validOrDie,
 } from "../_base/cli/validators";
-import { promptBackend, promptFlavor, promptHostname, promptName } from "../_base/cli/prompts";
+import { promptBackend, promptLanguage, promptHostname, promptName } from "../_base/cli/prompts";
 import snakeCase from "lodash/snakeCase";
 
 function getHostname(backend: TargetBackendType | undefined, options: ActionOptions): string | undefined {
@@ -37,16 +37,16 @@ function getBackend(options: ActionOptions): TargetBackendType | undefined {
     return backend as TargetBackendType;
 }
 
-function getFlavor(options: ActionOptions): TargetAppFlavor | undefined {
-    const { flavor } = options.commandOpts;
+function getLanguage(options: ActionOptions): TargetAppLanguage | undefined {
+    const { language } = options.commandOpts;
 
-    if (!flavor) {
+    if (!language) {
         return undefined;
     }
 
-    validOrDie("flavor", flavor, flavorValidator);
+    validOrDie("language", language, languageValidator);
 
-    return flavor as TargetAppFlavor;
+    return language as TargetAppLanguage;
 }
 
 //
@@ -58,7 +58,7 @@ export type InitCmdActionConfig = {
     pluginIdentifier: string;
     backend: TargetBackendType;
     hostname: string;
-    flavor: TargetAppFlavor;
+    language: TargetAppLanguage;
     targetDir: string | undefined;
     skipInstall: boolean;
 };
@@ -83,10 +83,10 @@ export async function getInitCmdActionConfig(
 
     const backendFromOptions = getBackend(options);
     const hostnameFromOptions = getHostname(backendFromOptions, options);
-    const flavorFromOptions = getFlavor(options);
+    const languageFromOptions = getLanguage(options);
     const backend = backendFromOptions ?? (await promptBackend());
     const hostname = hostnameFromOptions ?? (await promptHostname(backend));
-    const flavor = flavorFromOptions ?? (await promptFlavor());
+    const language = languageFromOptions ?? (await promptLanguage());
     const name = pluginName ?? (await promptName());
 
     // validate hostname once again; this is to catch the case when hostname is provided as
@@ -99,7 +99,7 @@ export async function getInitCmdActionConfig(
         pluginIdentifier: `dp_${snakeCase(name)}`,
         backend,
         hostname,
-        flavor,
+        language,
         targetDir: options.commandOpts.targetDir,
         skipInstall: options.commandOpts.skipInstall ?? false,
     };

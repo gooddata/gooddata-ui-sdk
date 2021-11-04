@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { ActionOptions, TargetAppFlavor } from "../_base/types";
+import { ActionOptions, TargetAppLanguage } from "../_base/types";
 import { logError, logInfo } from "../_base/cli/loggers";
 import kebabCase from "lodash/kebabCase";
 import * as path from "path";
@@ -16,10 +16,10 @@ import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles";
 //
 //
 
-function unpackProject(target: string, flavor: TargetAppFlavor) {
+function unpackProject(target: string, language: TargetAppLanguage) {
     return fse.mkdirp(target).then((_) => {
         return tar.x({
-            file: getDashboardPluginTemplateArchive(flavor),
+            file: getDashboardPluginTemplateArchive(language),
             strip: 1,
             cwd: target,
         });
@@ -73,7 +73,7 @@ function renamePluginDirectories(target: string, config: InitCmdActionConfig) {
 }
 
 function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): Promise<void> {
-    const { backend, hostname, pluginIdentifier, flavor } = config;
+    const { backend, hostname, pluginIdentifier, language } = config;
     const isTiger = backend === "tiger";
     const replacements: FileReplacementSpec = {
         "webpack.config.js": [
@@ -97,7 +97,7 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
                 },
             ],
             harness: {
-                [`PluginLoader.${flavor}x`]: [
+                [`PluginLoader.${language}x`]: [
                     {
                         regex: /"\.\.\/plugin"/g,
                         value: `"../${pluginIdentifier}"`,
@@ -125,10 +125,10 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
  * @param config - config for the initialization action
  */
 async function prepareProject(config: InitCmdActionConfig) {
-    const { name, targetDir, flavor, backend } = config;
+    const { name, targetDir, language, backend } = config;
     const target = targetDir ? targetDir : path.resolve(process.cwd(), kebabCase(name));
 
-    await unpackProject(target, flavor);
+    await unpackProject(target, language);
     modifyPackageJson(target, config);
 
     await processTigerFiles(target, backend === "tiger");
