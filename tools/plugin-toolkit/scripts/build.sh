@@ -37,7 +37,8 @@ mkdir -p "${TS_BUILD_DIR}/src"
 cp -R "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/src" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/package.json" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/webpack.config.js" "${TS_BUILD_DIR}"
-cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.env.template" "${TS_BUILD_DIR}"
+cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.env.template" "${TS_BUILD_DIR}/.env"
+cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.gitignore" "${TS_BUILD_DIR}"
 
 $PREPARE_PACKAGE_JSON remove-gd-stuff "${TS_BUILD_DIR}"
 
