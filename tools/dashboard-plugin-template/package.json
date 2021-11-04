@@ -99,6 +99,7 @@
         "eslint-plugin-react-hooks": "^4.0.8",
         "eslint-plugin-react": "^7.20.5",
         "eslint-plugin-sonarjs": "^0.9.1",
+        "html-webpack-plugin": "^5.3.1",
         "jest": "^26.4.2",
         "jest-enzyme": "^7.1.2",
         "jest-junit": "^3.0.0",

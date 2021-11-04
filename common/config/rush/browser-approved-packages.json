@@ -652,7 +652,7 @@
     },
     {
       "name": "html-webpack-plugin",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "http-status-codes",
