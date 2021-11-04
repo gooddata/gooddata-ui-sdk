@@ -8,6 +8,7 @@ import {
     validOrDie,
 } from "../_base/cli/validators";
 import { promptBackend, promptFlavor, promptHostname, promptName } from "../_base/cli/prompts";
+import snakeCase from "lodash/snakeCase";
 
 function getHostname(backend: TargetBackendType | undefined, options: ActionOptions): string | undefined {
     const { hostname } = options.programOpts;
@@ -54,6 +55,7 @@ function getFlavor(options: ActionOptions): TargetAppFlavor | undefined {
 
 export type InitCmdActionConfig = {
     name: string;
+    pluginIdentifier: string;
     backend: TargetBackendType;
     hostname: string;
     flavor: TargetAppFlavor;
@@ -93,7 +95,8 @@ export async function getInitCmdActionConfig(
     validOrDie("hostname", hostname, createHostnameValidator(backend));
 
     return {
-        name: name,
+        name,
+        pluginIdentifier: `dp_${snakeCase(name)}`,
         backend,
         hostname,
         flavor,
