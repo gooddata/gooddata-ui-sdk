@@ -30,15 +30,15 @@ const setFilterBarExpanded: UiReducer<PayloadAction<boolean>> = (state, action) 
 };
 
 const closeKpiAlertDialog: UiReducer = (state) => {
-    state.kpiAlerts.openedAlertRef = undefined;
+    state.kpiAlerts.openedWidgetRef = undefined;
 };
 
 const openKpiAlertDialog: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
-    state.kpiAlerts.openedAlertRef = action.payload;
+    state.kpiAlerts.openedWidgetRef = action.payload;
 };
 
 const highlightKpiAlert: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
-    state.kpiAlerts.highlightedAlertRef = action.payload;
+    state.kpiAlerts.highlightedWidgetRef = action.payload;
 };
 
 export const uiReducers = {

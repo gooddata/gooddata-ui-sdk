@@ -53,8 +53,8 @@ import {
     selectConfiguredDrillsByWidgetRef,
     uiActions,
     useDashboardDispatch,
-    selectIsKpiAlertOpenedByAlertRef,
-    selectIsKpiAlertHighlightedByAlertRef,
+    selectIsKpiAlertOpenedByWidgetRef,
+    selectIsKpiAlertHighlightedByWidgetRef,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
@@ -137,15 +137,13 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const settings = useDashboardSelector(selectSettings);
     const drillableItems = useDashboardSelector(selectDrillableItems);
     const widgetDrills = useDashboardSelector(selectConfiguredDrillsByWidgetRef(kpiWidget.ref));
-    const isAlertDialogOpen = useDashboardSelector(selectIsKpiAlertOpenedByAlertRef(alert?.ref));
-    const isAlertHighlighted = useDashboardSelector(selectIsKpiAlertHighlightedByAlertRef(alert?.ref));
+    const isAlertDialogOpen = useDashboardSelector(selectIsKpiAlertOpenedByWidgetRef(kpiWidget.ref));
+    const isAlertHighlighted = useDashboardSelector(selectIsKpiAlertHighlightedByWidgetRef(kpiWidget.ref));
 
     const dispatch = useDashboardDispatch();
     const openAlertDialog = useCallback(() => {
-        if (alert?.ref) {
-            dispatch(uiActions.openKpiAlertDialog(alert.ref));
-        }
-    }, [alert]);
+        dispatch(uiActions.openKpiAlertDialog(kpiWidget.ref));
+    }, [kpiWidget]);
     const closeAlertDialog = useCallback(() => {
         dispatch(uiActions.closeKpiAlertDialog());
     }, []);

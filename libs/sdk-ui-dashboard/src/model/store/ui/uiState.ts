@@ -16,8 +16,8 @@ export type UiState = {
         expanded: boolean;
     };
     kpiAlerts: {
-        openedAlertRef: ObjRef | undefined;
-        highlightedAlertRef: ObjRef | undefined;
+        openedWidgetRef: ObjRef | undefined;
+        highlightedWidgetRef: ObjRef | undefined;
     };
 };
 
@@ -33,7 +33,7 @@ export const uiInitialState: UiState = {
         expanded: false,
     },
     kpiAlerts: {
-        highlightedAlertRef: undefined,
-        openedAlertRef: undefined,
+        highlightedWidgetRef: undefined,
+        openedWidgetRef: undefined,
     },
 };
