@@ -125,8 +125,8 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
  * @param config - config for the initialization action
  */
 async function prepareProject(config: InitCmdActionConfig) {
-    const { pluginIdentifier, targetDir, flavor, backend } = config;
-    const target = targetDir ? targetDir : path.resolve(process.cwd(), kebabCase(pluginIdentifier));
+    const { name, targetDir, flavor, backend } = config;
+    const target = targetDir ? targetDir : path.resolve(process.cwd(), kebabCase(name));
 
     await unpackProject(target, flavor);
     modifyPackageJson(target, config);
