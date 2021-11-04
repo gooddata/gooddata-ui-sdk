@@ -1,6 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import React, { SyntheticEvent } from "react";
 import cx from "classnames";
+import compact from "lodash/compact";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ITheme } from "@gooddata/sdk-backend-spi";
@@ -43,7 +44,9 @@ export const DrillSelectListItem = (props: DrillSelectListItemProps): JSX.Elemen
     const IconComponent = Icon[DRILL_ICON_NAME[type]];
 
     const attributeLabel = attributeValue ? `(${attributeValue})` : "";
-    const title = `${name} ${attributeLabel}`;
+
+    // make sure there is no trailing space in case attributeLabel is empty
+    const title = compact([name, attributeLabel]).join(" ");
 
     return (
         <a onClick={onClick} className={itemClassName} title={title}>
