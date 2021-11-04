@@ -115,10 +115,6 @@ module.exports = (_env, argv) => {
             new DefinePlugin({
                 PORT: JSON.stringify(PORT),
             }),
-            new Dotenv({
-                silent: true, // we are ok with the .env file not being there, do not warn about it (so that CI works)
-                systemvars: true,
-            }),
         ],
     };
 
@@ -134,6 +130,10 @@ module.exports = (_env, argv) => {
             },
             plugins: [
                 ...commonConfig.plugins,
+                new Dotenv({
+                    silent: true, // we are ok with the .env file not being there, do not warn about it (so that CI works)
+                    systemvars: true,
+                }),
                 new HtmlWebpackPlugin({
                     template: "./src/harness/public/index.html",
                 }),
@@ -141,6 +141,9 @@ module.exports = (_env, argv) => {
         },
         {
             ...commonConfig,
+            entry: `./src/${MODULE_FEDERATION_NAME}/index`,
+            name: "dashboardPlugin",
+            output: { ...commonConfig.output, path: path.join(__dirname, "dist", "dashboardPlugin") },
             plugins: [
                 ...commonConfig.plugins,
                 new ModuleFederationPlugin({
@@ -187,9 +190,6 @@ module.exports = (_env, argv) => {
                     },
                 }),
             ],
-            entry: `./src/${MODULE_FEDERATION_NAME}/index`,
-            name: "dashboardPlugin",
-            output: { ...commonConfig.output, path: path.join(__dirname, "dist", "dashboardPlugin") },
         },
     ];
 };
