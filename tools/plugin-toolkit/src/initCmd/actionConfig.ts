@@ -1,11 +1,12 @@
 // (C) 2021 GoodData Corporation
-import { ActionOptions, TargetAppLanguage, TargetBackendType } from "../_base/types";
+import { ActionOptions, SupportedPackageManager, TargetAppLanguage, TargetBackendType } from "../_base/types";
 import {
     backendTypeValidator,
     languageValidator,
     createHostnameValidator,
     pluginNameValidator,
     validOrDie,
+    packageManagerValidator,
 } from "../_base/cli/validators";
 import {
     promptBackend,
@@ -80,6 +81,18 @@ function getLanguage(options: ActionOptions): TargetAppLanguage | undefined {
     return language as TargetAppLanguage;
 }
 
+function getPackageManager(options: ActionOptions): SupportedPackageManager {
+    const { packageManager } = options.commandOpts;
+
+    if (!packageManager) {
+        return "npm";
+    }
+
+    validOrDie("packageManager", packageManager, packageManagerValidator);
+
+    return packageManager as SupportedPackageManager;
+}
+
 //
 //
 //
@@ -87,6 +100,7 @@ function getLanguage(options: ActionOptions): TargetAppLanguage | undefined {
 export type InitCmdActionConfig = {
     name: string;
     pluginIdentifier: string;
+    packageManager: SupportedPackageManager;
     backend: TargetBackendType;
     hostname: string;
     workspace: string;
@@ -119,6 +133,7 @@ export async function getInitCmdActionConfig(
     const languageFromOptions = getLanguage(options);
     const workspaceFromOptions = getWorkspace(options);
     const dashboardFromOptions = getDashboard(options);
+    const packageManagerFromOptions = getPackageManager(options);
     const backend = backendFromOptions ?? (await promptBackend());
     const hostname = hostnameFromOptions ?? (await promptHostname(backend));
     const language = languageFromOptions ?? (await promptLanguage());
@@ -139,6 +154,7 @@ export async function getInitCmdActionConfig(
         workspace,
         dashboard,
         language,
+        packageManager: packageManagerFromOptions,
         targetDir: options.commandOpts.targetDir,
         skipInstall: options.commandOpts.skipInstall ?? false,
     };

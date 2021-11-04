@@ -21529,7 +21529,7 @@ packages:
     dev: false
 
   file:projects/plugin-toolkit.tgz:
-    resolution: {integrity: sha512-rbf1Nv2KFxfUMLK/4CAZsbYPc31zluEDKYc+sDDu1Pkd8Ila88V28CmliQ/r1pmk8KuWYznOTCAfQ2GZ2CJi/Q==, tarball: file:projects/plugin-toolkit.tgz}
+    resolution: {integrity: sha512-TkMFbEK9HiYSmxIDXnasfsISbIeTCM8g21DCCcpZqvZyHoUdEzcWwPQEc6n8WQBjwUQ4SH42lanCUfg6P0O5Nw==, tarball: file:projects/plugin-toolkit.tgz}
     name: '@rush-temp/plugin-toolkit'
     version: 0.0.0
     dependencies:
@@ -21537,6 +21537,7 @@ packages:
       '@babel/core': 7.14.3
       '@babel/plugin-transform-typescript': 7.14.4_@babel+core@7.14.3
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
+      '@types/cross-spawn': 6.0.2
       '@types/fs-extra': 9.0.13
       '@types/inquirer': 7.3.1
       '@types/jest': 26.0.23
@@ -21550,6 +21551,7 @@ packages:
       chalk: 4.1.1
       commander: 8.3.0
       concurrently: 6.2.0
+      cross-spawn: 7.0.3
       dependency-cruiser: 9.26.1
       eslint: 7.28.0
       eslint-plugin-header: 3.1.1_eslint@7.28.0

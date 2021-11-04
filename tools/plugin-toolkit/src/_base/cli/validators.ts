@@ -62,6 +62,14 @@ export function languageValidator(value: string): boolean | string {
     return "Invalid language. Specify 'ts' for TypeScript or 'js' for JavaScript.";
 }
 
+export function packageManagerValidator(value: string): boolean | string {
+    if (value === "npm" || value === "yarn") {
+        return true;
+    }
+
+    return "Invalid package manager. Specify 'npm' or 'yarn'.";
+}
+
 export function validOrDie(inputName: string, value: string, validator: InputValidator): void {
     const result = validator(value);
 

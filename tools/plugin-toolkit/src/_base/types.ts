@@ -9,3 +9,4 @@ export type ActionOptions = {
 
 export type TargetBackendType = "bear" | "tiger";
 export type TargetAppLanguage = "ts" | "js";
+export type SupportedPackageManager = "npm" | "yarn";

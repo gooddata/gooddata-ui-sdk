@@ -36,9 +36,10 @@ const initCmd: Command = dashboardCmd
     .option(
         "--target-dir <path>",
         "Path to the directory to create the plugin in. If not " +
-            "specified, program will create a new subdirectory with name derived from plugin name in the current working directory.",
+            "specified, program will create a new subdirectory with name derived from plugin name in the current working directory",
     )
-    .option("--skip-install", "Skip yarn installing the plugin dependencies", false)
+    .option("--package-manager <package-manager>", "Package manager to use in the plugin project", "npm")
+    .option("--skip-install", "Skip installing the plugin dependencies", false)
     .action(async (pluginName) => {
         acceptUntrustedSsl(program.opts());
 

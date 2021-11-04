@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { ActionOptions, TargetAppLanguage } from "../_base/types";
-import { logError, logInfo } from "../_base/cli/loggers";
+import { logError, logInfo, logWarn } from "../_base/cli/loggers";
 import kebabCase from "lodash/kebabCase";
 import * as path from "path";
 import fse from "fs-extra";
@@ -11,6 +11,7 @@ import { isInputValidationError } from "../_base/cli/validators";
 import { processTigerFiles } from "./processTigerFiles";
 import { getInitCmdActionConfig, InitCmdActionConfig } from "./actionConfig";
 import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles";
+import { sync as spawnSync } from "cross-spawn";
 
 //
 //
@@ -132,7 +133,7 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
  *
  * @param config - config for the initialization action
  */
-async function prepareProject(config: InitCmdActionConfig) {
+async function prepareProject(config: InitCmdActionConfig): Promise<string> {
     const { name, targetDir, language, backend } = config;
     const target = targetDir ? targetDir : path.resolve(process.cwd(), kebabCase(name));
 
@@ -142,6 +143,43 @@ async function prepareProject(config: InitCmdActionConfig) {
     await processTigerFiles(target, backend === "tiger");
     renamePluginDirectories(target, config);
     await performReplacementsInFiles(target, config);
+
+    return target;
+}
+
+function runInstall(target: string, config: InitCmdActionConfig): void {
+    const { skipInstall, packageManager } = config;
+
+    if (skipInstall) {
+        logWarn(
+            `Skipping installation of plugin project dependencies. Make sure to run '${packageManager} install' in the plugin directory before you start developing.`,
+        );
+
+        return;
+    }
+
+    try {
+        const result = spawnSync(packageManager, ["install"], {
+            cwd: target,
+            stdio: ["ignore", "inherit", "inherit"],
+        });
+
+        if (result.status !== 0) {
+            logWarn(
+                `New project was created but the installation of dependencies has failed. Troubleshoot the problem in '${target}' and retry '${packageManager} install'.`,
+            );
+
+            return;
+        }
+
+        return;
+    } catch (e) {
+        logError(
+            `An internal error has occurred while attempting to install project dependencies: ${e.message}`,
+        );
+
+        return;
+    }
 }
 
 export async function initCmdAction(pluginName: string | undefined, options: ActionOptions): Promise<void> {
@@ -155,12 +193,15 @@ export async function initCmdAction(pluginName: string | undefined, options: Act
         );
 
         const config = await getInitCmdActionConfig(pluginName, options);
+        const directory = await prepareProject(config);
 
-        logInfo(`initCmdAction ${JSON.stringify(config, null, 4)}`);
-        await prepareProject(config);
+        runInstall(directory, config);
+
+        logInfo(`A new project for your dashboard plugin is ready in: ${directory}`);
     } catch (e) {
         if (isInputValidationError(e)) {
             logError(e.message);
+
             process.exit(1);
         } else {
             logError(`An error has occurred during initialization of new project: ${e.message}`);
