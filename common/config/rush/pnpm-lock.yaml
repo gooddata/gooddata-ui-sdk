@@ -21529,13 +21529,15 @@ packages:
     dev: false
 
   file:projects/plugin-toolkit.tgz:
-    resolution: {integrity: sha512-TkMFbEK9HiYSmxIDXnasfsISbIeTCM8g21DCCcpZqvZyHoUdEzcWwPQEc6n8WQBjwUQ4SH42lanCUfg6P0O5Nw==, tarball: file:projects/plugin-toolkit.tgz}
+    resolution: {integrity: sha512-WuEniwMmwHvlY8w/TMyIpDyNGgo9L75HtqwtSFe5m0dam8oFxOSjBEAP8YLCTYRaB3HbEqYiduPdx0JkFxqFmg==, tarball: file:projects/plugin-toolkit.tgz}
     name: '@rush-temp/plugin-toolkit'
     version: 0.0.0
     dependencies:
       '@babel/cli': 7.14.3_@babel+core@7.14.3
       '@babel/core': 7.14.3
       '@babel/plugin-transform-typescript': 7.14.4_@babel+core@7.14.3
+      '@babel/preset-env': 7.14.4_@babel+core@7.14.3
+      '@babel/preset-typescript': 7.13.0_@babel+core@7.14.3
       '@gooddata/eslint-config': 2.1.0_7e427bd3bb4b7d86e24202eabc093566
       '@types/cross-spawn': 6.0.2
       '@types/fs-extra': 9.0.13

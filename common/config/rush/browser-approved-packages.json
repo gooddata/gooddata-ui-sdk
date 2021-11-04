@@ -56,7 +56,7 @@
     },
     {
       "name": "@babel/preset-typescript",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/runtime",

@@ -77,6 +77,7 @@ module.exports = (_env, argv) => {
         },
         module: {
             rules: [
+                // TS source files in case TS is used
                 {
                     test: /\.tsx?$/,
                     use: [
@@ -87,6 +88,19 @@ module.exports = (_env, argv) => {
                             loader: "ts-loader",
                             options: {
                                 transpileOnly: true,
+                            },
+                        },
+                    ],
+                },
+                // JS source files in case JS is used
+                {
+                    test: /\.jsx?$/,
+                    exclude: /node_modules/,
+                    use: [
+                        {
+                            loader: "babel-loader",
+                            options: {
+                                presets: ["@babel/preset-react"],
                             },
                         },
                     ],

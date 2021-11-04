@@ -6,12 +6,14 @@ import {
     IDashboardEventHandling,
 } from "@gooddata/sdk-ui-dashboard";
 
+import packageJson from "../../package.json";
+
 // Implement your plugin here, you can import other files etc. Just keep the component name and make sure it stays exported.
 
 export class Plugin extends DashboardPluginV1 {
-    public readonly author = "<your-email>";
-    public readonly displayName = "plugin";
-    public readonly version = "0.1";
+    public readonly author = packageJson.author;
+    public readonly displayName = packageJson.name;
+    public readonly version = packageJson.version;
 
     public register(
         _ctx: DashboardContext,
