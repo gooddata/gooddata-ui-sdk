@@ -66,7 +66,7 @@ $BABEL_BIN --no-babelrc \
   --extensions .ts,.tsx "${JS_BUILD_DIR}" -d "${JS_BUILD_DIR}"
 
 # remove TypeScript files
-find "${JS_BUILD_DIR}" -type f -regex '.*\.\(ts\|tsx\)' -exec rm -rf {} \;
+find "${JS_BUILD_DIR}" -type f \( -iname \*.ts -o -iname \*.tsx -o -iname \*.d.js \) -exec rm -rf {} \;
 
 # format transpiled files as format was broken during transpile process
 $PRETTIER_BIN --write "${JS_BUILD_DIR}/**/*.{js,jsx}" \
