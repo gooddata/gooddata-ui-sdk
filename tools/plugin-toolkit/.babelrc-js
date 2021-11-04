@@ -1,15 +1,13 @@
 {
     "retainLines": true,
-    "plugins": [
+    "presets": [
         [
-            "@babel/plugin-transform-typescript",
+            "@babel/preset-typescript",
             {
                 "isTSX": true,
                 "allExtensions": true
             }
-        ]
-    ],
-    "presets": [
+        ],
         [
             "@babel/preset-env",
             {
