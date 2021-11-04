@@ -54,12 +54,20 @@ export function backendTypeValidator(value: string): boolean | string {
     return "Invalid backend type. Specify 'bear' for GoodData Platform or 'tiger' for GoodData.CN.";
 }
 
-export function flavorValidator(value: string): boolean | string {
+export function languageValidator(value: string): boolean | string {
     if (value === "js" || value === "ts") {
         return true;
     }
 
-    return "Invalid flavor. Specify 'ts' for TypeScript or 'js' for JavaScript.";
+    return "Invalid language. Specify 'ts' for TypeScript or 'js' for JavaScript.";
+}
+
+export function packageManagerValidator(value: string): boolean | string {
+    if (value === "npm" || value === "yarn") {
+        return true;
+    }
+
+    return "Invalid package manager. Specify 'npm' or 'yarn'.";
 }
 
 export function validOrDie(inputName: string, value: string, validator: InputValidator): void {

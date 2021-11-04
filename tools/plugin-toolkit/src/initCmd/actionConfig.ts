@@ -1,13 +1,21 @@
 // (C) 2021 GoodData Corporation
-import { ActionOptions, TargetAppFlavor, TargetBackendType } from "../_base/types";
+import { ActionOptions, SupportedPackageManager, TargetAppLanguage, TargetBackendType } from "../_base/types";
 import {
     backendTypeValidator,
-    flavorValidator,
+    languageValidator,
     createHostnameValidator,
     pluginNameValidator,
     validOrDie,
+    packageManagerValidator,
 } from "../_base/cli/validators";
-import { promptBackend, promptFlavor, promptHostname, promptName } from "../_base/cli/prompts";
+import {
+    promptBackend,
+    promptLanguage,
+    promptHostname,
+    promptName,
+    promptWorkspaceIdWithoutChoice,
+    promptDashboardIdWithoutChoice,
+} from "../_base/cli/prompts";
 import snakeCase from "lodash/snakeCase";
 
 function getHostname(backend: TargetBackendType | undefined, options: ActionOptions): string | undefined {
@@ -37,16 +45,52 @@ function getBackend(options: ActionOptions): TargetBackendType | undefined {
     return backend as TargetBackendType;
 }
 
-function getFlavor(options: ActionOptions): TargetAppFlavor | undefined {
-    const { flavor } = options.commandOpts;
+function getWorkspace(options: ActionOptions): string | undefined {
+    const { workspaceId } = options.commandOpts;
 
-    if (!flavor) {
+    if (!workspaceId) {
         return undefined;
     }
 
-    validOrDie("flavor", flavor, flavorValidator);
+    validOrDie("workspace", workspaceId, () => true);
 
-    return flavor as TargetAppFlavor;
+    return workspaceId;
+}
+
+function getDashboard(options: ActionOptions): string | undefined {
+    const { dashboardId } = options.commandOpts;
+
+    if (!dashboardId) {
+        return undefined;
+    }
+
+    validOrDie("dashboard", dashboardId, () => true);
+
+    return dashboardId;
+}
+
+function getLanguage(options: ActionOptions): TargetAppLanguage | undefined {
+    const { language } = options.commandOpts;
+
+    if (!language) {
+        return undefined;
+    }
+
+    validOrDie("language", language, languageValidator);
+
+    return language as TargetAppLanguage;
+}
+
+function getPackageManager(options: ActionOptions): SupportedPackageManager {
+    const { packageManager } = options.commandOpts;
+
+    if (!packageManager) {
+        return "npm";
+    }
+
+    validOrDie("packageManager", packageManager, packageManagerValidator);
+
+    return packageManager as SupportedPackageManager;
 }
 
 //
@@ -56,9 +100,12 @@ function getFlavor(options: ActionOptions): TargetAppFlavor | undefined {
 export type InitCmdActionConfig = {
     name: string;
     pluginIdentifier: string;
+    packageManager: SupportedPackageManager;
     backend: TargetBackendType;
     hostname: string;
-    flavor: TargetAppFlavor;
+    workspace: string;
+    dashboard: string;
+    language: TargetAppLanguage;
     targetDir: string | undefined;
     skipInstall: boolean;
 };
@@ -83,10 +130,15 @@ export async function getInitCmdActionConfig(
 
     const backendFromOptions = getBackend(options);
     const hostnameFromOptions = getHostname(backendFromOptions, options);
-    const flavorFromOptions = getFlavor(options);
+    const languageFromOptions = getLanguage(options);
+    const workspaceFromOptions = getWorkspace(options);
+    const dashboardFromOptions = getDashboard(options);
+    const packageManagerFromOptions = getPackageManager(options);
     const backend = backendFromOptions ?? (await promptBackend());
     const hostname = hostnameFromOptions ?? (await promptHostname(backend));
-    const flavor = flavorFromOptions ?? (await promptFlavor());
+    const language = languageFromOptions ?? (await promptLanguage());
+    const workspace = workspaceFromOptions ?? (await promptWorkspaceIdWithoutChoice());
+    const dashboard = dashboardFromOptions ?? (await promptDashboardIdWithoutChoice());
     const name = pluginName ?? (await promptName());
 
     // validate hostname once again; this is to catch the case when hostname is provided as
@@ -99,7 +151,10 @@ export async function getInitCmdActionConfig(
         pluginIdentifier: `dp_${snakeCase(name)}`,
         backend,
         hostname,
-        flavor,
+        workspace,
+        dashboard,
+        language,
+        packageManager: packageManagerFromOptions,
         targetDir: options.commandOpts.targetDir,
         skipInstall: options.commandOpts.skipInstall ?? false,
     };

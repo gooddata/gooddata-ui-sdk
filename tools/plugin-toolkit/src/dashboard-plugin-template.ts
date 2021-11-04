@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { TargetAppFlavor } from "./_base/types";
+import { TargetAppLanguage } from "./_base/types";
 import * as path from "path";
 
 /*
@@ -7,6 +7,6 @@ import * as path from "path";
  * that contain the template project.
  */
 
-export function getDashboardPluginTemplateArchive(flavor: TargetAppFlavor): string {
-    return path.join(__dirname, `dashboard-plugin-template.${flavor}.tgz`);
+export function getDashboardPluginTemplateArchive(language: TargetAppLanguage): string {
+    return path.join(__dirname, `dashboard-plugin-template.${language}.tgz`);
 }

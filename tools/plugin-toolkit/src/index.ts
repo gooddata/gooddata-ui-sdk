@@ -21,16 +21,25 @@ const initCmd: Command = dashboardCmd
     .description("Initialize a new dashboard plugin")
     .argument("[plugin-name]", "Name of the plugin to create")
     .option(
+        "--backend <backend>",
+        "Type of backend against which you want to develop the plugin, either GoodData Platform (bear) or GoodData.CN (tiger)",
+    )
+    .option(
+        "--language <language>",
+        "Programming language to use for plugin. Either TypeScript (ts) or JavaScript (js)",
+    )
+    .option(
+        "--workspace-id <workspace>",
+        "Identifier of workspace that contains dashboard that you want to enhance using a plugin",
+    )
+    .option("--dashboard-id <dashboard>", "Identifier of dashboard that you want to enhance using a plugin")
+    .option(
         "--target-dir <path>",
         "Path to the directory to create the plugin in. If not " +
-            "specified, program will create a new subdirectory with name derived from plugin name in the current working directory.",
+            "specified, program will create a new subdirectory with name derived from plugin name in the current working directory",
     )
-    .option("--skip-install", "Skip yarn installing the plugin dependencies", false)
-    .option(
-        "--backend <backend>",
-        "Type of backend that this plugin targets, either GoodData Platform (bear) or GoodData.CN (tiger)",
-    )
-    .option("--flavor <flavor>", "Language flavor of the plugin, either TypeScript (ts) or JavaScript (js)")
+    .option("--package-manager <package-manager>", "Package manager to use in the plugin project", "npm")
+    .option("--skip-install", "Skip installing the plugin dependencies", false)
     .action(async (pluginName) => {
         acceptUntrustedSsl(program.opts());
 
@@ -42,9 +51,13 @@ const initCmd: Command = dashboardCmd
 
 const addPluginCmd: Command = dashboardCmd
     .command("store")
-    .description("Store plugin in a workspace so that it can be used on the dashboards in that workspace.")
-    .option("--username <email>", "Your username that you use to log in to GoodData platform.")
-    .option("--workspace-id <id>", "Workspace id to which you want to add the plugin.")
+    .description("Store plugin in a workspace so that it can be used on the dashboards in that workspace")
+    .argument(
+        "[plugin-url]",
+        "URL of location where the plugin assets are hosted. The URL must use https protocol",
+    )
+    .option("--username <email>", "Your username that you use to log in to GoodData platform")
+    .option("--workspace-id <id>", "Identifier of workspace to which you want to add the plugin")
     .action(async () => {
         acceptUntrustedSsl(program.opts());
 
@@ -56,15 +69,18 @@ const addPluginCmd: Command = dashboardCmd
 
 const usePluginCmd: Command = dashboardCmd
     .command("use")
-    .argument("[plugin-id]", "Plugin id which you want to use on the dashboard.")
-    .option("--username <email>", "Your username that you use to log in to GoodData platform.")
-    .option("--workspace-id <id>", "Workspace id that contains dashboard that should use the plugin.")
-    .option("--dashboard-id <id>", "Dashboard id on which you want to use the plugin.")
+    .description("Use plugin available in a workspace on a dashboard.")
+    .argument("[plugin-id]", "Plugin id which you want to use on the dashboard")
+    .option("--username <email>", "Your username that you use to log in to GoodData platform")
+    .option(
+        "--workspace-id <id>",
+        "Identifier of workspace that contains dashboard that should use the plugin",
+    )
+    .option("--dashboard-id <id>", "Identifier of dashboard on which you want to use the plugin")
     .option(
         "--with-parameters",
-        "Tool will prompt for parameters that will be passed to plugin during initialization.",
+        "Tool will prompt for parameters that will be passed to plugin during initialization",
     )
-    .description("Use plugin available in a workspace on a dashboard.")
     .action(async () => {
         acceptUntrustedSsl(program.opts());
 
