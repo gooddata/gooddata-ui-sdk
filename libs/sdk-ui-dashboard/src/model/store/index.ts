@@ -149,8 +149,8 @@ export {
     selectIsSaveAsDialogOpen,
     selectFilterBarExpanded,
     selectFilterBarHeight,
-    selectIsKpiAlertOpenedByAlertRef,
-    selectIsKpiAlertHighlightedByAlertRef,
+    selectIsKpiAlertOpenedByWidgetRef,
+    selectIsKpiAlertHighlightedByWidgetRef,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 

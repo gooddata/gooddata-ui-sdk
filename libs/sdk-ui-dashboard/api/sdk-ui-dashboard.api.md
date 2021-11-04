@@ -3731,10 +3731,10 @@ export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => Output
 export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha (undocumented)
-export const selectIsKpiAlertHighlightedByAlertRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
+export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
 
 // @alpha (undocumented)
-export const selectIsKpiAlertOpenedByAlertRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
+export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
 
 // @alpha
 export const selectIsLayoutEmpty: OutputSelector<DashboardState, boolean, (res: IWidget[]) => boolean>;
@@ -3891,8 +3891,8 @@ export type UiState = {
         expanded: boolean;
     };
     kpiAlerts: {
-        openedAlertRef: ObjRef | undefined;
-        highlightedAlertRef: ObjRef | undefined;
+        openedWidgetRef: ObjRef | undefined;
+        highlightedWidgetRef: ObjRef | undefined;
     };
 };
 

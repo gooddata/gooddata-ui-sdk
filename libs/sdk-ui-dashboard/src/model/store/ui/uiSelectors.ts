@@ -2,7 +2,7 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef } from "@gooddata/sdk-model";
-import { selectAlertsMap } from "../alerts/alertsSelectors";
+import { selectWidgetsMap } from "../layout/layoutSelectors";
 import { DashboardState } from "../types";
 import { createMemoizedSelector } from "../_infra/selectors";
 
@@ -34,32 +34,34 @@ export const selectFilterBarHeight = createSelector(selectSelf, (state) => state
  */
 export const selectFilterBarExpanded = createSelector(selectSelf, (state) => state.filterBar.expanded);
 
-const selectHighlightedKpiAlertRef = createSelector(
+const selectHighlightedKpiWidgetRef = createSelector(
     selectSelf,
-    (state) => state.kpiAlerts.highlightedAlertRef,
+    (state) => state.kpiAlerts.highlightedWidgetRef,
 );
 
-const selectOpenedKpiAlertRef = createSelector(selectSelf, (state) => state.kpiAlerts.openedAlertRef);
+const selectOpenedKpiWidgetRef = createSelector(selectSelf, (state) => state.kpiAlerts.openedWidgetRef);
 
 /**
  * @alpha
  */
-export const selectIsKpiAlertOpenedByAlertRef = createMemoizedSelector(
+export const selectIsKpiAlertOpenedByWidgetRef = createMemoizedSelector(
     (ref: ObjRef | undefined): ((state: DashboardState) => boolean) => {
-        return createSelector(selectAlertsMap, selectOpenedKpiAlertRef, (alerts, openedAlertRef) => {
+        return createSelector(selectWidgetsMap, selectOpenedKpiWidgetRef, (widgets, openedWidgetRef) => {
             if (!ref) {
                 return false;
             }
-            const openedAlert = openedAlertRef && alerts.get(openedAlertRef);
-            if (!openedAlert) {
-                return false;
-            }
-            const targetAlert = alerts.get(ref);
-            if (!targetAlert) {
+
+            const openedWidget = openedWidgetRef && widgets.get(openedWidgetRef);
+            if (!openedWidget) {
                 return false;
             }
 
-            return targetAlert.identifier === openedAlert.identifier;
+            const targetWidget = widgets.get(ref);
+            if (!targetWidget) {
+                return false;
+            }
+
+            return targetWidget.identifier === openedWidget.identifier;
         });
     },
 );
@@ -67,25 +69,27 @@ export const selectIsKpiAlertOpenedByAlertRef = createMemoizedSelector(
 /**
  * @alpha
  */
-export const selectIsKpiAlertHighlightedByAlertRef = createMemoizedSelector(
+export const selectIsKpiAlertHighlightedByWidgetRef = createMemoizedSelector(
     (ref: ObjRef | undefined): ((state: DashboardState) => boolean) => {
         return createSelector(
-            selectAlertsMap,
-            selectHighlightedKpiAlertRef,
-            (alerts, highlightedAlertRef) => {
+            selectWidgetsMap,
+            selectHighlightedKpiWidgetRef,
+            (widgets, highlightedWidgetRef) => {
                 if (!ref) {
                     return false;
                 }
-                const highlightedAlert = highlightedAlertRef && alerts.get(highlightedAlertRef);
-                if (!highlightedAlert) {
-                    return false;
-                }
-                const targetAlert = alerts.get(ref);
-                if (!targetAlert) {
+
+                const highlightedWidget = highlightedWidgetRef && widgets.get(highlightedWidgetRef);
+                if (!highlightedWidget) {
                     return false;
                 }
 
-                return targetAlert.identifier === highlightedAlert.identifier;
+                const targetWidget = widgets.get(ref);
+                if (!targetWidget) {
+                    return false;
+                }
+
+                return targetWidget.identifier === highlightedWidget.identifier;
             },
         );
     },
