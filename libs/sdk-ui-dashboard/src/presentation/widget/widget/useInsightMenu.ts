@@ -59,7 +59,15 @@ export const useInsightMenu = (config: {
             },
             tooltipMessage: intl.formatMessage({ id: bubbleMessageKey }),
         });
-    }, [insightMenuItemsProvider, execution, exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX]);
+    }, [
+        insightMenuItemsProvider,
+        execution,
+        exportCSVEnabled,
+        exportXLSXEnabled,
+        onExportCSV,
+        onExportXLSX,
+        intl,
+    ]);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider
