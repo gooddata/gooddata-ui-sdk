@@ -330,7 +330,8 @@
             "packageName": "@gooddata/plugin-toolkit",
             "projectFolder": "tools/plugin-toolkit",
             "reviewCategory": "tools",
-            "shouldPublish": false
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-ui-theme-provider",
