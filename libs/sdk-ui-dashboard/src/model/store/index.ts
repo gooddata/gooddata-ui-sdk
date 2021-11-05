@@ -116,7 +116,7 @@ export {
     selectAlertByRef,
 } from "./alerts/alertsSelectors";
 export { UserState } from "./user/userState";
-export { selectUser } from "./user/userSelectors";
+export { selectUser, selectCurrentUserRef } from "./user/userSelectors";
 export { DashboardMetaState, DashboardDescriptor } from "./meta/metaState";
 export {
     selectDashboardRef,
@@ -128,6 +128,7 @@ export {
     selectDashboardUri,
     selectDashboardId,
     selectDashboardShareStatus,
+    selectPersistedDashboard,
 } from "./meta/metaSelectors";
 export {
     selectListedDashboards,
@@ -147,6 +148,7 @@ export { UiState } from "./ui/uiState";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsSaveAsDialogOpen,
+    selectIsShareDialogOpen,
     selectFilterBarExpanded,
     selectFilterBarHeight,
     selectIsKpiAlertOpenedByWidgetRef,

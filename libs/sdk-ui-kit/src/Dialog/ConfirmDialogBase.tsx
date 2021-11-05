@@ -17,6 +17,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
         onCancel: noop,
         onSubmit: noop,
         isSubmitDisabled: false,
+        headerLeftButtonRenderer: undefined,
     };
 
     render(): JSX.Element {
@@ -35,6 +36,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             showProgressIndicator,
             onSubmit,
             onCancel,
+            headerLeftButtonRenderer,
         } = this.props;
         const dialogClasses = cx(
             {
@@ -54,10 +56,12 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                 <div className={dialogClasses}>
                     {displayCloseButton && this.renderCloseButton()}
 
-                    <div className="gd-dialog-header">
-                        <h3>{headline}</h3>
+                    <div className="gd-dialog-header-wrapper">
+                        {headerLeftButtonRenderer && headerLeftButtonRenderer()}
+                        <div className="gd-dialog-header">
+                            <h3>{headline}</h3>
+                        </div>
                     </div>
-
                     {!!warning && <div className="gd-dialog-warning">{warning}</div>}
 
                     <div className="gd-dialog-content">{children}</div>

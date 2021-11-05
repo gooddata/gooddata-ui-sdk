@@ -12,3 +12,5 @@ export {
     IHubspotConversionTouchPointDialogBaseProps,
     IHubspotFormValue,
 } from "./HubspotConversionTouchPointDialogBase";
+
+export * from "./ShareDialog";

@@ -11,6 +11,9 @@ export type UiState = {
     saveAsDialog: {
         open: boolean;
     };
+    shareDialog: {
+        open: boolean;
+    };
     filterBar: {
         height: number;
         expanded: boolean;
@@ -26,6 +29,9 @@ export const uiInitialState: UiState = {
         open: false,
     },
     saveAsDialog: {
+        open: false,
+    },
+    shareDialog: {
         open: false,
     },
     filterBar: {

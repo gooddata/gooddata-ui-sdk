@@ -431,6 +431,11 @@
         "comment": "",
         "limit": 0
     },
+    "save": {
+        "value": "Save",
+        "comment": "Label of save button or visual element",
+        "limit": 0
+    },
     "loading": {
         "value": "Loading…",
         "comment": "Use '…' as one character, not 3 dots ('...').",
@@ -1153,6 +1158,81 @@
     "attributesDropdown.noData": {
         "value": "This attribute does not have any value.",
         "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.title": {
+        "value": "Share with users and groups",
+        "comment": "Title of dialog used for sharing of private dashboard with other users or user groups.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.share": {
+        "value": "Share",
+        "comment": "Title of confirm button of share dialog",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.list.title": {
+        "value": "Shared with",
+        "comment": "Title shown above list of grantees in share dialog.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.add": {
+        "value": "Add",
+        "comment": "Label of button than adds a new grantee in share dialog.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.add.empty.selection": {
+        "value": "No user or group selected.",
+        "comment": "Information message shown when there is no user or group in grantees list in share dialog.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.add.info": {
+        "value": "Add users and groups",
+        "comment": "Title of dialog used for sharing of private dashboard with other users or user groups.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.add.search.placeholder": {
+        "value": "Search users and groups",
+        "comment": "Placeholder of empty share dialog search input.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.add.search.no.matching.items": {
+        "value": "No matching users or groups.",
+        "comment": "Information shown to the user when query in search input does no match any user or group.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.item.you": {
+        "value": "{userName} (You)",
+        "comment": "Text used for currently logged user in the list of grantees in share dialog. '{userName}' placeholder is replaced with logged use name, for example, 'John Doe (You)'. Do not translate '{userName}' placeholder.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.item.users.count": {
+        "value": "{granteeCount} users",
+        "comment": "Description of grantee user group in share dialog that informs about how many users are in the group. {granteeCount} placeholder will be replaced with a number, for example '110 users'. Do not translate '{granteeCount}' placeholder.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.item.creator": {
+        "value": "Creator",
+        "comment": "Tag rendered next to the name of a user in grantees list in share dialog that marks user as creator of the shared dashboard. The text is rendered in a 'pill' component.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.item.user.all": {
+        "value": "All users",
+        "comment": "Title of user group that contains all the users in the system.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.item.remove.access": {
+        "value": "Remove access to this dashboard.",
+        "comment": "Text of the tooltip shown above button that removes user or group dashboard access right.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.item.owner.remove.access": {
+        "value": "Users who created this dashboard. Creator cannot be removed.",
+        "comment": "Text of the tooltip shown above disabled button that removes user dashboard access right. Shown in the case when user cannot be removed because he is the creator of the dashboard.",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.item.remove.selection": {
+        "value": "Remove from selection.",
+        "comment": "Text of the tooltip shown above button that removes user or group from unsaved selection of newly added grantees that will gain access right to the dashboard after changes in share dialog are saved.",
         "limit": 0
     }
 }

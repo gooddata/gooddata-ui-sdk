@@ -7,3 +7,4 @@ export * from "./scheduledEmail";
 export * from "./saveAs";
 export * from "./topBar";
 export * from "./widget";
+export * from "./shareDialog";

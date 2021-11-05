@@ -76,6 +76,10 @@
     }
 }
 
+.gd-dialog-header-wrapper {
+    display: flex;
+}
+
 .gd-dialog-header {
     @include text-overflow();
 

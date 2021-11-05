@@ -26,6 +26,7 @@ import { IDashboardAttributeFilter, IInsightWidget, IKpiWidget, ILegacyKpi } fro
 import { CustomSaveAsDialogComponent } from "../saveAs/types";
 import { IInsight } from "@gooddata/sdk-model";
 import { ExtendedDashboardWidget } from "../../model";
+import { CustomShareDialogComponent } from "../shareDialog/types";
 
 /**
  * @internal
@@ -50,6 +51,7 @@ interface IDashboardComponentsContext {
     TitleComponent: CustomTitleComponent;
     TopBarComponent: CustomTopBarComponent;
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
+    ShareDialogComponent: CustomShareDialogComponent;
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
     DashboardAttributeFilterComponentProvider: (
         filter: IDashboardAttributeFilter,
@@ -81,6 +83,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     TitleComponent: ThrowMissingComponentError("TitleComponent"),
     TopBarComponent: ThrowMissingComponentError("TopBarComponent"),
     ScheduledEmailDialogComponent: ThrowMissingComponentError("ScheduledEmailDialogComponent"),
+    ShareDialogComponent: ThrowMissingComponentError("ShareDialogComponent"),
     SaveAsDialogComponent: ThrowMissingComponentError("SaveAsDialogComponent"),
     DashboardAttributeFilterComponentProvider: ThrowMissingComponentError(
         "DashboardAttributeFilterComponentFactory",
