@@ -18,7 +18,7 @@ import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import includes from "lodash/includes";
 import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
-import { Bubble, BubbleHoverTrigger, Message, LoadingMask } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Message, LoadingMask, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { isEmail } from "../../utils/validate";
 import {
@@ -82,6 +82,8 @@ export interface IRecipientsSelectRendererProps {
      */
     canListUsersInProject?: boolean;
 }
+
+const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl" }];
 
 export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSelectRendererProps> {
     private recipientRef = React.createRef<HTMLDivElement>();
@@ -269,7 +271,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                     </div>
                     <Bubble
                         className="bubble-negative s-gd-recipient-not-valid-email"
-                        alignPoints={[{ align: "cr cl" }]}
+                        alignPoints={bubbleAlignPoints}
                     >
                         <FormattedHTMLMessage id="options.menu.schedule.email.recipient.invalid" />
                     </Bubble>

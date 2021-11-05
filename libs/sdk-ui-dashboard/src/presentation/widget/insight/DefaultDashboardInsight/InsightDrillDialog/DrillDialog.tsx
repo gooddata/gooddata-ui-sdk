@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import React from "react";
-import { useIntl } from "react-intl";
-import { Button, Bubble, BubbleHoverTrigger, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { FormattedMessage } from "react-intl";
+import { Button, Bubble, BubbleHoverTrigger, ShortenedText, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { selectPermissions, selectSettings, useDashboardSelector } from "../../../../../model";
 import { PoweredByGDLogo } from "./PoweredByGDLogo";
 import { DrillModalFooter } from "./DrillModalFooter";
@@ -22,6 +22,9 @@ export interface DrillDialogProps {
     isLoading: boolean;
 }
 
+const tooltipAlignPoints: IAlignPoint[] = [{ align: "cc tc", offset: { x: -20, y: 10 } }];
+const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc", offset: { x: -5, y: -5 } }];
+
 export const DrillDialog: React.FC<DrillDialogProps> = ({
     title,
     breadcrumbs,
@@ -37,8 +40,6 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     onExportXLSX,
     isLoading,
 }) => {
-    const intl = useIntl();
-
     const settings = useDashboardSelector(selectSettings);
     const permissions = useDashboardSelector(selectPermissions);
     const shouldShowDrilledInsightExport =
@@ -53,8 +54,6 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             : title;
     };
 
-    const tooltipAlignPoints = [{ align: "cc tc", offset: { x: -20, y: 10 } }];
-
     return (
         <div className="gd-dialog gd-drill-modal-dialog s-drill-modal-dialog">
             <div className="gd-dialog-header gd-dialog-header-with-border gd-drill-modal-dialog-header">
@@ -64,11 +63,8 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                             className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-drill-reset-button gd-drill-reset-button"
                             onClick={onBackButtonClick}
                         />
-                        <Bubble
-                            className="bubble-primary"
-                            alignPoints={[{ align: "bc tc", offset: { x: -5, y: -5 } }]}
-                        >
-                            <span>{intl.formatMessage({ id: "drillModal.backToTop" })}</span>
+                        <Bubble className="bubble-primary" alignPoints={bubbleAlignPoints}>
+                            <FormattedMessage id="drillModal.backToTop" tagName="span" />
                         </Bubble>
                     </BubbleHoverTrigger>
                 )}

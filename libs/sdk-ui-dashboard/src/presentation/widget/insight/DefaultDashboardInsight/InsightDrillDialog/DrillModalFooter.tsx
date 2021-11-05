@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
+import { BubbleHoverTrigger, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import DrillModalExportOptions from "./DrillModalExportOptions";
 
@@ -14,6 +14,8 @@ export interface IDrillModalFooterProps {
     onExportCSV: () => void;
     isLoading: boolean;
 }
+
+const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc" }];
 
 export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
     exportAvailable,
@@ -65,7 +67,7 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
             {exportDisabled && !isLoading ? (
                 <BubbleHoverTrigger>
                     {toggleButton}
-                    <Bubble className="bubble-primary" alignPoints={[{ align: "tc bc" }]}>
+                    <Bubble className="bubble-primary" alignPoints={bubbleAlignPoints}>
                         <FormattedMessage id="export_unsupported.disabled" />
                     </Bubble>
                 </BubbleHoverTrigger>

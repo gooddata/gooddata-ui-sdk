@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { ArrowOffsets, Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { FormattedHTMLMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util/dist";
 import cx from "classnames";
@@ -10,6 +10,9 @@ interface IDisabledConfigurationParentItemProps {
     itemTitle: string;
     hasConnectingAttributes: boolean;
 }
+
+const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tl" }, { align: "tc bl" }];
+const bubbleArrowOffsets: ArrowOffsets = { "bc tl": [-100, 10], "tc bl": [-100, -10] };
 
 export const DisabledConfigurationParentItem: React.FC<IDisabledConfigurationParentItemProps> = ({
     attributeFilterTitle,
@@ -37,8 +40,8 @@ export const DisabledConfigurationParentItem: React.FC<IDisabledConfigurationPar
             </div>
             <Bubble
                 className="bubble-primary gd-attribute-filter-dropdown-bubble s-attribute-filter-dropdown-bubble"
-                alignPoints={[{ align: "bc tl" }, { align: "tc bl" }]}
-                arrowOffsets={{ "bc tl": [-100, 10], "tc bl": [-100, -10] }}
+                alignPoints={bubbleAlignPoints}
+                arrowOffsets={bubbleArrowOffsets}
             >
                 {hasConnectingAttributes ? (
                     <div>

@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import { GoodDataSdkError, isNoDataSdkError } from "@gooddata/sdk-ui";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { DashboardItemKpi } from "../../../../presentationComponents";
 import { IKpiResult, IKpiAlertResult, KpiAlertOperationStatus } from "../types";
@@ -78,6 +78,9 @@ interface IDashboardItemWithKpiAlertState {
     isKpiAlertAfterDeleting: boolean;
     isAlertHighlighted: boolean;
 }
+
+const disabledBubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl" }, { align: "cl cr" }];
+const enabledBubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc" }, { align: "tc br" }];
 
 export class DashboardItemWithKpiAlert extends Component<
     IDashboardItemWithKpiAlertProps,
@@ -242,7 +245,7 @@ export class DashboardItemWithKpiAlert extends Component<
                     className={cx(alertIconClasses, "disabled")}
                 >
                     {/* no children here since alert icon is only a styled div with classes ^^^ */}
-                    <Bubble className="bubble-primary" alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
+                    <Bubble className="bubble-primary" alignPoints={disabledBubbleAlignPoints}>
                         {bubbleMessage}
                     </Bubble>
                 </BubbleHoverTrigger>
@@ -252,7 +255,7 @@ export class DashboardItemWithKpiAlert extends Component<
         return (
             <div onClick={this.onAlertDialogOpenClick}>
                 <BubbleHoverTrigger className={alertIconClasses} showDelay={500} hideDelay={0} tagName="div">
-                    <Bubble className="bubble-primary" alignPoints={[{ align: "tc bc" }, { align: "tc br" }]}>
+                    <Bubble className="bubble-primary" alignPoints={enabledBubbleAlignPoints}>
                         <FormattedMessage id="kpi.alertBox.title" />
                     </Bubble>
                 </BubbleHoverTrigger>

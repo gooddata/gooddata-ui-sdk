@@ -4,7 +4,7 @@ import { insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { widgetRef } from "@gooddata/sdk-backend-spi";
 import { VisType } from "@gooddata/sdk-ui";
 
@@ -15,6 +15,8 @@ const nonExportableVisTypes: VisType[] = ["headline", "xirr"];
 function isExportableVisualization(visType: VisType): boolean {
     return !nonExportableVisTypes.includes(visType);
 }
+
+const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc" }, { align: "tc br" }];
 
 const LegacyInsightMenuButtonCore: React.FC<IDashboardInsightMenuButtonProps & WrappedComponentProps> = ({
     onClick,
@@ -65,7 +67,7 @@ const LegacyInsightMenuButtonCore: React.FC<IDashboardInsightMenuButtonProps & W
             onClick={onOptionsMenuClick}
         >
             <BubbleHoverTrigger className={optionsIconClasses} showDelay={500} hideDelay={0} tagName="div">
-                <Bubble className="bubble-primary" alignPoints={[{ align: "tc bc" }, { align: "tc br" }]}>
+                <Bubble className="bubble-primary" alignPoints={bubbleAlignPoints}>
                     <span>{intl.formatMessage({ id: "options.button.bubble" })}</span>
                 </Bubble>
             </BubbleHoverTrigger>
