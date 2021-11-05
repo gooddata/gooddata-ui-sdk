@@ -74,7 +74,7 @@ function renamePluginDirectories(target: string, config: InitCmdActionConfig) {
 }
 
 function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): Promise<void> {
-    const { backend, hostname, workspace, dashboard, pluginIdentifier, language } = config;
+    const { backend, hostname, workspace, dashboard, pluginIdentifier, language, packageManager } = config;
     const isTiger = backend === "tiger";
     const replacements: FileReplacementSpec = {
         "webpack.config.js": [
@@ -96,6 +96,20 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
             {
                 regex: /DASHBOARD_ID=/g,
                 value: `DASHBOARD_ID=${dashboard}`,
+            },
+        ],
+        "README.md": [
+            {
+                regex: /{{packageManager}}/g,
+                value: packageManager,
+            },
+            {
+                regex: /{{pluginIdentifier}}/g,
+                value: pluginIdentifier,
+            },
+            {
+                regex: /{{language}}/g,
+                value: language,
             },
         ],
         src: {
@@ -185,7 +199,7 @@ function runInstall(target: string, config: InitCmdActionConfig): void {
 export async function initCmdAction(pluginName: string | undefined, options: ActionOptions): Promise<void> {
     try {
         logInfo(
-            "You are about to create project for a new dashboard plugin. Please be note that the " +
+            "You are about to create project for a new dashboard plugin. Please note that the " +
                 "values of backend, hostname, workspace-id and dashboard-id options that you enter at this point " +
                 "will be used primarily during development and testing of your new plugin. You will be able to " +
                 "use the new plugin in production on other backend, workspace or dashboard regardless " +

@@ -121,15 +121,7 @@ module.exports = (_env, argv) => {
                 },
             ].filter(Boolean),
         },
-        plugins: [
-            new CaseSensitivePathsPlugin(),
-            new ProvidePlugin({
-                process: "process/browser",
-            }),
-            new DefinePlugin({
-                PORT: JSON.stringify(PORT),
-            }),
-        ],
+        plugins: [new CaseSensitivePathsPlugin()],
     };
 
     return [
@@ -144,6 +136,12 @@ module.exports = (_env, argv) => {
             },
             plugins: [
                 ...commonConfig.plugins,
+                new ProvidePlugin({
+                    process: "process/browser",
+                }),
+                new DefinePlugin({
+                    PORT: JSON.stringify(PORT),
+                }),
                 new Dotenv({
                     silent: true, // we are ok with the .env file not being there, do not warn about it (so that CI works)
                     systemvars: true,
