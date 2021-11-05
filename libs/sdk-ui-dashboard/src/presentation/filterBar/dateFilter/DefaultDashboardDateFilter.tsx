@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
-import React, { useMemo, useState } from "react";
-import { DateFilter } from "@gooddata/sdk-ui-filters";
+import React, { useCallback, useMemo, useState } from "react";
+import { DateFilter, IDateFilterProps } from "@gooddata/sdk-ui-filters";
 
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping";
@@ -29,6 +29,13 @@ export const DefaultDashboardDateFilterInner = (): JSX.Element => {
             ),
         [filter, config.dateFilterOptions, lastSelectedOptionId],
     );
+    const onApply = useCallback<IDateFilterProps["onApply"]>(
+        (option, exclude) => {
+            setLastSelectedOptionId(option.localIdentifier);
+            onFilterChanged(dateFilterOptionToDashboardDateFilter(option, exclude), option.localIdentifier);
+        },
+        [onFilterChanged],
+    );
 
     return (
         <DateFilter
@@ -38,13 +45,7 @@ export const DefaultDashboardDateFilterInner = (): JSX.Element => {
             filterOptions={config.dateFilterOptions}
             availableGranularities={config.availableGranularities}
             customFilterName={config.customFilterName}
-            onApply={(option, exclude) => {
-                setLastSelectedOptionId(option.localIdentifier);
-                onFilterChanged(
-                    dateFilterOptionToDashboardDateFilter(option, exclude),
-                    option.localIdentifier,
-                );
-            }}
+            onApply={onApply}
             dateFormat={settings.responsiveUiDateFormat}
             locale={locale}
         />
