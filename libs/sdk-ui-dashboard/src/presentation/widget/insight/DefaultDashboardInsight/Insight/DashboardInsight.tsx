@@ -166,6 +166,10 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         };
     }, [isPositionRelative]);
 
+    const insightWrapperStyle: CSSProperties | undefined = useMemo(() => {
+        return isVisualizationLoading ? { height: 0 } : undefined;
+    }, [isVisualizationLoading]);
+
     // Error handling
     const handleError = useCallback<OnError>(
         (error) => {
@@ -192,10 +196,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                         />
                     )}
                     {filtersStatus === "success" && (
-                        <div
-                            className="insight-view-visualization"
-                            style={isVisualizationLoading ? { height: 0 } : undefined}
-                        >
+                        <div className="insight-view-visualization" style={insightWrapperStyle}>
                             <InsightRenderer
                                 insight={insightWithAddedWidgetProperties}
                                 backend={effectiveBackend}
