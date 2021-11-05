@@ -10,7 +10,12 @@ import {
 } from "../../store/filterContext/filterContextSelectors";
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors";
 import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
-import { IDashboard, IDashboardDefinition, IDashboardObjectIdentity } from "@gooddata/sdk-backend-spi";
+import {
+    IAccessControlAware,
+    IDashboard,
+    IDashboardDefinition,
+    IDashboardObjectIdentity,
+} from "@gooddata/sdk-backend-spi";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { DashboardSaved, dashboardSaved } from "../../events/dashboard";
@@ -25,6 +30,7 @@ import {
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils";
 import { layoutActions } from "../../store/layout";
 import { savingActions } from "../../store/saving";
+import { selectSettings } from "../../store/config/configSelectors";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;
@@ -94,6 +100,21 @@ function* createDashboardSaveContext(cmd: SaveDashboard): SagaIterator<Dashboard
         selectDateFilterConfigOverrides,
     );
 
+    const isNewDashboard = persistedDashboard === undefined;
+    let shareProp: Partial<IAccessControlAware> = {};
+    if (isNewDashboard) {
+        const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+
+        shareProp = settings.enableAnalyticalDashboardPermissions
+            ? {
+                  shareStatus: "private",
+                  isUnderStrictControl: true,
+              }
+            : {
+                  shareStatus: "public",
+              };
+    }
+
     /*
      * When updating an existing dashboard, the services expect that the dashboard definition to use for
      * updating contains the identity of the existing dashboard.
@@ -116,6 +137,7 @@ function* createDashboardSaveContext(cmd: SaveDashboard): SagaIterator<Dashboard
         },
         layout,
         dateFilterConfig,
+        ...shareProp,
     };
 
     const dashboardToSave: IDashboardDefinition = {

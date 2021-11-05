@@ -7,7 +7,15 @@ import { DashboardCopySaved, DashboardSaved } from "../../../events";
 import { selectBasicLayout } from "../../../store/layout/layoutSelectors";
 import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils";
 import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors";
-import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors";
+import {
+    selectDashboardDescriptor,
+    selectDashboardTitle,
+    selectPersistedDashboard,
+} from "../../../store/meta/metaSelectors";
+import {
+    LockedDashboardIdentifier,
+    TestCorrelation as TestCorrelationLocked,
+} from "../../../tests/fixtures/LockedDashboard.fixtures";
 
 describe("save as dashboard handler", () => {
     describe("for a new dashboard", () => {
@@ -111,6 +119,32 @@ describe("save as dashboard handler", () => {
             );
 
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
+        });
+    });
+
+    describe("for an existing dashboard", () => {
+        let Tester: DashboardTester;
+        // each test starts with a new dashboard
+        beforeEach(
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, LockedDashboardIdentifier),
+        );
+
+        const TestDashboardTitle = "My Dashboard Copy";
+
+        it("should save an existing locked dashboard as a copy with isLocked flag cleaned", async () => {
+            const originalState = Tester.state();
+            expect(selectDashboardDescriptor(originalState).isLocked).toBeTruthy();
+
+            await Tester.dispatchAndWaitFor(
+                saveDashboardAs(TestDashboardTitle, true, undefined, TestCorrelationLocked),
+                "GDC.DASH/EVT.COPY_SAVED",
+            );
+
+            const newState = Tester.state();
+
+            expect(selectDashboardDescriptor(newState).isLocked).toBeFalsy();
         });
     });
 });
