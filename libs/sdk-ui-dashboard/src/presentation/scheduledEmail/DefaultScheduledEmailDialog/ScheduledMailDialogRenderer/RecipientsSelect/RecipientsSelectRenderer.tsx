@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
 import React from "react";
-import { WrappedComponentProps, injectIntl, FormattedHTMLMessage } from "react-intl";
+import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
 import CreatableSelect from "react-select/creatable";
 import {
     ActionMeta,
@@ -41,7 +41,7 @@ const CREATE_OPTION = "create-option";
 const SELECT_OPTION = "select-option";
 const { Menu, Input } = ReactSelectComponents;
 
-export interface IRecipientsSelectRendererOwnProps {
+export interface IRecipientsSelectRendererProps {
     /**
      * Author of the scheduled email - is always recipient of the scheduled email.
      */
@@ -83,12 +83,10 @@ export interface IRecipientsSelectRendererOwnProps {
     canListUsersInProject?: boolean;
 }
 
-type IRecipientsSelectRendererProps = IRecipientsSelectRendererOwnProps & WrappedComponentProps;
-
-class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRendererProps> {
+export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSelectRendererProps> {
     private recipientRef = React.createRef<HTMLDivElement>();
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         const { current } = this.recipientRef;
 
         if (!current) {
@@ -104,7 +102,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
     }
 
     public render(): React.ReactNode {
-        const { intl, isMulti, options, value } = this.props;
+        const { isMulti, options, value } = this.props;
         const creatableSelectComponent: SelectComponentsConfig<any, boolean> = {
             ...ReactSelectComponents,
             IndicatorsContainer: this.renderEmptyContainer,
@@ -119,7 +117,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
         return (
             <div className="gd-input-component gd-recipients-field s-gd-schedule-email-dialog-recipients">
                 <label className="gd-label">
-                    {intl.formatMessage({ id: "dialogs.schedule.email.to.label" })}
+                    <FormattedMessage id="dialogs.schedule.email.to.label" />
                 </label>
                 <div ref={this.recipientRef} className="gd-input s-gd-recipients-value">
                     <CreatableSelect
@@ -446,5 +444,3 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
         );
     };
 }
-
-export const RecipientsSelectRenderer = injectIntl(RecipientsSelectRendererUI);
