@@ -42,6 +42,10 @@ import {
     IAttributeMetadataObject,
     IElementsQueryFactory,
     IMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    IMeasureExpressionToken,
+    IMeasureMetadataObject,
+    IMeasureReferencing,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -228,7 +232,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             return new DummyWorkspaceAttributesService(workspace);
         },
         measures(): IWorkspaceMeasuresService {
-            throw new NotSupported("not supported");
+            return new DummyWorkspaceMeasuresService(workspace);
         },
         facts(): IWorkspaceFactsService {
             throw new NotSupported("not supported");
@@ -498,5 +502,42 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     }
     getAttributeDatasetMeta(_ref: ObjRef): Promise<IMetadataObject> {
         throw new NotSupported("not supported");
+    }
+}
+
+class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
+    constructor(public readonly workspace: string) {}
+
+    createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
+        return Promise.resolve({
+            id: "test_metric_id",
+            uri: "test_metric_id",
+            ref: idRef("test_metric_id", "measure"),
+            type: "measure",
+            title: measure.title || "",
+            description: measure.description || "",
+            deprecated: measure.deprecated || false,
+            expression: measure.expression || "",
+            format: measure.format || "",
+            production: measure.production || false,
+            isLocked: measure.isLocked || false,
+            unlisted: measure.unlisted || false,
+        });
+    }
+
+    deleteMeasure(_measureRef: ObjRef): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
+    getMeasureExpressionTokens(_ref: ObjRef): Promise<IMeasureExpressionToken[]> {
+        return Promise.resolve([]);
+    }
+
+    getMeasureReferencingObjects(_measureRef: ObjRef): Promise<IMeasureReferencing> {
+        return Promise.resolve({});
+    }
+
+    updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
+        return Promise.resolve({ ...measure });
     }
 }
