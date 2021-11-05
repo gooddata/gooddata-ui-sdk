@@ -8,7 +8,6 @@
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "tools/plugin-toolkit"
     },
-    "private": true,
     "license": "MIT",
     "main": "dist/index.js",
     "module": "esm/index.js",
