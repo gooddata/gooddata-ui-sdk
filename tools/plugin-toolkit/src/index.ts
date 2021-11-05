@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // (C) 2021 GoodData Corporation
 
 import { Command, OptionValues, program } from "commander";

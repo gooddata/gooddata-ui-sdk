@@ -14,6 +14,9 @@
     "module": "esm/index.js",
     "browser": "dist/index.js",
     "typings": "esm/index.d.ts",
+    "bin": {
+        "gdc-plugins": "dist/index.js"
+    },
     "sideEffects": false,
     "files": [
         "dist/**/*.js",
