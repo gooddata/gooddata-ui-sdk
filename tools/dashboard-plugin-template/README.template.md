@@ -84,6 +84,21 @@ may be defined elsewhere as well).
 
 ## FAQ
 
+### What's up with the directories in src? Can I rename them?
+
+Do not rename or otherwise refactor any of the directories that were created during this project initialization.
+The structure and naming are essential for the build and the runtime loading of your plugin to work properly.
+
+This project is setup so that all your custom code must be self-contained in the [src/{{pluginIdentifier}}](src/{{pluginIdentifier}}) directory.
+
+The [src/{{pluginIdentifier}}\_engine](src/{{pluginIdentifier}}_engine) and [src/{{pluginIdentifier}}\_entry](src/{{pluginIdentifier}}_entry) directories contain essential plugin boilerplate.
+You must not modify these directories or their contents.
+
+The [src/harness] directory contains code for plugin development harness; it is used only during plugin development and the
+code in this directory will not be part of the plugin build . You can start the harness using `{{packageManager}} start`.
+You should have no need to modify the code in the harness. We anticipate that at times you may need to tweak Analytical Backend setup
+that is contained in the [src/harness/backend.ts](src/harness/backend.ts) - this is a safe change.
+
 ### How do plugin dependencies work?
 
 Your plugin can depend on arbitrary third party packages at your discretion with one exception: the packages
