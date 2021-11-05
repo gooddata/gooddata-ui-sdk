@@ -30,7 +30,8 @@ const isUriLike = (value: string): boolean => /\/gdc\/md\/\S+\/obj\/\S+/.test(va
 
 const convertAttributeElements = (items: string[]): IAttributeElements => {
     if (!items.length) {
-        return { values: [] }; // TODO is this OK or we want to throw?
+        // in case of empty filter assume that it is meant to be an URI-based one as these are much more common on bear
+        return { uris: [] };
     }
     // we assume that all the items either use uris, or values, not both, since there is no way of representing the mixed variant
     const first = items[0];
