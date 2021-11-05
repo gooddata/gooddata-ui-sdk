@@ -11,7 +11,6 @@ export const EmptyDashboardDescriptor: DashboardDescriptor = {
     title: "",
     description: "",
     shareStatus: "private",
-    isUnderStrictControl: true,
 };
 
 /**

@@ -87,9 +87,11 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
 
     const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
 
+    const { isUnderStrictControl: _unusedProp, ...dashboardDescriptorRest } = dashboardDescriptor;
+
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
-        ...dashboardDescriptor,
+        ...dashboardDescriptorRest,
         filterContext: {
             ...filterContextDefinition,
         },
@@ -103,7 +105,10 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
               shareStatus: "private",
               isUnderStrictControl: true,
           }
-        : {};
+        : {
+              isLocked: false,
+              shareStatus: "public",
+          };
 
     // remove widget identity from all widgets; according to the SPI contract, this will result in
     // creation of new widgets

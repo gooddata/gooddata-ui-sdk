@@ -1,0 +1,153 @@
+{
+    "dashboard": {
+        "created": "2021-11-05 08:23:35",
+        "description": "",
+        "filterContext": {
+            "description": "",
+            "filters": [],
+            "identifier": "abh2aBe64cb7",
+            "ref": { "uri": "/gdc/md/referenceworkspace/obj/1502" },
+            "title": "filterContext",
+            "uri": "/gdc/md/referenceworkspace/obj/1502"
+        },
+        "identifier": "aaI2dN741uaa",
+        "isLocked": true,
+        "isUnderStrictControl": true,
+        "layout": {
+            "sections": [
+                {
+                    "items": [
+                        {
+                            "size": { "xl": { "gridWidth": 12 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "abk1X9pTeeGt",
+                                "ignoreDashboardFilters": [],
+                                "insight": { "uri": "/gdc/md/referenceworkspace/obj/1308" },
+                                "properties": {},
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1501" },
+                                "title": "Simple Sorted Table",
+                                "type": "insight",
+                                "uri": "/gdc/md/referenceworkspace/obj/1501"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                }
+            ],
+            "type": "IDashboardLayout"
+        },
+        "ref": { "uri": "/gdc/md/referenceworkspace/obj/1503" },
+        "shareStatus": "public",
+        "tags": [],
+        "title": "Locked dashboard",
+        "type": "IDashboard",
+        "updated": "2021-11-05 08:24:18",
+        "uri": "/gdc/md/referenceworkspace/obj/1503"
+    },
+    "references": {
+        "insights": [
+            {
+                "insight": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "computeRatio": false,
+                                                "filters": [],
+                                                "item": { "uri": "/gdc/md/referenceworkspace/obj/1272" }
+                                            }
+                                        },
+                                        "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
+                                        "title": "Won"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1055" },
+                                        "localIdentifier": "3b196b9f8de04b61ba37762fa28fcf4f"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                                        "localIdentifier": "d25f36e4914f4ed18ee6b057d18decd9"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "created": "2020-08-10 09:21:34",
+                    "filters": [],
+                    "identifier": "ab2pdQnmiqo5",
+                    "properties": {
+                        "sortItems": [
+                            {
+                                "measureSortItem": {
+                                    "direction": "desc",
+                                    "locators": [
+                                        {
+                                            "attributeLocatorItem": {
+                                                "attributeIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                                                "element": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                                            }
+                                        },
+                                        {
+                                            "measureLocatorItem": {
+                                                "measureIdentifier": "31c22194386b408aa80ab90b966e85a7"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "ref": { "uri": "/gdc/md/referenceworkspace/obj/1308" },
+                    "sorts": [
+                        {
+                            "measureSortItem": {
+                                "direction": "desc",
+                                "locators": [
+                                    {
+                                        "attributeLocatorItem": {
+                                            "attributeIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                                            "element": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                                        }
+                                    },
+                                    {
+                                        "measureLocatorItem": {
+                                            "measureIdentifier": "31c22194386b408aa80ab90b966e85a7"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "tags": [],
+                    "title": "Simple Sorted Table",
+                    "updated": "2020-08-16 20:07:15",
+                    "uri": "/gdc/md/referenceworkspace/obj/1308",
+                    "visualizationUrl": "local:table"
+                }
+            }
+        ],
+        "plugins": []
+    }
+}

@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-08-23T11:38:20.222Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-11-05T07:29:15.710Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -4663,13 +4663,17 @@ const dash_aaQ8QjLVhNOG = {
     obj: require("./metadata/dashboards/aaQ8QjLVhNOG/obj.json"),
     alerts: require("./metadata/dashboards/aaQ8QjLVhNOG/alerts.json"),
 };
+const dash_abK3yl1TcTWV = {
+    obj: require("./metadata/dashboards/abK3yl1TcTWV/obj.json"),
+    alerts: require("./metadata/dashboards/abK3yl1TcTWV/alerts.json"),
+};
 const dash_emptyDashboard = {
     obj: require("./metadata/dashboards/emptyDashboard/obj.json"),
     alerts: require("./metadata/dashboards/emptyDashboard/alerts.json"),
 };
-const dash_abK3yl1TcTWV = {
-    obj: require("./metadata/dashboards/abK3yl1TcTWV/obj.json"),
-    alerts: require("./metadata/dashboards/abK3yl1TcTWV/alerts.json"),
+const dash_aaI2dN741uaa = {
+    obj: require("./metadata/dashboards/aaI2dN741uaa/obj.json"),
+    alerts: require("./metadata/dashboards/aaI2dN741uaa/alerts.json"),
 };
 export const Recordings = {
     executions: {
@@ -5867,8 +5871,9 @@ export const Recordings = {
             dash_aeis6NlXcL7X,
             dash_abr8vSe5exU7,
             dash_aaQ8QjLVhNOG,
-            dash_emptyDashboard,
             dash_abK3yl1TcTWV,
+            dash_emptyDashboard,
+            dash_aaI2dN741uaa,
         },
     },
 };
