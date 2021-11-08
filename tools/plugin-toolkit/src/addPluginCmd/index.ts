@@ -16,7 +16,7 @@ export async function addPluginCmdAction(pluginUrl: string, options: ActionOptio
     }
 
     try {
-        const config: AddCmdActionConfig = getAddCmdActionConfig(pluginUrl, options);
+        const config: AddCmdActionConfig = await getAddCmdActionConfig(pluginUrl, options);
         logInfo(`addPluginCmdAction ${JSON.stringify(config, null, 4)}`);
 
         if (config.dryRun) {

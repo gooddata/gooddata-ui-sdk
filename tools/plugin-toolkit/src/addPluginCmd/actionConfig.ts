@@ -4,6 +4,7 @@ import { ActionOptions, TargetBackendType } from "../_base/types";
 import { getBackend, getHostname, getWorkspace } from "../_base/cli/extractors";
 import { convertToPluginIdentifier, readJsonSync } from "../_base/utils";
 import {
+    asyncValidOrDie,
     createHostnameValidator,
     createPluginUrlValidator,
     InputValidationError,
@@ -107,7 +108,10 @@ function validateCredentialsAvailable(config: AddCmdActionConfig) {
     }
 }
 
-export function getAddCmdActionConfig(pluginUrl: string, options: ActionOptions): AddCmdActionConfig {
+export async function getAddCmdActionConfig(
+    pluginUrl: string,
+    options: ActionOptions,
+): Promise<AddCmdActionConfig> {
     const packageJson = readJsonSync("package.json");
 
     const pluginIdentifier = convertToPluginIdentifier(packageJson.name);
@@ -126,7 +130,7 @@ export function getAddCmdActionConfig(pluginUrl: string, options: ActionOptions)
 
     validOrDie("hostname", hostname, createHostnameValidator(backend));
     validOrDie("workspace", workspace, workspaceValidator);
-    validOrDie("pluginUrl", pluginUrl, createPluginUrlValidator(pluginIdentifier));
+    await asyncValidOrDie("pluginUrl", pluginUrl, createPluginUrlValidator(pluginIdentifier));
 
     const config: AddCmdActionConfig = {
         pluginUrl,
