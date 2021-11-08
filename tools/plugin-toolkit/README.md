@@ -1,6 +1,11 @@
-# Plugin toolkit
+# Plugin Development Toolkit
 
-This package serves as a starting point for developing various plugins for GoodData applications and components.
+This package implements GoodData Plugin Development Toolkit (PDT). The primary entry point to the toolkit is its
+CLI tool called `gdc-plugins`. Through this CLI tool you can currently:
+
+-   Create a new project to develop a Dashboard Plugin
+-   Add configuration for the Dashboard Plugin into a workspace of your choice
+-   Configure an existing dashboard to use a Dashboard Plugin available in a workspace
 
 ## License
 
