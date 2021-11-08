@@ -4,6 +4,8 @@ import url from "url";
 import includes from "lodash/includes";
 import { TargetBackendType } from "../types";
 import axios, { AxiosError } from "axios";
+import { IAnalyticalBackend, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import { extractRootCause } from "../utils";
 
 const InvalidHostnameMessage =
     "Invalid hostname. Please provide a valid hostname in format [[https|http]://]host[:port]";
@@ -116,13 +118,34 @@ export function packageManagerValidator(value: string): boolean | string {
     return "Invalid package manager. Specify 'npm' or 'yarn'.";
 }
 
-export function workspaceValidator(value: string): boolean | string {
-    // TODO: make this more strict
-    if (!isEmpty(value)) {
-        return true;
-    }
+export function createWorkspaceValidator(backend: IAnalyticalBackend): AsyncInputValidator {
+    return async (value): Promise<boolean | string> => {
+        if (isEmpty(value)) {
+            return "Invalid workspace. Specify a valid workspace identifier.";
+        }
 
-    return "Invalid workspace. Specify a valid workspace identifier.";
+        // TODO: see FET-902; we should use getDescriptor() here.
+        return backend
+            .workspace(value)
+            .dashboards()
+            .getDashboards()
+            .then((_) => {
+                return true;
+            })
+            .catch((e: any) => {
+                if (isUnexpectedResponseError(e)) {
+                    if (e.httpStatus === 404) {
+                        return `Workspace ${value} does not exist on ${backend.config.hostname}.`;
+                    } else if (e.httpStatus === 403) {
+                        return `Workspace ${value} does exist but you do not have authorization.`;
+                    }
+                }
+
+                const rootCause = extractRootCause(e);
+
+                return `An error has occurred while validating workspace existence: ${rootCause.message}`;
+            });
+    };
 }
 
 export function validOrDie(inputName: string, value: string, validator: InputValidator): void {

@@ -4,6 +4,21 @@ import { logError, logInfo, logWarn } from "../_base/cli/loggers";
 import { AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig";
 import { isInputValidationError } from "../_base/cli/validators";
 import fse from "fs-extra";
+import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
+
+function printAddConfigSummary(config: AddCmdActionConfig) {
+    const { backend, hostname, workspace, pluginUrl, username } = config;
+
+    logInfo("Everything looks valid. Going to add new plugin object to workspace metadata.");
+    logInfo(`  Hostname  : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
+
+    if (backend === "bear") {
+        logInfo(`  Username  : ${username}`);
+    }
+
+    logInfo(`  Workspace : ${workspace}`);
+    logInfo(`  Plugin URL: ${pluginUrl}`);
+}
 
 export async function addPluginCmdAction(pluginUrl: string, options: ActionOptions): Promise<void> {
     if (!fse.existsSync("package.json")) {
@@ -17,7 +32,8 @@ export async function addPluginCmdAction(pluginUrl: string, options: ActionOptio
 
     try {
         const config: AddCmdActionConfig = await getAddCmdActionConfig(pluginUrl, options);
-        logInfo(`addPluginCmdAction ${JSON.stringify(config, null, 4)}`);
+
+        printAddConfigSummary(config);
 
         if (config.dryRun) {
             logWarn(
@@ -29,10 +45,14 @@ export async function addPluginCmdAction(pluginUrl: string, options: ActionOptio
     } catch (e) {
         if (isInputValidationError(e)) {
             logError(e.message);
-
-            process.exit(1);
+        } else if (isNotAuthenticated(e)) {
+            logError(
+                "Authentication to backend has failed. Please ensure your environment is setup with correct credentials.",
+            );
         } else {
             logError(`An error has occurred while adding plugin: ${e.message}`);
         }
+
+        process.exit(1);
     }
 }

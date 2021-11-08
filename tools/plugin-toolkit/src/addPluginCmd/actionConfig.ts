@@ -7,17 +7,19 @@ import {
     asyncValidOrDie,
     createHostnameValidator,
     createPluginUrlValidator,
+    createWorkspaceValidator,
     InputValidationError,
     validOrDie,
-    workspaceValidator,
 } from "../_base/cli/validators";
 import { readFileSync } from "fs";
 import fse from "fs-extra";
 import { logInfo } from "../_base/cli/loggers";
 import isEmpty from "lodash/isEmpty";
+import { createBackend } from "../_base/backend";
+import ora from "ora";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 export type AddCmdActionConfig = {
-    dryRun: boolean;
     pluginUrl: string;
     pluginIdentifier: string;
     backend: TargetBackendType;
@@ -26,6 +28,8 @@ export type AddCmdActionConfig = {
     username: string | undefined;
     password: string | undefined;
     token: string | undefined;
+    dryRun: boolean;
+    backendInstance: IAnalyticalBackend;
 };
 
 function readDotEnv(): Record<string, string> {
@@ -108,6 +112,31 @@ function validateCredentialsAvailable(config: AddCmdActionConfig) {
     }
 }
 
+/**
+ * Perform asynchronous validations:
+ *
+ * -  backend & authentication against it
+ * -  workspace exists
+ * -  plugin is valid and entry point exists at the provided location
+ * @param config
+ */
+async function doAsyncValidations(config: AddCmdActionConfig) {
+    const { backendInstance, workspace, pluginUrl, pluginIdentifier } = config;
+
+    const asyncValidationProgress = ora({
+        text: "Performing server-side validations.",
+    });
+    try {
+        asyncValidationProgress.start();
+
+        await backendInstance.authenticate(true);
+        await asyncValidOrDie("workspace", workspace, createWorkspaceValidator(backendInstance));
+        await asyncValidOrDie("pluginUrl", pluginUrl, createPluginUrlValidator(pluginIdentifier));
+    } finally {
+        asyncValidationProgress.stop();
+    }
+}
+
 export async function getAddCmdActionConfig(
     pluginUrl: string,
     options: ActionOptions,
@@ -127,24 +156,30 @@ export async function getAddCmdActionConfig(
     const username = env.GDC_USERNAME;
     const password = env.GDC_PASSWORD;
     const token = env.TIGER_API_TOKEN;
-
-    validOrDie("hostname", hostname, createHostnameValidator(backend));
-    validOrDie("workspace", workspace, workspaceValidator);
-    await asyncValidOrDie("pluginUrl", pluginUrl, createPluginUrlValidator(pluginIdentifier));
+    const backendInstance = createBackend({
+        hostname,
+        backend,
+        username,
+        password,
+        token,
+    });
 
     const config: AddCmdActionConfig = {
         pluginUrl,
         pluginIdentifier,
-        dryRun: options.programOpts.dryRun ?? false,
         backend,
         hostname,
         workspace,
         username,
         password,
         token,
+        dryRun: options.commandOpts.dryRun ?? false,
+        backendInstance,
     };
 
+    validOrDie("hostname", hostname, createHostnameValidator(backend));
     validateCredentialsAvailable(config);
+    await doAsyncValidations(config);
 
     return config;
 }

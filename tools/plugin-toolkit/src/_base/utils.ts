@@ -40,3 +40,11 @@ export function safeJoin(initialPath: string, relativePath: string): string {
 export function convertToPluginIdentifier(name: string): string {
     return `dp_${snakeCase(name)}`;
 }
+
+export function extractRootCause(error: any): any {
+    if (error.cause === undefined) {
+        return error;
+    }
+
+    return extractRootCause(error.cause);
+}
