@@ -65,6 +65,7 @@
         "@babel/preset-env": "^7.7.2",
         "@babel/preset-react": "^7.7.2",
         "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/plugin-toolkit": "^8.7.0-alpha.50",
         "@gooddata/sdk-model": "^8.7.0-alpha.50",
         "@gooddata/sdk-backend-spi": "^8.7.0-alpha.50",
         "@gooddata/sdk-backend-bear": "^8.7.0-alpha.50",

@@ -107,6 +107,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/plugin-toolkit",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@gooddata/reference-workspace",
       "allowedCategories": [ "production" ]
     },
