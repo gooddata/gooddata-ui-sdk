@@ -2,15 +2,23 @@
 import { parse } from "dotenv";
 import { ActionOptions, TargetBackendType } from "../_base/types";
 import { getBackend, getHostname, getWorkspace } from "../_base/cli/extractors";
-import { readJsonSync } from "../_base/utils";
-import { InputValidationError } from "../_base/cli/validators";
+import { convertToPluginIdentifier, readJsonSync } from "../_base/utils";
+import {
+    createHostnameValidator,
+    createPluginUrlValidator,
+    InputValidationError,
+    validOrDie,
+    workspaceValidator,
+} from "../_base/cli/validators";
 import { readFileSync } from "fs";
 import fse from "fs-extra";
 import { logInfo } from "../_base/cli/loggers";
 import isEmpty from "lodash/isEmpty";
 
 export type AddCmdActionConfig = {
+    dryRun: boolean;
     pluginUrl: string;
+    pluginIdentifier: string;
     backend: TargetBackendType;
     hostname: string;
     workspace: string;
@@ -53,8 +61,7 @@ function loadEnv(backend: TargetBackendType): Record<string, string> {
     return dotEnvContent;
 }
 
-function discoverBackendType(): TargetBackendType {
-    const packageJson = fse.existsSync("package.json") ? readJsonSync("package.json") : {};
+function discoverBackendType(packageJson: Record<string, any>): TargetBackendType {
     const { peerDependencies = {} } = packageJson;
 
     if (peerDependencies["@gooddata/sdk-backend-bear"] !== undefined) {
@@ -74,36 +81,8 @@ function discoverBackendType(): TargetBackendType {
     );
 }
 
-export function getAddCmdActionConfig(pluginUrl: string, options: ActionOptions): AddCmdActionConfig {
-    const backendFromOptions = getBackend(options);
-    const backend = backendFromOptions ?? discoverBackendType();
-
-    const env = loadEnv(backend);
-    const hostnameFromOptions = getHostname(backendFromOptions, options);
-    const workspaceFromOptions = getWorkspace(options);
-
-    const hostname = hostnameFromOptions ?? env.BACKEND_URL;
-    const workspace = workspaceFromOptions ?? env.WORKSPACE;
-    const username = env.GDC_USERNAME;
-    const password = env.GDC_PASSWORD;
-    const token = env.TIGER_API_TOKEN;
-
-    if (!hostname) {
-        throw new InputValidationError(
-            "hostname",
-            "",
-            "Unable to determine hostname to add plugin to. Please specify --hostname option on the command line.",
-        );
-    }
-
-    if (!workspace) {
-        throw new InputValidationError(
-            "workspace",
-            "",
-            "Unable to determine workspace to add plugin to. Please specify --workspace-id option on the command line.",
-        );
-    }
-
+function validateCredentialsAvailable(config: AddCmdActionConfig) {
+    const { backend, username, password, token } = config;
     if (backend === "bear") {
         if (isEmpty(username)) {
             throw new InputValidationError(
@@ -126,9 +105,33 @@ export function getAddCmdActionConfig(pluginUrl: string, options: ActionOptions)
             "Unable to determine token to use for authentication to GoodData.CN. Please make sure TIGER_API_TOKEN env variable is set in your session or in the .env file",
         );
     }
+}
 
-    return {
+export function getAddCmdActionConfig(pluginUrl: string, options: ActionOptions): AddCmdActionConfig {
+    const packageJson = readJsonSync("package.json");
+
+    const pluginIdentifier = convertToPluginIdentifier(packageJson.name);
+    const backendFromOptions = getBackend(options);
+    const backend = backendFromOptions ?? discoverBackendType(packageJson);
+
+    const env = loadEnv(backend);
+    const hostnameFromOptions = getHostname(backendFromOptions, options);
+    const workspaceFromOptions = getWorkspace(options);
+
+    const hostname = hostnameFromOptions ?? env.BACKEND_URL;
+    const workspace = workspaceFromOptions ?? env.WORKSPACE;
+    const username = env.GDC_USERNAME;
+    const password = env.GDC_PASSWORD;
+    const token = env.TIGER_API_TOKEN;
+
+    validOrDie("hostname", hostname, createHostnameValidator(backend));
+    validOrDie("workspace", workspace, workspaceValidator);
+    validOrDie("pluginUrl", pluginUrl, createPluginUrlValidator(pluginIdentifier));
+
+    const config: AddCmdActionConfig = {
         pluginUrl,
+        pluginIdentifier,
+        dryRun: options.programOpts.dryRun ?? false,
         backend,
         hostname,
         workspace,
@@ -136,4 +139,8 @@ export function getAddCmdActionConfig(pluginUrl: string, options: ActionOptions)
         password,
         token,
     };
+
+    validateCredentialsAvailable(config);
+
+    return config;
 }

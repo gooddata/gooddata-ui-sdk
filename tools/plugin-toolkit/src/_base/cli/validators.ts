@@ -9,7 +9,7 @@ const InvalidHostnameMessage =
 
 export type InputValidator = (value: string) => boolean | string;
 
-export function createHostnameValidator(backend: TargetBackendType) {
+export function createHostnameValidator(backend: TargetBackendType): InputValidator {
     return (input: string): boolean | string => {
         if (isEmpty(input)) {
             return InvalidHostnameMessage;
@@ -46,6 +46,21 @@ export function pluginNameValidator(value: string): boolean | string {
     return true;
 }
 
+export function createPluginUrlValidator(pluginIdentifier: string): InputValidator {
+    const entryPoint = `${pluginIdentifier}.js`;
+    return (value: string): boolean | string => {
+        if (!value.startsWith("https://")) {
+            return "Invalid plugin URL. The plugin URL must be for an https location. Example: 'https://your.hosting.com/myPlugin/${entryPoint}'.";
+        }
+
+        if (!value.endsWith(entryPoint)) {
+            return `Invalid plugin URL. The plugin URL must point at the plugin entry point. Example: 'https://your.hosting.com/myPlugin/${entryPoint}'.`;
+        }
+
+        return true;
+    };
+}
+
 export function backendTypeValidator(value: string): boolean | string {
     if (value === "bear" || value === "tiger") {
         return true;
@@ -68,6 +83,15 @@ export function packageManagerValidator(value: string): boolean | string {
     }
 
     return "Invalid package manager. Specify 'npm' or 'yarn'.";
+}
+
+export function workspaceValidator(value: string): boolean | string {
+    // TODO: make this more strict
+    if (!isEmpty(value)) {
+        return true;
+    }
+
+    return "Invalid workspace. Specify a valid workspace identifier.";
 }
 
 export function validOrDie(inputName: string, value: string, validator: InputValidator): void {

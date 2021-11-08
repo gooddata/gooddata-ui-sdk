@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import * as fs from "fs";
 import path from "path";
+import snakeCase from "lodash/snakeCase";
 
 export function toJsonString(obj: any): string {
     // note: using json-stable-stringify is likely not a good idea in this project:
@@ -28,4 +29,14 @@ export function readJsonSync(file: string): any {
  */
 export function safeJoin(initialPath: string, relativePath: string): string {
     return path.posix.join(initialPath, relativePath).replace(/\\/g, "/");
+}
+
+/**
+ * Converts plug name to an identifier that can be used for module federation identifier, directory names,
+ * asset file names etc.
+ *
+ * @param name - plugin name as entered by the user
+ */
+export function convertToPluginIdentifier(name: string): string {
+    return `dp_${snakeCase(name)}`;
 }
