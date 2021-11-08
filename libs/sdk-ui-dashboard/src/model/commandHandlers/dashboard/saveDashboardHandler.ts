@@ -31,6 +31,7 @@ import { isTemporaryIdentity } from "../../utils/dashboardItemUtils";
 import { layoutActions } from "../../store/layout";
 import { savingActions } from "../../store/saving";
 import { selectSettings } from "../../store/config/configSelectors";
+import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;
@@ -76,13 +77,42 @@ function updateDashboard(ctx: DashboardContext, saveCtx: DashboardSaveContext): 
         .updateDashboard(persistedDashboard, dashboardToSave);
 }
 
+export function getDashboardWithSharing(
+    dashboard: IDashboardDefinition,
+    sharingEnabled: boolean = false,
+    sharingSupported: boolean = true,
+    isNewDashboard: boolean,
+): IDashboardDefinition {
+    let shareProp: Partial<IAccessControlAware> = {};
+    if (isNewDashboard) {
+        const { isUnderStrictControl: _unusedIsUnderStrictControl, ...dashboardRest } = dashboard;
+        shareProp =
+            sharingEnabled && sharingSupported
+                ? {
+                      shareStatus: "private",
+                      isUnderStrictControl: true,
+                  }
+                : {
+                      shareStatus: "public",
+                  };
+        return {
+            ...dashboardRest,
+            ...shareProp,
+        };
+    }
+    return dashboard;
+}
+
 /*
  * TODO: custom widget persistence; we need a new backend capability that indicates whether the
  *  backend can persist custom widget content (tiger can already, bear cannot). Based on that
  *  capability, this code should use either the selectBasicLayout (that strips any custom widgets) or
  *  selectLayout (that keeps custom widgets).
  */
-function* createDashboardSaveContext(cmd: SaveDashboard): SagaIterator<DashboardSaveContext> {
+function* createDashboardSaveContext(
+    cmd: SaveDashboard,
+    isNewDashboard: boolean,
+): SagaIterator<DashboardSaveContext> {
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
         selectPersistedDashboard,
     );
@@ -99,21 +129,10 @@ function* createDashboardSaveContext(cmd: SaveDashboard): SagaIterator<Dashboard
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfigOverrides> = yield select(
         selectDateFilterConfigOverrides,
     );
-
-    const isNewDashboard = persistedDashboard === undefined;
-    let shareProp: Partial<IAccessControlAware> = {};
-    if (isNewDashboard) {
-        const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
-
-        shareProp = settings.enableAnalyticalDashboardPermissions
-            ? {
-                  shareStatus: "private",
-                  isUnderStrictControl: true,
-              }
-            : {
-                  shareStatus: "public",
-              };
-    }
+    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+    const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
+        selectBackendCapabilities,
+    );
 
     /*
      * When updating an existing dashboard, the services expect that the dashboard definition to use for
@@ -137,7 +156,6 @@ function* createDashboardSaveContext(cmd: SaveDashboard): SagaIterator<Dashboard
         },
         layout,
         dateFilterConfig,
-        ...shareProp,
     };
 
     const dashboardToSave: IDashboardDefinition = {
@@ -149,7 +167,12 @@ function* createDashboardSaveContext(cmd: SaveDashboard): SagaIterator<Dashboard
         cmd,
         persistedDashboard,
         dashboardFromState,
-        dashboardToSave,
+        dashboardToSave: getDashboardWithSharing(
+            dashboardToSave,
+            settings.enableAnalyticalDashboardPermissions,
+            capabilities.supportsAccessControl,
+            isNewDashboard,
+        ),
     };
 }
 
@@ -201,11 +224,18 @@ export function* saveDashboardHandler(
 ): SagaIterator<DashboardSaved> {
     try {
         yield put(savingActions.setSavingStart());
+
+        const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
+            selectPersistedDashboard,
+        );
+
+        const isNewDashboard = persistedDashboard === undefined;
+
         const saveCtx: SagaReturnType<typeof createDashboardSaveContext> = yield call(
             createDashboardSaveContext,
             cmd,
+            isNewDashboard,
         );
-        const isNewDashboard = saveCtx.persistedDashboard === undefined;
         let result: DashboardSaveResult;
 
         if (isNewDashboard) {
