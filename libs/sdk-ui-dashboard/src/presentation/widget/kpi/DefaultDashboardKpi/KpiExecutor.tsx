@@ -50,7 +50,7 @@ import {
     useDashboardSelector,
     useDashboardUserInteraction,
     useWidgetExecutionsHandler,
-    selectConfiguredDrillsByWidgetRef,
+    selectValidConfiguredDrillsByWidgetRef,
     uiActions,
     useDashboardDispatch,
     selectIsKpiAlertOpenedByWidgetRef,
@@ -136,7 +136,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const permissions = useDashboardSelector(selectPermissions);
     const settings = useDashboardSelector(selectSettings);
     const drillableItems = useDashboardSelector(selectDrillableItems);
-    const widgetDrills = useDashboardSelector(selectConfiguredDrillsByWidgetRef(kpiWidget.ref));
+    const widgetDrills = useDashboardSelector(selectValidConfiguredDrillsByWidgetRef(kpiWidget.ref));
     const isAlertDialogOpen = useDashboardSelector(selectIsKpiAlertOpenedByWidgetRef(kpiWidget.ref));
     const isAlertHighlighted = useDashboardSelector(selectIsKpiAlertHighlightedByWidgetRef(kpiWidget.ref));
 

@@ -45,6 +45,9 @@ import {
     selectIsEmbedded,
 } from "../config/configSelectors";
 import flatMap from "lodash/flatMap";
+import { selectAllCatalogAttributesMap } from "../catalog/catalogSelectors";
+import { selectListedDashboardsMap } from "../listedDashboards/listedDashboardsSelectors";
+import { selectInsightsMap } from "../insights/insightsSelectors";
 
 /**
  * @internal
@@ -254,6 +257,52 @@ export const selectConfiguredDrillsByWidgetRef = createMemoizedSelector((ref: Ob
     ),
 );
 
+/**
+ * @internal
+ */
+export const selectValidConfiguredDrillsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(
+        selectConfiguredDrillsByWidgetRef(ref),
+        selectAllCatalogAttributesMap,
+        selectListedDashboardsMap,
+        selectInsightsMap,
+        (drills = [], attributesMap, listedDashboardsMap, insightsMap) => {
+            const filteredDrills = drills.filter((drill) => {
+                switch (drill.drillDefinition.type) {
+                    case "drillToAttributeUrl": {
+                        return attributesMap.get(drill.drillDefinition.target.hyperlinkDisplayForm);
+                    }
+                    case "drillToCustomUrl": {
+                        return true;
+                    }
+                    case "drillToDashboard": {
+                        // No drill target equals drill to the same dashboard
+                        return (
+                            !drill.drillDefinition.target ||
+                            listedDashboardsMap.get(drill.drillDefinition.target)
+                        );
+                    }
+                    case "drillToInsight": {
+                        return insightsMap.get(drill.drillDefinition.target);
+                    }
+                    case "drillToLegacyDashboard": {
+                        return true;
+                    }
+                    case "drillDown": {
+                        return true;
+                    }
+                    default: {
+                        const unhandledType: never = drill.drillDefinition;
+                        throw new UnexpectedError(`Unhandled widget drill type: ${unhandledType}`);
+                    }
+                }
+            });
+
+            return filteredDrills;
+        },
+    ),
+);
+
 const selectImplicitDrillToUrlPredicates = createMemoizedSelector((ref: ObjRef) =>
     createSelector(selectImplicitDrillsToUrlByWidgetRef(ref), (drillToUrlDrills) => {
         return flatMap(drillToUrlDrills, (drill) => drill.predicates);
@@ -267,7 +316,7 @@ const selectImplicitDrillDownPredicates = createMemoizedSelector((ref: ObjRef) =
 );
 
 const selectConfiguredDrillPredicates = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(selectConfiguredDrillsByWidgetRef(ref), (configuredDrills = []) => {
+    createSelector(selectValidConfiguredDrillsByWidgetRef(ref), (configuredDrills = []) => {
         return flatMap(configuredDrills, (drill) => drill.predicates);
     }),
 );
@@ -277,7 +326,7 @@ const selectConfiguredDrillPredicates = createMemoizedSelector((ref: ObjRef) =>
  */
 export const selectConfiguredAndImplicitDrillsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
-        selectConfiguredDrillsByWidgetRef(ref),
+        selectValidConfiguredDrillsByWidgetRef(ref),
         selectImplicitDrillsDownByWidgetRef(ref),
         selectImplicitDrillsToUrlByWidgetRef(ref),
         (configuredDrills, implicitDrillDownDrills, implicitDrillToUrlDrills) => {
