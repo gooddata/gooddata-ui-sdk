@@ -16,7 +16,6 @@ Object {
   },
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
-  "isUnderStrictControl": true,
   "layout": undefined,
   "plugins": undefined,
   "ref": Object {
@@ -49,7 +48,6 @@ Object {
   "filterContext": undefined,
   "identifier": "dashboardWithExtendedDateFilterConfig",
   "isLocked": false,
-  "isUnderStrictControl": true,
   "layout": undefined,
   "plugins": undefined,
   "ref": Object {
@@ -138,7 +136,6 @@ Object {
   },
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
-  "isUnderStrictControl": true,
   "layout": undefined,
   "plugins": undefined,
   "ref": Object {
@@ -163,7 +160,6 @@ Object {
   "filterContext": undefined,
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
-  "isUnderStrictControl": true,
   "layout": Object {
     "sections": Array [
       Object {
@@ -325,7 +321,6 @@ Object {
   "filterContext": undefined,
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
-  "isUnderStrictControl": true,
   "layout": Object {
     "sections": Array [
       Object {
@@ -490,7 +485,6 @@ Object {
   "filterContext": undefined,
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
-  "isUnderStrictControl": true,
   "layout": Object {
     "sections": Array [
       Object {
@@ -652,7 +646,6 @@ Object {
   "filterContext": undefined,
   "identifier": "emptyDashboard",
   "isLocked": false,
-  "isUnderStrictControl": true,
   "layout": undefined,
   "plugins": undefined,
   "ref": Object {
@@ -686,7 +679,6 @@ Object {
   },
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
-  "isUnderStrictControl": true,
   "layout": undefined,
   "plugins": undefined,
   "ref": Object {
