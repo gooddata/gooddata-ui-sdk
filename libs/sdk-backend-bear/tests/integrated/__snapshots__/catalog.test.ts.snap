@@ -84,6 +84,42 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.account.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
+            },
+            "title": "Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.account.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+            },
+            "title": "Account",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+          },
+        ],
         "id": "attr.account.id",
         "production": true,
         "ref": Object {
@@ -225,6 +261,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.department",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+            },
+            "title": "Department",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+          },
+        ],
         "id": "attr.owner.department",
         "production": true,
         "ref": Object {
@@ -296,6 +351,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunitysnapshot.forecastcategory",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
+            },
+            "title": "Forecast Category",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
+          },
+        ],
         "id": "attr.opportunitysnapshot.forecastcategory",
         "production": true,
         "ref": Object {
@@ -350,6 +424,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.isactive",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
+            },
+            "title": "Is Active?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
+          },
+        ],
         "id": "attr.stage.isactive",
         "production": true,
         "ref": Object {
@@ -404,6 +497,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.isclosed",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
+            },
+            "title": "Is Closed?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
+          },
+        ],
         "id": "attr.stage.isclosed",
         "production": true,
         "ref": Object {
@@ -458,6 +570,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.iswon",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
+            },
+            "title": "Is Won?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
+          },
+        ],
         "id": "attr.stage.iswon",
         "production": true,
         "ref": Object {
@@ -546,6 +677,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunitysnapshot.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
+            },
+            "title": "Opp. Snapshot",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
+          },
+        ],
         "id": "attr.opportunitysnapshot.id",
         "production": true,
         "ref": Object {
@@ -617,6 +767,59 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunity.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
+            },
+            "title": "Opportunity Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunity.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1068",
+            },
+            "title": "Opportunity",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1068",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "label.opportunity.id.url",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
+            },
+            "title": "SFDC URL",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
+          },
+        ],
         "drillToAttributeLink": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
         },
@@ -744,6 +947,42 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.product.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+            },
+            "title": "Product Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.product.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1056",
+            },
+            "title": "Product",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1056",
+          },
+        ],
         "id": "attr.product.id",
         "production": true,
         "ref": Object {
@@ -815,6 +1054,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.region",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+            },
+            "title": "Region",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+          },
+        ],
         "id": "attr.owner.region",
         "production": true,
         "ref": Object {
@@ -869,6 +1127,42 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
+            },
+            "title": "Owner Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1085",
+            },
+            "title": "Owner",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1085",
+          },
+        ],
         "id": "attr.owner.id",
         "production": true,
         "ref": Object {
@@ -959,6 +1253,42 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.name.stagename",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
+            },
+            "title": "Stage Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.name.order",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1093",
+            },
+            "title": "Order",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1093",
+          },
+        ],
         "id": "attr.stage.name",
         "production": true,
         "ref": Object {
@@ -1030,6 +1360,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.status",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
+            },
+            "title": "Status",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
+          },
+        ],
         "id": "attr.stage.status",
         "production": true,
         "ref": Object {
@@ -2661,6 +3010,42 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.account.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
+            },
+            "title": "Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.account.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+            },
+            "title": "Account",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+          },
+        ],
         "id": "attr.account.id",
         "production": true,
         "ref": Object {
@@ -2732,6 +3117,42 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.id.subject",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1071",
+            },
+            "title": "Subject",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1071",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1072",
+            },
+            "title": "Activity",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1072",
+          },
+        ],
         "id": "attr.activity.id",
         "production": true,
         "ref": Object {
@@ -2820,6 +3241,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.activitytype",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1082",
+            },
+            "title": "Activity Type",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1082",
+          },
+        ],
         "id": "attr.activity.activitytype",
         "production": true,
         "ref": Object {
@@ -2927,6 +3367,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.department",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+            },
+            "title": "Department",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+          },
+        ],
         "id": "attr.owner.department",
         "production": true,
         "ref": Object {
@@ -2998,6 +3457,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunitysnapshot.forecastcategory",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
+            },
+            "title": "Forecast Category",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
+          },
+        ],
         "id": "attr.opportunitysnapshot.forecastcategory",
         "production": true,
         "ref": Object {
@@ -3052,6 +3530,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.isactive",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
+            },
+            "title": "Is Active?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
+          },
+        ],
         "id": "attr.stage.isactive",
         "production": true,
         "ref": Object {
@@ -3106,6 +3603,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.isclosed",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1074",
+            },
+            "title": "Is Closed?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1074",
+          },
+        ],
         "id": "attr.activity.isclosed",
         "production": true,
         "ref": Object {
@@ -3160,6 +3676,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.isclosed",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
+            },
+            "title": "Is Closed?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
+          },
+        ],
         "id": "attr.stage.isclosed",
         "production": true,
         "ref": Object {
@@ -3214,6 +3749,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.istask",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1076",
+            },
+            "title": "Is Task?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1076",
+          },
+        ],
         "id": "attr.activity.istask",
         "production": true,
         "ref": Object {
@@ -3268,6 +3822,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.iswon",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
+            },
+            "title": "Is Won?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
+          },
+        ],
         "id": "attr.stage.iswon",
         "production": true,
         "ref": Object {
@@ -3356,6 +3929,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunitysnapshot.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
+            },
+            "title": "Opp. Snapshot",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
+          },
+        ],
         "id": "attr.opportunitysnapshot.id",
         "production": true,
         "ref": Object {
@@ -3427,6 +4019,59 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunity.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
+            },
+            "title": "Opportunity Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunity.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1068",
+            },
+            "title": "Opportunity",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1068",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "label.opportunity.id.url",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
+            },
+            "title": "SFDC URL",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
+          },
+        ],
         "drillToAttributeLink": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
         },
@@ -3518,6 +4163,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.priority",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1080",
+            },
+            "title": "Priority",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1080",
+          },
+        ],
         "id": "attr.activity.priority",
         "production": true,
         "ref": Object {
@@ -3608,6 +4272,42 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.product.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+            },
+            "title": "Product Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.product.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1056",
+            },
+            "title": "Product",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1056",
+          },
+        ],
         "id": "attr.product.id",
         "production": true,
         "ref": Object {
@@ -3679,6 +4379,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.region",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+            },
+            "title": "Region",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+          },
+        ],
         "id": "attr.owner.region",
         "production": true,
         "ref": Object {
@@ -3733,6 +4452,42 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
+            },
+            "title": "Owner Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1085",
+            },
+            "title": "Owner",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1085",
+          },
+        ],
         "id": "attr.owner.id",
         "production": true,
         "ref": Object {
@@ -3823,6 +4578,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stagehistory.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1065",
+            },
+            "title": "Stage History",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1065",
+          },
+        ],
         "id": "attr.stagehistory.id",
         "production": true,
         "ref": Object {
@@ -3877,6 +4651,42 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.name.stagename",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
+            },
+            "title": "Stage Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.name.order",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1093",
+            },
+            "title": "Order",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1093",
+          },
+        ],
         "id": "attr.stage.name",
         "production": true,
         "ref": Object {
@@ -3948,6 +4758,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.status",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1078",
+            },
+            "title": "Status",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1078",
+          },
+        ],
         "id": "attr.activity.status",
         "production": true,
         "ref": Object {
@@ -4002,6 +4831,25 @@ BearWorkspaceCatalogWithAvailableItems {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.status",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
+            },
+            "title": "Status",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
+          },
+        ],
         "id": "attr.stage.status",
         "production": true,
         "ref": Object {
@@ -6589,6 +7437,42 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.account.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
+            },
+            "title": "Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.account.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+            },
+            "title": "Account",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+          },
+        ],
         "id": "attr.account.id",
         "production": true,
         "ref": Object {
@@ -6660,6 +7544,42 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.id.subject",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1071",
+            },
+            "title": "Subject",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1071",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1072",
+            },
+            "title": "Activity",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1072",
+          },
+        ],
         "id": "attr.activity.id",
         "production": true,
         "ref": Object {
@@ -6748,6 +7668,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.activitytype",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1082",
+            },
+            "title": "Activity Type",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1082",
+          },
+        ],
         "id": "attr.activity.activitytype",
         "production": true,
         "ref": Object {
@@ -6855,6 +7794,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.department",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+            },
+            "title": "Department",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+          },
+        ],
         "id": "attr.owner.department",
         "production": true,
         "ref": Object {
@@ -6926,6 +7884,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunitysnapshot.forecastcategory",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
+            },
+            "title": "Forecast Category",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
+          },
+        ],
         "id": "attr.opportunitysnapshot.forecastcategory",
         "production": true,
         "ref": Object {
@@ -6980,6 +7957,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.isactive",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
+            },
+            "title": "Is Active?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
+          },
+        ],
         "id": "attr.stage.isactive",
         "production": true,
         "ref": Object {
@@ -7034,6 +8030,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.isclosed",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1074",
+            },
+            "title": "Is Closed?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1074",
+          },
+        ],
         "id": "attr.activity.isclosed",
         "production": true,
         "ref": Object {
@@ -7088,6 +8103,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.isclosed",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
+            },
+            "title": "Is Closed?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
+          },
+        ],
         "id": "attr.stage.isclosed",
         "production": true,
         "ref": Object {
@@ -7142,6 +8176,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.istask",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1076",
+            },
+            "title": "Is Task?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1076",
+          },
+        ],
         "id": "attr.activity.istask",
         "production": true,
         "ref": Object {
@@ -7196,6 +8249,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.iswon",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
+            },
+            "title": "Is Won?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
+          },
+        ],
         "id": "attr.stage.iswon",
         "production": true,
         "ref": Object {
@@ -7284,6 +8356,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunitysnapshot.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
+            },
+            "title": "Opp. Snapshot",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
+          },
+        ],
         "id": "attr.opportunitysnapshot.id",
         "production": true,
         "ref": Object {
@@ -7355,6 +8446,59 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunity.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
+            },
+            "title": "Opportunity Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.opportunity.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1068",
+            },
+            "title": "Opportunity",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1068",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "label.opportunity.id.url",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
+            },
+            "title": "SFDC URL",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
+          },
+        ],
         "drillToAttributeLink": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1069",
         },
@@ -7446,6 +8590,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.priority",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1080",
+            },
+            "title": "Priority",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1080",
+          },
+        ],
         "id": "attr.activity.priority",
         "production": true,
         "ref": Object {
@@ -7536,6 +8699,42 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.product.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+            },
+            "title": "Product Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.product.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1056",
+            },
+            "title": "Product",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1056",
+          },
+        ],
         "id": "attr.product.id",
         "production": true,
         "ref": Object {
@@ -7607,6 +8806,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.region",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+            },
+            "title": "Region",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+          },
+        ],
         "id": "attr.owner.region",
         "production": true,
         "ref": Object {
@@ -7661,6 +8879,42 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.id.name",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
+            },
+            "title": "Owner Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.owner.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1085",
+            },
+            "title": "Owner",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1085",
+          },
+        ],
         "id": "attr.owner.id",
         "production": true,
         "ref": Object {
@@ -7751,6 +9005,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stagehistory.id",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1065",
+            },
+            "title": "Stage History",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1065",
+          },
+        ],
         "id": "attr.stagehistory.id",
         "production": true,
         "ref": Object {
@@ -7805,6 +9078,42 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.name.stagename",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
+            },
+            "title": "Stage Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
+          },
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.name.order",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1093",
+            },
+            "title": "Order",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1093",
+          },
+        ],
         "id": "attr.stage.name",
         "production": true,
         "ref": Object {
@@ -7876,6 +9185,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.activity.status",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1078",
+            },
+            "title": "Status",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1078",
+          },
+        ],
         "id": "attr.activity.status",
         "production": true,
         "ref": Object {
@@ -7930,6 +9258,25 @@ BearWorkspaceCatalog {
       "attribute": Object {
         "deprecated": false,
         "description": "",
+        "displayForms": Array [
+          Object {
+            "attribute": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
+            },
+            "deprecated": false,
+            "description": "",
+            "displayFormType": undefined,
+            "id": "label.stage.status",
+            "production": true,
+            "ref": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
+            },
+            "title": "Status",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
+          },
+        ],
         "id": "attr.stage.status",
         "production": true,
         "ref": Object {

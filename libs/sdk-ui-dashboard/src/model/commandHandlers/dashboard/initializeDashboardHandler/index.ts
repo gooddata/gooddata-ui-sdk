@@ -30,7 +30,6 @@ import {
     actionsToInitializeNewDashboard,
 } from "../common/stateInitializers";
 import { executionResultsActions } from "../../../store/executionResults";
-import { resolveFilterDisplayForms } from "../../../utils/filterResolver";
 import { createDisplayFormMapFromCatalog } from "../../../../_staging/catalog/displayFormMap";
 import { getPrivateContext } from "../../../store/_infra/contexts";
 
@@ -105,7 +104,7 @@ function* loadExistingDashboard(
         dashboard.dateFilterConfig,
     );
 
-    const initActions: SagaReturnType<typeof resolveFilterDisplayForms> = yield call(
+    const initActions: SagaReturnType<typeof actionsToInitializeExistingDashboard> = yield call(
         actionsToInitializeExistingDashboard,
         ctx,
         dashboard,

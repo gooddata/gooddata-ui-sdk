@@ -13,13 +13,18 @@ import { AnyAction } from "@reduxjs/toolkit";
 import { canApplyDateFilter, dispatchFilterContextChanged } from "./common";
 import partition from "lodash/partition";
 import uniqBy from "lodash/uniqBy";
-import { isAttributeFilter, objRefToString, filterObjRef, isRelativeDateFilter } from "@gooddata/sdk-model";
+import compact from "lodash/compact";
 import {
+    isAttributeFilter,
+    objRefToString,
+    filterObjRef,
+    isRelativeDateFilter,
+    isUriRef,
     filterAttributeElements,
     isNegativeAttributeFilter,
     isAbsoluteDateFilter,
+    isAllTimeDateFilter,
 } from "@gooddata/sdk-model";
-import { isAllTimeDateFilter } from "@gooddata/sdk-model";
 import {
     DateFilterGranularity,
     FilterContextItem,
@@ -35,6 +40,8 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IUpsertDateFilterPayload } from "../../store/filterContext/filterContextReducers";
 import { IDashboardFilter } from "../../../types";
+import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver";
+import { resolveAttributeMetadata } from "../../utils/attributeResolver";
 
 function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterContextItem {
     if (isAttributeFilter(filter)) {
@@ -84,7 +91,7 @@ export function* changeFilterContextSelectionHandler(
     const [[dateFilter], attributeFilters] = partition(uniqueFilters, isDashboardDateFilter);
 
     const [attributeFilterUpdateActions, dateFilterUpdateActions]: AnyAction[][] = yield all([
-        call(getAttributeFiltersUpdateActions, attributeFilters, resetOthers),
+        call(getAttributeFiltersUpdateActions, attributeFilters, resetOthers, ctx),
         call(getDateFilterUpdateActions, dateFilter, resetOthers),
     ]);
 
@@ -96,15 +103,45 @@ export function* changeFilterContextSelectionHandler(
 function* getAttributeFiltersUpdateActions(
     attributeFilters: IDashboardAttributeFilter[],
     resetOthers: boolean,
+    ctx: DashboardContext,
 ): SagaIterator<AnyAction[]> {
     const updateActions: AnyAction[] = [];
     const handledLocalIds = new Set<string>();
+    const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
+        resolveDisplayFormMetadata,
+        ctx,
+        attributeFilters.map((af) => af.attributeFilter.displayForm),
+    );
 
     for (const attributeFilter of attributeFilters) {
         const filterRef = attributeFilter.attributeFilter.displayForm;
-        const dashboardFilter: ReturnType<
-            ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>
-        > = yield select(selectFilterContextAttributeFilterByDisplayForm(filterRef));
+        let dashboardFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>> =
+            yield select(selectFilterContextAttributeFilterByDisplayForm(filterRef));
+
+        if (!dashboardFilter) {
+            if (isUriRef(filterRef) && !ctx.backend.capabilities.supportsObjectUris) {
+                throw new NotSupported(
+                    "Unsupported filter ObjRef! Please provide IdentifierRef instead of UriRef.",
+                );
+            }
+
+            const filterDF = resolvedDisplayForms.resolved.get(filterRef);
+            const resolvedAttribute: SagaReturnType<typeof resolveAttributeMetadata> = yield call(
+                resolveAttributeMetadata,
+                ctx,
+                compact([filterDF?.attribute]),
+            );
+            const attribute = filterDF?.attribute && resolvedAttribute.resolved.get(filterDF?.attribute);
+
+            for (const displayForm of attribute?.displayForms ?? []) {
+                dashboardFilter = yield select(
+                    selectFilterContextAttributeFilterByDisplayForm(displayForm.ref),
+                );
+                if (dashboardFilter) {
+                    break;
+                }
+            }
+        }
 
         if (dashboardFilter) {
             updateActions.push(

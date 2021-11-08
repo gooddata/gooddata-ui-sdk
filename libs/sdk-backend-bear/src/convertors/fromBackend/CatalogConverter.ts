@@ -116,7 +116,8 @@ export const convertAttribute = (
                 return a
                     .modify(commonCatalogItemModifications(attribute))
                     .drillDownStep(drillDownStep)
-                    .drillToAttributeLink(drillDownLink);
+                    .drillToAttributeLink(drillDownLink)
+                    .displayForms(attributeDisplayForms);
             })
             .defaultDisplayForm(convertDisplayForm(defaultDisplayForm, attrRef))
             .displayForms(attributeDisplayForms)
