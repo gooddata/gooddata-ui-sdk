@@ -1,73 +1,22 @@
 // (C) 2021 GoodData Corporation
 import { ActionOptions, SupportedPackageManager, TargetAppLanguage, TargetBackendType } from "../_base/types";
 import {
-    backendTypeValidator,
-    languageValidator,
     createHostnameValidator,
+    languageValidator,
+    packageManagerValidator,
     pluginNameValidator,
     validOrDie,
-    packageManagerValidator,
 } from "../_base/cli/validators";
 import {
     promptBackend,
-    promptLanguage,
+    promptDashboardIdWithoutChoice,
     promptHostname,
+    promptLanguage,
     promptName,
     promptWorkspaceIdWithoutChoice,
-    promptDashboardIdWithoutChoice,
 } from "../_base/cli/prompts";
 import snakeCase from "lodash/snakeCase";
-
-function getHostname(backend: TargetBackendType | undefined, options: ActionOptions): string | undefined {
-    const { hostname } = options.programOpts;
-
-    if (!hostname) {
-        return undefined;
-    }
-
-    // do the hostname validation only if the backend type is known at this point
-    if (backend !== undefined) {
-        validOrDie("hostname", hostname, createHostnameValidator(backend));
-    }
-
-    return hostname;
-}
-
-function getBackend(options: ActionOptions): TargetBackendType | undefined {
-    const { backend } = options.commandOpts;
-
-    if (!backend) {
-        return undefined;
-    }
-
-    validOrDie("backend", backend, backendTypeValidator);
-
-    return backend as TargetBackendType;
-}
-
-function getWorkspace(options: ActionOptions): string | undefined {
-    const { workspaceId } = options.commandOpts;
-
-    if (!workspaceId) {
-        return undefined;
-    }
-
-    validOrDie("workspace", workspaceId, () => true);
-
-    return workspaceId;
-}
-
-function getDashboard(options: ActionOptions): string | undefined {
-    const { dashboardId } = options.commandOpts;
-
-    if (!dashboardId) {
-        return undefined;
-    }
-
-    validOrDie("dashboard", dashboardId, () => true);
-
-    return dashboardId;
-}
+import { getBackend, getDashboard, getHostname, getWorkspace } from "../_base/cli/extractors";
 
 function getLanguage(options: ActionOptions): TargetAppLanguage | undefined {
     const { language } = options.commandOpts;

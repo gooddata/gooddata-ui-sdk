@@ -44,25 +44,38 @@ const initCmd: Command = dashboardCmd
     .action(async (pluginName) => {
         acceptUntrustedSsl(program.opts());
 
-        return initCmdAction(pluginName, {
+        await initCmdAction(pluginName, {
             programOpts: program.opts(),
             commandOpts: initCmd.opts(),
         });
     });
 
 const addPluginCmd: Command = dashboardCmd
-    .command("store")
-    .description("Store plugin in a workspace so that it can be used on the dashboards in that workspace")
+    .command("add")
+    .description("Add plugin into a workspace so that it can be used on the dashboards in that workspace")
     .argument(
-        "[plugin-url]",
+        "<plugin-url>",
         "URL of location where the plugin assets are hosted. The URL must use https protocol",
     )
-    .option("--username <email>", "Your username that you use to log in to GoodData platform")
-    .option("--workspace-id <id>", "Identifier of workspace to which you want to add the plugin")
-    .action(async () => {
+    .option(
+        "--backend <backend>",
+        "Type of backend to which you want to add the plugin, either GoodData Platform (bear) or GoodData.CN (tiger). " +
+            "By default tries to auto-detect the backend type from your project's package.json.",
+    )
+    .option(
+        "--workspace-id <id>",
+        "Identifier of workspace to which you want to add the plugin. " +
+            "By default uses workspace from your .env file.",
+    )
+    // not doing this now; it may be a nice convenience but let's not overdo it
+    //
+    // .option("--no-env", "By default, if you do not provide hostname and workspace on the CLI, " +
+    //     "the tool will try to read and use values in your .env file. If you add this option, then hostname " +
+    //     "and workspace will not be read from .env and you will be prompted instead.", false)
+    .action(async (pluginUrl) => {
         acceptUntrustedSsl(program.opts());
 
-        return addPluginCmdAction({
+        await addPluginCmdAction(pluginUrl, {
             programOpts: program.opts(),
             commandOpts: addPluginCmd.opts(),
         });
@@ -71,8 +84,7 @@ const addPluginCmd: Command = dashboardCmd
 const usePluginCmd: Command = dashboardCmd
     .command("use")
     .description("Use plugin available in a workspace on a dashboard.")
-    .argument("[plugin-id]", "Plugin id which you want to use on the dashboard")
-    .option("--username <email>", "Your username that you use to log in to GoodData platform")
+    .argument("<plugin-id>", "Plugin id which you want to use on the dashboard")
     .option(
         "--workspace-id <id>",
         "Identifier of workspace that contains dashboard that should use the plugin",
@@ -85,7 +97,7 @@ const usePluginCmd: Command = dashboardCmd
     .action(async () => {
         acceptUntrustedSsl(program.opts());
 
-        return usePluginCmdAction({
+        await usePluginCmdAction({
             programOpts: program.opts(),
             commandOpts: usePluginCmd.opts(),
         });
