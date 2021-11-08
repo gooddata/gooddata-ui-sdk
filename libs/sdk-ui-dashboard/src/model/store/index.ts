@@ -62,6 +62,7 @@ export {
     selectConfiguredDrillsByWidgetRef,
     selectDrillableItemsByWidgetRef,
     selectConfiguredAndImplicitDrillsByWidgetRef,
+    selectValidConfiguredDrillsByWidgetRef,
     // Local drills for drill dialog
     selectImplicitDrillsByAvailableDrillTargets,
     selectDrillableItemsByAvailableDrillTargets,
