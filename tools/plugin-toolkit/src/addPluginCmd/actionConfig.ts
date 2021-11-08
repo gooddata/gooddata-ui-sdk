@@ -35,17 +35,19 @@ export type AddCmdActionConfig = {
 };
 
 function readDotEnv(): Record<string, string> {
-    if (!fse.existsSync(".env")) {
-        return {};
-    }
+    logInfo("Reading .env and .env.secrets files.");
 
-    logInfo("Reading .env file to obtain values");
+    const env = fse.existsSync(".env") ? parse(readFileSync(".env"), {}) : {};
+    const secrets = fse.existsSync(".env.secrets") ? parse(readFileSync(".env.secrets"), {}) : {};
 
-    return parse(readFileSync(".env"), {});
+    return {
+        ...env,
+        ...secrets,
+    };
 }
 
 /**
- * Load environment variables. This will read .env file in the current directory. If GDC_USERNAME, GDC_PASSWORD
+ * Load environment variables. This will read .env and .env.secrets files in the current directory. If GDC_USERNAME, GDC_PASSWORD
  * and TIGER_API_TOKEN are set as normal env variables, then they will be used.
  */
 function loadEnv(backend: TargetBackendType): Record<string, string> {

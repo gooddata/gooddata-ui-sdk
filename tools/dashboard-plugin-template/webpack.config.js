@@ -143,7 +143,12 @@ module.exports = (_env, argv) => {
                     PORT: JSON.stringify(PORT),
                 }),
                 new Dotenv({
-                    silent: true, // we are ok with the .env file not being there, do not warn about it (so that CI works)
+                    silent: true,
+                    systemvars: true,
+                }),
+                new Dotenv({
+                    path: ".env.secrets",
+                    silent: true,
                     systemvars: true,
                 }),
                 new HtmlWebpackPlugin({
