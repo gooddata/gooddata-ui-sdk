@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-model",
-    "version": "8.7.0-alpha.49",
+    "version": "8.7.0-alpha.50",
     "author": "GoodData",
     "description": "GoodData Model definitions used by UI components and Backend SPI and its implementations",
     "repository": {
