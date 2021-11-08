@@ -67,6 +67,7 @@
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
         "lru-cache": "^4.1.5",
+        "memoize-one": "^6.0.0",
         "react-intl": "^3.6.0",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0",
