@@ -7,6 +7,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 import { WorkspaceProvider, BackendProvider } from "../../../index";
 import { TranslationsCustomizationProvider } from "../TranslationsCustomizationProvider";
+import { resetWorkspaceSettingsLoader } from "../workspaceSettingsLoader";
 
 const workspace = "testWorkspace";
 const getBackend = (enableInsightToReport = true) =>
@@ -32,6 +33,7 @@ const renderComponent = async (component: React.ReactElement) => {
 describe("TranslationsCustomizationProvider", () => {
     afterEach(() => {
         delete window.gdSettings;
+        resetWorkspaceSettingsLoader();
     });
 
     it("should load the config and set it to `window.gdSettings` (backend and workspace is provided through context)", async () => {

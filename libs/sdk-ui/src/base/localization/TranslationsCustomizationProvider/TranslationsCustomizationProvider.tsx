@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useBackend } from "../../react/BackendContext";
 import { useWorkspace } from "../../react/WorkspaceContext";
 import { TranslationsCustomizationContextProvider } from "./Context";
+import { getWorkspaceSettingsLoader } from "./workspaceSettingsLoader";
 import { pickCorrectInsightWording } from "./utils";
 
 declare global {
@@ -78,7 +79,13 @@ export const TranslationsCustomizationProvider: React.FC<ITranslationsCustomizat
                 return;
             }
             setIsLoading(true);
-            const settings = await backend.workspace(workspace).settings().getSettings();
+
+            /**
+             * Load the settings using a centralized loader with cache to prevent duplicate network requests.
+             */
+            const loader = getWorkspaceSettingsLoader();
+            const settings = await loader.load(backend, workspace);
+
             /**
              * Because of issues described in the ticket FET-855, we decided to use this workaround.
              * After the issues that are described in the ticket are solved or at least reduced,
