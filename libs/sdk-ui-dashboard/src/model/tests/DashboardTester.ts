@@ -4,7 +4,11 @@ import { Identifier, idRef } from "@gooddata/sdk-model";
 import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore";
 import { DashboardState } from "../store/types";
 import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes";
-import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
+import {
+    recordedBackend,
+    RecordedBackendConfig,
+    defaultRecordedBackendCapabilities,
+} from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
     DashboardEvents,
@@ -25,6 +29,7 @@ import { IDashboardQuery } from "../queries";
 import { queryEnvelopeWithPromise } from "../store/_infra/queryProcessing";
 import { IDashboardQueryService } from "../store/_infra/queryService";
 import { newRenderingWorker, RenderingWorkerConfiguration } from "../commandHandlers/render/renderingWorker";
+import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 
 type MonitoredAction = {
     calls: number;
@@ -148,14 +153,19 @@ export class DashboardTester {
      * @param identifier
      * @param testerConfig
      * @param backendConfig
+     * @param customCapabilities
      */
     public static forRecording(
         identifier: Identifier,
         testerConfig?: DashboardTesterConfig,
         backendConfig?: RecordedBackendConfig,
+        customCapabilities?: Partial<IBackendCapabilities>,
     ): DashboardTester {
         const ctx: DashboardContext = {
-            backend: recordedBackend(ReferenceRecordings.Recordings, backendConfig),
+            backend: recordedBackend(ReferenceRecordings.Recordings, backendConfig, {
+                ...defaultRecordedBackendCapabilities,
+                ...customCapabilities,
+            }),
             workspace: "reference-workspace",
             dashboardRef: idRef(identifier),
         };
