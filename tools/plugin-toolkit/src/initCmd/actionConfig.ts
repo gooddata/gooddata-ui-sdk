@@ -134,12 +134,12 @@ export async function getInitCmdActionConfig(
     const workspaceFromOptions = getWorkspace(options);
     const dashboardFromOptions = getDashboard(options);
     const packageManagerFromOptions = getPackageManager(options);
+    const name = pluginName ?? (await promptName());
     const backend = backendFromOptions ?? (await promptBackend());
     const hostname = hostnameFromOptions ?? (await promptHostname(backend));
     const language = languageFromOptions ?? (await promptLanguage());
     const workspace = workspaceFromOptions ?? (await promptWorkspaceIdWithoutChoice());
     const dashboard = dashboardFromOptions ?? (await promptDashboardIdWithoutChoice());
-    const name = pluginName ?? (await promptName());
 
     // validate hostname once again; this is to catch the case when hostname is provided as
     // option but the backend is not and user is prompted for it. the user may select backend
