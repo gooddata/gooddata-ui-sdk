@@ -723,6 +723,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "memoize-one",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "mkdirp",
       "allowedCategories": [ "production" ]
     },
