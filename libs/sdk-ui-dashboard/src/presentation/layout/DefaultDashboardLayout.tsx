@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import {
     isWidget,
     widgetId,
@@ -29,7 +29,10 @@ import {
     DashboardLayoutBuilder,
     DashboardLayoutItemModifications,
     IDashboardLayoutItemFacade,
+    IDashboardLayoutItemKeyGetter,
     IDashboardLayoutItemsFacade,
+    IDashboardLayoutSectionHeaderRenderer,
+    IDashboardLayoutWidgetRenderer,
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
 import { DashboardLayoutPropsProvider, useDashboardLayoutProps } from "./DashboardLayoutPropsContext";
@@ -77,6 +80,14 @@ function selectAllItemsWithInsights<TWidget = IDashboardWidget>(
     return items.filter((item) => item.isInsightWidgetItem());
 }
 
+const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (keyGetterProps) => {
+    const widget = keyGetterProps.item.widget();
+    if (isWidget(widget)) {
+        return objRefToString(widget.ref);
+    }
+    return keyGetterProps.item.index().toString();
+};
+
 /**
  * @internal
  */
@@ -108,32 +119,37 @@ export const DefaultDashboardLayoutInner = (): JSX.Element => {
         return isExport ? getDashboardLayoutForExport(layout) : layoutWithRefs;
     }, [layout, isExport]);
 
+    const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
+        (renderProps) => {
+            return (
+                <DashboardLayoutWidget
+                    onError={onError}
+                    onDrill={onDrill}
+                    onFiltersChange={onFiltersChange}
+                    {...renderProps}
+                />
+            );
+        },
+        [onError, onDrill, onFiltersChange],
+    );
+
+    const sectionHeaderRenderer = useMemo<
+        IDashboardLayoutSectionHeaderRenderer<ExtendedDashboardWidget> | undefined
+    >(() => {
+        // When section headers are enabled, use default DashboardLayout sectionHeaderRenderer.
+        // When turned off, render nothing.
+        return settings.enableSectionHeaders ? undefined : () => <React.Fragment />;
+    }, [settings.enableSectionHeaders]);
+
     return isLayoutEmpty ? (
         <EmptyDashboardError ErrorComponent={ErrorComponent} />
     ) : (
         <DashboardLayout
             className={isExport ? "export-mode" : ""}
             layout={transformedLayout}
-            itemKeyGetter={(keyGetterProps) => {
-                const widget = keyGetterProps.item.widget();
-                if (isWidget(widget)) {
-                    return objRefToString(widget.ref);
-                }
-                return keyGetterProps.item.index().toString();
-            }}
-            widgetRenderer={(renderProps) => {
-                return (
-                    <DashboardLayoutWidget
-                        onError={onError}
-                        onDrill={onDrill}
-                        onFiltersChange={onFiltersChange}
-                        {...renderProps}
-                    />
-                );
-            }}
-            // When section headers are enabled, use default DashboardLayout sectionHeaderRenderer.
-            // When turned off, render nothing.
-            sectionHeaderRenderer={settings.enableSectionHeaders ? undefined : () => <React.Fragment />}
+            itemKeyGetter={itemKeyGetter}
+            widgetRenderer={widgetRenderer}
+            sectionHeaderRenderer={sectionHeaderRenderer}
             enableCustomHeight={settings.enableKDWidgetCustomHeight}
         />
     );

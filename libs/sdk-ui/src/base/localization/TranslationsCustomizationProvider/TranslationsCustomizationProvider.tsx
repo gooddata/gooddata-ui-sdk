@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useBackend } from "../../react/BackendContext";
 import { useWorkspace } from "../../react/WorkspaceContext";
 import { TranslationsCustomizationContextProvider } from "./Context";
@@ -48,6 +48,8 @@ export interface ITranslationsCustomizationProviderProps {
     workspace?: string;
 }
 
+const defaultTranslationsParam: ITranslationsCustomizationProviderProps["translations"] = {};
+
 /**
  * This provider is here because of the need for customization of translations.
  * If you need to change translations based on some setting flag,
@@ -61,14 +63,13 @@ export interface ITranslationsCustomizationProviderProps {
 export const TranslationsCustomizationProvider: React.FC<ITranslationsCustomizationProviderProps> = ({
     render,
     customize = pickCorrectInsightWording,
-    translations: translationsParam = {},
+    translations: translationsParam = defaultTranslationsParam,
     backend: backendParam,
     workspace: workspaceParam,
 }) => {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
-    const memoizedTranslations = useMemo(() => customize(translationsParam), [translationsParam]);
-    const [translations, setTranslations] = useState(memoizedTranslations);
+    const [translations, setTranslations] = useState(() => customize(translationsParam));
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -84,12 +85,12 @@ export const TranslationsCustomizationProvider: React.FC<ITranslationsCustomizat
              * this workaround can be removed.
              */
             window.gdSettings = settings;
-            setTranslations(customize(memoizedTranslations, settings));
+            setTranslations(customize(translationsParam, settings));
             setIsLoading(false);
         };
 
         fetchSettings();
-    }, [backend, workspace, memoizedTranslations]);
+    }, [backend, workspace, translationsParam]);
 
     return (
         <TranslationsCustomizationContextProvider

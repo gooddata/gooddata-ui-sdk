@@ -1,11 +1,14 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { ArrowOffsets, Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
 
 export interface IItemsFilteredMessageProps {
     parentFilterTitles: ReadonlyArray<string>;
 }
+
+const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc" }];
+const bubbleArrowOffsets: ArrowOffsets = { "bc tc": [0, 15] };
 
 export const AllItemsFilteredMessage: React.FC<IItemsFilteredMessageProps> = ({ parentFilterTitles }) => {
     return (
@@ -16,9 +19,9 @@ export const AllItemsFilteredMessage: React.FC<IItemsFilteredMessageProps> = ({ 
                     <span className="gd-icon-circle-question" />
                 </div>
                 <Bubble
-                    className={`bubble-primary gd-attribute-filter-dropdown-bubble s-attribute-filter-dropdown-bubble`}
-                    alignPoints={[{ align: "bc tc" }]}
-                    arrowOffsets={{ "bc tc": [0, 15] }}
+                    className="bubble-primary gd-attribute-filter-dropdown-bubble s-attribute-filter-dropdown-bubble"
+                    alignPoints={bubbleAlignPoints}
+                    arrowOffsets={bubbleArrowOffsets}
                 >
                     <FormattedHTMLMessage
                         id="attributesDropdown.itemsFiltered.tooltip"

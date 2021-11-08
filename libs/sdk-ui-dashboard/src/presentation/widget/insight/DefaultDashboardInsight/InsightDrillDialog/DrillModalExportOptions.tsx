@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { Overlay, ItemsWrapper, Item } from "@gooddata/sdk-ui-kit";
+import { Overlay, ItemsWrapper, Item, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 export interface IDrillModalExportOptionsProps {
     showDropdown: boolean;
@@ -11,6 +11,16 @@ export interface IDrillModalExportOptionsProps {
     exportCSVEnabled: boolean;
     onExportCSV: () => void;
 }
+
+const overlayAlignPoints: IAlignPoint[] = [
+    {
+        align: "tc bc",
+        offset: {
+            x: -10,
+            y: -5,
+        },
+    },
+];
 
 const DrillModalExportOptions: React.FC<IDrillModalExportOptionsProps> = ({
     showDropdown,
@@ -24,15 +34,7 @@ const DrillModalExportOptions: React.FC<IDrillModalExportOptionsProps> = ({
         <Overlay
             key="DrillModalOptionsMenu"
             alignTo=".export-drilled-insight"
-            alignPoints={[
-                {
-                    align: "tc bc",
-                    offset: {
-                        x: -10,
-                        y: -5,
-                    },
-                },
-            ]}
+            alignPoints={overlayAlignPoints}
             className="gd-header-menu-overlay s-drill-modal-export-options"
             closeOnOutsideClick={true}
             onClose={toggleShowDropdown}

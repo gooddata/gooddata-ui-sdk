@@ -4,7 +4,7 @@ import noop from "lodash/noop";
 import { ReactWrapper, mount } from "enzyme";
 import { uriRef } from "@gooddata/sdk-model";
 
-import { IRecipientsSelectRendererOwnProps, RecipientsSelectRenderer } from "../RecipientsSelectRenderer";
+import { IRecipientsSelectRendererProps, RecipientsSelectRenderer } from "../RecipientsSelectRenderer";
 import { IScheduleEmailRecipient } from "../../../interfaces";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
 
@@ -32,7 +32,7 @@ const options: IScheduleEmailRecipient[] = [
 ];
 
 describe("RecipientsSelect", () => {
-    function renderComponent(customProps: Partial<IRecipientsSelectRendererOwnProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IRecipientsSelectRendererProps> = {}): ReactWrapper {
         const defaultProps = {
             options,
             value: [currentUser],

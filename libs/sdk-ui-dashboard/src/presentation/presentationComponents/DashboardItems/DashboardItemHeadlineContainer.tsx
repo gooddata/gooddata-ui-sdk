@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 
 interface IDashboardItemHeadlineContainerProps {
     children: React.ReactNode;
@@ -17,16 +17,24 @@ export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineCont
 }) => {
     const isSmallCustomHeight = clientHeight !== undefined ? clientHeight < SMALLEST_WIDGET_HEIGHT : false;
 
-    const hasCustomMargin = clientHeight !== undefined ? clientHeight <= SMALL_WIDGET_HEIGHT : false;
-    const customMargin = hasCustomMargin ? { marginTop: 0 } : undefined;
+    const outerStyle = useMemo(() => {
+        const hasCustomMargin = clientHeight !== undefined ? clientHeight <= SMALL_WIDGET_HEIGHT : false;
+        const customMargin = hasCustomMargin ? { marginTop: 0 } : undefined;
 
-    const customStyle = isSmallCustomHeight
-        ? { height: `${SMALL_HEIGHT}px`, lineHeight: `${SMALL_LINE_HEIGHT}px` }
-        : undefined;
+        const customStyle = isSmallCustomHeight
+            ? { height: `${SMALL_HEIGHT}px`, lineHeight: `${SMALL_LINE_HEIGHT}px` }
+            : undefined;
+
+        return { ...customStyle, ...customMargin };
+    }, [isSmallCustomHeight, clientHeight]);
+
+    const innerStyle = useMemo(() => {
+        return isSmallCustomHeight ? { fontSize: "15px" } : undefined;
+    }, [isSmallCustomHeight]);
 
     return (
-        <div className={"item-headline-outer"} style={{ ...customStyle, ...customMargin }}>
-            <div className="item-headline" style={isSmallCustomHeight ? { fontSize: "15px" } : undefined}>
+        <div className={"item-headline-outer"} style={outerStyle}>
+            <div className="item-headline" style={innerStyle}>
                 {children}
             </div>
         </div>

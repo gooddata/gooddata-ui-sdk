@@ -12,6 +12,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
+import stringify from "json-stable-stringify";
 
 import { useDashboardComponentsContext } from "../../../../dashboardContexts";
 import {
@@ -124,7 +125,15 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight, filtersForInsight),
-        [insight, filtersForInsight],
+        [
+            insight,
+            /**
+             * We use stringified value to avoid setting equal filters. This prevents cascading cache invalidation
+             * and expensive re-renders down the line. The stringification is worth it as the filters are usually
+             * pretty small thus saving more time than it is taking.
+             */
+            stringify(filtersForInsight),
+        ],
     );
 
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
@@ -166,6 +175,10 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         };
     }, [isPositionRelative]);
 
+    const insightWrapperStyle: CSSProperties | undefined = useMemo(() => {
+        return isVisualizationLoading ? { height: 0 } : undefined;
+    }, [isVisualizationLoading]);
+
     // Error handling
     const handleError = useCallback<OnError>(
         (error) => {
@@ -192,10 +205,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                         />
                     )}
                     {filtersStatus === "success" && (
-                        <div
-                            className="insight-view-visualization"
-                            style={isVisualizationLoading ? { height: 0 } : undefined}
-                        >
+                        <div className="insight-view-visualization" style={insightWrapperStyle}>
                             <InsightRenderer
                                 insight={insightWithAddedWidgetProperties}
                                 backend={effectiveBackend}

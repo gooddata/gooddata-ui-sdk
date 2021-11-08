@@ -2,7 +2,7 @@
 
 import { ObjRef } from "@gooddata/sdk-model";
 import React from "react";
-import { Dropdown } from "@gooddata/sdk-ui-kit";
+import { Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 // const DROPDOWN_BODY_WIDTH = 205;
 
@@ -28,6 +28,8 @@ interface IConnectingAttributesDropdownProps {
 //     return connectingAttributes.find(({ ref }) => areObjRefsEqual(ref, selectedConnectingAttributeRef))!;
 // };
 
+const dropdownAlignPoints: IAlignPoint[] = [{ align: "br tr" }, { align: "tr br" }];
+
 export const ConnectingAttributesDropdown: React.FC<IConnectingAttributesDropdownProps> = () =>
     // {
     //     objRef,
@@ -47,14 +49,7 @@ export const ConnectingAttributesDropdown: React.FC<IConnectingAttributesDropdow
                 closeOnParentScroll={true}
                 closeOnMouseDrag={true}
                 closeOnOutsideClick={true}
-                alignPoints={[
-                    {
-                        align: "br tr",
-                    },
-                    {
-                        align: "tr br",
-                    },
-                ]}
+                alignPoints={dropdownAlignPoints}
                 // button={
                 //     <DropdownButton
                 //         value={selectedConnectingAttribute.title}

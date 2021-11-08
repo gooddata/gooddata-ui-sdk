@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import cx from "classnames";
 import {
     Button,
@@ -8,10 +8,14 @@ import {
     Overlay,
     BubbleHoverTrigger,
     Bubble,
+    IAlignPoint,
 } from "@gooddata/sdk-ui-kit";
 
 import { IMenuButtonProps } from "./types";
 import { MenuButtonPropsProvider, useMenuButtonProps } from "./MenuButtonPropsContext";
+
+const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
+const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];
 
 /**
  * @internal
@@ -20,9 +24,9 @@ export const DefaultMenuButtonInner = (): JSX.Element | null => {
     const { menuItems } = useMenuButtonProps();
     const [isOpen, setIsOpen] = useState(false);
 
-    const onMenuButtonClick = () => {
-        setIsOpen(!isOpen);
-    };
+    const onMenuButtonClick = useCallback(() => {
+        setIsOpen((prevIsOpen) => !prevIsOpen);
+    }, []);
 
     if (!menuItems.length) {
         // eslint-disable-next-line no-console
@@ -38,7 +42,7 @@ export const DefaultMenuButtonInner = (): JSX.Element | null => {
             <Overlay
                 key={"topBarMenuButton"}
                 alignTo=".s-header-options-button"
-                alignPoints={[{ align: "br tr" }]}
+                alignPoints={overlayAlignPoints}
                 className="gd-header-menu-overlay"
                 closeOnMouseDrag={true}
                 closeOnOutsideClick={true}
@@ -87,7 +91,7 @@ export const DefaultMenuButtonInner = (): JSX.Element | null => {
                         return (
                             <BubbleHoverTrigger key={menuItem.itemId}>
                                 {body}
-                                <Bubble alignTo={`.${selectorClassName}`} alignPoints={[{ align: "cl tr" }]}>
+                                <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
                                     <span>{menuItem.tooltip}</span>
                                 </Bubble>
                             </BubbleHoverTrigger>
