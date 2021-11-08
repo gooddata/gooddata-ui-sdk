@@ -8,28 +8,16 @@ import {
     drillToDashboardRequested,
     drillToDashboardResolved,
 } from "../../events/drill";
-import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors";
-import { selectWidgetByRef } from "../../store/layout/layoutSelectors";
-import { IInsightWidget } from "@gooddata/sdk-backend-spi";
-import { IDashboardFilter } from "../../../types";
-import { filterContextToFiltersForWidget } from "../../../converters";
 import {
     DrillEventIntersectionElementHeader,
     IDrillEventIntersectionElement,
     IDrillIntersectionAttributeItem,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import {
-    areObjRefsEqual,
-    filterObjRef,
-    IAttributeFilter,
-    newPositiveAttributeFilter,
-    ObjRef,
-    objRefToString,
-} from "@gooddata/sdk-model";
+import { areObjRefsEqual, IAttributeFilter, newPositiveAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors";
-import uniqBy from "lodash/uniqBy";
-import flow from "lodash/flow";
+import { queryWidgetFilters } from "../../queries";
+import { query } from "../../store/_infra/queryCall";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
@@ -44,11 +32,6 @@ export function* drillToDashboardHandler(
         ),
     );
 
-    const filterContext: ReturnType<typeof selectFilterContextDefinition> = yield select(
-        selectFilterContextDefinition,
-    );
-    const widget: IInsightWidget = yield select(selectWidgetByRef(cmd.payload.drillEvent.widgetRef!));
-    const widgetFilters = filterContextToFiltersForWidget(filterContext, widget);
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
         selectCatalogDateAttributes,
     );
@@ -58,38 +41,20 @@ export function* drillToDashboardHandler(
         dateAttributes.map((dA) => dA.attribute.ref),
     );
 
-    const uniqueFilters = uniqBy(
-        [
-            // Drill filters has higher priority than the widget filters
-            ...drillFilters,
-            ...widgetFilters,
-        ],
-        flow(filterObjRef, objRefToString),
-    );
-
-    const resolvedFilters: IDashboardFilter[] = yield call(
-        getResolvedFiltersForWidget,
-        ctx,
-        widget,
-        uniqueFilters,
+    const widgetFilters = yield call(
+        query,
+        queryWidgetFilters(cmd.payload.drillEvent.widgetRef!, drillFilters),
     );
 
     return drillToDashboardResolved(
         ctx,
-        resolvedFilters,
+        widgetFilters,
         cmd.payload.drillDefinition,
         cmd.payload.drillEvent,
         cmd.correlationId,
     );
 }
 
-function getResolvedFiltersForWidget(
-    ctx: DashboardContext,
-    widget: IInsightWidget,
-    filters: IDashboardFilter[],
-) {
-    return ctx.backend.workspace(ctx.workspace).dashboards().getResolvedFiltersForWidget(widget, filters);
-}
 /**
  *  For correct drill intersection that should be converted into AttributeFilters must be drill intersection:
  *  1. AttributeItem
