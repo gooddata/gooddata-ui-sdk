@@ -224,7 +224,8 @@
          */
         "preRushInstall": [
             "common/scripts/bootstrap-catalog-export.sh",
-            "common/scripts/bootstrap-mock-handling.sh"
+            "common/scripts/bootstrap-mock-handling.sh",
+            "common/scripts/bootstrap-plugin-toolkit.sh"
         ],
 
         /**
