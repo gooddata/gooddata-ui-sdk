@@ -22,6 +22,8 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 export type AddCmdActionConfig = {
     pluginUrl: string;
     pluginIdentifier: string;
+    pluginName: string;
+    pluginDescription: string | undefined;
     backend: TargetBackendType;
     hostname: string;
     workspace: string;
@@ -167,6 +169,8 @@ export async function getAddCmdActionConfig(
     const config: AddCmdActionConfig = {
         pluginUrl,
         pluginIdentifier,
+        pluginName: packageJson.name,
+        pluginDescription: packageJson.description,
         backend,
         hostname,
         workspace,

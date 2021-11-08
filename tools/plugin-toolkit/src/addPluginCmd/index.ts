@@ -1,23 +1,36 @@
 // (C) 2021 GoodData Corporation
 import { ActionOptions } from "../_base/types";
-import { logError, logInfo, logWarn } from "../_base/cli/loggers";
+import { logError, logInfo, logSuccess, logWarn } from "../_base/cli/loggers";
 import { AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig";
 import { isInputValidationError } from "../_base/cli/validators";
 import fse from "fs-extra";
-import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
+import { IDashboardPlugin, isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 
 function printAddConfigSummary(config: AddCmdActionConfig) {
-    const { backend, hostname, workspace, pluginUrl, username } = config;
+    const { backend, hostname, workspace, pluginUrl, username, pluginName } = config;
 
     logInfo("Everything looks valid. Going to add new plugin object to workspace metadata.");
-    logInfo(`  Hostname  : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
+    logInfo(`  Hostname    : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
 
     if (backend === "bear") {
-        logInfo(`  Username  : ${username}`);
+        logInfo(`  Username    : ${username}`);
     }
 
-    logInfo(`  Workspace : ${workspace}`);
-    logInfo(`  Plugin URL: ${pluginUrl}`);
+    logInfo(`  Workspace   : ${workspace}`);
+    logInfo(`  Plugin URL  : ${pluginUrl}`);
+    logInfo(`  Plugin name : ${pluginName}`);
+}
+
+function createPluginObject(config: AddCmdActionConfig): Promise<IDashboardPlugin> {
+    const { backendInstance, workspace, pluginUrl: validUrl, pluginName, pluginDescription } = config;
+
+    return backendInstance.workspace(workspace).dashboards().createDashboardPlugin({
+        type: "IDashboardPlugin",
+        url: validUrl,
+        name: pluginName,
+        description: pluginDescription,
+        tags: [],
+    });
 }
 
 export async function addPluginCmdAction(pluginUrl: string, options: ActionOptions): Promise<void> {
@@ -41,7 +54,12 @@ export async function addPluginCmdAction(pluginUrl: string, options: ActionOptio
             );
 
             process.exit(0);
+            return;
         }
+
+        const newPluginObject = await createPluginObject(config);
+
+        logSuccess(`Created new plugin object with ID: ${newPluginObject.identifier}`);
     } catch (e) {
         if (isInputValidationError(e)) {
             logError(e.message);
