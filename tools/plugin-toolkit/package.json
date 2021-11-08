@@ -21,7 +21,8 @@
         "dist/**/*.js",
         "dist/**/*.json",
         "dist/**/*.d.ts",
-        "dist/**/*.map"
+        "dist/**/*.map",
+        "dist/**/*.tgz"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts src/"
