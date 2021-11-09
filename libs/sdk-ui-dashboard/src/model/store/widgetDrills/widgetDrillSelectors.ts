@@ -45,7 +45,7 @@ import {
     selectIsEmbedded,
 } from "../config/configSelectors";
 import flatMap from "lodash/flatMap";
-import { selectAllCatalogAttributesMap } from "../catalog/catalogSelectors";
+import { selectAllCatalogDisplayFormsMap } from "../catalog/catalogSelectors";
 import { selectListedDashboardsMap } from "../listedDashboards/listedDashboardsSelectors";
 import { selectInsightsMap } from "../insights/insightsSelectors";
 
@@ -263,14 +263,14 @@ export const selectConfiguredDrillsByWidgetRef = createMemoizedSelector((ref: Ob
 export const selectValidConfiguredDrillsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectConfiguredDrillsByWidgetRef(ref),
-        selectAllCatalogAttributesMap,
+        selectAllCatalogDisplayFormsMap,
         selectListedDashboardsMap,
         selectInsightsMap,
-        (drills = [], attributesMap, listedDashboardsMap, insightsMap) => {
+        (drills = [], displayFormsMap, listedDashboardsMap, insightsMap) => {
             const filteredDrills = drills.filter((drill) => {
                 switch (drill.drillDefinition.type) {
                     case "drillToAttributeUrl": {
-                        return attributesMap.get(drill.drillDefinition.target.hyperlinkDisplayForm);
+                        return displayFormsMap.get(drill.drillDefinition.target.hyperlinkDisplayForm);
                     }
                     case "drillToCustomUrl": {
                         return true;
