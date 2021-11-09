@@ -232,7 +232,11 @@ export class TigerBackend implements IAnalyticalBackend {
             });
         }
 
-        return this.triggerAuthentication(true).catch(this.handleNotAuthenticated);
+        return this.triggerAuthentication(true)
+            .catch((e) => {
+                throw convertApiError(e);
+            })
+            .catch(this.handleNotAuthenticated);
     };
 
     /**

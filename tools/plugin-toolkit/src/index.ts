@@ -67,6 +67,12 @@ const addPluginCmd: Command = dashboardCmd
         "Identifier of workspace to which you want to add the plugin. " +
             "By default uses workspace from your .env file.",
     )
+    .option(
+        "--dry-run",
+        "In dry run mode, the tool will proceed up to the point when first update operation has to " +
+            "be done and then will stop. This is ideal to verify configuration. Dry run is disabled by default",
+        false,
+    )
     // not doing this now; it may be a nice convenience but let's not overdo it
     //
     // .option("--no-env", "By default, if you do not provide hostname and workspace on the CLI, " +

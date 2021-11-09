@@ -1,5 +1,5 @@
 {
-    "extends": "./tsconfig.build.esm.json",
+    "extends": "./tsconfig.build.json",
     "compilerOptions": {
         "noUnusedLocals": false,
         "noUnusedParameters": false,

@@ -2,35 +2,52 @@
 import { parse } from "dotenv";
 import { ActionOptions, TargetBackendType } from "../_base/types";
 import { getBackend, getHostname, getWorkspace } from "../_base/cli/extractors";
-import { readJsonSync } from "../_base/utils";
-import { InputValidationError } from "../_base/cli/validators";
+import { convertToPluginIdentifier, readJsonSync } from "../_base/utils";
+import {
+    asyncValidOrDie,
+    createHostnameValidator,
+    createPluginUrlValidator,
+    createWorkspaceValidator,
+    InputValidationError,
+    validOrDie,
+} from "../_base/cli/validators";
 import { readFileSync } from "fs";
 import fse from "fs-extra";
 import { logInfo } from "../_base/cli/loggers";
 import isEmpty from "lodash/isEmpty";
+import { createBackend } from "../_base/backend";
+import ora from "ora";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 export type AddCmdActionConfig = {
     pluginUrl: string;
+    pluginIdentifier: string;
+    pluginName: string;
+    pluginDescription: string | undefined;
     backend: TargetBackendType;
     hostname: string;
     workspace: string;
     username: string | undefined;
     password: string | undefined;
     token: string | undefined;
+    dryRun: boolean;
+    backendInstance: IAnalyticalBackend;
 };
 
 function readDotEnv(): Record<string, string> {
-    if (!fse.existsSync(".env")) {
-        return {};
-    }
+    logInfo("Reading .env and .env.secrets files.");
 
-    logInfo("Reading .env file to obtain values");
+    const env = fse.existsSync(".env") ? parse(readFileSync(".env"), {}) : {};
+    const secrets = fse.existsSync(".env.secrets") ? parse(readFileSync(".env.secrets"), {}) : {};
 
-    return parse(readFileSync(".env"), {});
+    return {
+        ...env,
+        ...secrets,
+    };
 }
 
 /**
- * Load environment variables. This will read .env file in the current directory. If GDC_USERNAME, GDC_PASSWORD
+ * Load environment variables. This will read .env and .env.secrets files in the current directory. If GDC_USERNAME, GDC_PASSWORD
  * and TIGER_API_TOKEN are set as normal env variables, then they will be used.
  */
 function loadEnv(backend: TargetBackendType): Record<string, string> {
@@ -53,8 +70,7 @@ function loadEnv(backend: TargetBackendType): Record<string, string> {
     return dotEnvContent;
 }
 
-function discoverBackendType(): TargetBackendType {
-    const packageJson = fse.existsSync("package.json") ? readJsonSync("package.json") : {};
+function discoverBackendType(packageJson: Record<string, any>): TargetBackendType {
     const { peerDependencies = {} } = packageJson;
 
     if (peerDependencies["@gooddata/sdk-backend-bear"] !== undefined) {
@@ -74,36 +90,8 @@ function discoverBackendType(): TargetBackendType {
     );
 }
 
-export function getAddCmdActionConfig(pluginUrl: string, options: ActionOptions): AddCmdActionConfig {
-    const backendFromOptions = getBackend(options);
-    const backend = backendFromOptions ?? discoverBackendType();
-
-    const env = loadEnv(backend);
-    const hostnameFromOptions = getHostname(backendFromOptions, options);
-    const workspaceFromOptions = getWorkspace(options);
-
-    const hostname = hostnameFromOptions ?? env.BACKEND_URL;
-    const workspace = workspaceFromOptions ?? env.WORKSPACE;
-    const username = env.GDC_USERNAME;
-    const password = env.GDC_PASSWORD;
-    const token = env.TIGER_API_TOKEN;
-
-    if (!hostname) {
-        throw new InputValidationError(
-            "hostname",
-            "",
-            "Unable to determine hostname to add plugin to. Please specify --hostname option on the command line.",
-        );
-    }
-
-    if (!workspace) {
-        throw new InputValidationError(
-            "workspace",
-            "",
-            "Unable to determine workspace to add plugin to. Please specify --workspace-id option on the command line.",
-        );
-    }
-
+function validateCredentialsAvailable(config: AddCmdActionConfig) {
+    const { backend, username, password, token } = config;
     if (backend === "bear") {
         if (isEmpty(username)) {
             throw new InputValidationError(
@@ -126,14 +114,78 @@ export function getAddCmdActionConfig(pluginUrl: string, options: ActionOptions)
             "Unable to determine token to use for authentication to GoodData.CN. Please make sure TIGER_API_TOKEN env variable is set in your session or in the .env file",
         );
     }
+}
 
-    return {
+/**
+ * Perform asynchronous validations:
+ *
+ * -  backend & authentication against it
+ * -  workspace exists
+ * -  plugin is valid and entry point exists at the provided location
+ * @param config
+ */
+async function doAsyncValidations(config: AddCmdActionConfig) {
+    const { backendInstance, workspace, pluginUrl, pluginIdentifier } = config;
+
+    const asyncValidationProgress = ora({
+        text: "Performing server-side validations.",
+    });
+    try {
+        asyncValidationProgress.start();
+
+        await backendInstance.authenticate(true);
+        await asyncValidOrDie("workspace", workspace, createWorkspaceValidator(backendInstance));
+        await asyncValidOrDie("pluginUrl", pluginUrl, createPluginUrlValidator(pluginIdentifier));
+    } finally {
+        asyncValidationProgress.stop();
+    }
+}
+
+export async function getAddCmdActionConfig(
+    pluginUrl: string,
+    options: ActionOptions,
+): Promise<AddCmdActionConfig> {
+    const packageJson = readJsonSync("package.json");
+
+    const pluginIdentifier = convertToPluginIdentifier(packageJson.name);
+    const backendFromOptions = getBackend(options);
+    const backend = backendFromOptions ?? discoverBackendType(packageJson);
+
+    const env = loadEnv(backend);
+    const hostnameFromOptions = getHostname(backendFromOptions, options);
+    const workspaceFromOptions = getWorkspace(options);
+
+    const hostname = hostnameFromOptions ?? env.BACKEND_URL;
+    const workspace = workspaceFromOptions ?? env.WORKSPACE;
+    const username = env.GDC_USERNAME;
+    const password = env.GDC_PASSWORD;
+    const token = env.TIGER_API_TOKEN;
+    const backendInstance = createBackend({
+        hostname,
+        backend,
+        username,
+        password,
+        token,
+    });
+
+    const config: AddCmdActionConfig = {
         pluginUrl,
+        pluginIdentifier,
+        pluginName: packageJson.name,
+        pluginDescription: packageJson.description,
         backend,
         hostname,
         workspace,
         username,
         password,
         token,
+        dryRun: options.commandOpts.dryRun ?? false,
+        backendInstance,
     };
+
+    validOrDie("hostname", hostname, createHostnameValidator(backend));
+    validateCredentialsAvailable(config);
+    await doAsyncValidations(config);
+
+    return config;
 }

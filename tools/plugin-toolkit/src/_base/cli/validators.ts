@@ -3,13 +3,17 @@ import isEmpty from "lodash/isEmpty";
 import url from "url";
 import includes from "lodash/includes";
 import { TargetBackendType } from "../types";
+import axios, { AxiosError } from "axios";
+import { IAnalyticalBackend, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import { extractRootCause } from "../utils";
 
 const InvalidHostnameMessage =
     "Invalid hostname. Please provide a valid hostname in format [[https|http]://]host[:port]";
 
 export type InputValidator = (value: string) => boolean | string;
+export type AsyncInputValidator = (value: string) => Promise<boolean | string>;
 
-export function createHostnameValidator(backend: TargetBackendType) {
+export function createHostnameValidator(backend: TargetBackendType): InputValidator {
     return (input: string): boolean | string => {
         if (isEmpty(input)) {
             return InvalidHostnameMessage;
@@ -46,6 +50,50 @@ export function pluginNameValidator(value: string): boolean | string {
     return true;
 }
 
+export function createPluginUrlValidator(pluginIdentifier: string): AsyncInputValidator {
+    const entryPoint = `${pluginIdentifier}.js`;
+    return async (value: string): Promise<boolean | string> => {
+        if (!value.startsWith("https://")) {
+            return "Invalid plugin URL. The plugin URL must be for an https location. Example: 'https://your.hosting.com/myPlugin/${entryPoint}'.";
+        }
+
+        if (!value.endsWith(entryPoint)) {
+            return `Invalid plugin URL. The plugin URL must point at the plugin entry point. Example: 'https://your.hosting.com/myPlugin/${entryPoint}'.`;
+        }
+
+        return axios
+            .get(value)
+            .then((_) => {
+                return true;
+            })
+            .catch((e: AxiosError) => {
+                const { status, statusText } = e.response ?? {};
+
+                if (status && statusText) {
+                    const prefix = `Invalid plugin URL (${status} ${statusText}). `;
+
+                    if (status === 404) {
+                        return prefix + "Looks like the plugin is not available on the hosting.";
+                    } else if (status === 401) {
+                        return (
+                            prefix +
+                            "Host requires authentication to access plugin. Plugins must be hosted publicly, without need for authentication."
+                        );
+                    } else if (status === 403) {
+                        return (
+                            prefix +
+                            "Host requires authorization to access plugin. Note that in some hosting configuration this is just a 404 in disguise and the plugin actually does not exist on the host."
+                        );
+                    }
+
+                    return prefix + "Please check hosting is setup correctly.";
+                }
+
+                return `An error has occurred while validating plugin URL: ${e.message}`;
+            });
+    };
+}
+
 export function backendTypeValidator(value: string): boolean | string {
     if (value === "bear" || value === "tiger") {
         return true;
@@ -70,6 +118,36 @@ export function packageManagerValidator(value: string): boolean | string {
     return "Invalid package manager. Specify 'npm' or 'yarn'.";
 }
 
+export function createWorkspaceValidator(backend: IAnalyticalBackend): AsyncInputValidator {
+    return async (value): Promise<boolean | string> => {
+        if (isEmpty(value)) {
+            return "Invalid workspace. Specify a valid workspace identifier.";
+        }
+
+        // TODO: see FET-902; we should use getDescriptor() here.
+        return backend
+            .workspace(value)
+            .dashboards()
+            .getDashboards()
+            .then((_) => {
+                return true;
+            })
+            .catch((e: any) => {
+                if (isUnexpectedResponseError(e)) {
+                    if (e.httpStatus === 404) {
+                        return `Workspace ${value} does not exist on ${backend.config.hostname}.`;
+                    } else if (e.httpStatus === 403) {
+                        return `Workspace ${value} does exist but you do not have authorization.`;
+                    }
+                }
+
+                const rootCause = extractRootCause(e);
+
+                return `An error has occurred while validating workspace existence: ${rootCause.message}`;
+            });
+    };
+}
+
 export function validOrDie(inputName: string, value: string, validator: InputValidator): void {
     const result = validator(value);
 
@@ -80,6 +158,22 @@ export function validOrDie(inputName: string, value: string, validator: InputVal
     if (!result) {
         throw new InputValidationError(inputName, value, `Invalid value provided: ${value}`);
     }
+}
+
+export function asyncValidOrDie(
+    inputName: string,
+    value: string,
+    validator: AsyncInputValidator,
+): Promise<void> {
+    return validator(value).then((result) => {
+        if (typeof result === "string") {
+            throw new InputValidationError(inputName, value, result);
+        }
+
+        if (!result) {
+            throw new InputValidationError(inputName, value, `Invalid value provided: ${value}`);
+        }
+    });
 }
 
 export class InputValidationError extends Error {

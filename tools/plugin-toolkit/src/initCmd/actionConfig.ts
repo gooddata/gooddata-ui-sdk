@@ -15,8 +15,8 @@ import {
     promptName,
     promptWorkspaceIdWithoutChoice,
 } from "../_base/cli/prompts";
-import snakeCase from "lodash/snakeCase";
 import { getBackend, getDashboard, getHostname, getWorkspace } from "../_base/cli/extractors";
+import { convertToPluginIdentifier } from "../_base/utils";
 
 function getLanguage(options: ActionOptions): TargetAppLanguage | undefined {
     const { language } = options.commandOpts;
@@ -97,7 +97,7 @@ export async function getInitCmdActionConfig(
 
     return {
         name,
-        pluginIdentifier: `dp_${snakeCase(name)}`,
+        pluginIdentifier: convertToPluginIdentifier(name),
         backend,
         hostname,
         workspace,

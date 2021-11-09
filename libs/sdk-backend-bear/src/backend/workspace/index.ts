@@ -44,6 +44,7 @@ export class BearWorkspace implements IAnalyticalWorkspace {
         if (!this.descriptor) {
             const projects = await this.authCall(async (sdk, { getPrincipal }) => {
                 const userId = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
+                // TODO: this is wasteful; we should get single project directly
                 return sdk.project.getProjects(userId);
             });
             const project = projects.find(

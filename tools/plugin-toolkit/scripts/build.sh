@@ -38,6 +38,7 @@ cp -R "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/src" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/package.json" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/webpack.config.js" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.env.template" "${TS_BUILD_DIR}/.env"
+cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.env.secrets.template" "${TS_BUILD_DIR}/.env.secrets"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.gitignore" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/README.template.md" "${TS_BUILD_DIR}/README.md"
 
