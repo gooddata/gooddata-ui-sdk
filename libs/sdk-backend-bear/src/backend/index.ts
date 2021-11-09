@@ -356,6 +356,9 @@ export class BearBackend implements IAnalyticalBackend {
 
         return this.authProvider
             .authenticate(this.getAuthenticationContext())
+            .catch((e) => {
+                throw convertApiError(e);
+            })
             .catch(this.handleNotAuthenticated);
     };
 
