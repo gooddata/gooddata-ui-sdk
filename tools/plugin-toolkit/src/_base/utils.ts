@@ -71,7 +71,7 @@ export function discoverBackendType(packageJson: Record<string, any>): TargetBac
 }
 
 export function extractRootCause(error: any): any {
-    if (error.cause === undefined) {
+    if (error.cause === undefined || error.cause === null) {
         return error;
     }
 
