@@ -15,10 +15,15 @@ import {
     promptName,
     promptWorkspaceIdWithoutChoice,
 } from "../_base/terminal/prompts";
-import { getBackend, getDashboard, getHostname, getWorkspace } from "../_base/inputHandling/extractors";
+import {
+    getBackendFromOptions,
+    getDashboardOptions,
+    getHostnameFromOptions,
+    getWorkspaceFromOptions,
+} from "../_base/inputHandling/extractors";
 import { convertToPluginIdentifier } from "../_base/utils";
 
-function getLanguage(options: ActionOptions): TargetAppLanguage | undefined {
+function getLanguageFromOptions(options: ActionOptions): TargetAppLanguage | undefined {
     const { language } = options.commandOpts;
 
     if (!language) {
@@ -30,7 +35,7 @@ function getLanguage(options: ActionOptions): TargetAppLanguage | undefined {
     return language as TargetAppLanguage;
 }
 
-function getPackageManager(options: ActionOptions): SupportedPackageManager {
+function getPackageManagerFromOptions(options: ActionOptions): SupportedPackageManager {
     const { packageManager } = options.commandOpts;
 
     if (!packageManager) {
@@ -77,12 +82,12 @@ export async function getInitCmdActionConfig(
         validOrDie("plugin-name", pluginName, pluginNameValidator);
     }
 
-    const backendFromOptions = getBackend(options);
-    const hostnameFromOptions = getHostname(backendFromOptions, options);
-    const languageFromOptions = getLanguage(options);
-    const workspaceFromOptions = getWorkspace(options);
-    const dashboardFromOptions = getDashboard(options);
-    const packageManagerFromOptions = getPackageManager(options);
+    const backendFromOptions = getBackendFromOptions(options);
+    const hostnameFromOptions = getHostnameFromOptions(backendFromOptions, options);
+    const languageFromOptions = getLanguageFromOptions(options);
+    const workspaceFromOptions = getWorkspaceFromOptions(options);
+    const dashboardFromOptions = getDashboardOptions(options);
+    const packageManagerFromOptions = getPackageManagerFromOptions(options);
     const name = pluginName ?? (await promptName());
     const backend = backendFromOptions ?? (await promptBackend());
     const hostname = hostnameFromOptions ?? (await promptHostname(backend));

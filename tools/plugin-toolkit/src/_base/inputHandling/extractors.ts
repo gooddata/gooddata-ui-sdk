@@ -10,7 +10,7 @@ import { backendTypeValidator, createHostnameValidator, validOrDie } from "./val
  * @param options - program & command options
  * @returns undefined if no hostname specified.
  */
-export function getHostname(
+export function getHostnameFromOptions(
     backend: TargetBackendType | undefined,
     options: ActionOptions,
 ): string | undefined {
@@ -34,7 +34,7 @@ export function getHostname(
  * @param options - program & command options
  * @returns undefined if no backend type specified.
  */
-export function getBackend(options: ActionOptions): TargetBackendType | undefined {
+export function getBackendFromOptions(options: ActionOptions): TargetBackendType | undefined {
     const { backend } = options.commandOpts;
 
     if (!backend) {
@@ -54,7 +54,7 @@ export function getBackend(options: ActionOptions): TargetBackendType | undefine
  * @param options - program & command options
  * @returns undefined if no workspace specified.
  */
-export function getWorkspace(options: ActionOptions): string | undefined {
+export function getWorkspaceFromOptions(options: ActionOptions): string | undefined {
     const { workspaceId } = options.commandOpts;
 
     if (!workspaceId) {
@@ -74,7 +74,7 @@ export function getWorkspace(options: ActionOptions): string | undefined {
  * @param options - program & command options
  * @returns undefined if no dashboard specified.
  */
-export function getDashboard(options: ActionOptions): string | undefined {
+export function getDashboardOptions(options: ActionOptions): string | undefined {
     const { dashboardId } = options.commandOpts;
 
     if (!dashboardId) {

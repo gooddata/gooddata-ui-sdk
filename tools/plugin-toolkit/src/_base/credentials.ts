@@ -20,6 +20,14 @@ export type BackendCredentials = {
     token: string | undefined;
 };
 
+export function createCredentialsFromEnv(env: Record<string, string>): BackendCredentials {
+    return {
+        username: env.GDC_USERNAME,
+        password: env.GDC_PASSWORD,
+        token: env.TIGER_API_TOKEN,
+    };
+}
+
 /**
  * Validate that the gathered credentials provided on the input are complete in the context of the
  * specified backend type. For 'bear' both username & password must be specified. For 'tiger' only
@@ -42,21 +50,21 @@ export function validateCredentialsAreComplete(
             throw new InputValidationError(
                 "username",
                 "",
-                "Unable to determine username to use when logging into GoodData platform. Please make sure GDC_USERNAME env variable is set in your session or in the .env file",
+                "Unable to determine username to use when logging into GoodData platform. Please make sure GDC_USERNAME env variable is set in your session or in the .env.secrets file",
             );
         }
         if (isEmpty(password)) {
             throw new InputValidationError(
                 "password",
                 "",
-                "Unable to determine password to use when logging into GoodData platform. Please make sure GDC_PASSWORD env variable is set in your session or in the .env file",
+                "Unable to determine password to use when logging into GoodData platform. Please make sure GDC_PASSWORD env variable is set in your session or in the .env.secrets file",
             );
         }
     } else if (isEmpty(token)) {
         throw new InputValidationError(
             "token",
             "",
-            "Unable to determine token to use for authentication to GoodData.CN. Please make sure TIGER_API_TOKEN env variable is set in your session or in the .env file",
+            "Unable to determine token to use for authentication to GoodData.CN. Please make sure TIGER_API_TOKEN env variable is set in your session or in the .env.secrets file",
         );
     }
 }
