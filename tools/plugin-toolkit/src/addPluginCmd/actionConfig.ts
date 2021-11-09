@@ -58,7 +58,6 @@ export async function getAddCmdActionConfig(
 
     validateWorkspaceTargetConfig(workspaceTargetConfig);
 
-    const pluginIdentifier = convertToPluginIdentifier(packageJson.name);
     const backendInstance = createBackend({
         hostname,
         backend,
@@ -68,7 +67,7 @@ export async function getAddCmdActionConfig(
     const config: AddCmdActionConfig = {
         ...workspaceTargetConfig,
         pluginUrl,
-        pluginIdentifier,
+        pluginIdentifier: convertToPluginIdentifier(packageJson.name),
         pluginName: packageJson.name,
         pluginDescription: packageJson.description,
         dryRun: options.commandOpts.dryRun ?? false,

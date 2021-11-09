@@ -19,9 +19,18 @@ import {
 import isEmpty from "lodash/isEmpty";
 import { promptPluginParameters } from "../_base/terminal/prompts";
 import { logError } from "../_base/terminal/loggers";
+import { convertToPluginEntrypoint, convertToPluginIdentifier } from "../_base/utils";
 
 export type UseCmdActionConfig = WorkspaceTargetConfig & {
+    /**
+     * Plugin _metadata object_ identifier.
+     */
     identifier: string;
+
+    /**
+     * Plugin identifier (as used in module naming, entry point naming etc)
+     */
+    pluginIdentifier: string;
     dashboard: string;
     dryRun: boolean;
     withParameters: boolean;
@@ -29,12 +38,18 @@ export type UseCmdActionConfig = WorkspaceTargetConfig & {
     backendInstance: IAnalyticalBackend;
 };
 
-function createDuplicatePluginLinkValidator(identifier: string): InputValidator<IDashboardWithReferences> {
+function createDuplicatePluginLinkValidator(
+    identifier: string,
+    pluginIdentifier: string,
+): InputValidator<IDashboardWithReferences> {
+    const entryPoint = convertToPluginEntrypoint(pluginIdentifier);
+
     return (dashboardWithReferences) => {
         const {
             dashboard,
             references: { plugins },
         } = dashboardWithReferences;
+
         if (isEmpty(plugins)) {
             return true;
         }
@@ -44,12 +59,22 @@ function createDuplicatePluginLinkValidator(identifier: string): InputValidator<
             Dashboard can only use each plugin once. Consider using parameterization instead.`;
         }
 
+        const otherPluginWithSameEp = plugins.find((plugin) => plugin.url.endsWith(entryPoint));
+        if (otherPluginWithSameEp) {
+            const { identifier: otherIdentifier, name } = otherPluginWithSameEp;
+
+            return `Dashboard ${dashboard.identifier} already uses another plugin (${otherIdentifier} - ${name}) 
+            that has same entry point as the plugin that you want to use. This is likely another version of
+            the same plugin. Adding two versions of the same plugin is not allowed will not work. Note:
+            renaming the entry point files will not help as you will then encounter load-time errors.`;
+        }
+
         return true;
     };
 }
 
 async function doAsyncValidations(config: UseCmdActionConfig) {
-    const { backendInstance, workspace, dashboard, identifier } = config;
+    const { backendInstance, workspace, dashboard, identifier, pluginIdentifier } = config;
 
     const asyncValidationProgress = ora({
         text: "Performing server-side validations.",
@@ -70,7 +95,7 @@ async function doAsyncValidations(config: UseCmdActionConfig) {
             createDashboardValidator(
                 backendInstance,
                 workspace,
-                createDuplicatePluginLinkValidator(identifier),
+                createDuplicatePluginLinkValidator(identifier, pluginIdentifier),
             ),
         );
     } finally {
@@ -83,7 +108,7 @@ export async function getUseCmdActionConfig(
     options: ActionOptions,
 ): Promise<UseCmdActionConfig> {
     const workspaceTargetConfig = createWorkspaceTargetConfig(options);
-    const { hostname, backend, credentials, env } = workspaceTargetConfig;
+    const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
     const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD;
 
     validateWorkspaceTargetConfig(workspaceTargetConfig);
@@ -98,6 +123,7 @@ export async function getUseCmdActionConfig(
         ...workspaceTargetConfig,
         identifier,
         dashboard,
+        pluginIdentifier: convertToPluginIdentifier(packageJson.name),
         dryRun: options.commandOpts.dryRun ?? false,
         withParameters: options.commandOpts.withParameters ?? false,
         parameters: undefined,

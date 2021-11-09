@@ -34,13 +34,20 @@ export function safeJoin(initialPath: string, relativePath: string): string {
 }
 
 /**
- * Converts plug name to an identifier that can be used for module federation identifier, directory names,
+ * Converts plugin name to an identifier that can be used for module federation identifier, directory names,
  * asset file names etc.
  *
  * @param name - plugin name as entered by the user
  */
 export function convertToPluginIdentifier(name: string): string {
     return `dp_${snakeCase(name)}`;
+}
+
+/**
+ * Converts plugin identifier to entry point file name
+ */
+export function convertToPluginEntrypoint(pluginIdentifier: string): string {
+    return `${pluginIdentifier}.js`;
 }
 
 /**
