@@ -32,7 +32,14 @@ export function loadEnv(backend: TargetBackendType): Record<string, string> {
         );
 
         dotEnvContent.GDC_USERNAME = GDC_USERNAME;
-        dotEnvContent.GDC_PASSWORD = GDC_PASSWORD ?? "";
+
+        if (!GDC_PASSWORD) {
+            // prevent mixing of credential sources. either both come from .env.secrets or both come from
+            // process env variables
+            delete dotEnvContent.GDC_PASSWORD;
+        } else {
+            dotEnvContent.GDC_PASSWORD = GDC_PASSWORD;
+        }
     }
 
     if (backend === "tiger" && TIGER_API_TOKEN) {
