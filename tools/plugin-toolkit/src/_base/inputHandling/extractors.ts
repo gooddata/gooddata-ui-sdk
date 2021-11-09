@@ -74,7 +74,7 @@ export function getWorkspaceFromOptions(options: ActionOptions): string | undefi
  * @param options - program & command options
  * @returns undefined if no dashboard specified.
  */
-export function getDashboardOptions(options: ActionOptions): string | undefined {
+export function getDashboardFromOptions(options: ActionOptions): string | undefined {
     const { dashboardId } = options.commandOpts;
 
     if (!dashboardId) {

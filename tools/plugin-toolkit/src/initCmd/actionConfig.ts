@@ -17,7 +17,7 @@ import {
 } from "../_base/terminal/prompts";
 import {
     getBackendFromOptions,
-    getDashboardOptions,
+    getDashboardFromOptions,
     getHostnameFromOptions,
     getWorkspaceFromOptions,
 } from "../_base/inputHandling/extractors";
@@ -86,7 +86,7 @@ export async function getInitCmdActionConfig(
     const hostnameFromOptions = getHostnameFromOptions(backendFromOptions, options);
     const languageFromOptions = getLanguageFromOptions(options);
     const workspaceFromOptions = getWorkspaceFromOptions(options);
-    const dashboardFromOptions = getDashboardOptions(options);
+    const dashboardFromOptions = getDashboardFromOptions(options);
     const packageManagerFromOptions = getPackageManagerFromOptions(options);
     const name = pluginName ?? (await promptName());
     const backend = backendFromOptions ?? (await promptBackend());

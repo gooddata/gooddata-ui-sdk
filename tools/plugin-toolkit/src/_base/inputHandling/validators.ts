@@ -4,10 +4,17 @@ import url from "url";
 import includes from "lodash/includes";
 import { InputValidationError, TargetBackendType } from "../types";
 import axios, { AxiosError } from "axios";
-import { IAnalyticalBackend, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IDashboardPlugin,
+    isUnexpectedResponseError,
+    IDashboardWithReferences,
+    IAnalyticalWorkspace,
+} from "@gooddata/sdk-backend-spi";
 import { extractRootCause } from "../utils";
+import { idRef } from "@gooddata/sdk-model";
 
-export type InputValidator = (value: string) => boolean | string;
+export type InputValidator<T = string> = (value: T) => boolean | string;
 export type AsyncInputValidator = (value: string) => Promise<boolean | string>;
 
 //
@@ -160,9 +167,13 @@ export function createPluginUrlValidator(pluginIdentifier: string): AsyncInputVa
 
 /**
  * Factory for workspace validators. The created validator is async and verifies that the workspace
- * actually exists on the backend.
+ * actually exists on the backend. Optionally, you may specify additional validation to perform
+ * in case the workspace actually exists.
  */
-export function createWorkspaceValidator(backend: IAnalyticalBackend): AsyncInputValidator {
+export function createWorkspaceValidator(
+    backend: IAnalyticalBackend,
+    additionalValidation?: InputValidator<IAnalyticalWorkspace>,
+): AsyncInputValidator {
     return async (value): Promise<boolean | string> => {
         if (isEmpty(value)) {
             return "Invalid workspace. Specify a valid workspace identifier.";
@@ -174,7 +185,9 @@ export function createWorkspaceValidator(backend: IAnalyticalBackend): AsyncInpu
             .dashboards()
             .getDashboards()
             .then((_) => {
-                return true;
+                const workspace = backend.workspace(value);
+
+                return additionalValidation?.(workspace) ?? true;
             })
             .catch((e: any) => {
                 if (isUnexpectedResponseError(e)) {
@@ -182,6 +195,82 @@ export function createWorkspaceValidator(backend: IAnalyticalBackend): AsyncInpu
                         return `Workspace ${value} does not exist on ${backend.config.hostname}.`;
                     } else if (e.httpStatus === 403) {
                         return `Workspace ${value} does exist but you do not have authorization.`;
+                    }
+                }
+
+                const rootCause = extractRootCause(e);
+
+                return `An error has occurred while validating workspace existence: ${rootCause.message}`;
+            });
+    };
+}
+
+/**
+ * Factory for dashboard validators. The created validator is async and verifies that a dashboard
+ * actually exists in a workspace on a backend. Optionally, you may specify additional validation to perform
+ * in case the dashboard actually exists.
+ */
+export function createDashboardValidator(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    additionalValidation?: InputValidator<IDashboardWithReferences>,
+): AsyncInputValidator {
+    return async (value): Promise<boolean | string> => {
+        if (isEmpty(value)) {
+            return "Invalid dashboard. Specify a valid dashboard identifier.";
+        }
+
+        return backend
+            .workspace(workspace)
+            .dashboards()
+            .getDashboardWithReferences(idRef(value), undefined, undefined, ["dashboardPlugin"])
+            .then((dashboard) => {
+                return additionalValidation?.(dashboard) ?? true;
+            })
+            .catch((e: any) => {
+                if (isUnexpectedResponseError(e)) {
+                    if (e.httpStatus === 404) {
+                        return `Dashboard ${value} does not exist in the workspace ${workspace}.`;
+                    } else if (e.httpStatus === 403) {
+                        return `Dashboard ${value} does exist in workspace ${workspace} but you do not have authorization.`;
+                    }
+                }
+
+                const rootCause = extractRootCause(e);
+
+                return `An error has occurred while validating workspace existence: ${rootCause.message}`;
+            });
+    };
+}
+
+/**
+ * Factory for dashboard plugin validators. The created validator is async and verifies that a plugin object
+ * actually exists in a workspace on a backend. Optionally, you may specify additional validation to perform
+ * in case the dashboard plugin actually exists.
+ */
+export function createDashboardPluginValidator(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    additionalValidation?: InputValidator<IDashboardPlugin>,
+): AsyncInputValidator {
+    return async (value): Promise<boolean | string> => {
+        if (isEmpty(value)) {
+            return "Invalid dashboard. Specify a valid dashboard identifier.";
+        }
+
+        return backend
+            .workspace(workspace)
+            .dashboards()
+            .getDashboardPlugin(idRef(value))
+            .then((plugin) => {
+                return additionalValidation?.(plugin) ?? true;
+            })
+            .catch((e: any) => {
+                if (isUnexpectedResponseError(e)) {
+                    if (e.httpStatus === 404) {
+                        return `Dashboard plugin ${value} does not exist in the workspace ${workspace}.`;
+                    } else if (e.httpStatus === 403) {
+                        return `Dashboard plugin ${value} does exist in workspace ${workspace} but you do not have authorization.`;
                     }
                 }
 

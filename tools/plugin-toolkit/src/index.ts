@@ -111,10 +111,10 @@ const usePluginCmd: Command = dashboardCmd
         "--with-parameters",
         "Tool will prompt for parameters that will be passed to plugin during initialization",
     )
-    .action(async () => {
+    .action(async (identifier) => {
         acceptUntrustedSsl(program.opts());
 
-        await usePluginCmdAction({
+        await usePluginCmdAction(identifier, {
             programOpts: program.opts(),
             commandOpts: usePluginCmd.opts(),
         });
