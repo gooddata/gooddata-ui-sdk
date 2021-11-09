@@ -4,13 +4,12 @@ import { TargetBackendType } from "./types";
 import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tiger";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { BackendCredentials } from "./cli/credentials";
 
 export type BackendConfig = {
     backend: TargetBackendType;
     hostname: string;
-    username: string | undefined;
-    password: string | undefined;
-    token: string | undefined;
+    credentials: BackendCredentials;
 };
 
 /**
@@ -21,16 +20,16 @@ export type BackendConfig = {
  * messages.
  */
 export function createBackend(backendConfig: BackendConfig): IAnalyticalBackend {
-    const { backend, hostname } = backendConfig;
+    const { backend, hostname, credentials } = backendConfig;
 
     if (backend === "bear") {
-        const { username, password } = backendConfig;
+        const { username, password } = credentials;
 
         return bearFactory({
             hostname,
         }).withAuthentication(new FixedLoginAndPasswordAuthProvider(username!, password!));
     } else {
-        const { token } = backendConfig;
+        const { token } = credentials;
 
         return tigerFactory({
             hostname,

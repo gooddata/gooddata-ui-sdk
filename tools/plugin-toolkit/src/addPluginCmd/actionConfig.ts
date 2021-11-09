@@ -14,10 +14,10 @@ import {
 import { readFileSync } from "fs";
 import fse from "fs-extra";
 import { logInfo } from "../_base/cli/loggers";
-import isEmpty from "lodash/isEmpty";
 import { createBackend } from "../_base/backend";
 import ora from "ora";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { BackendCredentials, validateCredentialsAreComplete } from "../_base/cli/credentials";
 
 export type AddCmdActionConfig = {
     pluginUrl: string;
@@ -27,9 +27,7 @@ export type AddCmdActionConfig = {
     backend: TargetBackendType;
     hostname: string;
     workspace: string;
-    username: string | undefined;
-    password: string | undefined;
-    token: string | undefined;
+    credentials: BackendCredentials;
     dryRun: boolean;
     backendInstance: IAnalyticalBackend;
 };
@@ -90,32 +88,6 @@ function discoverBackendType(packageJson: Record<string, any>): TargetBackendTyp
     );
 }
 
-function validateCredentialsAvailable(config: AddCmdActionConfig) {
-    const { backend, username, password, token } = config;
-    if (backend === "bear") {
-        if (isEmpty(username)) {
-            throw new InputValidationError(
-                "username",
-                "",
-                "Unable to determine username to use when logging into GoodData platform. Please make sure GDC_USERNAME env variable is set in your session or in the .env file",
-            );
-        }
-        if (isEmpty(password)) {
-            throw new InputValidationError(
-                "password",
-                "",
-                "Unable to determine password to use when logging into GoodData platform. Please make sure GDC_PASSWORD env variable is set in your session or in the .env file",
-            );
-        }
-    } else if (isEmpty(token)) {
-        throw new InputValidationError(
-            "token",
-            "",
-            "Unable to determine token to use for authentication to GoodData.CN. Please make sure TIGER_API_TOKEN env variable is set in your session or in the .env file",
-        );
-    }
-}
-
 /**
  * Perform asynchronous validations:
  *
@@ -157,15 +129,15 @@ export async function getAddCmdActionConfig(
 
     const hostname = hostnameFromOptions ?? env.BACKEND_URL;
     const workspace = workspaceFromOptions ?? env.WORKSPACE;
-    const username = env.GDC_USERNAME;
-    const password = env.GDC_PASSWORD;
-    const token = env.TIGER_API_TOKEN;
+    const credentials: BackendCredentials = {
+        username: env.GDC_USERNAME,
+        password: env.GDC_PASSWORD,
+        token: env.TIGER_API_TOKEN,
+    };
     const backendInstance = createBackend({
         hostname,
         backend,
-        username,
-        password,
-        token,
+        credentials,
     });
 
     const config: AddCmdActionConfig = {
@@ -176,15 +148,13 @@ export async function getAddCmdActionConfig(
         backend,
         hostname,
         workspace,
-        username,
-        password,
-        token,
+        credentials,
         dryRun: options.commandOpts.dryRun ?? false,
         backendInstance,
     };
 
     validOrDie("hostname", hostname, createHostnameValidator(backend));
-    validateCredentialsAvailable(config);
+    validateCredentialsAreComplete(backend, credentials);
     await doAsyncValidations(config);
 
     return config;

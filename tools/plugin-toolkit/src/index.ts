@@ -92,10 +92,21 @@ const usePluginCmd: Command = dashboardCmd
     .description("Use plugin available in a workspace on a dashboard.")
     .argument("<plugin-id>", "Plugin id which you want to use on the dashboard")
     .option(
+        "--backend <backend>",
+        "Type of backend to which you want to add the plugin, either GoodData Platform (bear) or GoodData.CN (tiger). " +
+            "By default tries to auto-detect the backend type from your project's package.json.",
+    )
+    .option(
         "--workspace-id <id>",
         "Identifier of workspace that contains dashboard that should use the plugin",
     )
     .option("--dashboard-id <id>", "Identifier of dashboard on which you want to use the plugin")
+    .option(
+        "--dry-run",
+        "In dry run mode, the tool will proceed up to the point when first update operation has to " +
+            "be done and then will stop. This is ideal to verify configuration. Dry run is disabled by default",
+        false,
+    )
     .option(
         "--with-parameters",
         "Tool will prompt for parameters that will be passed to plugin during initialization",

@@ -7,7 +7,14 @@ import fse from "fs-extra";
 import { IDashboardPlugin, isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 
 function printAddConfigSummary(config: AddCmdActionConfig) {
-    const { backend, hostname, workspace, pluginUrl, username, pluginName } = config;
+    const {
+        backend,
+        hostname,
+        workspace,
+        pluginUrl,
+        credentials: { username },
+        pluginName,
+    } = config;
 
     logInfo("Everything looks valid. Going to add new plugin object to workspace metadata.");
     logInfo(`  Hostname    : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
