@@ -3,6 +3,7 @@ import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
 import {
     IDashboardDefinition,
     IDashboardLayout,
+    IDashboardPluginDefinition,
     IDashboardWidget,
     IFilterContextDefinition,
     LayoutPath,
@@ -51,6 +52,15 @@ export function convertFilterContextToBackend(
 ): AnalyticalDashboardModelV2.IFilterContext {
     return {
         filters: cloneWithSanitizedIds(filterContext.filters),
+        version: "2",
+    };
+}
+
+export function convertDashboardPluginToBackend(
+    plugin: IDashboardPluginDefinition,
+): AnalyticalDashboardModelV2.IDashboardPlugin {
+    return {
+        url: plugin.url,
         version: "2",
     };
 }

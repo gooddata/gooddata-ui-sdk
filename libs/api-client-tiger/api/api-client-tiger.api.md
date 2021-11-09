@@ -406,6 +406,13 @@ export namespace AnalyticalDashboardModelV2 {
         version: "2";
     }
     // (undocumented)
+    export interface IDashboardPlugin {
+        // (undocumented)
+        url: string;
+        // (undocumented)
+        version: "2";
+    }
+    // (undocumented)
     export interface IFilterContext {
         // (undocumented)
         filters: IFilterContext["filters"];
@@ -414,6 +421,8 @@ export namespace AnalyticalDashboardModelV2 {
     }
     // (undocumented)
     export function isAnalyticalDashboard(dashboard: unknown): dashboard is IAnalyticalDashboard;
+    // (undocumented)
+    export function isDashboardPlugin(plugin: unknown): plugin is IDashboardPlugin;
     // (undocumented)
     export function isFilterContext(filterContext: unknown): filterContext is IFilterContext;
 }
@@ -6693,7 +6702,7 @@ export type MetadataGetEntitiesParams = {
 };
 
 // @internal
-export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList;
+export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList;
 
 // @public
 export interface MetadataRequestArgs {

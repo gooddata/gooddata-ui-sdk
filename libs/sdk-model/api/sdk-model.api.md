@@ -1273,7 +1273,7 @@ export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dat
 /**
 * @deprecated will be removed in the next major release, use "insight" instead
 */
-| "visualizationObject" | "filterContext";
+| "visualizationObject" | "filterContext" | "dashboardPlugin";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

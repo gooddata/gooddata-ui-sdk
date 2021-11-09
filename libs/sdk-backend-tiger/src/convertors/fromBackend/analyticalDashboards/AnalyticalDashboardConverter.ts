@@ -9,8 +9,16 @@ import {
     JsonApiAnalyticalDashboardOutWithLinks,
     JsonApiFilterContextOutDocument,
     JsonApiFilterContextOutWithLinks,
+    JsonApiDashboardPluginOutDocument,
+    JsonApiDashboardPluginOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import { FilterContextItem, IDashboard, IFilterContext, IListedDashboard } from "@gooddata/sdk-backend-spi";
+import {
+    FilterContextItem,
+    IDashboard,
+    IDashboardPlugin,
+    IFilterContext,
+    IListedDashboard,
+} from "@gooddata/sdk-backend-spi";
 
 import {
     convertDashboard as convertDashboardV1,
@@ -21,6 +29,8 @@ import {
     convertDashboard as convertDashboardV2,
     convertFilterContextFilters as convertFilterContextFiltersV2,
     convertFilterContextFromBackend as convertFilterContextFromBackendV2,
+    convertDashboardPlugin as convertDashboardPluginV2,
+    convertDashboardPluginWithLinks as convertDashboardPluginWithLinksV2,
 } from "./v2/AnalyticalDashboardConverter";
 import { idRef, ObjectType } from "@gooddata/sdk-model";
 import { isInheritedObject } from "../utils";
@@ -81,6 +91,34 @@ export function convertFilterContextFromBackend(
     }
 
     invariant(false, "Unknown filter context version");
+}
+
+export function convertDashboardPluginFromBackend(
+    plugin: JsonApiDashboardPluginOutDocument,
+): IDashboardPlugin {
+    const content = plugin.data.attributes!.content;
+
+    // V1 does not support plugins
+
+    if (AnalyticalDashboardModelV2.isDashboardPlugin(content)) {
+        return convertDashboardPluginV2(plugin);
+    }
+
+    invariant(false, "Unknown dashboard plugin version");
+}
+
+export function convertDashboardPluginWithLinksFromBackend(
+    plugin: JsonApiDashboardPluginOutWithLinks,
+): IDashboardPlugin {
+    const content = plugin.attributes!.content;
+
+    // V1 does not support plugins
+
+    if (AnalyticalDashboardModelV2.isDashboardPlugin(content)) {
+        return convertDashboardPluginWithLinksV2(plugin);
+    }
+
+    invariant(false, "Unknown dashboard plugin version");
 }
 
 function convertFilterContextFilters(

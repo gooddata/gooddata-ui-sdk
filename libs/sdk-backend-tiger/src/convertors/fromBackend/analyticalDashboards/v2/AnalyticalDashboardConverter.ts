@@ -2,6 +2,8 @@
 import {
     AnalyticalDashboardModelV2,
     JsonApiAnalyticalDashboardOutDocument,
+    JsonApiDashboardPluginOutDocument,
+    JsonApiDashboardPluginOutWithLinks,
     JsonApiFilterContextOutDocument,
 } from "@gooddata/api-client-tiger";
 import {
@@ -9,6 +11,7 @@ import {
     IDashboard,
     IDashboardDateFilterConfig,
     IDashboardLayout,
+    IDashboardPlugin,
     IDashboardWidget,
     IFilterContext,
     LayoutPath,
@@ -113,4 +116,40 @@ export function convertFilterContextFilters(
     content: AnalyticalDashboardModelV2.IFilterContext,
 ): FilterContextItem[] {
     return cloneWithSanitizedIds(content.filters);
+}
+
+export function convertDashboardPlugin(plugin: JsonApiDashboardPluginOutDocument): IDashboardPlugin {
+    const { id, type, attributes } = plugin.data;
+    const { title = "", description = "", content, tags } = attributes!;
+    const { url } = content as AnalyticalDashboardModelV2.IDashboardPlugin;
+
+    return {
+        ref: idRef(id, type as ObjectType),
+        identifier: id,
+        uri: plugin.links!.self,
+        name: title,
+        description,
+        tags: tags ?? [],
+        type: "IDashboardPlugin",
+        url,
+    };
+}
+
+export function convertDashboardPluginWithLinks(
+    plugin: JsonApiDashboardPluginOutWithLinks,
+): IDashboardPlugin {
+    const { id, type, attributes } = plugin;
+    const { title = "", description = "", content, tags } = attributes!;
+    const { url } = content as AnalyticalDashboardModelV2.IDashboardPlugin;
+
+    return {
+        ref: idRef(id, type as ObjectType),
+        identifier: id,
+        uri: plugin.links!.self,
+        name: title,
+        description,
+        tags: tags ?? [],
+        type: "IDashboardPlugin",
+        url,
+    };
 }

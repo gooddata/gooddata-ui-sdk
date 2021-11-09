@@ -3,6 +3,7 @@ import {
     isVisualizationObjectsItem,
     JsonApiAnalyticalDashboardInTypeEnum,
     JsonApiAnalyticalDashboardOutDocument,
+    JsonApiDashboardPluginInTypeEnum,
     JsonApiFilterContextInTypeEnum,
     jsonApiHeaders,
     MetadataUtilities,
@@ -37,10 +38,13 @@ import {
     convertDashboard,
     convertFilterContextFromBackend,
     getFilterContextFromIncluded,
+    convertDashboardPluginFromBackend,
+    convertDashboardPluginWithLinksFromBackend,
 } from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
 import {
     convertAnalyticalDashboard,
+    convertDashboardPluginToBackend,
     convertFilterContextToBackend,
 } from "../../../convertors/toBackend/AnalyticalDashboardConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
@@ -55,8 +59,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     // Public methods
     public getDashboards = async (options?: IGetDashboardOptions): Promise<IListedDashboard[]> => {
         if (options?.loadUserData) {
-            throw new NotSupported(
-                "Tiger backend does not support the 'loadUserData' option of getDashboards.",
+            // eslint-disable-next-line no-console
+            console.warn(
+                "Tiger backend does not support the 'loadUserData' option of getDashboards. Ignoring.",
             );
         }
 
@@ -80,8 +85,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         options?: IGetDashboardOptions,
     ): Promise<IDashboard> => {
         if (options?.loadUserData) {
-            throw new NotSupported(
-                "Tiger backend does not support the 'loadUserData' option of getDashboard.",
+            // eslint-disable-next-line no-console
+            console.warn(
+                "Tiger backend does not support the 'loadUserData' option of getDashboard. Ignoring.",
             );
         }
 
@@ -120,8 +126,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         types: SupportedDashboardReferenceTypes[] = ["insight"],
     ): Promise<IDashboardWithReferences> => {
         if (options?.loadUserData) {
-            throw new NotSupported(
-                "Tiger backend does not support the 'loadUserData' option of getDashboardWithReferences.",
+            // eslint-disable-next-line no-console
+            console.warn(
+                "Tiger backend does not support the 'loadUserData' option of getDashboardWithReferences. Ignoring.",
             );
         }
 
@@ -346,20 +353,80 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
     };
 
-    public createDashboardPlugin = (_plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin> => {
-        throw new NotSupported("Tiger backend does not support dashboard plugins.");
+    public createDashboardPlugin = async (plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin> => {
+        const pluginContent = convertDashboardPluginToBackend(plugin);
+
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.createEntityDashboardPlugins(
+                {
+                    workspaceId: this.workspace,
+                    jsonApiDashboardPluginInDocument: {
+                        data: {
+                            id: uuidv4(),
+                            type: JsonApiDashboardPluginInTypeEnum.DashboardPlugin,
+                            attributes: {
+                                content: pluginContent,
+                                title: plugin.name,
+                                description: plugin.description ?? "",
+                            },
+                        },
+                    },
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+        });
+
+        return convertDashboardPluginFromBackend(result.data);
     };
 
-    public deleteDashboardPlugin = (_ref: ObjRef): Promise<void> => {
-        throw new NotSupported("Tiger backend does not support dashboard plugins.");
+    public deleteDashboardPlugin = async (ref: ObjRef): Promise<void> => {
+        const id = await objRefToIdentifier(ref, this.authCall);
+
+        await this.authCall((client) =>
+            client.workspaceObjects.deleteEntityDashboardPlugins(
+                {
+                    objectId: id,
+                    workspaceId: this.workspace,
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            ),
+        );
     };
 
-    public getDashboardPlugin = (_ref: ObjRef): Promise<IDashboardPlugin> => {
-        throw new NotSupported("Tiger backend does not support dashboard plugins.");
+    public getDashboardPlugin = async (ref: ObjRef): Promise<IDashboardPlugin> => {
+        const objectId = await objRefToIdentifier(ref, this.authCall);
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.getEntityDashboardPlugins(
+                {
+                    workspaceId: this.workspace,
+                    objectId,
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+        });
+
+        return convertDashboardPluginFromBackend(result.data);
     };
 
-    public getDashboardPlugins = (): Promise<IDashboardPlugin[]> => {
-        throw new NotSupported("Tiger backend does not support dashboard plugins.");
+    public getDashboardPlugins = async (): Promise<IDashboardPlugin[]> => {
+        const result = await this.authCall((client) => {
+            return MetadataUtilities.getAllPagesOf(
+                client,
+                client.workspaceObjects.getAllEntitiesDashboardPlugins,
+                { workspaceId: this.workspace },
+                { headers: ValidateRelationsHeader },
+            )
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then(MetadataUtilities.filterValidEntities);
+        });
+
+        return result.data.map(convertDashboardPluginWithLinksFromBackend);
     };
 
     //
