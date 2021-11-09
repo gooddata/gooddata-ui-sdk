@@ -20,6 +20,14 @@ export const GranteeUserIcon: React.FC = () => {
     );
 };
 
+export const GranteeUserInactiveIcon: React.FC = () => {
+    return (
+        <div className="gd-grantee-item-icon-left-background">
+            <span className="gd-grantee-item-icon-inactive gd-grantee-icon-user gd-grantee-item-icon-left" />
+        </div>
+    );
+};
+
 export const GranteeGroupIcon: React.FC = () => {
     return (
         <div className="gd-grantee-item-icon-left-background">

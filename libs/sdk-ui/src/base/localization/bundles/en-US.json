@@ -1220,6 +1220,17 @@
         "comment": "Title of user group that contains all the users in the system.",
         "limit": 0
     },
+    "shareDialog.share.grantee.item.user.inactive": {
+        "value": "Inactive user",
+        "comment": "Title of user that is inactive or deleted in workspace",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.item.user.inactive.description": {
+        "value": "User was deleted from this workspace",
+        "comment": "Description of inactive user",
+        "limit": 0
+    },
+
     "shareDialog.share.grantee.item.remove.access": {
         "value": "Remove access to this dashboard.",
         "comment": "Text of the tooltip shown above button that removes user or group dashboard access right.",

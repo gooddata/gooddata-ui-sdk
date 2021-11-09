@@ -104,11 +104,30 @@
         font-weight: bold;
     }
 
+    .gd-grantee-content-label-inactive {
+        overflow: hidden;
+        font-family: $gd-font-primary;
+        font-size: 14px;
+        line-height: 1.3rem;
+        white-space: nowrap;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        text-overflow: ellipsis;
+        cursor: default;
+        font-weight: bold;
+    }
+
     .gd-grantee-count-button {
         height: 20px;
     }
 
     .gd-grantee-content-email {
+        font-size: 14px;
+        line-height: 1.3rem;
+        font-weight: normal;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+    }
+
+    .gd-grantee-content-inactive {
         font-size: 14px;
         line-height: 1.3rem;
         font-weight: normal;
@@ -129,6 +148,17 @@
         line-height: 36px;
         text-align: center;
         background: $is-focused-background;
+    }
+
+    .gd-grantee-item-icon-inactive {
+        width: 32px;
+        height: 32px;
+        border-radius: 20px;
+        font-size: 18px;
+        border: 1px dashed $is-focused-background;
+        line-height: 36px;
+        text-align: center;
+        border-style: dashed;
     }
 
     .gd-grantee-item-icon-left {

@@ -12,7 +12,7 @@ import "../styles/goodstrap.scss";
 import { action } from "@storybook/addon-actions";
 import { getGranteeItemTestId, GranteeItemComponent } from "@gooddata/sdk-ui-kit";
 import { BackstopConfig } from "../../../_infra/backstopScenario";
-import { current, currentAndOwen, group, groupNoCount, owner, user } from "./GranteeMock";
+import { current, currentAndOwen, group, groupNoCount, inactiveUser, owner, user } from "./GranteeMock";
 
 const UserItemBasicExample = (): JSX.Element => {
     const border = { border: "1px solid black", width: 300 };
@@ -48,6 +48,15 @@ const UserItemBasicExample = (): JSX.Element => {
                 <GranteeItemComponent
                     mode={"ShareGrantee"}
                     grantee={currentAndOwen}
+                    onDelete={action("onDelete")}
+                />
+            </div>
+
+            <span> Grantee owner inactive</span>
+            <div id="Grantee-item-basic-example" style={border}>
+                <GranteeItemComponent
+                    mode={"ShareGrantee"}
+                    grantee={inactiveUser}
                     onDelete={action("onDelete")}
                 />
             </div>

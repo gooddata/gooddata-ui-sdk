@@ -3,8 +3,12 @@ import React, { useCallback, useMemo } from "react";
 import { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase";
 import { GranteeItem } from "./ShareDialogBase/types";
 import { IShareDialogProps } from "./types";
-import invariant from "ts-invariant";
-import { mapGranteesToShareStatus, mapOwnerToGrantee, mapShareStatusToGroupAll } from "./shareDialogMappers";
+import {
+    mapGranteesToShareStatus,
+    mapOwnerToGrantee,
+    mapShareStatusToGroupAll,
+    mapUserToInactiveGrantee,
+} from "./shareDialogMappers";
 
 /**
  * @internal
@@ -14,9 +18,10 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
     const { createdBy, shareStatus } = sharedObject;
 
     const owner = useMemo(() => {
-        invariant(sharedObject.createdBy, "ShareDialog sharedObject.createdBy should be specified.");
-
-        return mapOwnerToGrantee(createdBy, currentUserRef);
+        if (sharedObject.createdBy) {
+            return mapOwnerToGrantee(createdBy, currentUserRef);
+        }
+        return mapUserToInactiveGrantee();
     }, [createdBy, currentUserRef]);
 
     const grantees = useMemo(() => {
