@@ -942,6 +942,20 @@ export interface IDocumentHeaderProps {
 }
 
 // @internal (undocumented)
+export interface IDomNative {
+    // (undocumented)
+    focus: (options?: {
+        preventScroll?: boolean;
+    }) => void;
+}
+
+// @internal (undocumented)
+export interface IDomNativeProps {
+    // (undocumented)
+    autofocus?: boolean;
+}
+
+// @internal (undocumented)
 export interface IDropdownBodyRenderProps {
     // (undocumented)
     closeDropdown: () => void;
@@ -2146,9 +2160,11 @@ export class Input extends React_2.PureComponent<InputPureProps, InputState> {
 }
 
 // @internal (undocumented)
-export class InputPure extends React_2.PureComponent<InputPureProps> {
+export class InputPure extends React_2.PureComponent<InputPureProps> implements IDomNative {
     // (undocumented)
     componentDidMount(): void;
+    // (undocumented)
+    componentWillUnmount(): void;
     // (undocumented)
     static defaultProps: {
         autofocus: boolean;
@@ -2173,6 +2189,10 @@ export class InputPure extends React_2.PureComponent<InputPureProps> {
         labelPositionTop: boolean;
         value: string;
     };
+    // (undocumented)
+    focus(options?: {
+        preventScroll?: boolean;
+    }): void;
     // (undocumented)
     getInputClassNames(): string;
     // (undocumented)
@@ -2200,9 +2220,7 @@ export class InputPure extends React_2.PureComponent<InputPureProps> {
 }
 
 // @internal (undocumented)
-export interface InputPureProps {
-    // (undocumented)
-    autofocus: boolean;
+export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     className: string;
     // (undocumented)
@@ -2223,6 +2241,8 @@ export interface InputPureProps {
     labelPositionTop: boolean;
     // (undocumented)
     maxlength: number;
+    // (undocumented)
+    nativeLikeAutofocus?: boolean;
     // (undocumented)
     onBlur: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)

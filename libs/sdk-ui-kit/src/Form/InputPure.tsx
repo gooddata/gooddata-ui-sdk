@@ -5,13 +5,14 @@ import NativeListener from "react-native-listener";
 import noop from "lodash/noop";
 
 import { ENUM_KEY_CODE } from "../typings/utilities";
+import { IDomNative, IDomNativeProps } from "../typings/domNative";
+import tryFocus from "./focus";
 
 /**
  * @internal
  */
 
-export interface InputPureProps {
-    autofocus: boolean;
+export interface InputPureProps extends IDomNativeProps {
     className: string;
     clearOnEsc: boolean;
     disabled: boolean;
@@ -32,12 +33,15 @@ export interface InputPureProps {
     label: string;
     labelPositionTop: boolean;
     value: string | number;
+    nativeLikeAutofocus?: boolean;
 }
 /**
  * @internal
  */
-export class InputPure extends React.PureComponent<InputPureProps> {
+export class InputPure extends React.PureComponent<InputPureProps> implements IDomNative {
     public inputNodeRef: HTMLInputElement;
+    private focusTimer: number = -1;
+    private focusInterval: number = -1;
 
     static defaultProps = {
         autofocus: false,
@@ -64,10 +68,20 @@ export class InputPure extends React.PureComponent<InputPureProps> {
     };
 
     componentDidMount(): void {
-        if (this.props.autofocus) {
+        const { autofocus, nativeLikeAutofocus } = this.props;
+
+        if (autofocus && !nativeLikeAutofocus) {
             // https://github.com/facebook/react/issues/1791
-            setTimeout(() => this.inputNodeRef && this.inputNodeRef.focus(), 100);
+            this.focusTimer = window.setTimeout(() => this.inputNodeRef && this.inputNodeRef.focus(), 100);
         }
+        if (autofocus && nativeLikeAutofocus) {
+            this.focusInterval = tryFocus(() => this.inputNodeRef);
+        }
+    }
+
+    componentWillUnmount(): void {
+        window.clearTimeout(this.focusTimer);
+        window.clearInterval(this.focusInterval);
     }
 
     onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -194,5 +208,11 @@ export class InputPure extends React.PureComponent<InputPureProps> {
                 </div>
             </label>
         );
+    }
+
+    focus(options?: { preventScroll?: boolean }): void {
+        if (this.inputNodeRef) {
+            this.inputNodeRef.focus(options);
+        }
     }
 }
