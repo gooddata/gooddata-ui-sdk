@@ -6,7 +6,7 @@ import {
     packageManagerValidator,
     pluginNameValidator,
     validOrDie,
-} from "../_base/cli/validators";
+} from "../_base/inputHandling/validators";
 import {
     promptBackend,
     promptDashboardIdWithoutChoice,
@@ -14,8 +14,8 @@ import {
     promptLanguage,
     promptName,
     promptWorkspaceIdWithoutChoice,
-} from "../_base/cli/prompts";
-import { getBackend, getDashboard, getHostname, getWorkspace } from "../_base/cli/extractors";
+} from "../_base/terminal/prompts";
+import { getBackend, getDashboard, getHostname, getWorkspace } from "../_base/inputHandling/extractors";
 import { convertToPluginIdentifier } from "../_base/utils";
 
 function getLanguage(options: ActionOptions): TargetAppLanguage | undefined {

@@ -1,23 +1,22 @@
 // (C) 2021 GoodData Corporation
 import { parse } from "dotenv";
-import { ActionOptions, TargetBackendType } from "../_base/types";
-import { getBackend, getHostname, getWorkspace } from "../_base/cli/extractors";
+import { ActionOptions, InputValidationError, TargetBackendType } from "../_base/types";
+import { getBackend, getHostname, getWorkspace } from "../_base/inputHandling/extractors";
 import { convertToPluginIdentifier, readJsonSync } from "../_base/utils";
 import {
     asyncValidOrDie,
     createHostnameValidator,
     createPluginUrlValidator,
     createWorkspaceValidator,
-    InputValidationError,
     validOrDie,
-} from "../_base/cli/validators";
+} from "../_base/inputHandling/validators";
 import { readFileSync } from "fs";
 import fse from "fs-extra";
-import { logInfo } from "../_base/cli/loggers";
+import { logInfo } from "../_base/terminal/loggers";
 import { createBackend } from "../_base/backend";
 import ora from "ora";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { BackendCredentials, validateCredentialsAreComplete } from "../_base/cli/credentials";
+import { BackendCredentials, validateCredentialsAreComplete } from "../_base/credentials";
 
 export type AddCmdActionConfig = {
     pluginUrl: string;

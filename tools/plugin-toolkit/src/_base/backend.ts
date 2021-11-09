@@ -4,7 +4,7 @@ import { TargetBackendType } from "./types";
 import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tiger";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { BackendCredentials } from "./cli/credentials";
+import { BackendCredentials } from "./credentials";
 
 export type BackendConfig = {
     backend: TargetBackendType;

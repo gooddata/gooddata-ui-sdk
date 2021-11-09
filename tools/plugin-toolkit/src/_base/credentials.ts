@@ -1,8 +1,7 @@
 // (C) 2021 GoodData Corporation
 
-import { TargetBackendType } from "../types";
+import { InputValidationError, TargetBackendType } from "./types";
 import isEmpty from "lodash/isEmpty";
-import { InputValidationError } from "./validators";
 
 export type BackendCredentials = {
     /**

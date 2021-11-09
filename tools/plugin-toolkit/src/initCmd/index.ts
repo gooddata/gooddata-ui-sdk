@@ -1,13 +1,12 @@
 // (C) 2021 GoodData Corporation
-import { ActionOptions, TargetAppLanguage } from "../_base/types";
-import { logError, logInfo, logWarn } from "../_base/cli/loggers";
+import { ActionOptions, isInputValidationError, TargetAppLanguage } from "../_base/types";
+import { logError, logInfo, logWarn } from "../_base/terminal/loggers";
 import kebabCase from "lodash/kebabCase";
 import * as path from "path";
 import fse from "fs-extra";
 import tar from "tar";
 import { getDashboardPluginTemplateArchive } from "../dashboard-plugin-template";
 import { readJsonSync, writeAsJsonSync } from "../_base/utils";
-import { isInputValidationError } from "../_base/cli/validators";
 import { processTigerFiles } from "./processTigerFiles";
 import { getInitCmdActionConfig, InitCmdActionConfig } from "./actionConfig";
 import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles";

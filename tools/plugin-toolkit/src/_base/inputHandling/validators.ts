@@ -2,7 +2,7 @@
 import isEmpty from "lodash/isEmpty";
 import url from "url";
 import includes from "lodash/includes";
-import { TargetBackendType } from "../types";
+import { InputValidationError, TargetBackendType } from "../types";
 import axios, { AxiosError } from "axios";
 import { IAnalyticalBackend, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { extractRootCause } from "../utils";
@@ -240,25 +240,4 @@ export function asyncValidOrDie(
             throw new InputValidationError(inputName, value, `Invalid value provided: ${value}`);
         }
     });
-}
-
-/**
- * This error is thrown when input validation fails.
- */
-export class InputValidationError extends Error {
-    public readonly type = "IVE";
-
-    public constructor(public readonly inputName: string, public readonly value: string, message: string) {
-        super(message);
-
-        // restore prototype chain
-        Object.setPrototypeOf(this, new.target.prototype);
-    }
-}
-
-/**
- * Type guard testing whether object is a type of {@link InputValidationError}.
- */
-export function isInputValidationError(obj: unknown): obj is InputValidationError {
-    return obj && (obj as InputValidationError).type === "IVE";
 }
