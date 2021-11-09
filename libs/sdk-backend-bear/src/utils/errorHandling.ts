@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ApiResponseError } from "@gooddata/api-client-bear";
 import {
     AnalyticalBackendError,
@@ -34,7 +34,10 @@ function isComplainingAboutAuthorization(error: ApiResponseError): boolean {
 
     const message = getJSONFromText(error.responseBody)?.error?.message ?? "";
 
-    return includes(message, "Attempt to execute protected report unsafely");
+    return (
+        includes(message, "Attempt to execute protected report unsafely") ||
+        includes(message, "Export to required format is not allowed for data flagged as restricted")
+    );
 }
 
 export function convertExecutionApiError(error: Error): AnalyticalBackendError {
@@ -62,6 +65,8 @@ export function convertApiError(error: Error): AnalyticalBackendError {
     if (isApiResponseError(error)) {
         if (error.response.status === HttpStatusCodes.UNAUTHORIZED) {
             return new NotAuthenticated("Not authenticated against backend");
+        } else if (isComplainingAboutAuthorization(error)) {
+            return new ProtectedDataError("Request not authorized", error);
         }
 
         return new UnexpectedResponseError(error.message, error.response.status, error.responseBody, error);
