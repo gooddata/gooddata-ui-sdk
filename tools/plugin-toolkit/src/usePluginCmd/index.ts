@@ -3,7 +3,9 @@ import { ActionOptions, isInputValidationError } from "../_base/types";
 import { logError, logInfo, logWarn } from "../_base/terminal/loggers";
 import fse from "fs-extra";
 import { getUseCmdActionConfig, UseCmdActionConfig } from "./actionConfig";
-import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
+import { isNotAuthenticated, IDashboardDefinition, IDashboard } from "@gooddata/sdk-backend-spi";
+import { idRef } from "@gooddata/sdk-model";
+import ora from "ora";
 
 function printUseConfigSummary(config: UseCmdActionConfig) {
     const {
@@ -33,6 +35,32 @@ function printUseConfigSummary(config: UseCmdActionConfig) {
     }
 }
 
+async function updateDashboardWithPluginLink(config: UseCmdActionConfig) {
+    const { backendInstance, workspace, dashboard, identifier: validIdentifier, parameters } = config;
+    const dashboardRef = idRef(dashboard);
+
+    const dashboardObj: IDashboard = await backendInstance
+        .workspace(workspace)
+        .dashboards()
+        .getDashboard(dashboardRef);
+    const plugins = dashboardObj.plugins ? [...dashboardObj.plugins] : [];
+
+    plugins.push({
+        type: "IDashboardPluginLink",
+        plugin: idRef(validIdentifier),
+        parameters,
+    });
+
+    // note: need the cast here as IDashboard filterContext may contain ITempFilter context in some cases...
+    // but that's not going to happen here (because code never asked for export-specific temp filters)
+    const updatedDashboard: IDashboardDefinition = {
+        ...(dashboardObj as IDashboardDefinition),
+        plugins,
+    };
+
+    await backendInstance.workspace(workspace).dashboards().updateDashboard(dashboardObj, updatedDashboard);
+}
+
 export async function usePluginCmdAction(identifier: string, options: ActionOptions): Promise<void> {
     if (!fse.existsSync("package.json")) {
         logError(
@@ -55,6 +83,17 @@ export async function usePluginCmdAction(identifier: string, options: ActionOpti
 
             process.exit(0);
             return;
+        }
+
+        const updateProgress = ora({
+            text: "Updating dashboard to use plugin.",
+        });
+
+        try {
+            updateProgress.start();
+            await updateDashboardWithPluginLink(config);
+        } finally {
+            updateProgress.stop();
         }
     } catch (e) {
         if (isInputValidationError(e)) {
