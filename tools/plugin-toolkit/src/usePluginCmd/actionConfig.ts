@@ -4,7 +4,7 @@ import {
     validateWorkspaceTargetConfig,
     WorkspaceTargetConfig,
 } from "../_base/workspaceTargetConfig";
-import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDashboardPlugin, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { ActionOptions } from "../_base/types";
 import { createBackend } from "../_base/backend";
 import { getDashboardFromOptions } from "../_base/inputHandling/extractors";
@@ -55,18 +55,37 @@ function createDuplicatePluginLinkValidator(
         }
 
         if (plugins.some((plugin) => plugin.identifier === identifier)) {
-            return `Dashboard ${dashboard.identifier} already uses plugin ${identifier}. 
-            Dashboard can only use each plugin once. Consider using parameterization instead.`;
+            return (
+                `Dashboard ${dashboard.identifier} already uses plugin ${identifier}. ` +
+                "Dashboard can only use each plugin once. Consider using parameterization instead."
+            );
         }
 
         const otherPluginWithSameEp = plugins.find((plugin) => plugin.url.endsWith(entryPoint));
         if (otherPluginWithSameEp) {
             const { identifier: otherIdentifier, name } = otherPluginWithSameEp;
 
-            return `Dashboard ${dashboard.identifier} already uses another plugin (${otherIdentifier} - ${name}) 
-            that has same entry point as the plugin that you want to use. This is likely another version of
-            the same plugin. Adding two versions of the same plugin is not allowed will not work. Note:
-            renaming the entry point files will not help as you will then encounter load-time errors.`;
+            return (
+                `Dashboard ${dashboard.identifier} already uses another plugin (${otherIdentifier} - ${name})` +
+                "that has same entry point as the plugin that you want to use. This is likely another version of " +
+                "the same plugin. Adding two versions of the same plugin is not allowed will not work. Note: " +
+                "renaming the entry point files will not help as you will then encounter load-time errors."
+            );
+        }
+
+        return true;
+    };
+}
+
+function createLinkedPluginUrlValidator(pluginIdentifier: string): InputValidator<IDashboardPlugin> {
+    const entryPoint = convertToPluginEntrypoint(pluginIdentifier);
+
+    return (plugin) => {
+        if (!plugin.url.endsWith(entryPoint)) {
+            return (
+                `You are trying to use a plugin (${plugin.name}) whose entry point differs from the ` +
+                "entry point of the plugin in your current directory."
+            );
         }
 
         return true;
@@ -87,7 +106,11 @@ async function doAsyncValidations(config: UseCmdActionConfig) {
         await asyncValidOrDie(
             "dashboardPlugin",
             identifier,
-            createDashboardPluginValidator(backendInstance, workspace),
+            createDashboardPluginValidator(
+                backendInstance,
+                workspace,
+                createLinkedPluginUrlValidator(pluginIdentifier),
+            ),
         );
         await asyncValidOrDie(
             "dashboard",
