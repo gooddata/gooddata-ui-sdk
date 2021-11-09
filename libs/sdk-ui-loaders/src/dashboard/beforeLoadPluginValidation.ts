@@ -19,7 +19,9 @@ export async function validatePluginsBeforeLoading(
     const organization = await backend.organizations().getCurrentOrganization();
 
     for (const plugin of plugins) {
-        const pluginResult = organization.securitySettings().isDashboardPluginUrlValid(plugin.url, workspace);
+        const pluginResult = await organization
+            .securitySettings()
+            .isDashboardPluginUrlValid(plugin.url, workspace);
 
         if (!pluginResult) {
             // eslint-disable-next-line no-console
