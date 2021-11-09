@@ -1,6 +1,12 @@
 // (C) 2021 GoodData Corporation
 import { uriRef } from "@gooddata/sdk-model";
-import { GranteeItem, IGranteeGroup, IGranteeGroupAll, IGranteeUser } from "@gooddata/sdk-ui-kit";
+import {
+    GranteeItem,
+    IGranteeGroup,
+    IGranteeGroupAll,
+    IGranteeUser,
+    IGranteeUserInactive,
+} from "@gooddata/sdk-ui-kit";
 
 export const user: IGranteeUser = {
     type: "user",
@@ -55,6 +61,11 @@ export const groupAll: IGranteeGroupAll = {
     type: "groupAll",
     id: uriRef("groupAll"),
     memberCount: 11,
+};
+
+export const inactiveUser: IGranteeUserInactive = {
+    type: "inactive_user",
+    id: uriRef("inactive_user"),
 };
 
 export const grantees: GranteeItem[] = [user, group];

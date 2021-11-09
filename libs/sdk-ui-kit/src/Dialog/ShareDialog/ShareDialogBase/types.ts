@@ -7,12 +7,12 @@ import isEmpty from "lodash/isEmpty";
 /**
  * @internal
  */
-export type GranteeItem = IGranteeUser | IGranteeGroup | IGranteeGroupAll;
+export type GranteeItem = IGranteeUser | IGranteeUserInactive | IGranteeGroup | IGranteeGroupAll;
 
 /**
  * @internal
  */
-export type GranteeType = "user" | "group" | "groupAll";
+export type GranteeType = "user" | "inactive_user" | "group" | "groupAll";
 
 /**
  * @internal
@@ -39,6 +39,13 @@ export interface IGranteeUser extends IGranteeBase {
 export const isGranteeUser = (obj: unknown): obj is IGranteeUser => {
     return !isEmpty(obj) && (obj as IGranteeUser).type === "user";
 };
+
+/**
+ * @internal
+ */
+export interface IGranteeUserInactive extends IGranteeBase {
+    type: "inactive_user";
+}
 
 /**
  * @internal
@@ -81,7 +88,7 @@ export type DialogModeType = "ShareGrantee" | "AddGrantee";
  * @internal
  */
 export interface IShareDialogBaseProps {
-    owner: IGranteeUser;
+    owner: IGranteeUser | IGranteeUserInactive;
     grantees: GranteeItem[];
     onCancel: () => void;
     onSubmit: (granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[]) => void;
@@ -101,7 +108,7 @@ export interface IGranteeItemProps {
  */
 export interface IShareGranteeBaseProps {
     isDirty: boolean;
-    owner: IGranteeUser;
+    owner: IGranteeUser | IGranteeUserInactive;
     grantees: GranteeItem[];
     onAddGranteeButtonClick: () => void;
     onGranteeDelete: (grantee: GranteeItem) => void;

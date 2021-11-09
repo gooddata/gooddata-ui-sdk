@@ -477,13 +477,13 @@ export type GetPositionedSelfRegion = {
 export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T;
 
 // @internal (undocumented)
-export type GranteeItem = IGranteeUser | IGranteeGroup | IGranteeGroupAll;
+export type GranteeItem = IGranteeUser | IGranteeUserInactive | IGranteeGroup | IGranteeGroupAll;
 
 // @internal (undocumented)
 export const GranteeItemComponent: React_2.FC<IGranteeItemProps>;
 
 // @internal (undocumented)
-export type GranteeType = "user" | "group" | "groupAll";
+export type GranteeType = "user" | "inactive_user" | "group" | "groupAll";
 
 // @internal
 export function guidFor(obj: any): string;
@@ -1278,6 +1278,12 @@ export interface IGranteeUser extends IGranteeBase {
     name: string;
     // (undocumented)
     type: "user";
+}
+
+// @internal (undocumented)
+export interface IGranteeUserInactive extends IGranteeBase {
+    // (undocumented)
+    type: "inactive_user";
 }
 
 // @internal (undocumented)
@@ -2503,7 +2509,7 @@ export interface IShareDialogBaseProps {
     // (undocumented)
     onSubmit: (granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[]) => void;
     // (undocumented)
-    owner: IGranteeUser;
+    owner: IGranteeUser | IGranteeUserInactive;
 }
 
 // @internal (undocumented)
@@ -2535,7 +2541,7 @@ export interface IShareGranteeBaseProps {
     // (undocumented)
     onSubmit: () => void;
     // (undocumented)
-    owner: IGranteeUser;
+    owner: IGranteeUser | IGranteeUserInactive;
 }
 
 // @internal (undocumented)

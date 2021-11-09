@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { areObjRefsEqual, IUser, ObjRef } from "@gooddata/sdk-model";
-import { GranteeItem, IGranteeGroupAll, IGranteeUser } from "./ShareDialogBase/types";
+import { GranteeItem, IGranteeGroupAll, IGranteeUser, IGranteeUserInactive } from "./ShareDialogBase/types";
 import { ShareStatus } from "@gooddata/sdk-backend-spi";
-import { notInArrayFilter, GranteeGroupAll } from "./ShareDialogBase/utils";
+import { notInArrayFilter, GranteeGroupAll, InactiveOwner } from "./ShareDialogBase/utils";
 
 /**
  * @internal
@@ -27,6 +27,10 @@ export const mapOwnerToGrantee = (user: IUser, currentUserRef: ObjRef): IGrantee
         isOwner: true,
         isCurrentUser: areObjRefsEqual(user.ref, currentUserRef),
     };
+};
+
+export const mapUserToInactiveGrantee = (): IGranteeUserInactive => {
+    return InactiveOwner;
 };
 
 /**

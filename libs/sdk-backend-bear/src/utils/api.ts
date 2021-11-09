@@ -208,17 +208,25 @@ export const updateUserMap = async (
 
     const results = await Promise.all(
         uniqueUsersToLoad.map((uri) => {
-            return authCall(async (sdk): Promise<IUser> => {
-                const result = await sdk.xhr.getParsed<GdcUser.IWrappedAccountSetting>(uri);
-                return convertUser(result.accountSetting);
+            return authCall(async (sdk): Promise<IUser | undefined> => {
+                try {
+                    const result = await sdk.xhr.getParsed<GdcUser.IWrappedAccountSetting>(uri);
+                    return convertUser(result.accountSetting);
+                } catch (ex) {
+                    // for inactive users, non-admins will get Forbidden from the server
+                    // so on error we assume that the user that was requested is no longer there (is inactive)
+                    return undefined;
+                }
             });
         }),
     );
 
     results.forEach((result) => {
-        const uri = isUriRef(result.ref) ? result.ref.uri : undefined;
-        invariant(uri, "User must have uri in bear backend instances.");
-        userMap.set(uri, result);
+        if (result) {
+            const uri = isUriRef(result.ref) ? result.ref.uri : undefined;
+            invariant(uri, "User must have uri in bear backend instances.");
+            userMap.set(uri, result);
+        }
     });
 
     return userMap;

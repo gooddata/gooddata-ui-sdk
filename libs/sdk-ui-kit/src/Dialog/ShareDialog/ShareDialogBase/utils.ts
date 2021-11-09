@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { areObjRefsEqual, objRefToString, uriRef } from "@gooddata/sdk-model";
-import { GranteeItem, IGranteeGroupAll } from "./types";
+import { GranteeItem, IGranteeGroupAll, IGranteeUserInactive } from "./types";
 import differenceWith from "lodash/differenceWith";
 
 export const GROUP_ALL_ID = "groupAll";
@@ -9,6 +9,13 @@ export const GROUP_ALL_ID = "groupAll";
 export const GranteeGroupAll: IGranteeGroupAll = {
     id: uriRef(GROUP_ALL_ID),
     type: "groupAll",
+};
+
+export const INACTIVE_OWNER_ID = "inactive_owner";
+
+export const InactiveOwner: IGranteeUserInactive = {
+    id: uriRef(INACTIVE_OWNER_ID),
+    type: "inactive_user",
 };
 
 const exhaustiveCheck = (_param: never): never => {
@@ -22,6 +29,8 @@ export const getGranteeLabel = (grantee: GranteeItem, intl: IntlShape): string =
         return grantee.name;
     } else if (grantee.type === "groupAll") {
         return intl.formatMessage({ id: "shareDialog.share.grantee.item.user.all" });
+    } else if (grantee.type === "inactive_user") {
+        return intl.formatMessage({ id: "shareDialog.share.grantee.item.user.inactive" });
     } else {
         exhaustiveCheck(grantee);
     }
