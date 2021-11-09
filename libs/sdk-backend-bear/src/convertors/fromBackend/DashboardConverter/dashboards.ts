@@ -30,22 +30,30 @@ import { convertVisualizationWidget, convertKpi } from "./widget";
 export const convertListedDashboard = (
     dashboardLink: GdcMetadata.IObjectLink,
     userMap?: Map<string, IUser>,
-): IListedDashboard => ({
-    ref: uriRef(dashboardLink.link),
-    identifier: dashboardLink.identifier!,
-    uri: dashboardLink.link,
-    title: dashboardLink.title!,
-    description: dashboardLink.summary!,
-    updated: dashboardLink.updated!,
-    updatedBy: dashboardLink.contributor ? userMap?.get(dashboardLink.contributor) : undefined,
-    created: dashboardLink.created!,
-    createdBy: dashboardLink.author ? userMap?.get(dashboardLink.author) : undefined,
-    // filter takes care of multiple spaces and also the base scenario ("" ~> [])
-    tags: dashboardLink.tags?.split(" ").filter(Boolean) ?? [],
-    isLocked: !!dashboardLink.locked,
-    shareStatus: getShareStatus(!!dashboardLink.unlisted, !!dashboardLink.sharedWithSomeone),
-    isUnderStrictControl: dashboardLink.flags?.findIndex((flag) => flag === "strictAccessControl") !== -1,
-});
+): IListedDashboard => {
+    const isUnderStrictControlProp =
+        dashboardLink.flags && dashboardLink.flags.findIndex((flag) => flag === "strictAccessControl") !== -1
+            ? {
+                  isUnderStrictControl: true,
+              }
+            : {};
+    return {
+        ref: uriRef(dashboardLink.link),
+        identifier: dashboardLink.identifier!,
+        uri: dashboardLink.link,
+        title: dashboardLink.title!,
+        description: dashboardLink.summary!,
+        updated: dashboardLink.updated!,
+        updatedBy: dashboardLink.contributor ? userMap?.get(dashboardLink.contributor) : undefined,
+        created: dashboardLink.created!,
+        createdBy: dashboardLink.author ? userMap?.get(dashboardLink.author) : undefined,
+        // filter takes care of multiple spaces and also the base scenario ("" ~> [])
+        tags: dashboardLink.tags?.split(" ").filter(Boolean) ?? [],
+        isLocked: !!dashboardLink.locked,
+        shareStatus: getShareStatus(!!dashboardLink.unlisted, !!dashboardLink.sharedWithSomeone),
+        ...isUnderStrictControlProp,
+    };
+};
 
 const convertDateFilterConfigAddedPresets = (
     addPresets: GdcDashboard.IDashboardDateFilterAddedPresets,
@@ -131,6 +139,13 @@ export const convertDashboard = (
         exportFilterContextUri ? dep.uri === exportFilterContextUri : dep.uri === filterContext,
     ) as IFilterContext | ITempFilterContext | undefined;
 
+    const isUnderStrictControlProp =
+        flags && flags.findIndex((flag) => flag === "strictAccessControl") !== -1
+            ? {
+                  isUnderStrictControl: true,
+              }
+            : {};
+
     return {
         type: "IDashboard",
         title,
@@ -146,8 +161,7 @@ export const convertDashboard = (
         updatedBy: contributor ? userMap?.get(contributor) : undefined,
         isLocked: !!locked,
         shareStatus: getShareStatus(!!unlisted, !!sharedWithSomeone),
-        isUnderStrictControl: flags?.findIndex((flag) => flag === "strictAccessControl") !== -1,
-
+        ...isUnderStrictControlProp,
         dateFilterConfig: dateFilterConfig && convertDashboardDateFilterConfig(dateFilterConfig),
 
         filterContext:
