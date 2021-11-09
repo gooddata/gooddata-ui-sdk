@@ -7,13 +7,74 @@ import axios, { AxiosError } from "axios";
 import { IAnalyticalBackend, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { extractRootCause } from "../utils";
 
-const InvalidHostnameMessage =
-    "Invalid hostname. Please provide a valid hostname in format [[https|http]://]host[:port]";
-
 export type InputValidator = (value: string) => boolean | string;
 export type AsyncInputValidator = (value: string) => Promise<boolean | string>;
 
+//
+// Simple validators compatible with inquirer API
+//
+
+/**
+ * Validates that plugin name matches required regex.
+ */
+export function pluginNameValidator(value: string): boolean | string {
+    if (!value.match(/^[a-zA-Z0-9_\-@/]*$/)) {
+        return "Invalid plugin name. Use only alphanumerical characters, underscores and dashes.";
+    }
+
+    return true;
+}
+
+/**
+ * Validates that value is either 'bear' or 'tiger'.
+ *
+ * @param value
+ */
+export function backendTypeValidator(value: string): boolean | string {
+    if (value === "bear" || value === "tiger") {
+        return true;
+    }
+
+    return "Invalid backend type. Specify 'bear' for GoodData Platform or 'tiger' for GoodData.CN.";
+}
+
+/**
+ * Validates that value is either 'js' or 'ts'.
+ */
+export function languageValidator(value: string): boolean | string {
+    if (value === "js" || value === "ts") {
+        return true;
+    }
+
+    return "Invalid language. Specify 'ts' for TypeScript or 'js' for JavaScript.";
+}
+
+/**
+ * Validates that value is either 'npm' or 'yarn'.
+ */
+export function packageManagerValidator(value: string): boolean | string {
+    if (value === "npm" || value === "yarn") {
+        return true;
+    }
+
+    return "Invalid package manager. Specify 'npm' or 'yarn'.";
+}
+
+//
+// More complex validators compatible with the inquirer API
+//
+
+/**
+ * Factory for hostname validators. Only validates that URL is syntactically correct. Validation depends on
+ * the backend type:
+ *
+ * -  bear backend: only allow https protocol
+ * -  tiger backend: allows either http or https
+ */
 export function createHostnameValidator(backend: TargetBackendType): InputValidator {
+    const InvalidHostnameMessage =
+        "Invalid hostname. Please provide a valid hostname in format [[https|http]://]host[:port]";
+
     return (input: string): boolean | string => {
         if (isEmpty(input)) {
             return InvalidHostnameMessage;
@@ -42,19 +103,20 @@ export function createHostnameValidator(backend: TargetBackendType): InputValida
     };
 }
 
-export function pluginNameValidator(value: string): boolean | string {
-    if (!value.match(/^[a-zA-Z0-9_\-@/]*$/)) {
-        return "Invalid plugin name. Use only alphanumerical characters, underscores and dashes.";
-    }
-
-    return true;
-}
-
+/**
+ * Factory for plugin URL validators. The created validator is async:
+ *
+ * -  verify that the hosting is https
+ * -  verify that the URL ends with the plugin entry point file
+ * -  verify that GET of the entry point works
+ *    -  validator attempts to give some nicer messaging and where possible also provide hints
+ */
 export function createPluginUrlValidator(pluginIdentifier: string): AsyncInputValidator {
     const entryPoint = `${pluginIdentifier}.js`;
+
     return async (value: string): Promise<boolean | string> => {
         if (!value.startsWith("https://")) {
-            return "Invalid plugin URL. The plugin URL must be for an https location. Example: 'https://your.hosting.com/myPlugin/${entryPoint}'.";
+            return `Invalid plugin URL. The plugin URL must be for an https location. Example: 'https://your.hosting.com/myPlugin/${entryPoint}'.`;
         }
 
         if (!value.endsWith(entryPoint)) {
@@ -77,12 +139,14 @@ export function createPluginUrlValidator(pluginIdentifier: string): AsyncInputVa
                     } else if (status === 401) {
                         return (
                             prefix +
-                            "Host requires authentication to access plugin. Plugins must be hosted publicly, without need for authentication."
+                            "Host requires authentication to access plugin. Plugins must be hosted publicly, " +
+                            "without need for authentication."
                         );
                     } else if (status === 403) {
                         return (
                             prefix +
-                            "Host requires authorization to access plugin. Note that in some hosting configuration this is just a 404 in disguise and the plugin actually does not exist on the host."
+                            "Host requires authorization to access plugin. Note that in some hosting configuration " +
+                            "this is just a 404 in disguise and the plugin actually does not exist on the host."
                         );
                     }
 
@@ -94,30 +158,10 @@ export function createPluginUrlValidator(pluginIdentifier: string): AsyncInputVa
     };
 }
 
-export function backendTypeValidator(value: string): boolean | string {
-    if (value === "bear" || value === "tiger") {
-        return true;
-    }
-
-    return "Invalid backend type. Specify 'bear' for GoodData Platform or 'tiger' for GoodData.CN.";
-}
-
-export function languageValidator(value: string): boolean | string {
-    if (value === "js" || value === "ts") {
-        return true;
-    }
-
-    return "Invalid language. Specify 'ts' for TypeScript or 'js' for JavaScript.";
-}
-
-export function packageManagerValidator(value: string): boolean | string {
-    if (value === "npm" || value === "yarn") {
-        return true;
-    }
-
-    return "Invalid package manager. Specify 'npm' or 'yarn'.";
-}
-
+/**
+ * Factory for workspace validators. The created validator is async and verifies that the workspace
+ * actually exists on the backend.
+ */
 export function createWorkspaceValidator(backend: IAnalyticalBackend): AsyncInputValidator {
     return async (value): Promise<boolean | string> => {
         if (isEmpty(value)) {
@@ -148,6 +192,22 @@ export function createWorkspaceValidator(backend: IAnalyticalBackend): AsyncInpu
     };
 }
 
+//
+// Functions to trigger validation outside of inquirer.
+//
+
+/**
+ * Triggers validation of value for particular input, using the provided validator. If the validation
+ * succeeds (validator returns true), then this function just returns.
+ *
+ * Otherwise the function throws an {@link InputValidationError}.
+ *
+ * @param inputName name of input that is being validated - this is purely metadata, passed over to the exception
+ *  so that whoever gets hold of it can determine what exactly failed validation.
+ * @param value value to validate; this will be sent to the validator function & in case of failure will also
+ *  appear in the exception
+ * @param validator validator to use, this is function matching the contract set by the inquirer library
+ */
 export function validOrDie(inputName: string, value: string, validator: InputValidator): void {
     const result = validator(value);
 
@@ -160,6 +220,12 @@ export function validOrDie(inputName: string, value: string, validator: InputVal
     }
 }
 
+/**
+ * This is same as {@link validOrDie} except that the validator function returns Promise of the validation
+ * result.
+ *
+ * See {@link validOrDie} for more detail.
+ */
 export function asyncValidOrDie(
     inputName: string,
     value: string,
@@ -176,6 +242,9 @@ export function asyncValidOrDie(
     });
 }
 
+/**
+ * This error is thrown when input validation fails.
+ */
 export class InputValidationError extends Error {
     public readonly type = "IVE";
 
@@ -187,6 +256,9 @@ export class InputValidationError extends Error {
     }
 }
 
+/**
+ * Type guard testing whether object is a type of {@link InputValidationError}.
+ */
 export function isInputValidationError(obj: unknown): obj is InputValidationError {
     return obj && (obj as InputValidationError).type === "IVE";
 }
