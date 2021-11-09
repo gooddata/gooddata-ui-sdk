@@ -216,6 +216,8 @@ export interface IGetInsightOptions {
     /**
      * Optionally specify if information about the users that created/modified the insight should be loaded.
      * Defaults to false.
+     *
+     * If user is inactive or logged in user has not rights to access this information than users that created/modified is undefined.
      */
     loadUserData?: boolean;
 }
