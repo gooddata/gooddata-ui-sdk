@@ -34,9 +34,7 @@ _Note: GoodData currently does not provide hosting for your plugin artifacts._
 
 ## Plugin development guide
 
-Building a new plugin is easy. Before you start, ensure that your `.env` file is setup correctly, including the
-environment variables that contain your authentication information (you can put them into the .env file but they
-may be defined elsewhere as well).
+Building a new plugin is easy. Before you start, ensure that your `.env` and `.env.secrets` files are set up correctly.
 
 1.  Start the development server: `{{packageManager}} start`
 

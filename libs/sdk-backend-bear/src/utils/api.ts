@@ -1,6 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 import { GdcUser } from "@gooddata/api-model-bear";
-import { IAuthenticatedPrincipal, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { IAuthenticatedPrincipal, UnexpectedError, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { Identifier, isIdentifierRef, isUriRef, IUser, ObjRef, Uri } from "@gooddata/sdk-model";
 import last from "lodash/last";
 import uniq from "lodash/uniq";
@@ -10,6 +10,7 @@ import { convertUser } from "../convertors/fromBackend/UsersConverter";
 
 import { BearAuthenticatedCallGuard } from "../types/auth";
 import isEmpty from "lodash/isEmpty";
+import { isApiResponseError } from "./errorHandling";
 
 /**
  * Returns a user uri. This is used in some bear client calls.
@@ -103,7 +104,29 @@ export const objRefToUri = async (
     workspace: string,
     authCall: BearAuthenticatedCallGuard,
 ): Promise<Uri> => {
-    return isUriRef(ref) ? ref.uri : authCall((sdk) => sdk.md.getObjectUri(workspace, ref.identifier));
+    return isUriRef(ref)
+        ? ref.uri
+        : authCall((sdk) => {
+              return sdk.md.getObjectUri(workspace, ref.identifier).catch((e: unknown) => {
+                  // Nasty but necessary :( Resolution of id -> uri happens using POST request which succeeds and
+                  // tells that the object does not exist && the api-client-bear does not have proper exception
+                  // to communicate this with. It sends ApiResponseError and includes the response of the POST
+                  // which has all green statuses.
+                  //
+                  // Backend must reconcile here and do explicit categorization otherwise the upstream handlers
+                  // will throw this into UnexpectedError category (reserved for really unexpected stuff happening which
+                  // kind of makes sense if you get ApiResponseError with status code 200 :))
+                  if (isApiResponseError(e) && e.message?.search("not found") > -1) {
+                      throw new UnexpectedResponseError(
+                          `Object with ${ref.identifier} does not exist.`,
+                          404,
+                          e.responseBody,
+                      );
+                  }
+
+                  throw e;
+              });
+          });
 };
 
 /**

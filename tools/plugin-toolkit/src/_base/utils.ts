@@ -2,6 +2,8 @@
 import * as fs from "fs";
 import path from "path";
 import snakeCase from "lodash/snakeCase";
+import { InputValidationError, TargetBackendType } from "./types";
+import { logInfo } from "./terminal/loggers";
 
 export function toJsonString(obj: any): string {
     // note: using json-stable-stringify is likely not a good idea in this project:
@@ -41,8 +43,35 @@ export function convertToPluginIdentifier(name: string): string {
     return `dp_${snakeCase(name)}`;
 }
 
+/**
+ * Given package JSON contents, this function tries to discover the backend type that action should
+ * target. The idea is.. if the person develops plugin against particular backend then its likely
+ * that they will also want to deploy it there.
+ *
+ * @param packageJson - package json object
+ */
+export function discoverBackendType(packageJson: Record<string, any>): TargetBackendType {
+    const { peerDependencies = {} } = packageJson;
+
+    if (peerDependencies["@gooddata/sdk-backend-bear"] !== undefined) {
+        logInfo("Plugin project depends on @gooddata/sdk-backend-bear. Assuming backend type 'bear'.");
+
+        return "bear";
+    } else if (peerDependencies["@gooddata/sdk-backend-tiger"] !== undefined) {
+        logInfo("Plugin project depends on @gooddata/sdk-backend-tiger. Assuming backend type 'tiger'.");
+
+        return "tiger";
+    }
+
+    throw new InputValidationError(
+        "backend",
+        "?",
+        "Unable to discover target backend type. Please specify --backend option on the command line.",
+    );
+}
+
 export function extractRootCause(error: any): any {
-    if (error.cause === undefined) {
+    if (error.cause === undefined || error.cause === null) {
         return error;
     }
 

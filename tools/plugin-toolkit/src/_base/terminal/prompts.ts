@@ -1,8 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
 import { TargetAppLanguage, TargetBackendType } from "../types";
-import { createHostnameValidator, pluginNameValidator } from "./validators";
-import { sanitizeHostname } from "./sanitizers";
+import { createHostnameValidator, pluginNameValidator } from "../inputHandling/validators";
+import { sanitizeHostname } from "../inputHandling/sanitizers";
 
 export async function promptUsername(wording: string = "username"): Promise<string> {
     const usernameQuestion: DistinctQuestion = {
