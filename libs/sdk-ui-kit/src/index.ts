@@ -11,6 +11,7 @@
 export * from "./typings/utilities";
 export * from "./typings/positioning";
 export * from "./typings/domUtilities";
+export * from "./typings/domNative";
 export * from "./typings/overlay";
 export * from "./utils/constants";
 export * from "./utils/featureFlags";
