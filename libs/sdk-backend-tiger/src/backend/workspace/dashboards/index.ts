@@ -1,5 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import {
+    isDashboardPluginsItem,
     isVisualizationObjectsItem,
     JsonApiAnalyticalDashboardInTypeEnum,
     JsonApiAnalyticalDashboardOutDocument,
@@ -50,7 +51,6 @@ import {
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api";
 import { resolveWidgetFilters } from "./widgetFilters";
-import isEmpty from "lodash/isEmpty";
 import includes from "lodash/includes";
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
@@ -123,7 +123,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         ref: ObjRef,
         filterContextRef?: ObjRef,
         options?: IGetDashboardOptions,
-        types: SupportedDashboardReferenceTypes[] = ["insight"],
+        types: SupportedDashboardReferenceTypes[] = ["insight", "dashboardPlugin"],
     ): Promise<IDashboardWithReferences> => {
         if (options?.loadUserData) {
             // eslint-disable-next-line no-console
@@ -139,6 +139,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const dashboard = await this.getDashboardWithSideloads(ref, types);
         const included = dashboard.included || [];
         const insights = included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight);
+        const plugins = included
+            .filter(isDashboardPluginsItem)
+            .map(convertDashboardPluginWithLinksFromBackend);
         const filterContext = filterContextByRef
             ? filterContextByRef
             : getFilterContextFromIncluded(included);
@@ -147,7 +150,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             dashboard: convertDashboard(dashboard, filterContext),
             references: {
                 insights,
-                plugins: [],
+                plugins,
             },
         };
     };
@@ -161,7 +164,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
             return {
                 insights: included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight),
-                plugins: [],
+                plugins: included
+                    .filter(isDashboardPluginsItem)
+                    .map(convertDashboardPluginWithLinksFromBackend),
             };
         });
     };
@@ -174,6 +179,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         if (includes(types, "insight")) {
             include.push("visualizationObjects");
+        }
+
+        if (includes(types, "dashboardPlugin")) {
+            include.push("dashboardPlugins");
         }
 
         const id = await objRefToIdentifier(ref, this.authCall);
@@ -195,10 +204,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
-        if (!isEmpty(dashboard.plugins)) {
-            throw new NotSupported("Tiger backend does not support dashboard plugins.");
-        }
-
         let filterContext;
         if (dashboard.filterContext) {
             filterContext = isFilterContextDefinition(dashboard.filterContext)
@@ -236,10 +241,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         originalDashboard: IDashboard,
         updatedDashboard: IDashboardDefinition,
     ): Promise<IDashboard> => {
-        if (!isEmpty(updatedDashboard.plugins)) {
-            throw new NotSupported("Tiger backend does not support dashboard plugins.");
-        }
-
         if (!areObjRefsEqual(originalDashboard.ref, updatedDashboard.ref)) {
             throw new Error("Cannot update dashboard with different refs!");
         } else if (isEqual(originalDashboard, updatedDashboard)) {

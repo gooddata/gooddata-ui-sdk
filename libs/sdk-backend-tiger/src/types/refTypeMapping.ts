@@ -20,6 +20,7 @@ export const tigerIdTypeToObjectType: {
     analyticalDashboard: "analyticalDashboard",
     visualizationObject: "insight",
     filterContext: "filterContext",
+    dashboardPlugin: "dashboardPlugin",
 };
 
 export const objectTypeToTigerIdType = invert(tigerIdTypeToObjectType) as {

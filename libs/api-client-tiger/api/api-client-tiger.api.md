@@ -403,12 +403,23 @@ export namespace AnalyticalDashboardModelV2 {
         // (undocumented)
         layout?: IDashboardLayout;
         // (undocumented)
+        plugins?: IDashboardPluginLink[];
+        // (undocumented)
         version: "2";
     }
     // (undocumented)
     export interface IDashboardPlugin {
         // (undocumented)
         url: string;
+        // (undocumented)
+        version: "2";
+    }
+    // (undocumented)
+    export interface IDashboardPluginLink {
+        // (undocumented)
+        parameters?: string;
+        // (undocumented)
+        plugin: ObjRef;
         // (undocumented)
         version: "2";
     }
@@ -423,6 +434,8 @@ export namespace AnalyticalDashboardModelV2 {
     export function isAnalyticalDashboard(dashboard: unknown): dashboard is IAnalyticalDashboard;
     // (undocumented)
     export function isDashboardPlugin(plugin: unknown): plugin is IDashboardPlugin;
+    // (undocumented)
+    export function isDashboardPluginLink(pluginLink: unknown): pluginLink is IDashboardPluginLink;
     // (undocumented)
     export function isFilterContext(filterContext: unknown): filterContext is IFilterContext;
 }
@@ -4513,6 +4526,9 @@ export const isAfmObjectIdentifier: (value: unknown) => value is AfmObjectIdenti
 
 // @public (undocumented)
 export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader;
+
+// @public (undocumented)
+export function isDashboardPluginsItem(dashboardPlugin: unknown): dashboardPlugin is JsonApiDashboardPluginOutWithLinks;
 
 // @public (undocumented)
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn;

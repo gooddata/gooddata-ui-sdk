@@ -12,6 +12,7 @@ import {
     IDashboardDateFilterConfig,
     IDashboardLayout,
     IDashboardPlugin,
+    IDashboardPluginLink,
     IDashboardWidget,
     IFilterContext,
     LayoutPath,
@@ -54,6 +55,17 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
 interface IAnalyticalDashboardContent {
     layout?: IDashboardLayout;
     dateFilterConfig?: IDashboardDateFilterConfig;
+    plugins?: IDashboardPluginLink[];
+}
+
+function convertDashboardPluginLink(
+    pluginLink: AnalyticalDashboardModelV2.IDashboardPluginLink,
+): IDashboardPluginLink {
+    return {
+        type: "IDashboardPluginLink",
+        plugin: cloneWithSanitizedIds(pluginLink.plugin),
+        parameters: pluginLink.parameters,
+    };
 }
 
 function getConvertedAnalyticalDashboardContent(
@@ -62,6 +74,7 @@ function getConvertedAnalyticalDashboardContent(
     return {
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
         layout: setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
+        plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
     };
 }
 
@@ -72,7 +85,7 @@ export function convertDashboard(
     const { id, attributes = {} } = analyticalDashboard.data;
     const { title = "", description = "", content } = attributes;
 
-    const { dateFilterConfig, layout } = getConvertedAnalyticalDashboardContent(
+    const { dateFilterConfig, layout, plugins } = getConvertedAnalyticalDashboardContent(
         content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
     );
 
@@ -93,6 +106,7 @@ export function convertDashboard(
         filterContext,
         dateFilterConfig,
         layout,
+        plugins,
     };
 }
 

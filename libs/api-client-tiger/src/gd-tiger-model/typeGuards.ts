@@ -10,6 +10,10 @@ import {
 import {
     JsonApiFilterContextIn,
     JsonApiVisualizationObjectOutWithLinks,
+    JsonApiDashboardPluginOutWithLinks,
+    JsonApiDashboardPluginOutWithLinksTypeEnum,
+    JsonApiFilterContextInTypeEnum,
+    JsonApiVisualizationObjectOutWithLinksTypeEnum,
 } from "../generated/metadata-json-api";
 
 export type ResultDimensionHeader = ResultDimension["headers"][number];
@@ -34,9 +38,21 @@ export function isResultAttributeHeader(
 export function isVisualizationObjectsItem(
     visualizationObject: unknown,
 ): visualizationObject is JsonApiVisualizationObjectOutWithLinks {
-    return (visualizationObject as JsonApiVisualizationObjectOutWithLinks).type === "visualizationObject";
+    return (
+        (visualizationObject as JsonApiVisualizationObjectOutWithLinks).type ===
+        JsonApiVisualizationObjectOutWithLinksTypeEnum.VisualizationObject
+    );
 }
 
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn {
-    return (filterContext as JsonApiFilterContextIn).type === "filterContext";
+    return (filterContext as JsonApiFilterContextIn).type === JsonApiFilterContextInTypeEnum.FilterContext;
+}
+
+export function isDashboardPluginsItem(
+    dashboardPlugin: unknown,
+): dashboardPlugin is JsonApiDashboardPluginOutWithLinks {
+    return (
+        (dashboardPlugin as JsonApiDashboardPluginOutWithLinks).type ===
+        JsonApiDashboardPluginOutWithLinksTypeEnum.DashboardPlugin
+    );
 }
