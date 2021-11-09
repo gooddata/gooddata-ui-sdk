@@ -55,6 +55,7 @@
     "gs.list.limitExceeded": "Infelizmente, você excedeu o limite ({limit}).",
     "gs.list.noItemsFound": "Nenhum item encontrado.",
     "gs.list.error": "Erro ao carregar itens da lista",
+    "gs.header.upsellButtonText": "Atualizar",
     "measure.title.suffix.same_period_year_ago": "MP um ano atrás",
     "measure.title.suffix.previous_period": "período atrás",
     "visualizations.measure.arithmetic.sum.title": "Soma de {firstMeasureTitle} com {secondMeasureTitle}",

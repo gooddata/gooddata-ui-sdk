@@ -55,6 +55,7 @@
     "gs.list.limitExceeded": "Sorry, u hebt de limiet ({limit}) overschreden.",
     "gs.list.noItemsFound": "Geen items gevonden.",
     "gs.list.error": "Fout bij inlezen lijstitems",
+    "gs.header.upsellButtonText": "Upgrade",
     "measure.title.suffix.same_period_year_ago": "ZP jaar geleden",
     "measure.title.suffix.previous_period": "periode geleden",
     "visualizations.measure.arithmetic.sum.title": "Som van {firstMeasureTitle} en {secondMeasureTitle}",

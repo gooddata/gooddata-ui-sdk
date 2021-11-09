@@ -55,6 +55,7 @@
     "gs.list.limitExceeded": "抱歉，您已超出限制 ({limit})。",
     "gs.list.noItemsFound": "未找到任何项。",
     "gs.list.error": "加载列表项时出错",
+    "gs.header.upsellButtonText": "升级",
     "measure.title.suffix.same_period_year_ago": "去年同期之前",
     "measure.title.suffix.previous_period": "时间段之前",
     "visualizations.measure.arithmetic.sum.title": "{firstMeasureTitle} 和 {secondMeasureTitle} 加",

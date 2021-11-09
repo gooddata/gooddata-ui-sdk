@@ -201,7 +201,7 @@
     "dialogs.schedule.email.repeats.types.monthly": "毎月の {week, select, 1 {1 番目の} 2 {2 番目の} 3 {3 番目の} 4 {4 番目の} other {最後の}} {day}",
     "dialogs.schedule.email.repeats.types.weekly": "週の {day}",
     "dialogs.schedule.email.subject.label": "件名:",
-    "dialogs.schedule.email.time.label": "最初のメール：",
+    "dialogs.schedule.email.time.label": "最初の発生:",
     "dialogs.schedule.email.to.label": "終了:",
     "dialogs.schedule.email.message.placeholder": "こんにちは、\n\nスケジュールされたメールの準備ができました。ダッシュボードを添付ファイルとしてダウンロードできます。",
     "dialogs.schedule.email.submit": "スケジュール",
