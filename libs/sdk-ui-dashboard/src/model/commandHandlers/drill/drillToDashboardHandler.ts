@@ -14,10 +14,19 @@ import {
     IDrillIntersectionAttributeItem,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { areObjRefsEqual, IAttributeFilter, newPositiveAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IAttributeFilter,
+    isDateFilter,
+    newAllTimeFilter,
+    newPositiveAttributeFilter,
+    ObjRef,
+} from "@gooddata/sdk-model";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors";
 import { queryWidgetFilters } from "../../queries";
 import { query } from "../../store/_infra/queryCall";
+import { selectWidgetByRef } from "../../store/layout/layoutSelectors";
+import { IDashboardFilter } from "../../../types";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
@@ -41,10 +50,18 @@ export function* drillToDashboardHandler(
         dateAttributes.map((dA) => dA.attribute.ref),
     );
 
-    const widgetFilters = yield call(
+    let widgetFilters: IDashboardFilter[] = yield call(
         query,
         queryWidgetFilters(cmd.payload.drillEvent.widgetRef!, drillFilters),
     );
+
+    const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(
+        selectWidgetByRef(cmd.payload.drillEvent.widgetRef),
+    );
+
+    if (!widgetFilters.some(isDateFilter) && widget?.dateDataSet) {
+        widgetFilters = [newAllTimeFilter(widget?.dateDataSet), ...widgetFilters];
+    }
 
     return drillToDashboardResolved(
         ctx,
