@@ -812,6 +812,9 @@ export class MetadataModule {
                     return found.uri;
                 }
 
+                // WARNING: code in sdk-backend-bear is searching for 'not found' within the message
+                //  in order to determine the NotFound status. Cannot use the response status because
+                //  the POST request returns 200
                 throw new ApiResponseError(
                     `Object with identifier ${identifier} not found in project ${projectId}`,
                     r.response,
