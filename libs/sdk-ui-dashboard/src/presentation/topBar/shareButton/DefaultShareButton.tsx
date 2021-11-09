@@ -10,6 +10,7 @@ import {
     selectSettings,
     useDashboardSelector,
     selectDashboardShareStatus,
+    selectBackendCapabilities,
 } from "../../../model";
 
 import { HiddenShareButton } from "./HiddenShareButton";
@@ -17,11 +18,16 @@ import { HiddenShareButton } from "./HiddenShareButton";
 const DefaultShareButtonCore: React.FC<WrappedComponentProps> = ({ intl }): JSX.Element | null => {
     const { onShareButtonClick } = useShareButtonProps();
     const settings = useDashboardSelector(selectSettings);
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
     const hasPermission = useDashboardSelector(selectCanManageACL);
     // TODO INE temp switching of share status. Will be replaced by Share dialog in TNT-257
     const currentShareStatus = useDashboardSelector(selectDashboardShareStatus);
 
-    if (settings.enableAnalyticalDashboardPermissions && hasPermission) {
+    if (
+        settings.enableAnalyticalDashboardPermissions &&
+        capabilities.supportsAccessControl &&
+        hasPermission
+    ) {
         return (
             <>
                 <Button

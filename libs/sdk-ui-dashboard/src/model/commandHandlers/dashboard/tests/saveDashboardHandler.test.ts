@@ -8,6 +8,12 @@ import { selectBasicLayout } from "../../../store/layout/layoutSelectors";
 import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils";
 import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors";
 import { selectPersistedDashboard } from "../../../store/meta/metaSelectors";
+import { getDashboardWithSharing } from "../saveDashboardHandler";
+import {
+    SimpleDashboardFilterContext,
+    SimpleDashboardWithReferences,
+} from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import { IDashboardDefinition } from "@gooddata/sdk-backend-spi";
 
 describe("save dashboard handler", () => {
     describe("for a new dashboard", () => {
@@ -46,7 +52,6 @@ describe("save dashboard handler", () => {
 
             // verify that assigned identities of the entities that make up the dashboard are stored in the state
             expect(selectPersistedDashboard(state)?.ref).toEqual(event.payload.dashboard.ref);
-
             const filterContextIdentity = selectFilterContextIdentity(state);
             expect(filterContextIdentity).toBeDefined();
             expect(isTemporaryIdentity(filterContextIdentity!)).toBe(false);
@@ -99,4 +104,62 @@ describe("save dashboard handler", () => {
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
         });
     });
+});
+
+describe("getDashboardWithSharing", () => {
+    const filterContextDefinition = SimpleDashboardFilterContext;
+    const dashboard: IDashboardDefinition = {
+        ...SimpleDashboardWithReferences.dashboard,
+        type: "IDashboard",
+        filterContext: {
+            ...filterContextDefinition,
+        },
+    };
+    it.each([
+        [true, true, { shareStatus: "private", isLocked: false, isUnderStrictControl: true }],
+        [false, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+        [false, true, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+        [true, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+    ])(
+        "should set proper sharing on dashboard for new dashboard when enableAnalyticalDashboardPermissions %s, supportsAccessControl %s",
+        (sharingEnabled, sharingSupported, expectedResult) => {
+            const { shareStatus, isLocked, isUnderStrictControl } = getDashboardWithSharing(
+                dashboard,
+                sharingEnabled,
+                sharingSupported,
+                true,
+            );
+            expect(shareStatus).toBe(expectedResult.shareStatus);
+            expect(isLocked).toBe(expectedResult.isLocked);
+            expect(isUnderStrictControl).toBe(expectedResult.isUnderStrictControl);
+        },
+    );
+
+    it.each([
+        [true, true, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+        [false, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+        [false, true, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+        [true, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+    ])(
+        "should set proper sharing on dashboard for existing public dashboard when enableAnalyticalDashboardPermissions %s, supportsAccessControl %s",
+        (sharingEnabled, sharingSupported, expectedResult) => {
+            const publicDashboard: IDashboardDefinition = {
+                ...SimpleDashboardWithReferences.dashboard,
+                type: "IDashboard",
+                filterContext: {
+                    ...filterContextDefinition,
+                },
+                shareStatus: "public",
+            };
+            const { shareStatus, isLocked, isUnderStrictControl } = getDashboardWithSharing(
+                publicDashboard,
+                sharingEnabled,
+                sharingSupported,
+                false,
+            );
+            expect(shareStatus).toBe(expectedResult.shareStatus);
+            expect(isLocked).toBe(expectedResult.isLocked);
+            expect(isUnderStrictControl).toBe(expectedResult.isUnderStrictControl);
+        },
+    );
 });

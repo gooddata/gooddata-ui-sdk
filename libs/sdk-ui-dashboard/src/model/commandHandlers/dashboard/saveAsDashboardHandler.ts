@@ -27,6 +27,7 @@ import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/da
 import { alertsActions } from "../../store/alerts";
 import { savingActions } from "../../store/saving";
 import { selectSettings } from "../../store/config/configSelectors";
+import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;
@@ -86,6 +87,9 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     );
 
     const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+    const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
+        selectBackendCapabilities,
+    );
 
     const { isUnderStrictControl: _unusedProp, ...dashboardDescriptorRest } = dashboardDescriptor;
 
@@ -99,16 +103,17 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         dateFilterConfig,
     };
 
-    const shareProp: Partial<IAccessControlAware> = settings.enableAnalyticalDashboardPermissions
-        ? {
-              isLocked: false,
-              shareStatus: "private",
-              isUnderStrictControl: true,
-          }
-        : {
-              isLocked: false,
-              shareStatus: "public",
-          };
+    const shareProp: Partial<IAccessControlAware> =
+        settings.enableAnalyticalDashboardPermissions && capabilities.supportsAccessControl
+            ? {
+                  isLocked: false,
+                  shareStatus: "private",
+                  isUnderStrictControl: true,
+              }
+            : {
+                  isLocked: false,
+                  shareStatus: "public",
+              };
 
     // remove widget identity from all widgets; according to the SPI contract, this will result in
     // creation of new widgets

@@ -64,6 +64,9 @@ export const DataViewFirstPage: string;
 export const dataViewWindow: (offset: number[], size: number[]) => string;
 
 // @internal (undocumented)
+export const defaultRecordedBackendCapabilities: IBackendCapabilities;
+
+// @internal (undocumented)
 export type DisplayFormRecording = {
     obj: IAttributeDisplayFormMetadataObject;
     elements: IAttributeElement[];

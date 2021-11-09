@@ -60,6 +60,18 @@ const separators: ISeparators = {
 };
 
 /**
+ * @internal
+ */
+export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
+    canCalculateGrandTotals: true,
+    canCalculateSubTotals: true,
+    canCalculateTotals: true,
+    canCalculateNativeTotals: true,
+    supportsCsvUploader: true,
+    supportsKpiWidget: true,
+};
+
+/**
  * Creates new backend that will be providing recorded results to the caller. The recorded results are provided
  * to the backend in the form of RecordingIndex. This contains categorized recordings for the different service
  * calls.
@@ -77,14 +89,7 @@ const separators: ISeparators = {
 export function recordedBackend(
     index: RecordingIndex,
     config: RecordedBackendConfig = defaultConfig,
-    capabilities: IBackendCapabilities = {
-        canCalculateGrandTotals: true,
-        canCalculateSubTotals: true,
-        canCalculateTotals: true,
-        canCalculateNativeTotals: true,
-        supportsCsvUploader: true,
-        supportsKpiWidget: true,
-    },
+    capabilities = defaultRecordedBackendCapabilities,
 ): IAnalyticalBackend {
     const backend: IAnalyticalBackend = {
         capabilities,

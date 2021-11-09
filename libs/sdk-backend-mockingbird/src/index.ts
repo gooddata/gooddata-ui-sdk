@@ -11,7 +11,7 @@
 import { dummyBackend, dummyBackendEmptyData, dummyDataView } from "@gooddata/sdk-backend-base";
 export { dummyBackend, dummyBackendEmptyData, dummyDataView };
 
-export { recordedBackend } from "./recordedBackend";
+export { recordedBackend, defaultRecordedBackendCapabilities } from "./recordedBackend";
 
 export {
     RecordingIndex,
