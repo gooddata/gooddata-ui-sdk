@@ -49,7 +49,8 @@ export type ObjectType =
      * @deprecated will be removed in the next major release, use "insight" instead
      */
     | "visualizationObject"
-    | "filterContext";
+    | "filterContext"
+    | "dashboardPlugin";
 
 /**
  * Model object reference using object's unique identifier.

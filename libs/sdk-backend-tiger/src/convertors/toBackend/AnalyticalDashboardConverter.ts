@@ -3,6 +3,8 @@ import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
 import {
     IDashboardDefinition,
     IDashboardLayout,
+    IDashboardPluginDefinition,
+    IDashboardPluginLink,
     IDashboardWidget,
     IFilterContextDefinition,
     LayoutPath,
@@ -42,6 +44,7 @@ export function convertAnalyticalDashboard(
         dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
         filterContextRef: cloneWithSanitizedIds(filterContextRef),
         layout: cloneWithSanitizedIds(layout),
+        plugins: dashboard.plugins?.map(convertDashboardPluginLinkToBackend),
         version: "2",
     };
 }
@@ -51,6 +54,25 @@ export function convertFilterContextToBackend(
 ): AnalyticalDashboardModelV2.IFilterContext {
     return {
         filters: cloneWithSanitizedIds(filterContext.filters),
+        version: "2",
+    };
+}
+
+export function convertDashboardPluginToBackend(
+    plugin: IDashboardPluginDefinition,
+): AnalyticalDashboardModelV2.IDashboardPlugin {
+    return {
+        url: plugin.url,
+        version: "2",
+    };
+}
+
+export function convertDashboardPluginLinkToBackend(
+    pluginLink: IDashboardPluginLink,
+): AnalyticalDashboardModelV2.IDashboardPluginLink {
+    return {
+        plugin: cloneWithSanitizedIds(pluginLink.plugin),
+        parameters: pluginLink.parameters,
         version: "2",
     };
 }

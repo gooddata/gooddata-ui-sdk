@@ -2,6 +2,8 @@
 import {
     AnalyticalDashboardModelV2,
     JsonApiAnalyticalDashboardOutDocument,
+    JsonApiDashboardPluginOutDocument,
+    JsonApiDashboardPluginOutWithLinks,
     JsonApiFilterContextOutDocument,
 } from "@gooddata/api-client-tiger";
 import {
@@ -9,6 +11,8 @@ import {
     IDashboard,
     IDashboardDateFilterConfig,
     IDashboardLayout,
+    IDashboardPlugin,
+    IDashboardPluginLink,
     IDashboardWidget,
     IFilterContext,
     LayoutPath,
@@ -51,6 +55,17 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
 interface IAnalyticalDashboardContent {
     layout?: IDashboardLayout;
     dateFilterConfig?: IDashboardDateFilterConfig;
+    plugins?: IDashboardPluginLink[];
+}
+
+function convertDashboardPluginLink(
+    pluginLink: AnalyticalDashboardModelV2.IDashboardPluginLink,
+): IDashboardPluginLink {
+    return {
+        type: "IDashboardPluginLink",
+        plugin: cloneWithSanitizedIds(pluginLink.plugin),
+        parameters: pluginLink.parameters,
+    };
 }
 
 function getConvertedAnalyticalDashboardContent(
@@ -59,6 +74,7 @@ function getConvertedAnalyticalDashboardContent(
     return {
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
         layout: setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
+        plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
     };
 }
 
@@ -69,7 +85,7 @@ export function convertDashboard(
     const { id, attributes = {} } = analyticalDashboard.data;
     const { title = "", description = "", content } = attributes;
 
-    const { dateFilterConfig, layout } = getConvertedAnalyticalDashboardContent(
+    const { dateFilterConfig, layout, plugins } = getConvertedAnalyticalDashboardContent(
         content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
     );
 
@@ -90,6 +106,7 @@ export function convertDashboard(
         filterContext,
         dateFilterConfig,
         layout,
+        plugins,
     };
 }
 
@@ -113,4 +130,40 @@ export function convertFilterContextFilters(
     content: AnalyticalDashboardModelV2.IFilterContext,
 ): FilterContextItem[] {
     return cloneWithSanitizedIds(content.filters);
+}
+
+export function convertDashboardPlugin(plugin: JsonApiDashboardPluginOutDocument): IDashboardPlugin {
+    const { id, type, attributes } = plugin.data;
+    const { title = "", description = "", content, tags } = attributes!;
+    const { url } = content as AnalyticalDashboardModelV2.IDashboardPlugin;
+
+    return {
+        ref: idRef(id, type as ObjectType),
+        identifier: id,
+        uri: plugin.links!.self,
+        name: title,
+        description,
+        tags: tags ?? [],
+        type: "IDashboardPlugin",
+        url,
+    };
+}
+
+export function convertDashboardPluginWithLinks(
+    plugin: JsonApiDashboardPluginOutWithLinks,
+): IDashboardPlugin {
+    const { id, type, attributes } = plugin;
+    const { title = "", description = "", content, tags } = attributes!;
+    const { url } = content as AnalyticalDashboardModelV2.IDashboardPlugin;
+
+    return {
+        ref: idRef(id, type as ObjectType),
+        identifier: id,
+        uri: plugin.links!.self,
+        name: title,
+        description,
+        tags: tags ?? [],
+        type: "IDashboardPlugin",
+        url,
+    };
 }

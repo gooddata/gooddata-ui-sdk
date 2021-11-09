@@ -9,6 +9,7 @@ import { jsonApiHeaders } from "./constants";
 import {
     JsonApiAnalyticalDashboardOutList,
     JsonApiAttributeOutList,
+    JsonApiDashboardPluginOutList,
     JsonApiDatasetOutList,
     JsonApiFactOutList,
     JsonApiFilterContextOutList,
@@ -65,6 +66,7 @@ export type MetadataGetEntitiesOptions = {
 export type MetadataGetEntitiesResult =
     | JsonApiVisualizationObjectOutList
     | JsonApiAnalyticalDashboardOutList
+    | JsonApiDashboardPluginOutList
     | JsonApiDatasetOutList
     | JsonApiAttributeOutList
     | JsonApiLabelOutList
@@ -148,7 +150,8 @@ export class MetadataUtilities {
         return {
             data: flatMap(pages, (page) => page.data) as any,
             included: uniqBy(
-                flatMap(pages, (page) => page.included ?? []),
+                // we need the as any because the JsonApiDashboardPluginOutList does not have the "included" property
+                flatMap(pages, (page) => (page as any).included ?? []),
                 (item: any) => `${item.id}_${item.type}`,
             ) as any,
         } as T;

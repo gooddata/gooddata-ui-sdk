@@ -28,6 +28,7 @@ export {
     isResultAttributeHeader,
     isVisualizationObjectsItem,
     isFilterContextData,
+    isDashboardPluginsItem,
     ResultDimensionHeader,
 } from "./gd-tiger-model/typeGuards";
 

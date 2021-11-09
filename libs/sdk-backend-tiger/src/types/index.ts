@@ -21,7 +21,11 @@ export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute"
  *
  * @public
  */
-export type TigerMetadataType = "analyticalDashboard" | "visualizationObject" | "filterContext";
+export type TigerMetadataType =
+    | "analyticalDashboard"
+    | "visualizationObject"
+    | "filterContext"
+    | "dashboardPlugin";
 
 /**
  * Tiger entity types
