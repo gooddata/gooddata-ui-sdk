@@ -17,11 +17,15 @@ import {
     InputValidator,
 } from "../_base/inputHandling/validators";
 import isEmpty from "lodash/isEmpty";
+import { promptPluginParameters } from "../_base/terminal/prompts";
+import { logError } from "../_base/terminal/loggers";
 
 export type UseCmdActionConfig = WorkspaceTargetConfig & {
     identifier: string;
     dashboard: string;
     dryRun: boolean;
+    withParameters: boolean;
+    parameters: string | undefined;
     backendInstance: IAnalyticalBackend;
 };
 
@@ -95,10 +99,26 @@ export async function getUseCmdActionConfig(
         identifier,
         dashboard,
         dryRun: options.commandOpts.dryRun ?? false,
+        withParameters: options.commandOpts.withParameters ?? false,
+        parameters: undefined,
         backendInstance,
     };
 
     await doAsyncValidations(config);
+
+    if (config.withParameters) {
+        const parameters = await promptPluginParameters();
+
+        if (isEmpty(parameters.trim())) {
+            logError(
+                "You did not specify any parameters. If you do not want to use plugin parameterization, remove the --with-parameters option.",
+            );
+
+            process.exit(1);
+        } else {
+            config.parameters = parameters;
+        }
+    }
 
     return config;
 }

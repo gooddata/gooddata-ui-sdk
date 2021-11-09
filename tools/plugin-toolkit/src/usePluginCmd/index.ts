@@ -12,10 +12,12 @@ function printUseConfigSummary(config: UseCmdActionConfig) {
         workspace,
         dashboard,
         identifier,
+        parameters,
+        withParameters,
         credentials: { username },
     } = config;
 
-    logInfo("Everything looks valid. Going to use plugin object to dashboard metadata.");
+    logInfo("Everything looks valid. Going to use plugin object on the dashboard.");
     logInfo(`  Hostname    : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
 
     if (backend === "bear") {
@@ -25,6 +27,10 @@ function printUseConfigSummary(config: UseCmdActionConfig) {
     logInfo(`  Workspace   : ${workspace}`);
     logInfo(`  Dashboard   : ${dashboard}`);
     logInfo(`  Plugin obj  : ${identifier}`);
+
+    if (withParameters) {
+        logInfo(`  Parameters  : ${parameters}`);
+    }
 }
 
 export async function usePluginCmdAction(identifier: string, options: ActionOptions): Promise<void> {
