@@ -201,7 +201,7 @@
     "dialogs.schedule.email.repeats.types.monthly": "Monatlich am {week, select, 1 {ersten} 2 {zweiten} 3 {dritten} 4 {vierten} other {letzten}} {day}",
     "dialogs.schedule.email.repeats.types.weekly": "Wöchentlich am {day}",
     "dialogs.schedule.email.subject.label": "Betreff:",
-    "dialogs.schedule.email.time.label": "Erstes Ereignis:",
+    "dialogs.schedule.email.time.label": "Erste E-Mail:",
     "dialogs.schedule.email.to.label": "Bis:",
     "dialogs.schedule.email.message.placeholder": "Hallo,\n\nIhre geplante E-Mail ist bereit. Sie können das Dashboard in Anhänge herunterladen.",
     "dialogs.schedule.email.submit": "Planen",

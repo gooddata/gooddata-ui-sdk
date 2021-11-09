@@ -55,6 +55,7 @@
     "gs.list.limitExceeded": "申し訳ございません、制限({limit})を超過しました。",
     "gs.list.noItemsFound": "アイテムが見つかりません。",
     "gs.list.error": "リストの読み込みエラー",
+    "gs.header.upsellButtonText": "アップグレード",
     "measure.title.suffix.same_period_year_ago": "前年同期",
     "measure.title.suffix.previous_period": " 期前",
     "visualizations.measure.arithmetic.sum.title": "{firstMeasureTitle} と {secondMeasureTitle} の和",

@@ -55,6 +55,7 @@
     "gs.list.limitExceeded": "Désolé, vous avez dépassé la limite ({limit}).",
     "gs.list.noItemsFound": "Éléments introuvables.",
     "gs.list.error": "Erreur lors du chargement des éléments de la liste",
+    "gs.header.upsellButtonText": "Mise à niveau",
     "measure.title.suffix.same_period_year_ago": "MP de l'année antérieure",
     "measure.title.suffix.previous_period": "période précédente",
     "visualizations.measure.arithmetic.sum.title": "Somme de {firstMeasureTitle} et {secondMeasureTitle}",

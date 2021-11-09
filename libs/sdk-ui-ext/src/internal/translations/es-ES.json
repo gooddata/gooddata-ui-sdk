@@ -201,7 +201,7 @@
     "dialogs.schedule.email.repeats.types.monthly": "Mensualmente el {week, select, 1 {primer} 2 {segundo} 3 {tercer} 4 {cuarto} other {último}} {day}",
     "dialogs.schedule.email.repeats.types.weekly": "Semanalmente el {day}",
     "dialogs.schedule.email.subject.label": "Asunto:",
-    "dialogs.schedule.email.time.label": "Primera repetición:",
+    "dialogs.schedule.email.time.label": "Primer evento:",
     "dialogs.schedule.email.to.label": "Hasta:",
     "dialogs.schedule.email.message.placeholder": "Hola:\n\nEl correo programado está listo. Puede descargar el panel en los adjuntos.",
     "dialogs.schedule.email.submit": "Programar",

@@ -55,6 +55,7 @@
     "gs.list.limitExceeded": "Leider haben Sie den Grenzwert ({limit}) überschritten.",
     "gs.list.noItemsFound": "Keine Elemente gefunden.",
     "gs.list.error": "Fehler beim Laden der Listenobjekte",
+    "gs.header.upsellButtonText": "Upgrade",
     "measure.title.suffix.same_period_year_ago": "vor DZ Jahr",
     "measure.title.suffix.previous_period": "früherer Zeitraum",
     "visualizations.measure.arithmetic.sum.title": "Summe von {firstMeasureTitle} und {secondMeasureTitle}",
