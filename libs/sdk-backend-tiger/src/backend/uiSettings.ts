@@ -65,6 +65,9 @@ export const DefaultUiSettings: ISettings = {
     enableAlternativeDisplayFormSelection: true,
     enableNewAnalyticalDashboardsNavigation: false, // TODO TNT-278 switch to true for verification or New navigation rollout
     enableAnalyticalDashboardPermissions: false,
+
+    // enable the plugin-ready Dashboard component in gdc-dashboards
+    dashboardComponentDevRollout: true,
 };
 
 /**
