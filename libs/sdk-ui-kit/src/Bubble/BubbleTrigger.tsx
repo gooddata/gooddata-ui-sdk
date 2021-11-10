@@ -2,6 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import uniqueId from "lodash/uniqueId";
+import pickBy from "lodash/pickBy";
 
 /**
  * @internal
@@ -44,14 +45,6 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
         this.changeBubbleVisibility(false);
     };
 
-    private getClassnames(): string {
-        return cx({
-            "gd-bubble-trigger": true,
-            [this.state.bubbleId]: true,
-            [this.props.className]: !!this.props.className,
-        });
-    }
-
     protected eventListeners(): any {
         return {};
     }
@@ -61,11 +54,18 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
     }
 
     public render(): React.ReactNode {
-        const TagName = this.props.tagName;
+        const { children, eventsOnBubble, className, tagName, ...others } = this.props;
+        const dataAttributes = pickBy(others, (_, key) => key.startsWith("data-"));
+
+        const classNames = cx("gd-bubble-trigger", className, {
+            [this.state.bubbleId]: true,
+        });
+
+        const TagName = tagName;
         let BubbleElement;
         let WrappedTrigger;
 
-        React.Children.map(this.props.children, (child: any) => {
+        React.Children.map(children, (child: any) => {
             if (child) {
                 if (child.type && child.type.identifier === "Bubble") {
                     BubbleElement = child;
@@ -76,7 +76,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
         });
 
         const bubbleProps = {
-            ...(this.props.eventsOnBubble ? this.eventListeners() : {}),
+            ...(eventsOnBubble ? this.eventListeners() : {}),
             alignTo: `.${this.state.bubbleId}`,
             onClose: this.onClose,
         };
@@ -86,7 +86,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
 
         return (
             <React.Fragment>
-                <TagName {...this.eventListeners()} className={this.getClassnames()}>
+                <TagName {...dataAttributes} {...this.eventListeners()} className={classNames}>
                     {WrappedTrigger}
                 </TagName>
                 {BubbleOverlay}

@@ -153,4 +153,14 @@ describe("BubbleTrigger", () => {
             expect(instance.changeBubbleVisibility).toHaveBeenCalledWith(false);
         });
     });
+
+    it("should propagate data attributes", () => {
+        const wrapper = renderBubbleHoverTrigger({
+            // @ts-expect-error data attributes are allowed in JSX but not directly in props type
+            "data-attribute": "test",
+        });
+
+        const props = wrapper.props();
+        expect(props["data-attribute"]).toBe("test");
+    });
 });
