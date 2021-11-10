@@ -5,7 +5,8 @@ import { Command, OptionValues, program } from "commander";
 import * as pkg from "../package.json";
 import { addPluginCmdAction } from "./addPluginCmd";
 import { initCmdAction } from "./initCmd";
-import { usePluginCmdAction } from "./usePluginCmd";
+import { linkPluginCmdAction } from "./linkPluginCmd";
+import { unlinkPluginCmdAction } from "./unlinkPluginCmd";
 
 program
     .version(pkg.version)
@@ -87,13 +88,48 @@ const addPluginCmd: Command = dashboardCmd
         });
     });
 
-const usePluginCmd: Command = dashboardCmd
-    .command("use")
-    .description("Use plugin available in a workspace on a dashboard.")
-    .argument("<plugin-id>", "Plugin id which you want to use on the dashboard")
+const linkPluginCmd: Command = dashboardCmd
+    .command("link")
+    .description("Link plugin available in a workspace with a dashboard in the same workspace.")
+    .argument("<plugin-id>", "Plugin id which you want to link with the dashboard")
     .option(
         "--backend <backend>",
-        "Type of backend to which you want to add the plugin, either GoodData Platform (bear) or GoodData.CN (tiger). " +
+        "Type of backend that you are targeting. Either GoodData Platform (bear) or GoodData.CN (tiger). " +
+            "By default tries to auto-detect the backend type from your project's package.json.",
+    )
+    .option(
+        "--workspace-id <id>",
+        "Identifier of workspace that contains dashboard and plugin that should be linked",
+    )
+    .option("--dashboard-id <id>", "Identifier of dashboard to which you want to link the plugin")
+    .option(
+        "--dry-run",
+        "In dry run mode, the tool will proceed up to the point when first update operation has to " +
+            "be done and then will stop. This is ideal to verify configuration. Dry run is disabled by default",
+        false,
+    )
+    .option(
+        "--with-parameters",
+        "Indicate that the link between dashboard and plugin should be parameterized. When you specify " +
+            "this option the program will open an editor for you to enter parameters that should be passed to the linked " +
+            "plugin as it is loaded on the dashboard.",
+    )
+    .action(async (identifier) => {
+        acceptUntrustedSsl(program.opts());
+
+        await linkPluginCmdAction(identifier, {
+            programOpts: program.opts(),
+            commandOpts: linkPluginCmd.opts(),
+        });
+    });
+
+const unlinkPluginCmd: Command = dashboardCmd
+    .command("unlink")
+    .description("Unlink plugin from a dashboard.")
+    .argument("<plugin-id>", "Identifier of the plugin object which you want to unlink from the dashboard.")
+    .option(
+        "--backend <backend>",
+        "Type of backend that you are targeting. Either GoodData Platform (bear) or GoodData.CN (tiger). " +
             "By default tries to auto-detect the backend type from your project's package.json.",
     )
     .option(
@@ -107,16 +143,12 @@ const usePluginCmd: Command = dashboardCmd
             "be done and then will stop. This is ideal to verify configuration. Dry run is disabled by default",
         false,
     )
-    .option(
-        "--with-parameters",
-        "Tool will prompt for parameters that will be passed to plugin during initialization",
-    )
     .action(async (identifier) => {
         acceptUntrustedSsl(program.opts());
 
-        await usePluginCmdAction(identifier, {
+        await unlinkPluginCmdAction(identifier, {
             programOpts: program.opts(),
-            commandOpts: usePluginCmd.opts(),
+            commandOpts: unlinkPluginCmd.opts(),
         });
     });
 

@@ -2,12 +2,12 @@
 import { ActionOptions, isInputValidationError } from "../_base/types";
 import { logError, logInfo, logWarn } from "../_base/terminal/loggers";
 import fse from "fs-extra";
-import { getUseCmdActionConfig, UseCmdActionConfig } from "./actionConfig";
+import { getLinkCmdActionConfig, LinkCmdActionConfig } from "./actionConfig";
 import { isNotAuthenticated, IDashboardDefinition, IDashboard } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 import ora from "ora";
 
-function printUseConfigSummary(config: UseCmdActionConfig) {
+function printUseConfigSummary(config: LinkCmdActionConfig) {
     const {
         backend,
         hostname,
@@ -19,7 +19,7 @@ function printUseConfigSummary(config: UseCmdActionConfig) {
         credentials: { username },
     } = config;
 
-    logInfo("Everything looks valid. Going to use plugin object on the dashboard.");
+    logInfo("Everything looks valid. Going to link plugin on the dashboard.");
     logInfo(`  Hostname    : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
 
     if (backend === "bear") {
@@ -35,7 +35,7 @@ function printUseConfigSummary(config: UseCmdActionConfig) {
     }
 }
 
-async function updateDashboardWithPluginLink(config: UseCmdActionConfig) {
+async function updateDashboardWithPluginLink(config: LinkCmdActionConfig) {
     const { backendInstance, workspace, dashboard, identifier: validIdentifier, parameters } = config;
     const dashboardRef = idRef(dashboard);
 
@@ -61,7 +61,7 @@ async function updateDashboardWithPluginLink(config: UseCmdActionConfig) {
     await backendInstance.workspace(workspace).dashboards().updateDashboard(dashboardObj, updatedDashboard);
 }
 
-export async function usePluginCmdAction(identifier: string, options: ActionOptions): Promise<void> {
+export async function linkPluginCmdAction(identifier: string, options: ActionOptions): Promise<void> {
     if (!fse.existsSync("package.json")) {
         logError(
             "Cannot find package.json. Please make sure to run the tool in directory that contains your dashboard plugin project.",
@@ -72,7 +72,7 @@ export async function usePluginCmdAction(identifier: string, options: ActionOpti
     }
 
     try {
-        const config: UseCmdActionConfig = await getUseCmdActionConfig(identifier, options);
+        const config: LinkCmdActionConfig = await getLinkCmdActionConfig(identifier, options);
 
         printUseConfigSummary(config);
 
@@ -86,7 +86,7 @@ export async function usePluginCmdAction(identifier: string, options: ActionOpti
         }
 
         const updateProgress = ora({
-            text: "Updating dashboard to use plugin.",
+            text: "Link dashboard with a plugin.",
         });
 
         try {
@@ -103,7 +103,7 @@ export async function usePluginCmdAction(identifier: string, options: ActionOpti
                 "Authentication to backend has failed. Please ensure your environment is setup with correct credentials.",
             );
         } else {
-            logError(`An error has occurred while adding plugin: ${e.message}`);
+            logError(`An error has occurred while linking plugin to a dashboard: ${e.message}`);
         }
 
         process.exit(1);

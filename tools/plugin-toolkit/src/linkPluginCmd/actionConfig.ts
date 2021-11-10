@@ -21,7 +21,7 @@ import { promptPluginParameters } from "../_base/terminal/prompts";
 import { logError } from "../_base/terminal/loggers";
 import { convertToPluginEntrypoint, convertToPluginIdentifier } from "../_base/utils";
 
-export type UseCmdActionConfig = WorkspaceTargetConfig & {
+export type LinkCmdActionConfig = WorkspaceTargetConfig & {
     /**
      * Plugin _metadata object_ identifier.
      */
@@ -57,7 +57,7 @@ function createDuplicatePluginLinkValidator(
         if (plugins.some((plugin) => plugin.identifier === identifier)) {
             return (
                 `Dashboard ${dashboard.identifier} already uses plugin ${identifier}. ` +
-                "Dashboard can only use each plugin once. Consider using parameterization instead."
+                "Dashboard can only link each plugin once. Consider using parameterization instead."
             );
         }
 
@@ -66,9 +66,9 @@ function createDuplicatePluginLinkValidator(
             const { identifier: otherIdentifier, name } = otherPluginWithSameEp;
 
             return (
-                `Dashboard ${dashboard.identifier} already uses another plugin (${otherIdentifier} - ${name})` +
-                "that has same entry point as the plugin that you want to use. This is likely another version of " +
-                "the same plugin. Adding two versions of the same plugin is not allowed will not work. Note: " +
+                `Dashboard ${dashboard.identifier} is already linked with another plugin (${otherIdentifier} - ${name})` +
+                "that has same entry point as the plugin that you want to link now. This is likely another version of " +
+                "the same plugin. Adding two versions of the same plugin is not supported. Note: " +
                 "renaming the entry point files will not help as you will then encounter load-time errors."
             );
         }
@@ -83,7 +83,7 @@ function createLinkedPluginUrlValidator(pluginIdentifier: string): InputValidato
     return (plugin) => {
         if (!plugin.url.endsWith(entryPoint)) {
             return (
-                `You are trying to use a plugin (${plugin.name}) whose entry point differs from the ` +
+                `You are trying to link a plugin (${plugin.name}) whose entry point differs from the ` +
                 "entry point of the plugin in your current directory."
             );
         }
@@ -92,7 +92,7 @@ function createLinkedPluginUrlValidator(pluginIdentifier: string): InputValidato
     };
 }
 
-async function doAsyncValidations(config: UseCmdActionConfig) {
+async function doAsyncValidations(config: LinkCmdActionConfig) {
     const { backendInstance, workspace, dashboard, identifier, pluginIdentifier } = config;
 
     const asyncValidationProgress = ora({
@@ -126,10 +126,10 @@ async function doAsyncValidations(config: UseCmdActionConfig) {
     }
 }
 
-export async function getUseCmdActionConfig(
+export async function getLinkCmdActionConfig(
     identifier: string,
     options: ActionOptions,
-): Promise<UseCmdActionConfig> {
+): Promise<LinkCmdActionConfig> {
     const workspaceTargetConfig = createWorkspaceTargetConfig(options);
     const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
     const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD;
@@ -142,7 +142,7 @@ export async function getUseCmdActionConfig(
         credentials,
     });
 
-    const config: UseCmdActionConfig = {
+    const config: LinkCmdActionConfig = {
         ...workspaceTargetConfig,
         identifier,
         dashboard,
