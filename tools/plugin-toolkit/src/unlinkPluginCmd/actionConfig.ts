@@ -94,7 +94,7 @@ export async function getUnlinkCmdActionConfig(
 ): Promise<UnlinkCmdActionConfig> {
     const workspaceTargetConfig = createWorkspaceTargetConfig(options);
     const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
-    const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD;
+    const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD_ID;
 
     const backendInstance = createBackend({
         hostname,
