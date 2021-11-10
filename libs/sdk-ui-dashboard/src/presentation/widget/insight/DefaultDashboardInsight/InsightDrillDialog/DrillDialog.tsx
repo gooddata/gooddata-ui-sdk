@@ -5,9 +5,10 @@ import { Button, Bubble, BubbleHoverTrigger, ShortenedText, IAlignPoint } from "
 import { selectPermissions, selectSettings, useDashboardSelector } from "../../../../../model";
 import { PoweredByGDLogo } from "./PoweredByGDLogo";
 import { DrillModalFooter } from "./DrillModalFooter";
+import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs";
 
 export interface DrillDialogProps {
-    title: string;
+    insightTitle: string;
     breadcrumbs: string[];
     onCloseDialog: () => void;
     onBackButtonClick: () => void;
@@ -26,7 +27,7 @@ const tooltipAlignPoints: IAlignPoint[] = [{ align: "cc tc", offset: { x: -20, y
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc", offset: { x: -5, y: -5 } }];
 
 export const DrillDialog: React.FC<DrillDialogProps> = ({
-    title,
+    insightTitle,
     breadcrumbs,
     onCloseDialog,
     onBackButtonClick,
@@ -45,14 +46,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     const shouldShowDrilledInsightExport =
         settings?.enableDrilledInsightExport && permissions.canExportReport;
 
-    const renderTitle = () => {
-        const separator = "\u203A";
-        const paddedSeparator = ` ${separator} `;
-
-        return breadcrumbs.length > 0
-            ? `${title} ${separator} ${breadcrumbs.filter(Boolean).join(paddedSeparator)}`
-            : title;
-    };
+    const titleWithBreadcrumbs = getTitleWithBreadcrumbs(insightTitle, breadcrumbs);
 
     return (
         <div className="gd-dialog gd-drill-modal-dialog s-drill-modal-dialog">
@@ -74,7 +68,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                         tooltipAlignPoints={tooltipAlignPoints}
                         tooltipVisibleOnMouseOver={false}
                     >
-                        {renderTitle()}
+                        {titleWithBreadcrumbs}
                     </ShortenedText>
                 </div>
                 <Button
