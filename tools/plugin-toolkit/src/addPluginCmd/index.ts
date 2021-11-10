@@ -1,9 +1,10 @@
 // (C) 2021 GoodData Corporation
-import { ActionOptions, isInputValidationError } from "../_base/types";
+import { ActionOptions } from "../_base/types";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import { AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig";
 import fse from "fs-extra";
-import { IDashboardPlugin, isNotAuthenticated } from "@gooddata/sdk-backend-spi";
+import { IDashboardPlugin } from "@gooddata/sdk-backend-spi";
+import { genericErrorReporter } from "../_base/utils";
 
 function printAddConfigSummary(config: AddCmdActionConfig) {
     const {
@@ -66,16 +67,8 @@ export async function addPluginCmdAction(pluginUrl: string, options: ActionOptio
         const newPluginObject = await createPluginObject(config);
 
         logSuccess(`Created new plugin object with ID: ${newPluginObject.identifier}`);
-    } catch (e) {
-        if (isInputValidationError(e)) {
-            logError(e.message);
-        } else if (isNotAuthenticated(e)) {
-            logError(
-                "Authentication to backend has failed. Please ensure your environment is setup with correct credentials.",
-            );
-        } else {
-            logError(`An error has occurred while adding plugin: ${e.message}`);
-        }
+    } catch (e: any) {
+        genericErrorReporter(e);
 
         process.exit(1);
     }

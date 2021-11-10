@@ -1,12 +1,12 @@
 // (C) 2021 GoodData Corporation
-import { ActionOptions, isInputValidationError, TargetAppLanguage } from "../_base/types";
+import { ActionOptions, TargetAppLanguage } from "../_base/types";
 import { logError, logInfo, logWarn } from "../_base/terminal/loggers";
 import kebabCase from "lodash/kebabCase";
 import * as path from "path";
 import fse from "fs-extra";
 import tar from "tar";
 import { getDashboardPluginTemplateArchive } from "../dashboard-plugin-template";
-import { readJsonSync, writeAsJsonSync } from "../_base/utils";
+import { genericErrorReporter, readJsonSync, writeAsJsonSync } from "../_base/utils";
 import { processTigerFiles } from "./processTigerFiles";
 import { getInitCmdActionConfig, InitCmdActionConfig } from "./actionConfig";
 import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles";
@@ -212,12 +212,8 @@ export async function initCmdAction(pluginName: string | undefined, options: Act
 
         logInfo(`A new project for your dashboard plugin is ready in: ${directory}`);
     } catch (e) {
-        if (isInputValidationError(e)) {
-            logError(e.message);
+        genericErrorReporter(e);
 
-            process.exit(1);
-        } else {
-            logError(`An error has occurred during initialization of new project: ${e.message}`);
-        }
+        process.exit(1);
     }
 }
