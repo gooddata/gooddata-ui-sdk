@@ -11,41 +11,64 @@ import { getDashboardFromOptions } from "../_base/inputHandling/extractors";
 import ora from "ora";
 import {
     asyncValidOrDie,
-    createDashboardPluginValidator,
     createDashboardValidator,
     createWorkspaceValidator,
     InputValidator,
 } from "../_base/inputHandling/validators";
 import isEmpty from "lodash/isEmpty";
+import { convertToPluginEntrypoint, convertToPluginIdentifier } from "../_base/utils";
 
-export type UseCmdActionConfig = WorkspaceTargetConfig & {
+export type UnlinkCmdActionConfig = WorkspaceTargetConfig & {
+    /**
+     * Plugin _metadata object_ identifier.
+     */
     identifier: string;
+
+    /**
+     * Plugin identifier (as used in module naming, entry point naming etc)
+     */
+    pluginIdentifier: string;
+
     dashboard: string;
     dryRun: boolean;
     backendInstance: IAnalyticalBackend;
 };
 
-function createDuplicatePluginLinkValidator(identifier: string): InputValidator<IDashboardWithReferences> {
+function createLinkedPluginValidator(
+    identifier: string,
+    pluginIdentifier: string,
+): InputValidator<IDashboardWithReferences> {
+    const entryPoint = convertToPluginEntrypoint(pluginIdentifier);
+
     return (dashboardWithReferences) => {
         const {
             dashboard,
             references: { plugins },
         } = dashboardWithReferences;
+
         if (isEmpty(plugins)) {
-            return true;
+            return `Dashboard ${dashboard.identifier} does not use any plugins.`;
         }
 
-        if (plugins.some((plugin) => plugin.identifier === identifier)) {
-            return `Dashboard ${dashboard.identifier} already uses plugin ${identifier}. 
-            Dashboard can only use each plugin once. Consider using parameterization instead.`;
+        const linkedPlugin = plugins.find((plugin) => plugin.identifier === identifier);
+
+        if (!linkedPlugin) {
+            return `Dashboard ${dashboard.identifier} is not linked with plugin ${identifier}.`;
+        }
+
+        if (!linkedPlugin.url.endsWith(entryPoint)) {
+            return (
+                `You are trying to unlink a plugin (${linkedPlugin.name}) whose entry point differs from the ` +
+                "entry point of the plugin in your current directory."
+            );
         }
 
         return true;
     };
 }
 
-async function doAsyncValidations(config: UseCmdActionConfig) {
-    const { backendInstance, workspace, dashboard, identifier } = config;
+async function doAsyncValidations(config: UnlinkCmdActionConfig) {
+    const { backendInstance, workspace, dashboard, identifier, pluginIdentifier } = config;
 
     const asyncValidationProgress = ora({
         text: "Performing server-side validations.",
@@ -56,17 +79,12 @@ async function doAsyncValidations(config: UseCmdActionConfig) {
         await backendInstance.authenticate(true);
         await asyncValidOrDie("workspace", workspace, createWorkspaceValidator(backendInstance));
         await asyncValidOrDie(
-            "dashboardPlugin",
-            identifier,
-            createDashboardPluginValidator(backendInstance, workspace),
-        );
-        await asyncValidOrDie(
             "dashboard",
             dashboard,
             createDashboardValidator(
                 backendInstance,
                 workspace,
-                createDuplicatePluginLinkValidator(identifier),
+                createLinkedPluginValidator(identifier, pluginIdentifier),
             ),
         );
     } finally {
@@ -74,12 +92,12 @@ async function doAsyncValidations(config: UseCmdActionConfig) {
     }
 }
 
-export async function getUseCmdActionConfig(
+export async function getUnlinkCmdActionConfig(
     identifier: string,
     options: ActionOptions,
-): Promise<UseCmdActionConfig> {
+): Promise<UnlinkCmdActionConfig> {
     const workspaceTargetConfig = createWorkspaceTargetConfig(options);
-    const { hostname, backend, credentials, env } = workspaceTargetConfig;
+    const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
     const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD;
 
     validateWorkspaceTargetConfig(workspaceTargetConfig);
@@ -90,9 +108,10 @@ export async function getUseCmdActionConfig(
         credentials,
     });
 
-    const config: UseCmdActionConfig = {
+    const config: UnlinkCmdActionConfig = {
         ...workspaceTargetConfig,
         identifier,
+        pluginIdentifier: convertToPluginIdentifier(packageJson.name),
         dashboard,
         dryRun: options.commandOpts.dryRun ?? false,
         backendInstance,

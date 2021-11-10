@@ -158,3 +158,16 @@ export async function promptLanguage(): Promise<TargetAppLanguage> {
     const response = await prompt(question);
     return response.language;
 }
+
+export async function promptPluginParameters(): Promise<string> {
+    const question: DistinctQuestion = {
+        message:
+            "A text editor specified will now open and let you enter parameters for the plugin." +
+            "This is how you can configure how your plugin behaves on the workspace. Save and exit editor when done.",
+        name: "parameters",
+        type: "editor",
+    };
+
+    const response = await prompt(question);
+    return response.parameters;
+}

@@ -11,7 +11,7 @@ import {
     IDashboardWithReferences,
     IAnalyticalWorkspace,
 } from "@gooddata/sdk-backend-spi";
-import { extractRootCause } from "../utils";
+import { convertToPluginEntrypoint, extractRootCause } from "../utils";
 import { idRef } from "@gooddata/sdk-model";
 
 export type InputValidator<T = string> = (value: T) => boolean | string;
@@ -119,7 +119,7 @@ export function createHostnameValidator(backend: TargetBackendType): InputValida
  *    -  validator attempts to give some nicer messaging and where possible also provide hints
  */
 export function createPluginUrlValidator(pluginIdentifier: string): AsyncInputValidator {
-    const entryPoint = `${pluginIdentifier}.js`;
+    const entryPoint = convertToPluginEntrypoint(pluginIdentifier);
 
     return async (value: string): Promise<boolean | string> => {
         if (!value.startsWith("https://")) {
