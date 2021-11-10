@@ -9,9 +9,11 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
+import { useDashboardSelector, selectCanListUsersInWorkspace } from "../../../model";
+
 interface IUseWorkspaceUsersConfig extends UseCancelablePromiseCallbacks<IWorkspaceUser[], GoodDataSdkError> {
     /**
-     *  Option to filter users by the provided string.
+     * Option to filter users by the provided string.
      */
     search?: string;
 
@@ -49,14 +51,18 @@ export function useWorkspaceUsers({
 }: IUseWorkspaceUsersConfig): UseCancelablePromiseState<IWorkspaceUser[], any> {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
+    const canListUsersInWorkspace = useDashboardSelector(selectCanListUsersInWorkspace);
 
-    const promise = () => {
-        let loader = effectiveBackend.workspace(effectiveWorkspace).users();
-        if (search) {
-            loader = loader.withOptions({ search: `%${search}` });
-        }
-        return loader.queryAll();
-    };
+    // if the user cannot list the users, do not even try and resolve to an empty array
+    const promise = canListUsersInWorkspace
+        ? () => {
+              let loader = effectiveBackend.workspace(effectiveWorkspace).users();
+              if (search) {
+                  loader = loader.withOptions({ search: `%${search}` });
+              }
+              return loader.queryAll();
+          }
+        : () => Promise.resolve([]);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
