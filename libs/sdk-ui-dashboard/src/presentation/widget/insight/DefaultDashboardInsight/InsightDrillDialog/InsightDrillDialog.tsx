@@ -11,6 +11,7 @@ import { IntlWrapper } from "../../../../localization";
 import { DrillDialog } from "./DrillDialog";
 import { DrillDialogInsight } from "./DrillDialogInsight";
 import { useWidgetExecutionsHandler } from "../../../../../model";
+import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs";
 
 /**
  * @internal
@@ -49,10 +50,10 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
         executionsHandler.onLoadingChanged({ isLoading });
     }, []);
 
-    const modalTitle = insightTitle(insight);
+    const baseInsightTitle = insightTitle(insight);
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
-        title: modalTitle,
+        title: getTitleWithBreadcrumbs(baseInsightTitle, breadcrumbs),
         widgetRef: DRILL_MODAL_EXECUTION_PSEUDO_REF,
     });
 
@@ -70,7 +71,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
         >
             <IntlWrapper locale={locale}>
                 <DrillDialog
-                    title={modalTitle}
+                    insightTitle={baseInsightTitle}
                     isBackButtonVisible={breadcrumbs.length > 1}
                     onBackButtonClick={onBackButtonClick}
                     onCloseDialog={onClose}
