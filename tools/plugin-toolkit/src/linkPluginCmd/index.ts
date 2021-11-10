@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { ActionOptions, isInputValidationError } from "../_base/types";
-import { logError, logInfo, logWarn } from "../_base/terminal/loggers";
+import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import fse from "fs-extra";
 import { getLinkCmdActionConfig, LinkCmdActionConfig } from "./actionConfig";
 import { isNotAuthenticated, IDashboardDefinition, IDashboard } from "@gooddata/sdk-backend-spi";
@@ -86,14 +86,20 @@ export async function linkPluginCmdAction(identifier: string, options: ActionOpt
         }
 
         const updateProgress = ora({
-            text: "Link dashboard with a plugin.",
+            text: "Linking dashboard with a plugin.",
         });
 
+        let success = false;
         try {
             updateProgress.start();
             await updateDashboardWithPluginLink(config);
+            success = true;
         } finally {
             updateProgress.stop();
+        }
+
+        if (success) {
+            logSuccess(`Linked dashboard ${config.dashboard} with plugin ${config.identifier}.`);
         }
     } catch (e) {
         if (isInputValidationError(e)) {
