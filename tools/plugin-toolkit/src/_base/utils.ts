@@ -2,8 +2,9 @@
 import * as fs from "fs";
 import path from "path";
 import snakeCase from "lodash/snakeCase";
-import { InputValidationError, TargetBackendType } from "./types";
-import { logInfo } from "./terminal/loggers";
+import { InputValidationError, isInputValidationError, TargetBackendType } from "./types";
+import { logError, logInfo } from "./terminal/loggers";
+import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 
 export function toJsonString(obj: any): string {
     // note: using json-stable-stringify is likely not a good idea in this project:
@@ -83,4 +84,31 @@ export function extractRootCause(error: any): any {
     }
 
     return extractRootCause(error.cause);
+}
+
+/**
+ * This function will attempt to categorize the provided error and print something meaningful into the console.
+ *
+ * @param error - error message to report on
+ */
+export function genericErrorReporter(error: any): void {
+    if (isInputValidationError(error)) {
+        logError(error.message);
+    } else if (isNotAuthenticated(error)) {
+        logError(
+            "Authentication to backend has failed. Please ensure your environment is setup with correct credentials.",
+        );
+    } else {
+        const e = extractRootCause(error);
+
+        if (e.message && e.message.search(/.*(certificate|self-signed).*/) > -1) {
+            logError(
+                "Server does not have valid certificate. The login has failed. " +
+                    "If you trust the server, you can use the --accept-untrusted-ssl option " +
+                    "to turn off certificate validation.",
+            );
+        } else {
+            logError(`An unexpected error has occurred: ${e.stack}`);
+        }
+    }
 }

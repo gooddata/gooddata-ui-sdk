@@ -1,16 +1,12 @@
 // (C) 2021 GoodData Corporation
-import { ActionOptions, isInputValidationError } from "../_base/types";
+import { ActionOptions } from "../_base/types";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import fse from "fs-extra";
 import { getUnlinkCmdActionConfig, UnlinkCmdActionConfig } from "./actionConfig";
-import {
-    isNotAuthenticated,
-    IDashboardDefinition,
-    IDashboardWithReferences,
-} from "@gooddata/sdk-backend-spi";
-import { idRef } from "@gooddata/sdk-model";
+import { IDashboardDefinition, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 import ora from "ora";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
+import { genericErrorReporter } from "../_base/utils";
 
 function printUnlinkConfigSummary(config: UnlinkCmdActionConfig) {
     const {
@@ -115,15 +111,7 @@ export async function unlinkPluginCmdAction(identifier: string, options: ActionO
             logSuccess(`Plugin ${config.identifier} was unlinked from dashboard ${config.dashboard}.`);
         }
     } catch (e) {
-        if (isInputValidationError(e)) {
-            logError(e.message);
-        } else if (isNotAuthenticated(e)) {
-            logError(
-                "Authentication to backend has failed. Please ensure your environment is setup with correct credentials.",
-            );
-        } else {
-            logError(`An error has occurred while linking plugin to a dashboard: ${e.message}`);
-        }
+        genericErrorReporter(e);
 
         process.exit(1);
     }

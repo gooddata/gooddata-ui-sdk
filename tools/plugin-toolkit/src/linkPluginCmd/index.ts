@@ -1,11 +1,12 @@
 // (C) 2021 GoodData Corporation
-import { ActionOptions, isInputValidationError } from "../_base/types";
+import { ActionOptions } from "../_base/types";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import fse from "fs-extra";
 import { getLinkCmdActionConfig, LinkCmdActionConfig } from "./actionConfig";
-import { isNotAuthenticated, IDashboardDefinition, IDashboard } from "@gooddata/sdk-backend-spi";
+import { IDashboard, IDashboardDefinition } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 import ora from "ora";
+import { genericErrorReporter } from "../_base/utils";
 
 function printUseConfigSummary(config: LinkCmdActionConfig) {
     const {
@@ -102,15 +103,7 @@ export async function linkPluginCmdAction(identifier: string, options: ActionOpt
             logSuccess(`Linked dashboard ${config.dashboard} with plugin ${config.identifier}.`);
         }
     } catch (e) {
-        if (isInputValidationError(e)) {
-            logError(e.message);
-        } else if (isNotAuthenticated(e)) {
-            logError(
-                "Authentication to backend has failed. Please ensure your environment is setup with correct credentials.",
-            );
-        } else {
-            logError(`An error has occurred while linking plugin to a dashboard: ${e.message}`);
-        }
+        genericErrorReporter(e);
 
         process.exit(1);
     }

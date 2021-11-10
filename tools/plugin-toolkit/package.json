@@ -30,6 +30,7 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
+        "prepublishOnly": "npm run build",
         "build": "bash scripts/build.sh",
         "build-cjs": "tsc -p tsconfig.build.json",
         "test": "jest --watch --passWithNoTests",
