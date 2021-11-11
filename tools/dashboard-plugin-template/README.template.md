@@ -72,13 +72,36 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
     _BAD IDEA_: overwriting existing plugin artifacts will immediately impact all dashboards that use the plugin, possibly
     breaking them if you did not have chance to fully test the plugin.
 
-5.  Add plugin to one or more workspaces: `{{packageManager}} dashboard-plugin add`
+5.  Add plugin to one or more workspaces: `{{packageManager}} run add-plugin -- <url>`
 
-    TBD
+    Once your plugin is uploaded to public hosting location, you can add it into your workspace. You can achieve this
+    using the same CLI tool that you have used to create this plugin project. For convenience, this project contains
+    the tool among the devDependencies together with convenience script to add plugin to either workspace specified
+    in your `.env` file (default) or another workspace that you specify on the command line.
 
-6.  Use plugin on a dashboard: `{{packageManager}} dashboard-plugin use`
+    Run the `{{packageManager}} run add-plugin -- "https://your.hosting/pluginDirOfYourChoice/dp_{{pluginIdentifier}}.js"` to
+    create a new dashboard plugin object in the workspace specified in the `.env` file. The created dashboard object
+    point to the URL of the built plugin.
 
-    TBD
+    After successful creation of the plugin object, the tool will print plugin object identifier. You will need this
+    identifier later to link dashboard(s) with the plugin.
+
+    Note: the CLI tool has options that allow you to add plugin to different backends and/or different workspaces. Check out
+    `{{packageManager}} run gdc-plugins -- --help` to learn more about the tool's commands and options.
+
+6.  Use plugin on a dashboard: `{{packageManager}} run link-plugin -- <plugin-object-id>`
+
+    Now that you have created a plugin object in your workspace, you can link it with one or more dashboards. The
+    `link-plugin` script in package.json is a shortcut to link plugin with dashboard specified in your `.env` file.
+
+    If your plugin supports parameterization (see [src/{{pluginIdentifier}}](./src/{{pluginIdentifier}}/Plugin.tsx)) and
+    you want to specify parameters for the link between dashboard the plugin, you can run `{{packageManager}} run link-plugin -- <plugin-object-id> --with-parameters`
+    and the tool will open an editor for you to enter the parameters.
+
+    Note: the CLI tool has options that allow you to link plugin to different backends and/or different workspaces. Check out
+    `{{packageManager}} run gdc-plugins -- --help` to learn more about the tool's commands and options.
+
+    _TIP_: you can use the `unlink` command to remove the link between dashboard and the plugin.
 
 ## FAQ
 
@@ -87,9 +110,9 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 Do not rename or otherwise refactor any of the directories that were created during this project initialization.
 The structure and naming are essential for the build and the runtime loading of your plugin to work properly.
 
-This project is setup so that all your custom code must be self-contained in the [src/{{pluginIdentifier}}](src/{{pluginIdentifier}}) directory.
+This project is setup so that all your custom code must be self-contained in the [src/{{pluginIdentifier}}](./src/{{pluginIdentifier}}) directory.
 
-The [src/{{pluginIdentifier}}\_engine](src/{{pluginIdentifier}}_engine) and [src/{{pluginIdentifier}}\_entry](src/{{pluginIdentifier}}_entry) directories contain essential plugin boilerplate.
+The [src/{{pluginIdentifier}}\_engine](./src/{{pluginIdentifier}}_engine) and [src/{{pluginIdentifier}}\_entry](./src/{{pluginIdentifier}}_entry) directories contain essential plugin boilerplate.
 You must not modify these directories or their contents.
 
 The [src/harness] directory contains code for plugin development harness; it is used only during plugin development and the
