@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
-import * as fs from "fs";
 import path from "path";
+import fse from "fs-extra";
 import snakeCase from "lodash/snakeCase";
 import { InputValidationError, isInputValidationError, TargetBackendType } from "./types";
 import { logError, logInfo } from "./terminal/loggers";
@@ -13,11 +13,22 @@ export function toJsonString(obj: any): string {
 }
 
 export function writeAsJsonSync(file: string, obj: object): void {
-    fs.writeFileSync(file, toJsonString(obj), { encoding: "utf-8" });
+    fse.writeFileSync(file, toJsonString(obj), { encoding: "utf-8" });
 }
 
 export function readJsonSync(file: string): any {
-    return JSON.parse(fs.readFileSync(file, { encoding: "utf-8" }));
+    return JSON.parse(fse.readFileSync(file, { encoding: "utf-8" }));
+}
+
+/**
+ * Reads package.json file if it exists in current dir. Otherwise returns empty object.
+ */
+export function readPackageJsonIfExists(): Record<string, any> {
+    if (fse.existsSync("package.json")) {
+        return readJsonSync("package.json");
+    }
+
+    return {};
 }
 
 /**
@@ -58,7 +69,7 @@ export function convertToPluginEntrypoint(pluginIdentifier: string): string {
  *
  * @param packageJson - package json object
  */
-export function discoverBackendType(packageJson: Record<string, any>): TargetBackendType {
+export function discoverBackendTypeOrDie(packageJson: Record<string, any>): TargetBackendType {
     const { peerDependencies = {} } = packageJson;
 
     if (peerDependencies["@gooddata/sdk-backend-bear"] !== undefined) {

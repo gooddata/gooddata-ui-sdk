@@ -35,7 +35,7 @@ export function getHostnameFromOptions(
  * @returns undefined if no backend type specified.
  */
 export function getBackendFromOptions(options: ActionOptions): TargetBackendType | undefined {
-    const { backend } = options.commandOpts;
+    const { backend } = options.programOpts;
 
     if (!backend) {
         return undefined;

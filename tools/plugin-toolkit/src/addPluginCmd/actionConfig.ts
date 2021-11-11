@@ -9,11 +9,7 @@ import {
 import { createBackend } from "../_base/backend";
 import ora from "ora";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import {
-    createWorkspaceTargetConfig,
-    validateWorkspaceTargetConfig,
-    WorkspaceTargetConfig,
-} from "../_base/workspaceTargetConfig";
+import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig";
 
 export type AddCmdActionConfig = WorkspaceTargetConfig & {
     pluginUrl: string;
@@ -55,8 +51,6 @@ export async function getAddCmdActionConfig(
 ): Promise<AddCmdActionConfig> {
     const workspaceTargetConfig = createWorkspaceTargetConfig(options);
     const { hostname, backend, credentials, packageJson } = workspaceTargetConfig;
-
-    validateWorkspaceTargetConfig(workspaceTargetConfig);
 
     const backendInstance = createBackend({
         hostname,

@@ -15,6 +15,18 @@ export class Plugin extends DashboardPluginV1 {
     public readonly displayName = packageJson.name;
     public readonly version = packageJson.version;
 
+    public onPluginLoaded(_ctx: DashboardContext, _parameters?: string) {
+        /*
+         * This will be called when the plugin is loaded in context of some dashboard and before
+         * the register() method.
+         *
+         * If the link between the dashboard and this plugin is parameterized, then all the parameters will
+         * be included in the parameters string.
+         *
+         * The parameters are useful to modify plugin behavior in context of particular dashboard.
+         */
+    }
+
     public register(
         _ctx: DashboardContext,
         customize: IDashboardCustomizer,

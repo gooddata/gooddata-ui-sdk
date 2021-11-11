@@ -12,7 +12,11 @@ program
     .version(pkg.version)
     .name("GoodData Plugin Development Toolkit")
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
-    .option("--hostname <hostname>", "URL of your GoodData host");
+    .option("--hostname <hostname>", "URL of your GoodData host")
+    .option(
+        "--backend <backend>",
+        "Type of backend against that you are targeting. Either GoodData Platform (bear) or GoodData.CN (tiger)",
+    );
 
 const dashboardCmd = program
     .command("dashboard-plugin")
@@ -22,10 +26,6 @@ const initCmd: Command = dashboardCmd
     .command("init")
     .description("Initialize a new dashboard plugin")
     .argument("[plugin-name]", "Name of the plugin to create")
-    .option(
-        "--backend <backend>",
-        "Type of backend against which you want to develop the plugin, either GoodData Platform (bear) or GoodData.CN (tiger)",
-    )
     .option(
         "--language <language>",
         "Programming language to use for plugin. Either TypeScript (ts) or JavaScript (js)",
@@ -59,11 +59,6 @@ const addPluginCmd: Command = dashboardCmd
         "URL of location where the plugin assets are hosted. The URL must use https protocol",
     )
     .option(
-        "--backend <backend>",
-        "Type of backend to which you want to add the plugin, either GoodData Platform (bear) or GoodData.CN (tiger). " +
-            "By default tries to auto-detect the backend type from your project's package.json.",
-    )
-    .option(
         "--workspace-id <id>",
         "Identifier of workspace to which you want to add the plugin. " +
             "By default uses workspace from your .env file.",
@@ -92,11 +87,6 @@ const linkPluginCmd: Command = dashboardCmd
     .command("link")
     .description("Link plugin available in a workspace with a dashboard in the same workspace.")
     .argument("<plugin-id>", "Plugin id which you want to link with the dashboard")
-    .option(
-        "--backend <backend>",
-        "Type of backend that you are targeting. Either GoodData Platform (bear) or GoodData.CN (tiger). " +
-            "By default tries to auto-detect the backend type from your project's package.json.",
-    )
     .option(
         "--workspace-id <id>",
         "Identifier of workspace that contains dashboard and plugin that should be linked",
@@ -127,11 +117,6 @@ const unlinkPluginCmd: Command = dashboardCmd
     .command("unlink")
     .description("Unlink plugin from a dashboard.")
     .argument("<plugin-id>", "Identifier of the plugin object which you want to unlink from the dashboard.")
-    .option(
-        "--backend <backend>",
-        "Type of backend that you are targeting. Either GoodData Platform (bear) or GoodData.CN (tiger). " +
-            "By default tries to auto-detect the backend type from your project's package.json.",
-    )
     .option(
         "--workspace-id <id>",
         "Identifier of workspace that contains dashboard that should use the plugin",

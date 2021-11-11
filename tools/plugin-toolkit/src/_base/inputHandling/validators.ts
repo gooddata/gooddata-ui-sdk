@@ -160,7 +160,7 @@ export function createPluginUrlValidator(pluginIdentifier: string): AsyncInputVa
                     return prefix + "Please check hosting is setup correctly.";
                 }
 
-                return `An error has occurred while validating plugin URL: ${e.message}`;
+                return `An error has occurred while validating plugin URL: ${e.stack}`;
             });
     };
 }
@@ -200,7 +200,7 @@ export function createWorkspaceValidator(
 
                 const rootCause = extractRootCause(e);
 
-                return `An error has occurred while validating workspace existence: ${rootCause.message}`;
+                return `An error has occurred while validating workspace existence: ${rootCause.stack}`;
             });
     };
 }
@@ -238,7 +238,7 @@ export function createDashboardValidator(
 
                 const rootCause = extractRootCause(e);
 
-                return `An error has occurred while validating workspace existence: ${rootCause.message}`;
+                return `An error has occurred while validating workspace existence: ${rootCause.stack}`;
             });
     };
 }
@@ -276,7 +276,7 @@ export function createDashboardPluginValidator(
 
                 const rootCause = extractRootCause(e);
 
-                return `An error has occurred while validating workspace existence: ${rootCause.message}`;
+                return `An error has occurred while validating workspace existence: ${rootCause.stack}`;
             });
     };
 }

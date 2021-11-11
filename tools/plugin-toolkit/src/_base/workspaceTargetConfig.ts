@@ -2,7 +2,7 @@
 
 import { ActionOptions, TargetBackendType } from "./types";
 import { BackendCredentials, createCredentialsFromEnv, validateCredentialsAreComplete } from "./credentials";
-import { discoverBackendType, readJsonSync } from "./utils";
+import { discoverBackendTypeOrDie, readPackageJsonIfExists } from "./utils";
 import {
     getBackendFromOptions,
     getHostnameFromOptions,
@@ -42,33 +42,30 @@ export type WorkspaceTargetConfig = {
     env: Record<string, string>;
 
     /**
-     * For completeness includes package.json of the current project. The package.json was used to
-     * determine backend type however it is included here due to anticipation that the command may
-     * need more info from it.
+     * For completeness includes package.json of the current project. May be an empty object in case CLI
+     * is invoked from directory that does not contain package.json
      */
     packageJson: Record<string, any>;
 };
 
 /**
- * Creates common config for commands that target a workspace. This function perform no validation
- * at all on purpose - whoever gets the workspace config may need to do more work and more validations
- * and perhaps needs to do them in different order or who knows... one day we can make this async and
- * do all the essential validations here instead.
- *
- * See {@link validateWorkspaceTargetConfig} to trigger available client-side validations.
+ * Creates common config for commands that target a workspace.
  *
  * @param options
  */
 export function createWorkspaceTargetConfig(options: ActionOptions): WorkspaceTargetConfig {
-    const packageJson = readJsonSync("package.json");
+    const packageJson = readPackageJsonIfExists();
     const backendFromOptions = getBackendFromOptions(options);
-    const backend = backendFromOptions ?? discoverBackendType(packageJson);
+    const backend = backendFromOptions ?? discoverBackendTypeOrDie(packageJson);
     const env = loadEnv(backend);
     const hostnameFromOptions = getHostnameFromOptions(backendFromOptions, options);
     const workspaceFromOptions = getWorkspaceFromOptions(options);
     const hostname = hostnameFromOptions ?? env.BACKEND_URL;
     const workspace = workspaceFromOptions ?? env.WORKSPACE;
     const credentials = createCredentialsFromEnv(env);
+
+    validOrDie("hostname", hostname, createHostnameValidator(backend));
+    validateCredentialsAreComplete(backend, credentials);
 
     return {
         backend,
@@ -78,11 +75,4 @@ export function createWorkspaceTargetConfig(options: ActionOptions): WorkspaceTa
         env,
         packageJson,
     };
-}
-
-export function validateWorkspaceTargetConfig(config: WorkspaceTargetConfig): void {
-    const { hostname, backend, credentials } = config;
-
-    validOrDie("hostname", hostname, createHostnameValidator(backend));
-    validateCredentialsAreComplete(backend, credentials);
 }

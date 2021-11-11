@@ -1,9 +1,5 @@
 // (C) 2021 GoodData Corporation
-import {
-    createWorkspaceTargetConfig,
-    validateWorkspaceTargetConfig,
-    WorkspaceTargetConfig,
-} from "../_base/workspaceTargetConfig";
+import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig";
 import { IAnalyticalBackend, IDashboardPlugin, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { ActionOptions } from "../_base/types";
 import { createBackend } from "../_base/backend";
@@ -132,9 +128,7 @@ export async function getLinkCmdActionConfig(
 ): Promise<LinkCmdActionConfig> {
     const workspaceTargetConfig = createWorkspaceTargetConfig(options);
     const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
-    const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD;
-
-    validateWorkspaceTargetConfig(workspaceTargetConfig);
+    const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD_ID;
 
     const backendInstance = createBackend({
         hostname,
