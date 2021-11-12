@@ -19,7 +19,7 @@ import { metaActions } from "../../store/meta";
 import {
     selectDashboardDescriptor,
     selectPersistedDashboard,
-    selectPersistedDashboardFilterContext,
+    selectPersistedDashboardFilterContextAsFilterContextDefinition,
 } from "../../store/meta/metaSelectors";
 import { DashboardContext } from "../../types/commonTypes";
 import { PromiseFnReturnType } from "../../types/sagas";
@@ -78,7 +78,7 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     const filterContextDefinition: ReturnType<typeof selectFilterContextDefinition> = yield select(
         !useOriginalFilterContext || !originalDashboardDescription
             ? selectFilterContextDefinition
-            : selectPersistedDashboardFilterContext,
+            : selectPersistedDashboardFilterContextAsFilterContextDefinition,
     );
 
     const layout: ReturnType<typeof selectBasicLayout> = yield select(selectBasicLayout);
