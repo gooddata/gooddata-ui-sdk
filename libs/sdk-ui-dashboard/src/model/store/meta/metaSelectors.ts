@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { idRef, uriRef } from "@gooddata/sdk-model";
+import { IFilterContextDefinition, isTempFilterContext } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 
@@ -44,6 +45,36 @@ export const selectPersistedDashboard = createSelector(selectSelf, (state) => {
 export const selectPersistedDashboardFilterContext = createSelector(selectSelf, (state) => {
     return state.persistedDashboard?.filterContext;
 });
+
+/**
+ * Selects persisted IFilterContextDefinition - that is the IFilterContext or ITempFilterContext that
+ * was used to initialize the original filters of the dashboard component during the initial load of the
+ * dashboard but removes ref, uri and identifier, effectively creating a clone of the stored value
+ * that can be used independently.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+export const selectPersistedDashboardFilterContextAsFilterContextDefinition = createSelector(
+    selectPersistedDashboardFilterContext,
+    (filterContext): IFilterContextDefinition | undefined => {
+        if (!filterContext) {
+            return undefined;
+        }
+
+        if (isTempFilterContext(filterContext)) {
+            const { ref: _, uri: __, ...definition } = filterContext;
+            return {
+                ...definition,
+                title: "filterContext",
+                description: "",
+            };
+        } else {
+            const { identifier: _, ref: __, uri: ___, ...definition } = filterContext;
+            return definition;
+        }
+    },
+);
 
 /**
  * Selects ref of the persisted dashboard object that backs and is rendered-by the dashboard component.
