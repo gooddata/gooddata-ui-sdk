@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-import { FilterContextItem } from "@gooddata/sdk-backend-spi";
+import { FilterContextItem, isDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../types/commonTypes";
@@ -24,6 +24,14 @@ function exportDashboardToPdf(
     return backend.workspace(workspace).dashboards().exportDashboardToPdf(dashboardRef, filters);
 }
 
+// the value is taken from gdc-dashboards
+const allTimeFilterContextItem: FilterContextItem = {
+    dateFilter: {
+        type: "absolute",
+        granularity: "GDC.time.year",
+    },
+};
+
 export function* exportDashboardToPdfHandler(
     ctx: DashboardContext,
     cmd: ExportDashboardToPdf,
@@ -35,9 +43,17 @@ export function* exportDashboardToPdfHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to PDF must have an ObjRef.");
     }
 
-    const filterContextFilters = yield select(selectFilterContextFilters);
+    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
+        selectFilterContextFilters,
+    );
 
-    const resultUri = yield call(exportDashboardToPdf, ctx, dashboardRef, filterContextFilters);
+    // if there is no date filter, add an "all time" filter so that in case the dashboard is saved with some
+    // date filter, it is overridden to All time for the purpose of the export
+    const effectiveFilters: FilterContextItem[] = filterContextFilters.some(isDashboardDateFilter)
+        ? filterContextFilters
+        : [allTimeFilterContextItem, ...filterContextFilters];
+
+    const resultUri = yield call(exportDashboardToPdf, ctx, dashboardRef, effectiveFilters);
 
     return dashboardExportToPdfResolved(ctx, resultUri, cmd.correlationId);
 }
