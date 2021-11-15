@@ -121,5 +121,7 @@
     "options.menu.unsupported.loading": "La perception ne peut pas être exportée à l'heure actuelle.",
     "export.defaultTitle": "Perception sans titre",
     "widget.options.menu.exportToCSV": "Exporter au format CSV",
-    "widget.options.menu.exportToXLSX": "Exporter vers XLSX"
+    "widget.options.menu.exportToXLSX": "Exporter vers XLSX",
+    "dashboard.error.empty.heading": "Ce tableau de bord est vide",
+    "dashboard.error.empty.text": "Toutes les perceptions ont été retirées."
 }

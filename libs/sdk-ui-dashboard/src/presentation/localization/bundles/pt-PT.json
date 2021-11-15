@@ -121,5 +121,7 @@
     "options.menu.unsupported.loading": "De momento não é possível exportar o insight.",
     "export.defaultTitle": "Insight sem título",
     "widget.options.menu.exportToCSV": "Exportar para CSV",
-    "widget.options.menu.exportToXLSX": "Exportar para XLSX"
+    "widget.options.menu.exportToXLSX": "Exportar para XLSX",
+    "dashboard.error.empty.heading": "Este dashboard está vazio",
+    "dashboard.error.empty.text": "Todos os insights foram removidos."
 }

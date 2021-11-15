@@ -121,5 +121,7 @@
     "options.menu.unsupported.loading": "目前无法导出此洞察。",
     "export.defaultTitle": "无标题洞察",
     "widget.options.menu.exportToCSV": "导出至 CSV",
-    "widget.options.menu.exportToXLSX": "导出为 XLSX"
+    "widget.options.menu.exportToXLSX": "导出为 XLSX",
+    "dashboard.error.empty.heading": "此控制面板为空",
+    "dashboard.error.empty.text": "已删除所有洞察。"
 }

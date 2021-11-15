@@ -121,5 +121,7 @@
     "options.menu.unsupported.loading": "No se puede exportar la perspectiva en estos momentos.",
     "export.defaultTitle": "Perspectiva sin título",
     "widget.options.menu.exportToCSV": "Exportar a CSV",
-    "widget.options.menu.exportToXLSX": "Exportar a XLSX"
+    "widget.options.menu.exportToXLSX": "Exportar a XLSX",
+    "dashboard.error.empty.heading": "Este panel está vacío",
+    "dashboard.error.empty.text": "Se eliminaron todas las perspectivas."
 }

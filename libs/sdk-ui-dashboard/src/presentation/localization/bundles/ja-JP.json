@@ -121,5 +121,7 @@
     "options.menu.unsupported.loading": "現在、このインサイトはエクスポートできません。",
     "export.defaultTitle": "無題の解析",
     "widget.options.menu.exportToCSV": "CSV にエクスポート",
-    "widget.options.menu.exportToXLSX": "XLSX にエクスポート"
+    "widget.options.menu.exportToXLSX": "XLSX にエクスポート",
+    "dashboard.error.empty.heading": "このダッシュボードは空欄です",
+    "dashboard.error.empty.text": "すべてのインサイトは削除されました。"
 }
