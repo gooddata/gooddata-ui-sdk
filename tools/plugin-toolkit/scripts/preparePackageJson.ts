@@ -47,8 +47,8 @@ const ExplicitTypeScriptDependencies = [
 
 function removeGdStuff(packageJson: Record<string, any>) {
     packageJson.name = "<plugin-name>";
-    packageJson.author = "<plugin-author>";
-    packageJson.description = "<plugin-description>";
+    packageJson.author = "";
+    packageJson.description = "";
 
     delete packageJson.repository;
     delete packageJson.config;
