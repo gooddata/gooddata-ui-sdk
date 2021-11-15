@@ -3,9 +3,9 @@
     "compilerOptions": {
         "declaration": true,
         "declarationMap": true,
-        "target": "es5",
+        "target": "es2017",
         "jsx": "react",
-        "lib": ["es7", "dom"],
+        "lib": ["es2017", "dom"],
         "module": "ESNext",
         "moduleResolution": "node",
         "esModuleInterop": true,
