@@ -7,6 +7,9 @@ import { addPluginCmdAction } from "./addPluginCmd";
 import { initCmdAction } from "./initCmd";
 import { linkPluginCmdAction } from "./linkPluginCmd";
 import { unlinkPluginCmdAction } from "./unlinkPluginCmd";
+import { listCmdAction } from "./listCmds/listCmdAction";
+import { listDashboards } from "./listCmds/listDashboards";
+import { listDashboardPlugins } from "./listCmds/listDashboardPlugins";
 
 program
     .version(pkg.version)
@@ -21,6 +24,41 @@ program
 const dashboardCmd = program
     .command("dashboard-plugin")
     .description("Commands to work with dashboard plugins.");
+
+const listCmd = program
+    .command("list")
+    .description("Commands to list workspace metadata.")
+    .option("--workspace-id <workspace>", "Identifier of workspace whose objects you want to list.");
+
+const listDashboardsCmd = listCmd
+    .command("dashboards")
+    .description("List workspace dashboards")
+    .action(async () => {
+        acceptUntrustedSsl(program.opts());
+
+        await listCmdAction(listDashboards, {
+            programOpts: program.opts(),
+            commandOpts: {
+                ...listCmd.opts(),
+                ...listDashboardsCmd.opts(),
+            },
+        });
+    });
+
+const listDashboardPluginsCmd = listCmd
+    .command("dashboardPlugins")
+    .description("List workspace dashboard plugins")
+    .action(async () => {
+        acceptUntrustedSsl(program.opts());
+
+        await listCmdAction(listDashboardPlugins, {
+            programOpts: program.opts(),
+            commandOpts: {
+                ...listCmd.opts(),
+                ...listDashboardPluginsCmd.opts(),
+            },
+        });
+    });
 
 const initCmd: Command = dashboardCmd
     .command("init")

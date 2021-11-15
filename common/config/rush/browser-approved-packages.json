@@ -239,6 +239,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/columnify",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/cross-spawn",
       "allowedCategories": [ "tools" ]
     },
@@ -493,6 +497,10 @@
     {
       "name": "codemirror",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "columnify",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "commander",
