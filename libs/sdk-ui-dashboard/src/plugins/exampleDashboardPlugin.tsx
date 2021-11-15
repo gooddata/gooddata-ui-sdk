@@ -133,7 +133,7 @@ export class PluginAddsCustomInsightRendering extends DashboardPluginV1 {
         customize: IDashboardCustomizer,
         _handlers: IDashboardEventHandling,
     ): void {
-        customize.insightRendering().withTag("some-tag", CustomInsightRenderer);
+        customize.insightWidgets().withTag("some-tag", CustomInsightRenderer);
     }
 }
 
@@ -165,7 +165,7 @@ export class PluginAddsParameterizedInsightRendering extends DashboardPluginV1 {
         _handlers: IDashboardEventHandling,
     ): void {
         this.customizeByTag.forEach((tag) => {
-            customize.insightRendering().withTag(tag, CustomInsightRenderer);
+            customize.insightWidgets().withTag(tag, CustomInsightRenderer);
         });
     }
 }
@@ -218,10 +218,10 @@ export class PluginAddsCustomInsightDecorator extends DashboardPluginV1 {
         _handlers: IDashboardEventHandling,
     ): void {
         // register custom renderer for insights with some tags
-        customize.insightRendering().withTag("some-tag", CustomInsightRenderer);
+        customize.insightWidgets().withTag("some-tag", CustomInsightRenderer);
         // register decorator that will be used during any insight rendering - regardless if using custom renderer or
         // the default renderer
-        customize.insightRendering().withCustomDecorator(customDecoratorFactory);
+        customize.insightWidgets().withCustomDecorator(customDecoratorFactory);
     }
 }
 
@@ -269,7 +269,7 @@ export class PluginAddsCustomWidget extends DashboardPluginV1 {
         handlers: IDashboardEventHandling,
     ): void {
         // register custom widget type to use the TestWidgetComponent
-        customize.widgets().addCustomWidget("test", TestWidget);
+        customize.customWidgets().addCustomWidget("test", TestWidget);
 
         // add a new section at the end of the layout
         customize.layout().customizeFluidLayout((_layout, customizer) => {
