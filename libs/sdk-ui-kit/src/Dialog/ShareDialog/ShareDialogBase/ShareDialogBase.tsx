@@ -17,11 +17,8 @@ const availableGranteesConst: GranteeItem[] = [
     },
 ];
 
-/**
- * @internal
- */
-export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
-    const { onCancel, onSubmit, owner, grantees } = props;
+const useShareDialogBase = (props: IShareDialogBaseProps) => {
+    const { onSubmit, grantees } = props;
     const [dialogMode, setDialogMode] = useState<DialogModeType>("ShareGrantee");
     const [granteesToAdd, setGranteesToAdd] = useState<GranteeItem[]>([]);
     const [granteesToDelete, setGranteesToDelete] = useState<GranteeItem[]>([]);
@@ -56,14 +53,6 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
         [setGranteesToAdd],
     );
 
-    const onSubmitCallback = useCallback(() => {
-        onSubmit(granteesToAdd, granteesToDelete);
-    }, [granteesToAdd, granteesToDelete, onSubmit]);
-
-    const filteredGrantees = useMemo(() => {
-        return notInArrayFilter(grantees, granteesToDelete);
-    }, [grantees, granteesToDelete]);
-
     const isShareDialogDirty = useMemo(() => {
         return granteesToDelete.length !== 0;
     }, [granteesToDelete]);
@@ -71,6 +60,24 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
     const isAddDialogDirty = useMemo(() => {
         return granteesToAdd.length !== 0;
     }, [granteesToDelete, granteesToAdd]);
+
+    const onSubmitShareGrantee = useCallback(() => {
+        if (!isShareDialogDirty) {
+            return;
+        }
+        onSubmit(granteesToAdd, granteesToDelete);
+    }, [granteesToAdd, granteesToDelete, isShareDialogDirty, onSubmit]);
+
+    const onSubmitAddGrantee = useCallback(() => {
+        if (!isAddDialogDirty) {
+            return;
+        }
+        onSubmit(granteesToAdd, granteesToDelete);
+    }, [granteesToAdd, granteesToDelete, isAddDialogDirty, onSubmit]);
+
+    const filteredGrantees = useMemo(() => {
+        return notInArrayFilter(grantees, granteesToDelete);
+    }, [grantees, granteesToDelete]);
 
     const availableGrantees = useMemo(() => {
         return notInArrayFilter(availableGranteesConst, granteesToAdd).filter((grantee) => {
@@ -86,6 +93,45 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
         });
     }, [grantees, granteesToDelete, granteesToAdd]);
 
+    return {
+        onAddedGranteeDelete,
+        onSharedGranteeDelete,
+        onAddGranteeBackClick,
+        onAddGranteeButtonClick,
+        onGranteeAdd,
+        onSubmitShareGrantee,
+        onSubmitAddGrantee,
+        granteesToAdd,
+        dialogMode,
+        isShareDialogDirty,
+        isAddDialogDirty,
+        filteredGrantees,
+        availableGrantees,
+    };
+};
+
+/**
+ * @internal
+ */
+export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
+    const { onCancel, owner } = props;
+
+    const {
+        onAddedGranteeDelete,
+        onSharedGranteeDelete,
+        onAddGranteeBackClick,
+        onAddGranteeButtonClick,
+        onGranteeAdd,
+        onSubmitShareGrantee,
+        onSubmitAddGrantee,
+        granteesToAdd,
+        dialogMode,
+        isShareDialogDirty,
+        isAddDialogDirty,
+        filteredGrantees,
+        availableGrantees,
+    } = useShareDialogBase(props);
+
     return (
         <Overlay
             alignPoints={alignPoints}
@@ -100,7 +146,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         owner={owner}
                         grantees={filteredGrantees}
                         onCancel={onCancel}
-                        onSubmit={onSubmitCallback}
+                        onSubmit={onSubmitShareGrantee}
                         onAddGranteeButtonClick={onAddGranteeButtonClick}
                         onGranteeDelete={onSharedGranteeDelete}
                     />
@@ -112,7 +158,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         onAddUserOrGroups={onGranteeAdd}
                         onDelete={onAddedGranteeDelete}
                         onCancel={onCancel}
-                        onSubmit={onSubmitCallback}
+                        onSubmit={onSubmitAddGrantee}
                         onBackClick={onAddGranteeBackClick}
                     />
                 )}
