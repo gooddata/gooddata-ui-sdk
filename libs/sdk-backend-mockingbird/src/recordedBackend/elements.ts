@@ -73,6 +73,11 @@ class RecordedElements implements IElementsQuery {
         return Promise.resolve(new InMemoryPaging<IAttributeElement>(elements, this.limit, this.offset));
     }
 
+    public async queryTotalCount(): Promise<number> {
+        const result = await this.query();
+        return result.totalCount;
+    }
+
     public withLimit(limit: number): IElementsQuery {
         if (limit <= 0) {
             throw new Error("Limit must be positive number");

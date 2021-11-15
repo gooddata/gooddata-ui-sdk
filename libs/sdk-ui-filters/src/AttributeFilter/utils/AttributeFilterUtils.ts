@@ -107,9 +107,7 @@ export const getElementTotalCount = async (
         elementsLoader = elementsLoader.withAttributeFilters(parentFilters);
     }
 
-    const elements = await elementsLoader.query();
-
-    return elements.totalCount;
+    return elementsLoader.queryTotalCount();
 };
 
 /**

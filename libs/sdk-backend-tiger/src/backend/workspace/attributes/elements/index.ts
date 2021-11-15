@@ -81,6 +81,12 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         return this.queryWorker(this.offset, this.limit, this.options);
     }
 
+    public async queryTotalCount(): Promise<number> {
+        // TODO use special "count-only" API when that is ready
+        const result = await this.queryWorker(this.offset, this.limit, this.options);
+        return result.totalCount;
+    }
+
     private async queryWorker(
         offset: number,
         limit: number,

@@ -148,6 +148,17 @@ export interface IElementsQuery {
     query(): Promise<IElementsQueryResult>;
 
     /**
+     * Starts the query that will return the total count of elements valid for the provided options.
+     *
+     * @remarks
+     * This can be useful when we are only interested in the number of elements, not the elements themselves.
+     * The backend implementation can also use more efficient logic for this, potentially improving performance.
+     *
+     * @returns promise of total count of elements valid for the provided options
+     */
+    queryTotalCount(): Promise<number>;
+
+    /**
      * Sets the date filters that will limit the available elements
      *
      * @param filters - date filters limiting the elements

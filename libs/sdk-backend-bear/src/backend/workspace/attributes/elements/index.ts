@@ -113,6 +113,13 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
         return this.queryWorker(this.offset, this.limit, this.options);
     }
 
+    public async queryTotalCount(): Promise<number> {
+        // on bear, there is currently no special API for this
+        // so just use the "full-blown" API and unwrap the totalCount value
+        const queryResult = await this.query();
+        return queryResult.totalCount;
+    }
+
     private async getObjectId(): Promise<string> {
         if (!this.objectId) {
             const uri = await objRefToUri(this.displayFormRef, this.workspace, this.authCall);

@@ -771,6 +771,7 @@ export interface IDrillToLegacyDashboard extends IDrill {
 // @public
 export interface IElementsQuery {
     query(): Promise<IElementsQueryResult>;
+    queryTotalCount(): Promise<number>;
     withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
     withDateFilters(filters: IRelativeDateFilter[]): IElementsQuery;
     withLimit(limit: number): IElementsQuery;
