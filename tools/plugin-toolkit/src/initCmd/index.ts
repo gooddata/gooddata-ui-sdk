@@ -214,7 +214,9 @@ export async function initCmdAction(pluginName: string | undefined, options: Act
 
         runInstall(directory, config);
 
-        logInfo(`A new project for your dashboard plugin is ready in: ${directory}`);
+        logInfo(
+            `A new project for your dashboard plugin is ready in: ${directory}. Check out the package.json and fill in author and description if possible.`,
+        );
     } catch (e) {
         genericErrorReporter(e);
 
