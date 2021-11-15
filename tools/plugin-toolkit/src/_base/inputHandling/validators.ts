@@ -25,8 +25,17 @@ export type AsyncInputValidator = (value: string) => Promise<boolean | string>;
  * Validates that plugin name matches required regex.
  */
 export function pluginNameValidator(value: string): boolean | string {
-    if (!value.match(/^[a-zA-Z0-9_\-@/]*$/)) {
-        return "Invalid plugin name. Use only alphanumerical characters, underscores and dashes.";
+    if (isEmpty(value) || (value && isEmpty(value.trim()))) {
+        return "Please enter non-empty plugin name.";
+    }
+
+    // pattern used by VS code:
+    if (!value.match(/^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/)) {
+        return "Invalid plugin name. Plugin name must be a valid package name.";
+    }
+
+    if (value.length > 214) {
+        return "Invalid plugin name. Plugin too long.";
     }
 
     return true;
