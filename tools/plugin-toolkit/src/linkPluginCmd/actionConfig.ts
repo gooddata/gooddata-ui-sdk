@@ -62,7 +62,7 @@ function createDuplicatePluginLinkValidator(
             const { identifier: otherIdentifier, name } = otherPluginWithSameEp;
 
             return (
-                `Dashboard ${dashboard.identifier} is already linked with another plugin (${otherIdentifier} - ${name})` +
+                `Dashboard ${dashboard.identifier} is already linked with another plugin (${otherIdentifier} - ${name}) ` +
                 "that has same entry point as the plugin that you want to link now. This is likely another version of " +
                 "the same plugin. Adding two versions of the same plugin is not supported. Note: " +
                 "renaming the entry point files will not help as you will then encounter load-time errors."
