@@ -170,6 +170,9 @@ export interface IDashboardWidgetCustomizer {
     /**
      * Adds a new custom widget type. Custom widget's can be used to render arbitrary content.
      *
+     * The custom widget must be wrapped inside an element which sets the height and width CSS sizing
+     * properties in order to align the behaviour with the provided widget types.
+     *
      * @param widgetType - unique type name of the custom widget; if plugins register multiple custom
      *  widgets for the same widget type, then the last-registered custom widget wins
      * @param Component - React component to use for rendering of the custom widget
