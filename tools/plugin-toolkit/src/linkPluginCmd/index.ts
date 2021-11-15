@@ -48,7 +48,7 @@ async function updateDashboardWithPluginLink(config: LinkCmdActionConfig) {
 
     plugins.push({
         type: "IDashboardPluginLink",
-        plugin: idRef(validIdentifier),
+        plugin: idRef(validIdentifier, "dashboardPlugin"),
         parameters,
     });
 
