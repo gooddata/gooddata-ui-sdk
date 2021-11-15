@@ -66,6 +66,9 @@ export interface IDashboardInsightCustomizer {
      *
      *         function MyCustomDecorator() {
      *              const Decorated = next(insight, widget);
+     *              if (!Decorated) {
+     *                  return null;
+     *              }
      *
      *              return (
      *                  <div>
@@ -135,6 +138,9 @@ export interface IDashboardKpiCustomizer {
      *
      *         function MyCustomDecorator() {
      *              const Decorated = next(kpi, widget);
+     *              if (!Decorated) {
+     *                  return null;
+     *              }
      *
      *              return (
      *                  <div>
