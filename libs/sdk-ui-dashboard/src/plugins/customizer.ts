@@ -246,19 +246,19 @@ export interface IDashboardLayoutCustomizer {
  */
 export interface IDashboardCustomizer {
     /**
-     * Customize how rendering of insights is done.
+     * Customize how rendering of insight widgets is done.
      */
-    insightRendering(): IDashboardInsightCustomizer;
+    insightWidgets(): IDashboardInsightCustomizer;
 
     /**
-     * Customize how rendering of KPIs is done.
+     * Customize how rendering of KPI widgets is done.
      */
-    kpiRendering(): IDashboardKpiCustomizer;
+    kpiWidgets(): IDashboardKpiCustomizer;
 
     /**
      * Register custom widget types.
      */
-    widgets(): IDashboardWidgetCustomizer;
+    customWidgets(): IDashboardWidgetCustomizer;
 
     /**
      * Customize dashboard layout - this allows the plugin step in during initialization and modify

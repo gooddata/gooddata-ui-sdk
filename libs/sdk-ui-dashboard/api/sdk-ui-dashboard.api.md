@@ -2150,10 +2150,10 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
 
 // @alpha (undocumented)
 export interface IDashboardCustomizer {
-    insightRendering(): IDashboardInsightCustomizer;
-    kpiRendering(): IDashboardKpiCustomizer;
+    customWidgets(): IDashboardWidgetCustomizer;
+    insightWidgets(): IDashboardInsightCustomizer;
+    kpiWidgets(): IDashboardKpiCustomizer;
     layout(): IDashboardLayoutCustomizer;
-    widgets(): IDashboardWidgetCustomizer;
 }
 
 // @alpha

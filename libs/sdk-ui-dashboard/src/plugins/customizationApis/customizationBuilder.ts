@@ -32,15 +32,15 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         this.layoutCustomizer.sealCustomizer();
     };
 
-    public insightRendering = (): IDashboardInsightCustomizer => {
+    public insightWidgets = (): IDashboardInsightCustomizer => {
         return this.insightCustomizer;
     };
 
-    public kpiRendering = (): IDashboardKpiCustomizer => {
+    public kpiWidgets = (): IDashboardKpiCustomizer => {
         return this.kpiCustomizer;
     };
 
-    public widgets = (): IDashboardWidgetCustomizer => {
+    public customWidgets = (): IDashboardWidgetCustomizer => {
         return this.widgetCustomizer;
     };
 
