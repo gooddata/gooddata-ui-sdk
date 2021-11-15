@@ -2126,10 +2126,10 @@ export interface IDashboardCustomComponentProps {
     DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
     ErrorComponent?: ComponentType<IErrorProps>;
     FilterBarComponent?: CustomFilterBarComponent;
-    InsightComponentProvider?: InsightComponentProvider;
+    InsightComponentProvider?: OptionalInsightComponentProvider;
     InsightMenuButtonComponentProvider?: InsightMenuButtonComponentProvider;
     InsightMenuComponentProvider?: InsightMenuComponentProvider;
-    KpiComponentProvider?: KpiComponentProvider;
+    KpiComponentProvider?: OptionalKpiComponentProvider;
     LayoutComponent?: CustomDashboardLayoutComponent;
     LoadingComponent?: ComponentType<ILoadingProps>;
     MenuButtonComponent?: CustomMenuButtonComponent;
@@ -2138,7 +2138,7 @@ export interface IDashboardCustomComponentProps {
     ShareDialogComponent?: CustomShareDialogComponent;
     TitleComponent?: CustomTitleComponent;
     TopBarComponent?: CustomTopBarComponent;
-    WidgetComponentProvider?: WidgetComponentProvider;
+    WidgetComponentProvider?: OptionalWidgetComponentProvider;
 }
 
 // @alpha (undocumented)
@@ -2228,7 +2228,7 @@ export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPosi
 
 // @alpha (undocumented)
 export interface IDashboardInsightCustomizer {
-    withCustomDecorator(providerFactory: (next: InsightComponentProvider) => InsightComponentProvider): IDashboardInsightCustomizer;
+    withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): IDashboardInsightCustomizer;
     withCustomProvider(provider: InsightComponentProvider): IDashboardInsightCustomizer;
     withTag(tag: string, component: React_2.ComponentType): IDashboardInsightCustomizer;
 }
@@ -2303,7 +2303,7 @@ export interface IDashboardInsightProps {
 
 // @alpha (undocumented)
 export interface IDashboardKpiCustomizer {
-    withCustomDecorator(providerFactory: (next: KpiComponentProvider) => KpiComponentProvider): IDashboardKpiCustomizer;
+    withCustomDecorator(providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider): IDashboardKpiCustomizer;
     withCustomProvider(provider: KpiComponentProvider): IDashboardKpiCustomizer;
 }
 
@@ -2547,7 +2547,7 @@ export type InsightAttributesMeta = {
 };
 
 // @alpha (undocumented)
-export type InsightComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent | undefined;
+export type InsightComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent;
 
 // @alpha
 export type InsightDateDatasets = {
@@ -2931,7 +2931,7 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kp
 }>;
 
 // @alpha (undocumented)
-export type KpiComponentProvider = (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent | undefined;
+export type KpiComponentProvider = (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
 
 // @alpha (undocumented)
 export type KpiPlaceholderWidget = ICustomWidgetBase & {
@@ -3150,6 +3150,18 @@ export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => Re
 
 // @internal (undocumented)
 export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
+
+// @alpha (undocumented)
+export type OptionalInsightComponentProvider = OptionalProvider<InsightComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes ? (...args: TArgs) => TRes | undefined : never;
+
+// @alpha (undocumented)
+export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentProvider>;
 
 // @alpha (undocumented)
 export interface PermissionsState {
@@ -4549,7 +4561,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 };
 
 // @alpha (undocumented)
-export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent | undefined;
+export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
 
 // @alpha
 export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;

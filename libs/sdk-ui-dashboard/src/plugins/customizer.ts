@@ -1,6 +1,11 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { InsightComponentProvider, KpiComponentProvider } from "../presentation";
+import {
+    InsightComponentProvider,
+    KpiComponentProvider,
+    OptionalInsightComponentProvider,
+    OptionalKpiComponentProvider,
+} from "../presentation";
 import {
     DashboardDispatch,
     DashboardEventHandler,
@@ -66,9 +71,6 @@ export interface IDashboardInsightCustomizer {
      *
      *         function MyCustomDecorator() {
      *              const Decorated = next(insight, widget);
-     *              if (!Decorated) {
-     *                  return null;
-     *              }
      *
      *              return (
      *                  <div>
@@ -93,7 +95,7 @@ export interface IDashboardInsightCustomizer {
      * @param providerFactory - factory
      */
     withCustomDecorator(
-        providerFactory: (next: InsightComponentProvider) => InsightComponentProvider,
+        providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider,
     ): IDashboardInsightCustomizer;
 }
 
@@ -138,9 +140,6 @@ export interface IDashboardKpiCustomizer {
      *
      *         function MyCustomDecorator() {
      *              const Decorated = next(kpi, widget);
-     *              if (!Decorated) {
-     *                  return null;
-     *              }
      *
      *              return (
      *                  <div>
@@ -165,7 +164,7 @@ export interface IDashboardKpiCustomizer {
      * @param providerFactory - factory
      */
     withCustomDecorator(
-        providerFactory: (next: KpiComponentProvider) => KpiComponentProvider,
+        providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider,
     ): IDashboardKpiCustomizer;
 }
 

@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import React from "react";
-import { KpiComponentProvider } from "../../../presentation";
+import { KpiComponentProvider, OptionalKpiComponentProvider } from "../../../presentation";
 import { idRef, measureItem } from "@gooddata/sdk-model";
 import { IKpiWidget, ILegacyKpi } from "@gooddata/sdk-backend-spi";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
@@ -47,7 +47,7 @@ function createTestComponent(name: string): React.FC {
 function createTestComponentProvider(
     name: string,
     predicate: (kpi: ILegacyKpi, widget: IKpiWidget) => boolean,
-): KpiComponentProvider {
+): OptionalKpiComponentProvider {
     const Component = createTestComponent(name);
 
     return (kpi, widget) => {
@@ -63,7 +63,7 @@ function createTestDecoratorFactory(
     name: string,
     predicate: (kpi: ILegacyKpi, widget: IKpiWidget) => boolean,
 ) {
-    return (next: KpiComponentProvider): KpiComponentProvider => {
+    return (next: KpiComponentProvider): OptionalKpiComponentProvider => {
         return (kpi, widget) => {
             if (!predicate(kpi, widget)) {
                 return undefined;
@@ -84,7 +84,10 @@ function createTestDecoratorFactory(
     };
 }
 
-const DefaultTestComponentProvider: KpiComponentProvider = createTestComponentProvider("default", () => true);
+const DefaultTestComponentProvider: KpiComponentProvider = createTestComponentProvider(
+    "default",
+    () => true,
+) as KpiComponentProvider;
 
 //
 //

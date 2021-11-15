@@ -1,6 +1,10 @@
 // (C) 2021 GoodData Corporation
 import { IDashboardInsightCustomizer } from "../customizer";
-import { DefaultDashboardInsightInner, InsightComponentProvider } from "../../presentation";
+import {
+    DefaultDashboardInsightInner,
+    InsightComponentProvider,
+    OptionalInsightComponentProvider,
+} from "../../presentation";
 import React from "react";
 import { InvariantError } from "ts-invariant";
 import includes from "lodash/includes";
@@ -12,8 +16,8 @@ const DefaultInsightRendererProvider: InsightComponentProvider = () => {
 };
 
 interface IInsightCustomizerState {
-    addTagProvider(tag: string, provider: InsightComponentProvider): void;
-    addCustomProvider(provider: InsightComponentProvider): void;
+    addTagProvider(tag: string, provider: OptionalInsightComponentProvider): void;
+    addCustomProvider(provider: OptionalInsightComponentProvider): void;
     getRootProvider(): InsightComponentProvider;
     switchRootProvider(provider: InsightComponentProvider): void;
 }
@@ -177,7 +181,7 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
             return this;
         }
 
-        const newProvider: InsightComponentProvider = (insight) => {
+        const newProvider: OptionalInsightComponentProvider = (insight) => {
             if (includes(insightTags(insight), tag)) {
                 return component;
             }
@@ -188,14 +192,14 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
         return this;
     };
 
-    public withCustomProvider = (provider: InsightComponentProvider): this => {
+    public withCustomProvider = (provider: OptionalInsightComponentProvider): this => {
         this.state.addCustomProvider(provider);
 
         return this;
     };
 
     public withCustomDecorator = (
-        providerFactory: (next: InsightComponentProvider) => InsightComponentProvider,
+        providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider,
     ): this => {
         // snapshot current root provider
         const rootSnapshot = this.state.getRootProvider();

@@ -2,7 +2,7 @@
 
 import { IDashboardWidgetCustomizer } from "../customizer";
 import { DashboardCustomizationLogger } from "./customizationLogging";
-import { WidgetComponentProvider } from "../../presentation";
+import { OptionalWidgetComponentProvider } from "../../presentation";
 import React from "react";
 import { isCustomWidget } from "../../model";
 
@@ -91,7 +91,7 @@ export class DefaultWidgetCustomizer implements IDashboardWidgetCustomizer {
         return this;
     };
 
-    public getWidgetComponentProvider = (): WidgetComponentProvider => {
+    public getWidgetComponentProvider = (): OptionalWidgetComponentProvider => {
         const customWidgetMap = this.state.getCustomWidgetMap();
 
         return (widget) => {
