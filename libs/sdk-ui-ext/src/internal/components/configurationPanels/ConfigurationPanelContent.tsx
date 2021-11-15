@@ -28,7 +28,9 @@ export interface IConfigurationPanelContentProps {
     panelConfig?: any;
 }
 
-export default abstract class ConfigurationPanelContent extends React.PureComponent<IConfigurationPanelContentProps> {
+export default abstract class ConfigurationPanelContent<
+    T extends IConfigurationPanelContentProps = IConfigurationPanelContentProps,
+> extends React.PureComponent<T> {
     public static defaultProps: IConfigurationPanelContentProps = {
         properties: null,
         references: null,

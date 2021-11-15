@@ -7,7 +7,7 @@ import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
 import MinMaxControl from "../configurationControls//MinMaxControl";
-import ConfigurationPanelContent from "./ConfigurationPanelContent";
+import ConfigurationPanelContent, { IConfigurationPanelContentProps } from "./ConfigurationPanelContent";
 import ConfigSection from "../configurationControls/ConfigSection";
 import CheckboxControl from "../configurationControls/CheckboxControl";
 import DataLabelsControl from "../configurationControls/DataLabelsControl";
@@ -24,7 +24,9 @@ import { bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 import NameSubsection from "../configurationControls/axis/NameSubsection";
 
-export default class BaseChartConfigurationPanel extends ConfigurationPanelContent {
+export default class BaseChartConfigurationPanel<
+    T extends IConfigurationPanelContentProps = IConfigurationPanelContentProps,
+> extends ConfigurationPanelContent<T> {
     protected renderCanvasSection(): React.ReactNode {
         const { gridEnabled } = this.getControlProperties();
 

@@ -13,12 +13,24 @@ import {
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble";
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
+import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent";
 
-export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel {
+export interface ILineChartBasedConfigurationPanel extends IConfigurationPanelContentProps {
+    dataLabelDefaultValue?: string | boolean;
+}
+
+export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel<ILineChartBasedConfigurationPanel> {
     protected renderConfigurationPanel(): React.ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
-        const { featureFlags, properties, propertiesMeta, pushData, panelConfig } = this.props;
+        const {
+            featureFlags,
+            properties,
+            propertiesMeta,
+            pushData,
+            panelConfig,
+            dataLabelDefaultValue = false,
+        } = this.props;
         const { isDataPointsControlDisabled } = panelConfig;
 
         const controlsDisabled = this.isControlDisabled();
@@ -41,7 +53,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             pushData={pushData}
                             properties={properties}
                             isDisabled={controlsDisabled}
-                            defaultValue={false}
+                            defaultValue={dataLabelDefaultValue}
                         />
 
                         {featureFlags["enableHidingOfDataPoints"] && (
