@@ -28,6 +28,7 @@ import { IAccessControlAware } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAttributeElements } from '@gooddata/sdk-model';
+import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
@@ -51,6 +52,7 @@ import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-backend-spi';
 import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { Identifier } from '@gooddata/sdk-model';
@@ -1924,6 +1926,12 @@ export const FilterBar: () => JSX.Element;
 
 // @internal (undocumented)
 export const FilterBarPropsProvider: React_2.FC<IFilterBarProps>;
+
+// @internal
+export function filterContextAttributeFilterToAttributeFilter(filter: IDashboardAttributeFilter): IAttributeFilter;
+
+// @internal
+export function filterContextDateFilterToDateFilter(filter: IDashboardDateFilter, widget: IWidgetDefinition): IDateFilter;
 
 // @internal
 export function filterContextItemsToFiltersForWidget(filterContextItems: FilterContextItem[], widget: IWidgetDefinition): IDashboardFilter[];

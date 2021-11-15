@@ -2,6 +2,7 @@
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
+    IDashboardDateFilter,
     IFilterContext,
     IFilterContextDefinition,
     isDashboardAttributeFilter,
@@ -14,6 +15,7 @@ import {
     newRelativeDateFilter,
     newAbsoluteDateFilter,
     IAttributeFilter,
+    IDateFilter,
 } from "@gooddata/sdk-model";
 import isString from "lodash/isString";
 import { IDashboardFilter } from "../types";
@@ -37,7 +39,7 @@ export function filterContextToFiltersForWidget(
 }
 
 /**
- * Converts {@link IDashboardAttributeFilter} to {@link @gooddata/sdk-model#IAttributeFilter} instance.
+ * Converts {@link @gooddata/sdk-backend-spi#IDashboardAttributeFilter} to {@link @gooddata/sdk-model#IAttributeFilter} instance.
  *
  * @param filter - filter context attribute filter to convert
  * @internal
@@ -59,6 +61,33 @@ export function filterContextAttributeFilterToAttributeFilter(
 }
 
 /**
+ * Converts {@link @gooddata/sdk-backend-spi#IDashboardDateFilter} to {@link @gooddata/sdk-model#IAttributeFilter} instance.
+ *
+ * @param filter - filter context attribute filter to convert
+ * @param widget - widget to use to get dateDataSet for date filters
+ * @internal
+ */
+export function filterContextDateFilterToDateFilter(
+    filter: IDashboardDateFilter,
+    widget: IWidgetDefinition,
+): IDateFilter {
+    if (filter.dateFilter.type === "relative") {
+        return newRelativeDateFilter(
+            widget.dateDataSet!,
+            filter.dateFilter.granularity,
+            numberOrStringToNumber(filter.dateFilter.from!),
+            numberOrStringToNumber(filter.dateFilter.to!),
+        );
+    } else {
+        return newAbsoluteDateFilter(
+            widget.dateDataSet!,
+            filter.dateFilter.from!.toString(),
+            filter.dateFilter.to!.toString(),
+        );
+    }
+}
+
+/**
  * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
  *
  * @param filterContextItems - filter context items to get filters for
@@ -73,20 +102,7 @@ export function filterContextItemsToFiltersForWidget(
         if (isDashboardAttributeFilter(filter)) {
             return filterContextAttributeFilterToAttributeFilter(filter);
         } else {
-            if (filter.dateFilter.type === "relative") {
-                return newRelativeDateFilter(
-                    widget.dateDataSet!,
-                    filter.dateFilter.granularity,
-                    numberOrStringToNumber(filter.dateFilter.from!),
-                    numberOrStringToNumber(filter.dateFilter.to!),
-                );
-            } else {
-                return newAbsoluteDateFilter(
-                    widget.dateDataSet!,
-                    filter.dateFilter.from!.toString(),
-                    filter.dateFilter.to!.toString(),
-                );
-            }
+            return filterContextDateFilterToDateFilter(filter, widget);
         }
     });
 }
