@@ -121,5 +121,7 @@
     "options.menu.unsupported.loading": "U kunt het inzicht momenteel niet exporteren.",
     "export.defaultTitle": "Inzicht zonder naam",
     "widget.options.menu.exportToCSV": "Exporteren naar CSV",
-    "widget.options.menu.exportToXLSX": "Exporteren naar XLSX"
+    "widget.options.menu.exportToXLSX": "Exporteren naar XLSX",
+    "dashboard.error.empty.heading": "Dit dashboard is leeg",
+    "dashboard.error.empty.text": "Alle inzichten zijn verwijderd."
 }

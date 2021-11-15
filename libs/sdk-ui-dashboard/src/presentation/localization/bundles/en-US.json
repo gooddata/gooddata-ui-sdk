@@ -670,5 +670,21 @@
         "value": "Share",
         "comment": "Text of button that opens share dialog",
         "limit": 0
+    },
+    "dashboard.error.empty.heading": {
+        "value": "This dashboard is empty",
+        "comment": "The user has a dashboard that contains no widgets.",
+        "limit": 0
+    },
+    "dashboard.error.empty.text|insight": {
+        "value": "All insights were removed.",
+        "comment": "The user has a dashboard that contains no widgets.",
+        "limit": 0
+    },
+    "dashboard.error.empty.text|report": {
+        "value": "All reports were removed.",
+        "comment": "The user has a dashboard that contains no widgets.",
+        "translate": false,
+        "limit": 0
     }
 }

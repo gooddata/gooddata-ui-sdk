@@ -121,5 +121,7 @@
     "options.menu.unsupported.loading": "Die Betrachtung kann momentan nicht exportiert werden. ",
     "export.defaultTitle": "Betrachtung ohne Namen",
     "widget.options.menu.exportToCSV": "Als CSV exportieren",
-    "widget.options.menu.exportToXLSX": "Nach XLSX exportieren"
+    "widget.options.menu.exportToXLSX": "Nach XLSX exportieren",
+    "dashboard.error.empty.heading": "Dieses Dashboard ist leer",
+    "dashboard.error.empty.text": "Alle Betrachtungen wurden entfernt."
 }
