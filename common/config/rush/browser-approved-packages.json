@@ -148,7 +148,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-charts",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-dashboard",
