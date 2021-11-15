@@ -902,6 +902,9 @@ export function isComparisonConditionOperator(obj: unknown): obj is ComparisonCo
 // @public
 export function isDateFilter(obj: unknown): obj is IDateFilter;
 
+// @public (undocumented)
+export function isDerivedMeasure(measure: IMeasure): boolean;
+
 // @public
 export function isDimension(obj: unknown): obj is IDimension;
 

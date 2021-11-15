@@ -610,7 +610,7 @@ export function measurePreviousPeriodDateDataSets(
  * Gets date data sets used in previous-period measure. If the input is not a previous period measure, then undefined
  * will be returned.
  *
- * @param measure - measure to get the previous period date data sets of
+ * ≈
  * @returns measure previous period date data sets if specified, undefined otherwise
  * @public
  */
@@ -627,4 +627,13 @@ export function measurePreviousPeriodDateDataSets(
     }
 
     return measure.measure.definition.previousPeriodMeasure.dateDataSets;
+}
+
+/**
+ * @param measure - measure to check if it is derived
+ * @returns true if measure is derived
+ * @public
+ */
+export function isDerivedMeasure(measure: IMeasure): boolean {
+    return isPoPMeasure(measure) || isPreviousPeriodMeasure(measure);
 }

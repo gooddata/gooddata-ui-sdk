@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     attributeAlias,
     attributeLocalId,
@@ -30,6 +30,8 @@ import {
     IMeasureDefinition,
     isAttributeFilter,
     isRankingFilter,
+    isDerivedMeasure,
+    measureMasterIdentifier,
 } from "@gooddata/sdk-model";
 import {
     IDimensionDescriptor,
@@ -117,7 +119,7 @@ export class Denormalizer {
             } else if (isMeasureDescriptor(value)) {
                 const localIdentifier = this.originalLocalId(value.measureHeaderItem.localIdentifier);
                 const measure = this.originalMeasures[localIdentifier]!;
-                const format = measureFormat(measure) || value.measureHeaderItem.format;
+                const format = this.originalMeasureFormat(measure, value.measureHeaderItem.format);
                 const name = this.originalMeasureTitle(measure, value.measureHeaderItem.name);
 
                 return {
@@ -185,6 +187,22 @@ export class Denormalizer {
 
     private originalMeasureTitle = (originalDef: IMeasure, nameFromBackend: string): string => {
         return measureAlias(originalDef) || measureTitle(originalDef) || nameFromBackend;
+    };
+
+    private originalMeasureFormat = (measure: IMeasure, formatFromBackend: string): string => {
+        const format = isDerivedMeasure(measure)
+            ? this.getDerivedMeasureFormat(measure)
+            : measureFormat(measure);
+        return format || formatFromBackend;
+    };
+
+    private getDerivedMeasureFormat = (derivedMeasure: IMeasure): string | undefined => {
+        const masterMeasureLocalIdentifier = measureMasterIdentifier(derivedMeasure);
+        if (!masterMeasureLocalIdentifier) {
+            return;
+        }
+        const measure = this.originalMeasures[masterMeasureLocalIdentifier];
+        return measureFormat(measure);
     };
 }
 

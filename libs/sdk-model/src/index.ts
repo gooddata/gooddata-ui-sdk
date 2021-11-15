@@ -203,6 +203,7 @@ export {
     measurePopAttribute,
     measurePreviousPeriodDateDataSets,
     MeasureOrLocalId,
+    isDerivedMeasure,
 } from "./execution/measure";
 
 export {
