@@ -56,6 +56,18 @@ export function convertToPluginIdentifier(name: string): string {
 }
 
 /**
+ * Converts plugin name to directory name for the plugin. This will ensure that if the plugin name
+ * contains organization (@something/plugin) then only the `plugin` will be used.
+ *
+ * @param name
+ */
+export function convertToPluginDirectory(name: string): string {
+    const split = name.split("/");
+
+    return split.length > 1 ? split[1] : name;
+}
+
+/**
  * Converts plugin identifier to entry point file name
  */
 export function convertToPluginEntrypoint(pluginIdentifier: string): string {

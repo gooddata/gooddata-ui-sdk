@@ -1,12 +1,16 @@
 // (C) 2021 GoodData Corporation
 import { ActionOptions, TargetAppLanguage } from "../_base/types";
 import { logError, logInfo, logWarn } from "../_base/terminal/loggers";
-import kebabCase from "lodash/kebabCase";
 import * as path from "path";
 import fse from "fs-extra";
 import tar from "tar";
 import { getDashboardPluginTemplateArchive } from "../dashboard-plugin-template";
-import { genericErrorReporter, readJsonSync, writeAsJsonSync } from "../_base/utils";
+import {
+    convertToPluginDirectory,
+    genericErrorReporter,
+    readJsonSync,
+    writeAsJsonSync,
+} from "../_base/utils";
 import { processTigerFiles } from "./processTigerFiles";
 import { getInitCmdActionConfig, InitCmdActionConfig } from "./actionConfig";
 import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles";
@@ -148,7 +152,7 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
  */
 async function prepareProject(config: InitCmdActionConfig): Promise<string> {
     const { name, targetDir, language, backend } = config;
-    const target = targetDir ? targetDir : path.resolve(process.cwd(), kebabCase(name));
+    const target = targetDir ? targetDir : path.resolve(process.cwd(), convertToPluginDirectory(name));
 
     await unpackProject(target, language);
     modifyPackageJson(target, config);
