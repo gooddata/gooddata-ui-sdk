@@ -5,6 +5,7 @@ import { AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig";
 import fse from "fs-extra";
 import { IDashboardPlugin } from "@gooddata/sdk-backend-spi";
 import { genericErrorReporter } from "../_base/utils";
+import isEmpty from "lodash/isEmpty";
 
 function printAddConfigSummary(config: AddCmdActionConfig) {
     const {
@@ -14,6 +15,7 @@ function printAddConfigSummary(config: AddCmdActionConfig) {
         pluginUrl,
         credentials: { username },
         pluginName,
+        pluginDescription,
     } = config;
 
     logInfo("Everything looks valid. Going to add new plugin object to workspace metadata.");
@@ -26,6 +28,9 @@ function printAddConfigSummary(config: AddCmdActionConfig) {
     logInfo(`  Workspace   : ${workspace}`);
     logInfo(`  Plugin URL  : ${pluginUrl}`);
     logInfo(`  Plugin name : ${pluginName}`);
+
+    const description = isEmpty(pluginDescription) ? "(empty)" : pluginDescription;
+    logInfo(`  Plugin desc : ${description}   (see package.json)`);
 }
 
 function createPluginObject(config: AddCmdActionConfig): Promise<IDashboardPlugin> {
