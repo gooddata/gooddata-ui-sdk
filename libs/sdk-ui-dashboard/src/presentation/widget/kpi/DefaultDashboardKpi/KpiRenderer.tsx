@@ -40,18 +40,21 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     isLoading,
 }) => {
     const onPrimaryValueClick = useCallback(() => {
-        if (!isDrillable || !onDrill || !kpiResult?.measureDescriptor) {
+        if (!isDrillable || !onDrill) {
             return;
         }
+
         return onDrill({
             type: "headline", // TODO is that correct?
             element: "primaryValue",
-            value: kpiResult.measureResult?.toString(),
-            intersection: [
-                {
-                    header: kpiResult.measureDescriptor,
-                },
-            ],
+            value: kpiResult?.measureResult?.toString(),
+            intersection: kpiResult?.measureDescriptor
+                ? [
+                      {
+                          header: kpiResult.measureDescriptor,
+                      },
+                  ]
+                : [],
         });
     }, [kpiResult?.measureResult, kpiResult?.measureDescriptor, isDrillable, onDrill]);
 
