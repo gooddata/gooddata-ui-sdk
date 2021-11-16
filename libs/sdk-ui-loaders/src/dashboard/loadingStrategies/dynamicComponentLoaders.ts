@@ -1,7 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
-import { ModuleFederationIntegration } from "../types";
+import { DashboardContext, IDashboardEngine } from "@gooddata/sdk-ui-dashboard";
+import { areObjRefsEqual } from "@gooddata/sdk-model";
+import { LoadedPlugin, ModuleFederationIntegration } from "../types";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 
@@ -31,19 +32,29 @@ export async function dynamicDashboardPluginLoader(
     _ctx: DashboardContext,
     dashboard: IDashboardWithReferences,
     moduleFederationIntegration: ModuleFederationIntegration,
-): Promise<IDashboardPluginContract_V1[]> {
+): Promise<LoadedPlugin[]> {
     const { plugins } = dashboard.references;
     if (!plugins.length) {
         return [];
     }
 
-    const urls = plugins.map((plugin) => plugin.url);
+    const pluginLinks = dashboard.dashboard.plugins;
 
     return Promise.all(
-        urls.map(async (url) => {
-            const loadedModule = await loadPlugin(moduleNameFromUrl(url), moduleFederationIntegration)();
+        plugins.map(async (pluginMeta): Promise<LoadedPlugin> => {
+            const loadedModule = await loadPlugin(
+                moduleNameFromUrl(pluginMeta.url),
+                moduleFederationIntegration,
+            )();
             const pluginFactory = loadedModule.default;
-            return pluginFactory();
+
+            const plugin = pluginFactory();
+            const pluginLink = pluginLinks?.find((link) => areObjRefsEqual(link.plugin, pluginMeta.ref));
+
+            return {
+                plugin,
+                parameters: pluginLink?.parameters,
+            };
         }),
     );
 }

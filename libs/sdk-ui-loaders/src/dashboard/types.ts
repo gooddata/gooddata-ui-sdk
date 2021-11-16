@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
+import { IDashboardBaseProps, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 import { IEmbeddedPlugin } from "./loader";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -136,4 +136,13 @@ export type AdaptiveLoadOptions = {
 export type ModuleFederationIntegration = {
     __webpack_init_sharing__: (scope: string) => Promise<void>;
     __webpack_share_scopes__: any;
+};
+
+/**
+ * Dashboard plugin and its parameters.
+ * @alpha
+ */
+export type LoadedPlugin = {
+    plugin: IDashboardPluginContract_V1;
+    parameters: string | undefined;
 };
