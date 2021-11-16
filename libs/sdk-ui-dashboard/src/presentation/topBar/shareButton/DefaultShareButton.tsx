@@ -4,7 +4,6 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { IShareButtonProps } from "./types";
-import { ShareButtonPropsProvider, useShareButtonProps } from "./ShareButtonPropsContext";
 import {
     selectCanManageACL,
     selectSettings,
@@ -15,8 +14,10 @@ import {
 
 import { HiddenShareButton } from "./HiddenShareButton";
 
-const DefaultShareButtonCore: React.FC<WrappedComponentProps> = ({ intl }): JSX.Element | null => {
-    const { onShareButtonClick } = useShareButtonProps();
+const DefaultShareButtonCore: React.FC<IShareButtonProps & WrappedComponentProps> = ({
+    intl,
+    onShareButtonClick,
+}): JSX.Element | null => {
     const settings = useDashboardSelector(selectSettings);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const hasPermission = useDashboardSelector(selectCanManageACL);
@@ -49,17 +50,6 @@ const DefaultShareButtonCore: React.FC<WrappedComponentProps> = ({ intl }): JSX.
 };
 
 /**
- * @internal
- */
-export const DefaultShareButtonInner = injectIntl(DefaultShareButtonCore);
-
-/**
  * @alpha
  */
-export const DefaultShareButton = (props: IShareButtonProps): JSX.Element => {
-    return (
-        <ShareButtonPropsProvider {...props}>
-            <DefaultShareButtonInner />
-        </ShareButtonPropsProvider>
-    );
-};
+export const DefaultShareButton = injectIntl(DefaultShareButtonCore);

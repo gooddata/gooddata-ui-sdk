@@ -1,5 +1,10 @@
 // (C) 2021 GoodData Corporation
-export { DashboardStoreProvider, useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider";
+export {
+    DashboardStoreProvider,
+    useDashboardDispatch,
+    useDashboardSelector,
+    ReactDashboardContext,
+} from "./DashboardStoreProvider";
 export { IDashboardEventsContext, useDashboardEventsContext } from "./DashboardEventsContext";
 export { useDashboardCommandProcessing, CommandProcessingStatus } from "./useDashboardCommandProcessing";
 export { useDashboardEventDispatch } from "./useDashboardEventDispatch";

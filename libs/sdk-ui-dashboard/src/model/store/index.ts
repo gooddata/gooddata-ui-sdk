@@ -159,3 +159,4 @@ export { uiActions } from "./ui";
 
 export { queryAndWaitFor } from "./_infra/queryAndWaitFor";
 export { dispatchAndWaitFor } from "./_infra/dispatchAndWaitFor";
+export { DashboardStore } from "./dashboardStore";

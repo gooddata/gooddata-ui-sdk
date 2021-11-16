@@ -12,4 +12,4 @@ export interface IButtonBarProps {
 /**
  * @alpha
  */
-export type CustomButtonBarComponent = ComponentType;
+export type CustomButtonBarComponent = ComponentType<IButtonBarProps>;

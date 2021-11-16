@@ -19,6 +19,7 @@ import { DateString } from '@gooddata/sdk-backend-spi';
 import { Dictionary } from '@reduxjs/toolkit';
 import { Dispatch } from '@reduxjs/toolkit';
 import { DrillDefinition } from '@gooddata/sdk-backend-spi';
+import { EnhancedStore } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
@@ -120,7 +121,6 @@ import { ShareStatus } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
-import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @alpha (undocumented)
@@ -236,7 +236,7 @@ export type BrokenAlertDateFilterInfo = IBrokenAlertFilterBasicInfo<IDashboardDa
 export type BrokenAlertType = "deleted" | "ignored";
 
 // @internal (undocumented)
-export const ButtonBar: () => JSX.Element;
+export const ButtonBar: (props: IButtonBarProps) => JSX.Element;
 
 // @internal (undocumented)
 export const ButtonBarPropsProvider: React_2.FC<IButtonBarProps>;
@@ -489,7 +489,7 @@ export interface CreateScheduledEmail extends IDashboardCommand {
 export function createScheduledEmail(scheduledEmail: IScheduledMailDefinition, filterContext?: IFilterContextDefinition, correlationId?: string): CreateScheduledEmail;
 
 // @alpha (undocumented)
-export type CustomButtonBarComponent = ComponentType;
+export type CustomButtonBarComponent = ComponentType<IButtonBarProps>;
 
 // @alpha (undocumented)
 export type CustomDashboardAttributeFilterComponent = ComponentType;
@@ -519,7 +519,7 @@ export type CustomDashboardWidgetComponent = ComponentType;
 export type CustomFilterBarComponent = ComponentType;
 
 // @alpha (undocumented)
-export type CustomMenuButtonComponent = ComponentType;
+export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
 
 // @alpha (undocumented)
 export type CustomSaveAsDialogComponent = ComponentType;
@@ -528,7 +528,7 @@ export type CustomSaveAsDialogComponent = ComponentType;
 export type CustomScheduledEmailDialogComponent = ComponentType;
 
 // @alpha (undocumented)
-export type CustomShareButtonComponent = ComponentType;
+export type CustomShareButtonComponent = ComponentType<IShareButtonProps>;
 
 // @alpha (undocumented)
 export type CustomShareDialogComponent = ComponentType;
@@ -1502,6 +1502,9 @@ export type DashboardState = {
 export type DashboardStateChangeCallback = (state: DashboardState, dispatch: DashboardDispatch) => void;
 
 // @internal (undocumented)
+export type DashboardStore = EnhancedStore<DashboardState>;
+
+// @internal (undocumented)
 export const DashboardStoreProvider: React_2.FC<IDashboardStoreProviderProps>;
 
 // @alpha (undocumented)
@@ -1626,9 +1629,6 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
 // @alpha (undocumented)
 export const DefaultButtonBar: React_2.FC<PropsWithChildren<IButtonBarProps>>;
 
-// @internal (undocumented)
-export const DefaultButtonBarInner: () => JSX.Element | null;
-
 // @alpha
 export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element;
 
@@ -1687,10 +1687,7 @@ export const DefaultFilterBar: (props: IFilterBarProps) => JSX.Element;
 export const DefaultFilterBarInner: () => JSX.Element;
 
 // @alpha (undocumented)
-export const DefaultMenuButton: (props: IMenuButtonProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultMenuButtonInner: () => JSX.Element | null;
+export const DefaultMenuButton: (props: IMenuButtonProps) => JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultSaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element;
@@ -1705,11 +1702,10 @@ export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) =>
 export const DefaultScheduledEmailDialogInner: () => JSX.Element | null;
 
 // @alpha (undocumented)
-export const DefaultShareButton: (props: IShareButtonProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultShareButtonInner: React_2.FC<WithIntlProps<WrappedComponentProps<"intl">>> & {
-    WrappedComponent: React_2.ComponentType<WrappedComponentProps<"intl">>;
+export const DefaultShareButton: React_2.ForwardRefExoticComponent<Pick<IShareButtonProps & WrappedComponentProps<"intl">, "onShareButtonClick"> & {
+    forwardedRef?: React_2.RefObject<any> | ((instance: any) => void) | null | undefined;
+} & React_2.RefAttributes<any>> & {
+    WrappedComponent: React_2.ComponentType<IShareButtonProps & WrappedComponentProps<"intl">>;
 };
 
 // @alpha (undocumented)
@@ -2229,7 +2225,9 @@ export interface IDashboardEventsContext {
 }
 
 // @alpha (undocumented)
-export type IDashboardExtensionProps = IDashboardEventing & IDashboardCustomizationProps & IDashboardThemingProps;
+export type IDashboardExtensionProps = IDashboardEventing & IDashboardCustomizationProps & IDashboardThemingProps & {
+    onStoreCreated?: (store: DashboardStore) => void;
+};
 
 // @beta
 export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
@@ -2361,6 +2359,8 @@ export interface IDashboardStoreProviderProps {
     onEventingInitialized?: (registerEventHandler: (handler: DashboardEventHandler) => void, unregisterEventHandler: (handler: DashboardEventHandler) => void) => void;
     // (undocumented)
     onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
+    // (undocumented)
+    onStoreCreated?: (store: DashboardStore) => void;
     // (undocumented)
     permissions?: IWorkspacePermissions;
     // (undocumented)
@@ -2990,7 +2990,7 @@ export type MeasureDateDatasets = {
 };
 
 // @internal (undocumented)
-export const MenuButton: () => JSX.Element;
+export const MenuButton: (props: IMenuButtonProps) => JSX.Element;
 
 // @internal (undocumented)
 export const MenuButtonPropsProvider: React_2.FC<IMenuButtonProps>;
@@ -3248,6 +3248,9 @@ export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: strin
 
 // @alpha
 export function queryWidgetFilters(widgetRef: ObjRef, widgetFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;
+
+// @internal (undocumented)
+export const ReactDashboardContext: any;
 
 // @alpha (undocumented)
 export interface RefreshInsightWidget extends IDashboardCommand {
@@ -3873,7 +3876,7 @@ export function setExecutionResultError(id: ObjRef | string, error: GoodDataSdkE
 export function setExecutionResultLoading(id: ObjRef | string, correlationId?: string): UpsertExecutionResult;
 
 // @internal (undocumented)
-export const ShareButton: () => JSX.Element;
+export const ShareButton: (props: IShareButtonProps) => JSX.Element;
 
 // @internal (undocumented)
 export const ShareButtonPropsProvider: React_2.FC<IShareButtonProps>;

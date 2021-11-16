@@ -45,12 +45,7 @@ import {
     useDispatchDashboardCommand,
 } from "../../model";
 import { DefaultScheduledEmailDialogInner } from "../scheduledEmail";
-import {
-    DefaultButtonBarInner,
-    DefaultMenuButtonInner,
-    DefaultTitleInner,
-    DefaultTopBarInner,
-} from "../topBar";
+import { DefaultButtonBar, DefaultMenuButton, DefaultTitleInner, DefaultTopBarInner } from "../topBar";
 
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { IDashboardProps } from "./types";
@@ -193,6 +188,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             permissions={props.permissions}
             onStateChange={props.onStateChange}
             onEventingInitialized={props.onEventingInitialized}
+            additionalReduxContext={props.additionalReduxContext}
             customizationFns={props.customizationFns}
         >
             <ToastMessageContextProvider>
@@ -209,8 +205,8 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                             InsightMenuComponentProvider={insightMenuProvider}
                             KpiComponentProvider={kpiProvider}
                             WidgetComponentProvider={widgetProvider}
-                            ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
-                            MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
+                            ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
+                            MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
                             TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
                             TitleComponent={props.TitleComponent ?? DefaultTitleInner}
                             ScheduledEmailDialogComponent={

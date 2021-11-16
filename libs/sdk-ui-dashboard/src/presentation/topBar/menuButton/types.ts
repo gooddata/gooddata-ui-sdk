@@ -48,7 +48,7 @@ export interface IMenuButtonProps {
 /**
  * @alpha
  */
-export type CustomMenuButtonComponent = ComponentType;
+export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
 
 /**
  * @alpha
