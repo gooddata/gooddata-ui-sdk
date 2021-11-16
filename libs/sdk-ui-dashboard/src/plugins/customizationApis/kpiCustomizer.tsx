@@ -1,6 +1,10 @@
 // (C) 2021 GoodData Corporation
 import { IDashboardKpiCustomizer } from "../customizer";
-import { DefaultDashboardKpiInner, KpiComponentProvider } from "../../presentation";
+import {
+    DefaultDashboardKpiInner,
+    KpiComponentProvider,
+    OptionalKpiComponentProvider,
+} from "../../presentation";
 import { InvariantError } from "ts-invariant";
 import { DashboardCustomizationLogger } from "./customizationLogging";
 
@@ -9,7 +13,7 @@ const DefaultKpiRendererProvider: KpiComponentProvider = () => {
 };
 
 interface IKpiCustomizerState {
-    addCustomProvider(provider: KpiComponentProvider): void;
+    addCustomProvider(provider: OptionalKpiComponentProvider): void;
     getRootProvider(): KpiComponentProvider;
     switchRootProvider(provider: KpiComponentProvider): void;
 }
@@ -126,14 +130,14 @@ export class DefaultKpiCustomizer implements IDashboardKpiCustomizer {
         this.state = new DefaultKpiCustomizerState(defaultProvider);
     }
 
-    public withCustomProvider = (provider: KpiComponentProvider): IDashboardKpiCustomizer => {
+    public withCustomProvider = (provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer => {
         this.state.addCustomProvider(provider);
 
         return this;
     };
 
     public withCustomDecorator = (
-        providerFactory: (next: KpiComponentProvider) => KpiComponentProvider,
+        providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider,
     ): IDashboardKpiCustomizer => {
         // snapshot current root provider
         const rootSnapshot = this.state.getRootProvider();

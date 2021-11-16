@@ -49,9 +49,19 @@ import { CustomShareDialogComponent } from "../shareDialog";
 /**
  * @alpha
  */
-export type WidgetComponentProvider = (
-    widget: ExtendedDashboardWidget,
-) => CustomDashboardWidgetComponent | undefined;
+export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes
+    ? (...args: TArgs) => TRes | undefined
+    : never;
+
+/**
+ * @alpha
+ */
+export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentProvider>;
 
 /**
  * @alpha
@@ -59,7 +69,12 @@ export type WidgetComponentProvider = (
 export type InsightComponentProvider = (
     insight: IInsight,
     widget: IInsightWidget,
-) => CustomDashboardInsightComponent | undefined;
+) => CustomDashboardInsightComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalInsightComponentProvider = OptionalProvider<InsightComponentProvider>;
 
 /**
  * @alpha
@@ -90,10 +105,12 @@ export type InsightMenuItemsProvider = (
 /**
  * @alpha
  */
-export type KpiComponentProvider = (
-    kpi: ILegacyKpi,
-    widget: IKpiWidget,
-) => CustomDashboardKpiComponent | undefined;
+export type KpiComponentProvider = (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
 
 /**
  * @alpha
@@ -159,7 +176,7 @@ export interface IDashboardCustomComponentProps {
      * };
      * ```
      */
-    WidgetComponentProvider?: WidgetComponentProvider;
+    WidgetComponentProvider?: OptionalWidgetComponentProvider;
 
     /**
      * Optionally specify function to obtain custom component to use for rendering an insight.
@@ -173,7 +190,7 @@ export interface IDashboardCustomComponentProps {
      * To access the necessary props in your component, use the {@link useDashboardInsightProps} hook.
      * To fall back to the default implementation, use the {@link DefaultDashboardInsight} component.
      */
-    InsightComponentProvider?: InsightComponentProvider;
+    InsightComponentProvider?: OptionalInsightComponentProvider;
 
     /**
      * Optionally specify function to obtain custom component to use for rendering an insight menu button.
@@ -217,7 +234,7 @@ export interface IDashboardCustomComponentProps {
      * To access the necessary props in your component, use the {@link useDashboardKpiProps} hook.
      * To fall back to the default implementation, use the {@link DefaultDashboardKpi} component.
      */
-    KpiComponentProvider?: KpiComponentProvider;
+    KpiComponentProvider?: OptionalKpiComponentProvider;
 
     /**
      * Optionally specify component to use for rendering the scheduled email dialog.

@@ -2,7 +2,7 @@
 
 import { DefaultInsightCustomizer } from "../insightCustomizer";
 import React from "react";
-import { InsightComponentProvider } from "../../../presentation";
+import { InsightComponentProvider, OptionalInsightComponentProvider } from "../../../presentation";
 import { IInsight, insightTags, insightTitle } from "@gooddata/sdk-model";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
@@ -41,7 +41,7 @@ function createTestComponent(name: string): React.FC {
 function createTestComponentProvider(
     name: string,
     predicate: (insight: IInsight, widget: IInsightWidget) => boolean,
-): InsightComponentProvider {
+): OptionalInsightComponentProvider {
     const Component = createTestComponent(name);
 
     return (insight, widget) => {
@@ -57,7 +57,7 @@ function createTestDecoratorFactory(
     name: string,
     predicate: (insight: IInsight, widget: IInsightWidget) => boolean,
 ) {
-    return (next: InsightComponentProvider): InsightComponentProvider => {
+    return (next: InsightComponentProvider): OptionalInsightComponentProvider => {
         return (insight, widget) => {
             if (!predicate(insight, widget)) {
                 return undefined;
@@ -81,7 +81,7 @@ function createTestDecoratorFactory(
 const DefaultTestComponentProvider: InsightComponentProvider = createTestComponentProvider(
     "default",
     () => true,
-);
+) as InsightComponentProvider;
 
 //
 //
