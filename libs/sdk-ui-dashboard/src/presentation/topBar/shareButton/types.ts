@@ -11,4 +11,4 @@ export interface IShareButtonProps {
 /**
  * @alpha
  */
-export type CustomShareButtonComponent = ComponentType;
+export type CustomShareButtonComponent = ComponentType<IShareButtonProps>;
