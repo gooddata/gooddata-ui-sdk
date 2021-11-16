@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
+import { DashboardContext, IDashboardEngine } from "@gooddata/sdk-ui-dashboard";
 import isEmpty from "lodash/isEmpty";
 import {
     noopDashboardBeforeLoad,
@@ -12,7 +12,7 @@ import {
     dynamicDashboardEngineLoader,
     dynamicDashboardPluginLoader,
 } from "./dynamicComponentLoaders";
-import { ModuleFederationIntegration } from "../types";
+import { LoadedPlugin, ModuleFederationIntegration } from "../types";
 
 /**
  * Adaptive loader will check if there are any plugins linked with the dashboard. If so, it will use the
@@ -43,7 +43,7 @@ export const adaptiveDashboardEngineLoaderFactory =
  */
 export const adaptiveDashboardPluginLoaderFactory =
     (moduleFederationIntegration: ModuleFederationIntegration) =>
-    (ctx: DashboardContext, dashboard: IDashboardWithReferences): Promise<IDashboardPluginContract_V1[]> => {
+    (ctx: DashboardContext, dashboard: IDashboardWithReferences): Promise<LoadedPlugin[]> => {
         if (!isEmpty(dashboard.references.plugins)) {
             return dynamicDashboardPluginLoader(ctx, dashboard, moduleFederationIntegration);
         }

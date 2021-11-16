@@ -22,7 +22,12 @@ import {
     noopDashboardPluginLoader,
     staticDashboardEngineLoader,
 } from "./loadingStrategies/staticComponentLoaders";
-import { AdaptiveLoadOptions, IDashboardBasePropsForLoader, ModuleFederationIntegration } from "./types";
+import {
+    AdaptiveLoadOptions,
+    IDashboardBasePropsForLoader,
+    LoadedPlugin,
+    ModuleFederationIntegration,
+} from "./types";
 import {
     adaptiveDashboardBeforeLoadFactory,
     adaptiveDashboardEngineLoaderFactory,
@@ -41,7 +46,7 @@ export type DashboardEngineLoader = (dashboard: IDashboardWithReferences) => Pro
 export type DashboardPluginsLoader = (
     ctx: DashboardContext,
     dashboard: IDashboardWithReferences,
-) => Promise<IDashboardPluginContract_V1[]>;
+) => Promise<LoadedPlugin[]>;
 
 /**
  * @alpha
@@ -187,7 +192,8 @@ export class DashboardLoader implements IDashboardLoader {
         ]);
 
         const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
-        const allPlugins = [...plugins, ...additionalPlugins];
+        const loadedPlugins = initializeLoadedPlugins(ctx, plugins);
+        const allPlugins = [...loadedPlugins, ...additionalPlugins];
 
         return [engine, allPlugins];
     };
@@ -273,6 +279,31 @@ function initializeEmbeddedPlugins(
 
         return plugin;
     });
+}
+
+function initializeLoadedPlugins(
+    ctx: DashboardContext,
+    plugins: LoadedPlugin[],
+): IDashboardPluginContract_V1[] {
+    const validPlugins: IDashboardPluginContract_V1[] = [];
+
+    plugins.forEach(({ plugin, parameters }) => {
+        try {
+            if (plugin.onPluginLoaded) {
+                // eslint-disable-next-line no-console
+                console.debug(`Calling onPluginLoaded on ${plugin.displayName}...`);
+                plugin.onPluginLoaded(ctx, parameters);
+            }
+            validPlugins.push(plugin);
+        } catch (e: any) {
+            // eslint-disable-next-line no-console
+            console.error(
+                `The onPluginLoaded call for ${plugin.displayName} failed: ${e?.message}. Ignoring the plugin.`,
+            );
+        }
+    });
+
+    return validPlugins;
 }
 
 function clientWorkspaceDashboardFactory(
