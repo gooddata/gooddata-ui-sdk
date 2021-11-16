@@ -254,6 +254,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                     panelConfig={{
                         isDataPointsControlDisabled: this.isDataPointsControlDisabled(insight),
                     }}
+                    dataLabelDefaultValue="auto"
                 />,
                 document.querySelector(this.configPanelElement),
             );

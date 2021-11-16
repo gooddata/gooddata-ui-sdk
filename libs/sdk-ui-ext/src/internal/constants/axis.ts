@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { VisualizationTypes, ChartType } from "@gooddata/sdk-ui";
 
 export const AXIS = {
     PRIMARY: "primary",
@@ -14,7 +14,7 @@ export enum AXIS_NAME {
     SECONDARY_Y = "secondary_yaxis",
 }
 
-export const DUAL_AXES_SUPPORTED_CHARTS = [
+export const DUAL_AXES_SUPPORTED_CHARTS: ChartType[] = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.BAR,
     VisualizationTypes.LINE,

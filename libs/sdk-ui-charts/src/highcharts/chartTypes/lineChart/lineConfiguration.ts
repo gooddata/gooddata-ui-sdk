@@ -40,7 +40,9 @@ export function getLineConfiguration(
                 },
             },
             column: {
-                dataLabels: {},
+                dataLabels: {
+                    enabled: true,
+                },
             },
         },
         xAxis: [
