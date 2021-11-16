@@ -12,16 +12,15 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { IMenuButtonProps } from "./types";
-import { MenuButtonPropsProvider, useMenuButtonProps } from "./MenuButtonPropsContext";
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];
 
 /**
- * @internal
+ * @alpha
  */
-export const DefaultMenuButtonInner = (): JSX.Element | null => {
-    const { menuItems } = useMenuButtonProps();
+export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null => {
+    const { menuItems } = props;
     const [isOpen, setIsOpen] = useState(false);
 
     const onMenuButtonClick = useCallback(() => {
@@ -111,16 +110,5 @@ export const DefaultMenuButtonInner = (): JSX.Element | null => {
             />
             {isOpen && renderMenuItems()}
         </>
-    );
-};
-
-/**
- * @alpha
- */
-export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element => {
-    return (
-        <MenuButtonPropsProvider {...props}>
-            <DefaultMenuButtonInner />
-        </MenuButtonPropsProvider>
     );
 };

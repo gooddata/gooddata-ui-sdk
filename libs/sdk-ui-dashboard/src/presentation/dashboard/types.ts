@@ -20,6 +20,7 @@ import {
     DashboardModelCustomizationFns,
     DashboardState,
     ExtendedDashboardWidget,
+    DashboardStore,
 } from "../../model";
 import {
     CustomDashboardAttributeFilterComponent,
@@ -499,7 +500,12 @@ export interface IDashboardBaseProps {
  */
 export type IDashboardExtensionProps = IDashboardEventing &
     IDashboardCustomizationProps &
-    IDashboardThemingProps;
+    IDashboardThemingProps & {
+        /**
+         * @internal
+         */
+        onStoreCreated?: (store: DashboardStore) => void;
+    };
 
 /**
  * @alpha

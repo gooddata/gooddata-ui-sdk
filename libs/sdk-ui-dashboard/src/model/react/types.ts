@@ -3,6 +3,7 @@ import { IAnalyticalBackend, IDashboard, IWorkspacePermissions } from "@gooddata
 import { ObjRef } from "@gooddata/sdk-model";
 import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 import { DashboardDispatch, DashboardState } from "../store";
+import { DashboardStore } from "../store/dashboardStore";
 import { DashboardConfig, DashboardModelCustomizationFns } from "../types/commonTypes";
 
 /**
@@ -23,5 +24,9 @@ export interface IDashboardStoreProviderProps {
         registerEventHandler: (handler: DashboardEventHandler) => void,
         unregisterEventHandler: (handler: DashboardEventHandler) => void,
     ) => void;
+    /**
+     * @internal
+     */
+    onStoreCreated?: (store: DashboardStore) => void;
     customizationFns?: DashboardModelCustomizationFns;
 }

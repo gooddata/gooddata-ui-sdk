@@ -3,8 +3,8 @@ import React from "react";
 
 import { selectIsExport, selectLocale, useDashboardSelector } from "../../../model";
 import { IntlWrapper } from "../../localization";
-import { ButtonBar, ButtonBarPropsProvider } from "../buttonBar";
-import { MenuButton, MenuButtonPropsProvider } from "../menuButton";
+import { ButtonBar } from "../buttonBar";
+import { MenuButton } from "../menuButton";
 import { Title, TitlePropsProvider } from "../title";
 
 import { TopBarPropsProvider, useTopBarProps } from "./TopBarPropsContext";
@@ -20,13 +20,9 @@ const TopBarCore = (): JSX.Element => {
                     <Title />
                 </TitlePropsProvider>
 
-                <ButtonBarPropsProvider {...buttonBarProps}>
-                    <ButtonBar />
-                </ButtonBarPropsProvider>
+                <ButtonBar {...buttonBarProps} />
             </div>
-            <MenuButtonPropsProvider {...menuButtonProps}>
-                <MenuButton />
-            </MenuButtonPropsProvider>
+            <MenuButton {...menuButtonProps} />
         </div>
     );
 };
