@@ -10,6 +10,7 @@ import round from "lodash/round";
 import {
     FilterContextItem,
     IAnalyticalBackend,
+    IDataView,
     IKpiWidget,
     ISeparators,
     IUserWorkspaceSettings,
@@ -178,12 +179,12 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
 
     const handleOnDrill = useCallback(
         (drillContext: IDrillEventContext): ReturnType<OnFiredDashboardViewDrillEvent> => {
-            if (!onDrill || !result) {
+            if (!onDrill) {
                 return false;
             }
 
             return onDrill({
-                dataView: result.dataView,
+                dataView: result?.dataView as IDataView, // Even invalid Kpi can be drillable
                 drillContext,
                 drillDefinitions: kpiWidget.drills,
                 widgetRef: widgetRef(kpiWidget),
@@ -221,11 +222,11 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
 
     const predicates = convertDrillableItemsToPredicates(drillableItems);
     const isDrillable =
-        kpiResult?.measureDescriptor &&
-        result &&
-        status !== "error" &&
-        (isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result) ||
-            widgetDrills.length > 0);
+        (kpiResult?.measureDescriptor &&
+            result &&
+            status !== "error" &&
+            isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result)) ||
+        widgetDrills.length > 0;
 
     const enableCompactSize = settings.enableKDWidgetCustomHeight;
 
