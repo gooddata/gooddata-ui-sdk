@@ -103,6 +103,24 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 
     _TIP_: you can use the `unlink` command to remove the link between dashboard and the plugin.
 
+## Authentication & secrets
+
+Your plugin does not have to concern itself with the authentication against GoodData backend. When the plugin runs
+in context of GoodData KPI Dashboards, it is the application that takes care of all the authentication and ensures
+that the plugin executes in an authenticated environment.
+
+The authentication credentials that are required to start the development harness included in this project are used
+only during development because the harness needs to provide authenticated environment to the plugin as well.
+
+In order to provide credentials to the development harness, you can use either the `.env.secrets` file or export the
+necessary environment variables before starting the harness.
+
+The contents of `.env.secrets` will never make their way into plugin build artifacts, they are loaded only when starting
+the development harness. Check out the webpack.config.js if you would like to double-check this.
+
+_IMPORTANT: Never include credentials and secrets in your plugin source code or other assets that your plugin requires.
+All this data will be available in the publicly hosted plugin artifacts and can also be found through the browser developer console._
+
 ## FAQ
 
 ### What's up with the directories in src? Can I rename them?
@@ -116,7 +134,7 @@ The [src/{{pluginIdentifier}}\_engine](./src/{{pluginIdentifier}}_engine) and [s
 You must not modify these directories or their contents.
 
 The [src/harness] directory contains code for plugin development harness; it is used only during plugin development and the
-code in this directory will not be part of the plugin build . You can start the harness using `{{packageManager}} start`.
+code in this directory will not be part of the plugin build. You can start the harness using `{{packageManager}} start`.
 You should have no need to modify the code in the harness. We anticipate that at times you may need to tweak Analytical Backend setup
 that is contained in the [src/harness/backend.ts](src/harness/backend.ts) - this is a safe change.
 
@@ -135,5 +153,5 @@ plugin and prevent it from loading correctly.
 
 ### How about Internet Explorer?
 
-GoodData applications [do not support Internet Explorer](https://help.gooddata.com/doc/enterprise/en/how-to-get-started-with-gooddata/system-requirements-and-supported-browsers) as of November 19th 2021. Thus, you
-do not have to test your plugin with Internet Explorer because at this point there is no guarantee that the GoodData KPI Dashboards application will even load with Internet Explorer.
+GoodData applications [do not support Internet Explorer](https://help.gooddata.com/doc/enterprise/en/how-to-get-started-with-gooddata/system-requirements-and-supported-browsers) as of November 19th 2021.
+The plugin artifacts created during the plugin build are not compatible with Internet Explorer.
