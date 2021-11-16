@@ -3,9 +3,10 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
-const { DefinePlugin, ProvidePlugin } = require("webpack");
+const { DefinePlugin, EnvironmentPlugin, ProvidePlugin } = require("webpack");
 const path = require("path");
 const deps = require("./package.json").dependencies;
+const peerDeps = require("./package.json").peerDependencies;
 const Dotenv = require("dotenv-webpack");
 require("dotenv").config();
 
@@ -13,15 +14,15 @@ const { MODULE_FEDERATION_NAME } = require("./src/metadata.json");
 
 const PORT = 3001;
 const DEFAULT_BACKEND_URL = "https://live-examples-proxy.herokuapp.com";
-const SHARE_SCOPE = "default"; // any other share scope name fail with multiple versions of react for some reason
 
 // add all the gooddata packages that absolutely need to be shared and singletons because of contexts
-const gooddataSharePackagesEntries = Object.keys(deps)
-    .filter((pkg) => pkg.startsWith("@gooddata"))
+// do not share @gooddata/sdk-ui-dashboard though
+const gooddataSharePackagesEntries = [...Object.keys(deps), ...Object.keys(peerDeps)]
+    .filter((pkg) => pkg.startsWith("@gooddata") && pkg !== "@gooddata/sdk-ui-dashboard")
     .reduce((acc, curr) => {
         acc[curr] = {
             singleton: true,
-            shareScope: SHARE_SCOPE,
+            requiredVersion: deps[curr],
         };
         return acc;
     }, {});
@@ -121,7 +122,17 @@ module.exports = (_env, argv) => {
                 },
             ].filter(Boolean),
         },
-        plugins: [new CaseSensitivePathsPlugin()],
+        plugins: [
+            new CaseSensitivePathsPlugin(),
+            // provide bogus process.env keys that lru-cache, pseudomap and util packages use unsafely for no reason...
+            new EnvironmentPlugin({
+                npm_package_name: false,
+                npm_lifecycle_script: false,
+                _nodeLRUCacheForceNoSymbol: false,
+                TEST_PSEUDOMAP: false,
+                NODE_DEBUG: !isProduction,
+            }),
+        ],
     };
 
     return [
@@ -189,19 +200,16 @@ module.exports = (_env, argv) => {
                         react: {
                             import: "react", // the "react" package will be used a provided and fallback module
                             shareKey: "react", // under this name the shared module will be placed in the share scope
-                            shareScope: SHARE_SCOPE, // share scope with this name will be used
                             singleton: true, // only a single version of the shared module is allowed
                             requiredVersion: deps.react,
                         },
                         "react-dom": {
                             singleton: true,
-                            shareScope: SHARE_SCOPE,
                             requiredVersion: deps["react-dom"],
                         },
                         // add all the packages that absolutely need to be shared and singletons because of contexts
                         "react-intl": {
                             singleton: true,
-                            shareScope: SHARE_SCOPE,
                         },
                         ...gooddataSharePackagesEntries,
                     },
