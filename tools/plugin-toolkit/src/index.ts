@@ -10,6 +10,8 @@ import { unlinkPluginCmdAction } from "./unlinkPluginCmd";
 import { listCmdAction } from "./listCmds/listCmdAction";
 import { listDashboards } from "./listCmds/listDashboards";
 import { listDashboardPlugins } from "./listCmds/listDashboardPlugins";
+import { inspectCmdAction } from "./inspectCmds/inspectCmdAction";
+import { inspectDashboard } from "./inspectCmds/inspectDashboard";
 
 program
     .version(pkg.version)
@@ -56,6 +58,27 @@ const listDashboardPluginsCmd = listCmd
             commandOpts: {
                 ...listCmd.opts(),
                 ...listDashboardPluginsCmd.opts(),
+            },
+        });
+    });
+
+const inspectCmd = program
+    .command("inspect")
+    .description("Commands to inspect workspace metadata objects.")
+    .option("--workspace-id <workspace>", "Identifier of workspace whose object you want to inspect.");
+
+const inspectDashboardCmd = inspectCmd
+    .command("dashboard")
+    .argument("<identifier>", "Dashboard identifier")
+    .description("Inspect workspace dashboard")
+    .action(async (identifier: string) => {
+        acceptUntrustedSsl(program.opts());
+
+        await inspectCmdAction(identifier, inspectDashboard, {
+            programOpts: program.opts(),
+            commandOpts: {
+                ...inspectCmd.opts(),
+                ...inspectDashboardCmd.opts(),
             },
         });
     });
