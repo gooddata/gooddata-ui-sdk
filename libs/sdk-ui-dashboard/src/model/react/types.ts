@@ -3,8 +3,9 @@ import { IAnalyticalBackend, IDashboard, IWorkspacePermissions } from "@gooddata
 import { ObjRef } from "@gooddata/sdk-model";
 import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 import { DashboardDispatch, DashboardState } from "../store";
-import { DashboardStore } from "../store/dashboardStore";
 import { DashboardConfig, DashboardModelCustomizationFns } from "../types/commonTypes";
+import React from "react";
+import { ReactReduxContextValue } from "react-redux";
 
 /**
  * Subset of IDashboardProps required during initialization of the dashboard component's store.
@@ -24,9 +25,6 @@ export interface IDashboardStoreProviderProps {
         registerEventHandler: (handler: DashboardEventHandler) => void,
         unregisterEventHandler: (handler: DashboardEventHandler) => void,
     ) => void;
-    /**
-     * @internal
-     */
-    onStoreCreated?: (store: DashboardStore) => void;
+    additionalReduxContext?: React.Context<ReactReduxContextValue>;
     customizationFns?: DashboardModelCustomizationFns;
 }

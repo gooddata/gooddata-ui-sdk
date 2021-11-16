@@ -188,7 +188,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             permissions={props.permissions}
             onStateChange={props.onStateChange}
             onEventingInitialized={props.onEventingInitialized}
-            onStoreCreated={props.onStoreCreated}
+            additionalReduxContext={props.additionalReduxContext}
             customizationFns={props.customizationFns}
         >
             <ToastMessageContextProvider>
