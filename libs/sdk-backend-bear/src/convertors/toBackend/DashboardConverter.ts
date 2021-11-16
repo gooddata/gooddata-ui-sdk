@@ -549,7 +549,7 @@ export const convertDashboard = (
         analyticalDashboard: {
             content: {
                 ...(convertedDateFilterConfig && { dateFilterConfig: convertedDateFilterConfig }),
-                ...(convertedPlugins && { plugins: convertedPlugins }),
+                ...(convertedPlugins && !isEmpty(convertedPlugins) && { plugins: convertedPlugins }),
                 filterContext: filterContextUri,
                 widgets: widgets ? widgets.filter(isWidget).map((widget) => refToUri(widget.ref)) : [],
                 layout: convertedLayout,
