@@ -5,7 +5,7 @@ import bearFactory, {
 } from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-function hasCredentialsSetup(): boolean {
+export function hasCredentialsSetup(): boolean {
     return !!(process.env.GDC_USERNAME && process.env.GDC_PASSWORD);
 }
 

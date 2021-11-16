@@ -5,7 +5,7 @@ import tigerFactory, {
 } from "@gooddata/sdk-backend-tiger";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-function hasCredentialsSetup(): boolean {
+export function hasCredentialsSetup(): boolean {
     return !!process.env.TIGER_API_TOKEN;
 }
 
