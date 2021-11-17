@@ -239,9 +239,6 @@ export type BrokenAlertType = "deleted" | "ignored";
 // @internal (undocumented)
 export const ButtonBar: (props: IButtonBarProps) => JSX.Element;
 
-// @internal (undocumented)
-export const ButtonBarPropsProvider: React_2.FC<IButtonBarProps>;
-
 // @alpha (undocumented)
 export interface CatalogState {
     // (undocumented)
@@ -535,10 +532,10 @@ export type CustomShareButtonComponent = ComponentType<IShareButtonProps>;
 export type CustomShareDialogComponent = ComponentType;
 
 // @alpha (undocumented)
-export type CustomTitleComponent = ComponentType;
+export type CustomTitleComponent = ComponentType<ITitleProps>;
 
 // @alpha (undocumented)
-export type CustomTopBarComponent = ComponentType;
+export type CustomTopBarComponent = ComponentType<ITopBarProps>;
 
 // @internal (undocumented)
 export const Dashboard: React_2.FC<IDashboardProps>;
@@ -1701,16 +1698,10 @@ export const DefaultShareDialog: (props: IShareDialogProps) => JSX.Element;
 export const DefaultShareDialogInner: () => JSX.Element | null;
 
 // @alpha (undocumented)
-export const DefaultTitle: (props: ITitleProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultTitleInner: () => JSX.Element | null;
+export const DefaultTitle: (props: ITitleProps) => JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultTopBar: (props: ITopBarProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultTopBarInner: () => JSX.Element;
 
 // @alpha (undocumented)
 export interface DeleteDashboard extends IDashboardCommand {
@@ -2034,7 +2025,7 @@ export const HiddenShareButton: () => JSX.Element | null;
 export const HiddenTitle: () => JSX.Element | null;
 
 // @alpha
-export const HiddenTopBar: () => JSX.Element | null;
+export const HiddenTopBar: (_props: ITopBarProps) => JSX.Element | null;
 
 // @alpha
 export interface IBrokenAlertFilterBasicInfo<TFilter extends FilterContextItem = FilterContextItem> {
@@ -2048,6 +2039,8 @@ export interface IBrokenAlertFilterBasicInfo<TFilter extends FilterContextItem =
 export interface IButtonBarProps {
     // (undocumented)
     buttons?: React_2.ReactNode;
+    // (undocumented)
+    DefaultButtonBar: CustomButtonBarComponent;
     // (undocumented)
     shareButtonProps: IShareButtonProps;
 }
@@ -2511,6 +2504,8 @@ export interface IMenuButtonItemSeparator {
 
 // @alpha (undocumented)
 export interface IMenuButtonProps {
+    // (undocumented)
+    DefaultMenuButton: CustomMenuButtonComponent;
     menuItems: ReadonlyArray<IMenuButtonItem>;
 }
 
@@ -2904,6 +2899,8 @@ export interface ITopBarProps {
     // (undocumented)
     buttonBarProps: IButtonBarProps;
     // (undocumented)
+    DefaultTopBar: CustomTopBarComponent;
+    // (undocumented)
     menuButtonProps: IMenuButtonProps;
     // (undocumented)
     titleProps: ITitleProps;
@@ -2975,9 +2972,6 @@ export type MeasureDateDatasets = {
 
 // @internal (undocumented)
 export const MenuButton: (props: IMenuButtonProps) => JSX.Element;
-
-// @internal (undocumented)
-export const MenuButtonPropsProvider: React_2.FC<IMenuButtonProps>;
 
 // @alpha (undocumented)
 export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
@@ -3863,9 +3857,6 @@ export function setExecutionResultLoading(id: ObjRef | string, correlationId?: s
 export const ShareButton: (props: IShareButtonProps) => JSX.Element;
 
 // @internal (undocumented)
-export const ShareButtonPropsProvider: React_2.FC<IShareButtonProps>;
-
-// @internal (undocumented)
 export const ShareDialog: () => JSX.Element;
 
 // @internal (undocumented)
@@ -3878,16 +3869,10 @@ export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboard
 export type StashedDashboardItemsId = string;
 
 // @internal (undocumented)
-export const Title: () => JSX.Element;
+export const Title: (props: ITitleProps) => JSX.Element;
 
 // @internal (undocumented)
-export const TitlePropsProvider: React_2.FC<ITitleProps>;
-
-// @internal (undocumented)
-export const TopBar: () => JSX.Element;
-
-// @internal (undocumented)
-export const TopBarPropsProvider: React_2.FC<ITopBarProps>;
+export const TopBar: (props: ITopBarProps) => JSX.Element;
 
 // @alpha
 export interface TriggerEvent extends IDashboardCommand {
@@ -4007,9 +3992,6 @@ export interface UpsertExecutionResult extends IDashboardCommand {
     // (undocumented)
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
 }
-
-// @alpha (undocumented)
-export const useButtonBarProps: () => IButtonBarProps;
 
 // @internal (undocumented)
 export interface UseDashboardAsyncRender {
@@ -4492,9 +4474,6 @@ export interface UseDrillToLegacyDashboardProps {
 }
 
 // @alpha (undocumented)
-export const useMenuButtonProps: (config?: IMenuButtonConfiguration | undefined) => IMenuButtonProps;
-
-// @alpha (undocumented)
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
 
 // @alpha (undocumented)
@@ -4527,16 +4506,7 @@ export const useSaveAsDialogProps: () => ISaveAsDialogProps;
 export const useScheduledEmailDialogProps: () => IScheduledEmailDialogProps;
 
 // @alpha (undocumented)
-export const useShareButtonProps: () => IShareButtonProps;
-
-// @alpha (undocumented)
 export const useShareDialogProps: () => IShareDialogProps;
-
-// @alpha (undocumented)
-export const useTitleProps: () => ITitleProps;
-
-// @alpha (undocumented)
-export const useTopBarProps: () => ITopBarProps;
 
 // @internal
 export function useWidgetExecutionsHandler(widgetRef: ObjRef): {

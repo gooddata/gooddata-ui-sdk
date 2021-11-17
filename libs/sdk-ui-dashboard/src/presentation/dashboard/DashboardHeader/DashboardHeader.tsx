@@ -31,7 +31,7 @@ import {
 import { ExportDialogProvider } from "../../dialogs";
 
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
-import { IMenuButtonItem, TopBar, TopBarPropsProvider } from "../../topBar";
+import { DefaultButtonBar, DefaultMenuButton, DefaultTopBar, IMenuButtonItem, TopBar } from "../../topBar";
 import { ScheduledEmailDialog, ScheduledEmailDialogPropsProvider } from "../../scheduledEmail";
 import { SaveAsDialog, SaveAsDialogPropsProvider } from "../../saveAs";
 import { DefaultFilterBar, FilterBar } from "../../filterBar";
@@ -261,15 +261,15 @@ export const DashboardHeader = (): JSX.Element => {
                 </SaveAsDialogPropsProvider>
             )}
 
-            <TopBarPropsProvider
-                menuButtonProps={{ menuItems: defaultMenuItems }}
+            <TopBar
+                menuButtonProps={{ menuItems: defaultMenuItems, DefaultMenuButton: DefaultMenuButton }}
                 titleProps={{ title, onTitleChanged }}
                 buttonBarProps={{
                     shareButtonProps: { onShareButtonClick },
+                    DefaultButtonBar: DefaultButtonBar,
                 }}
-            >
-                <TopBar />
-            </TopBarPropsProvider>
+                DefaultTopBar={DefaultTopBar}
+            />
 
             <FilterBar
                 filters={filters}

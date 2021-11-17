@@ -266,28 +266,16 @@ export interface IDashboardCustomComponentProps {
 
     /**
      * Optionally specify component to use for rendering the button bar.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useButtonBarProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultButtonBar} component.
      */
     ButtonBarComponent?: CustomButtonBarComponent;
 
     /**
      * Optionally specify component to use for rendering the menu button.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useMenuButtonProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultMenuButton} component.
      */
     MenuButtonComponent?: CustomMenuButtonComponent;
 
     /**
      * Optionally specify component to use for rendering the top bar.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useTopBarProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultTopBar} component.
      *
      * Note that if you override this component, the ButtonBarComponent, MenuButtonComponent and TitleComponent
      * props might get ignored depending on your implementation.
@@ -296,10 +284,6 @@ export interface IDashboardCustomComponentProps {
 
     /**
      * Optionally specify component to use for rendering the title.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useTitleProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultTitle} component.
      */
     TitleComponent?: CustomTitleComponent;
 
