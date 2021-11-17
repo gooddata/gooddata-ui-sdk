@@ -116,6 +116,7 @@ import { Patch } from 'immer';
 import { PlatformEdition } from '@gooddata/sdk-backend-spi';
 import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
+import { ReactReduxContextValue } from 'react-redux';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
@@ -492,10 +493,10 @@ export function createScheduledEmail(scheduledEmail: IScheduledMailDefinition, f
 export type CustomButtonBarComponent = ComponentType<IButtonBarProps>;
 
 // @alpha (undocumented)
-export type CustomDashboardAttributeFilterComponent = ComponentType;
+export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
 
 // @alpha (undocumented)
-export type CustomDashboardDateFilterComponent = ComponentType;
+export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterProps>;
 
 // @alpha (undocumented)
 export type CustomDashboardInsightComponent = ComponentType;
@@ -516,7 +517,7 @@ export type CustomDashboardLayoutComponent = ComponentType;
 export type CustomDashboardWidgetComponent = ComponentType;
 
 // @alpha (undocumented)
-export type CustomFilterBarComponent = ComponentType;
+export type CustomFilterBarComponent = ComponentType<IFilterBarProps>;
 
 // @alpha (undocumented)
 export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
@@ -625,9 +626,6 @@ export interface DashboardAttributeFilterParentChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED";
 }
 
-// @internal (undocumented)
-export const DashboardAttributeFilterPropsProvider: React_2.FC<IDashboardAttributeFilterProps>;
-
 // @alpha
 export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
     // (undocumented)
@@ -721,10 +719,7 @@ export interface DashboardCopySaved extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export const DashboardDateFilter: () => JSX.Element;
-
-// @internal (undocumented)
-export const DashboardDateFilterPropsProvider: React_2.FC<IDashboardDateFilterProps>;
+export const DashboardDateFilter: (props: IDashboardDateFilterProps) => JSX.Element;
 
 // @alpha
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
@@ -1632,14 +1627,8 @@ export const DefaultButtonBar: React_2.FC<PropsWithChildren<IButtonBarProps>>;
 // @alpha
 export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element;
 
-// @internal (undocumented)
-export const DefaultDashboardAttributeFilterInner: () => JSX.Element;
-
 // @alpha
 export const DefaultDashboardDateFilter: (props: IDashboardDateFilterProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultDashboardDateFilterInner: () => JSX.Element;
 
 // @internal (undocumented)
 export const DefaultDashboardInsight: (props: IDashboardInsightProps) => JSX.Element;
@@ -1682,9 +1671,6 @@ export const DefaultDashboardWidgetInner: () => JSX.Element;
 
 // @alpha (undocumented)
 export const DefaultFilterBar: (props: IFilterBarProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultFilterBarInner: () => JSX.Element;
 
 // @alpha (undocumented)
 export const DefaultMenuButton: (props: IMenuButtonProps) => JSX.Element | null;
@@ -1918,10 +1904,7 @@ export type ExtendedDashboardWidget = IWidget | ICustomWidget;
 export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string;
 
 // @internal (undocumented)
-export const FilterBar: () => JSX.Element;
-
-// @internal (undocumented)
-export const FilterBarPropsProvider: React_2.FC<IFilterBarProps>;
+export const FilterBar: (props: IFilterBarProps) => JSX.Element;
 
 // @internal
 export function filterContextAttributeFilterToAttributeFilter(filter: IDashboardAttributeFilter): IAttributeFilter;
@@ -2039,7 +2022,7 @@ export const HiddenDashboardAttributeFilter: () => JSX.Element | null;
 export const HiddenDashboardDateFilter: () => JSX.Element | null;
 
 // @alpha
-export const HiddenFilterBar: () => JSX.Element | null;
+export const HiddenFilterBar: (_props: IFilterBarProps) => JSX.Element | null;
 
 // @alpha
 export const HiddenMenuButton: () => JSX.Element | null;
@@ -2226,7 +2209,7 @@ export interface IDashboardEventsContext {
 
 // @alpha (undocumented)
 export type IDashboardExtensionProps = IDashboardEventing & IDashboardCustomizationProps & IDashboardThemingProps & {
-    onStoreCreated?: (store: DashboardStore) => void;
+    additionalReduxContext?: React_2.Context<ReactReduxContextValue>;
 };
 
 // @beta
@@ -2344,6 +2327,8 @@ export type IDashboardQueryResult<T> = T extends IDashboardQuery<infer TResult> 
 // @internal
 export interface IDashboardStoreProviderProps {
     // (undocumented)
+    additionalReduxContext?: React_2.Context<ReactReduxContextValue>;
+    // (undocumented)
     backend?: IAnalyticalBackend;
     // (undocumented)
     config?: DashboardConfig;
@@ -2359,8 +2344,6 @@ export interface IDashboardStoreProviderProps {
     onEventingInitialized?: (registerEventHandler: (handler: DashboardEventHandler) => void, unregisterEventHandler: (handler: DashboardEventHandler) => void) => void;
     // (undocumented)
     onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
-    // (undocumented)
-    onStoreCreated?: (store: DashboardStore) => void;
     // (undocumented)
     permissions?: IWorkspacePermissions;
     // (undocumented)
@@ -2429,6 +2412,7 @@ export type IExportConfig = ICsvExportConfig | IXlsxExportConfig;
 
 // @alpha (undocumented)
 export interface IFilterBarProps {
+    DefaultFilterBar: ComponentType<IFilterBarProps>;
     filters: FilterContextItem[];
     onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
     onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
@@ -3249,7 +3233,7 @@ export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: strin
 // @alpha
 export function queryWidgetFilters(widgetRef: ObjRef, widgetFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export const ReactDashboardContext: any;
 
 // @alpha (undocumented)
@@ -4036,9 +4020,6 @@ export interface UseDashboardAsyncRender {
 // @internal
 export const useDashboardAsyncRender: (id: string) => UseDashboardAsyncRender;
 
-// @alpha (undocumented)
-export const useDashboardAttributeFilterProps: () => IDashboardAttributeFilterProps;
-
 // @internal (undocumented)
 export const useDashboardCommandProcessing: <TCommand extends DashboardCommands, TCommandCreatorArgs extends any[], TSuccessEventType extends DashboardEventType, TErrorEventType extends DashboardEventType>({ commandCreator, successEvent, errorEvent, onSuccess, onError, onBeforeRun, }: {
     commandCreator: (...args: TCommandCreatorArgs) => TCommand;
@@ -4345,9 +4326,6 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
 };
 
 // @alpha (undocumented)
-export const useDashboardDateFilterProps: () => IDashboardDateFilterProps;
-
-// @alpha (undocumented)
 export const useDashboardDispatch: () => Dispatch<AnyAction>;
 
 // @alpha
@@ -4512,9 +4490,6 @@ export interface UseDrillToLegacyDashboardProps {
     // (undocumented)
     onSuccess?: (event: DashboardDrillToLegacyDashboardResolved) => void;
 }
-
-// @alpha (undocumented)
-export const useFilterBarProps: () => IFilterBarProps;
 
 // @alpha (undocumented)
 export const useMenuButtonProps: (config?: IMenuButtonConfiguration | undefined) => IMenuButtonProps;

@@ -7,20 +7,20 @@ import {
     dashboardAttributeFilterToAttributeFilter,
 } from "../../../_staging/dashboard/dashboardFilterConverter";
 
-import {
-    DashboardAttributeFilterPropsProvider,
-    useDashboardAttributeFilterProps,
-} from "./DashboardAttributeFilterPropsContext";
 import { IDashboardAttributeFilterProps } from "./types";
 import { AttributeFilterBody } from "./dashboardDropdownBody/AttributeFilterBody";
 import { useParentFilters } from "./useParentFilters";
 import { selectLocale, useDashboardSelector } from "../../../model";
 
 /**
- * @internal
+ * Default implementation of the attribute filter to use on the dashboard's filter bar.
+ *
+ * This will use the SDK's AttributeFilter with the button styled same as we have it today on KD.
+ *
+ * @alpha
  */
-export const DefaultDashboardAttributeFilterInner = (): JSX.Element => {
-    const { filter, onFilterChanged } = useDashboardAttributeFilterProps();
+export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilterProps): JSX.Element => {
+    const { filter, onFilterChanged } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
@@ -43,20 +43,5 @@ export const DefaultDashboardAttributeFilterInner = (): JSX.Element => {
             parentFilterOverAttribute={parentFilterOverAttribute}
             locale={locale}
         />
-    );
-};
-
-/**
- * Default implementation of the attribute filter to use on the dashboard's filter bar.
- *
- * This will use the SDK's AttributeFilter with the button styled same as we have it today on KD.
- *
- * @alpha
- */
-export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilterProps): JSX.Element => {
-    return (
-        <DashboardAttributeFilterPropsProvider {...props}>
-            <DefaultDashboardAttributeFilterInner />
-        </DashboardAttributeFilterPropsProvider>
     );
 };

@@ -57,4 +57,4 @@ export interface IDashboardDateFilterProps {
 /**
  * @alpha
  */
-export type CustomDashboardDateFilterComponent = ComponentType;
+export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterProps>;

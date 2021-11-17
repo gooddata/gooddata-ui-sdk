@@ -34,7 +34,7 @@ import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import { IMenuButtonItem, TopBar, TopBarPropsProvider } from "../../topBar";
 import { ScheduledEmailDialog, ScheduledEmailDialogPropsProvider } from "../../scheduledEmail";
 import { SaveAsDialog, SaveAsDialogPropsProvider } from "../../saveAs";
-import { FilterBar, FilterBarPropsProvider } from "../../filterBar";
+import { DefaultFilterBar, FilterBar } from "../../filterBar";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
 
 const useFilterBar = (): {
@@ -271,13 +271,12 @@ export const DashboardHeader = (): JSX.Element => {
                 <TopBar />
             </TopBarPropsProvider>
 
-            <FilterBarPropsProvider
+            <FilterBar
                 filters={filters}
                 onAttributeFilterChanged={onAttributeFilterChanged}
                 onDateFilterChanged={onDateFilterChanged}
-            >
-                <FilterBar />
-            </FilterBarPropsProvider>
+                DefaultFilterBar={DefaultFilterBar}
+            />
         </>
     );
 };
