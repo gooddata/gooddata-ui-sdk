@@ -319,9 +319,6 @@ export interface IDashboardCustomComponentProps {
      *
      * @remarks
      * If you want to hide some or all filters, you can use the {@link HiddenDashboardAttributeFilter} implementation.
-     *
-     * To access the necessary props in your custom component, use the {@link useDashboardAttributeFilterProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardAttributeFilter} component.
      */
     DashboardAttributeFilterComponentProvider?: AttributeFilterComponentProvider;
 
@@ -329,8 +326,6 @@ export interface IDashboardCustomComponentProps {
      * Optionally specify component to use for rendering the date filters.
      *
      * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardDateFilterProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardDateFilter} component.
      */
     DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
 
@@ -338,8 +333,6 @@ export interface IDashboardCustomComponentProps {
      * Optionally specify component to use for rendering the filter bar.
      *
      * @remarks
-     * To access the necessary props in your component, use the {@link useFilterBarProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultFilterBar} component.
      *
      * Note that if you override this component, the DashboardAttributeFilterComponentFactory and DashboardDateFilterComponent
      * props might get ignored depending on your implementation.

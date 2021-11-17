@@ -31,9 +31,16 @@ export interface IFilterBarProps {
      * @param dateFilterOptionLocalId - localId of the {@link @gooddata/sdk-backend-spi#IDateFilterOption} selected
      */
     onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
+
+    /**
+     * Contains reference to default implementation of the filter bar. If you are implementing a custom
+     * filter bar that decorates default filter bar, then use this component to render the default filter
+     * bar.
+     */
+    DefaultFilterBar: ComponentType<IFilterBarProps>;
 }
 
 /**
  * @alpha
  */
-export type CustomFilterBarComponent = ComponentType;
+export type CustomFilterBarComponent = ComponentType<IFilterBarProps>;

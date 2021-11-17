@@ -5,20 +5,20 @@ import { DateFilter, IDateFilterProps } from "@gooddata/sdk-ui-filters";
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping";
 
-import {
-    DashboardDateFilterPropsProvider,
-    useDashboardDateFilterProps,
-} from "./DashboardDateFilterPropsContext";
 import { IDashboardDateFilterProps } from "./types";
 import { selectLocale, selectSettings, useDashboardSelector } from "../../../model";
 
 /**
- * @internal
+ * Default implementation of the attribute filter to use on the dashboard's filter bar.
+ *
+ * This will use the SDK's DateFilter with the button styled same as we have it today on KD.
+ *
+ * @alpha
  */
-export const DefaultDashboardDateFilterInner = (): JSX.Element => {
+export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JSX.Element => {
     const settings = useDashboardSelector(selectSettings);
     const locale = useDashboardSelector(selectLocale);
-    const { filter, onFilterChanged, config, readonly } = useDashboardDateFilterProps();
+    const { filter, onFilterChanged, config, readonly } = props;
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
         () =>
@@ -49,20 +49,5 @@ export const DefaultDashboardDateFilterInner = (): JSX.Element => {
             dateFormat={settings.responsiveUiDateFormat}
             locale={locale}
         />
-    );
-};
-
-/**
- * Default implementation of the attribute filter to use on the dashboard's filter bar.
- *
- * This will use the SDK's DateFilter with the button styled same as we have it today on KD.
- *
- * @alpha
- */
-export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JSX.Element => {
-    return (
-        <DashboardDateFilterPropsProvider {...props}>
-            <DefaultDashboardDateFilterInner />
-        </DashboardDateFilterPropsProvider>
     );
 };

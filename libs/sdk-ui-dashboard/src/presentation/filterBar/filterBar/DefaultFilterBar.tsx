@@ -13,19 +13,17 @@ import {
     useDashboardSelector,
 } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
-import { DashboardAttributeFilterPropsProvider } from "../attributeFilter";
-import { DashboardDateFilter, DashboardDateFilterPropsProvider } from "../dateFilter";
+import { DashboardDateFilter } from "../dateFilter";
 import { IDashboardDateFilterConfig, IFilterBarProps } from "../types";
 
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer";
-import { FilterBarPropsProvider, useFilterBarProps } from "./FilterBarPropsContext";
 import { HiddenFilterBar } from "./HiddenFilterBar";
 
 /**
- * @internal
+ * @alpha
  */
-export const DefaultFilterBarInner = (): JSX.Element => {
-    const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBarProps();
+export const DefaultFilterBar = (props: IFilterBarProps): JSX.Element => {
+    const { filters, onAttributeFilterChanged, onDateFilterChanged } = props;
     const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
@@ -34,7 +32,7 @@ export const DefaultFilterBarInner = (): JSX.Element => {
     const { DashboardAttributeFilterComponentProvider } = useDashboardComponentsContext();
 
     if (isExport) {
-        return <HiddenFilterBar />;
+        return <HiddenFilterBar {...props} />;
     }
 
     const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
@@ -48,14 +46,12 @@ export const DefaultFilterBarInner = (): JSX.Element => {
     return (
         <DefaultFilterBarContainer>
             <div className="dash-filters-date dash-filters-attribute">
-                <DashboardDateFilterPropsProvider
+                <DashboardDateFilter
                     filter={dateFilter}
                     onFilterChanged={onDateFilterChanged}
                     config={dateFilterComponentConfig}
                     readonly={dateFilterMode === "readonly"}
-                >
-                    <DashboardDateFilter />
-                </DashboardDateFilterPropsProvider>
+                />
             </div>
             {attributeFilters.map((filter) => {
                 const AttributeFilter = DashboardAttributeFilterComponentProvider(filter);
@@ -65,26 +61,10 @@ export const DefaultFilterBarInner = (): JSX.Element => {
                         className="dash-filters-notdate dash-filters-attribute"
                         key={objRefToString(filter.attributeFilter.displayForm)}
                     >
-                        <DashboardAttributeFilterPropsProvider
-                            filter={filter}
-                            onFilterChanged={onAttributeFilterChanged}
-                        >
-                            <AttributeFilter />
-                        </DashboardAttributeFilterPropsProvider>
+                        <AttributeFilter filter={filter} onFilterChanged={onAttributeFilterChanged} />
                     </div>
                 );
             })}
         </DefaultFilterBarContainer>
-    );
-};
-
-/**
- * @alpha
- */
-export const DefaultFilterBar = (props: IFilterBarProps): JSX.Element => {
-    return (
-        <FilterBarPropsProvider {...props}>
-            <DefaultFilterBarInner />
-        </FilterBarPropsProvider>
     );
 };

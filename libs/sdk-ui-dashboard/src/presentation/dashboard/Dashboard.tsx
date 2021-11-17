@@ -14,9 +14,9 @@ import {
 } from "../dashboardContexts";
 import {
     CustomDashboardAttributeFilterComponent,
-    DefaultDashboardAttributeFilterInner,
-    DefaultDashboardDateFilterInner,
-    DefaultFilterBarInner,
+    DefaultDashboardAttributeFilter,
+    DefaultDashboardDateFilter,
+    DefaultFilterBar,
 } from "../filterBar";
 import {
     CustomDashboardInsightMenuButtonComponent,
@@ -121,7 +121,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     const attributeFilterProvider = useCallback(
         (filter: IDashboardAttributeFilter): CustomDashboardAttributeFilterComponent => {
             const userSpecified = props.DashboardAttributeFilterComponentProvider?.(filter);
-            return userSpecified ?? DefaultDashboardAttributeFilterInner;
+            return userSpecified ?? DefaultDashboardAttributeFilter;
         },
         [props.DashboardAttributeFilterComponentProvider],
     );
@@ -216,9 +216,9 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                             SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialogInner}
                             DashboardAttributeFilterComponentProvider={attributeFilterProvider}
                             DashboardDateFilterComponent={
-                                props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
+                                props.DashboardDateFilterComponent ?? DefaultDashboardDateFilter
                             }
-                            FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBarInner}
+                            FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBar}
                         >
                             <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                 <DashboardLoading {...props} />
