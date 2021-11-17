@@ -44,15 +44,15 @@ import {
     useDashboardSelector,
     useDispatchDashboardCommand,
 } from "../../model";
-import { DefaultScheduledEmailDialogInner } from "../scheduledEmail";
+import { DefaultScheduledEmailDialog } from "../scheduledEmail";
 import { DefaultButtonBar, DefaultMenuButton, DefaultTitle, DefaultTopBar } from "../topBar";
 
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { IDashboardProps } from "./types";
-import { DefaultSaveAsDialogInner } from "../saveAs";
+import { DefaultSaveAsDialog } from "../saveAs";
 import { IInsight } from "@gooddata/sdk-model";
 import { DEFAULT_FILTER_BAR_HEIGHT } from "../constants";
-import { DefaultShareDialogInner } from "../shareDialog";
+import { DefaultShareDialog } from "../shareDialog";
 import { DashboardHeader } from "./DashboardHeader/DashboardHeader";
 
 const DashboardMainContent: React.FC<IDashboardProps> = () => {
@@ -210,10 +210,10 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                             TopBarComponent={props.TopBarComponent ?? DefaultTopBar}
                             TitleComponent={props.TitleComponent ?? DefaultTitle}
                             ScheduledEmailDialogComponent={
-                                props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
+                                props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog
                             }
-                            ShareDialogComponent={props.ShareDialogComponent ?? DefaultShareDialogInner}
-                            SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialogInner}
+                            ShareDialogComponent={props.ShareDialogComponent ?? DefaultShareDialog}
+                            SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialog}
                             DashboardAttributeFilterComponentProvider={attributeFilterProvider}
                             DashboardDateFilterComponent={
                                 props.DashboardDateFilterComponent ?? DefaultDashboardDateFilter

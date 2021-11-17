@@ -32,8 +32,8 @@ import { ExportDialogProvider } from "../../dialogs";
 
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import { DefaultButtonBar, DefaultMenuButton, DefaultTopBar, IMenuButtonItem, TopBar } from "../../topBar";
-import { ScheduledEmailDialog, ScheduledEmailDialogPropsProvider } from "../../scheduledEmail";
-import { SaveAsDialog, SaveAsDialogPropsProvider } from "../../saveAs";
+import { ScheduledEmailDialog } from "../../scheduledEmail";
+import { SaveAsDialog } from "../../saveAs";
 import { DefaultFilterBar, FilterBar } from "../../filterBar";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
 
@@ -240,25 +240,21 @@ export const DashboardHeader = (): JSX.Element => {
             <ToastMessages />
             <ExportDialogProvider />
             {isScheduleEmailingDialogOpen && (
-                <ScheduledEmailDialogPropsProvider
+                <ScheduledEmailDialog
                     isVisible={isScheduleEmailingDialogOpen}
                     onCancel={onScheduleEmailingCancel}
                     onError={onScheduleEmailingError}
                     onSuccess={onScheduleEmailingSuccess}
-                >
-                    <ScheduledEmailDialog />
-                </ScheduledEmailDialogPropsProvider>
+                />
             )}
             <ShareDialogDashboardHeader />
             {isSaveAsDialogOpen && (
-                <SaveAsDialogPropsProvider
+                <SaveAsDialog
                     isVisible={isSaveAsDialogOpen}
                     onCancel={onSaveAsCancel}
                     onError={onSaveAsError}
                     onSuccess={onSaveAsSuccess}
-                >
-                    <SaveAsDialog />
-                </SaveAsDialogPropsProvider>
+                />
             )}
 
             <TopBar
