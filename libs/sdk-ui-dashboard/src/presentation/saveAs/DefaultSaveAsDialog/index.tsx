@@ -1,15 +1,14 @@
 // (C) 2019-2020 GoodData Corporation
 import React from "react";
-import { SaveAsDialogPropsProvider, useSaveAsDialogProps } from "../SaveAsDialogPropsContext";
 import { ISaveAsDialogProps } from "../types";
 import { useSaveAs } from "./useSaveAs";
 import { SaveAsDialogRenderer } from "./SaveAsDialogRenderer";
 
 /**
- * @internal
+ * @alpha
  */
-export const DefaultSaveAsDialogInner = (): JSX.Element | null => {
-    const { onSubmit, onCancel, onError, isVisible, onSuccess } = useSaveAsDialogProps();
+export const DefaultSaveAsDialog = (props: ISaveAsDialogProps): JSX.Element | null => {
+    const { onSubmit, onCancel, onError, isVisible, onSuccess } = props;
 
     const {
         locale,
@@ -36,16 +35,5 @@ export const DefaultSaveAsDialogInner = (): JSX.Element | null => {
             onSubmit={handleSaveAs}
             onCancel={onCancel}
         />
-    );
-};
-
-/**
- * @alpha
- */
-export const DefaultSaveAsDialog = (props: ISaveAsDialogProps): JSX.Element => {
-    return (
-        <SaveAsDialogPropsProvider {...props}>
-            <DefaultSaveAsDialogInner />
-        </SaveAsDialogPropsProvider>
     );
 };

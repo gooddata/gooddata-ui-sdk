@@ -239,28 +239,17 @@ export interface IDashboardCustomComponentProps {
 
     /**
      * Optionally specify component to use for rendering the scheduled email dialog.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useScheduledEmailDialogProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultScheduledEmailDialog} component.
      */
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the share dialog.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useShareDialogProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultShareDialog} component.
      */
     ShareDialogComponent?: CustomShareDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the save as dialog.
      *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useSaveAsDialogProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultSaveAsDialog} component.
      */
     SaveAsDialogComponent?: CustomSaveAsDialogComponent;
 

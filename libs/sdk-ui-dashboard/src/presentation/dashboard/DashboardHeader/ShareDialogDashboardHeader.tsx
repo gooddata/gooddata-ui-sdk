@@ -11,7 +11,7 @@ import {
     useDashboardCommandProcessing,
     changeSharing,
 } from "../../../model";
-import { ShareDialogPropsProvider, ShareDialog, ISharingApplyPayload } from "../../shareDialog";
+import { ShareDialog, ISharingApplyPayload } from "../../shareDialog";
 
 const useShareDialogDashboardHeader = () => {
     const dispatch = useDashboardDispatch();
@@ -69,14 +69,12 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
     }
 
     return (
-        <ShareDialogPropsProvider
+        <ShareDialog
             isVisible={isShareDialogOpen}
             currentUserRef={currentUserRef}
             sharedObject={persistedDashboard!}
             onCancel={onCloseShareDialog}
             onApply={onApplyShareDialog}
-        >
-            <ShareDialog />
-        </ShareDialogPropsProvider>
+        />
     );
 };

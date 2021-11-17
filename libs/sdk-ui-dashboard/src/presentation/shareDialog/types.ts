@@ -49,4 +49,4 @@ export interface IShareDialogProps {
 /**
  * @alpha
  */
-export type CustomShareDialogComponent = ComponentType;
+export type CustomShareDialogComponent = ComponentType<IShareDialogProps>;
