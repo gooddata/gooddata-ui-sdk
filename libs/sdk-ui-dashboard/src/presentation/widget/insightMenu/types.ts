@@ -4,20 +4,6 @@ import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 
 ///
-/// Custom component types
-///
-
-/**
- * @alpha
- */
-export type CustomDashboardInsightMenuButtonComponent = ComponentType;
-
-/**
- * @alpha
- */
-export type CustomDashboardInsightMenuComponent = ComponentType;
-
-///
 /// Component props
 ///
 
@@ -54,7 +40,7 @@ export interface IInsightMenuItemSeparator {
 export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator;
 
 /**
- * @internal
+ * @alpha
  */
 export interface IDashboardInsightMenuButtonProps {
     widget: IInsightWidget;
@@ -65,7 +51,7 @@ export interface IDashboardInsightMenuButtonProps {
 }
 
 /**
- * @internal
+ * @alpha
  */
 export interface IDashboardInsightMenuProps {
     widget: IInsightWidget;
@@ -74,3 +60,17 @@ export interface IDashboardInsightMenuProps {
     onClose: () => void;
     items: IInsightMenuItem[];
 }
+
+///
+/// Custom component types
+///
+
+/**
+ * @alpha
+ */
+export type CustomDashboardInsightMenuButtonComponent = ComponentType<IDashboardInsightMenuButtonProps>;
+
+/**
+ * @alpha
+ */
+export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsightMenuProps>;

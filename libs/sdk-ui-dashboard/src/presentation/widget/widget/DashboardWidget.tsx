@@ -1,10 +1,10 @@
 // (C) 2020 GoodData Corporation
 import React, { useMemo } from "react";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
-import { useDashboardWidgetProps } from "./DashboardWidgetPropsContext";
 import { extendedWidgetDebugStr } from "../../../model";
-import { DefaultDashboardWidgetInner } from "./DefaultDashboardWidget";
+import { DefaultDashboardWidget } from "./DefaultDashboardWidget";
 import { isDashboardWidget } from "@gooddata/sdk-backend-spi";
+import { IDashboardWidgetProps } from "./types";
 
 const BadWidgetType: React.FC = () => {
     return <div>Missing renderer</div>;
@@ -17,10 +17,10 @@ const MissingWidget: React.FC = () => {
 /**
  * @internal
  */
-export const DashboardWidget: React.FC = (): JSX.Element => {
+export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
     const { WidgetComponentProvider } = useDashboardComponentsContext();
-    const { widget } = useDashboardWidgetProps();
-    const WidgetComponent = useMemo((): React.ComponentType => {
+    const { widget } = props;
+    const WidgetComponent = useMemo((): React.ComponentType<IDashboardWidgetProps> => {
         // TODO: we need to get rid of this; the widget being optional at this point is the problem; the parent
         //  components (or possibly the model) should deal with layout items that have no valid widgets associated
         //  and thus short-circuit.
@@ -35,7 +35,7 @@ export const DashboardWidget: React.FC = (): JSX.Element => {
         }
 
         if (isDashboardWidget(widget)) {
-            return DefaultDashboardWidgetInner;
+            return DefaultDashboardWidget;
         } else if (widget) {
             // eslint-disable-next-line no-console
             console.warn(`Unable to render widget ${extendedWidgetDebugStr(widget)}`);
@@ -50,5 +50,5 @@ export const DashboardWidget: React.FC = (): JSX.Element => {
         }
     }, [widget]);
 
-    return <WidgetComponent />;
+    return <WidgetComponent {...props} />;
 };

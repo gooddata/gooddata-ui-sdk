@@ -5,22 +5,13 @@ import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../types";
 
 ///
-/// Custom component types
+/// Component props
 ///
 
 /**
  * @alpha
  */
-export type CustomDashboardKpiComponent = ComponentType;
-
-///
-/// Component props
-///
-
-/**
- * @internal
- */
-export interface DashboardKpiProps {
+export interface IDashboardKpiProps {
     /**
      * The KPI to execute and display.
      */
@@ -78,3 +69,12 @@ export interface DashboardKpiProps {
      */
     LoadingComponent?: React.ComponentType<ILoadingProps>;
 }
+
+///
+/// Custom component types
+///
+
+/**
+ * @alpha
+ */
+export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;

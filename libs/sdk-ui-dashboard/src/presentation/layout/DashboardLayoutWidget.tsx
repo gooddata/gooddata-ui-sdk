@@ -17,7 +17,7 @@ import {
     selectSettings,
     useDashboardSelector,
 } from "../../model";
-import { DashboardWidgetPropsProvider, DashboardWidget, DashboardWidgetProps } from "../widget";
+import { DashboardWidget, IDashboardWidgetProps } from "../widget";
 import {
     getDashboardLayoutItemHeight,
     getDashboardLayoutItemHeightForRatioAndScreen,
@@ -60,7 +60,7 @@ function calculateWidgetMinHeight(
  */
 export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     ExtendedDashboardWidget,
-    Pick<DashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
+    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
 > = (props) => {
     const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError } = props;
     const insights = useDashboardSelector(selectInsightsMap);
@@ -88,15 +88,13 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             minHeight={minHeight}
             className={className}
         >
-            <DashboardWidgetPropsProvider
+            <DashboardWidget
                 screen={screen}
                 onDrill={onDrill}
                 onError={onError}
                 onFiltersChange={onFiltersChange}
                 widget={widget as ExtendedDashboardWidget}
-            >
-                <DashboardWidget />
-            </DashboardWidgetPropsProvider>
+            />
         </DefaultWidgetRenderer>
     );
 };

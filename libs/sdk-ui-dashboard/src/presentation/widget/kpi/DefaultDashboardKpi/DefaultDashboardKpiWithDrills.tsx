@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback } from "react";
 import { IDrillToLegacyDashboard } from "@gooddata/sdk-backend-spi";
-import { DashboardKpiProps } from "../types";
+import { IDashboardKpiProps } from "../types";
 import { DashboardKpiCore } from "./DashboardKpiCore";
 import { OnFiredDashboardViewDrillEvent } from "../../../../types";
 import { useDrill, useDrillToLegacyDashboard } from "../../../drill";
@@ -10,7 +10,7 @@ import { useDashboardSelector, selectDisableDefaultDrills } from "../../../../mo
 /**
  * @internal
  */
-export const DefaultDashboardKpiWithDrills = (props: DashboardKpiProps): JSX.Element => {
+export const DefaultDashboardKpiWithDrills = (props: IDashboardKpiProps): JSX.Element => {
     const { kpiWidget } = props;
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
 

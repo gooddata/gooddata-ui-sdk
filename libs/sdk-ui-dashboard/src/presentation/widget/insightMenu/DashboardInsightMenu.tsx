@@ -2,18 +2,18 @@
 import React, { useMemo } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts";
-import { useDashboardInsightMenuProps } from "./DashboardInsightMenuPropsContext";
+import { IDashboardInsightMenuProps } from "./types";
 
 /**
  * @internal
  */
-export const DashboardInsightMenu = (): JSX.Element => {
-    const { insight, widget } = useDashboardInsightMenuProps();
+export const DashboardInsightMenu = (props: IDashboardInsightMenuProps): JSX.Element => {
+    const { insight, widget } = props;
     const { InsightMenuComponentProvider } = useDashboardComponentsContext();
     const InsightMenuComponent = useMemo(
         () => InsightMenuComponentProvider(insight, widget),
         [InsightMenuComponentProvider, insight, widget],
     );
 
-    return <InsightMenuComponent />;
+    return <InsightMenuComponent {...props} />;
 };
