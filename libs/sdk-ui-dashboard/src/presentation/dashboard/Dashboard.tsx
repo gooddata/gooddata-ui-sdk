@@ -32,7 +32,7 @@ import {
     LegacyDashboardInsightMenu,
     LegacyDashboardInsightMenuButton,
 } from "../widget";
-import { DashboardLayout, DashboardLayoutPropsProvider, DefaultDashboardLayoutInner } from "../layout";
+import { DashboardLayout, DefaultDashboardLayout } from "../layout";
 import { IntlWrapper } from "../localization";
 import {
     changeFilterContextSelection,
@@ -78,9 +78,7 @@ const DashboardMainContent: React.FC<IDashboardProps> = () => {
     return (
         <div className="gd-flex-item-stretch dash-section dash-section-kpis" style={dashSectionStyles}>
             <div className="gd-flex-container root-flex-maincontent">
-                <DashboardLayoutPropsProvider onFiltersChange={onFiltersChange}>
-                    <DashboardLayout />
-                </DashboardLayoutPropsProvider>
+                <DashboardLayout onFiltersChange={onFiltersChange} />
             </div>
         </div>
     );
@@ -201,7 +199,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         <DashboardComponentsProvider
                             ErrorComponent={props.ErrorComponent ?? DefaultError}
                             LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                            LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
+                            LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayout}
                             InsightComponentProvider={insightProvider}
                             InsightMenuButtonComponentProvider={insightMenuButtonProvider}
                             InsightMenuComponentProvider={insightMenuProvider}

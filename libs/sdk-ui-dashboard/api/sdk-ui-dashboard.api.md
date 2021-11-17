@@ -508,7 +508,7 @@ export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsigh
 export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;
 
 // @alpha (undocumented)
-export type CustomDashboardLayoutComponent = ComponentType;
+export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps>;
 
 // @alpha (undocumented)
 export type CustomDashboardWidgetComponent = ComponentType<IDashboardWidgetProps>;
@@ -1163,7 +1163,7 @@ export interface DashboardKpiWidgetMeasureChanged extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export const DashboardLayout: (props: DashboardLayoutProps) => JSX.Element;
+export const DashboardLayout: (props: IDashboardLayoutProps) => JSX.Element;
 
 // @alpha
 export interface DashboardLayoutChanged extends IDashboardEvent {
@@ -1177,21 +1177,6 @@ export interface DashboardLayoutChanged extends IDashboardEvent {
 
 // @alpha (undocumented)
 export type DashboardLayoutCommands = AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | MoveSectionItem | RemoveSectionItem;
-
-// @alpha (undocumented)
-export interface DashboardLayoutProps {
-    // (undocumented)
-    ErrorComponent?: React.ComponentType<IErrorProps>;
-    // (undocumented)
-    onDrill?: OnFiredDashboardViewDrillEvent;
-    // (undocumented)
-    onError?: OnError;
-    // (undocumented)
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
-}
-
-// @internal (undocumented)
-export const DashboardLayoutPropsProvider: React_2.FC<DashboardLayoutProps>;
 
 // @alpha
 export interface DashboardLayoutSectionAdded extends IDashboardEvent {
@@ -1584,10 +1569,7 @@ export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuBut
 export const DefaultDashboardKpi: (props: IDashboardKpiProps) => JSX.Element;
 
 // @alpha (undocumented)
-export const DefaultDashboardLayout: (props: DashboardLayoutProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultDashboardLayoutInner: () => JSX.Element;
+export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Element;
 
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
@@ -2226,6 +2208,18 @@ export interface IDashboardKpiProps {
 // @alpha (undocumented)
 export interface IDashboardLayoutCustomizer {
     customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
+}
+
+// @alpha (undocumented)
+export interface IDashboardLayoutProps {
+    // (undocumented)
+    ErrorComponent?: React.ComponentType<IErrorProps>;
+    // (undocumented)
+    onDrill?: OnFiredDashboardViewDrillEvent;
+    // (undocumented)
+    onError?: OnError;
+    // (undocumented)
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
 }
 
 // @alpha
@@ -4261,9 +4255,6 @@ export const useDashboardEventDispatch: () => (eventBody: DashboardEventBody<Das
 
 // @alpha (undocumented)
 export const useDashboardEventsContext: () => IDashboardEventsContext;
-
-// @alpha (undocumented)
-export const useDashboardLayoutProps: () => DashboardLayoutProps;
 
 // @internal (undocumented)
 export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryCreatorArgs extends any[]>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
