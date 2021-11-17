@@ -23,4 +23,4 @@ export interface IDashboardAttributeFilterProps {
 /**
  * @alpha
  */
-export type CustomDashboardAttributeFilterComponent = ComponentType;
+export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
