@@ -23,7 +23,7 @@ import { useDashboardComponentsContext } from "../dashboardContexts";
 
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget";
 import { EmptyDashboardError } from "./EmptyDashboardError";
-import { DashboardLayoutProps } from "./types";
+import { IDashboardLayoutProps } from "./types";
 import {
     DashboardLayout,
     DashboardLayoutBuilder,
@@ -35,7 +35,6 @@ import {
     IDashboardLayoutWidgetRenderer,
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
-import { DashboardLayoutPropsProvider, useDashboardLayoutProps } from "./DashboardLayoutPropsContext";
 
 /**
  * Get dashboard layout for exports.
@@ -89,10 +88,10 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
 };
 
 /**
- * @internal
+ * @alpha
  */
-export const DefaultDashboardLayoutInner = (): JSX.Element => {
-    const { onFiltersChange, onDrill, onError, ErrorComponent: CustomError } = useDashboardLayoutProps();
+export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
+    const { onFiltersChange, onDrill, onError, ErrorComponent: CustomError } = props;
 
     const layout = useDashboardSelector(selectLayout);
     const isLayoutEmpty = useDashboardSelector(selectIsLayoutEmpty);
@@ -152,17 +151,6 @@ export const DefaultDashboardLayoutInner = (): JSX.Element => {
             sectionHeaderRenderer={sectionHeaderRenderer}
             enableCustomHeight={settings.enableKDWidgetCustomHeight}
         />
-    );
-};
-
-/**
- * @alpha
- */
-export const DefaultDashboardLayout = (props: DashboardLayoutProps): JSX.Element => {
-    return (
-        <DashboardLayoutPropsProvider {...props}>
-            <DefaultDashboardLayoutInner />
-        </DashboardLayoutPropsProvider>
     );
 };
 

@@ -8,7 +8,7 @@ import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../types";
 /**
  * @alpha
  */
-export interface DashboardLayoutProps {
+export interface IDashboardLayoutProps {
     ErrorComponent?: React.ComponentType<IErrorProps>;
     // TODO: is this necessary? (there are events for it)
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
@@ -19,4 +19,4 @@ export interface DashboardLayoutProps {
 /**
  * @alpha
  */
-export type CustomDashboardLayoutComponent = ComponentType;
+export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps>;
