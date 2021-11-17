@@ -2,7 +2,11 @@
 
 import { DefaultInsightCustomizer } from "../insightCustomizer";
 import React from "react";
-import { InsightComponentProvider, OptionalInsightComponentProvider } from "../../../presentation";
+import {
+    IDashboardInsightProps,
+    InsightComponentProvider,
+    OptionalInsightComponentProvider,
+} from "../../../presentation";
 import { IInsight, insightTags, insightTitle } from "@gooddata/sdk-model";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
@@ -63,12 +67,12 @@ function createTestDecoratorFactory(
                 return undefined;
             }
 
-            function Decorator() {
+            function Decorator(props: IDashboardInsightProps) {
                 const Decorated = next(insight, widget)!;
 
                 return (
                     <div id={name}>
-                        <Decorated />
+                        <Decorated {...props} />
                     </div>
                 );
             }
@@ -94,11 +98,12 @@ const DummyInsightWidget: IInsightWidget = {} as any;
 function renderToHtml(customizer: DefaultInsightCustomizer, insight: IInsight) {
     const provider = customizer.getInsightProvider();
     const Component = provider(insight, DummyInsightWidget);
+    const dummyProps: IDashboardInsightProps = { dummyInsightProps: true } as any;
 
     // this should not happen; if it does something is seriously hosed in the customizer
     invariant(Component);
 
-    const wrapper = mount(<Component />);
+    const wrapper = mount(<Component {...dummyProps} />);
     return wrapper.html();
 }
 
