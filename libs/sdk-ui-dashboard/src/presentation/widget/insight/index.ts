@@ -2,4 +2,3 @@
 export * from "./DefaultDashboardInsight";
 export { DashboardInsight } from "./DashboardInsight";
 export { IDashboardInsightProps, CustomDashboardInsightComponent } from "./types";
-export { DashboardInsightPropsProvider, useDashboardInsightProps } from "./DashboardInsightPropsContext";

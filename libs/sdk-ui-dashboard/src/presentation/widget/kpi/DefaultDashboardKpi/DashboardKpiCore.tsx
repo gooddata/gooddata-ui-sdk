@@ -12,7 +12,7 @@ import {
     selectSettings,
     useDashboardSelector,
 } from "../../../../model";
-import { DashboardKpiProps } from "../types";
+import { IDashboardKpiProps } from "../types";
 
 import { KpiExecutor } from "./KpiExecutor";
 import { useKpiData } from "./useKpiData";
@@ -20,7 +20,7 @@ import { useKpiData } from "./useKpiData";
 /**
  * @internal
  */
-export const DashboardKpiCore = (props: DashboardKpiProps): JSX.Element => {
+export const DashboardKpiCore = (props: IDashboardKpiProps): JSX.Element => {
     const {
         kpiWidget,
         alert,

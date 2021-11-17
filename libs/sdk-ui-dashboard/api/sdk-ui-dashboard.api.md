@@ -496,22 +496,22 @@ export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAt
 export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterProps>;
 
 // @alpha (undocumented)
-export type CustomDashboardInsightComponent = ComponentType;
+export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;
 
 // @alpha (undocumented)
-export type CustomDashboardInsightMenuButtonComponent = ComponentType;
+export type CustomDashboardInsightMenuButtonComponent = ComponentType<IDashboardInsightMenuButtonProps>;
 
 // @alpha (undocumented)
-export type CustomDashboardInsightMenuComponent = ComponentType;
+export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsightMenuProps>;
 
 // @alpha (undocumented)
-export type CustomDashboardKpiComponent = ComponentType;
+export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;
 
 // @alpha (undocumented)
 export type CustomDashboardLayoutComponent = ComponentType;
 
 // @alpha (undocumented)
-export type CustomDashboardWidgetComponent = ComponentType;
+export type CustomDashboardWidgetComponent = ComponentType<IDashboardWidgetProps>;
 
 // @alpha (undocumented)
 export type CustomFilterBarComponent = ComponentType<IFilterBarProps>;
@@ -520,7 +520,7 @@ export type CustomFilterBarComponent = ComponentType<IFilterBarProps>;
 export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
 
 // @alpha (undocumented)
-export type CustomSaveAsDialogComponent = ComponentType;
+export type CustomSaveAsDialogComponent = ComponentType<ISaveAsDialogProps>;
 
 // @alpha (undocumented)
 export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
@@ -992,22 +992,13 @@ export interface DashboardInitialized extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export const DashboardInsight: () => JSX.Element;
+export const DashboardInsight: (props: IDashboardInsightProps) => JSX.Element;
 
 // @internal (undocumented)
-export const DashboardInsightMenu: () => JSX.Element;
+export const DashboardInsightMenu: (props: IDashboardInsightMenuProps) => JSX.Element;
 
 // @internal (undocumented)
-export const DashboardInsightMenuButton: () => JSX.Element;
-
-// @internal (undocumented)
-export const DashboardInsightMenuButtonPropsProvider: React_2.FC<IDashboardInsightMenuButtonProps>;
-
-// @internal (undocumented)
-export const DashboardInsightMenuPropsProvider: React_2.FC<IDashboardInsightMenuProps>;
-
-// @internal (undocumented)
-export const DashboardInsightPropsProvider: React_2.FC<IDashboardInsightProps>;
+export const DashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
 
 // @alpha
 export interface DashboardInsightWidgetChanged extends IDashboardEvent {
@@ -1112,24 +1103,7 @@ export interface DashboardInsightWidgetVisPropertiesChanged extends IDashboardEv
 export type DashboardItemDefinition = ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition | ICustomWidgetDefinition> | StashedDashboardItemsId;
 
 // @internal (undocumented)
-export const DashboardKpi: () => JSX.Element;
-
-// @internal (undocumented)
-export interface DashboardKpiProps {
-    alert?: IWidgetAlert;
-    backend?: IAnalyticalBackend;
-    ErrorComponent?: React_2.ComponentType<IErrorProps>;
-    filters?: FilterContextItem[];
-    kpiWidget: IKpiWidget;
-    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
-    onDrill?: OnFiredDashboardViewDrillEvent;
-    onError?: OnError;
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
-    workspace?: string;
-}
-
-// @internal (undocumented)
-export const DashboardKpiPropsProvider: React_2.FC<DashboardKpiProps>;
+export const DashboardKpi: (props: IDashboardKpiProps) => JSX.Element;
 
 // @alpha
 export interface DashboardKpiWidgetChanged extends IDashboardEvent {
@@ -1521,7 +1495,7 @@ export interface DashboardWasReset extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export const DashboardWidget: React_2.FC;
+export const DashboardWidget: (props: IDashboardWidgetProps) => JSX.Element;
 
 // @alpha
 export interface DashboardWidgetExecutionFailed extends IDashboardEvent {
@@ -1555,36 +1529,6 @@ export interface DashboardWidgetExecutionSucceeded extends IDashboardEvent {
     // (undocumented)
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED";
 }
-
-// @internal (undocumented)
-export interface DashboardWidgetProps {
-    // (undocumented)
-    backend?: IAnalyticalBackend;
-    dateDataset?: ObjRef;
-    // (undocumented)
-    ErrorComponent?: ComponentType<IErrorProps>;
-    ignoredAttributeFilters?: ObjRefInScope[];
-    // (undocumented)
-    LoadingComponent?: ComponentType<ILoadingProps>;
-    // (undocumented)
-    onDrill?: OnFiredDashboardViewDrillEvent;
-    // (undocumented)
-    onError?: OnError;
-    // (undocumented)
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
-    onWidgetClicked?: () => void;
-    // (undocumented)
-    screen: ScreenSize;
-    showHeader?: boolean;
-    showMenu?: boolean;
-    // (undocumented)
-    widget?: ExtendedDashboardWidget;
-    // (undocumented)
-    workspace?: string;
-}
-
-// @internal (undocumented)
-export const DashboardWidgetPropsProvider: React_2.FC<DashboardWidgetProps>;
 
 // @alpha (undocumented)
 export interface DateFilterConfigState {
@@ -1630,26 +1574,14 @@ export const DefaultDashboardDateFilter: (props: IDashboardDateFilterProps) => J
 // @internal (undocumented)
 export const DefaultDashboardInsight: (props: IDashboardInsightProps) => JSX.Element;
 
-// @internal (undocumented)
-export const DefaultDashboardInsightInner: () => JSX.Element;
-
-// @internal (undocumented)
+// @alpha (undocumented)
 export const DefaultDashboardInsightMenu: (props: IDashboardInsightMenuProps) => JSX.Element;
 
 // @internal (undocumented)
 export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
 
 // @internal (undocumented)
-export const DefaultDashboardInsightMenuButtonInner: () => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultDashboardInsightMenuInner: () => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultDashboardKpi: (props: DashboardKpiProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultDashboardKpiInner: () => JSX.Element;
+export const DefaultDashboardKpi: (props: IDashboardKpiProps) => JSX.Element;
 
 // @alpha (undocumented)
 export const DefaultDashboardLayout: (props: DashboardLayoutProps) => JSX.Element;
@@ -1661,10 +1593,7 @@ export const DefaultDashboardLayoutInner: () => JSX.Element;
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
 // @internal (undocumented)
-export const DefaultDashboardWidget: (props: DashboardWidgetProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultDashboardWidgetInner: () => JSX.Element;
+export const DefaultDashboardWidget: (props: IDashboardWidgetProps) => JSX.Element;
 
 // @alpha (undocumented)
 export const DefaultFilterBar: (props: IFilterBarProps) => JSX.Element;
@@ -1673,10 +1602,7 @@ export const DefaultFilterBar: (props: IFilterBarProps) => JSX.Element;
 export const DefaultMenuButton: (props: IMenuButtonProps) => JSX.Element | null;
 
 // @alpha (undocumented)
-export const DefaultSaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultSaveAsDialogInner: () => JSX.Element | null;
+export const DefaultSaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element | null;
@@ -2206,10 +2132,10 @@ export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPosi
 export interface IDashboardInsightCustomizer {
     withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): IDashboardInsightCustomizer;
     withCustomProvider(provider: InsightComponentProvider): IDashboardInsightCustomizer;
-    withTag(tag: string, component: React_2.ComponentType): IDashboardInsightCustomizer;
+    withTag(tag: string, component: CustomDashboardInsightComponent): IDashboardInsightCustomizer;
 }
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export interface IDashboardInsightMenuButtonProps {
     // (undocumented)
     insight: IInsight;
@@ -2223,7 +2149,7 @@ export interface IDashboardInsightMenuButtonProps {
     widget: IInsightWidget;
 }
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export interface IDashboardInsightMenuProps {
     // (undocumented)
     insight: IInsight;
@@ -2237,7 +2163,7 @@ export interface IDashboardInsightMenuProps {
     widget: IInsightWidget;
 }
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export interface IDashboardInsightProps {
     // (undocumented)
     backend?: IAnalyticalBackend;
@@ -2281,6 +2207,20 @@ export interface IDashboardInsightProps {
 export interface IDashboardKpiCustomizer {
     withCustomDecorator(providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider): IDashboardKpiCustomizer;
     withCustomProvider(provider: KpiComponentProvider): IDashboardKpiCustomizer;
+}
+
+// @alpha (undocumented)
+export interface IDashboardKpiProps {
+    alert?: IWidgetAlert;
+    backend?: IAnalyticalBackend;
+    ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    filters?: FilterContextItem[];
+    kpiWidget: IKpiWidget;
+    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
+    onDrill?: OnFiredDashboardViewDrillEvent;
+    onError?: OnError;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+    workspace?: string;
 }
 
 // @alpha (undocumented)
@@ -2345,7 +2285,34 @@ export interface IDashboardThemingProps {
 
 // @alpha (undocumented)
 export interface IDashboardWidgetCustomizer {
-    addCustomWidget(widgetType: string, Component: React_2.ComponentType): IDashboardWidgetCustomizer;
+    addCustomWidget(widgetType: string, Component: CustomDashboardWidgetComponent): IDashboardWidgetCustomizer;
+}
+
+// @alpha (undocumented)
+export interface IDashboardWidgetProps {
+    // (undocumented)
+    backend?: IAnalyticalBackend;
+    dateDataset?: ObjRef;
+    // (undocumented)
+    ErrorComponent?: ComponentType<IErrorProps>;
+    ignoredAttributeFilters?: ObjRefInScope[];
+    // (undocumented)
+    LoadingComponent?: ComponentType<ILoadingProps>;
+    // (undocumented)
+    onDrill?: OnFiredDashboardViewDrillEvent;
+    // (undocumented)
+    onError?: OnError;
+    // (undocumented)
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+    onWidgetClicked?: () => void;
+    // (undocumented)
+    screen: ScreenSize;
+    showHeader?: boolean;
+    showMenu?: boolean;
+    // (undocumented)
+    widget?: ExtendedDashboardWidget;
+    // (undocumented)
+    workspace?: string;
 }
 
 // @alpha
@@ -2944,12 +2911,6 @@ export const LegacyDashboardInsightMenu: (props: IDashboardInsightMenuProps) => 
 // @internal (undocumented)
 export const LegacyDashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
 
-// @internal (undocumented)
-export const LegacyDashboardInsightMenuButtonInner: () => JSX.Element;
-
-// @internal (undocumented)
-export const LegacyDashboardInsightMenuInner: () => JSX.Element;
-
 // @alpha (undocumented)
 export type LoadingState = {
     loading: boolean;
@@ -3092,31 +3053,31 @@ export type OnDashboardDrillSuccess = (event: DashboardDrillResolved) => void;
 // @internal (undocumented)
 export type OnDrillDown = (cmd: DrillDown) => void;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type OnDrillDownSuccess = (event: DashboardDrillDownResolved) => void;
 
 // @internal (undocumented)
 export type OnDrillToAttributeUrl = (cmd: DrillToAttributeUrl) => void;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type OnDrillToAttributeUrlSuccess = (event: DashboardDrillToAttributeUrlResolved) => void;
 
 // @internal (undocumented)
 export type OnDrillToCustomUrl = (cmd: DrillToCustomUrl) => void;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type OnDrillToCustomUrlSuccess = (event: DashboardDrillToCustomUrlResolved) => void;
 
 // @internal (undocumented)
 export type OnDrillToDashboard = (cmd: DrillToDashboard) => void;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type OnDrillToDashboardSuccess = (event: DashboardDrillToDashboardResolved) => void;
 
 // @internal (undocumented)
 export type OnDrillToInsight = (cmd: DrillToInsight) => void;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type OnDrillToInsightSuccess = (event: DashboardDrillToInsightResolved) => void;
 
 // @internal (undocumented)
@@ -3128,7 +3089,7 @@ export type OnDrillToLegacyDashboardSuccess = (event: DashboardDrillToLegacyDash
 // @beta
 export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
 
-// @internal (undocumented)
+// @alpha (undocumented)
 export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
 
 // @alpha (undocumented)
@@ -3419,10 +3380,7 @@ export function resolveFilterValues(filters: ResolvableFilter[], backend?: IAnal
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;
 
 // @internal (undocumented)
-export const SaveAsDialog: () => JSX.Element;
-
-// @internal (undocumented)
-export const SaveAsDialogPropsProvider: React_2.FC<ISaveAsDialogProps>;
+export const SaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element;
 
 // @alpha (undocumented)
 export interface SaveDashboard extends IDashboardCommand {
@@ -4304,18 +4262,6 @@ export const useDashboardEventDispatch: () => (eventBody: DashboardEventBody<Das
 // @alpha (undocumented)
 export const useDashboardEventsContext: () => IDashboardEventsContext;
 
-// @internal (undocumented)
-export const useDashboardInsightMenuButtonProps: () => IDashboardInsightMenuButtonProps;
-
-// @internal (undocumented)
-export const useDashboardInsightMenuProps: () => IDashboardInsightMenuProps;
-
-// @internal (undocumented)
-export const useDashboardInsightProps: () => IDashboardInsightProps;
-
-// @internal (undocumented)
-export const useDashboardKpiProps: () => DashboardKpiProps;
-
 // @alpha (undocumented)
 export const useDashboardLayoutProps: () => DashboardLayoutProps;
 
@@ -4342,9 +4288,6 @@ export const useDashboardUserInteraction: () => {
     kpiAlertDialogClosed: () => void;
     kpiAlertDialogOpened: (alreadyHasAlert: boolean) => void;
 };
-
-// @internal (undocumented)
-export const useDashboardWidgetProps: () => DashboardWidgetProps;
 
 // @alpha
 export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => (...args: TArgs) => void;
@@ -4486,9 +4429,6 @@ export interface UserState {
     // (undocumented)
     user?: IUser;
 }
-
-// @alpha (undocumented)
-export const useSaveAsDialogProps: () => ISaveAsDialogProps;
 
 // @internal
 export function useWidgetExecutionsHandler(widgetRef: ObjRef): {

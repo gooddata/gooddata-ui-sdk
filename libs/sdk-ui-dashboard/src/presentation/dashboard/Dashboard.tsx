@@ -19,16 +19,18 @@ import {
     DefaultFilterBar,
 } from "../filterBar";
 import {
+    CustomDashboardInsightComponent,
     CustomDashboardInsightMenuButtonComponent,
     CustomDashboardInsightMenuComponent,
+    CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
-    DefaultDashboardInsightInner,
-    DefaultDashboardInsightMenuButtonInner,
-    DefaultDashboardInsightMenuInner,
-    DefaultDashboardKpiInner,
-    DefaultDashboardWidgetInner,
-    LegacyDashboardInsightMenuButtonInner,
-    LegacyDashboardInsightMenuInner,
+    DefaultDashboardInsight,
+    DefaultDashboardInsightMenu,
+    DefaultDashboardInsightMenuButton,
+    DefaultDashboardKpi,
+    DefaultDashboardWidget,
+    LegacyDashboardInsightMenu,
+    LegacyDashboardInsightMenuButton,
 } from "../widget";
 import { DashboardLayout, DashboardLayoutPropsProvider, DefaultDashboardLayoutInner } from "../layout";
 import { IntlWrapper } from "../localization";
@@ -129,15 +131,15 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     const widgetProvider = useCallback(
         (widget: ExtendedDashboardWidget): CustomDashboardWidgetComponent => {
             const userSpecified = props.WidgetComponentProvider?.(widget);
-            return userSpecified ?? DefaultDashboardWidgetInner;
+            return userSpecified ?? DefaultDashboardWidget;
         },
         [props.WidgetComponentProvider],
     );
 
     const insightProvider = useCallback(
-        (insight: IInsight, widget: IInsightWidget): CustomDashboardWidgetComponent => {
+        (insight: IInsight, widget: IInsightWidget): CustomDashboardInsightComponent => {
             const userSpecified = props.InsightComponentProvider?.(insight, widget);
-            return userSpecified ?? DefaultDashboardInsightInner;
+            return userSpecified ?? DefaultDashboardInsight;
         },
         [props.InsightComponentProvider],
     );
@@ -147,8 +149,8 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             const userSpecified = props.InsightMenuButtonComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu button
             const FallbackDashboardInsightMenuButtonInner = props.insightMenuItemsProvider
-                ? DefaultDashboardInsightMenuButtonInner
-                : LegacyDashboardInsightMenuButtonInner;
+                ? DefaultDashboardInsightMenuButton
+                : LegacyDashboardInsightMenuButton;
             return userSpecified ?? FallbackDashboardInsightMenuButtonInner;
         },
         [props.InsightMenuButtonComponentProvider],
@@ -159,17 +161,17 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             const userSpecified = props.InsightMenuComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu
             const FallbackDashboardInsightMenuInner = props.insightMenuItemsProvider
-                ? DefaultDashboardInsightMenuInner
-                : LegacyDashboardInsightMenuInner;
+                ? DefaultDashboardInsightMenu
+                : LegacyDashboardInsightMenu;
             return userSpecified ?? FallbackDashboardInsightMenuInner;
         },
         [props.InsightMenuComponentProvider],
     );
 
     const kpiProvider = useCallback(
-        (kpi: ILegacyKpi, widget: IKpiWidget): CustomDashboardWidgetComponent => {
+        (kpi: ILegacyKpi, widget: IKpiWidget): CustomDashboardKpiComponent => {
             const userSpecified = props.KpiComponentProvider?.(kpi, widget);
-            return userSpecified ?? DefaultDashboardKpiInner;
+            return userSpecified ?? DefaultDashboardKpi;
         },
         [props.KpiComponentProvider],
     );

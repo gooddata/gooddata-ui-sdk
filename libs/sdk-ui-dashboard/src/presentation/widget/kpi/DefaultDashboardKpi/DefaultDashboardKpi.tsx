@@ -1,26 +1,12 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 
-import { DashboardKpiPropsProvider, useDashboardKpiProps } from "../DashboardKpiPropsContext";
-import { DashboardKpiProps } from "../types";
+import { IDashboardKpiProps } from "../types";
 import { DefaultDashboardKpiWithDrills } from "./DefaultDashboardKpiWithDrills";
 
 /**
  * @internal
  */
-export const DefaultDashboardKpiInner = (): JSX.Element => {
-    const props = useDashboardKpiProps();
-
+export const DefaultDashboardKpi = (props: IDashboardKpiProps): JSX.Element => {
     return <DefaultDashboardKpiWithDrills {...props} />;
-};
-
-/**
- * @internal
- */
-export const DefaultDashboardKpi = (props: DashboardKpiProps): JSX.Element => {
-    return (
-        <DashboardKpiPropsProvider {...props}>
-            <DefaultDashboardKpiInner />
-        </DashboardKpiPropsProvider>
-    );
 };

@@ -17,17 +17,15 @@ import {
     widgetExecutionStarted,
     widgetExecutionSucceeded,
 } from "../../../model/events/widget";
-import { DashboardWidgetProps } from "./types";
-import { DashboardWidgetPropsProvider, useDashboardWidgetProps } from "./DashboardWidgetPropsContext";
-import { DashboardKpiPropsProvider } from "../kpi/DashboardKpiPropsContext";
+import { IDashboardWidgetProps } from "./types";
 import { DashboardKpi } from "../kpi/DashboardKpi";
 import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget";
 
 /**
  * @internal
  */
-export const DefaultDashboardWidgetInner = (): JSX.Element => {
-    const { onError, onFiltersChange, screen, widget, backend } = useDashboardWidgetProps();
+export const DefaultDashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
+    const { onError, onFiltersChange, screen, widget, backend } = props;
 
     const widgetRef = widget?.ref;
     const alertSelector = selectAlertByWidgetRef(widgetRef!);
@@ -81,14 +79,12 @@ export const DefaultDashboardWidgetInner = (): JSX.Element => {
                     <DefaultDashboardInsightWidget widget={widget} screen={screen} />
                 ) : (
                     <DashboardItem className="type-kpi" screen={screen}>
-                        <DashboardKpiPropsProvider
+                        <DashboardKpi
                             kpiWidget={widget}
                             alert={alert}
                             onFiltersChange={onFiltersChange}
                             onError={onError}
-                        >
-                            <DashboardKpi />
-                        </DashboardKpiPropsProvider>
+                        />
                     </DashboardItem>
                 )}
             </BackendProvider>
@@ -96,15 +92,4 @@ export const DefaultDashboardWidgetInner = (): JSX.Element => {
     }
 
     return <div>Unknown widget</div>;
-};
-
-/**
- * @internal
- */
-export const DefaultDashboardWidget = (props: DashboardWidgetProps): JSX.Element => {
-    return (
-        <DashboardWidgetPropsProvider {...props}>
-            <DefaultDashboardWidgetInner />
-        </DashboardWidgetPropsProvider>
-    );
 };

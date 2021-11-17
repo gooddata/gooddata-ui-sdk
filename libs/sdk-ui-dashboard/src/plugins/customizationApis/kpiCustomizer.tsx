@@ -1,15 +1,11 @@
 // (C) 2021 GoodData Corporation
 import { IDashboardKpiCustomizer } from "../customizer";
-import {
-    DefaultDashboardKpiInner,
-    KpiComponentProvider,
-    OptionalKpiComponentProvider,
-} from "../../presentation";
+import { DefaultDashboardKpi, KpiComponentProvider, OptionalKpiComponentProvider } from "../../presentation";
 import { InvariantError } from "ts-invariant";
 import { DashboardCustomizationLogger } from "./customizationLogging";
 
 const DefaultKpiRendererProvider: KpiComponentProvider = () => {
-    return DefaultDashboardKpiInner;
+    return DefaultDashboardKpi;
 };
 
 interface IKpiCustomizerState {
