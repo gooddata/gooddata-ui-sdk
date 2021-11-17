@@ -1,7 +1,11 @@
 // (C) 2021 GoodData Corporation
 
 import React from "react";
-import { KpiComponentProvider, OptionalKpiComponentProvider } from "../../../presentation";
+import {
+    IDashboardKpiProps,
+    KpiComponentProvider,
+    OptionalKpiComponentProvider,
+} from "../../../presentation";
 import { idRef, measureItem } from "@gooddata/sdk-model";
 import { IKpiWidget, ILegacyKpi } from "@gooddata/sdk-backend-spi";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
@@ -69,12 +73,12 @@ function createTestDecoratorFactory(
                 return undefined;
             }
 
-            function Decorator() {
+            function Decorator(props: IDashboardKpiProps) {
                 const Decorated = next(kpi, widget)!;
 
                 return (
                     <div id={name}>
-                        <Decorated />
+                        <Decorated {...props} />
                     </div>
                 );
             }
@@ -96,11 +100,12 @@ const DefaultTestComponentProvider: KpiComponentProvider = createTestComponentPr
 function renderToHtml(customizer: DefaultKpiCustomizer, widget: IKpiWidget) {
     const provider = customizer.getKpiProvider();
     const Component = provider(widget.kpi, widget);
+    const dummyProps: IDashboardKpiProps = { dummyKpiProps: true } as any;
 
     // this should not happen; if it does something is seriously hosed in the customizer
     invariant(Component);
 
-    const wrapper = mount(<Component />);
+    const wrapper = mount(<Component {...dummyProps} />);
     return wrapper.html();
 }
 

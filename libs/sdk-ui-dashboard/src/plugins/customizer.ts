@@ -70,13 +70,13 @@ export interface IDashboardInsightCustomizer {
      *             return undefined;
      *         }
      *
-     *         function MyCustomDecorator() {
+     *         function MyCustomDecorator(props) {
      *              const Decorated = next(insight, widget);
      *
      *              return (
      *                  <div>
      *                      <p>My Custom Decoration</p>
-     *                      <Decorated/>
+     *                      <Decorated {...props} />
      *                  </div>
      *              )
      *         }
@@ -139,13 +139,13 @@ export interface IDashboardKpiCustomizer {
      *             return undefined;
      *         }
      *
-     *         function MyCustomDecorator() {
+     *         function MyCustomDecorator(props) {
      *              const Decorated = next(kpi, widget);
      *
      *              return (
      *                  <div>
      *                      <p>My Custom Decoration</p>
-     *                      <Decorated/>
+     *                      <Decorated {...props}/>
      *                  </div>
      *              )
      *         }
