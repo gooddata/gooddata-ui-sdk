@@ -12,11 +12,3 @@ export {
     IInsightMenuItemButton,
     IInsightMenuItemSeparator,
 } from "./types";
-export {
-    DashboardInsightMenuButtonPropsProvider,
-    useDashboardInsightMenuButtonProps,
-} from "./DashboardInsightMenuButtonPropsContext";
-export {
-    DashboardInsightMenuPropsProvider,
-    useDashboardInsightMenuProps,
-} from "./DashboardInsightMenuPropsContext";

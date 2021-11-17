@@ -157,17 +157,11 @@ export interface IDashboardCustomComponentProps {
      *    This is useful if you want to customize just one particular widget and keep default rendering for the
      *    other widgets.
      *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardWidgetProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardWidget} component.
-     *
      * @example
      *
      * ```tsx
      * // Simple component that alters the title of every widget
-     * const CustomWidget = () => {
-     *     const props = useDashboardWidgetProps();
-     *
+     * const CustomWidget = (props) => {
      *     const widget: IInsightWidget = {
      *         ...props.widget,
      *         title: `Prepend to ${props.widget.title}`,
@@ -186,10 +180,6 @@ export interface IDashboardCustomComponentProps {
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsight} will be used.
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardInsightProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardInsight} component.
      */
     InsightComponentProvider?: OptionalInsightComponentProvider;
 
@@ -202,9 +192,6 @@ export interface IDashboardCustomComponentProps {
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
      *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardInsightMenuButtonProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardInsightMenuButton} component.
      */
     InsightMenuButtonComponentProvider?: InsightMenuButtonComponentProvider;
 
@@ -217,9 +204,6 @@ export interface IDashboardCustomComponentProps {
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
      *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardInsightMenuProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardInsightMenu} component.
      */
     InsightMenuComponentProvider?: InsightMenuComponentProvider;
 
@@ -230,10 +214,6 @@ export interface IDashboardCustomComponentProps {
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardKpi}.
      *    This is useful if you want to customize just one particular KPI and keep default rendering for
      *    the other insights.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardKpiProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardKpi} component.
      */
     KpiComponentProvider?: OptionalKpiComponentProvider;
 

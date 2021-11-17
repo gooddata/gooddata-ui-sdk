@@ -20,20 +20,11 @@ import {
 } from "../../drill/types";
 
 ///
-/// Custom component types
-///
-
-/**
- * @alpha
- */
-export type CustomDashboardInsightComponent = ComponentType;
-
-///
 /// Component props
 ///
 
 /**
- * @internal
+ * @alpha
  */
 export interface IDashboardInsightProps {
     widget: IInsightWidget;
@@ -60,3 +51,12 @@ export interface IDashboardInsightProps {
     ErrorComponent?: ComponentType<IErrorProps>;
     LoadingComponent?: ComponentType<ILoadingProps>;
 }
+
+///
+/// Custom component types
+///
+
+/**
+ * @alpha
+ */
+export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;

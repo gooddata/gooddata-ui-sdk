@@ -9,5 +9,5 @@ export {
     IInsightMenuItemButton,
     IInsightMenuItemSeparator,
 } from "./insightMenu/types";
-export { DashboardKpiProps, CustomDashboardKpiComponent } from "./kpi/types";
-export { DashboardWidgetProps, CustomDashboardWidgetComponent } from "./widget/types";
+export { IDashboardKpiProps, CustomDashboardKpiComponent } from "./kpi/types";
+export { IDashboardWidgetProps, CustomDashboardWidgetComponent } from "./widget/types";
