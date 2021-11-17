@@ -523,13 +523,13 @@ export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
 export type CustomSaveAsDialogComponent = ComponentType;
 
 // @alpha (undocumented)
-export type CustomScheduledEmailDialogComponent = ComponentType;
+export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
 
 // @alpha (undocumented)
 export type CustomShareButtonComponent = ComponentType<IShareButtonProps>;
 
 // @alpha (undocumented)
-export type CustomShareDialogComponent = ComponentType;
+export type CustomShareDialogComponent = ComponentType<IShareDialogProps>;
 
 // @alpha (undocumented)
 export type CustomTitleComponent = ComponentType<ITitleProps>;
@@ -1679,10 +1679,7 @@ export const DefaultSaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element;
 export const DefaultSaveAsDialogInner: () => JSX.Element | null;
 
 // @alpha (undocumented)
-export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultScheduledEmailDialogInner: () => JSX.Element | null;
+export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultShareButton: React_2.ForwardRefExoticComponent<Pick<IShareButtonProps & WrappedComponentProps<"intl">, "onShareButtonClick"> & {
@@ -1692,10 +1689,7 @@ export const DefaultShareButton: React_2.ForwardRefExoticComponent<Pick<IShareBu
 };
 
 // @alpha (undocumented)
-export const DefaultShareDialog: (props: IShareDialogProps) => JSX.Element;
-
-// @internal (undocumented)
-export const DefaultShareDialogInner: () => JSX.Element | null;
+export const DefaultShareDialog: (props: IShareDialogProps) => JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultTitle: (props: ITitleProps) => JSX.Element | null;
@@ -3462,10 +3456,7 @@ export type SavingState = {
 };
 
 // @internal (undocumented)
-export const ScheduledEmailDialog: () => JSX.Element;
-
-// @internal (undocumented)
-export const ScheduledEmailDialogPropsProvider: React_2.FC<IScheduledEmailDialogProps>;
+export const ScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element;
 
 // @alpha
 export const selectAlertByRef: ((ref: ObjRef) => (state: DashboardState) => IWidgetAlert | undefined) & MemoizedFunction;
@@ -3857,10 +3848,7 @@ export function setExecutionResultLoading(id: ObjRef | string, correlationId?: s
 export const ShareButton: (props: IShareButtonProps) => JSX.Element;
 
 // @internal (undocumented)
-export const ShareDialog: () => JSX.Element;
-
-// @internal (undocumented)
-export const ShareDialogPropsProvider: React_2.FC<IShareDialogProps>;
+export const ShareDialog: (props: IShareDialogProps) => JSX.Element;
 
 // @alpha
 export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboardEvent)["type"], handler: DashboardEventHandler["handler"]): DashboardEventHandler;
@@ -4501,12 +4489,6 @@ export interface UserState {
 
 // @alpha (undocumented)
 export const useSaveAsDialogProps: () => ISaveAsDialogProps;
-
-// @alpha (undocumented)
-export const useScheduledEmailDialogProps: () => IScheduledEmailDialogProps;
-
-// @alpha (undocumented)
-export const useShareDialogProps: () => IShareDialogProps;
 
 // @internal
 export function useWidgetExecutionsHandler(widgetRef: ObjRef): {

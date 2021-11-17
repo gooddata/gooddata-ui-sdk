@@ -1,21 +1,16 @@
 // (C) 2019-2020 GoodData Corporation
 import React from "react";
 import invariant from "ts-invariant";
-import {
-    ScheduledEmailDialogPropsProvider,
-    useScheduledEmailDialogProps,
-} from "../ScheduledEmailDialogPropsContext";
-
 import { IScheduledEmailDialogProps } from "../types";
 
 import { ScheduledMailDialogRenderer } from "./ScheduledMailDialogRenderer/ScheduledMailDialogRenderer";
 import { useScheduledEmail } from "./useScheduledEmail";
 
 /**
- * @internal
+ * @alpha
  */
-export const DefaultScheduledEmailDialogInner = (): JSX.Element | null => {
-    const { onSubmit, onCancel, onError, isVisible, onSuccess } = useScheduledEmailDialogProps();
+export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): JSX.Element | null => {
+    const { onSubmit, onCancel, onError, isVisible, onSuccess } = props;
 
     const {
         currentUser,
@@ -54,16 +49,5 @@ export const DefaultScheduledEmailDialogInner = (): JSX.Element | null => {
             onCancel={onCancel}
             onError={onError}
         />
-    );
-};
-
-/**
- * @alpha
- */
-export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): JSX.Element => {
-    return (
-        <ScheduledEmailDialogPropsProvider {...props}>
-            <DefaultScheduledEmailDialogInner />
-        </ScheduledEmailDialogPropsProvider>
     );
 };

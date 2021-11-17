@@ -44,4 +44,4 @@ export interface IScheduledEmailDialogProps {
 /**
  * @alpha
  */
-export type CustomScheduledEmailDialogComponent = ComponentType;
+export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
