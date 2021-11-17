@@ -142,10 +142,6 @@ export interface IDashboardCustomComponentProps {
 
     /**
      * Optionally specify component to use for rendering the layout.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardLayoutProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardLayout} component.
      */
     LayoutComponent?: CustomDashboardLayoutComponent;
 
