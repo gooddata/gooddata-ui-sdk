@@ -5,20 +5,16 @@ import { selectIsExport, selectLocale, useDashboardSelector } from "../../../mod
 import { IntlWrapper } from "../../localization";
 import { ButtonBar } from "../buttonBar";
 import { MenuButton } from "../menuButton";
-import { Title, TitlePropsProvider } from "../title";
-
-import { TopBarPropsProvider, useTopBarProps } from "./TopBarPropsContext";
+import { Title } from "../title";
 import { ITopBarProps } from "./types";
 import { HiddenTopBar } from "./HiddenTopBar";
 
-const TopBarCore = (): JSX.Element => {
-    const { menuButtonProps, titleProps, buttonBarProps } = useTopBarProps();
+const TopBarCore = (props: ITopBarProps): JSX.Element => {
+    const { menuButtonProps, titleProps, buttonBarProps } = props;
     return (
         <div className={"dash-header s-top-bar"}>
             <div className={"dash-header-inner"}>
-                <TitlePropsProvider {...titleProps}>
-                    <Title />
-                </TitlePropsProvider>
+                <Title {...titleProps} />
 
                 <ButtonBar {...buttonBarProps} />
             </div>
@@ -28,30 +24,19 @@ const TopBarCore = (): JSX.Element => {
 };
 
 /**
- * @internal
+ * @alpha
  */
-export const DefaultTopBarInner = (): JSX.Element => {
+export const DefaultTopBar = (props: ITopBarProps): JSX.Element => {
     const isExport = useDashboardSelector(selectIsExport);
     const locale = useDashboardSelector(selectLocale);
 
     if (isExport) {
-        return <HiddenTopBar />;
+        return <HiddenTopBar {...props} />;
     }
 
     return (
         <IntlWrapper locale={locale}>
-            <TopBarCore />
+            <TopBarCore {...props} />
         </IntlWrapper>
-    );
-};
-
-/**
- * @alpha
- */
-export const DefaultTopBar = (props: ITopBarProps): JSX.Element => {
-    return (
-        <TopBarPropsProvider {...props}>
-            <DefaultTopBarInner />
-        </TopBarPropsProvider>
     );
 };

@@ -12,4 +12,4 @@ export interface ITitleProps {
 /**
  * @alpha
  */
-export type CustomTitleComponent = ComponentType;
+export type CustomTitleComponent = ComponentType<ITitleProps>;
