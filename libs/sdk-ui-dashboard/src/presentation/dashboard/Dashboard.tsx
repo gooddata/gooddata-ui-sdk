@@ -45,7 +45,7 @@ import {
     useDispatchDashboardCommand,
 } from "../../model";
 import { DefaultScheduledEmailDialogInner } from "../scheduledEmail";
-import { DefaultButtonBar, DefaultMenuButton, DefaultTitleInner, DefaultTopBarInner } from "../topBar";
+import { DefaultButtonBar, DefaultMenuButton, DefaultTitle, DefaultTopBar } from "../topBar";
 
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { IDashboardProps } from "./types";
@@ -207,8 +207,8 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                             WidgetComponentProvider={widgetProvider}
                             ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
                             MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
-                            TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
-                            TitleComponent={props.TitleComponent ?? DefaultTitleInner}
+                            TopBarComponent={props.TopBarComponent ?? DefaultTopBar}
+                            TitleComponent={props.TitleComponent ?? DefaultTitle}
                             ScheduledEmailDialogComponent={
                                 props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
                             }

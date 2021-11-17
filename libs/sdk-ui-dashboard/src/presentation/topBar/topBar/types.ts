@@ -12,9 +12,10 @@ export interface ITopBarProps {
     menuButtonProps: IMenuButtonProps;
     titleProps: ITitleProps;
     buttonBarProps: IButtonBarProps;
+    DefaultTopBar: CustomTopBarComponent;
 }
 
 /**
  * @alpha
  */
-export type CustomTopBarComponent = ComponentType;
+export type CustomTopBarComponent = ComponentType<ITopBarProps>;

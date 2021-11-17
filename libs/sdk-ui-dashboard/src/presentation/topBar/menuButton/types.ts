@@ -43,6 +43,8 @@ export interface IMenuButtonProps {
      * Items that will be in the menu.
      */
     menuItems: ReadonlyArray<IMenuButtonItem>;
+
+    DefaultMenuButton: CustomMenuButtonComponent;
 }
 
 /**
