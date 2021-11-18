@@ -148,11 +148,11 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
  * -  backend-specific files have to be used where needed (or thrown away if not needed)
  * -  string replacements need to happen in the different files to reflect the renaming
  *
+ * @param target - target directory to create plugin in
  * @param config - config for the initialization action
  */
-async function prepareProject(config: InitCmdActionConfig): Promise<string> {
-    const { name, targetDir, language, backend } = config;
-    const target = targetDir ? targetDir : path.resolve(process.cwd(), convertToPluginDirectory(name));
+async function prepareProject(target: string, config: InitCmdActionConfig): Promise<void> {
+    const { language, backend } = config;
 
     await unpackProject(target, language);
     modifyPackageJson(target, config);
@@ -160,8 +160,6 @@ async function prepareProject(config: InitCmdActionConfig): Promise<string> {
     await processTigerFiles(target, backend === "tiger");
     renamePluginDirectories(target, config);
     await performReplacementsInFiles(target, config);
-
-    return target;
 }
 
 function runInstall(target: string, config: InitCmdActionConfig): void {
@@ -210,9 +208,21 @@ export async function initCmdAction(pluginName: string | undefined, options: Act
         );
 
         const config = await getInitCmdActionConfig(pluginName, options);
-        const directory = await prepareProject(config);
+        const { name, targetDir } = config;
+        const target = targetDir ? targetDir : path.resolve(process.cwd(), convertToPluginDirectory(name));
 
-        runInstall(directory, config);
+        if (fse.existsSync(target)) {
+            logError(
+                `Directory for your new plugin already exists: ${target}. Either use a different plugin name or use --target-dir and specify a different directory.`,
+            );
+
+            process.exit(1);
+            return;
+        }
+
+        const directory = await prepareProject(target, config);
+
+        runInstall(target, config);
 
         logInfo(
             `A new project for your dashboard plugin is ready in: ${directory}. Check out the package.json and fill in author and description if possible.`,
