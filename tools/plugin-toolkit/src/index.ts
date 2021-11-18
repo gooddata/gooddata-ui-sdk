@@ -86,7 +86,11 @@ const inspectDashboardCmd = inspectCmd
 const initCmd: Command = dashboardCmd
     .command("init")
     .description("Initialize a new dashboard plugin")
-    .argument("[plugin-name]", "Name of the plugin to create")
+    .argument(
+        "[plugin-name]",
+        "Name of the plugin to create. Plugin name will be used to " +
+            "create a new subdirectory for the plugin project. The program expects that the subdirectory does not exist",
+    )
     .option(
         "--language <language>",
         "Programming language to use for plugin. Either TypeScript (ts) or JavaScript (js)",
@@ -99,7 +103,8 @@ const initCmd: Command = dashboardCmd
     .option(
         "--target-dir <path>",
         "Path to the directory to create the plugin in. If not " +
-            "specified, program will create a new subdirectory with name derived from plugin name in the current working directory",
+            "specified, program will create a new subdirectory with name derived from plugin name in the " +
+            "current working directory. The program expects that the subdirectory does not exist",
     )
     .option("--package-manager <package-manager>", "Package manager to use in the plugin project", "npm")
     .option("--skip-install", "Skip installing the plugin dependencies", false)
