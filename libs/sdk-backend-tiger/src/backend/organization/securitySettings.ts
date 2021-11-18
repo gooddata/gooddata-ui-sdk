@@ -31,15 +31,9 @@ export class SecuritySettingsService implements ISecuritySettingsService {
             return false;
         }
 
-        if (typeof location === "undefined") {
-            // eslint-disable-next-line no-console
-            console.error("Plugin validation unable to obtain current location.");
-
-            return false;
-        }
-
-        const currentLocation = `${location.protocol}//${location.host}`;
-
-        return Promise.resolve(url.startsWith(currentLocation));
+        // On tiger, it is responsibility of the installation admin to correctly set the CSP. The browser
+        // will then prevent loading plugins from unsupported locations
+        //
+        return Promise.resolve(true);
     };
 }
