@@ -67,6 +67,10 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     const { title, useOriginalFilterContext } = cmd.payload;
     const titleProp = title ? { title } : {};
 
+    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
+        selectPersistedDashboard,
+    );
+
     const dashboardDescriptor: ReturnType<typeof selectDashboardDescriptor> = yield select(
         selectDashboardDescriptor,
     );
@@ -103,6 +107,8 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         dateFilterConfig,
     };
 
+    const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
+
     const shareProp: Partial<IAccessControlAware> =
         settings.enableAnalyticalDashboardPermissions && capabilities.supportsAccessControl
             ? {
@@ -122,6 +128,7 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         ...titleProp,
         layout: dashboardLayoutRemoveIdentity(layout, () => true),
         ...shareProp,
+        ...pluginsProp,
     };
 
     return {

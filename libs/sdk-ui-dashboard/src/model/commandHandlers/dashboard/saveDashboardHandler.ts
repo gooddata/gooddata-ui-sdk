@@ -146,6 +146,8 @@ function* createDashboardSaveContext(
         identifier: persistedDashboard?.identifier,
     };
 
+    const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
+
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
         ...dashboardDescriptor,
@@ -156,6 +158,7 @@ function* createDashboardSaveContext(
         },
         layout,
         dateFilterConfig,
+        ...pluginsProp,
     };
 
     const dashboardToSave: IDashboardDefinition = {
