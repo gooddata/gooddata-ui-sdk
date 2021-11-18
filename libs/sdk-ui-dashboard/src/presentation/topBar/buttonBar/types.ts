@@ -7,9 +7,10 @@ import { IShareButtonProps } from "../shareButton/types";
 export interface IButtonBarProps {
     buttons?: React.ReactNode;
     shareButtonProps: IShareButtonProps;
+    DefaultButtonBar: CustomButtonBarComponent;
 }
 
 /**
  * @alpha
  */
-export type CustomButtonBarComponent = ComponentType;
+export type CustomButtonBarComponent = ComponentType<IButtonBarProps>;

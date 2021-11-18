@@ -8,9 +8,9 @@ import { ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
 import { ExtendedDashboardWidget } from "../../../model";
 
 /**
- * @internal
+ * @alpha
  */
-export interface DashboardWidgetProps {
+export interface IDashboardWidgetProps {
     widget?: ExtendedDashboardWidget;
     screen: ScreenSize;
     /**
@@ -58,4 +58,4 @@ export interface DashboardWidgetProps {
 /**
  * @alpha
  */
-export type CustomDashboardWidgetComponent = ComponentType;
+export type CustomDashboardWidgetComponent = ComponentType<IDashboardWidgetProps>;

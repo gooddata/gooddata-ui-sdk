@@ -2,7 +2,7 @@
 import React, { createContext, useContext } from "react";
 import { IErrorProps, ILoadingProps, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { DashboardLayoutProps } from "../layout/types";
+import { CustomDashboardLayoutComponent } from "../layout/types";
 import {
     CustomDashboardInsightComponent,
     CustomDashboardInsightMenuButtonComponent,
@@ -34,7 +34,7 @@ import { CustomShareDialogComponent } from "../shareDialog/types";
 interface IDashboardComponentsContext {
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
-    LayoutComponent: React.ComponentType<DashboardLayoutProps>;
+    LayoutComponent: CustomDashboardLayoutComponent;
     WidgetComponentProvider: (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
     InsightComponentProvider: (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent;
     InsightMenuButtonComponentProvider: (

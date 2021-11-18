@@ -31,10 +31,10 @@ import {
 import { ExportDialogProvider } from "../../dialogs";
 
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
-import { IMenuButtonItem, TopBar, TopBarPropsProvider } from "../../topBar";
-import { ScheduledEmailDialog, ScheduledEmailDialogPropsProvider } from "../../scheduledEmail";
-import { SaveAsDialog, SaveAsDialogPropsProvider } from "../../saveAs";
-import { FilterBar, FilterBarPropsProvider } from "../../filterBar";
+import { DefaultButtonBar, DefaultMenuButton, DefaultTopBar, IMenuButtonItem, TopBar } from "../../topBar";
+import { ScheduledEmailDialog } from "../../scheduledEmail";
+import { SaveAsDialog } from "../../saveAs";
+import { DefaultFilterBar, FilterBar } from "../../filterBar";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
 
 const useFilterBar = (): {
@@ -240,44 +240,39 @@ export const DashboardHeader = (): JSX.Element => {
             <ToastMessages />
             <ExportDialogProvider />
             {isScheduleEmailingDialogOpen && (
-                <ScheduledEmailDialogPropsProvider
+                <ScheduledEmailDialog
                     isVisible={isScheduleEmailingDialogOpen}
                     onCancel={onScheduleEmailingCancel}
                     onError={onScheduleEmailingError}
                     onSuccess={onScheduleEmailingSuccess}
-                >
-                    <ScheduledEmailDialog />
-                </ScheduledEmailDialogPropsProvider>
+                />
             )}
             <ShareDialogDashboardHeader />
             {isSaveAsDialogOpen && (
-                <SaveAsDialogPropsProvider
+                <SaveAsDialog
                     isVisible={isSaveAsDialogOpen}
                     onCancel={onSaveAsCancel}
                     onError={onSaveAsError}
                     onSuccess={onSaveAsSuccess}
-                >
-                    <SaveAsDialog />
-                </SaveAsDialogPropsProvider>
+                />
             )}
 
-            <TopBarPropsProvider
-                menuButtonProps={{ menuItems: defaultMenuItems }}
+            <TopBar
+                menuButtonProps={{ menuItems: defaultMenuItems, DefaultMenuButton: DefaultMenuButton }}
                 titleProps={{ title, onTitleChanged }}
                 buttonBarProps={{
                     shareButtonProps: { onShareButtonClick },
+                    DefaultButtonBar: DefaultButtonBar,
                 }}
-            >
-                <TopBar />
-            </TopBarPropsProvider>
+                DefaultTopBar={DefaultTopBar}
+            />
 
-            <FilterBarPropsProvider
+            <FilterBar
                 filters={filters}
                 onAttributeFilterChanged={onAttributeFilterChanged}
                 onDateFilterChanged={onDateFilterChanged}
-            >
-                <FilterBar />
-            </FilterBarPropsProvider>
+                DefaultFilterBar={DefaultFilterBar}
+            />
         </>
     );
 };

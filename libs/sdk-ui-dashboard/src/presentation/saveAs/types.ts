@@ -44,4 +44,4 @@ export interface ISaveAsDialogProps {
 /**
  * @alpha
  */
-export type CustomSaveAsDialogComponent = ComponentType;
+export type CustomSaveAsDialogComponent = ComponentType<ISaveAsDialogProps>;

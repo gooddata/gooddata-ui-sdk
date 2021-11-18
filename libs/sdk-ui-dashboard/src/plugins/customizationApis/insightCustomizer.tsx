@@ -1,18 +1,18 @@
 // (C) 2021 GoodData Corporation
 import { IDashboardInsightCustomizer } from "../customizer";
 import {
-    DefaultDashboardInsightInner,
+    CustomDashboardInsightComponent,
+    DefaultDashboardInsight,
     InsightComponentProvider,
     OptionalInsightComponentProvider,
 } from "../../presentation";
-import React from "react";
 import { InvariantError } from "ts-invariant";
 import includes from "lodash/includes";
 import { insightTags } from "@gooddata/sdk-model";
 import { DashboardCustomizationLogger } from "./customizationLogging";
 
 const DefaultInsightRendererProvider: InsightComponentProvider = () => {
-    return DefaultDashboardInsightInner;
+    return DefaultDashboardInsight;
 };
 
 interface IInsightCustomizerState {
@@ -173,7 +173,7 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
         this.state = new DefaultInsightCustomizerState(logger, defaultProvider);
     }
 
-    public withTag = (tag: string, component: React.ComponentType): this => {
+    public withTag = (tag: string, component: CustomDashboardInsightComponent): this => {
         if (!tag) {
             this.logger.warn(
                 "The 'withTag' was called with an empty 'tag' parameter. This is effectively a noop.",

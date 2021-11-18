@@ -2,8 +2,7 @@
 
 import { IDashboardWidgetCustomizer } from "../customizer";
 import { DashboardCustomizationLogger } from "./customizationLogging";
-import { OptionalWidgetComponentProvider } from "../../presentation";
-import React from "react";
+import { CustomDashboardWidgetComponent, OptionalWidgetComponentProvider } from "../../presentation";
 import { isCustomWidget } from "../../model";
 
 /*
@@ -13,7 +12,7 @@ import { isCustomWidget } from "../../model";
  */
 interface IDashboardWidgetDefinition {
     readonly widgetType: string;
-    readonly DefaultComponent: React.ComponentType;
+    readonly DefaultComponent: CustomDashboardWidgetComponent;
 
     // component to use for rendering the drag handle which the user can grab and toss onto dashboard
     // readonly DragHandleComponent: React.ComponentType;
@@ -75,7 +74,7 @@ export class DefaultWidgetCustomizer implements IDashboardWidgetCustomizer {
 
     public addCustomWidget = (
         widgetType: string,
-        Component: React.ComponentType,
+        Component: CustomDashboardWidgetComponent,
     ): IDashboardWidgetCustomizer => {
         this.state.addDefinition({
             widgetType,

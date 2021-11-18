@@ -14,11 +14,9 @@ import {
     getVisTypeCssClass,
 } from "../../presentationComponents";
 
-import { DashboardInsightPropsProvider } from "../insight/DashboardInsightPropsContext";
 import { DashboardInsight } from "../insight/DashboardInsight";
 import { useInsightExport } from "../common/useInsightExport";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
-import { DashboardInsightMenuButtonPropsProvider, DashboardInsightMenuPropsProvider } from "../insightMenu";
 import { useInsightMenu } from "./useInsightMenu";
 
 interface IDefaultDashboardInsightWidgetProps {
@@ -82,15 +80,13 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                     <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
                 )}
                 renderBeforeVisualization={() => (
-                    <DashboardInsightMenuButtonPropsProvider
+                    <InsightMenuButtonComponent
                         insight={insight}
                         widget={widget}
                         isOpen={isMenuOpen}
                         onClick={openMenu}
                         items={menuItems}
-                    >
-                        <InsightMenuButtonComponent />
-                    </DashboardInsightMenuButtonPropsProvider>
+                    />
                 )}
                 renderAfterContent={() => {
                     if (!isMenuOpen) {
@@ -98,20 +94,18 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                     }
 
                     return (
-                        <DashboardInsightMenuPropsProvider
+                        <InsightMenuComponent
                             insight={insight}
                             widget={widget}
                             isOpen={isMenuOpen}
                             onClose={closeMenu}
                             items={menuItems}
-                        >
-                            <InsightMenuComponent />
-                        </DashboardInsightMenuPropsProvider>
+                        />
                     );
                 }}
             >
                 {({ clientHeight, clientWidth }) => (
-                    <DashboardInsightPropsProvider
+                    <DashboardInsight
                         clientHeight={clientHeight}
                         clientWidth={clientWidth}
                         insight={insight!}
@@ -119,9 +113,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         onExportReady={onExportReady}
                         onLoadingChanged={onLoadingChanged}
                         onError={onError}
-                    >
-                        <DashboardInsight />
-                    </DashboardInsightPropsProvider>
+                    />
                 )}
             </DashboardItemVisualization>
         </DashboardItem>

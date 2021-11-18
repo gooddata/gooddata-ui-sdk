@@ -36,7 +36,7 @@ import {
 } from "../../model";
 
 /**
- * @internal
+ * @alpha
  */
 export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
 
@@ -61,7 +61,7 @@ export type OnDashboardDrillSuccess = (event: DashboardDrillResolved) => void;
 export type OnDrillDown = (cmd: DrillDown) => void;
 
 /**
- * @internal
+ * @alpha
  */
 export type OnDrillDownSuccess = (event: DashboardDrillDownResolved) => void;
 
@@ -71,7 +71,7 @@ export type OnDrillDownSuccess = (event: DashboardDrillDownResolved) => void;
 export type OnDrillToInsight = (cmd: DrillToInsight) => void;
 
 /**
- * @internal
+ * @alpha
  */
 export type OnDrillToInsightSuccess = (event: DashboardDrillToInsightResolved) => void;
 
@@ -81,7 +81,7 @@ export type OnDrillToInsightSuccess = (event: DashboardDrillToInsightResolved) =
 export type OnDrillToDashboard = (cmd: DrillToDashboard) => void;
 
 /**
- * @internal
+ * @alpha
  */
 export type OnDrillToDashboardSuccess = (event: DashboardDrillToDashboardResolved) => void;
 
@@ -91,7 +91,7 @@ export type OnDrillToDashboardSuccess = (event: DashboardDrillToDashboardResolve
 export type OnDrillToAttributeUrl = (cmd: DrillToAttributeUrl) => void;
 
 /**
- * @internal
+ * @alpha
  */
 export type OnDrillToAttributeUrlSuccess = (event: DashboardDrillToAttributeUrlResolved) => void;
 
@@ -101,7 +101,7 @@ export type OnDrillToAttributeUrlSuccess = (event: DashboardDrillToAttributeUrlR
 export type OnDrillToCustomUrl = (cmd: DrillToCustomUrl) => void;
 
 /**
- * @internal
+ * @alpha
  */
 export type OnDrillToCustomUrlSuccess = (event: DashboardDrillToCustomUrlResolved) => void;
 

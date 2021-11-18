@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
-import React from "react";
 import {
+    CustomDashboardInsightComponent,
+    CustomDashboardWidgetComponent,
     InsightComponentProvider,
     KpiComponentProvider,
     OptionalInsightComponentProvider,
@@ -32,7 +33,7 @@ export interface IDashboardInsightCustomizer {
      * @param component - component to use if the tag is found
      * @returns self, for call chaining sakes
      */
-    withTag(tag: string, component: React.ComponentType): IDashboardInsightCustomizer;
+    withTag(tag: string, component: CustomDashboardInsightComponent): IDashboardInsightCustomizer;
 
     /**
      * Register a provider for React components to render insights. A provider takes the insight and
@@ -69,13 +70,13 @@ export interface IDashboardInsightCustomizer {
      *             return undefined;
      *         }
      *
-     *         function MyCustomDecorator() {
+     *         function MyCustomDecorator(props) {
      *              const Decorated = next(insight, widget);
      *
      *              return (
      *                  <div>
      *                      <p>My Custom Decoration</p>
-     *                      <Decorated/>
+     *                      <Decorated {...props} />
      *                  </div>
      *              )
      *         }
@@ -138,13 +139,13 @@ export interface IDashboardKpiCustomizer {
      *             return undefined;
      *         }
      *
-     *         function MyCustomDecorator() {
+     *         function MyCustomDecorator(props) {
      *              const Decorated = next(kpi, widget);
      *
      *              return (
      *                  <div>
      *                      <p>My Custom Decoration</p>
-     *                      <Decorated/>
+     *                      <Decorated {...props}/>
      *                  </div>
      *              )
      *         }
@@ -182,7 +183,10 @@ export interface IDashboardWidgetCustomizer {
      *  widgets for the same widget type, then the last-registered custom widget wins
      * @param Component - React component to use for rendering of the custom widget
      */
-    addCustomWidget(widgetType: string, Component: React.ComponentType): IDashboardWidgetCustomizer;
+    addCustomWidget(
+        widgetType: string,
+        Component: CustomDashboardWidgetComponent,
+    ): IDashboardWidgetCustomizer;
 }
 
 /**

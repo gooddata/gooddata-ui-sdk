@@ -3,49 +3,23 @@ import React from "react";
 
 import { selectIsExport, selectLocale, useDashboardSelector } from "../../../model";
 import { IntlWrapper } from "../../localization";
-import { ButtonBar, ButtonBarPropsProvider } from "../buttonBar";
-import { MenuButton, MenuButtonPropsProvider } from "../menuButton";
-import { Title, TitlePropsProvider } from "../title";
-
-import { TopBarPropsProvider, useTopBarProps } from "./TopBarPropsContext";
+import { ButtonBar } from "../buttonBar";
+import { MenuButton } from "../menuButton";
+import { Title } from "../title";
 import { ITopBarProps } from "./types";
 import { HiddenTopBar } from "./HiddenTopBar";
 
-const TopBarCore = (): JSX.Element => {
-    const { menuButtonProps, titleProps, buttonBarProps } = useTopBarProps();
+const TopBarCore = (props: ITopBarProps): JSX.Element => {
+    const { menuButtonProps, titleProps, buttonBarProps } = props;
     return (
         <div className={"dash-header s-top-bar"}>
             <div className={"dash-header-inner"}>
-                <TitlePropsProvider {...titleProps}>
-                    <Title />
-                </TitlePropsProvider>
+                <Title {...titleProps} />
 
-                <ButtonBarPropsProvider {...buttonBarProps}>
-                    <ButtonBar />
-                </ButtonBarPropsProvider>
+                <ButtonBar {...buttonBarProps} />
             </div>
-            <MenuButtonPropsProvider {...menuButtonProps}>
-                <MenuButton />
-            </MenuButtonPropsProvider>
+            <MenuButton {...menuButtonProps} />
         </div>
-    );
-};
-
-/**
- * @internal
- */
-export const DefaultTopBarInner = (): JSX.Element => {
-    const isExport = useDashboardSelector(selectIsExport);
-    const locale = useDashboardSelector(selectLocale);
-
-    if (isExport) {
-        return <HiddenTopBar />;
-    }
-
-    return (
-        <IntlWrapper locale={locale}>
-            <TopBarCore />
-        </IntlWrapper>
     );
 };
 
@@ -53,9 +27,16 @@ export const DefaultTopBarInner = (): JSX.Element => {
  * @alpha
  */
 export const DefaultTopBar = (props: ITopBarProps): JSX.Element => {
+    const isExport = useDashboardSelector(selectIsExport);
+    const locale = useDashboardSelector(selectLocale);
+
+    if (isExport) {
+        return <HiddenTopBar {...props} />;
+    }
+
     return (
-        <TopBarPropsProvider {...props}>
-            <DefaultTopBarInner />
-        </TopBarPropsProvider>
+        <IntlWrapper locale={locale}>
+            <TopBarCore {...props} />
+        </IntlWrapper>
     );
 };

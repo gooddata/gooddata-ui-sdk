@@ -1,9 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
-
 import { ITitleProps } from "./types";
-import { TitlePropsProvider, useTitleProps } from "./TitlePropsContext";
 
 const EditableTitle: React.FC<{
     title: string;
@@ -22,10 +20,10 @@ const EditableTitle: React.FC<{
 };
 
 /**
- * @internal
+ * @alpha
  */
-export const DefaultTitleInner = (): JSX.Element | null => {
-    const { title, onTitleChanged } = useTitleProps();
+export const DefaultTitle = (props: ITitleProps): JSX.Element | null => {
+    const { title, onTitleChanged } = props;
 
     return (
         <div className="dash-title-wrapper">
@@ -35,16 +33,5 @@ export const DefaultTitleInner = (): JSX.Element | null => {
                 <div className={"s-gd-dashboard-title dash-title static"}>{title}</div>
             )}
         </div>
-    );
-};
-
-/**
- * @alpha
- */
-export const DefaultTitle = (props: ITitleProps): JSX.Element => {
-    return (
-        <TitlePropsProvider {...props}>
-            <DefaultTitleInner />
-        </TitlePropsProvider>
     );
 };

@@ -1,16 +1,24 @@
-// (C) 2021 GoodData Corporation
+// (C) 2020 GoodData Corporation
 import React from "react";
-import { DefaultShareDialogInner } from "./DefaultShareDialogInner";
-import { ShareDialogPropsProvider } from "./ShareDialogPropsContext";
+import { ShareDialog } from "@gooddata/sdk-ui-kit";
 import { IShareDialogProps } from "./types";
 
 /**
  * @alpha
  */
-export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element => {
+export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null => {
+    const { isVisible, sharedObject, currentUserRef, onApply, onCancel } = props;
+
+    if (!isVisible) {
+        return null;
+    }
+
     return (
-        <ShareDialogPropsProvider {...props}>
-            <DefaultShareDialogInner />
-        </ShareDialogPropsProvider>
+        <ShareDialog
+            sharedObject={sharedObject}
+            currentUserRef={currentUserRef}
+            onApply={onApply}
+            onCancel={onCancel}
+        />
     );
 };

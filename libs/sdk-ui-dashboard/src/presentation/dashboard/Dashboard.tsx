@@ -14,23 +14,25 @@ import {
 } from "../dashboardContexts";
 import {
     CustomDashboardAttributeFilterComponent,
-    DefaultDashboardAttributeFilterInner,
-    DefaultDashboardDateFilterInner,
-    DefaultFilterBarInner,
+    DefaultDashboardAttributeFilter,
+    DefaultDashboardDateFilter,
+    DefaultFilterBar,
 } from "../filterBar";
 import {
+    CustomDashboardInsightComponent,
     CustomDashboardInsightMenuButtonComponent,
     CustomDashboardInsightMenuComponent,
+    CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
-    DefaultDashboardInsightInner,
-    DefaultDashboardInsightMenuButtonInner,
-    DefaultDashboardInsightMenuInner,
-    DefaultDashboardKpiInner,
-    DefaultDashboardWidgetInner,
-    LegacyDashboardInsightMenuButtonInner,
-    LegacyDashboardInsightMenuInner,
+    DefaultDashboardInsight,
+    DefaultDashboardInsightMenu,
+    DefaultDashboardInsightMenuButton,
+    DefaultDashboardKpi,
+    DefaultDashboardWidget,
+    LegacyDashboardInsightMenu,
+    LegacyDashboardInsightMenuButton,
 } from "../widget";
-import { DashboardLayout, DashboardLayoutPropsProvider, DefaultDashboardLayoutInner } from "../layout";
+import { DashboardLayout, DefaultDashboardLayout } from "../layout";
 import { IntlWrapper } from "../localization";
 import {
     changeFilterContextSelection,
@@ -44,20 +46,15 @@ import {
     useDashboardSelector,
     useDispatchDashboardCommand,
 } from "../../model";
-import { DefaultScheduledEmailDialogInner } from "../scheduledEmail";
-import {
-    DefaultButtonBarInner,
-    DefaultMenuButtonInner,
-    DefaultTitleInner,
-    DefaultTopBarInner,
-} from "../topBar";
+import { DefaultScheduledEmailDialog } from "../scheduledEmail";
+import { DefaultButtonBar, DefaultMenuButton, DefaultTitle, DefaultTopBar } from "../topBar";
 
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { IDashboardProps } from "./types";
-import { DefaultSaveAsDialogInner } from "../saveAs";
+import { DefaultSaveAsDialog } from "../saveAs";
 import { IInsight } from "@gooddata/sdk-model";
 import { DEFAULT_FILTER_BAR_HEIGHT } from "../constants";
-import { DefaultShareDialogInner } from "../shareDialog";
+import { DefaultShareDialog } from "../shareDialog";
 import { DashboardHeader } from "./DashboardHeader/DashboardHeader";
 
 const DashboardMainContent: React.FC<IDashboardProps> = () => {
@@ -81,9 +78,7 @@ const DashboardMainContent: React.FC<IDashboardProps> = () => {
     return (
         <div className="gd-flex-item-stretch dash-section dash-section-kpis" style={dashSectionStyles}>
             <div className="gd-flex-container root-flex-maincontent">
-                <DashboardLayoutPropsProvider onFiltersChange={onFiltersChange}>
-                    <DashboardLayout />
-                </DashboardLayoutPropsProvider>
+                <DashboardLayout onFiltersChange={onFiltersChange} />
             </div>
         </div>
     );
@@ -126,7 +121,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     const attributeFilterProvider = useCallback(
         (filter: IDashboardAttributeFilter): CustomDashboardAttributeFilterComponent => {
             const userSpecified = props.DashboardAttributeFilterComponentProvider?.(filter);
-            return userSpecified ?? DefaultDashboardAttributeFilterInner;
+            return userSpecified ?? DefaultDashboardAttributeFilter;
         },
         [props.DashboardAttributeFilterComponentProvider],
     );
@@ -134,15 +129,15 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     const widgetProvider = useCallback(
         (widget: ExtendedDashboardWidget): CustomDashboardWidgetComponent => {
             const userSpecified = props.WidgetComponentProvider?.(widget);
-            return userSpecified ?? DefaultDashboardWidgetInner;
+            return userSpecified ?? DefaultDashboardWidget;
         },
         [props.WidgetComponentProvider],
     );
 
     const insightProvider = useCallback(
-        (insight: IInsight, widget: IInsightWidget): CustomDashboardWidgetComponent => {
+        (insight: IInsight, widget: IInsightWidget): CustomDashboardInsightComponent => {
             const userSpecified = props.InsightComponentProvider?.(insight, widget);
-            return userSpecified ?? DefaultDashboardInsightInner;
+            return userSpecified ?? DefaultDashboardInsight;
         },
         [props.InsightComponentProvider],
     );
@@ -152,8 +147,8 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             const userSpecified = props.InsightMenuButtonComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu button
             const FallbackDashboardInsightMenuButtonInner = props.insightMenuItemsProvider
-                ? DefaultDashboardInsightMenuButtonInner
-                : LegacyDashboardInsightMenuButtonInner;
+                ? DefaultDashboardInsightMenuButton
+                : LegacyDashboardInsightMenuButton;
             return userSpecified ?? FallbackDashboardInsightMenuButtonInner;
         },
         [props.InsightMenuButtonComponentProvider],
@@ -164,17 +159,17 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             const userSpecified = props.InsightMenuComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu
             const FallbackDashboardInsightMenuInner = props.insightMenuItemsProvider
-                ? DefaultDashboardInsightMenuInner
-                : LegacyDashboardInsightMenuInner;
+                ? DefaultDashboardInsightMenu
+                : LegacyDashboardInsightMenu;
             return userSpecified ?? FallbackDashboardInsightMenuInner;
         },
         [props.InsightMenuComponentProvider],
     );
 
     const kpiProvider = useCallback(
-        (kpi: ILegacyKpi, widget: IKpiWidget): CustomDashboardWidgetComponent => {
+        (kpi: ILegacyKpi, widget: IKpiWidget): CustomDashboardKpiComponent => {
             const userSpecified = props.KpiComponentProvider?.(kpi, widget);
-            return userSpecified ?? DefaultDashboardKpiInner;
+            return userSpecified ?? DefaultDashboardKpi;
         },
         [props.KpiComponentProvider],
     );
@@ -193,6 +188,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
             permissions={props.permissions}
             onStateChange={props.onStateChange}
             onEventingInitialized={props.onEventingInitialized}
+            additionalReduxContext={props.additionalReduxContext}
             customizationFns={props.customizationFns}
         >
             <ToastMessageContextProvider>
@@ -203,26 +199,26 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         <DashboardComponentsProvider
                             ErrorComponent={props.ErrorComponent ?? DefaultError}
                             LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                            LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayoutInner}
+                            LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayout}
                             InsightComponentProvider={insightProvider}
                             InsightMenuButtonComponentProvider={insightMenuButtonProvider}
                             InsightMenuComponentProvider={insightMenuProvider}
                             KpiComponentProvider={kpiProvider}
                             WidgetComponentProvider={widgetProvider}
-                            ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBarInner}
-                            MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButtonInner}
-                            TopBarComponent={props.TopBarComponent ?? DefaultTopBarInner}
-                            TitleComponent={props.TitleComponent ?? DefaultTitleInner}
+                            ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
+                            MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
+                            TopBarComponent={props.TopBarComponent ?? DefaultTopBar}
+                            TitleComponent={props.TitleComponent ?? DefaultTitle}
                             ScheduledEmailDialogComponent={
-                                props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialogInner
+                                props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog
                             }
-                            ShareDialogComponent={props.ShareDialogComponent ?? DefaultShareDialogInner}
-                            SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialogInner}
+                            ShareDialogComponent={props.ShareDialogComponent ?? DefaultShareDialog}
+                            SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialog}
                             DashboardAttributeFilterComponentProvider={attributeFilterProvider}
                             DashboardDateFilterComponent={
-                                props.DashboardDateFilterComponent ?? DefaultDashboardDateFilterInner
+                                props.DashboardDateFilterComponent ?? DefaultDashboardDateFilter
                             }
-                            FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBarInner}
+                            FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBar}
                         >
                             <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                 <DashboardLoading {...props} />

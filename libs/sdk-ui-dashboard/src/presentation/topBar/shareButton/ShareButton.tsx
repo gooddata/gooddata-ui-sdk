@@ -1,11 +1,12 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { DefaultShareButtonInner } from "./DefaultShareButton";
+import { DefaultShareButton } from "./DefaultShareButton";
+import { IShareButtonProps } from "./types";
 
 /**
  * @internal
  */
-export const ShareButton = (): JSX.Element => {
+export const ShareButton = (props: IShareButtonProps): JSX.Element => {
     // No customization from useDashboardComponentsContext for now
-    return <DefaultShareButtonInner />;
+    return <DefaultShareButton {...props} />;
 };

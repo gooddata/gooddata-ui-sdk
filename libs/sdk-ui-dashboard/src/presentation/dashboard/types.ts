@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { ComponentType } from "react";
+import React, { ComponentType } from "react";
 import {
     IAnalyticalBackend,
     IDashboard,
@@ -45,6 +45,7 @@ import {
 } from "../widget";
 import { CustomSaveAsDialogComponent } from "../saveAs";
 import { CustomShareDialogComponent } from "../shareDialog";
+import { ReactReduxContextValue } from "react-redux";
 
 /**
  * @alpha
@@ -141,10 +142,6 @@ export interface IDashboardCustomComponentProps {
 
     /**
      * Optionally specify component to use for rendering the layout.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardLayoutProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardLayout} component.
      */
     LayoutComponent?: CustomDashboardLayoutComponent;
 
@@ -156,17 +153,11 @@ export interface IDashboardCustomComponentProps {
      *    This is useful if you want to customize just one particular widget and keep default rendering for the
      *    other widgets.
      *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardWidgetProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardWidget} component.
-     *
      * @example
      *
      * ```tsx
      * // Simple component that alters the title of every widget
-     * const CustomWidget = () => {
-     *     const props = useDashboardWidgetProps();
-     *
+     * const CustomWidget = (props) => {
      *     const widget: IInsightWidget = {
      *         ...props.widget,
      *         title: `Prepend to ${props.widget.title}`,
@@ -185,10 +176,6 @@ export interface IDashboardCustomComponentProps {
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsight} will be used.
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardInsightProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardInsight} component.
      */
     InsightComponentProvider?: OptionalInsightComponentProvider;
 
@@ -201,9 +188,6 @@ export interface IDashboardCustomComponentProps {
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
      *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardInsightMenuButtonProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardInsightMenuButton} component.
      */
     InsightMenuButtonComponentProvider?: InsightMenuButtonComponentProvider;
 
@@ -216,9 +200,6 @@ export interface IDashboardCustomComponentProps {
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
      *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardInsightMenuProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardInsightMenu} component.
      */
     InsightMenuComponentProvider?: InsightMenuComponentProvider;
 
@@ -229,64 +210,37 @@ export interface IDashboardCustomComponentProps {
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardKpi}.
      *    This is useful if you want to customize just one particular KPI and keep default rendering for
      *    the other insights.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardKpiProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardKpi} component.
      */
     KpiComponentProvider?: OptionalKpiComponentProvider;
 
     /**
      * Optionally specify component to use for rendering the scheduled email dialog.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useScheduledEmailDialogProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultScheduledEmailDialog} component.
      */
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the share dialog.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useShareDialogProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultShareDialog} component.
      */
     ShareDialogComponent?: CustomShareDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the save as dialog.
      *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useSaveAsDialogProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultSaveAsDialog} component.
      */
     SaveAsDialogComponent?: CustomSaveAsDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the button bar.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useButtonBarProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultButtonBar} component.
      */
     ButtonBarComponent?: CustomButtonBarComponent;
 
     /**
      * Optionally specify component to use for rendering the menu button.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useMenuButtonProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultMenuButton} component.
      */
     MenuButtonComponent?: CustomMenuButtonComponent;
 
     /**
      * Optionally specify component to use for rendering the top bar.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useTopBarProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultTopBar} component.
      *
      * Note that if you override this component, the ButtonBarComponent, MenuButtonComponent and TitleComponent
      * props might get ignored depending on your implementation.
@@ -295,10 +249,6 @@ export interface IDashboardCustomComponentProps {
 
     /**
      * Optionally specify component to use for rendering the title.
-     *
-     * @remarks
-     * To access the necessary props in your component, use the {@link useTitleProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultTitle} component.
      */
     TitleComponent?: CustomTitleComponent;
 
@@ -318,9 +268,6 @@ export interface IDashboardCustomComponentProps {
      *
      * @remarks
      * If you want to hide some or all filters, you can use the {@link HiddenDashboardAttributeFilter} implementation.
-     *
-     * To access the necessary props in your custom component, use the {@link useDashboardAttributeFilterProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardAttributeFilter} component.
      */
     DashboardAttributeFilterComponentProvider?: AttributeFilterComponentProvider;
 
@@ -328,8 +275,6 @@ export interface IDashboardCustomComponentProps {
      * Optionally specify component to use for rendering the date filters.
      *
      * @remarks
-     * To access the necessary props in your component, use the {@link useDashboardDateFilterProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultDashboardDateFilter} component.
      */
     DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
 
@@ -337,8 +282,6 @@ export interface IDashboardCustomComponentProps {
      * Optionally specify component to use for rendering the filter bar.
      *
      * @remarks
-     * To access the necessary props in your component, use the {@link useFilterBarProps} hook.
-     * To fall back to the default implementation, use the {@link DefaultFilterBar} component.
      *
      * Note that if you override this component, the DashboardAttributeFilterComponentFactory and DashboardDateFilterComponent
      * props might get ignored depending on your implementation.
@@ -499,7 +442,19 @@ export interface IDashboardBaseProps {
  */
 export type IDashboardExtensionProps = IDashboardEventing &
     IDashboardCustomizationProps &
-    IDashboardThemingProps;
+    IDashboardThemingProps & {
+        /**
+         * Pass instance of ReactReduxContext where the dashboard component's store should be saved.
+         *
+         * This is essential if you are dynamically loading dashboard engine and then enriching the
+         * dashboard with embedded, local plugins. If such plugins are compiled against sdk-ui-dashboard and
+         * use Redux hooks (useDashboardSelect, useDashboardDispatch) then your solution will not work
+         * unless you explicitly send your application's `ReactDashboardContext` into this prop.
+         *
+         * Note: there is no need to use this prop unless you are dynamically loading the engine bundle.
+         */
+        additionalReduxContext?: React.Context<ReactReduxContextValue>;
+    };
 
 /**
  * @alpha
