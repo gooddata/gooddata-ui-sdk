@@ -70,6 +70,7 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     supportsCsvUploader: true,
     supportsKpiWidget: true,
     supportsWidgetEntity: true,
+    supportsOwners: true,
 };
 
 /**

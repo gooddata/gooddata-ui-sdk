@@ -66,6 +66,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsExplain: false,
     supportsAccessControl: true,
     usesStrictAccessControl: false,
+    supportsOwners: true,
 };
 
 /**
