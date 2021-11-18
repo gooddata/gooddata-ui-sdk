@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-vis-commons",
-    "version": "8.7.0-alpha.65",
+    "version": "8.7.0-alpha.66",
     "description": "GoodData.UI SDK - common functionality for different types of visualizations",
     "repository": {
         "type": "git",
@@ -59,11 +59,11 @@
     },
     "dependencies": {
         "@gooddata/numberjs": "^3.2.5",
-        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.65",
-        "@gooddata/sdk-model": "^8.7.0-alpha.65",
-        "@gooddata/sdk-ui": "^8.7.0-alpha.65",
-        "@gooddata/sdk-ui-kit": "^8.7.0-alpha.65",
-        "@gooddata/sdk-ui-theme-provider": "^8.7.0-alpha.65",
+        "@gooddata/sdk-backend-spi": "^8.7.0-alpha.66",
+        "@gooddata/sdk-model": "^8.7.0-alpha.66",
+        "@gooddata/sdk-ui": "^8.7.0-alpha.66",
+        "@gooddata/sdk-ui-kit": "^8.7.0-alpha.66",
+        "@gooddata/sdk-ui-theme-provider": "^8.7.0-alpha.66",
         "classnames": "^2.3.1",
         "lodash": "^4.17.19",
         "react-intl": "^3.6.0",
@@ -76,8 +76,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/reference-workspace": "^8.7.0-alpha.65",
-        "@gooddata/sdk-backend-mockingbird": "^8.7.0-alpha.65",
+        "@gooddata/reference-workspace": "^8.7.0-alpha.66",
+        "@gooddata/sdk-backend-mockingbird": "^8.7.0-alpha.66",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.18.4",

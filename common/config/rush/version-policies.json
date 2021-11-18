@@ -12,7 +12,7 @@
   {
     "definitionName": "lockStepVersion",
     "policyName": "sdk",
-    "version": "8.7.0-alpha.65",
+    "version": "8.7.0-alpha.66",
     "nextBump": "prerelease",
     "mainProject": "@gooddata/sdk-ui-all"
   }
