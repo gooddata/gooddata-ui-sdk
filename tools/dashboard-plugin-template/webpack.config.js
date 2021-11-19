@@ -126,11 +126,11 @@ module.exports = (_env, argv) => {
             new CaseSensitivePathsPlugin(),
             // provide bogus process.env keys that lru-cache, pseudomap and util packages use unsafely for no reason...
             new EnvironmentPlugin({
-                npm_package_name: false,
-                npm_lifecycle_script: false,
-                _nodeLRUCacheForceNoSymbol: false,
-                TEST_PSEUDOMAP: false,
-                NODE_DEBUG: !isProduction,
+                npm_package_name: "",
+                npm_lifecycle_script: "",
+                _nodeLRUCacheForceNoSymbol: "",
+                TEST_PSEUDOMAP: "",
+                NODE_DEBUG: "",
             }),
         ],
     };
@@ -185,8 +185,7 @@ module.exports = (_env, argv) => {
                         /**
                          * this is the entry to the plugin itself
                          */
-                        [`./${MODULE_FEDERATION_NAME}_PLUGIN`]: `./src/${MODULE_FEDERATION_NAME}
-                        `,
+                        [`./${MODULE_FEDERATION_NAME}_PLUGIN`]: `./src/${MODULE_FEDERATION_NAME}`,
                         /**
                          * this is the entry to the engine
                          */
