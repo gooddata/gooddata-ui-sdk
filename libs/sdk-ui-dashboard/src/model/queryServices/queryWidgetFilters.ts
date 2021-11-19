@@ -242,10 +242,10 @@ function* queryForInsightWidget(
         widgetAwareDashboardFiltersSelector,
     );
 
-    // add all time filter explicitly in case the widgetAwareDashboardFilters are empty
+    // add all time filter explicitly in case the date widgetAwareDashboardFilters are empty
     // this will cause the all time filter to be used instead of the insight date filter
     // if the dashboard date filter is not ignored by the widget
-    if (!widgetAwareDashboardFilters.length && widget.dateDataSet) {
+    if (!widgetAwareDashboardFilters.filter(isDateFilter).length && widget.dateDataSet) {
         widgetAwareDashboardFilters.push(newAllTimeFilter(widget.dateDataSet));
     }
 
