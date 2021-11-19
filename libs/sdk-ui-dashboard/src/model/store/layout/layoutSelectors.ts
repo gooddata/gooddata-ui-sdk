@@ -11,7 +11,7 @@ import {
     isKpiWidget,
     IWidget,
 } from "@gooddata/sdk-backend-spi";
-import { ExtendedDashboardWidget } from "../../types/layoutTypes";
+import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes";
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
@@ -89,16 +89,13 @@ export const selectBasicLayout = createSelector(selectLayout, (layout) => {
 });
 
 /**
- * Selects dashboard widgets in an obj ref to widget map. This map will include all insight and all KPI widgets - those
- * that are persisted as part of the dashboard.
- *
- * The 'ephemeral' widgets such as placeholders that are not persisted and cannot be referenced using a `ref` will naturally
- * not be included in this map.
+ * Selects dashboard widgets in an obj ref to widget map. This map will include both analytical and custom
+ * widgets that are placed on the dashboard.
  *
  * @internal
  */
 export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
-    const items: IWidget[] = [];
+    const items: ExtendedDashboardWidget[] = [];
 
     for (const section of layout.sections) {
         for (const item of section.items) {
@@ -106,9 +103,7 @@ export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
                 continue;
             }
 
-            if (item.widget.type === "insight" || item.widget.type === "kpi") {
-                items.push(item.widget as IWidget);
-            }
+            items.push(item.widget);
         }
     }
 
@@ -116,13 +111,36 @@ export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
 });
 
 /**
- * Selects widget by its ref.
+ * Selects analytical widget by its ref. This selector will return undefined if the provided
+ * widget ref is for a custom widget.
  *
+ * @deprecated use {@link selectAnalyticalWidgetByRef} instead; this selector will in near future to return all widget
+ *  types - even custom widgets
  * @alpha
  */
 export const selectWidgetByRef = createMemoizedSelector((ref: ObjRef | undefined) =>
-    createSelector(selectWidgetsMap, (widgetMap) => ref && widgetMap.get(ref)),
+    createSelector(selectWidgetsMap, (widgetMap) => {
+        if (!ref) {
+            return undefined;
+        }
+
+        const widget = widgetMap.get(ref);
+
+        if (!widget || isCustomWidget(widget)) {
+            return undefined;
+        }
+
+        return widget;
+    }),
 );
+
+/**
+ * Selects analytical widget by its ref. This selector will return undefined if the provided
+ * widget ref is for a custom widget.
+ *
+ * @alpha
+ */
+export const selectAnalyticalWidgetByRef = selectWidgetByRef;
 
 /**
  * Selects widget drills by the widget ref.
@@ -177,4 +195,13 @@ export const selectAllKpiWidgets = createSelector(selectAllWidgets, (allWidgets)
  */
 export const selectAllInsightWidgets = createSelector(selectAllWidgets, (allWidgets) => {
     return allWidgets.filter(isInsightWidget);
+});
+
+/**
+ * Selects all custom widgets in the layout.
+ *
+ * @alpha
+ */
+export const selectAllCustomWidgets = createSelector(selectAllWidgets, (allWidgets) => {
+    return allWidgets.filter(isCustomWidget);
 });
