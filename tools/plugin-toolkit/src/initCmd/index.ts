@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { ActionOptions, TargetAppLanguage } from "../_base/types";
-import { logError, logInfo, logWarn } from "../_base/terminal/loggers";
+import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import * as path from "path";
 import fse from "fs-extra";
 import tar from "tar";
@@ -220,12 +220,12 @@ export async function initCmdAction(pluginName: string | undefined, options: Act
             return;
         }
 
-        const directory = await prepareProject(target, config);
+        await prepareProject(target, config);
 
         runInstall(target, config);
 
-        logInfo(
-            `A new project for your dashboard plugin is ready in: ${directory}. Check out the package.json and fill in author and description if possible.`,
+        logSuccess(
+            `A new project for your dashboard plugin is ready in: ${target}. Check out the package.json and fill in author and description if possible.`,
         );
     } catch (e) {
         genericErrorReporter(e);
