@@ -7,7 +7,6 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IntlShape } from "react-intl";
 import isFunction from "lodash/isFunction";
-import keyBy from "lodash/keyBy";
 import {
     AttributeListItem,
     EmptyListItem,
@@ -52,18 +51,22 @@ export const getNoneTitleIntl = (intl: IntlShape): string => {
 
 export const getItemsTitles = (
     selectedFilterOptions: IAttributeElement[],
-    validOptions: IAttributeElement[],
+    elementTitles: Map<string, IAttributeElement>,
 ): string => {
-    const validOptionsByUri = keyBy(validOptions, "uri");
-    const validOptionsByTitle = keyBy(validOptions, "title");
     return selectedFilterOptions
-        .map(
-            (selectedOption) =>
-                selectedOption.title ??
-                validOptionsByUri[selectedOption.uri]?.title ??
-                validOptionsByTitle[selectedOption.title]?.title,
+        .map((selectedOption) =>
+            selectedOption?.uri ? elementTitles.get(selectedOption.uri)?.title : undefined,
         )
         .join(", ");
+};
+
+export const updateSelectedOptionsWithDataByMap = (
+    selection: Array<Partial<IAttributeElement>>,
+    validElements: Map<string, IAttributeElement>,
+): Array<IAttributeElement> => {
+    return selection.map((selectedItem) => {
+        return validElements.get(selectedItem.uri);
+    });
 };
 
 export const updateSelectedOptionsWithData = (
@@ -71,18 +74,13 @@ export const updateSelectedOptionsWithData = (
     items: AttributeListItem[],
 ): Array<IAttributeElement> => {
     const nonEmptyItems = items.filter(isNonEmptyListItem);
-    const createFullItem = (item: Partial<IAttributeElement>): IAttributeElement => ({
-        uri: item.uri ?? "",
-        title: item.title ?? "",
-    });
 
     return selection.map((selectedItem) => {
-        const foundItem = nonEmptyItems.find(
+        return nonEmptyItems.find(
             (item) =>
                 (selectedItem.uri && item.uri === selectedItem.uri) ||
                 (selectedItem.title && item.title === selectedItem.title),
         );
-        return foundItem || createFullItem(selectedItem);
     });
 };
 
