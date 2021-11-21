@@ -52,7 +52,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
 
             const newLayout = snapshot.reduce((currentLayout, fn) => {
                 // Create a new fluid layout customizer just for this round of processing
-                const customizer = new FluidLayoutCustomizer();
+                const customizer = new FluidLayoutCustomizer(this.logger);
 
                 try {
                     // call out to the plugin-provided function with the current value of the layout & the
