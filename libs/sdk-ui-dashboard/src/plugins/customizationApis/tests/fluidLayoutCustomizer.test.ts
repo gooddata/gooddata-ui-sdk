@@ -3,6 +3,7 @@
 import { FluidLayoutCustomizer } from "../fluidLayoutCustomizer";
 import { IDashboardLayout, IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-backend-spi";
 import { ExtendedDashboardWidget, ICustomWidget, newCustomWidget } from "../../../model";
+import { DashboardCustomizationLogger } from "../customizationLogging";
 
 const EmptyLayout: IDashboardLayout<ExtendedDashboardWidget> = {
     type: "IDashboardLayout",
@@ -37,7 +38,7 @@ describe("fluid layout customizer", () => {
     let Customizer: FluidLayoutCustomizer;
 
     beforeEach(() => {
-        Customizer = new FluidLayoutCustomizer();
+        Customizer = new FluidLayoutCustomizer(new DashboardCustomizationLogger());
     });
 
     it("should add new section with custom widgets", () => {
@@ -58,6 +59,40 @@ describe("fluid layout customizer", () => {
         expect(updatedNonEmptyLayout.sections[1]).toEqual(newSection);
     });
 
+    it("should not add empty section", () => {
+        const emptySection: IDashboardLayoutSection<ICustomWidget> = {
+            type: "IDashboardLayoutSection",
+            items: [],
+        };
+
+        Customizer.addSection(-1, emptySection);
+
+        const updatedEmptyLayout = Customizer.applyTransformations(EmptyLayout);
+        expect(updatedEmptyLayout.sections.length).toEqual(0);
+    });
+
+    it("should not add section with item that has no widget", () => {
+        const sectionWithBadItem: IDashboardLayoutSection<ICustomWidget> = {
+            type: "IDashboardLayoutSection",
+            items: [
+                {
+                    type: "IDashboardLayoutItem",
+                    size: {
+                        xl: {
+                            gridWidth: 6,
+                        },
+                    },
+                },
+                createTestItem(newCustomWidget("1", "custom1")),
+            ],
+        };
+
+        Customizer.addSection(-1, sectionWithBadItem);
+
+        const updatedEmptyLayout = Customizer.applyTransformations(EmptyLayout);
+        expect(updatedEmptyLayout.sections.length).toEqual(0);
+    });
+
     it("should add new item into an existing section", () => {
         const item = createTestItem(newCustomWidget("1", "custom1"));
 
@@ -65,6 +100,20 @@ describe("fluid layout customizer", () => {
         const updatedNonEmptyLayout = Customizer.applyTransformations(LayoutWithOneSection);
 
         expect(updatedNonEmptyLayout.sections[0].items).toEqual([item]);
+    });
+
+    it("should not add item without widget", () => {
+        Customizer.addItem(0, -1, {
+            type: "IDashboardLayoutItem",
+            size: {
+                xl: {
+                    gridWidth: 6,
+                },
+            },
+        });
+
+        const updatedNonEmptyLayout = Customizer.applyTransformations(LayoutWithOneSection);
+        expect(updatedNonEmptyLayout.sections[0]).toEqual(LayoutWithOneSection.sections[0]);
     });
 
     it("should first add new items then new sections", () => {
