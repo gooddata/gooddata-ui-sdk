@@ -50,6 +50,7 @@ import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
+import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-backend-spi';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-backend-spi';
 import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -2990,6 +2991,12 @@ export function newDashboardEngine(): IDashboardEngine;
 export function newDashboardEventPredicate<T extends DashboardEvents["type"]>(eventType: T, pred?: (event: DashboardEvents & {
     type: T;
 }) => boolean): (event: Action) => boolean;
+
+// @alpha
+export function newDashboardItem<T = ExtendedDashboardWidget>(widget: T, sizeOrColSize: IDashboardLayoutSizeByScreenSize | number): ExtendedDashboardItem<T>;
+
+// @alpha
+export function newDashboardSection<T = ExtendedDashboardWidget>(titleOrHeader: IDashboardLayoutSectionHeader | string | undefined, ...items: ReadonlyArray<ExtendedDashboardItem<T>>): IDashboardLayoutSection<T>;
 
 // @alpha
 export function newDisplayFormMap(items: ReadonlyArray<IAttributeDisplayFormMetadataObject>, strictTypeCheck?: boolean): ObjRefMap<IAttributeDisplayFormMetadataObject>;
