@@ -4,11 +4,22 @@ import {
     DashboardPluginV1,
     IDashboardCustomizer,
     IDashboardEventHandling,
+    IDashboardWidgetProps,
+    newDashboardSection,
+    newDashboardItem,
+    newCustomWidget,
 } from "@gooddata/sdk-ui-dashboard";
 
 import packageJson from "../../package.json";
+import React from "react";
 
-// Implement your plugin here, you can import other files etc. Just keep the component name and make sure it stays exported.
+/*
+ * Component to render 'myCustomWidget'. If you create custom widget instance and also pass extra data,
+ * then that data will be available in
+ */
+function MyCustomWidget(_props: IDashboardWidgetProps): JSX.Element {
+    return <div>Hello from custom widget</div>;
+}
 
 export class Plugin extends DashboardPluginV1 {
     public readonly author = packageJson.author;
@@ -32,14 +43,22 @@ export class Plugin extends DashboardPluginV1 {
         customize: IDashboardCustomizer,
         handlers: IDashboardEventHandling,
     ): void {
+        customize.customWidgets().addCustomWidget("myCustomWidget", MyCustomWidget);
         customize.layout().customizeFluidLayout((_layout, customizer) => {
-            customizer.addSection(-1, {
-                items: [],
-                type: "IDashboardLayoutSection",
-                header: {
-                    title: "Added from a plugin",
-                },
-            });
+            customizer.addSection(
+                0,
+                newDashboardSection(
+                    "Section Added By Plugin",
+                    newDashboardItem(newCustomWidget("myWidget1", "myCustomWidget"), {
+                        xl: {
+                            // all 12 columns of the grid will be 'allocated' for this this new item
+                            gridWidth: 12,
+                            // minimum height since the custom widget now has just some one-liner text
+                            gridHeight: 1,
+                        },
+                    }),
+                ),
+            );
         });
         handlers.addEventHandler("GDC.DASH/EVT.INITIALIZED", (evt) => {
             // eslint-disable-next-line no-console
