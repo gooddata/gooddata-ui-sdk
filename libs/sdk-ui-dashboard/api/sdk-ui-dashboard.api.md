@@ -4451,6 +4451,13 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onPushData: (data: IPushData) => void;
 };
 
+// @alpha
+export const useWidgetFilters: (widget: IWidget | undefined, filters?: IFilter[] | undefined) => {
+    result?: IFilter[] | undefined;
+    status?: "error" | "running" | "success" | "rejected" | undefined;
+    error?: GoodDataSdkError | undefined;
+};
+
 // @alpha (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
 
