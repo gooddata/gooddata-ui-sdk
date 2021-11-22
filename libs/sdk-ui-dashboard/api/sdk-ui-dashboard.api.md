@@ -2274,6 +2274,7 @@ export interface IDashboardStoreProviderProps {
 
 // @alpha (undocumented)
 export interface IDashboardThemingProps {
+    disableThemeLoading?: boolean;
     theme?: ITheme;
     themeModifier?: (theme: ITheme) => ITheme;
 }
