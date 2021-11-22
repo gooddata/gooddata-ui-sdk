@@ -21,6 +21,7 @@ import {
     OnLoadingChanged,
     OnError,
     useCancelablePromise,
+    convertError,
 } from "@gooddata/sdk-ui";
 import { IInsightViewProps } from "./types";
 import InsightTitle from "./InsightTitle";
@@ -212,7 +213,9 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
         <div className="insight-view-container">
             {resolvedTitle && <TitleComponent title={resolvedTitle} />}
             {isLoadingShown && <LoadingComponent className="insight-view-loader" />}
-            {error && !isDataLoading && <InsightError error={error} ErrorComponent={ErrorComponent} />}
+            {error && !isDataLoading && (
+                <InsightError error={convertError(error)} ErrorComponent={ErrorComponent} />
+            )}
             <div
                 className="insight-view-visualization"
                 // make the visualization div 0 height so that the loading component can take up the whole area
