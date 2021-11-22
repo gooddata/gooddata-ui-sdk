@@ -42,6 +42,8 @@ export {
     StashedDashboardItemsId,
     ExtendedDashboardLayoutSection,
     RelativeIndex,
+    ExtendedDashboardItemType,
+    ExtendedDashboardItemTypes,
 } from "./types/layoutTypes";
 export {
     FilterOp,
