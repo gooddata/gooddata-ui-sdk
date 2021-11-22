@@ -1789,6 +1789,14 @@ export function exportInsightWidget(ref: ObjRef, config: IExportConfig, correlat
 export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
 
 // @alpha
+export type ExtendedDashboardItemType<T> = T extends ExtendedDashboardItem<infer S> ? S : never;
+
+// @alpha
+export type ExtendedDashboardItemTypes<T extends ReadonlyArray<ExtendedDashboardItem<unknown>>> = {
+    [K in keyof T]: ExtendedDashboardItemType<T[K]>;
+}[number];
+
+// @alpha
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @alpha
@@ -2114,7 +2122,7 @@ export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPosi
 // @alpha (undocumented)
 export interface IDashboardInsightCustomizer {
     withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): IDashboardInsightCustomizer;
-    withCustomProvider(provider: InsightComponentProvider): IDashboardInsightCustomizer;
+    withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
     withTag(tag: string, component: CustomDashboardInsightComponent): IDashboardInsightCustomizer;
 }
 
@@ -2189,7 +2197,7 @@ export interface IDashboardInsightProps {
 // @alpha (undocumented)
 export interface IDashboardKpiCustomizer {
     withCustomDecorator(providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider): IDashboardKpiCustomizer;
-    withCustomProvider(provider: KpiComponentProvider): IDashboardKpiCustomizer;
+    withCustomProvider(provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer;
 }
 
 // @alpha (undocumented)
@@ -2997,7 +3005,7 @@ export function newDashboardEventPredicate<T extends DashboardEvents["type"]>(ev
 export function newDashboardItem<T = ExtendedDashboardWidget>(widget: T, sizeOrColSize: IDashboardLayoutSizeByScreenSize | number): ExtendedDashboardItem<T>;
 
 // @alpha
-export function newDashboardSection<T = ExtendedDashboardWidget>(titleOrHeader: IDashboardLayoutSectionHeader | string | undefined, ...items: ReadonlyArray<ExtendedDashboardItem<T>>): IDashboardLayoutSection<T>;
+export function newDashboardSection<T extends ReadonlyArray<ExtendedDashboardItem<unknown>>>(titleOrHeader: IDashboardLayoutSectionHeader | string | undefined, ...items: T): IDashboardLayoutSection<ExtendedDashboardItemTypes<T>>;
 
 // @alpha
 export function newDisplayFormMap(items: ReadonlyArray<IAttributeDisplayFormMetadataObject>, strictTypeCheck?: boolean): ObjRefMap<IAttributeDisplayFormMetadataObject>;
