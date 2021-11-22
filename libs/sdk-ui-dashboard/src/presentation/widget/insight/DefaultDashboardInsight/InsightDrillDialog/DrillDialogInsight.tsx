@@ -25,7 +25,7 @@ import {
     selectDrillableItems,
 } from "../../../../../model";
 import { IDashboardInsightProps } from "../../types";
-import { useWidgetFiltersQuery } from "../../../common";
+import { useWidgetFilters } from "../../../common";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties";
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills";
 import { CustomError } from "../CustomError/CustomError";
@@ -102,7 +102,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         result: filtersForInsight,
         status: filtersStatus,
         error: filtersError,
-    } = useWidgetFiltersQuery(widget, insight && insightFilters(insight));
+    } = useWidgetFilters(widget, insight && insightFilters(insight));
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight, filtersForInsight),

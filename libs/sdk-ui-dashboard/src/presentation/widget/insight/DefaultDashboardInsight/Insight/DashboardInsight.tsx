@@ -30,7 +30,7 @@ import {
 } from "../../../../../model";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties";
 import { IDashboardInsightProps } from "../../types";
-import { useWidgetFiltersQuery } from "../../../common";
+import { useWidgetFilters } from "../../../common";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
 import { CustomError } from "../CustomError/CustomError";
 import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants";
@@ -121,7 +121,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         result: filtersForInsight,
         status: filtersStatus,
         error: filtersError,
-    } = useWidgetFiltersQuery(widget);
+    } = useWidgetFilters(widget);
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight, filtersForInsight),

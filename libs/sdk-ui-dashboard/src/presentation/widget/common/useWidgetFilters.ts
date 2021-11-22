@@ -29,9 +29,10 @@ import {
  * @param widget - widget to get effective filters for
  * @param filters - additional filters to apply
  * @returns set of filters that should be used to execute the given widget
- * @internal
+ *
+ * @alpha
  */
-export const useWidgetFiltersQuery = (
+export const useWidgetFilters = (
     widget: IWidget | undefined,
     filters?: IFilter[],
 ): {
