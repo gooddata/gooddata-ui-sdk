@@ -128,6 +128,20 @@ export type ExtendedDashboardWidget = IWidget | ICustomWidget;
 export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
 
 /**
+ * Utility type to get the widget type from a given {@link ExtendedDashboardItem} type.
+ * @alpha
+ */
+export type ExtendedDashboardItemType<T> = T extends ExtendedDashboardItem<infer S> ? S : never;
+
+/**
+ * Utility type to get the widget type from a given {@link ExtendedDashboardItem} array.
+ * @alpha
+ */
+export type ExtendedDashboardItemTypes<T extends ReadonlyArray<ExtendedDashboardItem<unknown>>> = {
+    [K in keyof T]: ExtendedDashboardItemType<T[K]>;
+}[number];
+
+/**
  * Creates a new dashboard item containing the provided custom widget.
  *
  * @param widget - custom widget to include
@@ -178,12 +192,12 @@ function getOrCreateSectionHeader(
  *
  * @alpha
  */
-export function newDashboardSection<T = ExtendedDashboardWidget>(
+export function newDashboardSection<T extends ReadonlyArray<ExtendedDashboardItem<unknown>>>(
     titleOrHeader: IDashboardLayoutSectionHeader | string | undefined,
-    ...items: ReadonlyArray<ExtendedDashboardItem<T>>
-): IDashboardLayoutSection<T> {
+    ...items: T
+): IDashboardLayoutSection<ExtendedDashboardItemTypes<T>> {
     const header = getOrCreateSectionHeader(titleOrHeader);
-    const itemsClone: Array<ExtendedDashboardItem<T>> = cloneDeep(items) as Array<ExtendedDashboardItem<T>>;
+    const itemsClone = cloneDeep(items) as any;
 
     return {
         type: "IDashboardLayoutSection",
