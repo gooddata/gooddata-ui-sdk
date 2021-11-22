@@ -53,7 +53,7 @@ export interface IDashboardInsightCustomizer {
      * @param provider - provider to register
      * @returns self, for call chaining sakes
      */
-    withCustomProvider(provider: InsightComponentProvider): IDashboardInsightCustomizer;
+    withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
 
     /**
      * Register a factory for insight decorator providers. Decorators are a way to add customizations or embellishments on top
@@ -117,12 +117,10 @@ export interface IDashboardKpiCustomizer {
      *
      * You may register multiple providers. They will be evaluated in the order you register them.
      *
-     * @remarks see the {@link IDashboardInsightCustomizer.withTag} convenience method to register components for insights
-     *  with particular tags.
      * @param provider - provider to register
      * @returns self, for call chaining sakes
      */
-    withCustomProvider(provider: KpiComponentProvider): IDashboardKpiCustomizer;
+    withCustomProvider(provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer;
 
     /**
      * Register a factory for insight decorator providers. Decorators are a way to add customizations or embellishments on top

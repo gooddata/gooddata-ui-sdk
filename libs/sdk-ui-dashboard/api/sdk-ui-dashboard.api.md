@@ -2122,7 +2122,7 @@ export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPosi
 // @alpha (undocumented)
 export interface IDashboardInsightCustomizer {
     withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): IDashboardInsightCustomizer;
-    withCustomProvider(provider: InsightComponentProvider): IDashboardInsightCustomizer;
+    withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
     withTag(tag: string, component: CustomDashboardInsightComponent): IDashboardInsightCustomizer;
 }
 
@@ -2197,7 +2197,7 @@ export interface IDashboardInsightProps {
 // @alpha (undocumented)
 export interface IDashboardKpiCustomizer {
     withCustomDecorator(providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider): IDashboardKpiCustomizer;
-    withCustomProvider(provider: KpiComponentProvider): IDashboardKpiCustomizer;
+    withCustomProvider(provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer;
 }
 
 // @alpha (undocumented)
