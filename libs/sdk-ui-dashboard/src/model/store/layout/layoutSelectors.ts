@@ -17,6 +17,7 @@ import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMa
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
 import { filterContextItemsToFiltersForWidget } from "../../../converters";
 import { createMemoizedSelector } from "../_infra/selectors";
+import isEmpty from "lodash/isEmpty";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -72,17 +73,23 @@ function isItemWithBaseWidget(
  * handlers will not wipe the custom widgets from the state during the save - so at this point the custom
  * widgets are treated as client-side extensions.
  *
+ * Note: this selector also intentionally removes empty sections; dashboard cannot cope with them and
+ * they may readily appear if user adds section full of custom widgets and then does saveAs; such sections
+ * would end up empty.
+ *
  * @internal
  */
 export const selectBasicLayout = createSelector(selectLayout, (layout) => {
     const dashboardLayout: IDashboardLayout<IWidget> = {
         ...layout,
-        sections: layout.sections.map((section) => {
-            return {
-                ...section,
-                items: section.items.filter(isItemWithBaseWidget),
-            };
-        }),
+        sections: layout.sections
+            .map((section) => {
+                return {
+                    ...section,
+                    items: section.items.filter(isItemWithBaseWidget),
+                };
+            })
+            .filter((section) => !isEmpty(section.items)),
     };
 
     return dashboardLayout;
