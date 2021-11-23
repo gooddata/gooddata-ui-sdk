@@ -349,7 +349,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 : async () => prepareElementsTitleQuery().query(),
             onSuccess: (initialElements) => {
                 setState((prevState) => {
-                    const uriToAttributeElementMap = new Map<string, IAttributeElement>();
+                    const uriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
                     initialElements.items?.forEach((item) => {
                         uriToAttributeElementMap.set(item.uri, item);
                     });
@@ -404,7 +404,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                         appliedFilterOptions: compact(updatedAppliedItems),
                         validOptions: validOptions,
                         firstLoad: false,
-                        elementTitles: newUriToAttributeElementMap,
+                        uriToAttributeElementMap: newUriToAttributeElementMap,
                     };
                 });
             },
