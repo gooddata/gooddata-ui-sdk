@@ -47,6 +47,7 @@ const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
  * @internal
  */
 export const translations: { [locale: string]: Record<string, string> } = merge(
+    {},
     sdkUiTranslations, // we use also some of the sdk-ui strings here so we need to merge them in here
     sdkUiExtTranslations,
 );
