@@ -93,6 +93,11 @@ export interface IBackendCapabilities {
     supportsKpiWidget?: boolean;
 
     /**
+     * Indicates whether backend supports Widget as standalone addressable entity.
+     */
+    supportsWidgetEntity?: boolean;
+
+    /**
      * Indicates whether backend supports hyperlink attribute labels.
      */
     supportsHyperlinkAttributeLabels?: boolean;

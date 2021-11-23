@@ -326,6 +326,7 @@ export interface IBackendCapabilities {
     supportsObjectUris?: boolean;
     supportsRankingFilter?: boolean;
     supportsRankingFilterWithMeasureValueFilter?: boolean;
+    supportsWidgetEntity?: boolean;
     usesStrictAccessControl?: boolean;
 }
 
