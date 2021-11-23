@@ -68,6 +68,8 @@ export const DefaultUiSettings: ISettings = {
 
     // enable the plugin-ready Dashboard component in gdc-dashboards
     dashboardComponentDevRollout: true,
+
+    enableRenamingProjectToWorkspace: true,
 };
 
 /**
