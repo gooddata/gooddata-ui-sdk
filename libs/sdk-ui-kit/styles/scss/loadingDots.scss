@@ -9,6 +9,7 @@ $loading-dot-delay: 0.16;
     overflow: hidden;
 
     &-centered {
+        min-width: 36px;
         position: absolute;
         top: 50%;
         left: 50%;
