@@ -60,6 +60,10 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
                     // to add sections or items. customizer will not reflect those changes immediately. instead
                     // it will accumulate those operations
                     fn(currentLayout, customizer);
+                    // now make the customizer apply the registered layout modifications; this is done so that
+                    // customizer can guarantee that all new items are added at first (keeping the original
+                    // section indexes) and only then new sections are added
+                    return customizer.applyTransformations(currentLayout);
                 } catch (e) {
                     this.logger.error(
                         "An error has occurred while transforming fluid dashboard layout. Skipping failed transformation.",
@@ -68,11 +72,6 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
 
                     return currentLayout;
                 }
-
-                // now make the customizer apply the registered layout modifications; this is done so that
-                // customizer can guarantee that all new items are added at first (keeping the original
-                // section indexes) and only then new sections are added
-                return customizer.applyTransformations(currentLayout);
             }, layout as IDashboardLayout<ExtendedDashboardWidget>);
 
             return {
