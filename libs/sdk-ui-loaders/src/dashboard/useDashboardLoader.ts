@@ -9,6 +9,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
+import { serializeObjRef } from "@gooddata/sdk-model";
 import isArray from "lodash/isArray";
 import compact from "lodash/compact";
 import { DashboardLoader } from "./dashboardLoader";
@@ -90,7 +91,16 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         initializeLoader(loader, baseProps, extraPluginsArr, clientWorkspace);
 
         return loader;
-    }, [backend, workspace, dashboard, filterContextRef, config, permissions, clientWorkspace, extraPlugins]);
+    }, [
+        backend,
+        workspace,
+        serializeObjRef(dashboard),
+        filterContextRef,
+        config,
+        permissions,
+        clientWorkspace,
+        extraPlugins,
+    ]);
 
     useCancelablePromise(
         {
