@@ -4,6 +4,7 @@ import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/logger
 import * as path from "path";
 import fse from "fs-extra";
 import tar from "tar";
+import url from "url";
 import { getDashboardPluginTemplateArchive } from "../dashboard-plugin-template";
 import {
     convertToPluginDirectory,
@@ -79,6 +80,7 @@ function renamePluginDirectories(target: string, config: InitCmdActionConfig) {
 function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): Promise<void> {
     const { backend, hostname, workspace, dashboard, pluginIdentifier, language, packageManager } = config;
     const isTiger = backend === "tiger";
+    const { protocol } = url.parse(hostname);
     const replacements: FileReplacementSpec = {
         "webpack.config.js": [
             {
@@ -113,6 +115,10 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
             {
                 regex: /{{language}}/g,
                 value: language,
+            },
+            {
+                regex: /{{protocol}}/g,
+                value: protocol ?? "https:",
             },
         ],
         src: {

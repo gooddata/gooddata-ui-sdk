@@ -38,7 +38,7 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 
 1.  Start the development server: `{{packageManager}} start`
 
-    To verify everything works correctly, navigate to `https://localhost:3001`. You should see your existing
+    To verify everything works correctly, navigate to `{{protocol}}//localhost:3001`. You should see your existing
     dashboard with a new empty section added at the end. The section will be titled 'Added from a plugin'.
 
     Note: you can use `PORT` env variable to specify different port number.
@@ -52,7 +52,7 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
     Note: we recommend to write your plugin in TypeScript and to use a modern IDE. This way you can conveniently
     explore the plugin customization APIs from the comfort of your development environment.
 
-3.  Build the plugin: `{{packageManager}} build-plugin`
+3.  Build the plugin: `{{packageManager}} run build-plugin`
 
     This will build plugin artifacts under `dist/dashboardPlugin`.
 
