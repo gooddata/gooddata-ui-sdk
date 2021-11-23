@@ -14,6 +14,7 @@ import {
     exportInsightWidget,
     ExportInsightWidget,
     DashboardInsightWidgetExportResolved,
+    selectIsWidgetExportSupported,
 } from "../../../model";
 import { useExportHandler } from "./useExportHandler";
 import { useExportDialogContext } from "../../dashboardContexts";
@@ -40,6 +41,7 @@ export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) =
         [widgetRef],
     );
 
+    const isWidgetExportable = useDashboardSelector(selectIsWidgetExportSupported(widgetRef));
     const isExportableToCsv = useDashboardSelector(selectIsExecutionResultExportableToCsvByRef(widgetRef));
     const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
 
@@ -80,8 +82,8 @@ export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) =
         });
     }, [settings, title, exportFunction, closeDialog]);
 
-    const exportCSVEnabled = !isExporting && isExportableToCsv;
-    const exportXLSXEnabled = !isExporting && isExportableToXlsx;
+    const exportCSVEnabled = !isExporting && isWidgetExportable && isExportableToCsv;
+    const exportXLSXEnabled = !isExporting && isWidgetExportable && isExportableToXlsx;
 
     return {
         exportCSVEnabled,
