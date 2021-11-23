@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { insightVisualizationUrl, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 import { LayoutState } from "./layoutState";
@@ -18,6 +18,8 @@ import { selectFilterContextFilters } from "../filterContext/filterContextSelect
 import { filterContextItemsToFiltersForWidget } from "../../../converters";
 import { createMemoizedSelector } from "../_infra/selectors";
 import isEmpty from "lodash/isEmpty";
+import { selectInsightsMap } from "../insights/insightsSelectors";
+import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -212,3 +214,26 @@ export const selectAllInsightWidgets = createSelector(selectAllWidgets, (allWidg
 export const selectAllCustomWidgets = createSelector(selectAllWidgets, (allWidgets) => {
     return allWidgets.filter(isCustomWidget);
 });
+
+/**
+ * Selects whether the given widget can be exported.
+ *
+ * @alpha
+ */
+export const selectIsWidgetExportSupported = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectWidgetByRef(ref), selectInsightsMap, (widget, insights) => {
+        if (!isInsightWidget(widget)) {
+            return false;
+        }
+        const insight = insights.get(widget.insight);
+        if (!insight) {
+            return false;
+        }
+
+        const insightVisUrl = insightVisualizationUrl(insight);
+
+        // currently Headline and its derivatives have the export disabled globally
+        const exportDisabledVisualizations = [VisualizationTypes.HEADLINE, VisualizationTypes.XIRR];
+        return !exportDisabledVisualizations.some((disabled) => insightVisUrl.includes(disabled));
+    }),
+);
