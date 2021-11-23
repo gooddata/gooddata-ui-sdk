@@ -59,6 +59,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsRankingFilterWithMeasureValueFilter: false,
     supportsElementsQueryParentFiltering: false,
     supportsKpiWidget: false,
+    supportsWidgetEntity: false,
     supportsHyperlinkAttributeLabels: false,
     supportsGenericDateAttributeElements: false,
     supportsExplain: true,
