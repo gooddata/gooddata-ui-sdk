@@ -1,5 +1,7 @@
 # GoodData.UI regression and end-to-end tests
 
+I want to check if backstop tests works on CI on master branch
+
 The project contains black-box regression and end-to-end tests for the GoodData.UI components.
 
 ## Overview
