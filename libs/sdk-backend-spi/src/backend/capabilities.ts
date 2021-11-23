@@ -133,6 +133,11 @@ export interface IBackendCapabilities {
     usesStrictAccessControl?: boolean;
 
     /**
+     * Indicates whether backend supports filtering object by owner/creator.
+     */
+    supportsOwners?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

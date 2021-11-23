@@ -324,6 +324,7 @@ export interface IBackendCapabilities {
     supportsHyperlinkAttributeLabels?: boolean;
     supportsKpiWidget?: boolean;
     supportsObjectUris?: boolean;
+    supportsOwners?: boolean;
     supportsRankingFilter?: boolean;
     supportsRankingFilterWithMeasureValueFilter?: boolean;
     supportsWidgetEntity?: boolean;

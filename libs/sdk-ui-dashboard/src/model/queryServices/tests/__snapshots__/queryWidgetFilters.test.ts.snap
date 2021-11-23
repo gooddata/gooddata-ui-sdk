@@ -229,6 +229,7 @@ Object {
         "canCalculateTotals": true,
         "supportsCsvUploader": true,
         "supportsKpiWidget": true,
+        "supportsOwners": true,
         "supportsWidgetEntity": true,
       },
       "config": Object {
