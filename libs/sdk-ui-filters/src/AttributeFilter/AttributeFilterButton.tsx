@@ -19,6 +19,7 @@ import {
     IAttributeDropdownBodyExtendedProps,
     IAttributeDropdownBodyProps,
 } from "./AttributeDropdown/AttributeDropdownBody";
+import compact from "lodash/compact";
 import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
@@ -52,7 +53,7 @@ import {
     needsLoading,
     showAllFilteredMessage,
     showItemsFilteredMessage,
-    updateSelectedOptionsWithData,
+    updateSelectedOptionsWithDataByMap,
 } from "./utils/AttributeFilterUtils";
 import invariant from "ts-invariant";
 import stringify from "json-stable-stringify";
@@ -165,6 +166,7 @@ interface IAttributeFilterButtonState {
     limit: number;
     isDropdownOpen: boolean;
     validOptions: IElementQueryResultWithEmptyItems;
+    uriToAttributeElementMap: Map<string, IAttributeElement>;
 }
 
 /**
@@ -283,22 +285,40 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             limit: LIMIT,
             isDropdownOpen: false,
             validOptions: null,
+            uriToAttributeElementMap: new Map<string, IAttributeElement>(),
         };
     });
 
     useEffect(() => {
+        setState((prevState) => {
+            return {
+                ...prevState,
+                uriToAttributeElementMap: new Map<string, IAttributeElement>(),
+            };
+        });
+    }, [props.backend, props.workspace, props.identifier, stringify(currentFilterObjRef)]);
+
+    useEffect(() => {
         setState((prevValue) => {
-            let resultState = prevValue;
             const initialSelection = getInitialSelectedOptions();
             const initialIsInverted = getInitialIsInverted();
 
-            if (
-                !isEqual(prevValue.appliedFilterOptions, initialSelection) ||
-                !isEqual(prevValue.selectedFilterOptions, initialSelection)
-            ) {
+            const selectedOptionsUris = prevValue.selectedFilterOptions.map((opt) => opt.uri);
+            const appliedOptionsUris = prevValue.appliedFilterOptions.map((opt) => opt.uri);
+            const initialSelectionUris = initialSelection.map((opt) => opt.uri);
+
+            let resultState = prevValue;
+
+            if (!isEqual(selectedOptionsUris, initialSelectionUris)) {
                 resultState = {
                     ...resultState,
                     selectedFilterOptions: initialSelection,
+                };
+            }
+
+            if (!isEqual(appliedOptionsUris, initialSelectionUris)) {
+                resultState = {
+                    ...resultState,
                     appliedFilterOptions: initialSelection,
                 };
             }
@@ -317,6 +337,33 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
 
+    /*
+     * This cancelable promise is used to fetch attribute filter elements for the initial selected options.
+     * It's only called on component mounting to ensure we have attribute element titles for elements out of
+     * limits in case of huge element number.
+     */
+    const { error: uriToAttributeElementMapError } = useCancelablePromise(
+        {
+            promise: isEmpty(state.selectedFilterOptions)
+                ? null
+                : async () => prepareElementsTitleQuery().query(),
+            onSuccess: (initialElements) => {
+                setState((prevState) => {
+                    const uriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
+                    initialElements.items?.forEach((item) => {
+                        uriToAttributeElementMap.set(item.uri, item);
+                    });
+
+                    return {
+                        ...prevState,
+                        uriToAttributeElementMap,
+                    };
+                });
+            },
+        },
+        [props.backend, props.workspace, props.identifier, stringify(currentFilterObjRef)],
+    );
+
     // this cancelable promise loads missing page of data if needed and in the onSuccess callback
     // it merges the newly loaded data into the already loaded data
     const { error: elementsError, status: elementsStatus } = useCancelablePromise(
@@ -328,26 +375,38 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                   }
                 : null,
             onSuccess: (newElements) => {
-                const mergedValidElements = mergeElementQueryResults(state.validOptions, newElements);
-                const { items } = mergedValidElements;
+                setState((prevState) => {
+                    const mergedValidElements = mergeElementQueryResults(prevState.validOptions, newElements);
+                    const newUriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
 
-                // make sure that selected items have both title and uri, otherwise selection in InvertableList won't work
-                // TODO we could maybe use the InvertableList's getItemKey and just use title or uri for example
-                const updatedSelectedItems = updateSelectedOptionsWithData(
-                    state.selectedFilterOptions,
-                    items,
-                );
-                const updatedAppliedItems = updateSelectedOptionsWithData(state.appliedFilterOptions, items);
+                    const { items } = mergedValidElements;
 
-                const validOptions = resolvedParentFilters?.length ? newElements : mergedValidElements;
+                    items.filter(isNonEmptyListItem).forEach((item) => {
+                        newUriToAttributeElementMap.set(item.uri, item);
+                    });
 
-                setState((s) => ({
-                    ...s,
-                    selectedFilterOptions: updatedSelectedItems,
-                    appliedFilterOptions: updatedAppliedItems,
-                    validOptions: validOptions,
-                    firstLoad: false,
-                }));
+                    // make sure that selected items have both title and uri, otherwise selection in InvertableList won't work
+                    // TODO we could maybe use the InvertableList's getItemKey and just use title or uri for example
+                    const updatedSelectedItems = updateSelectedOptionsWithDataByMap(
+                        prevState.selectedFilterOptions,
+                        newUriToAttributeElementMap,
+                    );
+                    const updatedAppliedItems = updateSelectedOptionsWithDataByMap(
+                        prevState.appliedFilterOptions,
+                        newUriToAttributeElementMap,
+                    );
+
+                    const validOptions = resolvedParentFilters?.length ? newElements : mergedValidElements;
+
+                    return {
+                        ...prevState,
+                        selectedFilterOptions: compact(updatedSelectedItems),
+                        appliedFilterOptions: compact(updatedAppliedItems),
+                        validOptions: validOptions,
+                        firstLoad: false,
+                        uriToAttributeElementMap: newUriToAttributeElementMap,
+                    };
+                });
             },
         },
         [
@@ -512,6 +571,17 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         return preparedElementQuery;
     };
 
+    const prepareElementsTitleQuery = () => {
+        return getBackend()
+            .workspace(props.workspace)
+            .attributes()
+            .elements()
+            .forDisplayForm(getObjRef(currentFilter, props.identifier))
+            .withOptions({
+                uris: state.selectedFilterOptions.map((opt) => opt.uri),
+            });
+    };
+
     /**
      * getters
      */
@@ -550,7 +620,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         if (isTotalCountLoading()) {
             if (state.firstLoad) {
                 return getLoadingTitleIntl(props.intl);
-            } else if (props.parentFilters) {
+            } else if (!isEmpty(props.parentFilters)) {
                 return getFilteringTitleIntl(props.intl);
             }
         }
@@ -560,12 +630,12 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         }
 
         const displayForm = getObjRef(currentFilter, props.identifier);
-        if (state.validOptions && !isNil(totalCount) && displayForm) {
+        if (state.uriToAttributeElementMap.size > 0 && !isNil(totalCount) && displayForm) {
             const empty = isEmpty(state.selectedFilterOptions);
             const equal = isEqual(originalTotalCount, state.selectedFilterOptions?.length);
             const getAllPartIntl = getAllTitleIntl(props.intl, state.isInverted, empty, equal);
 
-            if (!state.validOptions.totalCount && state.searchString) {
+            if (!state.selectedFilterOptions?.length && state.searchString) {
                 return getNoneTitleIntl(props.intl);
             }
 
@@ -577,10 +647,12 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 return state.isInverted ? "" : `${getAllPartIntl}`;
             }
 
-            const validElements = state.validOptions.items.filter(isNonEmptyListItem);
             return state.isInverted
-                ? `${getAllPartIntl} ${getItemsTitles(state.selectedFilterOptions, validElements)}`
-                : `${getItemsTitles(state.selectedFilterOptions, validElements)}`;
+                ? `${getAllPartIntl} ${getItemsTitles(
+                      state.selectedFilterOptions,
+                      state.uriToAttributeElementMap,
+                  )}`
+                : `${getItemsTitles(state.selectedFilterOptions, state.uriToAttributeElementMap)}`;
         }
         return "";
     };
@@ -628,9 +700,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             setPlaceholderValue(filter);
         }
 
-        closeDropdown();
-
-        return props.onApply?.(filter, state.isInverted);
+        props.onApply?.(filter, state.isInverted);
+        return closeDropdown();
     };
 
     const onSelect = (selectedFilterOptions: IAttributeElement[], isInverted: boolean) => {
@@ -814,7 +885,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         attributeError ||
         totalCountError ||
         parentFilterTitlesError ||
-        originalTotalCountError ? (
+        originalTotalCountError ||
+        uriToAttributeElementMapError ? (
         <FilterError
             error={
                 elementsError?.message ??
@@ -822,6 +894,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 totalCountError?.message ??
                 parentFilterTitlesError?.message ??
                 originalTotalCountError?.message ??
+                uriToAttributeElementMapError?.message ??
                 "Unknown error"
             }
         />
