@@ -141,5 +141,5 @@ export function* changeSharingHandler(
         yield put(batch);
     }
 
-    return dashboardSharingChanged(ctx, cmd.payload.newShareProps, cmd.correlationId);
+    return dashboardSharingChanged(ctx, dashboardRef, cmd.payload.newShareProps, cmd.correlationId);
 }

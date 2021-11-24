@@ -1,11 +1,15 @@
 // (C) 2021 GoodData Corporation
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
+
 import { ConfirmDialogBase } from "../../ConfirmDialogBase";
+
 import { ContentDivider } from "./ContentDivider";
 import { ShareGranteeContent } from "./ShareGranteeContent";
 import { IShareGranteeBaseProps } from "./types";
 import { sortGranteesByName } from "./utils";
+import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl";
+import { SharedObjectLockControl } from "./SharedObjectLockControl";
 
 /**
  * @internal
@@ -13,14 +17,21 @@ import { sortGranteesByName } from "./utils";
 export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
     const {
         isLoading,
+        isLockedNow,
+        isUnderLenientControlNow,
         grantees,
-        owner,
+        sharedObject,
         isDirty,
         onCancel,
         onSubmit,
         onGranteeDelete,
         onAddGranteeButtonClick,
+        labels,
+        onLockChange,
+        onUnderLenientControlChange,
     } = props;
+    const { owner, isLeniencyControlSupported, isLockingSupported } = sharedObject;
+
     const intl = useIntl();
 
     const granteeList = useMemo(() => {
@@ -54,6 +65,18 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
                 onDelete={onGranteeDelete}
             />
             <ContentDivider />
+            <SharedObjectUnderLenientControl
+                isUnderLenientControl={isUnderLenientControlNow}
+                isLeniencyControlSupported={isLeniencyControlSupported}
+                onUnderLenientControlChange={onUnderLenientControlChange}
+                labels={labels}
+            />
+            <SharedObjectLockControl
+                isLocked={isLockedNow}
+                isLockingSupported={isLockingSupported}
+                onLockChange={onLockChange}
+                labels={labels}
+            />
         </ConfirmDialogBase>
     );
 };

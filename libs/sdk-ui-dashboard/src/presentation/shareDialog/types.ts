@@ -41,6 +41,11 @@ export interface IShareDialogProps {
     currentUserRef: ObjRef;
 
     /**
+     * Is locking of the dashboard supported by the currently logged user and backend?
+     */
+    isLockingSupported: boolean;
+
+    /**
      * Callback to be called when user apply share dialog
      */
     onApply: (payload: ISharingApplyPayload) => void;

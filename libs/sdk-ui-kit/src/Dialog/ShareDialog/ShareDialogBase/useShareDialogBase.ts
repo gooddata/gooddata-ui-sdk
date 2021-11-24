@@ -21,66 +21,71 @@ interface IUseShareDialogStateReturnType {
     grantees: GranteeItem[];
     granteesToAdd: GranteeItem[];
     granteesToDelete: GranteeItem[];
+    isUnderLenientControlNow: boolean;
+    isLockedNow: boolean;
     onLoadGrantees: (grantees: GranteeItem[], groupAll: IGranteeGroupAll | undefined) => void;
     onSharedGranteeDelete: (grantee: GranteeItem) => void;
     onAddedGranteeDelete: (grantee: GranteeItem) => void;
     onGranteeAdd: (grantee: GranteeItem) => void;
     onAddGranteeButtonClick: () => void;
     onAddGranteeBackClick: () => void;
+    onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
+    onLockChange: (isLocked: boolean) => void;
 }
 
 /**
  * @internal
  */
-const useShareDialogState = (): IUseShareDialogStateReturnType => {
+const useShareDialogState = (
+    isUnderLenientControl: boolean,
+    isLocked: boolean,
+): IUseShareDialogStateReturnType => {
     const [dialogMode, setDialogMode] = useState<DialogModeType>("ShareGrantee");
     const [isGranteesLoading, setIsGranteesLoading] = useState(true);
     const [grantees, setGrantees] = useState<GranteeItem[]>([]);
     const [granteesToAdd, setGranteesToAdd] = useState<GranteeItem[]>([]);
     const [granteesToDelete, setGranteesToDelete] = useState<GranteeItem[]>([]);
+    const [isUnderLenientControlNow, setUnderLenientControlNow] = useState(isUnderLenientControl);
+    const [isLockedNow, setLockedNow] = useState(isLocked);
 
-    const onSharedGranteeDelete = useCallback(
-        (grantee: GranteeItem) => {
-            setGranteesToDelete((state) => [...state, grantee]);
-        },
-        [setGranteesToDelete],
-    );
+    const onSharedGranteeDelete = useCallback((grantee: GranteeItem) => {
+        setGranteesToDelete((state) => [...state, grantee]);
+    }, []);
 
-    const onAddedGranteeDelete = useCallback(
-        (grantee: GranteeItem) => {
-            setGranteesToAdd((state) => state.filter((g) => !areObjRefsEqual(g.id, grantee.id)));
-        },
-        [setGranteesToAdd],
-    );
+    const onAddedGranteeDelete = useCallback((grantee: GranteeItem) => {
+        setGranteesToAdd((state) => state.filter((g) => !areObjRefsEqual(g.id, grantee.id)));
+    }, []);
 
-    const onGranteeAdd = useCallback(
-        (grantee: GranteeItem) => {
-            setGranteesToAdd((state) => [...state, grantee]);
-        },
-        [setGranteesToAdd],
-    );
+    const onGranteeAdd = useCallback((grantee: GranteeItem) => {
+        setGranteesToAdd((state) => [...state, grantee]);
+    }, []);
 
     const onAddGranteeButtonClick = useCallback(() => {
         setDialogMode("AddGrantee");
-    }, [setDialogMode]);
+    }, []);
 
     const onAddGranteeBackClick = useCallback(() => {
         setDialogMode("ShareGrantee");
         setGranteesToAdd([]);
-    }, [setDialogMode, setGranteesToAdd]);
+    }, []);
 
-    const onLoadGrantees = useCallback(
-        (grantees: GranteeItem[], groupAll: IGranteeGroupAll | undefined) => {
-            if (groupAll) {
-                setGrantees([...grantees, groupAll]);
-            } else {
-                setGrantees(grantees);
-            }
+    const onLoadGrantees = useCallback((grantees: GranteeItem[], groupAll: IGranteeGroupAll | undefined) => {
+        if (groupAll) {
+            setGrantees([...grantees, groupAll]);
+        } else {
+            setGrantees(grantees);
+        }
 
-            setIsGranteesLoading(false);
-        },
-        [setGrantees, setIsGranteesLoading],
-    );
+        setIsGranteesLoading(false);
+    }, []);
+
+    const onUnderLenientControlChange = useCallback((isUnderLenientControl: boolean) => {
+        setUnderLenientControlNow(isUnderLenientControl);
+    }, []);
+
+    const onLockChange = useCallback((isLocked: boolean) => {
+        setLockedNow(isLocked);
+    }, []);
 
     return {
         dialogMode,
@@ -94,6 +99,10 @@ const useShareDialogState = (): IUseShareDialogStateReturnType => {
         onGranteeAdd,
         onAddGranteeButtonClick,
         onAddGranteeBackClick,
+        isUnderLenientControlNow,
+        isLockedNow,
+        onUnderLenientControlChange,
+        onLockChange,
     };
 };
 
@@ -115,16 +124,24 @@ export interface IUseShareDialogBaseReturnType {
     isAddDialogDirty: boolean;
     sharedGrantees: GranteeItem[];
     appliedGranteesWithOwner: GranteeItem[];
+    isLockedNow: boolean;
+    isUnderLenientControlNow: boolean;
+    onLockChange: (locked: boolean) => void;
+    onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
 }
 
 /**
  * @internal
  */
 export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialogBaseReturnType => {
-    const { shareStatus, sharedObjectRef, owner, onSubmit, onError } = props;
+    const { sharedObject, onSubmit, onError } = props;
+    const { ref, shareStatus, owner, isUnderLenientControl, isLocked } = sharedObject;
+
     const {
         dialogMode,
         isGranteesLoading,
+        isLockedNow,
+        isUnderLenientControlNow,
         grantees,
         granteesToAdd,
         granteesToDelete,
@@ -134,7 +151,9 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         onGranteeAdd,
         onAddGranteeButtonClick,
         onAddGranteeBackClick,
-    } = useShareDialogState();
+        onLockChange,
+        onUnderLenientControlChange,
+    } = useShareDialogState(isUnderLenientControl, isLocked);
 
     const onLoadGranteesSuccess = useCallback(
         (result: GranteeItem[]) => {
@@ -144,11 +163,15 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         [onLoadGrantees, shareStatus],
     );
 
-    useGetAccessList({ sharedObjectRef, onSuccess: onLoadGranteesSuccess, onError });
+    useGetAccessList({ sharedObjectRef: ref, onSuccess: onLoadGranteesSuccess, onError });
 
     const isShareDialogDirty = useMemo(() => {
-        return granteesToDelete.length !== 0;
-    }, [granteesToDelete]);
+        return (
+            granteesToDelete.length !== 0 ||
+            isLocked !== isLockedNow ||
+            isUnderLenientControl !== isUnderLenientControlNow
+        );
+    }, [granteesToDelete, isLocked, isLockedNow, isUnderLenientControl, isUnderLenientControlNow]);
 
     const isAddDialogDirty = useMemo(() => {
         return granteesToAdd.length !== 0;
@@ -158,15 +181,31 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         if (!isShareDialogDirty) {
             return;
         }
-        onSubmit(grantees, granteesToAdd, granteesToDelete);
-    }, [grantees, granteesToAdd, granteesToDelete, isShareDialogDirty, onSubmit]);
+        onSubmit(grantees, granteesToAdd, granteesToDelete, isUnderLenientControlNow, isLockedNow);
+    }, [
+        grantees,
+        granteesToAdd,
+        granteesToDelete,
+        isShareDialogDirty,
+        isUnderLenientControlNow,
+        isLockedNow,
+        onSubmit,
+    ]);
 
     const onSubmitAddGrantee = useCallback(() => {
         if (!isAddDialogDirty) {
             return;
         }
-        onSubmit(grantees, granteesToAdd, granteesToDelete);
-    }, [grantees, granteesToAdd, granteesToDelete, isAddDialogDirty, onSubmit]);
+        onSubmit(grantees, granteesToAdd, granteesToDelete, isUnderLenientControlNow, isLockedNow);
+    }, [
+        grantees,
+        granteesToAdd,
+        granteesToDelete,
+        isAddDialogDirty,
+        isUnderLenientControlNow,
+        isLockedNow,
+        onSubmit,
+    ]);
 
     const sharedGrantees = useMemo(() => {
         return notInArrayFilter(grantees, granteesToDelete);
@@ -195,5 +234,9 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         isAddDialogDirty,
         sharedGrantees,
         appliedGranteesWithOwner,
+        onLockChange,
+        onUnderLenientControlChange,
+        isUnderLenientControlNow,
+        isLockedNow,
     };
 };

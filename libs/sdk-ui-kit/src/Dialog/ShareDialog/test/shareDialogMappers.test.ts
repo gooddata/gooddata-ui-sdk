@@ -1,7 +1,9 @@
 // (C) 2021 GoodData Corporation
 import { ShareStatus } from "@gooddata/sdk-backend-spi";
-
+import { IListedDashboard, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { IUser, uriRef } from "@gooddata/sdk-model";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+
 import { groupAll, owner, user } from "../ShareDialogBase/test/GranteeMock";
 import { GranteeItem, IGranteeUser } from "../ShareDialogBase/types";
 import { GranteeGroupAll } from "../ShareDialogBase/utils";
@@ -10,7 +12,24 @@ import {
     mapOwnerToGrantee,
     mapShareStatusToGroupAll,
     mapUserFullName,
+    mapSharedObjectToAffectedSharedObject,
 } from "../shareDialogMappers";
+
+const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards.dash_aaRaEZRWdRpQ
+    .obj as IDashboardWithReferences;
+
+const SimpleDashboard: IListedDashboard = {
+    ref: SimpleDashboardWithReferences.dashboard.ref,
+    identifier: SimpleDashboardWithReferences.dashboard.identifier,
+    uri: SimpleDashboardWithReferences.dashboard.uri,
+    title: SimpleDashboardWithReferences.dashboard.title,
+    description: SimpleDashboardWithReferences.dashboard.description,
+    updated: SimpleDashboardWithReferences.dashboard.updated,
+    created: SimpleDashboardWithReferences.dashboard.created,
+    tags: SimpleDashboardWithReferences.dashboard.tags,
+    shareStatus: "public",
+    isLocked: true,
+};
 
 describe("shareDialogMappers", () => {
     describe("mapUserFullName", () => {
@@ -152,5 +171,20 @@ describe("shareDialogMappers", () => {
                 expect(mapGranteesToShareStatus(grantees, granteesToAdd, granteesToDelete)).toEqual(result);
             },
         );
+    });
+
+    describe("mapSharedObjectToAffectedSharedObject", () => {
+        it("should map shared object to expected affected shared object", () => {
+            const ref = uriRef("userID1");
+            const user: IUser = {
+                ref: ref,
+                login: "user-login",
+                firstName: "User",
+                lastName: "Name",
+            };
+            const owner = mapOwnerToGrantee(user, ref);
+            const result = mapSharedObjectToAffectedSharedObject(SimpleDashboard, owner, true, false);
+            expect(result).toMatchSnapshot();
+        });
     });
 });

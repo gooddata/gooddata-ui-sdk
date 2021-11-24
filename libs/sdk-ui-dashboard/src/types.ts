@@ -130,4 +130,5 @@ export interface IDrillToUrlPlaceholder {
 export interface IShareProps {
     shareStatus: ShareStatus;
     isUnderStrictControl: boolean;
+    isLocked: boolean;
 }

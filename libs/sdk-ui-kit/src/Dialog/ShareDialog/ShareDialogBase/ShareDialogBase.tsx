@@ -1,7 +1,9 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
+
 import { Overlay } from "../../../Overlay";
 import { IAlignPoint } from "../../../typings/positioning";
+
 import { ShareGranteeBase } from "./ShareGranteeBase";
 import { AddGranteeBase } from "./AddGranteeBase";
 import { IShareDialogBaseProps } from "./types";
@@ -13,7 +15,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
  * @internal
  */
 export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
-    const { onCancel, owner } = props;
+    const { sharedObject, onCancel, labels } = props;
 
     const {
         onAddedGranteeDelete,
@@ -30,6 +32,10 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
         sharedGrantees,
         appliedGranteesWithOwner,
         isGranteesLoading,
+        isLockedNow,
+        isUnderLenientControlNow,
+        onLockChange,
+        onUnderLenientControlChange,
     } = useShareDialogBase(props);
 
     return (
@@ -44,12 +50,17 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                     <ShareGranteeBase
                         isLoading={isGranteesLoading}
                         isDirty={isShareDialogDirty}
-                        owner={owner}
+                        isLockedNow={isLockedNow}
+                        isUnderLenientControlNow={isUnderLenientControlNow}
+                        sharedObject={sharedObject}
                         grantees={sharedGrantees}
                         onCancel={onCancel}
                         onSubmit={onSubmitShareGrantee}
                         onAddGranteeButtonClick={onAddGranteeButtonClick}
                         onGranteeDelete={onSharedGranteeDelete}
+                        labels={labels}
+                        onLockChange={onLockChange}
+                        onUnderLenientControlChange={onUnderLenientControlChange}
                     />
                 ) : (
                     <AddGranteeBase

@@ -3,6 +3,8 @@ import { ShareStatus } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
+import { IShareDialogLabels } from "../types";
+
 // Grantee types
 
 /**
@@ -111,15 +113,29 @@ export type DialogModeType = "ShareGrantee" | "AddGrantee";
 /**
  * @internal
  */
-export interface IShareDialogBaseProps {
-    sharedObjectRef: ObjRef;
+export interface IAffectedSharedObject {
+    ref: ObjRef;
     shareStatus: ShareStatus;
     owner: IGranteeUser | IGranteeInactiveOwner;
+    isLocked: boolean;
+    isUnderLenientControl: boolean;
+    isLockingSupported: boolean;
+    isLeniencyControlSupported: boolean;
+}
+
+/**
+ * @internal
+ */
+export interface IShareDialogBaseProps {
+    sharedObject: IAffectedSharedObject;
+    labels: IShareDialogLabels;
     onCancel: () => void;
     onSubmit: (
         grantees: GranteeItem[],
         granteesToAdd: GranteeItem[],
         granteesToDelete: GranteeItem[],
+        isUnderLenientControl: boolean,
+        isLocked: boolean,
     ) => void;
     onError: (err: Error) => void;
 }
@@ -139,12 +155,17 @@ export interface IGranteeItemProps {
 export interface IShareGranteeBaseProps {
     isDirty: boolean;
     isLoading: boolean;
-    owner: IGranteeUser | IGranteeInactiveOwner;
+    isLockedNow: boolean;
+    isUnderLenientControlNow: boolean;
+    sharedObject: IAffectedSharedObject;
     grantees: GranteeItem[];
+    labels: IShareDialogLabels;
     onAddGranteeButtonClick: () => void;
     onGranteeDelete: (grantee: GranteeItem) => void;
     onCancel: () => void;
     onSubmit: () => void;
+    onLockChange: (locked: boolean) => void;
+    onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
 }
 
 /**
@@ -236,4 +257,24 @@ export const isSelectErrorOption = (obj: unknown): obj is ISelectErrorOption => 
 export interface IAddGranteeSelectProps {
     onSelectGrantee: (grantee: GranteeItem) => void;
     appliedGrantees: GranteeItem[];
+}
+
+/**
+ * @internal
+ */
+export interface ISharedObjectLockControlProps {
+    isLocked: boolean;
+    isLockingSupported: boolean;
+    labels: IShareDialogLabels;
+    onLockChange: (locked: boolean) => void;
+}
+
+/**
+ * @internal
+ */
+export interface ISharedObjectUnderLenientControlProps {
+    isUnderLenientControl: boolean;
+    isLeniencyControlSupported: boolean;
+    labels: IShareDialogLabels;
+    onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
 }
