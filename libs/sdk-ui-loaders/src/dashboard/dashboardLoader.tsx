@@ -182,6 +182,9 @@ export class DashboardLoader implements IDashboardLoader {
     ): Promise<[IDashboardEngine, IDashboardPluginContract_V1[]]> => {
         const { engineLoader, pluginLoader, beforeLoad } = config;
 
+        // eslint-disable-next-line no-console
+        console.debug("Loading engine and plugins...");
+
         if (beforeLoad) {
             await beforeLoad(ctx, dashboardWithPlugins);
         }
@@ -190,6 +193,9 @@ export class DashboardLoader implements IDashboardLoader {
             engineLoader(dashboardWithPlugins),
             pluginLoader(ctx, dashboardWithPlugins),
         ]);
+
+        // eslint-disable-next-line no-console
+        console.debug("Initializing the plugins...");
 
         const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
         const loadedPlugins = initializeLoadedPlugins(ctx, plugins);
@@ -210,6 +216,9 @@ export class DashboardLoader implements IDashboardLoader {
         const [workspace, clientWorkspace] = await this.resolveWorkspace(backend);
         invariant(workspace, "DashboardLoader is not configured with workspace to use and loader.");
 
+        // eslint-disable-next-line no-console
+        console.debug("Loading the dashboard...");
+
         const dashboardWithPlugins: IDashboardWithReferences = await backend
             .workspace(workspace)
             .dashboards()
@@ -225,6 +234,9 @@ export class DashboardLoader implements IDashboardLoader {
             dataProductId: clientWorkspace?.dataProduct,
             clientId: clientWorkspace?.client,
         };
+
+        // eslint-disable-next-line no-console
+        console.debug("Validating the plugins...");
 
         const pluginsAreValid = await validatePluginsBeforeLoading(ctx, dashboardWithPlugins);
         if (!pluginsAreValid) {

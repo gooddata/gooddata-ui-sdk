@@ -7,6 +7,7 @@ import { DashboardCustomizationBuilder } from "./customizationApis/customization
 import { DefaultDashboardEventHandling } from "./customizationApis/dashboardEventHandling";
 import { pluginDebugStr } from "./customizationApis/pluginUtils";
 import { DashboardContext } from "../model";
+import { LIB_VERSION } from "../__version";
 
 /**
  * Dashboard Engine encapsulates a particular build of the `Dashboard` component and provides
@@ -52,11 +53,7 @@ export interface IDashboardEngine {
  */
 export function newDashboardEngine(): IDashboardEngine {
     return {
-        // TODO: this must be filled in automatically .. somehow; the problem with getting the value from
-        //  package.json directly is that the resolveJsonModules tsconfig setting (which we need) leads to
-        //  messing up the dist&esm. tsc will include all model stuff under dist/src instead of putting it
-        //  directly under dist
-        version: "8.7.0",
+        version: LIB_VERSION,
         initializePlugins(
             ctx: DashboardContext,
             plugins: IDashboardPluginContract_V1[],
