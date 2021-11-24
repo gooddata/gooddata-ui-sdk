@@ -4490,6 +4490,4 @@ export type WithDrillSelectProps = {
     }) => JSX.Element;
 };
 
-// (No @packageDocumentation comment for this package)
-
 ```

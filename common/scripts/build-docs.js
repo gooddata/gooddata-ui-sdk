@@ -23,9 +23,10 @@ const libsToBeRemoved = [
     "sdk-backend-tiger",
     "sdk-embedding",
     "sdk-ui-all",
-    "sdk-ui-dashboard",
     "sdk-ui-ext",
     "sdk-ui-kit",
+    "sdk-ui-tests",
+    "sdk-ui-tests-e2e",
 ];
 
 function main() {
