@@ -461,4 +461,23 @@ export namespace GdcUser {
             };
         };
     }
+
+    export type UsersItemStatus = "ENABLED" | "DISABLED";
+
+    export interface IUsersItem {
+        content: {
+            status?: UsersItemStatus;
+            firstname?: string;
+            lastname?: string;
+            email?: Email;
+            login?: Email;
+            phonenumber?: string;
+        };
+        links?: {
+            self: Uri;
+            roles?: Uri;
+            permissions?: Uri;
+            projectRelUri?: Uri;
+        };
+    }
 }

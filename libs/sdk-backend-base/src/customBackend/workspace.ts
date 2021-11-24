@@ -17,6 +17,8 @@ import {
     IWorkspaceUsersQuery,
     IDateFilterConfigsQuery,
     IWorkspaceDescriptor,
+    IWorkspaceUserGroupsQuery,
+    IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
 import { CustomExecutionFactory } from "./execution";
 import { CustomBackendConfig, CustomBackendState } from "./config";
@@ -99,5 +101,13 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public dateFilterConfigs(): IDateFilterConfigsQuery {
         throw new NotSupported("dateFilterConfigs are not supported");
+    }
+
+    public userGroups(): IWorkspaceUserGroupsQuery {
+        throw new NotSupported("user groups are not supported");
+    }
+
+    public accessControl(): IWorkspaceAccessControlService {
+        throw new NotSupported("access control is not supported");
     }
 }
