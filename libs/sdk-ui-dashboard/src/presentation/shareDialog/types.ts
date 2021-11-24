@@ -1,14 +1,15 @@
 // (C) 2019-2021 GoodData Corporation
 import { ComponentType } from "react";
-import { IAccessControlAware } from "@gooddata/sdk-backend-spi";
-import { IAuditableUsers, ObjRef } from "@gooddata/sdk-model";
-import { IShareProps } from "../../types";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
+import { ISharedObject, ISharingApplyPayload as Payload } from "@gooddata/sdk-ui-kit";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * @alpha
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ISharingApplyPayload extends IShareProps {
+export interface ISharingApplyPayload extends Payload {
     // this payload will have more items,
 }
 
@@ -17,6 +18,16 @@ export interface ISharingApplyPayload extends IShareProps {
  */
 export interface IShareDialogProps {
     /**
+     * Analytical backend from which the dashboard obtains data to render.
+     */
+    backend: IAnalyticalBackend;
+
+    /**
+     * Identifier of analytical workspace, from which the dashboard obtains data to render.
+     */
+    workspace: string;
+
+    /**
      * Is share dialog visible?
      */
     isVisible?: boolean;
@@ -24,7 +35,7 @@ export interface IShareDialogProps {
     /**
      * Object to share
      */
-    sharedObject: IAccessControlAware & IAuditableUsers;
+    sharedObject: ISharedObject;
 
     /**
      * Current user reference
@@ -35,6 +46,11 @@ export interface IShareDialogProps {
      * Callback to be called when user apply share dialog
      */
     onApply: (payload: ISharingApplyPayload) => void;
+
+    /**
+     * Callback to be called, when error occurs.
+     */
+    onError?: (error: GoodDataSdkError) => void;
 
     /**
      * Callback to be called when user closes the share dialog.

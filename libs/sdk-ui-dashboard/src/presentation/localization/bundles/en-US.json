@@ -551,6 +551,11 @@
         "comment": "Global messages. Change of dashboard sharing fails.",
         "limit": 0
     },
+    "messages.sharingDialogError.general": {
+        "value": "Failed to load the sharing settings. Try again later.",
+        "comment": "Global messages. Load of dashboard sharing dialog fails.",
+        "limit": 0
+    },
     "attributeFilterDropdown.searchPlaceholder": {
         "value": "Search…",
         "comment": "Use '…' as one character, not 3 dots ('...').",

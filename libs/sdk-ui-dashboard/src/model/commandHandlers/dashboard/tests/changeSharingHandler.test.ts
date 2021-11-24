@@ -21,6 +21,8 @@ describe("change dashboard sharing handler", () => {
                     {
                         shareStatus: "public",
                         isUnderStrictControl: false,
+                        granteesToAdd: [],
+                        granteesToDelete: [],
                     },
                     TestCorrelation,
                 ),
@@ -30,6 +32,8 @@ describe("change dashboard sharing handler", () => {
             expect(event.payload.newShareProps).toEqual({
                 shareStatus: "public",
                 isUnderStrictControl: false,
+                granteesToAdd: [],
+                granteesToDelete: [],
             });
             const newState = Tester.state();
             expect(selectDashboardShareStatus(newState)).toEqual("public");
@@ -41,6 +45,8 @@ describe("change dashboard sharing handler", () => {
                     {
                         shareStatus: "public",
                         isUnderStrictControl: false,
+                        granteesToAdd: [],
+                        granteesToDelete: [],
                     },
                     TestCorrelation,
                 ),
@@ -64,6 +70,8 @@ describe("change dashboard sharing handler", () => {
                     {
                         shareStatus: "public",
                         isUnderStrictControl: false,
+                        granteesToAdd: [],
+                        granteesToDelete: [],
                     },
                     TestCorrelation,
                 ),

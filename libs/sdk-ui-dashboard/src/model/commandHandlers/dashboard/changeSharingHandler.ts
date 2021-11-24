@@ -66,6 +66,22 @@ function updateDashboard(
         .updateDashboard(saveSharingCtx.persistedDashboard, saveSharingCtx.dashboardToSave);
 }
 
+function addGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
+    const { cmd } = saveSharingCtx;
+    return ctx.backend
+        .workspace(ctx.workspace)
+        .accessControl()
+        .grantAccess(ctx.dashboardRef!, cmd.payload.newShareProps.granteesToAdd);
+}
+
+function removeGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
+    const { cmd } = saveSharingCtx;
+    return ctx.backend
+        .workspace(ctx.workspace)
+        .accessControl()
+        .revokeAccess(ctx.dashboardRef!, cmd.payload.newShareProps.granteesToDelete);
+}
+
 type DashboardSaveSharingResult = {
     batch?: BatchAction;
     dashboard: IDashboard;
@@ -80,6 +96,13 @@ function* saveSharing(
         ctx,
         saveSharingCtx,
     );
+
+    if (saveSharingCtx.cmd.payload.newShareProps.granteesToAdd.length !== 0) {
+        yield call(addGrantees, ctx, saveSharingCtx);
+    }
+    if (saveSharingCtx.cmd.payload.newShareProps.granteesToDelete.length !== 0) {
+        yield call(removeGrantees, ctx, saveSharingCtx);
+    }
 
     const batch = batchActions([metaActions.setMeta({ dashboard })], "@@GDC.DASH.SAVE_SHARING");
 
