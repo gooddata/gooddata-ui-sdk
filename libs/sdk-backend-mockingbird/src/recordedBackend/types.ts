@@ -16,6 +16,9 @@ import {
     IWidgetAlert,
     ValidationContext,
     IWorkspaceDescriptor,
+    AccessGranteeDetail,
+    IWorkspaceUserGroup,
+    IWorkspaceUser,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -115,6 +118,42 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
         availableFacts?: (facts: ICatalogFact[]) => ICatalogFact[];
         availableDateDatasets?: (datasets: ICatalogDateDataset[]) => ICatalogDateDataset[];
     };
+
+    /**
+     * Optionally specify response for accessList
+     */
+    accessControl?: IAccessControl;
+
+    /**
+     * Optionally specify response for userGroup
+     */
+    userGroup?: IUserGroup;
+
+    /**
+     * Optionally specify response for users
+     */
+    users?: IUsers;
+};
+
+/**
+ * @internal
+ */
+export type IAccessControl = {
+    accessList?: AccessGranteeDetail[];
+};
+
+/**
+ * @internal
+ */
+export type IUserGroup = {
+    userGroups?: IWorkspaceUserGroup[];
+};
+
+/**
+ * @internal
+ */
+export type IUsers = {
+    users?: IWorkspaceUser[];
 };
 
 /**
