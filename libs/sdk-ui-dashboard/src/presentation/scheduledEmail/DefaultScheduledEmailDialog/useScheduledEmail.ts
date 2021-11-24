@@ -135,7 +135,7 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
 
     const handleCreateScheduledEmail = useCallback(
         (scheduledEmail: IScheduledMailDefinition, customFilters?: FilterContextItem[]) => {
-            scheduledEmailCreator.create(scheduledEmail, customFilters);
+            scheduledEmailCreator.create(scheduledEmail, customFilters ?? filters);
         },
         [filters],
     );
