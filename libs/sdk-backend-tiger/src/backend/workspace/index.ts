@@ -17,6 +17,8 @@ import {
     IWorkspaceMeasuresService,
     IWorkspaceFactsService,
     IWorkspaceDescriptor,
+    IWorkspaceUserGroupsQuery,
+    IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
 import { TigerExecution } from "./execution/executionFactory";
 import { TigerWorkspaceCatalogFactory } from "./catalog/factory";
@@ -111,6 +113,12 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public users(): IWorkspaceUsersQuery {
+        throw new NotSupported("Not supported");
+    }
+    public userGroups(): IWorkspaceUserGroupsQuery {
+        throw new NotSupported("Not supported");
+    }
+    public accessControl(): IWorkspaceAccessControlService {
         throw new NotSupported("Not supported");
     }
     public dateFilterConfigs(): IDateFilterConfigsQuery {
