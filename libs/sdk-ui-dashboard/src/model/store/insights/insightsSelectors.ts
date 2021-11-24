@@ -2,10 +2,10 @@
 import { insightsAdapter } from "./insightsEntityAdapter";
 import { DashboardState } from "../types";
 import { createSelector } from "@reduxjs/toolkit";
-import { insightRef, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import memoize from "lodash/memoize";
+import { insightRef, ObjRef } from "@gooddata/sdk-model";
 import { newInsightMap } from "../../../_staging/metadata/objRefMap";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
+import { createMemoizedSelector } from "../_infra/selectors";
 
 const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => state.insights);
 
@@ -50,8 +50,8 @@ export const selectInsightsMap = createSelector(
  *
  * @alpha
  */
-export const selectInsightByRef = memoize((ref: ObjRef) => {
+export const selectInsightByRef = createMemoizedSelector((ref: ObjRef | undefined) => {
     return createSelector(selectInsightsMap, (insights) => {
-        return insights.get(ref);
+        return ref && insights.get(ref);
     });
-}, serializeObjRef);
+});
