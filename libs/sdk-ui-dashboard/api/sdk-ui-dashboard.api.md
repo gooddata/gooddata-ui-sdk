@@ -3694,7 +3694,7 @@ error?: string | undefined;
 } | undefined>;
 
 // @alpha
-export const selectInsightByRef: ((ref: ObjRef) => OutputSelector<DashboardState, IInsight | undefined, (res: ObjRefMap<IInsight>) => IInsight | undefined>) & MemoizedFunction;
+export const selectInsightByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IInsight | undefined, (res: ObjRefMap<IInsight>) => IInsight | undefined>;
 
 // @alpha
 export const selectInsightRefs: OutputSelector<DashboardState, ObjRef[], (res: IInsight[]) => ObjRef[]>;
