@@ -7,6 +7,7 @@ import {
     IFilterContextDefinition,
 } from "@gooddata/sdk-backend-spi";
 import { CommandProcessingStatus, createScheduledEmail, useDashboardCommandProcessing } from "../../../model";
+import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils";
 
 export const useCreateScheduledEmail = ({
     onBeforeRun,
@@ -40,7 +41,7 @@ export const useCreateScheduledEmail = ({
             const filterContext: IFilterContextDefinition | undefined = filters && {
                 title: "filterContext",
                 description: "",
-                filters,
+                filters: ensureAllTimeFilterForExport(filters),
             };
 
             scheduledEmailCommandProcessing.run(scheduledEmailToCreate, filterContext);
