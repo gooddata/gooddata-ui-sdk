@@ -72,11 +72,10 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
      * initialization and parameter parsing at this point.
      *
      * Note that the parameterization that can be specified for the dashboard-plugin link can be edited
-     * freely by the dashboard creator - and may thus be incorrect. If this function throws any exception, then
-     * the dashboard loading will fall back to no-parameterization.
+     * freely by the dashboard creator - and may thus be incorrect.
      *
      * If this function is not specified, then any parameters specified on the dashboard-plugin link will be
-     * ignored.
+     * ignored. If this function throws any exception, then your plugin will not be used on the dashboard.
 
      * @param ctx - dashboard context into which this plugin was loaded
      * @param parameters - parameters that the dashboard specifies on its link to this plugin; these parameters
