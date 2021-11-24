@@ -4,13 +4,14 @@ import { FormattedMessage } from "react-intl";
 import { Typography } from "../../../Typography";
 import { AddUserOrGroupButton } from "./AddGranteeButton";
 import { GranteeList } from "./GranteeList";
+import { GranteeListLoading } from "./GranteeListLoading";
 import { IShareGranteeContentProps } from "./types";
 
 /**
  * @internal
  */
 export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) => {
-    const { grantees, onAddGrantee, onDelete } = props;
+    const { isLoading, grantees, onAddGrantee, onDelete } = props;
 
     return (
         <>
@@ -18,9 +19,13 @@ export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) 
                 <Typography tagName="h3">
                     <FormattedMessage id="shareDialog.share.grantee.list.title" />
                 </Typography>
-                <AddUserOrGroupButton onClick={onAddGrantee} />
+                <AddUserOrGroupButton onClick={onAddGrantee} isDisabled={isLoading} />
             </div>
-            <GranteeList grantees={grantees} mode="ShareGrantee" onDelete={onDelete} />
+            {isLoading ? (
+                <GranteeListLoading />
+            ) : (
+                <GranteeList grantees={grantees} mode="ShareGrantee" onDelete={onDelete} />
+            )}
         </>
     );
 };

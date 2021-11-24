@@ -11,7 +11,10 @@ import { ColorFormats } from 'tinycolor2';
 import { Component } from 'react';
 import { CSSProperties } from 'react';
 import { FC } from 'react';
+import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAccessControlAware } from '@gooddata/sdk-backend-spi';
+import { IAccessGrantee } from '@gooddata/sdk-backend-spi';
+import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
@@ -483,7 +486,10 @@ export type GranteeItem = IGranteeUser | IGranteeUserInactive | IGranteeGroup | 
 export const GranteeItemComponent: React_2.FC<IGranteeItemProps>;
 
 // @internal (undocumented)
-export type GranteeType = "user" | "inactive_user" | "group" | "groupAll";
+export type GranteeStatus = "Inactive" | "Active";
+
+// @internal (undocumented)
+export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll";
 
 // @internal
 export function guidFor(obj: any): string;
@@ -546,7 +552,7 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     addedGrantees: GranteeItem[];
     // (undocumented)
-    availableGrantees: GranteeItem[];
+    appliedGrantees: GranteeItem[];
     // (undocumented)
     isDirty: boolean;
     // (undocumented)
@@ -1291,13 +1297,15 @@ export interface IGranteeUser extends IGranteeBase {
     // (undocumented)
     name: string;
     // (undocumented)
+    status: GranteeStatus;
+    // (undocumented)
     type: "user";
 }
 
 // @internal (undocumented)
 export interface IGranteeUserInactive extends IGranteeBase {
     // (undocumented)
-    type: "inactive_user";
+    type: "inactive_owner";
 }
 
 // @internal (undocumented)
@@ -1904,6 +1912,8 @@ export interface ILoadingMaskProps {
     className?: string;
     // (undocumented)
     height?: CSSProperties["height"];
+    // (undocumented)
+    size?: SpinnerSize;
     // (undocumented)
     width?: CSSProperties["width"];
 }
@@ -2523,17 +2533,23 @@ export const isGranteeUser: (obj: unknown) => obj is IGranteeUser;
 // @internal (undocumented)
 export interface IShareDialogBaseProps {
     // (undocumented)
-    grantees: GranteeItem[];
-    // (undocumented)
     onCancel: () => void;
     // (undocumented)
-    onSubmit: (granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[]) => void;
+    onError: (err: Error) => void;
+    // (undocumented)
+    onSubmit: (grantees: GranteeItem[], granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[]) => void;
     // (undocumented)
     owner: IGranteeUser | IGranteeUserInactive;
+    // (undocumented)
+    sharedObjectRef: ObjRef;
+    // (undocumented)
+    shareStatus: ShareStatus;
 }
 
 // @internal (undocumented)
 export interface IShareDialogProps {
+    // (undocumented)
+    backend: IAnalyticalBackend;
     // (undocumented)
     currentUserRef: ObjRef;
     // (undocumented)
@@ -2543,7 +2559,17 @@ export interface IShareDialogProps {
     // (undocumented)
     onCancel: () => void;
     // (undocumented)
-    sharedObject: IAccessControlAware & IAuditableUsers;
+    onError?: (error: GoodDataSdkError) => void;
+    // (undocumented)
+    sharedObject: ISharedObject;
+    // (undocumented)
+    workspace: string;
+}
+
+// @internal (undocumented)
+export interface ISharedObject extends IAccessControlAware, IAuditableUsers {
+    // (undocumented)
+    ref: ObjRef;
 }
 
 // @internal (undocumented)
@@ -2552,6 +2578,8 @@ export interface IShareGranteeBaseProps {
     grantees: GranteeItem[];
     // (undocumented)
     isDirty: boolean;
+    // (undocumented)
+    isLoading: boolean;
     // (undocumented)
     onAddGranteeButtonClick: () => void;
     // (undocumented)
@@ -2569,6 +2597,8 @@ export interface IShareGranteeContentProps {
     // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)
+    isLoading: boolean;
+    // (undocumented)
     onAddGrantee: () => void;
     // (undocumented)
     onDelete: (grantee: GranteeItem) => void;
@@ -2576,6 +2606,10 @@ export interface IShareGranteeContentProps {
 
 // @internal (undocumented)
 export interface ISharingApplyPayload {
+    // (undocumented)
+    granteesToAdd: IAccessGrantee[];
+    // (undocumented)
+    granteesToDelete: IAccessGrantee[];
     // (undocumented)
     isUnderStrictControl: boolean;
     // (undocumented)
@@ -3105,6 +3139,9 @@ export class Spinner extends PureComponent<ISpinnerProps> {
     // (undocumented)
     render(): ReactNode;
 }
+
+// @internal (undocumented)
+export type SpinnerSize = "large" | "small";
 
 // @internal (undocumented)
 export const SubMenu: React_2.FC<ISubMenuProps>;

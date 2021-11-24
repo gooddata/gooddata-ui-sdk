@@ -24,7 +24,7 @@
         transition-duration: 0.25s;
         transition-timing-function: ease-in-out;
         border-radius: 3px;
-
+        min-height: 32px;
         &:hover {
             border-color: var(--gd-palette-complementary-5, #b3b3b3);
         }
@@ -70,11 +70,10 @@
         border-style: solid;
         border-radius: 0 0 3px 3px;
         border-color: $gd-palette-primary-base;
-        border-top: 0;
-        border-top-color: $button-normal-border-color;
+        border-top: 1px solid $gd-border-color;
         margin-top: -2px;
         outline: 0;
-        box-shadow: inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.2);
+        box-shadow: 0 0 1px 0 transparentize($gd-input-text-box-shadow-color, 0.2) inset;
         color: $gd-color-text;
         background-color: $gd-color-white;
     }
@@ -84,12 +83,81 @@
         padding-bottom: 0;
 
         .gd-share-dialog__option {
-            padding-top: 7px;
-            padding-bottom: 7px;
+            padding: 7px 12px;
         }
 
         .gd-share-dialog__option--is-focused {
             background: $is-focused-background;
+        }
+
+        .option-content {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            cursor: default;
+        }
+
+        .option-email {
+            color: var(--gd-palette-complementary-6, #94a1ad);
+            cursor: default;
+        }
+    }
+
+    .gd-share-dialog__group {
+        padding-bottom: 0;
+    }
+
+    .gd-share-dialog-option-error {
+        display: flex;
+        min-height: 38px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .gd-share-dialog-option-error-content {
+        flex-grow: 2;
+        margin: 4px;
+        padding: 4px;
+        font-size: 14px;
+        font-family: $gd-font-primary;
+        font-weight: 200;
+        line-height: normal;
+        vertical-align: middle;
+        color: var(--gd-palette-error-base, #e54d42);
+        background: var(--gd-palette-error-lightest, #fff2f1);
+    }
+
+    .gd-share-dialog-loading-mask-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 38px;
+    }
+}
+
+.gd-share-dialog-select-group-heading {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 12px;
+    margin-right: 12px;
+
+    h3 {
+        flex-grow: 2;
+        position: relative;
+        overflow: hidden;
+        font-size: 11px;
+        text-transform: uppercase;
+        color: $gd-color-state-blank;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            display: inline-block;
+            width: 100%;
+            height: 0;
+            margin-left: 10px;
+            border-top: 1px solid $gd-border-color;
         }
     }
 }

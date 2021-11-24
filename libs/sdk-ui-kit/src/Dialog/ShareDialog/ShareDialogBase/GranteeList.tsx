@@ -16,7 +16,7 @@ export const GranteeList: React.FC<IGranteesListProps> = (props) => {
     }
 
     return (
-        <div>
+        <div className="gd-share-dialog-grantee-list">
             {grantees.map((grantee) => {
                 return (
                     <GranteeItemComponent

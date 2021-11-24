@@ -11,9 +11,19 @@ import { sortGranteesByName } from "./utils";
  * @internal
  */
 export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
-    const { grantees, owner, isDirty, onCancel, onSubmit, onGranteeDelete, onAddGranteeButtonClick } = props;
+    const {
+        isLoading,
+        grantees,
+        owner,
+        isDirty,
+        onCancel,
+        onSubmit,
+        onGranteeDelete,
+        onAddGranteeButtonClick,
+    } = props;
     const intl = useIntl();
 
+    // TODO mozna ownera pridat drive hned po nacten
     const granteeList = useMemo(() => {
         return [owner, ...grantees].sort(sortGranteesByName(intl));
     }, [grantees, owner, intl]);
@@ -39,6 +49,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             onSubmit={onSubmit}
         >
             <ShareGranteeContent
+                isLoading={isLoading}
                 grantees={granteeList}
                 onAddGrantee={onAddGranteeButtonClick}
                 onDelete={onGranteeDelete}

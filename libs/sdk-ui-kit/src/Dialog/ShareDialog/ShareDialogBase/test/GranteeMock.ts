@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { uriRef } from "@gooddata/sdk-model";
+import { IWorkspaceUser, IWorkspaceUserGroup } from "@gooddata/sdk-backend-spi";
 import { GranteeItem, IGranteeGroup, IGranteeGroupAll, IGranteeUser } from "../types";
 
 export const user: IGranteeUser = {
@@ -9,6 +10,7 @@ export const user: IGranteeUser = {
     email: "user.name@gooddata.com",
     isOwner: false,
     isCurrentUser: false,
+    status: "Active",
 };
 
 export const owner: IGranteeUser = {
@@ -18,6 +20,7 @@ export const owner: IGranteeUser = {
     email: "owner.name@gooddata.com",
     isOwner: true,
     isCurrentUser: false,
+    status: "Active",
 };
 
 export const current: IGranteeUser = {
@@ -27,6 +30,7 @@ export const current: IGranteeUser = {
     email: "current.name@gooddata.com",
     isOwner: false,
     isCurrentUser: true,
+    status: "Active",
 };
 
 export const currentAndOwen: IGranteeUser = {
@@ -36,6 +40,7 @@ export const currentAndOwen: IGranteeUser = {
     email: "owner.current.name@gooddata.com",
     isOwner: true,
     isCurrentUser: true,
+    status: "Active",
 };
 
 export const group: IGranteeGroup = {
@@ -58,3 +63,17 @@ export const groupAll: IGranteeGroupAll = {
 };
 
 export const grantees: GranteeItem[] = [user, group];
+
+export const workspaceUser: IWorkspaceUser = {
+    ref: uriRef("john-id"),
+    uri: "uri",
+    login: "john.doe@d.com",
+    email: "john.doe@d.com",
+    fullName: "John Doe ",
+};
+
+export const workSpaceGroup: IWorkspaceUserGroup = {
+    ref: uriRef("test-group-id"),
+    id: "id",
+    name: "Test group",
+};

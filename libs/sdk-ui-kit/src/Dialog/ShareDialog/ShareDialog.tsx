@@ -4,42 +4,69 @@ import { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase";
 import { GranteeItem } from "./ShareDialogBase/types";
 import { IShareDialogProps } from "./types";
 import {
+    mapGranteesToAccessGrantees,
     mapGranteesToShareStatus,
     mapOwnerToGrantee,
-    mapShareStatusToGroupAll,
-    mapUserToInactiveGrantee,
+    mapUserToInactiveOwner,
 } from "./shareDialogMappers";
+import {
+    BackendProvider,
+    IntlWrapper,
+    UnexpectedSdkError,
+    useBackendStrict,
+    useWorkspaceStrict,
+    WorkspaceProvider,
+} from "@gooddata/sdk-ui";
 
 /**
  * @internal
  */
 export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
-    const { sharedObject, currentUserRef, onApply, onCancel } = props;
-    const { createdBy, shareStatus } = sharedObject;
+    const { backend, workspace, locale, sharedObject, currentUserRef, onApply, onCancel, onError } = props;
+    const { createdBy, shareStatus, ref: sharedObjectRef } = sharedObject;
+
+    const effectiveBackend = useBackendStrict(backend);
+    const effectiveWorkspace = useWorkspaceStrict(workspace);
+
+    const onShareDialogBaseError = useCallback(
+        (err: Error) => {
+            onError && onError(new UnexpectedSdkError(err.message, err));
+        },
+        [onError],
+    );
 
     const owner = useMemo(() => {
         if (sharedObject.createdBy) {
             return mapOwnerToGrantee(createdBy, currentUserRef);
         }
-        return mapUserToInactiveGrantee();
+        return mapUserToInactiveOwner();
     }, [createdBy, currentUserRef]);
 
-    const grantees = useMemo(() => {
-        const groupAll = mapShareStatusToGroupAll(shareStatus);
-        if (groupAll) {
-            return [groupAll];
-        }
-        return [];
-    }, [shareStatus]);
-
     const onSubmit = useCallback(
-        (granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[]) => {
+        (grantees: GranteeItem[], granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[]) => {
             const shareStatus = mapGranteesToShareStatus(grantees, granteesToAdd, granteesToDelete);
             const isUnderStrictControl = shareStatus !== "public";
-            onApply({ shareStatus, isUnderStrictControl });
+            const add = mapGranteesToAccessGrantees(granteesToAdd);
+            const del = mapGranteesToAccessGrantees(granteesToDelete);
+            onApply({ shareStatus, isUnderStrictControl, granteesToAdd: add, granteesToDelete: del });
         },
-        [grantees, onApply],
+        [onApply],
     );
 
-    return <ShareDialogBase owner={owner} grantees={grantees} onCancel={onCancel} onSubmit={onSubmit} />;
+    return (
+        <IntlWrapper locale={locale}>
+            <BackendProvider backend={effectiveBackend}>
+                <WorkspaceProvider workspace={effectiveWorkspace}>
+                    <ShareDialogBase
+                        shareStatus={shareStatus}
+                        sharedObjectRef={sharedObjectRef}
+                        owner={owner}
+                        onCancel={onCancel}
+                        onSubmit={onSubmit}
+                        onError={onShareDialogBaseError}
+                    />
+                </WorkspaceProvider>
+            </BackendProvider>
+        </IntlWrapper>
+    );
 };

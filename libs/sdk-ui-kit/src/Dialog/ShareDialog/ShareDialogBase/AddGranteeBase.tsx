@@ -30,7 +30,7 @@ const BackButton: React.FC<IBackButtonProps> = (props) => {
  */
 export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
     const {
-        availableGrantees,
+        appliedGrantees,
         addedGrantees,
         isDirty,
         onCancel,
@@ -61,7 +61,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         >
             <AddGranteeContent
                 addedGrantees={addedGrantees}
-                availableGrantees={availableGrantees}
+                appliedGrantees={appliedGrantees}
                 onAddUserOrGroups={onAddUserOrGroups}
                 onDelete={onDelete}
             />
