@@ -120,9 +120,12 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
             },
             onSuccess: (result) => {
                 // eslint-disable-next-line no-console
-                console.log("Loaded dashboard engine", result.engine);
+                console.log("Loaded dashboard engine", result.engine.version);
                 // eslint-disable-next-line no-console
-                console.log("Dashboard engine initialized with plugins", result.plugins);
+                console.log(
+                    `Dashboard engine ${result.engine.version} initialized with plugins`,
+                    result.plugins.map((plugin) => `${plugin.displayName}/${plugin.version}`).join(", "),
+                );
 
                 setLoadStatus({
                     status: "success",
