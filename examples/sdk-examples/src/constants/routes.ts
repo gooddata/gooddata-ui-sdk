@@ -53,6 +53,8 @@ import DashboardViewAdvancedCustomizations from "../examples/dashboardEmbedding/
 import SingleValuePlaceholders from "../examples/placeholders/SingleValuePlaceholder";
 import MultiValuePlaceholders from "../examples/placeholders/MultiValuePlaceholder";
 import ComposedPlaceholder from "../examples/placeholders/ComposedPlaceholder";
+import SimpleDashboardComponent from "../examples/dashboardComponent/SimpleDashboardComponent";
+import DashboardComponentWithLocalPlugin from "../examples/dashboardComponent/DashboardComponentWithLocalPlugin";
 
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import MultipleDomains from "./MultipleDomains";
@@ -91,6 +93,19 @@ export const insightViewUseCasesRoutes = [
         path: "/insightView/insightView-by-identifier",
         title: "InsightView by identifier",
         Component: InsightView,
+    },
+];
+
+export const dashboardComponentUseCasesRoutes = [
+    {
+        path: "/dashboard/simple",
+        title: "Simple",
+        Component: SimpleDashboardComponent,
+    },
+    {
+        path: "/dashboard/local-plugin",
+        title: "With local plugin",
+        Component: DashboardComponentWithLocalPlugin,
     },
 ];
 
@@ -182,6 +197,10 @@ const InsightViewUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: insightViewUseCasesRoutes });
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const DashboardComponentUseCasesRoutes = (props: any): JSX.Element =>
+    WithSubRoutes({ ...props, subRoutes: dashboardComponentUseCasesRoutes });
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const DashboardViewUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: dashboardViewUseCasesRoutes });
 
@@ -225,6 +244,13 @@ export const sideNavigationRoutes: RouteDefinition[] = [
         redirectTo: insightViewUseCasesRoutes[0].path,
         title: "InsightView Component",
         Component: InsightViewUseCasesRoutes,
+    },
+    {
+        path: "/dashboard",
+        pathMatch: "full",
+        redirectTo: dashboardComponentUseCasesRoutes[0].path,
+        title: "Dashboard Component",
+        Component: DashboardComponentUseCasesRoutes,
     },
     {
         path: "/dashboardView",
@@ -320,6 +346,7 @@ export const userRoutes = [{ path: "/login", title: "Login", Component: Login }]
 export const routes = [
     ...sideNavigationRoutes,
     ...insightViewUseCasesRoutes,
+    ...dashboardComponentUseCasesRoutes,
     ...dashboardViewUseCasesRoutes,
     ...advancedUseCasesRoutes,
     ...drillingUseCasesRoutes,

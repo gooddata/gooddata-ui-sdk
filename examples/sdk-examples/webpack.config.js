@@ -126,6 +126,7 @@ module.exports = async (env, argv) => {
                 // fixes tilde imports in CSS from sdk-ui-ext
                 "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
                 "@gooddata/sdk-ui-kit": path.resolve("./node_modules/@gooddata/sdk-ui-kit"),
+                "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),
             },
             // Prefer ESM versions of packages to enable tree shaking and easier dev experience
             mainFields: ["module", "browser", "main"],
