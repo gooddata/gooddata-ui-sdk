@@ -13,6 +13,8 @@ import { IDateFilterConfigsQuery } from "./dateFilterConfigs";
 import { IWorkspaceAttributesService } from "./attributes";
 import { IWorkspaceMeasuresService } from "./measures";
 import { IWorkspaceFactsService } from "./facts";
+import { IWorkspaceAccessControlService } from "./accessControl";
+import { IWorkspaceUserGroupsQuery } from "./userGroups";
 
 /**
  * Represents an analytical workspace hosted on a backend. It is an entry point to various services that can be
@@ -85,6 +87,11 @@ export interface IAnalyticalWorkspace {
     users(): IWorkspaceUsersQuery;
 
     /**
+     * Returns service that can be used to query workspace user groups.
+     */
+    userGroups(): IWorkspaceUserGroupsQuery;
+
+    /**
      * Returns service that can be used to query workspace permissions.
      */
     permissions(): IWorkspacePermissionsService;
@@ -99,6 +106,11 @@ export interface IAnalyticalWorkspace {
      * what colors should be used in the charts.
      */
     styling(): IWorkspaceStylingService;
+
+    /**
+     * Returns service that can be used to manage access control records for the workspace.
+     */
+    accessControl(): IWorkspaceAccessControlService;
 }
 
 /**

@@ -334,7 +334,12 @@ export {
     ScheduledMailAttachment,
     IScheduledMailBase,
 } from "./workspace/dashboards/scheduledMail";
-export { IWorkspaceUser, IWorkspaceUsersQuery, IWorkspaceUsersQueryOptions } from "./workspace/users";
+export {
+    IWorkspaceUser,
+    IWorkspaceUsersQuery,
+    IWorkspaceUsersQueryOptions,
+    IWorkspaceUsersQueryResult,
+} from "./workspace/users";
 export { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "./workspace/dateFilterConfigs";
 export {
     IDateFilterConfig,
@@ -430,3 +435,20 @@ export {
 
 export { IOrganization, IOrganizations, IOrganizationDescriptor } from "./organization";
 export { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings";
+
+export {
+    IWorkspaceUserGroupsQuery,
+    IWorkspaceUserGroup,
+    IWorkspaceUserGroupsQueryOptions,
+    IWorkspaceUserGroupsQueryResult,
+} from "./workspace/userGroups";
+
+export {
+    IWorkspaceAccessControlService,
+    AccessGranteeDetail,
+    IAccessGrantee,
+    IUserAccess,
+    IUserGroupAccess,
+    isUserAccess,
+    isUserGroupAccess,
+} from "./workspace/accessControl";
