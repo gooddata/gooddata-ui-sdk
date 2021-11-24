@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { insightVisualizationUrl, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 import { LayoutState } from "./layoutState";
@@ -11,12 +11,15 @@ import {
     isKpiWidget,
     IWidget,
 } from "@gooddata/sdk-backend-spi";
-import { ExtendedDashboardWidget } from "../../types/layoutTypes";
+import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes";
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
 import { filterContextItemsToFiltersForWidget } from "../../../converters";
 import { createMemoizedSelector } from "../_infra/selectors";
+import isEmpty from "lodash/isEmpty";
+import { selectInsightsMap } from "../insights/insightsSelectors";
+import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -72,33 +75,36 @@ function isItemWithBaseWidget(
  * handlers will not wipe the custom widgets from the state during the save - so at this point the custom
  * widgets are treated as client-side extensions.
  *
+ * Note: this selector also intentionally removes empty sections; dashboard cannot cope with them and
+ * they may readily appear if user adds section full of custom widgets and then does saveAs; such sections
+ * would end up empty.
+ *
  * @internal
  */
 export const selectBasicLayout = createSelector(selectLayout, (layout) => {
     const dashboardLayout: IDashboardLayout<IWidget> = {
         ...layout,
-        sections: layout.sections.map((section) => {
-            return {
-                ...section,
-                items: section.items.filter(isItemWithBaseWidget),
-            };
-        }),
+        sections: layout.sections
+            .map((section) => {
+                return {
+                    ...section,
+                    items: section.items.filter(isItemWithBaseWidget),
+                };
+            })
+            .filter((section) => !isEmpty(section.items)),
     };
 
     return dashboardLayout;
 });
 
 /**
- * Selects dashboard widgets in an obj ref to widget map. This map will include all insight and all KPI widgets - those
- * that are persisted as part of the dashboard.
- *
- * The 'ephemeral' widgets such as placeholders that are not persisted and cannot be referenced using a `ref` will naturally
- * not be included in this map.
+ * Selects dashboard widgets in an obj ref to widget map. This map will include both analytical and custom
+ * widgets that are placed on the dashboard.
  *
  * @internal
  */
 export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
-    const items: IWidget[] = [];
+    const items: ExtendedDashboardWidget[] = [];
 
     for (const section of layout.sections) {
         for (const item of section.items) {
@@ -106,9 +112,7 @@ export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
                 continue;
             }
 
-            if (item.widget.type === "insight" || item.widget.type === "kpi") {
-                items.push(item.widget as IWidget);
-            }
+            items.push(item.widget);
         }
     }
 
@@ -116,13 +120,36 @@ export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
 });
 
 /**
- * Selects widget by its ref.
+ * Selects analytical widget by its ref. This selector will return undefined if the provided
+ * widget ref is for a custom widget.
  *
+ * @deprecated use {@link selectAnalyticalWidgetByRef} instead; this selector will in near future to return all widget
+ *  types - even custom widgets
  * @alpha
  */
 export const selectWidgetByRef = createMemoizedSelector((ref: ObjRef | undefined) =>
-    createSelector(selectWidgetsMap, (widgetMap) => ref && widgetMap.get(ref)),
+    createSelector(selectWidgetsMap, (widgetMap) => {
+        if (!ref) {
+            return undefined;
+        }
+
+        const widget = widgetMap.get(ref);
+
+        if (!widget || isCustomWidget(widget)) {
+            return undefined;
+        }
+
+        return widget;
+    }),
 );
+
+/**
+ * Selects analytical widget by its ref. This selector will return undefined if the provided
+ * widget ref is for a custom widget.
+ *
+ * @alpha
+ */
+export const selectAnalyticalWidgetByRef = selectWidgetByRef;
 
 /**
  * Selects widget drills by the widget ref.
@@ -178,3 +205,35 @@ export const selectAllKpiWidgets = createSelector(selectAllWidgets, (allWidgets)
 export const selectAllInsightWidgets = createSelector(selectAllWidgets, (allWidgets) => {
     return allWidgets.filter(isInsightWidget);
 });
+
+/**
+ * Selects all custom widgets in the layout.
+ *
+ * @alpha
+ */
+export const selectAllCustomWidgets = createSelector(selectAllWidgets, (allWidgets) => {
+    return allWidgets.filter(isCustomWidget);
+});
+
+/**
+ * Selects whether the given widget can be exported.
+ *
+ * @alpha
+ */
+export const selectIsWidgetExportSupported = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectWidgetByRef(ref), selectInsightsMap, (widget, insights) => {
+        if (!isInsightWidget(widget)) {
+            return false;
+        }
+        const insight = insights.get(widget.insight);
+        if (!insight) {
+            return false;
+        }
+
+        const insightVisUrl = insightVisualizationUrl(insight);
+
+        // currently Headline and its derivatives have the export disabled globally
+        const exportDisabledVisualizations = [VisualizationTypes.HEADLINE, VisualizationTypes.XIRR];
+        return !exportDisabledVisualizations.some((disabled) => insightVisUrl.includes(disabled));
+    }),
+);

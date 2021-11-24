@@ -24,7 +24,7 @@ import invariant from "ts-invariant";
 
 import { filterContextItemsToFiltersForWidget } from "../../../../converters";
 import { IDashboardFilter } from "../../../../types";
-import { useWidgetFiltersQuery } from "../../common";
+import { useWidgetFilters } from "../../common";
 import { useMemo } from "react";
 
 interface IUseKpiDataConfig {
@@ -61,7 +61,7 @@ export function useKpiData({
         [filters, kpiWidget],
     );
 
-    const { status, result } = useWidgetFiltersQuery(kpiWidget, convertedFilters);
+    const { status, result } = useWidgetFilters(kpiWidget, convertedFilters);
 
     // we only put IDashboardFilters in, so we must get IDashboardFilters out as well
     const effectiveFilters = result as IDashboardFilter[] | undefined;

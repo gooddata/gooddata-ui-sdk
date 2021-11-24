@@ -53,7 +53,7 @@ export interface IDashboardInsightCustomizer {
      * @param provider - provider to register
      * @returns self, for call chaining sakes
      */
-    withCustomProvider(provider: InsightComponentProvider): IDashboardInsightCustomizer;
+    withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
 
     /**
      * Register a factory for insight decorator providers. Decorators are a way to add customizations or embellishments on top
@@ -117,12 +117,10 @@ export interface IDashboardKpiCustomizer {
      *
      * You may register multiple providers. They will be evaluated in the order you register them.
      *
-     * @remarks see the {@link IDashboardInsightCustomizer.withTag} convenience method to register components for insights
-     *  with particular tags.
      * @param provider - provider to register
      * @returns self, for call chaining sakes
      */
-    withCustomProvider(provider: KpiComponentProvider): IDashboardKpiCustomizer;
+    withCustomProvider(provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer;
 
     /**
      * Register a factory for insight decorator providers. Decorators are a way to add customizations or embellishments on top
@@ -194,16 +192,22 @@ export interface IDashboardWidgetCustomizer {
  */
 export interface IFluidLayoutCustomizer {
     /**
-     * Adds a new section with one or more custom widgets onto the fluid layout.
+     * Adds a new section with one or more custom widgets onto the fluid layout. The section to add must not
+     * be empty - it must contain at least one item. Attempts to add empty sections will be ignored and
+     * warnings will be reported.
      *
      * @param sectionIdx - index to add the new section at
-     * @param section - section to add
+     * @param section - section to add; note: customizer will make a deep copy of the item before adding it
+     *  onto a dashboard. At this moment, the newly added items are read-only.
      */
     addSection(sectionIdx: number, section: IDashboardLayoutSection<ICustomWidget>): IFluidLayoutCustomizer;
 
     /**
      * Adds a new item containing a custom widget onto the dashboard. New item will be added to
-     * an existing section at index `sectionIdx` and within that section will be placed at `itemIdx`.
+     * an existing section at index `sectionIdx` and within that section will be placed at `itemIdx`. The item
+     * to add must contain a custom widget data. Attempts to add item that does not contain any widget data
+     * will be ignored and warnings will be reported. Keep in mind that this can lead to further errors or
+     * problems down the line if you are adding more items at specific indexes into the same section.
      *
      * Note: new items will be added into existing sections before new sections will be added using the
      * {@link IFluidLayoutCustomizer.addSection} method. Therefore,
@@ -211,7 +215,8 @@ export interface IFluidLayoutCustomizer {
      * @param sectionIdx - index of section where to add the new item
      * @param itemIdx - index within the section where to add new item; you may specify -1 to add the
      *  item at the end of the section
-     * @param item - item containing custom widget
+     * @param item - item containing custom widget; note: customizer will make a deep copy of the item before adding it
+     *  onto a dashboard. At this moment, the newly added items are read-only.
      */
     addItem(
         sectionIdx: number,

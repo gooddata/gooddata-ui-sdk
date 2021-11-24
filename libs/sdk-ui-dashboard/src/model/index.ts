@@ -31,6 +31,8 @@ export {
     ICustomWidgetDefinition,
     ICustomWidgetBase,
     newCustomWidget,
+    newDashboardItem,
+    newDashboardSection,
     isCustomWidgetDefinition,
     isCustomWidget,
     ExtendedDashboardItem,
@@ -40,6 +42,8 @@ export {
     StashedDashboardItemsId,
     ExtendedDashboardLayoutSection,
     RelativeIndex,
+    ExtendedDashboardItemType,
+    ExtendedDashboardItemTypes,
 } from "./types/layoutTypes";
 export {
     FilterOp,

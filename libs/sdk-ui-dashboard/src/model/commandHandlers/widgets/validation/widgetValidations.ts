@@ -1,11 +1,12 @@
 // (C) 2021 GoodData Corporation
 
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
-import { IInsightWidget, IKpiWidget, isInsightWidget, isKpiWidget, IWidget } from "@gooddata/sdk-backend-spi";
+import { IInsightWidget, IKpiWidget, isInsightWidget, isKpiWidget } from "@gooddata/sdk-backend-spi";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "../../../commands";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { DashboardContext } from "../../../types/commonTypes";
+import { ExtendedDashboardWidget } from "../../../types/layoutTypes";
 
 type CommandWithRef = IDashboardCommand & {
     payload: {
@@ -26,7 +27,7 @@ type CommandWithRef = IDashboardCommand & {
  * @param cmd - any command that has 'ref' in its payload
  */
 export function validateExistingInsightWidget(
-    widgets: ObjRefMap<IWidget>,
+    widgets: ObjRefMap<ExtendedDashboardWidget>,
     cmd: CommandWithRef,
     ctx: DashboardContext,
 ): IInsightWidget {
@@ -67,7 +68,7 @@ export function validateExistingInsightWidget(
  * @param cmd - any command that has 'ref' in its payload
  */
 export function validateExistingKpiWidget(
-    widgets: ObjRefMap<IWidget>,
+    widgets: ObjRefMap<ExtendedDashboardWidget>,
     cmd: CommandWithRef,
     ctx: DashboardContext,
 ): IKpiWidget {

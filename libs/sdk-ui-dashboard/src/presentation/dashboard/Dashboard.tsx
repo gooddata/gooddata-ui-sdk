@@ -230,11 +230,13 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
         </DashboardStoreProvider>
     );
 
-    if (props.theme || !hasThemeProvider) {
+    if (props.theme || (!hasThemeProvider && !props.disableThemeLoading)) {
         dashboardRender = (
             <ThemeProvider
                 theme={props.theme}
                 modifier={props.themeModifier ?? defaultDashboardThemeModifier}
+                backend={props.backend}
+                workspace={props.workspace}
             >
                 {dashboardRender}
             </ThemeProvider>

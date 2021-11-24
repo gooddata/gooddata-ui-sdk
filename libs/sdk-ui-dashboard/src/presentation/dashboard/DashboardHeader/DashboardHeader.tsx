@@ -20,6 +20,7 @@ import {
     selectDashboardTitle,
     selectFilterContextFilters,
     selectIsLayoutEmpty,
+    selectIsReadOnly,
     selectIsSaveAsDialogOpen,
     selectIsScheduleEmailDialogOpen,
     uiActions,
@@ -77,6 +78,7 @@ const useFilterBar = (): {
 const useTopBar = () => {
     const dispatch = useDashboardDispatch();
     const title = useDashboardSelector(selectDashboardTitle);
+    const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
     const onTitleChanged = useCallback(
         (title: string) => {
@@ -89,7 +91,7 @@ const useTopBar = () => {
 
     return {
         title,
-        onTitleChanged,
+        onTitleChanged: isReadOnly ? undefined : onTitleChanged,
         onShareButtonClick,
     };
 };
@@ -174,12 +176,15 @@ export const DashboardHeader = (): JSX.Element => {
         exportDashboard();
     }, [exportDashboard, dashboardRef]);
 
+    const isReadOnly = useDashboardSelector(selectIsReadOnly);
+
     const defaultMenuItems = useMemo<IMenuButtonItem[]>(() => {
         if (!dashboardRef) {
             return [];
         }
 
-        const isSaveAsDisabled = isEmptyLayout || !dashboardRef;
+        const isSaveAsDisabled = isEmptyLayout || !dashboardRef || isReadOnly;
+        const isScheduledEmailingDisabled = isReadOnly;
 
         return [
             {
@@ -187,9 +192,11 @@ export const DashboardHeader = (): JSX.Element => {
                 itemId: "save_as_menu_item", // careful, also a s- class selector, do not change
                 disabled: isSaveAsDisabled,
                 itemName: intl.formatMessage({ id: "options.menu.save.as" }),
-                tooltip: isSaveAsDisabled
-                    ? intl.formatMessage({ id: "options.menu.save.as.tooltip" })
-                    : undefined,
+                tooltip:
+                    // the tooltip is only relevant to non-read only states
+                    !isReadOnly && isSaveAsDisabled
+                        ? intl.formatMessage({ id: "options.menu.save.as.tooltip" })
+                        : undefined,
                 onClick: defaultOnSaveAs,
             },
             {
@@ -201,11 +208,12 @@ export const DashboardHeader = (): JSX.Element => {
             {
                 type: "button",
                 itemId: "schedule-email-item", // careful, this is also used as a selector in tests, do not change
+                disabled: isScheduledEmailingDisabled,
                 itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
                 onClick: defaultOnScheduleEmailing,
             },
         ];
-    }, [defaultOnScheduleEmailing, defaultOnExportToPdf, dashboardRef]);
+    }, [defaultOnScheduleEmailing, defaultOnExportToPdf, dashboardRef, isReadOnly]);
 
     const onScheduleEmailingError = useCallback(() => {
         closeScheduleEmailingDialog();

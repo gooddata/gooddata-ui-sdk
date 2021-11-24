@@ -107,6 +107,4 @@ export type ModuleFederationIntegration = {
 // @alpha
 export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoadStatus;
 
-// (No @packageDocumentation comment for this package)
-
 ```

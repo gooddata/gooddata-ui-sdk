@@ -86,6 +86,7 @@ options = {
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/presentation/scheduledEmail", [
+            "src/_staging/*",
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
             "src/presentation/constants/*",

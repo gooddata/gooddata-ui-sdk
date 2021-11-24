@@ -75,11 +75,14 @@ export {
     selectLayout,
     selectStash,
     selectWidgetByRef,
+    selectAnalyticalWidgetByRef,
     selectWidgetsMap,
     selectAllInsightWidgets,
+    selectAllCustomWidgets,
     selectAllKpiWidgets,
     selectIsLayoutEmpty,
     selectWidgetDrills,
+    selectIsWidgetExportSupported,
 } from "./layout/layoutSelectors";
 export { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 export {

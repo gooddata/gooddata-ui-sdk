@@ -50,6 +50,7 @@ import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
+import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-backend-spi';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-backend-spi';
 import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -1788,6 +1789,14 @@ export function exportInsightWidget(ref: ObjRef, config: IExportConfig, correlat
 export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
 
 // @alpha
+export type ExtendedDashboardItemType<T> = T extends ExtendedDashboardItem<infer S> ? S : never;
+
+// @alpha
+export type ExtendedDashboardItemTypes<T extends ReadonlyArray<ExtendedDashboardItem<unknown>>> = {
+    [K in keyof T]: ExtendedDashboardItemType<T[K]>;
+}[number];
+
+// @alpha
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @alpha
@@ -2113,7 +2122,7 @@ export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPosi
 // @alpha (undocumented)
 export interface IDashboardInsightCustomizer {
     withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): IDashboardInsightCustomizer;
-    withCustomProvider(provider: InsightComponentProvider): IDashboardInsightCustomizer;
+    withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
     withTag(tag: string, component: CustomDashboardInsightComponent): IDashboardInsightCustomizer;
 }
 
@@ -2188,7 +2197,7 @@ export interface IDashboardInsightProps {
 // @alpha (undocumented)
 export interface IDashboardKpiCustomizer {
     withCustomDecorator(providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider): IDashboardKpiCustomizer;
-    withCustomProvider(provider: KpiComponentProvider): IDashboardKpiCustomizer;
+    withCustomProvider(provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer;
 }
 
 // @alpha (undocumented)
@@ -2273,6 +2282,7 @@ export interface IDashboardStoreProviderProps {
 
 // @alpha (undocumented)
 export interface IDashboardThemingProps {
+    disableThemeLoading?: boolean;
     theme?: ITheme;
     themeModifier?: (theme: ITheme) => ITheme;
 }
@@ -2992,6 +3002,12 @@ export function newDashboardEventPredicate<T extends DashboardEvents["type"]>(ev
 }) => boolean): (event: Action) => boolean;
 
 // @alpha
+export function newDashboardItem<T = ExtendedDashboardWidget>(widget: T, sizeOrColSize: IDashboardLayoutSizeByScreenSize | number): ExtendedDashboardItem<T>;
+
+// @alpha
+export function newDashboardSection<T extends ReadonlyArray<ExtendedDashboardItem<unknown>>>(titleOrHeader: IDashboardLayoutSectionHeader | string | undefined, ...items: T): IDashboardLayoutSection<ExtendedDashboardItemTypes<T>>;
+
+// @alpha
 export function newDisplayFormMap(items: ReadonlyArray<IAttributeDisplayFormMetadataObject>, strictTypeCheck?: boolean): ObjRefMap<IAttributeDisplayFormMetadataObject>;
 
 // @alpha
@@ -3429,10 +3445,16 @@ export const selectAllCatalogAttributesMap: OutputSelector<DashboardState, ObjRe
 export const selectAllCatalogDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
 
 // @alpha
-export const selectAllInsightWidgets: OutputSelector<DashboardState, IInsightWidget[], (res: IWidget[]) => IInsightWidget[]>;
+export const selectAllCustomWidgets: OutputSelector<DashboardState, ICustomWidget[], (res: ExtendedDashboardWidget[]) => ICustomWidget[]>;
 
 // @alpha
-export const selectAllKpiWidgets: OutputSelector<DashboardState, IKpiWidget[], (res: IWidget[]) => IKpiWidget[]>;
+export const selectAllInsightWidgets: OutputSelector<DashboardState, IInsightWidget[], (res: ExtendedDashboardWidget[]) => IInsightWidget[]>;
+
+// @alpha
+export const selectAllKpiWidgets: OutputSelector<DashboardState, IKpiWidget[], (res: ExtendedDashboardWidget[]) => IKpiWidget[]>;
+
+// @alpha
+export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | undefined>;
 
 // @alpha
 export const selectAttributeFilterDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: FilterContextState) => IAttributeDisplayFormMetadataObject[]>;
@@ -3708,7 +3730,7 @@ export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) =
 export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
 
 // @alpha
-export const selectIsLayoutEmpty: OutputSelector<DashboardState, boolean, (res: IWidget[]) => boolean>;
+export const selectIsLayoutEmpty: OutputSelector<DashboardState, boolean, (res: ExtendedDashboardWidget[]) => boolean>;
 
 // @alpha
 export const selectIsReadOnly: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
@@ -3721,6 +3743,9 @@ export const selectIsScheduleEmailDialogOpen: OutputSelector<DashboardState, boo
 
 // @alpha (undocumented)
 export const selectIsShareDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @alpha
+export const selectIsWidgetExportSupported: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: IKpiWidget | IInsightWidget | undefined, res2: ObjRefMap<IInsight>) => boolean>;
 
 // @alpha
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
@@ -3764,14 +3789,14 @@ export const selectUser: OutputSelector<DashboardState, IUser, (res: UserState) 
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: ObjRefMap<IAttributeDisplayFormMetadataObject>, res3: ObjRefMap<IListedDashboard>, res4: ObjRefMap<IInsight>) => IImplicitDrillWithPredicates[]>;
 
-// @alpha
-export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | undefined, (res: ObjRefMap<IWidget>) => IKpiWidget | IInsightWidget | undefined>;
+// @alpha @deprecated
+export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | undefined>;
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
 
 // @internal
-export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<IWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => ObjRefMap<IWidget>>;
+export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<ExtendedDashboardWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => ObjRefMap<ExtendedDashboardWidget>>;
 
 // @alpha (undocumented)
 export interface SetAttributeFilterParent extends IDashboardCommand {
@@ -4429,6 +4454,13 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onPushData: (data: IPushData) => void;
 };
 
+// @alpha
+export const useWidgetFilters: (widget: IWidget | undefined, filters?: IFilter[] | undefined) => {
+    result?: IFilter[] | undefined;
+    status?: "error" | "running" | "success" | "rejected" | undefined;
+    error?: GoodDataSdkError | undefined;
+};
+
 // @alpha (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
 
@@ -4457,7 +4489,5 @@ export type WithDrillSelectProps = {
         onDrill: OnWidgetDrill;
     }) => JSX.Element;
 };
-
-// (No @packageDocumentation comment for this package)
 
 ```

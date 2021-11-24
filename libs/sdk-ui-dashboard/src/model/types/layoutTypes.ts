@@ -4,12 +4,15 @@ import {
     IBaseWidget,
     IDashboardLayoutItem,
     IDashboardLayoutSection,
+    IDashboardLayoutSectionHeader,
+    IDashboardLayoutSizeByScreenSize,
     IDashboardObjectIdentity,
     isWidget,
     IWidget,
     IWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
+import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -44,7 +47,8 @@ export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDas
  * @param identifier - identifier for custom widget; once added onto a dashboard, widget will be referencable using this identifier
  * @param customType - custom widget type
  * @param extras - optionally provide extra data to include on the custom widget; the content of this argument can be an
- *  arbitrary plain object
+ *  arbitrary plain object. note: the factory will make a copy of all the extra data. at this moment it is not possible
+ *  to modify the data once the widget is added onto a dashboard.
  * @alpha
  */
 export function newCustomWidget<TExtra = void>(
@@ -52,13 +56,15 @@ export function newCustomWidget<TExtra = void>(
     customType: string,
     extras?: TExtra,
 ): TExtra & ICustomWidget {
+    const extrasCopy = extras ? cloneDeep(extras) : {};
+
     return {
         type: "customWidget",
         customType,
         identifier,
         uri: `_custom_widget_uri/${identifier}`,
         ref: idRef(identifier),
-        ...extras,
+        ...extrasCopy,
     } as TExtra & ICustomWidget;
 }
 
@@ -120,6 +126,85 @@ export type ExtendedDashboardWidget = IWidget | ICustomWidget;
  * @alpha
  */
 export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
+
+/**
+ * Utility type to get the widget type from a given {@link ExtendedDashboardItem} type.
+ * @alpha
+ */
+export type ExtendedDashboardItemType<T> = T extends ExtendedDashboardItem<infer S> ? S : never;
+
+/**
+ * Utility type to get the widget type from a given {@link ExtendedDashboardItem} array.
+ * @alpha
+ */
+export type ExtendedDashboardItemTypes<T extends ReadonlyArray<ExtendedDashboardItem<unknown>>> = {
+    [K in keyof T]: ExtendedDashboardItemType<T[K]>;
+}[number];
+
+/**
+ * Creates a new dashboard item containing the provided custom widget.
+ *
+ * @param widget - custom widget to include
+ * @param sizeOrColSize - item size specification; for convenience you can specify the size as number which will be
+ *  interpreted as number of columns in a 12-col grid that the item should use when rendered on an XL screen.
+ * @alpha
+ */
+export function newDashboardItem<T = ExtendedDashboardWidget>(
+    widget: T,
+    sizeOrColSize: IDashboardLayoutSizeByScreenSize | number,
+): ExtendedDashboardItem<T> {
+    const size: IDashboardLayoutSizeByScreenSize =
+        typeof sizeOrColSize === "number" ? { xl: { gridWidth: sizeOrColSize } } : sizeOrColSize;
+
+    return {
+        type: "IDashboardLayoutItem",
+        size,
+        widget: cloneDeep(widget),
+    };
+}
+
+function getOrCreateSectionHeader(
+    titleOrHeader: IDashboardLayoutSectionHeader | string | undefined,
+): IDashboardLayoutSectionHeader | undefined {
+    if (!titleOrHeader) {
+        return undefined;
+    }
+
+    if (typeof titleOrHeader === "string") {
+        if (isEmpty(titleOrHeader)) {
+            return undefined;
+        }
+
+        return {
+            title: titleOrHeader,
+        };
+    }
+
+    return titleOrHeader;
+}
+
+/**
+ * Creates a new dashboard section.
+ *
+ * @param titleOrHeader - header to use for this section (if any); for convenience, you may provide just string containing the title instead
+ * of specifying full header. if you specify empty string for title, then there will be no header.
+ * @param items - dashboard items to include in the section; note: a deep copy of each item will be used on the new section
+ *
+ * @alpha
+ */
+export function newDashboardSection<T extends ReadonlyArray<ExtendedDashboardItem<unknown>>>(
+    titleOrHeader: IDashboardLayoutSectionHeader | string | undefined,
+    ...items: T
+): IDashboardLayoutSection<ExtendedDashboardItemTypes<T>> {
+    const header = getOrCreateSectionHeader(titleOrHeader);
+    const itemsClone = cloneDeep(items) as any;
+
+    return {
+        type: "IDashboardLayoutSection",
+        items: itemsClone,
+        header,
+    };
+}
 
 /**
  * Identifier of a stashed dashboard items. When removing one or more item, the caller may decide to 'stash' these items
