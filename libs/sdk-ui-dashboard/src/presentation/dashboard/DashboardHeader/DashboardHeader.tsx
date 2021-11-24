@@ -78,6 +78,7 @@ const useFilterBar = (): {
 const useTopBar = () => {
     const dispatch = useDashboardDispatch();
     const title = useDashboardSelector(selectDashboardTitle);
+    const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
     const onTitleChanged = useCallback(
         (title: string) => {
@@ -90,7 +91,7 @@ const useTopBar = () => {
 
     return {
         title,
-        onTitleChanged,
+        onTitleChanged: isReadOnly ? undefined : onTitleChanged,
         onShareButtonClick,
     };
 };
