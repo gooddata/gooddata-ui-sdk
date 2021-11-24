@@ -247,6 +247,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "@types/debounce-promise",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/enzyme",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -536,6 +540,10 @@
     },
     {
       "name": "date-fns",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "debounce-promise",
       "allowedCategories": [ "production" ]
     },
     {
