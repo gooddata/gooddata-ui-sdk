@@ -138,7 +138,7 @@ export interface IDashboardLoader {
      *
      * 1.  The loader will call the onPluginLoaded, pass any parameters that may be specified for the embedded plugin
      * 2.  Plugin registration is done same as for normal plugins
-     * 3.  The loader will call onPluginUnloaded when the dashboard containing the plugins gets unmounted
+     * 3.  The loader will call onPluginUnload when the dashboard containing the plugins gets unmounted
      *
      * @param plugins - extra plugins to use
      */
