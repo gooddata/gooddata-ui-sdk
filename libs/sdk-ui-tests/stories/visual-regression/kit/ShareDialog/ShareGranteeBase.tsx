@@ -9,25 +9,50 @@ import { wrapWithTheme } from "../../themeWrapper";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import { action } from "@storybook/addon-actions";
 
-import { ShareGranteeBase } from "@gooddata/sdk-ui-kit";
-import { grantees, owner } from "./GranteeMock";
+import { GranteeItem, IGranteeUser, IGranteeUserInactive, ShareGranteeBase } from "@gooddata/sdk-ui-kit";
+import { grantees, inactiveUser, owner } from "./GranteeMock";
+import { uriRef } from "@gooddata/sdk-model";
 
-const BasicExample = (): JSX.Element => {
+interface BasicExampleProps {
+    isDirty: boolean;
+    grantees: GranteeItem[];
+    owner: IGranteeUser | IGranteeUserInactive;
+}
+
+const BasicExample = (props: BasicExampleProps): JSX.Element => {
     return (
         <div id="Share-Grantee-base-basic-example">
             <ShareGranteeBase
-                isDirty={false}
-                owner={owner}
-                grantees={grantees}
+                isDirty={props.isDirty}
+                isLoading={false}
+                owner={props.owner}
+                grantees={props.grantees}
                 onGranteeDelete={action("onGranteeDelete")}
+                onAddGranteeButtonClick={action("onAddGrantee")}
                 onCancel={action("onCancel")}
                 onSubmit={action("onSubmit")}
-                onAddGranteeButtonClick={action("onAddGrantee")}
             />
         </div>
     );
 };
 
+const getGrantees = (): GranteeItem[] => {
+    const res: IGranteeUser[] = [];
+
+    for (let i = 1; i <= 10; i++) {
+        res.push({
+            id: uriRef(i.toString()),
+            type: "user",
+            name: `Name surname - ${i}`,
+            email: `name.surname-${i}@mail.com`,
+            isOwner: false,
+            isCurrentUser: i === 0,
+            status: "Active",
+        });
+    }
+
+    return res;
+};
 /**
  * @internal
  */
@@ -36,7 +61,13 @@ export const ShareGranteeBaseExamples = (): JSX.Element => {
         <InternalIntlWrapper>
             <div className="library-component screenshot-target">
                 <h4>ShareGranteeBase basic example</h4>
-                <BasicExample />
+                <BasicExample isDirty={false} grantees={[]} owner={owner} />
+                <h4>ShareGranteeBase isDirty</h4>
+                <BasicExample isDirty={true} grantees={grantees} owner={owner} />
+                <h4>ShareGranteeBase inactive owner</h4>
+                <BasicExample isDirty={false} grantees={[]} owner={inactiveUser} />
+                <h4>ShareGranteeBase scrollable</h4>
+                <BasicExample isDirty={false} grantees={getGrantees()} owner={owner} />
             </div>
         </InternalIntlWrapper>
     );
