@@ -632,7 +632,19 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
         const displayForm = getObjRef(currentFilter, props.identifier);
         if (state.uriToAttributeElementMap.size > 0 && !isNil(originalTotalCount) && displayForm) {
+            /**
+             * If the attribute filter is positive, `getNumberOfSelectedItems` returns current size of
+             * the `state.selectedFilterOptions` array. If the filter is negative attribute filter, it
+             * returns difference between `originalTotalCount` and current size of the selection.
+             *
+             * If the number of selected items is 0 and originalTotalCount is greater than 0, it is
+             * considered the selection is empty.
+             */
             const empty = getNumberOfSelectedItems() === 0 && originalTotalCount > 0;
+            /**
+             * All items are selected only in case the number of selected items is equal to original total
+             * count.
+             */
             const all = getNumberOfSelectedItems() === originalTotalCount;
             const getAllPartIntl = all ? getAllTitle(props.intl) : getAllExceptTitle(props.intl);
 
