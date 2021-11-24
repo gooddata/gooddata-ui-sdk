@@ -2233,8 +2233,8 @@ export interface IDashboardLayoutProps {
 
 // @alpha
 export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
-    onPluginLoaded?(ctx: DashboardContext, parameters?: string): void;
-    onPluginUnload?(ctx: DashboardContext): Promise<void>;
+    onPluginLoaded?(ctx: DashboardContext, parameters?: string): Promise<void> | void;
+    onPluginUnload?(ctx: DashboardContext): Promise<void> | void;
     readonly _pluginVersion: "1.0";
     register(ctx: DashboardContext, customize: IDashboardCustomizer, eventing: IDashboardEventHandling): void;
 }

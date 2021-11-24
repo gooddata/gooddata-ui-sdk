@@ -197,8 +197,8 @@ export class DashboardLoader implements IDashboardLoader {
         // eslint-disable-next-line no-console
         console.debug("Initializing the plugins...");
 
-        const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
-        const loadedPlugins = initializeLoadedPlugins(ctx, plugins);
+        const additionalPlugins = await initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
+        const loadedPlugins = await initializeLoadedPlugins(ctx, plugins);
         const allPlugins = [...loadedPlugins, ...additionalPlugins];
 
         return [engine, allPlugins];
@@ -284,27 +284,31 @@ export class DashboardLoader implements IDashboardLoader {
 function initializeEmbeddedPlugins(
     ctx: DashboardContext,
     embeddedPlugins: IEmbeddedPlugin[],
-): IDashboardPluginContract_V1[] {
-    return embeddedPlugins.map((embedded) => {
-        const plugin = embedded.factory();
-        plugin.onPluginLoaded?.(ctx, embedded.parameters);
+): Promise<IDashboardPluginContract_V1[]> {
+    const plugins: LoadedPlugin[] = embeddedPlugins.map((embedded) => ({
+        plugin: embedded.factory(),
+        parameters: embedded.parameters,
+    }));
 
-        return plugin;
-    });
+    return initializeLoadedPlugins(ctx, plugins);
 }
 
-function initializeLoadedPlugins(
+async function initializeLoadedPlugins(
     ctx: DashboardContext,
     plugins: LoadedPlugin[],
-): IDashboardPluginContract_V1[] {
+): Promise<IDashboardPluginContract_V1[]> {
     const validPlugins: IDashboardPluginContract_V1[] = [];
 
-    plugins.forEach(({ plugin, parameters }) => {
+    for (const loadedPlugin of plugins) {
+        const { plugin, parameters } = loadedPlugin;
+
         try {
             if (plugin.onPluginLoaded) {
                 // eslint-disable-next-line no-console
                 console.debug(`Calling onPluginLoaded on ${plugin.displayName}...`);
-                plugin.onPluginLoaded(ctx, parameters);
+                const loadPromise = plugin.onPluginLoaded(ctx, parameters);
+
+                await loadPromise;
             }
             validPlugins.push(plugin);
         } catch (e: any) {
@@ -313,7 +317,7 @@ function initializeLoadedPlugins(
                 `The onPluginLoaded call for ${plugin.displayName} failed: ${e?.message}. Ignoring the plugin.`,
             );
         }
-    });
+    }
 
     return validPlugins;
 }
