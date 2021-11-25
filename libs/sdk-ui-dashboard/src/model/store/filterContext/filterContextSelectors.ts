@@ -12,6 +12,7 @@ import {
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { newDisplayFormMap } from "../../../_staging/metadata/objRefMap";
 import { createMemoizedSelector } from "../_infra/selectors";
+import compact from "lodash/compact";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -158,4 +159,32 @@ export const selectFilterContextAttributeFilterIndexByLocalId = createMemoizedSe
     createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
         attributeFilters.findIndex((filter) => filter.attributeFilter.localIdentifier === localId),
     ),
+);
+
+/**
+ * Creates a selector for selecting all descendants of the attribute filter with given localId.
+ *
+ * @alpha
+ */
+export const selectAttributeFilterDescendants = createMemoizedSelector((localId: string) =>
+    createSelector(selectFilterContextAttributeFilters, (attributeFilters) => {
+        const toCheck = compact([localId]);
+        const result = new Set<string>();
+
+        while (toCheck.length) {
+            const current = toCheck.pop();
+            const children = attributeFilters.filter((f) =>
+                f.attributeFilter.filterElementsBy?.some(
+                    (parent) => parent.filterLocalIdentifier === current,
+                ),
+            );
+
+            children.forEach((child) => {
+                result.add(child.attributeFilter.localIdentifier!);
+                toCheck.push(child.attributeFilter.localIdentifier!);
+            });
+        }
+
+        return Array.from(result);
+    }),
 );

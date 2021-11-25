@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { call, put, select } from "redux-saga/effects";
+import { all, call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import invariant from "ts-invariant";
 
@@ -9,7 +9,10 @@ import { ChangeAttributeFilterSelection } from "../../../commands/filters";
 import { filterContextActions } from "../../../store/filterContext";
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
-import { selectFilterContextAttributeFilterByLocalId } from "../../../store/filterContext/filterContextSelectors";
+import {
+    selectAttributeFilterDescendants,
+    selectFilterContextAttributeFilterByLocalId,
+} from "../../../store/filterContext/filterContextSelectors";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 
 export function* changeAttributeFilterSelectionHandler(
@@ -38,6 +41,24 @@ export function* changeAttributeFilterSelectionHandler(
         yield select(selectFilterContextAttributeFilterByLocalId(cmd.payload.filterLocalId));
 
     invariant(changedFilter, "Inconsistent state in attributeFilterChangeSelectionCommandHandler");
+
+    const childFiltersIds: ReturnType<ReturnType<typeof selectAttributeFilterDescendants>> = yield select(
+        selectAttributeFilterDescendants(changedFilter.attributeFilter.localIdentifier!),
+    );
+
+    yield all(
+        childFiltersIds.map((childFilterId) =>
+            put(
+                filterContextActions.updateAttributeFilterSelection({
+                    filterLocalId: childFilterId,
+                    elements: {
+                        uris: [],
+                    },
+                    negativeSelection: true,
+                }),
+            ),
+        ),
+    );
 
     yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
     yield call(dispatchFilterContextChanged, ctx, cmd);

@@ -371,6 +371,18 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     }
 }
 
+.gd-attribute-filter-button-is-filtering {
+    &.attribute-filter-button:not(.is-active) {
+        background: $gd-palette-primary-dimmed;
+        border-radius: 3px;
+
+        &.attribute-filter-button::before,
+        &.attribute-filter-button::after {
+            display: none;
+        }
+    }
+}
+
 /* hide IE10+ eraser */
 ::-ms-clear {
     display: none;
