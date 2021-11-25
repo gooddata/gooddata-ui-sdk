@@ -4,7 +4,7 @@ import { IDashboardCustomizer, IDashboardEventHandling } from "./customizer";
 import { DashboardContext } from "../model";
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardPluginDescriptor = {
     /**
@@ -59,7 +59,7 @@ export type DashboardPluginDescriptor = {
  *
  * @remarks see {@link DashboardPluginV1}
  *
- * @alpha
+ * @public
  */
 export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
     /**
@@ -122,7 +122,7 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
  * Abstract base class for the Dashboard Plugin. Each plugin should extend this class and implement at least
  * the {@link DashboardPluginV1.register} method.
  *
- * @alpha
+ * @public
  */
 export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
     public readonly _pluginVersion = "1.0";

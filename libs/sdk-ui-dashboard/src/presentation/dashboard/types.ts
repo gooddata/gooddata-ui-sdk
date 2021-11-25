@@ -48,24 +48,24 @@ import { CustomShareDialogComponent } from "../shareDialog";
 import { ReactReduxContextValue } from "react-redux";
 
 /**
- * @alpha
+ * @public
  */
 export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes
     ? (...args: TArgs) => TRes | undefined
     : never;
 
 /**
- * @alpha
+ * @public
  */
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
 
 /**
- * @alpha
+ * @public
  */
 export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentProvider>;
 
 /**
- * @alpha
+ * @public
  */
 export type InsightComponentProvider = (
     insight: IInsight,
@@ -73,7 +73,7 @@ export type InsightComponentProvider = (
 ) => CustomDashboardInsightComponent;
 
 /**
- * @alpha
+ * @public
  */
 export type OptionalInsightComponentProvider = OptionalProvider<InsightComponentProvider>;
 
@@ -104,12 +104,12 @@ export type InsightMenuItemsProvider = (
 ) => IInsightMenuItem[];
 
 /**
- * @alpha
+ * @public
  */
 export type KpiComponentProvider = (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
 
 /**
- * @alpha
+ * @public
  */
 export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
 
@@ -121,7 +121,13 @@ export type AttributeFilterComponentProvider = (
 ) => CustomDashboardAttributeFilterComponent | undefined;
 
 /**
- * @alpha
+ * These props allow you to specify custom components or custom component providers that the Dashboard
+ * component will use for rendering different parts of the dashboard.
+ *
+ * IMPORTANT: while this interface is marked as public, you also need to heed the maturity annotations
+ * on each property. A lot of these properties are at this moment alpha level.
+ *
+ * @public
  */
 export interface IDashboardCustomComponentProps {
     /**
@@ -129,6 +135,8 @@ export interface IDashboardCustomComponentProps {
      * This component is also used in all the individual widgets when they have some error occur.
      *
      * TODO do we need separate component for the dashboard as a whole and individual widgets?
+     *
+     * @alpha
      */
     ErrorComponent?: ComponentType<IErrorProps>;
 
@@ -137,11 +145,14 @@ export interface IDashboardCustomComponentProps {
      * This component is also used in all the individual widgets while they are loading.
      *
      * TODO do we need separate component for the dashboard as a whole and individual widgets?
+     * @alpha
      */
     LoadingComponent?: ComponentType<ILoadingProps>;
 
     /**
      * Optionally specify component to use for rendering the layout.
+     *
+     * @alpha
      */
     LayoutComponent?: CustomDashboardLayoutComponent;
 
@@ -166,6 +177,8 @@ export interface IDashboardCustomComponentProps {
      *     return <DefaultDashboardWidget {...props} widget={widget} />;
      * };
      * ```
+     *
+     * @public
      */
     WidgetComponentProvider?: OptionalWidgetComponentProvider;
 
@@ -176,6 +189,8 @@ export interface IDashboardCustomComponentProps {
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsight} will be used.
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
+     *
+     * @public
      */
     InsightComponentProvider?: OptionalInsightComponentProvider;
 
@@ -188,6 +203,7 @@ export interface IDashboardCustomComponentProps {
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
      *
+     * @alpha
      */
     InsightMenuButtonComponentProvider?: InsightMenuButtonComponentProvider;
 
@@ -200,6 +216,7 @@ export interface IDashboardCustomComponentProps {
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
      *
+     * @alpha
      */
     InsightMenuComponentProvider?: InsightMenuComponentProvider;
 
@@ -210,32 +227,43 @@ export interface IDashboardCustomComponentProps {
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardKpi}.
      *    This is useful if you want to customize just one particular KPI and keep default rendering for
      *    the other insights.
+     *
+     * @public
      */
     KpiComponentProvider?: OptionalKpiComponentProvider;
 
     /**
      * Optionally specify component to use for rendering the scheduled email dialog.
+     *
+     * @alpha
      */
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the share dialog.
+     *
+     * @alpha
      */
     ShareDialogComponent?: CustomShareDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the save as dialog.
      *
+     * @alpha
      */
     SaveAsDialogComponent?: CustomSaveAsDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the button bar.
+     *
+     * @alpha
      */
     ButtonBarComponent?: CustomButtonBarComponent;
 
     /**
      * Optionally specify component to use for rendering the menu button.
+     *
+     * @alpha
      */
     MenuButtonComponent?: CustomMenuButtonComponent;
 
@@ -244,11 +272,15 @@ export interface IDashboardCustomComponentProps {
      *
      * Note that if you override this component, the ButtonBarComponent, MenuButtonComponent and TitleComponent
      * props might get ignored depending on your implementation.
+     *
+     * @alpha
      */
     TopBarComponent?: CustomTopBarComponent;
 
     /**
      * Optionally specify component to use for rendering the title.
+     *
+     * @alpha
      */
     TitleComponent?: CustomTitleComponent;
 
@@ -268,13 +300,15 @@ export interface IDashboardCustomComponentProps {
      *
      * @remarks
      * If you want to hide some or all filters, you can use the {@link HiddenDashboardAttributeFilter} implementation.
+     *
+     * @alpha
      */
     DashboardAttributeFilterComponentProvider?: AttributeFilterComponentProvider;
 
     /**
      * Optionally specify component to use for rendering the date filters.
      *
-     * @remarks
+     * @alpha
      */
     DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
 
@@ -285,16 +319,23 @@ export interface IDashboardCustomComponentProps {
      *
      * Note that if you override this component, the DashboardAttributeFilterComponentFactory and DashboardDateFilterComponent
      * props might get ignored depending on your implementation.
+     *
+     * @alpha
      */
     FilterBarComponent?: CustomFilterBarComponent;
 }
 
 /**
- * @alpha
+ * IMPORTANT: while this interface is marked as public, you also need to heed the maturity annotations
+ * on each property. A lot of these properties are at this moment alpha level.
+ *
+ * @public
  */
 export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
     /**
      * Optionally provide custom configuration for the Menu button.
+     *
+     * @alpha
      */
     menuButtonConfig?: IMenuButtonConfiguration;
 
@@ -303,18 +344,22 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
      *
      * @remarks
      * If the function returns an empty array, the menu will not be rendered at all.
+     *
+     * @alpha
      */
     insightMenuItemsProvider?: InsightMenuItemsProvider;
 
     /**
      * Optionally specify customization functions. The dashboard component will call out to these functions
      * at different points during its lifetime. See documentation of the different functions to learn more.
+     *
+     * @public
      */
     customizationFns?: DashboardModelCustomizationFns;
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardThemingProps {
     /**
@@ -359,7 +404,7 @@ export interface IDashboardThemingProps {
  *
  * The infrastructural events are handled using callbacks. There are only few of these infr
  *
- * @alpha
+ * @public
  */
 export interface IDashboardEventing {
     /**
@@ -394,7 +439,7 @@ export interface IDashboardEventing {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardBaseProps {
     /**
@@ -449,7 +494,10 @@ export interface IDashboardBaseProps {
 }
 
 /**
- * @alpha
+ * IMPORTANT: while this interface is marked as public, you also need to heed the maturity annotations
+ * on each property. A lot of these properties are at this moment alpha level.
+ *
+ * @public
  */
 export type IDashboardExtensionProps = IDashboardEventing &
     IDashboardCustomizationProps &
@@ -468,7 +516,7 @@ export type IDashboardExtensionProps = IDashboardEventing &
     };
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
     children?: JSX.Element | ((dashboard: any) => JSX.Element);

@@ -19,7 +19,7 @@ import isEmpty from "lodash/isEmpty";
  * Base type for custom widgets. Custom widgets may extend this and add extra properties to hold widget-specific
  * configuration.
  *
- * @alpha
+ * @public
  */
 export interface ICustomWidgetBase extends IBaseWidget {
     readonly type: "customWidget";
@@ -29,7 +29,7 @@ export interface ICustomWidgetBase extends IBaseWidget {
 /**
  * Custom widget with assigned identity.
  *
- * @alpha
+ * @public
  */
 export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdentity {}
 
@@ -37,7 +37,7 @@ export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdenti
  * Definition of custom widget. The definition may not specify identity. In that case a temporary identity
  * will be assigned to the widget as it is added onto a dashboard.
  *
- * @alpha
+ * @public
  */
 export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDashboardObjectIdentity> {}
 
@@ -49,7 +49,7 @@ export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDas
  * @param extras - optionally provide extra data to include on the custom widget; the content of this argument can be an
  *  arbitrary plain object. note: the factory will make a copy of all the extra data. at this moment it is not possible
  *  to modify the data once the widget is added onto a dashboard.
- * @alpha
+ * @public
  */
 export function newCustomWidget<TExtra = void>(
     identifier: string,
@@ -72,7 +72,7 @@ export function newCustomWidget<TExtra = void>(
  * Type-guard that tests whether an object is an instance of {@link ICustomWidget}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export function isCustomWidget(obj: unknown): obj is ICustomWidget {
     const w = obj as ICustomWidget;
@@ -84,7 +84,7 @@ export function isCustomWidget(obj: unknown): obj is ICustomWidget {
  * Type-guard that tests whether an object is an instance of {@link ICustomWidgetDefinition}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export function isCustomWidgetDefinition(obj: unknown): obj is ICustomWidget {
     const w = obj as ICustomWidget;
@@ -96,7 +96,7 @@ export function isCustomWidgetDefinition(obj: unknown): obj is ICustomWidget {
  * Dumps debug information about a widget into a string.
  *
  * @param widget - widget to dump info from
- * @alpha
+ * @internal
  */
 export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string {
     const widgetId = `${widget.identifier}`;
@@ -115,7 +115,7 @@ export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string 
  * Extension of the default {@link @gooddata/sdk-backend-spi#IWidget} type to also include view-only
  * custom widget types.
  *
- * @alpha
+ * @public
  */
 export type ExtendedDashboardWidget = IWidget | ICustomWidget;
 
@@ -123,19 +123,19 @@ export type ExtendedDashboardWidget = IWidget | ICustomWidget;
  * Specialization of the IDashboardLayoutItem which also includes the extended dashboard widgets - KPI and
  * Insight placeholders.
  *
- * @alpha
+ * @public
  */
 export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
 
 /**
  * Utility type to get the widget type from a given {@link ExtendedDashboardItem} type.
- * @alpha
+ * @public
  */
 export type ExtendedDashboardItemType<T> = T extends ExtendedDashboardItem<infer S> ? S : never;
 
 /**
  * Utility type to get the widget type from a given {@link ExtendedDashboardItem} array.
- * @alpha
+ * @public
  */
 export type ExtendedDashboardItemTypes<T extends ReadonlyArray<ExtendedDashboardItem<unknown>>> = {
     [K in keyof T]: ExtendedDashboardItemType<T[K]>;
@@ -147,7 +147,7 @@ export type ExtendedDashboardItemTypes<T extends ReadonlyArray<ExtendedDashboard
  * @param widget - custom widget to include
  * @param sizeOrColSize - item size specification; for convenience you can specify the size as number which will be
  *  interpreted as number of columns in a 12-col grid that the item should use when rendered on an XL screen.
- * @alpha
+ * @public
  */
 export function newDashboardItem<T = ExtendedDashboardWidget>(
     widget: T,
@@ -190,7 +190,7 @@ function getOrCreateSectionHeader(
  * of specifying full header. if you specify empty string for title, then there will be no header.
  * @param items - dashboard items to include in the section; note: a deep copy of each item will be used on the new section
  *
- * @alpha
+ * @public
  */
 export function newDashboardSection<T extends ReadonlyArray<ExtendedDashboardItem<unknown>>>(
     titleOrHeader: IDashboardLayoutSectionHeader | string | undefined,
@@ -257,6 +257,6 @@ export type InternalDashboardItemDefinition = ExtendedDashboardItem | StashedDas
 /**
  * Dashboard layout section that can contain extended set of items - including KPI and Insight placeholders.
  *
- * @alpha
+ * @public
  */
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;

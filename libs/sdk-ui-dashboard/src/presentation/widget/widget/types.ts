@@ -8,45 +8,109 @@ import { ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
 import { ExtendedDashboardWidget } from "../../../model";
 
 /**
- * @alpha
+ * Dashboard widget props.
+ *
+ * IMPORTANT: this interface is marked as public but not all properties in it are suitable for public consumption
+ * yet. Please heed the per-property API maturity annotations; the alpha level APIs may change in a breaking way
+ * in the next release.
+ *
+ * @public
  */
 export interface IDashboardWidgetProps {
+    /**
+     * Backend to work with.
+     *
+     * Note: the backend must come either from this property or from BackendContext. If you do not specify
+     * backend here, then the component MUST be rendered within an existing BackendContext.
+     *
+     * @alpha
+     */
+    backend?: IAnalyticalBackend;
+
+    /**
+     * Workspace where the widget exists.
+     *
+     * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
+     * workspace here, then the component MUST be rendered within an existing WorkspaceContext.
+     *
+     * @alpha
+     */
+    workspace?: string;
+
+    /**
+     * @public
+     */
     widget?: ExtendedDashboardWidget;
-    screen: ScreenSize;
+
     /**
      * Specify date data set to use when passing dashboard date filter to rendered visualization.
      *
      * If not provided, the date filter will not be applied
+     *
+     * @public
      */
     dateDataset?: ObjRef;
+
     /**
      * Specify what attribute filters to ignore for this widget. Those filters will not be passed to the
      * rendered visualization.
+     *
+     * @public
      */
     ignoredAttributeFilters?: ObjRefInScope[];
 
-    backend?: IAnalyticalBackend;
-    workspace?: string;
-
-    onDrill?: OnFiredDashboardViewDrillEvent;
-
-    onError?: OnError;
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     /**
-     * Callback that the component MUST call when the widget is clicked.
+     * Error component to use when insight rendering fails for any reason.
+     *
+     * @alpha
      */
-    onWidgetClicked?: () => void;
-
     ErrorComponent?: ComponentType<IErrorProps>;
+
+    /**
+     * Loading component to use while loading and preparing data to render.
+     *
+     * @alpha
+     */
     LoadingComponent?: ComponentType<ILoadingProps>;
 
     /**
+     * @alpha
+     */
+    screen: ScreenSize;
+
+    /**
+     * @alpha
+     */
+    onDrill?: OnFiredDashboardViewDrillEvent;
+
+    /**
+     * @alpha
+     */
+    onError?: OnError;
+
+    /**
+     * @alpha
+     */
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+
+    /**
+     * Callback that the component MUST call when the widget is clicked.
+     *
+     * @alpha
+     */
+    onWidgetClicked?: () => void;
+
+    /**
      * Turn widget header on/off.
+     *
+     * @alpha
      */
     showHeader?: boolean;
 
     /**
      * Turn visibility of the interactions menu on/off.
+     *
+     * @alpha
      */
     showMenu?: boolean;
 }
@@ -56,6 +120,6 @@ export interface IDashboardWidgetProps {
 ///
 
 /**
- * @alpha
+ * @public
  */
 export type CustomDashboardWidgetComponent = ComponentType<IDashboardWidgetProps>;

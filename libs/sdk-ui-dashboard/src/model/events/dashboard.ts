@@ -23,7 +23,7 @@ import { eventGuard } from "./util";
  *
  * If the initialization created a new, empty dashboard then dashboard object will be undefined.
  *
- * @alpha
+ * @public
  */
 export interface DashboardInitialized extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INITIALIZED";
@@ -141,7 +141,7 @@ export const isDashboardSaved = eventGuard<DashboardSaved>("GDC.DASH/EVT.SAVED")
  * This event is emitted at the end of successful 'dashboard save as' command processing. At this point, a new
  * dashboard exists on the backend.
  *
- * @alpha
+ * @public
  */
 export interface DashboardCopySaved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COPY_SAVED";
@@ -312,7 +312,7 @@ export const isDashboardDeleted = eventGuard<DashboardDeleted>("GDC.DASH/EVT.DEL
 //
 
 /**
- * @alpha
+ * @public
  */
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
@@ -326,7 +326,7 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
  * Note that this event is not a show stopper. The dashboard load will recover and fall back to a safe date
  * filter configuration.
  *
- * @alpha
+ * @public
  */
 export interface DateFilterValidationFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED";

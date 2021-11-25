@@ -21,7 +21,7 @@ import { ExtendedDashboardWidget } from "./layoutTypes";
  *
  * By default, all objects
  *
- * @alpha
+ * @public
  */
 export type ObjectAvailabilityConfig = {
     /**
@@ -41,7 +41,7 @@ export type ObjectAvailabilityConfig = {
 /**
  * Dashboard configuration can influence the available features, look and feel and behavior of the dashboard.
  *
- * @alpha
+ * @public
  */
 export type DashboardConfig = {
     /**
@@ -131,7 +131,7 @@ export type DashboardConfig = {
  * -  `mapboxToken` - has to be provided by the context
  * -  `isReadOnly` - is purely choice of context in which the dashboard is used
  *
- * @alpha
+ * @public
  */
 export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;
 
@@ -160,7 +160,7 @@ export function isResolvedConfig(config?: DashboardConfig): config is ResolvedDa
 }
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardContext = {
     /**
@@ -207,14 +207,14 @@ export type PrivateDashboardContext = DashboardModelCustomizationFns & {
 };
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardTransformFn = (
     dashboard: IDashboard<ExtendedDashboardWidget>,
 ) => IDashboard<ExtendedDashboardWidget> | undefined;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardModelCustomizationFns = {
     /**

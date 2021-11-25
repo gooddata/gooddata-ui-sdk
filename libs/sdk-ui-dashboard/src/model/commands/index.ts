@@ -206,7 +206,7 @@ export { RequestAsyncRender, ResolveAsyncRender, requestAsyncRender, resolveAsyn
 export { AddDrillTargets, addDrillTargets } from "./drillTargets";
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardCommands =
     | InitializeDashboard

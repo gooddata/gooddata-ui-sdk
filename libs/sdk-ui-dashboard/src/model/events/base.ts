@@ -3,7 +3,7 @@ import isEmpty from "lodash/isEmpty";
 import { DashboardContext } from "../types/commonTypes";
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardEventType =
     | "GDC.DASH/EVT.COMMAND.FAILED"
@@ -86,7 +86,7 @@ export type DashboardEventType =
  * Base type for all dashboard events.
  *
  * @typeParam TPayload - type of the event's additional data
- * @alpha
+ * @public
  */
 export interface IDashboardEvent<TPayload = any> {
     /**
@@ -124,7 +124,7 @@ export interface IDashboardEvent<TPayload = any> {
  * Tests whether object is an instance of {@link IDashboardEvent}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export function isDashboardEvent(obj: unknown): obj is IDashboardEvent {
     return !isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("GDC.DASH/EVT");
@@ -134,7 +134,7 @@ export function isDashboardEvent(obj: unknown): obj is IDashboardEvent {
  * Base type for all custom events.
  *
  * @typeParam TPayload - type of the event's additional data
- * @alpha
+ * @public
  */
 export interface ICustomDashboardEvent<TPayload = any> {
     /**
@@ -167,7 +167,7 @@ export interface ICustomDashboardEvent<TPayload = any> {
  * Tests whether object is an instance of {@link ICustomDashboardEvent}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export function isCustomDashboardEvent(obj: unknown): obj is ICustomDashboardEvent {
     return !isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("CUSTOM/EVT");
@@ -177,7 +177,7 @@ export function isCustomDashboardEvent(obj: unknown): obj is ICustomDashboardEve
  * Tests whether object is an instance of {@link IDashboardEvent} or {@link ICustomDashboardEvent}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export function isDashboardEventOrCustomDashboardEvent(
     obj: unknown,
@@ -186,6 +186,6 @@ export function isDashboardEventOrCustomDashboardEvent(
 }
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardEventBody<T extends IDashboardEvent | ICustomDashboardEvent> = Omit<T, "ctx">;

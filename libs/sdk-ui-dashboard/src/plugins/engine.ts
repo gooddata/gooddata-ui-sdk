@@ -14,7 +14,7 @@ import { LIB_VERSION } from "../__version";
  * factory methods to create the Dashboard component's customization-related props using one or more
  * plugins.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardEngine {
     /**
@@ -49,7 +49,7 @@ export interface IDashboardEngine {
  * point to the Dashboard Engine that is used during both static and dynamic loading of the dashboard engine
  * instances by the DashboardLoader.
  *
- * @alpha
+ * @public
  */
 export function newDashboardEngine(): IDashboardEngine {
     return {

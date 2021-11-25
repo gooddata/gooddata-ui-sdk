@@ -28,6 +28,12 @@ import { UiState } from "./ui/uiState";
  */
 
 /**
+ * Layout of the dashboard component's state. State modifications are always done using Command API. Reading
+ * from state must always be done using the Selectors API.
+ *
+ * Accessing state props directly is dangerous practice. We reserve the rights to refactor and otherwise break
+ * the shape of the state at any time while keeping the Selectors and Command APIs stable.
+ *
  * @alpha
  */
 export type DashboardState = {
@@ -70,19 +76,19 @@ export type DashboardState = {
 };
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardDispatch = Dispatch<AnyAction>;
 
 /**
  * Function that selects part of the Dashboard state.
  *
- * @alpha
+ * @public
  */
 export type DashboardSelector<TResult> = (state: DashboardState) => TResult;
 /**
  * Type of a callback that evaluates a selector function against the Dashboard state
  *
- * @alpha
+ * @public
  */
 export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<TResult>) => TResult;

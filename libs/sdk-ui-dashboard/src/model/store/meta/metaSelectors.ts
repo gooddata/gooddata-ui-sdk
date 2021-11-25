@@ -86,7 +86,7 @@ export const selectPersistedDashboardFilterContextAsFilterContextDefinition = cr
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  *
- * @alpha
+ * @public
  */
 export const selectDashboardRef = createSelector(selectPersistedDashboard, (state) => {
     return state?.ref;
@@ -98,7 +98,7 @@ export const selectDashboardRef = createSelector(selectPersistedDashboard, (stat
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  *
- * @alpha
+ * @public
  */
 export const selectDashboardId = createSelector(selectPersistedDashboard, (state) => {
     return state?.identifier;
@@ -110,7 +110,7 @@ export const selectDashboardId = createSelector(selectPersistedDashboard, (state
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  *
- * @alpha
+ * @public
  */
 export const selectDashboardUri = createSelector(selectPersistedDashboard, (state) => {
     return state?.uri;
@@ -122,7 +122,7 @@ export const selectDashboardUri = createSelector(selectPersistedDashboard, (stat
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  *
- * @alpha
+ * @public
  */
 export const selectDashboardIdRef = createSelector(selectDashboardId, (id) => {
     return id ? idRef(id, "analyticalDashboard") : undefined;
@@ -134,7 +134,7 @@ export const selectDashboardIdRef = createSelector(selectDashboardId, (id) => {
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  *
- * @alpha
+ * @public
  */
 export const selectDashboardUriRef = createSelector(selectDashboardUri, (uri) => {
     return uri ? uriRef(uri) : undefined;
@@ -147,7 +147,7 @@ export const selectDashboardUriRef = createSelector(selectDashboardUri, (uri) =>
 /**
  * Selects current dashboard title.
  *
- * @alpha
+ * @public
  */
 export const selectDashboardTitle = createSelector(selectDashboardDescriptor, (state) => {
     return state.title;
@@ -156,7 +156,7 @@ export const selectDashboardTitle = createSelector(selectDashboardDescriptor, (s
 /**
  * Selects current dashboard description.
  *
- * @alpha
+ * @public
  */
 export const selectDashboardDescription = createSelector(selectDashboardDescriptor, (state) => {
     return state.description;
@@ -165,7 +165,7 @@ export const selectDashboardDescription = createSelector(selectDashboardDescript
 /**
  * Selects dashboard tags.
  *
- * @alpha
+ * @public
  */
 export const selectDashboardTags = createSelector(selectDashboardDescriptor, (state) => {
     return state.tags;

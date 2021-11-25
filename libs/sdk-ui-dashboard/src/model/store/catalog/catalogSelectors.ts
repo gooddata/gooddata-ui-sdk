@@ -21,42 +21,42 @@ const selectSelf = createSelector(
 );
 
 /**
- * @alpha
+ * @public
  */
 export const selectCatalogAttributes = createSelector(selectSelf, (state) => {
     return state.attributes ?? [];
 });
 
 /**
- * @alpha
+ * @public
  */
 export const selectCatalogAttributeDisplayForms = createSelector(selectCatalogAttributes, (attributes) => {
     return flatMap(attributes, (attribute) => [...attribute.displayForms, ...attribute.geoPinDisplayForms]);
 });
 
 /**
- * @alpha
+ * @public
  */
 export const selectCatalogMeasures = createSelector(selectSelf, (state) => {
     return state.measures ?? [];
 });
 
 /**
- * @alpha
+ * @public
  */
 export const selectCatalogFacts = createSelector(selectSelf, (state) => {
     return state.facts ?? [];
 });
 
 /**
- * @alpha
+ * @public
  */
 export const selectCatalogDateDatasets = createSelector(selectSelf, (state) => {
     return state.dateDatasets ?? [];
 });
 
 /**
- * @alpha
+ * @public
  */
 export const selectCatalogDateAttributes = createSelector(selectCatalogDateDatasets, (dateDatasets) => {
     return flatMap(dateDatasets, (dd) => dd.dateAttributes);
@@ -72,6 +72,9 @@ export const selectAttributesWithDrillDown = createSelector(
     },
 );
 
+/**
+ * @internal
+ */
 export const selectAttributesWithDisplayFormLink = createSelector(
     [selectCatalogAttributes],
     (attributes = []) => {

@@ -8,14 +8,14 @@ import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 /**
  * The initial load of the dashboard will use this correlation id.
  *
- * @alpha
+ * @public
  */
 export const InitialLoadCorrelationId = "initialLoad";
 
 /**
  * Loads dashboard from analytical backend.
  *
- * @alpha
+ * @public
  */
 export interface InitializeDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INITIALIZE";
@@ -50,7 +50,7 @@ export interface InitializeDashboard extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @public
  */
 export function initializeDashboard(
     config?: DashboardConfig,
@@ -101,7 +101,7 @@ export function saveDashboard(correlationId?: string): SaveDashboard {
 //
 
 /**
- * @alpha
+ * @public
  */
 export interface SaveDashboardAs extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SAVEAS";
@@ -140,7 +140,7 @@ export interface SaveDashboardAs extends IDashboardCommand {
  *  events that will be emitted during the command processing
  *  @param useOriginalFilterContext - optionally indicate whether new dashboard should use original filter context
  *  or the one with current filter selection.
- * @alpha
+ * @public
  */
 export function saveDashboardAs(
     title?: string,

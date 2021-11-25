@@ -11,7 +11,7 @@ const selectSelf = createSelector(
 /**
  * This selector returns capabilities of the backend with which the dashboard works.
  *
- * @alpha
+ * @public
  */
 export const selectBackendCapabilities = createSelector(selectSelf, (state) => {
     invariant(state.backendCapabilities, "attempting to access uninitialized backend capabilities");
