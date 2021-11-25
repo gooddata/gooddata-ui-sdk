@@ -120,6 +120,7 @@
     "options.menu.unsupported.error": "U kunt het inzicht momenteel niet exporteren. Probeer verschillende filters toe te passen of verschillende maten of attributen te gebruiken.",
     "options.menu.unsupported.loading": "U kunt het inzicht momenteel niet exporteren.",
     "export.defaultTitle": "Inzicht zonder naam",
+    "export_unsupported.disabled": "Exporteren wordt niet ondersteund",
     "widget.options.menu.exportToCSV": "Exporteren naar CSV",
     "widget.options.menu.exportToXLSX": "Exporteren naar XLSX",
     "dashboard.error.empty.heading": "Dit dashboard is leeg",

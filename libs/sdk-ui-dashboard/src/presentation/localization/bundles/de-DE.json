@@ -120,6 +120,7 @@
     "options.menu.unsupported.error": "Die Betrachtung kann momentan nicht exportiert werden. Versuchen Sie andere Filter anzuwenden bzw. andere Messungen oder Attribute.",
     "options.menu.unsupported.loading": "Die Betrachtung kann momentan nicht exportiert werden. ",
     "export.defaultTitle": "Betrachtung ohne Namen",
+    "export_unsupported.disabled": "Es wird kein Export unterstützt",
     "widget.options.menu.exportToCSV": "Als CSV exportieren",
     "widget.options.menu.exportToXLSX": "Nach XLSX exportieren",
     "dashboard.error.empty.heading": "Dieses Dashboard ist leer",
