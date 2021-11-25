@@ -57,6 +57,15 @@ export const selectCanCreateAnalyticalDashboard = createSelector(selectPermissio
 });
 
 /**
+ * Returns whether the current user has permissions to edit the analytical dashboard.
+ *
+ * @alpha
+ */
+export const selectCanManageAnalyticalDashboard = createSelector(selectPermissions, (state) => {
+    return state?.canManageAnalyticalDashboard ?? false;
+});
+
+/**
  * Returns whether the current user has permissions to manage access rights.
  *
  * @alpha

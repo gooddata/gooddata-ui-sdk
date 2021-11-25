@@ -701,5 +701,30 @@
         "value": "Only admins can edit this dashboard",
         "comment": "Label of checkbox that sets edit right for the dashboard",
         "limit": 0
+    },
+"header.lockStatus.tooltip": {
+        "value": "<b>This dashboard is locked.</b> Only administrators can edit this dashboard.",
+        "comment": "Shown when hovering over lock indicator. Dont translate html tags <b>, </b>",
+        "limit": 0
+    },
+    "header.shareStatus.shared.text": {
+        "value": "Shared",
+        "comment": "Share indicator text when dashboard is shared with someone",
+        "limit": 0
+    },
+    "header.shareStatus.shared.tooltip": {
+        "value": "This dashboard is shared with other users.",
+        "comment": "Shown when hovering over share indicator of public dashboard.",
+        "limit": 0
+    },
+    "header.shareStatus.private.text": {
+        "value": "Draft",
+        "comment": "Share indicator text when dashboard is private draft",
+        "limit": 0
+    },
+    "header.shareStatus.private.tooltip": {
+        "value": "Only you can view and edit this dashboard.",
+        "comment": "Shown when hovering over share indicator of private dashboard.",
+        "limit": 0
     }
 }

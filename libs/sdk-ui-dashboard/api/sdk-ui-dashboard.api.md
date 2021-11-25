@@ -98,6 +98,7 @@ import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
 import { ITempFilterContext } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
+import { ITranslations } from '@gooddata/sdk-ui';
 import { IUser } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
@@ -120,7 +121,7 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
-import { ShareStatus } from '@gooddata/sdk-backend-spi';
+import { ShareStatus as ShareStatus_2 } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
@@ -2428,6 +2429,14 @@ export interface IInsightMenuItemSeparator {
 }
 
 // @alpha (undocumented)
+export interface ILockedStatusProps {
+    // (undocumented)
+    isLocked: boolean;
+    // (undocumented)
+    theme?: ITheme;
+}
+
+// @alpha (undocumented)
 export interface IMenuButtonConfiguration {
     additionalMenuItems?: ReadonlyArray<[number, IMenuButtonItem]>;
     menuItems?: ReadonlyArray<IMenuButtonItem>;
@@ -2852,7 +2861,13 @@ export interface IShareProps {
     // (undocumented)
     isUnderStrictControl: boolean;
     // (undocumented)
-    shareStatus: ShareStatus;
+    shareStatus: ShareStatus_2;
+}
+
+// @alpha (undocumented)
+export interface IShareStatusProps {
+    // (undocumented)
+    shareStatus: ShareStatus_2;
 }
 
 // @alpha (undocumented)
@@ -2874,7 +2889,11 @@ export interface ITopBarProps {
     // (undocumented)
     DefaultTopBar: CustomTopBarComponent;
     // (undocumented)
+    lockedStatusProps: ILockedStatusProps;
+    // (undocumented)
     menuButtonProps: IMenuButtonProps;
+    // (undocumented)
+    shareStatusProps: IShareStatusProps;
     // (undocumented)
     titleProps: ITitleProps;
 }
@@ -2929,6 +2948,9 @@ export type LoadingState = {
     result?: boolean;
     error?: Error;
 };
+
+// @alpha (undocumented)
+export const LockedStatus: React_2.ComponentType<Pick<ILockedStatusProps, "isLocked">>;
 
 // @alpha
 export type MeasureDateDatasets = {
@@ -3489,6 +3511,9 @@ export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boole
 export const selectCanManageACL: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @alpha
+export const selectCanManageAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @alpha
 export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @alpha (undocumented)
@@ -3543,7 +3568,10 @@ export const selectDashboardRef: OutputSelector<DashboardState, UriRef | Identif
 export const selectDashboardSaving: OutputSelector<DashboardState, SavingState, (res: DashboardState) => SavingState>;
 
 // @alpha
-export const selectDashboardShareStatus: OutputSelector<DashboardState, ShareStatus, (res: DashboardDescriptor) => ShareStatus>;
+export const selectDashboardShareInfo: OutputSelector<DashboardState, IAccessControlAware, (res: DashboardDescriptor) => IAccessControlAware>;
+
+// @alpha
+export const selectDashboardShareStatus: OutputSelector<DashboardState, ShareStatus_2, (res: DashboardDescriptor) => ShareStatus_2>;
 
 // @alpha
 export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: DashboardDescriptor) => string[] | undefined>;
@@ -3838,6 +3866,9 @@ export const ShareButton: (props: IShareButtonProps) => JSX.Element;
 // @internal (undocumented)
 export const ShareDialog: (props: IShareDialogProps) => JSX.Element;
 
+// @alpha (undocumented)
+export const ShareStatus: (props: IShareStatusProps) => JSX.Element;
+
 // @alpha
 export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboardEvent)["type"], handler: DashboardEventHandler["handler"]): DashboardEventHandler;
 
@@ -3849,6 +3880,13 @@ export const Title: (props: ITitleProps) => JSX.Element;
 
 // @internal (undocumented)
 export const TopBar: (props: ITopBarProps) => JSX.Element;
+
+// @internal (undocumented)
+export const translations: {
+    [locale: string]: ITranslations;
+} & {
+    [locale: string]: Record<string, string>;
+};
 
 // @alpha
 export interface TriggerEvent extends IDashboardCommand {

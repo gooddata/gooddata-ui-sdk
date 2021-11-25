@@ -44,6 +44,7 @@ export {
     selectCanExportReport,
     selectCanCreateAnalyticalDashboard,
     selectCanManageACL,
+    selectCanManageAnalyticalDashboard,
 } from "./permissions/permissionsSelectors";
 export { FilterContextState } from "./filterContext/filterContextState";
 export {
@@ -132,6 +133,7 @@ export {
     selectDashboardUri,
     selectDashboardId,
     selectDashboardShareStatus,
+    selectDashboardShareInfo,
     selectPersistedDashboard,
     selectDashboardLockStatus,
 } from "./meta/metaSelectors";

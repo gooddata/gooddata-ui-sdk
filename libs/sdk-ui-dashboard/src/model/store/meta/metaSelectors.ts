@@ -1,7 +1,11 @@
 // (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { idRef, uriRef } from "@gooddata/sdk-model";
-import { IFilterContextDefinition, isTempFilterContext } from "@gooddata/sdk-backend-spi";
+import {
+    IAccessControlAware,
+    IFilterContextDefinition,
+    isTempFilterContext,
+} from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 
@@ -184,3 +188,17 @@ export const selectDashboardShareStatus = createSelector(selectDashboardDescript
 export const selectDashboardLockStatus = createSelector(selectDashboardDescriptor, (state) => {
     return state.isLocked;
 });
+
+/**
+ * Selects complete dashboard share info.
+ *
+ * @alpha
+ */
+export const selectDashboardShareInfo = createSelector(selectDashboardDescriptor, (state) => {
+    const shareInfo: IAccessControlAware = {
+        shareStatus: state.shareStatus,
+        isLocked: state.isLocked,
+    };
+    return shareInfo;
+});
+

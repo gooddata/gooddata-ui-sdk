@@ -8,7 +8,6 @@ import {
     selectCanManageACL,
     selectSettings,
     useDashboardSelector,
-    selectDashboardShareStatus,
     selectBackendCapabilities,
     selectCanManageWorkspace,
     selectDashboardLockStatus,
@@ -23,7 +22,6 @@ const DefaultShareButtonCore: React.FC<IShareButtonProps & WrappedComponentProps
     const settings = useDashboardSelector(selectSettings);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const hasPermission = useDashboardSelector(selectCanManageACL);
-    const currentShareStatus = useDashboardSelector(selectDashboardShareStatus);
     const isLocked = useDashboardSelector(selectDashboardLockStatus);
     const isAdmin = useDashboardSelector(selectCanManageWorkspace);
 
@@ -37,11 +35,7 @@ const DefaultShareButtonCore: React.FC<IShareButtonProps & WrappedComponentProps
             <>
                 <Button
                     onClick={() => onShareButtonClick()}
-                    value={
-                        currentShareStatus === "private"
-                            ? intl.formatMessage({ id: "share.button.text" })
-                            : "UNSHARE" // TODO INE temp switching of label. Will be replaced by status icons TNT-277
-                    }
+                    value={intl.formatMessage({ id: "share.button.text" })}
                     className={
                         "gd-button-secondary dash-header-share-button s-header-share-button gd-button gd-icon-users"
                     }

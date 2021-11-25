@@ -4,3 +4,4 @@ export * from "./menuButton";
 export * from "./title";
 export * from "./topBar";
 export * from "./shareButton";
+export * from "./shareIndicators";
