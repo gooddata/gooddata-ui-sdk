@@ -401,7 +401,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                     position: fixed;
                     right: 0;
                     left: 0;
-                    z-index: 32;
+                    z-index: 132;
                     display: flex;
                     flex-wrap: nowrap;
                     justify-content: space-between;
@@ -413,7 +413,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                     top: 0;
                     min-height: 65px;
                     background-color: #fff;
-                    z-index: 33;
+                    z-index: 133;
                 }
 
                 .gd-docs-header-nav__second {
