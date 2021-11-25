@@ -130,6 +130,11 @@ export const App: React.FC = () => {
                                 max-width: 800px;
                             }
 
+                            // some p tags must not be affected by the previous rule...
+                            :global(.gd-typography--p) {
+                                max-width: initial;
+                            }
+
                             .pageWrapper {
                                 display: flex;
                                 width: 100%;

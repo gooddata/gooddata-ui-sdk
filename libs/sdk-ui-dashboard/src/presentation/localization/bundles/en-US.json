@@ -656,6 +656,11 @@
         "limit": 0,
         "translate": false
     },
+    "export_unsupported.disabled": {
+        "value": "Export is not supported",
+        "comment": "Export to the file not supported.",
+        "limit": 0
+    },
     "widget.options.menu.exportToCSV": {
         "value": "Export to CSV",
         "comment": "Export to file with CSV extension.",
