@@ -42,6 +42,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
         widgetRef: widget.ref,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
+        insight,
     });
 
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({

@@ -55,6 +55,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
         title: getTitleWithBreadcrumbs(baseInsightTitle, breadcrumbs),
         widgetRef: DRILL_MODAL_EXECUTION_PSEUDO_REF,
+        insight,
     });
 
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;
