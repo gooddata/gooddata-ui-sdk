@@ -350,6 +350,10 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             setState((prevState) => {
                 return {
                     ...prevState,
+                    selectedFilterOptions: [],
+                    appliedFilterOptions: [],
+                    isInverted: true,
+                    appliedIsInverted: true,
                     isFiltering: true,
                 };
             });
