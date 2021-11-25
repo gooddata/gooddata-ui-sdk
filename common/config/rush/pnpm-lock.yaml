@@ -21275,7 +21275,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-tnhtsGZiELUAIn5rMC6arJmdp8j0hoqiG9U0wRS0ri9f98UXpS6l65MQjmdFZThA7qL/iMEXqT0XEmamGyH5kQ==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-E6Wleru+vgD/vK1JOFJO1yitfa7ZZzIvQDIfe9IPnf7T5q8JpW828TShImCz4uz/6ke05krWUOkRsAZlhBi4kw==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -21287,6 +21287,7 @@ packages:
       '@types/enzyme': 3.10.8
       '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 26.0.23
+      '@types/json-stable-stringify': 1.0.32
       '@types/lodash': 4.14.170
       '@types/raf': 3.4.0
       '@types/react': 16.14.8
@@ -21315,6 +21316,7 @@ packages:
       jest: 26.6.3_ts-node@8.10.2
       jest-enzyme: 7.1.2_847a09de400b6a6d5a9c863e7946818d
       jest-junit: 3.7.0
+      json-stable-stringify: 1.0.1
       lodash: 4.17.21
       prettier: 2.3.1
       process: 0.11.10
