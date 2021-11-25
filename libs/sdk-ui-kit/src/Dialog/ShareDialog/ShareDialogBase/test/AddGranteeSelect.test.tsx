@@ -24,11 +24,13 @@ const createComponent = (
 ): ReactWrapper => {
     const props: IAddGranteeSelectProps = { ...defaultProps, ...customProps };
     const config: RecordedBackendConfig = {
-        users: {
-            users: users,
-        },
-        userGroup: {
-            userGroups: groups,
+        userManagement: {
+            users: {
+                users: users,
+            },
+            userGroup: {
+                userGroups: groups,
+            },
         },
     };
 

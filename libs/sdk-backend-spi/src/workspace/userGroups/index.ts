@@ -12,7 +12,7 @@ export interface IWorkspaceUserGroup {
      */
     ref: ObjRef;
     /**
-     * Stored user group id (unfortunately some of bear API need group URI and some its id, so we need to keep both of them)
+     * Stored user group id
      */
     id?: string;
     /**

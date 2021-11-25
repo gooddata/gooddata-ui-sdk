@@ -87,26 +87,3 @@ export const loadGranteeOptionsPromise =
             return createErrorOption(intl);
         }
     };
-
-export const loadGranteeOptionsPromiseError =
-    (_appliedGrantees: GranteeItem[], _backend: IAnalyticalBackend, _workspace: string, intl: IntlShape) =>
-    async (_inputValue: string): Promise<IGroupedOption[] | ISelectErrorOption[]> => {
-        try {
-            // eslint-disable-next-line no-console
-            console.log("Err");
-            throw "errr";
-            return [];
-        } catch (ex) {
-            // eslint-disable-next-line no-console
-            console.log("ex");
-            return [
-                {
-                    isDisabled: true,
-                    type: "error",
-                    label: intl.formatMessage({
-                        id: "shareDialog.share.grantee.add.search.error.message",
-                    }),
-                },
-            ];
-        }
-    };

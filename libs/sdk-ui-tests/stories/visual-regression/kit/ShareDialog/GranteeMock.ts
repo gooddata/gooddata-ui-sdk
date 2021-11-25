@@ -5,7 +5,7 @@ import {
     IGranteeGroup,
     IGranteeGroupAll,
     IGranteeUser,
-    IGranteeUserInactive,
+    IGranteeInactiveOwner,
 } from "@gooddata/sdk-ui-kit";
 
 export const user: IGranteeUser = {
@@ -77,7 +77,7 @@ export const groupAll: IGranteeGroupAll = {
     memberCount: 11,
 };
 
-export const inactiveUser: IGranteeUserInactive = {
+export const inactiveUser: IGranteeInactiveOwner = {
     type: "inactive_owner",
     id: uriRef("inactive_user"),
 };

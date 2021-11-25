@@ -2,16 +2,14 @@
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
-import { ISharedObject, ISharingApplyPayload as Payload } from "@gooddata/sdk-ui-kit";
+import { ISharedObject, ISharingApplyPayload as ISharingDialogApplyPayload } from "@gooddata/sdk-ui-kit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * @alpha
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ISharingApplyPayload extends Payload {
-    // this payload will have more items,
-}
+export interface ISharingApplyPayload extends ISharingDialogApplyPayload {}
 
 /**
  * @alpha

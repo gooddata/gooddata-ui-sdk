@@ -23,7 +23,6 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
     } = props;
     const intl = useIntl();
 
-    // TODO mozna ownera pridat drive hned po nacten
     const granteeList = useMemo(() => {
         return [owner, ...grantees].sort(sortGranteesByName(intl));
     }, [grantees, owner, intl]);

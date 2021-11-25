@@ -12,20 +12,12 @@ import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
 import { current, group, groupAll, user } from "./GranteeMock";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 const EmptySelectionExample = (): JSX.Element => {
-    const config: RecordedBackendConfig = {
-        accessControl: {
-            accessList: [],
-        },
-        users: {
-            users: [],
-        },
-    };
     const workspace = "foo";
-    const backend = recordedBackend(ReferenceRecordings.Recordings, config);
+    const backend = recordedBackend(ReferenceRecordings.Recordings);
 
     return (
         <div id="Share-Grantee-base-basic-example">
@@ -48,16 +40,8 @@ const EmptySelectionExample = (): JSX.Element => {
 };
 
 const EmptyAvailableItemsExample = (): JSX.Element => {
-    const config: RecordedBackendConfig = {
-        accessControl: {
-            accessList: [],
-        },
-        users: {
-            users: [],
-        },
-    };
     const workspace = "foo";
-    const backend = recordedBackend(ReferenceRecordings.Recordings, config);
+    const backend = recordedBackend(ReferenceRecordings.Recordings);
 
     return (
         <div id="Share-Grantee-base-basic-example">
@@ -80,16 +64,8 @@ const EmptyAvailableItemsExample = (): JSX.Element => {
 };
 
 const SelectedItemsExample = (): JSX.Element => {
-    const config: RecordedBackendConfig = {
-        accessControl: {
-            accessList: [],
-        },
-        users: {
-            users: [],
-        },
-    };
     const workspace = "foo";
-    const backend = recordedBackend(ReferenceRecordings.Recordings, config);
+    const backend = recordedBackend(ReferenceRecordings.Recordings);
 
     return (
         <div id="Share-Grantee-base-basic-example">

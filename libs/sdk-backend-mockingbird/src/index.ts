@@ -30,6 +30,7 @@ export {
     IUserGroup,
     IUsers,
     IAccessControl,
+    IUserManagement,
 } from "./recordedBackend/types";
 
 export {

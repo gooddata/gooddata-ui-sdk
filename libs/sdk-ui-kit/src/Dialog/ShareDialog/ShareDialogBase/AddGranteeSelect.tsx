@@ -36,7 +36,7 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
     const selectRef = useRef<AsyncSelect<ISelectOption, false>>(null);
 
     useEffect(() => {
-        selectRef?.current.focus();
+        selectRef.current.focus();
     }, []);
 
     const onSelect = useCallback(

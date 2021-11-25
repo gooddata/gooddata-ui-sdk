@@ -14,7 +14,7 @@ export type {
     IGranteeUser,
     IGranteeGroup,
     IGranteeGroupAll,
-    IGranteeInactiveOwner as IGranteeUserInactive,
+    IGranteeInactiveOwner,
     IShareDialogBaseProps,
     IGranteeItemProps,
     IShareGranteeBaseProps,

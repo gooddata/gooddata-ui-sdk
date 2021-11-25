@@ -49,9 +49,11 @@ import { RecordedMeasures } from "./measures";
 import { RecordedFacts } from "./facts";
 import { RecordedDashboards } from "./dashboards";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import { recordedUserGroupsQuery } from "./userGroups";
-import { recordedAccessControlFactory } from "./accessControl";
-import { RecordedWorkspaceUsersQuery } from "./users";
+import {
+    recordedAccessControlFactory,
+    recordedUserGroupsQuery,
+    RecordedWorkspaceUsersQuery,
+} from "./userManagement";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -271,7 +273,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
     return {
         async getUser(): Promise<IUser> {
             return (
-                implConfig.user ?? {
+                implConfig.userManagement?.user ?? {
                     login: USER_ID,
                     ref: idRef(USER_ID),
                     email: "",

@@ -9,14 +9,14 @@ import { wrapWithTheme } from "../../themeWrapper";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import { action } from "@storybook/addon-actions";
 
-import { GranteeItem, IGranteeUser, IGranteeUserInactive, ShareGranteeBase } from "@gooddata/sdk-ui-kit";
+import { GranteeItem, IGranteeUser, IGranteeInactiveOwner, ShareGranteeBase } from "@gooddata/sdk-ui-kit";
 import { grantees, inactiveUser, owner } from "./GranteeMock";
 import { uriRef } from "@gooddata/sdk-model";
 
 interface BasicExampleProps {
     isDirty: boolean;
     grantees: GranteeItem[];
-    owner: IGranteeUser | IGranteeUserInactive;
+    owner: IGranteeUser | IGranteeInactiveOwner;
 }
 
 const BasicExample = (props: BasicExampleProps): JSX.Element => {

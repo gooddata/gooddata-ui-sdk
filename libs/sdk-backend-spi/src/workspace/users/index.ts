@@ -72,6 +72,7 @@ export interface IWorkspaceUsersQueryOptions {
 
     /**
      * Optionally specify number of items per page.
+     * Default value is 1000
      */
     limit?: number;
 }

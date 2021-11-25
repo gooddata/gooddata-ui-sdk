@@ -12,10 +12,9 @@ import { action } from "@storybook/addon-actions";
 import { getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { groupAll, owner } from "./GranteeMock";
-
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { uriRef } from "@gooddata/sdk-model";
-import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 const BasicExample = (): JSX.Element => {
@@ -37,16 +36,8 @@ const BasicExample = (): JSX.Element => {
         [setOpen],
     );
 
-    const config: RecordedBackendConfig = {
-        accessControl: {
-            accessList: [],
-        },
-        users: {
-            users: [],
-        },
-    };
     const workspace = "foo";
-    const backend = recordedBackend(ReferenceRecordings.Recordings, config);
+    const backend = recordedBackend(ReferenceRecordings.Recordings);
 
     return (
         <BackendProvider backend={backend}>
@@ -98,7 +89,14 @@ const scenarios: BackstopConfig = {
         clickSelectors: [".s-share-dialog-button", 100, ".s-add-users-or-groups", 100],
     },
     "selected-grantee": {
-        clickSelectors: [".s-share-dialog-button", 100, ".s-add-users-or-groups", 100, granteeAllSelector],
+        clickSelectors: [
+            ".s-share-dialog-button",
+            100,
+            ".s-add-users-or-groups",
+            100,
+            granteeAllSelector,
+            300,
+        ],
     },
 };
 

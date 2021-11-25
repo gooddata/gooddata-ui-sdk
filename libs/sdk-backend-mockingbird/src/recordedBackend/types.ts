@@ -100,11 +100,6 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
 
     /**
-     * Specify user to return.
-     */
-    user?: IUser;
-
-    /**
      * Specify responses to the getCommonAttributes calls. The key of the map MUST be created using the {@link objRefsToStringKey} function.
      */
     getCommonAttributesResponses?: Record<string, ObjRef[]>;
@@ -120,17 +115,37 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     };
 
     /**
-     * Optionally specify response for accessList
+     * Optionally Specify currently authenticated user or workspace users or groups or access to the objects
+     */
+    userManagement?: IUserManagement;
+};
+
+/**
+ * @internal
+ */
+export type IUserManagement = {
+    /**
+     * Optionally Specify currently authenticated user
+     * Response of IUserService
+     */
+    user?: IUser;
+
+    /**
+     * Optionally Specify respond of Service to manage access to the objects.
+     * IWorkspaceAccessControlService
+     *
      */
     accessControl?: IAccessControl;
 
     /**
-     * Optionally specify response for userGroup
+     *  Optionally Specify respond of Service to query user groups for current workspace
+     *  IWorkspaceUserGroupsQuery
      */
     userGroup?: IUserGroup;
 
     /**
-     * Optionally specify response for users
+     * Optionally Specify users for current workspace
+     * IWorkspaceUsersQuery
      */
     users?: IUsers;
 };

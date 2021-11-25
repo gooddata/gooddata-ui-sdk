@@ -105,6 +105,14 @@ export type IUserGroup = {
 };
 
 // @internal (undocumented)
+export type IUserManagement = {
+    user?: IUser;
+    accessControl?: IAccessControl;
+    userGroup?: IUserGroup;
+    users?: IUsers;
+};
+
+// @internal (undocumented)
 export type IUsers = {
     users?: IWorkspaceUser[];
 };
@@ -165,7 +173,6 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
     securitySettingsPluginUrlValidator?: SecuritySettingsPluginUrlValidator;
     securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
-    user?: IUser;
     getCommonAttributesResponses?: Record<string, ObjRef[]>;
     catalogAvailability?: {
         availableAttributes?: (attributes: ICatalogAttribute[]) => ICatalogAttribute[];
@@ -173,9 +180,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
         availableFacts?: (facts: ICatalogFact[]) => ICatalogFact[];
         availableDateDatasets?: (datasets: ICatalogDateDataset[]) => ICatalogDateDataset[];
     };
-    accessControl?: IAccessControl;
-    userGroup?: IUserGroup;
-    users?: IUsers;
+    userManagement?: IUserManagement;
 };
 
 // @internal

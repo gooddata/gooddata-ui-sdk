@@ -480,7 +480,7 @@ export type GetPositionedSelfRegion = {
 export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T;
 
 // @internal (undocumented)
-export type GranteeItem = IGranteeUser | IGranteeUserInactive | IGranteeGroup | IGranteeGroupAll;
+export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll;
 
 // @internal (undocumented)
 export const GranteeItemComponent: React_2.FC<IGranteeItemProps>;
@@ -1277,6 +1277,12 @@ export interface IGranteeGroupAll extends IGranteeBase {
 }
 
 // @internal (undocumented)
+export interface IGranteeInactiveOwner extends IGranteeBase {
+    // (undocumented)
+    type: "inactive_owner";
+}
+
+// @internal (undocumented)
 export interface IGranteeItemProps {
     // (undocumented)
     grantee: GranteeItem;
@@ -1300,12 +1306,6 @@ export interface IGranteeUser extends IGranteeBase {
     status: GranteeStatus;
     // (undocumented)
     type: "user";
-}
-
-// @internal (undocumented)
-export interface IGranteeUserInactive extends IGranteeBase {
-    // (undocumented)
-    type: "inactive_owner";
 }
 
 // @internal (undocumented)
@@ -2539,7 +2539,7 @@ export interface IShareDialogBaseProps {
     // (undocumented)
     onSubmit: (grantees: GranteeItem[], granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[]) => void;
     // (undocumented)
-    owner: IGranteeUser | IGranteeUserInactive;
+    owner: IGranteeUser | IGranteeInactiveOwner;
     // (undocumented)
     sharedObjectRef: ObjRef;
     // (undocumented)
@@ -2589,7 +2589,7 @@ export interface IShareGranteeBaseProps {
     // (undocumented)
     onSubmit: () => void;
     // (undocumented)
-    owner: IGranteeUser | IGranteeUserInactive;
+    owner: IGranteeUser | IGranteeInactiveOwner;
 }
 
 // @internal (undocumented)

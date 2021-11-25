@@ -30,7 +30,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
 
     const onShareDialogBaseError = useCallback(
         (err: Error) => {
-            onError && onError(new UnexpectedSdkError(err.message, err));
+            onError?.(new UnexpectedSdkError(err.message, err));
         },
         [onError],
     );
