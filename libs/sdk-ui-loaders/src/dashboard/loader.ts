@@ -67,6 +67,10 @@ export interface IEmbeddedPlugin {
 }
 
 /**
+ * Dashboard loader is responsible for loading dashboard and all the assets that the dashboard needs. As a
+ * result, it returns a React component and an instance of props to use in order
+ * to mount the dashboard.
+ *
  * @public
  */
 export interface IDashboardLoader {

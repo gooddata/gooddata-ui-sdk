@@ -17,6 +17,8 @@ import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader
 import invariant from "ts-invariant";
 
 /**
+ * Returned by the `useDashboardLoader` to communicate the status of dashboard loading.
+ *
  * @public
  */
 export type DashboardLoadStatus = UseCancelablePromiseState<DashboardLoadResult, any>;
