@@ -8,7 +8,7 @@ import { ObjRef } from "@gooddata/sdk-model";
  * This a specialization of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} interface in which the `dashboard` can only be provided
  * by reference.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
     /**
@@ -19,7 +19,7 @@ export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, 
 
 /**
  * Dashboard loading options
- * @alpha
+ * @public
  */
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     /**
@@ -76,7 +76,7 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
 }
 
 /**
- * @alpha
+ * @public
  */
 export type AdaptiveLoadOptions = {
     /**
@@ -131,7 +131,7 @@ export type AdaptiveLoadOptions = {
  * };
  * ```
  *
- * @alpha
+ * @public
  */
 export type ModuleFederationIntegration = {
     __webpack_init_sharing__: (scope: string) => Promise<void>;
@@ -140,7 +140,7 @@ export type ModuleFederationIntegration = {
 
 /**
  * Dashboard plugin and its parameters.
- * @alpha
+ * @public
  */
 export type LoadedPlugin = {
     plugin: IDashboardPluginContract_V1;

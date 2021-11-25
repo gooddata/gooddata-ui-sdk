@@ -17,7 +17,7 @@ import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader
 import invariant from "ts-invariant";
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardLoadStatus = UseCancelablePromiseState<DashboardLoadResult, any>;
 
@@ -34,7 +34,7 @@ const InitialStatus: DashboardLoadStatus = {
  * @remarks See {@link IDashboardLoadOptions.loadingMode} to learn about loading modes
  *
  * @param options - load options
- * @alpha
+ * @public
  */
 export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoadStatus {
     const backend = useBackendStrict(options.backend);
