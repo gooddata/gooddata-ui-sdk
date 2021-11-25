@@ -2,7 +2,7 @@
 /**
  * All available command types.
  *
- * @alpha
+ * @public
  */
 export type DashboardCommandType =
     | "GDC.DASH/CMD.INITIALIZE"
@@ -61,7 +61,7 @@ export type DashboardCommandType =
     | "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE";
 
 /**
- * @alpha
+ * @public
  */
 export type CommandProcessingMeta = {
     /**
@@ -77,7 +77,7 @@ export type CommandProcessingMeta = {
  * they target backend, workspace and dashboard in depending on the Dashboard component tree from which the dispatch
  * is done.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardCommand {
     /**

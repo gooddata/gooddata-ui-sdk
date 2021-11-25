@@ -274,8 +274,9 @@ export {
     isDashboardRenderRequested,
     isDashboardRenderResolved,
 } from "./render";
+
 /**
- * @alpha
+ * @public
  */
 export type DashboardEvents =
     | DashboardInitialized

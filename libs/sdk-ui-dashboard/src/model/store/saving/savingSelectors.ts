@@ -14,6 +14,6 @@ const selectSelf = createSelector(
 export const selectDashboardSaving = selectSelf;
 
 /**
- * @alpha
+ * @public
  */
 export const selectIsDashboardSaving = createSelector(selectSelf, (state) => state.saving);
