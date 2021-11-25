@@ -17,14 +17,13 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 
-// @public (undocumented)
+// @public
 export type AdaptiveLoadOptions = {
     moduleFederationIntegration: ModuleFederationIntegration;
 };
 
-// @public (undocumented)
+// @public
 export class DashboardLoader implements IDashboardLoader {
-    // (undocumented)
     static adaptive(options: AdaptiveLoadOptions): DashboardLoader;
     // (undocumented)
     forDashboard: (dashboardRef: ObjRef) => this;
@@ -36,7 +35,6 @@ export class DashboardLoader implements IDashboardLoader {
     load: () => Promise<DashboardLoadResult>;
     // (undocumented)
     onBackend: (backend: IAnalyticalBackend) => this;
-    // (undocumented)
     static staticOnly(): DashboardLoader;
     // (undocumented)
     withBaseProps: (props: IDashboardBasePropsForLoader) => this;
@@ -55,7 +53,7 @@ export type DashboardLoadResult = {
     plugins: IDashboardPluginContract_V1[];
 };
 
-// @public (undocumented)
+// @public
 export type DashboardLoadStatus = UseCancelablePromiseState<DashboardLoadResult, any>;
 
 // @public
@@ -66,7 +64,7 @@ export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, 
     dashboard: ObjRef;
 }
 
-// @public (undocumented)
+// @public
 export interface IDashboardLoader {
     forDashboard(dashboardRef: ObjRef): IDashboardLoader;
     fromClientWorkspace(clientWorkspace: IClientWorkspaceIdentifiers): IDashboardLoader;

@@ -18,7 +18,8 @@ export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, 
 }
 
 /**
- * Dashboard loading options
+ * Dashboard loading options.
+ *
  * @public
  */
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
@@ -76,6 +77,13 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
 }
 
 /**
+ * Adaptive loading requires additional options passed by the client. The crucial options are the
+ * module federation integration functions.
+ *
+ * The adaptive loader relies on Webpack's Module Federation to get the job done and expects that it
+ * is running in context where Webpack Module Federation is correctly setup; the load requires few functions
+ * from webpack in order to work properly. You need to pass them in via these options.
+ *
  * @public
  */
 export type AdaptiveLoadOptions = {
