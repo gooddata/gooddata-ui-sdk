@@ -82,7 +82,6 @@ export {
     selectAllKpiWidgets,
     selectIsLayoutEmpty,
     selectWidgetDrills,
-    selectIsWidgetExportSupported,
 } from "./layout/layoutSelectors";
 export { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 export {

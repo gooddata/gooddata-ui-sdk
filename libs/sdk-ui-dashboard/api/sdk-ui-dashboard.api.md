@@ -3745,9 +3745,6 @@ export const selectIsScheduleEmailDialogOpen: OutputSelector<DashboardState, boo
 export const selectIsShareDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @alpha
-export const selectIsWidgetExportSupported: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: IKpiWidget | IInsightWidget | undefined, res2: ObjRefMap<IInsight>) => boolean>;
-
-// @alpha
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
 
 // @alpha
