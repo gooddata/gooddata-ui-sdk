@@ -36,12 +36,12 @@ import {
 import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation";
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardEngineLoader = (dashboard: IDashboardWithReferences) => Promise<IDashboardEngine>;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardPluginsLoader = (
     ctx: DashboardContext,
@@ -49,7 +49,7 @@ export type DashboardPluginsLoader = (
 ) => Promise<LoadedPlugin[]>;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardBeforeLoad = (
     ctx: DashboardContext,
@@ -57,7 +57,7 @@ export type DashboardBeforeLoad = (
 ) => Promise<void>;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardLoaderConfig = {
     /**
@@ -95,7 +95,7 @@ const AdaptiveLoadStrategies = (
 };
 
 /**
- * @alpha
+ * @public
  */
 export class DashboardLoader implements IDashboardLoader {
     private readonly config: DashboardLoaderConfig;
