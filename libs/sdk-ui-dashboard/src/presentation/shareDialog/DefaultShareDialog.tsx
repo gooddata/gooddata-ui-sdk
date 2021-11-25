@@ -23,9 +23,15 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
     const intl = useIntl();
     const labels: IShareDialogLabels = useMemo(
         () => ({
-            lockControl: intl.formatMessage({ id: "dashboard.shareDialog.lock.label" }),
-            underLenientControl: intl.formatMessage({
+            accessTypeLabel: intl.formatMessage({ id: "dashboard.shareDialog.lock.label" }),
+            accessRegimeLabel: intl.formatMessage({
                 id: "dashboard.shareDialog.underLenientControl.label",
+            }),
+            removeAccessCreatorTooltip: intl.formatMessage({
+                id: "dashboard.shareDialog.removeAccessCreatorTooltip",
+            }),
+            removeAccessGranteeTooltip: intl.formatMessage({
+                id: "dashboard.shareDialog.removeAccessGranteeTooltip",
             }),
         }),
         [intl],

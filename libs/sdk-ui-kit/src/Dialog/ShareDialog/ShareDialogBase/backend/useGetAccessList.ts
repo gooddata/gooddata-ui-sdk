@@ -11,6 +11,7 @@ import { GranteeItem } from "../types";
  */
 interface IUseGetAccessListProps {
     sharedObjectRef: ObjRef;
+    currentUserRef: ObjRef;
     onSuccess: (result: GranteeItem[]) => void;
     onError: (err: Error) => void;
 }
@@ -19,7 +20,7 @@ interface IUseGetAccessListProps {
  * @internal
  */
 export const useGetAccessList = (props: IUseGetAccessListProps): void => {
-    const { sharedObjectRef, onSuccess, onError } = props;
+    const { sharedObjectRef, currentUserRef, onSuccess, onError } = props;
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
 
@@ -28,10 +29,10 @@ export const useGetAccessList = (props: IUseGetAccessListProps): void => {
 
     const onSuccessCallBack = useCallback(
         (result: AccessGranteeDetail[]) => {
-            const grantees = result.map(mapAccessGranteeDetailToGrantee);
+            const grantees = result.map((item) => mapAccessGranteeDetailToGrantee(item, currentUserRef));
             onSuccess(grantees);
         },
-        [onSuccess],
+        [currentUserRef, onSuccess],
     );
 
     useCancelablePromise({ promise, onError, onSuccess: onSuccessCallBack }, [

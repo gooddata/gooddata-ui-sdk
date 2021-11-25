@@ -26,8 +26,10 @@ export interface ISharedObject extends IAccessControlAware, IAuditableUsers {
  * @internal
  */
 export interface IShareDialogLabels {
-    lockControl: string;
-    underLenientControl: string;
+    accessTypeLabel: string;
+    accessRegimeLabel: string;
+    removeAccessGranteeTooltip: string;
+    removeAccessCreatorTooltip: string;
 }
 
 /**

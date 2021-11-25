@@ -223,6 +223,9 @@ export const ColorPickerPointer: React_2.FC;
 export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
 
 // @internal (undocumented)
+export const ComponentLabelsProvider: React_2.FC<IComponentLabelsProviderProps>;
+
+// @internal (undocumented)
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
     // (undocumented)
     render(): JSX.Element;
@@ -554,6 +557,8 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     appliedGrantees: GranteeItem[];
     // (undocumented)
+    currentUserRef: ObjRef;
+    // (undocumented)
     isDirty: boolean;
     // (undocumented)
     onAddUserOrGroups?: (grantee: GranteeItem) => void;
@@ -799,6 +804,11 @@ export interface ICommunityEditionDialogProps {
     // (undocumented)
     onClose: () => void;
 }
+
+// @internal (undocumented)
+export type IComponentLabelsProviderProps = {
+    labels: IShareDialogLabels;
+};
 
 // @internal (undocumented)
 export const Icon: {
@@ -2551,7 +2561,7 @@ export const isGranteeUser: (obj: unknown) => obj is IGranteeUser;
 // @internal (undocumented)
 export interface IShareDialogBaseProps {
     // (undocumented)
-    labels: IShareDialogLabels;
+    currentUserRef: ObjRef;
     // (undocumented)
     onCancel: () => void;
     // (undocumented)
@@ -2565,9 +2575,13 @@ export interface IShareDialogBaseProps {
 // @internal (undocumented)
 export interface IShareDialogLabels {
     // (undocumented)
-    lockControl: string;
+    accessRegimeLabel: string;
     // (undocumented)
-    underLenientControl: string;
+    accessTypeLabel: string;
+    // (undocumented)
+    removeAccessCreatorTooltip: string;
+    // (undocumented)
+    removeAccessGranteeTooltip: string;
 }
 
 // @internal (undocumented)
@@ -2603,6 +2617,8 @@ export interface ISharedObject extends IAccessControlAware, IAuditableUsers {
 // @internal (undocumented)
 export interface IShareGranteeBaseProps {
     // (undocumented)
+    currentUserRef: ObjRef;
+    // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)
     isDirty: boolean;
@@ -2612,8 +2628,6 @@ export interface IShareGranteeBaseProps {
     isLockedNow: boolean;
     // (undocumented)
     isUnderLenientControlNow: boolean;
-    // (undocumented)
-    labels: IShareDialogLabels;
     // (undocumented)
     onAddGranteeButtonClick: () => void;
     // (undocumented)

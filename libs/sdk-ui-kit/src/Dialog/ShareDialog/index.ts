@@ -22,6 +22,7 @@ export type {
     IAddGranteeBaseProps,
     DialogModeType,
     IAffectedSharedObject,
+    IComponentLabelsProviderProps,
 } from "./ShareDialogBase/types";
 
 export { isGranteeUser, isGranteeGroup } from "./ShareDialogBase/types";
@@ -33,5 +34,7 @@ export { ShareGranteeBase } from "./ShareDialogBase/ShareGranteeBase";
 export { AddGranteeBase } from "./ShareDialogBase/AddGranteeBase";
 
 export { GranteeItemComponent } from "./ShareDialogBase/GranteeItem";
+
+export { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext";
 
 export { getGranteeItemTestId } from "./ShareDialogBase/utils";

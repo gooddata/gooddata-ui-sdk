@@ -11,10 +11,12 @@ import { IWorkspaceUser, IWorkspaceUserGroup } from "@gooddata/sdk-backend-spi";
 import { groupAll, workSpaceGroup, workspaceUser } from "./GranteeMock";
 import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers";
 import { getGranteeItemTestId } from "../utils";
+import { uriRef } from "@gooddata/sdk-model";
 
 const defaultProps: IAddGranteeSelectProps = {
     onSelectGrantee: noop,
     appliedGrantees: [],
+    currentUserRef: uriRef("user-uri"),
 };
 
 const createComponent = (
@@ -63,7 +65,7 @@ function isErrorMessageVisible(wrapper: ReactWrapper) {
 }
 
 function getUserOptionSelector(user: IWorkspaceUser): string {
-    return `.${getGranteeItemTestId(mapWorkspaceUserToGrantee(user), "option")}`;
+    return `.${getGranteeItemTestId(mapWorkspaceUserToGrantee(user, uriRef("")), "option")}`;
 }
 
 function getGroupOptionSelector(group: IWorkspaceUserGroup): string {
@@ -141,7 +143,7 @@ describe("AddGranteeSelect", () => {
         wrapper.update();
 
         const userSelector = getUserOptionSelector(workspaceUser);
-        const expectedPayload = mapWorkspaceUserToGrantee(workspaceUser);
+        const expectedPayload = mapWorkspaceUserToGrantee(workspaceUser, uriRef(""));
 
         clickOnOption(wrapper, userSelector);
         wrapper.update();

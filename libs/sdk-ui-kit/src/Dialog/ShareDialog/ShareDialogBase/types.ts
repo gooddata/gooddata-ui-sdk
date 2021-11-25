@@ -2,7 +2,6 @@
 import { ShareStatus } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
-
 import { IShareDialogLabels } from "../types";
 
 // Grantee types
@@ -108,6 +107,13 @@ export const isGranteeItem = (obj: unknown): obj is GranteeItem => {
 /**
  * @internal
  */
+export type IComponentLabelsProviderProps = {
+    labels: IShareDialogLabels;
+};
+
+/**
+ * @internal
+ */
 export type DialogModeType = "ShareGrantee" | "AddGrantee";
 
 /**
@@ -128,7 +134,7 @@ export interface IAffectedSharedObject {
  */
 export interface IShareDialogBaseProps {
     sharedObject: IAffectedSharedObject;
-    labels: IShareDialogLabels;
+    currentUserRef: ObjRef;
     onCancel: () => void;
     onSubmit: (
         grantees: GranteeItem[],
@@ -153,13 +159,13 @@ export interface IGranteeItemProps {
  * @internal
  */
 export interface IShareGranteeBaseProps {
+    currentUserRef: ObjRef;
     isDirty: boolean;
     isLoading: boolean;
     isLockedNow: boolean;
     isUnderLenientControlNow: boolean;
     sharedObject: IAffectedSharedObject;
     grantees: GranteeItem[];
-    labels: IShareDialogLabels;
     onAddGranteeButtonClick: () => void;
     onGranteeDelete: (grantee: GranteeItem) => void;
     onCancel: () => void;
@@ -183,6 +189,7 @@ export interface IShareGranteeContentProps {
  */
 export interface IAddGranteeBaseProps {
     isDirty: boolean;
+    currentUserRef: ObjRef;
     addedGrantees: GranteeItem[];
     appliedGrantees: GranteeItem[];
     onBackClick?: () => void;
@@ -196,6 +203,7 @@ export interface IAddGranteeBaseProps {
  * @internal
  */
 export interface IAddGranteeContentProps {
+    currentUserRef: ObjRef;
     addedGrantees: GranteeItem[];
     appliedGrantees: GranteeItem[];
     onDelete: (grantee: GranteeItem) => void;
@@ -256,6 +264,7 @@ export const isSelectErrorOption = (obj: unknown): obj is ISelectErrorOption => 
  */
 export interface IAddGranteeSelectProps {
     onSelectGrantee: (grantee: GranteeItem) => void;
+    currentUserRef: ObjRef;
     appliedGrantees: GranteeItem[];
 }
 
@@ -265,7 +274,6 @@ export interface IAddGranteeSelectProps {
 export interface ISharedObjectLockControlProps {
     isLocked: boolean;
     isLockingSupported: boolean;
-    labels: IShareDialogLabels;
     onLockChange: (locked: boolean) => void;
 }
 
@@ -275,6 +283,5 @@ export interface ISharedObjectLockControlProps {
 export interface ISharedObjectUnderLenientControlProps {
     isUnderLenientControl: boolean;
     isLeniencyControlSupported: boolean;
-    labels: IShareDialogLabels;
     onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
 }

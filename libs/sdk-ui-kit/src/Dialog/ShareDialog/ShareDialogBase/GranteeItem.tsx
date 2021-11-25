@@ -41,10 +41,6 @@ interface IGranteeGroupItemProps {
 const granteeUserTitleRenderer = (grantee: IGranteeUser, intl: IntlShape): JSX.Element => {
     const userName = getGranteeLabel(grantee, intl);
 
-    if (grantee.isCurrentUser) {
-        return <>{intl.formatMessage({ id: "shareDialog.share.grantee.item.you" }, { userName })}</>;
-    }
-
     if (grantee.status === "Inactive") {
         const inactiveLabel = ` (${intl.formatMessage({
             id: "shareDialog.share.grantee.item.user.inactive",
@@ -69,7 +65,11 @@ const GranteeUserItem: React.FC<IGranteeUserItemProps> = (props) => {
         onDelete(grantee);
     }, [grantee, onDelete]);
 
-    const itemClassName = cx("gd-share-dialog-grantee-item", getGranteeItemTestId(grantee));
+    const itemClassName = cx(
+        { "s-share-dialog-owner": grantee.isOwner, "s-share-dialog-current-user": grantee.isCurrentUser },
+        "gd-share-dialog-grantee-item",
+        getGranteeItemTestId(grantee),
+    );
 
     return (
         <div className={itemClassName}>
@@ -96,7 +96,11 @@ const GranteeUserInactiveItem: React.FC<IGranteeInactiveItemProps> = (props) => 
         return getGranteeLabel(grantee, intl);
     }, [grantee, intl]);
 
-    const itemClassName = cx("gd-share-dialog-grantee-item", getGranteeItemTestId(grantee));
+    const itemClassName = cx(
+        "gd-share-dialog-grantee-item",
+        "s-share-dialog-inactive-owner",
+        getGranteeItemTestId(grantee),
+    );
 
     return (
         <div className={itemClassName}>

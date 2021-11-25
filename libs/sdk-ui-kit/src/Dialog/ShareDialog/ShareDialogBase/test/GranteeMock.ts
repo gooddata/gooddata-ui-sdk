@@ -1,6 +1,11 @@
 // (C) 2021 GoodData Corporation
 import { uriRef } from "@gooddata/sdk-model";
-import { IWorkspaceUser, IWorkspaceUserGroup } from "@gooddata/sdk-backend-spi";
+import {
+    IUserAccess,
+    IUserGroupAccess,
+    IWorkspaceUser,
+    IWorkspaceUserGroup,
+} from "@gooddata/sdk-backend-spi";
 import { GranteeItem, IGranteeGroup, IGranteeGroupAll, IGranteeUser } from "../types";
 
 export const user: IGranteeUser = {
@@ -76,4 +81,14 @@ export const workSpaceGroup: IWorkspaceUserGroup = {
     ref: uriRef("test-group-id"),
     id: "id",
     name: "Test group",
+};
+
+export const userAccessGrantee: IUserAccess = {
+    type: "user",
+    user: workspaceUser,
+};
+
+export const groupAccessGrantee: IUserGroupAccess = {
+    type: "group",
+    userGroup: workSpaceGroup,
 };

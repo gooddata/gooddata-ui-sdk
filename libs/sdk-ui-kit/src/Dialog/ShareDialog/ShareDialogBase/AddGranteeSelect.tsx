@@ -27,7 +27,7 @@ const SEARCH_INTERVAL = 400;
  * @internal
  */
 export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
-    const { appliedGrantees, onSelectGrantee } = props;
+    const { appliedGrantees, currentUserRef, onSelectGrantee } = props;
 
     const backend: IAnalyticalBackend = useBackendStrict();
     const workspace: string = useWorkspaceStrict();
@@ -61,9 +61,13 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
 
     const loadOptions = useMemo(
         () =>
-            debounce(loadGranteeOptionsPromise(appliedGrantees, backend, workspace, intl), SEARCH_INTERVAL, {
-                leading: true,
-            }),
+            debounce(
+                loadGranteeOptionsPromise(currentUserRef, appliedGrantees, backend, workspace, intl),
+                SEARCH_INTERVAL,
+                {
+                    leading: true,
+                },
+            ),
         [backend, workspace, intl, appliedGrantees],
     );
 

@@ -1,8 +1,15 @@
 // (C) 2021 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { areObjRefsEqual, objRefToString, uriRef } from "@gooddata/sdk-model";
-import { GranteeItem, IGranteeGroupAll, IGranteeInactiveOwner } from "./types";
+import {
+    GranteeItem,
+    IGranteeGroupAll,
+    IGranteeInactiveOwner,
+    isGranteeGroup,
+    isGranteeGroupAll,
+} from "./types";
 import differenceWith from "lodash/differenceWith";
+import partition from "lodash/partition";
 
 /**
  * @internal
@@ -42,6 +49,12 @@ const exhaustiveCheck = (_param: never): never => {
  */
 export const getGranteeLabel = (grantee: GranteeItem, intl: IntlShape): string => {
     if (grantee.type === "user") {
+        if (grantee.isCurrentUser) {
+            return intl.formatMessage(
+                { id: "shareDialog.share.grantee.item.you" },
+                { userName: grantee.name },
+            );
+        }
         return grantee.name;
     } else if (grantee.type === "group") {
         return grantee.name;
@@ -65,6 +78,27 @@ export const sortGranteesByName =
 
         return textA < textB ? -1 : textA > textB ? 1 : 0;
     };
+
+export const sortGranteeList = (grantees: GranteeItem[], intl: IntlShape): GranteeItem[] => {
+    const granteeSort = sortGranteesByName(intl);
+
+    const hasAllGroup = hasGroupAll(grantees);
+
+    const granteesWithNoAllGroup: GranteeItem[] = grantees.filter((g) => !isGranteeGroupAll(g));
+
+    const [groups, users] = partition(granteesWithNoAllGroup, isGranteeGroup) as [
+        GranteeItem[],
+        GranteeItem[],
+    ];
+
+    const sorted = [...groups.sort(granteeSort), ...users.sort(granteeSort)];
+
+    if (hasAllGroup) {
+        return [GranteeGroupAll, ...sorted];
+    }
+
+    return sorted;
+};
 
 /**
  * @internal

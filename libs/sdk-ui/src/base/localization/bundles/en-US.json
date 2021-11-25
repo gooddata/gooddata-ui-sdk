@@ -1235,17 +1235,6 @@
         "comment": "Description of inactive user",
         "limit": 0
     },
-
-    "shareDialog.share.grantee.item.remove.access": {
-        "value": "Remove access to this dashboard.",
-        "comment": "Text of the tooltip shown above button that removes user or group dashboard access right.",
-        "limit": 0
-    },
-    "shareDialog.share.grantee.item.owner.remove.access": {
-        "value": "Users who created this dashboard. Creator cannot be removed.",
-        "comment": "Text of the tooltip shown above disabled button that removes user dashboard access right. Shown in the case when user cannot be removed because he is the creator of the dashboard.",
-        "limit": 0
-    },
     "shareDialog.share.grantee.item.remove.selection": {
         "value": "Remove from selection.",
         "comment": "Text of the tooltip shown above button that removes user or group from unsaved selection of newly added grantees that will gain access right to the dashboard after changes in share dialog are saved.",
