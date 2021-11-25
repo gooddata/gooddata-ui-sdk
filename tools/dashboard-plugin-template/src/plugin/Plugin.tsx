@@ -26,7 +26,7 @@ export class Plugin extends DashboardPluginV1 {
     public readonly displayName = packageJson.name;
     public readonly version = packageJson.version;
 
-    public onPluginLoaded(_ctx: DashboardContext, _parameters?: string) {
+    public onPluginLoaded(_ctx: DashboardContext, _parameters?: string): Promise<void> | void {
         /*
          * This will be called when the plugin is loaded in context of some dashboard and before
          * the register() method.
