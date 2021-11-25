@@ -32,6 +32,7 @@ import {
     IPlaceholder,
     useCancelablePromise,
     usePlaceholder,
+    usePrevious,
     useResolveValueWithPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
@@ -192,7 +193,8 @@ const DropdownButton: React.FC<{
     title: string;
     subtitleText: string;
     subtitleItemCount: number;
-}> = ({ isMobile, isOpen, title, subtitleItemCount, subtitleText }) => {
+    isFiltering?: boolean;
+}> = ({ isMobile, isOpen, title, subtitleItemCount, subtitleText, isFiltering }) => {
     const subtitleSelectedItemsRef = useRef(null);
     const [displayItemCount, setDisplayItemCount] = useState(false);
     const [subtitle, setSubtitle] = useState("");
@@ -221,6 +223,7 @@ const DropdownButton: React.FC<{
             className={cx("attribute-filter-button", "s-attribute-filter", {
                 "is-active": isOpen,
                 "gd-attribute-filter-button-mobile": isMobile,
+                "gd-attribute-filter-button-is-filtering": isFiltering,
             })}
         >
             <div className="button-content">
@@ -289,6 +292,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             uriToAttributeElementMap: new Map<string, IAttributeElement>(),
         };
     });
+
+    const prevParentFilters = usePrevious(props.parentFilters);
+    const parentFilterChanged = !isEqual(props.parentFilters, prevParentFilters);
 
     useEffect(() => {
         setState((prevState) => {
@@ -489,7 +495,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 setPlaceholderValue(emptyFilter);
             }
             const isInverted = isNegativeAttributeFilter(currentFilter);
-            props.onApply?.(emptyFilter, isInverted);
+            // props.onApply?.(emptyFilter, isInverted);
             setState((s) => {
                 return {
                     ...s,
@@ -621,7 +627,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         if (isTotalCountLoading()) {
             if (state.firstLoad) {
                 return getLoadingTitleIntl(props.intl);
-            } else if (!isEmpty(props.parentFilters)) {
+            } else if (!isEmpty(props.parentFilters) && parentFilterChanged) {
                 return getFilteringTitleIntl(props.intl);
             }
         }
@@ -840,6 +846,12 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                         {(isMobile) => (
                             <span onClick={toggleDropdown}>
                                 <DropdownButton
+                                    isFiltering={
+                                        isTotalCountLoading() &&
+                                        !isEmpty(props.parentFilters) &&
+                                        !state.firstLoad &&
+                                        parentFilterChanged
+                                    }
                                     isOpen={state.isDropdownOpen}
                                     isMobile={isMobile}
                                     title={
