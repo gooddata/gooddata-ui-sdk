@@ -171,7 +171,7 @@ export const selectAttributeFilterDescendants = createMemoizedSelector((localId:
         const toCheck = compact([localId]);
         const result = new Set<string>();
 
-        while (!!toCheck.length) {
+        while (toCheck.length) {
             const current = toCheck.pop();
             const children = attributeFilters.filter((f) =>
                 f.attributeFilter.filterElementsBy?.some(
