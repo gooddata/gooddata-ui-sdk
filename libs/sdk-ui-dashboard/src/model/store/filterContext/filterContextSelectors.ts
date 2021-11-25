@@ -163,6 +163,8 @@ export const selectFilterContextAttributeFilterIndexByLocalId = createMemoizedSe
 
 /**
  * Creates a selector for selecting all descendants of the attribute filter with given localId.
+ *
+ * @alpha
  */
 export const selectAttributeFilterDescendants = createMemoizedSelector((localId: string) =>
     createSelector(selectFilterContextAttributeFilters, (attributeFilters) => {

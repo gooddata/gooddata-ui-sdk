@@ -495,7 +495,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 setPlaceholderValue(emptyFilter);
             }
             const isInverted = isNegativeAttributeFilter(currentFilter);
-            // props.onApply?.(emptyFilter, isInverted);
             setState((s) => {
                 return {
                     ...s,
