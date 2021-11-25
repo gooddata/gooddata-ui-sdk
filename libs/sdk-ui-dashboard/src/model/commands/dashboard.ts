@@ -3,7 +3,7 @@
 import { DashboardConfig } from "../types/commonTypes";
 import { IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { IDashboardCommand } from "./base";
-import { IShareProps } from "../../types";
+import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 
 /**
  * The initial load of the dashboard will use this correlation id.
@@ -198,7 +198,7 @@ export function renameDashboard(newTitle: string, correlationId?: string): Renam
 export interface ChangeSharing extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SHARING.CHANGE";
     readonly payload: {
-        readonly newShareProps: IShareProps;
+        readonly newShareProps: ISharingApplyPayload;
     };
 }
 
@@ -211,7 +211,7 @@ export interface ChangeSharing extends IDashboardCommand {
  *  events that will be emitted during the command processing
  * @alpha
  */
-export function changeSharing(newShareProps: IShareProps, correlationId?: string): ChangeSharing {
+export function changeSharing(newShareProps: ISharingApplyPayload, correlationId?: string): ChangeSharing {
     return {
         type: "GDC.DASH/CMD.SHARING.CHANGE",
         correlationId,

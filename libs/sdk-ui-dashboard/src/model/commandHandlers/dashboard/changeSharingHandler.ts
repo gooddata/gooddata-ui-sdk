@@ -12,6 +12,7 @@ import { metaActions } from "../../store/meta";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { PromiseFnReturnType } from "../../types/sagas";
 import invariant from "ts-invariant";
+import isEmpty from "lodash/isEmpty";
 
 type DashboardSaveSharingContext = {
     cmd: ChangeSharing;
@@ -66,6 +67,22 @@ function updateDashboard(
         .updateDashboard(saveSharingCtx.persistedDashboard, saveSharingCtx.dashboardToSave);
 }
 
+function addGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
+    const { cmd } = saveSharingCtx;
+    return ctx.backend
+        .workspace(ctx.workspace)
+        .accessControl()
+        .grantAccess(ctx.dashboardRef!, cmd.payload.newShareProps.granteesToAdd);
+}
+
+function removeGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
+    const { cmd } = saveSharingCtx;
+    return ctx.backend
+        .workspace(ctx.workspace)
+        .accessControl()
+        .revokeAccess(ctx.dashboardRef!, cmd.payload.newShareProps.granteesToDelete);
+}
+
 type DashboardSaveSharingResult = {
     batch?: BatchAction;
     dashboard: IDashboard;
@@ -80,6 +97,16 @@ function* saveSharing(
         ctx,
         saveSharingCtx,
     );
+
+    const { granteesToDelete, granteesToAdd } = saveSharingCtx.cmd.payload.newShareProps;
+
+    if (!isEmpty(granteesToDelete)) {
+        yield call(removeGrantees, ctx, saveSharingCtx);
+    }
+
+    if (!isEmpty(granteesToAdd)) {
+        yield call(addGrantees, ctx, saveSharingCtx);
+    }
 
     const batch = batchActions([metaActions.setMeta({ dashboard })], "@@GDC.DASH.SAVE_SHARING");
 

@@ -1,23 +1,20 @@
 // (C) 2021 GoodData Corporation
 import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
-import classNames from "classnames";
+import cx from "classnames";
 import { BubbleHoverTrigger, Bubble } from "../../../Bubble";
-
-/**
- * @internal
- */
-export interface IAddUserOrGroupButton {
-    onClick: () => void;
-}
+import { IAddUserOrGroupButton } from "./types";
 
 /**
  * @internal
  */
 export const AddUserOrGroupButton: React.FC<IAddUserOrGroupButton> = (props) => {
-    const { onClick } = props;
+    const { isDisabled, onClick } = props;
 
-    const buttonClassNames = classNames(
+    const buttonClassNames = cx(
+        {
+            disabled: isDisabled,
+        },
         "gd-button",
         "gd-button-link",
         "gd-icon-plus",
@@ -27,9 +24,12 @@ export const AddUserOrGroupButton: React.FC<IAddUserOrGroupButton> = (props) => 
     const handleClick = useCallback(
         (e: React.MouseEvent) => {
             e.preventDefault();
+            if (isDisabled) {
+                return;
+            }
             onClick();
         },
-        [onClick],
+        [isDisabled, onClick],
     );
 
     return (

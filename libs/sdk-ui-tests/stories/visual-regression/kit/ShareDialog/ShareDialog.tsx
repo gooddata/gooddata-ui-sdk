@@ -11,7 +11,11 @@ import "../styles/goodstrap.scss";
 import { action } from "@storybook/addon-actions";
 import { getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
 import { Button } from "@gooddata/sdk-ui-kit";
-import { grantees, groupAll, owner } from "./GranteeMock";
+import { groupAll, owner } from "./GranteeMock";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { uriRef } from "@gooddata/sdk-model";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 const BasicExample = (): JSX.Element => {
     const [open, setOpen] = useState(false);
@@ -32,17 +36,31 @@ const BasicExample = (): JSX.Element => {
         [setOpen],
     );
 
+    const workspace = "foo";
+    const backend = recordedBackend(ReferenceRecordings.Recordings);
+
     return (
-        <div id="Share-Grantee-base-basic-example">
-            <Button
-                value="Open share dialog"
-                className="gd-button-positive s-share-dialog-button"
-                onClick={onOpen}
-            />
-            {open && (
-                <ShareDialogBase owner={owner} grantees={grantees} onCancel={onCancel} onSubmit={onSubmit} />
-            )}
-        </div>
+        <BackendProvider backend={backend}>
+            <WorkspaceProvider workspace={workspace}>
+                <div id="Share-Grantee-base-basic-example">
+                    <Button
+                        value="Open share dialog"
+                        className="gd-button-positive s-share-dialog-button"
+                        onClick={onOpen}
+                    />
+                    {open && (
+                        <ShareDialogBase
+                            sharedObjectRef={uriRef("ref")}
+                            shareStatus={"private"}
+                            owner={owner}
+                            onCancel={onCancel}
+                            onSubmit={onSubmit}
+                            onError={onCancel}
+                        />
+                    )}
+                </div>
+            </WorkspaceProvider>
+        </BackendProvider>
     );
 };
 
@@ -71,7 +89,14 @@ const scenarios: BackstopConfig = {
         clickSelectors: [".s-share-dialog-button", 100, ".s-add-users-or-groups", 100],
     },
     "selected-grantee": {
-        clickSelectors: [".s-share-dialog-button", 100, ".s-add-users-or-groups", 100, granteeAllSelector],
+        clickSelectors: [
+            ".s-share-dialog-button",
+            100,
+            ".s-add-users-or-groups",
+            100,
+            granteeAllSelector,
+            300,
+        ],
     },
 };
 

@@ -4,6 +4,7 @@
 
 ```ts
 
+import { AccessGranteeDetail } from '@gooddata/sdk-backend-spi';
 import { CatalogItem } from '@gooddata/sdk-backend-spi';
 import { dummyBackend } from '@gooddata/sdk-backend-base';
 import { dummyBackendEmptyData } from '@gooddata/sdk-backend-base';
@@ -30,6 +31,8 @@ import { IUser } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceDescriptor } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceUser } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceUserGroup } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ValidationContext } from '@gooddata/sdk-backend-spi';
 
@@ -87,8 +90,31 @@ export type ExecutionRecording = {
 };
 
 // @internal (undocumented)
+export type IAccessControl = {
+    accessList?: AccessGranteeDetail[];
+};
+
+// @internal (undocumented)
 export type InsightRecording = {
     obj: IInsight;
+};
+
+// @internal (undocumented)
+export type IUserGroup = {
+    userGroups?: IWorkspaceUserGroup[];
+};
+
+// @internal (undocumented)
+export type IUserManagement = {
+    user?: IUser;
+    accessControl?: IAccessControl;
+    userGroup?: IUserGroup;
+    users?: IUsers;
+};
+
+// @internal (undocumented)
+export type IUsers = {
+    users?: IWorkspaceUser[];
 };
 
 // @internal @deprecated
@@ -147,7 +173,6 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
     securitySettingsPluginUrlValidator?: SecuritySettingsPluginUrlValidator;
     securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
-    user?: IUser;
     getCommonAttributesResponses?: Record<string, ObjRef[]>;
     catalogAvailability?: {
         availableAttributes?: (attributes: ICatalogAttribute[]) => ICatalogAttribute[];
@@ -155,6 +180,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
         availableFacts?: (facts: ICatalogFact[]) => ICatalogFact[];
         availableDateDatasets?: (datasets: ICatalogDateDataset[]) => ICatalogDateDataset[];
     };
+    userManagement?: IUserManagement;
 };
 
 // @internal

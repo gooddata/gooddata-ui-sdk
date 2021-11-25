@@ -5,17 +5,23 @@ import cx from "classnames";
 /**
  * @internal
  */
+export type SpinnerSize = "large" | "small";
+
+/**
+ * @internal
+ */
 export interface ILoadingMaskProps {
     className?: string;
     height?: CSSProperties["height"];
     width?: CSSProperties["width"];
+    size?: SpinnerSize;
 }
 
 /**
  * @internal
  */
 export const LoadingMask: React.FC<ILoadingMaskProps> = (props) => {
-    const { className, height, width } = props;
+    const { className, height, width, size } = props;
 
     const style = useMemo(
         (): CSSProperties => ({
@@ -25,9 +31,10 @@ export const LoadingMask: React.FC<ILoadingMaskProps> = (props) => {
         [width, height],
     );
 
+    const spinnerSize: SpinnerSize = size ? size : "large";
     return (
         <div style={style} className={cx("s-isLoading", "loading-mask", className)}>
-            <div className="gd-spinner large" />
+            <div className={cx("gd-spinner", spinnerSize)} />
         </div>
     );
 };

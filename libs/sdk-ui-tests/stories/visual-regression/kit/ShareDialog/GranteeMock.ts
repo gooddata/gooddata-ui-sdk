@@ -5,7 +5,7 @@ import {
     IGranteeGroup,
     IGranteeGroupAll,
     IGranteeUser,
-    IGranteeUserInactive,
+    IGranteeInactiveOwner,
 } from "@gooddata/sdk-ui-kit";
 
 export const user: IGranteeUser = {
@@ -15,6 +15,17 @@ export const user: IGranteeUser = {
     email: "user.name@gooddata.com",
     isOwner: false,
     isCurrentUser: false,
+    status: "Active",
+};
+
+export const userInactive: IGranteeUser = {
+    type: "user",
+    id: uriRef("userID1"),
+    name: "User Name",
+    email: "user.name@gooddata.com",
+    isOwner: false,
+    isCurrentUser: false,
+    status: "Inactive",
 };
 
 export const owner: IGranteeUser = {
@@ -24,6 +35,7 @@ export const owner: IGranteeUser = {
     email: "owner.name@gooddata.com",
     isOwner: true,
     isCurrentUser: false,
+    status: "Active",
 };
 
 export const current: IGranteeUser = {
@@ -33,6 +45,7 @@ export const current: IGranteeUser = {
     email: "current.name@gooddata.com",
     isOwner: false,
     isCurrentUser: true,
+    status: "Active",
 };
 
 export const currentAndOwen: IGranteeUser = {
@@ -42,6 +55,7 @@ export const currentAndOwen: IGranteeUser = {
     email: "owner.current.name@gooddata.com",
     isOwner: true,
     isCurrentUser: true,
+    status: "Active",
 };
 
 export const group: IGranteeGroup = {
@@ -63,8 +77,8 @@ export const groupAll: IGranteeGroupAll = {
     memberCount: 11,
 };
 
-export const inactiveUser: IGranteeUserInactive = {
-    type: "inactive_user",
+export const inactiveUser: IGranteeInactiveOwner = {
+    type: "inactive_owner",
     id: uriRef("inactive_user"),
 };
 

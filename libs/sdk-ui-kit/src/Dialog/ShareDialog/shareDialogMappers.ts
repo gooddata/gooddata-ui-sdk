@@ -1,13 +1,64 @@
 // (C) 2021 GoodData Corporation
 import { areObjRefsEqual, IUser, ObjRef } from "@gooddata/sdk-model";
-import { GranteeItem, IGranteeGroupAll, IGranteeUser, IGranteeUserInactive } from "./ShareDialogBase/types";
-import { ShareStatus } from "@gooddata/sdk-backend-spi";
-import { notInArrayFilter, GranteeGroupAll, InactiveOwner } from "./ShareDialogBase/utils";
+import {
+    GranteeItem,
+    IGranteeGroup,
+    IGranteeGroupAll,
+    IGranteeUser,
+    IGranteeInactiveOwner,
+    isGranteeGroupAll,
+    isGranteeUserInactive,
+    GranteeStatus,
+} from "./ShareDialogBase/types";
+import {
+    AccessGranteeDetail,
+    IAccessGrantee,
+    IWorkspaceUser,
+    IWorkspaceUserGroup,
+    ShareStatus,
+} from "@gooddata/sdk-backend-spi";
+import { GranteeGroupAll, InactiveOwner, getAppliedGrantees, hasGroupAll } from "./ShareDialogBase/utils";
+import { typesUtils } from "@gooddata/util";
+import { isUserAccess, isUserGroupAccess } from "@gooddata/sdk-backend-spi";
+
+const mapUserStatusToGranteeStatus = (status: "ENABLED" | "DISABLED"): GranteeStatus => {
+    if (status === "DISABLED") {
+        return "Inactive";
+    }
+
+    return "Active";
+};
 
 /**
  * @internal
  */
-export const mapUserFullName = (user: IUser): string => {
+export const mapWorkspaceUserToGrantee = (user: IWorkspaceUser): IGranteeUser => {
+    return {
+        type: "user",
+        id: user.ref,
+        name: mapUserFullName(user),
+        email: user.email,
+        isOwner: false,
+        isCurrentUser: false,
+        status: mapUserStatusToGranteeStatus(user.status),
+    };
+};
+
+/**
+ * @internal
+ */
+export const mapWorkspaceUserGroupToGrantee = (userGroup: IWorkspaceUserGroup): IGranteeGroup => {
+    return {
+        id: userGroup.ref,
+        type: "group",
+        name: userGroup.name,
+    };
+};
+
+/**
+ * @internal
+ */
+export const mapUserFullName = (user: IUser | IWorkspaceUser): string => {
     if (user.fullName) {
         return user.fullName;
     }
@@ -26,10 +77,14 @@ export const mapOwnerToGrantee = (user: IUser, currentUserRef: ObjRef): IGrantee
         email: user.email,
         isOwner: true,
         isCurrentUser: areObjRefsEqual(user.ref, currentUserRef),
+        status: "Active",
     };
 };
 
-export const mapUserToInactiveGrantee = (): IGranteeUserInactive => {
+/**
+ * @internal
+ */
+export const mapUserToInactiveOwner = (): IGranteeInactiveOwner => {
     return InactiveOwner;
 };
 
@@ -45,16 +100,41 @@ export const mapShareStatusToGroupAll = (shareStatus: ShareStatus): IGranteeGrou
 /**
  * @internal
  */
+export const mapGranteesToAccessGrantees = (grantees: GranteeItem[]): IAccessGrantee[] => {
+    const guard = typesUtils.combineGuards(isGranteeGroupAll, isGranteeUserInactive);
+    return grantees
+        .filter((g) => !guard(g))
+        .map((g) => {
+            return {
+                granteeRef: g.id,
+            };
+        });
+};
+
+export const mapAccessGranteeDetailToGrantee = (accessGranteeDetail: AccessGranteeDetail): GranteeItem => {
+    if (isUserAccess(accessGranteeDetail)) {
+        return mapWorkspaceUserToGrantee(accessGranteeDetail.user);
+    } else if (isUserGroupAccess(accessGranteeDetail)) {
+        return mapWorkspaceUserGroupToGrantee(accessGranteeDetail.userGroup);
+    }
+};
+
+/**
+ * @internal
+ */
 export const mapGranteesToShareStatus = (
     grantees: GranteeItem[],
     granteesToAdd: GranteeItem[],
     granteesToDelete: GranteeItem[],
 ): ShareStatus => {
-    const omitDeleted = notInArrayFilter(grantees, granteesToDelete);
-    const withAdded = [...omitDeleted, ...granteesToAdd];
+    const appliedGrantees = getAppliedGrantees(grantees, granteesToAdd, granteesToDelete);
 
-    if (withAdded.some((g) => areObjRefsEqual(g.id, GranteeGroupAll.id))) {
+    if (hasGroupAll(appliedGrantees)) {
         return "public";
+    }
+
+    if (appliedGrantees.length > 0) {
+        return "shared";
     }
 
     return "private";

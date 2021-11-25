@@ -35,6 +35,8 @@ import {
     IWorkspaceDescriptor,
     IOrganization,
     IOrganizations,
+    IWorkspaceUserGroupsQuery,
+    IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -214,6 +216,14 @@ function recordedWorkspace(
             throw new NotSupported("not supported");
         },
         dateFilterConfigs(): IDateFilterConfigsQuery {
+            throw new NotSupported("not supported");
+        },
+
+        userGroups(): IWorkspaceUserGroupsQuery {
+            throw new NotSupported("not supported");
+        },
+
+        accessControl(): IWorkspaceAccessControlService {
             throw new NotSupported("not supported");
         },
     };

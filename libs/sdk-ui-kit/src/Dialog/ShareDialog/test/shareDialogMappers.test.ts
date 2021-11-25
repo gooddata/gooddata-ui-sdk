@@ -56,6 +56,7 @@ describe("shareDialogMappers", () => {
                 name: "Owner Name",
                 isCurrentUser: true,
                 isOwner: true,
+                status: "Active",
             };
 
             expect(mapOwnerToGrantee(user, ref)).toEqual(result);
@@ -78,6 +79,7 @@ describe("shareDialogMappers", () => {
                 name: "Owner Name",
                 isCurrentUser: false,
                 isOwner: true,
+                status: "Active",
             };
 
             expect(mapOwnerToGrantee(user, uriRef("aaaa"))).toEqual(result);
@@ -97,11 +99,18 @@ describe("shareDialogMappers", () => {
     describe("mapGranteesToShareStatus", () => {
         it.each([
             [
-                "Group all is missing",
+                "Group all is missing and not grantees remain",
+                Array<GranteeItem>(user),
+                Array<GranteeItem>(),
+                Array<GranteeItem>(user),
+                "private",
+            ],
+            [
+                "Group all is missing and some grantees remain",
                 Array<GranteeItem>(user),
                 Array<GranteeItem>(owner),
                 Array<GranteeItem>(user),
-                "private",
+                "shared",
             ],
             [
                 "Group all is added",
@@ -122,7 +131,7 @@ describe("shareDialogMappers", () => {
                 Array<GranteeItem>(groupAll),
                 Array<GranteeItem>(user),
                 Array<GranteeItem>(groupAll),
-                "private",
+                "shared",
             ],
             [
                 "Group all is added and removed",

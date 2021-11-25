@@ -9,7 +9,7 @@ import {
     IGranteeGroupAll,
     IGranteeItemProps,
     IGranteeUser,
-    IGranteeUserInactive,
+    IGranteeInactiveOwner,
 } from "./types";
 import { getGranteeLabel, getGranteeItemTestId } from "./utils";
 import {
@@ -20,6 +20,7 @@ import {
     GranteeUserInactiveIcon,
 } from "./GranteeIcons";
 import { Button } from "../../../Button";
+import { IntlShape } from "react-intl";
 
 interface IGranteeUserItemProps {
     grantee: IGranteeUser;
@@ -28,7 +29,7 @@ interface IGranteeUserItemProps {
 }
 
 interface IGranteeInactiveItemProps {
-    grantee: IGranteeUserInactive;
+    grantee: IGranteeInactiveOwner;
 }
 
 interface IGranteeGroupItemProps {
@@ -37,16 +38,32 @@ interface IGranteeGroupItemProps {
     onDelete: (grantee: GranteeItem) => void;
 }
 
+const granteeUserTitleRenderer = (grantee: IGranteeUser, intl: IntlShape): JSX.Element => {
+    const userName = getGranteeLabel(grantee, intl);
+
+    if (grantee.isCurrentUser) {
+        return <>{intl.formatMessage({ id: "shareDialog.share.grantee.item.you" }, { userName })}</>;
+    }
+
+    if (grantee.status === "Inactive") {
+        const inactiveLabel = ` (${intl.formatMessage({
+            id: "shareDialog.share.grantee.item.user.inactive",
+        })})`;
+
+        return (
+            <>
+                {userName}
+                <span className="gd-grantee-content-label-inactive">{inactiveLabel}</span>
+            </>
+        );
+    }
+
+    return <> {userName} </>;
+};
+
 const GranteeUserItem: React.FC<IGranteeUserItemProps> = (props) => {
     const { grantee, mode, onDelete } = props;
     const intl = useIntl();
-
-    const granteeLabel = useMemo(() => {
-        const userName = getGranteeLabel(grantee, intl);
-        return grantee.isCurrentUser
-            ? intl.formatMessage({ id: "shareDialog.share.grantee.item.you" }, { userName })
-            : userName;
-    }, [grantee, intl]);
 
     const onClick = useCallback(() => {
         onDelete(grantee);
@@ -62,10 +79,11 @@ const GranteeUserItem: React.FC<IGranteeUserItemProps> = (props) => {
                 <GranteeRemoveIcon mode={mode} onClick={onClick} />
             )}
             <div className="gd-grantee-content">
-                <div className="gd-grantee-content-label">{granteeLabel}</div>
+                <div className="gd-grantee-content-label">{granteeUserTitleRenderer(grantee, intl)}</div>
                 <div className="gd-grantee-content-label gd-grantee-content-email">{grantee.email}</div>
             </div>
-            <GranteeUserIcon />
+
+            {grantee.status === "Active" ? <GranteeUserIcon /> : <GranteeUserInactiveIcon />}
         </div>
     );
 };
@@ -145,7 +163,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
 
     if (grantee.type === "user") {
         return <GranteeUserItem grantee={grantee} mode={mode} onDelete={onDelete} />;
-    } else if (grantee.type === "inactive_user") {
+    } else if (grantee.type === "inactive_owner") {
         return <GranteeUserInactiveItem grantee={grantee} />;
     } else {
         return <GranteeGroupItem grantee={grantee} mode={mode} onDelete={onDelete} />;

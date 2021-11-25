@@ -33,6 +33,8 @@ export { GdcScheduledMail } from "./scheduledMail/GdcScheduledMail";
 export { GdcProjectDashboard } from "./projectDashboard/GdcProjectDashboard";
 export { GdcPaging } from "./base/GdcPaging";
 export { GdcReport } from "./report/GdcReport";
+export { GdcUserGroup } from "./userGroup/GdcUserGroup";
+export { GdcAccessControl } from "./accessControl/GdcAccessControl";
 export {
     BooleanAsString,
     DateString,

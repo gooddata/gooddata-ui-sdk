@@ -16,6 +16,8 @@ import {
     IWorkspaceMeasuresService,
     IWorkspaceFactsService,
     IWorkspaceDescriptor,
+    IWorkspaceUserGroupsQuery,
+    IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./execution/executionFactory";
 import { BearWorkspaceMeasures } from "./measures";
@@ -32,6 +34,8 @@ import { BearWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
 import { BearWorkspaceAttributes } from "./attributes/index";
 import { BearWorkspaceFacts } from "./facts";
 import { userLoginMd5FromAuthenticatedPrincipal } from "../../utils/api";
+import { BearWorkspaceUserGroupsQuery } from "./userGroups";
+import { BearWorkspaceAccessControlService } from "./accessControl";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
     constructor(
@@ -116,5 +120,13 @@ export class BearWorkspace implements IAnalyticalWorkspace {
 
     public dateFilterConfigs(): IDateFilterConfigsQuery {
         return new BearWorkspaceDateFilterConfigsQuery(this.authCall, this.workspace);
+    }
+
+    public userGroups(): IWorkspaceUserGroupsQuery {
+        return new BearWorkspaceUserGroupsQuery(this.authCall, this.workspace);
+    }
+
+    public accessControl(): IWorkspaceAccessControlService {
+        return new BearWorkspaceAccessControlService(this.authCall, this.workspace);
     }
 }

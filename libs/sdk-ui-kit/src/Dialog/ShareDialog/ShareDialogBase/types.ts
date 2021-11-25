@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+import { ShareStatus } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
@@ -7,12 +8,12 @@ import isEmpty from "lodash/isEmpty";
 /**
  * @internal
  */
-export type GranteeItem = IGranteeUser | IGranteeUserInactive | IGranteeGroup | IGranteeGroupAll;
+export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll;
 
 /**
  * @internal
  */
-export type GranteeType = "user" | "inactive_user" | "group" | "groupAll";
+export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll";
 
 /**
  * @internal
@@ -25,12 +26,18 @@ export interface IGranteeBase {
 /**
  * @internal
  */
+export type GranteeStatus = "Inactive" | "Active";
+
+/**
+ * @internal
+ */
 export interface IGranteeUser extends IGranteeBase {
     type: "user";
     name: string;
     email: string;
     isOwner: boolean;
     isCurrentUser: boolean;
+    status: GranteeStatus;
 }
 
 /**
@@ -43,9 +50,16 @@ export const isGranteeUser = (obj: unknown): obj is IGranteeUser => {
 /**
  * @internal
  */
-export interface IGranteeUserInactive extends IGranteeBase {
-    type: "inactive_user";
+export interface IGranteeInactiveOwner extends IGranteeBase {
+    type: "inactive_owner";
 }
+
+/**
+ * @internal
+ */
+export const isGranteeUserInactive = (obj: unknown): obj is IGranteeInactiveOwner => {
+    return !isEmpty(obj) && (obj as IGranteeInactiveOwner).type === "inactive_owner";
+};
 
 /**
  * @internal
@@ -77,6 +91,16 @@ export const isGranteeGroupAll = (obj: unknown): obj is IGranteeGroup => {
     return !isEmpty(obj) && (obj as IGranteeGroupAll).type === "groupAll";
 };
 
+/**
+ * @internal
+ */
+export const isGranteeItem = (obj: unknown): obj is GranteeItem => {
+    return (
+        !isEmpty(obj) &&
+        (isGranteeGroupAll(obj) || isGranteeGroup(obj) || isGranteeUserInactive(obj) || isGranteeUser(obj))
+    );
+};
+
 // Components types
 
 /**
@@ -88,10 +112,16 @@ export type DialogModeType = "ShareGrantee" | "AddGrantee";
  * @internal
  */
 export interface IShareDialogBaseProps {
-    owner: IGranteeUser | IGranteeUserInactive;
-    grantees: GranteeItem[];
+    sharedObjectRef: ObjRef;
+    shareStatus: ShareStatus;
+    owner: IGranteeUser | IGranteeInactiveOwner;
     onCancel: () => void;
-    onSubmit: (granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[]) => void;
+    onSubmit: (
+        grantees: GranteeItem[],
+        granteesToAdd: GranteeItem[],
+        granteesToDelete: GranteeItem[],
+    ) => void;
+    onError: (err: Error) => void;
 }
 
 /**
@@ -108,7 +138,8 @@ export interface IGranteeItemProps {
  */
 export interface IShareGranteeBaseProps {
     isDirty: boolean;
-    owner: IGranteeUser | IGranteeUserInactive;
+    isLoading: boolean;
+    owner: IGranteeUser | IGranteeInactiveOwner;
     grantees: GranteeItem[];
     onAddGranteeButtonClick: () => void;
     onGranteeDelete: (grantee: GranteeItem) => void;
@@ -120,6 +151,7 @@ export interface IShareGranteeBaseProps {
  * @internal
  */
 export interface IShareGranteeContentProps {
+    isLoading: boolean;
     grantees: GranteeItem[];
     onAddGrantee: () => void;
     onDelete: (grantee: GranteeItem) => void;
@@ -130,8 +162,8 @@ export interface IShareGranteeContentProps {
  */
 export interface IAddGranteeBaseProps {
     isDirty: boolean;
-    availableGrantees: GranteeItem[];
     addedGrantees: GranteeItem[];
+    appliedGrantees: GranteeItem[];
     onBackClick?: () => void;
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups?: (grantee: GranteeItem) => void; // rename
@@ -143,8 +175,8 @@ export interface IAddGranteeBaseProps {
  * @internal
  */
 export interface IAddGranteeContentProps {
-    availableGrantees: GranteeItem[];
     addedGrantees: GranteeItem[];
+    appliedGrantees: GranteeItem[];
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups: (grantee: GranteeItem) => void;
 }
@@ -161,6 +193,22 @@ export interface IGranteesListProps {
 /**
  * @internal
  */
+export interface IAddUserOrGroupButton {
+    isDisabled: boolean;
+    onClick: () => void;
+}
+
+/**
+ * @internal
+ */
+export interface IGroupedOption {
+    label: string;
+    options: ISelectOption[];
+}
+
+/**
+ * @internal
+ */
 export interface ISelectOption {
     label: string;
     value: GranteeItem;
@@ -169,7 +217,23 @@ export interface ISelectOption {
 /**
  * @internal
  */
+export interface ISelectErrorOption {
+    isDisabled: boolean;
+    type: "error";
+    label: string;
+}
+
+/**
+ * @internal
+ */
+export const isSelectErrorOption = (obj: unknown): obj is ISelectErrorOption => {
+    return !isEmpty(obj) && (obj as ISelectErrorOption).type === "error";
+};
+
+/**
+ * @internal
+ */
 export interface IAddGranteeSelectProps {
     onSelectGrantee: (grantee: GranteeItem) => void;
-    granteesOption: ISelectOption[];
+    appliedGrantees: GranteeItem[];
 }

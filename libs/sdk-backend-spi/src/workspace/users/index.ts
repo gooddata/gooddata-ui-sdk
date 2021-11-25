@@ -1,5 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
+import { IPagedResource } from "../../common/paging";
 
 /**
  * User
@@ -43,6 +44,11 @@ export interface IWorkspaceUser {
      * Last name - when backend implementations supports it.
      */
     lastName?: string;
+
+    /**
+     * User status - when backend implementations supports it.
+     */
+    status?: "ENABLED" | "DISABLED";
 }
 
 /**
@@ -58,6 +64,17 @@ export interface IWorkspaceUsersQueryOptions {
      * - basic form match, if it matches as prefix to any of firstName, lastName and email
      */
     search?: string;
+
+    /**
+     * Optionally specify (zero-based) starting offset for the paged results.
+     */
+    offset?: number;
+
+    /**
+     * Optionally specify number of items per page.
+     * Default value is 1000
+     */
+    limit?: number;
 }
 
 /**
@@ -80,4 +97,18 @@ export interface IWorkspaceUsersQuery {
      * @returns promise with a list of all users matching the specified options
      */
     queryAll(): Promise<IWorkspaceUser[]>;
+
+    /**
+     * Starts the users query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IWorkspaceUsersQueryResult>;
 }
+
+/**
+ * Paged result of users query. Last page of data returns empty items.
+ *
+ * @public
+ */
+export type IWorkspaceUsersQueryResult = IPagedResource<IWorkspaceUser>;

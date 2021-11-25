@@ -1195,6 +1195,11 @@
         "comment": "Placeholder of empty share dialog search input.",
         "limit": 0
     },
+    "shareDialog.share.grantee.add.search.error.message": {
+        "value": "Failed to load users and groups. Try again later.",
+        "comment": "Error message shown to the user when query in search input failed",
+        "limit": 0
+    },
     "shareDialog.share.grantee.add.search.no.matching.items": {
         "value": "No matching users or groups.",
         "comment": "Information shown to the user when query in search input does no match any user or group.",

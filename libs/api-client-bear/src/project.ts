@@ -3,7 +3,7 @@ import { getAllPagesByOffsetLimit, getQueryEntries, handlePolling, parseSettingI
 import { IColor, IColorPalette, IFeatureFlags, ITimezone } from "./interfaces";
 import { IFeatureFlagsResponse, IStyleSettingsResponse } from "./apiResponsesInterfaces";
 import { ApiError, ApiResponse, XhrModule } from "./xhr";
-import { GdcProject, GdcUser } from "@gooddata/api-model-bear";
+import { GdcProject, GdcUser, GdcUserGroup, GdcAccessControl } from "@gooddata/api-model-bear";
 import { stringify } from "./utils/queryString";
 
 export const DEFAULT_PALETTE = [
@@ -461,5 +461,91 @@ export class ProjectModule {
         };
 
         return loadPage();
+    }
+
+    /**
+     * Get paged user groups
+     *
+     * @method getUserGroups
+     * @param {String} projectId - project identifier
+     * @param {IGetUserGroupsParams} options - paging params
+     * @return {IGetUserGroupsResponse} List of user groups with paging
+     */
+    public getUserGroups(
+        projectId: string,
+        options: GdcUserGroup.IGetUserGroupsParams,
+    ): Promise<GdcUserGroup.IGetUserGroupsResponse> {
+        const { offset = "0", limit = 100 } = options;
+
+        return this.xhr.getParsed<GdcUserGroup.IGetUserGroupsResponse>(
+            `/gdc/userGroups?project=${projectId}&offset=${offset}&limit=${limit}`,
+        );
+    }
+
+    /**
+     * Get info about all grantees able to access given object
+     *
+     * @method getGranteesInfo
+     * @param {String} objectUri - object's uri
+     * @param {IGetGranteesParams} options - grantee limitations params
+     * @return {IGetGranteesResponse} List of all grantees
+     */
+    public getGranteesInfo(
+        objectUri: string,
+        options: GdcAccessControl.IGetGranteesParams,
+    ): Promise<GdcAccessControl.IGetGranteesResponse> {
+        const { permission = "read" } = options;
+        const apiUri = objectUri.replace("/md/", "/projects/");
+        return this.xhr.getParsed<GdcAccessControl.IGetGranteesResponse>(
+            `${apiUri}/grantees?permission=${permission}`,
+        );
+    }
+
+    private convertGrantees(granteeUris: string[] = []) {
+        return granteeUris.map((granteeUri) => ({
+            aclEntryURI: {
+                permission: "read",
+                grantee: granteeUri,
+            },
+        }));
+    }
+
+    private handleGranteesChangeError(error: any) {
+        if (error?.response?.status !== 200) {
+            throw error;
+        }
+    }
+
+    /**
+     * Add grantees to access given object
+     * @param objectUri - object's uri
+     * @param granteeUris - grantees uri array
+     */
+    public addGrantees(objectUri: string, granteeUris: string[]): Promise<any> {
+        const addGranteesRequest = {
+            granteeURIs: {
+                items: this.convertGrantees(granteeUris),
+            },
+        };
+        return this.xhr
+            .post(`${objectUri}/grantees/add`, { body: { ...addGranteesRequest } })
+            .catch(this.handleGranteesChangeError);
+    }
+
+    /**
+     * Remove grantees access given object
+     * @param objectUri - object's uri
+     * @param granteeUris - grantees uri array
+     */
+    public removeGrantees(objectUri: string, granteeUris: string[] = []): Promise<any> {
+        const removeGranteesRequest = {
+            granteeURIs: {
+                items: this.convertGrantees(granteeUris),
+            },
+        };
+
+        return this.xhr
+            .post(`${objectUri}/grantees/remove`, { body: { ...removeGranteesRequest } })
+            .catch(this.handleGranteesChangeError);
     }
 }

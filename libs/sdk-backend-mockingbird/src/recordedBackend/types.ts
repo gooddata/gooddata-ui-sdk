@@ -16,6 +16,9 @@ import {
     IWidgetAlert,
     ValidationContext,
     IWorkspaceDescriptor,
+    AccessGranteeDetail,
+    IWorkspaceUserGroup,
+    IWorkspaceUser,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -97,11 +100,6 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
 
     /**
-     * Specify user to return.
-     */
-    user?: IUser;
-
-    /**
      * Specify responses to the getCommonAttributes calls. The key of the map MUST be created using the {@link objRefsToStringKey} function.
      */
     getCommonAttributesResponses?: Record<string, ObjRef[]>;
@@ -115,6 +113,62 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
         availableFacts?: (facts: ICatalogFact[]) => ICatalogFact[];
         availableDateDatasets?: (datasets: ICatalogDateDataset[]) => ICatalogDateDataset[];
     };
+
+    /**
+     * Optionally Specify currently authenticated user or workspace users or groups or access to the objects
+     */
+    userManagement?: IUserManagement;
+};
+
+/**
+ * @internal
+ */
+export type IUserManagement = {
+    /**
+     * Optionally Specify currently authenticated user
+     * Response of IUserService
+     */
+    user?: IUser;
+
+    /**
+     * Optionally Specify respond of Service to manage access to the objects.
+     * IWorkspaceAccessControlService
+     *
+     */
+    accessControl?: IAccessControl;
+
+    /**
+     *  Optionally Specify respond of Service to query user groups for current workspace
+     *  IWorkspaceUserGroupsQuery
+     */
+    userGroup?: IUserGroup;
+
+    /**
+     * Optionally Specify users for current workspace
+     * IWorkspaceUsersQuery
+     */
+    users?: IUsers;
+};
+
+/**
+ * @internal
+ */
+export type IAccessControl = {
+    accessList?: AccessGranteeDetail[];
+};
+
+/**
+ * @internal
+ */
+export type IUserGroup = {
+    userGroups?: IWorkspaceUserGroup[];
+};
+
+/**
+ * @internal
+ */
+export type IUsers = {
+    users?: IWorkspaceUser[];
 };
 
 /**

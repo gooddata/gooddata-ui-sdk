@@ -21,7 +21,6 @@ const DefaultShareButtonCore: React.FC<IShareButtonProps & WrappedComponentProps
     const settings = useDashboardSelector(selectSettings);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const hasPermission = useDashboardSelector(selectCanManageACL);
-    // TODO INE temp switching of share status. Will be replaced by Share dialog in TNT-257
     const currentShareStatus = useDashboardSelector(selectDashboardShareStatus);
 
     if (
@@ -36,7 +35,7 @@ const DefaultShareButtonCore: React.FC<IShareButtonProps & WrappedComponentProps
                     value={
                         currentShareStatus === "private"
                             ? intl.formatMessage({ id: "share.button.text" })
-                            : "UNSHARE"
+                            : "UNSHARE" // TODO INE temp switching of label. Will be replaced by status icons TNT-277
                     }
                     className={
                         "gd-button-secondary dash-header-share-button s-header-share-button gd-button gd-icon-users"

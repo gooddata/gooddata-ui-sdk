@@ -12,6 +12,7 @@ import {
     changeSharing,
 } from "../../../model";
 import { ShareDialog, ISharingApplyPayload } from "../../shareDialog";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 const useShareDialogDashboardHeader = () => {
     const dispatch = useDashboardDispatch();
@@ -19,6 +20,8 @@ const useShareDialogDashboardHeader = () => {
     const isShareDialogOpen = useDashboardSelector(selectIsShareDialogOpen);
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
     const currentUserRef = useDashboardSelector(selectCurrentUserRef);
+    const backend = useBackendStrict();
+    const workspace = useWorkspaceStrict();
 
     const closeShareDialog = useMemo(() => {
         return () => dispatch(uiActions.closeShareDialog());
@@ -48,12 +51,20 @@ const useShareDialogDashboardHeader = () => {
         [closeShareDialog, runChangeSharing],
     );
 
+    const onErrorShareDialog = useCallback(() => {
+        dispatch(uiActions.closeShareDialog());
+        addError({ id: "messages.sharingDialogError.general" });
+    }, [dispatch, addError, uiActions]);
+
     return {
+        backend,
+        workspace,
         isShareDialogOpen,
         persistedDashboard,
         currentUserRef,
         onCloseShareDialog,
         onApplyShareDialog,
+        onErrorShareDialog,
     };
 };
 
@@ -61,8 +72,16 @@ const useShareDialogDashboardHeader = () => {
  * @internal
  */
 export const ShareDialogDashboardHeader = (): JSX.Element | null => {
-    const { isShareDialogOpen, persistedDashboard, currentUserRef, onCloseShareDialog, onApplyShareDialog } =
-        useShareDialogDashboardHeader();
+    const {
+        backend,
+        workspace,
+        isShareDialogOpen,
+        persistedDashboard,
+        currentUserRef,
+        onCloseShareDialog,
+        onApplyShareDialog,
+        onErrorShareDialog,
+    } = useShareDialogDashboardHeader();
 
     if (!isShareDialogOpen) {
         return null;
@@ -70,11 +89,14 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
 
     return (
         <ShareDialog
+            backend={backend}
+            workspace={workspace}
             isVisible={isShareDialogOpen}
             currentUserRef={currentUserRef}
             sharedObject={persistedDashboard!}
             onCancel={onCloseShareDialog}
             onApply={onApplyShareDialog}
+            onError={onErrorShareDialog}
         />
     );
 };

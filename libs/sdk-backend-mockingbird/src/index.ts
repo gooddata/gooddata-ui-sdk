@@ -27,6 +27,10 @@ export {
     SecuritySettingsUrlValidator,
     SecuritySettingsOrganizationScope,
     SecuritySettingsPluginUrlValidator,
+    IUserGroup,
+    IUsers,
+    IAccessControl,
+    IUserManagement,
 } from "./recordedBackend/types";
 
 export {

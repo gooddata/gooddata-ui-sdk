@@ -36,6 +36,8 @@ import {
     IOrganizations,
     IDateFilterConfigsQueryResult,
     IUser,
+    IWorkspaceUserGroupsQuery,
+    IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette, idRef } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
@@ -47,6 +49,11 @@ import { RecordedMeasures } from "./measures";
 import { RecordedFacts } from "./facts";
 import { RecordedDashboards } from "./dashboards";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import {
+    recordedAccessControlFactory,
+    recordedUserGroupsQuery,
+    RecordedWorkspaceUsersQuery,
+} from "./userManagement";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -209,7 +216,13 @@ function recordedWorkspace(
             return recordedPermissionsFactory();
         },
         users(): IWorkspaceUsersQuery {
-            throw new NotSupported("not supported");
+            return new RecordedWorkspaceUsersQuery(implConfig);
+        },
+        userGroups(): IWorkspaceUserGroupsQuery {
+            return recordedUserGroupsQuery(implConfig);
+        },
+        accessControl(): IWorkspaceAccessControlService {
+            return recordedAccessControlFactory(implConfig);
         },
     };
 }
@@ -260,7 +273,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
     return {
         async getUser(): Promise<IUser> {
             return (
-                implConfig.user ?? {
+                implConfig.userManagement?.user ?? {
                     login: USER_ID,
                     ref: idRef(USER_ID),
                     email: "",

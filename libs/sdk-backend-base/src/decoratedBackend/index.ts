@@ -27,6 +27,8 @@ import {
     ISecuritySettingsService,
     IOrganizationDescriptor,
     IOrganizations,
+    IWorkspaceUserGroupsQuery,
+    IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 
@@ -184,6 +186,14 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public dateFilterConfigs(): IDateFilterConfigsQuery {
         return this.decorated.dateFilterConfigs();
+    }
+
+    public userGroups(): IWorkspaceUserGroupsQuery {
+        return this.decorated.userGroups();
+    }
+
+    public accessControl(): IWorkspaceAccessControlService {
+        return this.decorated.accessControl();
     }
 }
 

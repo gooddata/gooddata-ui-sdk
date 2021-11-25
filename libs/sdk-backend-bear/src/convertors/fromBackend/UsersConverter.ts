@@ -3,8 +3,10 @@ import { IWorkspaceUser, IUser } from "@gooddata/sdk-backend-spi";
 import { GdcUser } from "@gooddata/api-model-bear";
 import { uriRef } from "@gooddata/sdk-model";
 
-const getUserFullName = (user: GdcUser.IAccountSetting | GdcUser.IUserListItem): string | undefined => {
-    const { firstName, lastName } = user;
+const getUserFullName = (
+    firstName: string | null | undefined,
+    lastName: string | null | undefined,
+): string | undefined => {
     if (!firstName && !lastName) {
         return undefined;
     }
@@ -20,12 +22,27 @@ export const convertUser = (user: GdcUser.IAccountSetting): IUser => {
         login: login!,
         firstName,
         lastName,
-        fullName: getUserFullName(user),
+        fullName: getUserFullName(firstName, lastName),
     };
 };
 
 export const convertWorkspaceUser = (user: GdcUser.IUserListItem): IWorkspaceUser => {
-    const { email, login, uri, firstName, lastName } = user;
+    const getStatusFromState = (
+        state: GdcUser.IUserListItem["state"],
+    ): IWorkspaceUser["status"] | undefined => {
+        switch (state) {
+            case "ACTIVE":
+                return "ENABLED";
+            case "INACTIVE":
+                return "DISABLED";
+            default:
+                return;
+        }
+    };
+
+    const { email, login, uri, firstName, lastName, state } = user;
+    const status = getStatusFromState(state);
+    const statusProp = status ? { status } : {};
     return {
         ref: uriRef(uri),
         email,
@@ -33,6 +50,25 @@ export const convertWorkspaceUser = (user: GdcUser.IUserListItem): IWorkspaceUse
         uri,
         firstName: firstName ?? undefined,
         lastName: lastName ?? undefined,
-        fullName: getUserFullName(user),
+        fullName: getUserFullName(firstName, lastName),
+        ...statusProp,
+    };
+};
+
+export const convertUsersItem = (user: GdcUser.IUsersItem): IWorkspaceUser => {
+    const {
+        content: { email, login, firstname, lastname, status },
+        links,
+    } = user;
+    const statusProp = status ? { status } : {};
+    return {
+        ref: uriRef(links!.self!),
+        uri: links!.self!,
+        email: email!,
+        login: login!,
+        firstName: firstname,
+        lastName: lastname,
+        fullName: getUserFullName(firstname, lastname),
+        ...statusProp,
     };
 };
