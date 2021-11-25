@@ -19,6 +19,7 @@ import {
 import { useExportHandler } from "./useExportHandler";
 import { useExportDialogContext } from "../../dashboardContexts";
 
+// TODO: FET-910 this should be handled by the pluggable visualizations, not hardcoded here
 function canInsightBeExported(insight: IInsightDefinition) {
     const insightVisUrl = insightVisualizationUrl(insight);
 
