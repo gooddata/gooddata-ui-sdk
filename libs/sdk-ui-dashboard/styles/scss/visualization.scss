@@ -64,3 +64,14 @@
         animation-duration: 0.3s;
     }
 }
+
+.zoomable {
+    .crosshair {
+        cursor: crosshair;
+    }
+
+    .highcharts-selection-marker {
+        fill: $highchart-selection-marker-color;
+        fill-opacity: 0.2;
+    }
+}

@@ -2,7 +2,12 @@
 import React, { CSSProperties, useCallback, useMemo, useState } from "react";
 import { IUserWorkspaceSettings, widgetRef } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
-import { insightSetFilters, insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
+import {
+    insightProperties,
+    insightSetFilters,
+    insightVisualizationUrl,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IPushData,
@@ -13,6 +18,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 import stringify from "json-stable-stringify";
+import cx from "classnames";
 
 import { useDashboardComponentsContext } from "../../../../dashboardContexts";
 import {
@@ -191,9 +197,15 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     const error = filtersError ?? visualizationError;
 
+    const visualizationProperties = insightProperties(insightWithAddedWidgetProperties);
+    const isZoomable = visualizationProperties?.controls.zoomInsight;
+
     return (
         <div className="visualization-content">
-            <div className="gd-visualization-content" style={insightPositionStyle}>
+            <div
+                className={cx("gd-visualization-content", { zoomable: isZoomable })}
+                style={insightPositionStyle}
+            >
                 <IntlWrapper locale={locale}>
                     {(filtersStatus === "running" || isVisualizationLoading) && <LoadingComponent />}
                     {error && (
