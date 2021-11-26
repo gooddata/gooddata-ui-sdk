@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/experimental-workspace",
-    "version": "8.8.0-alpha.4",
+    "version": "8.8.0-alpha.5",
     "author": "GoodData",
     "description": "GoodData SDK - Experimental workspace for features in dev",
     "repository": {
@@ -40,15 +40,15 @@
         "refresh-recordings": "./bin/refresh-recordings.sh && npm run prettier-write && npm run build"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.8.0-alpha.4",
-        "@gooddata/sdk-model": "^8.8.0-alpha.4",
+        "@gooddata/sdk-backend-spi": "^8.8.0-alpha.5",
+        "@gooddata/sdk-model": "^8.8.0-alpha.5",
         "lodash": "^4.17.19",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@gooddata/catalog-export": "^8.8.0-alpha.4",
+        "@gooddata/catalog-export": "^8.8.0-alpha.5",
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/mock-handling": "^8.8.0-alpha.4",
+        "@gooddata/mock-handling": "^8.8.0-alpha.5",
         "@microsoft/api-extractor": "^7.18.4",
         "@types/jest": "^26.0.12",
         "@types/lodash": "^4.14.158",
