@@ -2,6 +2,11 @@
 /**
  * All available command types.
  *
+ * Note: while this type is marked as public most of the command types are currently an alpha-level API that
+ * we reserve to change in the following releases.
+ *
+ * At this moment, we only consider the GDC.DASH/CMD.SAVEAS as stable
+ *
  * @public
  */
 export type DashboardCommandType =
