@@ -19,7 +19,7 @@ const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => 
  *
  * @remarks see {@link selectInsightsMap} or {@link selectInsightByRef} for a faster and safer ways to get
  * an insight by its ObjRef.
- * @alpha
+ * @public
  */
 export const selectInsights = entitySelectors.selectAll;
 

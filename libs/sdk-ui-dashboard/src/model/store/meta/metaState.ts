@@ -3,7 +3,7 @@
 import { IAccessControlAware, IDashboard } from "@gooddata/sdk-backend-spi";
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags"> & IAccessControlAware;
 

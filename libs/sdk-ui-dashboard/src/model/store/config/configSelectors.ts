@@ -12,7 +12,7 @@ const selectSelf = createSelector(
  * Returns dashboard's config. It is expected that the selector is called only after the config state
  * is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @alpha
+ * @public
  */
 export const selectConfig = createSelector(selectSelf, (configState) => {
     invariant(configState.config, "attempting to access uninitialized config state");
@@ -26,7 +26,7 @@ export const selectConfig = createSelector(selectSelf, (configState) => {
  * Note: this configuration SHOULD be further augmented by the dashboard-level overrides to obtain
  * the effective date filter configuration.
  *
- * @alpha
+ * @public
  */
 export const selectDateFilterConfig = createSelector(selectConfig, (state) => {
     return state.dateFilterConfig;
@@ -35,7 +35,7 @@ export const selectDateFilterConfig = createSelector(selectConfig, (state) => {
 /**
  * Returns settings that are in effect for the current dashboard.
  *
- * @alpha
+ * @public
  */
 export const selectSettings = createSelector(selectConfig, (state) => {
     return state.settings;
@@ -44,7 +44,7 @@ export const selectSettings = createSelector(selectConfig, (state) => {
 /**
  * Returns locale to use for internationalization of the dashboard.
  *
- * @alpha
+ * @public
  */
 export const selectLocale = createSelector(selectConfig, (state) => {
     return state.locale;
@@ -53,7 +53,7 @@ export const selectLocale = createSelector(selectConfig, (state) => {
 /**
  * Returns number separators to use when rendering numeric values on charts or KPIs.
  *
- * @alpha
+ * @public
  */
 export const selectSeparators = createSelector(selectConfig, (state) => {
     return state.separators;
@@ -62,7 +62,7 @@ export const selectSeparators = createSelector(selectConfig, (state) => {
 /**
  * Returns the color palette for dashboard charts.
  *
- * @alpha
+ * @public
  */
 export const selectColorPalette = createSelector(selectConfig, (state) => {
     return state.colorPalette;
@@ -73,7 +73,7 @@ export const selectColorPalette = createSelector(selectConfig, (state) => {
  * criteria can appear in selections where user has pick an object to use for some purpose (for instance metric for
  * KPI or date dataset to filter by).
  *
- * @alpha
+ * @public
  */
 export const selectObjectAvailabilityConfig = createSelector(selectConfig, (state) => {
     return state.objectAvailability;
@@ -82,7 +82,7 @@ export const selectObjectAvailabilityConfig = createSelector(selectConfig, (stat
 /**
  * Returns Mapbox token.
  *
- * @alpha
+ * @internal
  */
 export const selectMapboxToken = createSelector(selectConfig, (state) => {
     return state.mapboxToken;
@@ -92,7 +92,7 @@ export const selectMapboxToken = createSelector(selectConfig, (state) => {
  * Returns whether the Dashboard is executed in read-only mode.
  * Read-only mode disables any interactions that can alter the backend data.
  *
- * @alpha
+ * @public
  */
 export const selectIsReadOnly = createSelector(selectConfig, (state) => {
     return state.isReadOnly;
@@ -102,7 +102,7 @@ export const selectIsReadOnly = createSelector(selectConfig, (state) => {
  * Returns whether the Dashboard is executed in embedded context.
  * In embedded mode, some interactions may be disabled.
  *
- * @alpha
+ * @public
  */
 export const selectIsEmbedded = createSelector(selectConfig, (state) => {
     return state.isEmbedded;
@@ -122,7 +122,7 @@ export const selectIsExport = createSelector(selectConfig, (state) => {
  * Returns whether the default drills configured on the widgets or implicit drills (eg. drill down) are disabled.
  * This option does not affect drilling enabled by drillableItems.
  *
- * @alpha
+ * @public
  */
 export const selectDisableDefaultDrills = createSelector(selectConfig, (state) => {
     return state.disableDefaultDrills ?? false;
@@ -131,7 +131,7 @@ export const selectDisableDefaultDrills = createSelector(selectConfig, (state) =
 /**
  * Returns whether filter values in drill events should be resolved.
  *
- * @alpha
+ * @public
  */
 export const selectEnableFilterValuesResolutionInDrillEvents = createSelector(selectConfig, (state) => {
     return state.enableFilterValuesResolutionInDrillEvents ?? false;
@@ -144,7 +144,7 @@ export const selectEnableFilterValuesResolutionInDrillEvents = createSelector(se
 /**
  * Returns date format.
  *
- * @alpha
+ * @public
  */
 export const selectDateFormat = createSelector(selectConfig, (state) => {
     return state.settings?.responsiveUiDateFormat;
@@ -153,7 +153,7 @@ export const selectDateFormat = createSelector(selectConfig, (state) => {
 /**
  * Returns whether the current user can schedule emails.
  *
- * @alpha
+ * @public
  */
 export const selectEnableKPIDashboardSchedule = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardSchedule;
@@ -162,7 +162,7 @@ export const selectEnableKPIDashboardSchedule = createSelector(selectConfig, (st
 /**
  * Returns whether the current user can share scheduled email to other recipients.
  *
- * @alpha
+ * @public
  */
 export const selectEnableKPIDashboardScheduleRecipients = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardScheduleRecipients;
@@ -171,16 +171,16 @@ export const selectEnableKPIDashboardScheduleRecipients = createSelector(selectC
 /**
  * Returns current platform edition.
  *
- * @alpha
+ * @public
  */
 export const selectPlatformEdition = createSelector(selectConfig, (state) => {
     return state.settings?.platformEdition ?? "enterprise";
 });
 
 /**
- * Returns whether comapny logo should be visible in embedded dashboard.
+ * Returns whether company logo should be visible in embedded dashboard.
  *
- * @alpha
+ * @public
  */
 export const selectEnableCompanyLogoInEmbeddedUI = createSelector(selectConfig, (state) => {
     return state.settings?.enableCompanyLogoInEmbeddedUI ?? false;
@@ -189,7 +189,7 @@ export const selectEnableCompanyLogoInEmbeddedUI = createSelector(selectConfig, 
 /**
  * Returns whether the export to pdf is enabled.
  *
- * @alpha
+ * @public
  */
 export const selectEnableKPIDashboardExportPDF = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardExportPDF ?? false;
@@ -198,7 +198,7 @@ export const selectEnableKPIDashboardExportPDF = createSelector(selectConfig, (s
 /**
  * Returns whether the drill to dashboard is enabled.
  *
- * @alpha
+ * @public
  */
 export const selectEnableKPIDashboardDrillToDashboard = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardDrillToDashboard ?? false;
@@ -207,7 +207,7 @@ export const selectEnableKPIDashboardDrillToDashboard = createSelector(selectCon
 /**
  * Returns whether the save as new dashboard functionality is enabled.
  *
- * @alpha
+ * @public
  */
 export const selectEnableKPIDashboardSaveAsNew = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardSaveAsNew ?? false;
@@ -216,7 +216,7 @@ export const selectEnableKPIDashboardSaveAsNew = createSelector(selectConfig, (s
 /**
  * Returns whether implicit drill to attributes url enabled
  *
- * @alpha
+ * @public
  */
 export const selectEnableClickableAttributeURL = createSelector(selectConfig, (state) => {
     return state.settings?.enableClickableAttributeURL ?? true;
@@ -225,7 +225,7 @@ export const selectEnableClickableAttributeURL = createSelector(selectConfig, (s
 /**
  * Returns whether drill to url is enabled
  *
- * @alpha
+ * @public
  */
 export const selectEnableKPIDashboardDrillToURL = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardDrillToURL ?? false;
@@ -234,7 +234,7 @@ export const selectEnableKPIDashboardDrillToURL = createSelector(selectConfig, (
 /**
  * Returns whether drill to insight is enabled
  *
- * @alpha
+ * @public
  */
 export const selectEnableKPIDashboardDrillToInsight = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardDrillToInsight ?? false;
@@ -243,7 +243,7 @@ export const selectEnableKPIDashboardDrillToInsight = createSelector(selectConfi
 /**
  * Returns whether implicit drill to attributes url enabled
  *
- * @alpha
+ * @public
  */
 export const selectEnableKPIDashboardImplicitDrillDown = createSelector(selectConfig, (state) => {
     return state.settings?.enableKPIDashboardImplicitDrillDown ?? false;
@@ -252,7 +252,7 @@ export const selectEnableKPIDashboardImplicitDrillDown = createSelector(selectCo
 /**
  * Returns whether Kpi drills in embedded mode are disabled.
  *
- * @alpha
+ * @public
  */
 export const selectHideKpiDrillInEmbedded = createSelector(selectConfig, (state) => {
     return state.settings?.hideKpiDrillInEmbedded ?? false;

@@ -2,7 +2,12 @@
 /**
  * All available command types.
  *
- * @alpha
+ * Note: while this type is marked as public most of the command types are currently an alpha-level API that
+ * we reserve to change in the following releases.
+ *
+ * At this moment, we only consider the GDC.DASH/CMD.SAVEAS as stable
+ *
+ * @public
  */
 export type DashboardCommandType =
     | "GDC.DASH/CMD.INITIALIZE"
@@ -61,7 +66,7 @@ export type DashboardCommandType =
     | "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE";
 
 /**
- * @alpha
+ * @public
  */
 export type CommandProcessingMeta = {
     /**
@@ -77,7 +82,7 @@ export type CommandProcessingMeta = {
  * they target backend, workspace and dashboard in depending on the Dashboard component tree from which the dispatch
  * is done.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardCommand {
     /**

@@ -13,7 +13,7 @@ import {
 } from "../events";
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardEventHandlerFn<TEvents extends DashboardEvents | ICustomDashboardEvent> = (
     event: TEvents,
@@ -22,7 +22,7 @@ export type DashboardEventHandlerFn<TEvents extends DashboardEvents | ICustomDas
 ) => void;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardEventEvalFn = (event: DashboardEvents | ICustomDashboardEvent) => boolean;
 
@@ -31,7 +31,7 @@ export type DashboardEventEvalFn = (event: DashboardEvents | ICustomDashboardEve
  * evaluated against all registered handlers and if evaluation succeeds they will be dispatched to the handler
  * function.
  *
- * @alpha
+ * @public
  */
 export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> = {
     /**
@@ -56,7 +56,7 @@ export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashb
  * Creates a {@link DashboardEventHandler} instance that will be invoked for any event (event for custom events).
  *
  * @param handler - the actual event handling function
- * @alpha
+ * @public
  */
 export function anyEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler {
     return {
@@ -69,7 +69,7 @@ export function anyEventHandler(handler: DashboardEventHandler["handler"]): Dash
  * Creates a {@link DashboardEventHandler} instance that will be invoked for any dashboard event (i.e. not for custom events).
  *
  * @param handler - the actual event handling function
- * @alpha
+ * @public
  */
 export function anyDashboardEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler {
     return {
@@ -83,7 +83,7 @@ export function anyDashboardEventHandler(handler: DashboardEventHandler["handler
  *
  * @param type - the type of event this handler should trigger for
  * @param handler - the actual event handling function
- * @alpha
+ * @public
  */
 export function singleEventTypeHandler(
     type: (DashboardEvents | ICustomDashboardEvent)["type"],

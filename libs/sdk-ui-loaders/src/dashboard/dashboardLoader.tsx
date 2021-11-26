@@ -36,12 +36,12 @@ import {
 import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation";
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardEngineLoader = (dashboard: IDashboardWithReferences) => Promise<IDashboardEngine>;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardPluginsLoader = (
     ctx: DashboardContext,
@@ -49,7 +49,7 @@ export type DashboardPluginsLoader = (
 ) => Promise<LoadedPlugin[]>;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardBeforeLoad = (
     ctx: DashboardContext,
@@ -57,7 +57,7 @@ export type DashboardBeforeLoad = (
 ) => Promise<void>;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardLoaderConfig = {
     /**
@@ -95,7 +95,13 @@ const AdaptiveLoadStrategies = (
 };
 
 /**
- * @alpha
+ * Default implementation of the {@link IDashboardLoader} interface. This class implements all the
+ * necessary functionality related to either static or dynamic dashboard loading.
+ *
+ * Note: you typically do not have to use this class directly and instead use the `useDashboardLoader`
+ * hook or the `DashboardStub` component.
+ *
+ * @public
  */
 export class DashboardLoader implements IDashboardLoader {
     private readonly config: DashboardLoaderConfig;
@@ -107,10 +113,22 @@ export class DashboardLoader implements IDashboardLoader {
         this.config = config;
     }
 
+    /**
+     * Create loader that will never do any dynamic loading and linking. The loader will expect that
+     * the dashboard engine is statically linked in the context. Any plugins that require dynamic loading
+     * from remote locations will be ignored. Only locally embedded plugins will be used.
+     */
     public static staticOnly(): DashboardLoader {
         return new DashboardLoader(StaticLoadStrategies);
     }
 
+    /**
+     * Create loader that may dynamically load dashboard engine and plugins in case a Dashboard to load
+     * is using them. Otherwise it will fall back to the dashboard engine statically linked to the context
+     * and will only use locally embedded plugins.
+     *
+     * @param options - options for the adaptive load
+     */
     public static adaptive(options: AdaptiveLoadOptions): DashboardLoader {
         return new DashboardLoader(AdaptiveLoadStrategies(options.moduleFederationIntegration));
     }
