@@ -133,6 +133,7 @@ export {
     selectDashboardId,
     selectDashboardShareStatus,
     selectPersistedDashboard,
+    selectDashboardLockStatus,
 } from "./meta/metaSelectors";
 export {
     selectListedDashboards,

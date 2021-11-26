@@ -2,22 +2,26 @@
 import React, { useCallback, useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import { getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
+import { Button } from "@gooddata/sdk-ui-kit";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { action } from "@storybook/addon-actions";
+import { uriRef } from "@gooddata/sdk-model";
+
 import { UiKit } from "../../../_infra/storyGroups";
 import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 import { BackstopConfig } from "../../../_infra/backstopScenario";
+
+import { groupAll, owner } from "./GranteeMock";
+import { LabelsMock } from "./LabelsMock";
+
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
-import { action } from "@storybook/addon-actions";
-import { getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
-import { Button } from "@gooddata/sdk-ui-kit";
-import { groupAll, owner } from "./GranteeMock";
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { uriRef } from "@gooddata/sdk-model";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
-const BasicExample = (): JSX.Element => {
+const BasicExample: React.FC = () => {
     const [open, setOpen] = useState(false);
 
     const onCancel = useCallback(() => {
@@ -50,12 +54,19 @@ const BasicExample = (): JSX.Element => {
                     />
                     {open && (
                         <ShareDialogBase
-                            sharedObjectRef={uriRef("ref")}
-                            shareStatus={"private"}
-                            owner={owner}
+                            sharedObject={{
+                                ref: uriRef("ref"),
+                                shareStatus: "private",
+                                owner,
+                                isLocked: false,
+                                isUnderLenientControl: false,
+                                isLockingSupported: true,
+                                isLeniencyControlSupported: true,
+                            }}
                             onCancel={onCancel}
                             onSubmit={onSubmit}
                             onError={onCancel}
+                            labels={LabelsMock}
                         />
                     )}
                 </div>
@@ -67,7 +78,7 @@ const BasicExample = (): JSX.Element => {
 /**
  * @internal
  */
-export const ShareDialogExamples = (): JSX.Element => {
+export const ShareDialogExamples: React.FC = () => {
     return (
         <InternalIntlWrapper>
             screen 800x600 px
@@ -83,7 +94,7 @@ const granteeAllSelector = `.${getGranteeItemTestId(groupAll, "option")}`;
 
 const scenarios: BackstopConfig = {
     open: {
-        clickSelectors: [".s-share-dialog-button"],
+        clickSelectors: [".s-share-dialog-button", 100],
     },
     "add-grantee": {
         clickSelectors: [".s-share-dialog-button", 100, ".s-add-users-or-groups", 100],
@@ -100,9 +111,33 @@ const scenarios: BackstopConfig = {
     },
 };
 
+const lockScenarios: BackstopConfig = {
+    open: {
+        clickSelectors: [".s-share-dialog-button", 100],
+    },
+    "toggle-lock": {
+        clickSelectors: [".s-share-dialog-button", 100, ".s-shared-object-lock", 100],
+    },
+};
+
+const drillAvailabilityScenarios: BackstopConfig = {
+    open: {
+        clickSelectors: [".s-share-dialog-button", 100],
+    },
+    "toggle-availability-for-drill": {
+        clickSelectors: [".s-share-dialog-button", 100, ".s-shared-object-under-lenient-control", 100],
+    },
+};
+
 storiesOf(`${UiKit}/ShareDialog/ShareDialog`, module).add("full-featured", () =>
     withMultipleScreenshots(<ShareDialogExamples />, scenarios),
 );
 storiesOf(`${UiKit}/ShareDialog/ShareDialog`, module).add("themed", () =>
     withMultipleScreenshots(wrapWithTheme(<ShareDialogExamples />), scenarios),
+);
+storiesOf(`${UiKit}/ShareDialog/ShareDialog`, module).add("lock-interaction", () =>
+    withMultipleScreenshots(<ShareDialogExamples />, lockScenarios),
+);
+storiesOf(`${UiKit}/ShareDialog/ShareDialog`, module).add("drill-availability-interaction", () =>
+    withMultipleScreenshots(<ShareDialogExamples />, drillAvailabilityScenarios),
 );

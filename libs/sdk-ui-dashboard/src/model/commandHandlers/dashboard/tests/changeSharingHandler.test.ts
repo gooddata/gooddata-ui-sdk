@@ -1,4 +1,6 @@
 // (C) 2021 GoodData Corporation
+import { uriRef } from "@gooddata/sdk-model";
+
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { changeSharing, ChangeSharing } from "../../../commands";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
@@ -21,6 +23,7 @@ describe("change dashboard sharing handler", () => {
                     {
                         shareStatus: "public",
                         isUnderStrictControl: false,
+                        isLocked: true,
                         granteesToAdd: [],
                         granteesToDelete: [],
                     },
@@ -29,11 +32,15 @@ describe("change dashboard sharing handler", () => {
                 "GDC.DASH/EVT.SHARING.CHANGED",
             );
 
-            expect(event.payload.newShareProps).toEqual({
-                shareStatus: "public",
-                isUnderStrictControl: false,
-                granteesToAdd: [],
-                granteesToDelete: [],
+            expect(event.payload).toEqual({
+                dashboardRef: uriRef("/gdc/md/referenceworkspace/obj/1304"),
+                newShareProps: {
+                    shareStatus: "public",
+                    isUnderStrictControl: false,
+                    isLocked: true,
+                    granteesToAdd: [],
+                    granteesToDelete: [],
+                },
             });
             const newState = Tester.state();
             expect(selectDashboardShareStatus(newState)).toEqual("public");
@@ -45,6 +52,7 @@ describe("change dashboard sharing handler", () => {
                     {
                         shareStatus: "public",
                         isUnderStrictControl: false,
+                        isLocked: true,
                         granteesToAdd: [],
                         granteesToDelete: [],
                     },
@@ -70,6 +78,7 @@ describe("change dashboard sharing handler", () => {
                     {
                         shareStatus: "public",
                         isUnderStrictControl: false,
+                        isLocked: true,
                         granteesToAdd: [],
                         granteesToDelete: [],
                     },

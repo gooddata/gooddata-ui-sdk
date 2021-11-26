@@ -1420,6 +1420,7 @@ export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<T
 export interface DashboardSharingChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
+        dashboardRef: ObjRef;
         newShareProps: IShareProps;
     };
     // (undocumented)
@@ -2835,6 +2836,7 @@ export interface IShareButtonProps {
 export interface IShareDialogProps {
     backend: IAnalyticalBackend;
     currentUserRef: ObjRef;
+    isLockingSupported: boolean;
     isVisible?: boolean;
     onApply: (payload: ISharingApplyPayload) => void;
     onCancel: () => void;
@@ -2845,6 +2847,8 @@ export interface IShareDialogProps {
 
 // @alpha
 export interface IShareProps {
+    // (undocumented)
+    isLocked: boolean;
     // (undocumented)
     isUnderStrictControl: boolean;
     // (undocumented)
@@ -3528,6 +3532,9 @@ export const selectDashboardIdRef: OutputSelector<DashboardState, IdentifierRef 
 
 // @internal (undocumented)
 export const selectDashboardLoading: OutputSelector<DashboardState, LoadingState, (res: DashboardState) => LoadingState>;
+
+// @alpha
+export const selectDashboardLockStatus: OutputSelector<DashboardState, boolean | undefined, (res: DashboardDescriptor) => boolean | undefined>;
 
 // @alpha
 export const selectDashboardRef: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: IDashboard<IDashboardWidget> | undefined) => UriRef | IdentifierRef | undefined>;

@@ -568,6 +568,24 @@ export interface IAddGranteeBaseProps {
 }
 
 // @internal (undocumented)
+export interface IAffectedSharedObject {
+    // (undocumented)
+    isLeniencyControlSupported: boolean;
+    // (undocumented)
+    isLocked: boolean;
+    // (undocumented)
+    isLockingSupported: boolean;
+    // (undocumented)
+    isUnderLenientControl: boolean;
+    // (undocumented)
+    owner: IGranteeUser | IGranteeInactiveOwner;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    shareStatus: ShareStatus;
+}
+
+// @internal (undocumented)
 export interface IAlignPoint {
     // (undocumented)
     align: string;
@@ -2533,17 +2551,23 @@ export const isGranteeUser: (obj: unknown) => obj is IGranteeUser;
 // @internal (undocumented)
 export interface IShareDialogBaseProps {
     // (undocumented)
+    labels: IShareDialogLabels;
+    // (undocumented)
     onCancel: () => void;
     // (undocumented)
     onError: (err: Error) => void;
     // (undocumented)
-    onSubmit: (grantees: GranteeItem[], granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[]) => void;
+    onSubmit: (grantees: GranteeItem[], granteesToAdd: GranteeItem[], granteesToDelete: GranteeItem[], isUnderLenientControl: boolean, isLocked: boolean) => void;
     // (undocumented)
-    owner: IGranteeUser | IGranteeInactiveOwner;
+    sharedObject: IAffectedSharedObject;
+}
+
+// @internal (undocumented)
+export interface IShareDialogLabels {
     // (undocumented)
-    sharedObjectRef: ObjRef;
+    lockControl: string;
     // (undocumented)
-    shareStatus: ShareStatus;
+    underLenientControl: string;
 }
 
 // @internal (undocumented)
@@ -2552,6 +2576,10 @@ export interface IShareDialogProps {
     backend: IAnalyticalBackend;
     // (undocumented)
     currentUserRef: ObjRef;
+    // (undocumented)
+    isLockingSupported: boolean;
+    // (undocumented)
+    labels: IShareDialogLabels;
     // (undocumented)
     locale?: string;
     // (undocumented)
@@ -2581,15 +2609,25 @@ export interface IShareGranteeBaseProps {
     // (undocumented)
     isLoading: boolean;
     // (undocumented)
+    isLockedNow: boolean;
+    // (undocumented)
+    isUnderLenientControlNow: boolean;
+    // (undocumented)
+    labels: IShareDialogLabels;
+    // (undocumented)
     onAddGranteeButtonClick: () => void;
     // (undocumented)
     onCancel: () => void;
     // (undocumented)
     onGranteeDelete: (grantee: GranteeItem) => void;
     // (undocumented)
+    onLockChange: (locked: boolean) => void;
+    // (undocumented)
     onSubmit: () => void;
     // (undocumented)
-    owner: IGranteeUser | IGranteeInactiveOwner;
+    onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
+    // (undocumented)
+    sharedObject: IAffectedSharedObject;
 }
 
 // @internal (undocumented)
@@ -2610,6 +2648,8 @@ export interface ISharingApplyPayload {
     granteesToAdd: IAccessGrantee[];
     // (undocumented)
     granteesToDelete: IAccessGrantee[];
+    // (undocumented)
+    isLocked: boolean;
     // (undocumented)
     isUnderStrictControl: boolean;
     // (undocumented)

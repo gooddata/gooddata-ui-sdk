@@ -10,6 +10,7 @@ import {
     selectCurrentUserRef,
     useDashboardCommandProcessing,
     changeSharing,
+    selectCanManageWorkspace,
 } from "../../../model";
 import { ShareDialog, ISharingApplyPayload } from "../../shareDialog";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -20,6 +21,7 @@ const useShareDialogDashboardHeader = () => {
     const isShareDialogOpen = useDashboardSelector(selectIsShareDialogOpen);
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
     const currentUserRef = useDashboardSelector(selectCurrentUserRef);
+    const isLockingSupported = useDashboardSelector(selectCanManageWorkspace);
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -65,6 +67,7 @@ const useShareDialogDashboardHeader = () => {
         onCloseShareDialog,
         onApplyShareDialog,
         onErrorShareDialog,
+        isLockingSupported,
     };
 };
 
@@ -81,6 +84,7 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
         onCloseShareDialog,
         onApplyShareDialog,
         onErrorShareDialog,
+        isLockingSupported,
     } = useShareDialogDashboardHeader();
 
     if (!isShareDialogOpen) {
@@ -97,6 +101,7 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
             onCancel={onCloseShareDialog}
             onApply={onApplyShareDialog}
             onError={onErrorShareDialog}
+            isLockingSupported={isLockingSupported}
         />
     );
 };

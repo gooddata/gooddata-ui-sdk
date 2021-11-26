@@ -1,6 +1,16 @@
 // (C) 2021 GoodData Corporation
 import { areObjRefsEqual, IUser, ObjRef } from "@gooddata/sdk-model";
 import {
+    AccessGranteeDetail,
+    IAccessGrantee,
+    IWorkspaceUser,
+    IWorkspaceUserGroup,
+    ShareStatus,
+} from "@gooddata/sdk-backend-spi";
+import { isUserAccess, isUserGroupAccess } from "@gooddata/sdk-backend-spi";
+import { typesUtils } from "@gooddata/util";
+
+import {
     GranteeItem,
     IGranteeGroup,
     IGranteeGroupAll,
@@ -9,17 +19,10 @@ import {
     isGranteeGroupAll,
     isGranteeUserInactive,
     GranteeStatus,
+    IAffectedSharedObject,
 } from "./ShareDialogBase/types";
-import {
-    AccessGranteeDetail,
-    IAccessGrantee,
-    IWorkspaceUser,
-    IWorkspaceUserGroup,
-    ShareStatus,
-} from "@gooddata/sdk-backend-spi";
 import { GranteeGroupAll, InactiveOwner, getAppliedGrantees, hasGroupAll } from "./ShareDialogBase/utils";
-import { typesUtils } from "@gooddata/util";
-import { isUserAccess, isUserGroupAccess } from "@gooddata/sdk-backend-spi";
+import { ISharedObject } from "./types";
 
 const mapUserStatusToGranteeStatus = (status: "ENABLED" | "DISABLED"): GranteeStatus => {
     if (status === "DISABLED") {
@@ -138,4 +141,25 @@ export const mapGranteesToShareStatus = (
     }
 
     return "private";
+};
+
+/**
+ * @internal
+ */
+export const mapSharedObjectToAffectedSharedObject = (
+    sharedObject: ISharedObject,
+    owner: IGranteeUser | IGranteeInactiveOwner,
+    isLockingSupported: boolean,
+    isLeniencyControlSupported: boolean,
+): IAffectedSharedObject => {
+    const { ref, shareStatus, isLocked, isUnderStrictControl } = sharedObject;
+    return {
+        ref,
+        shareStatus,
+        owner,
+        isLocked,
+        isUnderLenientControl: !isUnderStrictControl,
+        isLockingSupported,
+        isLeniencyControlSupported,
+    };
 };

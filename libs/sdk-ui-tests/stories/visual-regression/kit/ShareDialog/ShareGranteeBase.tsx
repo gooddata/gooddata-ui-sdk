@@ -2,35 +2,62 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import { uriRef } from "@gooddata/sdk-model";
+import { action } from "@storybook/addon-actions";
+import { GranteeItem, IGranteeUser, IGranteeInactiveOwner, ShareGranteeBase } from "@gooddata/sdk-ui-kit";
+
 import { UiKit } from "../../../_infra/storyGroups";
 import { withScreenshot } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
-import "@gooddata/sdk-ui-kit/styles/css/main.css";
-import { action } from "@storybook/addon-actions";
-
-import { GranteeItem, IGranteeUser, IGranteeInactiveOwner, ShareGranteeBase } from "@gooddata/sdk-ui-kit";
 import { grantees, inactiveUser, owner } from "./GranteeMock";
-import { uriRef } from "@gooddata/sdk-model";
+import { LabelsMock } from "./LabelsMock";
+
+import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
 interface BasicExampleProps {
     isDirty: boolean;
     grantees: GranteeItem[];
     owner: IGranteeUser | IGranteeInactiveOwner;
+    isLocked?: boolean;
+    isUnderLenientControl?: boolean;
+    isLockingSupported?: boolean;
+    isLeniencyControlSupported?: boolean;
 }
 
-const BasicExample = (props: BasicExampleProps): JSX.Element => {
+const BasicExample: React.FC<BasicExampleProps> = ({
+    owner,
+    grantees,
+    isDirty,
+    isLocked = false,
+    isUnderLenientControl = false,
+    isLockingSupported = true,
+    isLeniencyControlSupported = true,
+}) => {
     return (
         <div id="Share-Grantee-base-basic-example">
             <ShareGranteeBase
-                isDirty={props.isDirty}
+                isDirty={isDirty}
                 isLoading={false}
-                owner={props.owner}
-                grantees={props.grantees}
+                sharedObject={{
+                    ref: uriRef("ref"),
+                    shareStatus: "private",
+                    owner,
+                    isLockingSupported,
+                    isLocked,
+                    isUnderLenientControl,
+                    isLeniencyControlSupported,
+                }}
+                isLockedNow={isLocked}
+                isUnderLenientControlNow={isUnderLenientControl}
+                grantees={grantees}
                 onGranteeDelete={action("onGranteeDelete")}
                 onAddGranteeButtonClick={action("onAddGrantee")}
                 onCancel={action("onCancel")}
                 onSubmit={action("onSubmit")}
+                onUnderLenientControlChange={action("onUnderLenientControlChange")}
+                onLockChange={action("onLockChange")}
+                labels={LabelsMock}
             />
         </div>
     );
@@ -56,7 +83,7 @@ const getGrantees = (): GranteeItem[] => {
 /**
  * @internal
  */
-export const ShareGranteeBaseExamples = (): JSX.Element => {
+export const ShareGranteeBaseExamples: React.FC = () => {
     return (
         <InternalIntlWrapper>
             <div className="library-component screenshot-target">
@@ -68,6 +95,38 @@ export const ShareGranteeBaseExamples = (): JSX.Element => {
                 <BasicExample isDirty={false} grantees={[]} owner={inactiveUser} />
                 <h4>ShareGranteeBase scrollable</h4>
                 <BasicExample isDirty={false} grantees={getGrantees()} owner={owner} />
+                <h4>ShareGranteeBase locked</h4>
+                <BasicExample isDirty={false} grantees={grantees} owner={owner} isLocked={true} />
+                <h4>ShareGranteeBase available for drill</h4>
+                <BasicExample
+                    isDirty={false}
+                    grantees={grantees}
+                    owner={owner}
+                    isUnderLenientControl={true}
+                />
+                <h4>ShareGranteeBase without ability to lock the object</h4>
+                <BasicExample isDirty={false} grantees={grantees} owner={owner} isLockingSupported={false} />
+                <h4>ShareGranteeBase without ability to change availability for drill</h4>
+                <BasicExample
+                    isDirty={false}
+                    grantees={grantees}
+                    owner={owner}
+                    isLeniencyControlSupported={false}
+                />
+            </div>
+        </InternalIntlWrapper>
+    );
+};
+
+/**
+ * @internal
+ */
+export const ShareGranteeBaseInteractionExamples: React.FC = () => {
+    return (
+        <InternalIntlWrapper>
+            <div className="library-component screenshot-target">
+                <h4>ShareGranteeBase interaction example</h4>
+                <BasicExample isDirty={false} grantees={grantees} owner={owner} />
             </div>
         </InternalIntlWrapper>
     );

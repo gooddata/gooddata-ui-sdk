@@ -10,6 +10,7 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 export interface ISharingApplyPayload {
     shareStatus: ShareStatus;
     isUnderStrictControl: boolean;
+    isLocked: boolean;
     granteesToAdd: IAccessGrantee[];
     granteesToDelete: IAccessGrantee[];
 }
@@ -24,6 +25,14 @@ export interface ISharedObject extends IAccessControlAware, IAuditableUsers {
 /**
  * @internal
  */
+export interface IShareDialogLabels {
+    lockControl: string;
+    underLenientControl: string;
+}
+
+/**
+ * @internal
+ */
 export interface IShareDialogProps {
     backend: IAnalyticalBackend;
     workspace: string;
@@ -33,4 +42,6 @@ export interface IShareDialogProps {
     onApply: (payload: ISharingApplyPayload) => void;
     onCancel: () => void;
     onError?: (error: GoodDataSdkError) => void;
+    isLockingSupported: boolean;
+    labels: IShareDialogLabels;
 }

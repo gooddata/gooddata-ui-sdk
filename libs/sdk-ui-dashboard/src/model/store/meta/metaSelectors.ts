@@ -175,3 +175,12 @@ export const selectDashboardTags = createSelector(selectDashboardDescriptor, (st
 export const selectDashboardShareStatus = createSelector(selectDashboardDescriptor, (state) => {
     return state.shareStatus;
 });
+
+/**
+ * Selects dashboard lock status.
+ *
+ * @alpha
+ */
+export const selectDashboardLockStatus = createSelector(selectDashboardDescriptor, (state) => {
+    return state.isLocked;
+});

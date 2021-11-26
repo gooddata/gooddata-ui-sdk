@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shareDialogMappers mapSharedObjectToAffectedSharedObject should map shared object to expected affected shared object 1`] = `
+Object {
+  "isLeniencyControlSupported": false,
+  "isLocked": true,
+  "isLockingSupported": true,
+  "isUnderLenientControl": true,
+  "owner": Object {
+    "email": undefined,
+    "id": Object {
+      "uri": "userID1",
+    },
+    "isCurrentUser": true,
+    "isOwner": true,
+    "name": "User Name",
+    "status": "Active",
+    "type": "user",
+  },
+  "ref": Object {
+    "uri": "/gdc/md/referenceworkspace/obj/1304",
+  },
+  "shareStatus": "public",
+}
+`;
