@@ -29,4 +29,4 @@ const LockedStatusComponent = (props: ILockedStatusProps): JSX.Element | null =>
 /**
  * @alpha
  */
-export const LockedStatus = withTheme(LockedStatusComponent);
+export const LockedStatusIndicator = withTheme(LockedStatusComponent);

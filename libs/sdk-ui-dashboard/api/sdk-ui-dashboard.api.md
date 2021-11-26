@@ -121,7 +121,7 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
-import { ShareStatus as ShareStatus_2 } from '@gooddata/sdk-backend-spi';
+import { ShareStatus } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
@@ -1585,6 +1585,9 @@ export const DefaultDashboardWidget: (props: IDashboardWidgetProps) => JSX.Eleme
 export const DefaultFilterBar: (props: IFilterBarProps) => JSX.Element;
 
 // @alpha (undocumented)
+export const DefaultLockedStatus: (props: ILockedStatusProps) => JSX.Element | null;
+
+// @alpha (undocumented)
 export const DefaultMenuButton: (props: IMenuButtonProps) => JSX.Element | null;
 
 // @alpha (undocumented)
@@ -1602,6 +1605,9 @@ export const DefaultShareButton: React_2.ForwardRefExoticComponent<Pick<IShareBu
 
 // @alpha (undocumented)
 export const DefaultShareDialog: (props: IShareDialogProps) => JSX.Element | null;
+
+// @alpha (undocumented)
+export const DefaultShareStatus: (props: IShareStatusProps) => JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultTitle: (props: ITitleProps) => JSX.Element | null;
@@ -2861,13 +2867,13 @@ export interface IShareProps {
     // (undocumented)
     isUnderStrictControl: boolean;
     // (undocumented)
-    shareStatus: ShareStatus_2;
+    shareStatus: ShareStatus;
 }
 
 // @alpha (undocumented)
 export interface IShareStatusProps {
     // (undocumented)
-    shareStatus: ShareStatus_2;
+    shareStatus: ShareStatus;
 }
 
 // @alpha (undocumented)
@@ -2950,7 +2956,7 @@ export type LoadingState = {
 };
 
 // @alpha (undocumented)
-export const LockedStatus: React_2.ComponentType<Pick<ILockedStatusProps, "isLocked">>;
+export const LockedStatusIndicator: React_2.ComponentType<Pick<ILockedStatusProps, "isLocked">>;
 
 // @alpha
 export type MeasureDateDatasets = {
@@ -3571,7 +3577,7 @@ export const selectDashboardSaving: OutputSelector<DashboardState, SavingState, 
 export const selectDashboardShareInfo: OutputSelector<DashboardState, IAccessControlAware, (res: DashboardDescriptor) => IAccessControlAware>;
 
 // @alpha
-export const selectDashboardShareStatus: OutputSelector<DashboardState, ShareStatus_2, (res: DashboardDescriptor) => ShareStatus_2>;
+export const selectDashboardShareStatus: OutputSelector<DashboardState, ShareStatus, (res: DashboardDescriptor) => ShareStatus>;
 
 // @alpha
 export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: DashboardDescriptor) => string[] | undefined>;
@@ -3867,7 +3873,7 @@ export const ShareButton: (props: IShareButtonProps) => JSX.Element;
 export const ShareDialog: (props: IShareDialogProps) => JSX.Element;
 
 // @alpha (undocumented)
-export const ShareStatus: (props: IShareStatusProps) => JSX.Element;
+export const ShareStatusIndicator: (props: IShareStatusProps) => JSX.Element;
 
 // @alpha
 export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboardEvent)["type"], handler: DashboardEventHandler["handler"]): DashboardEventHandler;

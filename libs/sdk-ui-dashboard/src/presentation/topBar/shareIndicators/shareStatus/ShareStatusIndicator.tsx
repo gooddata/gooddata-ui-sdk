@@ -7,7 +7,7 @@ import { IShareStatusProps } from "./types";
 /**
  * @alpha
  */
-export const ShareStatus = (props: IShareStatusProps): JSX.Element => {
+export const ShareStatusIndicator = (props: IShareStatusProps): JSX.Element => {
     let icon, text, tooltip;
     if (props.shareStatus !== "private") {
         icon = "gd-icon-users";
