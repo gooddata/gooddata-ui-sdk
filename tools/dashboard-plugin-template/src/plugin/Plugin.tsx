@@ -35,6 +35,8 @@ export class Plugin extends DashboardPluginV1 {
          * be included in the parameters string.
          *
          * The parameters are useful to modify plugin behavior in context of particular dashboard.
+         *
+         * Note: it is safe to delete this stub if your plugin does not need any specific initialization.
          */
     }
 
@@ -64,5 +66,14 @@ export class Plugin extends DashboardPluginV1 {
             // eslint-disable-next-line no-console
             console.log("### Dashboard initialized", evt);
         });
+    }
+
+    public onPluginUnload(_ctx: DashboardContext): Promise<void> | void {
+        /*
+         * This will be called when user navigates away from the dashboard enhanced by the plugin. At this point,
+         * your code may do additional teardown and cleanup.
+         *
+         * Note: it is safe to delete this stub if your plugin does not need to do anything extra during unload.
+         */
     }
 }
