@@ -3,6 +3,16 @@ import isEmpty from "lodash/isEmpty";
 import { DashboardContext } from "../types/commonTypes";
 
 /**
+ * A union of all available built-in dashboard event type names.
+ *
+ * Note: while this type is marked as public most of the event types are currently an alpha-level API that
+ * we reserve to change in the following releases.
+ *
+ * These are the event types that we currently consider stable:
+ *
+ * -  GDC.DASH/EVT.INITIALIZED
+ * -  GDC.DASH/EVT.COPY_SAVED
+ *
  * @public
  */
 export type DashboardEventType =
