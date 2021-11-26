@@ -346,7 +346,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
 
     useEffect(() => {
-        if (!isEqual(prevParentFilters, props.parentFilters)) {
+        if (!isEmpty(props.parentFilters) && !isEqual(prevParentFilters, props.parentFilters)) {
             setState((prevState) => {
                 return {
                     ...prevState,
