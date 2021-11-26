@@ -23,7 +23,6 @@ import compact from "lodash/compact";
 import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdown/AttributeDropdownList";
 import { mergeElementQueryResults } from "./AttributeDropdown/mergeElementQueryResults";
 import {
@@ -62,6 +61,7 @@ import stringify from "json-stable-stringify";
 import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "./AttributeDropdown/types";
 import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdown/AttributeDropdownAllFilteredOutBody";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
+import isNil from "lodash/isNil";
 
 /**
  * @public
@@ -169,6 +169,7 @@ interface IAttributeFilterButtonState {
     isDropdownOpen: boolean;
     validOptions: IElementQueryResultWithEmptyItems;
     uriToAttributeElementMap: Map<string, IAttributeElement>;
+    isFiltering: boolean;
 }
 
 /**
@@ -290,11 +291,11 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             isDropdownOpen: false,
             validOptions: null,
             uriToAttributeElementMap: new Map<string, IAttributeElement>(),
+            isFiltering: false,
         };
     });
 
     const prevParentFilters = usePrevious(props.parentFilters);
-    const parentFilterChanged = !isEqual(props.parentFilters, prevParentFilters);
 
     useEffect(() => {
         setState((prevState) => {
@@ -343,6 +344,21 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     }, [currentFilter]);
 
     const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
+
+    useEffect(() => {
+        if (!isEmpty(props.parentFilters) && !isEqual(prevParentFilters, props.parentFilters)) {
+            setState((prevState) => {
+                return {
+                    ...prevState,
+                    selectedFilterOptions: [],
+                    appliedFilterOptions: [],
+                    isInverted: true,
+                    appliedIsInverted: true,
+                    isFiltering: true,
+                };
+            });
+        }
+    }, [stringify(resolvedParentFilters)]);
 
     /*
      * This cancelable promise is used to fetch attribute filter elements for the initial selected options.
@@ -445,6 +461,17 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         [props.backend, props.workspace, props.identifier, stringify(resolvedParentFilters), currentFilter],
     );
 
+    useEffect(() => {
+        if (originalTotalCountStatus !== "loading" && originalTotalCountStatus !== "pending") {
+            setState((prevState) => {
+                return {
+                    ...prevState,
+                    isFiltering: false,
+                };
+            });
+        }
+    }, [originalTotalCountStatus]);
+
     const {
         error: totalCountError,
         result: totalCount,
@@ -482,49 +509,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         [props.backend, props.workspace, stringify(resolvedParentFilters)],
     );
 
-    const invalidate = (parentFilterChanged = false) => {
-        const nullStateValues: Partial<IAttributeFilterButtonState> = {
-            validOptions: null as IElementQueryResultWithEmptyItems,
-            offset: 0,
-            limit: LIMIT,
-        };
-
-        if (parentFilterChanged) {
-            const emptyFilter = createFilter(currentFilter, true);
-            if (props.connectToPlaceholder) {
-                setPlaceholderValue(emptyFilter);
-            }
-            const isInverted = isNegativeAttributeFilter(currentFilter);
-            setState((s) => {
-                return {
-                    ...s,
-                    ...nullStateValues,
-                    selectedFilterOptions: [],
-                    appliedFilterOptions: [],
-                    isInverted,
-                    appliedIsInverted: isInverted,
-                };
-            });
-        } else {
-            setState((s) => {
-                return {
-                    ...s,
-                    ...nullStateValues,
-                };
-            });
-        }
-    };
-
-    useEffect(() => {
-        if (!state.firstLoad && !isElementsLoading()) {
-            invalidate(true);
-        }
-    }, [stringify(resolvedParentFilters)]);
-
-    useEffect(() => {
-        invalidate();
-    }, [props.workspace, props.backend, state.searchString]);
-
     const {
         error: attributeError,
         result: attribute,
@@ -543,10 +527,32 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     );
 
     useEffect(() => {
-        if (props.onError && (attributeError || elementsError)) {
-            props.onError(attributeError || elementsError);
+        if (
+            props.onError &&
+            (attributeError ||
+                elementsError ||
+                totalCountError ||
+                parentFilterTitlesError ||
+                originalTotalCountError ||
+                uriToAttributeElementMapError)
+        ) {
+            props.onError(
+                attributeError ||
+                    elementsError ||
+                    totalCountError ||
+                    parentFilterTitlesError ||
+                    originalTotalCountError ||
+                    uriToAttributeElementMapError,
+            );
         }
-    }, [attributeError, elementsError]);
+    }, [
+        attributeError,
+        elementsError,
+        totalCountError,
+        parentFilterTitlesError,
+        originalTotalCountError,
+        uriToAttributeElementMapError,
+    ]);
 
     const prepareElementsQuery = (offset: number, limit: number) => {
         const { workspace } = props;
@@ -626,7 +632,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         if (isTotalCountLoading()) {
             if (state.firstLoad) {
                 return getLoadingTitleIntl(props.intl);
-            } else if (!isEmpty(props.parentFilters) && parentFilterChanged) {
+            } else if (state.isFiltering) {
                 return getFilteringTitleIntl(props.intl);
             }
         }
@@ -845,12 +851,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                         {(isMobile) => (
                             <span onClick={toggleDropdown}>
                                 <DropdownButton
-                                    isFiltering={
-                                        isTotalCountLoading() &&
-                                        !isEmpty(props.parentFilters) &&
-                                        !state.firstLoad &&
-                                        parentFilterChanged
-                                    }
+                                    isFiltering={state.isFiltering}
                                     isOpen={state.isDropdownOpen}
                                     isMobile={isMobile}
                                     title={
