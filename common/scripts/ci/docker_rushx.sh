@@ -35,6 +35,7 @@ docker run \
   --env WIREMOCK_NET \
   --env EXAMPLES_BUILD_TYPE \
   --env EXAMPLE_MAPBOX_ACCESS_TOKEN \
+  --env BROWSERSLIST_IGNORE_OLD_DATA \
   --env HOME="/workspace" \
   --rm \
   ${net_param} \
