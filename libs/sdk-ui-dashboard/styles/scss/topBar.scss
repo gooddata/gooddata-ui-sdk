@@ -13,7 +13,8 @@
 
     .dash-control-buttons {
         flex: 0 0 auto;
-        margin-left: 20px;
+        margin-left: auto;
+        padding-left: 20px;
         text-align: right;
 
         .cancel-button {
@@ -24,7 +25,8 @@
 
 .dash-control-buttons {
     flex: 0 0 auto;
-    margin: 0 10px 0 20px;
+    margin: 0 10px 0 auto;
+    padding-left: 20px;
     text-align: right;
 }
 
@@ -33,13 +35,26 @@
     flex: 1 1 auto;
     align-items: center;
     overflow: hidden;
+    margin-left: 15px;
+
+    .gd-locked-status,
+    .gd-share-status {
+        align-self: flex-end;
+    }
+
+    .gd-locked-status {
+        padding-bottom: 2px;
+        margin-left: 5px;
+    }
+    .gd-share-status {
+        padding-bottom: 4px;
+    }
 }
 
 .dash-title-wrapper {
     display: block;
-    flex: 1 1 auto;
     overflow: hidden;
-    margin-left: 15px;
+    margin-right: 5px;
 }
 
 .dash-title {
@@ -47,7 +62,7 @@
     width: auto;
     height: 40px;
     max-width: 100%;
-    padding: 4px 16px 2px 8px;
+    padding: 4px 10px 2px 8px;
     border: 1px solid transparent;
     font-size: 24px;
     font-weight: bold;

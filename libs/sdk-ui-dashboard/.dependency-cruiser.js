@@ -101,6 +101,7 @@ options = {
         depCruiser.moduleWithDependencies("topBar", "src/presentation/topBar", [
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
+            "src/presentation/constants/*",
             "src/model",
             "src/types.ts",
         ]),

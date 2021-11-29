@@ -17,6 +17,7 @@ import {
     exportDashboardToPdf,
     renameDashboard,
     selectDashboardRef,
+    selectDashboardShareInfo,
     selectDashboardTitle,
     selectFilterContextFilters,
     selectIsLayoutEmpty,
@@ -79,6 +80,7 @@ const useTopBar = () => {
     const dispatch = useDashboardDispatch();
     const title = useDashboardSelector(selectDashboardTitle);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
+    const shareInfo = useDashboardSelector(selectDashboardShareInfo);
 
     const onTitleChanged = useCallback(
         (title: string) => {
@@ -93,6 +95,7 @@ const useTopBar = () => {
         title,
         onTitleChanged: isReadOnly ? undefined : onTitleChanged,
         onShareButtonClick,
+        shareInfo,
     };
 };
 
@@ -103,7 +106,7 @@ export const DashboardHeader = (): JSX.Element => {
     const dashboardRef = useDashboardSelector(selectDashboardRef);
     const isEmptyLayout = useDashboardSelector(selectIsLayoutEmpty);
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
-    const { title, onTitleChanged, onShareButtonClick } = useTopBar();
+    const { title, onTitleChanged, onShareButtonClick, shareInfo } = useTopBar();
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
 
     const dispatch = useDashboardDispatch();
@@ -271,6 +274,12 @@ export const DashboardHeader = (): JSX.Element => {
                 buttonBarProps={{
                     shareButtonProps: { onShareButtonClick },
                     DefaultButtonBar: DefaultButtonBar,
+                }}
+                shareStatusProps={{
+                    shareStatus: shareInfo.shareStatus,
+                }}
+                lockedStatusProps={{
+                    isLocked: !!shareInfo.isLocked,
                 }}
                 DefaultTopBar={DefaultTopBar}
             />

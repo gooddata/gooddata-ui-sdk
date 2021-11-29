@@ -8,14 +8,18 @@ import { MenuButton } from "../menuButton";
 import { Title } from "../title";
 import { ITopBarProps } from "./types";
 import { HiddenTopBar } from "./HiddenTopBar";
+import { DefaultLockedStatus, DefaultShareStatus } from "../shareIndicators";
 
 const TopBarCore = (props: ITopBarProps): JSX.Element => {
-    const { menuButtonProps, titleProps, buttonBarProps } = props;
+    const { menuButtonProps, titleProps, buttonBarProps, shareStatusProps, lockedStatusProps } = props;
     return (
         <div className={"dash-header s-top-bar"}>
             <div className={"dash-header-inner"}>
+                {/* No customization from useDashboardComponentsContext for now */}
+                <DefaultLockedStatus {...lockedStatusProps} />
                 <Title {...titleProps} />
-
+                {/* No customization from useDashboardComponentsContext for now */}
+                <DefaultShareStatus {...shareStatusProps} />
                 <ButtonBar {...buttonBarProps} />
             </div>
             <MenuButton {...menuButtonProps} />
