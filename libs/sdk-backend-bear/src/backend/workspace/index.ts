@@ -33,7 +33,6 @@ import { BearWorkspaceUsersQuery } from "./users";
 import { BearWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
 import { BearWorkspaceAttributes } from "./attributes/index";
 import { BearWorkspaceFacts } from "./facts";
-import { userLoginMd5FromAuthenticatedPrincipal } from "../../utils/api";
 import { BearWorkspaceUserGroupsQuery } from "./userGroups";
 import { BearWorkspaceAccessControlService } from "./accessControl";
 
@@ -46,14 +45,10 @@ export class BearWorkspace implements IAnalyticalWorkspace {
 
     public async getDescriptor(): Promise<IWorkspaceDescriptor> {
         if (!this.descriptor) {
-            const projects = await this.authCall(async (sdk, { getPrincipal }) => {
-                const userId = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
-                // TODO: this is wasteful; we should get single project directly
-                return sdk.project.getProjects(userId);
+            const project = await this.authCall(async (sdk) => {
+                return sdk.project.getProject(this.workspace);
             });
-            const project = projects.find(
-                (project) => project.links?.self.split("/").pop() === this.workspace,
-            );
+
             return {
                 id: this.workspace,
                 description: project?.meta.summary ?? "",

@@ -81,6 +81,17 @@ export class ProjectModule {
     }
 
     /**
+     * Fetches project by its identifier.
+     *
+     * @method getProject
+     * @param {String} projectId - Project identifier
+     * @return {GdcUser.IProject} Project
+     */
+    public getProject(projectId: string): Promise<GdcUser.IProject> {
+        return this.xhr.getParsed(`/gdc/projects/${projectId}`);
+    }
+
+    /**
      * Fetches projects available for the user represented by the given profileId
      *
      * @method getProjects
