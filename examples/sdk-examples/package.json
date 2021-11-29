@@ -43,7 +43,6 @@
         "@types/react-select": "^3.0.12",
         "@types/react-syntax-highlighter": "^11.0.4",
         "@types/react": "^16.9.11",
-        "@types/recharts": "^1.8.15",
         "@types/yup": "^0.28.3",
         "@typescript-eslint/eslint-plugin": "^4.14.2",
         "@typescript-eslint/parser": "^4.14.2",
@@ -119,7 +118,7 @@
         "react-router-dom": "^5.2.0",
         "react-select": "^3.1.0",
         "react-syntax-highlighter": "^15.4.4",
-        "recharts": "^1.8.5",
+        "recharts": "^2.1.6",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0",
         "yup": "^0.32.9"
