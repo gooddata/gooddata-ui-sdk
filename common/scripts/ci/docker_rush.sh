@@ -12,7 +12,6 @@ echo "Running \"$*\" using ${IMAGE} in root directory ${ROOT_DIR}"
 #
 export CI=true
 
-
 echo "-----------------------------------------------------------------------"
 echo "--- starting: rush-$*"
 echo "-----------------------------------------------------------------------"
@@ -34,6 +33,7 @@ docker run \
   --env HOME="/workspace" \
   --env EXAMPLES_BUILD_TYPE \
   --env EXAMPLE_MAPBOX_ACCESS_TOKEN \
+  --env BROWSERSLIST_IGNORE_OLD_DATA \
   --rm \
   ${net_param} \
   --volume ${ROOT_DIR}:/workspace:Z \
