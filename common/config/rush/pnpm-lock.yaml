@@ -4554,7 +4554,7 @@ packages:
     dependencies:
       '@types/react': 16.14.8
       '@types/react-dom': 16.9.13
-      '@types/react-transition-group': 4.4.1
+      '@types/react-transition-group': 4.4.4
     dev: false
 
   /@types/react-syntax-highlighter/11.0.5:
@@ -4563,14 +4563,8 @@ packages:
       '@types/react': 16.14.8
     dev: false
 
-  /@types/react-transition-group/2.9.2:
-    resolution: {integrity: sha512-5Fv2DQNO+GpdPZcxp2x/OQG/H19A01WlmpjVD9cKvVFmoVLOZ9LvBgSWG6pSXIU4og5fgbvGPaCV5+VGkWAEHA==}
-    dependencies:
-      '@types/react': 16.14.8
-    dev: false
-
-  /@types/react-transition-group/4.4.1:
-    resolution: {integrity: sha512-vIo69qKKcYoJ8wKCJjwSgCTM+z3chw3g18dkrDfVX665tMH7tmbDxEAnPdey4gTlwZz5QuHGzd+hul0OVZDqqQ==}
+  /@types/react-transition-group/4.4.4:
+    resolution: {integrity: sha512-7gAPz7anVK5xzbeQW9wFBDg7G++aPLAFY0QaSMOou9rJZpbuI58WAuJrgu+qR92l61grlnCUe7AFX8KGahAgug==}
     dependencies:
       '@types/react': 16.14.8
     dev: false
@@ -5838,7 +5832,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.1
+      follow-redirects: 1.14.1_debug@4.3.2
     transitivePeerDependencies:
       - debug
     dev: false
@@ -9853,16 +9847,6 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
-    dev: false
-
-  /follow-redirects/1.14.1:
-    resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
     dev: false
 
   /follow-redirects/1.14.1_debug@4.1.1:
@@ -22282,7 +22266,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-X85DzgaUV238Fs/esA7A9ODbhC4fwB3S8FGrtrB/r/gpqfK3qTeCXpffyz9WiwtpkUxpePggvZNf1SGgdjBx2Q==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-ZHHf8PaooyWzzH/oCGqGFVXQHo73/K/F4WzPNP5TxlSoVFNzRHlxZ3uoUpAhUV/udIy4APDLOKYvKBhcW6rWjQ==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
@@ -22303,7 +22287,7 @@ packages:
       '@types/react-measure': 2.0.5
       '@types/react-redux': 7.1.16
       '@types/react-select': 3.1.2
-      '@types/react-transition-group': 2.9.2
+      '@types/react-transition-group': 4.4.4
       '@types/react-truncate': 2.3.3
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.26.1_7bd7a7858841324c95046422bb20bae5
@@ -22342,7 +22326,7 @@ packages:
       react-measure: 2.5.2_react-dom@16.14.0+react@16.14.0
       react-redux: 7.2.4_react-dom@16.14.0+react@16.14.0
       react-select: 3.2.0_react-dom@16.14.0+react@16.14.0
-      react-transition-group: 2.9.0_react-dom@16.14.0+react@16.14.0
+      react-transition-group: 4.4.2_react-dom@16.14.0+react@16.14.0
       react-truncate: 2.4.0_react@16.14.0
       redux-batched-actions: 0.5.0
       redux-saga: 1.1.3
@@ -22365,7 +22349,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-ext.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-jv7CtytCSLSAozeM0ttWHz4OCbuEBagh8fen/GK4ZsOOBAMg465GnIGy3daw8QK1hqmRsQQKgV6CPkr1gyZ6gA==, tarball: file:projects/sdk-ui-ext.tgz}
+    resolution: {integrity: sha512-D7UkQE1L5oAg9Oa/4ucdFhzuRUX45qu/8TTjPLlOOokR2/ulJIrH4phgReajLrjYTerEkCFShBvx/HKFjzaLCg==, tarball: file:projects/sdk-ui-ext.tgz}
     id: file:projects/sdk-ui-ext.tgz
     name: '@rush-temp/sdk-ui-ext'
     version: 0.0.0
@@ -22386,7 +22370,7 @@ packages:
       '@types/react-dom': 16.9.13
       '@types/react-measure': 2.0.5
       '@types/react-select': 3.1.2
-      '@types/react-transition-group': 2.9.2
+      '@types/react-transition-group': 4.4.4
       '@types/react-truncate': 2.3.3
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.26.1_7bd7a7858841324c95046422bb20bae5
@@ -22425,7 +22409,7 @@ packages:
       react-intl: 3.12.1_react@16.14.0
       react-measure: 2.5.2_react-dom@16.14.0+react@16.14.0
       react-select: 3.2.0_react-dom@16.14.0+react@16.14.0
-      react-transition-group: 2.9.0_react-dom@16.14.0+react@16.14.0
+      react-transition-group: 4.4.2_react-dom@16.14.0+react@16.14.0
       react-truncate: 2.4.0_react@16.14.0
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
@@ -22590,7 +22574,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-RH4FcsN7WdFfWOcnIwxm47fjxmYJ1gwuIFVcXWaY3pSLUaeBE2p6P842MJZTUFLJPEWet2UcKmKCOnYcBFIuWQ==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-DaxGA8MSC4i2TdJ5n9U5lY4U06p0d+PT2CVBBMsY3k5LGSixFxUMQaoAmmxl+67WmyBaJPPzaFQuJ/JDQnwpyQ==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -22616,7 +22600,7 @@ packages:
       '@types/react-portal': 4.0.2
       '@types/react-responsive': 8.0.2
       '@types/react-select': 3.1.2
-      '@types/react-transition-group': 2.9.2
+      '@types/react-transition-group': 4.4.4
       '@types/tinycolor2': 1.4.2
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.26.1_7bd7a7858841324c95046422bb20bae5
@@ -22664,7 +22648,7 @@ packages:
       react-responsive: 8.2.0_react@16.14.0
       react-select: 3.2.0_react-dom@16.14.0+react@16.14.0
       react-textarea-autosize: 8.3.3_807f3d8e201fbb23c29c1613533607c0
-      react-transition-group: 2.9.0_react-dom@16.14.0+react@16.14.0
+      react-transition-group: 4.4.2_react-dom@16.14.0+react@16.14.0
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1
