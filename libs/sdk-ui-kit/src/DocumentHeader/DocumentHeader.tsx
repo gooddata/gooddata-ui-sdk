@@ -1,8 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import DocumentTitle from "react-document-title";
-import AppleTouchIcon from "./AppleTouchIcon";
-import Favicon from "./Favicon";
+import { Helmet } from "react-helmet";
+import compact from "lodash/compact";
 
 /**
  * @internal
@@ -14,29 +13,22 @@ export interface IDocumentHeaderProps {
     faviconUrl?: string;
 }
 
+function getEffectiveTitle(pageTitle: string, brandTitle: string): string {
+    return compact([pageTitle, brandTitle]).join(" - ");
+}
+
 /**
  * @internal
  */
 const DocumentHeader: React.FC<IDocumentHeaderProps> = (props) => {
     const { pageTitle = "", brandTitle = "", appleTouchIconUrl = "", faviconUrl = "" } = props;
 
-    let title: string;
-    if (brandTitle) {
-        if (pageTitle) {
-            title = `${pageTitle} - ${brandTitle}`;
-        } else {
-            title = brandTitle;
-        }
-    } else {
-        title = pageTitle;
-    }
-
     return (
-        <div>
-            <DocumentTitle title={title} />
-            <AppleTouchIcon url={appleTouchIconUrl} />
-            <Favicon url={faviconUrl} />
-        </div>
+        <Helmet>
+            <title>{getEffectiveTitle(pageTitle, brandTitle)}</title>
+            <link rel="apple-touch-icon" type="image/png" href={appleTouchIconUrl} />
+            <link rel="shortcut icon" type="image/x-icon" href={faviconUrl} />
+        </Helmet>
     );
 };
 

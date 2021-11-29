@@ -1,17 +1,16 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import DocumentTitle from "react-document-title";
-import { mount, shallow } from "enzyme";
+import { mount } from "enzyme";
 import DocumentHeader from "../DocumentHeader";
-import AppleTouchIcon from "../AppleTouchIcon";
-import Favicon from "../Favicon";
+import { Helmet } from "react-helmet";
 
 describe("DocumentHeader", () => {
     it("should set document title to 'Title - brand'", () => {
         const component = mount(
             <DocumentHeader pageTitle="Title" brandTitle="brand" appleTouchIconUrl="url" faviconUrl="url" />,
         );
-        expect(document.title).toEqual("Title - brand");
+        const helmet = Helmet.peek();
+        expect(helmet.title).toEqual("Title - brand");
         component.unmount();
     });
 
@@ -19,7 +18,8 @@ describe("DocumentHeader", () => {
         const component = mount(
             <DocumentHeader pageTitle="Title" appleTouchIconUrl="url" faviconUrl="url" />,
         );
-        expect(document.title).toEqual("Title");
+        const helmet = Helmet.peek();
+        expect(helmet.title).toEqual("Title");
         component.unmount();
     });
 
@@ -27,17 +27,17 @@ describe("DocumentHeader", () => {
         const component = mount(
             <DocumentHeader pageTitle="" brandTitle="brand" appleTouchIconUrl="url" faviconUrl="url" />,
         );
-        expect(document.title).toEqual("brand");
+        const helmet = Helmet.peek();
+        expect(helmet.title).toEqual("brand");
         component.unmount();
     });
 
-    it("should render all components", () => {
-        const component = shallow(
-            <DocumentHeader pageTitle="Title" appleTouchIconUrl="url" faviconUrl="url" />,
+    it("should set the icons", () => {
+        const component = mount(
+            <DocumentHeader pageTitle="Title" appleTouchIconUrl="APPLE_URL" faviconUrl="FAVICON_URL" />,
         );
-
-        expect(component.find(DocumentTitle).length).toEqual(1);
-        expect(component.find(AppleTouchIcon).length).toEqual(1);
-        expect(component.find(Favicon).length).toEqual(1);
+        const helmet = Helmet.peek();
+        expect(helmet.linkTags).toMatchSnapshot();
+        component.unmount();
     });
 });

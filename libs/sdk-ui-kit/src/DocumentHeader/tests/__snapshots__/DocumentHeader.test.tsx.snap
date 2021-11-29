@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DocumentHeader should set the icons 1`] = `
+Array [
+  Object {
+    "href": "APPLE_URL",
+    "rel": "apple-touch-icon",
+    "type": "image/png",
+  },
+  Object {
+    "href": "FAVICON_URL",
+    "rel": "shortcut icon",
+    "type": "image/x-icon",
+  },
+]
+`;
