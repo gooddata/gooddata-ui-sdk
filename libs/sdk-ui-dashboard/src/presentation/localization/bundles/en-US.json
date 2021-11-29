@@ -702,7 +702,7 @@
         "comment": "Label of checkbox that sets edit right for the dashboard",
         "limit": 0
     },
-"header.lockStatus.tooltip": {
+    "header.lockStatus.tooltip": {
         "value": "<b>This dashboard is locked.</b> Only administrators can edit this dashboard.",
         "comment": "Shown when hovering over lock indicator. Dont translate html tags <b>, </b>",
         "limit": 0
