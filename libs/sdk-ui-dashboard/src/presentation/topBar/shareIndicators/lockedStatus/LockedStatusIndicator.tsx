@@ -4,6 +4,7 @@ import { BubbleHoverTrigger, Bubble, Icon } from "@gooddata/sdk-ui-kit";
 import { FormattedHTMLMessage } from "react-intl";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ILockedStatusProps } from "./types";
+import { gdColorStateBlank } from "../../../constants/colors";
 
 const LockedStatusComponent = (props: ILockedStatusProps): JSX.Element | null => {
     if (!props.isLocked) {
@@ -16,7 +17,7 @@ const LockedStatusComponent = (props: ILockedStatusProps): JSX.Element | null =>
                     className="gd-icon-locked"
                     width={25}
                     height={24}
-                    color={props.theme?.palette?.complementary?.c6 ?? "#94a1ad"}
+                    color={props.theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
                 />
                 <Bubble alignPoints={[{ align: "bc tl" }]} alignTo={`.gd-icon-locked`}>
                     <FormattedHTMLMessage id={"header.lockStatus.tooltip"} />

@@ -8,7 +8,6 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
-import { DashboardDescriptor } from "./metaState";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -195,11 +194,10 @@ export const selectDashboardLockStatus = createSelector(selectDashboardDescripto
  *
  * @alpha
  */
-export const selectDashboardShareInfo = createSelector<
-    DashboardState,
-    DashboardDescriptor,
-    IAccessControlAware
->(selectDashboardDescriptor, ({ shareStatus, isLocked }) => ({
-    shareStatus,
-    isLocked,
-}));
+export const selectDashboardShareInfo = createSelector(
+    selectDashboardDescriptor,
+    ({ shareStatus, isLocked }): IAccessControlAware => ({
+        shareStatus,
+        isLocked,
+    }),
+);
