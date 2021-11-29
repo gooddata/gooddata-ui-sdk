@@ -460,11 +460,12 @@ export interface IDashboardBaseProps {
 
     /**
      * Specify dashboard to render; you can specify the dashboard either by reference (ObjRef) or
-     * by value (of type IDashboard).
+     * by value (of type IDashboard). As a convenience, you may also specify a dashboard object
+     * identifier - this is same as using `idRef(objectIdentifier)`.
      *
      * If you do not specify dashboard to render, a new default empty dashboard will be rendered.
      */
-    dashboard?: ObjRef | IDashboard;
+    dashboard?: string | ObjRef | IDashboard;
 
     /**
      * Optionally specify reference to a filter context that should be used instead of the default,

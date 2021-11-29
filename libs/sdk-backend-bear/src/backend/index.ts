@@ -113,6 +113,7 @@ type BearLegacyFunctions = {
     getObjectsByUri?(workspace: string, uris: string[]): Promise<GdcMetadataObject.WrappedObject[]>;
     getVisualizationObject?(workspace: string, uri: string): Promise<GdcVisualizationObject.IVisualization>;
     getUISettings?(): Promise<{ settings: GdcUser.IUISettings }>;
+    isDomainAdmin?(domainUri: string): Promise<boolean>;
 };
 
 /**
@@ -230,6 +231,23 @@ export class BearBackend implements IAnalyticalBackend {
                     return this.sdk.xhr
                         .get("/gdc/account/organization/settings")
                         .then((response) => response.getData());
+                },
+
+                isDomainAdmin: (domainUri: string): Promise<boolean> => {
+                    return this.authApiCall((sdk) => {
+                        return sdk.xhr
+                            .get(`${domainUri}/config`)
+                            .then((_) => true)
+                            .catch((error) => {
+                                if (isApiResponseError(error)) {
+                                    // when user _is not_ domain admin, then attempting to retrieve domain config
+                                    // will fail fast with 403
+                                    return error.response.status !== 403;
+                                }
+
+                                return true;
+                            });
+                    });
                 },
             };
 

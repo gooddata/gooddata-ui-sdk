@@ -61,7 +61,7 @@ export const DashboardStub: React_2.FC<IDashboardStubProps>;
 
 // @public
 export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
-    dashboard: ObjRef;
+    dashboard: string | ObjRef;
 }
 
 // @public

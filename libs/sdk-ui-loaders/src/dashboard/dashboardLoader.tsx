@@ -14,7 +14,7 @@ import {
     ResolvedClientWorkspaceProvider,
     resolveLCMWorkspaceIdentifiers,
 } from "@gooddata/sdk-ui";
-import { ObjRef } from "@gooddata/sdk-model";
+import { idRef, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 import React from "react";
@@ -224,10 +224,11 @@ export class DashboardLoader implements IDashboardLoader {
 
     public load = async (): Promise<DashboardLoadResult> => {
         const { backend, dashboard, filterContextRef } = this.baseProps;
+        const dashboardRef = typeof dashboard === "string" ? idRef(dashboard) : dashboard;
 
         invariant(backend, "DashboardLoader is not configured with an instance of Analytical Backend.");
         invariant(
-            dashboard,
+            dashboardRef,
             "DashboardLoader is not configured with a reference to dashboard that it should load.",
         );
 
@@ -240,14 +241,14 @@ export class DashboardLoader implements IDashboardLoader {
         const dashboardWithPlugins: IDashboardWithReferences = await backend
             .workspace(workspace)
             .dashboards()
-            .getDashboardWithReferences(dashboard, filterContextRef, { loadUserData: true }, [
+            .getDashboardWithReferences(dashboardRef, filterContextRef, { loadUserData: true }, [
                 "dashboardPlugin",
             ]);
 
         const ctx: DashboardContext = {
             backend,
             workspace,
-            dashboardRef: dashboard,
+            dashboardRef,
             filterContextRef,
             dataProductId: clientWorkspace?.dataProduct,
             clientId: clientWorkspace?.client,

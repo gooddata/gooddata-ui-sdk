@@ -59,7 +59,7 @@ import { DefaultButtonBar, DefaultMenuButton, DefaultTitle, DefaultTopBar } from
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { IDashboardProps } from "./types";
 import { DefaultSaveAsDialog } from "../saveAs";
-import { IInsight } from "@gooddata/sdk-model";
+import { idRef, IInsight } from "@gooddata/sdk-model";
 import { DEFAULT_FILTER_BAR_HEIGHT } from "../constants";
 import { DefaultShareDialog } from "../shareDialog";
 import { DashboardHeader } from "./DashboardHeader/DashboardHeader";
@@ -186,6 +186,8 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
+    const { dashboard } = props;
+    const dashboardOrRef = typeof dashboard === "string" ? idRef(dashboard) : dashboard;
 
     let dashboardRender = (
         <BackendProvider backend={backend}>
@@ -193,7 +195,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                 <DashboardStoreProvider
                     backend={props.backend}
                     workspace={props.workspace}
-                    dashboard={props.dashboard}
+                    dashboard={dashboardOrRef}
                     filterContextRef={props.filterContextRef}
                     eventHandlers={props.eventHandlers}
                     config={props.config}
