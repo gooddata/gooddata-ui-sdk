@@ -76,7 +76,7 @@
         "react-responsive": "^8.0.1",
         "react-window": "^1.8.5",
         "tslib": "^2.0.0",
-        "date-fns": "^2.8.1",
+        "date-fns": "^2.22.1",
         "ts-invariant": "^0.7.3"
     },
     "peerDependencies": {

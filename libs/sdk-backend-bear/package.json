@@ -61,7 +61,7 @@
         "@gooddata/sdk-backend-spi": "^8.8.0-alpha.6",
         "@gooddata/sdk-embedding": "^8.8.0-alpha.6",
         "@gooddata/sdk-model": "^8.8.0-alpha.6",
-        "date-fns": "^2.8.1",
+        "date-fns": "^2.22.1",
         "http-status-codes": "^1.3.0",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",

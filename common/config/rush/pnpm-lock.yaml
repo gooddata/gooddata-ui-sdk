@@ -1926,7 +1926,7 @@ packages:
       '@oclif/command': 1.8.0
       '@oclif/config': 1.17.0
       cli-ux: 4.9.3
-      date-fns: 2.22.1
+      date-fns: 2.26.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -2279,18 +2279,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       ip-address: 5.9.4
-    dev: false
-
-  /@hypnosphi/create-react-context/0.3.1_prop-types@15.7.2+react@16.14.0:
-    resolution: {integrity: sha512-V1klUed202XahrWJLLOT3EXNeCpFHCcJntdFGI15ntCwau+jfT386w7OFTMaCqOgXUH1fa0w/I1oZs+i/Rfr0A==}
-    peerDependencies:
-      prop-types: ^15.0.0
-      react: '>=0.14.0'
-    dependencies:
-      gud: 1.0.0
-      prop-types: 15.7.2
-      react: 16.14.0
-      warning: 4.0.3
     dev: false
 
   /@istanbuljs/load-nyc-config/1.1.0:
@@ -4468,12 +4456,15 @@ packages:
       '@types/react': 16.14.8
     dev: false
 
-  /@types/react-datepicker/2.11.1:
-    resolution: {integrity: sha512-MVz1vcv3ButoDfKPUA40lSxPBGsT1f05zqvUsP4t5997TX9C4btlYyREJ+h9sRw9R10EpokkS08GFK4XI+Q0Qg==}
+  /@types/react-datepicker/4.3.2_react@16.14.0:
+    resolution: {integrity: sha512-vj8sN+tdQPF13bH4CU8DdTuT0Z4h6+3IG14lGCSDlIw1QvTe3svr2Yqp7KbDlcRpbdcnhya3e91SnCVk+kH/RQ==}
     dependencies:
+      '@popperjs/core': 2.9.2
       '@types/react': 16.14.8
-      date-fns: 2.22.1
-      popper.js: 1.16.1
+      date-fns: 2.26.0
+      react-popper: 2.2.5_8548d99834c2e663160c36c7d0931260
+    transitivePeerDependencies:
+      - react
     dev: false
 
   /@types/react-document-title/2.0.4:
@@ -5834,7 +5825,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.1_debug@4.3.2
+      follow-redirects: 1.14.1
     transitivePeerDependencies:
       - debug
     dev: false
@@ -7357,7 +7348,7 @@ packages:
     hasBin: true
     dependencies:
       chalk: 4.1.1
-      date-fns: 2.22.1
+      date-fns: 2.26.0
       lodash: 4.17.21
       read-pkg: 5.2.0
       rxjs: 6.6.7
@@ -7922,8 +7913,8 @@ packages:
     resolution: {integrity: sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==}
     dev: false
 
-  /date-fns/2.22.1:
-    resolution: {integrity: sha512-yUFPQjrxEmIsMqlHhAhmxkuH769baF21Kk+nZwZGyrMoyLA+LugaQtC0+Tqf9CBUUULWwUJt6Q5ySI3LJDDCGg==}
+  /date-fns/2.26.0:
+    resolution: {integrity: sha512-VQI812dRi3cusdY/fhoBKvc6l2W8BPWU1FNVnFH9Nttjx4AFBRzfSVb/Eyc7jBT6e9sg1XtAGsYpBQ6c/jygbg==}
     engines: {node: '>=0.11'}
     dev: false
 
@@ -9842,6 +9833,16 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
+    dev: false
+
+  /follow-redirects/1.14.1:
+    resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /follow-redirects/1.14.1_debug@4.1.1:
@@ -15346,11 +15347,6 @@ packages:
       '@babel/runtime': 7.14.0
     dev: false
 
-  /popper.js/1.16.1:
-    resolution: {integrity: sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==}
-    deprecated: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
-    dev: false
-
   /portfinder/1.0.28:
     resolution: {integrity: sha512-Se+2isanIcEqf2XMHjyUKskczxbPH7dQnlMjXX6+dybayyHvAf/TCgyMRlzf/B6QDhAEFOGes0pzRo3by4AbMA==}
     engines: {node: '>= 0.12.0'}
@@ -16033,19 +16029,20 @@ packages:
       react-dom: 16.14.0_react@16.14.0
     dev: false
 
-  /react-datepicker/2.16.0_react-dom@16.14.0+react@16.14.0:
-    resolution: {integrity: sha512-TvcmSY27rn0JKvuJuIXNNS+niGQNdgtuG/CsBttVYhPOA9KmSw7c2PvQBPVEvzkyV+QPNJ8jN/KVJNj9uvopqA==}
+  /react-datepicker/4.4.0_react-dom@16.14.0+react@16.14.0:
+    resolution: {integrity: sha512-QWCDCKTW9i+L33+yyYaDWZkVCDcFjru7wEmSqO6dNsGo4hSaReQ/EaT9IKzjEmvMXfMHn9ixzgGh/4ydnLP08w==}
     peerDependencies:
-      react: ^16.9.0
-      react-dom: ^16.9.0
+      react: ^16.9.0 || ^17
+      react-dom: ^16.9.0 || ^17
     dependencies:
+      '@popperjs/core': 2.9.2
       classnames: 2.3.1
-      date-fns: 2.22.1
+      date-fns: 2.26.0
       prop-types: 15.7.2
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
-      react-onclickoutside: 6.11.2_react-dom@16.14.0+react@16.14.0
-      react-popper: 1.3.11_react@16.14.0
+      react-onclickoutside: 6.12.1_react-dom@16.14.0+react@16.14.0
+      react-popper: 2.2.5_8548d99834c2e663160c36c7d0931260
     dev: false
 
   /react-day-picker/7.3.0_react@16.14.0:
@@ -16276,8 +16273,8 @@ packages:
     engines: {node: '>= 0.10.0'}
     dev: false
 
-  /react-onclickoutside/6.11.2_react-dom@16.14.0+react@16.14.0:
-    resolution: {integrity: sha512-640486eSwU/t5iD6yeTlefma8dI3bxPXD93hM9JGKyYITAd0P1JFkkcDeyHZRqNpY/fv1YW0Fad9BXr44OY8wQ==}
+  /react-onclickoutside/6.12.1_react-dom@16.14.0+react@16.14.0:
+    resolution: {integrity: sha512-a5Q7CkWznBRUWPmocCvE8b6lEYw1s6+opp/60dCunhO+G6E4tDTO2Sd2jKE+leEnnrLAE2Wj5DlDHNqj5wPv1Q==}
     peerDependencies:
       react: ^15.5.x || ^16.x || ^17.x
       react-dom: ^15.5.x || ^16.x || ^17.x
@@ -16297,21 +16294,6 @@ packages:
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
       react-popper: 2.2.5_8548d99834c2e663160c36c7d0931260
-    dev: false
-
-  /react-popper/1.3.11_react@16.14.0:
-    resolution: {integrity: sha512-VSA/bS+pSndSF2fiasHK/PTEEAyOpX60+H5EPAjoArr8JGm+oihu4UbrqcEBpQibJxBVCpYyjAX7abJ+7DoYVg==}
-    peerDependencies:
-      react: 0.14.x || ^15.0.0 || ^16.0.0 || ^17.0.0
-    dependencies:
-      '@babel/runtime': 7.14.0
-      '@hypnosphi/create-react-context': 0.3.1_prop-types@15.7.2+react@16.14.0
-      deep-equal: 1.1.1
-      popper.js: 1.16.1
-      prop-types: 15.7.2
-      react: 16.14.0
-      typed-styles: 0.0.7
-      warning: 4.0.3
     dev: false
 
   /react-popper/2.2.5_8548d99834c2e663160c36c7d0931260:
@@ -19604,10 +19586,6 @@ packages:
       mime-types: 2.1.31
     dev: false
 
-  /typed-styles/0.0.7:
-    resolution: {integrity: sha512-pzP0PWoZUhsECYjABgCGQlRGL1n7tOHsgwYv3oIiEpJwGhFTuty/YNeduxQYzXXa3Ge5BdT6sHYIQYpl4uJ+5Q==}
-    dev: false
-
   /typedarray-to-buffer/3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
     dependencies:
@@ -21726,7 +21704,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-bear.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-LrY3DGIjQPuxnDh3Hca5WwTW08QSd2hoNDc3DJzztpLd/nWwnXpq7uQnJjjGsHSIgDUCY36l5ucAZbtw0t6WIQ==, tarball: file:projects/sdk-backend-bear.tgz}
+    resolution: {integrity: sha512-5Ld/4DM1O66BDDhEx4BSpffH9SPdrieMkbiASFCR+p7EkOPKjKI5xOjWH1KwpI5/KdxteE68bCfjB0qX8NLHMw==, tarball: file:projects/sdk-backend-bear.tgz}
     id: file:projects/sdk-backend-bear.tgz
     name: '@rush-temp/sdk-backend-bear'
     version: 0.0.0
@@ -21742,7 +21720,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 4.26.1_7bd7a7858841324c95046422bb20bae5
       '@typescript-eslint/parser': 4.26.1_eslint@7.28.0+typescript@4.0.2
       concurrently: 6.2.0
-      date-fns: 2.22.1
+      date-fns: 2.26.0
       dependency-cruiser: 9.26.1
       dotenv: 8.6.0
       eslint: 7.28.0
@@ -21856,7 +21834,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-tiger.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-d0+VGt4oMBJihdk7B9VG85thKIYalEw3V/cX/vzHjKBd1P1IHCMaHESr0CsLVHTpppMKcQ+gnpDe3zHLWVm7HQ==, tarball: file:projects/sdk-backend-tiger.tgz}
+    resolution: {integrity: sha512-V/BoqO7xY7GlWTPlzfvFSBBwhtExok0Wmmu5zeQ4dJUXRtd90ek1gtsx5QmPKv/PDsI/aRaPSVimKEgaZIJAnA==, tarball: file:projects/sdk-backend-tiger.tgz}
     id: file:projects/sdk-backend-tiger.tgz
     name: '@rush-temp/sdk-backend-tiger'
     version: 0.0.0
@@ -21872,7 +21850,7 @@ packages:
       '@typescript-eslint/parser': 4.26.1_eslint@7.28.0+typescript@4.0.2
       axios: 0.21.4
       concurrently: 6.2.0
-      date-fns: 2.22.1
+      date-fns: 2.26.0
       dependency-cruiser: 9.26.1
       eslint: 7.28.0
       eslint-plugin-header: 3.1.1_eslint@7.28.0
@@ -21943,7 +21921,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-I/Ri717hVy1wzbQTq+gaRQ7sjLInU5hvMznj8uEvcJ1pHjdawRldM5q23FQPrQzGZMWk39YxwM9j2SF7ds5GLA==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-mw1cDylVvv7WEIXJ07sdAXvTtqyDRRHE8XNiEFv9j6obZxdB8R3NG1yfq+wCHfU7v+Nu4+cjrOs2SwD8YSnHRw==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -21965,7 +21943,7 @@ packages:
       '@types/lodash': 4.14.170
       '@types/node': 12.20.15
       '@types/react': 16.14.8
-      '@types/react-datepicker': 2.11.1
+      '@types/react-datepicker': 4.3.2_react@16.14.0
       '@types/react-dom': 16.9.13
       '@types/react-google-recaptcha': 1.1.2
       '@types/react-helmet': 6.1.4
@@ -22011,7 +21989,7 @@ packages:
       prettier: 2.3.1
       prettier-loader: 3.3.0_prettier@2.3.1+webpack@5.58.2
       react: 16.14.0
-      react-datepicker: 2.16.0_react-dom@16.14.0+react@16.14.0
+      react-datepicker: 4.4.0_react-dom@16.14.0+react@16.14.0
       react-dom: 16.14.0_react@16.14.0
       react-ga: 2.7.0_react@16.14.0
       react-google-recaptcha: 2.1.0_react@16.14.0
@@ -22224,7 +22202,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-charts.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-kF+NwPCxQSrB6juAaTj00WJwl4fOXv7J423KxDUwRthiqWbF5yq/286b2CDcDYK1DZ3VEUdOF+YVbwRttYKkNQ==, tarball: file:projects/sdk-ui-charts.tgz}
+    resolution: {integrity: sha512-CYISXt93vZ5Q0fyc2M7dy7Lu/fnXquiYI3QrFgcXGc1oDQWWPbBpoTCiYbnyy0WVbsEZdkLoiuhyLys/yLe5IQ==, tarball: file:projects/sdk-ui-charts.tgz}
     id: file:projects/sdk-ui-charts.tgz
     name: '@rush-temp/sdk-ui-charts'
     version: 0.0.0
@@ -22249,7 +22227,7 @@ packages:
       classnames: 2.3.1
       concurrently: 6.2.0
       custom-event: 1.0.1
-      date-fns: 2.22.1
+      date-fns: 2.26.0
       dependency-cruiser: 9.26.1
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.6_4f82faf5e8cab057bc46d4d95079ec42
@@ -22298,7 +22276,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-bNjl3TEqPNZ9CShibnPqjfRw06iXm7PgrPLqFw5qvH4pOq/+tACFGGxWsX15fkJPo95PEcZE33lE0YfU7KJvlg==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-X85DzgaUV238Fs/esA7A9ODbhC4fwB3S8FGrtrB/r/gpqfK3qTeCXpffyz9WiwtpkUxpePggvZNf1SGgdjBx2Q==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
@@ -22326,7 +22304,7 @@ packages:
       '@typescript-eslint/parser': 4.26.1_eslint@7.28.0+typescript@4.0.2
       classnames: 2.3.1
       concurrently: 6.2.0
-      date-fns: 2.22.1
+      date-fns: 2.26.0
       dependency-cruiser: 9.26.1
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.6_4f82faf5e8cab057bc46d4d95079ec42
@@ -22381,7 +22359,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-ext.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-5W7gY/q/77MJjl4Rmc2+DWQnt2Of+bUAR+d2nUlpQQ0AlKA6yZZ/dl3ejcZ8bIrtT5FMCxZBDflzqRm/TZUKZQ==, tarball: file:projects/sdk-ui-ext.tgz}
+    resolution: {integrity: sha512-jv7CtytCSLSAozeM0ttWHz4OCbuEBagh8fen/GK4ZsOOBAMg465GnIGy3daw8QK1hqmRsQQKgV6CPkr1gyZ6gA==, tarball: file:projects/sdk-ui-ext.tgz}
     id: file:projects/sdk-ui-ext.tgz
     name: '@rush-temp/sdk-ui-ext'
     version: 0.0.0
@@ -22410,7 +22388,7 @@ packages:
       classnames: 2.3.1
       concurrently: 6.2.0
       custom-event: 1.0.1
-      date-fns: 2.22.1
+      date-fns: 2.26.0
       dependency-cruiser: 9.26.1
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.6_4f82faf5e8cab057bc46d4d95079ec42
@@ -22463,7 +22441,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-cvQOdi0vQTqjIs9A/sWrkBA1SCtIBnVm3LNFcXKrJlheTXfpRoyF0kMhz/tDDuhViLPtiEWz2aUDIGgL43mDbA==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-hdm6K1OzAEOKwxacxarkiad+r0JfqkLF89boAsyHSwXciJA98z0kpvB0KXA6b91P90j5PdYaoYA4+R5plCC7Zw==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
@@ -22488,7 +22466,7 @@ packages:
       '@typescript-eslint/parser': 4.26.1_eslint@7.28.0+typescript@4.0.2
       classnames: 2.3.1
       concurrently: 6.2.0
-      date-fns: 2.22.1
+      date-fns: 2.26.0
       dependency-cruiser: 9.26.1
       downshift: 3.4.8_react@16.14.0
       enzyme: 3.11.0
@@ -22606,7 +22584,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-6JPYEjD5BfFZGTS1K32h5ygkQ0vFYUeIb7e83O58u2bPYA2EZL3oMFLcuR9fWYnmXFdfYLB0P3GyQ5DZ4gcB2Q==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-KBW19HVnuC8E6+tt22VA91Xad8Gop00ob9OqdHL9f3HiYiKWtmvriZofT3VbVG4L5ZLGmGD73ggsqqn6hDCvWw==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -22640,7 +22618,7 @@ packages:
       classnames: 2.3.1
       codemirror: 5.61.1
       concurrently: 6.2.0
-      date-fns: 2.22.1
+      date-fns: 2.26.0
       debounce-promise: 3.1.2
       dependency-cruiser: 9.26.1
       element-closest-polyfill: 1.0.4
