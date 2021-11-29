@@ -27,6 +27,7 @@ export interface IAnalyticalWorkspace {
 
     /**
      * Returns details about the analytical workspace.
+     * Throws error in case the workspace does not exist.
      */
     getDescriptor(): Promise<IWorkspaceDescriptor>;
 
