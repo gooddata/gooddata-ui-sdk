@@ -17,14 +17,13 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 
-// @alpha (undocumented)
+// @public
 export type AdaptiveLoadOptions = {
     moduleFederationIntegration: ModuleFederationIntegration;
 };
 
-// @alpha (undocumented)
+// @public
 export class DashboardLoader implements IDashboardLoader {
-    // (undocumented)
     static adaptive(options: AdaptiveLoadOptions): DashboardLoader;
     // (undocumented)
     forDashboard: (dashboardRef: ObjRef) => this;
@@ -36,7 +35,6 @@ export class DashboardLoader implements IDashboardLoader {
     load: () => Promise<DashboardLoadResult>;
     // (undocumented)
     onBackend: (backend: IAnalyticalBackend) => this;
-    // (undocumented)
     static staticOnly(): DashboardLoader;
     // (undocumented)
     withBaseProps: (props: IDashboardBasePropsForLoader) => this;
@@ -46,7 +44,7 @@ export class DashboardLoader implements IDashboardLoader {
     withFilterContext: (filterContextRef: ObjRef) => this;
 }
 
-// @alpha
+// @public
 export type DashboardLoadResult = {
     ctx: DashboardContext;
     engine: IDashboardEngine;
@@ -55,18 +53,18 @@ export type DashboardLoadResult = {
     plugins: IDashboardPluginContract_V1[];
 };
 
-// @alpha (undocumented)
+// @public
 export type DashboardLoadStatus = UseCancelablePromiseState<DashboardLoadResult, any>;
 
-// @alpha
+// @public
 export const DashboardStub: React_2.FC<IDashboardStubProps>;
 
-// @alpha
+// @public
 export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
     dashboard: ObjRef;
 }
 
-// @alpha (undocumented)
+// @public
 export interface IDashboardLoader {
     forDashboard(dashboardRef: ObjRef): IDashboardLoader;
     fromClientWorkspace(clientWorkspace: IClientWorkspaceIdentifiers): IDashboardLoader;
@@ -78,7 +76,7 @@ export interface IDashboardLoader {
     withFilterContext(filterContextRef: ObjRef): IDashboardLoader;
 }
 
-// @alpha
+// @public
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     adaptiveLoadOptions?: AdaptiveLoadOptions;
     clientWorkspace?: IClientWorkspaceIdentifiers;
@@ -86,25 +84,25 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     loadingMode?: "adaptive" | "staticOnly";
 }
 
-// @alpha (undocumented)
+// @public (undocumented)
 export interface IDashboardStubProps extends IDashboardLoadOptions {
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
 }
 
-// @alpha
+// @public
 export interface IEmbeddedPlugin {
     factory: () => IDashboardPluginContract_V1;
     parameters?: string;
 }
 
-// @alpha
+// @public
 export type ModuleFederationIntegration = {
     __webpack_init_sharing__: (scope: string) => Promise<void>;
     __webpack_share_scopes__: any;
 };
 
-// @alpha
+// @public
 export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoadStatus;
 
 ```

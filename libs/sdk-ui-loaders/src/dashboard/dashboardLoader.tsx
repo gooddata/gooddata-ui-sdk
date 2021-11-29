@@ -36,12 +36,12 @@ import {
 import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation";
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardEngineLoader = (dashboard: IDashboardWithReferences) => Promise<IDashboardEngine>;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardPluginsLoader = (
     ctx: DashboardContext,
@@ -49,7 +49,7 @@ export type DashboardPluginsLoader = (
 ) => Promise<LoadedPlugin[]>;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardBeforeLoad = (
     ctx: DashboardContext,
@@ -57,7 +57,7 @@ export type DashboardBeforeLoad = (
 ) => Promise<void>;
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardLoaderConfig = {
     /**
@@ -95,7 +95,13 @@ const AdaptiveLoadStrategies = (
 };
 
 /**
- * @alpha
+ * Default implementation of the {@link IDashboardLoader} interface. This class implements all the
+ * necessary functionality related to either static or dynamic dashboard loading.
+ *
+ * Note: you typically do not have to use this class directly and instead use the `useDashboardLoader`
+ * hook or the `DashboardStub` component.
+ *
+ * @public
  */
 export class DashboardLoader implements IDashboardLoader {
     private readonly config: DashboardLoaderConfig;
@@ -107,10 +113,22 @@ export class DashboardLoader implements IDashboardLoader {
         this.config = config;
     }
 
+    /**
+     * Create loader that will never do any dynamic loading and linking. The loader will expect that
+     * the dashboard engine is statically linked in the context. Any plugins that require dynamic loading
+     * from remote locations will be ignored. Only locally embedded plugins will be used.
+     */
     public static staticOnly(): DashboardLoader {
         return new DashboardLoader(StaticLoadStrategies);
     }
 
+    /**
+     * Create loader that may dynamically load dashboard engine and plugins in case a Dashboard to load
+     * is using them. Otherwise it will fall back to the dashboard engine statically linked to the context
+     * and will only use locally embedded plugins.
+     *
+     * @param options - options for the adaptive load
+     */
     public static adaptive(options: AdaptiveLoadOptions): DashboardLoader {
         return new DashboardLoader(AdaptiveLoadStrategies(options.moduleFederationIntegration));
     }
@@ -182,6 +200,9 @@ export class DashboardLoader implements IDashboardLoader {
     ): Promise<[IDashboardEngine, IDashboardPluginContract_V1[]]> => {
         const { engineLoader, pluginLoader, beforeLoad } = config;
 
+        // eslint-disable-next-line no-console
+        console.debug("Loading engine and plugins...");
+
         if (beforeLoad) {
             await beforeLoad(ctx, dashboardWithPlugins);
         }
@@ -191,8 +212,11 @@ export class DashboardLoader implements IDashboardLoader {
             pluginLoader(ctx, dashboardWithPlugins),
         ]);
 
-        const additionalPlugins = initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
-        const loadedPlugins = initializeLoadedPlugins(ctx, plugins);
+        // eslint-disable-next-line no-console
+        console.debug("Initializing the plugins...");
+
+        const additionalPlugins = await initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
+        const loadedPlugins = await initializeLoadedPlugins(ctx, plugins);
         const allPlugins = [...loadedPlugins, ...additionalPlugins];
 
         return [engine, allPlugins];
@@ -210,6 +234,9 @@ export class DashboardLoader implements IDashboardLoader {
         const [workspace, clientWorkspace] = await this.resolveWorkspace(backend);
         invariant(workspace, "DashboardLoader is not configured with workspace to use and loader.");
 
+        // eslint-disable-next-line no-console
+        console.debug("Loading the dashboard...");
+
         const dashboardWithPlugins: IDashboardWithReferences = await backend
             .workspace(workspace)
             .dashboards()
@@ -225,6 +252,9 @@ export class DashboardLoader implements IDashboardLoader {
             dataProductId: clientWorkspace?.dataProduct,
             clientId: clientWorkspace?.client,
         };
+
+        // eslint-disable-next-line no-console
+        console.debug("Validating the plugins...");
 
         const pluginsAreValid = await validatePluginsBeforeLoading(ctx, dashboardWithPlugins);
         if (!pluginsAreValid) {
@@ -272,27 +302,31 @@ export class DashboardLoader implements IDashboardLoader {
 function initializeEmbeddedPlugins(
     ctx: DashboardContext,
     embeddedPlugins: IEmbeddedPlugin[],
-): IDashboardPluginContract_V1[] {
-    return embeddedPlugins.map((embedded) => {
-        const plugin = embedded.factory();
-        plugin.onPluginLoaded?.(ctx, embedded.parameters);
+): Promise<IDashboardPluginContract_V1[]> {
+    const plugins: LoadedPlugin[] = embeddedPlugins.map((embedded) => ({
+        plugin: embedded.factory(),
+        parameters: embedded.parameters,
+    }));
 
-        return plugin;
-    });
+    return initializeLoadedPlugins(ctx, plugins);
 }
 
-function initializeLoadedPlugins(
+async function initializeLoadedPlugins(
     ctx: DashboardContext,
     plugins: LoadedPlugin[],
-): IDashboardPluginContract_V1[] {
+): Promise<IDashboardPluginContract_V1[]> {
     const validPlugins: IDashboardPluginContract_V1[] = [];
 
-    plugins.forEach(({ plugin, parameters }) => {
+    for (const loadedPlugin of plugins) {
+        const { plugin, parameters } = loadedPlugin;
+
         try {
             if (plugin.onPluginLoaded) {
                 // eslint-disable-next-line no-console
                 console.debug(`Calling onPluginLoaded on ${plugin.displayName}...`);
-                plugin.onPluginLoaded(ctx, parameters);
+                const loadPromise = plugin.onPluginLoaded(ctx, parameters);
+
+                await loadPromise;
             }
             validPlugins.push(plugin);
         } catch (e: any) {
@@ -301,7 +335,7 @@ function initializeLoadedPlugins(
                 `The onPluginLoaded call for ${plugin.displayName} failed: ${e?.message}. Ignoring the plugin.`,
             );
         }
-    });
+    }
 
     return validPlugins;
 }

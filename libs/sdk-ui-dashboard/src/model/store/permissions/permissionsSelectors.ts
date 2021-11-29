@@ -12,7 +12,7 @@ const selectSelf = createSelector(
  * This selector returns user's permissions in the workspace where the dashboard is stored. It is expected that the
  * selector is called only after the permission state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @alpha
+ * @public
  */
 export const selectPermissions = createSelector(selectSelf, (filterContextState) => {
     invariant(filterContextState.permissions, "attempting to access uninitialized permissions state");

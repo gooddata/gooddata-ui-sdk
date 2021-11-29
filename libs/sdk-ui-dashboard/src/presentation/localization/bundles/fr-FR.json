@@ -120,6 +120,7 @@
     "options.menu.unsupported.error": "La perception ne peut pas être exportée à l'heure actuelle. Essayez d'appliquer d'autres filtres ou d'utiliser d'autres mesures ou attributs.",
     "options.menu.unsupported.loading": "La perception ne peut pas être exportée à l'heure actuelle.",
     "export.defaultTitle": "Perception sans titre",
+    "export_unsupported.disabled": "L'exportation n'est pas prise en charge.",
     "widget.options.menu.exportToCSV": "Exporter au format CSV",
     "widget.options.menu.exportToXLSX": "Exporter vers XLSX",
     "dashboard.error.empty.heading": "Ce tableau de bord est vide",

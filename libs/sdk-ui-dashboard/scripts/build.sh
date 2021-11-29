@@ -28,6 +28,11 @@ _common-build() {
 
     mkdir -p esm/presentation/localization/bundles
     cp -rf src/presentation/localization/bundles esm/presentation/localization
+
+    # prepare the auxiliary __version.ts file so that the code can read the package version as a constant
+    echo '// (C) 2021 GoodData Corporation' >src/__version.ts
+    echo '// DO NOT CHANGE THIS FILE, IT IS RE-GENERATED ON EVERY BUILD' >>src/__version.ts
+    node -p "'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version) + ';'" >>src/__version.ts
 }
 
 build() {

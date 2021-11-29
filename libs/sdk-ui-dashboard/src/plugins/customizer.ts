@@ -21,7 +21,7 @@ import {
 import { IDashboardLayout, IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-backend-spi";
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardInsightCustomizer {
     /**
@@ -101,7 +101,7 @@ export interface IDashboardInsightCustomizer {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardKpiCustomizer {
     /**
@@ -168,7 +168,7 @@ export interface IDashboardKpiCustomizer {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardWidgetCustomizer {
     /**
@@ -188,7 +188,7 @@ export interface IDashboardWidgetCustomizer {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IFluidLayoutCustomizer {
     /**
@@ -226,7 +226,7 @@ export interface IFluidLayoutCustomizer {
 }
 
 /**
- * @alpha
+ * @public
  */
 export type FluidLayoutCustomizationFn = (
     layout: IDashboardLayout<ExtendedDashboardWidget>,
@@ -234,7 +234,7 @@ export type FluidLayoutCustomizationFn = (
 ) => void;
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardLayoutCustomizer {
     /**
@@ -256,7 +256,7 @@ export interface IDashboardLayoutCustomizer {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardCustomizer {
     /**
@@ -285,14 +285,14 @@ export interface IDashboardCustomizer {
 /**
  * TODO: move to common location
  *
- * @alpha
+ * @public
  */
 export type DashboardStateChangeCallback = (state: DashboardState, dispatch: DashboardDispatch) => void;
 
 /**
  * Defines a facade that you can use to register or unregister dashboard event handlers.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardEventHandling {
     /**

@@ -16,7 +16,7 @@ import { ObjRef } from "@gooddata/sdk-model";
  * A result of successful load of a dashboard consists of a React component and constructed props that
  * should be passed to the component in order to mount the dashboard.
  *
- * @alpha
+ * @public
  */
 export type DashboardLoadResult = {
     /**
@@ -52,7 +52,7 @@ export type DashboardLoadResult = {
  *
  * The lifecycle of embedded plugin is the same as other plugins
 
- * @alpha
+ * @public
  */
 export interface IEmbeddedPlugin {
     /**
@@ -67,7 +67,11 @@ export interface IEmbeddedPlugin {
 }
 
 /**
- * @alpha
+ * Dashboard loader is responsible for loading dashboard and all the assets that the dashboard needs. As a
+ * result, it returns a React component and an instance of props to use in order
+ * to mount the dashboard.
+ *
+ * @public
  */
 export interface IDashboardLoader {
     /**
@@ -138,7 +142,7 @@ export interface IDashboardLoader {
      *
      * 1.  The loader will call the onPluginLoaded, pass any parameters that may be specified for the embedded plugin
      * 2.  Plugin registration is done same as for normal plugins
-     * 3.  The loader will call onPluginUnloaded when the dashboard containing the plugins gets unmounted
+     * 3.  The loader will call onPluginUnload when the dashboard containing the plugins gets unmounted
      *
      * @param plugins - extra plugins to use
      */

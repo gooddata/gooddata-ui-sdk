@@ -5,7 +5,6 @@ import { createSelector } from "@reduxjs/toolkit";
 import { insightFilters, insightSetFilters, insightVisualizationUrl } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
-    IntlWrapper,
     IPushData,
     OnError,
     OnLoadingChanged,
@@ -30,6 +29,7 @@ import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsi
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills";
 import { CustomError } from "../CustomError/CustomError";
 import { ThemedLoadingEqualizer } from "../../../../presentationComponents";
+import { IntlWrapper } from "../../../../localization";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 

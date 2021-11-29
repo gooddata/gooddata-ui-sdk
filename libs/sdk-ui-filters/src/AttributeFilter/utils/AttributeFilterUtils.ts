@@ -32,8 +32,16 @@ export const getAllTitleIntl = (
     equal: boolean,
 ): string => {
     if ((isInverted && empty) || (!isInverted && equal)) {
-        return intl.formatMessage({ id: "attrf.all" });
+        return getAllTitle(intl);
     }
+    return getAllExceptTitle(intl);
+};
+
+export const getAllTitle = (intl: IntlShape): string => {
+    return intl.formatMessage({ id: "attrf.all" });
+};
+
+export const getAllExceptTitle = (intl: IntlShape): string => {
     return intl.formatMessage({ id: "attrf.all_except" });
 };
 

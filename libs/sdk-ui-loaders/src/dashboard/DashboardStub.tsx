@@ -10,7 +10,7 @@ import { useDashboardLoader } from "./useDashboardLoader";
 import { IDashboardLoadOptions } from "./types";
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardStubProps extends IDashboardLoadOptions {
     /**
@@ -29,7 +29,7 @@ export interface IDashboardStubProps extends IDashboardLoadOptions {
  * is a thin wrapper on top of the {@link useDashboardLoader} hook which does the heavy lifting - you can
  * use the hook in your own component if this simple stub does not suffice.
  *
- * @alpha
+ * @public
  */
 export const DashboardStub: React.FC<IDashboardStubProps> = (props) => {
     const { ErrorComponent = DefaultErrorComponent, LoadingComponent = DefaultLoadingComponent } = props;

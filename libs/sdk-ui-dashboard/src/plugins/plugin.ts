@@ -4,7 +4,7 @@ import { IDashboardCustomizer, IDashboardEventHandling } from "./customizer";
 import { DashboardContext } from "../model";
 
 /**
- * @alpha
+ * @public
  */
 export type DashboardPluginDescriptor = {
     /**
@@ -59,7 +59,7 @@ export type DashboardPluginDescriptor = {
  *
  * @remarks see {@link DashboardPluginV1}
  *
- * @alpha
+ * @public
  */
 export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
     /**
@@ -72,17 +72,16 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
      * initialization and parameter parsing at this point.
      *
      * Note that the parameterization that can be specified for the dashboard-plugin link can be edited
-     * freely by the dashboard creator - and may thus be incorrect. If this function throws any exception, then
-     * the dashboard loading will fall back to no-parameterization.
+     * freely by the dashboard creator - and may thus be incorrect.
      *
      * If this function is not specified, then any parameters specified on the dashboard-plugin link will be
-     * ignored.
+     * ignored. If this function throws any exception, then your plugin will not be used on the dashboard.
 
      * @param ctx - dashboard context into which this plugin was loaded
      * @param parameters - parameters that the dashboard specifies on its link to this plugin; these parameters
      *  are
      */
-    onPluginLoaded?(ctx: DashboardContext, parameters?: string): void;
+    onPluginLoaded?(ctx: DashboardContext, parameters?: string): Promise<void> | void;
 
     /**
      * This function will be called before the dashboard initialization and rendering starts. At this point,
@@ -116,14 +115,14 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
      *
      * @param ctx - dashboard context into which this plugin was loaded
      */
-    onPluginUnload?(ctx: DashboardContext): Promise<void>;
+    onPluginUnload?(ctx: DashboardContext): Promise<void> | void;
 }
 
 /**
  * Abstract base class for the Dashboard Plugin. Each plugin should extend this class and implement at least
  * the {@link DashboardPluginV1.register} method.
  *
- * @alpha
+ * @public
  */
 export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
     public readonly _pluginVersion = "1.0";

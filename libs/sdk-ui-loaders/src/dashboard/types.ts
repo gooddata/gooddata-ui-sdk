@@ -8,7 +8,7 @@ import { ObjRef } from "@gooddata/sdk-model";
  * This a specialization of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} interface in which the `dashboard` can only be provided
  * by reference.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
     /**
@@ -18,8 +18,9 @@ export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, 
 }
 
 /**
- * Dashboard loading options
- * @alpha
+ * Dashboard loading options.
+ *
+ * @public
  */
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     /**
@@ -76,7 +77,14 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
 }
 
 /**
- * @alpha
+ * Adaptive loading requires additional options passed by the client. The crucial options are the
+ * module federation integration functions.
+ *
+ * The adaptive loader relies on Webpack's Module Federation to get the job done and expects that it
+ * is running in context where Webpack Module Federation is correctly setup; the load requires few functions
+ * from webpack in order to work properly. You need to pass them in via these options.
+ *
+ * @public
  */
 export type AdaptiveLoadOptions = {
     /**
@@ -131,7 +139,7 @@ export type AdaptiveLoadOptions = {
  * };
  * ```
  *
- * @alpha
+ * @public
  */
 export type ModuleFederationIntegration = {
     __webpack_init_sharing__: (scope: string) => Promise<void>;
@@ -140,7 +148,7 @@ export type ModuleFederationIntegration = {
 
 /**
  * Dashboard plugin and its parameters.
- * @alpha
+ * @public
  */
 export type LoadedPlugin = {
     plugin: IDashboardPluginContract_V1;

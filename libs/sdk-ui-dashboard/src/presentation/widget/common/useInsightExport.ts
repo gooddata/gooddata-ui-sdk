@@ -1,7 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { useCallback, useState } from "react";
 import invariant from "ts-invariant";
-import { IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { IExtendedExportConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { IInsightDefinition, insightVisualizationUrl, ObjRef } from "@gooddata/sdk-model";
 import { v4 as uuid } from "uuid";
 
 import {
@@ -14,14 +15,25 @@ import {
     exportInsightWidget,
     ExportInsightWidget,
     DashboardInsightWidgetExportResolved,
-    selectIsWidgetExportSupported,
 } from "../../../model";
 import { useExportHandler } from "./useExportHandler";
 import { useExportDialogContext } from "../../dashboardContexts";
-import { ObjRef } from "@gooddata/sdk-model";
 
-export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) => {
-    const { title, widgetRef } = config;
+// TODO: FET-910 this should be handled by the pluggable visualizations, not hardcoded here
+function canInsightBeExported(insight: IInsightDefinition) {
+    const insightVisUrl = insightVisualizationUrl(insight);
+
+    // currently Headline and its derivatives have the export disabled globally
+    const exportDisabledVisualizations = [VisualizationTypes.HEADLINE, VisualizationTypes.XIRR];
+    return !exportDisabledVisualizations.some((disabled) => insightVisUrl.includes(disabled));
+}
+
+export const useInsightExport = (config: {
+    title: string;
+    widgetRef: ObjRef;
+    insight: IInsightDefinition;
+}) => {
+    const { title, widgetRef, insight } = config;
     const [isExporting, setIsExporting] = useState(false);
 
     const dispatch = useDashboardDispatch();
@@ -41,7 +53,7 @@ export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) =
         [widgetRef],
     );
 
-    const isWidgetExportable = useDashboardSelector(selectIsWidgetExportSupported(widgetRef));
+    const isInsightExportable = canInsightBeExported(insight);
     const isExportableToCsv = useDashboardSelector(selectIsExecutionResultExportableToCsvByRef(widgetRef));
     const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
 
@@ -82,8 +94,8 @@ export const useInsightExport = (config: { title: string; widgetRef: ObjRef }) =
         });
     }, [settings, title, exportFunction, closeDialog]);
 
-    const exportCSVEnabled = !isExporting && isWidgetExportable && isExportableToCsv;
-    const exportXLSXEnabled = !isExporting && isWidgetExportable && isExportableToXlsx;
+    const exportCSVEnabled = !isExporting && isInsightExportable && isExportableToCsv;
+    const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;
 
     return {
         exportCSVEnabled,

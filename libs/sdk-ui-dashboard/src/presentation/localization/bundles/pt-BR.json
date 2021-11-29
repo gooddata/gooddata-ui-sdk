@@ -120,6 +120,7 @@
     "options.menu.unsupported.error": "O insight não pode ser exportado no momento. Tente aplicar filtros diferentes, ou usar medidas e atributos diferentes.",
     "options.menu.unsupported.loading": "O insight não pode ser exportado no momento.",
     "export.defaultTitle": "Insight sem título",
+    "export_unsupported.disabled": "Exportação não é compatível.",
     "widget.options.menu.exportToCSV": "Exportar para CSV",
     "widget.options.menu.exportToXLSX": "Exportar para XLSX",
     "dashboard.error.empty.heading": "Dashboard vazio",

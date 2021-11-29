@@ -17,7 +17,9 @@ import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader
 import invariant from "ts-invariant";
 
 /**
- * @alpha
+ * Returned by the `useDashboardLoader` to communicate the status of dashboard loading.
+ *
+ * @public
  */
 export type DashboardLoadStatus = UseCancelablePromiseState<DashboardLoadResult, any>;
 
@@ -34,7 +36,7 @@ const InitialStatus: DashboardLoadStatus = {
  * @remarks See {@link IDashboardLoadOptions.loadingMode} to learn about loading modes
  *
  * @param options - load options
- * @alpha
+ * @public
  */
 export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoadStatus {
     const backend = useBackendStrict(options.backend);
@@ -120,9 +122,12 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
             },
             onSuccess: (result) => {
                 // eslint-disable-next-line no-console
-                console.log("Loaded dashboard engine", result.engine);
+                console.log("Loaded dashboard engine", result.engine.version);
                 // eslint-disable-next-line no-console
-                console.log("Dashboard engine initialized with plugins", result.plugins);
+                console.log(
+                    `Dashboard engine ${result.engine.version} initialized with plugins`,
+                    result.plugins.map((plugin) => `${plugin.displayName}/${plugin.version}`).join(", "),
+                );
 
                 setLoadStatus({
                     status: "success",

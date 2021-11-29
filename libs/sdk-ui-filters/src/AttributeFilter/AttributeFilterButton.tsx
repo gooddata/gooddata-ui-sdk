@@ -39,7 +39,8 @@ import MediaQuery from "react-responsive";
 import { MediaQueries } from "../constants";
 import {
     attributeElementsToAttributeElementArray,
-    getAllTitleIntl,
+    getAllExceptTitle,
+    getAllTitle,
     getElementTotalCount,
     getFilteringTitleIntl,
     getItemsTitles,
@@ -626,25 +627,21 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         }
 
         if (isAllFiltered) {
-            return getAllTitleIntl(props.intl, true, true, true);
+            return getAllTitle(props.intl);
         }
 
         const displayForm = getObjRef(currentFilter, props.identifier);
-        if (state.uriToAttributeElementMap.size > 0 && !isNil(totalCount) && displayForm) {
-            const empty = isEmpty(state.selectedFilterOptions);
-            const equal = isEqual(originalTotalCount, state.selectedFilterOptions?.length);
-            const getAllPartIntl = getAllTitleIntl(props.intl, state.isInverted, empty, equal);
+        if (state.uriToAttributeElementMap.size > 0 && !isNil(originalTotalCount) && displayForm) {
+            const empty = getNumberOfSelectedItems() === 0 && originalTotalCount > 0;
+            const all = getNumberOfSelectedItems() === originalTotalCount;
+            const getAllPartIntl = all ? getAllTitle(props.intl) : getAllExceptTitle(props.intl);
 
-            if (!state.selectedFilterOptions?.length && state.searchString) {
+            if (empty) {
                 return getNoneTitleIntl(props.intl);
             }
 
-            if (empty) {
-                return !state.isInverted ? `${getNoneTitleIntl(props.intl)}` : `${getAllPartIntl}`;
-            }
-
-            if (equal) {
-                return state.isInverted ? "" : `${getAllPartIntl}`;
+            if (all) {
+                return getAllPartIntl;
             }
 
             return state.isInverted
