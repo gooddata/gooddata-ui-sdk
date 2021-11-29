@@ -2006,7 +2006,7 @@ export interface IDashboardAttributeFilterProps {
 export interface IDashboardBaseProps {
     backend?: IAnalyticalBackend;
     config?: DashboardConfig;
-    dashboard?: ObjRef | IDashboard;
+    dashboard?: string | ObjRef | IDashboard;
     filterContextRef?: ObjRef;
     permissions?: IWorkspacePermissions;
     workspace?: string;

@@ -12,9 +12,10 @@ import { ObjRef } from "@gooddata/sdk-model";
  */
 export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
     /**
-     * Specify reference to an existing dashboard that should be loaded.
+     * Specify reference to an existing dashboard that should be loaded. You may specify an `idRef` or `uriRef`; as
+     * a convenience you may also specify dashboard object identifier (string) - that's same as using `idRef(objectIdentifier)`.
      */
-    dashboard: ObjRef;
+    dashboard: string | ObjRef;
 }
 
 /**
