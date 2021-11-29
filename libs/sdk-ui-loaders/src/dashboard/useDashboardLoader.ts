@@ -9,7 +9,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
-import { idRef, serializeObjRef } from "@gooddata/sdk-model";
+import { idRef, objRefToString, serializeObjRef } from "@gooddata/sdk-model";
 import isArray from "lodash/isArray";
 import compact from "lodash/compact";
 import { DashboardLoader } from "./dashboardLoader";
@@ -92,6 +92,11 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
 
         const extraPluginsArr = isArray(extraPlugins) ? extraPlugins : compact([extraPlugins]);
         initializeLoader(loader, baseProps, extraPluginsArr, clientWorkspace);
+
+        // eslint-disable-next-line no-console
+        console.log(
+            `Dashboard loader initialized in ${loadingMode} mode to load ${objRefToString(dashboardRef)}.`,
+        );
 
         return loader;
     }, [
