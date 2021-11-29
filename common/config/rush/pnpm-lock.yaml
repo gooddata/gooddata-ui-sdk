@@ -4494,8 +4494,8 @@ packages:
       '@types/react': 16.14.8
     dev: false
 
-  /@types/react-helmet/5.0.16:
-    resolution: {integrity: sha512-++KMqwodVBg75hT2ZT4jobvDPi6iPUl/Lhrn0nP1XTcmFLtccaDb4FTAxzrj3egL7WQYTDnpHuPj52FSFkJqzA==}
+  /@types/react-helmet/6.1.4:
+    resolution: {integrity: sha512-jyx50RNZXVaTGHY3MsoRPNpeiVk8b0XTPgD/O6KHF6COTDnG/+lRjPYvTK5nfWtR3xDOux0w6bHLAsaHo2ZLTA==}
     dependencies:
       '@types/react': 16.14.8
     dev: false
@@ -21943,7 +21943,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-xdBq20RUwDRQavgbCYlsXL1zGruh7hyz4aTh2riuv4X0wF1kVGNkFyyD5AddWzB/Ku0w4e4cB8MAIfTsQGWBLQ==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-I/Ri717hVy1wzbQTq+gaRQ7sjLInU5hvMznj8uEvcJ1pHjdawRldM5q23FQPrQzGZMWk39YxwM9j2SF7ds5GLA==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -21968,7 +21968,7 @@ packages:
       '@types/react-datepicker': 2.11.1
       '@types/react-dom': 16.9.13
       '@types/react-google-recaptcha': 1.1.2
-      '@types/react-helmet': 5.0.16
+      '@types/react-helmet': 6.1.4
       '@types/react-measure': 2.0.5
       '@types/react-router-dom': 5.1.7
       '@types/react-select': 3.1.2
@@ -22606,7 +22606,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-K/D2TM1dLys3dkJJWYXRx5x+I7uF6DOvDbtNf9xzy92aybusu6V1qQrx8k3tU/kassmyemmiOj653KPpQeKKiA==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-6JPYEjD5BfFZGTS1K32h5ygkQ0vFYUeIb7e83O58u2bPYA2EZL3oMFLcuR9fWYnmXFdfYLB0P3GyQ5DZ4gcB2Q==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -22628,6 +22628,7 @@ packages:
       '@types/react': 16.14.8
       '@types/react-document-title': 2.0.4
       '@types/react-dom': 16.9.13
+      '@types/react-helmet': 6.1.4
       '@types/react-portal': 4.0.2
       '@types/react-responsive': 8.0.2
       '@types/react-select': 3.1.2
@@ -22672,6 +22673,7 @@ packages:
       react-day-picker: 7.3.0_react@16.14.0
       react-document-title: 2.0.3_react@16.14.0
       react-dom: 16.14.0_react@16.14.0
+      react-helmet: 6.1.0_react@16.14.0
       react-intl: 3.12.1_react@16.14.0
       react-native-listener: 1.1.0
       react-portal: 4.2.1_react@16.14.0
