@@ -1585,7 +1585,7 @@ export const DefaultDashboardWidget: (props: IDashboardWidgetProps) => JSX.Eleme
 export const DefaultFilterBar: (props: IFilterBarProps) => JSX.Element;
 
 // @alpha (undocumented)
-export const DefaultLockedStatus: (props: ILockedStatusProps) => JSX.Element | null;
+export const DefaultLockedStatus: React_2.FC<ILockedStatusProps>;
 
 // @alpha (undocumented)
 export const DefaultMenuButton: (props: IMenuButtonProps) => JSX.Element | null;
@@ -1607,7 +1607,7 @@ export const DefaultShareButton: React_2.ForwardRefExoticComponent<Pick<IShareBu
 export const DefaultShareDialog: (props: IShareDialogProps) => JSX.Element | null;
 
 // @alpha (undocumented)
-export const DefaultShareStatus: (props: IShareStatusProps) => JSX.Element | null;
+export const DefaultShareStatus: React_2.FC<IShareStatusProps>;
 
 // @alpha (undocumented)
 export const DefaultTitle: (props: ITitleProps) => JSX.Element | null;

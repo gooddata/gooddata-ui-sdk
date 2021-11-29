@@ -8,7 +8,8 @@ import { LockedStatusIndicator } from "./LockedStatusIndicator";
 /**
  * @alpha
  */
-export const DefaultLockedStatus = (props: ILockedStatusProps): JSX.Element | null => {
+
+export const DefaultLockedStatus: React.FC<ILockedStatusProps> = (props): JSX.Element | null => {
     const settings = useDashboardSelector(selectSettings);
     if (!settings.enableAnalyticalDashboardPermissions) {
         return null;

@@ -7,7 +7,7 @@ import { ShareStatusIndicator } from "./ShareStatusIndicator";
 /**
  * @alpha
  */
-export const DefaultShareStatus = (props: IShareStatusProps): JSX.Element | null => {
+export const DefaultShareStatus: React.FC<IShareStatusProps> = (props): JSX.Element | null => {
     const settings = useDashboardSelector(selectSettings);
     if (!settings.enableAnalyticalDashboardPermissions) {
         return null;
