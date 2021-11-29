@@ -115,19 +115,19 @@ const scenarios: BackstopConfig = {
 
 const lockScenarios: BackstopConfig = {
     open: {
-        clickSelectors: [".s-share-dialog-button", 100],
+        clickSelectors: [".s-share-dialog-button", 300],
     },
     "toggle-lock": {
-        clickSelectors: [".s-share-dialog-button", 100, ".s-shared-object-lock", 100],
+        clickSelectors: [".s-share-dialog-button", 300, ".s-shared-object-lock", 300],
     },
 };
 
 const drillAvailabilityScenarios: BackstopConfig = {
     open: {
-        clickSelectors: [".s-share-dialog-button", 100],
+        clickSelectors: [".s-share-dialog-button", 300],
     },
     "toggle-availability-for-drill": {
-        clickSelectors: [".s-share-dialog-button", 100, ".s-shared-object-under-lenient-control", 100],
+        clickSelectors: [".s-share-dialog-button", 300, ".s-shared-object-under-lenient-control", 300],
     },
 };
 
