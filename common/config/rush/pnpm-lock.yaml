@@ -5825,7 +5825,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.1
+      follow-redirects: 1.14.1_debug@4.3.2
     transitivePeerDependencies:
       - debug
     dev: false
@@ -9833,16 +9833,6 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
-    dev: false
-
-  /follow-redirects/1.14.1:
-    resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
     dev: false
 
   /follow-redirects/1.14.1_debug@4.1.1:
@@ -16045,10 +16035,10 @@ packages:
       react-popper: 2.2.5_8548d99834c2e663160c36c7d0931260
     dev: false
 
-  /react-day-picker/7.3.0_react@16.14.0:
-    resolution: {integrity: sha512-t2kz0Zy4P5U4qwU5YhsBq2QGmypP8L/u+89TSnuD0h4dYKSEDQArFPWfin9gv8erV1ciR1Wzr485TMaYnI7FTw==}
+  /react-day-picker/7.4.10_react@16.14.0:
+    resolution: {integrity: sha512-/QkK75qLKdyLmv0kcVzhL7HoJPazoZXS8a6HixbVoK6vWey1Od1WRLcxfyEiUsRfccAlIlf6oKHShqY2SM82rA==}
     peerDependencies:
-      react: ~0.13.x || ~0.14.x || ^15.0.0 || ^16.0.0
+      react: ~0.13.x || ~0.14.x || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
       prop-types: 15.7.2
       react: 16.14.0
@@ -22441,7 +22431,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-hdm6K1OzAEOKwxacxarkiad+r0JfqkLF89boAsyHSwXciJA98z0kpvB0KXA6b91P90j5PdYaoYA4+R5plCC7Zw==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-qWphkuTKVOMc5XJ0L6kUvoqaMF38PiQUqhZpCXxjpWr5mT5XOpHMiRTfb3cd6KJm/Gq97xnD83i/mWpYcyJ4qA==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
@@ -22495,7 +22485,7 @@ packages:
       prettier: 2.3.1
       raf: 3.4.1
       react: 16.14.0
-      react-day-picker: 7.3.0_react@16.14.0
+      react-day-picker: 7.4.10_react@16.14.0
       react-dom: 16.14.0_react@16.14.0
       react-intl: 3.12.1_react@16.14.0
       react-responsive: 8.2.0_react@16.14.0
@@ -22584,7 +22574,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-KBW19HVnuC8E6+tt22VA91Xad8Gop00ob9OqdHL9f3HiYiKWtmvriZofT3VbVG4L5ZLGmGD73ggsqqn6hDCvWw==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-RH4FcsN7WdFfWOcnIwxm47fjxmYJ1gwuIFVcXWaY3pSLUaeBE2p6P842MJZTUFLJPEWet2UcKmKCOnYcBFIuWQ==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -22648,7 +22638,7 @@ packages:
       raf: 3.4.1
       react: 16.14.0
       react-codemirror2: 7.2.1_codemirror@5.61.1+react@16.14.0
-      react-day-picker: 7.3.0_react@16.14.0
+      react-day-picker: 7.4.10_react@16.14.0
       react-document-title: 2.0.3_react@16.14.0
       react-dom: 16.14.0_react@16.14.0
       react-helmet: 6.1.0_react@16.14.0

@@ -4,11 +4,14 @@ import cx from "classnames";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
 import isValid from "date-fns/isValid";
-import { DayPickerInputProps, InputClassNames } from "react-day-picker";
+import { DayPickerInputProps } from "react-day-picker";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody";
 
-const getInputClassNames = (className?: string, classNameCalendar?: string): InputClassNames => ({
+const getInputClassNames = (
+    className?: string,
+    classNameCalendar?: string,
+): DayPickerInputProps["classNames"] => ({
     container: cx("gd-date-range-picker-input", className),
     overlay: cx("gd-date-range-picker-picker", classNameCalendar),
     overlayWrapper: undefined,

@@ -46,7 +46,7 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
             modifiers: { start: from, end: to },
             selectedDays: [from, { from, to }],
             locale: translationUtils.sanitizeLocaleForMoment(intl.locale),
-            localeUtils: MomentLocaleUtils as any, // the typings are broken
+            localeUtils: MomentLocaleUtils,
         };
 
         const dayPickerPropsWithDefaults = mergeDayPickerProps(defaultDayPickerProps, dayPickerProps);
