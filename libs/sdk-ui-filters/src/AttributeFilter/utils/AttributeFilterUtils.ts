@@ -24,7 +24,6 @@ import {
     isAttributeElementsByValue,
     ObjRef,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
 
 export const getAllTitleIntl = (
     intl: IntlShape,
@@ -82,22 +81,6 @@ export const updateSelectedOptionsWithData = (
     selection: Array<Partial<IAttributeElement>>,
     items: AttributeListItem[],
 ): Array<IAttributeElement> => {
-    /**
-     * For original AttributeFilter we need to handle empty `items` property as a indicator, that items
-     * should not be changed and should be extended by the missing `uri` or `title` property (if needed)
-     * so it can be used in AttributeFilterDropdown.
-     *
-     * This won't affect `AttributeFilterButton` component in any case.
-     */
-    if (isEmpty(items)) {
-        return selection.map((item) => {
-            return {
-                title: item.title ?? "",
-                uri: item.uri ?? "",
-            };
-        });
-    }
-
     const nonEmptyItems = items.filter(isNonEmptyListItem);
 
     return selection.map((selectedItem) => {
