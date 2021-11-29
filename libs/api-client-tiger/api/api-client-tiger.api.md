@@ -6715,6 +6715,7 @@ export type MetadataGetEntitiesOptions = {
 // @internal
 export type MetadataGetEntitiesParams = {
     workspaceId: string;
+    filter?: string;
 };
 
 // @internal
