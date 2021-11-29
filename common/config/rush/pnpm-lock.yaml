@@ -5838,7 +5838,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.1_debug@4.3.2
+      follow-redirects: 1.14.1
     transitivePeerDependencies:
       - debug
     dev: false
@@ -9853,6 +9853,16 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
+    dev: false
+
+  /follow-redirects/1.14.1:
+    resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /follow-redirects/1.14.1_debug@4.1.1:
@@ -15879,10 +15889,6 @@ packages:
     engines: {node: '>=0.6'}
     dev: false
 
-  /query-state-core/2.5.0:
-    resolution: {integrity: sha512-XVo7I/K+gKXqu+HlxtGXfjUtQ+LPjs5bTHB4RC4vDs6yCYLmchc4IxcZWt5EdZZLqIg/CuY+PUxN141t3J17fQ==}
-    dev: false
-
   /query-string/5.1.1:
     resolution: {integrity: sha512-gjWOsm2SoGlgLEdAGt7a6slVOk9mGiXmPFMqrEhLQ68rhQuBnpfs3+EmlvqKyxnCo9/PPlF+9MtY02S1aFg+Jw==}
     engines: {node: '>=0.10.0'}
@@ -16398,16 +16404,6 @@ packages:
       react-router: 5.2.0_react@16.14.0
       tiny-invariant: 1.1.0
       tiny-warning: 1.0.3
-    dev: false
-
-  /react-router-use-location-state/2.5.0_react@16.14.0:
-    resolution: {integrity: sha512-p0duQtatgL8SZzIITI3He2MP/4d9x9GQHJs93spPYAckVrvCRLAlQxS7k04RHYZb0e4yxwW76Rp/PBvezyez6g==}
-    peerDependencies:
-      react: ^16.8.0
-      react-router: ^5.0.0
-    dependencies:
-      react: 16.14.0
-      use-location-state: 2.5.0_react@16.14.0
     dev: false
 
   /react-router/5.2.0_react@16.14.0:
@@ -19970,15 +19966,6 @@ packages:
       use-isomorphic-layout-effect: 1.1.1_807f3d8e201fbb23c29c1613533607c0
     dev: false
 
-  /use-location-state/2.5.0_react@16.14.0:
-    resolution: {integrity: sha512-Gsn37xXWTVa4gGZA8WobtmC7ixm46TkQUyr9MApLhh9YIDcxOKuLCH/0wuKY7YcrCsb5t/S0b77qP50/mbvibQ==}
-    peerDependencies:
-      react: ^16.8.0
-    dependencies:
-      query-state-core: 2.5.0
-      react: 16.14.0
-    dev: false
-
   /use/3.1.1:
     resolution: {integrity: sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==}
     engines: {node: '>=0.10.0'}
@@ -22826,7 +22813,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-2qPE1Mv1z+lTVcCKuDLHbnfW3oQgQbQqPvg2/+Txa1J9JXwzt9MDA0kPtKZ7ROc+CvRQMsNPIwdDLxwUJFhPnw==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-GWPw8RGW6rzlxF1cIVjaOQPwZZix4XXkAK/4OIkGwH2wxPupqHoSUm2PC2CCljrk5UdlGsbnV7XMPCEdAobYEA==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -22893,7 +22880,6 @@ packages:
       react-dom: 16.14.0_react@16.14.0
       react-intl: 3.12.1_react@16.14.0
       react-router-dom: 5.2.0_react@16.14.0
-      react-router-use-location-state: 2.5.0_react@16.14.0
       sass: 1.34.1
       sass-loader: 10.2.0_b9f634b54c56570d1679efa838fbfb86
       source-map-loader: 2.0.2_webpack@5.58.2
@@ -22915,7 +22901,6 @@ packages:
       - debug
       - eslint-config-prettier
       - fibers
-      - react-router
       - supports-color
       - ts-node
       - utf-8-validate

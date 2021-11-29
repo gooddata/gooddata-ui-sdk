@@ -871,10 +871,6 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
-      "name": "react-router-use-location-state",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "react-select",
       "allowedCategories": [ "examples", "production" ]
     },
