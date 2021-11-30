@@ -91,8 +91,8 @@
         "uuid": "^8.3.2"
     },
     "peerDependencies": {
-        "react": "^16.10.0",
-        "react-dom": "^16.10.0"
+        "react": "^16.10.0 || ^17.0.0",
+        "react-dom": "^16.10.0 || ^17.0.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",

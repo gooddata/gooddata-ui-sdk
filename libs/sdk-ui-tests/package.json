@@ -103,8 +103,8 @@
         "@gooddata/sdk-ui-kit": "^8.8.0-alpha.9",
         "@gooddata/sdk-ui-pivot": "^8.8.0-alpha.9",
         "@gooddata/sdk-ui-theme-provider": "^8.8.0-alpha.9",
-        "react": "^16.10.0",
-        "react-dom": "^16.10.0",
+        "react": "^16.10.0 || ^17.0.0",
+        "react-dom": "^16.10.0 || ^17.0.0",
         "typescript": ">= 2.5.3"
     },
     "devDependencies": {
@@ -143,8 +143,8 @@
         "eslint-plugin-sonarjs": "^0.9.1",
         "mapbox-gl": "^1.13.1",
         "prettier": "~2.5.0",
-        "react": "^16.10.0",
-        "react-dom": "^16.10.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
         "sass-loader": "^10.1.1",
         "style-loader": "^1.2.1",
         "stylelint": "^13.8.0",

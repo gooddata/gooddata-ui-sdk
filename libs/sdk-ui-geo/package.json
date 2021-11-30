@@ -77,8 +77,8 @@
         "uuid": "^8.3.2"
     },
     "peerDependencies": {
-        "react": "^16.10.0",
-        "react-dom": "^16.10.0"
+        "react": "^16.10.0 || ^17.0.0",
+        "react-dom": "^16.10.0 || ^17.0.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
@@ -119,8 +119,8 @@
         "node-sass-magic-importer": "^5.3.2",
         "prettier": "~2.5.0",
         "raf": "^3.4.1",
-        "react": "^16.10.0",
-        "react-dom": "^16.10.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
         "stylelint": "^13.8.0",
         "stylelint-checkstyle-formatter": "^0.1.2",
         "stylelint-config-prettier": "^8.0.2",
