@@ -175,6 +175,12 @@ describe("withCaching", () => {
         // and the second attempt will give new promise
         const second = result.readWindow([0, 0], [1, 1]);
 
+        try {
+            await second;
+        } catch (e) {
+            // ignored
+        }
+
         expect(second).not.toBe(first);
     });
 
