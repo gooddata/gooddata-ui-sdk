@@ -5,7 +5,7 @@ set -o pipefail
 # Absolute root directory - for volumes
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../.. && pwd -P))
 
-IMAGE="node:14.17.5"
+IMAGE="node:16.13.0"
 
 echo "Running \"$*\" using ${IMAGE} in root directory ${ROOT_DIR}"
 

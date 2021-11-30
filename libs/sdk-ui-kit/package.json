@@ -92,7 +92,7 @@
         "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0",
         "uuid": "^8.3.2",
-        "@types/node": "^14.17.11"
+        "@types/node": "^16.11.11"
     },
     "peerDependencies": {
         "react": "^16.10.0",

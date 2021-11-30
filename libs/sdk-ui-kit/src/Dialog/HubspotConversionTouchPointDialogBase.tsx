@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
-import { HubSpotFormLocale } from "@aaronhayes/react-use-hubspot-form/build/main/hubspot-form-locale.enum";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
 import { Button } from "../Button";
@@ -159,7 +158,7 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
         portalId: hubspotPortalId,
         formId: hubspotFormId,
         target: `#${hubspotFormTargetId}`,
-        locale: intl.locale.split("-").shift() as HubSpotFormLocale,
+        locale: intl.locale.split("-").shift() as any,
         submitButtonClass,
         onFormSubmitted: onHubspotFormSubmitted,
         onFormReady: ($form: ArrayLike<IHubspotFormField> | IHubspotJqueryFormField) => {

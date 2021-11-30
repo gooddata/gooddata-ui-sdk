@@ -8,7 +8,13 @@
  *
  * @packageDocumentation
  */
+
+// NOTE: import/export disabled for some packages as we have to fiddle with stuff that we copied from one
+// package to another.
+
+// eslint-disable-next-line import/export
 export * from "@gooddata/sdk-model";
+// eslint-disable-next-line import/export
 export * from "@gooddata/sdk-backend-spi";
 export * from "@gooddata/sdk-ui";
 export * from "@gooddata/sdk-ui-charts";
@@ -19,4 +25,5 @@ export * from "@gooddata/sdk-ui-ext";
 
 // override IUser, userFullName that are both in model and SPI so that the model version is used
 import { IUser, userFullName } from "@gooddata/sdk-model";
+// eslint-disable-next-line import/export
 export { IUser, userFullName };

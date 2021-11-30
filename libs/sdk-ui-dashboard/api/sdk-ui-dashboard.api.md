@@ -121,6 +121,7 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
+import { Selector } from '@reduxjs/toolkit';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
@@ -3617,22 +3618,14 @@ export const selectDashboardUri: OutputSelector<DashboardState, string | undefin
 export const selectDashboardUriRef: OutputSelector<DashboardState, UriRef | undefined, (res: string | undefined) => UriRef | undefined>;
 
 // @internal
-export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => OutputSelector<DashboardState, {
-status: "error" | "loading" | "success";
-result?: InsightDateDatasets | undefined;
-error?: string | undefined;
-} | undefined, (res: DashboardState) => {
+export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => Selector<DashboardState, {
 status: "error" | "loading" | "success";
 result?: InsightDateDatasets | undefined;
 error?: string | undefined;
 } | undefined>;
 
 // @internal
-export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => OutputSelector<DashboardState, {
-status: "error" | "loading" | "success";
-result?: MeasureDateDatasets | undefined;
-error?: string | undefined;
-} | undefined, (res: DashboardState) => {
+export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => Selector<DashboardState, {
 status: "error" | "loading" | "success";
 result?: MeasureDateDatasets | undefined;
 error?: string | undefined;
@@ -3753,11 +3746,7 @@ export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets
 export const selectImplicitDrillsDownByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: (ICatalogAttribute | ICatalogDateAttribute)[], res3: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @internal
-export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => OutputSelector<DashboardState, {
-status: "error" | "loading" | "success";
-result?: InsightAttributesMeta | undefined;
-error?: string | undefined;
-} | undefined, (res: DashboardState) => {
+export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => Selector<DashboardState, {
 status: "error" | "loading" | "success";
 result?: InsightAttributesMeta | undefined;
 error?: string | undefined;
