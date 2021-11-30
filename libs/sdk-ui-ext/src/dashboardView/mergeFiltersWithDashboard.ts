@@ -10,6 +10,7 @@ import { filterArrayToFilterContextItems } from "../internal";
  * @param dashboard - dashboard to get the filters from
  * @param additionalFilters - filters to apply on top of the filters from the dashboard
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export function mergeFiltersWithDashboard(
     dashboard: IDashboard | undefined,

@@ -22,6 +22,7 @@ import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IUseDashboardWidgetExecutionConfig {
     /**
@@ -60,6 +61,7 @@ export interface IUseDashboardWidgetExecutionConfig {
  * Hook allowing to get execution for particular dashboard widget.
  * @param config - configuration of the hook
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export function useDashboardWidgetExecution({
     dashboard,
