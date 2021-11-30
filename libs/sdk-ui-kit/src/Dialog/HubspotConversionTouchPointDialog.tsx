@@ -2,7 +2,9 @@
 import React from "react";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 
-import { Dialog } from "./Dialog";
+import { Overlay } from "../Overlay";
+
+import { DialogBase } from "./DialogBase";
 import {
     HubspotConversionTouchPointDialogBase,
     IHubspotConversionTouchPointDialogBaseProps,
@@ -22,16 +24,30 @@ export const HubspotConversionTouchPointDialog: React.FC<IHubspotConversionTouch
     };
 
     return (
-        <Dialog
-            displayCloseButton={true}
-            onCancel={props.onClose}
-            submitOnEnterKey={true}
-            onSubmit={onDialogSubmit}
-            className="conversion-touch-point-dialog s-conversion-touch-point-dialog"
+        <Overlay
+            containerClassName="visible"
+            className="gd-conversion-touch-point-overlay"
+            isModal={true}
+            closeOnOutsideClick={true}
+            closeOnEscape={true}
+            ignoreClicksOnByClass={[".s-conversion-touch-point-dialog"]}
+            onClose={props.onClose}
+            positionType="fixed"
         >
-            <HubspotProvider>
-                <HubspotConversionTouchPointDialogBase {...props} submitButtonClass={submitButtonClasses} />
-            </HubspotProvider>
-        </Dialog>
+            <DialogBase
+                displayCloseButton={true}
+                onCancel={props.onClose}
+                submitOnEnterKey={true}
+                onSubmit={onDialogSubmit}
+                className="conversion-touch-point-dialog s-conversion-touch-point-dialog"
+            >
+                <HubspotProvider>
+                    <HubspotConversionTouchPointDialogBase
+                        {...props}
+                        submitButtonClass={submitButtonClasses}
+                    />
+                </HubspotProvider>
+            </DialogBase>
+        </Overlay>
     );
 };

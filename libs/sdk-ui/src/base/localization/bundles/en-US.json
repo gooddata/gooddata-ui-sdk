@@ -1239,5 +1239,70 @@
         "value": "Remove from selection.",
         "comment": "Text of the tooltip shown above button that removes user or group from unsaved selection of newly added grantees that will gain access right to the dashboard after changes in share dialog are saved.",
         "limit": 0
+    },
+    "gdPricingPlansDialog.title": {
+        "value": "GoodData pricing plans",
+        "comment": "The title of GoodData pricing plans dialog",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.talkToUs": {
+        "value": "Talk to us",
+        "comment": "The value of 'Talk to us' button",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.requestSent": {
+        "value": "Request sent",
+        "comment": "The text will be show after clicking 'Talk to us' button",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.footer.title": {
+        "value": "Analytics solution loved by many",
+        "comment": "The footer title of the dialog",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.plan.growth": {
+        "value": "Growth",
+        "comment": "The Growth plan title",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.plan.growth.subTitle": {
+        "value": "Upgrade your data analytics with a flexible, easily scalable solution with predictable pricing.",
+        "comment": "The Growth plan sub title",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.plan.growth.price": {
+        "value": "From $20",
+        "comment": "The plan price",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.plan.growth.price.detail": {
+        "value": "per workspace/month (billed annually)",
+        "comment": "The detail of the plan price",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.plan.growth.desc": {
+        "value": "<strong>Includes:</strong><ul class=\"plan-description\"> <li>Unlimited number of users</li><li>Transparent pricing</li><li>1GB data storage per workspace for free</li><li>Extra feature add-ons when you need them</li><li>Professional services tailored to you</li></ul>",
+        "comment": "The Growth plan description. Please do not translate the html tag <strong>, <ul>, <li> or class=\"plan-description\".",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.plan.enterprise": {
+        "value": "Enterprise",
+        "comment": "The Enterprise plan title",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.plan.enterprise.subTitle": {
+        "value": "Unlock your data’s full potential with a robust and entirely customized analytics solution.",
+        "comment": "The Enterprise plan sub title",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.plan.enterprise.price": {
+        "value": "Custom pricing",
+        "comment": "The plan price",
+        "limit": 0
+    },
+    "gdPricingPlansDialog.plan.enterprise.desc": {
+        "value": "<strong>Everything from Growth, plus:</strong><ul class=\"plan-description\"> <li>Optional HIPAA and GDPR-S compliance</li><li>24/7 support with first response SLA</li><li>99.5% platform availability SLA</li><li>Continuous customer success guidance</li><li>Enterprise-grade scalability</li></ul>",
+        "comment": "The Enterprise plan description. Please do not translate the html tag <strong>, <ul>, <li> or class=\"plan-description\".",
+        "limit": 0
     }
 }

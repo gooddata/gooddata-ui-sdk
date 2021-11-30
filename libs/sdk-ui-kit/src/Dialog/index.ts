@@ -8,9 +8,11 @@ export { ExportDialog } from "./ExportDialog";
 export { ExportDialogBase } from "./ExportDialogBase";
 export { CommunityEditionDialog, ICommunityEditionDialogProps } from "./CommunityEditionDialog";
 export { HubspotConversionTouchPointDialog } from "./HubspotConversionTouchPointDialog";
+export { GoodDataPricingPlansDialog, IGoodDataPricingPlansDialogProps } from "./GoodDataPricingPlansDialog";
 export {
     IHubspotConversionTouchPointDialogBaseProps,
     IHubspotFormValue,
+    HubspotConversionTouchPointDialogBase,
 } from "./HubspotConversionTouchPointDialogBase";
 
 export * from "./ShareDialog";

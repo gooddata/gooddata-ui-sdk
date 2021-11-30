@@ -90,6 +90,9 @@ $button-negative-active-gradient-top: var(--gd-palette-error-base-d20, darken($g
 
 $button-negative-active-gradient-bottom: $button-negative-hover-bg;
 
+// upsell color
+$button-upsell-bg-color: #8351a4;
+
 // border-radius
 $button-border-radius: var(--gd-button-borderRadius, 3px);
 $button-group-border-radius: 0;

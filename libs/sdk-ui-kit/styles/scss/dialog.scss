@@ -441,3 +441,301 @@
         }
     }
 }
+
+/* GoodData pricing plans
+   ========================================================================== */
+.gd-pricing-overlay {
+    @media #{$small-only} {
+        // override the inline css
+        // stylelint-disable-next-line declaration-no-important
+        top: 0 !important;
+    }
+
+    @media #{$small-only}, #{$medium-only} {
+        // override the inline css
+        // stylelint-disable-next-line declaration-no-important
+        left: 0 !important;
+    }
+
+    @media #{$medium-only}, #{$large-only} {
+        width: 100%;
+    }
+}
+.gd-dialog:not(.gd-dropdown).gd-pricing-plans-dialog {
+    width: 1092px;
+    max-width: none;
+    height: 80vh;
+    max-height: 820px;
+    margin: 0 20px;
+    padding: 20px 20px 0;
+    background-color: #f5f8fa;
+
+    @media #{$small-only} {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        height: 100vh;
+    }
+
+    @media #{$medium-only}, #{$large-only} {
+        width: calc(100% - 20px);
+        margin: 0 10px;
+        max-height: 750px;
+    }
+
+    .gd-dialog-close {
+        right: 12px;
+    }
+}
+
+.dialog-contain-wrapper {
+    overflow-x: auto;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: calc(80vh - 63px);
+
+    @media #{$small-only} {
+        height: calc(100vh - 63px);
+    }
+}
+
+.gd-pricing-plans-dialog .conversion-touch-point-dialog-wrapper {
+    display: none;
+}
+
+.gd-pricing-plans {
+    .dialog-title {
+        background-color: $default-gd-color-white;
+        margin: -20px -20px 0;
+        padding: 20px;
+    }
+
+    h3 {
+        font-size: 20px;
+        line-height: 23px;
+        color: $default-gd-color-text;
+    }
+
+    h3,
+    p {
+        margin: 0;
+    }
+
+    .dialog-body {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 30px 0;
+
+        @media #{$small-only} {
+            flex-direction: column;
+            padding-top: 20px;
+        }
+
+        h3 {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-size: 30px;
+            line-height: 30px;
+        }
+
+        p,
+        .plan-description {
+            font-size: 14px;
+            line-height: 23px;
+        }
+
+        .plan-price {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .growth .plan-price {
+            padding: 20px 0;
+        }
+
+        .enterprise .plan-price {
+            padding: 20px 0 43px;
+
+            @media #{$small-only} {
+                padding: 32px 0;
+            }
+        }
+
+        strong {
+            display: block;
+            margin-top: 20px;
+        }
+    }
+
+    .plan-description {
+        list-style-type: none;
+        padding-left: 26px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+
+        li {
+            margin-bottom: 10px;
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 6px;
+                left: -26px;
+                display: inline-block;
+                width: 12px;
+                height: 8px;
+                background: url("~@gooddata/sdk-ui-kit/styles/icons/checkmark.svg") no-repeat;
+                background-position: center;
+                background-size: contain;
+            }
+        }
+    }
+
+    .gd-pricing-plan-item {
+        position: relative;
+        box-sizing: border-box;
+        background-color: $default-gd-color-white;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: auto;
+        max-width: 390px;
+        padding: 40px;
+        border: 1px solid #e3eaf0;
+        border-radius: 4px;
+
+        @media #{$small-only} {
+            width: 100%;
+            max-width: none;
+            padding: 20px;
+        }
+
+        @media #{$medium-only} {
+            padding: 20px;
+        }
+
+        &.growth {
+            margin-right: 40px;
+
+            @media #{$small-only} {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            @media #{$medium-only} {
+                margin-right: 20px;
+            }
+        }
+
+        .gd-button-upsell {
+            margin-top: auto;
+            height: 42px;
+        }
+
+        .request-sent {
+            box-sizing: border-box;
+            margin-top: auto;
+            height: 42px;
+            padding: 10px 18px;
+            font-size: 16px;
+            line-height: 22px;
+            color: #00c18d;
+            background: #e6f9f4;
+            border-radius: 3px;
+
+            &::before {
+                content: "";
+                position: relative;
+                top: 2px;
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+                margin-right: 10px;
+                background: url("~@gooddata/sdk-ui-kit/styles/icons/checkmark.svg") no-repeat;
+                background-position: center;
+                background-size: contain;
+            }
+        }
+    }
+
+    .gd-customer-zalando {
+        width: 110px;
+        height: 22px;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/zalando.svg") no-repeat;
+    }
+
+    .gd-customer-visa {
+        width: 56px;
+        height: 18px;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/visa.svg") no-repeat;
+    }
+
+    .gd-customer-zendesk {
+        width: 115px;
+        height: 22px;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/zendesk.svg") no-repeat;
+    }
+
+    .gd-customer-calpine {
+        width: 138px;
+        height: 36px;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/calpine.svg") no-repeat;
+    }
+
+    .gd-customer-double-verify {
+        width: 142px;
+        height: 32px;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/double-verify.svg") no-repeat;
+    }
+
+    .dialog-footer {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+        margin-bottom: 50px;
+
+        h4 {
+            margin: 26px 0;
+
+            @media #{$small-only}, #{$medium-only} {
+                margin: 10px 0 20px;
+            }
+        }
+    }
+
+    .customers {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        align-content: center;
+        width: 100%;
+
+        @media #{$small-only} {
+            align-content: space-between;
+            height: 88px;
+        }
+
+        i {
+            display: block;
+            background-position: center;
+            background-size: contain;
+
+            @media #{$small-only}, #{$medium-only} {
+                margin-right: 10px;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}

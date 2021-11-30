@@ -9,7 +9,7 @@ import { Button } from "../Button";
 declare global {
     interface Window {
         jQuery: object;
-        hbspt: undefined | { isSuccessMessageShow: boolean };
+        hbspt: undefined | { isSuccessMessageShow: boolean; commentValue: string };
     }
 }
 
@@ -105,6 +105,11 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
      * Form submitted callback function
      */
     onFormSubmitted?: () => void;
+
+    /**
+     * Allow to close dialog after submit or not
+     */
+    shouldCloseDialogAfterSubmit?: boolean;
 }
 
 /**
@@ -125,6 +130,7 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
         values = {},
         onClose,
         onFormSubmitted,
+        shouldCloseDialogAfterSubmit = true,
     } = props;
 
     const intl = useIntl();
@@ -141,17 +147,30 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
                 }
                 return nodeOrSelector;
             };
-        if (window.hbspt?.isSuccessMessageShow) {
-            window.hbspt.isSuccessMessageShow = false;
+        if (window.hbspt) {
+            window.hbspt = {
+                ...window.hbspt,
+                commentValue: "",
+                isSuccessMessageShow: false,
+            };
         }
-    }, []);
+    }, [targetId]);
 
     const onHubspotFormSubmitted = () => {
         if (!window.hbspt.isSuccessMessageShow) {
             onFormSubmitted?.();
-            onClose();
+            if (shouldCloseDialogAfterSubmit) {
+                onClose();
+            }
             window.hbspt.isSuccessMessageShow = true;
         }
+    };
+
+    const getListInputFields = ($form: ArrayLike<IHubspotFormField> | IHubspotJqueryFormField) => {
+        if ($form["jquery"] && $form[0]?.length > 0) {
+            return $form[0];
+        }
+        return $form;
     };
 
     const { formCreated } = useHubspotForm({
@@ -161,12 +180,23 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
         locale: intl.locale.split("-").shift() as any,
         submitButtonClass,
         onFormSubmitted: onHubspotFormSubmitted,
+        onFormSubmit: ($form: ArrayLike<IHubspotFormField> | IHubspotJqueryFormField) => {
+            const fields = getListInputFields($form);
+            // assign the global comment value to the comment field.
+            if (window.hbspt.commentValue) {
+                for (let i = 0; i < fields.length; i += 1) {
+                    const commentField = fields[i];
+                    if (commentField?.name === "comment__c") {
+                        commentField.value = window.hbspt.commentValue;
+                        break;
+                    }
+                }
+            }
+        },
         onFormReady: ($form: ArrayLike<IHubspotFormField> | IHubspotJqueryFormField) => {
             setIsFormReady(true);
-            let fields = $form;
-            if (fields["jquery"] && fields[0]?.length > 0) {
-                fields = fields[0];
-            }
+            const fields = getListInputFields($form);
+
             // populating the values for hidden fields
             for (let i = 0; i < fields.length; i += 1) {
                 const inputField = fields[i];

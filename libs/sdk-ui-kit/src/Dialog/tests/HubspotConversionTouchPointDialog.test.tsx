@@ -4,9 +4,10 @@ import { mount } from "enzyme";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { Dialog } from "../Dialog";
+import { Overlay } from "../../Overlay";
 import { HubspotConversionTouchPointDialog } from "../HubspotConversionTouchPointDialog";
 import { HubspotConversionTouchPointDialogBase } from "../HubspotConversionTouchPointDialogBase";
+import { DialogBase } from "../DialogBase";
 
 describe("ConversionTouchPointDialog", () => {
     it("should render content", () => {
@@ -22,7 +23,8 @@ describe("ConversionTouchPointDialog", () => {
             </IntlWrapper>,
         );
 
-        expect(wrapper.find(Dialog)).toHaveLength(1);
+        expect(wrapper.find(Overlay)).toHaveLength(1);
+        expect(wrapper.find(DialogBase)).toHaveLength(1);
         expect(wrapper.find(HubspotProvider)).toHaveLength(1);
         expect(wrapper.find(HubspotConversionTouchPointDialogBase)).toHaveLength(1);
     });

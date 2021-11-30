@@ -482,6 +482,9 @@ export type GetPositionedSelfRegion = {
 // @internal (undocumented)
 export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T;
 
+// @public (undocumented)
+export const GoodDataPricingPlansDialog: React_2.FC<IGoodDataPricingPlansDialogProps>;
+
 // @internal (undocumented)
 export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll;
 
@@ -549,6 +552,9 @@ export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHead
 
 // @public (undocumented)
 export const HubspotConversionTouchPointDialog: React_2.FC<IHubspotConversionTouchPointDialogBaseProps>;
+
+// @internal (undocumented)
+export const HubspotConversionTouchPointDialogBase: React_2.FC<IHubspotConversionTouchPointDialogBaseProps>;
 
 // @internal (undocumented)
 export interface IAddGranteeBaseProps {
@@ -1278,6 +1284,17 @@ export interface IFormatTemplate {
     name: string;
 }
 
+// @public (undocumented)
+export interface IGoodDataPricingPlansDialogProps {
+    hubspotFormId: string;
+    hubspotPortalId: string;
+    onClose: () => void;
+    onFormSubmitted?: () => void;
+    values?: {
+        [key: string]: string | number | boolean;
+    };
+}
+
 // @internal (undocumented)
 export interface IGranteeBase {
     // (undocumented)
@@ -1481,6 +1498,7 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
     onClose: () => void;
     onFormSubmitted?: () => void;
     selectedValue?: string;
+    shouldCloseDialogAfterSubmit?: boolean;
     showCancelButton?: boolean;
     submitButtonClass?: string;
     targetId?: string;
