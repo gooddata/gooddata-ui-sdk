@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { ShareStatus } from "@gooddata/sdk-backend-spi";
+import { ShareStatus, IUserAccessGrantee } from "@gooddata/sdk-backend-spi";
 import { ISharedObject, ISharingApplyPayload } from "../types";
 import { IUser } from "@gooddata/sdk-model";
 import { userAccessGrantee, workspaceUser } from "../ShareDialogBase/test/GranteeMock";
@@ -80,7 +80,8 @@ describe("ShareDialog", () => {
                 granteesToDelete: [
                     {
                         granteeRef: userAccessGrantee.user.ref,
-                    },
+                        type: "user",
+                    } as IUserAccessGrantee,
                 ],
                 isUnderStrictControl: false,
                 isLocked: false,
@@ -106,7 +107,8 @@ describe("ShareDialog", () => {
                 granteesToDelete: [
                     {
                         granteeRef: userAccessGrantee.user.ref,
-                    },
+                        type: "user",
+                    } as IUserAccessGrantee,
                 ],
                 isUnderStrictControl: false,
                 isLocked: false,

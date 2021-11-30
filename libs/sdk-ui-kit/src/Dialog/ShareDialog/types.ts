@@ -1,6 +1,10 @@
 // (C) 2021 GoodData Corporation
-import { IAccessControlAware, IAccessGrantee, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ShareStatus } from "@gooddata/sdk-backend-spi";
+import {
+    IAccessControlAware,
+    IAccessGrantee,
+    IAnalyticalBackend,
+    ShareStatus,
+} from "@gooddata/sdk-backend-spi";
 import { IAuditableUsers, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 

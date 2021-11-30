@@ -229,7 +229,10 @@ describe("shareDialogMappers", () => {
 
     describe("mapGranteesToAccessGrantees", () => {
         it("should return correctly mapped grantees to access grantees", () => {
-            const accessGrantee = [{ granteeRef: uriRef("userID1") }, { granteeRef: uriRef("groupId") }];
+            const accessGrantee = [
+                { granteeRef: uriRef("userID1"), type: "user" },
+                { granteeRef: uriRef("groupId"), type: "group" },
+            ];
             expect(mapGranteesToAccessGrantees(grantees)).toEqual(accessGrantee);
         });
     });

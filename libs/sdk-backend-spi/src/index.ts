@@ -447,8 +447,12 @@ export {
     IWorkspaceAccessControlService,
     AccessGranteeDetail,
     IAccessGrantee,
+    IUserAccessGrantee,
+    IUserGroupAccessGrantee,
     IUserAccess,
     IUserGroupAccess,
     isUserAccess,
     isUserGroupAccess,
+    isUserGroupAccessGrantee,
+    isUserAccessGrantee,
 } from "./workspace/accessControl";

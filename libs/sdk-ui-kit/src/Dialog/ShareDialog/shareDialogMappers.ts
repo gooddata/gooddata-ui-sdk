@@ -20,6 +20,7 @@ import {
     isGranteeUserInactive,
     GranteeStatus,
     IAffectedSharedObject,
+    isGranteeUser,
 } from "./ShareDialogBase/types";
 import { GranteeGroupAll, InactiveOwner, getAppliedGrantees, hasGroupAll } from "./ShareDialogBase/utils";
 import { ISharedObject } from "./types";
@@ -108,8 +109,10 @@ export const mapGranteesToAccessGrantees = (grantees: GranteeItem[]): IAccessGra
     return grantees
         .filter((g) => !guard(g))
         .map((g) => {
+            const type = isGranteeUser(g) ? "user" : "group";
             return {
                 granteeRef: g.id,
+                type,
             };
         });
 };

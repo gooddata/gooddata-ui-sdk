@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { DrillDefinition, IWidget, ShareStatus } from "@gooddata/sdk-backend-spi";
+import { DrillDefinition, IAccessGrantee, IWidget, ShareStatus } from "@gooddata/sdk-backend-spi";
 import {
     IAbsoluteDateFilter,
     IInsight,
@@ -131,4 +131,6 @@ export interface IShareProps {
     shareStatus: ShareStatus;
     isUnderStrictControl: boolean;
     isLocked: boolean;
+    granteesToAdd: IAccessGrantee[];
+    granteesToDelete: IAccessGrantee[];
 }
