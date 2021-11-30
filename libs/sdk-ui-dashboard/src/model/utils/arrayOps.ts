@@ -1,10 +1,9 @@
 // (C) 2021 GoodData Corporation
-import { WritableDraft } from "immer/dist/types/types-external";
 import { RelativeIndex } from "../types/layoutTypes";
 import { Draft } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
-export function addArrayElements<T>(arr: WritableDraft<T[]>, index: RelativeIndex, items: Draft<T[]>): void {
+export function addArrayElements<T>(arr: Draft<T[]>, index: RelativeIndex, items: Draft<T[]>): void {
     if (index === 0) {
         arr.unshift(...items);
     } else if (index < 0) {
@@ -14,7 +13,7 @@ export function addArrayElements<T>(arr: WritableDraft<T[]>, index: RelativeInde
     }
 }
 
-export function removeArrayElement<T>(arr: WritableDraft<T[]>, index: RelativeIndex): Draft<T> | undefined {
+export function removeArrayElement<T>(arr: Draft<T[]>, index: RelativeIndex): Draft<T> | undefined {
     if (index === 0) {
         return arr.shift();
     } else if (index < 0) {
@@ -26,11 +25,7 @@ export function removeArrayElement<T>(arr: WritableDraft<T[]>, index: RelativeIn
     }
 }
 
-export function moveArrayElement<T>(
-    arr: WritableDraft<T[]>,
-    fromIndex: number,
-    toIndex: RelativeIndex,
-): void {
+export function moveArrayElement<T>(arr: Draft<T[]>, fromIndex: number, toIndex: RelativeIndex): void {
     const element = removeArrayElement(arr, fromIndex);
 
     // if this happens then there is error in the validation (or no validation) before the call
