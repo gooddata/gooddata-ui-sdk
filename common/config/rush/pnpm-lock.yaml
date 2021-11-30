@@ -4232,12 +4232,6 @@ packages:
     resolution: {integrity: sha512-9SEVY3nsz+uMN2DwDocftB5TAgZe7D0cOzxxRhpotWs6T4QFqRaTXpXbOSzbk31/7iYcfCkJJPwWGzTxyuGhCg==}
     dev: false
 
-  /@types/enzyme-adapter-react-16/1.0.6:
-    resolution: {integrity: sha512-VonDkZ15jzqDWL8mPFIQnnLtjwebuL9YnDkqeCDYnB4IVgwUm0mwKkqhrxLL6mb05xm7qqa3IE95m8CZE9imCg==}
-    dependencies:
-      '@types/enzyme': 3.10.10
-    dev: false
-
   /@types/enzyme/3.10.10:
     resolution: {integrity: sha512-/D4wFhiEjUDfPu+j5FVK0g/jf7rqeEIpNfAI+kyxzLpw5CKO0drnW3W5NC38alIjsWgnyQ8pbuPF5+UD+vhVyg==}
     dependencies:
@@ -5232,6 +5226,39 @@ packages:
       react: 17.0.2
     dev: false
 
+  /@wojtekmaj/enzyme-adapter-react-17/0.6.5_fae758709a8810ba97b4c03852dde4d0:
+    resolution: {integrity: sha512-ChIObUiXXYUiqzXPqOai+p6KF5dlbItpDDYsftUOQiAiygbMDlLeJIjynC6ZrJIa2U2MpRp4YJmtR2GQyIHjgA==}
+    peerDependencies:
+      enzyme: ^3.0.0
+      react: ^17.0.0-0
+      react-dom: ^17.0.0-0
+    dependencies:
+      '@wojtekmaj/enzyme-adapter-utils': 0.1.1_react@17.0.2
+      enzyme: 3.11.0
+      enzyme-shallow-equal: 1.0.4
+      has: 1.0.3
+      object.assign: 4.1.2
+      object.values: 1.1.5
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-is: 17.0.2
+      react-test-renderer: 17.0.2_react@17.0.2
+    dev: false
+
+  /@wojtekmaj/enzyme-adapter-utils/0.1.1_react@17.0.2:
+    resolution: {integrity: sha512-bNPWtN/d8huKOkC6j1E3EkSamnRrHHT7YuR6f9JppAQqtoAm3v4/vERe4J14jQKmHLCyEBHXrlgb7H6l817hVg==}
+    peerDependencies:
+      react: ^17.0.0-0
+    dependencies:
+      function.prototype.name: 1.1.5
+      has: 1.0.3
+      object.assign: 4.1.2
+      object.fromentries: 2.0.5
+      prop-types: 15.7.2
+      react: 17.0.2
+    dev: false
+
   /@xtuc/ieee754/1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
     dev: false
@@ -5374,23 +5401,6 @@ packages:
       string.prototype.padend: 3.1.3
       string.prototype.padstart: 3.1.3
       symbol.prototype.description: 1.0.5
-    dev: false
-
-  /airbnb-prop-types/2.16.0_react@17.0.2:
-    resolution: {integrity: sha512-7WHOFolP/6cS96PhKNrslCLMYAI8yB1Pp6u6XmxozQOiZbsI5ycglZr5cHhBFfuRcQQjzCMith5ZPZdYiJCxUg==}
-    peerDependencies:
-      react: ^0.14 || ^15.0.0 || ^16.0.0-alpha
-    dependencies:
-      array.prototype.find: 2.1.2
-      function.prototype.name: 1.1.5
-      is-regex: 1.1.4
-      object-is: 1.1.5
-      object.assign: 4.1.2
-      object.entries: 1.1.5
-      prop-types: 15.7.2
-      prop-types-exact: 1.2.0
-      react: 17.0.2
-      react-is: 16.13.1
     dev: false
 
   /ajv-errors/1.0.1_ajv@6.12.6:
@@ -5665,14 +5675,6 @@ packages:
       is-string: 1.0.7
     dev: false
 
-  /array.prototype.find/2.1.2:
-    resolution: {integrity: sha512-00S1O4ewO95OmmJW7EesWfQlrCrLEL8kZ40w3+GkLX2yTt0m2ggcePPa2uHPJ9KUmJvwRq+lCV9bD8Yim23x/Q==}
-    dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.1.3
-      es-abstract: 1.19.1
-    dev: false
-
   /array.prototype.flat/1.2.5:
     resolution: {integrity: sha512-KaYU+S+ndVqyUnignHftkwc58o3uVU1jzczILJ1tN2YaIZpFIKBiP/x/j97E5MVPsaCloPbqWLB/8qCTVvT2qg==}
     engines: {node: '>= 0.4'}
@@ -5861,7 +5863,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.5
+      follow-redirects: 1.14.5_debug@4.3.3
     transitivePeerDependencies:
       - debug
     dev: false
@@ -8709,42 +8711,6 @@ packages:
     hasBin: true
     dev: false
 
-  /enzyme-adapter-react-16/1.15.6_fae758709a8810ba97b4c03852dde4d0:
-    resolution: {integrity: sha512-yFlVJCXh8T+mcQo8M6my9sPgeGzj85HSHi6Apgf1Cvq/7EL/J9+1JoJmJsRxZgyTvPMAqOEpRSu/Ii/ZpyOk0g==}
-    peerDependencies:
-      enzyme: ^3.0.0
-      react: ^16.0.0-0
-      react-dom: ^16.0.0-0
-    dependencies:
-      enzyme: 3.11.0
-      enzyme-adapter-utils: 1.14.0_react@17.0.2
-      enzyme-shallow-equal: 1.0.4
-      has: 1.0.3
-      object.assign: 4.1.2
-      object.values: 1.1.5
-      prop-types: 15.7.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-is: 16.13.1
-      react-test-renderer: 16.14.0_react@17.0.2
-      semver: 5.7.1
-    dev: false
-
-  /enzyme-adapter-utils/1.14.0_react@17.0.2:
-    resolution: {integrity: sha512-F/z/7SeLt+reKFcb7597IThpDp0bmzcH1E9Oabqv+o01cID2/YInlqHbFl7HzWBl4h3OdZYedtwNDOmSKkk0bg==}
-    peerDependencies:
-      react: 0.13.x || 0.14.x || ^15.0.0-0 || ^16.0.0-0
-    dependencies:
-      airbnb-prop-types: 2.16.0_react@17.0.2
-      function.prototype.name: 1.1.5
-      has: 1.0.3
-      object.assign: 4.1.2
-      object.fromentries: 2.0.5
-      prop-types: 15.7.2
-      react: 17.0.2
-      semver: 5.7.1
-    dev: false
-
   /enzyme-matchers/7.1.2_enzyme@3.11.0:
     resolution: {integrity: sha512-03WqAg2XDl7id9rARIO97HQ1JIw9F2heJ3R4meGu/13hx0ULTDEgl0E67MGl2Uq1jq1DyRnJfto1/VSzskdV5A==}
     peerDependencies:
@@ -9806,16 +9772,6 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
-    dev: false
-
-  /follow-redirects/1.14.5:
-    resolution: {integrity: sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
     dev: false
 
   /follow-redirects/1.14.5_debug@4.1.1:
@@ -15699,14 +15655,6 @@ packages:
       sisteransi: 1.0.5
     dev: false
 
-  /prop-types-exact/1.2.0:
-    resolution: {integrity: sha512-K+Tk3Kd9V0odiXFP9fwDHUYRyvK3Nun3GVyPapSIs5OBkITAm15W0CPFD/YKTkMUAbc0b9CUwRQp2ybiBIq+eA==}
-    dependencies:
-      has: 1.0.3
-      object.assign: 4.1.2
-      reflect.ownkeys: 0.2.0
-    dev: false
-
   /prop-types/15.7.2:
     resolution: {integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==}
     dependencies:
@@ -16379,6 +16327,16 @@ packages:
       react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
     dev: false
 
+  /react-shallow-renderer/16.14.1_react@17.0.2:
+    resolution: {integrity: sha512-rkIMcQi01/+kxiTE9D3fdS959U1g7gs+/rborw++42m1O9FAQiNI/UNRZExVUoAOprn4umcXf+pFRou8i4zuBg==}
+    peerDependencies:
+      react: ^16.0.0 || ^17.0.0
+    dependencies:
+      object-assign: 4.1.1
+      react: 17.0.2
+      react-is: 17.0.2
+    dev: false
+
   /react-side-effect/2.1.1_react@17.0.2:
     resolution: {integrity: sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ==}
     peerDependencies:
@@ -16436,16 +16394,16 @@ packages:
       refractor: 3.5.0
     dev: false
 
-  /react-test-renderer/16.14.0_react@17.0.2:
-    resolution: {integrity: sha512-L8yPjqPE5CZO6rKsKXRO/rVPiaCOy0tQQJbC+UjPNlobl5mad59lvPjwFsQHTvL03caVDIVr9x9/OSgDe6I5Eg==}
+  /react-test-renderer/17.0.2_react@17.0.2:
+    resolution: {integrity: sha512-yaQ9cB89c17PUb0x6UfWRs7kQCorVdHlutU1boVPEsB8IDZH6n9tHxMacc3y0JoXOJUsZb/t/Mb8FUWMKaM7iQ==}
     peerDependencies:
-      react: ^16.14.0
+      react: 17.0.2
     dependencies:
       object-assign: 4.1.1
-      prop-types: 15.7.2
       react: 17.0.2
-      react-is: 16.13.1
-      scheduler: 0.19.1
+      react-is: 17.0.2
+      react-shallow-renderer: 16.14.1_react@17.0.2
+      scheduler: 0.20.2
     dev: false
 
   /react-textarea-autosize/8.3.3_740a948703592b63b980d9a4f1bb96de:
@@ -16694,10 +16652,6 @@ packages:
     resolution: {integrity: sha512-SH8PglcebESbd/shgf6mii6EIoRM0zrQyjcuQ+ojmfxjTtE0z9Y8pa62iA/OJ58qjP6j27uyW4kUF4jl/jd6sw==}
     dependencies:
       '@babel/runtime': 7.16.3
-    dev: false
-
-  /reflect.ownkeys/0.2.0:
-    resolution: {integrity: sha1-dJrO7H8/34tj+SegSAnpDFwLNGA=}
     dev: false
 
   /refractor/3.5.0:
@@ -17331,13 +17285,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       xmlchars: 2.2.0
-    dev: false
-
-  /scheduler/0.19.1:
-    resolution: {integrity: sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==}
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
     dev: false
 
   /scheduler/0.20.2:
@@ -21172,7 +21119,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-RXsUPt+tr+f8m0Z8NTOivB99OxZI3BJF9OWpZxNIUd5lh0XUpSsWgklFhfE6xcIyyDb9MlZKWY1hD1GVFxu6fA==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-IOl8WNqziHfnOGQkBY7GqeDs5WTB4S43pS04sgg36iSKhWHkFphPWs7dpCntFHJJ2XNFFjIIhjjLOiZWerRy8Q==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -21182,7 +21129,6 @@ packages:
       '@babel/preset-react': 7.16.0_@babel+core@7.16.0
       '@gooddata/eslint-config': 2.1.0_69f44414d6f4b9ca988b842c60304217
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/json-stable-stringify': 1.0.33
       '@types/lodash': 4.14.177
@@ -21191,6 +21137,7 @@ packages:
       '@types/react-dom': 16.9.14
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       babel-loader: 8.2.3_d888b76bb52891dbb46d1b9f7384ff34
       case-sensitive-paths-webpack-plugin: 2.4.0
       concurrently: 6.4.0
@@ -21199,7 +21146,6 @@ packages:
       dotenv: 8.6.0
       dotenv-webpack: 7.0.3_webpack@5.64.4
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22085,7 +22031,7 @@ packages:
     dev: false
 
   file:projects/sdk-skel-tsx.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-clN7BiF0qtDZ4NJ1f027p9vWpxgqCY43yTK82jCiz+mzHjumEhkywm5pYCaDcvBIb7jW33rwghDdBx1I2KFBQQ==, tarball: file:projects/sdk-skel-tsx.tgz}
+    resolution: {integrity: sha512-tkD4d145cPRUa846+RXgQhQT9bJ2LycJC5pqcEAVmQpfJJ3zUQNh6VzMhG3ioEdP4OITvk5w8rgRvXEioFEEkw==, tarball: file:projects/sdk-skel-tsx.tgz}
     id: file:projects/sdk-skel-tsx.tgz
     name: '@rush-temp/sdk-skel-tsx'
     version: 0.0.0
@@ -22094,7 +22040,6 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
       '@types/raf': 3.4.0
@@ -22102,10 +22047,10 @@ packages:
       '@types/react-dom': 16.9.14
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       concurrently: 6.4.0
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22181,7 +22126,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-charts.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-FPyY4zI/zxzjA62MclASekEpPfpwch456rko3yH4qpDwUnmo3Fe9nU7vl6TbYNih9XmyEfBwr3MK68wdnyCSrA==, tarball: file:projects/sdk-ui-charts.tgz}
+    resolution: {integrity: sha512-d01ZlceQxNcV8lwh9Z95JANabAdrUL1pxN7SM+EUhtC3o2cpLxEME9xsUurwm1dnuTjeMNzyoAas2lVrKh6ETQ==, tarball: file:projects/sdk-ui-charts.tgz}
     id: file:projects/sdk-ui-charts.tgz
     name: '@rush-temp/sdk-ui-charts'
     version: 0.0.0
@@ -22192,7 +22137,6 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/hoist-non-react-statics': 3.3.1
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
@@ -22203,13 +22147,13 @@ packages:
       '@types/uuid': 8.3.3
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       classnames: 2.3.1
       concurrently: 6.4.0
       custom-event: 1.0.1
       date-fns: 2.27.0
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22258,7 +22202,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-8f70yeR3FODhghUNkGQTYam39dt84zgEb3xPCGVmouXT8irpa6MFtGPWGk13SLoE6AGsvKEB/0nxLSl3G056vQ==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-nNam5B78VtpGjDDPZy2GN6mWwA+NG6U5pa8OTXaP3TSVBuOu5s50MeaPTGLpcJJr0YZjg85zyylPXAF3vSACyg==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
@@ -22269,7 +22213,6 @@ packages:
       '@microsoft/api-extractor': 7.18.19
       '@reduxjs/toolkit': 1.6.2_react-redux@7.2.6+react@17.0.2
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/json-stable-stringify': 1.0.33
       '@types/lodash': 4.14.177
@@ -22284,12 +22227,12 @@ packages:
       '@types/uuid': 8.3.3
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       classnames: 2.3.1
       concurrently: 6.4.0
       date-fns: 2.27.0
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22344,7 +22287,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-ext.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-Eys2tekPUhrZnRXdGZp9YfR8AJMqmnVDdW+bp8+fqGROA/WkTLDqe5R+VTqMpQG0iQfs3QW+7ZEcnnA0qqRLgg==, tarball: file:projects/sdk-ui-ext.tgz}
+    resolution: {integrity: sha512-XZqpEW1o3Oz2Ur7Q2d4sOaVSQgplcOiq9QW73V0XdegvqoBZRl7DSVaRNj4qiTLaHCbTBJTdkg4c3QGJiuZjjQ==, tarball: file:projects/sdk-ui-ext.tgz}
     id: file:projects/sdk-ui-ext.tgz
     name: '@rush-temp/sdk-ui-ext'
     version: 0.0.0
@@ -22356,7 +22299,6 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
       '@types/lru-cache': 5.1.1
@@ -22370,13 +22312,13 @@ packages:
       '@types/uuid': 8.3.3
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       classnames: 2.3.1
       concurrently: 6.4.0
       custom-event: 1.0.1
       date-fns: 2.27.0
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22429,7 +22371,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-sz5J2c+UMN2jD2EiFGBgXhojTnjjYcD2HRw9rW/wSFkoYdy1VmHU7oedlS9muGNUHMZSCCAP8NH1EN+9Nc/+kg==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-Mc+eSeX5h1ZN/mmcLONSLDWSHs3wtwNFu3uKvHA4kIbrQvOz5O6N4lUN7AYfqyUnw30fjinaHbYR1M3Q2mKFEA==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
@@ -22440,7 +22382,6 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/hoist-non-react-statics': 3.3.1
       '@types/jest': 27.0.3
       '@types/json-stable-stringify': 1.0.33
@@ -22452,13 +22393,13 @@ packages:
       '@types/react-window': 1.8.5
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       classnames: 2.3.1
       concurrently: 6.4.0
       date-fns: 2.27.0
       dependency-cruiser: 10.8.0
       downshift: 3.4.8_react@17.0.2
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22508,7 +22449,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-geo.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-fWo0ox78ihD9gtZsEdL4DFOdzH0iiJQkQhz7wUbCrsPR3UvUNjIT7xBPj5xmpnp2kLvLv6xwNKuud8P/PeYRUg==, tarball: file:projects/sdk-ui-geo.tgz}
+    resolution: {integrity: sha512-ssn7kqCetQ6CvXM4qmGZCJYNzO7HmwNZ8HNgQAPNEUiEpOaRVJwKDAKTmKF1pv3RFhyzzAguQBFg3yltiKjtFQ==, tarball: file:projects/sdk-ui-geo.tgz}
     id: file:projects/sdk-ui-geo.tgz
     name: '@rush-temp/sdk-ui-geo'
     version: 0.0.0
@@ -22519,7 +22460,6 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
       '@types/mapbox-gl': 1.13.2
@@ -22529,12 +22469,12 @@ packages:
       '@types/uuid': 8.3.3
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       classnames: 2.3.1
       concurrently: 6.4.0
       custom-event: 1.0.1
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22579,7 +22519,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-w/bbOfVrJ90NCTPWHjPJ9C7/UoJVDB9H/sfKItFbkxcGn0w2X0P44FG1Fe1uSZFAFdOvsSKxm7+nLzferFBKGQ==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-8A9yq3DXDI/tYhlNoWrFzH/0VqyNWVL8FaqrLMpYLipzWfNb6T1RMKLBX7zx1v/MLkXvvmZMJf7vfoa/+uvW0w==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -22593,7 +22533,6 @@ packages:
       '@types/codemirror': 0.0.95
       '@types/debounce-promise': 3.1.4
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/kefir': 3.8.7
       '@types/lodash': 4.14.177
@@ -22610,6 +22549,7 @@ packages:
       '@types/uuid': 8.3.3
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       classnames: 2.3.1
       codemirror: 5.64.0
       concurrently: 6.4.0
@@ -22618,7 +22558,6 @@ packages:
       dependency-cruiser: 10.8.0
       element-closest-polyfill: 1.0.4
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22676,7 +22615,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-loaders.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-I54zXOJQFiw8oNLTCD8WXdAOBdtcQsJ02F/tw1zNDuKSi3iyTqd4/dTCpo5m8ebDyxMl+z8unQAUl0zD1zk1Sw==, tarball: file:projects/sdk-ui-loaders.tgz}
+    resolution: {integrity: sha512-5sJeaEjIhEuDfAX8fCGDGfkDex6WGuVR7tb7gpo1x77iVpkjlv/y8bGsYHtJ/CM5z9bd4jpxcJG4eOwP52yxGQ==, tarball: file:projects/sdk-ui-loaders.tgz}
     id: file:projects/sdk-ui-loaders.tgz
     name: '@rush-temp/sdk-ui-loaders'
     version: 0.0.0
@@ -22685,7 +22624,6 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
       '@types/raf': 3.4.0
@@ -22693,10 +22631,10 @@ packages:
       '@types/react-dom': 16.9.14
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       concurrently: 6.4.0
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22734,7 +22672,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-pivot.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-trtD7qtHQ6aTp53xYdyf/KW2bvkS5MNlGuO3TqCd4Su4k3rJyoLr1T3fC1HgKD78MoTodj3LFGdcaPpCgA2ntw==, tarball: file:projects/sdk-ui-pivot.tgz}
+    resolution: {integrity: sha512-hVc3IhaWLKiGtpuEukYjKBaIQGuiVSvmzrO6zZVa01xGETEwoJWCzvC2P08HqMpcrgw4EVIheVo4TxI2SJ/i3g==, tarball: file:projects/sdk-ui-pivot.tgz}
     id: file:projects/sdk-ui-pivot.tgz
     name: '@rush-temp/sdk-ui-pivot'
     version: 0.0.0
@@ -22748,7 +22686,6 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
       '@types/raf': 3.4.0
@@ -22757,12 +22694,12 @@ packages:
       '@types/uuid': 8.3.3
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       classnames: 2.3.1
       concurrently: 6.4.0
       custom-event: 1.0.1
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22808,7 +22745,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-WvjPRiepU6NV7nT8hs6q/QF4t8lRrljtUZbKCy/sC8dtK2PHoLXPQX+o2hOO1m9dBbudnI5HhEqF2SpuXofzmg==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-rtk9r3Mrurf3qzppcZpzAHvd6dBrf5iPVm99GWYLb3RD/2vD6TAu12DGde7PSKyXIQFEUHyT28svQWKLTcr5Xw==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -22828,13 +22765,13 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/lodash': 4.14.177
       '@types/raf': 3.4.0
       '@types/react': 16.14.21
       '@types/react-dom': 16.9.14
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       axios: 0.21.4
       babel-loader: 8.2.3_d888b76bb52891dbb46d1b9f7384ff34
       babel-plugin-lodash: 3.3.4
@@ -22849,7 +22786,6 @@ packages:
       dotenv: 8.6.0
       dotenv-webpack: 7.0.3_webpack@5.64.4
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -22909,7 +22845,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-8DvDM5viQGTVwlokjS48XLDlmkkPovf+4vLDBJymhpK7sgKRM9qWgk1TTulnGygIoe/zl9+SDKMqwCxctB0Pdg==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-IXalCfpmVRIO2nglGppeBZ4QCmeepnbqqmXCuQnCI6XtT92upekOcH/VgDCmwyVzRynnp0BkAneXFTrQArmYCw==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:
@@ -22928,7 +22864,6 @@ packages:
       '@storybook/react': 6.3.0_b480663d5d3ddc5cf6558e72c2d3cf87
       '@storybook/theming': 6.3.0_react-dom@17.0.2+react@17.0.2
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/json-stable-stringify': 1.0.33
       '@types/lodash': 4.14.177
@@ -22939,6 +22874,7 @@ packages:
       '@types/spark-md5': 3.0.2
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       babel-loader: 8.2.3_@babel+core@7.16.0
       babel-plugin-require-context-hook: 1.0.0
       babel-runtime: 6.26.0
@@ -22946,7 +22882,6 @@ packages:
       css-loader: 5.2.7
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -23008,7 +22943,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-theme-provider.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-FYSGJYG/D6rLx+PCBwUqQej2a6M+JpsBovOYHhv6FvFANqJLeMNQNK8nSw2a5KsEmXrmltZFAUdIlxQ84GOcIg==, tarball: file:projects/sdk-ui-theme-provider.tgz}
+    resolution: {integrity: sha512-CQ3LzFocK9N9HzXSCmBV9CIeHs5/2ICbN8mY5mfESssJ4RMppNCKjzx06cGffH/XQJEBY64iRgwdTOXfLFoshw==, tarball: file:projects/sdk-ui-theme-provider.tgz}
     id: file:projects/sdk-ui-theme-provider.tgz
     name: '@rush-temp/sdk-ui-theme-provider'
     version: 0.0.0
@@ -23017,7 +22952,6 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
       '@types/raf': 3.4.0
@@ -23025,10 +22959,10 @@ packages:
       '@types/react-dom': 16.9.14
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       concurrently: 6.4.0
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -23067,7 +23001,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-vis-commons.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-7oH8zLq6m7hCwMdnP2EFgUtKNXtl7vCS1YJlizKLs5d8ZdA3wwLa31pEjYmc5rL5y3KNqgbMia5RPG0k7RRJAg==, tarball: file:projects/sdk-ui-vis-commons.tgz}
+    resolution: {integrity: sha512-OshN0sqY7g3ipHKDn2xjiUqzfepDOzx30B54qMAgT4j5G6GyGJvB4haYJgVEUtldXBAlsPsTrJBurJuL/di7iA==, tarball: file:projects/sdk-ui-vis-commons.tgz}
     id: file:projects/sdk-ui-vis-commons.tgz
     name: '@rush-temp/sdk-ui-vis-commons'
     version: 0.0.0
@@ -23078,7 +23012,6 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
       '@types/react': 16.14.21
@@ -23086,11 +23019,11 @@ packages:
       '@types/react-measure': 2.0.5
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       classnames: 2.3.1
       concurrently: 6.4.0
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
@@ -23132,7 +23065,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-2uOYrbXrGjPzBbOsg/Nf5Jk9QxZgpZWklW+ctfBKtwKcbx6gm/ENgY47a24s394X4/WSHUymgss466C3FRQ8AQ==, tarball: file:projects/sdk-ui.tgz}
+    resolution: {integrity: sha512-4Qq9PgTzdu3CBTfRWCnoJasaJRAr442xoadb8Vj5WAzaj0vqYJAow2osbshnEa6XdAS/MLu3IfcsFJ3l9hnSPg==, tarball: file:projects/sdk-ui.tgz}
     id: file:projects/sdk-ui.tgz
     name: '@rush-temp/sdk-ui'
     version: 0.0.0
@@ -23144,7 +23077,6 @@ packages:
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
-      '@types/enzyme-adapter-react-16': 1.0.6
       '@types/hoist-non-react-statics': 3.3.1
       '@types/jest': 27.0.3
       '@types/json-stable-stringify': 1.0.33
@@ -23156,11 +23088,11 @@ packages:
       '@types/uuid': 8.3.3
       '@typescript-eslint/eslint-plugin': 4.33.0_889279c9015fef3c3e61c5fe1be7f154
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.0.2
+      '@wojtekmaj/enzyme-adapter-react-17': 0.6.5_fae758709a8810ba97b4c03852dde4d0
       concurrently: 6.4.0
       custom-event: 1.0.1
       dependency-cruiser: 10.8.0
       enzyme: 3.11.0
-      enzyme-adapter-react-16: 1.15.6_fae758709a8810ba97b4c03852dde4d0
       eslint: 7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0

@@ -255,10 +255,6 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "@types/enzyme-adapter-react-16",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "@types/fast-levenshtein",
       "allowedCategories": [ "production" ]
     },
@@ -435,6 +431,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "@wojtekmaj/enzyme-adapter-react-17",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
       "name": "async",
       "allowedCategories": [ "production" ]
     },
@@ -560,10 +560,6 @@
     },
     {
       "name": "enzyme",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "enzyme-adapter-react-16",
       "allowedCategories": [ "production", "tools" ]
     },
     {
