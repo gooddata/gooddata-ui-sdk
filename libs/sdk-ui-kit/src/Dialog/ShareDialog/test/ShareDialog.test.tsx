@@ -25,6 +25,8 @@ import {
     clickBack,
     isSelectionEmpty,
     isDialogOnShareGranteesPage,
+    checkLockCheckbox,
+    setUnderLenientControlCheckbox,
 } from "./testHelpers";
 
 describe("ShareDialog", () => {
@@ -142,6 +144,65 @@ describe("ShareDialog", () => {
             clickDeleteGranteeIcon(wrapper, granteeSelector);
 
             expect(isGranteeVisible(wrapper, granteeSelector)).toBe(false);
+
+            shareDialogSubmit(wrapper);
+
+            expect(onApply).toHaveBeenCalledTimes(1);
+            expect(onApply).toHaveBeenLastCalledWith(expectedPayload);
+        });
+
+        it("should uncheck under lenient control checkbox and submit callback where isUnderStrictControl is true", async () => {
+            const onApply = jest.fn();
+            const expectedPayload: ISharingApplyPayload = {
+                granteesToAdd: [],
+                granteesToDelete: [],
+                isUnderStrictControl: true,
+                shareStatus: "private",
+                isLocked: false,
+            };
+            const wrapper = await createComponent({ onApply: onApply }, [], [], []);
+
+            setUnderLenientControlCheckbox(wrapper, false);
+
+            shareDialogSubmit(wrapper);
+
+            expect(onApply).toHaveBeenCalledTimes(1);
+            expect(onApply).toHaveBeenLastCalledWith(expectedPayload);
+        });
+
+        it("should check under lenient control checkbox and submit callback where isUnderStrictControl is false", async () => {
+            const onApply = jest.fn();
+            const expectedPayload: ISharingApplyPayload = {
+                granteesToAdd: [],
+                granteesToDelete: [],
+                isUnderStrictControl: false,
+                shareStatus: "private",
+                isLocked: false,
+            };
+
+            const sharedObject: ISharedObject = { ...defaultSharedObject, isUnderStrictControl: true };
+            const wrapper = await createComponent({ onApply: onApply, sharedObject }, [], [], []);
+
+            setUnderLenientControlCheckbox(wrapper, true);
+
+            shareDialogSubmit(wrapper);
+
+            expect(onApply).toHaveBeenCalledTimes(1);
+            expect(onApply).toHaveBeenLastCalledWith(expectedPayload);
+        });
+
+        it("should check shared object lock checkbox and submit callback where isLocked is true", async () => {
+            const onApply = jest.fn();
+            const expectedPayload: ISharingApplyPayload = {
+                granteesToAdd: [],
+                granteesToDelete: [],
+                isUnderStrictControl: false,
+                shareStatus: "private",
+                isLocked: true,
+            };
+            const wrapper = await createComponent({ onApply: onApply }, [], [], []);
+
+            checkLockCheckbox(wrapper);
 
             shareDialogSubmit(wrapper);
 

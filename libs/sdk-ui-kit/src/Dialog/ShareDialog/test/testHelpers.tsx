@@ -155,3 +155,21 @@ export function isSelectionEmpty(wrapper: ReactWrapper): boolean {
 export function isDialogOnShareGranteesPage(wrapper: ReactWrapper): boolean {
     return wrapper.find(".s-gd-share-grantees").hostNodes().length === 1;
 }
+
+export function checkLockCheckbox(wrapper: ReactWrapper): void {
+    wrapper
+        .find(".s-shared-object-lock")
+        .find(".input-checkbox")
+        .hostNodes()
+        .simulate("change", { target: { checked: true } });
+    wrapper.update();
+}
+
+export function setUnderLenientControlCheckbox(wrapper: ReactWrapper, value: boolean): void {
+    wrapper
+        .find(".s-shared-object-under-lenient-control")
+        .find(".input-checkbox")
+        .hostNodes()
+        .simulate("change", { target: { checked: value } });
+    wrapper.update();
+}
