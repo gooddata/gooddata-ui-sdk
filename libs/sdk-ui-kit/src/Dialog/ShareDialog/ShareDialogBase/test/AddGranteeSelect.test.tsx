@@ -80,7 +80,13 @@ function clickOnOption(wrapper: ReactWrapper, selector: string) {
     wrapper.find(selector).simulate("click");
 }
 
-const flushPromises = () => new Promise(setImmediate);
+const flushPromises = () =>
+    new Promise((resolve) => {
+        // setImmediate is
+        setTimeout(() => {
+            resolve();
+        }, 10);
+    });
 
 describe("AddGranteeSelect", () => {
     it("should render without crash", () => {

@@ -115,19 +115,20 @@ export function mergeFilters(
 function mergeDateFilters(originalFilters: IDateFilter[], addedFilters: IDateFilter[]): IDateFilter[] {
     const allFilters = [...originalFilters, ...addedFilters];
     const grouped = groupBy(allFilters, (f) => objRefToString(filterObjRef(f)));
+    const mergedFilters: IDateFilter[] = [];
 
-    return values(grouped).reduce((filters, filtersForDimension) => {
+    values(grouped).forEach((filtersForDimension) => {
         // use the last filter for the dimension specified.
         // this makes sure that the added filter wins if it is specified
         const lastFilterForDimension = last(filtersForDimension)!;
 
         // if the last filter is all time, clear filters for this dimension, otherwise use the last filter
         if (!isAllTimeDateFilter(lastFilterForDimension)) {
-            filters.push(lastFilterForDimension);
+            mergedFilters.push(lastFilterForDimension);
         }
+    });
 
-        return filters;
-    }, []);
+    return mergedFilters;
 }
 
 function mergeMeasureValueFilters(

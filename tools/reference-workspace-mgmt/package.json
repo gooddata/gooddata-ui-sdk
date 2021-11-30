@@ -25,7 +25,7 @@
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "tsc -p tsconfig.build.json",
         "test": "jest --watch",
-        "test-once": "jest",
+        "test-once": "jest --maxWorkers=${JEST_MAX_WORKERS:-'45%'}",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
         "eslint": "eslint $npm_package_config_eslint",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
@@ -43,12 +43,12 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@types/jest": "^26.0.12",
+        "@types/jest": "^27.0.1",
         "@types/lodash": "^4.14.158",
-        "@types/node": "^12.12.26",
+        "@types/node": "^14.17.11",
         "@typescript-eslint/eslint-plugin": "^4.14.2",
         "@typescript-eslint/parser": "^4.14.2",
-        "dependency-cruiser": "^9.9.5",
+        "dependency-cruiser": "^10.1.1",
         "eslint": "^7.5.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",
@@ -56,10 +56,10 @@
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^3.1.4",
         "eslint-plugin-sonarjs": "^0.9.1",
-        "jest": "^26.4.2",
+        "jest": "^27.4.1",
         "jest-junit": "^3.0.0",
         "prettier": "~2.3.0",
-        "ts-jest": "^26.3.0",
+        "ts-jest": "^27.0.5",
         "typescript": "4.0.2"
     }
 }
