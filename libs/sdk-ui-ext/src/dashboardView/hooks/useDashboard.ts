@@ -14,6 +14,7 @@ import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDashboard, GoodDataSdkError> {
     /**
@@ -42,6 +43,7 @@ export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDash
  * Hook allowing to download dashboard data
  * @param config - configuration of the hook
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export function useDashboard({
     dashboard,
