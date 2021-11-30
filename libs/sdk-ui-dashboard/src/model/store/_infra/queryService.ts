@@ -9,7 +9,7 @@ import {
     EntityId,
     EntityState,
     IdSelector,
-    OutputSelector,
+    Selector,
     PayloadAction,
     Reducer,
 } from "@reduxjs/toolkit";
@@ -120,13 +120,7 @@ type QueryCache<TQuery extends IDashboardQuery<TResult>, TResult> = {
      *
      * @param id - cache key
      */
-    selectById: (
-        id: EntityId,
-    ) => OutputSelector<
-        DashboardState,
-        QueryCacheEntryResult<TResult> | undefined,
-        (res: DashboardState) => QueryCacheEntryResult<TResult> | undefined
-    >;
+    selectById: (id: EntityId) => Selector<DashboardState, QueryCacheEntryResult<TResult> | undefined>;
 
     /**
      * Factory for selectors that obtain query result stored in state. This is intended for consumption by presentational components.
@@ -140,11 +134,7 @@ type QueryCache<TQuery extends IDashboardQuery<TResult>, TResult> = {
      */
     selectQueryResult: (
         query: TQuery,
-    ) => OutputSelector<
-        DashboardState,
-        QueryCacheEntryResult<TResult> | undefined,
-        (res: DashboardState) => QueryCacheEntryResult<TResult> | undefined
-    >;
+    ) => Selector<DashboardState, QueryCacheEntryResult<TResult> | undefined>;
 };
 
 /**
