@@ -391,10 +391,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/recharts",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "@types/rimraf",
       "allowedCategories": [ "tools" ]
     },
@@ -873,10 +869,6 @@
     {
       "name": "react-router-dom",
       "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "react-router-use-location-state",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "react-select",

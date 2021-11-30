@@ -55,7 +55,7 @@ export const ExecuteWithCustomVisualizationExample: React.FC = () => {
                         <BarChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="label" />
-                            <YAxis domain={[0, (dataMax) => dataMax * 1.1]} />
+                            <YAxis domain={[0, (dataMax: number) => dataMax * 1.1]} />
                             <Legend />
                             {bars}
                         </BarChart>
