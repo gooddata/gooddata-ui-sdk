@@ -133,24 +133,24 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
 
     return {
         executions: () => {
-            return (categorized[RecordingType.Execution] as ExecutionRecording[]) || [];
+            return (categorized[RecordingType.Execution] as unknown as ExecutionRecording[]) || [];
         },
         displayForms: () => {
-            return (categorized[RecordingType.DisplayForms] as DisplayFormRecording[]) || [];
+            return (categorized[RecordingType.DisplayForms] as unknown as DisplayFormRecording[]) || [];
         },
         insights: () => {
-            return (categorized[RecordingType.Insights] as InsightRecording[]) || [];
+            return (categorized[RecordingType.Insights] as unknown as InsightRecording[]) || [];
         },
         catalog: () =>
             (categorized[RecordingType.Catalog] &&
-                (categorized[RecordingType.Catalog][0] as CatalogRecording)) ||
+                (categorized[RecordingType.Catalog][0] as unknown as CatalogRecording)) ||
             null,
         visClasses: () =>
             (categorized[RecordingType.VisClasses] &&
                 (categorized[RecordingType.VisClasses][0] as VisClassesRecording)) ||
             null,
         dashboards: () => {
-            return (categorized[RecordingType.Dashboards] as DashboardRecording[]) || [];
+            return (categorized[RecordingType.Dashboards] as unknown as DashboardRecording[]) || [];
         },
     };
 }
