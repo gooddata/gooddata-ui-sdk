@@ -6,7 +6,7 @@ import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/in
 import { UiKit } from "../../../_infra/storyGroups";
 import { withScreenshot } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
-import { AddGranteeBase } from "@gooddata/sdk-ui-kit";
+import { AddGranteeBase, ComponentLabelsProvider } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
@@ -14,6 +14,8 @@ import { current, group, groupAll, user } from "./GranteeMock";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { uriRef } from "@gooddata/sdk-model";
+import { LabelsMock } from "./LabelsMock";
 
 const EmptySelectionExample = (): JSX.Element => {
     const workspace = "foo";
@@ -23,16 +25,19 @@ const EmptySelectionExample = (): JSX.Element => {
         <div id="Share-Grantee-base-basic-example">
             <BackendProvider backend={backend}>
                 <WorkspaceProvider workspace={workspace}>
-                    <AddGranteeBase
-                        isDirty={false}
-                        addedGrantees={[]}
-                        appliedGrantees={[groupAll, user]}
-                        onAddUserOrGroups={action("onAddUserOrGroups")}
-                        onDelete={action("onDelete")}
-                        onCancel={action("onCancel")}
-                        onSubmit={action("onSubmit")}
-                        onBackClick={action("onBackClick")}
-                    />
+                    <ComponentLabelsProvider labels={LabelsMock}>
+                        <AddGranteeBase
+                            isDirty={false}
+                            addedGrantees={[]}
+                            currentUserRef={uriRef("")}
+                            appliedGrantees={[groupAll, user]}
+                            onAddUserOrGroups={action("onAddUserOrGroups")}
+                            onDelete={action("onDelete")}
+                            onCancel={action("onCancel")}
+                            onSubmit={action("onSubmit")}
+                            onBackClick={action("onBackClick")}
+                        />
+                    </ComponentLabelsProvider>
                 </WorkspaceProvider>
             </BackendProvider>
         </div>
@@ -47,16 +52,19 @@ const EmptyAvailableItemsExample = (): JSX.Element => {
         <div id="Share-Grantee-base-basic-example">
             <BackendProvider backend={backend}>
                 <WorkspaceProvider workspace={workspace}>
-                    <AddGranteeBase
-                        isDirty={false}
-                        addedGrantees={[user]}
-                        appliedGrantees={[]}
-                        onAddUserOrGroups={action("onAddUserOrGroups")}
-                        onDelete={action("onDelete")}
-                        onCancel={action("onCancel")}
-                        onSubmit={action("onSubmit")}
-                        onBackClick={action("onBackClick")}
-                    />
+                    <ComponentLabelsProvider labels={LabelsMock}>
+                        <AddGranteeBase
+                            isDirty={false}
+                            addedGrantees={[user]}
+                            appliedGrantees={[]}
+                            currentUserRef={uriRef("")}
+                            onAddUserOrGroups={action("onAddUserOrGroups")}
+                            onDelete={action("onDelete")}
+                            onCancel={action("onCancel")}
+                            onSubmit={action("onSubmit")}
+                            onBackClick={action("onBackClick")}
+                        />
+                    </ComponentLabelsProvider>
                 </WorkspaceProvider>
             </BackendProvider>
         </div>
@@ -71,16 +79,19 @@ const SelectedItemsExample = (): JSX.Element => {
         <div id="Share-Grantee-base-basic-example">
             <BackendProvider backend={backend}>
                 <WorkspaceProvider workspace={workspace}>
-                    <AddGranteeBase
-                        isDirty={true}
-                        addedGrantees={[user, current, group]}
-                        appliedGrantees={[groupAll]}
-                        onAddUserOrGroups={action("onAddUserOrGroups")}
-                        onDelete={action("onDelete")}
-                        onCancel={action("onCancel")}
-                        onSubmit={action("onSubmit")}
-                        onBackClick={action("onBackClick")}
-                    />
+                    <ComponentLabelsProvider labels={LabelsMock}>
+                        <AddGranteeBase
+                            isDirty={true}
+                            addedGrantees={[user, current, group]}
+                            appliedGrantees={[groupAll]}
+                            currentUserRef={uriRef("")}
+                            onAddUserOrGroups={action("onAddUserOrGroups")}
+                            onDelete={action("onDelete")}
+                            onCancel={action("onCancel")}
+                            onSubmit={action("onSubmit")}
+                            onBackClick={action("onBackClick")}
+                        />
+                    </ComponentLabelsProvider>
                 </WorkspaceProvider>
             </BackendProvider>
         </div>

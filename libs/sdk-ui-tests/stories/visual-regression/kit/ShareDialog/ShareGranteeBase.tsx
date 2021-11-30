@@ -4,7 +4,13 @@ import { storiesOf } from "@storybook/react";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import { uriRef } from "@gooddata/sdk-model";
 import { action } from "@storybook/addon-actions";
-import { GranteeItem, IGranteeUser, IGranteeInactiveOwner, ShareGranteeBase } from "@gooddata/sdk-ui-kit";
+import {
+    GranteeItem,
+    IGranteeUser,
+    IGranteeInactiveOwner,
+    ShareGranteeBase,
+    ComponentLabelsProvider,
+} from "@gooddata/sdk-ui-kit";
 
 import { UiKit } from "../../../_infra/storyGroups";
 import { withScreenshot } from "../../../_infra/backstopWrapper";
@@ -35,31 +41,33 @@ const BasicExample: React.FC<BasicExampleProps> = ({
     isLeniencyControlSupported = true,
 }) => {
     return (
-        <div id="Share-Grantee-base-basic-example">
-            <ShareGranteeBase
-                isDirty={isDirty}
-                isLoading={false}
-                sharedObject={{
-                    ref: uriRef("ref"),
-                    shareStatus: "private",
-                    owner,
-                    isLockingSupported,
-                    isLocked,
-                    isUnderLenientControl,
-                    isLeniencyControlSupported,
-                }}
-                isLockedNow={isLocked}
-                isUnderLenientControlNow={isUnderLenientControl}
-                grantees={grantees}
-                onGranteeDelete={action("onGranteeDelete")}
-                onAddGranteeButtonClick={action("onAddGrantee")}
-                onCancel={action("onCancel")}
-                onSubmit={action("onSubmit")}
-                onUnderLenientControlChange={action("onUnderLenientControlChange")}
-                onLockChange={action("onLockChange")}
-                labels={LabelsMock}
-            />
-        </div>
+        <ComponentLabelsProvider labels={LabelsMock}>
+            <div id="Share-Grantee-base-basic-example">
+                <ShareGranteeBase
+                    currentUserRef={uriRef("")}
+                    isDirty={isDirty}
+                    isLoading={false}
+                    sharedObject={{
+                        ref: uriRef("ref"),
+                        shareStatus: "private",
+                        owner,
+                        isLockingSupported,
+                        isLocked,
+                        isUnderLenientControl,
+                        isLeniencyControlSupported,
+                    }}
+                    isLockedNow={isLocked}
+                    isUnderLenientControlNow={isUnderLenientControl}
+                    grantees={grantees}
+                    onGranteeDelete={action("onGranteeDelete")}
+                    onAddGranteeButtonClick={action("onAddGrantee")}
+                    onCancel={action("onCancel")}
+                    onSubmit={action("onSubmit")}
+                    onUnderLenientControlChange={action("onUnderLenientControlChange")}
+                    onLockChange={action("onLockChange")}
+                />
+            </div>
+        </ComponentLabelsProvider>
     );
 };
 

@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
  */
 export const GranteeListEmpty: React.FC = () => {
     return (
-        <div className="gd-share-dialog-grantee-list-empty-selection">
+        <div className="gd-share-dialog-grantee-list-empty-selection s-gd-share-dialog-grantee-list-empty-selection">
             <span>
                 <FormattedMessage id="shareDialog.share.grantee.add.empty.selection" />
             </span>

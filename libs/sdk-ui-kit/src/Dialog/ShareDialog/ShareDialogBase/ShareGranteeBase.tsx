@@ -7,7 +7,6 @@ import { ConfirmDialogBase } from "../../ConfirmDialogBase";
 import { ContentDivider } from "./ContentDivider";
 import { ShareGranteeContent } from "./ShareGranteeContent";
 import { IShareGranteeBaseProps } from "./types";
-import { sortGranteesByName } from "./utils";
 import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl";
 import { SharedObjectLockControl } from "./SharedObjectLockControl";
 
@@ -26,7 +25,6 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         onSubmit,
         onGranteeDelete,
         onAddGranteeButtonClick,
-        labels,
         onLockChange,
         onUnderLenientControlChange,
     } = props;
@@ -35,7 +33,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
     const intl = useIntl();
 
     const granteeList = useMemo(() => {
-        return [owner, ...grantees].sort(sortGranteesByName(intl));
+        return [owner, ...grantees];
     }, [grantees, owner, intl]);
 
     const dialogLabels = useMemo(() => {
@@ -69,13 +67,11 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
                 isUnderLenientControl={isUnderLenientControlNow}
                 isLeniencyControlSupported={isLeniencyControlSupported}
                 onUnderLenientControlChange={onUnderLenientControlChange}
-                labels={labels}
             />
             <SharedObjectLockControl
                 isLocked={isLockedNow}
                 isLockingSupported={isLockingSupported}
                 onLockChange={onLockChange}
-                labels={labels}
             />
         </ConfirmDialogBase>
     );

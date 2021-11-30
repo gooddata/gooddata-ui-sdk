@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
+import { ComponentLabelsProvider, getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -46,30 +46,32 @@ const BasicExample: React.FC = () => {
     return (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspace}>
-                <div id="Share-Grantee-base-basic-example">
-                    <Button
-                        value="Open share dialog"
-                        className="gd-button-positive s-share-dialog-button"
-                        onClick={onOpen}
-                    />
-                    {open && (
-                        <ShareDialogBase
-                            sharedObject={{
-                                ref: uriRef("ref"),
-                                shareStatus: "private",
-                                owner,
-                                isLocked: false,
-                                isUnderLenientControl: false,
-                                isLockingSupported: true,
-                                isLeniencyControlSupported: true,
-                            }}
-                            onCancel={onCancel}
-                            onSubmit={onSubmit}
-                            onError={onCancel}
-                            labels={LabelsMock}
+                <ComponentLabelsProvider labels={LabelsMock}>
+                    <div id="Share-Grantee-base-basic-example">
+                        <Button
+                            value="Open share dialog"
+                            className="gd-button-positive s-share-dialog-button"
+                            onClick={onOpen}
                         />
-                    )}
-                </div>
+                        {open && (
+                            <ShareDialogBase
+                                currentUserRef={uriRef("ref")}
+                                sharedObject={{
+                                    ref: uriRef("ref"),
+                                    shareStatus: "private",
+                                    owner,
+                                    isLocked: false,
+                                    isUnderLenientControl: false,
+                                    isLockingSupported: true,
+                                    isLeniencyControlSupported: true,
+                                }}
+                                onCancel={onCancel}
+                                onSubmit={onSubmit}
+                                onError={onCancel}
+                            />
+                        )}
+                    </div>
+                </ComponentLabelsProvider>
             </WorkspaceProvider>
         </BackendProvider>
     );
@@ -113,19 +115,19 @@ const scenarios: BackstopConfig = {
 
 const lockScenarios: BackstopConfig = {
     open: {
-        clickSelectors: [".s-share-dialog-button", 100],
+        clickSelectors: [".s-share-dialog-button", 300],
     },
     "toggle-lock": {
-        clickSelectors: [".s-share-dialog-button", 100, ".s-shared-object-lock", 100],
+        clickSelectors: [".s-share-dialog-button", 300, ".s-shared-object-lock", 300],
     },
 };
 
 const drillAvailabilityScenarios: BackstopConfig = {
     open: {
-        clickSelectors: [".s-share-dialog-button", 100],
+        clickSelectors: [".s-share-dialog-button", 300],
     },
     "toggle-availability-for-drill": {
-        clickSelectors: [".s-share-dialog-button", 100, ".s-shared-object-under-lenient-control", 100],
+        clickSelectors: [".s-share-dialog-button", 300, ".s-shared-object-under-lenient-control", 300],
     },
 };
 

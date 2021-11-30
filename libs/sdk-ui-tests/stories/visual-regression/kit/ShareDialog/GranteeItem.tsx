@@ -10,7 +10,7 @@ import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
 
 import { action } from "@storybook/addon-actions";
-import { getGranteeItemTestId, GranteeItemComponent } from "@gooddata/sdk-ui-kit";
+import { ComponentLabelsProvider, getGranteeItemTestId, GranteeItemComponent } from "@gooddata/sdk-ui-kit";
 import { BackstopConfig } from "../../../_infra/backstopScenario";
 import {
     current,
@@ -22,12 +22,13 @@ import {
     user,
     userInactive,
 } from "./GranteeMock";
+import { LabelsMock } from "./LabelsMock";
 
 const UserItemBasicExample = (): JSX.Element => {
     const border = { border: "1px solid black", width: 300 };
 
     return (
-        <>
+        <ComponentLabelsProvider labels={LabelsMock}>
             <span> Grantee user</span>
             <div id="Grantee-item-basic-example" style={border}>
                 <GranteeItemComponent mode={"ShareGrantee"} grantee={user} onDelete={action("onDelete")} />
@@ -88,7 +89,7 @@ const UserItemBasicExample = (): JSX.Element => {
                     onDelete={action("onDelete")}
                 />
             </div>
-        </>
+        </ComponentLabelsProvider>
     );
 };
 
@@ -96,7 +97,7 @@ const GroupItemBasicExample = (): JSX.Element => {
     const border = { border: "1px solid black", width: 300 };
 
     return (
-        <>
+        <ComponentLabelsProvider labels={LabelsMock}>
             <span> Grantee group</span>
             <div id="Grantee-item-basic-example" style={border}>
                 <GranteeItemComponent mode={"ShareGrantee"} grantee={group} onDelete={action("onDelete")} />
@@ -117,7 +118,7 @@ const GroupItemBasicExample = (): JSX.Element => {
                     onDelete={action("onDelete")}
                 />
             </div>
-        </>
+        </ComponentLabelsProvider>
     );
 };
 

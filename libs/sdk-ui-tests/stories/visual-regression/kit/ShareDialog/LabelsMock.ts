@@ -3,6 +3,8 @@
 import { IShareDialogLabels } from "@gooddata/sdk-ui-kit";
 
 export const LabelsMock: IShareDialogLabels = {
-    underLenientControl: "Other users can access this dashboard if they drill to it",
-    lockControl: "Only admins can edit this dashboard",
+    accessRegimeLabel: "Other users can access this dashboard if they drill to it",
+    accessTypeLabel: "Only admins can edit this dashboard",
+    removeAccessGranteeTooltip: "Remove access to this dashboard.",
+    removeAccessCreatorTooltip: "User who created this dashboard. Creator cannot be removed.",
 };

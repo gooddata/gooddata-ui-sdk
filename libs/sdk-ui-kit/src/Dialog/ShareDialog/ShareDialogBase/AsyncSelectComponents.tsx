@@ -41,9 +41,9 @@ export const NoOptionsMessageRenderer = (props: any): JSX.Element => {
 
 export const MenuListRendered = (props: MenuListComponentProps<ISelectOption, false>): JSX.Element => {
     return (
-        <div className="s-gd-share-dialog-menu">
-            <ReactSelectComponents.MenuList {...props} />
-        </div>
+        <ReactSelectComponents.MenuList {...props}>
+            <div className="s-gd-share-dialog-menu">{props.children}</div>
+        </ReactSelectComponents.MenuList>
     );
 };
 
@@ -59,7 +59,7 @@ const OptionContentRenderer = (item: ISelectOption): JSX.Element => {
     if (isGranteeUser(item.value)) {
         return (
             <>
-                {item.value.name} <span className={"option-email"}>{item.value.email}</span>
+                {item.label} <span className={"option-email"}>{item.value.email}</span>
             </>
         );
     }

@@ -32,6 +32,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
     const {
         appliedGrantees,
         addedGrantees,
+        currentUserRef,
         isDirty,
         onCancel,
         onSubmit,
@@ -60,6 +61,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             headerLeftButtonRenderer={backButtonRenderer}
         >
             <AddGranteeContent
+                currentUserRef={currentUserRef}
                 addedGrantees={addedGrantees}
                 appliedGrantees={appliedGrantees}
                 onAddUserOrGroups={onAddUserOrGroups}

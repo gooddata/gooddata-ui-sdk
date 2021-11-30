@@ -9,7 +9,7 @@ import { AddGranteeSelect } from "./AddGranteeSelect";
  * @internal
  */
 export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
-    const { appliedGrantees, addedGrantees, onDelete, onAddUserOrGroups } = props;
+    const { appliedGrantees, currentUserRef, addedGrantees, onDelete, onAddUserOrGroups } = props;
 
     const onSelectGrantee = useCallback(
         (grantee: GranteeItem) => {
@@ -22,7 +22,11 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
 
     return (
         <>
-            <AddGranteeSelect appliedGrantees={appliedGrantees} onSelectGrantee={onSelectGrantee} />
+            <AddGranteeSelect
+                currentUserRef={currentUserRef}
+                appliedGrantees={appliedGrantees}
+                onSelectGrantee={onSelectGrantee}
+            />
             <GranteeList grantees={addedGrantees} mode={"AddGrantee"} onDelete={onDelete} />
         </>
     );

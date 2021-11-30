@@ -731,5 +731,15 @@
         "value": "Only you can view and edit this dashboard.",
         "comment": "Shown when hovering over share indicator of private dashboard.",
         "limit": 0
+    },
+    "dashboard.shareDialog.removeAccessGranteeTooltip": {
+        "value": "Remove access to this dashboard.",
+        "comment": "Text of the tooltip shown above button that removes user or group dashboard access right.",
+        "limit": 0
+    },
+    "dashboard.shareDialog.removeAccessCreatorTooltip": {
+        "value": "User who created this dashboard. Creator cannot be removed.",
+        "comment": "Text of the tooltip shown above disabled button that removes user dashboard access right. Shown in the case when user cannot be removed because he is the creator of the dashboard.",
+        "limit": 0
     }
 }

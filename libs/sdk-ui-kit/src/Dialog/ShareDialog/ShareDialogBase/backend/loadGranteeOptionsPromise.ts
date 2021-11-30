@@ -9,6 +9,7 @@ import { IntlShape } from "react-intl";
 import { GranteeItem, IGroupedOption, ISelectErrorOption, ISelectOption } from "../types";
 import { getGranteeLabel, GranteeGroupAll, hasGroupAll, sortGranteesByName } from "../utils";
 import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers";
+import { ObjRef } from "@gooddata/sdk-model";
 
 const createErrorOption = (intl: IntlShape): ISelectErrorOption[] => {
     return [
@@ -22,11 +23,21 @@ const createErrorOption = (intl: IntlShape): ISelectErrorOption[] => {
     ];
 };
 
+const matchAllGroupQueryString = (query: string, allGroupLabel: string): boolean => {
+    return allGroupLabel.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) > -1;
+};
+
 /**
  * @internal
  */
 export const loadGranteeOptionsPromise =
-    (appliedGrantees: GranteeItem[], backend: IAnalyticalBackend, workspace: string, intl: IntlShape) =>
+    (
+        currentUserRef: ObjRef,
+        appliedGrantees: GranteeItem[],
+        backend: IAnalyticalBackend,
+        workspace: string,
+        intl: IntlShape,
+    ) =>
     async (inputValue: string): Promise<IGroupedOption[] | ISelectErrorOption[]> => {
         let usersOption: IWorkspaceUsersQueryOptions = {};
         let groupsOption: IWorkspaceUserGroupsQueryOptions = {};
@@ -46,7 +57,7 @@ export const loadGranteeOptionsPromise =
             ]);
 
             const mappedUsers: ISelectOption[] = workspaceUsers.items
-                .map(mapWorkspaceUserToGrantee)
+                .map((item) => mapWorkspaceUserToGrantee(item, currentUserRef))
                 .sort(sortGranteesByName(intl))
                 .map((user) => {
                     return {
@@ -65,9 +76,11 @@ export const loadGranteeOptionsPromise =
                     };
                 });
 
-            if (!hasGroupAll(appliedGrantees)) {
+            const allGroupLabel = getGranteeLabel(GranteeGroupAll, intl);
+
+            if (!hasGroupAll(appliedGrantees) && matchAllGroupQueryString(inputValue, allGroupLabel)) {
                 const groupAllOption: ISelectOption = {
-                    label: getGranteeLabel(GranteeGroupAll, intl),
+                    label: allGroupLabel,
                     value: GranteeGroupAll,
                 };
                 mappedGroups = [groupAllOption, ...mappedGroups];

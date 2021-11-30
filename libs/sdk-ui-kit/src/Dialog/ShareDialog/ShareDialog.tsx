@@ -18,6 +18,7 @@ import {
     useWorkspaceStrict,
     WorkspaceProvider,
 } from "@gooddata/sdk-ui";
+import { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext";
 
 /**
  * @internal
@@ -89,13 +90,15 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
         <IntlWrapper locale={locale}>
             <BackendProvider backend={effectiveBackend}>
                 <WorkspaceProvider workspace={effectiveWorkspace}>
-                    <ShareDialogBase
-                        sharedObject={affectedSharedObject}
-                        labels={labels}
-                        onCancel={onCancel}
-                        onSubmit={onSubmit}
-                        onError={onShareDialogBaseError}
-                    />
+                    <ComponentLabelsProvider labels={labels}>
+                        <ShareDialogBase
+                            currentUserRef={currentUserRef}
+                            sharedObject={affectedSharedObject}
+                            onCancel={onCancel}
+                            onSubmit={onSubmit}
+                            onError={onShareDialogBaseError}
+                        />
+                    </ComponentLabelsProvider>
                 </WorkspaceProvider>
             </BackendProvider>
         </IntlWrapper>
