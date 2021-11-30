@@ -836,7 +836,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 isOriginalTotalCountLoading(),
             searchString: state.searchString,
             applyDisabled: getNumberOfSelectedItems() === 0,
-            showItemsFilteredMessage: showItemsFilteredMessage(isElementsLoading(), resolvedParentFilters),
+            showItemsFilteredMessage:
+                showItemsFilteredMessage(isElementsLoading(), resolvedParentFilters) && !isAllFiltered,
             parentFilterTitles,
             onApplyButtonClicked,
             onCloseButtonClicked,
