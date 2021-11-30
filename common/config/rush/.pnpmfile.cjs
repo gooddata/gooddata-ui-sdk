@@ -18,7 +18,7 @@ module.exports = {
   }
 };
 
-const JSDOM_VERSION = "^27.0.6";
+const JSDOM_VERSION = "^27.4.1";
 
 /**
  * This hook is invoked during installation before a package's dependencies

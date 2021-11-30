@@ -93,7 +93,7 @@
         "eslint-plugin-react-hooks": "^4.0.8",
         "eslint-plugin-react": "^7.20.5",
         "eslint-plugin-sonarjs": "^0.9.1",
-        "jest": "^27.0.6",
+        "jest": "^27.4.1",
         "jest-enzyme": "^7.1.2",
         "jest-junit": "^3.0.0",
         "node-sass": "^6.0.1",

@@ -80,7 +80,7 @@
         "core-js": "^2.6.10",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.15.1",
-        "jest": "^27.0.6",
+        "jest": "^27.4.1",
         "jest-enzyme": "^7.1.2",
         "jest-junit": "^3.0.0",
         "json-stable-stringify": "^1.0.1",
