@@ -54,13 +54,51 @@ export const isUserGroupAccess = (obj: unknown): obj is IUserGroupAccess => {
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
 
 /**
+ * New user grantee specification.
+ *
+ * @alpha
+ */
+export interface IUserAccessGrantee {
+    type: "user";
+    granteeRef: ObjRef;
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IUserAccessGrantee}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isUserAccessGrantee = (obj: unknown): obj is IUserAccessGrantee => {
+    return !isEmpty(obj) && (obj as IUserAccessGrantee).type === "user";
+};
+
+/**
+ * New user group grantee specification.
+ *
+ * @alpha
+ */
+export interface IUserGroupAccessGrantee {
+    type: "group";
+    granteeRef: ObjRef;
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IUserGroupAccessGrantee}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isUserGroupAccessGrantee = (obj: unknown): obj is IUserGroupAccessGrantee => {
+    return !isEmpty(obj) && (obj as IUserGroupAccessGrantee).type === "group";
+};
+
+/**
  * New grantee specification.
  *
  * @alpha
  */
-export interface IAccessGrantee {
-    granteeRef: ObjRef;
-}
+export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
 
 /**
  * Service to manage access to the objects.

@@ -26,6 +26,7 @@ import { FilterContextItem } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-backend-spi';
+import { IAccessGrantee } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAttributeElements } from '@gooddata/sdk-model';
@@ -2888,6 +2889,10 @@ export interface IShareDialogProps {
 
 // @alpha
 export interface IShareProps {
+    // (undocumented)
+    granteesToAdd: IAccessGrantee[];
+    // (undocumented)
+    granteesToDelete: IAccessGrantee[];
     // (undocumented)
     isLocked: boolean;
     // (undocumented)

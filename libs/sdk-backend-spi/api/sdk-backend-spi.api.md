@@ -179,10 +179,7 @@ export interface IAccessControlAware {
 }
 
 // @alpha
-export interface IAccessGrantee {
-    // (undocumented)
-    granteeRef: ObjRef;
-}
+export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
 
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
@@ -1490,7 +1487,13 @@ export function isUnexpectedResponseError(obj: unknown): obj is UnexpectedRespon
 export const isUserAccess: (obj: unknown) => obj is IUserAccess;
 
 // @alpha
+export const isUserAccessGrantee: (obj: unknown) => obj is IUserAccessGrantee;
+
+// @alpha
 export const isUserGroupAccess: (obj: unknown) => obj is IUserGroupAccess;
+
+// @alpha
+export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccessGrantee;
 
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
@@ -1729,11 +1732,27 @@ export interface IUserAccess {
 }
 
 // @alpha
+export interface IUserAccessGrantee {
+    // (undocumented)
+    granteeRef: ObjRef;
+    // (undocumented)
+    type: "user";
+}
+
+// @alpha
 export interface IUserGroupAccess {
     // (undocumented)
     type: "group";
     // (undocumented)
     userGroup: IWorkspaceUserGroup;
+}
+
+// @alpha
+export interface IUserGroupAccessGrantee {
+    // (undocumented)
+    granteeRef: ObjRef;
+    // (undocumented)
+    type: "group";
 }
 
 // @public
