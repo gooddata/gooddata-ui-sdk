@@ -142,7 +142,7 @@
         "eslint-plugin-react": "^7.20.5",
         "eslint-plugin-sonarjs": "^0.9.1",
         "mapbox-gl": "^1.13.1",
-        "prettier": "~2.3.0",
+        "prettier": "~2.5.0",
         "react": "^16.10.0",
         "react-dom": "^16.10.0",
         "sass-loader": "^10.1.1",

@@ -55,7 +55,7 @@ specifiers:
   '@rush-temp/util': file:./projects/util.tgz
   '@types/node': ^16.11.11
   lru-cache: ^4.1.5
-  prettier: ~2.3.0
+  prettier: ~2.5.0
   pretty-quick: ~3.1.0
   ts-node: ^8.4.1
   tslib: ^2.0.0
@@ -116,8 +116,8 @@ dependencies:
   '@rush-temp/util': file:projects/util.tgz_ts-node@8.10.2
   '@types/node': 16.11.11
   lru-cache: 4.1.5
-  prettier: 2.3.2
-  pretty-quick: 3.1.2_prettier@2.3.2
+  prettier: 2.5.0
+  pretty-quick: 3.1.2_prettier@2.5.0
   ts-node: 8.10.2_typescript@4.0.2
   tslib: 2.3.1
   typescript: 4.0.2
@@ -698,7 +698,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.14.5
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.12.9
       '@babel/plugin-transform-parameters': 7.16.3_@babel+core@7.12.9
     dev: false
@@ -2054,7 +2054,7 @@ packages:
       '@oclif/config': 1.18.1
       chalk: 2.4.2
       cli-ux: 4.9.3
-      debug: 4.1.1
+      debug: 4.3.3
       fs-extra: 7.0.1
       lodash.flatten: 4.4.0
       tslib: 1.9.3
@@ -2134,7 +2134,7 @@ packages:
       ansi-escapes: 3.2.0
       async-file: 2.0.2
       cli-ux: 4.9.3
-      debug: 4.1.1
+      debug: 4.3.3
       fs-extra: 7.0.1
       github-url-to-object: 4.0.6
       got: 9.6.0
@@ -2229,7 +2229,7 @@ packages:
     dependencies:
       '@heroku-cli/plugin-addons': 1.2.31
       bytes: 3.1.1
-      debug: 4.1.1
+      debug: 4.3.3
       filesize: 4.2.1
       heroku-cli-util: 8.0.12
       lodash: 4.17.21
@@ -2239,6 +2239,8 @@ packages:
       strip-eof: 2.0.0
       tunnel-ssh: 4.1.6
       uuid: 8.3.2
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@heroku-cli/plugin-pipelines/7.54.0:
@@ -2318,7 +2320,7 @@ packages:
       '@oclif/command': 1.8.6
       '@oclif/config': 1.18.1
       cli-ux: 5.6.4
-      debug: 4.1.1
+      debug: 4.3.3
       tslib: 1.14.1
     transitivePeerDependencies:
       - supports-color
@@ -3029,7 +3031,7 @@ packages:
       '@oclif/color': 0.1.2
       '@oclif/command': 1.8.6
       ansi-escapes: 4.3.2
-      debug: 4.1.1
+      debug: 4.3.3
       semver: 7.3.5
       tslib: 2.3.1
     transitivePeerDependencies:
@@ -9018,7 +9020,7 @@ packages:
     engines: {node: '>=4.0.0'}
     dev: false
 
-  /eslint-plugin-prettier/3.4.1_eslint@7.32.0+prettier@2.3.2:
+  /eslint-plugin-prettier/3.4.1_eslint@7.32.0+prettier@2.5.0:
     resolution: {integrity: sha512-htg25EUYUeIhKHXjOinK4BgCcDwtLHjqaxCDsMy5nbnUMkKFvIhMVCp+5GFUXQ4Nr8lBsPqtGAqBenbpFqAA2g==}
     engines: {node: '>=6.0.0'}
     peerDependencies:
@@ -9030,7 +9032,7 @@ packages:
         optional: true
     dependencies:
       eslint: 7.32.0
-      prettier: 2.3.2
+      prettier: 2.5.0
       prettier-linter-helpers: 1.0.0
     dev: false
 
@@ -9868,7 +9870,7 @@ packages:
     resolution: {integrity: sha512-DUxuQaKoqfNne8iikd14SAkh5uw4+8vNifp6gmA73yYNS6ywLIWSLD/n/mBzHQRpW3J7rbATEakmiA8JvkTyZw==}
     engines: {node: '>=6.11.5', yarn: '>=1.0.0'}
     dependencies:
-      '@babel/code-frame': 7.10.4
+      '@babel/code-frame': 7.16.0
       chalk: 2.4.2
       micromatch: 3.1.10
       minimatch: 3.0.4
@@ -14303,7 +14305,7 @@ packages:
     dependencies:
       growly: 1.3.0
       is-wsl: 1.1.0
-      semver: 5.6.0
+      semver: 5.7.1
       shellwords: 0.1.1
       which: 1.3.1
     dev: false
@@ -15531,7 +15533,7 @@ packages:
       fast-diff: 1.2.0
     dev: false
 
-  /prettier-loader/3.3.0_prettier@2.3.2+webpack@5.64.4:
+  /prettier-loader/3.3.0_prettier@2.5.0+webpack@5.64.4:
     resolution: {integrity: sha512-OhGQnvcAiiJ3i5StsgFCRnJ3tb4s5PGCAb/lVga9tMkBRTCK51oTZ1aCrYN7n4YrVbQRxs6/cgaQx5mgESafNg==}
     engines: {node: '>=8.3.0'}
     peerDependencies:
@@ -15540,7 +15542,7 @@ packages:
     dependencies:
       ignore: 5.1.9
       loader-utils: 1.4.0
-      prettier: 2.3.2
+      prettier: 2.5.0
       webpack: 5.64.4_webpack-cli@4.9.1
     dev: false
 
@@ -15550,8 +15552,8 @@ packages:
     hasBin: true
     dev: false
 
-  /prettier/2.3.2:
-    resolution: {integrity: sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==}
+  /prettier/2.5.0:
+    resolution: {integrity: sha512-FM/zAKgWTxj40rH03VxzIPdXmj39SwSjwG0heUcNFwI+EMZJnY93yAiKXM3dObIKAM5TA88werc8T/EwhB45eg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: false
@@ -15590,7 +15592,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /pretty-quick/3.1.2_prettier@2.3.2:
+  /pretty-quick/3.1.2_prettier@2.5.0:
     resolution: {integrity: sha512-T+fpTJrDjTzewql4p3lKrRA7z3MrNyjBK1MKeaBm5PpKwATgVm885TpY7TgY8KFt5Q1Qn3QDseRQcyX9AKTKkA==}
     engines: {node: '>=10.13'}
     hasBin: true
@@ -15603,7 +15605,7 @@ packages:
       ignore: 5.1.9
       mri: 1.2.0
       multimatch: 4.0.0
-      prettier: 2.3.2
+      prettier: 2.5.0
     dev: false
 
   /printf/0.3.0:
@@ -17900,7 +17902,7 @@ packages:
     engines: {node: '>=4.5.0'}
     dependencies:
       asn1: 0.2.6
-      semver: 5.6.0
+      semver: 5.7.1
       streamsearch: 0.1.2
     dev: false
 
@@ -20617,7 +20619,7 @@ packages:
   /wide-align/1.1.5:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
     dependencies:
-      string-width: 1.0.2
+      string-width: 4.2.3
     dev: false
 
   /widest-line/2.0.1:
@@ -20902,7 +20904,7 @@ packages:
     dev: false
 
   file:projects/api-client-bear.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-IG91fv5/8RbtuOxmptq+lm5nBIvt5G9mHtt0pnTbqu3HoO1ct29El8tK7QR43bVCzVdXmEEVUAyXoZ7kTK7k3A==, tarball: file:projects/api-client-bear.tgz}
+    resolution: {integrity: sha512-M4cEmKT/p+1C/AeX1718qQkxk6tTaXCdWjtns2V33Ad/L3JFZdL55Ms7aODqVWsOMBM0ggUS963nj4D0KeCKYw==, tarball: file:projects/api-client-bear.tgz}
     id: file:projects/api-client-bear.tgz
     name: '@rush-temp/api-client-bear'
     version: 0.0.0
@@ -20925,7 +20927,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       fast-levenshtein: 2.0.6
       fetch-cookie: 0.7.3
@@ -20937,7 +20939,7 @@ packages:
       lodash: 4.17.21
       lodash-webpack-plugin: 0.11.6_webpack@5.64.4
       node-fetch: 2.6.6
-      prettier: 2.3.2
+      prettier: 2.5.0
       qs: 6.10.1
       spark-md5: 3.0.2
       ts-invariant: 0.7.5
@@ -20967,7 +20969,7 @@ packages:
     dev: false
 
   file:projects/api-client-tiger.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-fGR/at929kPXj6maA0X4RIqlGt1PylAts0VbOG89QlsTaTGUi2dEiyOXLrsffKZVYNOD9WifgX1REuljmfuYpA==, tarball: file:projects/api-client-tiger.tgz}
+    resolution: {integrity: sha512-x0jeVCyAmYS0elSZFKelaK8FrUNcBfNcJJrVWzup9gHrvnMe83EJ5YlDDOQ6GwB8/wsupJR/2kLjWVv6mHM/Yw==, tarball: file:projects/api-client-tiger.tgz}
     id: file:projects/api-client-tiger.tgz
     name: '@rush-temp/api-client-tiger'
     version: 0.0.0
@@ -20992,13 +20994,13 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
       mkdirp: 1.0.4
-      prettier: 2.3.2
+      prettier: 2.5.0
       qs: 6.10.1
       spark-md5: 3.0.2
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
@@ -21018,7 +21020,7 @@ packages:
     dev: false
 
   file:projects/api-model-bear.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-d9ZhdUgv9rkhMzCJ/VHRerIHc45x/FyKlhRwtx1Y0toBo3iWH7cFIx6xP2AqpTnR9Si6YDNXXpfwgPhE1+82Yg==, tarball: file:projects/api-model-bear.tgz}
+    resolution: {integrity: sha512-zzKb1fNR1gmYyGta8ohQ/J4Zl+6KRy+EK+YRDTf/KVtTzGQY/vajYz7CWQCuysNcQE1qnQZZoPrBI1K6JP6BYw==, tarball: file:projects/api-model-bear.tgz}
     id: file:projects/api-model-bear.tgz
     name: '@rush-temp/api-model-bear'
     version: 0.0.0
@@ -21037,12 +21039,12 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
       typescript: 4.0.2
@@ -21059,7 +21061,7 @@ packages:
     dev: false
 
   file:projects/applink.tgz:
-    resolution: {integrity: sha512-8bgX994Og0XVjW7IM0BF88A/FKzI/tO2gAp/5Sc/s9Dab7fDbsjdPj/gjyfTdQ32S7C+G+r97WrZ32J0wJHEWg==, tarball: file:projects/applink.tgz}
+    resolution: {integrity: sha512-z5NmhyY/wzDdkMYvcpJGnBq1Rc1Onh8nOEMFIwnuSTX/0f0aL/e239lalnG4tTjjAYpNUm/OVxxhratgkgXDBw==, tarball: file:projects/applink.tgz}
     name: '@rush-temp/applink'
     version: 0.0.0
     dependencies:
@@ -21082,14 +21084,14 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       find-up: 5.0.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       json5: 2.2.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       ts-node: 8.10.2_typescript@4.0.2
       tslib: 2.3.1
@@ -21106,7 +21108,7 @@ packages:
     dev: false
 
   file:projects/catalog-export.tgz:
-    resolution: {integrity: sha512-b/9u9kTV+w9f5sZ5p/Z8pRSWWlZdEqSL59fQfVhqd036AbGDiQrClRyWLaKN4DQM0BGyW0YDdCO0G4PJRNEbvw==, tarball: file:projects/catalog-export.tgz}
+    resolution: {integrity: sha512-mrfH3j0m1tRCKaF0K93ZQpFCqQy+vVOMFqpeENoTX7vBYH/zREyBoGJuxu1UII+cNtipZ0hLIRR2RTZpSFtHuw==, tarball: file:projects/catalog-export.tgz}
     name: '@rush-temp/catalog-export'
     version: 0.0.0
     dependencies:
@@ -21128,7 +21130,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       inquirer: 7.3.3
       jest: 27.4.2_ts-node@8.10.2
@@ -21137,7 +21139,7 @@ packages:
       open: 7.4.2
       ora: 5.4.1
       p-map: 3.0.0
-      prettier: 2.3.2
+      prettier: 2.5.0
       strip-ansi: 6.0.1
       ts-jest: 27.0.7_0c1d779e00072c44d0a6a9615a4f0a08
       ts-morph: 8.2.0
@@ -21155,7 +21157,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-53/QV5b8VK6Ydwfuwj0q4xZPaFrvNsqhgXq1YuZo7n7cCeQcNS/Z8V9Kr6SItsAiavWXZJQhqZLrNLrZjIEwJA==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-mXuNEKLYFMj2xIFl0d/mPFI9KDBu2kIqfeFM1ZQpx+3LLC6cEDDeu2zE5iMEG7AThs1ix5KDffTPHmsC5EM2aw==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -21188,7 +21190,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -21198,7 +21200,7 @@ packages:
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       process: 0.11.10
       raf: 3.4.1
       react: 16.14.0
@@ -21233,7 +21235,7 @@ packages:
     dev: false
 
   file:projects/experimental-workspace.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-Lx2PvWMQqkvciHvp0CCTdGX77o8MLlSmhH8Twa69GBj/Y8aR/RtVbfY1H3itYceC4+dzg2IhTTRxihO6kXK80w==, tarball: file:projects/experimental-workspace.tgz}
+    resolution: {integrity: sha512-beMDjRvpnvN9pDWa6EYdOILdsTtnIJKZlJOGzqL0h0KeTY2flnFLegldAsnPdCGX6cyt7kZoCWpcggvD6wMVaw==, tarball: file:projects/experimental-workspace.tgz}
     id: file:projects/experimental-workspace.tgz
     name: '@rush-temp/experimental-workspace'
     version: 0.0.0
@@ -21251,12 +21253,12 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
       typescript: 4.0.2
@@ -21273,7 +21275,7 @@ packages:
     dev: false
 
   file:projects/live-examples-workspace.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-oIhoC/XzGpP6JGGkGI5X06bTtzHVqzl89SLHz/LvjK2d8o41BTj6wQWSLAkmMThvdzey61G0u/WBp+nuTXWqsA==, tarball: file:projects/live-examples-workspace.tgz}
+    resolution: {integrity: sha512-1+Dr/mAYTpsspQJYYO6fxRyoO2plmHeCGoI3BY+FmaeCuCiYdDJsVjNj4Ryk9VxRV/imNxFBJ5x+hAgkaNSAQw==, tarball: file:projects/live-examples-workspace.tgz}
     id: file:projects/live-examples-workspace.tgz
     name: '@rush-temp/live-examples-workspace'
     version: 0.0.0
@@ -21290,12 +21292,12 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
       typescript: 4.0.2
@@ -21312,7 +21314,7 @@ packages:
     dev: false
 
   file:projects/mock-handling.tgz:
-    resolution: {integrity: sha512-YKZnJm5x9ZePqYxXykXdRuGw+N1ty+WY9dO0FSyq3zEDYyNT5JRqatW1jxFEo3fQXhn/tLsaPfHDY0Oldl5mIQ==, tarball: file:projects/mock-handling.tgz}
+    resolution: {integrity: sha512-rBCbGJtIlLROkR8MvFYmX8kjY8jD4Dzewz+kFZAFxP7oW+2LKiqJkU17tl7chFmkO9n2uEP1i7nj3Q+NoARc0Q==, tarball: file:projects/mock-handling.tgz}
     name: '@rush-temp/mock-handling'
     version: 0.0.0
     dependencies:
@@ -21334,7 +21336,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       inquirer: 7.3.3
       jest: 27.4.2_ts-node@8.10.2
@@ -21343,7 +21345,7 @@ packages:
       lodash: 4.17.21
       ora: 5.4.1
       p-map: 3.0.0
-      prettier: 2.3.2
+      prettier: 2.5.0
       rimraf: 3.0.2
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       ts-morph: 8.2.0
@@ -21362,7 +21364,7 @@ packages:
     dev: false
 
   file:projects/playground.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-F9wGGzrdBFMNIvL0OHvycN5ipqkM4i5VadHghaGf9W1SwYAf0THM0UVY2VMUW7ACRTQed1y2Rpllan1EYD+IfQ==, tarball: file:projects/playground.tgz}
+    resolution: {integrity: sha512-/peYcGRSHQyhEwYIaHQEKsvISeQFSbystznAsSDaof1wRYRL5BW7AcGBY1FUeaed4ORpJGJG2yJMXwmJBVZkfA==, tarball: file:projects/playground.tgz}
     id: file:projects/playground.tgz
     name: '@rush-temp/playground'
     version: 0.0.0
@@ -21400,7 +21402,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -21410,8 +21412,8 @@ packages:
       jest-junit: 3.7.0
       lodash: 4.17.21
       npm-run-all: 4.1.5
-      prettier: 2.3.2
-      prettier-loader: 3.3.0_prettier@2.3.2+webpack@5.64.4
+      prettier: 2.5.0
+      prettier-loader: 3.3.0_prettier@2.5.0+webpack@5.64.4
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
       sass: 1.44.0
@@ -21446,7 +21448,7 @@ packages:
     dev: false
 
   file:projects/plugin-toolkit.tgz:
-    resolution: {integrity: sha512-uAkRivDD6iYYkiMbjaAouiJzpk0b5DJtyKud2hjDV6WChQVdvfuTIuBFYaxXt0VEZY/cFAv5+kEhjXtppkye2Q==, tarball: file:projects/plugin-toolkit.tgz}
+    resolution: {integrity: sha512-qOgxL9tzKmxBQq6aF0d0T0dIXjV2uva4LSKDvQb9ubfFjy9hNiU014DhHyjnwV2P+WYdUe2olzK1dz1FriyabQ==, tarball: file:projects/plugin-toolkit.tgz}
     name: '@rush-temp/plugin-toolkit'
     version: 0.0.0
     dependencies:
@@ -21478,7 +21480,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       fast-glob: 3.2.7
       fs-extra: 10.0.0
@@ -21487,7 +21489,7 @@ packages:
       jest-junit: 3.7.0
       lodash: 4.17.21
       ora: 5.4.1
-      prettier: 2.3.2
+      prettier: 2.5.0
       strip-ansi: 6.0.1
       tar: 6.1.11
       ts-jest: 27.0.7_0c1d779e00072c44d0a6a9615a4f0a08
@@ -21506,7 +21508,7 @@ packages:
     dev: false
 
   file:projects/reference-workspace-mgmt.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-YOzTzhqKGoiDoBEZvNwXG5cCpNgCMjI6NSAtfet+dOXRvIpsAh6e4edbiOn2nsN0N0fltdQgbONRDGYlC/0I0w==, tarball: file:projects/reference-workspace-mgmt.tgz}
+    resolution: {integrity: sha512-6AZiM1mBNe0JMA6PakNe4cxc4Ukfxk0kPssdN7dupsAgFdYf/m6NQsNz1yAWc6ie4xv+oi00HLmhgTEx0C1ViA==, tarball: file:projects/reference-workspace-mgmt.tgz}
     id: file:projects/reference-workspace-mgmt.tgz
     name: '@rush-temp/reference-workspace-mgmt'
     version: 0.0.0
@@ -21523,11 +21525,11 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
       typescript: 4.0.2
@@ -21544,7 +21546,7 @@ packages:
     dev: false
 
   file:projects/reference-workspace.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-R2rfgIjnFW9fR3gWMeUcDjCqFFgsFHS5PLZYdJeD/UZDPCyMBDGEfItaZLHPoe2ZlkhTHG3dErvP7m8ojW2OXA==, tarball: file:projects/reference-workspace.tgz}
+    resolution: {integrity: sha512-dc9tcFsj/AOlJ1M9CDU97A+m9qaOKJDH9z3css97i3vrCwMrb0mY8T6Cob/XBmRvrE2Ol0FwWBYifhK57ekqgQ==, tarball: file:projects/reference-workspace.tgz}
     id: file:projects/reference-workspace.tgz
     name: '@rush-temp/reference-workspace'
     version: 0.0.0
@@ -21561,12 +21563,12 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
       typescript: 4.0.2
@@ -21583,7 +21585,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-base.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-2NeGcx0Pt8FTzYqYhXmSB7xTWrBIkdAwRCjguIhQp1EcsUflOo2O+F2DMqDFJBmcIdEZNREnKGepK2Ap+cXOxQ==, tarball: file:projects/sdk-backend-base.tgz}
+    resolution: {integrity: sha512-byFUDvyBgqLBfna7HvOErZjwe14zW++BAR4iA9wklkODWGkA0mUsMEnKlj55Q2/QaYGFpakjd4twexgndE+3KQ==, tarball: file:projects/sdk-backend-base.tgz}
     id: file:projects/sdk-backend-base.tgz
     name: '@rush-temp/sdk-backend-base'
     version: 0.0.0
@@ -21607,14 +21609,14 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
       lodash: 4.17.21
       lru-cache: 4.1.5
-      prettier: 2.3.2
+      prettier: 2.5.0
       spark-md5: 3.0.2
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
@@ -21634,7 +21636,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-bear.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-TnoYS3Yccng+F2MByPYfzYrSEVRscq1U34rKFybyWMrYnKQPI4T59114aqLjz4YRIMmrimP7AK+MoONQMyxb6A==, tarball: file:projects/sdk-backend-bear.tgz}
+    resolution: {integrity: sha512-oEvaM1QmfMRbFWqexXBrSaw6YRXN4Xz9ZOxFA57UCezz6KgV95OcYm30fPTes+mp/NR2TgYNW19C0itaZRdJlQ==, tarball: file:projects/sdk-backend-bear.tgz}
     id: file:projects/sdk-backend-bear.tgz
     name: '@rush-temp/sdk-backend-bear'
     version: 0.0.0
@@ -21658,14 +21660,14 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       http-status-codes: 1.4.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       spark-md5: 3.0.2
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
@@ -21685,7 +21687,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-mockingbird.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-9wXB94DLzscgevPhmMREFRukTanAnHsAN37HktBE8t8OiO25RXpDPCz5v1LuTRuezre8AdgD/oEzdCDTNrBy7A==, tarball: file:projects/sdk-backend-mockingbird.tgz}
+    resolution: {integrity: sha512-rs9pqUL6U6zk9GQYOODzlGdubKe+5PODslFS+XsCWzgl8uK5yzdliQFh7WW6FIF4NreWARqNQSCOpzUmcwhfQA==, tarball: file:projects/sdk-backend-mockingbird.tgz}
     id: file:projects/sdk-backend-mockingbird.tgz
     name: '@rush-temp/sdk-backend-mockingbird'
     version: 0.0.0
@@ -21705,12 +21707,12 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
@@ -21729,7 +21731,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-spi.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-dopyA75cEfE8gIxnRH6K6WvGhF234VgzwSUuGhnKy4GJQDeACd6wqzC+Krej1SCjEHlQWC/04cV2j1CPTO4NPA==, tarball: file:projects/sdk-backend-spi.tgz}
+    resolution: {integrity: sha512-NLjzhXVOlhbNZVGOfLS4GwxALvTMT9xwqeIE/CJ45PU6P4+1zNySuEUS18+eBfaN2nZkWT5qeJF/9UeE3vwiKA==, tarball: file:projects/sdk-backend-spi.tgz}
     id: file:projects/sdk-backend-spi.tgz
     name: '@rush-temp/sdk-backend-spi'
     version: 0.0.0
@@ -21749,12 +21751,12 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       spark-md5: 3.0.2
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
@@ -21773,7 +21775,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-tiger.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-EWaF2tsrIPzh0EYCPvKbV5wUEDV6AD5/pb7bNvMQMYHDP+c2vHwQqNVwpgLTxxEOJcRU8ybRwv3XrkbXK0KQ5g==, tarball: file:projects/sdk-backend-tiger.tgz}
+    resolution: {integrity: sha512-gtcDAitXUYIGF+cdbk83b3UTpr0iovcGj1QzlN5MxNs5DB2q9IoLBT3wrScuHZPzW6jajyyPsImWN+TNgGJZxA==, tarball: file:projects/sdk-backend-tiger.tgz}
     id: file:projects/sdk-backend-tiger.tgz
     name: '@rush-temp/sdk-backend-tiger'
     version: 0.0.0
@@ -21796,13 +21798,13 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       http-status-codes: 1.4.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       spark-md5: 3.0.2
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
@@ -21824,7 +21826,7 @@ packages:
     dev: false
 
   file:projects/sdk-embedding.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-GlsIgRWt2gQGYIcR79OIE3k+uHonnuv0o3PxKzwd+XZXMeY7cK6Vi+AFsqvt6wsAY7BhJbBIuyTHPsX+Mtxk6A==, tarball: file:projects/sdk-embedding.tgz}
+    resolution: {integrity: sha512-ww5BXnVxwlwp1mYB41RGIjqsJkxHJzAmF4mvEmyykcFtG0gShr91xFgATL/JuPFDSAi4H2Gczqc8+diegLNPVA==, tarball: file:projects/sdk-embedding.tgz}
     id: file:projects/sdk-embedding.tgz
     name: '@rush-temp/sdk-embedding'
     version: 0.0.0
@@ -21843,12 +21845,12 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
@@ -21866,7 +21868,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-5mtJK4OW14EuLhfokVAlQayVTU/dkvabRA7/FUjg/278dYRkXczfYVIOlvxmEiTz/Ia9TPhNZUkhL7LeRZoO6w==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-4kUtmNSE6ax8GZH+Z8LUM1mevzdoC/08RPd5mFZx4b3Z778LYQP8iLyl0Knogfkx1pxM9w95erBHghHRa7geIg==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -21915,7 +21917,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -21930,8 +21932,8 @@ packages:
       lodash: 4.17.21
       moment: 2.29.1
       npm-run-all: 4.1.5
-      prettier: 2.3.2
-      prettier-loader: 3.3.0_prettier@2.3.2+webpack@5.64.4
+      prettier: 2.5.0
+      prettier-loader: 3.3.0_prettier@2.5.0+webpack@5.64.4
       react: 16.14.0
       react-datepicker: 4.4.0_react-dom@16.14.0+react@16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -21979,7 +21981,7 @@ packages:
     dev: false
 
   file:projects/sdk-model.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-MCxvMRL56ucuQGiyG2ZLRCHK5QRTbvpfdS5HI3wVPUo4Y/JG99R8NUr2SxLAYogGVMKr6rMMM0KMRZQ0dBvAsw==, tarball: file:projects/sdk-model.tgz}
+    resolution: {integrity: sha512-ZL2K1LU3kQrclRSGST98ytJngXx0HrtmaSxwPyL7WaWS1GBYhYZB5UM9HGvzEAunmmWto8Yo2uQRwoapvLL9WQ==, tarball: file:projects/sdk-model.tgz}
     id: file:projects/sdk-model.tgz
     name: '@rush-temp/sdk-model'
     version: 0.0.0
@@ -22001,13 +22003,13 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       spark-md5: 3.0.2
       stringify-object: 2.4.0
       ts-invariant: 0.7.5
@@ -22027,7 +22029,7 @@ packages:
     dev: false
 
   file:projects/sdk-skel-ts.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-eNzHKaaezIdgMHbCN6+cN9zMXv1uX3OGOSZP5LB2/XPMC8pvXPWE6yT/H5Ud0zmDyf9ud2Vf8MGkxtey5dlAZg==, tarball: file:projects/sdk-skel-ts.tgz}
+    resolution: {integrity: sha512-oke9V0SbwIyeNahH2yr4byl8N4MLjLv7UDSWtOaNd+nzj1a+dxFRhTvOg919BZAWX4F8Uv8RzZLNBDpxvHtXXw==, tarball: file:projects/sdk-skel-ts.tgz}
     id: file:projects/sdk-skel-ts.tgz
     name: '@rush-temp/sdk-skel-ts'
     version: 0.0.0
@@ -22046,12 +22048,12 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
       typescript: 4.0.2
@@ -22068,7 +22070,7 @@ packages:
     dev: false
 
   file:projects/sdk-skel-tsx.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-hoKZpUxCzx75c4ai+uhHB6yCFlph/bdameCp8iqhc+RbB5MIxD2soqfSVa4Vz2NFizFsBsmfFw2oLQMXzRO5qw==, tarball: file:projects/sdk-skel-tsx.tgz}
+    resolution: {integrity: sha512-dxqNT+xm/7gICgA0eTCSSFKdXjmC/6dCW+l8rfzQHQFhMtTF8IUy415C66LezwaNPI0nEcTDOSyKpXtarUkfGg==, tarball: file:projects/sdk-skel-tsx.tgz}
     id: file:projects/sdk-skel-tsx.tgz
     name: '@rush-temp/sdk-skel-tsx'
     version: 0.0.0
@@ -22094,7 +22096,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22104,7 +22106,7 @@ packages:
       lodash: 4.17.21
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -22125,7 +22127,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-all.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-sLhtln5e7S+quAcvlEZFTIkdxaqlnuDywKvloxeDmLYF3PeJ62wMS6egvTBC4YeJO5P8sN1m4JbzbpM4Vl7fbA==, tarball: file:projects/sdk-ui-all.tgz}
+    resolution: {integrity: sha512-L/zWknu1GLUOfI7QIHPJJrvUyFHKNTo1njBZ5RXJ0konO/Oe7YUejteSPjrbKafn/bNFB1yR7+prI6BuUOEoAQ==, tarball: file:projects/sdk-ui-all.tgz}
     id: file:projects/sdk-ui-all.tgz
     name: '@rush-temp/sdk-ui-all'
     version: 0.0.0
@@ -22143,11 +22145,11 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
       typescript: 4.0.2
@@ -22164,7 +22166,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-charts.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-CjLYCwldGAGRFrPZzVthoOgZZec4TdglBR4nz72UMu6WT2gcUu3aDd2r4TQxtpkAJ3q9vf+lvGD0qQ5/mJMSxg==, tarball: file:projects/sdk-ui-charts.tgz}
+    resolution: {integrity: sha512-shPT0x3RqhfSR30W1VsJMkjcM3WFU8Uz3NPLcqlgmamTE2FmqjAKn/xwSNX/9NkwTFqPsPb5q6WeW4+hzSAcOg==, tarball: file:projects/sdk-ui-charts.tgz}
     id: file:projects/sdk-ui-charts.tgz
     name: '@rush-temp/sdk-ui-charts'
     version: 0.0.0
@@ -22198,7 +22200,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22213,7 +22215,7 @@ packages:
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
       polished: 3.7.2
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -22241,7 +22243,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-/pNL6o2YDtuevPUukIAPtjBofz30QiT9If7X49dsbLju51qXifFnpgYnBqb9NiE0U6l0hl2UsjFQdosRTYijrQ==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-h1qGNU8WD9POnk9Mt0aJ/Ozk+jK/NJMQyRh98T8i0T2VacKgyUmPuEae2jjPUfT3HOcZPFuug7yJYdmlvE2vhA==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
@@ -22278,7 +22280,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22292,7 +22294,7 @@ packages:
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
       normalize.css: 8.0.1
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -22327,7 +22329,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-ext.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-Ijb6T+hi1R08+hZNZZwQoXCQgI2EfJ1a9xTAWh+ERDDRjQPxa8VvoOYVfeHPGWgBLg2/pqABGaqCe9KzarkVBw==, tarball: file:projects/sdk-ui-ext.tgz}
+    resolution: {integrity: sha512-o/yFnbqN9uXOlgmpvuExaV2O8Y/afAMkIVISLI3EuUuHMk1V6OkfkWFCh4r+pGyPVONgx/dgMWsasY7uhxQsMA==, tarball: file:projects/sdk-ui-ext.tgz}
     id: file:projects/sdk-ui-ext.tgz
     name: '@rush-temp/sdk-ui-ext'
     version: 0.0.0
@@ -22365,7 +22367,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22379,7 +22381,7 @@ packages:
       lru-cache: 4.1.5
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -22412,7 +22414,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-E/Xo3tINtPRAVIRjORCSDYcMdBI8RG94TEx9n76Nz8CwpHy4Lc+2QHHpiQR6DDinfsYIJ1ei1sBuw+Y9hA9eUw==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-YKycofsMnYkpqadatME+hqeEm9emnZFtt6O6ptLen8ZCNMHx3cI/X7llFyawidF2cnjgpi2NDtb/dlWfPBuqsw==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
@@ -22447,7 +22449,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22463,7 +22465,7 @@ packages:
       moment: 2.29.1
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-day-picker: 7.4.10_react@16.14.0
@@ -22491,7 +22493,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-geo.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-IB+ATU1+ixK+NLJowLoyTH4Kn4PJ9CpHtOCVenn1+G32nvcwVtkvDtKt9wNNvSAhmDg+g14BPK/fm3/UUs/vsg==, tarball: file:projects/sdk-ui-geo.tgz}
+    resolution: {integrity: sha512-Rz6z/oN5HLw6n8qzNwCFy4HXc3J+6XWwmIZsfDs7GdOOk8eoJMwjq1q6/JOTELkZWSP28IZ5QudWP21qXYBHRQ==, tarball: file:projects/sdk-ui-geo.tgz}
     id: file:projects/sdk-ui-geo.tgz
     name: '@rush-temp/sdk-ui-geo'
     version: 0.0.0
@@ -22523,7 +22525,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22535,7 +22537,7 @@ packages:
       mapbox-gl: 1.13.2
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -22562,7 +22564,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-zzSwUGw2Bl5zcenGZ+LY3I2DlYxj+CFHK3Q3lf0+83xX3k1ThEzq9R/+b/FfhYE68mtL316zmiZLavT7RPeD0w==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-NhydS3aZfQWMSUqiTAgLTM3UjDruWk/9HC+l+z7hodVFZvX3gBlCzGhDUqy+e7OdpZGvjoZaZOOYjA9AasOXkg==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -22607,7 +22609,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22622,7 +22624,7 @@ packages:
       moment-timezone: 0.5.34
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-codemirror2: 7.2.1_codemirror@5.64.0+react@16.14.0
@@ -22659,7 +22661,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-loaders.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-OI3TGnTqfskRtjujrR1YmuY0NqCOK4w942wjKmcO6Vms2uW1NakgWimjoNr1hk2Dv3T1uLe57g3N9+ntCaSEXQ==, tarball: file:projects/sdk-ui-loaders.tgz}
+    resolution: {integrity: sha512-fGBc8tsqy9vypKu476tzohz7zamXGNWXkHlo8H5nVYbneaEh+wMUwy+UttNoTZaGo30xwnMAcX6+TiIsHGEoZw==, tarball: file:projects/sdk-ui-loaders.tgz}
     id: file:projects/sdk-ui-loaders.tgz
     name: '@rush-temp/sdk-ui-loaders'
     version: 0.0.0
@@ -22685,7 +22687,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22695,7 +22697,7 @@ packages:
       lodash: 4.17.21
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -22717,7 +22719,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-pivot.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-uBpnauHAUCQoZ9wu80UfxAakTJ3cNi/5/TrizOyf4gunt5bdvQd7HJoVZPjHSBLmX4tbiYoy0jYjgKIal3Ve9g==, tarball: file:projects/sdk-ui-pivot.tgz}
+    resolution: {integrity: sha512-NV/YG4rJRY+eWa/hhXLMOKeiG3Bpa5797P/k8VicqbYIvGPeaKd1gBQruGRXt+Vl7+B1O9dyb/HJUbEklIQ+Kg==, tarball: file:projects/sdk-ui-pivot.tgz}
     id: file:projects/sdk-ui-pivot.tgz
     name: '@rush-temp/sdk-ui-pivot'
     version: 0.0.0
@@ -22751,7 +22753,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22764,7 +22766,7 @@ packages:
       lodash: 4.17.21
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -22791,7 +22793,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-IpKQ2aNVQ/mzC5/Rh3gyer9KPvCOPlt1MC3yCtrXU/UW00+uJ8DAKv80AJQKvlWIqZ65Ya+/zBveuvbkVt4uJg==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-sFjuok1suNKZu/x6quGzpd8eRVldlej6dsxNgKX4eRcs83BXrVG9Dp4mx/wlBrYhf71Nx8kdNB7AzYIjNuGPYw==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -22838,7 +22840,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22850,8 +22852,8 @@ packages:
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
       npm-run-all: 4.1.5
-      prettier: 2.3.2
-      prettier-loader: 3.3.0_prettier@2.3.2+webpack@5.64.4
+      prettier: 2.5.0
+      prettier-loader: 3.3.0_prettier@2.5.0+webpack@5.64.4
       raf: 3.4.1
       react: 16.14.0
       react-app-polyfill: 2.0.0
@@ -22892,7 +22894,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-paKQqOmCPKClOPMy179B8IUaqZKybeqoHbyUaLiuSH2hfxgiG+enSRXFYAAesLLZbISpPOYrvB8s6QDJSZVxfw==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-pRYG2LFbQbcjT5lXeaS10V+HGf90WfooPBKRqQKBR+C7RkKcOTHKs5Nng+tKnpVbfw/4n6+ICwlzQhoFByOVcw==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:
@@ -22935,7 +22937,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -22946,7 +22948,7 @@ packages:
       lodash: 4.17.21
       mapbox-gl: 1.13.2
       moment: 2.29.1
-      prettier: 2.3.2
+      prettier: 2.5.0
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
       react-intl: 3.12.1_react@16.14.0
@@ -22991,7 +22993,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-theme-provider.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-d7p5UmJ2NTjOWn8IOLYutp2hCuby69WJz83SH/NCX/I3ZYXq1QR7gRkaiBeV7Eqi8v/gEhFsLLVMyyn05gg07w==, tarball: file:projects/sdk-ui-theme-provider.tgz}
+    resolution: {integrity: sha512-R1fz3BUrNa/4DQ1sdtrv4PJn6z4hcpPj/QRVeWcXzvcnBzMoRNR8Up2EiIdr+H81Ez+85huTNWTfE9r6f4D5DA==, tarball: file:projects/sdk-ui-theme-provider.tgz}
     id: file:projects/sdk-ui-theme-provider.tgz
     name: '@rush-temp/sdk-ui-theme-provider'
     version: 0.0.0
@@ -23017,7 +23019,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -23028,7 +23030,7 @@ packages:
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
       polished: 3.7.2
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -23050,7 +23052,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-vis-commons.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-1FHeENQrISiruBTgaujZYYmVLwGUPvhchCnXrrO6rqzXYWlSA4n6AOu+fki+lM+gYiES0KXYsw2IjHgO+ggA6Q==, tarball: file:projects/sdk-ui-vis-commons.tgz}
+    resolution: {integrity: sha512-1YIdw1Ep+1vFBhdLYyECBvR6NUkyaOpDs4vhay3eFjtQW/Op1fpZtb6ft2h29HeES87S7Z8xq/Dw/jCPyoa9MQ==, tarball: file:projects/sdk-ui-vis-commons.tgz}
     id: file:projects/sdk-ui-vis-commons.tgz
     name: '@rush-temp/sdk-ui-vis-commons'
     version: 0.0.0
@@ -23079,7 +23081,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -23090,7 +23092,7 @@ packages:
       lodash: 4.17.21
       node-sass: 6.0.1
       node-sass-magic-importer: 5.3.2
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -23115,7 +23117,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-pbjwc1TQYVoAhl9ENxjECRExqQApBAtF5dCe+H+TwcmF/6BWHpeG2XOCQAfasdld3A3RlKwjWps4mIvnTUPxvA==, tarball: file:projects/sdk-ui.tgz}
+    resolution: {integrity: sha512-C9CL0DDGS5GGb15NwBIROvdUOs4cFWcoLSKW3vRr0NNxhtSa+oBJE4kOrpUvm0sotQ8hCPJASvJme9sPADxsJQ==, tarball: file:projects/sdk-ui.tgz}
     id: file:projects/sdk-ui.tgz
     name: '@rush-temp/sdk-ui'
     version: 0.0.0
@@ -23149,7 +23151,7 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
@@ -23164,7 +23166,7 @@ packages:
       lodash: 4.17.21
       lru-cache: 4.1.5
       memoize-one: 6.0.0
-      prettier: 2.3.2
+      prettier: 2.5.0
       raf: 3.4.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -23191,7 +23193,7 @@ packages:
     dev: false
 
   file:projects/util.tgz_ts-node@8.10.2:
-    resolution: {integrity: sha512-ldGqlp14yYqe0uT3dWDW7mrP2X6AIFdWeCV1z2n8slNP7+e3V3cQs3rL0x5CB5mHBCtgiS3NURZWqqjtdSadFw==, tarball: file:projects/util.tgz}
+    resolution: {integrity: sha512-sh8GvExhOmcoMEZzwRKKKsulnAqIQU0UzZoCAHOi9ACsQ6x55J3T6opERfdML10MV9PTeVgnIdlWoreHEURLjQ==, tarball: file:projects/util.tgz}
     id: file:projects/util.tgz
     name: '@rush-temp/util'
     version: 0.0.0
@@ -23210,12 +23212,12 @@ packages:
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest: 24.7.0_27af671a4f72171970be43e4a9129283
       eslint-plugin-no-only-tests: 2.6.0
-      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.3.2
+      eslint-plugin-prettier: 3.4.1_eslint@7.32.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.9.1_eslint@7.32.0
       jest: 27.4.2_ts-node@8.10.2
       jest-junit: 3.7.0
       lodash: 4.17.21
-      prettier: 2.3.2
+      prettier: 2.5.0
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
       typescript: 4.0.2

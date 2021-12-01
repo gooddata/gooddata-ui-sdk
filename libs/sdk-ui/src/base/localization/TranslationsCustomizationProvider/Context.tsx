@@ -27,18 +27,17 @@ export interface ITranslationsCustomizationContextProviderProps {
 /**
  * @beta
  */
-export const TranslationsCustomizationContextProvider: React.FC<ITranslationsCustomizationContextProviderProps> =
-    ({ children, translationsCustomizationIsLoading, translations }) => {
-        return (
-            <TranslationsCustomizationContext.Provider value={translations}>
-                <TranslationsCustomizationIsLoadingContext.Provider
-                    value={translationsCustomizationIsLoading}
-                >
-                    {children}
-                </TranslationsCustomizationIsLoadingContext.Provider>
-            </TranslationsCustomizationContext.Provider>
-        );
-    };
+export const TranslationsCustomizationContextProvider: React.FC<
+    ITranslationsCustomizationContextProviderProps
+> = ({ children, translationsCustomizationIsLoading, translations }) => {
+    return (
+        <TranslationsCustomizationContext.Provider value={translations}>
+            <TranslationsCustomizationIsLoadingContext.Provider value={translationsCustomizationIsLoading}>
+                {children}
+            </TranslationsCustomizationIsLoadingContext.Provider>
+        </TranslationsCustomizationContext.Provider>
+    );
+};
 
 function withTranslationsCustomizationValue<T extends { translations?: Record<string, string> }>(
     Component: React.ComponentType<T>,
