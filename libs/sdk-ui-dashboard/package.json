@@ -43,6 +43,7 @@
         "build-styles": "bash scripts/build.sh --styles",
         "dev": "bash scripts/build.sh --dev-watch",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
+        "prepublishOnly": "npm run build",
         "test": "jest --watch",
         "test-once": "jest --maxWorkers=${JEST_MAX_WORKERS:-'45%'} --passWithNoTests",
         "test-once-with-coverage": "jest --passWithNoTests --coverage=true",
