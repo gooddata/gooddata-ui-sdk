@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { enhanceWithAll } from "@gooddata/sdk-backend-base";
+import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { IWorkspacesQueryFactory, IWorkspacesQuery, IWorkspacesQueryResult } from "@gooddata/sdk-backend-spi";
 import { convertUserProject } from "../../convertors/toBackend/WorkspaceConverter";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
@@ -41,53 +41,33 @@ class BearWorkspaceQuery implements IWorkspacesQuery {
     }
 
     public query(): Promise<IWorkspacesQueryResult> {
-        return this.queryWorker(this.offset, this.limit, this.search);
+        return this.queryWorker();
     }
 
-    private async queryWorker(
-        offset: number,
-        limit: number,
-        search?: string,
-    ): Promise<IWorkspacesQueryResult> {
-        const {
-            userProjects: { paging, items },
-        } = await this.authCall(async (sdk, { getPrincipal }) => {
-            const userId = this.userId || (await userLoginMd5FromAuthenticatedPrincipal(getPrincipal));
-            return sdk.project.getProjectsWithPaging(userId, offset, limit, search);
-        });
+    private async queryWorker(): Promise<IWorkspacesQueryResult> {
+        return ServerPaging.for(
+            async ({ limit, offset }) => {
+                const data = await this.authCall(async (sdk, { getPrincipal }) => {
+                    const userId =
+                        this.userId || (await userLoginMd5FromAuthenticatedPrincipal(getPrincipal));
+                    return sdk.project.getProjectsWithPaging(userId, offset, limit, this.search);
+                });
 
-        const serverOffset = paging.offset;
-        const { totalCount, count } = paging;
+                const {
+                    items,
+                    paging: { totalCount },
+                } = data.userProjects;
 
-        const hasNextPage = serverOffset + count < totalCount;
-        const goTo = (index: number) =>
-            index * count < totalCount
-                ? this.queryWorker(index * count, limit, search)
-                : Promise.resolve(emptyResult);
-
-        const emptyResult: IWorkspacesQueryResult = enhanceWithAll({
-            search,
-            items: [],
-            limit: count,
-            offset: totalCount,
-            totalCount,
-            next: () => Promise.resolve(emptyResult),
-            goTo,
-        });
-
-        return enhanceWithAll({
-            search,
-            items: items.map((workspace) => {
-                const descriptor = convertUserProject(workspace);
-                return new BearWorkspace(this.authCall, descriptor.id, descriptor);
-            }),
-            limit: paging.limit,
-            offset: paging.offset,
-            totalCount: paging.totalCount,
-            next: hasNextPage
-                ? () => this.queryWorker(offset + count, limit, search)
-                : () => Promise.resolve(emptyResult),
-            goTo,
-        });
+                return {
+                    items: items.map((item) => {
+                        const descriptor = convertUserProject(item);
+                        return new BearWorkspace(this.authCall, descriptor.id, descriptor);
+                    }),
+                    totalCount,
+                };
+            },
+            this.limit,
+            this.offset,
+        );
     }
 }
