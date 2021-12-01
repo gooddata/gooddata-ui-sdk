@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
 import React from "react";
-import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import CreatableSelect from "react-select/creatable";
 import {
     ActionMeta,
@@ -177,7 +177,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                     type="warning"
                     contrast={true}
                 >
-                    <FormattedHTMLMessage id="options.menu.schedule.email.recipient.warning.existed" />
+                    <FormattedMessage id="options.menu.schedule.email.recipient.warning.existed" />
                 </Message>
             );
         }
@@ -273,7 +273,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                         className="bubble-negative s-gd-recipient-not-valid-email"
                         alignPoints={bubbleAlignPoints}
                     >
-                        <FormattedHTMLMessage id="options.menu.schedule.email.recipient.invalid" />
+                        <FormattedMessage id="options.menu.schedule.email.recipient.invalid" />
                     </Bubble>
                 </BubbleHoverTrigger>
             </div>
@@ -328,7 +328,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                 // This class is necessary for testcafes
                 <div className="s-gd-recipient-option-item s-recipient-not-in-workspace-warning">
                     <Message type="warning" contrast={true}>
-                        <FormattedHTMLMessage id="options.menu.schedule.email.recipient.warning.belong.workspace" />
+                        <FormattedMessage id="options.menu.schedule.email.recipient.warning.belong.workspace" />
                     </Message>
                 </div>
             );

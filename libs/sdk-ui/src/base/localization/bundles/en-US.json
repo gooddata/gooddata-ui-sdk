@@ -468,8 +468,8 @@
         "limit": 0
     },
     "dateFilterDropdown.setDefault": {
-        "value": "Set default date filter for&nbsp;viewers:",
-        "comment": "Do not translate non-breakable space '&nbsp;'",
+        "value": "Set default date filter for{nbsp}viewers:",
+        "comment": "Do not translate non-breakable space '{nbsp}'",
         "limit": 0
     },
 

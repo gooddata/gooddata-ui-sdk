@@ -83,7 +83,7 @@
     "filtering": "A filtrar…",
     "dateFilterDropdown.title": "Intervalo de datas",
     "dateFilterDropdown.buttonTitle": "Intervalo de datas",
-    "dateFilterDropdown.setDefault": "Predefinir filtro de data para&nbsp;Os Visualizadores:",
+    "dateFilterDropdown.setDefault": "Predefinir filtro de data para{nbsp}Os Visualizadores:",
     "filters.thisDay.title": "Hoje",
     "filters.lastDay.title": "Ontem",
     "filters.nextDay.title": "Amanhã",
