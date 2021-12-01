@@ -219,7 +219,7 @@
     "kpiAlertDialog.emailMe": "メールで通知する",
     "kpiAlertDialog.emailMeWhen": "KPI が次の場合、{emailMe}",
     "kpiAlertDialog.emailInfo": "電子メールの送信先:{userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>この数字は有効ではありません。</strong><br />再確認してもう一度試してください。",
+    "kpiAlertDialog.invalidNumber": "<strong>この数字は有効ではありません。</strong>再確認してもう一度試してください。",
     "kpiAlertDialog.filtersDiffer": "通知が設定されたときと異なるフィルターが、KPIに適用されています。",
     "kpiAlertDialog.filtersApply": "通知のフィルターをダッシュボードに適用",
     "kpiAlertDialog.savingFailed": "通知を保存できませんでした。もう一度やり直してください。",
