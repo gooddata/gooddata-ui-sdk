@@ -9,10 +9,11 @@ export interface IDashboardLayoutSectionHeaderDescriptionProps {
     description: string;
 }
 
-export const DashboardLayoutSectionHeaderDescription: React.FC<IDashboardLayoutSectionHeaderDescriptionProps> =
-    (props) => {
-        const { description } = props;
+export const DashboardLayoutSectionHeaderDescription: React.FC<
+    IDashboardLayoutSectionHeaderDescriptionProps
+> = (props) => {
+    const { description } = props;
 
-        const className = cx("gd-paragraph", "description", "s-fluid-layout-row-description");
-        return <div className={className}>{description}</div>;
-    };
+    const className = cx("gd-paragraph", "description", "s-fluid-layout-row-description");
+    return <div className={className}>{description}</div>;
+};
