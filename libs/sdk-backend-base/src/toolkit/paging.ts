@@ -1,6 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
+import range from "lodash/range";
+import flatMap from "lodash/flatMap";
 
 /**
  * This implementation of {@link @gooddata/sdk-backend-spi#IPagedResource} pages over a list of items
@@ -122,21 +124,23 @@ export class ServerPaging<T> implements IPagedResource<T> {
 
     public async all(): Promise<T[]> {
         const results: T[] = [];
-        const pageSize = this.limit;
+        const maxRequests = 6;
+        const allPagesToLoad = range(0, this.totalCount / this.limit);
+
         // if the paged resource is already at the 0 offset, use it directly to save a duplicate request
-        let currentPage = this.offset !== 0 ? await this.goTo(0) : this;
-
-        // eslint-disable-next-line no-constant-condition
-        while (true) {
-            results.push(...currentPage.items);
-
-            if (currentPage.items.length < pageSize) {
-                return results;
-            }
-            currentPage.items.sort();
-
-            currentPage = await currentPage.next();
+        if (this.offset === 0) {
+            results.push(...this.items);
+            allPagesToLoad.shift();
         }
+
+        while (allPagesToLoad.length > 0) {
+            const pagesToLoad = allPagesToLoad.slice(0, maxRequests);
+            allPagesToLoad.splice(0, maxRequests);
+            const loadedPages = await Promise.all(pagesToLoad.map((page) => this.goTo(page)));
+            results.push(...flatMap(loadedPages, (page) => page.items));
+        }
+
+        return results;
     }
 
     public async allSorted(compareFn: (a: T, b: T) => number): Promise<T[]> {
@@ -165,6 +169,7 @@ async function getAllPagesOfInner<T>(
         if (currentPage.items.length < pageSize) {
             return results;
         }
+
         currentPage.items.sort();
 
         currentPage = await currentPage.next();
