@@ -78,7 +78,7 @@
     "kpiAlertDialog.emailMe": "Enviarme un correo electrónico",
     "kpiAlertDialog.emailMeWhen": "{emailMe} cuando este KPI sea",
     "kpiAlertDialog.emailInfo": "El correo electrónico se enviará a {userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>Este número no es válido.</strong><br />Compruebe y vuelva a intentarlo.",
+    "kpiAlertDialog.invalidNumber": "<strong>Este número no es válido.</strong>Compruebe y vuelva a intentarlo.",
     "kpiAlertDialog.filtersDiffer": "El KPI está filtrado de manera distinta a cuando se estableció la alerta.",
     "kpiAlertDialog.filtersApply": "Aplicar filtros de alerta al panel",
     "kpiAlertDialog.savingFailed": "Error al guardar la alerta. Vuelva a intentarlo más tarde.",
@@ -125,5 +125,18 @@
     "widget.options.menu.exportToCSV": "Exportar a CSV",
     "widget.options.menu.exportToXLSX": "Exportar a XLSX",
     "dashboard.error.empty.heading": "Este panel está vacío",
-    "dashboard.error.empty.text": "Se eliminaron todas las perspectivas."
+    "dashboard.error.empty.text": "Se eliminaron todas las perspectivas.",
+    "attributesDropdown.placeholder": "Buscar atributos…",
+    "attributesDropdown.noData": "Este atributo no tiene ningún valor.",
+    "attributesDropdown.configuration": "Configuración",
+    "attributesDropdown.itemsFiltered": "Los elementos se han filtrado",
+    "attributesDropdown.allItemsFiltered": "Todos los elementos están filtrados",
+    "attributesDropdown.itemsFiltered.tooltip": "Los elementos se han filtrado por: <strong>{filters}</strong>",
+    "attributesDropdown.save": "Guardar",
+    "attributesDropdown.filterBy": "Filtrar según",
+    "attributesDropdown.displayValuesAs": "Mostrar valores como",
+    "attributesDropdown.attributeNameWithData": "con datos de",
+    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> no se puede filtrar por <strong>{parentTitle}</strong>. No hay ninguna conexión entre los atributos de filtro en el modelo de datos.",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ya se ha filtrado por el filtro <strong>{childTitle}</strong> directamente o mediante otros filtros.",
+    "attributesDropdown.removeTooltip": "Quitar del panel"
 }

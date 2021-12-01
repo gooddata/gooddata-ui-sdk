@@ -127,6 +127,7 @@ import { ShareStatus } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
+import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @alpha (undocumented)
@@ -1600,9 +1601,7 @@ export const DefaultSaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element | n
 export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element | null;
 
 // @alpha (undocumented)
-export const DefaultShareButton: React_2.ForwardRefExoticComponent<Pick<IShareButtonProps & WrappedComponentProps<"intl">, "onShareButtonClick"> & {
-    forwardedRef?: React_2.RefObject<any> | ((instance: any) => void) | null | undefined;
-} & React_2.RefAttributes<any>> & {
+export const DefaultShareButton: React_2.FC<WithIntlProps<IShareButtonProps & WrappedComponentProps<"intl">>> & {
     WrappedComponent: React_2.ComponentType<IShareButtonProps & WrappedComponentProps<"intl">>;
 };
 

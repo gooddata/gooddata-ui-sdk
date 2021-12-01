@@ -78,7 +78,7 @@
     "kpiAlertDialog.emailMe": "Schicken Sie mir eine E-Mail",
     "kpiAlertDialog.emailMeWhen": "{emailMe}, wenn dieser KPI ist",
     "kpiAlertDialog.emailInfo": "E-Mail wird gesendet an {userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>Diese Zahl ist nicht gültig.</strong><br />Prüfen Sie sie nach und versuchen Sie es noch einmal.",
+    "kpiAlertDialog.invalidNumber": "<strong>Diese Zahl ist nicht gültig.</strong>Prüfen Sie sie nach und versuchen Sie es noch einmal.",
     "kpiAlertDialog.filtersDiffer": "Der KPI wird jetzt anders gefiltert als beim Einrichten des Alarms.",
     "kpiAlertDialog.filtersApply": "Alarmfilter auf Dashboard anwenden",
     "kpiAlertDialog.savingFailed": "Speichern des Alarms fehlgeschlagen. Bitte versuchen Sie es noch einmal.",
@@ -125,5 +125,18 @@
     "widget.options.menu.exportToCSV": "Als CSV exportieren",
     "widget.options.menu.exportToXLSX": "Nach XLSX exportieren",
     "dashboard.error.empty.heading": "Dieses Dashboard ist leer",
-    "dashboard.error.empty.text": "Alle Betrachtungen wurden entfernt."
+    "dashboard.error.empty.text": "Alle Betrachtungen wurden entfernt.",
+    "attributesDropdown.placeholder": "Sucht…",
+    "attributesDropdown.noData": "Dieses Attribut hat keinen Wert.",
+    "attributesDropdown.configuration": "Konfiguration",
+    "attributesDropdown.itemsFiltered": "Elemente wurden gefiltert",
+    "attributesDropdown.allItemsFiltered": "Alle Elemente sind ausgefiltert.",
+    "attributesDropdown.itemsFiltered.tooltip": "Elemente wurden nach: <strong>{filters}</strong> gefiltert",
+    "attributesDropdown.save": "Speichern",
+    "attributesDropdown.filterBy": "Filtern nach",
+    "attributesDropdown.displayValuesAs": "Werte anzeigen als",
+    "attributesDropdown.attributeNameWithData": "mit Daten von",
+    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> kann nicht nach <strong>{parentTitle}</strong> gefiltert werden. Es besteht keine Verbindung zwischen den Filterattributen und dem Datenmodell.",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ist bereits durch <strong>{childTitle}</strong> gefiltert, filtern Sie direkt oder durch andere Filter.",
+    "attributesDropdown.removeTooltip": "Vom Dashboard entfernen"
 }
