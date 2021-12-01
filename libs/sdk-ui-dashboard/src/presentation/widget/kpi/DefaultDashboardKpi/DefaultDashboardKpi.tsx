@@ -5,7 +5,9 @@ import { IDashboardKpiProps } from "../types";
 import { DefaultDashboardKpiWithDrills } from "./DefaultDashboardKpiWithDrills";
 
 /**
- * @internal
+ * Default implementation of the Dashboard KPI widget.
+ *
+ * @public
  */
 export const DefaultDashboardKpi = (props: IDashboardKpiProps): JSX.Element => {
     return <DefaultDashboardKpiWithDrills {...props} />;
