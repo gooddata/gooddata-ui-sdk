@@ -73,13 +73,7 @@ export {
     ExecutionFactoryUpgradingToExecByReference,
 } from "./toolkit/execution";
 
-export {
-    InMemoryPaging,
-    ServerPaging,
-    IServerPagingResult,
-    IServerPagingParams,
-    enhanceWithAll,
-} from "./toolkit/paging";
+export { InMemoryPaging, ServerPaging, IServerPagingResult, IServerPagingParams } from "./toolkit/paging";
 export { validatePluginUrlIsSane } from "./toolkit/pluginUrlValidation";
 
 export { customBackend } from "./customBackend";

@@ -493,9 +493,6 @@ export function dummyBackendEmptyData(): IAnalyticalBackend;
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
-// @internal
-export function enhanceWithAll<TItem, TResource extends Omit<IPagedResource<TItem>, "all" | "allSorted">>(pagedResource: TResource): TResource & IPagedResource<TItem>;
-
 // @alpha (undocumented)
 export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) => IExecutionFactory;
 
