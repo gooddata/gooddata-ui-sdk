@@ -1557,7 +1557,7 @@ export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterP
 // @alpha
 export const DefaultDashboardDateFilter: (props: IDashboardDateFilterProps) => JSX.Element;
 
-// @internal (undocumented)
+// @public
 export const DefaultDashboardInsight: (props: IDashboardInsightProps) => JSX.Element;
 
 // @alpha (undocumented)
@@ -1566,7 +1566,7 @@ export const DefaultDashboardInsightMenu: (props: IDashboardInsightMenuProps) =>
 // @internal (undocumented)
 export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
 
-// @internal (undocumented)
+// @public
 export const DefaultDashboardKpi: (props: IDashboardKpiProps) => JSX.Element;
 
 // @alpha (undocumented)

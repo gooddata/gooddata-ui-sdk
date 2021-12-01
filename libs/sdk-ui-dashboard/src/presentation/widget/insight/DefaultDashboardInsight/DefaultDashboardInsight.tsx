@@ -5,7 +5,9 @@ import { IDashboardInsightProps } from "../types";
 import { DashboardInsightWithDrillDialog } from "./DashboardInsightWithDrillDialog";
 
 /**
- * @internal
+ * Default implementation of the Dashboard Insight widget.
+ *
+ * @public
  */
 export const DefaultDashboardInsight = (props: IDashboardInsightProps): JSX.Element => {
     return <DashboardInsightWithDrillDialog {...props} />;
