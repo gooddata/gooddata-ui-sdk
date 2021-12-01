@@ -1,8 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
 import {
-    IWorkspaceCatalog,
-    IWorkspaceCatalogFactory,
-    IWorkspaceCatalogFactoryOptions,
     CatalogItem,
     CatalogItemType,
     ICatalogFact,
@@ -12,8 +9,11 @@ import {
     isCatalogAttribute,
     isCatalogFact,
     isCatalogMeasure,
+    IWorkspaceCatalog,
+    IWorkspaceCatalogFactory,
+    IWorkspaceCatalogFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
-import { IdentifierRef, isUriRef, ObjRef } from "@gooddata/sdk-model";
+import { IdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
 import { TigerWorkspaceCatalog } from "./catalog";
@@ -23,7 +23,7 @@ import flatMap from "lodash/flatMap";
 import uniqBy from "lodash/uniqBy";
 import sortBy from "lodash/sortBy";
 import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
-import invariant from "ts-invariant";
+import { addRsqlFilterToParams, tagsToRsqlFilter } from "./rsqlFilter";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
@@ -108,35 +108,33 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         return undefined;
     };
 
-    private tagsToIdentifiers = (tags: ObjRef[]): string[] => {
-        return tags.map((ref) => {
-            // Tags cannot be accessed by any separate endpoint, so it doesn't make sense to reference them by uri.
-            // We will likely change the tag type signature from ObjRef to plain string in the future.
-            invariant(!isUriRef(ref), "Tags cannot be referenced by uri!");
-            return ref.identifier;
-        });
-    };
-
     private loadAttributesAndDates = async (
         loadAttributes: boolean,
         loadDateDataSets: boolean,
     ): Promise<CatalogItem[]> => {
-        const tags = this.tagsToIdentifiers(this.options.includeTags);
+        const rsqlTagFilter = tagsToRsqlFilter(this.options);
+
         return this.authCall((client) =>
-            loadAttributesAndDateDatasets(client, this.workspace, tags, loadAttributes, loadDateDataSets),
+            loadAttributesAndDateDatasets(
+                client,
+                this.workspace,
+                rsqlTagFilter,
+                loadAttributes,
+                loadDateDataSets,
+            ),
         );
     };
 
     private loadMeasures = async (): Promise<ICatalogMeasure[]> => {
-        const tags = this.tagsToIdentifiers(this.options.includeTags);
+        const rsqlTagFilter = tagsToRsqlFilter(this.options);
+        const params = addRsqlFilterToParams({ workspaceId: this.workspace }, rsqlTagFilter);
+
         const measures = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
                 client.workspaceObjects.getAllEntitiesMetrics,
-                {
-                    workspaceId: this.workspace,
-                },
-                { query: { tags: tags.join(",") }, headers: ValidateRelationsHeader },
+                params,
+                { headers: ValidateRelationsHeader },
             )
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then(MetadataUtilities.filterValidEntities);
@@ -146,13 +144,14 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadFacts = async (): Promise<ICatalogFact[]> => {
-        const tags = this.tagsToIdentifiers(this.options.includeTags);
+        const rsqlTagFilter = tagsToRsqlFilter(this.options);
+        const params = addRsqlFilterToParams({ workspaceId: this.workspace }, rsqlTagFilter);
+
         const facts = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
                 client.workspaceObjects.getAllEntitiesFacts,
-                { workspaceId: this.workspace },
-                { query: { tags: tags.join(",") } },
+                params,
             ).then(MetadataUtilities.mergeEntitiesResults);
         });
 

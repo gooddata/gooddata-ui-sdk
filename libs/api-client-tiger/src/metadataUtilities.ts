@@ -40,6 +40,7 @@ function createOptionsForPage(page: number, options: MetadataGetEntitiesOptions)
  */
 export type MetadataGetEntitiesParams = {
     workspaceId: string;
+    filter?: string;
 };
 
 /**

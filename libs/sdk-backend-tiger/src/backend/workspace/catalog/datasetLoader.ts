@@ -1,12 +1,12 @@
 // (C) 2019-2021 GoodData Corporation
 
 import {
-    JsonApiAttributeOutList,
     ITigerClient,
-    JsonApiLabelOutWithLinks,
+    JsonApiAttributeOutList,
     JsonApiAttributeOutWithLinks,
-    JsonApiLabelLinkage,
     JsonApiDatasetOutWithLinks,
+    JsonApiLabelLinkage,
+    JsonApiLabelOutWithLinks,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
@@ -16,6 +16,7 @@ import {
     convertDateAttribute,
     convertDateDataset,
 } from "../../../convertors/fromBackend/CatalogConverter";
+import { addRsqlFilterToParams } from "./rsqlFilter";
 
 function lookupRelatedObject(
     included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,
@@ -120,7 +121,7 @@ function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDa
 export async function loadAttributesAndDateDatasets(
     client: ITigerClient,
     workspaceId: string,
-    includeObjectWithTags: string[],
+    rsqlFilter: string,
     loadAttributes?: boolean,
     loadDateDatasets?: boolean,
 ): Promise<CatalogItem[]> {
@@ -128,11 +129,13 @@ export async function loadAttributesAndDateDatasets(
     if (loadDateDatasets) {
         includeObjects.push("datasets");
     }
+    const params = addRsqlFilterToParams({ workspaceId }, rsqlFilter);
+
     const attributes = await MetadataUtilities.getAllPagesOf(
         client,
         client.workspaceObjects.getAllEntitiesAttributes,
-        { workspaceId },
-        { query: { include: includeObjects.join(","), tags: includeObjectWithTags.join(",") } },
+        params,
+        { query: { include: includeObjects.join(",") } },
     ).then(MetadataUtilities.mergeEntitiesResults);
 
     const catalogItems: CatalogItem[] = [];
