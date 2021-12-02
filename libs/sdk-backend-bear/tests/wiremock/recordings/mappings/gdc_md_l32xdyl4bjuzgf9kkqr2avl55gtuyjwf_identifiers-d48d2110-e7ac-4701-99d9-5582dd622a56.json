@@ -1,0 +1,40 @@
+{
+    "id": "d48d2110-e7ac-4701-99d9-5582dd622a56",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_identifiers",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/identifiers",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"identifierToUri\":[\"label.product.id.name\"]}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"identifiers\":[{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055\",\"identifier\":\"label.product.id.name\"}]}",
+        "headers": {
+            "date": "Thu, 02 Dec 2021 08:41:33 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "17",
+            "X-GDC-REQUEST": "wWzI95JubG7ijv2x",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "d48d2110-e7ac-4701-99d9-5582dd622a56",
+    "persistent": true,
+    "insertionIndex": 14
+}

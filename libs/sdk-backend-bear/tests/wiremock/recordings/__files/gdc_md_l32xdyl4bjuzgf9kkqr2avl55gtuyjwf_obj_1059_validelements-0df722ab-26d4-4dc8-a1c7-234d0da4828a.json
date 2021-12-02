@@ -1,0 +1,133 @@
+{
+    "validElements": {
+        "items": [
+            {
+                "element": {
+                    "title": "14 West",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428",
+                    "title": "1-800 Postcards"
+                }
+            },
+            {
+                "element": {
+                    "title": "1-800 We Answer",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874"
+                }
+            },
+            {
+                "element": {
+                    "title": "1st in Video - Music World",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431",
+                    "title": "2 Wheel Bikes"
+                }
+            },
+            {
+                "element": {
+                    "title": "352 Media Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433"
+                }
+            },
+            {
+                "element": {
+                    "title": "3balls.com",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1435",
+                    "title": "3dCart Shopping Cart Software"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1436",
+                    "title": "49er Communications"
+                }
+            },
+            {
+                "element": {
+                    "title": "614 Media Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1438"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1439",
+                    "title": "720 Strategies"
+                }
+            },
+            {
+                "element": {
+                    "title": "7-Eleven",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1440"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4513",
+                    "title": "A10 Clinical Solutions"
+                }
+            },
+            {
+                "element": {
+                    "title": "A1 Pool Parts",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2888"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=16",
+                    "title": "Aaron's Sales and Lease"
+                }
+            },
+            {
+                "element": {
+                    "title": "Aaron's Sales and Lease Ownership",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1446"
+                }
+            },
+            {
+                "element": {
+                    "title": "Abacus 24-7",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1448"
+                }
+            },
+            {
+                "element": {
+                    "title": "Able Equipment Rental",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2893"
+                }
+            },
+            {
+                "element": {
+                    "title": "Abraxas",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1451"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1452",
+                    "title": "Absolute Concrete Construction"
+                }
+            }
+        ],
+        "elementsMeta": {
+            "attributeDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+            "attribute": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
+            "order": "asc",
+            "filter": ""
+        },
+        "paging": { "offset": "0", "total": "2952", "count": 20 }
+    }
+}

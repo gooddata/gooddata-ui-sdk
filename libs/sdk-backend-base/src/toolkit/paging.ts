@@ -1,6 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
+import range from "lodash/range";
+import flatMap from "lodash/flatMap";
 
 /**
  * This implementation of {@link @gooddata/sdk-backend-spi#IPagedResource} pages over a list of items
@@ -55,45 +57,94 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
 }
 
 /**
- * Given a paged result, this function will retrieve all pages from the backend concatenated to a single array.
- *
- * @param pagedResource - the paged resource to get all the pages of
+ * @internal
  */
-async function getAllPagesOfInner<T>(
-    pagedResource: Omit<IPagedResource<T>, "all" | "allSorted">,
-): Promise<T[]> {
-    const results: T[] = [];
-    const pageSize = pagedResource.limit;
-    // if the paged resource is already at the 0 offset, use it directly to save a duplicate request
-    let currentPage = pagedResource.offset !== 0 ? await pagedResource.goTo(0) : pagedResource;
-
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-        results.push(...currentPage.items);
-
-        if (currentPage.items.length < pageSize) {
-            return results;
-        }
-        currentPage.items.sort();
-
-        currentPage = await currentPage.next();
-    }
+export interface IServerPagingResult<T> {
+    items: T[];
+    totalCount: number;
 }
 
 /**
- * Given a paged result, this function will enhance it with the `all` implementation.
- *
- * @remarks TODO: FET-847 avoid the need for this function
- *
- * @param pagedResource - paged resource to enhance
  * @internal
  */
-export function enhanceWithAll<TItem, TResource extends Omit<IPagedResource<TItem>, "all" | "allSorted">>(
-    pagedResource: TResource,
-): TResource & IPagedResource<TItem> {
-    return {
-        ...pagedResource,
-        all: () => getAllPagesOfInner(pagedResource),
-        allSorted: (compareFn) => getAllPagesOfInner(pagedResource).then((items) => items.sort(compareFn)),
-    };
+export type IServerPagingParams = {
+    offset: number;
+    limit: number;
+};
+
+/**
+ * Common implementation of the {@link @gooddata/sdk-backend-spi#IPagedResource} for the server-side paging.
+ *
+ * @internal
+ */
+export class ServerPaging<T> implements IPagedResource<T> {
+    public static async for<TItem>(
+        getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<TItem>>,
+        limit = 50,
+        offset = 0,
+    ): Promise<IPagedResource<TItem>> {
+        invariant(offset >= 0, `paging offset must be non-negative, got: ${offset}`);
+        invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
+        const { totalCount, items } = await getData({ limit, offset });
+        invariant(totalCount, `total count must be specified, got: ${totalCount}`);
+        return new ServerPaging(getData, limit, offset, totalCount, items);
+    }
+
+    constructor(
+        protected readonly getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>,
+        public readonly limit = 50,
+        public readonly offset = 0,
+        public readonly totalCount: number,
+        public readonly items: T[],
+    ) {
+        this.offset = Math.min(totalCount, offset);
+    }
+
+    public async next(): Promise<IPagedResource<T>> {
+        // No items = we are on the last page.
+        if (this.items.length === 0) {
+            return this;
+        }
+
+        const pageData = await this.getData({ limit: this.limit, offset: this.offset + this.limit });
+        return new ServerPaging(
+            this.getData,
+            this.limit,
+            this.offset + this.limit,
+            this.totalCount,
+            pageData.items,
+        );
+    }
+
+    public async goTo(pageIndex: number): Promise<IPagedResource<T>> {
+        const offset = pageIndex * this.limit;
+        const pageData = await this.getData({ limit: this.limit, offset });
+        return new ServerPaging(this.getData, this.limit, offset, this.totalCount, pageData.items);
+    }
+
+    public async all(): Promise<T[]> {
+        const results: T[] = [];
+        const maxRequests = 6;
+        const allPagesToLoad = range(0, this.totalCount / this.limit);
+
+        // if the paged resource is already at the 0 offset, use it directly to save a duplicate request
+        if (this.offset === 0) {
+            results.push(...this.items);
+            allPagesToLoad.shift();
+        }
+
+        while (allPagesToLoad.length > 0) {
+            const pagesToLoad = allPagesToLoad.slice(0, maxRequests);
+            allPagesToLoad.splice(0, maxRequests);
+            const loadedPages = await Promise.all(pagesToLoad.map((page) => this.goTo(page)));
+            results.push(...flatMap(loadedPages, (page) => page.items));
+        }
+
+        return results;
+    }
+
+    public async allSorted(compareFn: (a: T, b: T) => number): Promise<T[]> {
+        const all = await this.all();
+        return all.sort(compareFn);
+    }
 }

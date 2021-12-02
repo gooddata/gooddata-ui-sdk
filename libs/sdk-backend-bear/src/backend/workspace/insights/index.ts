@@ -35,7 +35,7 @@ import { objRefToUri, objRefsToUris, getObjectIdFromUri, updateUserMap } from ".
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { InsightReferencesQuery } from "./insightReferences";
 import { appendFilters } from "./filterMerging";
-import { enhanceWithAll } from "@gooddata/sdk-backend-base";
+import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { getVisualizationUserUris } from "../../../utils/metadata";
 
 export class BearWorkspaceInsights implements IWorkspaceInsightsService {
@@ -127,68 +127,50 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     ): Promise<IInsightsQueryResult> => {
         const mergedOptions = { ...options, getTotalCount: true };
         const defaultLimit = 50;
-        const {
-            items: visualizations,
-            paging: { count, offset, totalCount },
-        } = await this.authCall((sdk) =>
-            sdk.md.getObjectsByQueryWithPaging<GdcVisualizationObject.IVisualization>(this.workspace, {
-                category: "visualizationObject",
-                ...mergedOptions,
-                // the limit must be specified at all times, otherwise we get 400 (RAIL-3557)
-                limit: mergedOptions.limit ?? defaultLimit,
-            }),
+
+        return ServerPaging.for(
+            async ({ limit, offset }) => {
+                const data = await this.authCall((sdk) =>
+                    sdk.md.getObjectsByQueryWithPaging<GdcVisualizationObject.IVisualization>(
+                        this.workspace,
+                        {
+                            category: "visualizationObject",
+                            ...mergedOptions,
+                            // the limit must be specified at all times, otherwise we get 400 (RAIL-3557)
+                            limit,
+                            offset,
+                        },
+                    ),
+                );
+
+                const {
+                    items,
+                    paging: { totalCount },
+                } = data;
+
+                // only load the user data if explicitly asked to do so
+                const updatedUserMap = options.loadUserData
+                    ? await updateUserMap(userMap, flatMap(items, getVisualizationUserUris), this.authCall)
+                    : userMap;
+
+                const insights = items.map((visualization) =>
+                    convertVisualization(
+                        visualization,
+                        visualizationClassUrlByVisualizationClassUri[
+                            visualization.visualizationObject.content.visualizationClass.uri
+                        ],
+                        updatedUserMap,
+                    ),
+                );
+
+                return {
+                    items: insights,
+                    totalCount: totalCount!,
+                };
+            },
+            mergedOptions.limit ?? defaultLimit,
+            mergedOptions.offset,
         );
-
-        // only load the user data if explicitly asked to do so
-        const updatedUserMap = options.loadUserData
-            ? await updateUserMap(userMap, flatMap(visualizations, getVisualizationUserUris), this.authCall)
-            : userMap;
-
-        const insights = visualizations.map((visualization) =>
-            convertVisualization(
-                visualization,
-                visualizationClassUrlByVisualizationClassUri[
-                    visualization.visualizationObject.content.visualizationClass.uri
-                ],
-                updatedUserMap,
-            ),
-        );
-
-        const goTo = (index: number) =>
-            index * count < totalCount!
-                ? this.getInsightsInner(
-                      { ...options, offset: index * count },
-                      visualizationClassUrlByVisualizationClassUri,
-                      updatedUserMap,
-                  )
-                : Promise.resolve(emptyResult);
-
-        const emptyResult: IInsightsQueryResult = enhanceWithAll({
-            items: [],
-            limit: count,
-            offset: totalCount!,
-            totalCount: totalCount!,
-            next: () => Promise.resolve(emptyResult),
-            goTo,
-        });
-
-        const hasNextPage = offset + count < totalCount!;
-
-        return enhanceWithAll({
-            items: insights,
-            limit: count,
-            offset,
-            totalCount: totalCount!,
-            next: hasNextPage
-                ? () =>
-                      this.getInsightsInner(
-                          { ...options, offset: offset + count },
-                          visualizationClassUrlByVisualizationClassUri,
-                          updatedUserMap,
-                      )
-                : () => Promise.resolve(emptyResult),
-            goTo,
-        });
     };
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {

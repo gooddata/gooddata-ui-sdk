@@ -493,9 +493,6 @@ export function dummyBackendEmptyData(): IAnalyticalBackend;
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
-// @internal
-export function enhanceWithAll<TItem, TResource extends Omit<IPagedResource<TItem>, "all" | "allSorted">>(pagedResource: TResource): TResource & IPagedResource<TItem>;
-
 // @alpha (undocumented)
 export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) => IExecutionFactory;
 
@@ -629,6 +626,20 @@ export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> impl
     properties: (valueOrUpdateCallback: ValueOrUpdateCallback<VisualizationProperties | undefined>) => this;
     // (undocumented)
     protected validator?: ((item: Partial<IInsightWidget>) => void) | undefined;
+}
+
+// @internal (undocumented)
+export type IServerPagingParams = {
+    offset: number;
+    limit: number;
+};
+
+// @internal (undocumented)
+export interface IServerPagingResult<T> {
+    // (undocumented)
+    items: T[];
+    // (undocumented)
+    totalCount: number;
 }
 
 // @alpha
@@ -811,6 +822,31 @@ export type ResultProviderContext = CustomCallContext & {
 
 // @alpha (undocumented)
 export type SecuritySettingsDecoratorFactory = (securitySettings: ISecuritySettingsService) => ISecuritySettingsService;
+
+// @internal
+export class ServerPaging<T> implements IPagedResource<T> {
+    constructor(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>, limit: number, offset: number, totalCount: number, items: T[]);
+    // (undocumented)
+    all(): Promise<T[]>;
+    // (undocumented)
+    allSorted(compareFn: (a: T, b: T) => number): Promise<T[]>;
+    // (undocumented)
+    static for<TItem>(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<TItem>>, limit?: number, offset?: number): Promise<IPagedResource<TItem>>;
+    // (undocumented)
+    protected readonly getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>;
+    // (undocumented)
+    goTo(pageIndex: number): Promise<IPagedResource<T>>;
+    // (undocumented)
+    readonly items: T[];
+    // (undocumented)
+    readonly limit: number;
+    // (undocumented)
+    next(): Promise<IPagedResource<T>>;
+    // (undocumented)
+    readonly offset: number;
+    // (undocumented)
+    readonly totalCount: number;
+}
 
 // @beta
 export type SettingsWrapper = (settings: IWorkspaceSettings) => IWorkspaceSettings;

@@ -1,0 +1,33 @@
+{
+    "id": "fce9f345-10c7-4261-afcc-dc09c47eb19c",
+    "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_groups",
+    "request": {
+        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/groups",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"catalogGroups\":[]}",
+        "headers": {
+            "date": "Thu, 02 Dec 2021 08:41:42 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "34",
+            "X-GDC-REQUEST": "d1n6DZ25VU87lTwa",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "fce9f345-10c7-4261-afcc-dc09c47eb19c",
+    "persistent": true,
+    "insertionIndex": 28
+}

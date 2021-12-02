@@ -1,6 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 import { ElementsRequest, ElementsRequestSortOrderEnum } from "@gooddata/api-client-tiger";
-import { enhanceWithAll, InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { ServerPaging, InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     IElementsQueryFactory,
     IElementsQuery,
@@ -78,79 +78,58 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     }
 
     public async query(): Promise<IElementsQueryResult> {
-        return this.queryWorker(this.offset, this.limit, this.options);
+        return this.queryWorker(this.options);
     }
 
-    private async queryWorker(
-        offset: number,
-        limit: number,
-        options: IElementsQueryOptions | undefined,
-    ): Promise<IElementsQueryResult> {
+    private async queryWorker(options: IElementsQueryOptions | undefined): Promise<IElementsQueryResult> {
         const { ref } = this;
         if (!isIdentifierRef(ref)) {
             throw new UnexpectedError("Tiger backend does not allow referencing objects by URI");
         }
-        const response = await this.authCall((client) => {
-            const elementsRequest: ElementsRequest = {
-                label: ref.identifier,
-                ...(options?.complement && { complementFilter: options.complement }),
-                ...(options?.filter && { patternFilter: options.filter }),
-                ...(options?.uris && { exactFilter: options.uris }),
-                ...(options?.order && {
-                    sortOrder:
-                        options.order === "asc"
-                            ? ElementsRequestSortOrderEnum.ASC
-                            : ElementsRequestSortOrderEnum.DESC,
-                }),
-            };
 
-            const elementsRequestWrapped: Parameters<
-                typeof client.labelElements.computeLabelElementsPost
-            >[0] = {
-                limit,
-                offset,
-                elementsRequest,
-                workspaceId: this.workspace,
-            };
+        return ServerPaging.for(
+            async ({ offset, limit }) => {
+                const response = await this.authCall((client) => {
+                    const elementsRequest: ElementsRequest = {
+                        label: ref.identifier,
+                        ...(options?.complement && { complementFilter: options.complement }),
+                        ...(options?.filter && { patternFilter: options.filter }),
+                        ...(options?.uris && { exactFilter: options.uris }),
+                        ...(options?.order && {
+                            sortOrder:
+                                options.order === "asc"
+                                    ? ElementsRequestSortOrderEnum.ASC
+                                    : ElementsRequestSortOrderEnum.DESC,
+                        }),
+                    };
 
-            return client.labelElements.computeLabelElementsPost(elementsRequestWrapped);
-        });
+                    const elementsRequestWrapped: Parameters<
+                        typeof client.labelElements.computeLabelElementsPost
+                    >[0] = {
+                        limit: limit,
+                        offset: offset,
+                        elementsRequest,
+                        workspaceId: this.workspace,
+                    };
 
-        const { paging, elements } = response.data;
-        const { count, total, offset: serverOffset } = paging;
-        const hasNextPage = serverOffset + count < total;
+                    return client.labelElements.computeLabelElementsPost(elementsRequestWrapped);
+                });
 
-        const goTo = (pageIndex: number) => {
-            const hasRequestedPage = pageIndex * count < total;
-            return hasRequestedPage
-                ? this.queryWorker(pageIndex * count, limit, options)
-                : Promise.resolve(emptyResult);
-        };
+                const { paging, elements } = response.data;
 
-        const emptyResult: IElementsQueryResult = enhanceWithAll({
-            items: [],
-            limit,
-            offset,
-            totalCount: 0,
-            next: () => Promise.resolve(emptyResult),
-            goTo,
-        });
-
-        return enhanceWithAll({
-            items: elements.map(
-                (element): IAttributeElement => ({
-                    title: element.title,
-                    uri: element.primaryTitle,
-                }),
-            ),
-            limit: count,
-            offset: serverOffset,
-            totalCount: total,
-            next: hasNextPage
-                ? () => this.queryWorker(offset + count, limit, options)
-                : () => Promise.resolve(emptyResult),
-            goTo,
-        });
+                return {
+                    items: elements.map(
+                        (element): IAttributeElement => ({
+                            title: element.title,
+                            uri: element.primaryTitle,
+                        }),
+                    ),
+                    totalCount: paging.total,
+                };
+            },
+            this.limit,
+            this.offset,
+        );
     }
 }
 

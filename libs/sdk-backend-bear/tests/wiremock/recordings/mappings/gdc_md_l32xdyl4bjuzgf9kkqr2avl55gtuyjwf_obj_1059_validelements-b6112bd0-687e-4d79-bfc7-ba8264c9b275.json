@@ -1,0 +1,40 @@
+{
+    "id": "b6112bd0-687e-4d79-bfc7-ba8264c9b275",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059/validElements?limit=2&offset=6",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"validElementsRequest\":{}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"validElements\":{\"elementsMeta\":{\"order\":\"asc\",\"filter\":\"\",\"attribute\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057\",\"attributeDisplayForm\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\"},\"paging\":{\"offset\":\"6\",\"count\":2,\"total\":\"4846\"},\"items\":[{\"element\":{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2875\",\"title\":\"1-888-OhioComp\"}},{\"element\":{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2871\",\"title\":\"1 Source Consulting\"}}]}}",
+        "headers": {
+            "date": "Thu, 02 Dec 2021 08:41:35 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "36",
+            "X-GDC-REQUEST": "j2IzHtSff3dcHBWP",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "b6112bd0-687e-4d79-bfc7-ba8264c9b275",
+    "persistent": true,
+    "insertionIndex": 17
+}

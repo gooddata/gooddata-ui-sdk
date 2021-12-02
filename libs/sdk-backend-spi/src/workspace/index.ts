@@ -190,6 +190,4 @@ export interface IWorkspacesQuery {
  *
  * @public
  */
-export interface IWorkspacesQueryResult extends IPagedResource<IAnalyticalWorkspace> {
-    search: string | undefined;
-}
+export type IWorkspacesQueryResult = IPagedResource<IAnalyticalWorkspace>;

@@ -28,7 +28,7 @@ import { BearAuthenticatedCallGuard } from "../../../../types/auth";
 import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { LimitingAfmFactory } from "./limitingAfmFactory";
-import { enhanceWithAll, InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 
 export class BearWorkspaceElements implements IElementsQueryFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -110,7 +110,7 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
             this.dateFilters,
         );
 
-        return this.queryWorker(this.offset, this.limit, this.options);
+        return this.queryWorker(this.options);
     }
 
     private async getObjectId(): Promise<string> {
@@ -122,44 +122,32 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
         return this.objectId;
     }
 
-    private async queryWorker(
-        offset: number,
-        limit: number,
-        options: IElementsQueryOptions | undefined,
-    ): Promise<IElementsQueryResult> {
-        const mergedOptions = { ...options, limit, offset, afm: this.limitingAfm };
+    private async queryWorker(options: IElementsQueryOptions | undefined): Promise<IElementsQueryResult> {
         const objectId = await this.getObjectId();
-        const data = await this.authCall((sdk) =>
-            sdk.md.getValidElements(this.workspace, objectId, mergedOptions),
+
+        return ServerPaging.for(
+            async ({ limit, offset }) => {
+                const params = {
+                    ...options,
+                    limit,
+                    offset,
+                    afm: this.limitingAfm,
+                };
+                const data = await this.authCall((sdk) =>
+                    sdk.md.getValidElements(this.workspace, objectId, params),
+                );
+
+                const { items, paging } = data.validElements;
+                const totalCount = Number.parseInt(paging.total, 10);
+
+                return {
+                    items: items.map(({ element }) => element),
+                    totalCount,
+                };
+            },
+            this.limit,
+            this.offset,
         );
-
-        const { items, paging } = data.validElements;
-        const total = Number.parseInt(paging.total, 10);
-        const serverOffset = Number.parseInt(paging.offset, 10);
-        const { count } = paging;
-
-        const hasNextPage = serverOffset + count < total;
-        const goTo = (pageIndex: number) => this.queryWorker(pageIndex * count, limit, options);
-
-        const emptyResult: IElementsQueryResult = enhanceWithAll({
-            items: [],
-            limit: count,
-            offset: total,
-            totalCount: total,
-            next: () => Promise.resolve(emptyResult),
-            goTo,
-        });
-
-        return enhanceWithAll({
-            items: items.map((element: { element: IAttributeElement }) => element.element),
-            limit: count,
-            offset: serverOffset,
-            totalCount: total,
-            next: hasNextPage
-                ? () => this.queryWorker(offset + count, limit, options)
-                : () => Promise.resolve(emptyResult),
-            goTo,
-        });
     }
 }
 

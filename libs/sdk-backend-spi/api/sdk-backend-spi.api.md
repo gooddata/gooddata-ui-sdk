@@ -2032,10 +2032,7 @@ export interface IWorkspacesQueryFactory {
 }
 
 // @public
-export interface IWorkspacesQueryResult extends IPagedResource<IAnalyticalWorkspace> {
-    // (undocumented)
-    search: string | undefined;
-}
+export type IWorkspacesQueryResult = IPagedResource<IAnalyticalWorkspace>;
 
 // @public
 export interface IWorkspaceStylingService {

@@ -1,0 +1,40 @@
+{
+    "id": "0df722ab-26d4-4dc8-a1c7-234d0da4828a",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059/validElements?limit=20&offset=0",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"validElementsRequest\":{\"restrictiveDefinitionContent\":{\"format\":\"grid\",\"filters\":[{\"expression\":\"(([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100] IN ([/gdc/md/referenceworkspace/obj/1100/elements?id=460495])) OVER [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064] TO [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057])\"}],\"grid\":{\"columns\":[],\"rows\":[{\"attribute\":{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"alias\":\"\",\"totals\":[]}}],\"metrics\":[],\"sort\":{\"columns\":[],\"rows\":[]},\"columnWidths\":[]}}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements-0df722ab-26d4-4dc8-a1c7-234d0da4828a.json",
+        "headers": {
+            "date": "Thu, 02 Dec 2021 08:41:32 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "82",
+            "X-GDC-REQUEST": "oFskkhCssuuaRLx0",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "0df722ab-26d4-4dc8-a1c7-234d0da4828a",
+    "persistent": true,
+    "insertionIndex": 11
+}
