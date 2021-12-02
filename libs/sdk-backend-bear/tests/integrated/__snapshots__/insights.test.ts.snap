@@ -1,23 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`bear insights should load empty insights for out-of-range page 1`] = `
-Object {
-  "all": [Function],
-  "allSorted": [Function],
-  "goTo": [Function],
+ServerPaging {
+  "getData": [Function],
   "items": Array [],
-  "limit": 23,
-  "next": [Function],
+  "limit": 50,
   "offset": 23,
   "totalCount": 23,
 }
 `;
 
 exports[`bear insights should load insights 1`] = `
-Object {
-  "all": [Function],
-  "allSorted": [Function],
-  "goTo": [Function],
+ServerPaging {
+  "getData": [Function],
   "items": Array [
     Object {
       "insight": Object {
@@ -1832,8 +1827,7 @@ Object {
       },
     },
   ],
-  "limit": 23,
-  "next": [Function],
+  "limit": 50,
   "offset": 0,
   "totalCount": 23,
 }

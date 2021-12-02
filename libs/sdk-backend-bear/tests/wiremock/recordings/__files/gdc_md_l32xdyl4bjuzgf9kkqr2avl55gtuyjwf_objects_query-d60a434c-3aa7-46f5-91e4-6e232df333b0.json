@@ -1,0 +1,1526 @@
+{
+    "objects": {
+        "items": [
+            {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "be5a1422542e4ef397e2ca225fc0c942",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267"
+                                                    }
+                                                }
+                                            },
+                                            "title": "_Snapshot [EOP]"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "4b54261af5064ffaa4f93f1916b45e27",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089"
+                                            },
+                                            "localIdentifier": "56971915069f4702a5f8948b4b479860"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "stack"
+                            }
+                        ],
+                        "properties": "{\"controls\":{\"grid\":{\"enabled\":false},\"legend\":{\"enabled\":false},\"xaxis\":{\"visible\":true},\"yaxis\":{\"visible\":true}}}",
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/6" }
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1275/explain" },
+                    "meta": {
+                        "category": "visualizationObject",
+                        "created": "2020-01-20 09:30:52",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1275",
+                        "title": "Test Bar Chart",
+                        "summary": "",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "identifier": "acCgxKCchupK",
+                        "tags": "",
+                        "isProduction": 1,
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "deprecated": "0",
+                        "updated": "2021-06-30 14:25:21"
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "title": "Amount",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "1d6f7c1c254e475d9fd708cd55e39273"
+                                        }
+                                    },
+                                    {
+                                        "measure": {
+                                            "title": "Won",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "92b17b262bff43718fad6271d95115ee"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "3d9849004f5b4bb5bf95232f291f152f",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            },
+                            {
+                                "localIdentifier": "columns",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "daa575d4a7024907839b01f6e7828b4c",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089"
+                                            },
+                                            "localIdentifier": "e51db698edec473e955fff19e1b29a19"
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"3d9849004f5b4bb5bf95232f291f152f\",\"direction\":\"asc\"}}]}"
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1281/explain" },
+                    "meta": {
+                        "created": "2020-02-17 13:06:25",
+                        "category": "visualizationObject",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1281",
+                        "title": "my insight",
+                        "tags": "",
+                        "identifier": "acFU8WHNe2JJ",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "summary": "",
+                        "updated": "2020-02-17 13:06:25",
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "isProduction": 1
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1282",
+                        "title": "my heatmap",
+                        "category": "visualizationObject",
+                        "created": "2020-02-17 13:07:45",
+                        "isProduction": 1,
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "deprecated": "0",
+                        "updated": "2020-02-17 13:07:45",
+                        "summary": "",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "identifier": "abKVazWBbnx5",
+                        "tags": ""
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1282/explain" },
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/10" },
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "title": "Amount",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "1d6f7c1c254e475d9fd708cd55e39273"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "localIdentifier": "view",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055"
+                                            },
+                                            "localIdentifier": "3d9849004f5b4bb5bf95232f291f152f"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "localIdentifier": "stack",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            },
+                                            "localIdentifier": "daa575d4a7024907839b01f6e7828b4c"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "content": {
+                        "properties": "{\"controls\":{\"legend\":{\"enabled\":false}}}",
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/8" },
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "1d6f7c1c254e475d9fd708cd55e39273",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271"
+                                                    }
+                                                }
+                                            },
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055"
+                                            },
+                                            "localIdentifier": "3d9849004f5b4bb5bf95232f291f152f"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            },
+                                            "localIdentifier": "daa575d4a7024907839b01f6e7828b4c"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "segment"
+                            }
+                        ]
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1283/explain" },
+                    "meta": {
+                        "updated": "2020-02-17 13:09:46",
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "isProduction": 1,
+                        "identifier": "aaTVeHZ6e5mB",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "tags": "",
+                        "summary": "",
+                        "title": "my treemap",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1283",
+                        "created": "2020-02-17 13:07:54",
+                        "category": "visualizationObject"
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1284/explain" },
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/9" },
+                        "properties": "{\"controls\":{\"dualAxis\":true,\"legend\":{\"enabled\":false},\"primaryChartType\":\"column\",\"secondaryChartType\":\"line\",\"secondary_yaxis\":{\"measures\":[\"92b17b262bff43718fad6271d95115ee\"]}}}",
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "title": "Amount",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271"
+                                                    },
+                                                    "computeRatio": false
+                                                }
+                                            },
+                                            "localIdentifier": "1d6f7c1c254e475d9fd708cd55e39273"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "localIdentifier": "secondary_measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    },
+                                                    "computeRatio": false
+                                                }
+                                            },
+                                            "title": "Won",
+                                            "localIdentifier": "92b17b262bff43718fad6271d95115ee"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "ddefdd501a0c401b8e87812df2ca3ef7",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/547"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "category": "visualizationObject",
+                        "created": "2020-02-17 13:08:50",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1284",
+                        "title": "my line chart",
+                        "summary": "",
+                        "identifier": "ab2Va4rig3Cf",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "tags": "",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "updated": "2020-02-17 13:09:29"
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/6" },
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "3e3446657936495984e00bef44476d58",
+                                            "title": "Amount",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            }
+                        ]
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1293/explain" },
+                    "meta": {
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "identifier": "abHzIZtmcyj1",
+                        "tags": "",
+                        "summary": "",
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "isProduction": 1,
+                        "updated": "2020-02-24 11:33:37",
+                        "created": "2020-02-24 11:33:30",
+                        "category": "visualizationObject",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1293",
+                        "title": "test 2"
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "title": "test",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1295",
+                        "category": "visualizationObject",
+                        "created": "2020-03-19 11:04:51",
+                        "updated": "2020-03-19 11:04:51",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "summary": "",
+                        "tags": "",
+                        "identifier": "aa7PW2uGdxgt",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494"
+                    },
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/6" },
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "b3ca9b6f12464d17bc28b9334abb3d46",
+                                            "title": "Amount",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            }
+                        ]
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1295/explain" }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1297/explain" },
+                    "content": {
+                        "filters": [
+                            {
+                                "relativeDateFilter": {
+                                    "granularity": "GDC.time.date",
+                                    "from": -29,
+                                    "to": 0,
+                                    "dataSet": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557" }
+                                }
+                            }
+                        ],
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "1efdcdfefecb465fb6bee274df905f35",
+                                            "title": "Sum of Days to Close",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "aggregation": "sum",
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104"
+                                                    }
+                                                }
+                                            },
+                                            "format": "#,##0.00"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "localIdentifier": "view",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "454ca1db05c646e291fad2dd0f7d4174",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/6" }
+                    },
+                    "meta": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1297",
+                        "title": "Test insight",
+                        "category": "visualizationObject",
+                        "created": "2020-07-28 06:51:01",
+                        "updated": "2021-06-01 20:54:13",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/0ccfd3aaf82911a03808a376a7b07830",
+                        "summary": "",
+                        "identifier": "aagaIzlMbxR9",
+                        "tags": "",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494"
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "title": "test",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1305",
+                        "category": "visualizationObject",
+                        "created": "2020-07-28 07:11:17",
+                        "updated": "2020-07-28 07:11:17",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/0ccfd3aaf82911a03808a376a7b07830",
+                        "summary": "",
+                        "identifier": "aaPaKGXCd61w",
+                        "contributor": "/gdc/account/profile/0ccfd3aaf82911a03808a376a7b07830",
+                        "tags": ""
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1305/explain" },
+                    "content": {
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "format": "#,##0",
+                                            "localIdentifier": "4ef30246921f4a418df162cae2120741",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070"
+                                                    },
+                                                    "aggregation": "count"
+                                                }
+                                            },
+                                            "title": "Count of Activity"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "localIdentifier": "view",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089"
+                                            },
+                                            "localIdentifier": "907cc40939644b50b9c01a4bb0763ca8"
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/6" }
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/6" },
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "a4cd2b878a7048c8b9811dabedae61a6",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "aggregation": "count",
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057"
+                                                    }
+                                                }
+                                            },
+                                            "title": "Count of Account",
+                                            "format": "#,##0"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1306/explain" },
+                    "meta": {
+                        "summary": "",
+                        "tags": "",
+                        "identifier": "ab7aDKZAbdBg",
+                        "contributor": "/gdc/account/profile/9bd543e5ec6f83db811c82d3102d0d83",
+                        "updated": "2020-07-28 07:12:16",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/9bd543e5ec6f83db811c82d3102d0d83",
+                        "category": "visualizationObject",
+                        "created": "2020-07-28 07:12:16",
+                        "title": "test",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1306"
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1307",
+                        "title": "Longer Table",
+                        "category": "visualizationObject",
+                        "created": "2020-07-29 17:19:24",
+                        "isProduction": 1,
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "deprecated": "0",
+                        "updated": "2021-06-28 09:34:46",
+                        "summary": "",
+                        "identifier": "aaii8nYodE4p",
+                        "tags": "",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494"
+                    },
+                    "content": {
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"6331f1126ad54235b2bc3147801a7a42\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "format": "#,##0.00",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102"
+                                                    },
+                                                    "aggregation": "sum"
+                                                }
+                                            },
+                                            "title": "Sum of Amount",
+                                            "localIdentifier": "736827c3354b4df1b4a14c29f41c460b"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "localIdentifier": "attribute",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "6331f1126ad54235b2bc3147801a7a42",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "efee91542a184cacbee736b0c0e61eda",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "localIdentifier": "columns",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "8734593581994749847508ffaf4ad8d4",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055"
+                                            },
+                                            "localIdentifier": "49f10f86354849eb9be459d72b25ff5e"
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "filters": [
+                            {
+                                "relativeDateFilter": {
+                                    "dataSet": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557" },
+                                    "granularity": "GDC.time.year"
+                                }
+                            }
+                        ]
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1307/explain" }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "updated": "2020-08-16 20:07:15",
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "identifier": "ab2pdQnmiqo5",
+                        "tags": "",
+                        "summary": "",
+                        "title": "Simple Sorted Table",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1308",
+                        "created": "2020-08-10 09:21:34",
+                        "category": "visualizationObject"
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1308/explain" },
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "properties": "{\"sortItems\":[{\"measureSortItem\":{\"direction\":\"desc\",\"locators\":[{\"attributeLocatorItem\":{\"attributeIdentifier\":\"d25f36e4914f4ed18ee6b057d18decd9\",\"element\":\"b332c3fda5774172a9d1b3f8e9ae0c8d\"}},{\"measureLocatorItem\":{\"measureIdentifier\":\"31c22194386b408aa80ab90b966e85a7\"}}]}}]}",
+                        "references": {
+                            "b332c3fda5774172a9d1b3f8e9ae0c8d": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088/elements?id=460487"
+                        },
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "computeRatio": false,
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    }
+                                                }
+                                            },
+                                            "title": "Won",
+                                            "localIdentifier": "31c22194386b408aa80ab90b966e85a7"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "localIdentifier": "attribute",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "3b196b9f8de04b61ba37762fa28fcf4f",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "localIdentifier": "columns",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "title": "test insight",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1311",
+                        "created": "2020-08-11 14:11:13",
+                        "category": "visualizationObject",
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "updated": "2020-08-12 10:29:13",
+                        "identifier": "acKwfO4Yg9yo",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "tags": "",
+                        "summary": ""
+                    },
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "properties": "{\"sortItems\":[{\"measureSortItem\":{\"direction\":\"desc\",\"locators\":[{\"attributeLocatorItem\":{\"attributeIdentifier\":\"6d0039fca1c44eb6ad56a2f45d244082\",\"element\":\"5d62c33831c14c68bc0fc2669692fefc\"}},{\"measureLocatorItem\":{\"measureIdentifier\":\"e5e7e8a107a64aab955b6daba4b2e9d0\"}}]}}]}",
+                        "references": {
+                            "5d62c33831c14c68bc0fc2669692fefc": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678"
+                        },
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "title": "Won",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "0ac5aaf1f86940e4aad88016ae6bb4f8"
+                                        }
+                                    },
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "e5e7e8a107a64aab955b6daba4b2e9d0",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271"
+                                                    }
+                                                }
+                                            },
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "6d0039fca1c44eb6ad56a2f45d244082",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ]
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1311/explain" }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "identifier": "abkBnI1zd28W",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "tags": "",
+                        "summary": "",
+                        "updated": "2020-08-12 10:59:20",
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "created": "2020-08-12 10:59:20",
+                        "category": "visualizationObject",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1313",
+                        "title": "test insight"
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1313/explain" },
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "format": "#,##0.00",
+                                            "localIdentifier": "40d82100ff864b13b3eae3f4b93b0d89",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102"
+                                                    },
+                                                    "aggregation": "sum"
+                                                }
+                                            },
+                                            "title": "Sum of Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063"
+                                            },
+                                            "localIdentifier": "c98ec98c664442e1b5bb583b28779dbb"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"acbb06aeeb454f93a98a018b4a7fe01c\",\"direction\":\"asc\"}}]}",
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "465345e2e6e048589b4568c7a77a23ee",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "aggregation": "sum",
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102"
+                                                    }
+                                                }
+                                            },
+                                            "title": "Sum of Amount",
+                                            "format": "#,##0.00"
+                                        }
+                                    },
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    }
+                                                }
+                                            },
+                                            "title": "Won",
+                                            "localIdentifier": "6dc42ca10dd4436e9543bfd3229f1224"
+                                        }
+                                    },
+                                    {
+                                        "measure": {
+                                            "format": "#,##0.00",
+                                            "localIdentifier": "604a13612d0b4b56976b2b88a892f6e0",
+                                            "title": "Sum of Velocity",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "aggregation": "sum",
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "localIdentifier": "attribute",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "acbb06aeeb454f93a98a018b4a7fe01c",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1361/explain" },
+                    "meta": {
+                        "title": "table with multiple measures",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1361",
+                        "created": "2021-06-01 22:16:33",
+                        "category": "visualizationObject",
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "isProduction": 1,
+                        "updated": "2021-06-01 22:16:33",
+                        "identifier": "aegg7T2lgUh7",
+                        "contributor": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+                        "tags": "",
+                        "summary": ""
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "updated": "2021-07-23 11:42:40",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "summary": "",
+                        "identifier": "aaA8OrDqeYbN",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "tags": "",
+                        "title": "Insight with own attribute filter",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1395",
+                        "category": "visualizationObject",
+                        "created": "2021-07-23 11:42:40"
+                    },
+                    "content": {
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "title": "Won",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "localIdentifier": "attribute",
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "filters": [
+                            {
+                                "positiveAttributeFilter": {
+                                    "displayForm": {
+                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089"
+                                    },
+                                    "in": [
+                                        "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088/elements?id=460490"
+                                    ]
+                                }
+                            }
+                        ],
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"c6155632b0624aec9fd7e44b8cc4c4c8\",\"direction\":\"asc\"}}]}"
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1395/explain" }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"c6155632b0624aec9fd7e44b8cc4c4c8\",\"direction\":\"asc\"}}]}",
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "title": "Won",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "filters": [
+                            {
+                                "absoluteDateFilter": {
+                                    "from": "2010-01-01",
+                                    "to": "2011-01-01",
+                                    "dataSet": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557" }
+                                }
+                            }
+                        ]
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1396/explain" },
+                    "meta": {
+                        "updated": "2021-07-23 11:43:28",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "identifier": "abQ8wcaMfKnD",
+                        "tags": "",
+                        "summary": "",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1396",
+                        "title": "Insight with own date filter",
+                        "created": "2021-07-23 11:43:28",
+                        "category": "visualizationObject"
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "updated": "2021-07-23 11:46:24",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "tags": "",
+                        "identifier": "acY8CSf4bjDP",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "summary": "",
+                        "title": "Insight with own ranking filter",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1401",
+                        "created": "2021-07-23 11:46:24",
+                        "category": "visualizationObject"
+                    },
+                    "content": {
+                        "filters": [
+                            {
+                                "rankingFilter": {
+                                    "operator": "TOP",
+                                    "value": 1,
+                                    "measures": [{ "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c" }]
+                                }
+                            }
+                        ],
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    }
+                                                }
+                                            },
+                                            "title": "Won",
+                                            "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            },
+                                            "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"c6155632b0624aec9fd7e44b8cc4c4c8\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" }
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1401/explain" }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1402/explain" },
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"c6155632b0624aec9fd7e44b8cc4c4c8\",\"direction\":\"asc\"}}]}",
+                        "filters": [
+                            {
+                                "measureValueFilter": {
+                                    "measure": { "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c" },
+                                    "condition": {
+                                        "comparison": {
+                                            "operator": "GREATER_THAN_OR_EQUAL_TO",
+                                            "value": 15000000.0
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    }
+                                                }
+                                            },
+                                            "title": "Won",
+                                            "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            },
+                                            "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "category": "visualizationObject",
+                        "created": "2021-07-23 11:46:59",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1402",
+                        "title": "Insight with own measure value filter",
+                        "summary": "",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "identifier": "aea8whgCavlB",
+                        "tags": "",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "updated": "2021-07-23 11:46:59"
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c",
+                                            "title": "Won, Closed: Jan 1, 2011 - Jan 1, 2012",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    },
+                                                    "filters": [
+                                                        {
+                                                            "absoluteDateFilter": {
+                                                                "to": "2012-01-01",
+                                                                "dataSet": {
+                                                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557"
+                                                                },
+                                                                "from": "2011-01-01"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8",
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"c6155632b0624aec9fd7e44b8cc4c4c8\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" }
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1405/explain" },
+                    "meta": {
+                        "updated": "2021-07-23 11:57:57",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "tags": "",
+                        "identifier": "abD8NTsMizAs",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "summary": "",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1405",
+                        "title": "Insight with all measures filtered by date",
+                        "created": "2021-07-23 11:57:57",
+                        "category": "visualizationObject"
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "content": {
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"c6155632b0624aec9fd7e44b8cc4c4c8\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "title": "Won, Closed: Jan 1, 2011 - Jan 1, 2012",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "filters": [
+                                                        {
+                                                            "absoluteDateFilter": {
+                                                                "from": "2011-01-01",
+                                                                "to": "2012-01-01",
+                                                                "dataSet": {
+                                                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557"
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "3c7ab737bafc47d89caf7bcf120e0a9c"
+                                        }
+                                    },
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270"
+                                                    }
+                                                }
+                                            },
+                                            "title": "Win Rate",
+                                            "localIdentifier": "9e71305775c54f329571d653d27f057d"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+                                            },
+                                            "localIdentifier": "c6155632b0624aec9fd7e44b8cc4c4c8"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ]
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1406/explain" },
+                    "meta": {
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "isProduction": 1,
+                        "updated": "2021-07-23 11:58:15",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "identifier": "acN8vxIwh5gI",
+                        "tags": "",
+                        "summary": "",
+                        "title": "Insight with some measures filtered by date",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1406",
+                        "created": "2021-07-23 11:58:15",
+                        "category": "visualizationObject"
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "title": "drillToAttributeUrl",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1419",
+                        "category": "visualizationObject",
+                        "created": "2021-08-10 14:52:45",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "author": "/gdc/account/profile/80dfc6d5ef7c239c518705973062c99b",
+                        "updated": "2021-08-10 14:52:45",
+                        "summary": "",
+                        "tags": "",
+                        "identifier": "acSQJgNjhBhi",
+                        "contributor": "/gdc/account/profile/80dfc6d5ef7c239c518705973062c99b"
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1419/explain" },
+                    "content": {
+                        "buckets": [
+                            {
+                                "localIdentifier": "measures",
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "8e874c44107d41809d0d5e7bbd1c19ff",
+                                            "title": "# Of Opportunities",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067"
+                                            },
+                                            "localIdentifier": "a75a78a7e2194c339b4f6b8694777803"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"a75a78a7e2194c339b4f6b8694777803\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" }
+                    }
+                }
+            },
+            {
+                "visualizationObject": {
+                    "meta": {
+                        "category": "visualizationObject",
+                        "created": "2021-08-30 13:57:48",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1447",
+                        "title": "Insight new",
+                        "summary": "",
+                        "identifier": "aclJqJXpbSQq",
+                        "contributor": "/gdc/account/profile/631415d2ebf493f582b2e6fc8c49a372",
+                        "tags": "",
+                        "updated": "2021-08-30 13:58:34",
+                        "isProduction": 1,
+                        "author": "/gdc/account/profile/631415d2ebf493f582b2e6fc8c49a372",
+                        "deprecated": "0"
+                    },
+                    "content": {
+                        "visualizationClass": { "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4" },
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "localIdentifier": "e0ac9104b73c4d729d2872dce656e41e",
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273"
+                                                    }
+                                                }
+                                            },
+                                            "title": "Probability"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            }
+                        ]
+                    },
+                    "links": { "explain": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1447/explain" }
+                }
+            }
+        ],
+        "paging": { "count": 23, "offset": 0, "totalCount": 23 }
+    }
+}

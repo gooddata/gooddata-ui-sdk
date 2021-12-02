@@ -1,0 +1,33 @@
+{
+    "id": "85af5643-8699-4535-b566-f370d40b311c",
+    "name": "gdc_account_profile_current",
+    "request": {
+        "url": "/gdc/account/profile/current",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 307,
+        "base64Body": "",
+        "headers": {
+            "location": "/gdc/account/profile/889bd5b237cc5af3e6c4749bdd551a8d",
+            "date": "Thu, 02 Dec 2021 08:41:30 GMT",
+            "X-GDC-REQUEST-TIME": "9",
+            "X-GDC-REQUEST": "6QITIZqzecLcQEwo",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "85af5643-8699-4535-b566-f370d40b311c",
+    "persistent": true,
+    "insertionIndex": 3
+}

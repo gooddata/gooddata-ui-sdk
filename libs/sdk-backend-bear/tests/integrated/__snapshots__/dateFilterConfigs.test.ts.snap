@@ -1,10 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`bear dateFilterConfigs should load date filter configs 1`] = `
-Object {
-  "all": [Function],
-  "allSorted": [Function],
-  "goTo": [Function],
+ServerPaging {
+  "getData": [Function],
   "items": Array [
     Object {
       "absoluteForm": Object {
@@ -150,21 +148,17 @@ Object {
       "selectedOption": "relative_this_month",
     },
   ],
-  "limit": 1,
-  "next": [Function],
+  "limit": 10,
   "offset": 0,
   "totalCount": 1,
 }
 `;
 
 exports[`bear dateFilterConfigs should load empty date filter configs for out-of-range page 1`] = `
-Object {
-  "all": [Function],
-  "allSorted": [Function],
-  "goTo": [Function],
+ServerPaging {
+  "getData": [Function],
   "items": Array [],
-  "limit": 1,
-  "next": [Function],
+  "limit": 10,
   "offset": 1,
   "totalCount": 1,
 }

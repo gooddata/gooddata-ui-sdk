@@ -1,0 +1,40 @@
+{
+    "id": "c417b3f6-d2dc-40dc-b6da-596582358e2a",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_get",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/objects/get",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"get\":{\"items\":[\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1071\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1082\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1074\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1076\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1080\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1065\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1078\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_get-c417b3f6-d2dc-40dc-b6da-596582358e2a.json",
+        "headers": {
+            "date": "Thu, 02 Dec 2021 08:41:42 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "290",
+            "X-GDC-REQUEST": "7evISaG8BpiJlEqP",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "c417b3f6-d2dc-40dc-b6da-596582358e2a",
+    "persistent": true,
+    "insertionIndex": 33
+}

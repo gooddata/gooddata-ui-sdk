@@ -1,0 +1,768 @@
+{
+    "objects": {
+        "items": [
+            {
+                "metric": {
+                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266/explain2" },
+                    "content": {
+                        "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009]",
+                        "tree": {
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "position": { "line": 1, "column": 21 },
+                                            "type": "function",
+                                            "value": "MAX",
+                                            "content": [
+                                                {
+                                                    "type": "fact object",
+                                                    "position": { "column": 25, "line": 1 },
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "position": { "column": 21, "line": 1 },
+                                    "type": "expression"
+                                },
+                                {
+                                    "type": "by",
+                                    "position": { "column": 78, "line": 1 },
+                                    "content": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "type": "attribute object",
+                                                    "position": { "column": 116, "line": 1 },
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009"
+                                                }
+                                            ],
+                                            "position": { "line": 1, "column": 81 },
+                                            "type": "all other"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "position": { "column": 14, "line": 1 },
+                            "type": "metric"
+                        },
+                        "format": "#,##0.00"
+                    },
+                    "meta": {
+                        "contributor": "/gdc/account/profile/0ccfd3aaf82911a03808a376a7b07830",
+                        "isProduction": 1,
+                        "title": "_Timeline [EOP]",
+                        "updated": "2020-07-28 06:52:29",
+                        "created": "2019-12-10 14:26:00",
+                        "summary": "",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "category": "metric",
+                        "tags": "",
+                        "deprecated": "0",
+                        "identifier": "abYgDBRagANw",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266"
+                    }
+                }
+            },
+            {
+                "metric": {
+                    "meta": {
+                        "created": "2019-12-10 14:26:00",
+                        "summary": "",
+                        "category": "metric",
+                        "tags": "",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
+                        "identifier": "abxgDICQav2J",
+                        "deprecated": "0",
+                        "contributor": "/gdc/account/profile/0ccfd3aaf82911a03808a376a7b07830",
+                        "isProduction": 1,
+                        "title": "_Snapshot [EOP]",
+                        "updated": "2020-07-28 06:52:29"
+                    },
+                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267/explain2" },
+                    "content": {
+                        "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] <= [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266]\n",
+                        "tree": {
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "value": "MAX",
+                                            "type": "function",
+                                            "position": { "line": 1, "column": 21 },
+                                            "content": [
+                                                {
+                                                    "type": "fact object",
+                                                    "position": { "column": 25, "line": 1 },
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "type": "expression",
+                                    "position": { "line": 1, "column": 21 }
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "position": { "line": 1, "column": 81 },
+                                            "type": "all other",
+                                            "content": [
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
+                                                    "type": "attribute object",
+                                                    "position": { "line": 1, "column": 116 }
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "type": "by",
+                                    "position": { "line": 1, "column": 78 }
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "position": { "column": 225, "line": 1 },
+                                            "type": "<=",
+                                            "content": [
+                                                {
+                                                    "position": { "line": 1, "column": 173 },
+                                                    "type": "fact object",
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105"
+                                                },
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266",
+                                                    "type": "metric object",
+                                                    "position": { "line": 1, "column": 228 }
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "position": { "column": 167, "line": 1 },
+                                    "type": "where"
+                                }
+                            ],
+                            "type": "metric",
+                            "position": { "column": 14, "line": 1 }
+                        },
+                        "format": "#,##0.00"
+                    }
+                }
+            },
+            {
+                "metric": {
+                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268/explain2" },
+                    "content": {
+                        "tree": {
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "value": "COUNT",
+                                            "type": "function",
+                                            "position": { "column": 21, "line": 1 },
+                                            "content": [
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+                                                    "position": { "line": 1, "column": 27 },
+                                                    "type": "attribute object"
+                                                },
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
+                                                    "type": "attribute object",
+                                                    "position": { "line": 1, "column": 80 }
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "type": "expression",
+                                    "position": { "line": 1, "column": 21 }
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "type": "=",
+                                            "position": { "line": 1, "column": 191 },
+                                            "content": [
+                                                {
+                                                    "position": { "line": 1, "column": 139 },
+                                                    "type": "fact object",
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105"
+                                                },
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
+                                                    "type": "metric object",
+                                                    "position": { "line": 1, "column": 193 }
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "type": "where",
+                                    "position": { "column": 133, "line": 1 }
+                                }
+                            ],
+                            "type": "metric",
+                            "position": { "line": 1, "column": 14 }
+                        },
+                        "expression": "SELECT COUNT([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066], [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
+                        "format": "#,##0.00"
+                    },
+                    "meta": {
+                        "created": "2019-12-10 14:26:01",
+                        "summary": "",
+                        "category": "metric",
+                        "tags": "",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "identifier": "abQgDWx4gOUu",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
+                        "deprecated": "0",
+                        "isProduction": 1,
+                        "contributor": "/gdc/account/profile/0ccfd3aaf82911a03808a376a7b07830",
+                        "title": "# Of Opportunities",
+                        "updated": "2020-07-28 06:52:29"
+                    }
+                }
+            },
+            {
+                "metric": {
+                    "content": {
+                        "tree": {
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
+                                            "type": "metric object",
+                                            "position": { "line": 1, "column": 21 }
+                                        }
+                                    ],
+                                    "position": { "line": 1, "column": 21 },
+                                    "type": "expression"
+                                },
+                                {
+                                    "type": "where",
+                                    "position": { "column": 73, "line": 1 },
+                                    "content": [
+                                        {
+                                            "type": "=",
+                                            "position": { "column": 130, "line": 1 },
+                                            "content": [
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
+                                                    "type": "attribute object",
+                                                    "position": { "column": 79, "line": 1 }
+                                                },
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495",
+                                                    "type": "attributeElement object",
+                                                    "position": { "line": 1, "column": 131 }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "position": { "column": 14, "line": 1 },
+                            "type": "metric"
+                        },
+                        "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
+                        "format": "#,##0.00"
+                    },
+                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269/explain2" },
+                    "meta": {
+                        "created": "2019-12-10 14:26:01",
+                        "summary": "",
+                        "tags": "",
+                        "category": "metric",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269",
+                        "identifier": "aa4gLlQhcmLO",
+                        "deprecated": "0",
+                        "contributor": "/gdc/account/profile/0ccfd3aaf82911a03808a376a7b07830",
+                        "isProduction": 1,
+                        "title": "# Of Opportunities Won",
+                        "updated": "2020-07-28 06:52:29"
+                    }
+                }
+            },
+            {
+                "metric": {
+                    "meta": {
+                        "summary": "",
+                        "created": "2019-12-10 14:26:01",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270",
+                        "identifier": "abZgFKGPaGYM",
+                        "deprecated": "0",
+                        "tags": "",
+                        "category": "metric",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "isProduction": 1,
+                        "contributor": "/gdc/account/profile/0ccfd3aaf82911a03808a376a7b07830",
+                        "updated": "2020-07-28 06:52:29",
+                        "title": "Win Rate"
+                    },
+                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270/explain2" },
+                    "content": {
+                        "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269] / [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268]",
+                        "tree": {
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269",
+                                                    "type": "metric object",
+                                                    "position": { "line": 1, "column": 21 }
+                                                },
+                                                {
+                                                    "position": { "column": 75, "line": 1 },
+                                                    "type": "metric object",
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268"
+                                                }
+                                            ],
+                                            "position": { "column": 73, "line": 1 },
+                                            "type": "/"
+                                        }
+                                    ],
+                                    "type": "expression",
+                                    "position": { "column": 73, "line": 1 }
+                                }
+                            ],
+                            "type": "metric",
+                            "position": { "column": 14, "line": 1 }
+                        },
+                        "format": "#,##0.0%"
+                    }
+                }
+            },
+            {
+                "metric": {
+                    "content": {
+                        "format": "$#,##0.00",
+                        "tree": {
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "position": { "column": 25, "line": 1 },
+                                                    "type": "fact object",
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102"
+                                                }
+                                            ],
+                                            "type": "function",
+                                            "position": { "line": 1, "column": 21 },
+                                            "value": "SUM"
+                                        }
+                                    ],
+                                    "type": "expression",
+                                    "position": { "column": 21, "line": 1 }
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "position": { "column": 136, "line": 1 },
+                                            "type": "=",
+                                            "content": [
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
+                                                    "position": { "column": 84, "line": 1 },
+                                                    "type": "fact object"
+                                                },
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
+                                                    "position": { "column": 138, "line": 1 },
+                                                    "type": "metric object"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "type": "where",
+                                    "position": { "column": 78, "line": 1 }
+                                }
+                            ],
+                            "position": { "line": 1, "column": 14 },
+                            "type": "metric"
+                        },
+                        "expression": "SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]"
+                    },
+                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271/explain2" },
+                    "meta": {
+                        "updated": "2019-12-10 14:26:02",
+                        "title": "Amount",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "isProduction": 1,
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                        "identifier": "aangOxLSeztu",
+                        "deprecated": "0",
+                        "category": "metric",
+                        "tags": "",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "summary": "",
+                        "created": "2019-12-10 14:26:02"
+                    }
+                }
+            },
+            {
+                "metric": {
+                    "meta": {
+                        "created": "2019-12-10 14:26:02",
+                        "summary": "",
+                        "tags": "",
+                        "category": "metric",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "identifier": "acugFHNJgsBy",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                        "deprecated": "0",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "isProduction": 1,
+                        "title": "Won",
+                        "updated": "2019-12-10 14:26:02"
+                    },
+                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272/explain2" },
+                    "content": {
+                        "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
+                        "tree": {
+                            "content": [
+                                {
+                                    "type": "expression",
+                                    "position": { "line": 1, "column": 21 },
+                                    "content": [
+                                        {
+                                            "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                                            "type": "metric object",
+                                            "position": { "column": 21, "line": 1 }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "type": "=",
+                                            "position": { "column": 130, "line": 1 },
+                                            "content": [
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
+                                                    "position": { "column": 79, "line": 1 },
+                                                    "type": "attribute object"
+                                                },
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495",
+                                                    "position": { "column": 131, "line": 1 },
+                                                    "type": "attributeElement object"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "position": { "line": 1, "column": 73 },
+                                    "type": "where"
+                                }
+                            ],
+                            "position": { "line": 1, "column": 14 },
+                            "type": "metric"
+                        },
+                        "format": "$#,##0.00"
+                    }
+                }
+            },
+            {
+                "metric": {
+                    "meta": {
+                        "updated": "2019-12-10 14:26:03",
+                        "title": "Probability",
+                        "isProduction": 1,
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273",
+                        "identifier": "abEgMnq5hyJQ",
+                        "deprecated": "0",
+                        "tags": "",
+                        "category": "metric",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "summary": "",
+                        "created": "2019-12-10 14:26:02"
+                    },
+                    "content": {
+                        "tree": {
+                            "position": { "column": 14, "line": 1 },
+                            "type": "metric",
+                            "content": [
+                                {
+                                    "type": "expression",
+                                    "position": { "column": 21, "line": 1 },
+                                    "content": [
+                                        {
+                                            "type": "function",
+                                            "position": { "column": 21, "line": 1 },
+                                            "value": "AVG",
+                                            "content": [
+                                                {
+                                                    "position": { "column": 25, "line": 1 },
+                                                    "type": "fact object",
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "where",
+                                    "position": { "column": 78, "line": 1 },
+                                    "content": [
+                                        {
+                                            "type": "=",
+                                            "position": { "column": 136, "line": 1 },
+                                            "content": [
+                                                {
+                                                    "position": { "line": 1, "column": 84 },
+                                                    "type": "fact object",
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105"
+                                                },
+                                                {
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
+                                                    "position": { "column": 138, "line": 1 },
+                                                    "type": "metric object"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "expression": "SELECT AVG([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
+                        "format": "#,##0.0%"
+                    },
+                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273/explain2" }
+                }
+            },
+            {
+                "metric": {
+                    "content": {
+                        "expression": "SELECT CASE WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2018 THEN -123400, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2019 THEN 36200, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2020 THEN 54800, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2021 THEN 48100 END WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] BETWEEN 2018 AND 2021",
+                        "tree": {
+                            "content": [
+                                {
+                                    "position": { "column": 21, "line": 1 },
+                                    "type": "expression",
+                                    "content": [
+                                        {
+                                            "type": "case",
+                                            "position": { "column": 21, "line": 1 },
+                                            "content": [
+                                                {
+                                                    "position": { "line": 1, "column": 26 },
+                                                    "type": "when",
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "type": "attribute object",
+                                                                    "position": { "line": 1, "column": 31 },
+                                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992"
+                                                                },
+                                                                {
+                                                                    "position": { "column": 84, "line": 1 },
+                                                                    "type": "number",
+                                                                    "value": "2018"
+                                                                }
+                                                            ],
+                                                            "position": { "column": 82, "line": 1 },
+                                                            "type": "="
+                                                        },
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "value": "123400",
+                                                                    "type": "number",
+                                                                    "position": { "column": 95, "line": 1 }
+                                                                }
+                                                            ],
+                                                            "position": { "line": 1, "column": 94 },
+                                                            "type": "neg"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "position": { "line": 1, "column": 159 },
+                                                            "type": "=",
+                                                            "content": [
+                                                                {
+                                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
+                                                                    "type": "attribute object",
+                                                                    "position": { "column": 108, "line": 1 }
+                                                                },
+                                                                {
+                                                                    "value": "2019",
+                                                                    "position": { "line": 1, "column": 161 },
+                                                                    "type": "number"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "position": { "column": 171, "line": 1 },
+                                                            "type": "number",
+                                                            "value": "36200"
+                                                        }
+                                                    ],
+                                                    "type": "when",
+                                                    "position": { "column": 103, "line": 1 }
+                                                },
+                                                {
+                                                    "type": "when",
+                                                    "position": { "line": 1, "column": 178 },
+                                                    "content": [
+                                                        {
+                                                            "position": { "line": 1, "column": 234 },
+                                                            "type": "=",
+                                                            "content": [
+                                                                {
+                                                                    "position": { "column": 183, "line": 1 },
+                                                                    "type": "attribute object",
+                                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992"
+                                                                },
+                                                                {
+                                                                    "type": "number",
+                                                                    "position": { "column": 236, "line": 1 },
+                                                                    "value": "2020"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "position": { "column": 246, "line": 1 },
+                                                            "type": "number",
+                                                            "value": "54800"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "position": { "column": 253, "line": 1 },
+                                                    "type": "when",
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
+                                                                    "position": { "column": 258, "line": 1 },
+                                                                    "type": "attribute object"
+                                                                },
+                                                                {
+                                                                    "value": "2021",
+                                                                    "position": { "line": 1, "column": 311 },
+                                                                    "type": "number"
+                                                                }
+                                                            ],
+                                                            "type": "=",
+                                                            "position": { "column": 309, "line": 1 }
+                                                        },
+                                                        {
+                                                            "value": "48100",
+                                                            "type": "number",
+                                                            "position": { "column": 321, "line": 1 }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "position": { "line": 1, "column": 388 },
+                                            "type": "between",
+                                            "content": [
+                                                {
+                                                    "position": { "line": 1, "column": 337 },
+                                                    "type": "attribute object",
+                                                    "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992"
+                                                },
+                                                {
+                                                    "value": "2018",
+                                                    "position": { "column": 396, "line": 1 },
+                                                    "type": "number"
+                                                },
+                                                {
+                                                    "type": "number",
+                                                    "position": { "column": 405, "line": 1 },
+                                                    "value": "2021"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "type": "where",
+                                    "position": { "line": 1, "column": 331 }
+                                }
+                            ],
+                            "position": { "line": 1, "column": 14 },
+                            "type": "metric"
+                        },
+                        "format": "#,##0.00"
+                    },
+                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274/explain2" },
+                    "meta": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274",
+                        "identifier": "aadpHDMBecIy",
+                        "deprecated": "0",
+                        "category": "metric",
+                        "tags": "",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "summary": "",
+                        "created": "2019-12-10 14:26:03",
+                        "updated": "2019-12-10 14:26:03",
+                        "title": "Sample XIRR",
+                        "isProduction": 1,
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358"
+                    }
+                }
+            },
+            {
+                "metric": {
+                    "content": {
+                        "tree": {
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "position": { "line": 1, "column": 21 },
+                                            "type": "metric object",
+                                            "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273"
+                                        }
+                                    ],
+                                    "position": { "column": 21, "line": 1 },
+                                    "type": "expression"
+                                }
+                            ],
+                            "position": { "line": 1, "column": 14 },
+                            "type": "metric"
+                        },
+                        "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273]",
+                        "format": "#,##0.00"
+                    },
+                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1446/explain2" },
+                    "meta": {
+                        "isProduction": 1,
+                        "contributor": "/gdc/account/profile/631415d2ebf493f582b2e6fc8c49a372",
+                        "unlisted": 1,
+                        "title": "Pokus",
+                        "updated": "2021-08-30 13:49:17",
+                        "created": "2021-08-30 13:49:17",
+                        "summary": "",
+                        "sharedWithSomeone": 0,
+                        "author": "/gdc/account/profile/631415d2ebf493f582b2e6fc8c49a372",
+                        "tags": "",
+                        "category": "metric",
+                        "deprecated": "0",
+                        "identifier": "ac8JqIWshxVJ",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1446"
+                    }
+                }
+            }
+        ],
+        "paging": { "count": 10, "offset": 0 }
+    }
+}

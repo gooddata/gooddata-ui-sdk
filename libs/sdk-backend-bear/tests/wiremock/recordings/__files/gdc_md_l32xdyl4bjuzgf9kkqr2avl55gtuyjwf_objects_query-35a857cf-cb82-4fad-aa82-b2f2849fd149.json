@@ -1,0 +1,142 @@
+{
+    "objects": {
+        "paging": { "totalCount": 1, "count": 1, "offset": 0 },
+        "items": [
+            {
+                "dateFilterConfig": {
+                    "content": {
+                        "allTime": { "visible": true, "localIdentifier": "allTime" },
+                        "absoluteForm": { "visible": true, "localIdentifier": "absoluteForm" },
+                        "selectedOption": "relative_this_month",
+                        "relativeForm": {
+                            "granularities": [
+                                "GDC.time.week_us",
+                                "GDC.time.month",
+                                "GDC.time.year",
+                                "GDC.time.quarter",
+                                "GDC.time.date"
+                            ],
+                            "visible": true,
+                            "localIdentifier": "relativeForm"
+                        },
+                        "relativePresets": [
+                            {
+                                "localIdentifier": "relative_last_7_days",
+                                "to": 0,
+                                "granularity": "GDC.time.date",
+                                "from": -6,
+                                "visible": true
+                            },
+                            {
+                                "from": -29,
+                                "visible": true,
+                                "to": 0,
+                                "localIdentifier": "relative_last_30_days",
+                                "granularity": "GDC.time.date"
+                            },
+                            {
+                                "visible": true,
+                                "from": -89,
+                                "granularity": "GDC.time.date",
+                                "to": 0,
+                                "localIdentifier": "relative_last_90_days"
+                            },
+                            {
+                                "granularity": "GDC.time.week_us",
+                                "localIdentifier": "relative_this_week",
+                                "to": 0,
+                                "visible": true,
+                                "from": 0
+                            },
+                            {
+                                "localIdentifier": "relative_last_week",
+                                "to": -1,
+                                "granularity": "GDC.time.week_us",
+                                "from": -1,
+                                "visible": true
+                            },
+                            {
+                                "granularity": "GDC.time.week_us",
+                                "localIdentifier": "relative_last_two_weeks",
+                                "to": 0,
+                                "visible": true,
+                                "from": -1
+                            },
+                            {
+                                "from": 0,
+                                "visible": true,
+                                "localIdentifier": "relative_this_month",
+                                "to": 0,
+                                "granularity": "GDC.time.month"
+                            },
+                            {
+                                "to": -1,
+                                "localIdentifier": "relative_last_month",
+                                "granularity": "GDC.time.month",
+                                "from": -1,
+                                "visible": true
+                            },
+                            {
+                                "from": -11,
+                                "visible": true,
+                                "to": 0,
+                                "localIdentifier": "relative_last_12_months",
+                                "granularity": "GDC.time.month"
+                            },
+                            {
+                                "from": 0,
+                                "visible": true,
+                                "localIdentifier": "relative_this_quarter",
+                                "to": 0,
+                                "granularity": "GDC.time.quarter"
+                            },
+                            {
+                                "granularity": "GDC.time.quarter",
+                                "localIdentifier": "relative_last_quarter",
+                                "to": -1,
+                                "visible": true,
+                                "from": -1
+                            },
+                            {
+                                "visible": true,
+                                "from": -3,
+                                "granularity": "GDC.time.quarter",
+                                "to": 0,
+                                "localIdentifier": "relative_last_4_quarters"
+                            },
+                            {
+                                "visible": true,
+                                "from": 0,
+                                "granularity": "GDC.time.year",
+                                "localIdentifier": "relative_this_year",
+                                "to": 0
+                            },
+                            {
+                                "granularity": "GDC.time.year",
+                                "to": -1,
+                                "localIdentifier": "relative_last_year",
+                                "visible": true,
+                                "from": -1
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "category": "dateFilterConfig",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/12",
+                        "created": "2019-12-10 14:25:33",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "updated": "2019-12-10 14:25:33",
+                        "isProduction": 1,
+                        "deprecated": "0",
+                        "summary": "",
+                        "identifier": "defaultDateFilterConfig",
+                        "title": "DateFilterConfig",
+                        "flags": ["preloaded"],
+                        "tags": ""
+                    }
+                }
+            }
+        ]
+    }
+}
