@@ -11,6 +11,7 @@ import {
     selectBackendCapabilities,
     selectCanManageWorkspace,
     selectDashboardLockStatus,
+    selectIsReadOnly,
 } from "../../../model";
 
 import { HiddenShareButton } from "./HiddenShareButton";
@@ -24,12 +25,14 @@ const DefaultShareButtonCore: React.FC<IShareButtonProps & WrappedComponentProps
     const hasPermission = useDashboardSelector(selectCanManageACL);
     const isLocked = useDashboardSelector(selectDashboardLockStatus);
     const isAdmin = useDashboardSelector(selectCanManageWorkspace);
+    const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
     if (
         settings.enableAnalyticalDashboardPermissions &&
         capabilities.supportsAccessControl &&
         hasPermission &&
-        (!isLocked || isAdmin)
+        (!isLocked || isAdmin) &&
+        !isReadOnly
     ) {
         return (
             <>
