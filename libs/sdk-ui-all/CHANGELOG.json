@@ -2,6 +2,18 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.7.0",
+      "tag": "@gooddata/sdk-ui-all_v8.7.0",
+      "date": "Thu, 02 Dec 2021 08:24:11 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Dashboard, a component for embedding dashboards created in KPI Dashboards, is added in the beta stage."
+          }
+        ]
+      }
+    },
+    {
       "version": "8.6.0",
       "tag": "@gooddata/sdk-ui-all_v8.6.0",
       "date": "Thu, 07 Oct 2021 11:37:01 GMT",
