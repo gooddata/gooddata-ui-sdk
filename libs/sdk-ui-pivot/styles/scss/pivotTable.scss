@@ -2,8 +2,7 @@
 @import "~@gooddata/sdk-ui-kit/styles/scss/variables";
 @import "~@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
 @import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
-
-$ag-icons-path: "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/icons/";
+// $ag-icons-path: "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/icons/";
 
 $custom-foreground-color: var(--gd-table-valueColor, var(--gd-palette-complementary-8, $gd-color-text));
 $custom-secondary-foreground-color: var(
@@ -11,26 +10,26 @@ $custom-secondary-foreground-color: var(
     var(--gd-palette-complementary-8, $gd-color-text)
 );
 
-$border-color: transparent;
-$font-size: 12px;
-$font-family: $gd-font-primary;
+// $border-color: transparent;
+// $font-size: 12px;
+// $font-family: $gd-font-primary;
 $foreground-color: $custom-foreground-color;
 $default-background: $default-gd-color-white;
 $custom-background-color: var(
     --gd-table-backgroundColor,
     var(--gd-palette-complementary-0, $default-background)
 );
-$header-background-color: $default-gd-color-white;
-$odd-row-background-color: transparent;
-$primary-color: transparent;
-$secondary-foreground-color: $custom-secondary-foreground-color;
-$secondary-font-weight: normal;
-$hover-color: var(
-    --gd-table-hoverBackgroundColor,
-    var(--gd-palette-complementary-1, transparentize($default-gd-color-label, 0.9))
-);
+// $header-background-color: $default-gd-color-white;
+// $odd-row-background-color: transparent;
+$primary-color: transparent; // TODO maybe balham-active-color ?
+// $secondary-foreground-color: $custom-secondary-foreground-color;
+$secondary-font-weight: normal; // TODO this needs new CSS rule, the config was removed
+// $hover-color: var(
+//     --gd-table-hoverBackgroundColor,
+//     var(--gd-palette-complementary-1, transparentize($default-gd-color-label, 0.9))
+// );
 
-$cell-horizontal-border: none;
+// $cell-horizontal-border: none;
 $cell-border: 1px dashed transparent;
 $cell-border-color: var(
     --gd-table-gridColor,
@@ -42,8 +41,10 @@ $table-menu-hover: var(
     darken(mix($gd-color-highlight, $default-gd-color-text-light, 10%), 3%)
 );
 
+// renamed to header-foreground-color hopefully
 $header-label-color: var(--gd-table-headerLabelColor, var(--gd-palette-complementary-7, $gd-color-text));
 
+// renamed to header-cell-hover-background-color hopefully
 $header-hover-background-color: var(
     --gd-table-headerHoverBackgroundColor,
     var(--gd-palette-complementary-1, $gd-palette-primary-dimmed)
@@ -62,16 +63,58 @@ $subtotal-odd-background-color: var(
     var(--gd-palette-complementary-1, #f7f8f9)
 );
 
+@import "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin";
+
 .gd-table-component {
     @import "~@ag-grid-community/all-modules/dist/styles/ag-grid";
-    @import "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham";
-
     .ag-theme-balham {
-        font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+        /* currently does not work, maybe 26 has fixed
+ foreground-color: $custom-foreground-color,*/
+        @include ag-theme-balham(
+            (
+                borders: false,
+                border-color: transparent,
+                font-size: 12px,
+                font-family: $gd-font-primary,
+                header-background-color: $default-gd-color-white,
+                odd-row-background-color: transparent,
+                secondary-foreground-color: $custom-secondary-foreground-color,
+                row-hover-color:
+                    var(
+                        --gd-table-hoverBackgroundColor,
+                        var(--gd-palette-complementary-1, transparentize($default-gd-color-label, 0.9))
+                    ),
+                cell-horizontal-border: none,
+                header-foreground-color:
+                    var(--gd-table-headerLabelColor, var(--gd-palette-complementary-7, $gd-color-text)),
+                header-cell-hover-background-color:
+                    var(
+                        --gd-table-headerHoverBackgroundColor,
+                        var(--gd-palette-complementary-1, $gd-palette-primary-dimmed)
+                    ),
+            )
+        );
     }
 
-    .ag-theme-balham .ag-header {
-        font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    // .ag-theme-balham {
+    //     font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    // }
+
+    // .ag-theme-balham .ag-header {
+    //     font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    // }
+
+    .ag-theme-balham {
+        .ag-filter-toolpanel-header,
+        .ag-filter-toolpanel-search,
+        .ag-status-bar,
+        .ag-header-row {
+            font-weight: normal;
+        }
+
+        .ag-numeric-cell {
+            text-align: right;
+        }
     }
 
     .gd-table {
