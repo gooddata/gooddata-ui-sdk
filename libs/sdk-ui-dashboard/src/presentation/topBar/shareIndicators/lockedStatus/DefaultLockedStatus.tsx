@@ -12,7 +12,7 @@ import { LockedStatusIndicator } from "./LockedStatusIndicator";
 export const DefaultLockedStatus: React.FC<ILockedStatusProps> = (props): JSX.Element | null => {
     const settings = useDashboardSelector(selectSettings);
     const canManageAnalyticalDashboard = useDashboardSelector(selectCanManageAnalyticalDashboard);
-    if (!settings.enableAnalyticalDashboardPermissions || !canManageAnalyticalDashboard) {
+    if (!settings.enableNewAnalyticalDashboardsNavigation || !canManageAnalyticalDashboard) {
         return null;
     }
     return <LockedStatusIndicator {...props} />;
