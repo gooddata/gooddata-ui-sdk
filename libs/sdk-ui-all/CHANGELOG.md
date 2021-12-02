@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 07 Oct 2021 11:37:01 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Dec 2021 08:24:11 GMT and should not be manually modified.
+
+## 8.7.0
+Thu, 02 Dec 2021 08:24:11 GMT
+
+### Updates
+
+- Dashboard, a component for embedding dashboards created in KPI Dashboards, is added in the beta stage.
 
 ## 8.6.0
 Thu, 07 Oct 2021 11:37:01 GMT

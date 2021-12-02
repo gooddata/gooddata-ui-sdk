@@ -18,6 +18,7 @@ function downloadFile(uri: string): void {
 
 /**
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IUseDashboardPdfExporterConfig
     extends UseCancelablePromiseCallbacks<string, AnalyticalBackendError> {
@@ -40,6 +41,7 @@ export interface IUseDashboardPdfExporterConfig
 
 /**
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IUseDashboardPdfExporterResult {
     /**
@@ -66,6 +68,7 @@ export interface IUseDashboardPdfExporterResult {
  *
  * @param config - configuration of the hook
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export function useDashboardPdfExporter({
     backend,

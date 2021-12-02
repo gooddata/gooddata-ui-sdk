@@ -96,10 +96,10 @@ export type DashboardLayoutSectionModifications<TWidget = IDashboardWidget> = (s
 // @beta
 export type DashboardLayoutSectionsSelector<TWidget = IDashboardWidget> = (sectionsFacade: IDashboardLayoutSectionsFacade<TWidget>) => IDashboardLayoutSectionFacade<TWidget>[] | IDashboardLayoutSectionFacade<TWidget> | undefined;
 
-// @beta (undocumented)
+// @beta @deprecated (undocumented)
 export type DashboardLayoutTransform<TContent = any> = (layoutBuilder: IDashboardLayoutBuilder<TContent>, additionalProps: IDashboardLayoutTransformAdditionalProps) => IDashboardLayoutBuilder<TContent>;
 
-// @beta
+// @beta @deprecated
 export class DashboardView extends React_2.Component<IDashboardViewProps, IDashboardViewErrorBoundaryState> {
     // (undocumented)
     static getDerivedStateFromError(error: Error): IDashboardViewErrorBoundaryState;
@@ -109,7 +109,7 @@ export class DashboardView extends React_2.Component<IDashboardViewProps, IDashb
     state: IDashboardViewErrorBoundaryState;
 }
 
-// @beta
+// @beta @deprecated
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
 // @alpha (undocumented)
@@ -365,7 +365,7 @@ export interface IDashboardLayoutSectionsFacade<TWidget> {
     some(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): boolean;
 }
 
-// @beta (undocumented)
+// @beta @deprecated (undocumented)
 export interface IDashboardLayoutTransformAdditionalProps {
     filters?: FilterContextItem[];
     getInsight: (insightRef: ObjRef) => IInsight | undefined;
@@ -380,13 +380,13 @@ export interface IDashboardViewConfig {
     separators?: ISeparators;
 }
 
-// @beta (undocumented)
+// @beta @deprecated (undocumented)
 export interface IDashboardViewErrorBoundaryState {
     // (undocumented)
     error: Error | undefined;
 }
 
-// @beta (undocumented)
+// @beta @deprecated (undocumented)
 export interface IDashboardViewProps {
     applyFiltersToScheduledMail?: boolean;
     backend?: IAnalyticalBackend;
@@ -418,10 +418,10 @@ export interface IDashboardViewProps {
     workspace?: string;
 }
 
-// @beta
+// @beta @deprecated
 export type IDashboardWidgetRenderer = (renderProps: IDashboardWidgetRenderProps) => JSX.Element;
 
-// @beta
+// @beta @deprecated
 export type IDashboardWidgetRenderProps = {
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
@@ -549,34 +549,34 @@ export interface ISizeInfo {
     min?: number;
 }
 
-// @beta (undocumented)
+// @beta @deprecated (undocumented)
 export interface IUseDashboardAlertsConfig extends UseCancelablePromiseCallbacks<IWidgetAlert[], GoodDataSdkError> {
     backend?: IAnalyticalBackend;
     dashboard: ObjRef;
     workspace?: string;
 }
 
-// @beta (undocumented)
+// @beta @deprecated (undocumented)
 export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDashboard, GoodDataSdkError> {
     backend?: IAnalyticalBackend;
     dashboard: ObjRef;
     workspace?: string;
 }
 
-// @beta (undocumented)
+// @beta @deprecated (undocumented)
 export interface IUseDashboardPdfExporterConfig extends UseCancelablePromiseCallbacks<string, AnalyticalBackendError> {
     backend?: IAnalyticalBackend;
     workspace?: string;
 }
 
-// @beta (undocumented)
+// @beta @deprecated (undocumented)
 export interface IUseDashboardPdfExporterResult {
     error: AnalyticalBackendError | undefined;
     exportDashboard: (dashboard: ObjRef, filters?: IDashboardFilter[]) => void;
     status: UseCancelablePromiseStatus;
 }
 
-// @beta (undocumented)
+// @beta @deprecated (undocumented)
 export interface IUseDashboardWidgetExecutionConfig {
     backend?: IAnalyticalBackend;
     dashboard: ObjRef;
@@ -593,7 +593,7 @@ export interface IVisualizationSizeInfo {
     width: ISizeInfo;
 }
 
-// @beta
+// @beta @deprecated
 export interface IWidgetPredicates {
     isCustomWidget: () => boolean;
     isWidgetWithInsightRef: (ref: ObjRef) => boolean;
@@ -615,7 +615,7 @@ export type LayoutType = "fluid";
 // @internal (undocumented)
 export type MeasurableWidgetContent = IInsightDefinition | ILegacyKpi;
 
-// @beta
+// @beta @deprecated
 export function mergeFiltersWithDashboard(dashboard: IDashboard | undefined, additionalFilters: Array<IDashboardFilter | FilterContextItem>): FilterContextItem[];
 
 // @beta
@@ -630,16 +630,16 @@ export const PluggableVisualizationErrorCodes: {
 // @alpha (undocumented)
 export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizationErrorCodes;
 
-// @beta
+// @beta @deprecated
 export function useDashboard({ dashboard, backend, onCancel, onError, onLoading, onPending, onSuccess, workspace, }: IUseDashboardConfig): UseCancelablePromiseState<IDashboard, any>;
 
-// @beta
+// @beta @deprecated
 export function useDashboardAlerts({ dashboard, backend, onCancel, onError, onLoading, onPending, onSuccess, workspace, }: IUseDashboardAlertsConfig): UseCancelablePromiseState<IWidgetAlert[], GoodDataSdkError>;
 
-// @beta
+// @beta @deprecated
 export function useDashboardPdfExporter({ backend, workspace, onError, onCancel, onLoading, onPending, onSuccess, }?: IUseDashboardPdfExporterConfig): IUseDashboardPdfExporterResult;
 
-// @beta
+// @beta @deprecated
 export function useDashboardWidgetExecution({ dashboard, widget: widgetRef, filters, backend, workspace, }: IUseDashboardWidgetExecutionConfig): UseCancelablePromiseState<IPreparedExecution, GoodDataSdkError>;
 
 // @internal (undocumented)

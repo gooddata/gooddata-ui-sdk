@@ -6,6 +6,7 @@ import { IDashboardViewProps } from "./types";
 
 /**
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IDashboardViewErrorBoundaryState {
     error: Error | undefined;
@@ -13,7 +14,9 @@ export interface IDashboardViewErrorBoundaryState {
 
 /**
  * Component allowing you to embed a KPI dashboard into your application.
+ *
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export class DashboardViewErrorBoundary extends React.Component<
     IDashboardViewProps,

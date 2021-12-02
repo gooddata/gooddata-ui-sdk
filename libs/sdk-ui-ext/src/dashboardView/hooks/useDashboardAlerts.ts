@@ -14,6 +14,7 @@ import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IUseDashboardAlertsConfig
     extends UseCancelablePromiseCallbacks<IWidgetAlert[], GoodDataSdkError> {
@@ -43,6 +44,7 @@ export interface IUseDashboardAlertsConfig
  * Hook allowing to download dashboard alerts data for the current user
  * @param config - configuration of the hook
  * @beta
+ * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export function useDashboardAlerts({
     dashboard,
