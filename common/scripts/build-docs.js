@@ -1,15 +1,8 @@
 #!/usr/bin/env node
-const fs = require("fs");
+const { mkdir, readdir, readFile, rm, unlink, writeFile } = require("fs/promises");
 const path = require("path");
 const util = require("util");
 const child_process = require("child_process");
-
-const rmdir = util.promisify(fs.rmdir);
-const mkdir = util.promisify(fs.mkdir);
-const readdir = util.promisify(fs.readdir);
-const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
-const unlink = util.promisify(fs.unlink);
 
 const exec = util.promisify(child_process.exec);
 
@@ -134,11 +127,11 @@ async function buildVersion(versionName, dev, onSuccess) {
     }
 
     // clean the version folder and init it with a template
-    await rmdir(apiDocDirVersioned, { recursive: true });
+    await rm(apiDocDirVersioned, { recursive: true, force: true });
     // native node does not have recursive copy...
     await exec(`cp -rf '${path.resolve(apiDocDir, "_template")}' '${apiDocDirVersioned}'`);
 
-    await rmdir(apiDocDirDocs, { recursive: true });
+    await rm(apiDocDirDocs, { recursive: true, force: true });
     await mkdir(apiDocInputDir, { recursive: true });
 
     await writeJson(versionFile, { version: versionName });
