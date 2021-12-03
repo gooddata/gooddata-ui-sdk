@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 import { IShareStatusProps } from "./types";
-import { selectSettings, useDashboardSelector } from "../../../../model";
+import { selectBackendCapabilities, selectSettings, useDashboardSelector } from "../../../../model";
 import { ShareStatusIndicator } from "./ShareStatusIndicator";
 
 /**
@@ -9,7 +9,8 @@ import { ShareStatusIndicator } from "./ShareStatusIndicator";
  */
 export const DefaultShareStatus: React.FC<IShareStatusProps> = (props): JSX.Element | null => {
     const settings = useDashboardSelector(selectSettings);
-    if (!settings.enableAnalyticalDashboardPermissions) {
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
+    if (!settings.enableAnalyticalDashboardPermissions || !capabilities.supportsAccessControl) {
         return null;
     }
     return <ShareStatusIndicator {...props} />;
