@@ -21,6 +21,7 @@ import {
     IDashboardDateFilterConfig,
     IDashboardPluginLink,
     ShareStatus,
+    ListedDashboardAvailability,
 } from "@gooddata/sdk-backend-spi";
 import { sanitizeExportFilterContext, convertFilterContext, convertTempFilterContext } from "./filterContext";
 import { convertLayout, createImplicitDashboardLayout } from "./layout";
@@ -29,6 +30,7 @@ import { convertVisualizationWidget, convertKpi } from "./widget";
 
 export const convertListedDashboard = (
     dashboardLink: GdcMetadata.IObjectLink,
+    availability: ListedDashboardAvailability,
     userMap?: Map<string, IUser>,
 ): IListedDashboard => {
     const isUnderStrictControlProp =
@@ -51,6 +53,7 @@ export const convertListedDashboard = (
         tags: dashboardLink.tags?.split(" ").filter(Boolean) ?? [],
         isLocked: !!dashboardLink.locked,
         shareStatus: getShareStatus(!!dashboardLink.unlisted, !!dashboardLink.sharedWithSomeone),
+        availability,
         ...isUnderStrictControlProp,
     };
 };

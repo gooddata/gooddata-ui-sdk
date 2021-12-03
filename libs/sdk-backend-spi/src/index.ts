@@ -208,6 +208,7 @@ export {
     IDashboardWithReferences,
     IDashboardDefinition,
     IListedDashboard,
+    ListedDashboardAvailability,
     IDashboardBase,
     IDashboardDateFilterConfig,
     DashboardDateFilterConfigMode,

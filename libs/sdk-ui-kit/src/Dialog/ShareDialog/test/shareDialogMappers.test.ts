@@ -42,6 +42,7 @@ const SimpleDashboard: IListedDashboard = {
     tags: SimpleDashboardWithReferences.dashboard.tags,
     shareStatus: "public",
     isLocked: true,
+    availability: "full",
 };
 
 describe("shareDialogMappers", () => {

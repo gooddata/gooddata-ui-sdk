@@ -51,6 +51,7 @@ export const convertAnalyticalDashboard = (
         isLocked: isInheritedObject(analyticalDashboard.id),
         shareStatus: "public",
         isUnderStrictControl: true,
+        availability: "full",
     };
 };
 

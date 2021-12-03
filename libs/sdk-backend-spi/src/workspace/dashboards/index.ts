@@ -27,6 +27,14 @@ export interface IGetDashboardOptions {
      * If user is inactive or logged in user has not rights to access this information than users that created/modified is undefined.
      */
     loadUserData?: boolean;
+
+    /**
+     * Optionally specify if also dashboards available only via link should be loaded.
+     * Such dashboards may not be supported by every backend.
+     *
+     * Defaults to false.
+     */
+    includeAvailableViaLink?: boolean;
 }
 
 /**
@@ -51,7 +59,7 @@ export interface IWorkspaceDashboardsService {
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
 
     /**
-     * Load dashboard by it's reference,
+     * Load dashboard by its reference,
      * and optionally override filter context with the custom filter context
      * (custom filter context is used mainly for exporting)
      *

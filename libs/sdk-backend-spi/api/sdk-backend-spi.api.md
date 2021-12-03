@@ -887,6 +887,7 @@ export interface IFilterElementsQuery {
 
 // @alpha
 export interface IGetDashboardOptions {
+    includeAvailableViaLink?: boolean;
     loadUserData?: boolean;
 }
 
@@ -1008,6 +1009,7 @@ export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
 
 // @alpha
 export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
+    readonly availability: ListedDashboardAvailability;
     readonly description: string;
     readonly identifier: string;
     readonly ref: ObjRef;
@@ -2104,8 +2106,18 @@ export function layoutWidgets<TWidget extends IDashboardWidget>(layout: IDashboa
 // @alpha
 export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>): IWidgetWithLayoutPath<TWidget>[];
 
+// @alpha
+export type ListedDashboardAvailability = "full" | "viaLink";
+
 // @public
-export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject;
+export type MetadataObject =
+    IAttributeMetadataObject
+    | IAttributeDisplayFormMetadataObject
+    | IFactMetadataObject
+    | IMeasureMetadataObject
+    | IDataSetMetadataObject
+    | IVariableMetadataObject
+    | IDashboardMetadataObject;
 
 // @public
 export const metadataObjectId: (metadataObject: MetadataObject) => string;
