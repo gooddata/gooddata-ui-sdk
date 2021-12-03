@@ -132,13 +132,48 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
                 );
             }
         }
-    }
 
-    &.is-active {
         .button-title,
         .button-subtitle {
             &::after {
                 content: "\e613";
+            }
+        }
+
+        &.gd-attribute-filter-button-mobile {
+            display: block;
+            width: auto;
+            height: 45px;
+            margin: 0;
+            line-height: 25px;
+            border-width: 0;
+            border-top: 0;
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+            font-size: nth(map-get($gd-typo, font-sizes), 4);
+            text-align: left;
+            background-color: $gd-color-white;
+            max-width: none;
+            box-shadow: 0 0 2px var(--gd-shadow-color, rgba(20, 56, 93, 0.2));
+
+            &::after {
+                display: none;
+            }
+
+            &::before {
+                right: 4px;
+            }
+
+            .button-title,
+            .button-subtitle {
+                &::after {
+                    content: "\e613";
+                    display: inline-block;
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    font-size: 18px;
+                    transform: translateY(-50%);
+                }
             }
         }
     }
@@ -246,9 +281,9 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 }
 
 // remove button in mobile
-.gd-mobile-dropdown-overlay .gd-attribute-filter-button-mobile {
-    display: none;
-}
+//.gd-mobile-dropdown-overlay .gd-attribute-filter-button-mobile {
+//    display: none;
+//}
 
 // display the duplicate button in mobile content
 .gd-mobile-dropdown-content .gd-attribute-filter-button-mobile {
