@@ -98,9 +98,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
         public readonly offset = 0,
         public readonly totalCount: number,
         public readonly items: T[],
-    ) {
-        this.offset = Math.min(totalCount, offset);
-    }
+    ) {}
 
     public async next(): Promise<IPagedResource<T>> {
         // No items = we are on the last page.
@@ -108,12 +106,17 @@ export class ServerPaging<T> implements IPagedResource<T> {
             return this;
         }
 
+        // We are on the last page with the items - return empty result for the next page immediately
+        if (this.items.length < this.limit || this.offset + this.items.length === this.totalCount) {
+            return new ServerPaging(this.getData, this.limit, this.offset + this.limit, this.totalCount, []);
+        }
+
         const pageData = await this.getData({ limit: this.limit, offset: this.offset + this.limit });
         return new ServerPaging(
             this.getData,
             this.limit,
             this.offset + this.limit,
-            this.totalCount,
+            pageData.totalCount,
             pageData.items,
         );
     }
@@ -121,7 +124,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
     public async goTo(pageIndex: number): Promise<IPagedResource<T>> {
         const offset = pageIndex * this.limit;
         const pageData = await this.getData({ limit: this.limit, offset });
-        return new ServerPaging(this.getData, this.limit, offset, this.totalCount, pageData.items);
+        return new ServerPaging(this.getData, this.limit, offset, pageData.totalCount, pageData.items);
     }
 
     public async all(): Promise<T[]> {
