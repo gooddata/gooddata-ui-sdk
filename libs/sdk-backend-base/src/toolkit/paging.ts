@@ -3,6 +3,7 @@ import { IPagedResource } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import range from "lodash/range";
 import flatMap from "lodash/flatMap";
+import isNil from "lodash/isNil";
 
 /**
  * This implementation of {@link @gooddata/sdk-backend-spi#IPagedResource} pages over a list of items
@@ -86,7 +87,8 @@ export class ServerPaging<T> implements IPagedResource<T> {
         invariant(offset >= 0, `paging offset must be non-negative, got: ${offset}`);
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
         const { totalCount, items } = await getData({ limit, offset });
-        invariant(totalCount, `total count must be specified, got: ${totalCount}`);
+        // must use isNil, totalCount: 0 is a valid case (e.g. when searching for a nonsensical string)
+        invariant(!isNil(totalCount), `total count must be specified, got: ${totalCount}`);
         return new ServerPaging(getData, limit, offset, totalCount, items);
     }
 
