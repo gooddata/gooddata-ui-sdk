@@ -738,7 +738,7 @@
         "limit": 0
     },
     "dashboard.shareDialog.removeAccessCreatorTooltip": {
-        "value": "User who created this dashboard. Creator cannot be removed.",
+        "value": "The user that created this dashboard. Creators cannot be removed.",
         "comment": "Text of the tooltip shown above disabled button that removes user dashboard access right. Shown in the case when user cannot be removed because he is the creator of the dashboard.",
         "limit": 0
     }
