@@ -216,29 +216,4 @@ describe("agGridApiWrapper", () => {
             });
         });
     });
-
-    describe("pinned top row cell element", () => {
-        describe("getPinnedTopRowCellElementWrapper", () => {
-            it("should return the pinned top row cell element wrapper", async () => {
-                const api = await renderGridReady();
-
-                const cellElement = ApiWrapper.getPinnedTopRowCellElementWrapper(api, firstAttributeColumnId);
-
-                expect(cellElement instanceof HTMLElement).toBe(true);
-                expect(!!cellElement!.querySelector("span")).toEqual(true);
-                expect(cellElement!.classList.contains("ag-cell")).toBe(true);
-            });
-        });
-
-        describe("getPinnedTopRowCellElement", () => {
-            it("should return the pinned top row cell element", async () => {
-                const api = await renderGridReady();
-
-                const cellElement = ApiWrapper.getPinnedTopRowCellElement(api, firstAttributeColumnId);
-
-                expect(cellElement).toBeDefined();
-                expect(cellElement!.innerHTML).toEqual(firstAttributePinnedTopValue);
-            });
-        });
-    });
 });

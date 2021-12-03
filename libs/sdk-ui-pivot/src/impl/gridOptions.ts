@@ -27,6 +27,7 @@ import {
 import { TableFacade } from "./tableFacade";
 import { ICorePivotTableProps } from "../publicTypes";
 import { createLoadingRenderer } from "./data/loadingRenderer";
+import { ServerSideStoreType } from "@ag-grid-community/all-modules";
 
 export function createGridOptions(
     table: TableFacade,
@@ -102,6 +103,7 @@ export function createGridOptions(
 
         // infinite scrolling model
         rowModelType: "infinite",
+        serverSideStoreType: ServerSideStoreType.Partial,
         paginationPageSize: effectivePageSize,
         cacheOverflowSize: effectivePageSize,
         cacheBlockSize: effectivePageSize,

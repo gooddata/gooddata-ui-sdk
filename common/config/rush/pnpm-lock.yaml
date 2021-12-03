@@ -135,43 +135,43 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /@ag-grid-community/all-modules/24.1.0:
-    resolution: {integrity: sha512-RudIez5r/1xHitemoKJAn3tlym204Po8c4N6I1874yEyqWwXu4tu6VXjzVo09YhtOLYImmJLFcPJ9qupJAgcWQ==}
+  /@ag-grid-community/all-modules/25.3.0:
+    resolution: {integrity: sha512-77KcTqtGMLT69vuikPV/y0BXHODDVjw6G5jj53Z+M1w2jzLYOXshctjPhBkxyi03EAHyyn8c4upw1rJoAXMXPQ==}
     dependencies:
-      '@ag-grid-community/client-side-row-model': 24.1.0
-      '@ag-grid-community/core': 24.1.0
-      '@ag-grid-community/csv-export': 24.1.0
-      '@ag-grid-community/infinite-row-model': 24.1.0
+      '@ag-grid-community/client-side-row-model': 25.3.0
+      '@ag-grid-community/core': 25.3.0
+      '@ag-grid-community/csv-export': 25.3.0
+      '@ag-grid-community/infinite-row-model': 25.3.0
     dev: false
 
-  /@ag-grid-community/client-side-row-model/24.1.0:
-    resolution: {integrity: sha512-gzRxabieWLRQia3kqFbyesWU122oQeavzUuNAlhKyZFWgUpS8Ua7QwlSlfhafULocFL6tdEETrgWBtyGq/aR2w==}
+  /@ag-grid-community/client-side-row-model/25.3.0:
+    resolution: {integrity: sha512-uluZPRb3yTzOAsS6y+rWfdWCdxBCGn5ZN5T4tDP5nCpfQcuKOpuiFEBe4UflVO1SxEky30otfkah5d++8kq6kQ==}
     dependencies:
-      '@ag-grid-community/core': 24.1.0
+      '@ag-grid-community/core': 25.3.0
     dev: false
 
-  /@ag-grid-community/core/24.1.0:
-    resolution: {integrity: sha512-dmC7rgEoe6NIsGrBK4vENWorJ/yZxNU4TyaWp1Rwn0iCJENNOSbtjA8QejyTzKtLyWcYPlfkXxG1q2irAfRD7A==}
+  /@ag-grid-community/core/25.3.0:
+    resolution: {integrity: sha512-AJneyxmgtsLkAIAkeXlqjcCbTr/FpGyZkH/ZrT4SLeNOvHNLD7tCZINOBO2UCZVguI6Xv0c5g6c9y8NXOpc+lQ==}
     dev: false
 
-  /@ag-grid-community/csv-export/24.1.0:
-    resolution: {integrity: sha512-bhWMZ0ecnjbnENZlVVWZk9d3O/lt+RBD3AYb2Yn2X2cEiWskekIAMinX/7gzEkzpqb5XzQyLwXvXZzd8L7zSQg==}
+  /@ag-grid-community/csv-export/25.3.0:
+    resolution: {integrity: sha512-fq4XgXH2oY9T+XevxcnMUnmc/oX+xaQi10xgW4fG7TTj5LU+v+nky/BdVTQWT91AsaTKNg4h+QQelSpCSYKhyQ==}
     dependencies:
-      '@ag-grid-community/core': 24.1.0
+      '@ag-grid-community/core': 25.3.0
     dev: false
 
-  /@ag-grid-community/infinite-row-model/24.1.0:
-    resolution: {integrity: sha512-nhpqGoNagxmQEsNKwDLVB22nRD6U8hdF9dhAASJBjGIKtiPRufLcp8BDTwEVNI0GOab/Q4Z6ZfCd1Fb6evJsow==}
+  /@ag-grid-community/infinite-row-model/25.3.0:
+    resolution: {integrity: sha512-VvPRHjVn70/tt4K7xE682Hcax1cwgEFRXgpR1PEL7n4Q+RH9A2dunFlhktPfXQdCWWrdouzgpN1Oqcn7I+QIIQ==}
     dependencies:
-      '@ag-grid-community/core': 24.1.0
+      '@ag-grid-community/core': 25.3.0
     dev: false
 
-  /@ag-grid-community/react/24.1.1_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-cdbPZoSbzyGX+aKuxrdZMo8bujAY7LClwZu46w8sW699UiMa0ykKTmfWOHYecpYJemLWG91mgSuqT2opmdg4Vw==}
+  /@ag-grid-community/react/25.3.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-jLvhJoYnRFDV9e1TjkQj3KN5I1p8NDzjg+WIMyVgz1xl2fTYcWCpg5GAVCHTN4PYl+EhTHnbhNpE2oip/OBusA==}
     peerDependencies:
-      '@ag-grid-community/core': ~24.1.0
-      react: ^16.3.0
-      react-dom: ^16.3.0
+      '@ag-grid-community/core': ~25.3.0
+      react: ^16.3.0 || ^17.0.0
+      react-dom: ^16.3.0 || ^17.0.0
     dependencies:
       prop-types: 15.7.2
       react: 17.0.2
@@ -5902,7 +5902,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.5
+      follow-redirects: 1.14.5_debug@4.3.3
     transitivePeerDependencies:
       - debug
     dev: false
@@ -9837,16 +9837,6 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
-    dev: false
-
-  /follow-redirects/1.14.5:
-    resolution: {integrity: sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
     dev: false
 
   /follow-redirects/1.14.5_debug@4.1.1:
@@ -22749,13 +22739,13 @@ packages:
     dev: false
 
   file:projects/sdk-ui-pivot.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-o2zFxOaQ4r0lqdVPqjaGN41IuhKMQtTT6UFLjo8SLzWyHvVPmPazTdDVooPIZeJq8R7TjJEbcGOW+hksdfEtmg==, tarball: file:projects/sdk-ui-pivot.tgz}
+    resolution: {integrity: sha512-zwBHwbNHZv9ZU4tCyP5+8FEtY/awM4D5rwhvZhYt1hNoyOax9o9yFwxcjoHT5qkYSTGhAx/KAV6B5arxR3ID8Q==, tarball: file:projects/sdk-ui-pivot.tgz}
     id: file:projects/sdk-ui-pivot.tgz
     name: '@rush-temp/sdk-ui-pivot'
     version: 0.0.0
     dependencies:
-      '@ag-grid-community/all-modules': 24.1.0
-      '@ag-grid-community/react': 24.1.1_react-dom@17.0.2+react@17.0.2
+      '@ag-grid-community/all-modules': 25.3.0
+      '@ag-grid-community/react': 25.3.0_react-dom@17.0.2+react@17.0.2
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
       '@gooddata/numberjs': 3.2.5

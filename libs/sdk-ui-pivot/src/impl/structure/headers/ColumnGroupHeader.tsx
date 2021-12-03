@@ -14,7 +14,7 @@ export interface IProps extends ICommonHeaderParams, IHeaderGroupParams {
 export default class ColumnGroupHeader extends React.Component<IProps> {
     public render(): React.ReactNode {
         const { menu, intl } = this.props;
-        const colGroupDef = this.props.columnGroup.getColGroupDef();
+        const colGroupDef = this.props.columnGroup.getColGroupDef()!;
         const colId = agColId(colGroupDef);
         const parent = this.props.columnGroup.getParent();
 

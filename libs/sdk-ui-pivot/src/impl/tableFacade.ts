@@ -310,6 +310,7 @@ export class TableFacade {
         invariant(this.columnApi);
 
         const columns = this.columnApi.getAllColumns();
+        invariant(columns);
         this.resetColumnsWidthToDefault(resizingConfig, columns);
         this.clearFittedColumns();
 
@@ -339,6 +340,7 @@ export class TableFacade {
         invariant(this.columnApi);
 
         const columns = this.columnApi.getAllColumns();
+        invariant(columns);
 
         columns.forEach((col) => {
             const id = agColId(col);
@@ -372,6 +374,7 @@ export class TableFacade {
             this.growToFit(resizingConfig); // calls resetColumnsWidthToDefault internally too
         } else {
             const columns = this.columnApi.getAllColumns();
+            invariant(columns);
             this.resetColumnsWidthToDefault(resizingConfig, columns);
         }
     };
@@ -407,6 +410,7 @@ export class TableFacade {
                 this.shouldPerformAutoresize()
             ) {
                 const columns = this.columnApi!.getAllColumns();
+                invariant(columns);
                 this.resetColumnsWidthToDefault(resizingConfig, columns);
             }
             this.resizing = false;
@@ -587,7 +591,9 @@ export class TableFacade {
 
     private getAllMeasureColumns = () => {
         invariant(this.columnApi);
-        return this.columnApi.getAllColumns().filter((col) => isMeasureColumn(col));
+        const columns = this.columnApi.getAllColumns();
+        invariant(columns);
+        return columns.filter((col) => isMeasureColumn(col));
     };
 
     private isAllMeasureResizeOperation(resizingConfig: ColumnResizingConfig, columns: Column[]): boolean {
@@ -798,6 +804,7 @@ export class TableFacade {
         invariant(this.columnApi);
 
         const columns = this.columnApi.getAllColumns();
+        invariant(columns);
         columns.forEach((col) => {
             const colDef = col.getColDef();
             colDef.tooltipField = colDef.field;

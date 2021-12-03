@@ -589,9 +589,9 @@ export function syncSuppressSizeToFitOnColumns(
         return;
     }
 
-    const columns: Column[] = columnApi.getAllColumns();
+    const columns = columnApi.getAllColumns();
 
-    columns.forEach((col) => {
+    columns?.forEach((col) => {
         const resizedColumn = resizedColumnsStore.getManuallyResizedColumn(col);
         resizedColumn
             ? (col.getColDef().suppressSizeToFit = !resizedColumn.allowGrowToFit)
@@ -634,13 +634,13 @@ export function resizeAllMeasuresColumns(
     const columnWidth = column.getActualWidth();
     const allColumns = columnApi.getAllColumns();
 
-    allColumns.forEach((col) => {
+    allColumns?.forEach((col) => {
         if (isMeasureColumn(col)) {
             columnApi.setColumnWidth(col, columnWidth);
         }
     });
 
-    resizedColumnsStore.addAllMeasureColumn(columnWidth, allColumns);
+    resizedColumnsStore.addAllMeasureColumn(columnWidth, allColumns ?? []);
 }
 
 export function resizeWeakMeasureColumns(
@@ -649,11 +649,11 @@ export function resizeWeakMeasureColumns(
     resizedColumnsStore: ResizedColumnsStore,
     column: Column,
 ): void {
-    const allColumns: Column[] = columnApi.getAllColumns();
+    const allColumns = columnApi.getAllColumns();
 
     resizedColumnsStore.addWeekMeasureColumn(column);
 
-    allColumns.forEach((col) => {
+    allColumns?.forEach((col) => {
         const colDesc = tableDescriptor.getCol(col);
         const weakColumnWidth = resizedColumnsStore.getMatchedWeakMeasuresColumnWidth(colDesc);
 
@@ -842,7 +842,7 @@ function getDisplayedRowData(gridApi: GridApi): IGridRow[] {
     const rowCount = gridApi.getDisplayedRowCount();
     const rowData: IGridRow[] = [];
     for (let index = 0; index < rowCount; index++) {
-        const item: IGridRow = gridApi.getDisplayedRowAtIndex(index).data;
+        const item: IGridRow = gridApi.getDisplayedRowAtIndex(index)?.data;
         if (item) {
             rowData.push(item);
         }
@@ -941,7 +941,7 @@ export function getAutoResizedColumns(
 ): IResizedColumns {
     const { containerRef, columnAutoresizeOption, clientWidth } = resizingConfig;
     if (tableDescriptor && gridApi && columnApi && execution && containerRef) {
-        const columns = columnApi.getPrimaryColumns();
+        const columns = columnApi.getPrimaryColumns() ?? [];
         const { headerFont, rowFont, subtotalFont, totalFont } = getTableFonts(containerRef);
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");

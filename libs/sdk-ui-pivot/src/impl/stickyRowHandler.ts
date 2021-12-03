@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { GridApi, RowNode } from "@ag-grid-community/all-modules";
+import { GridApi } from "@ag-grid-community/all-modules";
 import { IGroupingProvider } from "./data/rowGroupingProvider";
 import { getGridIndex } from "./base/agUtils";
 import ApiWrapper from "./base/agApiWrapper";
@@ -73,8 +73,8 @@ export function updateStickyRowContentClassesAndData(
     }
 
     const firstVisibleRowIndex = getGridIndex(currentScrollPosition.top, rowHeight);
-    const firstVisibleRow: RowNode = gridApi.getDisplayedRowAtIndex(firstVisibleRowIndex);
-    const firstVisibleNodeData = firstVisibleRow && firstVisibleRow.data ? firstVisibleRow.data : null;
+    const firstVisibleRow = gridApi.getDisplayedRowAtIndex(firstVisibleRowIndex);
+    const firstVisibleNodeData = firstVisibleRow?.data ?? null;
 
     if (firstVisibleNodeData === null) {
         apiWrapper.removePinnedTopRowClass(gridApi, "gd-visible-sticky-row");

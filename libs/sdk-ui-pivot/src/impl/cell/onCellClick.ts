@@ -54,7 +54,7 @@ export function onCellClickedFactory(
             type: VisualizationTypes.TABLE,
             element: "cell",
             columnIndex: table.tableDescriptor.getAbsoluteLeafColIndex(col),
-            rowIndex,
+            rowIndex: rowIndex!,
             row: createDrilledRow(data as IGridRow, table.tableDescriptor),
             intersection: createDrillIntersection(cellEvent, table.tableDescriptor),
         };

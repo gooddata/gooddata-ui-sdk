@@ -7,9 +7,9 @@ function getHeaderHeight(gridApi: GridApi): number {
 
 function getCellElement(gridApi: GridApi, attributeId: string, rowIndex: number): HTMLElement | null {
     const rowRenderer = (gridApi as any).rowRenderer;
-    const rowComp = rowRenderer.rowCompsByIndex[rowIndex];
+    const rowCon = rowRenderer.rowConsByRowIndex[rowIndex];
 
-    return rowComp && rowComp.cellComps[attributeId] ? rowComp.cellComps[attributeId].eGui : null;
+    return rowCon ? rowCon.centerRowComp.cellComps[attributeId].eGui : null;
 }
 
 function addCellClass(gridApi: GridApi, attributeId: string, rowIndex: number, className: string): void {
@@ -35,14 +35,16 @@ function getPaginationBottomRowIndex(gridApi: GridApi): number | null {
     return null;
 }
 
-function getPinnedTopRow(gridApi: GridApi): any | null {
-    const pinnedTopRow = (gridApi as any).rowRenderer.floatingTopRowComps[0];
-    return pinnedTopRow ? pinnedTopRow : null;
-}
-
 function getPinnedTopRowElement(gridApi: GridApi): HTMLElement | null {
-    const pinnedTopRow = getPinnedTopRow(gridApi);
-    return pinnedTopRow ? pinnedTopRow.bodyContainerComp.eContainer.parentElement.parentElement : null;
+    const pinnedTopRow = gridApi.getPinnedTopRow(0);
+    if (!pinnedTopRow) {
+        return null;
+    }
+
+    const rootElement: HTMLElement = (gridApi as any).gridBodyComp.eGui;
+    const rowElement = rootElement.querySelector(`[row-id=${pinnedTopRow.id}]`);
+
+    return rowElement?.parentElement?.parentElement ?? null;
 }
 
 function addPinnedTopRowClass(gridApi: GridApi, className: string): void {
@@ -66,26 +68,6 @@ function setPinnedTopRowStyle(gridApi: GridApi, propertyName: string, propertyVa
     }
 }
 
-function getPinnedTopRowCellElementWrapper(gridApi: GridApi, attributeId: string): HTMLElement | null {
-    const pinnedTopRow = getPinnedTopRow(gridApi);
-    if (!pinnedTopRow) {
-        return null;
-    }
-
-    const columnIndex = Object.keys(pinnedTopRow.cellComps).find((index: string) => {
-        return index.slice(0, attributeId.length) === attributeId && pinnedTopRow.cellComps[index] !== null;
-    });
-
-    return columnIndex !== undefined && pinnedTopRow.cellComps[columnIndex]
-        ? pinnedTopRow.cellComps[columnIndex].eGui
-        : null;
-}
-
-function getPinnedTopRowCellElement(gridApi: GridApi, attributeId: string): HTMLElement | null {
-    const pinnedTopRowCellElementWrapper = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
-    return pinnedTopRowCellElementWrapper ? pinnedTopRowCellElementWrapper.querySelector("span") : null;
-}
-
 export default {
     getHeaderHeight,
     // cell element
@@ -98,7 +80,5 @@ export default {
     removePinnedTopRowClass,
     setPinnedTopRowStyle,
     // pinned row cell element
-    getPinnedTopRowCellElement,
-    getPinnedTopRowCellElementWrapper,
     getPaginationBottomRowIndex,
 };

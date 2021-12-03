@@ -23,7 +23,7 @@ export function createLoadingRenderer(
 ): (params: ICellRendererParams) => JSX.Element {
     return function LoadingRenderer(params: ICellRendererParams): JSX.Element {
         if (params.node.rowPinned === "top") {
-            return <span className={"gd-sticky-header-value"}>{params.formatValue(params.value)}</span>;
+            return <span className={"gd-sticky-header-value"}>{params.formatValue!(params.value)}</span>;
         }
 
         // rows that are still loading do not have node.id
@@ -32,7 +32,7 @@ export function createLoadingRenderer(
             // params.value is always unformatted
             // there is params.formattedValue, but this is null for row attributes for some reason
             return (
-                <span className={`${VALUE_CLASS} s-loading-done`}>{params.formatValue(params.value)}</span>
+                <span className={`${VALUE_CLASS} s-loading-done`}>{params.formatValue!(params.value)}</span>
             );
         }
 
