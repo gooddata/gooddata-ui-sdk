@@ -13,7 +13,7 @@ $custom-secondary-foreground-color: var(
 // $border-color: transparent;
 // $font-size: 12px;
 // $font-family: $gd-font-primary;
-$foreground-color: $custom-foreground-color;
+// $foreground-color: $custom-foreground-color;
 $default-background: $default-gd-color-white;
 $custom-background-color: var(
     --gd-table-backgroundColor,
@@ -67,13 +67,16 @@ $subtotal-odd-background-color: var(
 
 .gd-table-component {
     @import "~@ag-grid-community/all-modules/dist/styles/ag-grid";
+
+    // TODO really calculate disabled-foreground-color and chip-background-color now here only because it has to foreground being a CSS variable
     .ag-theme-balham {
-        /* currently does not work, maybe 26 has fixed
- foreground-color: $custom-foreground-color,*/
         @include ag-theme-balham(
             (
                 borders: false,
                 border-color: transparent,
+                foreground-color: $custom-foreground-color,
+                disabled-foreground-color: null,
+                chip-background-color: null,
                 font-size: 12px,
                 font-family: $gd-font-primary,
                 header-background-color: $default-gd-color-white,

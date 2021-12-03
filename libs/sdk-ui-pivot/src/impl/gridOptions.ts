@@ -99,7 +99,6 @@ export function createGridOptions(
         suppressMovableColumns: true,
         suppressCellSelection: true,
         suppressAutoSize: tableMethods.hasColumnWidths,
-        enableFilter: false,
 
         // infinite scrolling model
         rowModelType: "infinite",
