@@ -5871,7 +5871,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.5
+      follow-redirects: 1.14.5_debug@4.3.3
     transitivePeerDependencies:
       - debug
     dev: false
@@ -9052,11 +9052,11 @@ packages:
       string.prototype.matchall: 4.0.6
     dev: false
 
-  /eslint-plugin-sonarjs/0.9.1_eslint@8.3.0:
-    resolution: {integrity: sha512-KKFofk1LPjGHWeAZijYWv32c/C4mz+OAeBNVxhxHu1hknrTOhu415MWC8qKdAdsmOlBPShs9evM4mI1o7MNMhw==}
-    engines: {node: '>=10'}
+  /eslint-plugin-sonarjs/0.11.0_eslint@8.3.0:
+    resolution: {integrity: sha512-ei/WuZiL0wP+qx2KrxKyZs3+eDbxiGAhFSm3GKCOOAUkg+G2ny6TSXDB2j67tvyqHefi+eoQsAgGQvz+nEtIBw==}
+    engines: {node: '>=12'}
     peerDependencies:
-      eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
+      eslint: ^5.0.0 || ^6.0.0 || ^7.0.0|| ^8.0.0
     dependencies:
       eslint: 8.3.0
     dev: false
@@ -9801,16 +9801,6 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
-    dev: false
-
-  /follow-redirects/1.14.5:
-    resolution: {integrity: sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
     dev: false
 
   /follow-redirects/1.14.5_debug@4.1.1:
@@ -20905,7 +20895,7 @@ packages:
     dev: false
 
   file:projects/api-client-bear.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-NJ3q7A8Ivm21E3eisKCa/qr/fvMgejXFgtgE4SNI7PZnKw0XQRebqJpEpMB+FBARQDXlHWB0TaSs6WgUlGqgag==, tarball: file:projects/api-client-bear.tgz}
+    resolution: {integrity: sha512-/xYhktweoAYDhtm3O18InsCiZSIjekxvVKFJfTunCFMPofTz24o4EBdb56Kadg4t5oPMh0APgz86b07yKG07/w==, tarball: file:projects/api-client-bear.tgz}
     id: file:projects/api-client-bear.tgz
     name: '@rush-temp/api-client-bear'
     version: 0.0.0
@@ -20929,7 +20919,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       fast-levenshtein: 2.0.6
       fetch-cookie: 0.7.3
       fetch-mock: 9.11.0_node-fetch@2.6.6
@@ -20970,7 +20960,7 @@ packages:
     dev: false
 
   file:projects/api-client-tiger.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-YWw6nl12yb+nq3I34Yl5fcPd0A8g7KuSw4ymCEG2/75N9olGTxSgPkBX+rzdtdG+LGxUcFNUSxPbOPs7ccWafg==, tarball: file:projects/api-client-tiger.tgz}
+    resolution: {integrity: sha512-qHL3KhrMJ+ud5JRmtB6ACj89/pf3a0P71S9LKTNokXQ7J80g8N+J7RRXmuJCUYaOTCahY/Xo9Oy83sshxvmDuA==, tarball: file:projects/api-client-tiger.tgz}
     id: file:projects/api-client-tiger.tgz
     name: '@rush-temp/api-client-tiger'
     version: 0.0.0
@@ -20996,7 +20986,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       lodash: 4.17.21
@@ -21021,7 +21011,7 @@ packages:
     dev: false
 
   file:projects/api-model-bear.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-GemHFxObCt+jPNntiyxDSYcFTIsE8LYKi9h8lfnub3ZHfArwzFX68UbfntIrhT+7HvULlvJz3aB9Hf206f+HVg==, tarball: file:projects/api-model-bear.tgz}
+    resolution: {integrity: sha512-kBjyn6tEvGqroEcr3wtikZI1xwJmVQHkvjQEwyAuncY0OTsz+Qq5yzWXAh5pm23Z2zeV+OJ2t3FKUvvkvuAZuQ==, tarball: file:projects/api-model-bear.tgz}
     id: file:projects/api-model-bear.tgz
     name: '@rush-temp/api-model-bear'
     version: 0.0.0
@@ -21041,7 +21031,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       lodash: 4.17.21
@@ -21062,7 +21052,7 @@ packages:
     dev: false
 
   file:projects/applink.tgz:
-    resolution: {integrity: sha512-4G2cIKJr/q+0zsfiTaYFW0PM3MMR11wCNUgLWq6jCwFVbmvhpPXV9n0N8dTPG7wWs4px6mZAUBnzkmvShvq9Og==, tarball: file:projects/applink.tgz}
+    resolution: {integrity: sha512-rExMrxxUa1LdTq06zDGmayYNab5HSOzBjQAFJomi5W9Y3TB7n38QBZXUZf0rU/IPHjh0d+VliNAQNdouN88pFw==, tarball: file:projects/applink.tgz}
     name: '@rush-temp/applink'
     version: 0.0.0
     dependencies:
@@ -21086,7 +21076,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       find-up: 5.0.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
@@ -21111,7 +21101,7 @@ packages:
     dev: false
 
   file:projects/catalog-export.tgz:
-    resolution: {integrity: sha512-JlD3yAAmap9bPBuNavj32enCrejZvfUYaW3lmtGyPcJ5xlJiq5bhXM3eRV4AyT51GFZwFyRO1xfNnY+Jx+9cvg==, tarball: file:projects/catalog-export.tgz}
+    resolution: {integrity: sha512-o5hsKesxwFyBZ0NsOEjWu5sNFYsYsxAJuVDb6P6SveTRWf3RNSQm8lw6jQT9nuaHGLB+vDpit2BHJlqLGG6HNg==, tarball: file:projects/catalog-export.tgz}
     name: '@rush-temp/catalog-export'
     version: 0.0.0
     dependencies:
@@ -21134,7 +21124,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       inquirer: 7.3.3
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
@@ -21162,7 +21152,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-zodoLEb0/eF9O2csZhwV1ZU/U/dMDmwe1iFaJqk4XTLmdQiBEXjnWTdetVLhGiS6iNmbA39SORtKYXlwnwL4Uw==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-I0h+bpih1Ljfs9bnZ2o95DZkuo8yVJz8zkMwEM7JwYY69sm6aUhwm+sKsfShpR6V6uJHDX3JJ+TJAagqGvBiCA==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -21197,7 +21187,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       html-webpack-plugin: 5.5.0_webpack@5.64.4
       jest: 27.4.2_ts-node@10.4.0
       jest-enzyme: 7.1.2_dcd819bac097a5b7573de7f8a8275d1c
@@ -21239,7 +21229,7 @@ packages:
     dev: false
 
   file:projects/experimental-workspace.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-JVlbcvLhaP2LQ83y7ZwzW/Zu0JqNI+GVMBCDhcU15TMhLSc5UFYX8tLeBLtAL9MmRKjFURIGXLzXzrC2V544Hw==, tarball: file:projects/experimental-workspace.tgz}
+    resolution: {integrity: sha512-XGLEXPKCB9RNX8Xa4fLJQxyckHSmHdVIMb5y6e2xZ8INcRuEWAxITnOdbsC66/gYBeCtcmQBMAGjfpgvl87lFg==, tarball: file:projects/experimental-workspace.tgz}
     id: file:projects/experimental-workspace.tgz
     name: '@rush-temp/experimental-workspace'
     version: 0.0.0
@@ -21258,7 +21248,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       lodash: 4.17.21
@@ -21279,7 +21269,7 @@ packages:
     dev: false
 
   file:projects/live-examples-workspace.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-4T8SiWXiBzQjZ/NsSiZO67sRyLnM96mW1xCYdHmh/TMWWN0nO4z2z+1MkqmlHplnUX0GH3/6wFX6y0rV8RXs/A==, tarball: file:projects/live-examples-workspace.tgz}
+    resolution: {integrity: sha512-4ob6i4bo2G2H6FKN68L9sgg4tZe6/fCXlwm2H/aaIOt1arKZhmaX70oN8kb6hHHSeoFVOJc7Cv2qW5t+zknc7Q==, tarball: file:projects/live-examples-workspace.tgz}
     id: file:projects/live-examples-workspace.tgz
     name: '@rush-temp/live-examples-workspace'
     version: 0.0.0
@@ -21297,7 +21287,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       lodash: 4.17.21
@@ -21318,7 +21308,7 @@ packages:
     dev: false
 
   file:projects/mock-handling.tgz:
-    resolution: {integrity: sha512-539NV1IjkF9+l/j9Wyr+4DiJ7M/onl8lSfKKwM5ssbpVa8dhM4LYTjmKDDf9CapL5GNoAFer9esIyB9x/2Pfmw==, tarball: file:projects/mock-handling.tgz}
+    resolution: {integrity: sha512-0P/pjhdZyJauV+/BbiR5FEolADl3RFThCFzD7ZVk4EzttIerJusowh4IIY6LvOhRiCbO+Z2T8CREPPNsZHdXEw==, tarball: file:projects/mock-handling.tgz}
     name: '@rush-temp/mock-handling'
     version: 0.0.0
     dependencies:
@@ -21341,7 +21331,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       inquirer: 7.3.3
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
@@ -21370,7 +21360,7 @@ packages:
     dev: false
 
   file:projects/playground.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-G+bxho1TM/IQDZZ/VsKMU4AOCKgU9XWcVU4TX8MtUIJL8nvAR4sLb5kQOiKzUjORyxO5D/dsfE8cFHFtK0RomQ==, tarball: file:projects/playground.tgz}
+    resolution: {integrity: sha512-rJ4ovjvrH0ftwnMXUeb3VHQtjawCPe4xx7lH+upOOZoyG1Klk1k0xoOcDRSe+vaWhWnytYjI0lqYEhBwvJerDA==, tarball: file:projects/playground.tgz}
     id: file:projects/playground.tgz
     name: '@rush-temp/playground'
     version: 0.0.0
@@ -21411,7 +21401,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       fork-ts-checker-webpack-plugin: 6.5.0_9f3c600bb02975ca864765067757f8c0
       html-webpack-plugin: 5.5.0_webpack@5.64.4
       jest: 27.4.2_ts-node@10.4.0
@@ -21454,7 +21444,7 @@ packages:
     dev: false
 
   file:projects/plugin-toolkit.tgz:
-    resolution: {integrity: sha512-9k+aqdHXIIsKN5d1wcnyjS0pcjk60DdBdZo5526CkCOA0pMkfPHBingV3ZHJz2ZHHzeeI3XIByK7CDOFBcuBXA==, tarball: file:projects/plugin-toolkit.tgz}
+    resolution: {integrity: sha512-UernMky6ZBhYz8qsXZYmP4lwnUh4Jtv7TGPYQz72lgw5vctjm7zkj2KcSvN4CihxXNcHBrzO7v3o6N3I/tOY1Q==, tarball: file:projects/plugin-toolkit.tgz}
     name: '@rush-temp/plugin-toolkit'
     version: 0.0.0
     dependencies:
@@ -21487,7 +21477,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       fast-glob: 3.2.7
       fs-extra: 10.0.0
       inquirer: 7.3.3
@@ -21516,7 +21506,7 @@ packages:
     dev: false
 
   file:projects/reference-workspace-mgmt.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-8ujjj8CXVj4eh1CMKxsJmmlRFVRDbKgSQjwxREC2hHOBSLqIr/L80ighRGn1x+C+yYCGsGI7DFvlPX0lNk4J8g==, tarball: file:projects/reference-workspace-mgmt.tgz}
+    resolution: {integrity: sha512-6uqHIVQ6JsE/dOgGqlxKrji4jxXxc20/0f5Jk8bErfBqKP255S4UkvX2MPGYptmbf3tu0kIdxAN8uSdO+WbjQA==, tarball: file:projects/reference-workspace-mgmt.tgz}
     id: file:projects/reference-workspace-mgmt.tgz
     name: '@rush-temp/reference-workspace-mgmt'
     version: 0.0.0
@@ -21534,7 +21524,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       prettier: 2.5.0
@@ -21554,7 +21544,7 @@ packages:
     dev: false
 
   file:projects/reference-workspace.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-wQCTw2HNdogXUz9Y/107phEQ7UXRH7L8fnFYuAbj/V8hxGiEyP2Hmu2eCLn1aLbqiu84uLRSD9oUXf+Uo1GhsQ==, tarball: file:projects/reference-workspace.tgz}
+    resolution: {integrity: sha512-PmsfTcZkxanF3Zwl1AqBfBj9gdG9YI1EbzPTKGXAUYUUdxpeC8j+/jRAwR+TelpiZ9azUZSjAu6WYoKvBL0gqQ==, tarball: file:projects/reference-workspace.tgz}
     id: file:projects/reference-workspace.tgz
     name: '@rush-temp/reference-workspace'
     version: 0.0.0
@@ -21572,7 +21562,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       lodash: 4.17.21
@@ -21593,7 +21583,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-base.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-UOAXV3n4Gd9n+J30BeYyce6bPNddDCTTUgPvrqOHiLqcVXPmSbDYGAatEey/CW9T6/JZ2TOb9jyKOIp5iaPqaw==, tarball: file:projects/sdk-backend-base.tgz}
+    resolution: {integrity: sha512-UBMAvrBBUhjuaAIErftpi79UV71/BGjwT3XCgGzx7xviygKKo6eYi9TRTU0HcO4K3H352Z/a+vTUez7b/j3W4g==, tarball: file:projects/sdk-backend-base.tgz}
     id: file:projects/sdk-backend-base.tgz
     name: '@rush-temp/sdk-backend-base'
     version: 0.0.0
@@ -21618,7 +21608,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
@@ -21644,7 +21634,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-bear.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-G+zauPqeQsXycpuCijPaEwTlDyqzdrSK02yJNiCQBJY3Qf4MqbTBdqVFnjhU/TMO/Ii4JH1lJDo9OJN69K5A2Q==, tarball: file:projects/sdk-backend-bear.tgz}
+    resolution: {integrity: sha512-oRCJuhpXS+utzyBQFpQYFJywA0KDfz7HKl+WEVeyHT0xQSpDjQvaatiZkhy4p6+igUWdpOHNWuY07qLdBdSPpA==, tarball: file:projects/sdk-backend-bear.tgz}
     id: file:projects/sdk-backend-bear.tgz
     name: '@rush-temp/sdk-backend-bear'
     version: 0.0.0
@@ -21669,7 +21659,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       http-status-codes: 2.1.4
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
@@ -21695,7 +21685,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-mockingbird.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-JTYBoOpFLli3+78bs1Mxr2m8/ZN7bT0I3uABf3+0I0KPlsGGRtKEqYKvc6xziVvLKPoUuBNU/bOkM1mL+4s1zA==, tarball: file:projects/sdk-backend-mockingbird.tgz}
+    resolution: {integrity: sha512-PwSqw/1HrdbUea3nIKY1KiS0RpGycXy5APSP2YeCzNNzDHno2NdqGXH49KfgUsf5x06HeR15GQ5xfd2tJ059/Q==, tarball: file:projects/sdk-backend-mockingbird.tgz}
     id: file:projects/sdk-backend-mockingbird.tgz
     name: '@rush-temp/sdk-backend-mockingbird'
     version: 0.0.0
@@ -21716,7 +21706,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       lodash: 4.17.21
@@ -21739,7 +21729,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-spi.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-vRDIu2krrvIx9En6vzq7ta0sYKnP6PkV1sM+6F2Vh6CELE/813pV5XK990glUE7d7cSUC5ger1jxbOIPzhzAjw==, tarball: file:projects/sdk-backend-spi.tgz}
+    resolution: {integrity: sha512-IknIj4lbXMd53tSkVsT/UetoiOg1zJyFvPN6q/tZgVDN9YPnhhjrj5chqcbMmdeCw8me4LXh7txwi/BVP6iuHA==, tarball: file:projects/sdk-backend-spi.tgz}
     id: file:projects/sdk-backend-spi.tgz
     name: '@rush-temp/sdk-backend-spi'
     version: 0.0.0
@@ -21760,7 +21750,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       lodash: 4.17.21
@@ -21783,7 +21773,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-tiger.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-VZg9op6+svaWmiOA8RpHSUOeyZCEoNSwGdLXYH9Oix8fkPjEBTqarZ2pp6M7AIdS5J7Fmw6if106AarV/gCStg==, tarball: file:projects/sdk-backend-tiger.tgz}
+    resolution: {integrity: sha512-tQKC7ub3h/Bxg8gnPphtHlNtTgkmemDsndWx1CKG67aXafodrzktCvALKZLgYs70gsl3sw2aKuu/GsQJuTPP+A==, tarball: file:projects/sdk-backend-tiger.tgz}
     id: file:projects/sdk-backend-tiger.tgz
     name: '@rush-temp/sdk-backend-tiger'
     version: 0.0.0
@@ -21807,7 +21797,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       http-status-codes: 2.1.4
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
@@ -21834,7 +21824,7 @@ packages:
     dev: false
 
   file:projects/sdk-embedding.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-EdvOWbG4zeSaHj4qOZ2WiJGbIM60wJ892ajYaXYOM/uJJj7mzTYouws+nDxZOoWKp5tdO0R5M74qpOdziknURw==, tarball: file:projects/sdk-embedding.tgz}
+    resolution: {integrity: sha512-1H3zdBJ2u4oLVB5jkhUD3AJ+bDmHeblr2GpeaFcBG+OCDSeXE8Rn5rmcZuljmyAd0O8qCVNQe7UbYCtPUPfKjg==, tarball: file:projects/sdk-embedding.tgz}
     id: file:projects/sdk-embedding.tgz
     name: '@rush-temp/sdk-embedding'
     version: 0.0.0
@@ -21854,7 +21844,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       lodash: 4.17.21
@@ -21876,7 +21866,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-lRwl78EZGeyeop9ZU8kHlvtyRlc5iB0oFmnoHzq04bEUi8lp+uXPM1qWOo8OYzoaRn2MYlYKormIx4wP7D2faQ==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-CHg8y/rl8FUcMxoRPdiifIrffwpygyBQkn4esjYzfYErglASW4921J/f6Ae/4iJxjdWcI80R/4P3RigOcKWt9w==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -21928,7 +21918,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       fork-ts-checker-webpack-plugin: 6.5.0_9f3c600bb02975ca864765067757f8c0
       formik: 0.11.11_react@17.0.2
       heroku: 7.47.11
@@ -21989,7 +21979,7 @@ packages:
     dev: false
 
   file:projects/sdk-model.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-L394cO42Wp75K2aL7+Lef4zT44bgexJbD9ODZbXfIxCGNUUvf24CrWED+FR6CT3nfSPlaS496afXewPqP2IcgQ==, tarball: file:projects/sdk-model.tgz}
+    resolution: {integrity: sha512-o8f2kSGrymhtLwvQmxVllVDngHXUf+AKAMgRamNk4czA/iPw0Z3wlSWT57jroGwqamrFgNVKLC06brWH9BWTZg==, tarball: file:projects/sdk-model.tgz}
     id: file:projects/sdk-model.tgz
     name: '@rush-temp/sdk-model'
     version: 0.0.0
@@ -22012,7 +22002,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
@@ -22037,7 +22027,7 @@ packages:
     dev: false
 
   file:projects/sdk-skel-ts.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-MUb0VIvp9LyBAKkbdiFWrvOfaW8KxBf7y1AGr7lcdG3BMSwsukyLJmyz3VrqNjGFRH67obkumS4gZ1CSA8cKbg==, tarball: file:projects/sdk-skel-ts.tgz}
+    resolution: {integrity: sha512-sfIAShP6UMPAZoPkjL2wii+fEXca6hHPcmRBYXvyY54aNsN2G2qrUTS8jyAekXLHUvbUQ1fcEzxzIPd7kmMgOA==, tarball: file:projects/sdk-skel-ts.tgz}
     id: file:projects/sdk-skel-ts.tgz
     name: '@rush-temp/sdk-skel-ts'
     version: 0.0.0
@@ -22057,7 +22047,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       lodash: 4.17.21
@@ -22078,7 +22068,7 @@ packages:
     dev: false
 
   file:projects/sdk-skel-tsx.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-u71GY2PCVNWhztA97lzjc2rg+ybV+xUtmTTrFVSvKoxnY7XNoEXWAb9Xw3ZY6S5VL66jr8wiFEn6RzssLUK43g==, tarball: file:projects/sdk-skel-tsx.tgz}
+    resolution: {integrity: sha512-64GYm+sUsh9T1nDG7Mmqs7DRsACV1BoH+tysFO7Y7MhkO+yPUAzYV7zLF4Qn73Sy9DzYAsqfI3J+T6y3oAqHHQ==, tarball: file:projects/sdk-skel-tsx.tgz}
     id: file:projects/sdk-skel-tsx.tgz
     name: '@rush-temp/sdk-skel-tsx'
     version: 0.0.0
@@ -22106,7 +22096,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-enzyme: 7.1.2_dcd819bac097a5b7573de7f8a8275d1c
       jest-junit: 3.7.0
@@ -22134,7 +22124,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-all.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-oJqxlpMMplAmhjjeBLfAgj25mjrVOzgUIbiQl7/IMMU/ecoLYhZJ+1LSWyqIf/4g3FTp2Pbxj4wkU5JZHj3czg==, tarball: file:projects/sdk-ui-all.tgz}
+    resolution: {integrity: sha512-/tH6O39EVSjYmrBdnuEC7cXm9q7WMtkENQIPK19VpVH4WtqASsVm6b69L0E46eSs4voHeHHU22MuMW6YqsGDNQ==, tarball: file:projects/sdk-ui-all.tgz}
     id: file:projects/sdk-ui-all.tgz
     name: '@rush-temp/sdk-ui-all'
     version: 0.0.0
@@ -22153,7 +22143,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       prettier: 2.5.0
@@ -22173,7 +22163,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-charts.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-fKcLVsaWBZ0OzgNA3AnJMPVNW0zAll4u5UDe9YkOrrb4iGHWeDIURNluOCIY2HO7cKeN2bqNF+53B4YG1f8ZuA==, tarball: file:projects/sdk-ui-charts.tgz}
+    resolution: {integrity: sha512-JrE9uAnfmikT+TB9oEwywI9Jta9JhMyu8o3yvu4jhMCvSPRV2zBUfViPHhCgBmzrBIHhM6iY90qBkNyGeS4C5w==, tarball: file:projects/sdk-ui-charts.tgz}
     id: file:projects/sdk-ui-charts.tgz
     name: '@rush-temp/sdk-ui-charts'
     version: 0.0.0
@@ -22209,7 +22199,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       foundation-sites: 5.5.3
       full-icu: 1.4.0
       highcharts: 8.2.2
@@ -22249,7 +22239,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-lGT2xrlEWI03h/g1/bpTE3XMg/1ajepvZP7Bs8Ter0a4PrMZWhwYWfEPIXHx7dk6YpaThayZKBpdX+vx6p90/Q==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-IGBsEk6chMjVxB4/OXAltRn9EvPc/RtN32OJvG6U/7ioB77nX2hCEEZ4oX46dW/dVG7ki4H2hfxMALLRLPEI6w==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
@@ -22288,7 +22278,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       foundation-sites: 5.5.3
       immer: 9.0.7
       jest: 27.4.2_ts-node@10.4.0
@@ -22334,7 +22324,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-ext.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-qCEr1YLEhX85ryHvFM2l/HFK/O3EBYWanA6l3Gu84DRb9xAG0r8uTiJFaFdtflY2G4BLJ6lOI1h6jHrL2kZcPg==, tarball: file:projects/sdk-ui-ext.tgz}
+    resolution: {integrity: sha512-sFSEx+Ds2/u8/Ir3ngucuh39aNao9Ot5VI7cHcLjGGckfeEJpQ2gFPSig2kfC1mDaZ+gZCR1CvO0MBIwb/0Vzg==, tarball: file:projects/sdk-ui-ext.tgz}
     id: file:projects/sdk-ui-ext.tgz
     name: '@rush-temp/sdk-ui-ext'
     version: 0.0.0
@@ -22374,7 +22364,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       fixed-data-table-2: 1.2.2_react-dom@17.0.2+react@17.0.2
       foundation-sites: 5.5.3
       full-icu: 1.4.0
@@ -22418,7 +22408,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-a4d9ECwef1VDwhodm9g9H1CLmezjv5zVgWG5Aj5HpbiUtaqeAi8uYtRpyfOktpbIiEKvjn1UrQpX6aDvNKYVig==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-0BbfsxQCKm7fiCrNMQgEjtQr6iu3cMviIQRzUK48RegjsgXbKE31iBbsxZ3ERJpMUu6pDmHDDMrYvUhZgfD2uA==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
@@ -22455,7 +22445,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       fixed-data-table-2: 1.2.2_react-dom@17.0.2+react@17.0.2
       foundation-sites: 5.5.3
       full-icu: 1.4.0
@@ -22496,7 +22486,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-geo.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-P+RB51GaKoNWyPpFt4YAwYngsWPTqJYCusqMXCx5NKIzGN0BTB+JX/EEY7yU07E/0xnZoUKg/l8aJKlX4A8Q6g==, tarball: file:projects/sdk-ui-geo.tgz}
+    resolution: {integrity: sha512-ULX3VkOqymUZCMPt7UDl4oOoY0qzc4Gk7f5BPoZsSWdFZ9D6ZoGyEcKHksLaSbw4U6H012DCClgsaAN9kJxY3Q==, tarball: file:projects/sdk-ui-geo.tgz}
     id: file:projects/sdk-ui-geo.tgz
     name: '@rush-temp/sdk-ui-geo'
     version: 0.0.0
@@ -22530,7 +22520,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       foundation-sites: 5.5.3
       jest: 27.4.2_ts-node@10.4.0
       jest-enzyme: 7.1.2_dcd819bac097a5b7573de7f8a8275d1c
@@ -22566,7 +22556,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-QyWhEQsYzeYSfheXY7pqYwSruIfmLPimM6lEPbG8MxL7cR358V4zaVcYw6IPJKuRydb+qtL5y42jLLxmEJhVKA==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-EFxEbzfFM5WtCRFlGj2kQDWNNwn1PwkMphGj35F4Xf4r+6cFrGsgyUv3DwKpbtTi61uauoWifHAR3s5cmfJ0og==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -22613,7 +22603,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       fixed-data-table-2: 1.2.2_react-dom@17.0.2+react@17.0.2
       foundation-sites: 5.5.3
       jest: 27.4.2_ts-node@10.4.0
@@ -22662,7 +22652,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-loaders.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-MHDFufRqBiPyg3ZacHHipoe98eISCyKgpzEW/yA4/6n+4u3KLKNkMpktg+5CDUnOZ90MUMzecC+idJGUxqGRsw==, tarball: file:projects/sdk-ui-loaders.tgz}
+    resolution: {integrity: sha512-NoPNupRnxJDxpUuQi3NkeFEoRFCh4y/dg2F7znr7Uf9CNGiWJb88xwqhw1SsfcaE/J1ZrC6YFpRjobpfB2rUWg==, tarball: file:projects/sdk-ui-loaders.tgz}
     id: file:projects/sdk-ui-loaders.tgz
     name: '@rush-temp/sdk-ui-loaders'
     version: 0.0.0
@@ -22690,7 +22680,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-enzyme: 7.1.2_dcd819bac097a5b7573de7f8a8275d1c
       jest-junit: 3.7.0
@@ -22719,7 +22709,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-pivot.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-aYo5Xuz0rPWC2pQn0DYO1yAexylMfk5VP5JI2hoe/CHiJKwCyDeR8t7WJrSYhG8FQW6hsoRTWKZwEgsIPayDZg==, tarball: file:projects/sdk-ui-pivot.tgz}
+    resolution: {integrity: sha512-JKX/RHOQioy0LjYLApUzz++ejHMvYGedSGreJVAzNVgq5UWsFJdtvPvPwkPbCuQURqgK9Qvn6X7VbWuFUw2B5Q==, tarball: file:projects/sdk-ui-pivot.tgz}
     id: file:projects/sdk-ui-pivot.tgz
     name: '@rush-temp/sdk-ui-pivot'
     version: 0.0.0
@@ -22755,7 +22745,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       fixed-data-table-2: 1.2.2_react-dom@17.0.2+react@17.0.2
       foundation-sites: 5.5.3
       full-icu: 1.4.0
@@ -22792,7 +22782,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-GXGIgLB3RT9/O+5IDW0JSJagxgR2kU0Z2YotFEpINPbfzRNssuN0mXmbz+LZbJhFVBkyKZH9nJPKoe31NVcRSA==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-iTVcgGSzD4TBuA0QAnCwr353LrGgAzIdhTKyPoxoEBoIVcKahhXml6Mp1vID/wPSJg4I+uTqf5KAceiwReSJkQ==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -22841,7 +22831,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       fork-ts-checker-webpack-plugin: 6.5.0_9f3c600bb02975ca864765067757f8c0
       html-webpack-plugin: 5.5.0_webpack@5.64.4
       jest: 27.4.2_ts-node@10.4.0
@@ -22892,7 +22882,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-TXxeI6RD/oernNYd46whswJbBTHlW4oGFow9tLjaY1y/bqIMr0tGxg2D/oNCHmwsPWyB4EmXm2bYOTGgvn+D7A==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-dGdkIMHeOtuQ5gF9j4eNZP+QQCRKjenVvXL3saS1HLPKm//2XgzbQYZRzsZpDxAVVGxxWnxNWccWpo3yT+lcqA==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:
@@ -22937,7 +22927,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-enzyme: 7.1.2_dcd819bac097a5b7573de7f8a8275d1c
       jest-junit: 3.7.0
@@ -22992,7 +22982,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-theme-provider.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-gXZ0vNpLA/4Q4VKoapInEizjE0vpRMzIGRWwTGiqkgGpHN/v5S91yFRVIyGXjeV60me+o1RR0vYP8MqGtDRaPA==, tarball: file:projects/sdk-ui-theme-provider.tgz}
+    resolution: {integrity: sha512-4niv3j/lcfg07MxrZRnTLr84QCO6/XJsPfftU0FUcwqyZftJzm2d5TFF4QY6wm2szcE+jsoYgQWq01GCM0OQHw==, tarball: file:projects/sdk-ui-theme-provider.tgz}
     id: file:projects/sdk-ui-theme-provider.tgz
     name: '@rush-temp/sdk-ui-theme-provider'
     version: 0.0.0
@@ -23020,7 +23010,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-enzyme: 7.1.2_dcd819bac097a5b7573de7f8a8275d1c
       jest-junit: 3.7.0
@@ -23050,7 +23040,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-vis-commons.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-WQYciIK5gQTJEAQNkXYFRM9o4z5kyPi2LuRI1DT9fXYgQZJqWp1K/rJlTG7/Wyibcs3HVzpQrptbsWr5Fzuw8A==, tarball: file:projects/sdk-ui-vis-commons.tgz}
+    resolution: {integrity: sha512-mnZkN61sKIJxLfWABsj2Sm1PliWO7SMD2LQljtVXcFYSgEQE9y0i4Wg7Rph60RmQMyyYDXg1jEKv0GqgjfBmew==, tarball: file:projects/sdk-ui-vis-commons.tgz}
     id: file:projects/sdk-ui-vis-commons.tgz
     name: '@rush-temp/sdk-ui-vis-commons'
     version: 0.0.0
@@ -23081,7 +23071,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       foundation-sites: 5.5.3
       jest: 27.4.2_ts-node@10.4.0
       jest-enzyme: 7.1.2_dcd819bac097a5b7573de7f8a8275d1c
@@ -23114,7 +23104,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-dM0Yx8R9K1q5Xcnhw4mynKhwGxm1HQEVpvi88z5SLNMo/bkVrEsr9DrT6N/0a/2yruJ6hqWsABjzILEMf1Q6Gw==, tarball: file:projects/sdk-ui.tgz}
+    resolution: {integrity: sha512-PLnhWEMZdCjU/4Qqtsg2Xw/84jVLwga2ViHIJMjJvZE6fvfJVKockfq1S+tOxH/WcjO9bUbaG0Ljb40trZaYOQ==, tarball: file:projects/sdk-ui.tgz}
     id: file:projects/sdk-ui.tgz
     name: '@rush-temp/sdk-ui'
     version: 0.0.0
@@ -23150,7 +23140,7 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-react: 7.27.1_eslint@8.3.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       foundation-sites: 5.5.3
       full-icu: 1.4.0
       hoist-non-react-statics: 3.3.2
@@ -23189,7 +23179,7 @@ packages:
     dev: false
 
   file:projects/util.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-70PIAcd4rgBTLG5dRXUL3L4S7iIoWmkN9eg57Gpt4Ri7mUzqlac0baFAf2UNkTNqPJQI+DfLyEdUhjcaa0zuzA==, tarball: file:projects/util.tgz}
+    resolution: {integrity: sha512-yrAQ5r12/Ya9eNHkKbx3zShHetdj+7X7b9XphEM1Bru6SET8j1BwplHLl5p0Jg43SsLzPO2LC/fsJwdBEcnkhQ==, tarball: file:projects/util.tgz}
     id: file:projects/util.tgz
     name: '@rush-temp/util'
     version: 0.0.0
@@ -23209,7 +23199,7 @@ packages:
       eslint-plugin-jest: 25.3.0_6bd35a6de616c06ebbfc155311c3dbdb
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
-      eslint-plugin-sonarjs: 0.9.1_eslint@8.3.0
+      eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       lodash: 4.17.21
