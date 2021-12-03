@@ -140,6 +140,10 @@ export {
     selectListedDashboards,
     selectListedDashboardsMap,
 } from "./listedDashboards/listedDashboardsSelectors";
+export {
+    selectAccessibleDashboards,
+    selectAccessibleDashboardsMap,
+} from "./accessibleDashboards/accessibleDashboardsSelectors";
 export { selectDrillTargetsByWidgetRef, selectDrillTargets } from "./drillTargets/drillTargetsSelectors";
 export { IDrillTargets } from "./drillTargets/drillTargetsTypes";
 export {

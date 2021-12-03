@@ -54,6 +54,7 @@ export type DashboardState = {
     alerts: EntityState<IWidgetAlert>;
     drillTargets: EntityState<IDrillTargets>;
     listedDashboards: EntityState<IListedDashboard>;
+    accessibleDashboards: EntityState<IListedDashboard>;
 
     /**
      * Ui state controllable from the outside.

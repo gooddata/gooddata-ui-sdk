@@ -46,7 +46,7 @@ import {
 } from "../config/configSelectors";
 import flatMap from "lodash/flatMap";
 import { selectAllCatalogDisplayFormsMap } from "../catalog/catalogSelectors";
-import { selectListedDashboardsMap } from "../listedDashboards/listedDashboardsSelectors";
+import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors";
 import { selectInsightsMap } from "../insights/insightsSelectors";
 
 /**
@@ -264,9 +264,9 @@ export const selectValidConfiguredDrillsByWidgetRef = createMemoizedSelector((re
     createSelector(
         selectConfiguredDrillsByWidgetRef(ref),
         selectAllCatalogDisplayFormsMap,
-        selectListedDashboardsMap,
+        selectAccessibleDashboardsMap,
         selectInsightsMap,
-        (drills = [], displayFormsMap, listedDashboardsMap, insightsMap) => {
+        (drills = [], displayFormsMap, accessibleDashboardsMap, insightsMap) => {
             const filteredDrills = drills.filter((drill) => {
                 switch (drill.drillDefinition.type) {
                     case "drillToAttributeUrl": {
@@ -279,7 +279,7 @@ export const selectValidConfiguredDrillsByWidgetRef = createMemoizedSelector((re
                         // No drill target equals drill to the same dashboard
                         return (
                             !drill.drillDefinition.target ||
-                            listedDashboardsMap.get(drill.drillDefinition.target)
+                            accessibleDashboardsMap.get(drill.drillDefinition.target)
                         );
                     }
                     case "drillToInsight": {
