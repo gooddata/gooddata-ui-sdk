@@ -80,7 +80,7 @@ const itemHeightByTypeMap: { [key in SelectItemTypes]: number } = {
 };
 
 const getItemHeight =
-    <V extends unknown>(items: Array<ISelectItem<V>>) =>
+    (items: Array<ISelectItem<unknown>>) =>
     (index: number): number => {
         const itemType = items[index].type;
         return itemHeightByTypeMap[itemType];
@@ -124,7 +124,7 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
         );
 
         const listHeight = visibleIndexes.reduce(
-            (totalHeight, itemIndex) => totalHeight + getItemHeight<V>(items)(itemIndex),
+            (totalHeight, itemIndex) => totalHeight + getItemHeight(items)(itemIndex),
             0,
         );
 
@@ -135,7 +135,7 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
                         className="List"
                         ref={this.listRef}
                         itemCount={items.length}
-                        itemSize={getItemHeight<V>(items)}
+                        itemSize={getItemHeight(items)}
                         height={listHeight}
                         width="100%"
                         overscanCount={10} // initial value of 2 causes Downshifts scrollToView to break

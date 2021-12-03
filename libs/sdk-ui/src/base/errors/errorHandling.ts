@@ -5,7 +5,7 @@ import {
     isUnexpectedResponseError,
     NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
-import HttpStatusCodes from "http-status-codes";
+import { StatusCodes as HttpStatusCodes } from "http-status-codes";
 import { IntlShape } from "react-intl";
 import {
     BadRequestSdkError,

@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-08-23T11:37:38.474Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-12-03T08:00:54.375Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -3323,6 +3323,10 @@ export const Insights = {
      * Insight Title: drillToAttributeUrl
      * Insight ID: acSQJgNjhBhi
      */ DrillToAttributeUrl: "acSQJgNjhBhi",
+    /**
+     * Insight Title: Insight new
+     * Insight ID: aclJqJXpbSQq
+     */ InsightNew: "aclJqJXpbSQq",
 };
 export const Dashboards = {
     /**
@@ -3370,4 +3374,16 @@ export const Dashboards = {
      * Dashboard Title: Broken Filter Alerts Test
      * Dashboard ID: abK3yl1TcTWV
      */ BrokenFilterAlertsTest: "abK3yl1TcTWV",
+    /**
+     * Dashboard Title: test RAIL-3630
+     * Dashboard ID: ab4ffknygMd6
+     */ TestRAIL3630: "ab4ffknygMd6",
+    /**
+     * Dashboard Title: MAP - executeAfm test
+     * Dashboard ID: ac8FPh7Nmhx1
+     */ MAPExecuteAfmTest: "ac8FPh7Nmhx1",
+    /**
+     * Dashboard Title: Locked dashboard
+     * Dashboard ID: aaI2dN741uaa
+     */ LockedDashboard: "aaI2dN741uaa",
 };

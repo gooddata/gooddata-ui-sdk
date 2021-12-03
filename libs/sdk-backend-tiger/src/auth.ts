@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { ITigerClient, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
 import { AxiosError } from "axios";
-import HttpStatusCodes from "http-status-codes";
+import { StatusCodes as HttpStatusCodes } from "http-status-codes";
 
 import { convertApiError } from "./utils/errorHandling";
 

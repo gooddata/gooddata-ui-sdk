@@ -11,7 +11,7 @@ import {
     isAnalyticalBackendError,
 } from "@gooddata/sdk-backend-spi";
 import includes from "lodash/includes";
-import * as HttpStatusCodes from "http-status-codes";
+import { StatusCodes as HttpStatusCodes } from "http-status-codes";
 
 export function isApiResponseError(error: unknown): error is ApiResponseError {
     return (error as ApiResponseError).response !== undefined;
