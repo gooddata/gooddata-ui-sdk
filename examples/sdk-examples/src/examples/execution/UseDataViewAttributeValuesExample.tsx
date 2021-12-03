@@ -24,7 +24,7 @@ export const UseDataViewAttributeValuesExample: React.FC = () => {
 
     let renderAttributeValues: React.ReactNode = null;
     if (result) {
-        const [[locationStateHeaders, locationNameHeaders]] = result?.dataView.headerItems;
+        const [[locationStateHeaders, locationNameHeaders]] = result.dataView.headerItems;
         const locationStates = locationStateHeaders.map(getAttributeHeaderItemName);
         const locations = locationNameHeaders.map(getAttributeHeaderItemName);
         const locationsByState = groupBy(

@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty";
 import isNumber from "lodash/isNumber";
 import defaultTo from "lodash/defaultTo";
 import clamp from "lodash/clamp";
@@ -12,8 +11,7 @@ type NumericInputValue = number | "" | "-";
 
 const isIntermediateValue = (value: number | string): value is "" | "-" => value === "" || value === "-";
 
-const isNotNumeric = <T extends unknown>(value: T | number): value is T =>
-    !isEmpty(value) && !isNumber(value);
+const isNumericOrEmptyString = (value: unknown): value is number | "" => value === "" || isNumber(value);
 
 const UP_ARROW_CODE = 38;
 const DOWN_ARROW_CODE = 40;
@@ -60,11 +58,11 @@ export class NumericInput extends React.Component<{
     }
 
     private isIncrementDisabled = () =>
-        isNotNumeric(this.props.value) ||
+        !isNumericOrEmptyString(this.props.value) ||
         (this.props.max !== undefined && this.props.value >= this.props.max);
 
     private isDecrementDisabled = () =>
-        isNotNumeric(this.props.value) ||
+        !isNumericOrEmptyString(this.props.value) ||
         (this.props.min !== undefined && this.props.value <= this.props.min);
 
     private clampToRange = (value: number): number => {
