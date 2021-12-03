@@ -2,6 +2,7 @@
 import { validatePluginUrlIsSane } from "@gooddata/sdk-backend-base";
 import { ISecuritySettingsService, ValidationContext } from "@gooddata/sdk-backend-spi";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
+import isEmpty from "lodash/isEmpty";
 
 export interface IValidationResponse {
     validationResponse: {
@@ -50,9 +51,19 @@ export class SecuritySettingsService implements ISecuritySettingsService {
             return sdk.project.getConfigItem(workspace, "dashboardPluginHosts");
         });
 
-        const hostList = setting?.settingItem?.value ?? "";
-        const allowedHosts = hostList.split(";").map((entry) => entry.trim());
-
-        return allowedHosts.some((host) => url.startsWith(host));
+        return validateAgainstList(url, setting?.settingItem?.value);
     };
+}
+
+export function validateAgainstList(url: string, listContent: any): boolean {
+    if (!listContent || isEmpty(listContent) || typeof listContent !== "string") {
+        return false;
+    }
+
+    const allowedHosts = listContent
+        .split(";")
+        .map((entry) => entry.trim())
+        .filter((entry) => !isEmpty(entry));
+
+    return allowedHosts.some((host) => url.startsWith(host));
 }
