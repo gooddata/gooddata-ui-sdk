@@ -1719,14 +1719,6 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: false
 
-  /@dsherret/to-absolute-glob/2.0.2:
-    resolution: {integrity: sha1-H2R13IvZdM6gei2vOGSzF7HdMyw=}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      is-absolute: 1.0.0
-      is-negated-glob: 1.0.0
-    dev: false
-
   /@emotion/cache/10.0.29:
     resolution: {integrity: sha512-fU2VtSVlHiF27empSbxi1O2JFdNWZO+2NFHfwO0pxgTep6Xa3uGb+3pVKfLww2l/IBGLNEZl5Xf/++A4wAYDYQ==}
     dependencies:
@@ -4118,15 +4110,13 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: false
 
-  /@ts-morph/common/0.6.0:
-    resolution: {integrity: sha512-pI35nZz5bs3tL3btSVX2cWkAE8rc80F+Fn4TwSC6bQvn7fgn9IyLXVcAfpG6X6NBY5wN9TkSWXn/QYUkBvR/Fw==}
+  /@ts-morph/common/0.12.2:
+    resolution: {integrity: sha512-m5KjptpIf1K0t0QL38uE+ol1n+aNn9MgRq++G3Zym1FlqfN+rThsXlp3cAgib14pIeXF7jk3UtJQOviwawFyYg==}
     dependencies:
-      '@dsherret/to-absolute-glob': 2.0.2
       fast-glob: 3.2.7
-      fs-extra: 9.1.0
-      is-negated-glob: 1.0.0
-      multimatch: 4.0.0
-      typescript: 4.0.2
+      minimatch: 3.0.4
+      mkdirp: 1.0.4
+      path-browserify: 1.0.1
     dev: false
 
   /@tsconfig/node10/1.0.8:
@@ -5881,7 +5871,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.5_debug@4.3.3
+      follow-redirects: 1.14.5
     transitivePeerDependencies:
       - debug
     dev: false
@@ -7204,8 +7194,10 @@ packages:
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
     dev: false
 
-  /code-block-writer/10.1.1:
-    resolution: {integrity: sha512-67ueh2IRGst/51p0n6FvPrnRjAGHY5F8xdjkgrYE7DDzpJe6qA07RYQ9VcoUeo5ATOjSOiWpSL3SWBRRbempMw==}
+  /code-block-writer/11.0.0:
+    resolution: {integrity: sha512-GEqWvEWWsOvER+g9keO4ohFoD3ymwyCnqY3hoTr7GZipYFwEhMHJw+TtV0rfgRhNImM6QWZGO2XYjlJVyYT62w==}
+    dependencies:
+      tslib: 2.3.1
     dev: false
 
   /code-point-at/1.1.0:
@@ -9811,6 +9803,16 @@ packages:
       readable-stream: 2.3.7
     dev: false
 
+  /follow-redirects/1.14.5:
+    resolution: {integrity: sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
+
   /follow-redirects/1.14.5_debug@4.1.1:
     resolution: {integrity: sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==}
     engines: {node: '>=4.0'}
@@ -11587,14 +11589,6 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /is-absolute/1.0.0:
-    resolution: {integrity: sha512-dOWoqflvcydARa360Gvv18DZ/gRuHKi2NU/wU5X1ZFzdYfH29nkiNZsF3mp4OJ3H4yo9Mx8A/uAGNzpzPN3yBA==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      is-relative: 1.0.0
-      is-windows: 1.0.2
-    dev: false
-
   /is-accessor-descriptor/0.1.6:
     resolution: {integrity: sha1-qeEss66Nh2cn7u84Q/igiXtcmNY=}
     engines: {node: '>=0.10.0'}
@@ -11881,11 +11875,6 @@ packages:
     resolution: {integrity: sha512-cOZFQQozTha1f4MxLFzlgKYPTyj26picdZTx82hbc/Xf4K/tZOOXSCkMvU4pKioRXGDLJRn0GM7Upe7kR721yg==}
     dev: false
 
-  /is-negated-glob/1.0.0:
-    resolution: {integrity: sha1-aRC8pdqMleeEtXUbl2z1oQ/uNtI=}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
   /is-negative-zero/2.0.1:
     resolution: {integrity: sha512-2z6JzQvZRa9A2Y7xC6dQQm4FSTSTNWjKIYYTt4246eMTJmIo0Q+ZyOsU66X8lxK1AbB92dFeglPLrhwpeRKO6w==}
     engines: {node: '>= 0.4'}
@@ -12006,13 +11995,6 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /is-relative/1.0.0:
-    resolution: {integrity: sha512-Kw/ReK0iqwKeu0MITLFuj0jbPAmEiOsIwyIXvvbfa6QfmN9pkD1M+8pdk7Rl/dTKbH34/XBFMbgD4iMJhLQbGA==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      is-unc-path: 1.0.0
-    dev: false
-
   /is-retry-allowed/1.2.0:
     resolution: {integrity: sha512-RUbUeKwvm3XG2VYamhJL1xFktgjvPzL0Hq8C+6yrWIswDy3BIXGqCxhxkc30N9jqK311gVU137K8Ei55/zVJRg==}
     engines: {node: '>=0.10.0'}
@@ -12072,13 +12054,6 @@ packages:
 
   /is-typedarray/1.0.0:
     resolution: {integrity: sha1-5HnICFjfDBsR3dppQPlgEfzaSpo=}
-    dev: false
-
-  /is-unc-path/1.0.0:
-    resolution: {integrity: sha512-mrGpVd0fs7WWLfVsStvgF6iEJnbjDFZh9/emhRDcGWTduTfNHd9CHeUwH3gYIjdbwo4On6hunkztwOaAw0yllQ==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      unc-path-regex: 0.1.2
     dev: false
 
   /is-unicode-supported/0.1.0:
@@ -15061,6 +15036,10 @@ packages:
 
   /path-browserify/0.0.1:
     resolution: {integrity: sha512-BapA40NHICOS+USX9SN4tyhq+A2RrN/Ws5F0Z5aMHDp98Fl86lX8Oti8B7uN93L4Ifv4fHOEA+pQw87gmMO/lQ==}
+    dev: false
+
+  /path-browserify/1.0.1:
+    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
     dev: false
 
   /path-case/2.1.1:
@@ -19375,12 +19354,11 @@ packages:
       webpack: 5.64.4_webpack-cli@4.9.1
     dev: false
 
-  /ts-morph/8.2.0:
-    resolution: {integrity: sha512-NHHWu+7I2/AOZiTni5w3f+xCfIxrkzPCcQbTGa81Yk3pr23a4h9xLLEE6tIGuYIubWjkjr9QVC3ITqgmA5touQ==}
+  /ts-morph/13.0.2:
+    resolution: {integrity: sha512-SjeeHaRf/mFsNeR3KTJnx39JyEOzT4e+DX28gQx5zjzEOuFs2eGrqeN2PLKs/+AibSxPmzV7RD8nJVKmFJqtLA==}
     dependencies:
-      '@dsherret/to-absolute-glob': 2.0.2
-      '@ts-morph/common': 0.6.0
-      code-block-writer: 10.1.1
+      '@ts-morph/common': 0.12.2
+      code-block-writer: 11.0.0
     dev: false
 
   /ts-node/10.4.0_9dd118e102296836d641836d8e42e390:
@@ -19624,11 +19602,6 @@ packages:
       has-bigints: 1.0.1
       has-symbols: 1.0.2
       which-boxed-primitive: 1.0.2
-    dev: false
-
-  /unc-path-regex/0.1.2:
-    resolution: {integrity: sha1-5z3T17DXxe2G+6xrCufYxqadUPo=}
-    engines: {node: '>=0.10.0'}
     dev: false
 
   /unfetch/4.2.0:
@@ -21138,7 +21111,7 @@ packages:
     dev: false
 
   file:projects/catalog-export.tgz:
-    resolution: {integrity: sha512-qQYSWYEBRXqFxQIt3r6QOmQZsjxMYum30bApiixxoKLhcmO+0E2zVHa/bJJ2/X1T3Ca25T4nmUqevfqggneVPw==, tarball: file:projects/catalog-export.tgz}
+    resolution: {integrity: sha512-JlD3yAAmap9bPBuNavj32enCrejZvfUYaW3lmtGyPcJ5xlJiq5bhXM3eRV4AyT51GFZwFyRO1xfNnY+Jx+9cvg==, tarball: file:projects/catalog-export.tgz}
     name: '@rush-temp/catalog-export'
     version: 0.0.0
     dependencies:
@@ -21172,7 +21145,7 @@ packages:
       prettier: 2.5.0
       strip-ansi: 6.0.1
       ts-jest: 27.0.7_0c1d779e00072c44d0a6a9615a4f0a08
-      ts-morph: 8.2.0
+      ts-morph: 13.0.2
       ts-node: 10.4.0_9dd118e102296836d641836d8e42e390
       tslib: 2.3.1
       typescript: 4.0.2
@@ -21345,7 +21318,7 @@ packages:
     dev: false
 
   file:projects/mock-handling.tgz:
-    resolution: {integrity: sha512-a/Bu9gOUpfaOl/ZzrUz7G8icHaGf3CpOp/j/3LVr3DzAs5C3Nz1BbGbVPMbyhBrO3v+cMZOnHMhBdBYFoxSgpg==, tarball: file:projects/mock-handling.tgz}
+    resolution: {integrity: sha512-539NV1IjkF9+l/j9Wyr+4DiJ7M/onl8lSfKKwM5ssbpVa8dhM4LYTjmKDDf9CapL5GNoAFer9esIyB9x/2Pfmw==, tarball: file:projects/mock-handling.tgz}
     name: '@rush-temp/mock-handling'
     version: 0.0.0
     dependencies:
@@ -21379,7 +21352,7 @@ packages:
       prettier: 2.5.0
       rimraf: 3.0.2
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
-      ts-morph: 8.2.0
+      ts-morph: 13.0.2
       ts-node: 10.4.0_9dd118e102296836d641836d8e42e390
       tslib: 2.3.1
       typescript: 4.0.2
