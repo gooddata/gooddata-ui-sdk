@@ -1,0 +1,21 @@
+{
+    "id": "0ff74112-e8cd-40b7-842e-f8f9511ec987",
+    "name": "gdc_account_profile_b388eefffab41947076a75fd36d0bad1_settings_separators",
+    "request": {
+        "url": "/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/settings/separators",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"separators\":{\"thousand\":\",\",\"decimal\":\".\",\"links\":{\"self\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/settings/separators\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "0ff74112-e8cd-40b7-842e-f8f9511ec987",
+    "persistent": true,
+    "insertionIndex": 78
+}

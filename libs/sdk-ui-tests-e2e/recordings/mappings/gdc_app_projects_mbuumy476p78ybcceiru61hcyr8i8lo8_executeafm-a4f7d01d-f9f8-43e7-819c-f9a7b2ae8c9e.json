@@ -1,0 +1,28 @@
+{
+    "id": "a4f7d01d-f9f8-43e7-819c-f9a7b2ae8c9e",
+    "name": "gdc_app_projects_mbuumy476p78ybcceiru61hcyr8i8lo8_executeafm",
+    "request": {
+        "url": "/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executeAfm",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"3c2bb0732dc2454189b2d454a3845318\",\"definition\":{\"measure\":{\"item\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\"}}}}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"measureGroup\"]}]}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 201,
+        "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"$ Avg Daily Total Sales\",\"format\":\"$#,##0\",\"localIdentifier\":\"3c2bb0732dc2454189b2d454a3845318\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\",\"identifier\":\"aagJGHg1bxap\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executionResults/8180901872262282240?c=8f1885a5cd9075cc87f00a7089c6f674&q=eAE9jjELwjAUhP9KeXUsRFHa2E0QxMVFnaRDmsYayWvKa6KE0v9uKuJ23H3H3QikekvuJFBBCdfO%0AaWdUAxmgcqTlAOVthMEjCgoRiMGXiHKR7F5tshfahORinTDJWRg1%2FKvHJkKsbSTDhmHtPYZNkfcF%0AD7WUSpPPVw8ZiGtuLGe2frKcb9exfreEws0LaZamS5iqDMi%2B5yu%2FVweyvodoS2s8dnNSTR%2FDPUJk%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "a4f7d01d-f9f8-43e7-819c-f9a7b2ae8c9e",
+    "persistent": true,
+    "insertionIndex": 92
+}

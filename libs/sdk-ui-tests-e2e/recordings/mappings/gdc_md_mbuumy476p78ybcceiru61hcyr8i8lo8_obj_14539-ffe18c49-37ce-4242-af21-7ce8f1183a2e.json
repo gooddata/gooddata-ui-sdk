@@ -1,0 +1,21 @@
+{
+    "id": "ffe18c49-37ce-4242-af21-7ce8f1183a2e",
+    "name": "gdc_md_mbuumy476p78ybcceiru61hcyr8i8lo8_obj_14539",
+    "request": {
+        "url": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14539",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"analyticalDashboard\":{\"meta\":{\"author\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"deprecated\":\"0\",\"identifier\":\"aab58o6sdLRF\",\"summary\":\"\",\"isProduction\":1,\"created\":\"2021-07-12 09:50:52\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14539\",\"tags\":\"\",\"updated\":\"2021-07-12 09:50:52\",\"category\":\"analyticalDashboard\",\"title\":\"E2E RAIL Tests\",\"contributor\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\"},\"content\":{\"filterContext\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14537\",\"widgets\":[\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14538\"],\"layout\":{\"fluidLayout\":{\"rows\":[{\"columns\":[{\"size\":{\"xl\":{\"width\":2}},\"content\":{\"widget\":{\"qualifier\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14538\"}}}}]}]}}}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "ffe18c49-37ce-4242-af21-7ce8f1183a2e",
+    "persistent": true,
+    "insertionIndex": 73
+}

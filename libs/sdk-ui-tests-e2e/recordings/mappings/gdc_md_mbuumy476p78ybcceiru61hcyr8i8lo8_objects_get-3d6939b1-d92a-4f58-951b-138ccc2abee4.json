@@ -1,0 +1,28 @@
+{
+    "id": "3d6939b1-d92a-4f58-951b-138ccc2abee4",
+    "name": "gdc_md_mbuumy476p78ybcceiru61hcyr8i8lo8_objects_get",
+    "request": {
+        "url": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/objects/get",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"get\":{\"items\":[\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14538\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14537\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"items\":[{\"filterContext\":{\"meta\":{\"contributor\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"title\":\"filterContext\",\"updated\":\"2021-07-12 09:50:52\",\"category\":\"filterContext\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14537\",\"created\":\"2021-07-12 09:50:52\",\"tags\":\"\",\"isProduction\":1,\"summary\":\"\",\"author\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"deprecated\":\"0\",\"identifier\":\"aab58o3zB0S7\"},\"content\":{\"filters\":[]}}},{\"visualizationWidget\":{\"meta\":{\"isProduction\":1,\"identifier\":\"aag55vUqBz7o\",\"author\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"deprecated\":\"0\",\"summary\":\"\",\"title\":\"Avg Daily Total Sales\",\"contributor\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"tags\":\"\",\"created\":\"2021-07-12 09:50:52\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14538\",\"category\":\"visualizationWidget\",\"updated\":\"2021-07-12 09:50:52\"},\"content\":{\"ignoreDashboardFilters\":[],\"dateDataSet\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2180\",\"visualization\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14536\"}}}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "3d6939b1-d92a-4f58-951b-138ccc2abee4",
+    "persistent": true,
+    "insertionIndex": 95
+}
