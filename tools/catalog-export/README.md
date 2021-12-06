@@ -74,6 +74,8 @@ When connecting to a Tiger backend, the tool expects that you have TIGER_API_TOK
 which you yourself obtain from your installation. The username and password authentication is not possible against
 Tiger backend.
 
+The TIGER_API_TOKEN variable can be also set in the `.env` file in the application root directory.
+
 While the configuration allows to specify `username` this is optional and will be used only to open a browser window
 at location where you can obtain an API Token.
 
