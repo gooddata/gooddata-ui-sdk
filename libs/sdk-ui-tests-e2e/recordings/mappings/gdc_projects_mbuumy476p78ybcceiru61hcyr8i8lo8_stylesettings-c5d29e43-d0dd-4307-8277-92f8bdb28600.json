@@ -1,0 +1,21 @@
+{
+    "id": "c5d29e43-d0dd-4307-8277-92f8bdb28600",
+    "name": "gdc_projects_mbuumy476p78ybcceiru61hcyr8i8lo8_stylesettings",
+    "request": {
+        "url": "/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/styleSettings",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"styleSettings\":{\"chartPalette\":[{\"guid\":\"guid1\",\"fill\":{\"r\":0,\"g\":0,\"b\":0}},{\"guid\":\"guid2\",\"fill\":{\"r\":255,\"g\":212,\"b\":0}},{\"guid\":\"guid3\",\"fill\":{\"r\":255,\"g\":109,\"b\":0}},{\"guid\":\"guid4\",\"fill\":{\"r\":0,\"g\":199,\"b\":92}},{\"guid\":\"guid5\",\"fill\":{\"r\":166,\"g\":134,\"b\":106}}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "c5d29e43-d0dd-4307-8277-92f8bdb28600",
+    "persistent": true,
+    "insertionIndex": 62
+}

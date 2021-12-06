@@ -1,0 +1,21 @@
+{
+    "id": "48b1ad5c-a536-468e-acde-e66788191f12",
+    "name": "gdc_internal_projects",
+    "request": {
+        "url": "/gdc/internal/projects/?limit=100&offset=100&userId=b388eefffab41947076a75fd36d0bad1&projectStates=ENABLED&userState=ENABLED",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"userProjects\":{\"paging\":{\"offset\":100,\"limit\":100,\"count\":0,\"totalCount\":6},\"items\":[]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "48b1ad5c-a536-468e-acde-e66788191f12",
+    "persistent": true,
+    "insertionIndex": 89
+}

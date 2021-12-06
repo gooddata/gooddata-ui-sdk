@@ -1,0 +1,28 @@
+{
+    "id": "8aaf114b-dfe5-4780-b701-bef0811521cb",
+    "name": "gdc_app_projects_mbuumy476p78ybcceiru61hcyr8i8lo8_executeafm",
+    "request": {
+        "url": "/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executeAfm",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"3c2bb0732dc2454189b2d454a3845318\",\"definition\":{\"measure\":{\"item\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\"}}}}],\"filters\":[{\"relativeDateFilter\":{\"dataSet\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2180\"},\"granularity\":\"GDC.time.date\",\"from\":-6,\"to\":0}}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"measureGroup\"]}]}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 201,
+        "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"$ Avg Daily Total Sales\",\"format\":\"$#,##0\",\"localIdentifier\":\"3c2bb0732dc2454189b2d454a3845318\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\",\"identifier\":\"aagJGHg1bxap\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executionResults/7834944206394620928?c=ee3944190556e741c02c6d21f2872fe1&q=eAEljMEOgjAQRH%2BFLB5JqtFA5WZiYrx4UU%2BGQykVa7qULK2mIfy7RW6zb2bfCKR6S%2B4iUEEJ985p%0AZ1QDGUhrPHYDlI8qA7LfOQEqR1qeyPoeIl7OuRlh8IiCQpTE56clFC7mVZql6TqSv3cGyeHTJkeh%0ATUhu1gmTXIVRQ1wssnMTR6xtJMOGYe09hl2R9wUPtZRKk883LxmIa24sZ7Z%2Bs5zvtzBV0w%2FErEJk%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "8aaf114b-dfe5-4780-b701-bef0811521cb",
+    "persistent": true,
+    "insertionIndex": 98
+}

@@ -1,0 +1,21 @@
+{
+    "id": "c82d7fff-f80e-44d3-b2b3-31ec0713aa77",
+    "name": "gdc_internal_projects",
+    "request": {
+        "url": "/gdc/internal/projects/?limit=100&offset=0&userId=b388eefffab41947076a75fd36d0bad1&projectStates=ENABLED&userState=ENABLED",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":6,\"totalCount\":6},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"# My project - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/kzfaabpubxludopwiwy60xq7dk2v3t3t\",\"projectUser\":\"/gdc/projects/kzfaabpubxludopwiwy60xq7dk2v3t3t/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"dho-goodsales\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/yj8mvwtg67rdcdog5vj39xyl3k0uv9lq\",\"projectUser\":\"/gdc/projects/yj8mvwtg67rdcdog5vj39xyl3k0uv9lq/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Huyen's project\",\"projectTitle\":\"GoodSaleDemo2 - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4\",\"projectUser\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"MAP Test project\",\"projectTitle\":\"MAP GoodSales\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x\",\"projectUser\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"NEW UI(stg3)_ DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/xtuuemh43miequnxq9ohc69cb9tr0lei\",\"projectUser\":\"/gdc/projects/xtuuemh43miequnxq9ohc69cb9tr0lei/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL test-do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8\",\"projectUser\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/users/b388eefffab41947076a75fd36d0bad1\"}}}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "Accept-Encoding,origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "c82d7fff-f80e-44d3-b2b3-31ec0713aa77",
+    "persistent": true,
+    "insertionIndex": 86
+}

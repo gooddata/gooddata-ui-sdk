@@ -1,0 +1,28 @@
+{
+    "id": "f08aa0b8-637f-4cbf-978f-159059c30002",
+    "name": "gdc_app_projects_mbuumy476p78ybcceiru61hcyr8i8lo8_executeafm",
+    "request": {
+        "url": "/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executeAfm",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"4329964a12fd4dcebb5fb7cf7e1c915e\",\"definition\":{\"measure\":{\"item\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\"}}}}],\"attributes\":[{\"displayForm\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2201\"},\"localIdentifier\":\"4fea42e9279d418a8221421fe35c48cf\"},{\"displayForm\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2211\"},\"localIdentifier\":\"cc490ebc21f14b13b18abc66de23173f\"}],\"filters\":[{\"positiveAttributeFilter\":{\"displayForm\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2201\"},\"in\":{\"uris\":[\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339877\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339689\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339879\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339691\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339462\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339881\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339269\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339271\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339464\",\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200/elements?id=6339693\"]}}}]},\"resultSpec\":{\"sorts\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"4fea42e9279d418a8221421fe35c48cf\",\"direction\":\"asc\"}}],\"dimensions\":[{\"itemIdentifiers\":[\"4fea42e9279d418a8221421fe35c48cf\",\"cc490ebc21f14b13b18abc66de23173f\"]},{\"itemIdentifiers\":[\"measureGroup\"]}]}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 201,
+        "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"name\":\"Employee Name\",\"localIdentifier\":\"4fea42e9279d418a8221421fe35c48cf\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2201\",\"identifier\":\"label.employee.employeename\",\"formOf\":{\"name\":\"Employee Name\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2200\",\"identifier\":\"attr.employee.employeename\"}}},{\"attributeHeader\":{\"name\":\"Location State\",\"localIdentifier\":\"cc490ebc21f14b13b18abc66de23173f\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2211\",\"identifier\":\"label.restaurantlocation.locationstate\",\"formOf\":{\"name\":\"Location State\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2210\",\"identifier\":\"attr.restaurantlocation.locationstate\"}}}]},{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"$ Avg Daily Total Sales\",\"format\":\"$#,##0\",\"localIdentifier\":\"4329964a12fd4dcebb5fb7cf7e1c915e\",\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6893\",\"identifier\":\"aagJGHg1bxap\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/executionResults/5190287670877486080?c=a0d7cc8f9b6a530080b22d4f7fdefb3f&q=eAGtU8FqwkAQ%2FZWwegwk0VajUIqgFqH0UPUkHjbZqd12Nxs2s5VF8u%2BdNLSIeNF6nZ19b96bNweW%0AG%2BV0UbHxhmlAK%2FMna1zJtiGzUBqLL1wDG7N1gRIVCEZ1s2%2FaD6xyWnPr6ZWqGa9gpkBDgevXBdWi%0AncgjLSKdOaf93XBQDlOf5TlI6wbJe%2B5tKlNl0shkH1GvF8cRtN%2BrRykeCFHIqlTcz43VC3EFYEIY%0AHElS5hBWzfQEMtOlMh4g%2BNEVMiWLz8lv03R%2BKU0%2F7d0TDRrkqjFlsyXj%2FkivGjtu8M5OW4eHEyZh%0ApVJTsy%2BWCOU%2FZJD9oyPaZ5NzlKYIlsgRjm28RlHSKLppVpJbZyU5m5UTG2pabXsibfx%2Fl9QNJl%2B7%0AYMql8sGqCUKw5AoqEt12X%2B7ZIB31Tz17ozPgSPnsdsJOJ2b1tv4GTT0%2FrA%3D%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=0%2C0\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "Accept-Encoding,origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "f08aa0b8-637f-4cbf-978f-159059c30002",
+    "persistent": true,
+    "insertionIndex": 108
+}
