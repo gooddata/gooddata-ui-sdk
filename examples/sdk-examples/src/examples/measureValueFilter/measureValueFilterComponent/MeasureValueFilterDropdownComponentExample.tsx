@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
 import { IMeasureValueFilter, measureLocalId, localIdRef } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../ldm";
+import { LdmExt } from "../../../md";
 
 const measures = [LdmExt.FranchisedSales];
 

@@ -2,7 +2,7 @@
 import React from "react";
 import { LineChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 
 import { CUSTOM_COLOR_PALETTE } from "../../constants/colors";
 

@@ -11,7 +11,7 @@ import {
     isAttributeElementsByRef,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 
 interface IAttributeFilterExampleState {
     filters: Array<IPositiveAttributeFilter | INegativeAttributeFilter> | undefined;

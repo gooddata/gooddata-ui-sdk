@@ -4,7 +4,7 @@ import { InsightView } from "@gooddata/sdk-ui-ext";
 import { measureIdentifier } from "@gooddata/sdk-model";
 import { IDrillableItemIdentifier } from "@gooddata/sdk-ui";
 import { useOnDrillExample } from "./useOnDrillExample";
-import { Ldm } from "../../../ldm";
+import { Ldm } from "../../../md";
 
 const drillableItems: IDrillableItemIdentifier = {
     identifier: measureIdentifier(Ldm.$TotalSales)!,

@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
-import { Ldm } from "../../ldm";
+import { Ldm } from "../../md";
 
 export interface IItem {
     title: string;

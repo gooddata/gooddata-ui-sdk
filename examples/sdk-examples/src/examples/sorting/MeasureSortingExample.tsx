@@ -3,7 +3,7 @@
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newMeasureSort } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 
 const style = { height: 300 };
 

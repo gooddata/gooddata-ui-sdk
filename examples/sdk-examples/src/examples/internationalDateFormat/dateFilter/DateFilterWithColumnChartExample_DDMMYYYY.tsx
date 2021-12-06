@@ -8,7 +8,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 
-import { Ldm, LdmExt } from "../../../ldm";
+import { Ldm, LdmExt } from "../../../md";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 const measures = [LdmExt.TotalSales1];

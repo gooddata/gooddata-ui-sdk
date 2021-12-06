@@ -9,7 +9,7 @@ import {
     idRef,
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 
 export const AttributeParentChildFilterExample: React.FC = () => {
     const [filter, setFilter] = useState<IAttributeFilter>(

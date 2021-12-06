@@ -5,7 +5,7 @@ import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { Ldm } from "../../ldm";
+import { Ldm } from "../../md";
 
 export class GeoPushpinChartClusteringExample extends Component {
     public render(): React.ReactNode {

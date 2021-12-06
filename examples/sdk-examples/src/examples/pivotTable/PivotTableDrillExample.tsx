@@ -5,7 +5,7 @@ import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { attributeIdentifier, measureIdentifier, ITotal } from "@gooddata/sdk-model";
 import isNil from "lodash/isNil";
 
-import { LdmExt, Ldm } from "../../ldm";
+import { LdmExt, Ldm } from "../../md";
 
 const measures = [
     LdmExt.FranchiseFees,

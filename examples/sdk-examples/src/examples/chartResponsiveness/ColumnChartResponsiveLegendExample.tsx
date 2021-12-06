@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { ColumnChart, IChartConfig, PositionType } from "@gooddata/sdk-ui-charts";
 
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 
 const getConfig = (position: PositionType, responsive: boolean | "autoPositionWithPopup"): IChartConfig => ({
     legend: {

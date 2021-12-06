@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-ui-pivot";
 import { IAttributeLocatorItem, ILocatorItem, IMeasureLocatorItem } from "@gooddata/sdk-model";
 
-import { LdmExt } from "../../../ldm";
+import { LdmExt } from "../../../md";
 
 const measures = [LdmExt.FranchiseFees];
 

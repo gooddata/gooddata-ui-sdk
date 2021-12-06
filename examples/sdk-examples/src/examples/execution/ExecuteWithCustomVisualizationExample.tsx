@@ -3,7 +3,7 @@ import React from "react";
 import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar } from "recharts";
 
-import * as LdmExt from "../../ldm/ext";
+import * as LdmExt from "../../md/ext";
 
 const seriesBy = [
     LdmExt.FranchiseFeesAdRoyalty,

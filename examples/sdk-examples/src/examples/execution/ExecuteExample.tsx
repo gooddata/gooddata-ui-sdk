@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
-import { LdmExt } from "../../ldm";
+import { LdmExt } from "../../md";
 
 interface IExecuteExampleState {
     executionNumber: number;

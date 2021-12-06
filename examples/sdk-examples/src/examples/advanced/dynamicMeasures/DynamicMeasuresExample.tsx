@@ -9,7 +9,7 @@ import sdk from "@gooddata/api-client-bear";
 import { Layout } from "../../../components/Layout";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { workspace } from "../../../constants/fixtures";
-import { Ldm, LdmExt } from "../../../ldm";
+import { Ldm, LdmExt } from "../../../md";
 
 interface IDynamicMeasuresExampleState {
     measureList: null | any[];

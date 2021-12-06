@@ -3,7 +3,7 @@ import React from "react";
 import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 import { Execute, ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 
 const primaryMeasure = LdmExt.FranchiseFees;

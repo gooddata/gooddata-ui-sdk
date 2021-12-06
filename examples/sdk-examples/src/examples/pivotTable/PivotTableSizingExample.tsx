@@ -2,7 +2,7 @@
 import React from "react";
 import { PivotTable, DefaultColumnWidth } from "@gooddata/sdk-ui-pivot";
 
-import { LdmExt } from "../../ldm";
+import { LdmExt } from "../../md";
 
 const measures = [LdmExt.FranchisedSales];
 

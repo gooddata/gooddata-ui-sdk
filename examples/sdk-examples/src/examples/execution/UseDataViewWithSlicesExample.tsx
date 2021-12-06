@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { ErrorComponent, LoadingComponent, useExecutionDataView } from "@gooddata/sdk-ui";
-import { Ldm } from "../../ldm";
+import { Ldm } from "../../md";
 import { newAttributeSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 const style = { border: "1px black solid" };
 

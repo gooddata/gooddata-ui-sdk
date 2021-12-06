@@ -11,7 +11,7 @@ import {
     sizeMeasure,
     colorMeasure,
     segmentByAttribute,
-} from "../../ldm/geoModel";
+} from "../../md/geoModel";
 
 export class GeoPushpinChartConfigurationExample extends Component {
     public render(): React.ReactNode {

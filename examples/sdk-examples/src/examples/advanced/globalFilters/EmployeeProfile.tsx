@@ -7,7 +7,7 @@ import { Kpi } from "@gooddata/sdk-ui";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { EmployeeCard } from "./EmployeeCard";
 import { KpiMetricBox } from "./KpiMetricBox";
-import { Ldm, LdmExt } from "../../../ldm";
+import { Ldm, LdmExt } from "../../../md";
 import { Layout } from "../../../components/Layout";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";

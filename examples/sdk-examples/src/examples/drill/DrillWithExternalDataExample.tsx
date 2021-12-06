@@ -5,7 +5,7 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { LoadingComponent, ErrorComponent, HeaderPredicates } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newPositiveAttributeFilter, attributeIdentifier } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 import { EmployeeProfile } from "./EmployeeProfile";
 
 interface IEmployee3rdPartyData {

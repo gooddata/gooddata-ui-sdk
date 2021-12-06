@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
-import { Ldm } from "../../../ldm";
+import { Ldm } from "../../../md";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 
 interface IConfigurationColumnChartExampleState {

@@ -13,7 +13,7 @@ import {
     segmentByAttribute,
     colorMeasure,
     attributeUriPredicate,
-} from "../../ldm/geoModel";
+} from "../../md/geoModel";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-charts";
 

@@ -9,7 +9,7 @@ import {
     newWidthForSelectedColumns,
     newAttributeColumnLocator,
 } from "@gooddata/sdk-ui-pivot";
-import { LdmExt } from "../../ldm";
+import { LdmExt } from "../../md";
 import { workspace } from "../../constants/fixtures";
 
 const measures = [LdmExt.FranchiseFees];

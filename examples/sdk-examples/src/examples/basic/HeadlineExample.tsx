@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { LdmExt } from "../../ldm";
+import { LdmExt } from "../../md";
 
 export class HeadlineExample extends Component {
     public onLoadingChanged: OnLoadingChanged = (...params) => {

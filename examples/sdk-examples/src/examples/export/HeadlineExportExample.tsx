@@ -4,7 +4,7 @@ import { Headline } from "@gooddata/sdk-ui-charts";
 import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 
 const primaryMeasure = LdmExt.FranchiseFees;
 

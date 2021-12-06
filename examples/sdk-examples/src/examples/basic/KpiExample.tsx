@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { Kpi } from "@gooddata/sdk-ui";
-import { Ldm } from "../../ldm";
+import { Ldm } from "../../md";
 
 export const KpiExample = (): JSX.Element => {
     return (

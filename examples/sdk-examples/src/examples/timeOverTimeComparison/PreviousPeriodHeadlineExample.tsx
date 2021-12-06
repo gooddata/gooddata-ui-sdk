@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 
 export class PreviousPeriodHeadlineExample extends Component {

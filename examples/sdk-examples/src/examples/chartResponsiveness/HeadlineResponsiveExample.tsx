@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { LdmExt } from "../../ldm";
+import { LdmExt } from "../../md";
 
 const config = {
     enableCompactSize: true,

@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { ComboChart } from "@gooddata/sdk-ui-charts";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 
 const columnMeasures = [LdmExt.FranchiseFeesInitialFranchiseFee];
 

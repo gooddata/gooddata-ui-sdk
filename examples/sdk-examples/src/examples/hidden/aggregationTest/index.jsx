@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { BarChart, ColumnChart, PieChart } from "@gooddata/sdk-ui";
-import { Ldm, LdmExt } from "../../../ldm";
+import { Ldm, LdmExt } from "../../../md";
 
 export class AggregationTest extends Component {
     onLoadingChanged(...params) {

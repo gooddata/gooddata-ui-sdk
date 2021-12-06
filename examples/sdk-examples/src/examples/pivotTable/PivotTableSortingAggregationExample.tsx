@@ -3,7 +3,7 @@ import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newAttributeAreaSort } from "@gooddata/sdk-model";
 
-import { LdmExt, Ldm } from "../../ldm";
+import { LdmExt, Ldm } from "../../md";
 
 export const PivotTableSortingAggregationExample: React.FC = () => {
     return (

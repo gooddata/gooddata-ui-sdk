@@ -8,7 +8,7 @@ import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 
 import { DateFilterComponentExample } from "../dateFilter/DateFilterComponentExample";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 import { customTheme } from "../../constants/customTheme";
 
 export const ThemeProviderExample: React.FC = () => {

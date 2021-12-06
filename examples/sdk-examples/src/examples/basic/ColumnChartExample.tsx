@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { LdmExt } from "../../ldm";
+import { LdmExt } from "../../md";
 
 const style = { height: 300 };
 

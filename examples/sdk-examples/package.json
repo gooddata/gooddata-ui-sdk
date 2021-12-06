@@ -141,7 +141,7 @@
         "examples-testcafe": "./scripts/run-testcafe.sh visual",
         "examples-testcafe-live": "./scripts/run-testcafe.sh live",
         "examples-testcafe-ci": "./scripts/run-testcafe.sh ci",
-        "refresh-ldm": "./scripts/refresh-ldm.sh && npm run build",
+        "refresh-md": "./scripts/refresh-md.sh && npm run build",
         "heroku-create-app": "heroku create ${PUBLIC_APP_NAME}; exit 0",
         "heroku-set-env": "run-s heroku-set-env:*",
         "heroku-set-env:BACKEND_URL": "echo ${BACKEND_URL} && heroku config:set BACKEND_URL=${BACKEND_URL} -a ${PUBLIC_APP_NAME}",

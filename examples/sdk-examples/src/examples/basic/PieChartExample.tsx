@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PieChart } from "@gooddata/sdk-ui-charts";
-import { LdmExt } from "../../ldm";
+import { LdmExt } from "../../md";
 
 const measures = [
     LdmExt.FranchiseFeesAdRoyalty,

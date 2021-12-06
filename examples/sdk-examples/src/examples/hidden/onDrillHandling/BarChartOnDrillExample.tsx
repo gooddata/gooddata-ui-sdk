@@ -3,7 +3,7 @@ import React from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { measureIdentifier } from "@gooddata/sdk-model";
 import { IDrillableItemIdentifier } from "@gooddata/sdk-ui";
-import { LdmExt } from "../../../ldm";
+import { LdmExt } from "../../../md";
 import { useOnDrillExample } from "./useOnDrillExample";
 
 const measures = [LdmExt.TotalSales2];

@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { LdmExt } from "../../../ldm";
+import { LdmExt } from "../../../md";
 import { measureLocalId } from "@gooddata/sdk-model";
 
 const config = {

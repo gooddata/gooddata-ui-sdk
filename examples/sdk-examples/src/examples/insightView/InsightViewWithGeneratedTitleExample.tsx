@@ -2,7 +2,7 @@
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { Ldm } from "../../ldm";
+import { Ldm } from "../../md";
 
 const style = { height: 300 };
 

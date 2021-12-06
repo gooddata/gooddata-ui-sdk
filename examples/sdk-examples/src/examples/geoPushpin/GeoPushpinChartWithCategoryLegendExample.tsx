@@ -5,7 +5,7 @@ import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { locationAttribute, sizeMeasure, colorMeasure, segmentByAttribute } from "../../ldm/geoModel";
+import { locationAttribute, sizeMeasure, colorMeasure, segmentByAttribute } from "../../md/geoModel";
 
 export class GeoPushpinChartWithCategoryLegendExample extends Component {
     public render(): React.ReactNode {

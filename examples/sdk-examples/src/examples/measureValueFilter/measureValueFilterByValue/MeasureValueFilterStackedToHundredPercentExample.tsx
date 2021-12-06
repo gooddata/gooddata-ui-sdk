@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { newMeasureValueFilter, IMeasureValueFilter } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../ldm";
+import { LdmExt } from "../../../md";
 import { IMeasureValueFilterState } from "./MeasureValueFilterExample";
 
 const measures = [LdmExt.TotalSales2, LdmExt.numberOfChecks];

@@ -4,7 +4,7 @@ import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { Ldm, LdmExt } from "../../../ldm";
+import { Ldm, LdmExt } from "../../../md";
 import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 const dateFormat = "YYYY-MM-DD";

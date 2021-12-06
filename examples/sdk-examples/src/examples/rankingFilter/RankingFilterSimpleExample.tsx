@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { LdmExt } from "../../ldm";
+import { LdmExt } from "../../md";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newRankingFilter } from "@gooddata/sdk-model";
 

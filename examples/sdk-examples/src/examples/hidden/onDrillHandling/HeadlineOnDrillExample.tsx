@@ -3,7 +3,7 @@ import React from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { measureIdentifier } from "@gooddata/sdk-model";
 
-import { LdmExt } from "../../../ldm";
+import { LdmExt } from "../../../md";
 import { useOnDrillExample } from "./useOnDrillExample";
 
 const primaryMeasure = LdmExt.FranchiseFees;

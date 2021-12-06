@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
 import { measureLocalId, newMeasureValueFilter } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../ldm";
+import { LdmExt } from "../../../md";
 
 const measureTitle = "Sum of Number";
 

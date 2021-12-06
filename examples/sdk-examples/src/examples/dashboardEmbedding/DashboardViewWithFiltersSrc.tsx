@@ -2,7 +2,7 @@
 import React from "react";
 import { DashboardView } from "@gooddata/sdk-ui-ext";
 import { idRef, newPositiveAttributeFilter } from "@gooddata/sdk-model";
-import { Ldm } from "../../ldm";
+import { Ldm } from "../../md";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 
 const dashboardRef = idRef("aeO5PVgShc0T");

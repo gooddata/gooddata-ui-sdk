@@ -4,7 +4,7 @@ import keyBy from "lodash/keyBy";
 import mapValues from "lodash/mapValues";
 import { Kpi } from "@gooddata/sdk-ui";
 import { factory } from "@gooddata/api-client-bear";
-import { Ldm } from "../../../ldm";
+import { Ldm } from "../../../md";
 
 export class MultipleDomainsExample extends Component {
     constructor() {

@@ -3,7 +3,7 @@ import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newAttributeSort, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 
 const measures = [
     LdmExt.FranchiseFees,

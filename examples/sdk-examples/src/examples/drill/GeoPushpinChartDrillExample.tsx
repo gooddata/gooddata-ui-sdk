@@ -5,7 +5,7 @@ import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { IDrillEvent, HeaderPredicates } from "@gooddata/sdk-ui";
 import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
-import { locationAttribute, sizeMeasure, colorMeasure, segmentByAttribute } from "../../ldm/geoModel";
+import { locationAttribute, sizeMeasure, colorMeasure, segmentByAttribute } from "../../md/geoModel";
 
 const drillableItems = [
     HeaderPredicates.localIdentifierMatch(sizeMeasure),

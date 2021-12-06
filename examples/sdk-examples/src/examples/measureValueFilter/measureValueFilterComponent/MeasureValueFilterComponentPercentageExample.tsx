@@ -4,7 +4,7 @@ import React from "react";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
 import { IMeasureValueFilter, measureLocalId } from "@gooddata/sdk-model";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { LdmExt } from "../../../ldm";
+import { LdmExt } from "../../../md";
 
 const measureTitle = "Franchised Sales Ratio";
 

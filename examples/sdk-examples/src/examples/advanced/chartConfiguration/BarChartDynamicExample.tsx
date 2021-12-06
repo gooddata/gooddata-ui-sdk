@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { BarChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { Ldm, LdmExt } from "../../../ldm";
+import { Ldm, LdmExt } from "../../../md";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 
 interface IBarChartDynamicExampleState {

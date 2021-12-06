@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { BulletChart } from "@gooddata/sdk-ui-charts";
 
-import { LdmExt } from "../../ldm";
+import { LdmExt } from "../../md";
 
 export class BulletChartExample extends Component {
     public render(): React.ReactNode {

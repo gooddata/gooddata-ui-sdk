@@ -4,7 +4,7 @@ import { AttributeElements } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { newPositiveAttributeFilter, attributeDisplayFormRef, ObjRef, idRef } from "@gooddata/sdk-model";
 import Select from "react-select";
-import { Ldm, LdmExt } from "../../../ldm";
+import { Ldm, LdmExt } from "../../../md";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 interface IFilterValue {

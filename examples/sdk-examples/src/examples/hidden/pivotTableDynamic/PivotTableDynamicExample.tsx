@@ -14,7 +14,7 @@ import {
     newAttributeLocator,
 } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
-import { LdmExt, Ldm } from "../../../ldm";
+import { LdmExt, Ldm } from "../../../md";
 import { createColumnTotal } from "../../../utils/helpers";
 import { ElementWithParam } from "./ElementWithParam";
 

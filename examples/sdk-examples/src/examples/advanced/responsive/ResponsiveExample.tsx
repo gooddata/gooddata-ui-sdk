@@ -4,7 +4,7 @@ import { BarChart } from "@gooddata/sdk-ui-charts";
 
 import Measure from "react-measure";
 
-import { Ldm, LdmExt } from "../../../ldm";
+import { Ldm, LdmExt } from "../../../md";
 
 interface IResponsiveExampleState {
     size: [number, number];

@@ -2,7 +2,7 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newArithmeticMeasure } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../md";
 
 const averageRestaurantSales = newArithmeticMeasure(
     [LdmExt.TotalSales2, LdmExt.NrRestaurants],

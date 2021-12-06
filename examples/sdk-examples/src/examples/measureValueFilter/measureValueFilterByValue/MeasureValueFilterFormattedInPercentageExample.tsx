@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newMeasureValueFilter, IMeasureValueFilter } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../ldm";
+import { LdmExt } from "../../../md";
 import { IMeasureValueFilterState } from "./MeasureValueFilterExample";
 
 const measures = [LdmExt.FranchisedSalesAsPercent];

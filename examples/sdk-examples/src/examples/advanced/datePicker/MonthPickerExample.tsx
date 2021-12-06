@@ -5,7 +5,7 @@ import { newRelativeDateFilter } from "@gooddata/sdk-model";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { Ldm, LdmExt } from "../../../ldm";
+import { Ldm, LdmExt } from "../../../md";
 import { IDatePickerState } from "./DatePickerExample";
 const dateFormat = "yyyy-MM-DD";
 

@@ -2,8 +2,8 @@
 import React, { Component } from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";
-import { Ldm } from "../../../ldm";
-import { totalCostsLocalId, totalSalesLocalIdentifier } from "../../../ldm/ext";
+import { Ldm } from "../../../md";
+import { totalCostsLocalId, totalSalesLocalIdentifier } from "../../../md/ext";
 
 export class InsightViewDualAxisBarChartExample extends Component {
     public render(): React.ReactNode {

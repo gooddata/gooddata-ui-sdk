@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ITotal, attributeIdentifier, measureIdentifier } from "@gooddata/sdk-model";
-import { LdmExt } from "../../ldm";
+import { LdmExt } from "../../md";
 
 const measures = [
     LdmExt.FranchiseFees,
