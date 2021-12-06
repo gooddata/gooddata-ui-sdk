@@ -1,14 +1,14 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newRankingFilter } from "@gooddata/sdk-model";
 
-const measures = [LdmExt.FranchisedSales];
+const measures = [MdExt.FranchisedSales];
 
-const attributes = [LdmExt.LocationName];
+const attributes = [MdExt.LocationName];
 
-const filters = [newRankingFilter(LdmExt.franchiseSalesLocalId, "TOP", 3)];
+const filters = [newRankingFilter(MdExt.franchiseSalesLocalId, "TOP", 3)];
 
 export const RankingFilterSimpleExample: React.FC = () => {
     return (

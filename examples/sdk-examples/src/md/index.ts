@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 
-import * as Ldm from "./full";
-import * as LdmExt from "./ext";
+import * as Md from "./full";
+import * as MdExt from "./ext";
 
-export { Ldm, LdmExt };
+export { Md, MdExt };

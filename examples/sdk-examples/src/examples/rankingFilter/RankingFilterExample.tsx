@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useState } from "react";
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import {
     newRankingFilter,
@@ -12,18 +12,18 @@ import {
 } from "@gooddata/sdk-model";
 import { RankingFilter, IMeasureDropdownItem, IAttributeDropdownItem } from "@gooddata/sdk-ui-filters";
 
-const measures = [LdmExt.TotalSales2, LdmExt.FranchisedSales];
-const attributes = [LdmExt.LocationState, LdmExt.LocationName];
+const measures = [MdExt.TotalSales2, MdExt.FranchisedSales];
+const attributes = [MdExt.LocationState, MdExt.LocationName];
 
 export const measureDropdownItems: IMeasureDropdownItem[] = [
     {
         title: "$ Total sales",
-        ref: localIdRef(measureLocalId(LdmExt.TotalSales2)),
+        ref: localIdRef(measureLocalId(MdExt.TotalSales2)),
         sequenceNumber: "M1",
     },
     {
         title: "Franchised sales",
-        ref: localIdRef(measureLocalId(LdmExt.FranchisedSales)),
+        ref: localIdRef(measureLocalId(MdExt.FranchisedSales)),
         sequenceNumber: "M2",
     },
 ];
@@ -31,12 +31,12 @@ export const measureDropdownItems: IMeasureDropdownItem[] = [
 export const attributeDropdownItems: IAttributeDropdownItem[] = [
     {
         title: "Location state",
-        ref: localIdRef(attributeLocalId(LdmExt.LocationState)),
+        ref: localIdRef(attributeLocalId(MdExt.LocationState)),
         type: "ATTRIBUTE",
     },
     {
         title: "Location",
-        ref: localIdRef(attributeLocalId(LdmExt.LocationName)),
+        ref: localIdRef(attributeLocalId(MdExt.LocationName)),
         type: "ATTRIBUTE",
     },
 ];
@@ -68,7 +68,7 @@ export const RankingFilterExample: React.FC = () => {
             <PresetButtonComponent
                 title="Apply ranking filter"
                 isActive={filters.length > 0}
-                onClick={() => setFilters([newRankingFilter(LdmExt.franchiseSalesLocalId, "TOP", 3)])}
+                onClick={() => setFilters([newRankingFilter(MdExt.franchiseSalesLocalId, "TOP", 3)])}
             />
             {filters.length > 0 && (
                 <RankingFilter

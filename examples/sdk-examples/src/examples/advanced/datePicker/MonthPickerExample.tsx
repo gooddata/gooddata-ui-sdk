@@ -5,7 +5,7 @@ import { newRelativeDateFilter } from "@gooddata/sdk-model";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { Ldm, LdmExt } from "../../../md";
+import { Md, MdExt } from "../../../md";
 import { IDatePickerState } from "./DatePickerExample";
 const dateFormat = "yyyy-MM-DD";
 
@@ -14,7 +14,7 @@ const withGTM0 = (time: moment.Moment) => time.utcOffset("+00:00", true);
 
 const currentDate = withGTM0(moment().startOf("months"));
 
-const measures = [LdmExt.TotalSales1];
+const measures = [MdExt.TotalSales1];
 
 const style = { height: 300 };
 
@@ -56,7 +56,7 @@ export const MonthPickerExample: React.FC = () => {
 
     const filters = [
         newRelativeDateFilter(
-            Ldm.DateDatasets.Date.ref,
+            Md.DateDatasets.Date.ref,
             "GDC.time.month",
             Math.floor(from.diff(currentDate, "months", true)),
             Math.floor(to.diff(currentDate, "months", true)),
@@ -105,7 +105,7 @@ export const MonthPickerExample: React.FC = () => {
                 {error ? (
                     <ErrorComponent message={error} />
                 ) : (
-                    <ColumnChart measures={measures} viewBy={Ldm.DateMonthYear.Short} filters={filters} />
+                    <ColumnChart measures={measures} viewBy={Md.DateMonthYear.Short} filters={filters} />
                 )}
             </div>
         </div>

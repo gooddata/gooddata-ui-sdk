@@ -4,11 +4,11 @@ import classNames from "classnames";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
 import { IMeasureValueFilter, measureLocalId, localIdRef } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../md";
+import { MdExt } from "../../../md";
 
-const measures = [LdmExt.FranchisedSales];
+const measures = [MdExt.FranchisedSales];
 
-const attributes = [LdmExt.LocationName];
+const attributes = [MdExt.LocationName];
 
 const defaultFilter: IMeasureValueFilter = {
     measureValueFilter: {
@@ -85,7 +85,7 @@ export class MeasureValueFilterComponentExample extends React.PureComponent<
                         onCancel={this.onCancel}
                         filter={filters[0]}
                         anchorEl={this.ref.current!}
-                        measureIdentifier={measureLocalId(LdmExt.FranchisedSales)}
+                        measureIdentifier={measureLocalId(MdExt.FranchisedSales)}
                     />
                 ) : null}
                 <hr className="separator" />

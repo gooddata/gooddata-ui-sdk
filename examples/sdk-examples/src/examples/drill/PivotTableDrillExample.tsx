@@ -3,18 +3,18 @@ import React, { useState } from "react";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ITotal, attributeIdentifier, measureIdentifier } from "@gooddata/sdk-model";
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 
 const measures = [
-    LdmExt.FranchiseFees,
-    LdmExt.FranchiseFeesAdRoyalty,
-    LdmExt.FranchiseFeesInitialFranchiseFee,
-    LdmExt.FranchiseFeesOngoingRoyalty,
+    MdExt.FranchiseFees,
+    MdExt.FranchiseFeesAdRoyalty,
+    MdExt.FranchiseFeesInitialFranchiseFee,
+    MdExt.FranchiseFeesOngoingRoyalty,
 ];
 
-const attributes = [LdmExt.LocationState, LdmExt.LocationName, LdmExt.MenuCategory];
+const attributes = [MdExt.LocationState, MdExt.LocationName, MdExt.MenuCategory];
 
-const columns = [LdmExt.quarterDate, LdmExt.monthDate];
+const columns = [MdExt.quarterDate, MdExt.monthDate];
 
 const totals: ITotal[] = [
     {
@@ -45,8 +45,8 @@ const totals: ITotal[] = [
 ];
 
 const drillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.MenuCategory)!),
-    HeaderPredicates.identifierMatch(measureIdentifier(LdmExt.FranchiseFees)!),
+    HeaderPredicates.identifierMatch(attributeIdentifier(MdExt.MenuCategory)!),
+    HeaderPredicates.identifierMatch(measureIdentifier(MdExt.FranchiseFees)!),
 ];
 
 const style = { height: 500 };

@@ -2,17 +2,15 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newArithmeticMeasure } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
-const averageRestaurantSales = newArithmeticMeasure(
-    [LdmExt.TotalSales2, LdmExt.NrRestaurants],
-    "ratio",
-    (m) => m.format("#,##0").title("$ Avg State Daily Sales"),
+const averageRestaurantSales = newArithmeticMeasure([MdExt.TotalSales2, MdExt.NrRestaurants], "ratio", (m) =>
+    m.format("#,##0").title("$ Avg State Daily Sales"),
 );
 
-const measures = [LdmExt.TotalSales2, LdmExt.NrRestaurants, averageRestaurantSales];
+const measures = [MdExt.TotalSales2, MdExt.NrRestaurants, averageRestaurantSales];
 
-const rows = [Ldm.LocationState];
+const rows = [Md.LocationState];
 const style = { height: 200 };
 
 export const ArithmeticMeasureRatioExample: React.FC = () => {

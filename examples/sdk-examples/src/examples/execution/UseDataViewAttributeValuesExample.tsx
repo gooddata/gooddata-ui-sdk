@@ -5,7 +5,7 @@ import toPairs from "lodash/toPairs";
 import groupBy from "lodash/groupBy";
 
 import { workspace } from "../../constants/fixtures";
-import { Ldm } from "../../md";
+import { Md } from "../../md";
 import { useBackend } from "../../context/auth";
 
 const getAttributeHeaderItemName = (x: any) => x.attributeHeaderItem.name;
@@ -19,7 +19,7 @@ export const UseDataViewAttributeValuesExample: React.FC = () => {
     const execution = backend
         .workspace(workspace)
         .execution()
-        .forItems([Ldm.LocationState, Ldm.LocationName.Default]);
+        .forItems([Md.LocationState, Md.LocationName.Default]);
     const { result, error, status } = useExecutionDataView({ execution });
 
     let renderAttributeValues: React.ReactNode = null;

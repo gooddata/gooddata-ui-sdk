@@ -10,7 +10,7 @@ import {
     isPositiveAttributeFilter,
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 
 interface IAttributeFilterExampleState {
@@ -90,15 +90,15 @@ export class AttributeFilterButtonExample extends Component<unknown, IAttributeF
 
     public render(): React.ReactNode {
         const { filters } = this.state;
-        const filter = filters?.[0] ?? newNegativeAttributeFilter(Ldm.LocationResort, []);
+        const filter = filters?.[0] ?? newNegativeAttributeFilter(Md.LocationResort, []);
 
         return (
             <div className="s-attribute-filter">
                 <AttributeFilterButton filter={filter} onApply={this.onApply} onError={this.onError} />
                 <div style={{ height: 300 }} className="s-line-chart">
                     <LineChart
-                        measures={[LdmExt.TotalSales2]}
-                        trendBy={Ldm.LocationResort}
+                        measures={[MdExt.TotalSales2]}
+                        trendBy={Md.LocationResort}
                         filters={filters}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}

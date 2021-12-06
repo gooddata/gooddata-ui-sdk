@@ -3,12 +3,12 @@ import React from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { measureIdentifier } from "@gooddata/sdk-model";
 
-import { LdmExt } from "../../../md";
+import { MdExt } from "../../../md";
 import { useOnDrillExample } from "./useOnDrillExample";
 
-const primaryMeasure = LdmExt.FranchiseFees;
+const primaryMeasure = MdExt.FranchiseFees;
 
-const secondaryMeasure = LdmExt.FranchiseFeesAdRoyalty;
+const secondaryMeasure = MdExt.FranchiseFeesAdRoyalty;
 
 export const HeadlineOnDrillExample: React.FC = () => {
     const { onDrill, renderDrillEvent } = useOnDrillExample();
@@ -30,7 +30,7 @@ export const HeadlineOnDrillExample: React.FC = () => {
                         onDrill={onDrill}
                         drillableItems={[
                             {
-                                identifier: measureIdentifier(LdmExt.FranchisedSales)!,
+                                identifier: measureIdentifier(MdExt.FranchisedSales)!,
                             },
                         ]}
                     />

@@ -2,23 +2,23 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newArithmeticMeasure } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 const sum = newArithmeticMeasure(
-    [LdmExt.FranchiseFeesOngoingRoyalty, LdmExt.FranchiseFeesAdRoyalty],
+    [MdExt.FranchiseFeesOngoingRoyalty, MdExt.FranchiseFeesAdRoyalty],
     "sum",
     (m) => m.format("#,##0").title("$ Ongoing / Ad Royalty Sum"),
 );
 
 const difference = newArithmeticMeasure(
-    [LdmExt.FranchiseFeesOngoingRoyalty, LdmExt.FranchiseFeesAdRoyalty],
+    [MdExt.FranchiseFeesOngoingRoyalty, MdExt.FranchiseFeesAdRoyalty],
     "difference",
     (m) => m.format("#,##0").title("$ Ongoing / Ad Royalty Difference"),
 );
 
-const measures = [LdmExt.FranchiseFeesAdRoyalty, LdmExt.FranchiseFeesOngoingRoyalty, sum, difference];
+const measures = [MdExt.FranchiseFeesAdRoyalty, MdExt.FranchiseFeesOngoingRoyalty, sum, difference];
 
-const rows = [Ldm.LocationState];
+const rows = [Md.LocationState];
 
 const style = { height: 200 };
 

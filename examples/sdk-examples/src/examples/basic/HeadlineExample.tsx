@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 
 export class HeadlineExample extends Component {
     public onLoadingChanged: OnLoadingChanged = (...params) => {
@@ -16,9 +16,9 @@ export class HeadlineExample extends Component {
     };
 
     public render(): React.ReactNode {
-        const primaryMeasure = LdmExt.FranchiseFees;
+        const primaryMeasure = MdExt.FranchiseFees;
 
-        const secondaryMeasure = LdmExt.FranchiseFeesAdRoyalty;
+        const secondaryMeasure = MdExt.FranchiseFeesAdRoyalty;
 
         return (
             <div className="s-headline" style={{ display: "flex" }}>

@@ -1,16 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 const measures = [
-    LdmExt.FranchiseFees,
-    LdmExt.FranchiseFeesAdRoyalty,
-    LdmExt.FranchiseFeesInitialFranchiseFee,
-    LdmExt.FranchiseFeesOngoingRoyalty,
+    MdExt.FranchiseFees,
+    MdExt.FranchiseFeesAdRoyalty,
+    MdExt.FranchiseFeesInitialFranchiseFee,
+    MdExt.FranchiseFeesOngoingRoyalty,
 ];
-const attributes = [Ldm.LocationState, Ldm.LocationName.Default, Ldm.MenuCategory];
-const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
+const attributes = [Md.LocationState, Md.LocationName.Default, Md.MenuCategory];
+const columns = [Md.DateQuarter, Md.DateMonth.Short];
 const style = { height: 500 };
 const config = { groupRows: true };
 

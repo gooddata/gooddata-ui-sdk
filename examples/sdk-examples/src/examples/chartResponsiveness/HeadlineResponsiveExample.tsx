@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 
 const config = {
     enableCompactSize: true,
@@ -30,8 +30,8 @@ const SizeButton: React.FC<SizeButtonProps> = (props) => {
 };
 
 export const HeadlineResponsiveExample: React.FC = () => {
-    const primaryMeasure = LdmExt.FranchiseFees;
-    const secondaryMeasure = LdmExt.FranchiseFeesAdRoyalty;
+    const primaryMeasure = MdExt.FranchiseFees;
+    const secondaryMeasure = MdExt.FranchiseFeesAdRoyalty;
 
     const [[width, height], setSize] = useState<[number, number]>([150, 120]);
     const resize = (size: [number, number]) => {

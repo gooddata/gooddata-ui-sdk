@@ -5,7 +5,7 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { LoadingComponent, ErrorComponent, HeaderPredicates } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newPositiveAttributeFilter, attributeIdentifier } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 import { EmployeeProfile } from "./EmployeeProfile";
 
 interface IEmployee3rdPartyData {
@@ -23,22 +23,20 @@ const stateTableStyle: React.CSSProperties = { height: 200 };
 const employeeTableStyle: React.CSSProperties = { height: 300 };
 const salesChartStyle: React.CSSProperties = { height: 300 };
 
-const stateTableMeasures = [LdmExt.AvgDailyTotalSales];
-const stateTableRows = [LdmExt.LocationState];
+const stateTableMeasures = [MdExt.AvgDailyTotalSales];
+const stateTableRows = [MdExt.LocationState];
 const stateTableDrillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationState)!),
+    HeaderPredicates.identifierMatch(attributeIdentifier(MdExt.LocationState)!),
 ];
 
-const employeeTableMeasures = [LdmExt.AvgDailyTotalSales];
-const employeeTableRows = [LdmExt.EmployeeName];
+const employeeTableMeasures = [MdExt.AvgDailyTotalSales];
+const employeeTableRows = [MdExt.EmployeeName];
 const employeeTableDrillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.EmployeeName)!),
+    HeaderPredicates.identifierMatch(attributeIdentifier(MdExt.EmployeeName)!),
 ];
 
-const salesChartMeasures = [LdmExt.TotalSales2];
-const salesChartDrillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationName)!),
-];
+const salesChartMeasures = [MdExt.TotalSales2];
+const salesChartDrillableItems = [HeaderPredicates.identifierMatch(attributeIdentifier(MdExt.LocationName)!)];
 
 const EmployeeDetails: React.FC<{ employeeData: IEmployee3rdPartyData }> = ({ employeeData }) => {
     if (employeeData.error) {
@@ -81,7 +79,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
 
         const newState: IHasNameUri = {
             name,
-            uri: `${LdmExt.locationStateAttributeUri}/elements?id=${id}`,
+            uri: `${MdExt.locationStateAttributeUri}/elements?id=${id}`,
         };
 
         setState(newState);
@@ -149,14 +147,14 @@ export const DrillWithExternalDataExample: React.FC = () => {
         const filters = [];
         if (state) {
             filters.push(
-                newPositiveAttributeFilter(Ldm.LocationState, {
+                newPositiveAttributeFilter(Md.LocationState, {
                     uris: [state.uri],
                 }),
             );
         }
         if (location) {
             filters.push(
-                newPositiveAttributeFilter(Ldm.LocationName.Default, {
+                newPositiveAttributeFilter(Md.LocationName.Default, {
                     uris: [location.uri],
                 }),
             );
@@ -266,7 +264,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                 <div style={salesChartStyle} className="s-sales-chart">
                     <ColumnChart
                         measures={salesChartMeasures}
-                        viewBy={LdmExt.LocationName}
+                        viewBy={MdExt.LocationName}
                         filters={tableFilters}
                         drillableItems={salesChartDrillableItems}
                         onDrill={onLocationDrill}

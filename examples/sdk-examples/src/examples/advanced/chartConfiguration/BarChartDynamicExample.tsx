@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { BarChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { Ldm, LdmExt } from "../../../md";
+import { Md, MdExt } from "../../../md";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 
 interface IBarChartDynamicExampleState {
@@ -82,9 +82,9 @@ export const BarChartDynamicExample: React.FC = () => {
 
                 <div style={style}>
                     <BarChart
-                        measures={[LdmExt.TotalSales1]}
-                        viewBy={Ldm.LocationResort}
-                        stackBy={Ldm.MenuCategory}
+                        measures={[MdExt.TotalSales1]}
+                        viewBy={Md.LocationResort}
+                        stackBy={Md.MenuCategory}
                         config={config}
                     />
                 </div>

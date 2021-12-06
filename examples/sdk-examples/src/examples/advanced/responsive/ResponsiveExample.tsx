@@ -4,7 +4,7 @@ import { BarChart } from "@gooddata/sdk-ui-charts";
 
 import Measure from "react-measure";
 
-import { Ldm, LdmExt } from "../../../md";
+import { Md, MdExt } from "../../../md";
 
 interface IResponsiveExampleState {
     size: [number, number];
@@ -45,9 +45,9 @@ export const ResponsiveExample: React.FC = () => {
                             <div style={{ width: "100%", height: "100%" }} ref={measureRef}>
                                 <BarChart
                                     height={usedHeight}
-                                    measures={[LdmExt.TotalSales1]}
-                                    viewBy={Ldm.LocationResort}
-                                    stackBy={Ldm.DateMonth.Short}
+                                    measures={[MdExt.TotalSales1]}
+                                    viewBy={Md.LocationResort}
+                                    stackBy={Md.DateMonth.Short}
                                 />
                             </div>
                         );

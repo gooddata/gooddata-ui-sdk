@@ -9,21 +9,21 @@ import {
     newWidthForSelectedColumns,
     newAttributeColumnLocator,
 } from "@gooddata/sdk-ui-pivot";
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 import { workspace } from "../../constants/fixtures";
 
-const measures = [LdmExt.FranchiseFees];
+const measures = [MdExt.FranchiseFees];
 
-const attributes = [LdmExt.LocationState];
+const attributes = [MdExt.LocationState];
 
-const columns = [LdmExt.quarterDate];
+const columns = [MdExt.quarterDate];
 
 const attributeWidth = (width: number) => newWidthForAttributeColumn(attributes[0], width);
 
 const measureWidth = (width: number) =>
     newWidthForSelectedColumns(
-        LdmExt.FranchiseFees,
-        [newAttributeColumnLocator(LdmExt.quarterDate, `/gdc/md/${workspace}/obj/2009/elements?id=1`)],
+        MdExt.FranchiseFees,
+        [newAttributeColumnLocator(MdExt.quarterDate, `/gdc/md/${workspace}/obj/2009/elements?id=1`)],
         width,
     );
 

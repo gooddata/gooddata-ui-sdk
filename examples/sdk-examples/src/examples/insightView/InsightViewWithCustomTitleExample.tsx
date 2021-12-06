@@ -2,14 +2,14 @@
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { Ldm } from "../../md";
+import { Md } from "../../md";
 
 const style = { height: 300 };
 
 export const InsightViewWithCustomTitle: React.FC = () => {
     return (
         <div style={style} className="s-insightView-area">
-            <InsightView showTitle="Custom Insight Title" insight={Ldm.Insights.AreaChart} />
+            <InsightView showTitle="Custom Insight Title" insight={Md.Insights.AreaChart} />
         </div>
     );
 };

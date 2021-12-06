@@ -13,13 +13,13 @@ import {
 } from "@gooddata/sdk-ui-pivot";
 import { IAttributeLocatorItem, ILocatorItem, IMeasureLocatorItem } from "@gooddata/sdk-model";
 
-import { LdmExt } from "../../../md";
+import { MdExt } from "../../../md";
 
-const measures = [LdmExt.FranchiseFees];
+const measures = [MdExt.FranchiseFees];
 
-const attributes = [LdmExt.LocationState];
+const attributes = [MdExt.LocationState];
 
-const columns = [LdmExt.quarterDate];
+const columns = [MdExt.quarterDate];
 
 const attributeWidth = (width: number) => newWidthForAttributeColumn(attributes[0], width);
 

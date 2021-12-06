@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";
-import { Ldm } from "../../../md";
+import { Md } from "../../../md";
 import { totalCostsLocalId, totalSalesLocalIdentifier } from "../../../md/ext";
 
 export class InsightViewDualAxisBarChartExample extends Component {
@@ -28,7 +28,7 @@ export class InsightViewDualAxisBarChartExample extends Component {
 
         return (
             <div style={{ height: 300 }} className="s-insightView-dual-axis-bar">
-                <InsightView insight={Ldm.Insights.DualAxisBarChart} config={config} />
+                <InsightView insight={Md.Insights.DualAxisBarChart} config={config} />
             </div>
         );
     }

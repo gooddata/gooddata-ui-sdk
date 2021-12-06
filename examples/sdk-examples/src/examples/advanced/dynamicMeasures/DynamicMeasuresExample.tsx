@@ -9,7 +9,7 @@ import sdk from "@gooddata/api-client-bear";
 import { Layout } from "../../../components/Layout";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { workspace } from "../../../constants/fixtures";
-import { Ldm, LdmExt } from "../../../md";
+import { Md, MdExt } from "../../../md";
 
 interface IDynamicMeasuresExampleState {
     measureList: null | any[];
@@ -40,7 +40,7 @@ export const DynamicMeasuresExample: React.FC = () => {
     });
 
     useEffect(() => {
-        getMeasureListByTag(LdmExt.franchiseFeesTag)
+        getMeasureListByTag(MdExt.franchiseFeesTag)
             .then((measures) => {
                 const updatedState = measures.length
                     ? {
@@ -53,8 +53,8 @@ export const DynamicMeasuresExample: React.FC = () => {
                     : {
                           measureList: null,
                           error: {
-                              message: `No measures with tag ${LdmExt.franchiseFeesTag}`,
-                              description: `Please check your project. Franchise fees measures should have assigned the tag ${LdmExt.franchiseFeesTag}.`,
+                              message: `No measures with tag ${MdExt.franchiseFeesTag}`,
+                              description: `Please check your project. Franchise fees measures should have assigned the tag ${MdExt.franchiseFeesTag}.`,
                           },
                       };
 
@@ -64,7 +64,7 @@ export const DynamicMeasuresExample: React.FC = () => {
                 setState({
                     measureList: null,
                     error: {
-                        message: `There was Error while requesting measures by tag ${LdmExt.franchiseFeesTag}`,
+                        message: `There was Error while requesting measures by tag ${MdExt.franchiseFeesTag}`,
                         description: JSON.stringify(error),
                     },
                 });
@@ -156,7 +156,7 @@ export const DynamicMeasuresExample: React.FC = () => {
                         }
                     `}</style>
                     <div className="graph graph-line s-dynamic-measures-line-chart">
-                        <LineChart measures={measures} trendBy={Ldm.DateMonth.Short} config={config} />
+                        <LineChart measures={measures} trendBy={Md.DateMonth.Short} config={config} />
                     </div>
                     <div className="graph graph-column s-dynamic-measures-column-chart">
                         <ColumnChart measures={measures} config={config} />

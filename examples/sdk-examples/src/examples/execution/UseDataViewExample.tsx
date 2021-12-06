@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { LoadingComponent, ErrorComponent, useExecutionDataView } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 
 interface IUseDataViewExample {
     executionNumber: number;
@@ -25,7 +25,7 @@ export const UseDataViewExample: React.FC = () => {
         });
     };
 
-    const measure = newMeasure(willFail ? "thisDoesNotExits" : LdmExt.totalSalesIdentifier);
+    const measure = newMeasure(willFail ? "thisDoesNotExits" : MdExt.totalSalesIdentifier);
     const seriesBy = [measure];
     const { result, error, status } = useExecutionDataView({ execution: { seriesBy } });
 

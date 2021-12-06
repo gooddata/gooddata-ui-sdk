@@ -3,14 +3,14 @@ import React from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { Ldm } from "../../md";
+import { Md } from "../../md";
 
 const style = { height: 300 };
 
 export const InsightViewScatterByIdentifierExample: React.FC = () => {
     return (
         <div style={style} className="s-insightView-scatter">
-            <InsightView insight={Ldm.Insights.ScatterChart} />
+            <InsightView insight={Md.Insights.ScatterChart} />
         </div>
     );
 };

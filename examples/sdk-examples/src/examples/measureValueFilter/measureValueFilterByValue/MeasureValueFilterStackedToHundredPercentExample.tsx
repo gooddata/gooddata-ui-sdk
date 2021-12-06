@@ -2,14 +2,14 @@
 import React, { Component } from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { newMeasureValueFilter, IMeasureValueFilter } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../md";
+import { MdExt } from "../../../md";
 import { IMeasureValueFilterState } from "./MeasureValueFilterExample";
 
-const measures = [LdmExt.TotalSales2, LdmExt.numberOfChecks];
+const measures = [MdExt.TotalSales2, MdExt.numberOfChecks];
 
-const attributes = [LdmExt.LocationName];
+const attributes = [MdExt.LocationName];
 
-const greaterThanFilter = newMeasureValueFilter(LdmExt.TotalSales2, "GREATER_THAN", 7000000);
+const greaterThanFilter = newMeasureValueFilter(MdExt.TotalSales2, "GREATER_THAN", 7000000);
 
 export class MeasureValueFilterExample extends Component<unknown, IMeasureValueFilterState> {
     state: IMeasureValueFilterState = {

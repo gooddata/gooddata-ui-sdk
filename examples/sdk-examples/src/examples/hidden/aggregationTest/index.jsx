@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { BarChart, ColumnChart, PieChart } from "@gooddata/sdk-ui";
-import { Ldm, LdmExt } from "../../../md";
+import { Md, MdExt } from "../../../md";
 
 export class AggregationTest extends Component {
     onLoadingChanged(...params) {
@@ -27,8 +27,8 @@ export class AggregationTest extends Component {
                 <h2 id="bar-chart">Bar chart</h2>
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <BarChart
-                        measures={[LdmExt.TotalSales3]}
-                        viewBy={Ldm.LocationResort}
+                        measures={[MdExt.TotalSales3]}
+                        viewBy={Md.LocationResort}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
                     />
@@ -40,7 +40,7 @@ export class AggregationTest extends Component {
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <ColumnChart
                         measures={[$TotalSales]}
-                        viewBy={Ldm.DateMonth.Short}
+                        viewBy={Md.DateMonth.Short}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
                     />
@@ -52,7 +52,7 @@ export class AggregationTest extends Component {
 
                 <div style={{ height: 300 }} className="s-pie-chart">
                     <PieChart
-                        measures={LdmExt.franchiseFeesMeasures}
+                        measures={MdExt.franchiseFeesMeasures}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
                     />

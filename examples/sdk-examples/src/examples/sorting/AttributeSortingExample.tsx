@@ -3,7 +3,7 @@
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newAttributeSort } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 const style = { height: 300 };
 
@@ -11,9 +11,9 @@ export const AttributeSortingExample: React.FC = () => {
     return (
         <div style={style} className="s-attribute-sorting">
             <ColumnChart
-                measures={[Ldm.$TotalSales]}
-                viewBy={LdmExt.LocationCity}
-                sortBy={[newAttributeSort(LdmExt.LocationCity, "desc")]}
+                measures={[Md.$TotalSales]}
+                viewBy={MdExt.LocationCity}
+                sortBy={[newAttributeSort(MdExt.LocationCity, "desc")]}
             />
         </div>
     );

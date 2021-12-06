@@ -3,12 +3,12 @@ import React from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { measureIdentifier } from "@gooddata/sdk-model";
 import { IDrillableItemIdentifier } from "@gooddata/sdk-ui";
-import { LdmExt } from "../../../md";
+import { MdExt } from "../../../md";
 import { useOnDrillExample } from "./useOnDrillExample";
 
-const measures = [LdmExt.TotalSales2];
+const measures = [MdExt.TotalSales2];
 
-const drillableItems: IDrillableItemIdentifier = { identifier: measureIdentifier(LdmExt.TotalSales2)! };
+const drillableItems: IDrillableItemIdentifier = { identifier: measureIdentifier(MdExt.TotalSales2)! };
 
 const style = { height: 300 };
 
@@ -20,7 +20,7 @@ export const BarChartOnDrillExample: React.FC = () => {
             <div style={style} className="s-bar-chart">
                 <BarChart
                     measures={measures}
-                    viewBy={LdmExt.LocationResort}
+                    viewBy={MdExt.LocationResort}
                     onDrill={onDrill}
                     drillableItems={[drillableItems]}
                 />

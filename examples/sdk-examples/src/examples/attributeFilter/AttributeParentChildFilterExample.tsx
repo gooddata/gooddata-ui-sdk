@@ -9,14 +9,14 @@ import {
     idRef,
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 export const AttributeParentChildFilterExample: React.FC = () => {
     const [filter, setFilter] = useState<IAttributeFilter>(
-        newNegativeAttributeFilter(attributeDisplayFormRef(Ldm.LocationCity), { uris: [] }),
+        newNegativeAttributeFilter(attributeDisplayFormRef(Md.LocationCity), { uris: [] }),
     );
     const [parentFilter, setParentFilter] = useState<IAttributeFilter>(
-        newNegativeAttributeFilter(attributeDisplayFormRef(Ldm.LocationState), {
+        newNegativeAttributeFilter(attributeDisplayFormRef(Md.LocationState), {
             uris: [],
         }),
     );
@@ -37,14 +37,14 @@ export const AttributeParentChildFilterExample: React.FC = () => {
             <AttributeFilter
                 filter={filter}
                 parentFilters={parentFilter ? [parentFilter] : []}
-                parentFilterOverAttribute={idRef(LdmExt.locationIdAttributeIdentifier)}
+                parentFilterOverAttribute={idRef(MdExt.locationIdAttributeIdentifier)}
                 fullscreenOnMobile={false}
                 onApply={setFilter}
             />
             <div style={{ height: 300 }} className="s-line-chart">
                 <BarChart
-                    measures={[LdmExt.TotalSales2]}
-                    viewBy={Ldm.LocationCity}
+                    measures={[MdExt.TotalSales2]}
+                    viewBy={Md.LocationCity}
                     filters={[filter, parentFilter]}
                     onLoadingChanged={onLoadingChanged}
                     onError={onError}

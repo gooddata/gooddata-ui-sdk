@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { idRef, newPositiveAttributeFilter, newNegativeAttributeFilter, uriRef } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 export class AttributeFilterComponentExample extends Component {
     public onApply = (...params: any[]): void => {
@@ -15,20 +15,20 @@ export class AttributeFilterComponentExample extends Component {
             <div>
                 <div>attribute defined by identifier</div>
                 <AttributeFilter
-                    filter={newPositiveAttributeFilter(idRef(LdmExt.EmployeeNameIdentifier), [])}
+                    filter={newPositiveAttributeFilter(idRef(MdExt.EmployeeNameIdentifier), [])}
                     fullscreenOnMobile={false}
                     onApply={this.onApply}
                 />
                 <br />
                 <div>attribute defined by display form uri</div>
                 <AttributeFilter
-                    filter={newNegativeAttributeFilter(uriRef(LdmExt.employeeNameDisplayFormUri), [])}
+                    filter={newNegativeAttributeFilter(uriRef(MdExt.employeeNameDisplayFormUri), [])}
                     onApply={this.onApply}
                 />
                 <br />
                 <div>attribute defined by filter definition, including selection</div>
                 <AttributeFilter
-                    filter={newPositiveAttributeFilter(Ldm.EmployeeName.Default, ["Abbie Adams"])}
+                    filter={newPositiveAttributeFilter(Md.EmployeeName.Default, ["Abbie Adams"])}
                     onApply={this.onApply}
                 />
             </div>

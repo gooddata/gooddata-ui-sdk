@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable, IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 
-const measures = [LdmExt.FranchiseFees];
+const measures = [MdExt.FranchiseFees];
 
-const attributes = [LdmExt.EmployeeName];
+const attributes = [MdExt.EmployeeName];
 
-const columns = [LdmExt.LocationName];
+const columns = [MdExt.LocationName];
 
 const config: IPivotTableConfig = {
     columnSizing: {

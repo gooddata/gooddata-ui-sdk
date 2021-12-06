@@ -10,7 +10,7 @@ import {
     newAttributeAreaSort,
     SortDirection,
 } from "@gooddata/sdk-model";
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 
 interface ISortOption {
     key: string;
@@ -65,7 +65,7 @@ export const DynamicSortingExample: React.FC = () => {
                 `The column stacks (states) are sorted alphabetically by the label of the state attribute in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: (dir) => [newAttributeSort(LdmExt.LocationState, dir)],
+            sortBy: (dir) => [newAttributeSort(MdExt.LocationState, dir)],
         },
         {
             key: "date",
@@ -74,7 +74,7 @@ export const DynamicSortingExample: React.FC = () => {
                 `The columns (date) are sorted by the value of the date attribute in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: (dir) => [newAttributeSort(LdmExt.monthDate, dir)],
+            sortBy: (dir) => [newAttributeSort(MdExt.monthDate, dir)],
         },
         {
             key: "sum-of-column",
@@ -83,7 +83,7 @@ export const DynamicSortingExample: React.FC = () => {
                 `The columns (date) are sorted by the sum of the Total Sales stacks in each column in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: (dir) => [newAttributeAreaSort(LdmExt.monthDate, dir)],
+            sortBy: (dir) => [newAttributeAreaSort(MdExt.monthDate, dir)],
         },
         {
             key: "sum-of-stacks",
@@ -92,7 +92,7 @@ export const DynamicSortingExample: React.FC = () => {
                 `The stacks (state) are sorted by the sum of the Total Sales stacks across all columns in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: (dir) => [newAttributeAreaSort(LdmExt.LocationState, dir)],
+            sortBy: (dir) => [newAttributeAreaSort(MdExt.LocationState, dir)],
         },
         {
             key: "state-element",
@@ -102,8 +102,8 @@ export const DynamicSortingExample: React.FC = () => {
                     dir!,
                 )} order.`,
             sortBy: (dir) => [
-                newMeasureSort(LdmExt.TotalSales1, dir, [
-                    newAttributeLocator(LdmExt.LocationState, LdmExt.locationStateAttributeCaliforniaUri),
+                newMeasureSort(MdExt.TotalSales1, dir, [
+                    newAttributeLocator(MdExt.LocationState, MdExt.locationStateAttributeCaliforniaUri),
                 ]),
             ],
         },
@@ -115,8 +115,8 @@ export const DynamicSortingExample: React.FC = () => {
                     dir!,
                 )} order.`,
             sortBy: (dir) => [
-                newMeasureSort(LdmExt.TotalSales1, dir, [
-                    newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateJanuaryUri),
+                newMeasureSort(MdExt.TotalSales1, dir, [
+                    newAttributeLocator(MdExt.monthDate, MdExt.monthDateJanuaryUri),
                 ]),
             ],
         },
@@ -128,9 +128,9 @@ export const DynamicSortingExample: React.FC = () => {
                     dir!,
                 )} order.`,
             sortBy: (dir) => [
-                newAttributeAreaSort(LdmExt.monthDate),
-                newMeasureSort(LdmExt.TotalSales1, dir, [
-                    newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateJanuaryUri),
+                newAttributeAreaSort(MdExt.monthDate),
+                newMeasureSort(MdExt.TotalSales1, dir, [
+                    newAttributeLocator(MdExt.monthDate, MdExt.monthDateJanuaryUri),
                 ]),
             ],
         },
@@ -141,11 +141,11 @@ export const DynamicSortingExample: React.FC = () => {
             description: () =>
                 "The columns (date) are sorted by the value of the Total Sales of California stack in ascending order and the column stacks (states) are sorted by the value of Total Sales in the January column in descending direction",
             sortBy: () => [
-                newMeasureSort(LdmExt.TotalSales1, "asc", [
-                    newAttributeLocator(LdmExt.LocationState, LdmExt.locationStateAttributeCaliforniaUri),
+                newMeasureSort(MdExt.TotalSales1, "asc", [
+                    newAttributeLocator(MdExt.LocationState, MdExt.locationStateAttributeCaliforniaUri),
                 ]),
-                newMeasureSort(LdmExt.TotalSales1, "desc", [
-                    newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateJanuaryUri),
+                newMeasureSort(MdExt.TotalSales1, "desc", [
+                    newAttributeLocator(MdExt.monthDate, MdExt.monthDateJanuaryUri),
                 ]),
             ],
         },
@@ -219,9 +219,9 @@ export const DynamicSortingExample: React.FC = () => {
 
             <div style={style} className="s-dynamic-sorting-chart">
                 <ColumnChart
-                    measures={[LdmExt.TotalSales1]}
-                    viewBy={LdmExt.monthDate}
-                    stackBy={LdmExt.LocationState}
+                    measures={[MdExt.TotalSales1]}
+                    viewBy={MdExt.monthDate}
+                    stackBy={MdExt.LocationState}
                     sortBy={sortOption.sortBy(direction)}
                 />
             </div>

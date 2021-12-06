@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { ColumnChart, IChartConfig, PositionType } from "@gooddata/sdk-ui-charts";
 
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 const getConfig = (position: PositionType, responsive: boolean | "autoPositionWithPopup"): IChartConfig => ({
     legend: {
@@ -168,9 +168,9 @@ export const ColumnChartResponsiveLegendExample: React.FC = () => {
             <hr className="separator" />
             <div style={divStyle} className="s-resizable-vis">
                 <ColumnChart
-                    measures={[LdmExt.TotalSales1]}
-                    viewBy={Ldm.LocationState}
-                    stackBy={Ldm.MenuCategory}
+                    measures={[MdExt.TotalSales1]}
+                    viewBy={Md.LocationState}
+                    stackBy={Md.MenuCategory}
                     config={getConfig(position, responsive)}
                 />
             </div>

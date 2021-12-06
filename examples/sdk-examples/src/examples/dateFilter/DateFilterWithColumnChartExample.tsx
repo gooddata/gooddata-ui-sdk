@@ -8,10 +8,10 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
-const measures = [LdmExt.TotalSales1];
+const measures = [MdExt.TotalSales1];
 
 const availableGranularities: DateFilterGranularity[] = ["GDC.time.year"];
 
@@ -121,7 +121,7 @@ export const DateFilterWithColumnChartExample: React.FC = () => {
 
     const dateFilter = DateFilterHelpers.mapOptionToAfm(
         state.selectedFilterOption,
-        Ldm.DateDatasets.Date.ref,
+        Md.DateDatasets.Date.ref,
         state.excludeCurrentPeriod,
     );
 
@@ -141,7 +141,7 @@ export const DateFilterWithColumnChartExample: React.FC = () => {
             <div style={columnChartContainerStyle}>
                 <ColumnChart
                     measures={measures}
-                    viewBy={Ldm.DateMonth.Short}
+                    viewBy={Md.DateMonth.Short}
                     filters={dateFilter ? [dateFilter] : []}
                 />
             </div>

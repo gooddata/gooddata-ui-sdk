@@ -3,17 +3,17 @@ import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newAttributeAreaSort } from "@gooddata/sdk-model";
 
-import { LdmExt, Ldm } from "../../md";
+import { MdExt, Md } from "../../md";
 
 export const PivotTableSortingAggregationExample: React.FC = () => {
     return (
         <div style={{ height: 300 }} className="s-pivot-table-sorting">
             <PivotTable
-                measures={[LdmExt.FranchiseFees]}
-                rows={[LdmExt.LocationState]}
-                columns={[Ldm.DateQuarter]}
+                measures={[MdExt.FranchiseFees]}
+                rows={[MdExt.LocationState]}
+                columns={[Md.DateQuarter]}
                 pageSize={20}
-                sortBy={[newAttributeAreaSort(LdmExt.LocationState, "desc")]}
+                sortBy={[newAttributeAreaSort(MdExt.LocationState, "desc")]}
             />
         </div>
     );

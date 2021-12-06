@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { ErrorComponent, Execute, LoadingComponent } from "@gooddata/sdk-ui";
-import { Ldm } from "../../md";
+import { Md } from "../../md";
 import { newAttributeSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
 const style = { border: "1px black solid" };
@@ -28,10 +28,10 @@ export const ExecuteWithSlicesExample: React.FC = () => {
     return (
         <div>
             <Execute
-                seriesBy={[Ldm.$TotalSales, Ldm.$FranchisedSales]}
-                slicesBy={[Ldm.LocationState, Ldm.LocationCity]}
-                sortBy={[newAttributeSort(Ldm.LocationState, "asc")]}
-                filters={[newPositiveAttributeFilter(Ldm.LocationState, ["Florida", "Texas"])]}
+                seriesBy={[Md.$TotalSales, Md.$FranchisedSales]}
+                slicesBy={[Md.LocationState, Md.LocationCity]}
+                sortBy={[newAttributeSort(Md.LocationState, "asc")]}
+                filters={[newPositiveAttributeFilter(Md.LocationState, ["Florida", "Texas"])]}
                 LoadingComponent={CustomLoadingComponent}
                 ErrorComponent={CustomErrorComponent}
             >

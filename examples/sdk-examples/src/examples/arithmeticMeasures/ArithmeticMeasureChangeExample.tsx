@@ -2,23 +2,23 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newPreviousPeriodMeasure, newArithmeticMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 const totalSalesYearAgoBucketItem = newPreviousPeriodMeasure(
-    LdmExt.TotalSales1,
-    [{ dataSet: Ldm.DateDatasets.Date.identifier, periodsAgo: 1 }],
+    MdExt.TotalSales1,
+    [{ dataSet: Md.DateDatasets.Date.identifier, periodsAgo: 1 }],
     (m) => m.alias("$ Total Sales - year ago"),
 );
 
-const changeMeasure = newArithmeticMeasure([LdmExt.TotalSales1, totalSalesYearAgoBucketItem], "change", (m) =>
+const changeMeasure = newArithmeticMeasure([MdExt.TotalSales1, totalSalesYearAgoBucketItem], "change", (m) =>
     m.title("% Total Sales Change"),
 );
 
-const measures = [totalSalesYearAgoBucketItem, LdmExt.TotalSales1, changeMeasure];
+const measures = [totalSalesYearAgoBucketItem, MdExt.TotalSales1, changeMeasure];
 
-const rows = [Ldm.DateMonth.Short];
+const rows = [Md.DateMonth.Short];
 
-const filters = [newAbsoluteDateFilter(Ldm.DateDatasets.Date.ref, "2017-01-01", "2017-12-31")];
+const filters = [newAbsoluteDateFilter(Md.DateDatasets.Date.ref, "2017-01-01", "2017-12-31")];
 
 const style = { height: 200 };
 

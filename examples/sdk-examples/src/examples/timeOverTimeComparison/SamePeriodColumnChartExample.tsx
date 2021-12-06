@@ -3,9 +3,9 @@
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newPopMeasure } from "@gooddata/sdk-model";
-import { Ldm } from "../../md";
+import { Md } from "../../md";
 
-const totalSalesYearAgo = newPopMeasure(Ldm.$TotalSales, Ldm.DateDatasets.Date.Year.ref, (m) =>
+const totalSalesYearAgo = newPopMeasure(Md.$TotalSales, Md.DateDatasets.Date.Year.ref, (m) =>
     m.alias("$ Total Sales - SP year ago"),
 );
 
@@ -14,7 +14,7 @@ const style = { height: 300 };
 export const SamePeriodColumnChartExample: React.FC = () => {
     return (
         <div style={style} className="s-column-chart">
-            <ColumnChart measures={[Ldm.$TotalSales, totalSalesYearAgo]} viewBy={Ldm.DateQuarter} />
+            <ColumnChart measures={[Md.$TotalSales, totalSalesYearAgo]} viewBy={Md.DateQuarter} />
         </div>
     );
 };

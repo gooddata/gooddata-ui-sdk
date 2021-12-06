@@ -2,14 +2,14 @@
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { Ldm } from "../../md";
+import { Md } from "../../md";
 
 const style = { height: 300 };
 
 export const InsightViewLineByIdentifierExample: React.FC = () => {
     return (
         <div style={style} className="s-insightView-line">
-            <InsightView insight={Ldm.Insights.LineChart} />
+            <InsightView insight={Md.Insights.LineChart} />
         </div>
     );
 };

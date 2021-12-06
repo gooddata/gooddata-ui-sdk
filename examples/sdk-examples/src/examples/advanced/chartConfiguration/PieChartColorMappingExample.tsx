@@ -1,16 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PieChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { LdmExt } from "../../../md";
+import { MdExt } from "../../../md";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { modifyMeasure } from "@gooddata/sdk-model";
 
 const measures = [
-    modifyMeasure(LdmExt.FranchiseFeesAdRoyalty, (m) => m.localId("franchiseFeesAdRoyaltyIdentifier")),
-    modifyMeasure(LdmExt.FranchiseFeesInitialFranchiseFee, (m) =>
+    modifyMeasure(MdExt.FranchiseFeesAdRoyalty, (m) => m.localId("franchiseFeesAdRoyaltyIdentifier")),
+    modifyMeasure(MdExt.FranchiseFeesInitialFranchiseFee, (m) =>
         m.localId("franchiseFeesInitialFranchiseFeeIdentifier"),
     ),
-    modifyMeasure(LdmExt.FranchiseFeesOngoingRoyalty, (m) =>
+    modifyMeasure(MdExt.FranchiseFeesOngoingRoyalty, (m) =>
         m.localId("franchiseFeesIdentifierOngoingRoyalty"),
     ),
 ];

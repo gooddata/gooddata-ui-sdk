@@ -4,10 +4,10 @@ import xor from "lodash/xor";
 import { PlaceholdersProvider, newPlaceholder } from "@gooddata/sdk-ui";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { IMeasure, measureIdentifier, measureTitle, modifyMeasure } from "@gooddata/sdk-model";
-import { Ldm } from "../../md";
+import { Md } from "../../md";
 
-const totalSalesProfit = modifyMeasure(Ldm.$TotalSales, (m) => m.title("Total sales"));
-const grossProfit = modifyMeasure(Ldm.$GrossProfit, (m) => m.title("Gross profit"));
+const totalSalesProfit = modifyMeasure(Md.$TotalSales, (m) => m.title("Total sales"));
+const grossProfit = modifyMeasure(Md.$GrossProfit, (m) => m.title("Gross profit"));
 const allMeasures = [totalSalesProfit, grossProfit];
 
 // Create new placeholder with default value

@@ -2,23 +2,23 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ITotal, newTotal } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 const measures = [
-    LdmExt.FranchiseFees,
-    LdmExt.FranchiseFeesAdRoyalty,
-    LdmExt.FranchiseFeesInitialFranchiseFee,
-    LdmExt.FranchiseFeesOngoingRoyalty,
+    MdExt.FranchiseFees,
+    MdExt.FranchiseFeesAdRoyalty,
+    MdExt.FranchiseFeesInitialFranchiseFee,
+    MdExt.FranchiseFeesOngoingRoyalty,
 ];
 
-const attributes = [LdmExt.LocationState, Ldm.LocationName.Default, Ldm.MenuCategory];
+const attributes = [MdExt.LocationState, Md.LocationName.Default, Md.MenuCategory];
 
-const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
+const columns = [Md.DateQuarter, Md.DateMonth.Short];
 const totals: ITotal[] = [
-    newTotal("sum", LdmExt.FranchiseFees, LdmExt.LocationState),
-    newTotal("avg", LdmExt.FranchiseFees, LdmExt.LocationState),
-    newTotal("sum", LdmExt.FranchiseFeesAdRoyalty, LdmExt.LocationState),
-    newTotal("max", LdmExt.FranchiseFees, LdmExt.LocationState),
+    newTotal("sum", MdExt.FranchiseFees, MdExt.LocationState),
+    newTotal("avg", MdExt.FranchiseFees, MdExt.LocationState),
+    newTotal("sum", MdExt.FranchiseFeesAdRoyalty, MdExt.LocationState),
+    newTotal("max", MdExt.FranchiseFees, MdExt.LocationState),
 ];
 
 const style = { height: 600 };

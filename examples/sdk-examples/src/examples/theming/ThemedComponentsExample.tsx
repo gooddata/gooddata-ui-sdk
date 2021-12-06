@@ -8,7 +8,7 @@ import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 
 import { DateFilterComponentExample } from "../dateFilter/DateFilterComponentExample";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 import { customTheme } from "../../constants/customTheme";
 
 export const ThemeProviderExample: React.FC = () => {
@@ -45,7 +45,7 @@ const ThemedComponentsExample: React.FC = () => {
                     AttributeFilter
                     <br />
                     <AttributeFilter
-                        filter={newPositiveAttributeFilter(Ldm.EmployeeName.Default, ["Abbie Adams"])}
+                        filter={newPositiveAttributeFilter(Md.EmployeeName.Default, ["Abbie Adams"])}
                         onApply={() => {
                             /* omitted for brevity */
                         }}
@@ -90,7 +90,7 @@ const ThemedComponentsExample: React.FC = () => {
                     Bar chart
                     <br />
                     <div style={{ height: 300 }}>
-                        <BarChart measures={[LdmExt.TotalSales1]} viewBy={Ldm.LocationResort} />
+                        <BarChart measures={[MdExt.TotalSales1]} viewBy={Md.LocationResort} />
                     </div>
                 </div>
             )}

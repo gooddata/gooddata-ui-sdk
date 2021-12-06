@@ -2,13 +2,13 @@
 import React from "react";
 import { PivotTable, DefaultColumnWidth } from "@gooddata/sdk-ui-pivot";
 
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 
-const measures = [LdmExt.FranchisedSales];
+const measures = [MdExt.FranchisedSales];
 
-const attributes = [LdmExt.EmployeeName];
+const attributes = [MdExt.EmployeeName];
 
-const columns = [LdmExt.LocationName];
+const columns = [MdExt.LocationName];
 
 const config = {
     columnSizing: {

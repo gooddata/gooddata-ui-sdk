@@ -2,14 +2,14 @@
 import React, { Component } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newMeasureValueFilter, IMeasureValueFilter } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../md";
+import { MdExt } from "../../../md";
 import { IMeasureValueFilterState } from "./MeasureValueFilterExample";
 
-const measures = [LdmExt.FranchisedSalesAsPercent];
+const measures = [MdExt.FranchisedSalesAsPercent];
 
-const attributes = [LdmExt.LocationName];
+const attributes = [MdExt.LocationName];
 
-const greaterThanFilter = newMeasureValueFilter(LdmExt.FranchisedSalesAsPercent, "GREATER_THAN", 7000000);
+const greaterThanFilter = newMeasureValueFilter(MdExt.FranchisedSalesAsPercent, "GREATER_THAN", 7000000);
 
 export class MeasureValueFilterExample extends Component<unknown, IMeasureValueFilterState> {
     state: IMeasureValueFilterState = {

@@ -3,15 +3,15 @@ import React, { useState } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
 import { measureLocalId, newMeasureValueFilter } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../md";
+import { MdExt } from "../../../md";
 
 const measureTitle = "Sum of Number";
 
-const defaultMeasureValueFilter = newMeasureValueFilter(LdmExt.sumOfNumber, "BETWEEN", -30, 30, 0);
+const defaultMeasureValueFilter = newMeasureValueFilter(MdExt.sumOfNumber, "BETWEEN", -30, 30, 0);
 
-const measures = [LdmExt.sumOfNumber];
+const measures = [MdExt.sumOfNumber];
 
-const attributes = [LdmExt.nameAttribute];
+const attributes = [MdExt.nameAttribute];
 
 const MeasureValueFilterTreatNullAsZeroComponentExample: React.FC = () => {
     const [filters, setFilters] = useState([defaultMeasureValueFilter]);
@@ -23,7 +23,7 @@ const MeasureValueFilterTreatNullAsZeroComponentExample: React.FC = () => {
                 filter={filters[0]}
                 buttonTitle={measureTitle}
                 displayTreatNullAsZeroOption
-                measureIdentifier={measureLocalId(LdmExt.sumOfNumber)}
+                measureIdentifier={measureLocalId(MdExt.sumOfNumber)}
             />
             <hr className="separator" />
             <div style={{ height: 300 }} className="s-pivot-table">

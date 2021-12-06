@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { BubbleChart } from "@gooddata/sdk-ui-charts";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
-const xMeasure = LdmExt.FranchiseFees;
+const xMeasure = MdExt.FranchiseFees;
 
-const yMeasure = LdmExt.FranchisedSales;
+const yMeasure = MdExt.FranchisedSales;
 
 const style = { height: 300 };
 
@@ -15,8 +15,8 @@ export const BubbleChartExample: React.FC = () => {
             <BubbleChart
                 xAxisMeasure={xMeasure}
                 yAxisMeasure={yMeasure}
-                viewBy={Ldm.LocationResort}
-                size={Ldm.AvgCheckSizeByServer}
+                viewBy={Md.LocationResort}
+                size={Md.AvgCheckSizeByServer}
             />
         </div>
     );

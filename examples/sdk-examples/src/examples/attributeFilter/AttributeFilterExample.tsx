@@ -11,7 +11,7 @@ import {
     isAttributeElementsByRef,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 interface IAttributeFilterExampleState {
     filters: Array<IPositiveAttributeFilter | INegativeAttributeFilter> | undefined;
@@ -99,7 +99,7 @@ export class AttributeFilterExample extends Component<unknown, IAttributeFilterE
         return (
             <div className="s-attribute-filter">
                 <AttributeFilter
-                    identifier={attributeIdentifier(Ldm.LocationResort)}
+                    identifier={attributeIdentifier(Md.LocationResort)}
                     fullscreenOnMobile={false}
                     onApply={this.onApply}
                 />
@@ -108,8 +108,8 @@ export class AttributeFilterExample extends Component<unknown, IAttributeFilterE
                         <ErrorComponent message={error} />
                     ) : (
                         <LineChart
-                            measures={[LdmExt.TotalSales2]}
-                            trendBy={Ldm.LocationResort}
+                            measures={[MdExt.TotalSales2]}
+                            trendBy={Md.LocationResort}
                             filters={filters}
                             onLoadingChanged={this.onLoadingChanged}
                             onError={this.onError}

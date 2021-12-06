@@ -2,15 +2,15 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ITotal } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 const measures = [
-    LdmExt.FranchiseFees,
-    LdmExt.FranchiseFeesAdRoyalty,
-    LdmExt.FranchiseFeesInitialFranchiseFee,
-    LdmExt.FranchiseFeesOngoingRoyalty,
+    MdExt.FranchiseFees,
+    MdExt.FranchiseFeesAdRoyalty,
+    MdExt.FranchiseFeesInitialFranchiseFee,
+    MdExt.FranchiseFeesOngoingRoyalty,
 ];
-const attributes = [Ldm.LocationState, LdmExt.LocationName, LdmExt.MenuCategory];
+const attributes = [Md.LocationState, MdExt.LocationName, MdExt.MenuCategory];
 const totals: ITotal[] = [
     {
         measureIdentifier: "franchiseFees",
@@ -33,7 +33,7 @@ const totals: ITotal[] = [
         attributeIdentifier: "menu",
     },
 ];
-const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
+const columns = [Md.DateQuarter, Md.DateMonth.Short];
 const config = {
     menu: {
         aggregations: true,

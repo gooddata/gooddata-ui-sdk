@@ -5,18 +5,18 @@ import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { attributeIdentifier, measureIdentifier, ITotal } from "@gooddata/sdk-model";
 import isNil from "lodash/isNil";
 
-import { LdmExt, Ldm } from "../../md";
+import { MdExt, Md } from "../../md";
 
 const measures = [
-    LdmExt.FranchiseFees,
-    LdmExt.FranchiseFeesAdRoyalty,
-    LdmExt.FranchiseFeesOngoingRoyalty,
-    LdmExt.FranchiseFeesInitialFranchiseFee,
+    MdExt.FranchiseFees,
+    MdExt.FranchiseFeesAdRoyalty,
+    MdExt.FranchiseFeesOngoingRoyalty,
+    MdExt.FranchiseFeesInitialFranchiseFee,
 ];
 
-const attributes = [LdmExt.LocationState, LdmExt.LocationName, LdmExt.MenuCategory];
+const attributes = [MdExt.LocationState, MdExt.LocationName, MdExt.MenuCategory];
 
-const columns = [LdmExt.quarterDate, LdmExt.monthDate];
+const columns = [MdExt.quarterDate, MdExt.monthDate];
 
 const totals: ITotal[] = [
     {
@@ -47,8 +47,8 @@ const totals: ITotal[] = [
 ];
 
 const drillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(Ldm.MenuCategory)!),
-    HeaderPredicates.identifierMatch(measureIdentifier(Ldm.$FranchiseFees)!),
+    HeaderPredicates.identifierMatch(attributeIdentifier(Md.MenuCategory)!),
+    HeaderPredicates.identifierMatch(measureIdentifier(Md.$FranchiseFees)!),
 ];
 
 interface IPivotTableDrillExampleState {

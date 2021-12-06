@@ -4,13 +4,13 @@ import React from "react";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
 import { IMeasureValueFilter, measureLocalId } from "@gooddata/sdk-model";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { LdmExt } from "../../../md";
+import { MdExt } from "../../../md";
 
 const measureTitle = "Franchised Sales Ratio";
 
-const measures = [LdmExt.FranchisedSalesAsPercent];
+const measures = [MdExt.FranchisedSalesAsPercent];
 
-const attributes = [LdmExt.LocationName];
+const attributes = [MdExt.LocationName];
 
 const defaultFilter = {
     measureValueFilter: {
@@ -37,7 +37,7 @@ export class MeasureValueFilterComponentPercentageExample extends React.PureComp
                     filter={filters[0]}
                     buttonTitle={measureTitle}
                     usePercentage
-                    measureIdentifier={measureLocalId(LdmExt.FranchisedSalesAsPercent)}
+                    measureIdentifier={measureLocalId(MdExt.FranchisedSalesAsPercent)}
                 />
                 <hr className="separator" />
                 <div style={{ height: 300 }} className="s-pivot-table">

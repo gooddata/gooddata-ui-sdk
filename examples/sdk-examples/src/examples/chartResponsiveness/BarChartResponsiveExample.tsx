@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 const config = {
     enableCompactSize: true,
@@ -68,7 +68,7 @@ export const BarChartResponsiveExample: React.FC = () => {
             </button>
             <hr className="separator" />
             <div style={divStyle}>
-                <BarChart measures={[LdmExt.TotalSales1]} viewBy={Ldm.LocationResort} config={config} />
+                <BarChart measures={[MdExt.TotalSales1]} viewBy={Md.LocationResort} config={config} />
             </div>
         </div>
     );

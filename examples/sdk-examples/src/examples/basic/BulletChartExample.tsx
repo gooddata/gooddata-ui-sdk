@@ -2,17 +2,17 @@
 import React, { Component } from "react";
 import { BulletChart } from "@gooddata/sdk-ui-charts";
 
-import { LdmExt } from "../../md";
+import { MdExt } from "../../md";
 
 export class BulletChartExample extends Component {
     public render(): React.ReactNode {
         return (
             <div style={{ height: 300 }} className="s-bullet-chart">
                 <BulletChart
-                    primaryMeasure={LdmExt.FranchiseFeesAdRoyalty}
-                    targetMeasure={LdmExt.FranchiseFees}
-                    comparativeMeasure={LdmExt.FranchiseFeesOngoingRoyalty}
-                    viewBy={LdmExt.LocationResort}
+                    primaryMeasure={MdExt.FranchiseFeesAdRoyalty}
+                    targetMeasure={MdExt.FranchiseFees}
+                    comparativeMeasure={MdExt.FranchiseFeesOngoingRoyalty}
+                    viewBy={MdExt.LocationResort}
                 />
             </div>
         );

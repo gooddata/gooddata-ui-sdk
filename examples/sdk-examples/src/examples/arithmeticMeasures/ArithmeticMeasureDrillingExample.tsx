@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { measureIdentifier } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
-const measures = [LdmExt.NrRestaurants, LdmExt.TotalSales2, LdmExt.arithmeticMeasure];
+const measures = [MdExt.NrRestaurants, MdExt.TotalSales2, MdExt.arithmeticMeasure];
 
-const rows = [Ldm.LocationState];
+const rows = [Md.LocationState];
 
-const drillableItems = [HeaderPredicates.composedFromIdentifier(measureIdentifier(LdmExt.TotalSales2)!)];
+const drillableItems = [HeaderPredicates.composedFromIdentifier(measureIdentifier(MdExt.TotalSales2)!)];
 
 const style = { height: 200 };
 

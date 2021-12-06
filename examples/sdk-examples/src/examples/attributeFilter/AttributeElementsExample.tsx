@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
-import { Ldm } from "../../md";
+import { Md } from "../../md";
 
 export interface IItem {
     title: string;
@@ -37,7 +37,7 @@ export class AttributeElementsExample extends Component {
     public render(): React.ReactNode {
         return (
             <div style={{ minHeight: 500 }}>
-                <AttributeElements displayForm={attributeDisplayFormRef(Ldm.EmployeeName.Default)} limit={20}>
+                <AttributeElements displayForm={attributeDisplayFormRef(Md.EmployeeName.Default)} limit={20}>
                     {({ validElements, loadMore, isLoading, error }) => {
                         const { offset = null, items = null, totalCount = null } = validElements ?? {};
                         if (error) {

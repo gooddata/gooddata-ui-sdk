@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { ComboChart } from "@gooddata/sdk-ui-charts";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
-const columnMeasures = [LdmExt.FranchiseFeesInitialFranchiseFee];
+const columnMeasures = [MdExt.FranchiseFeesInitialFranchiseFee];
 
-const lineMeasures = [LdmExt.FranchiseFeesAdRoyalty];
+const lineMeasures = [MdExt.FranchiseFeesAdRoyalty];
 
 const style = { height: 300 };
 
@@ -15,7 +15,7 @@ export const ComboChartExample: React.FC = () => {
             <ComboChart
                 primaryMeasures={columnMeasures}
                 secondaryMeasures={lineMeasures}
-                viewBy={Ldm.LocationResort}
+                viewBy={Md.LocationResort}
             />
         </div>
     );

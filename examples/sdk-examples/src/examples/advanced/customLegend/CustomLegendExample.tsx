@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { PieChart } from "@gooddata/sdk-ui-charts";
-import { LdmExt } from "../../../md";
+import { MdExt } from "../../../md";
 
 interface ICustomChartExampleState {
     legendItems: Array<{
@@ -20,9 +20,9 @@ const chartConfig = {
 const legendItemStyle = { display: "flex", margin: "10px 0", cursor: "pointer" };
 
 const measures = [
-    LdmExt.FranchiseFeesAdRoyalty,
-    LdmExt.FranchiseFeesInitialFranchiseFee,
-    LdmExt.FranchiseFeesOngoingRoyalty,
+    MdExt.FranchiseFeesAdRoyalty,
+    MdExt.FranchiseFeesInitialFranchiseFee,
+    MdExt.FranchiseFeesOngoingRoyalty,
 ];
 
 const style = { height: 300 };

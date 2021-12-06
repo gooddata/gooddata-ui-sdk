@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 
 interface IPivotTableExampleProps {
     className?: string;
@@ -21,16 +21,16 @@ export const PivotTableExample: React.FC<IPivotTableExampleProps> = ({
 }) => {
     const measures = withMeasures
         ? [
-              LdmExt.FranchiseFees,
-              LdmExt.FranchiseFeesAdRoyalty,
-              LdmExt.FranchiseFeesInitialFranchiseFee,
-              LdmExt.FranchiseFeesOngoingRoyalty,
+              MdExt.FranchiseFees,
+              MdExt.FranchiseFeesAdRoyalty,
+              MdExt.FranchiseFeesInitialFranchiseFee,
+              MdExt.FranchiseFeesOngoingRoyalty,
           ]
         : [];
 
-    const attributes = withAttributes ? [Ldm.LocationState, Ldm.LocationName.Default, Ldm.MenuCategory] : [];
+    const attributes = withAttributes ? [Md.LocationState, Md.LocationName.Default, Md.MenuCategory] : [];
 
-    const columns = withPivot ? [Ldm.DateQuarter, Ldm.DateMonth.Short] : [];
+    const columns = withPivot ? [Md.DateQuarter, Md.DateMonth.Short] : [];
 
     return (
         <div style={style} className={className}>

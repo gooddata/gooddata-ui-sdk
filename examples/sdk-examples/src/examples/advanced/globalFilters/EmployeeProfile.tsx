@@ -7,7 +7,7 @@ import { Kpi } from "@gooddata/sdk-ui";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { EmployeeCard } from "./EmployeeCard";
 import { KpiMetricBox } from "./KpiMetricBox";
-import { Ldm, LdmExt } from "../../../md";
+import { Md, MdExt } from "../../../md";
 import { Layout } from "../../../components/Layout";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
@@ -21,7 +21,7 @@ interface IEmployeeProfileState {
     selectedEmployeeUri: string;
 }
 
-const measures = [LdmExt.AvgDailyTotalSales];
+const measures = [MdExt.AvgDailyTotalSales];
 
 export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements }) => {
     const [{ selectedEmployeeUri }, setState] = useState<IEmployeeProfileState>({
@@ -76,7 +76,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
     );
 
     const selectedEmployeesUris: IAttributeElementsByRef = { uris: [selectedEmployeeUri] };
-    const employeeFilter = newPositiveAttributeFilter(Ldm.EmployeeName.Default, selectedEmployeesUris);
+    const employeeFilter = newPositiveAttributeFilter(Md.EmployeeName.Default, selectedEmployeesUris);
     const selectedEmployee = validElements.items.find((item) => item.uri === selectedEmployeeUri);
 
     const employeeName = selectedEmployee!.title;
@@ -133,7 +133,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                             <KpiMetricBox title="Daily sales">
                                 <Kpi
                                     filters={[employeeFilter]}
-                                    measure={LdmExt.AvgDailyTotalSales}
+                                    measure={MdExt.AvgDailyTotalSales}
                                     LoadingComponent={(...otherProps) => (
                                         <CustomLoading inline imageHeight={20} {...otherProps} />
                                     )}
@@ -144,7 +144,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                             <KpiMetricBox title="Average check amount">
                                 <Kpi
                                     filters={[employeeFilter]}
-                                    measure={LdmExt.AvgCheckSizeByServer}
+                                    measure={MdExt.AvgCheckSizeByServer}
                                     LoadingComponent={(...otherProps) => (
                                         <CustomLoading inline imageHeight={20} {...otherProps} />
                                     )}
@@ -157,7 +157,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                             <div className="pie-chart">
                                 <PieChart
                                     measures={measures}
-                                    viewBy={Ldm.MenuCategory}
+                                    viewBy={Md.MenuCategory}
                                     filters={[employeeFilter]}
                                     LoadingComponent={CustomLoading}
                                     ErrorComponent={CustomError}
@@ -170,7 +170,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                             <div className="bar-chart">
                                 <BarChart
                                     measures={measures}
-                                    viewBy={LdmExt.MenuItemName}
+                                    viewBy={MdExt.MenuItemName}
                                     filters={[employeeFilter]}
                                     LoadingComponent={CustomLoading}
                                     ErrorComponent={CustomError}

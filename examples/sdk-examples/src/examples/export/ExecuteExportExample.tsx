@@ -3,11 +3,11 @@ import React from "react";
 import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Ldm, LdmExt } from "../../md";
+import { Md, MdExt } from "../../md";
 import { Execute, ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 
-const primaryMeasure = LdmExt.FranchiseFees;
-const filters = [newAbsoluteDateFilter(Ldm.DateDatasets.Date, "2017-01-01", "2017-12-31")];
+const primaryMeasure = MdExt.FranchiseFees;
+const filters = [newAbsoluteDateFilter(Md.DateDatasets.Date, "2017-01-01", "2017-12-31")];
 
 export const ExecuteExportExample: React.FC = () => {
     return (
