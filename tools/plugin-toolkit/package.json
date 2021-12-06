@@ -59,7 +59,7 @@
         "columnify": "^1.5.4",
         "commander": "^8.1.0",
         "cross-spawn": "^7.0.3",
-        "dotenv": "^8.2.0",
+        "dotenv": "^10.0.0",
         "fast-glob": "^3.2.7",
         "fs-extra": "^10.0.0",
         "inquirer": "^7.3.3",
