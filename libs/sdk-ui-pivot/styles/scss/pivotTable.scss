@@ -26,8 +26,6 @@ $table-menu-hover: var(
     darken(mix($gd-color-highlight, $default-gd-color-text-light, 10%), 3%)
 );
 
-$header-label-color: var(--gd-table-headerLabelColor, var(--gd-palette-complementary-7, $gd-color-text));
-
 $header-hover-background-color: var(
     --gd-table-headerHoverBackgroundColor,
     var(--gd-palette-complementary-1, $gd-palette-primary-dimmed)
@@ -65,7 +63,6 @@ $subtotal-odd-background-color: var(
                 font-family: $gd-font-primary,
                 background-color: $custom-background-color,
                 modal-overlay-background-color: $custom-background-color,
-                header-background-color: $custom-background-color,
                 odd-row-background-color: transparent,
                 secondary-foreground-color: $custom-secondary-foreground-color,
                 row-hover-color:
@@ -74,8 +71,11 @@ $subtotal-odd-background-color: var(
                         var(--gd-palette-complementary-1, transparentize($default-gd-color-label, 0.9))
                     ),
                 cell-horizontal-border: none,
-                header-foreground-color: $header-label-color,
+                header-background-color: $custom-background-color,
+                header-foreground-color:
+                    var(--gd-table-headerLabelColor, var(--gd-palette-complementary-7, $gd-color-text)),
                 header-cell-hover-background-color: $header-hover-background-color,
+                suppress-css-var-overrides: true,
             )
         );
 
@@ -365,7 +365,6 @@ $subtotal-odd-background-color: var(
         align-items: flex-end;
         overflow: hidden;
         padding: 0 11px;
-        color: $header-label-color;
 
         &--right {
             justify-content: flex-end;
