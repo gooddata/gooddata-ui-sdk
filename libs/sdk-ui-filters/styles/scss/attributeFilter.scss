@@ -132,13 +132,36 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
                 );
             }
         }
-    }
 
-    &.is-active {
         .button-title,
         .button-subtitle {
             &::after {
                 content: "\e613";
+            }
+        }
+
+        &.gd-attribute-filter-button-mobile {
+            display: block;
+            width: auto;
+            height: 45px;
+            margin: 0;
+            padding: 0 30px 0 10px;
+            box-shadow: 0 0 2px var(--gd-shadow-color, rgba(20, 56, 93, 0.2));
+            line-height: 45px;
+            border-width: 0;
+            border-top: 0;
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+            font-size: nth(map-get($gd-typo, font-sizes), 4);
+            text-align: left;
+            background-color: $gd-color-white;
+            max-width: none;
+
+            &::after {
+                display: none;
+            }
+
+            &::before {
+                right: 4px;
             }
         }
     }
@@ -146,6 +169,21 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     &:hover {
         &::after {
             border-color: $gd-border-color;
+        }
+    }
+}
+
+.gd-attribute-filter-button-mobile.is-active {
+    .button-title,
+    .button-subtitle {
+        &::after {
+            content: "\e613";
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            display: inline-block;
+            font-size: 18px;
+            transform: translateY(-50%);
         }
     }
 }
@@ -243,36 +281,6 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     display: inline-block;
     flex: 0 0 auto;
     vertical-align: bottom;
-}
-
-// remove button in mobile
-.gd-mobile-dropdown-overlay .gd-attribute-filter-button-mobile {
-    display: none;
-}
-
-// display the duplicate button in mobile content
-.gd-mobile-dropdown-content .gd-attribute-filter-button-mobile {
-    display: block;
-    width: auto;
-    height: auto;
-    margin: 0;
-    padding: 10px;
-    box-shadow: 0 1px 2px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1));
-    line-height: 25px;
-    border-width: 1px 0;
-    border-top: 1px solid $gd-border-color;
-    border-bottom: 1px solid $gd-border-color;
-    font-size: nth(map-get($gd-typo, font-sizes), 4);
-    text-align: left;
-    background-color: $gd-color-white;
-
-    &::after {
-        display: none;
-    }
-
-    &::before {
-        right: 4px;
-    }
 }
 
 .gd-attribute-filter-dropdown-all-items-filtered {

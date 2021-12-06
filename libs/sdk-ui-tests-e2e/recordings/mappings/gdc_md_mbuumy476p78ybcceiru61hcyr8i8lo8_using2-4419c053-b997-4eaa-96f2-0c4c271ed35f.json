@@ -1,0 +1,28 @@
+{
+    "id": "4419c053-b997-4eaa-96f2-0c4c271ed35f",
+    "name": "gdc_md_mbuumy476p78ybcceiru61hcyr8i8lo8_using2",
+    "request": {
+        "url": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/using2",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"inUse\":{\"uri\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14539\",\"types\":[\"kpi\",\"visualizationWidget\",\"filterContext\"],\"nearest\":0}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"entries\":[{\"category\":\"filterContext\",\"updated\":\"2021-07-12 09:50:52\",\"unlisted\":0,\"created\":\"2021-07-12 09:50:52\",\"contributor\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"title\":\"filterContext\",\"link\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14537\",\"summary\":\"\",\"identifier\":\"aab58o3zB0S7\",\"author\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"deprecated\":\"0\",\"locked\":0},{\"title\":\"Avg Daily Total Sales\",\"link\":\"/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/14538\",\"contributor\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"unlisted\":0,\"created\":\"2021-07-12 09:50:52\",\"category\":\"visualizationWidget\",\"updated\":\"2021-07-12 09:50:52\",\"locked\":0,\"identifier\":\"aag55vUqBz7o\",\"author\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"deprecated\":\"0\",\"summary\":\"\"}]}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "4419c053-b997-4eaa-96f2-0c4c271ed35f",
+    "persistent": true,
+    "insertionIndex": 79
+}
