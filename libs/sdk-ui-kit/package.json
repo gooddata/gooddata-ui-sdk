@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-kit",
-    "version": "8.7.1-beta.0",
+    "version": "8.7.1-beta.1",
     "description": "GoodData SDK - UI Building Components",
     "repository": {
         "type": "git",
@@ -63,11 +63,11 @@
     "dependencies": {
         "@aaronhayes/react-use-hubspot-form": "^2.0.1",
         "@gooddata/numberjs": "^3.2.5",
-        "@gooddata/sdk-backend-spi": "^8.7.1-beta.0",
-        "@gooddata/sdk-model": "^8.7.1-beta.0",
-        "@gooddata/sdk-ui": "^8.7.1-beta.0",
-        "@gooddata/sdk-ui-theme-provider": "^8.7.1-beta.0",
-        "@gooddata/util": "^8.7.1-beta.0",
+        "@gooddata/sdk-backend-spi": "^8.7.1-beta.1",
+        "@gooddata/sdk-model": "^8.7.1-beta.1",
+        "@gooddata/sdk-ui": "^8.7.1-beta.1",
+        "@gooddata/sdk-ui-theme-provider": "^8.7.1-beta.1",
+        "@gooddata/util": "^8.7.1-beta.1",
         "classnames": "^2.3.1",
         "codemirror": "^5.54.0",
         "date-fns": "^2.8.1",
