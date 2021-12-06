@@ -14,6 +14,7 @@ import { ITigerClient, jsonApiHeaders, JsonApiWorkspaceOutList } from "@gooddata
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
 import open from "open";
+import dotenv from "dotenv";
 
 /**
  * Tests if the provided tiger client can access the backend.
@@ -54,6 +55,7 @@ const TigerApiTokenVariable = "TIGER_API_TOKEN";
  * empty value.
  */
 function getTigerApiToken(): string | undefined {
+    dotenv.config({ path: ".env" });
     const token = process.env[TigerApiTokenVariable];
 
     return token?.length ? token : undefined;
