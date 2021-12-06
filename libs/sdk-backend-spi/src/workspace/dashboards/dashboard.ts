@@ -276,6 +276,14 @@ export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition
 }
 
 /**
+ * Availability of {@link IListedDashboard}.
+ * Either full (the listed dashboard is also available as a fully accessible metadata object) or
+ * only via link (full metadata object is not accessible, only the listed dashboard record).
+ * @alpha
+ */
+export type ListedDashboardAvailability = "full" | "viaLink";
+
+/**
  * Listed dashboard - to display the dashboard in the list
  * Only a subset of dashboard data is available,
  * for the full definition see {@link IDashboard}
@@ -320,6 +328,11 @@ export interface IListedDashboard
      * Since 8.6.0
      */
     readonly tags?: string[];
+
+    /**
+     * States if dashboard is shared with the user and fully accessible or if it is hidden but accessible via link if user knows it.
+     */
+    readonly availability: ListedDashboardAvailability;
 }
 
 /**

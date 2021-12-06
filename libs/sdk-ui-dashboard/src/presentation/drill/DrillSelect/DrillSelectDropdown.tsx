@@ -19,7 +19,7 @@ import { isDrillToUrl } from "../types";
 import { DrillSelectListBody } from "./DrillSelectListBody";
 import { getDrillDownAttributeTitle, getTotalDrillToUrlCount } from "../utils/drillDownUtils";
 import { DrillSelectContext, DrillType, DrillSelectItem } from "./types";
-import { useDashboardSelector, selectListedDashboards, selectInsightsMap } from "../../../model";
+import { useDashboardSelector, selectInsightsMap, selectAccessibleDashboards } from "../../../model";
 import { dashboardMatch } from "../utils/dashboardPredicate";
 import { selectDashboardTitle } from "../../../model";
 import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants";
@@ -37,7 +37,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) =
     const { isOpen, dropDownAnchorClass, onClose, onSelect, drillDefinitions, drillEvent } = props;
 
     const intl = useIntl();
-    const listedDashboards = useDashboardSelector(selectListedDashboards);
+    const listedDashboards = useDashboardSelector(selectAccessibleDashboards);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const insights = useDashboardSelector(selectInsightsMap);
 

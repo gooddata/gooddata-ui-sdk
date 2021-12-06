@@ -513,12 +513,20 @@ export class MetadataModule {
      *
      * @method getAnalyticalDashboards
      * @param {string} projectId Project identifier
+     * @param {boolean} fetchAllListedDashboards Optionally specify if also all the listed
+     *  dashboards should be loaded. Note that these include not just shared dashboards and dashboards
+     *  that were not shared with the user but are accessible via link, but also dashboards that cannot
+     *  be accessed because there were not shared are under strict control access (only its listed record
+     *  is accessible, not the whole metadata object).
      * @return {Array} An array of links to analytical dashboard objects
      */
-    public getAnalyticalDashboards(projectId: string): Promise<GdcMetadata.IObjectLink[]> {
+    public getAnalyticalDashboards(
+        projectId: string,
+        fetchAllListedDashboards?: boolean,
+    ): Promise<GdcMetadata.IObjectLink[]> {
         return this.xhr
             .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
-                `/gdc/md/${projectId}/query/analyticaldashboard?showAll=0`,
+                `/gdc/md/${projectId}/query/analyticaldashboard?showAll=${fetchAllListedDashboards ? 1 : 0}`,
             )
             .then((dashboardsQuery) => {
                 return dashboardsQuery.query.entries;

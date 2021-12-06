@@ -110,17 +110,31 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     // Public methods
 
     public getDashboards = async (options: IGetDashboardOptions = {}): Promise<IListedDashboard[]> => {
-        const dashboardsObjectLinks = await this.authCall((sdk) =>
+        const explicitlySharedDashboardsObjectLinks = await this.authCall((sdk) =>
             sdk.md.getAnalyticalDashboards(this.workspace),
         );
+
+        const accessibleDashboardsObjectLinks = await this.getAccessibleDashboards(
+            explicitlySharedDashboardsObjectLinks,
+            !!options.includeAvailableViaLink,
+        );
+
         const userMap: Map<string, IUser> = options.loadUserData
             ? await updateUserMap(
                   new Map(),
-                  compact(flatMap(dashboardsObjectLinks, (link) => [link.author, link.contributor])),
+                  compact(
+                      flatMap(accessibleDashboardsObjectLinks, (link) => [link.author, link.contributor]),
+                  ),
                   this.authCall,
               )
             : new Map();
-        return dashboardsObjectLinks.map((link) => toSdkModel.convertListedDashboard(link, userMap));
+
+        return accessibleDashboardsObjectLinks.map((link) => {
+            const availability = this.isExplicitlyShared(link, explicitlySharedDashboardsObjectLinks)
+                ? "full"
+                : "viaLink";
+            return toSdkModel.convertListedDashboard(link, availability, userMap);
+        });
     };
 
     public getDashboard = async (
@@ -456,6 +470,32 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         await this.updateBearMetadataObject(dashboard.ref, bearDashboard);
         return dashboard;
     };
+
+    private getAccessibleDashboards = async (
+        explicitlySharedDashboardsObjectLinks: GdcMetadata.IObjectLink[],
+        includeAvailableViaLink: boolean,
+    ) => {
+        if (!includeAvailableViaLink) {
+            return explicitlySharedDashboardsObjectLinks;
+        }
+        const allDashboardsObjectLinks = await this.authCall((sdk) =>
+            sdk.md.getAnalyticalDashboards(this.workspace, true),
+        );
+
+        return allDashboardsObjectLinks.filter((dashboard) => {
+            return (
+                this.isExplicitlyShared(dashboard, explicitlySharedDashboardsObjectLinks) ||
+                !dashboard?.flags?.includes("strictAccessControl")
+            );
+        });
+    };
+
+    private isExplicitlyShared(
+        dashboard: GdcMetadata.IObjectLink,
+        explicitlySharedDashboards: GdcMetadata.IObjectLink[],
+    ) {
+        return explicitlySharedDashboards.some(({ link }) => link === dashboard.link);
+    }
 
     // Layout
 

@@ -1448,6 +1448,7 @@ export type DashboardState = {
     alerts: EntityState<IWidgetAlert>;
     drillTargets: EntityState<IDrillTargets>;
     listedDashboards: EntityState<IListedDashboard>;
+    accessibleDashboards: EntityState<IListedDashboard>;
     ui: UiState;
     executionResults: EntityState<IExecutionResultEnvelope>;
     _queryCache: {
@@ -3492,6 +3493,12 @@ export type SavingState = {
 
 // @internal (undocumented)
 export const ScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element;
+
+// @alpha
+export const selectAccessibleDashboards: (state: DashboardState) => IListedDashboard[];
+
+// @alpha
+export const selectAccessibleDashboardsMap: OutputSelector<DashboardState, ObjRefMap<IListedDashboard>, (res: IListedDashboard[]) => ObjRefMap<IListedDashboard>>;
 
 // @alpha
 export const selectAlertByRef: ((ref: ObjRef) => (state: DashboardState) => IWidgetAlert | undefined) & MemoizedFunction;

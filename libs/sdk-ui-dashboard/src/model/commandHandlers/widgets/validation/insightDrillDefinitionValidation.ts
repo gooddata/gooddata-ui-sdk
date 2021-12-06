@@ -22,7 +22,7 @@ import {
     resolveDisplayFormMetadata,
 } from "../../../../model/utils/displayFormResolver";
 import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drillTargetsSelectors";
-import { selectListedDashboardsMap } from "../../../store/listedDashboards/listedDashboardsSelectors";
+import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors";
 
 export function validateDrillDefinition(
     drillDefinition: InsightDrillDefinition,
@@ -51,7 +51,7 @@ export function validateDrillDefinition(
 
     // validate drill
     const validationContext: InsightDrillDefinitionValidationData = {
-        dashboardsMap: validationData.listedDashboardMap,
+        dashboardsMap: validationData.accessibleDashboardMap,
         insightsMap: validationData.resolvedInsights.resolved,
         displayFormsMap: validationData.resolvedDisplayForms.resolved,
     };
@@ -71,7 +71,7 @@ export interface DrillDefinitionValidationData {
     drillTargets: IDrillTargets | undefined;
     resolvedInsights: InsightResolutionResult;
     resolvedDisplayForms: DisplayFormResolutionResult;
-    listedDashboardMap: ObjRefMap<IListedDashboard>;
+    accessibleDashboardMap: ObjRefMap<IListedDashboard>;
 }
 
 export function* getValidationData(
@@ -84,8 +84,8 @@ export function* getValidationData(
         selectDrillTargetsByWidgetRefSelector,
     );
 
-    const listedDashboardMap: ReturnType<typeof selectListedDashboardsMap> = yield select(
-        selectListedDashboardsMap,
+    const accessibleDashboardMap: ReturnType<typeof selectAccessibleDashboardsMap> = yield select(
+        selectAccessibleDashboardsMap,
     );
 
     const insightRefs = extractInsightRefs(drillsToModify);
@@ -104,7 +104,7 @@ export function* getValidationData(
 
     return {
         drillTargets,
-        listedDashboardMap,
+        accessibleDashboardMap,
         resolvedInsights,
         resolvedDisplayForms,
     };
