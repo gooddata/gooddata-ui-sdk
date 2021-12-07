@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import {
     Button,
@@ -34,7 +34,9 @@ const MAX_LIST_HEIGHT = 392;
 const CONFIGURATION_BUTTON_HEIGHT = 40;
 const PARENT_FILTER_MESSAGE_HEIGHT = 30;
 const LIST_EXTRAS = 143;
+const MOBILE_LIST_EXTRAS = 167;
 const LIST_ITEM_HEIGHT = 28;
+const MOBILE_LIST_ITEM_HEIGHT = 40;
 
 const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (props) => {
     const {
@@ -86,14 +88,19 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
 
     function getDropdownBodyHeight(): number {
         const winHeight = window.innerHeight;
+        const itemHeight = isMobile ? MOBILE_LIST_ITEM_HEIGHT : LIST_ITEM_HEIGHT;
+        const listExtras = isMobile ? MOBILE_LIST_EXTRAS : LIST_EXTRAS;
 
         const configurationButtonHeight = props.showConfigurationButton ? CONFIGURATION_BUTTON_HEIGHT : 0;
         const filteredItemsMessageHeight = props.showItemsFilteredMessage ? PARENT_FILTER_MESSAGE_HEIGHT : 0;
         const availableWindowHeight =
-            winHeight - LIST_EXTRAS - configurationButtonHeight - filteredItemsMessageHeight;
-        const listItemsHeight = LIST_ITEM_HEIGHT * props.totalCount;
-        const minHeight = min([MAX_LIST_HEIGHT, availableWindowHeight, listItemsHeight]);
-        return max([LIST_ITEM_HEIGHT, minHeight])!;
+            winHeight - listExtras - configurationButtonHeight - filteredItemsMessageHeight;
+
+        const maxListHeight = isMobile ? availableWindowHeight : MAX_LIST_HEIGHT;
+
+        const listItemsHeight = itemHeight * props.totalCount;
+        const minHeight = min([maxListHeight, availableWindowHeight, listItemsHeight]);
+        return max([itemHeight, minHeight])!;
     }
 
     const isFilteredOutByParents =
@@ -130,9 +137,18 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
     );
 
     const currentWidth = width || 245;
+    const actionsClassnames = cx("gd-dialog-footer dropdown-footer", {
+        "dropdown-footer-mobile": isMobile,
+    });
+    const attributeValuesStyles = useMemo(() => {
+        return {
+            width: isMobile ? "auto" : currentWidth,
+            overflow: isMobile ? "hidden" : undefined,
+        };
+    }, [isMobile, currentWidth]);
 
     return (
-        <div className={classNames} style={{ width: isMobile ? "auto" : currentWidth }}>
+        <div className={classNames} style={attributeValuesStyles}>
             {isConfigurationOpen ? (
                 /**
                  * TODO connect configuration with store
@@ -155,7 +171,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
                                 <ConfigurationButton setIsConfigurationOpen={setIsConfigurationOpen} />
                             )}
                             {!hasNoData && (
-                                <div className="gd-dialog-footer dropdown-footer">
+                                <div className={actionsClassnames}>
                                     {showDeleteButton && deleteFilter && (
                                         <DeleteButton deleteFilter={deleteFilter} />
                                     )}

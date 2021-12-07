@@ -132,4 +132,18 @@
             color: $gd-color-negative;
         }
     }
+
+    &-mobile {
+        display: flex;
+        align-items: stretch;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        .gd-button {
+            text-align: center;
+            flex: 1;
+        }
+    }
 }

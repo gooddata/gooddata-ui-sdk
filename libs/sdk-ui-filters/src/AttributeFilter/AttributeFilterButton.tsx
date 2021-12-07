@@ -817,9 +817,11 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         const getDropdownBodyProps: (
             onApplyButtonClicked: () => void,
             onCloseButtonClicked: () => void,
+            isMobile?: boolean,
         ) => IAttributeDropdownBodyProps = (
             onApplyButtonClicked: () => void,
             onCloseButtonClicked: () => void,
+            isMobile: false,
         ) => ({
             items: state.validOptions?.items ?? [],
             totalCount: totalCount ?? LIMIT,
@@ -841,6 +843,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             parentFilterTitles,
             onApplyButtonClicked,
             onCloseButtonClicked,
+            isFullWidth: isMobile,
         });
 
         return (
@@ -878,34 +881,40 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     </MediaQuery>
                 )}
                 onOpenStateChanged={onDropdownOpenStateChanged}
-                renderBody={({ closeDropdown }) =>
-                    props.renderBody
-                        ? props.renderBody({
-                              ...getDropdownBodyProps(
-                                  () => {
-                                      onApply(closeDropdown);
-                                  },
-                                  () => {
-                                      closeDropdown();
-                                  },
-                              ),
-                              isElementsLoading: !state.validOptions?.items && isElementsLoading(),
-                              isLoaded: !isOriginalTotalCountLoading(),
-                              onConfigurationChange: () => {},
-                              attributeFilterRef: null,
-                          })
-                        : renderDefaultBody(
-                              getDropdownBodyProps(
-                                  () => {
-                                      onApply(closeDropdown);
-                                  },
-                                  () => {
-                                      closeDropdown();
-                                  },
-                              ),
-                              closeDropdown,
-                          )
-                }
+                renderBody={({ closeDropdown }) => (
+                    <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
+                        {(isMobile) =>
+                            props.renderBody
+                                ? props.renderBody({
+                                      ...getDropdownBodyProps(
+                                          () => {
+                                              onApply(closeDropdown);
+                                          },
+                                          () => {
+                                              closeDropdown();
+                                          },
+                                      ),
+                                      isElementsLoading: !state.validOptions?.items && isElementsLoading(),
+                                      isLoaded: !isOriginalTotalCountLoading(),
+                                      onConfigurationChange: () => {},
+                                      attributeFilterRef: null,
+                                      isMobile,
+                                  })
+                                : renderDefaultBody(
+                                      getDropdownBodyProps(
+                                          () => {
+                                              onApply(closeDropdown);
+                                          },
+                                          () => {
+                                              closeDropdown();
+                                          },
+                                          isMobile,
+                                      ),
+                                      closeDropdown,
+                                  )
+                        }
+                    </MediaQuery>
+                )}
             />
         );
     };
