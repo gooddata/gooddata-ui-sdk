@@ -112,6 +112,7 @@
     "visualization.execute_protected_report.headline": "U bent niet gemachtigd om dit rapport te bekijken",
     "visualization.execute_protected_report.text": "Neem contact op met uw beheerder.",
     "visualization.empty.headline": "Geen data voor uw filterselectie",
+    "visualization.alert_not_supported": "Alarmen worden niet ondersteund voor de statische datumperiode",
     "visualization.error.headline": "Sorry, we kunnen dit inzicht niet weergeven",
     "visualization.error.text": "Neem contact op met uw beheerder.",
     "options.button.bubble": "Inzichtgegevens exporteren",

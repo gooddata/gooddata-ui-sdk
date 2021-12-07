@@ -581,6 +581,11 @@
         "comment": "",
         "limit": 0
     },
+    "visualization.alert_not_supported": {
+        "value": "Alerts are not supported for the static date period",
+        "comment": "",
+        "limit": 0
+    },
     "visualization.empty.headline": {
         "value": "No data for your filter selection",
         "comment": "",
