@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import {
     Button,
@@ -140,10 +140,12 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
     const actionsClassnames = cx("gd-dialog-footer dropdown-footer", {
         "dropdown-footer-mobile": isMobile,
     });
-    const attributeValuesStyles = {
-        width: isMobile ? "auto" : currentWidth,
-        overflow: isMobile ? "hidden" : undefined,
-    };
+    const attributeValuesStyles = useMemo(() => {
+        return {
+            width: isMobile ? "auto" : currentWidth,
+            overflow: isMobile ? "hidden" : undefined,
+        };
+    }, [isMobile]);
 
     return (
         <div className={classNames} style={attributeValuesStyles}>
