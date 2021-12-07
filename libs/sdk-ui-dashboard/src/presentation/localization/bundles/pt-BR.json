@@ -111,6 +111,7 @@
     "visualization.dataTooLarge.text": "Tente aplicar um ou mais filtros ao seu painel.",
     "visualization.execute_protected_report.headline": "Você não tem autorização para ver este relatório",
     "visualization.execute_protected_report.text": "Entre em contato com seu administrador.",
+    "visualization.alert_not_supported": "Não há suporte para alertas no período de datas estático",
     "visualization.empty.headline": "Sem dados para seleção de filtro",
     "visualization.error.headline": "Lamentamos, não é possível exibir este insight",
     "visualization.error.text": "Entre em contato com seu administrador.",

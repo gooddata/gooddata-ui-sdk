@@ -111,6 +111,7 @@
     "visualization.dataTooLarge.text": "尝试将一个或多个筛选器应用于控制面板。",
     "visualization.execute_protected_report.headline": "您无权查看此报告",
     "visualization.execute_protected_report.text": "请联系您的管理员。",
+    "visualization.alert_not_supported": "静态日期时间段不支持警报",
     "visualization.empty.headline": "对于您的筛选器选项，找不到数据",
     "visualization.error.headline": "抱歉，我们无法显示此洞察。",
     "visualization.error.text": "请联系您的管理员。",
