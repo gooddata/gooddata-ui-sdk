@@ -145,7 +145,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
             width: isMobile ? "auto" : currentWidth,
             overflow: isMobile ? "hidden" : undefined,
         };
-    }, [isMobile]);
+    }, [isMobile, currentWidth]);
 
     return (
         <div className={classNames} style={attributeValuesStyles}>
