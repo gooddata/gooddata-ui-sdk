@@ -67,7 +67,14 @@ if [ -z $existing_branch ]; then
     echo "MESSAGE=just created *gooddata-ui-sdk* hotfix branch *$TARGET_BRANCH*" >>$SLACK_VARS_FILE
   fi
 else
-  existing_fix_number=$(echo $existing_branch | sed 's/.*fix-\([0-9]*\)$/\1/')
+  # in case there is only the first branch for a hotfix, that ends with -fix, assume the existing fix number is 0
+  # otherwise parse the number from the branch name
+  if [[ $existing_branch =~ '-fix$' ]];
+  then
+    existing_fix_number=0
+  else
+    existing_fix_number=$(echo $existing_branch | sed 's/.*fix-\([0-9]*\)$/\1/')
+  fi
 
   echo "Checking out the latest existing hotfix branch $existing_branch"
   git checkout $existing_branch
