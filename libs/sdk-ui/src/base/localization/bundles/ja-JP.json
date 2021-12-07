@@ -226,6 +226,7 @@
     "shareDialog.share.grantee.add.empty.selection": "ユーザーやグループが選択されていません。",
     "shareDialog.share.grantee.add.info": "ユーザーまたはグループを追加",
     "shareDialog.share.grantee.add.search.placeholder": "ユーザーまたはグループを検索",
+    "shareDialog.share.grantee.add.search.error.message": "ユーザーおよびグループのロードに失敗しました。後で再試行してください。",
     "shareDialog.share.grantee.add.search.no.matching.items": "一致するユーザーまたはグループがありません。",
     "shareDialog.share.grantee.item.you": "{userName} (あなた)",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} ユーザー",
@@ -233,7 +234,5 @@
     "shareDialog.share.grantee.item.user.all": "すべてのユーザー",
     "shareDialog.share.grantee.item.user.inactive": "非アクティブなユーザー",
     "shareDialog.share.grantee.item.user.inactive.description": "ユーザーはこのワークスペースから削除されています",
-    "shareDialog.share.grantee.item.remove.access": "このダッシュボードへのアクセス権を外す。",
-    "shareDialog.share.grantee.item.owner.remove.access": "ダッシュボードを作成したユーザーです。制作者は削除できません。",
     "shareDialog.share.grantee.item.remove.selection": "この選択範囲から削除。"
 }

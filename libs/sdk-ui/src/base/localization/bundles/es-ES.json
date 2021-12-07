@@ -226,6 +226,7 @@
     "shareDialog.share.grantee.add.empty.selection": "Ningún usuario o grupo seleccionado.",
     "shareDialog.share.grantee.add.info": "Añadir usuarios y grupos",
     "shareDialog.share.grantee.add.search.placeholder": "Buscar usuarios y grupos",
+    "shareDialog.share.grantee.add.search.error.message": "Error al cargar usuarios y grupos. Inténtelo de nuevo más tarde.",
     "shareDialog.share.grantee.add.search.no.matching.items": "No coincide ningún usuario o grupo.",
     "shareDialog.share.grantee.item.you": "{userName} (Usted)",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} usuarios",
@@ -233,7 +234,5 @@
     "shareDialog.share.grantee.item.user.all": "Todos los usuarios",
     "shareDialog.share.grantee.item.user.inactive": "Usuario inactivo",
     "shareDialog.share.grantee.item.user.inactive.description": "Se eliminó al usuario de este espacio de trabajo",
-    "shareDialog.share.grantee.item.remove.access": "Eliminar acceso a este panel.",
-    "shareDialog.share.grantee.item.owner.remove.access": "Usuarios que crearon este panel. El creador no se puede eliminar.",
     "shareDialog.share.grantee.item.remove.selection": "Eliminar de la selección."
 }

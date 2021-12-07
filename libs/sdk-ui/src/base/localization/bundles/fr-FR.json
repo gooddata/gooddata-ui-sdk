@@ -226,6 +226,7 @@
     "shareDialog.share.grantee.add.empty.selection": "Aucun utilisateur ou groupe sélectionné.",
     "shareDialog.share.grantee.add.info": "Ajouter des utilisateurs et groupes",
     "shareDialog.share.grantee.add.search.placeholder": "Rechercher des utilisateurs et groupes",
+    "shareDialog.share.grantee.add.search.error.message": "Le chargement des utilisateurs et des groupes a échoué. Veuillez réessayer ultérieurement.",
     "shareDialog.share.grantee.add.search.no.matching.items": "Aucun utilisateur ou groupe trouvé.",
     "shareDialog.share.grantee.item.you": "{userName} (Vous)",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} utilisateurs",
@@ -233,7 +234,5 @@
     "shareDialog.share.grantee.item.user.all": "Tous les utilisateurs",
     "shareDialog.share.grantee.item.user.inactive": "Utilisateur inactif",
     "shareDialog.share.grantee.item.user.inactive.description": "L'utilisateur a été supprimé de cet espace de travail",
-    "shareDialog.share.grantee.item.remove.access": "Retirer l'accès à ce tableau de bord.",
-    "shareDialog.share.grantee.item.owner.remove.access": "Utilisateurs ayant créé ce tableau de bord. Un créateur ne peut pas être retiré.",
     "shareDialog.share.grantee.item.remove.selection": "Retirer de la sélection."
 }
