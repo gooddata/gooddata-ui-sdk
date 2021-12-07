@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-filters",
-    "version": "8.8.0-alpha.18",
+    "version": "8.8.0-alpha.19",
     "description": "GoodData.UI SDK - Filter Components",
     "repository": {
         "type": "git",
@@ -59,11 +59,11 @@
     },
     "dependencies": {
         "@gooddata/numberjs": "^3.2.5",
-        "@gooddata/sdk-backend-spi": "^8.8.0-alpha.18",
-        "@gooddata/sdk-model": "^8.8.0-alpha.18",
-        "@gooddata/sdk-ui": "^8.8.0-alpha.18",
-        "@gooddata/sdk-ui-kit": "^8.8.0-alpha.18",
-        "@gooddata/util": "^8.8.0-alpha.18",
+        "@gooddata/sdk-backend-spi": "^8.8.0-alpha.19",
+        "@gooddata/sdk-model": "^8.8.0-alpha.19",
+        "@gooddata/sdk-ui": "^8.8.0-alpha.19",
+        "@gooddata/sdk-ui-kit": "^8.8.0-alpha.19",
+        "@gooddata/util": "^8.8.0-alpha.19",
         "classnames": "^2.3.1",
         "downshift": "^3.4.7",
         "fixed-data-table-2": "^1.2.0",
@@ -85,8 +85,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/reference-workspace": "^8.8.0-alpha.18",
-        "@gooddata/sdk-backend-mockingbird": "^8.8.0-alpha.18",
+        "@gooddata/reference-workspace": "^8.8.0-alpha.19",
+        "@gooddata/sdk-backend-mockingbird": "^8.8.0-alpha.19",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.18.4",
