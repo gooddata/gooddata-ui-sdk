@@ -217,6 +217,7 @@ $subtotal-odd-background-color: var(
                 display: block;
                 width: $header-cell-resize-width / 2;
                 margin-right: $header-cell-resize-width / 2;
+                margin-top: 8px;
                 border-right: 1px solid $gd-palette-primary-base;
                 text-indent: $header-cell-resize-width / 2;
                 height: 16px;
