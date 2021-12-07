@@ -7,7 +7,7 @@ import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { ColorFactory } from "../../_chartOptions/colorFactory";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
 import { ScatterPlotColorStrategy } from "../scatterPlotColoring";
-import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import range from "lodash/range";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
@@ -22,7 +22,7 @@ describe("ScatterPlotColorStrategy", () => {
         const expectedColor = "rgb(0,0,0)";
         const colorMapping: IColorMapping[] = [
             {
-                predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
+                predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Amount),
                 color: {
                     type: "rgb",
                     value: {

@@ -6,7 +6,7 @@ import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { ColorFactory } from "../../_chartOptions/colorFactory";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
 import { BubbleChartColorStrategy } from "../bubbleChartColoring";
-import { ReferenceRecordings, ReferenceLdm, ReferenceData } from "@gooddata/reference-workspace";
+import { ReferenceRecordings, ReferenceMd, ReferenceData } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 describe("BubbleChartStrategy", () => {
@@ -18,7 +18,7 @@ describe("BubbleChartStrategy", () => {
         const expectedColors = ["rgb(0,0,0)"];
         const colorMapping: IColorMapping[] = [
             {
-                predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
+                predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Amount),
                 color: {
                     type: "rgb",
                     value: {

@@ -8,10 +8,10 @@ import {
     newAttribute,
 } from "@gooddata/sdk-model";
 import { workspace } from "../constants/fixtures";
-import * as Ldm from "./full";
+import * as Md from "./full";
 
 /*
- * This file contains our custom extensions on top of the reference LDM. Things such as arithmetic
+ * This file contains our custom extensions on top of the reference MD. Things such as arithmetic
  * measure definitions, PoP measure definitions and any custom yet reusable stuff that is useful
  * when testing.
  */
@@ -52,19 +52,19 @@ export const nameAttributeIdentifier = "label.csv_4dates.name";
 
 // ===============================================================================================
 
-export const numberOfChecks = modifyMeasure(Ldm.NrChecks, (m) =>
+export const numberOfChecks = modifyMeasure(Md.NrChecks, (m) =>
     m.localId("numOfChecks").format("#,##0").alias("# Checks").title("Number of Checks"),
 );
-export const FranchiseFees = modifyMeasure(Ldm.$FranchiseFees, (m) =>
+export const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
     m.format("#,##0").localId(franchiseFeesLocalId).title("Franchise Fees"),
 );
 export const franchiseFeesAsPercents = modifySimpleMeasure(FranchiseFees, (m) =>
     m.title("Franchise Fees shown in %").ratio(),
 );
-export const FranchisedSales = modifyMeasure(Ldm.$FranchisedSales, (m) =>
+export const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
     m.format("#,##0").title("Franchise Sales").localId(franchiseSalesLocalId),
 );
-export const FranchisedSalesAsPercent = modifyMeasure(Ldm.$FranchisedSales, (m) =>
+export const FranchisedSalesAsPercent = modifyMeasure(Md.$FranchisedSales, (m) =>
     m.format("#,##0%").title("Franchise Sales").localId(franchiseSalesAsPercentageLocalId),
 );
 export const FranchisedSalesWithRatio = modifySimpleMeasure(FranchisedSales, (m) =>
@@ -74,55 +74,55 @@ export const FranchisedSalesWithRatio = modifySimpleMeasure(FranchisedSales, (m)
         .title("Franchise Sales shown in %")
         .ratio(),
 );
-export const FranchiseFeesAdRoyalty = modifyMeasure(Ldm.$FranchiseFeesAdRoyalty, (m) =>
+export const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
     m.format("#,##0").localId(franchiseFeesAdRoyaltyLocalId),
 );
-export const FranchiseFeesInitialFranchiseFee = modifyMeasure(Ldm.$FranchiseFeesInitialFranchiseFee, (m) =>
+export const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
     m.format("#,##0").localId(franchiseFeesInitialFranchiseFeeLocalId),
 );
-export const FranchiseFeesOngoingRoyalty = modifyMeasure(Ldm.$FranchiseFeesOngoingRoyalty, (m) =>
+export const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
     m.format("#,##0").localId(franchiseFeesOngoingRoyaltyLocalId),
 );
 export const franchiseFeesMeasures = [
-    Ldm.$FranchiseFees,
-    Ldm.$FranchiseFeesAdRoyalty,
-    Ldm.$FranchiseFeesInitialFranchiseFee,
-    Ldm.$FranchiseFeesOngoingRoyalty,
+    Md.$FranchiseFees,
+    Md.$FranchiseFeesAdRoyalty,
+    Md.$FranchiseFeesInitialFranchiseFee,
+    Md.$FranchiseFeesOngoingRoyalty,
 ].map((measure) =>
     modifySimpleMeasure(measure, (m) => m.aggregation("sum").localId(measure.measure.localIdentifier)),
 );
 
-export const TotalSales1 = modifyMeasure(Ldm.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
-export const TotalSales2 = modifyMeasure(Ldm.$TotalSales, (m) =>
+export const TotalSales1 = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
+export const TotalSales2 = modifyMeasure(Md.$TotalSales, (m) =>
     m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId(totalSalesLocalId),
 );
-export const TotalSales3 = modifySimpleMeasure(Ldm.$TotalSales, (m) =>
+export const TotalSales3 = modifySimpleMeasure(Md.$TotalSales, (m) =>
     m.aggregation("sum").localId(totalSalesLocalId),
 );
-export const TotalCosts = modifyMeasure(Ldm.$TotalCosts, (m) =>
+export const TotalCosts = modifyMeasure(Md.$TotalCosts, (m) =>
     m.format("#,##0").alias("$ Total Costs").localId(totalCostsLocalId),
 );
 
-export const EmployeeName = modifyAttribute(Ldm.EmployeeName.Default, (a) => a.localId(EmployeeNameLocalId));
-export const LocationName = modifyAttribute(Ldm.LocationName.Default, (a) => a.localId(LocationNameLocalId));
-export const LocationResort = modifyAttribute(Ldm.LocationResort, (a) => a.localId(LocationNameLocalId));
-export const MenuCategory = modifyAttribute(Ldm.MenuCategory, (a) => a.localId(MenuCategoryLocalId));
-export const LocationState = modifyAttribute(Ldm.LocationState, (a) => a.localId(LocationStateLocalId));
-export const LocationCity = modifyAttribute(Ldm.LocationCity, (a) => a.localId(LocationCityLocalId));
-export const monthDate = modifyAttribute(Ldm.DateDatasets.Date.Month.Short, (a) =>
+export const EmployeeName = modifyAttribute(Md.EmployeeName.Default, (a) => a.localId(EmployeeNameLocalId));
+export const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId(LocationNameLocalId));
+export const LocationResort = modifyAttribute(Md.LocationResort, (a) => a.localId(LocationNameLocalId));
+export const MenuCategory = modifyAttribute(Md.MenuCategory, (a) => a.localId(MenuCategoryLocalId));
+export const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId(LocationStateLocalId));
+export const LocationCity = modifyAttribute(Md.LocationCity, (a) => a.localId(LocationCityLocalId));
+export const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
     a.alias("Month").localId(monthDateLocalId),
 );
-export const quarterDate = modifyAttribute(Ldm.DateDatasets.Date.Quarter.Default, (a) =>
+export const quarterDate = modifyAttribute(Md.DateDatasets.Date.Quarter.Default, (a) =>
     a.localId(quarterDateLocalId),
 );
-export const MenuItemName = modifyAttribute(Ldm.MenuItemName, (a) => a.alias("Menu Item name"));
-export const AvgDailyTotalSales = modifyMeasure(Ldm.$AvgDailyTotalSales, (m) =>
+export const MenuItemName = modifyAttribute(Md.MenuItemName, (a) => a.alias("Menu Item name"));
+export const AvgDailyTotalSales = modifyMeasure(Md.$AvgDailyTotalSales, (m) =>
     m.alias("$ Avg Daily Total Sales").format("$#,##0").localId(averageDailyTotalSalesLocalId),
 );
-export const AvgCheckSizeByServer = modifyMeasure(Ldm.AvgCheckSizeByServer, (m) =>
+export const AvgCheckSizeByServer = modifyMeasure(Md.AvgCheckSizeByServer, (m) =>
     m.alias("$ Avg Check Size By Server").format("$#,##0"),
 );
-export const NrRestaurants = modifyMeasure(Ldm.NrRestaurants, (m) =>
+export const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) =>
     m.format("#,##0").localId(numberOfRestaurantsLocalId),
 );
 

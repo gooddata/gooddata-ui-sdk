@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { scenariosFor } from "../../src";
 import { Execute, IExecuteProps, WithLoadingResult } from "@gooddata/sdk-ui";
 
@@ -25,19 +25,19 @@ export default scenariosFor<IExecuteProps>("Execute", Execute)
     .withDefaultTags("mock-no-insight")
     .withDefaultTestTypes("api")
     .addScenario("single unscoped series", {
-        seriesBy: [ReferenceLdm.Amount],
+        seriesBy: [ReferenceMd.Amount],
         children: DumpingComponent,
     })
     .addScenario("two unscoped series", {
-        seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Won],
+        seriesBy: [ReferenceMd.Amount, ReferenceMd.Won],
         children: DumpingComponent,
     })
     .addScenario("scoped series", {
-        seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdm.Region],
+        seriesBy: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMd.Region],
         children: DumpingComponent,
     })
     .addScenario("scoped series with slicing", {
-        seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdm.Region],
-        slicesBy: [ReferenceLdm.Product.Name],
+        seriesBy: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMd.Region],
+        slicesBy: [ReferenceMd.Product.Name],
         children: DumpingComponent,
     });

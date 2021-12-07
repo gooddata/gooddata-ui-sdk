@@ -1,14 +1,14 @@
 // (C) 2020-2021 GoodData Corporation
 import { IFilter, newAllTimeFilter, newRelativeDateFilter, idRef } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { addImplicitAllTimeFilter } from "../utils";
 import { IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 
 describe("addImplicitAllTimeFilter", () => {
     type Scenario = [string, IWidgetDefinition, IFilter[], IFilter[]];
 
-    const dateDimension = ReferenceLdm.DateDatasets.Created.ref;
-    const otherDateDimension = ReferenceLdm.DateDatasets.Timeline.ref;
+    const dateDimension = ReferenceMd.DateDatasets.Created.ref;
+    const otherDateDimension = ReferenceMd.DateDatasets.Timeline.ref;
 
     const matchingFilter = newRelativeDateFilter(dateDimension, "GDC.time.date", -5, 5);
     const notMatchingFilter = newRelativeDateFilter(otherDateDimension, "GDC.time.date", -5, 5);

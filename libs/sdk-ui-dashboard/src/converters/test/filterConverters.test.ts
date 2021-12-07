@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { FilterContextItem, IFilterContext, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
@@ -12,8 +12,8 @@ describe("filterContextToFiltersForWidget", () => {
         ignoreDashboardFilters: [],
         title: "Widget",
         type: "insight",
-        dateDataSet: ReferenceLdm.DateDatasets.Activity.ref,
-        insight: idRef(ReferenceLdm.Insights.Test),
+        dateDataSet: ReferenceMd.DateDatasets.Activity.ref,
+        insight: idRef(ReferenceMd.Insights.Test),
     };
 
     const getFilterContext = (filters: FilterContextItem[]): IFilterContext => ({
@@ -35,7 +35,7 @@ describe("filterContextToFiltersForWidget", () => {
                 {
                     attributeFilter: {
                         attributeElements: { values: ["foo", "bar"] },
-                        displayForm: ReferenceLdm.Account.Name.attribute.displayForm,
+                        displayForm: ReferenceMd.Account.Name.attribute.displayForm,
                         negativeSelection: false,
                     },
                 },
@@ -47,7 +47,7 @@ describe("filterContextToFiltersForWidget", () => {
                 {
                     attributeFilter: {
                         attributeElements: { uris: ["foo", "bar"] },
-                        displayForm: ReferenceLdm.Account.Name.attribute.displayForm,
+                        displayForm: ReferenceMd.Account.Name.attribute.displayForm,
                         negativeSelection: true,
                     },
                 },

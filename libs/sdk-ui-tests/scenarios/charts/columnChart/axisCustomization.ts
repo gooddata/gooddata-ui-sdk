@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
@@ -38,7 +38,7 @@ const dualAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", Column
             ...ColumnChartWithArithmeticMeasuresAndViewBy,
             config: {
                 secondary_yaxis: {
-                    measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                    measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
                 },
             },
         },
@@ -62,7 +62,7 @@ const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         ...ColumnChartWithTwoMeasuresAndViewBy,
         config: {
             secondary_yaxis: {
-                measures: [measureLocalId(ReferenceLdm.Amount), measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Amount), measureLocalId(ReferenceMd.Won)],
             },
         },
     })
@@ -78,7 +78,7 @@ const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         ...ColumnChartWithArithmeticMeasuresAndViewBy,
         config: {
             secondary_yaxis: {
-                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
             },
         },
     })
@@ -86,7 +86,7 @@ const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         ...ColumnChartWithArithmeticMeasuresAndViewBy,
         config: {
             secondary_yaxis: {
-                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
                 rotation: "45",
             },
         },
@@ -95,7 +95,7 @@ const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         ...ColumnChartWithArithmeticMeasuresAndViewBy,
         config: {
             secondary_yaxis: {
-                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
                 visible: false,
             },
         },
@@ -104,7 +104,7 @@ const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         ...ColumnChartWithArithmeticMeasuresAndViewBy,
         config: {
             secondary_yaxis: {
-                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
                 labelsEnabled: false,
             },
         },
@@ -113,7 +113,7 @@ const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         ...ColumnChartWithTwoMeasuresAndTwoViewBy,
         config: {
             secondary_yaxis: {
-                measures: [measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Won)],
             },
         },
     })
@@ -148,7 +148,7 @@ const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         ...ColumnChartWithTwoMeasuresAndTwoViewBy,
         config: {
             secondary_yaxis: {
-                measures: [measureLocalId(ReferenceLdm.Amount), measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Amount), measureLocalId(ReferenceMd.Won)],
             },
         },
     });

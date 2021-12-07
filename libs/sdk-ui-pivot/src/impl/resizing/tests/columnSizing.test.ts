@@ -28,7 +28,7 @@ import {
     TwoMeasuresWithRowAttributeDescriptor,
     TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
 } from "./columnSizing.fixture";
-import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "../../base/constants";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { pick } from "lodash";
@@ -40,7 +40,7 @@ export const ColumnOnlyWidth: IMeasureColumnWidthItem = {
             value: 400,
         },
         locators: [
-            newAttributeColumnLocator(ReferenceLdm.Product.Name, ReferenceData.ProductName.GrammarPlus.uri),
+            newAttributeColumnLocator(ReferenceMd.Product.Name, ReferenceData.ProductName.GrammarPlus.uri),
         ],
     },
 };
@@ -50,42 +50,42 @@ describe("ResizedColumnStore", () => {
         [
             "for attribute column width on table with single row attribute",
             SingleMeasureWithRowAttributeDescriptor,
-            [newWidthForAttributeColumn(ReferenceLdm.Product.Name, 200)],
+            [newWidthForAttributeColumn(ReferenceMd.Product.Name, 200)],
         ],
         [
             "for first attribute column width on table with two row attributes",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-            [newWidthForAttributeColumn(ReferenceLdm.Product.Name, 200)],
+            [newWidthForAttributeColumn(ReferenceMd.Product.Name, 200)],
         ],
         [
             "for second attribute column width on table with two row attributes",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-            [newWidthForAttributeColumn(ReferenceLdm.Department, 200)],
+            [newWidthForAttributeColumn(ReferenceMd.Department, 200)],
         ],
         [
             "for both attribute columns width on table with two row attributes",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
-                newWidthForAttributeColumn(ReferenceLdm.Department, 200),
-                newWidthForAttributeColumn(ReferenceLdm.Product.Name, 300),
+                newWidthForAttributeColumn(ReferenceMd.Department, 200),
+                newWidthForAttributeColumn(ReferenceMd.Product.Name, 300),
             ],
         ],
         [
             "for first measure column on non-pivoted table with two measures",
             TwoMeasuresWithRowAttributeDescriptor,
-            [newWidthForSelectedColumns(ReferenceLdm.Amount, [], 100)],
+            [newWidthForSelectedColumns(ReferenceMd.Amount, [], 100)],
         ],
         [
             "for second measure column on non-pivoted table with two measures",
             TwoMeasuresWithRowAttributeDescriptor,
-            [newWidthForSelectedColumns(ReferenceLdm.Won, [], 100)],
+            [newWidthForSelectedColumns(ReferenceMd.Won, [], 100)],
         ],
         [
             "for both measure columns on non-pivoted table with two measures",
             TwoMeasuresWithRowAttributeDescriptor,
             [
-                newWidthForSelectedColumns(ReferenceLdm.Amount, [], 100),
-                newWidthForSelectedColumns(ReferenceLdm.Won, [], 200),
+                newWidthForSelectedColumns(ReferenceMd.Amount, [], 100),
+                newWidthForSelectedColumns(ReferenceMd.Won, [], 200),
             ],
         ],
         [
@@ -93,13 +93,13 @@ describe("ResizedColumnStore", () => {
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Amount,
+                    ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     100,
                 ),
@@ -110,13 +110,13 @@ describe("ResizedColumnStore", () => {
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Amount,
+                    ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     "auto",
                 ),
@@ -127,24 +127,24 @@ describe("ResizedColumnStore", () => {
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Amount,
+                    ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     100,
                 ),
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Amount,
+                    ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Exclude.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.WestCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.WestCoast.uri),
                     ],
                     200,
                 ),
@@ -155,24 +155,24 @@ describe("ResizedColumnStore", () => {
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Amount,
+                    ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     100,
                 ),
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Won,
+                    ReferenceMd.Won,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     200,
                 ),
@@ -183,24 +183,24 @@ describe("ResizedColumnStore", () => {
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Amount,
+                    ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     "auto",
                 ),
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Won,
+                    ReferenceMd.Won,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     "auto",
                 ),
@@ -209,12 +209,12 @@ describe("ResizedColumnStore", () => {
         [
             "for all columns of a first measure on pivoted table",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-            [newWidthForAllColumnsForMeasure(ReferenceLdm.Amount, 155)],
+            [newWidthForAllColumnsForMeasure(ReferenceMd.Amount, 155)],
         ],
         [
             "for all columns of a second measure on pivoted table",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-            [newWidthForAllColumnsForMeasure(ReferenceLdm.Won, 175)],
+            [newWidthForAllColumnsForMeasure(ReferenceMd.Won, 175)],
         ],
         [
             "for all measure columns on pivoted table",
@@ -226,17 +226,17 @@ describe("ResizedColumnStore", () => {
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Amount,
+                    ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     200,
                 ),
-                newWidthForAllColumnsForMeasure(ReferenceLdm.Won, 175),
+                newWidthForAllColumnsForMeasure(ReferenceMd.Won, 175),
             ],
         ],
         [
@@ -244,18 +244,18 @@ describe("ResizedColumnStore", () => {
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Amount,
+                    ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     200,
                 ),
-                newWidthForAttributeColumn(ReferenceLdm.Product.Name, 300),
-                newWidthForAllColumnsForMeasure(ReferenceLdm.Won, 175),
+                newWidthForAttributeColumn(ReferenceMd.Product.Name, 300),
+                newWidthForAllColumnsForMeasure(ReferenceMd.Won, 175),
             ],
         ],
         ["for measureless column width on column-only table", ColumnOnlyResultDescriptor, [ColumnOnlyWidth]],
@@ -324,7 +324,7 @@ describe("ResizedColumnStore", () => {
         it("should remove measure from manual resizing", () => {
             const store = testStore(
                 TwoMeasuresWithRowAttributeDescriptor,
-                newWidthForSelectedColumns(ReferenceLdm.Amount, [], 100),
+                newWidthForSelectedColumns(ReferenceMd.Amount, [], 100),
             );
 
             const column = getFakeColumn({
@@ -341,7 +341,7 @@ describe("ResizedColumnStore", () => {
         it("should remove attribute from manual resizing AND disable suppressSizeToFit", () => {
             const store = testStore(
                 TwoMeasuresWithRowAttributeDescriptor,
-                newWidthForAttributeColumn(ReferenceLdm.Product.Name, 100),
+                newWidthForAttributeColumn(ReferenceMd.Product.Name, 100),
             );
 
             const column = getFakeColumn({
@@ -358,7 +358,7 @@ describe("ResizedColumnStore", () => {
         it("should remove attribute from manual resizing AND disable suppressSizeToFit even when all measures have column width set", () => {
             const store = testStore(
                 TwoMeasuresWithRowAttributeDescriptor,
-                newWidthForAttributeColumn(ReferenceLdm.Product.Name, 100),
+                newWidthForAttributeColumn(ReferenceMd.Product.Name, 100),
                 newWidthForAllMeasureColumns(200),
             );
 
@@ -389,7 +389,7 @@ describe("ResizedColumnStore", () => {
             const store = testStore(
                 TwoMeasuresWithRowAttributeDescriptor,
                 newWidthForAllMeasureColumns(155),
-                newWidthForSelectedColumns(ReferenceLdm.Amount, [], 175),
+                newWidthForSelectedColumns(ReferenceMd.Amount, [], 175),
             );
 
             const column = getFakeColumn({
@@ -407,13 +407,13 @@ describe("ResizedColumnStore", () => {
             [
                 "keep fixed-size single measure column setting",
                 TwoMeasuresWithRowAttributeDescriptor,
-                [newWidthForSelectedColumns(ReferenceLdm.Amount, [], 100)],
+                [newWidthForSelectedColumns(ReferenceMd.Amount, [], 100)],
                 100,
             ],
             [
                 "remove measure column settings when using auto-size",
                 TwoMeasuresWithRowAttributeDescriptor,
-                [newWidthForSelectedColumns(ReferenceLdm.Amount, [], "auto")],
+                [newWidthForSelectedColumns(ReferenceMd.Amount, [], "auto")],
                 undefined,
             ],
             [
@@ -441,7 +441,7 @@ describe("ResizedColumnStore", () => {
         it("should remove weak column with auto-size", () => {
             const store = testStore(
                 TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-                newWidthForAllColumnsForMeasure(ReferenceLdm.Amount, 150),
+                newWidthForAllColumnsForMeasure(ReferenceMd.Amount, 150),
             );
 
             const column = getFakeColumn({
@@ -457,8 +457,8 @@ describe("ResizedColumnStore", () => {
         it("should clear auto-width for measure column", () => {
             const store = testStore(
                 TwoMeasuresWithRowAttributeDescriptor,
-                newWidthForAllColumnsForMeasure(ReferenceLdm.Amount, 100),
-                newWidthForSelectedColumns(ReferenceLdm.Amount, [], 175),
+                newWidthForAllColumnsForMeasure(ReferenceMd.Amount, 100),
+                newWidthForSelectedColumns(ReferenceMd.Amount, [], 175),
             );
 
             const column = getFakeColumn({
@@ -507,13 +507,13 @@ describe("ResizedColumnStore", () => {
             const store = testStore(
                 TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Amount,
+                    ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     100,
                 ),
@@ -533,14 +533,14 @@ describe("ResizedColumnStore", () => {
 
     describe("addAllMeasureColumns", () => {
         const weakMeasuresColumnWidths: IWeakMeasureColumnWidthItemsMap = {};
-        weakMeasuresColumnWidths[measureLocalId(ReferenceLdm.Amount)] = {
+        weakMeasuresColumnWidths[measureLocalId(ReferenceMd.Amount)] = {
             measureColumnWidthItem: {
                 width: {
                     value: 350,
                 },
                 locator: {
                     measureLocatorItem: {
-                        measureIdentifier: measureLocalId(ReferenceLdm.Amount),
+                        measureIdentifier: measureLocalId(ReferenceMd.Amount),
                     },
                 },
             },
@@ -705,7 +705,7 @@ describe("ResizedColumnStore", () => {
         });
 
         it("should return all measure for columns width", () => {
-            const store = testStore(TestTable, newWidthForAllColumnsForMeasure(ReferenceLdm.Amount, 125));
+            const store = testStore(TestTable, newWidthForAllColumnsForMeasure(ReferenceMd.Amount, 125));
 
             expect(store.getManuallyResizedColumn(TestCol)?.width).toEqual(125);
         });
@@ -714,13 +714,13 @@ describe("ResizedColumnStore", () => {
             const store = testStore(
                 TestTable,
                 newWidthForSelectedColumns(
-                    ReferenceLdm.Amount,
+                    ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
-                            ReferenceLdm.ForecastCategory,
+                            ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Exclude.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                     ],
                     125,
                 ),

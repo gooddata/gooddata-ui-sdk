@@ -14,21 +14,21 @@ import {
     IExecutionDefinition,
     newAttribute,
 } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 export const absoluteFilter = {
     // Invalid "To" input
-    withoutTo: newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06"),
+    withoutTo: newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2019-08-06"),
     // Invalid "From" input
-    withoutFrom: newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, undefined, "2019-08-12"),
+    withoutFrom: newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, undefined, "2019-08-12"),
 };
 
 export const relativeFilter = {
     // Invalid "To" input
-    withoutTo: newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, 5),
+    withoutTo: newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.date, 5),
     // Invalid "From" input
     withoutFrom: newRelativeDateFilter(
-        ReferenceLdm.DateDatasets.Closed.ref,
+        ReferenceMd.DateDatasets.Closed.ref,
         DateGranularity.date,
         undefined,
         30,
@@ -37,12 +37,12 @@ export const relativeFilter = {
 
 export const measureValueFilterWithoutCondition = {
     measureValueFilter: {
-        measure: ReferenceLdm.Amount,
+        measure: ReferenceMd.Amount,
         condition: undefined,
     },
 };
 
-export const negativeEmptyAttributeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, []);
+export const negativeEmptyAttributeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, []);
 
 // Measure converter: unsupported measure definition
 export const invalidMeasureDefinition: IMeasure = {

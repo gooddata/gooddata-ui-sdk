@@ -2,7 +2,7 @@
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { ChangeKpiWidgetMeasure, changeKpiWidgetMeasure, initializeDashboard } from "../../../commands";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureItem, uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed, DashboardKpiWidgetMeasureChanged } from "../../../events";
 import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
@@ -28,7 +28,7 @@ describe("change KPI widget measure handler", () => {
 
         it("should replace measure and keep existing header", async () => {
             const event: DashboardKpiWidgetMeasureChanged = await Tester.dispatchAndWaitFor(
-                changeKpiWidgetMeasure(WidgetWithNoFilters.ref, measureItem(ReferenceLdm.Won)),
+                changeKpiWidgetMeasure(WidgetWithNoFilters.ref, measureItem(ReferenceMd.Won)),
                 "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
             );
 
@@ -40,11 +40,7 @@ describe("change KPI widget measure handler", () => {
 
         it("should replace measure and switch widget title to measure title", async () => {
             const event: DashboardKpiWidgetMeasureChanged = await Tester.dispatchAndWaitFor(
-                changeKpiWidgetMeasure(
-                    WidgetWithNoFilters.ref,
-                    measureItem(ReferenceLdm.Won),
-                    "from-measure",
-                ),
+                changeKpiWidgetMeasure(WidgetWithNoFilters.ref, measureItem(ReferenceMd.Won), "from-measure"),
                 "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
             );
 
@@ -56,7 +52,7 @@ describe("change KPI widget measure handler", () => {
 
         it("should replace measure and switch widget title to custom value", async () => {
             const event: DashboardKpiWidgetMeasureChanged = await Tester.dispatchAndWaitFor(
-                changeKpiWidgetMeasure(WidgetWithNoFilters.ref, measureItem(ReferenceLdm.Won), {
+                changeKpiWidgetMeasure(WidgetWithNoFilters.ref, measureItem(ReferenceMd.Won), {
                     title: "Custom Title",
                 }),
                 "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
@@ -72,7 +68,7 @@ describe("change KPI widget measure handler", () => {
             const event: DashboardCommandFailed<ChangeKpiWidgetMeasure> = await Tester.dispatchAndWaitFor(
                 changeKpiWidgetMeasure(
                     uriRef("does-not-exist"),
-                    measureItem(ReferenceLdm.Won),
+                    measureItem(ReferenceMd.Won),
                     { title: "Custom Title" },
                     TestCorrelation,
                 ),
@@ -102,7 +98,7 @@ describe("change KPI widget measure handler", () => {
             await Tester.dispatchAndWaitFor(
                 changeKpiWidgetMeasure(
                     WidgetWithNoFilters.ref,
-                    measureItem(ReferenceLdm.Won),
+                    measureItem(ReferenceMd.Won),
                     "from-measure",
                     TestCorrelation,
                 ),
@@ -123,7 +119,7 @@ describe("change KPI widget measure handler", () => {
 
             const originalWidget = selectWidgetByRef(WidgetWithDateDataset.ref)(Tester.state());
             const event: DashboardKpiWidgetMeasureChanged = await Tester.dispatchAndWaitFor(
-                changeKpiWidgetMeasure(WidgetWithDateDataset.ref, measureItem(ReferenceLdm.Won)),
+                changeKpiWidgetMeasure(WidgetWithDateDataset.ref, measureItem(ReferenceMd.Won)),
                 "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
             );
 
@@ -145,7 +141,7 @@ describe("change KPI widget measure handler", () => {
 
             const originalWidget = selectWidgetByRef(WidgetWithDateDataset.ref)(Tester.state());
             const event: DashboardKpiWidgetMeasureChanged = await Tester.dispatchAndWaitFor(
-                changeKpiWidgetMeasure(WidgetWithDateDataset.ref, measureItem(ReferenceLdm.Won)),
+                changeKpiWidgetMeasure(WidgetWithDateDataset.ref, measureItem(ReferenceMd.Won)),
                 "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
             );
 
@@ -163,7 +159,7 @@ describe("change KPI widget measure handler", () => {
             await Tester.dispatchAndWaitFor(
                 changeKpiWidgetMeasure(
                     WidgetWithDateDataset.ref,
-                    measureItem(ReferenceLdm.Won),
+                    measureItem(ReferenceMd.Won),
                     undefined,
                     TestCorrelation,
                 ),

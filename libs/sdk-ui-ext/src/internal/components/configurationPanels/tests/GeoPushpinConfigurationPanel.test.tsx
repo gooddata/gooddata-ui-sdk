@@ -9,11 +9,11 @@ import PushpinViewportControl from "../../configurationControls/PushpinViewportC
 import LegendSection from "../../configurationControls/legend/LegendSection";
 import ColorsSection from "../../configurationControls/colors/ColorsSection";
 import { BucketNames, DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
-import { ExamplesLdm } from "@gooddata/live-examples-workspace";
+import { ExamplesMd } from "@gooddata/live-examples-workspace";
 import { IInsightDefinition, modifyMeasure, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
 
-const Location = ExamplesLdm.City.Location;
-const Size = ExamplesLdm.Population.Sum;
+const Location = ExamplesMd.City.Location;
+const Size = ExamplesMd.Population.Sum;
 const LocationBucket = newBucket(BucketNames.LOCATION, Location);
 const SizeBucket = newBucket(BucketNames.SIZE, Size);
 
@@ -32,7 +32,7 @@ const DefaultInsight: IInsightDefinition = newInsightDefinition("local:pushpin",
         LocationBucket,
         newBucket(
             BucketNames.SIZE,
-            modifyMeasure(ExamplesLdm.Density.Sum, (m) => m.alias("Density").format("#,##0.00")),
+            modifyMeasure(ExamplesMd.Density.Sum, (m) => m.alias("Density").format("#,##0.00")),
         ),
     ]);
 });

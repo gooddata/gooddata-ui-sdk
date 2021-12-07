@@ -1,72 +1,72 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { scenariosFor } from "../../src";
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames";
 import { requestPages } from "@gooddata/mock-handling";
 import { IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 export const PivotTableWithSingleColumn = {
-    columns: [ReferenceLdm.Product.Name],
+    columns: [ReferenceMd.Product.Name],
 };
 
 export const PivotTableWithTwoMeasuresAndSingleRowAttr = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    rows: [ReferenceLdm.Product.Name],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    rows: [ReferenceMd.Product.Name],
 };
 
 export const PivotTableWithSingleMeasureAndTwoRowsAndCols = {
-    measures: [ReferenceLdm.Amount],
-    rows: [ReferenceLdm.Product.Name, ReferenceLdm.Department],
-    columns: [ReferenceLdm.StageName.Default, ReferenceLdm.Region],
+    measures: [ReferenceMd.Amount],
+    rows: [ReferenceMd.Product.Name, ReferenceMd.Department],
+    columns: [ReferenceMd.StageName.Default, ReferenceMd.Region],
 };
 
 export const PivotTableWithTwoMeasuresAndTwoRowsAndCols = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    rows: [ReferenceLdm.Product.Name, ReferenceLdm.Department],
-    columns: [ReferenceLdm.ForecastCategory, ReferenceLdm.Region],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    rows: [ReferenceMd.Product.Name, ReferenceMd.Department],
+    columns: [ReferenceMd.ForecastCategory, ReferenceMd.Region],
 };
 
 export const PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    rows: [ReferenceLdm.Product.Name, ReferenceLdm.Department, ReferenceLdm.SalesRep.OwnerName],
-    columns: [ReferenceLdm.ForecastCategory, ReferenceLdm.Region],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    rows: [ReferenceMd.Product.Name, ReferenceMd.Department, ReferenceMd.SalesRep.OwnerName],
+    columns: [ReferenceMd.ForecastCategory, ReferenceMd.Region],
 };
 
 export const PivotTableWithArithmeticMeasures = {
     measures: [
-        ReferenceLdm.Amount,
-        ReferenceLdm.Won,
-        ReferenceLdmExt.CalculatedLost,
-        ReferenceLdmExt.CalculatedWonLostRatio,
+        ReferenceMd.Amount,
+        ReferenceMd.Won,
+        ReferenceMdExt.CalculatedLost,
+        ReferenceMdExt.CalculatedWonLostRatio,
     ],
-    rows: [ReferenceLdm.Product.Name],
+    rows: [ReferenceMd.Product.Name],
 };
 
 export const PivotTableWithAttributesWithoutMeasures = {
     measures: [],
-    rows: [ReferenceLdm.StageName.Default, ReferenceLdm.Region],
-    columns: [ReferenceLdm.Department],
+    rows: [ReferenceMd.StageName.Default, ReferenceMd.Region],
+    columns: [ReferenceMd.Department],
 };
 
-const modifiedCreatedYear: IAttribute = modifyAttribute(ReferenceLdm.CreatedYear, (m) =>
+const modifiedCreatedYear: IAttribute = modifyAttribute(ReferenceMd.CreatedYear, (m) =>
     m.localId("created.test"),
 );
 
 export const PivotTableWithTwoSameDate = {
     measures: [],
-    rows: [ReferenceLdm.CreatedYear, modifiedCreatedYear],
+    rows: [ReferenceMd.CreatedYear, modifiedCreatedYear],
     columns: [],
 };
 
-const modifiedProductName: IAttribute = modifyAttribute(ReferenceLdm.Product.Name, (m) =>
+const modifiedProductName: IAttribute = modifyAttribute(ReferenceMd.Product.Name, (m) =>
     m.localId("product.name.test"),
 );
 
 export const PivotTableWithRepeatingRowAttributes = {
-    measures: [ReferenceLdm.Amount],
-    rows: [ReferenceLdm.Product.Name, ReferenceLdm.Region, modifiedProductName],
+    measures: [ReferenceMd.Amount],
+    rows: [ReferenceMd.Product.Name, ReferenceMd.Region, modifiedProductName],
     columns: [],
 };
 
@@ -74,51 +74,51 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .addScenario("single attribute", {
-        rows: [ReferenceLdm.Product.Name],
+        rows: [ReferenceMd.Product.Name],
     })
     .addScenario("single column", PivotTableWithSingleColumn)
     .addScenario("single measure", {
-        measures: [ReferenceLdm.Amount],
+        measures: [ReferenceMd.Amount],
     })
     .addScenario("single measure with row attribute", {
-        measures: [ReferenceLdm.Amount],
-        rows: [ReferenceLdm.Product.Name],
+        measures: [ReferenceMd.Amount],
+        rows: [ReferenceMd.Product.Name],
     })
     .addScenario("single measure with column attribute", {
-        measures: [ReferenceLdm.Amount],
-        columns: [ReferenceLdm.Region],
+        measures: [ReferenceMd.Amount],
+        columns: [ReferenceMd.Region],
     })
     .addScenario("single measure with row and column attributes", {
-        measures: [ReferenceLdm.Amount],
-        rows: [ReferenceLdm.Product.Name],
-        columns: [ReferenceLdm.Region],
+        measures: [ReferenceMd.Amount],
+        rows: [ReferenceMd.Product.Name],
+        columns: [ReferenceMd.Region],
     })
     .addScenario("single measure with two row and one column attributes", {
-        measures: [ReferenceLdm.Amount],
-        rows: [ReferenceLdm.Product.Name, ReferenceLdm.Department],
-        columns: [ReferenceLdm.Region],
+        measures: [ReferenceMd.Amount],
+        rows: [ReferenceMd.Product.Name, ReferenceMd.Department],
+        columns: [ReferenceMd.Region],
     })
     .addScenario(
         "single measure with two row and two column attributes",
         PivotTableWithSingleMeasureAndTwoRowsAndCols,
     )
     .addScenario("two measures", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
     })
     .addScenario("two measures with row attribute", PivotTableWithTwoMeasuresAndSingleRowAttr)
     .addScenario("two measures with column attribute", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        columns: [ReferenceLdm.Region],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        columns: [ReferenceMd.Region],
     })
     .addScenario("two measures with row and column attributes", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        rows: [ReferenceLdm.Product.Name],
-        columns: [ReferenceLdm.Region],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        rows: [ReferenceMd.Product.Name],
+        columns: [ReferenceMd.Region],
     })
     .addScenario("two measures with two row and one column attributes", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        rows: [ReferenceLdm.Product.Name, ReferenceLdm.Department],
-        columns: [ReferenceLdm.Region],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        rows: [ReferenceMd.Product.Name, ReferenceMd.Department],
+        columns: [ReferenceMd.Region],
     })
     .addScenario(
         "two measures with two row and two column attributes",
@@ -142,7 +142,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         {
             ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
             filters: [
-                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Activity.ref, "2021-01-01", "2021-02-01"),
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Activity.ref, "2021-01-01", "2021-02-01"),
             ],
         },
         (m) => m.withTests("api"),

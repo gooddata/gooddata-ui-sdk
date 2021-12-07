@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { ScenarioGroupNames } from "../_infra/groupNames";
@@ -9,14 +9,14 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
     .addScenario("themed", {
-        primaryMeasure: ReferenceLdm.Won,
-        secondaryMeasure: ReferenceLdm.Amount,
+        primaryMeasure: ReferenceMd.Won,
+        secondaryMeasure: ReferenceMd.Amount,
     })
     .addScenario(
         "font",
         {
-            primaryMeasure: ReferenceLdm.Won,
-            secondaryMeasure: ReferenceLdm.Amount,
+            primaryMeasure: ReferenceMd.Won,
+            secondaryMeasure: ReferenceMd.Amount,
         },
         (m) => m.withTags("themed", "font"),
     );

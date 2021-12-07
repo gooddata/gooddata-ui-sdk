@@ -7,7 +7,7 @@ import {
     RankingFilterDropdown,
 } from "@gooddata/sdk-ui-filters";
 import { newRankingFilter, measureLocalId, attributeLocalId, localIdRef } from "@gooddata/sdk-model";
-import { ExperimentalLdm } from "@gooddata/experimental-workspace";
+import { ExperimentalMd } from "@gooddata/experimental-workspace";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
@@ -42,10 +42,10 @@ const buttonScenarios = {
     opened: { clickSelector: ".s-rf-dropdown-button", postInteractionWait: 200 },
 };
 
-const rankingFilter = newRankingFilter(ExperimentalLdm.Amount_1.Sum, "TOP", 10);
+const rankingFilter = newRankingFilter(ExperimentalMd.Amount_1.Sum, "TOP", 10);
 const nonStandardRankingFilter = newRankingFilter(
-    ExperimentalLdm.Velocity.Sum,
-    [ExperimentalLdm.Status],
+    ExperimentalMd.Velocity.Sum,
+    [ExperimentalMd.Status],
     "TOP",
     42,
 );
@@ -53,12 +53,12 @@ const nonStandardRankingFilter = newRankingFilter(
 const measureDropdownItems: IMeasureDropdownItem[] = [
     {
         title: "Sum of amount",
-        ref: localIdRef(measureLocalId(ExperimentalLdm.Amount_1.Sum)),
+        ref: localIdRef(measureLocalId(ExperimentalMd.Amount_1.Sum)),
         sequenceNumber: "M1",
     },
     {
         title: "Sum of velocity with very long name",
-        ref: localIdRef(measureLocalId(ExperimentalLdm.Velocity.Sum)),
+        ref: localIdRef(measureLocalId(ExperimentalMd.Velocity.Sum)),
         sequenceNumber: "M2",
     },
 ];
@@ -66,17 +66,17 @@ const measureDropdownItems: IMeasureDropdownItem[] = [
 const attributeDropdownItems: IAttributeDropdownItem[] = [
     {
         title: "Account",
-        ref: localIdRef(attributeLocalId(ExperimentalLdm.Account.Name)),
+        ref: localIdRef(attributeLocalId(ExperimentalMd.Account.Name)),
         type: "ATTRIBUTE",
     },
     {
         title: "Status attribute with very long name",
-        ref: localIdRef(attributeLocalId(ExperimentalLdm.Status)),
+        ref: localIdRef(attributeLocalId(ExperimentalMd.Status)),
         type: "ATTRIBUTE",
     },
     {
         title: "Date",
-        ref: localIdRef(attributeLocalId(ExperimentalLdm.ClosedDate.DdMmYyyy)),
+        ref: localIdRef(attributeLocalId(ExperimentalMd.ClosedDate.DdMmYyyy)),
         type: "DATE",
     },
 ];

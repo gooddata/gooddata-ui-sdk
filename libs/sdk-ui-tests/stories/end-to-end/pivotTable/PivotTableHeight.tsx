@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { storiesOf } from "@storybook/react";
 import React, { Component, Fragment } from "react";
@@ -8,9 +8,9 @@ import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
 import { withMultipleScreenshots } from "../../_infra/backstopWrapper";
 
 const backend = StorybookBackend();
-const measures = [ReferenceLdm.Amount, ReferenceLdm.Won];
-const attributes = [ReferenceLdm.Product.Name, ReferenceLdm.Department];
-const columns = [ReferenceLdm.ForecastCategory, ReferenceLdm.Region];
+const measures = [ReferenceMd.Amount, ReferenceMd.Won];
+const attributes = [ReferenceMd.Product.Name, ReferenceMd.Department];
+const columns = [ReferenceMd.ForecastCategory, ReferenceMd.Region];
 
 class PivotTableHeight extends Component {
     state = {

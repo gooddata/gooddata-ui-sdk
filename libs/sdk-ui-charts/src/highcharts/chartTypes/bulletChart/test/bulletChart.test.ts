@@ -5,7 +5,7 @@ import { IColorPalette, IMeasure } from "@gooddata/sdk-model";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
 import { DataViewFacade, HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorMapping } from "../../../../interfaces";
-import { ReferenceLdm, ReferenceLdmExt, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 import { ITheme } from "@gooddata/sdk-backend-spi";
@@ -107,15 +107,15 @@ describe("BulletChartColorStrategy", () => {
 
         it.each([
             [
-                [getRedColorMappingForMeasure(ReferenceLdm.Won)],
+                [getRedColorMappingForMeasure(ReferenceMd.Won)],
                 ["rgb(255,0,0)", "rgb(14,125,158)", "rgb(217,220,226)"],
             ],
             [
-                [getRedColorMappingForMeasure(ReferenceLdm.Amount)],
+                [getRedColorMappingForMeasure(ReferenceMd.Amount)],
                 ["rgb(20,178,226)", "rgb(255,0,0)", "rgb(217,220,226)"],
             ],
             [
-                [getRedColorMappingForMeasure(ReferenceLdmExt.CalculatedLost)],
+                [getRedColorMappingForMeasure(ReferenceMdExt.CalculatedLost)],
                 ["rgb(20,178,226)", "rgb(14,125,158)", "rgb(255,0,0)"],
             ],
         ])("should map colors", (colorMapping: IColorMapping[], expectedColors: string[]) => {

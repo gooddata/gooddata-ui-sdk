@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { toAfmExecution } from "../ExecutionConverter";
 import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 import {
     emptyDef,
@@ -22,7 +22,7 @@ import {
 } from "@gooddata/sdk-model";
 
 const workspace = "test workspace";
-const total = newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Account.Name, "native total");
+const total = newTotal("nat", ReferenceMd.Won, ReferenceMd.Account.Name, "native total");
 
 describe("converts execution definition to AFM Execution", () => {
     const Scenarios: Array<[string, any]> = [
@@ -33,22 +33,22 @@ describe("converts execution definition to AFM Execution", () => {
             "definition with filters",
             newDefForItems(
                 workspace,
-                [ReferenceLdm.Account.Name, ReferenceLdm.Activity.Subject, ReferenceLdm.Won],
-                [newPositiveAttributeFilter(ReferenceLdm.Account.Name, ["myAccount"])],
+                [ReferenceMd.Account.Name, ReferenceMd.Activity.Subject, ReferenceMd.Won],
+                [newPositiveAttributeFilter(ReferenceMd.Account.Name, ["myAccount"])],
             ),
         ],
-        ["sorts", defSetSorts(emptyDef(workspace), [newAttributeSort(ReferenceLdm.Account.Name, "asc")])],
+        ["sorts", defSetSorts(emptyDef(workspace), [newAttributeSort(ReferenceMd.Account.Name, "asc")])],
         ["dimensions", defSetDimensions(emptyDef(workspace), [newDimension(["localId1"])])],
         [
             "dimensions with native totals and attribute is in bucket",
             defSetDimensions(
                 newDefForBuckets("test workspace", [
-                    newBucket("mixedBucket1", ReferenceLdm.Activity.Default, ReferenceLdm.Won),
-                    newBucket("measureBucket1", ReferenceLdm.WinRate),
-                    newBucket("attributeBucket1", ReferenceLdm.Account.Name),
+                    newBucket("mixedBucket1", ReferenceMd.Activity.Default, ReferenceMd.Won),
+                    newBucket("measureBucket1", ReferenceMd.WinRate),
+                    newBucket("attributeBucket1", ReferenceMd.Account.Name),
                 ]),
                 newTwoDimensional(
-                    [attributeLocalId(ReferenceLdm.Account.Name)],
+                    [attributeLocalId(ReferenceMd.Account.Name)],
                     [MeasureGroupIdentifier, total],
                 ),
             ),
@@ -65,10 +65,7 @@ describe("converts execution definition to AFM Execution", () => {
                     emptyDef(workspace),
                     newTwoDimensional(
                         ["localId1"],
-                        [
-                            MeasureGroupIdentifier,
-                            newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Account.Name),
-                        ],
+                        [MeasureGroupIdentifier, newTotal("nat", ReferenceMd.Won, ReferenceMd.Account.Name)],
                     ),
                 ),
             ),
@@ -76,10 +73,10 @@ describe("converts execution definition to AFM Execution", () => {
     });
 
     it("should remove empty attribute filters and not cause RAIL-2083", () => {
-        const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, []);
-        const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, []);
-        const positiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value 1"]);
-        const negativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["value 2"]);
+        const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, []);
+        const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, []);
+        const positiveFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, ["value 1"]);
+        const negativeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, ["value 2"]);
 
         const def = defWithFilters(emptyDef("test"), [
             emptyPositiveFilter,

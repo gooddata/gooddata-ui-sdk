@@ -9,7 +9,7 @@ import {
     BarChartWithTwoMeasuresAndViewBy,
 } from "./base";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { axisRotationVariants } from "../_infra/axisRotationVariants";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
@@ -35,7 +35,7 @@ const dualAxisNameConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
             ...BarChartWithTwoMeasuresAndTwoViewBy,
             config: {
                 secondary_xaxis: {
-                    measures: [measureLocalId(ReferenceLdm.Won)],
+                    measures: [measureLocalId(ReferenceMd.Won)],
                 },
             },
         },
@@ -58,7 +58,7 @@ const dualAxisLabelRotation = scenariosFor<IBarChartProps>("BarChart", BarChart)
                     rotation: "90",
                 },
                 secondary_xaxis: {
-                    measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                    measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
                     rotation: "90",
                 },
             },
@@ -83,7 +83,7 @@ const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
         ...BarChartWithTwoMeasuresAndViewBy,
         config: {
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdm.Amount), measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Amount), measureLocalId(ReferenceMd.Won)],
             },
         },
     })
@@ -91,7 +91,7 @@ const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
         ...BarChartWithArithmeticMeasuresAndViewBy,
         config: {
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
             },
         },
     })
@@ -99,7 +99,7 @@ const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
         ...BarChartWithTwoMeasuresAndTwoViewBy,
         config: {
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Won)],
             },
         },
     })
@@ -123,7 +123,7 @@ const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
         ...BarChartWithTwoMeasuresAndTwoViewBy,
         config: {
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdm.Amount), measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Amount), measureLocalId(ReferenceMd.Won)],
             },
         },
     });

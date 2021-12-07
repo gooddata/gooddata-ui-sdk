@@ -55,7 +55,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                         <a
                             rel="noopener noreferrer"
                             target="_blank"
-                            href="https://github.com/gooddata/gooddata-ui-sdk/blob/master/examples/sdk-examples/src/ldm/full.ts"
+                            href="https://github.com/gooddata/gooddata-ui-sdk/blob/master/examples/sdk-examples/src/md/full.ts"
                         >
                             Data Used
                         </a>

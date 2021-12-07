@@ -3,15 +3,15 @@ import React from "react";
 import { LoadingComponent, ErrorComponent, useExecutionDataView } from "@gooddata/sdk-ui";
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar } from "recharts";
 
-import * as LdmExt from "../../md/ext";
+import { MdExt } from "../../md";
 
 const seriesBy = [
-    LdmExt.FranchiseFeesAdRoyalty,
-    LdmExt.FranchiseFeesInitialFranchiseFee,
-    LdmExt.FranchiseFeesOngoingRoyalty,
+    MdExt.FranchiseFeesAdRoyalty,
+    MdExt.FranchiseFeesInitialFranchiseFee,
+    MdExt.FranchiseFeesOngoingRoyalty,
 ];
 
-const slicesBy = [LdmExt.monthDate];
+const slicesBy = [MdExt.monthDate];
 
 const colors = ["rgb(20,178,226)", "rgb(0,193,141)", "rgb(229,77,66)"];
 

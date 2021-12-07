@@ -6,7 +6,7 @@ import { AmountMeasurePredicate } from "../../_infra/predicates";
 import { coloringCustomizer } from "../_infra/coloringVariants";
 import { LineChartTwoMeasuresWithTrendyBy } from "./base";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<ILineChartProps>("LineChart", LineChart)
@@ -32,7 +32,7 @@ const colorAssignment = scenariosFor<ILineChartProps>("LineChart", LineChart)
                 ],
             },
         },
-        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceMd.Amount)),
     );
 
 export default [colorsAndPalette, colorAssignment];

@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 
-import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, dummyDataView, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDataAccessMethods } from "../dataAccessMethods";
 import { emptyDef, measureLocalId } from "@gooddata/sdk-model";
@@ -87,15 +87,15 @@ describe("DataAccessMethods", () => {
         it("should find series by measure", () => {
             const dataAccess = newDataAccessMethods(DataWithTwoSeriesAndNoSlices);
 
-            expect(dataAccess.series().firstForMeasure(ReferenceLdm.Amount)).toBeDefined();
-            expect(dataAccess.series().firstForMeasure(ReferenceLdm.Won)).toBeDefined();
+            expect(dataAccess.series().firstForMeasure(ReferenceMd.Amount)).toBeDefined();
+            expect(dataAccess.series().firstForMeasure(ReferenceMd.Won)).toBeDefined();
         });
 
         it("should find all series by measure", () => {
             const dataAccess = newDataAccessMethods(DataWithTwoSeriesAndNoSlices);
 
-            expect(Array.from(dataAccess.series().allForMeasure(ReferenceLdm.Amount)).length).toEqual(1);
-            expect(Array.from(dataAccess.series().allForMeasure(ReferenceLdm.Won)).length).toEqual(1);
+            expect(Array.from(dataAccess.series().allForMeasure(ReferenceMd.Amount)).length).toEqual(1);
+            expect(Array.from(dataAccess.series().allForMeasure(ReferenceMd.Won)).length).toEqual(1);
         });
     });
 
@@ -232,26 +232,26 @@ describe("DataAccessMethods", () => {
         it("should find series for measure", () => {
             const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices);
 
-            expect(dataAccess.series().firstForMeasure(ReferenceLdm.Amount)).toBeDefined();
-            expect(dataAccess.series().firstForMeasure(ReferenceLdm.Won)).toBeDefined();
+            expect(dataAccess.series().firstForMeasure(ReferenceMd.Amount)).toBeDefined();
+            expect(dataAccess.series().firstForMeasure(ReferenceMd.Won)).toBeDefined();
         });
 
         it("should find all series for measure", () => {
             const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices);
 
-            expect(Array.from(dataAccess.series().allForMeasure(ReferenceLdm.Amount)).length).toEqual(4);
+            expect(Array.from(dataAccess.series().allForMeasure(ReferenceMd.Amount)).length).toEqual(4);
 
-            for (const s of dataAccess.series().allForMeasure(ReferenceLdm.Amount)) {
+            for (const s of dataAccess.series().allForMeasure(ReferenceMd.Amount)) {
                 expect(measureLocalId(s.descriptor.measureDefinition)).toEqual(
-                    measureLocalId(ReferenceLdm.Amount),
+                    measureLocalId(ReferenceMd.Amount),
                 );
             }
 
-            expect(Array.from(dataAccess.series().allForMeasure(ReferenceLdm.Won)).length).toEqual(4);
+            expect(Array.from(dataAccess.series().allForMeasure(ReferenceMd.Won)).length).toEqual(4);
 
-            for (const s of dataAccess.series().allForMeasure(ReferenceLdm.Won)) {
+            for (const s of dataAccess.series().allForMeasure(ReferenceMd.Won)) {
                 expect(measureLocalId(s.descriptor.measureDefinition)).toEqual(
-                    measureLocalId(ReferenceLdm.Won),
+                    measureLocalId(ReferenceMd.Won),
                 );
             }
         });

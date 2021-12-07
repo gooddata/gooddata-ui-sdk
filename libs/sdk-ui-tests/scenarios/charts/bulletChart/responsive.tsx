@@ -3,7 +3,7 @@ import { BulletChart } from "@gooddata/sdk-ui-charts";
 import { BulletChartWithAllMeasuresAndViewBy } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 const sizeVariantsSimple: Array<IResponsiveSize> = [
     { label: "without x axis title", width: 650, height: 120 },
@@ -15,7 +15,7 @@ const simpleScenarios = responsiveScenarios(
     ScenarioGroupNames.Responsive,
     BulletChart,
     {
-        primaryMeasure: ReferenceLdm.Won,
+        primaryMeasure: ReferenceMd.Won,
         config: { enableCompactSize: true, legend: { enabled: false } },
     },
     sizeVariantsSimple,

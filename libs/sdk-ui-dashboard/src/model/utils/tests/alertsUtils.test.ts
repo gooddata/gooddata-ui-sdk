@@ -11,7 +11,7 @@ import { IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { idRef, newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { IBrokenAlertFilterBasicInfo } from "../../types/alertTypes";
 import { getBrokenAlertFiltersBasicInfo } from "../alertsUtils";
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { newDisplayFormMap } from "../../../_staging/metadata/objRefMap";
 
 describe("getBrokenAlertFiltersBasicInfo", () => {
@@ -67,7 +67,7 @@ describe("getBrokenAlertFiltersBasicInfo", () => {
                 dateFilter: {
                     type: "relative",
                     granularity: "GDC.time.date",
-                    dataSet: ReferenceLdm.DateDatasets.Activity.ref,
+                    dataSet: ReferenceMd.DateDatasets.Activity.ref,
                     from: -6,
                     to: 0,
                 },

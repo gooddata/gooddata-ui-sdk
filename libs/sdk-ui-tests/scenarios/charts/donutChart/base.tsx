@@ -1,16 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { DonutChart, IDonutChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const DonutChartWithTwoMeasures = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
 };
 
 export const DonutChartWithSingleMeasureAndViewBy = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: ReferenceLdm.Product.Name,
+    measures: [ReferenceMd.Amount],
+    viewBy: ReferenceMd.Product.Name,
 };
 
 /*
@@ -22,15 +22,15 @@ export const DonutChartWithSingleMeasureAndViewBy = {
 export default scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
-        measures: [ReferenceLdm.Amount],
+        measures: [ReferenceMd.Amount],
     })
     .addScenario("two measures", DonutChartWithTwoMeasures)
     .addScenario("single measure with viewBy", DonutChartWithSingleMeasureAndViewBy)
     .addScenario("arithmetic measures", {
         measures: [
-            ReferenceLdm.Amount,
-            ReferenceLdm.Won,
-            ReferenceLdmExt.CalculatedLost,
-            ReferenceLdmExt.CalculatedWonLostRatio,
+            ReferenceMd.Amount,
+            ReferenceMd.Won,
+            ReferenceMdExt.CalculatedLost,
+            ReferenceMdExt.CalculatedWonLostRatio,
         ],
     });

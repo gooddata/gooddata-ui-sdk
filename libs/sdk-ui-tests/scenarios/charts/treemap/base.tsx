@@ -1,56 +1,56 @@
 // (C) 2007-2019 GoodData Corporation
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { Treemap, ITreemapProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const TreemapWithArithmeticMeasuresAndSegment = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.CalculatedLost],
-    segmentBy: ReferenceLdm.CreatedQuarterYear,
+    measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.CalculatedLost],
+    segmentBy: ReferenceMd.CreatedQuarterYear,
 };
 
 export const TreemapWithMeasureViewByAndSegmentBy = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: ReferenceLdm.Product.Name,
-    segmentBy: ReferenceLdm.Region,
+    measures: [ReferenceMd.Amount],
+    viewBy: ReferenceMd.Product.Name,
+    segmentBy: ReferenceMd.Region,
 };
 
 export const TreemapWithViewByDateAndStackByDate = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: ReferenceLdm.ClosedYear,
-    segmentBy: ReferenceLdm.CreatedYear,
+    measures: [ReferenceMd.Amount],
+    viewBy: ReferenceMd.ClosedYear,
+    segmentBy: ReferenceMd.CreatedYear,
 };
 
 export default scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
-        measures: [ReferenceLdm.Amount],
+        measures: [ReferenceMd.Amount],
     })
     .addScenario("single measure and segment", {
-        measures: [ReferenceLdm.Amount],
-        segmentBy: ReferenceLdm.Region,
+        measures: [ReferenceMd.Amount],
+        segmentBy: ReferenceMd.Region,
     })
     .addScenario("two measures", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
     })
     .addScenario("single measure and viewBy", {
-        measures: [ReferenceLdm.Amount],
-        viewBy: ReferenceLdm.Product.Name,
+        measures: [ReferenceMd.Amount],
+        viewBy: ReferenceMd.Product.Name,
     })
     .addScenario("single measure and viewBy filtered to one element", {
-        measures: [ReferenceLdm.Amount],
-        viewBy: ReferenceLdm.Product.Name,
-        filters: [newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"])],
+        measures: [ReferenceMd.Amount],
+        viewBy: ReferenceMd.Product.Name,
+        filters: [newPositiveAttributeFilter(ReferenceMd.Product.Name, ["CompuSci"])],
     })
     .addScenario("single measure, viewBy and segment", TreemapWithMeasureViewByAndSegmentBy)
     .addScenario("two measures and viewBy", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        viewBy: ReferenceLdm.Product.Name,
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        viewBy: ReferenceMd.Product.Name,
     })
     .addScenario("two measures and segmentBy", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        segmentBy: ReferenceLdm.Product.Name,
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        segmentBy: ReferenceMd.Product.Name,
     })
     .addScenario("arithmetic measures and segment", TreemapWithArithmeticMeasuresAndSegment)
     .addScenario(

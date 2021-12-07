@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 
 import { testBackend, testWorkspace } from "./backend";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
 
 const backend = testBackend();
@@ -51,15 +51,12 @@ describe("bear catalog", () => {
 
         const catalog = await backend.workspace(testWorkspace()).catalog().load();
 
-        const arithmeticMeasure = newArithmeticMeasure(
-            [ReferenceLdm.Amount, ReferenceLdm.Amount_1.Sum],
-            "sum",
-        );
+        const arithmeticMeasure = newArithmeticMeasure([ReferenceMd.Amount, ReferenceMd.Amount_1.Sum], "sum");
         const availability = await catalog
             .availableItems()
             .forItems([
-                ReferenceLdm.Amount_1.Sum,
-                newPopMeasure(ReferenceLdm.Amount_1.Sum, "closed.year", (m) => m.alias("PoP measure")),
+                ReferenceMd.Amount_1.Sum,
+                newPopMeasure(ReferenceMd.Amount_1.Sum, "closed.year", (m) => m.alias("PoP measure")),
                 arithmeticMeasure,
                 newPopMeasure(arithmeticMeasure, "closed.year", (m) => m.alias("PoP measure")),
             ])

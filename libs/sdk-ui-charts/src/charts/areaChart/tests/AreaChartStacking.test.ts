@@ -2,7 +2,7 @@
 import { getBucketsProps, getConfigProps, IAreaChartProps } from "../AreaChart";
 import { IChartConfig } from "../../../interfaces";
 import { IAttributeOrMeasure, IAttribute } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("getPropsForArea", () => {
@@ -39,14 +39,14 @@ describe("getPropsForArea", () => {
             const props: IAreaChartProps = {
                 backend: dummyBackend(),
                 workspace: "myProjectId",
-                measures: [ReferenceLdm.Amount],
-                viewBy: [ReferenceLdm.Product.Name],
-                stackBy: ReferenceLdm.Region,
+                measures: [ReferenceMd.Amount],
+                viewBy: [ReferenceMd.Product.Name],
+                stackBy: ReferenceMd.Region,
             };
             expect(getPropsForArea(props)).toEqual({
-                measures: [ReferenceLdm.Amount],
-                viewBy: [ReferenceLdm.Product.Name],
-                stackBy: [ReferenceLdm.Region],
+                measures: [ReferenceMd.Amount],
+                viewBy: [ReferenceMd.Product.Name],
+                stackBy: [ReferenceMd.Region],
                 config: {},
             });
         });
@@ -55,15 +55,15 @@ describe("getPropsForArea", () => {
             const props: IAreaChartProps = {
                 workspace: "myProjectId",
                 backend: dummyBackend(),
-                measures: [ReferenceLdm.Amount],
-                viewBy: [ReferenceLdm.Product.Name],
-                stackBy: ReferenceLdm.Region,
+                measures: [ReferenceMd.Amount],
+                viewBy: [ReferenceMd.Product.Name],
+                stackBy: ReferenceMd.Region,
                 config: { stacking: false },
             };
             expect(getPropsForArea(props)).toEqual({
-                measures: [ReferenceLdm.Amount],
-                viewBy: [ReferenceLdm.Product.Name],
-                stackBy: [ReferenceLdm.Region],
+                measures: [ReferenceMd.Amount],
+                viewBy: [ReferenceMd.Product.Name],
+                stackBy: [ReferenceMd.Region],
                 config: { stacking: false },
             });
         });
@@ -77,15 +77,15 @@ describe("getPropsForArea", () => {
                 const props: IAreaChartProps = {
                     workspace: "myProjectId",
                     backend: dummyBackend(),
-                    measures: [ReferenceLdm.Amount],
-                    viewBy: [ReferenceLdm.Product.Name],
-                    stackBy: ReferenceLdm.Region,
+                    measures: [ReferenceMd.Amount],
+                    viewBy: [ReferenceMd.Product.Name],
+                    stackBy: ReferenceMd.Region,
                     config: { stacking, stackMeasures },
                 };
                 expect(getPropsForArea(props)).toEqual({
-                    measures: [ReferenceLdm.Amount],
-                    viewBy: [ReferenceLdm.Product.Name],
-                    stackBy: [ReferenceLdm.Region],
+                    measures: [ReferenceMd.Amount],
+                    viewBy: [ReferenceMd.Product.Name],
+                    stackBy: [ReferenceMd.Region],
                     config: {
                         stacking: stackMeasures,
                         stackMeasures,
@@ -103,16 +103,16 @@ describe("getPropsForArea", () => {
                 const props: IAreaChartProps = {
                     workspace: "myProjectId",
                     backend: dummyBackend(),
-                    measures: [ReferenceLdm.Amount],
-                    viewBy: [ReferenceLdm.Product.Name],
-                    stackBy: ReferenceLdm.Region,
+                    measures: [ReferenceMd.Amount],
+                    viewBy: [ReferenceMd.Product.Name],
+                    stackBy: ReferenceMd.Region,
                     config: { stacking, stackMeasuresToPercent },
                 };
                 const result = getPropsForArea(props);
                 expect(result).toEqual({
-                    measures: [ReferenceLdm.Amount],
-                    viewBy: [ReferenceLdm.Product.Name],
-                    stackBy: [ReferenceLdm.Region],
+                    measures: [ReferenceMd.Amount],
+                    viewBy: [ReferenceMd.Product.Name],
+                    stackBy: [ReferenceMd.Region],
                     config: {
                         stacking: stackMeasuresToPercent,
                         stackMeasuresToPercent,
@@ -133,14 +133,14 @@ describe("getPropsForArea", () => {
             const props: IAreaChartProps = {
                 workspace: "myProjectId",
                 backend: dummyBackend(),
-                measures: [ReferenceLdm.Amount],
-                viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
+                measures: [ReferenceMd.Amount],
+                viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
                 stackBy: null,
             };
             expect(getPropsForArea(props)).toEqual({
-                measures: [ReferenceLdm.Amount],
-                viewBy: [ReferenceLdm.Product.Name],
-                stackBy: [ReferenceLdm.Region],
+                measures: [ReferenceMd.Amount],
+                viewBy: [ReferenceMd.Product.Name],
+                stackBy: [ReferenceMd.Region],
                 config: configWithViewByTwoAttrs,
             });
         });
@@ -149,14 +149,14 @@ describe("getPropsForArea", () => {
             const props: IAreaChartProps = {
                 workspace: "myProjectId",
                 backend: dummyBackend(),
-                measures: [ReferenceLdm.Amount, ReferenceLdm.Amount],
-                viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
+                measures: [ReferenceMd.Amount, ReferenceMd.Amount],
+                viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
                 stackBy: null,
             };
             expect(getPropsForArea(props)).toEqual({
-                measures: [ReferenceLdm.Amount],
-                viewBy: [ReferenceLdm.Product.Name],
-                stackBy: [ReferenceLdm.Region],
+                measures: [ReferenceMd.Amount],
+                viewBy: [ReferenceMd.Product.Name],
+                stackBy: [ReferenceMd.Region],
                 config: configWithViewByTwoAttrs,
             });
         });
@@ -165,14 +165,14 @@ describe("getPropsForArea", () => {
             const props: IAreaChartProps = {
                 workspace: "myProjectId",
                 backend: dummyBackend(),
-                measures: [ReferenceLdm.Amount],
-                viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
-                stackBy: ReferenceLdm.Region,
+                measures: [ReferenceMd.Amount],
+                viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
+                stackBy: ReferenceMd.Region,
             };
             expect(getPropsForArea(props)).toEqual({
-                measures: [ReferenceLdm.Amount],
-                viewBy: [ReferenceLdm.Product.Name],
-                stackBy: [ReferenceLdm.Region],
+                measures: [ReferenceMd.Amount],
+                viewBy: [ReferenceMd.Product.Name],
+                stackBy: [ReferenceMd.Region],
                 config: configWithViewByTwoAttrs,
             });
         });

@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { ReferenceLdm, ReferenceData } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceData } from "@gooddata/reference-workspace";
 import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 import { Selector } from "testcafe";
 import { navigateToStory, sleep } from "../_infra/testcafeUtils";
@@ -35,9 +35,9 @@ const SECOND_CELL_AUTORESIZE_WIDTH = 110;
 const SECOND_CELL_GROW_TO_FIT_WIDTH = 288;
 const FIRST_CELL_MANUAL_WIDTH = 400;
 const SECOND_CELL_MANUAL_WIDTH = 60;
-const ATTRIBUTE_IDENTIFIER = attributeLocalId(ReferenceLdm.Product.Name);
-const MEASURE_LOCATOR_ITEM = measureLocalId(ReferenceLdm.Amount);
-const ATTRIBUTE_LOCATOR_ITEM_ATT_ID = attributeLocalId(ReferenceLdm.Region);
+const ATTRIBUTE_IDENTIFIER = attributeLocalId(ReferenceMd.Product.Name);
+const MEASURE_LOCATOR_ITEM = measureLocalId(ReferenceMd.Amount);
+const ATTRIBUTE_LOCATOR_ITEM_ATT_ID = attributeLocalId(ReferenceMd.Region);
 const ATTRIBUTE_LOCATOR_ITEM_ATT_ELM = ReferenceData.Region.EastCoast.uri;
 
 const getFirstCellResizer = async (t, tableSelectorStr) => {

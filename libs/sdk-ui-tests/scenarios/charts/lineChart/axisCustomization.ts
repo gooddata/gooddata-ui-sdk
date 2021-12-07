@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
@@ -25,7 +25,7 @@ const axisConfig = scenariosFor<ILineChartProps>("LineChart", LineChart)
         ...LineChartTwoMeasuresWithTrendyBy,
         config: {
             secondary_yaxis: {
-                measures: [measureLocalId(ReferenceLdm.Amount), measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Amount), measureLocalId(ReferenceMd.Won)],
             },
         },
     })
@@ -33,7 +33,7 @@ const axisConfig = scenariosFor<ILineChartProps>("LineChart", LineChart)
         ...LineChartWithArithmeticMeasuresAndViewBy,
         config: {
             secondary_yaxis: {
-                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
             },
         },
     });
@@ -54,7 +54,7 @@ const dualAxisNameScenarios = scenariosFor<ILineChartProps>("LineChart", LineCha
             ...LineChartTwoMeasuresWithTrendyBy,
             config: {
                 secondary_yaxis: {
-                    measures: [measureLocalId(ReferenceLdm.Won)],
+                    measures: [measureLocalId(ReferenceMd.Won)],
                 },
             },
         },

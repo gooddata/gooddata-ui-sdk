@@ -15,7 +15,7 @@ import {
     TwoMeasuresWithTwoRowAndTwoColumnAttributes,
 } from "./columnSizing.fixture";
 import { MANUALLY_SIZED_MAX_WIDTH, updateColumnDefinitionsWithWidths } from "../columnSizing";
-import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 
 // NOTE: the function under test mutate inputs (by design). each test must use its own instance of TableDescriptor
 //  as the ColDefs has will be updated during test runs.
@@ -24,18 +24,18 @@ describe("updateColumnDefinitionsWithWidths", () => {
         const table = TableDescriptor.for(TwoMeasuresWithTwoRowAndTwoColumnAttributes);
         const widths: ColumnWidthItem[] = [
             newWidthForSelectedColumns(
-                ReferenceLdm.Amount,
+                ReferenceMd.Amount,
                 [
                     newAttributeColumnLocator(
-                        ReferenceLdm.ForecastCategory,
+                        ReferenceMd.ForecastCategory,
                         ReferenceData.ForecastCategory.Include.uri,
                     ),
-                    newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                    newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                 ],
                 200,
             ),
-            newWidthForAttributeColumn(ReferenceLdm.Product.Name, 300),
-            newWidthForAllColumnsForMeasure(ReferenceLdm.Won, 175),
+            newWidthForAttributeColumn(ReferenceMd.Product.Name, 300),
+            newWidthForAllColumnsForMeasure(ReferenceMd.Won, 175),
         ];
 
         const store = testStore(table, ...widths);
@@ -66,7 +66,7 @@ describe("updateColumnDefinitionsWithWidths", () => {
 
     it("should enrich colDefs when mix of manual and auto-resizing and grow-to-fit on", () => {
         const table = TableDescriptor.for(TwoMeasuresWithRowAttribute);
-        const store = testStore(table, newWidthForSelectedColumns(ReferenceLdm.Won, [], 200));
+        const store = testStore(table, newWidthForSelectedColumns(ReferenceMd.Won, [], 200));
 
         updateColumnDefinitionsWithWidths(table, store, { r_0: { width: 100 } }, 666, true, {
             c_0: { width: 500 },

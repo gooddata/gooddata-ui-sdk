@@ -8,7 +8,7 @@ import {
     BarChartWithTwoMeasuresAndTwoViewBy,
 } from "./base";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { AttributeElements } from "../../_infra/predicates";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
@@ -40,7 +40,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         drillableItems: [AttributeElements.Region.EastCoast],
         config: {
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Won)],
             },
         },
     })
@@ -49,7 +49,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         drillableItems: [AttributeElements.Product.Explorer],
         config: {
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Won)],
             },
         },
     })
@@ -58,7 +58,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         drillableItems: [AttributeElements.Product.Explorer, AttributeElements.Region.EastCoast],
         config: {
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Won)],
             },
         },
     })

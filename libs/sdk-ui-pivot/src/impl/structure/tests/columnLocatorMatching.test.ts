@@ -6,7 +6,7 @@ import {
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
     TwoMeasures,
 } from "./table.fixture";
-import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { ColumnLocator, newAttributeColumnLocator, newMeasureColumnLocator } from "../../../columnWidths";
 import { createHeadersAndColDefs } from "../tableDescriptorFactory";
 import { searchForLocatorMatch } from "../colLocatorMatching";
@@ -15,27 +15,27 @@ describe("searchForLocatorMatch", () => {
     const Scenarios: Array<[string, ColumnLocator[], DataViewFacade, string | undefined]> = [
         [
             "matches first measure locator in two measure table",
-            [newMeasureColumnLocator(ReferenceLdm.Amount)],
+            [newMeasureColumnLocator(ReferenceMd.Amount)],
             TwoMeasures,
             "c_0",
         ],
         [
             "matches second measure locator in two measure table",
-            [newMeasureColumnLocator(ReferenceLdm.Won)],
+            [newMeasureColumnLocator(ReferenceMd.Won)],
             TwoMeasures,
             "c_1",
         ],
         [
             "does not match when measure missing in two measure table",
-            [newMeasureColumnLocator(ReferenceLdm.Probability)],
+            [newMeasureColumnLocator(ReferenceMd.Probability)],
             TwoMeasures,
             undefined,
         ],
         [
             "matches valid locator in single column attribute table",
             [
-                newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
-                newMeasureColumnLocator(ReferenceLdm.Amount),
+                newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                newMeasureColumnLocator(ReferenceMd.Amount),
             ],
             SingleMeasureWithColumnAttribute,
             "c_0",
@@ -43,8 +43,8 @@ describe("searchForLocatorMatch", () => {
         [
             "matches another valid locator in single column attribute table",
             [
-                newMeasureColumnLocator(ReferenceLdm.Amount),
-                newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.WestCoast.uri),
+                newMeasureColumnLocator(ReferenceMd.Amount),
+                newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.WestCoast.uri),
             ],
             SingleMeasureWithColumnAttribute,
             "c_1",
@@ -52,8 +52,8 @@ describe("searchForLocatorMatch", () => {
         [
             "does not match locator with non-existent attribute element in single column attribute table",
             [
-                newMeasureColumnLocator(ReferenceLdm.Amount),
-                newAttributeColumnLocator(ReferenceLdm.Region, "/does/not/exist"),
+                newMeasureColumnLocator(ReferenceMd.Amount),
+                newAttributeColumnLocator(ReferenceMd.Region, "/does/not/exist"),
             ],
             SingleMeasureWithColumnAttribute,
             undefined,
@@ -61,10 +61,10 @@ describe("searchForLocatorMatch", () => {
         [
             "does match locator in table with two column attributes and single measure",
             [
-                newMeasureColumnLocator(ReferenceLdm.Amount),
-                newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+                newMeasureColumnLocator(ReferenceMd.Amount),
+                newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
                 newAttributeColumnLocator(
-                    ReferenceLdm.StageName.Default,
+                    ReferenceMd.StageName.Default,
                     ReferenceData.StageName.Interest.uri,
                 ),
             ],
@@ -75,11 +75,11 @@ describe("searchForLocatorMatch", () => {
             "does match another locator in table with two column attributes and single measure",
             [
                 newAttributeColumnLocator(
-                    ReferenceLdm.StageName.Default,
+                    ReferenceMd.StageName.Default,
                     ReferenceData.StageName.Negotiation.uri,
                 ),
-                newMeasureColumnLocator(ReferenceLdm.Amount),
-                newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.WestCoast.uri),
+                newMeasureColumnLocator(ReferenceMd.Amount),
+                newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.WestCoast.uri),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             "c_11",
@@ -87,9 +87,9 @@ describe("searchForLocatorMatch", () => {
         [
             "does not match locator if first col attribute does not match in table with two column attributes and single measure",
             [
-                newAttributeColumnLocator(ReferenceLdm.StageName.Default, "/does/not/exist"),
-                newMeasureColumnLocator(ReferenceLdm.Amount),
-                newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.WestCoast.uri),
+                newAttributeColumnLocator(ReferenceMd.StageName.Default, "/does/not/exist"),
+                newMeasureColumnLocator(ReferenceMd.Amount),
+                newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.WestCoast.uri),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             undefined,
@@ -98,11 +98,11 @@ describe("searchForLocatorMatch", () => {
             "does not match locator if second col attribute does not match in table with two column attributes and single measure",
             [
                 newAttributeColumnLocator(
-                    ReferenceLdm.StageName.Default,
+                    ReferenceMd.StageName.Default,
                     ReferenceData.StageName.Negotiation.uri,
                 ),
-                newMeasureColumnLocator(ReferenceLdm.Amount),
-                newAttributeColumnLocator(ReferenceLdm.Region, "/does/not/match"),
+                newMeasureColumnLocator(ReferenceMd.Amount),
+                newAttributeColumnLocator(ReferenceMd.Region, "/does/not/match"),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             undefined,
@@ -111,11 +111,11 @@ describe("searchForLocatorMatch", () => {
             "does not match locator measure in table with two column attributes and single measure",
             [
                 newAttributeColumnLocator(
-                    ReferenceLdm.StageName.Default,
+                    ReferenceMd.StageName.Default,
                     ReferenceData.StageName.Negotiation.uri,
                 ),
-                newMeasureColumnLocator(ReferenceLdm.Probability),
-                newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.WestCoast.uri),
+                newMeasureColumnLocator(ReferenceMd.Probability),
+                newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.WestCoast.uri),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             undefined,
@@ -123,8 +123,8 @@ describe("searchForLocatorMatch", () => {
         [
             "does not match when insufficient attribute locators in table with two column attributes and single measure",
             [
-                newMeasureColumnLocator(ReferenceLdm.Probability),
-                newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.WestCoast.uri),
+                newMeasureColumnLocator(ReferenceMd.Probability),
+                newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.WestCoast.uri),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             undefined,
@@ -132,20 +132,20 @@ describe("searchForLocatorMatch", () => {
         [
             "does not match when too many attribute locators in table with two column attributes and single measure",
             [
-                newAttributeColumnLocator(ReferenceLdm.Product.Name, ReferenceData.ProductName.CompuSci.uri),
+                newAttributeColumnLocator(ReferenceMd.Product.Name, ReferenceData.ProductName.CompuSci.uri),
                 newAttributeColumnLocator(
-                    ReferenceLdm.StageName.Default,
+                    ReferenceMd.StageName.Default,
                     ReferenceData.StageName.Negotiation.uri,
                 ),
-                newMeasureColumnLocator(ReferenceLdm.Probability),
-                newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.WestCoast.uri),
+                newMeasureColumnLocator(ReferenceMd.Probability),
+                newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.WestCoast.uri),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
             undefined,
         ],
         [
             "does match locator in table with only column attribute",
-            [newAttributeColumnLocator(ReferenceLdm.Product.Name, ReferenceData.ProductName.Explorer.uri)],
+            [newAttributeColumnLocator(ReferenceMd.Product.Name, ReferenceData.ProductName.Explorer.uri)],
             SingleColumn,
             "cg_2",
         ],

@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 
 import { ISortItem, newAttributeLocator, newMeasureSort } from "@gooddata/sdk-model";
-import { ReferenceRecordings, ReferenceLdm, ReferenceData } from "@gooddata/reference-workspace";
+import { ReferenceRecordings, ReferenceMd, ReferenceData } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, recordedDataView, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import cloneDeep from "lodash/cloneDeep";
 import { DataViewFacade } from "../../facade";
@@ -31,15 +31,15 @@ describe("resultMetaMethods", () => {
             "strips invalid measure sort when no measures in result",
             ReferenceRecordings.Scenarios.PivotTable.SingleAttribute,
             DataViewFirstPage,
-            [newMeasureSort(ReferenceLdm.Amount)],
+            [newMeasureSort(ReferenceMd.Amount)],
         ],
         [
             "strips invalid measure sort when attribute not present",
             ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
             DataViewFirstPage,
             [
-                newMeasureSort(ReferenceLdm.Amount, "desc", [
-                    newAttributeLocator(ReferenceLdm.Product.Name, ReferenceData.ProductName.CompuSci.uri),
+                newMeasureSort(ReferenceMd.Amount, "desc", [
+                    newAttributeLocator(ReferenceMd.Product.Name, ReferenceData.ProductName.CompuSci.uri),
                 ]),
             ],
         ],
@@ -48,8 +48,8 @@ describe("resultMetaMethods", () => {
             ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
             DataViewFirstPage,
             [
-                newMeasureSort(ReferenceLdm.Amount, "desc", [
-                    newAttributeLocator(ReferenceLdm.Region, "invalid"),
+                newMeasureSort(ReferenceMd.Amount, "desc", [
+                    newAttributeLocator(ReferenceMd.Region, "invalid"),
                 ]),
             ],
         ],
@@ -57,7 +57,7 @@ describe("resultMetaMethods", () => {
             "strips invalid measure sort when measure not present",
             ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
             DataViewFirstPage,
-            [newMeasureSort(ReferenceLdm.Won)],
+            [newMeasureSort(ReferenceMd.Won)],
         ],
     ];
 

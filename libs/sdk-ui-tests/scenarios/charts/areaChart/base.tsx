@@ -1,88 +1,88 @@
 // (C) 2007-2019 GoodData Corporation
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const AreaChartWithViewBy = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.Product.Name],
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.Product.Name],
 };
 
 export const AreaChartWithViewAndStackBy = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.Product.Name],
-    stackBy: ReferenceLdm.Region,
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.Product.Name],
+    stackBy: ReferenceMd.Region,
 };
 
 export const AreaChartWithTwoMeasuresAndViewBy = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    viewBy: [ReferenceLdm.Product.Name],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    viewBy: [ReferenceMd.Product.Name],
 };
 
 export const AreaChartViewByDate = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    viewBy: [ReferenceLdm.ClosedYear],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    viewBy: [ReferenceMd.ClosedYear],
 };
 
 export const AreaChartWithManyDataPoints = {
-    measures: [ReferenceLdm.Amount],
-    filters: [newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 100000)],
-    viewBy: ReferenceLdm.Opportunity.Name,
+    measures: [ReferenceMd.Amount],
+    filters: [newMeasureValueFilter(ReferenceMd.Amount, "GREATER_THAN", 100000)],
+    viewBy: ReferenceMd.Opportunity.Name,
 };
 
 export const AreaChartWithLotArithmeticMeasuresAndViewBy = {
     measures: [
-        ReferenceLdm.Amount,
-        ReferenceLdm.Won,
-        ReferenceLdm.Probability,
-        ReferenceLdm.WinRate,
-        ReferenceLdm.SnapshotEOP,
-        ReferenceLdm.TimelineEOP,
-        ReferenceLdmExt.CalculatedLost,
-        ReferenceLdmExt.CalculatedWonLostRatio,
+        ReferenceMd.Amount,
+        ReferenceMd.Won,
+        ReferenceMd.Probability,
+        ReferenceMd.WinRate,
+        ReferenceMd.SnapshotEOP,
+        ReferenceMd.TimelineEOP,
+        ReferenceMdExt.CalculatedLost,
+        ReferenceMdExt.CalculatedWonLostRatio,
     ],
-    viewBy: ReferenceLdm.CreatedQuarterYear,
+    viewBy: ReferenceMd.CreatedQuarterYear,
 };
 
 export const AreaChartWithViewByDateAndStackByDate = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.ClosedYear],
-    stackBy: ReferenceLdm.CreatedYear,
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.ClosedYear],
+    stackBy: ReferenceMd.CreatedYear,
 };
 
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
-        measures: [ReferenceLdm.Amount],
+        measures: [ReferenceMd.Amount],
     })
     .addScenario("single measure with viewBy", AreaChartWithViewBy)
     .addScenario("single measure with viewBy and stackBy", AreaChartWithViewAndStackBy)
     .addScenario("single measure with two viewBy", {
-        measures: [ReferenceLdm.Amount],
-        viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
+        measures: [ReferenceMd.Amount],
+        viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
     })
     .addScenario("two measures with viewBy", AreaChartWithTwoMeasuresAndViewBy)
     .addScenario("two measures with undefined values", AreaChartViewByDate)
     .addScenario("two measures with viewBy sorted by attribute", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        viewBy: [ReferenceLdm.Product.Name],
-        sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        viewBy: [ReferenceMd.Product.Name],
+        sortBy: [newAttributeSort(ReferenceMd.Product.Name, "desc")],
     })
     .addScenario("two measures with viewBy sorted by measure", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        viewBy: [ReferenceLdm.Product.Name],
-        sortBy: [newMeasureSort(ReferenceLdm.Won, "asc")],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        viewBy: [ReferenceMd.Product.Name],
+        sortBy: [newMeasureSort(ReferenceMd.Won, "asc")],
     })
     .addScenario("arithmetic measures", {
         measures: [
-            ReferenceLdm.Amount,
-            ReferenceLdm.Won,
-            ReferenceLdmExt.CalculatedLost,
-            ReferenceLdmExt.CalculatedWonLostRatio,
+            ReferenceMd.Amount,
+            ReferenceMd.Won,
+            ReferenceMdExt.CalculatedLost,
+            ReferenceMdExt.CalculatedWonLostRatio,
         ],
-        viewBy: [ReferenceLdm.Product.Name],
+        viewBy: [ReferenceMd.Product.Name],
     })
     .addScenario(
         "with one measure and view by date and stack by date",

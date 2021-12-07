@@ -4,12 +4,12 @@ import { mount } from "enzyme";
 import { Treemap } from "../Treemap";
 import { CoreTreemap } from "../CoreTreemap";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 describe("Treemap", () => {
     it("should render with custom SDK", () => {
         const wrapper = mount(
-            <Treemap workspace="foo" backend={dummyBackend()} measures={[ReferenceLdm.Amount]} />,
+            <Treemap workspace="foo" backend={dummyBackend()} measures={[ReferenceMd.Amount]} />,
         );
         expect(wrapper.find(CoreTreemap)).toHaveLength(1);
     });

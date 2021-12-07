@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 
 import React, { useState } from "react";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { HeaderPredicates, ExplicitDrill, IDrillEvent } from "@gooddata/sdk-ui";
 import { storiesOf } from "@storybook/react";
@@ -19,7 +19,7 @@ const HeadlineDrilling: React.FC<{ drillableItems: ExplicitDrill[] }> = ({ drill
             <Headline
                 backend={backend}
                 workspace={ReferenceWorkspaceId}
-                primaryMeasure={ReferenceLdm.Won}
+                primaryMeasure={ReferenceMd.Won}
                 onDrill={setLastEvent}
                 drillableItems={drillableItems}
             />
@@ -34,11 +34,11 @@ const HeadlineDrilling: React.FC<{ drillableItems: ExplicitDrill[] }> = ({ drill
 storiesOf(`${StoriesForEndToEndTests}/Drilling`, module)
     .add("headline with localId measure drilling", () => (
         <HeadlineDrilling
-            drillableItems={[HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceLdm.Won))]}
+            drillableItems={[HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceMd.Won))]}
         />
     ))
     .add("headline with identifier measure drilling", () => (
         <HeadlineDrilling
-            drillableItems={[HeaderPredicates.identifierMatch(measureIdentifier(ReferenceLdm.Won)!)]}
+            drillableItems={[HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Won)!)]}
         />
     ));

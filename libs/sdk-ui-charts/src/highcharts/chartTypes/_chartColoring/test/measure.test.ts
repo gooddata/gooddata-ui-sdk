@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorPalette } from "@gooddata/sdk-model";
-import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 
 import { getMVS } from "../../_util/test/helper";
 import { ColorFactory } from "../../_chartOptions/colorFactory";
@@ -20,7 +20,7 @@ describe("MeasureColorStrategy", () => {
         const colorMapping: IColorMapping[] = [
             {
                 // first measure; no other measure derived from this;
-                predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
+                predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Amount),
                 color: {
                     type: "rgb",
                     value: {
@@ -32,7 +32,7 @@ describe("MeasureColorStrategy", () => {
             },
             {
                 // second measure; is master; derived measure follows
-                predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Won),
+                predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Won),
                 color: {
                     type: "rgb",
                     value: {

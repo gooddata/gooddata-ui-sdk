@@ -22,14 +22,14 @@ import {
     newNegativeAttributeFilter,
     newRankingFilter,
 } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 describe("bear filter converter from model to AFM", () => {
     describe("convert absolute date filter", () => {
         const Scenarios: Array<[string, any]> = [
             [
                 "convert absolute date filter from model to AFM",
-                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
             ["return null when from is undefined", absoluteFilter.withoutFrom],
             ["return null when to is undefined", absoluteFilter.withoutTo],
@@ -43,23 +43,23 @@ describe("bear filter converter from model to AFM", () => {
         const Scenarios: Array<[string, any]> = [
             [
                 "AFM relative date filter with year granularity",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.year, 2, 7),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.year, 2, 7),
             ],
             [
                 "AFM relative date filter with month granularity",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.month, -3, 9),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.month, -3, 9),
             ],
             [
                 "AFM relative date filter with quarter granularity",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.quarter, 25, -2),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.quarter, 25, -2),
             ],
             [
                 "AFM relative date filter with date granularity",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, -11, 0),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.date, -11, 0),
             ],
             [
                 "AFM relative date filter with week granularity",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.week, 50, 100),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.week, 50, 100),
             ],
             ["null when from is undefined", relativeFilter.withoutFrom],
             ["null when to is undefined", relativeFilter.withoutTo],
@@ -74,35 +74,35 @@ describe("bear filter converter from model to AFM", () => {
         const Scenarios: Array<[string, any]> = [
             [
                 "AFM measure value filter with greater than operator",
-                newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 10, undefined),
+                newMeasureValueFilter(ReferenceMd.Amount, "GREATER_THAN", 10, undefined),
             ],
             [
                 "AFM measure value filter with greater than or equal to operator",
-                newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN_OR_EQUAL_TO", -5, undefined),
+                newMeasureValueFilter(ReferenceMd.Amount, "GREATER_THAN_OR_EQUAL_TO", -5, undefined),
             ],
             [
                 "AFM measure value filter with less than operator",
-                newMeasureValueFilter(ReferenceLdm.Amount, "LESS_THAN", 13, undefined),
+                newMeasureValueFilter(ReferenceMd.Amount, "LESS_THAN", 13, undefined),
             ],
             [
                 "AFM measure value filter with less than or equal to operator",
-                newMeasureValueFilter(ReferenceLdm.Amount, "LESS_THAN_OR_EQUAL_TO", 13, undefined),
+                newMeasureValueFilter(ReferenceMd.Amount, "LESS_THAN_OR_EQUAL_TO", 13, undefined),
             ],
             [
                 "AFM measure value filter with equal to operator",
-                newMeasureValueFilter(ReferenceLdm.Amount, "EQUAL_TO", 18, undefined),
+                newMeasureValueFilter(ReferenceMd.Amount, "EQUAL_TO", 18, undefined),
             ],
             [
                 "AFM measure value filter with not equal to operator",
-                newMeasureValueFilter(ReferenceLdm.Amount, "NOT_EQUAL_TO", 3, undefined),
+                newMeasureValueFilter(ReferenceMd.Amount, "NOT_EQUAL_TO", 3, undefined),
             ],
             [
                 "AFM measure value filter with between operator",
-                newMeasureValueFilter(ReferenceLdm.Amount, "BETWEEN", 3, 45),
+                newMeasureValueFilter(ReferenceMd.Amount, "BETWEEN", 3, 45),
             ],
             [
                 "AFM measure value filter with not between operator",
-                newMeasureValueFilter(ReferenceLdm.Amount, "NOT_BETWEEN", 1, 5),
+                newMeasureValueFilter(ReferenceMd.Amount, "NOT_BETWEEN", 1, 5),
             ],
             ["null when condition is undefined", measureValueFilterWithoutCondition],
         ];
@@ -113,20 +113,20 @@ describe("bear filter converter from model to AFM", () => {
 
     describe("convert ranking filter", () => {
         const Scenarios: Array<[string, any]> = [
-            ["Ranking filter without attributes", newRankingFilter(ReferenceLdm.Amount, "TOP", 10)],
+            ["Ranking filter without attributes", newRankingFilter(ReferenceMd.Amount, "TOP", 10)],
             [
                 "Ranking filter without attributes with bottom operator",
-                newRankingFilter(ReferenceLdm.Amount, "BOTTOM", 3),
+                newRankingFilter(ReferenceMd.Amount, "BOTTOM", 3),
             ],
             [
                 "Ranking filter with 1 attribute",
-                newRankingFilter(ReferenceLdm.Amount, [ReferenceLdm.Department], "TOP", 10),
+                newRankingFilter(ReferenceMd.Amount, [ReferenceMd.Department], "TOP", 10),
             ],
             [
                 "Ranking filter with multiple attributes",
                 newRankingFilter(
-                    ReferenceLdm.Amount,
-                    [ReferenceLdm.Department, ReferenceLdm.Account.Default],
+                    ReferenceMd.Amount,
+                    [ReferenceMd.Department, ReferenceMd.Account.Default],
                     "TOP",
                     10,
                 ),
@@ -139,22 +139,22 @@ describe("bear filter converter from model to AFM", () => {
 
     describe("convert filter", () => {
         const Scenarios: Array<[string, any]> = [
-            ["value filter", newMeasureValueFilter(ReferenceLdm.Amount, "BETWEEN", 3, 9)],
+            ["value filter", newMeasureValueFilter(ReferenceMd.Amount, "BETWEEN", 3, 9)],
             [
                 "filter returns absolute date filter",
-                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
             [
                 "filter returns positive attribute filter",
-                newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"]),
+                newPositiveAttributeFilter(ReferenceMd.Product.Name, ["value"]),
             ],
             [
                 "filter returns negative attribute filter",
-                newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["other value"]),
+                newNegativeAttributeFilter(ReferenceMd.Product.Name, ["other value"]),
             ],
             [
                 "filter returns relative date filter",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, 2, 55),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.date, 2, 55),
             ],
         ];
         it.each(Scenarios)("returns AFM measure %s", (_desc, input) => {
@@ -162,8 +162,8 @@ describe("bear filter converter from model to AFM", () => {
         });
 
         it("should filter out empty attribute filters and not cause RAIL-2083", () => {
-            const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, []);
-            const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, []);
+            const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, []);
+            const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, []);
 
             expect(convertFilter(emptyPositiveFilter)).toBeNull();
             expect(convertFilter(emptyNegativeFilter)).toBeNull();
@@ -174,19 +174,19 @@ describe("bear filter converter from model to AFM", () => {
         const Scenarios: Array<[string, any]> = [
             [
                 "AFM measure filter returns relative date filter",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, 5, 22),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.date, 5, 22),
             ],
             [
                 "AFM measure filter returns positive attribute filter",
-                newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"]),
+                newPositiveAttributeFilter(ReferenceMd.Product.Name, ["value"]),
             ],
             [
                 "AFM measure filter returns negative attribute filter",
-                newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["other value"]),
+                newNegativeAttributeFilter(ReferenceMd.Product.Name, ["other value"]),
             ],
             [
                 "AFM measure filter returns absolute date filter",
-                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
             ["null when attribute filter is negative and empty", negativeEmptyAttributeFilter],
         ];

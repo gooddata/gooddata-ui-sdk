@@ -36,7 +36,7 @@
         "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.js --output-type err-html src/ >./ci/results/dep-cruiser.html",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
-        "refresh-ldm": "./bin/refresh-ldm.sh && npm run build",
+        "refresh-md": "./bin/refresh-md.sh && npm run build",
         "refresh-recordings": "./bin/refresh-recordings.sh && npm run prettier-write && npm run build"
     },
     "dependencies": {

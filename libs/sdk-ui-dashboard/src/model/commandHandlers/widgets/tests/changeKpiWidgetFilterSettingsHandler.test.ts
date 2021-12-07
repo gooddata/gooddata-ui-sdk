@@ -14,7 +14,7 @@ import { attributeDisplayFormRef, idRef, ObjRef, uriRef } from "@gooddata/sdk-mo
 import { DashboardCommandFailed, DashboardKpiWidgetFilterSettingsChanged } from "../../../events";
 import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { isDashboardAttributeFilterReference } from "@gooddata/sdk-backend-spi";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     ComplexDashboardFilters,
     ComplexDashboardIdentifier,
@@ -155,7 +155,7 @@ describe("change KPI widget filter settings handler", () => {
                     replaceKpiWidgetFilterSettings(
                         TestWidgetRef,
                         {
-                            ignoreAttributeFilters: [attributeDisplayFormRef(ReferenceLdm.Account.Default)],
+                            ignoreAttributeFilters: [attributeDisplayFormRef(ReferenceMd.Account.Default)],
                         },
                         TestCorrelation,
                     ),

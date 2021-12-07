@@ -1,19 +1,19 @@
 // (C) 2007-2019 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const HeatmapWithMeasureRowsAndColumns = {
-    measure: ReferenceLdm.Amount,
-    rows: ReferenceLdm.Product.Name,
-    columns: ReferenceLdm.Region,
+    measure: ReferenceMd.Amount,
+    rows: ReferenceMd.Product.Name,
+    columns: ReferenceMd.Region,
 };
 
 export const HeatmapWithNullDataPoints = {
-    measure: ReferenceLdm.Amount,
-    rows: ReferenceLdm.Product.Name,
-    columns: ReferenceLdm.ClosedYear,
+    measure: ReferenceMd.Amount,
+    rows: ReferenceMd.Product.Name,
+    columns: ReferenceMd.ClosedYear,
 };
 
 /*
@@ -27,15 +27,15 @@ export default scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 800 } })
     .addScenario("measure only", {
-        measure: ReferenceLdm.Amount,
+        measure: ReferenceMd.Amount,
     })
     .addScenario("measure and rows", {
-        measure: ReferenceLdm.Amount,
-        rows: ReferenceLdm.Product.Name,
+        measure: ReferenceMd.Amount,
+        rows: ReferenceMd.Product.Name,
     })
     .addScenario("measure and columns", {
-        measure: ReferenceLdm.Amount,
-        columns: ReferenceLdm.Product.Name,
+        measure: ReferenceMd.Amount,
+        columns: ReferenceMd.Product.Name,
     })
     .addScenario("measure, rows and columns", HeatmapWithMeasureRowsAndColumns)
     .addScenario("measure, rows and columns with null data points", HeatmapWithNullDataPoints);

@@ -2,21 +2,21 @@
 
 import { withNormalization } from "../index";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { NoDataError } from "@gooddata/sdk-backend-spi";
 
 describe("withNormalization", () => {
     const measures = [
-        ReferenceLdm.Won,
-        ReferenceLdm.Amount,
-        ReferenceLdmExt.WonPopClosedYear,
-        ReferenceLdmExt.WonPreviousPeriod,
-        ReferenceLdmExt.AmountWithRatio,
-        ReferenceLdmExt.MaxAmount,
-        ReferenceLdmExt.CalculatedLost,
+        ReferenceMd.Won,
+        ReferenceMd.Amount,
+        ReferenceMdExt.WonPopClosedYear,
+        ReferenceMdExt.WonPreviousPeriod,
+        ReferenceMdExt.AmountWithRatio,
+        ReferenceMdExt.MaxAmount,
+        ReferenceMdExt.CalculatedLost,
     ];
 
-    const attributes = [ReferenceLdm.Region, ReferenceLdm.Product.Name];
+    const attributes = [ReferenceMd.Region, ReferenceMd.Product.Name];
 
     it("should keep transparency of exec definition", async () => {
         const backend = withNormalization(dummyBackendEmptyData());

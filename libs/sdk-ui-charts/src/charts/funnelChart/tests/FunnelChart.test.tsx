@@ -8,14 +8,14 @@ import {
     newTwoDimensional,
     MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreFunnelChart } from "../CoreFunnelChart";
 
 describe("FunnelChart", () => {
     it("should render with custom SDK", () => {
         const wrapper = mount(
-            <FunnelChart workspace="foo" backend={dummyBackend()} measures={[ReferenceLdm.Amount]} />,
+            <FunnelChart workspace="foo" backend={dummyBackend()} measures={[ReferenceMd.Amount]} />,
         );
         expect(wrapper.find(CoreFunnelChart)).toHaveLength(1);
     });
@@ -25,15 +25,15 @@ describe("FunnelChart", () => {
             <FunnelChart
                 workspace="foo"
                 backend={dummyBackend()}
-                measures={[ReferenceLdm.Amount]}
-                viewBy={ReferenceLdm.Product.Name}
-                sortBy={[newAttributeSort(ReferenceLdm.Product.Name, "asc")]}
+                measures={[ReferenceMd.Amount]}
+                viewBy={ReferenceMd.Product.Name}
+                sortBy={[newAttributeSort(ReferenceMd.Product.Name, "asc")]}
             />,
         );
 
         const expectedDims = newTwoDimensional(
             [MeasureGroupIdentifier],
-            [attributeLocalId(ReferenceLdm.Product.Name)],
+            [attributeLocalId(ReferenceMd.Product.Name)],
         );
 
         expect(wrapper.find(CoreFunnelChart)).toHaveLength(1);

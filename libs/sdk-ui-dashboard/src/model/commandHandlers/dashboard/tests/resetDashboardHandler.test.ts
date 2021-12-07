@@ -9,7 +9,7 @@ import { DashboardWasReset } from "../../../events";
 import { addAttributeFilter, addLayoutSection, renameDashboard, resetDashboard } from "../../../commands";
 import { selectLayout } from "../../../store/layout/layoutSelectors";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
 import { selectDashboardTitle } from "../../../store/meta/metaSelectors";
 import {
@@ -28,7 +28,7 @@ async function testDashboardModifications(tester: DashboardTester): Promise<any>
     await tester.dispatchAndWaitFor(renameDashboard(TestTitle), "GDC.DASH/EVT.RENAMED");
 
     return await tester.dispatchAndWaitFor(
-        addAttributeFilter(attributeDisplayFormRef(ReferenceLdm.Region), 0),
+        addAttributeFilter(attributeDisplayFormRef(ReferenceMd.Region), 0),
         "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
     );
 }

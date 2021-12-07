@@ -10,7 +10,7 @@ import {
 import { TableDescriptor } from "../tableDescriptor";
 import { ScopeCol, SeriesCol } from "../tableDescriptorTypes";
 import { newWidthForAttributeColumn } from "../../../columnWidths";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 describe("TableDescriptor", () => {
     describe("isFirstCol", () => {
@@ -84,7 +84,7 @@ describe("TableDescriptor", () => {
         it("should match row attribute in pivot table", () => {
             expect(
                 TableDescriptor.for(SingleMeasureWithTwoRowAndTwoColumnAttributes).matchAttributeWidthItem(
-                    newWidthForAttributeColumn(ReferenceLdm.Product.Name, 100),
+                    newWidthForAttributeColumn(ReferenceMd.Product.Name, 100),
                 ),
             ).toBeTruthy();
         });
@@ -92,7 +92,7 @@ describe("TableDescriptor", () => {
         it("should not match column attribute in pivot table", () => {
             expect(
                 TableDescriptor.for(SingleMeasureWithTwoRowAndTwoColumnAttributes).matchAttributeWidthItem(
-                    newWidthForAttributeColumn(ReferenceLdm.Region, 100),
+                    newWidthForAttributeColumn(ReferenceMd.Region, 100),
                 ),
             ).toBeUndefined();
         });

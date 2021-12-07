@@ -8,7 +8,7 @@ import {
     BarChartWithTwoMeasuresAndTwoViewBy,
 } from "./base";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
@@ -32,7 +32,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         config: {
             stackMeasuresToPercent: true,
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdm.Amount), measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Amount), measureLocalId(ReferenceMd.Won)],
             },
         },
     })
@@ -41,7 +41,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         config: {
             stackMeasures: true,
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdm.Amount)],
+                measures: [measureLocalId(ReferenceMd.Amount)],
             },
         },
     })
@@ -50,7 +50,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         config: {
             stackMeasuresToPercent: true,
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdm.Amount)],
+                measures: [measureLocalId(ReferenceMd.Amount)],
             },
         },
     })
@@ -59,7 +59,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         config: {
             stackMeasures: true,
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
             },
         },
     })
@@ -68,7 +68,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         config: {
             stackMeasuresToPercent: true,
             secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
             },
         },
     })
@@ -83,7 +83,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
             secondary_xaxis: {
                 min: "1",
                 max: "2",
-                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
             },
         },
     })

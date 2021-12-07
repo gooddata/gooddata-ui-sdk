@@ -3,7 +3,7 @@
 import { BearExecution } from "../executionFactory";
 import { BearAuthenticatedCallGuard } from "../../../../types/auth";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
 import { newAttributeSort } from "@gooddata/sdk-model";
 import { withCaching } from "@gooddata/sdk-backend-base";
@@ -14,7 +14,7 @@ const UnsupportedAuthCall: BearAuthenticatedCallGuard = () => {
 };
 
 const TestInsight = recordedInsight(ReferenceRecordings.Insights.BarChart.SingleMeasureWithViewBy);
-const TestExtraSort = newAttributeSort(ReferenceLdm.Product.Name);
+const TestExtraSort = newAttributeSort(ReferenceMd.Product.Name);
 
 describe("execution factory", () => {
     it("should retain execute-by-ref implementation", () => {

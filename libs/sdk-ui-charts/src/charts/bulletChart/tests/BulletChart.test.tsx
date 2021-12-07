@@ -3,7 +3,7 @@ import React from "react";
 import { mount } from "enzyme";
 import { BulletChart } from "../BulletChart";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import {
     attributeLocalId,
     MeasureGroupIdentifier,
@@ -20,15 +20,15 @@ describe("BarChart", () => {
             <BulletChart
                 workspace="foo"
                 backend={dummyBackend()}
-                primaryMeasure={ReferenceLdm.Won}
-                viewBy={[ReferenceLdm.Product.Name]}
-                sortBy={[newAttributeSort(ReferenceLdm.Product.Name, "asc")]}
+                primaryMeasure={ReferenceMd.Won}
+                viewBy={[ReferenceMd.Product.Name]}
+                sortBy={[newAttributeSort(ReferenceMd.Product.Name, "asc")]}
             />,
         );
 
         const exceptedDimensions = newTwoDimensional(
             [MeasureGroupIdentifier],
-            [attributeLocalId(ReferenceLdm.Product.Name)],
+            [attributeLocalId(ReferenceMd.Product.Name)],
         );
 
         expect(wrapper.find(CoreBulletChart)).toHaveLength(1);
@@ -47,7 +47,7 @@ describe("BarChart", () => {
                 <BulletChart
                     workspace="foo"
                     backend={dummyBackend()}
-                    primaryMeasure={ReferenceLdm.Won}
+                    primaryMeasure={ReferenceMd.Won}
                     config={config}
                 />,
             );
@@ -62,7 +62,7 @@ describe("BarChart", () => {
                 <BulletChart
                     workspace="foo"
                     backend={dummyBackend()}
-                    primaryMeasure={ReferenceLdmExt.AmountWithRatio}
+                    primaryMeasure={ReferenceMdExt.AmountWithRatio}
                     config={config}
                 />,
             );
