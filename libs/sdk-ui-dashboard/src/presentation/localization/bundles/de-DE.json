@@ -111,6 +111,7 @@
     "visualization.dataTooLarge.text": "Versuchen Sie, einen oder mehrere Filter auf Ihr Dashboard anzuwenden.",
     "visualization.execute_protected_report.headline": "Sie sind nicht berechtigt, diesen Bericht anzuzeigen.",
     "visualization.execute_protected_report.text": "Setzen Sie sich mit Ihrem Administrator in Verbindung.",
+    "visualization.alert_not_supported": "Warnmeldungen für den statischen Zeitraum werden nicht unterstützt.",
     "visualization.empty.headline": "Keine Daten für Ihre Filterauswahl",
     "visualization.error.headline": "Leider können wir diese Betrachtung nicht anzeigen",
     "visualization.error.text": "Setzen Sie sich mit Ihrem Administrator in Verbindung.",

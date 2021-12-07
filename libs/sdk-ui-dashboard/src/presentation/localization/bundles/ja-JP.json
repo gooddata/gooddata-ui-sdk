@@ -111,6 +111,7 @@
     "visualization.dataTooLarge.text": "ダッシュボードに1つまたは複数のフィルターを適用してみてください。",
     "visualization.execute_protected_report.headline": "このレポートを表示する権限がありません",
     "visualization.execute_protected_report.text": "管理者に連絡してください.",
+    "visualization.alert_not_supported": "一定日付期間のアラートはサポートされていません。",
     "visualization.empty.headline": "フィルターの選択肢にデータがありません",
     "visualization.error.headline": "申し訳ございませんが、この解析を表示できません",
     "visualization.error.text": "管理者に連絡してください.",
