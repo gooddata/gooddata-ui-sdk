@@ -36,7 +36,9 @@ export function getHeatmapSeries(
                 if (isNil(value)) {
                     data.push({
                         ...pointData,
-                        borderWidth: 1,
+                        // with latest highcharts version 9.3.0 it was adding border on null values
+                        // set border width as 0 to have it as it was on previous versions
+                        borderWidth: 0,
                         borderColor: theme?.palette?.complementary?.c4 ?? GRAY,
                         color: TRANSPARENT,
                     });

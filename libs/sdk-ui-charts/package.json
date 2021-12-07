@@ -70,7 +70,7 @@
         "classnames": "^2.3.1",
         "custom-event": "^1.0.1",
         "date-fns": "^2.22.1",
-        "highcharts": "8.2.2",
+        "highcharts": "9.3.0",
         "hoist-non-react-statics": "^3.3.0",
         "lodash": "^4.17.19",
         "polished": "^3.6.7",

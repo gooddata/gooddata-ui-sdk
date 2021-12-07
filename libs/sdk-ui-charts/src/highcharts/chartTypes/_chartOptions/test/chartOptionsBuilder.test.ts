@@ -1537,7 +1537,7 @@ describe("chartOptionsBuilder", () => {
                 const { borderColor, borderWidth, pointPadding, color } =
                     heatmapDataPoints[firstEmptyCellIndex];
                 expect(borderColor).toEqual(GRAY);
-                expect(borderWidth).toBe(1);
+                expect(borderWidth).toBe(0);
                 expect(pointPadding).toBe(undefined);
                 expect(color).toBe(TRANSPARENT);
             });
