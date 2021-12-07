@@ -12,19 +12,38 @@ import {
     newAttributeSort,
     newMeasureSort,
     newAttributeLocator,
+    modifyMeasure,
+    modifyAttribute,
 } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
-import { MdExt, Md } from "../../../md";
+import { Md } from "../../../md";
 import { createColumnTotal } from "../../../utils/helpers";
 import { ElementWithParam } from "./ElementWithParam";
+import { workspace } from "../../../constants/fixtures";
 
-const measureFranchiseFees = MdExt.FranchiseFees;
-const measureAdRoyalty = MdExt.FranchiseFeesAdRoyalty;
-const attributeLocationState = MdExt.LocationState;
-const attributeLocationName = MdExt.LocationName;
-const attributeMenuCategory = MdExt.MenuCategory;
-const attributeQuarter = MdExt.quarterDate;
-const attributeMonth = MdExt.monthDate;
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("LocationState"));
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
+const MenuCategory = modifyAttribute(Md.MenuCategory, (a) => a.localId("MenuCategory"));
+const quarterDate = modifyAttribute(Md.DateDatasets.Date.Quarter.Default, (a) => a.localId("quarterDate"));
+const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
+    a.alias("Month").localId("monthDate"),
+);
+const locationStateAttributeCaliforniaUri = `/gdc/md/${workspace}/obj/2210/elements?id=6340116`;
+const monthDateJanuaryUri = `/gdc/md/${workspace}/obj/2071/elements?id=1`;
+
+const measureFranchiseFees = FranchiseFees;
+const measureAdRoyalty = FranchiseFeesAdRoyalty;
+const attributeLocationState = LocationState;
+const attributeLocationName = LocationName;
+const attributeMenuCategory = MenuCategory;
+const attributeQuarter = quarterDate;
+const attributeMonth = monthDate;
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
 const columns = [attributeQuarter, attributeMonth];
@@ -122,71 +141,61 @@ const drillingPresets: any = {
     measure: {
         label: "Measure Franchise Fees",
         key: "measure",
-        drillableItem: HeaderPredicates.identifierMatch(measureIdentifier(MdExt.FranchiseFees)!),
+        drillableItem: HeaderPredicates.identifierMatch(measureIdentifier(FranchiseFees)!),
     },
     attributeMonth: {
         label: "Attribute Month",
         key: "attributeMonth",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(MdExt.monthDate)!),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(monthDate)!),
     },
     attributeQuarter: {
         label: "Attribute Quarter",
         key: "attributeQuarter",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(MdExt.quarterDate)!),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(quarterDate)!),
     },
     attributeLocationState: {
         label: "Attribute Location state",
         key: "attributeLocationState",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(MdExt.LocationState)!),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LocationState)!),
     },
     attributeMenuCategory: {
         label: "Attribute Menu category",
         key: "attributeMenuCategory",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(MdExt.MenuCategory)!),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(MenuCategory)!),
     },
     attributeValueCalifornia: {
         label: "Attribute value California",
         key: "attributeValueCalifornia",
-        drillableItem: HeaderPredicates.uriMatch(MdExt.locationStateAttributeCaliforniaUri),
+        drillableItem: HeaderPredicates.uriMatch(locationStateAttributeCaliforniaUri),
     },
     attributeValueJanuary: {
         label: "Attribute value January",
         key: "attributeValueJanuary",
-        drillableItem: HeaderPredicates.uriMatch(MdExt.monthDateJanuaryUri),
+        drillableItem: HeaderPredicates.uriMatch(monthDateJanuaryUri),
     },
 };
 const totalPresets: any = {
     franchiseFeesSum: {
         label: "Franchise Fees Sum",
         key: "franchiseFeesSum",
-        totalItem: createColumnTotal(
-            measureLocalId(MdExt.FranchiseFees),
-            attributeLocalId(MdExt.LocationState),
-        ),
+        totalItem: createColumnTotal(measureLocalId(FranchiseFees), attributeLocalId(LocationState)),
     },
     franchiseFeesAvg: {
         label: "Franchise Fees Average",
         key: "franchiseFeesAvg",
-        totalItem: createColumnTotal(
-            measureLocalId(MdExt.FranchiseFees),
-            attributeLocalId(MdExt.LocationState),
-            "avg",
-        ),
+        totalItem: createColumnTotal(measureLocalId(FranchiseFees), attributeLocalId(LocationState), "avg"),
     },
     franchiseFeesAdRoyaltySum: {
         label: "Franchise Fees Ad Royalty Sum",
         key: "franchiseFeesAdRoyaltySum",
-        totalItem: createColumnTotal(
-            measureLocalId(MdExt.FranchiseFeesAdRoyalty),
-            attributeLocalId(MdExt.LocationState),
-        ),
+        totalItem: createColumnTotal(measureLocalId(FranchiseFeesAdRoyalty), attributeLocalId(LocationState)),
     },
     franchiseFeesAdRoyaltyMax: {
         label: "Franchise Fees Ad Royalty Max",
         key: "franchiseFeesAdRoyaltyMax",
         totalItem: createColumnTotal(
-            measureLocalId(MdExt.FranchiseFeesAdRoyalty),
-            attributeLocalId(MdExt.LocationState),
+            measureLocalId(FranchiseFeesAdRoyalty),
+            attributeLocalId(LocationState),
             "max",
         ),
     },
@@ -194,8 +203,8 @@ const totalPresets: any = {
         label: "Subtotal Franchise Fees Max by Location State",
         key: "franchiseFeesMaxByLocationState",
         totalItem: createColumnTotal(
-            measureLocalId(MdExt.FranchiseFeesAdRoyalty),
-            attributeLocalId(MdExt.LocationName),
+            measureLocalId(FranchiseFeesAdRoyalty),
+            attributeLocalId(LocationName),
             "max",
         ),
     },
@@ -204,8 +213,8 @@ const filterPresets: any = {
     attributeCalifornia: {
         label: "Attribute (California)",
         key: "attributeCalifornia",
-        filterItem: newPositiveAttributeFilter(attributeIdentifier(MdExt.LocationState)!, [
-            MdExt.locationStateAttributeCaliforniaUri,
+        filterItem: newPositiveAttributeFilter(attributeIdentifier(LocationState)!, [
+            locationStateAttributeCaliforniaUri,
         ]),
     },
     lastYear: {
@@ -235,18 +244,18 @@ const sortingPresets: any = {
     byMenuCategory: {
         label: "By Menu Category ASC",
         key: "byMenuCategory",
-        sortBy: [newAttributeSort(MdExt.MenuCategory, "asc")],
+        sortBy: [newAttributeSort(MenuCategory, "asc")],
     },
     byLocationState: {
         label: "By Location State DESC",
         key: "byLocationState",
-        sortBy: [newAttributeSort(MdExt.LocationState, "desc")],
+        sortBy: [newAttributeSort(LocationState, "desc")],
     },
     byQ1JanFranchiseFees: {
         label: "by Q1 / Jan / FranchiseFees DESC",
         key: "byQ1JanFranchiseFees",
         sortBy: [
-            newMeasureSort(MdExt.FranchiseFees, "desc", [
+            newMeasureSort(FranchiseFees, "desc", [
                 newAttributeLocator(
                     Md.DateQuarter,
                     "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
@@ -262,8 +271,8 @@ const sortingPresets: any = {
         label: "By Location State ASC And Q1 Jan Franchise Fees DESC",
         key: "byLocationStateAndQ1JanFranchiseFees",
         sortBy: [
-            newAttributeSort(MdExt.LocationState, "asc"),
-            newMeasureSort(MdExt.FranchiseFees, "desc", [
+            newAttributeSort(LocationState, "asc"),
+            newMeasureSort(FranchiseFees, "desc", [
                 newAttributeLocator(
                     Md.DateQuarter,
                     "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",

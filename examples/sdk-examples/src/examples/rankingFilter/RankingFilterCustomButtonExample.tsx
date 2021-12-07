@@ -1,6 +1,5 @@
 // (C) 2020 GoodData Corporation
 import React, { useState } from "react";
-import { MdExt } from "../../md";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import {
     newRankingFilter,
@@ -9,6 +8,8 @@ import {
     attributeLocalId,
     IFilter,
     IRankingFilter,
+    modifyAttribute,
+    modifyMeasure,
 } from "@gooddata/sdk-model";
 import {
     IMeasureDropdownItem,
@@ -16,19 +17,29 @@ import {
     RankingFilterDropdown,
 } from "@gooddata/sdk-ui-filters";
 import classNames from "classnames";
+import { Md } from "../../md";
 
-const measures = [MdExt.TotalSales2, MdExt.FranchisedSales];
-const attributes = [MdExt.LocationState, MdExt.LocationName];
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
+    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
+);
+const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("locationState"));
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("locationName"));
+
+const measures = [TotalSales, FranchisedSales];
+const attributes = [LocationState, LocationName];
 
 const measureDropdownItems: IMeasureDropdownItem[] = [
     {
         title: "$ Total sales",
-        ref: localIdRef(measureLocalId(MdExt.TotalSales2)),
+        ref: localIdRef(measureLocalId(TotalSales)),
         sequenceNumber: "M1",
     },
     {
         title: "Franchised sales",
-        ref: localIdRef(measureLocalId(MdExt.FranchisedSales)),
+        ref: localIdRef(measureLocalId(FranchisedSales)),
         sequenceNumber: "M2",
     },
 ];
@@ -36,12 +47,12 @@ const measureDropdownItems: IMeasureDropdownItem[] = [
 const attributeDropdownItems: IAttributeDropdownItem[] = [
     {
         title: "Location state",
-        ref: localIdRef(attributeLocalId(MdExt.LocationState)),
+        ref: localIdRef(attributeLocalId(LocationState)),
         type: "ATTRIBUTE",
     },
     {
         title: "Location",
-        ref: localIdRef(attributeLocalId(MdExt.LocationName)),
+        ref: localIdRef(attributeLocalId(LocationName)),
         type: "ATTRIBUTE",
     },
 ];
@@ -103,7 +114,7 @@ export const RankingFilterCustomButtonExample: React.FC = () => {
             <PresetButtonComponent
                 title="Apply ranking filter"
                 isActive={filters.length > 0}
-                onClick={() => setFilters([newRankingFilter(MdExt.franchiseSalesLocalId, "TOP", 3)])}
+                onClick={() => setFilters([newRankingFilter(measureLocalId(FranchisedSales), "TOP", 3)])}
             />
             {filters.length > 0 && (
                 <React.Fragment>

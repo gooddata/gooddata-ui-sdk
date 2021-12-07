@@ -2,7 +2,15 @@
 import React, { Component } from "react";
 import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { MdExt } from "../../md";
+import { modifyMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
+
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
 
 export class HeadlineExample extends Component {
     public onLoadingChanged: OnLoadingChanged = (...params) => {
@@ -16,10 +24,6 @@ export class HeadlineExample extends Component {
     };
 
     public render(): React.ReactNode {
-        const primaryMeasure = MdExt.FranchiseFees;
-
-        const secondaryMeasure = MdExt.FranchiseFeesAdRoyalty;
-
         return (
             <div className="s-headline" style={{ display: "flex" }}>
                 <style jsx>
@@ -31,15 +35,15 @@ export class HeadlineExample extends Component {
                 </style>
                 <div className="column">
                     <Headline
-                        primaryMeasure={primaryMeasure}
+                        primaryMeasure={FranchiseFees}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
                     />
                 </div>
                 <div className="column">
                     <Headline
-                        primaryMeasure={primaryMeasure}
-                        secondaryMeasure={secondaryMeasure}
+                        primaryMeasure={FranchiseFees}
+                        secondaryMeasure={FranchiseFeesAdRoyalty}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
                     />

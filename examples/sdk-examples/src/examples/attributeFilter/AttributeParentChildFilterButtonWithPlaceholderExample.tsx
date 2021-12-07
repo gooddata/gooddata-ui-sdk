@@ -14,9 +14,15 @@ import {
     attributeDisplayFormRef,
     IAttributeFilter,
     idRef,
+    modifyMeasure,
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Md, MdExt } from "../../md";
+import { Md } from "../../md";
+
+const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
 
 const stateFilterPlaceholder = newPlaceholder<IAttributeFilter>(
     newNegativeAttributeFilter(attributeDisplayFormRef(Md.LocationState), {
@@ -52,13 +58,13 @@ const AttributeParentChildFilterButtonWithPlaceholder: React.FC = () => {
                 <AttributeFilterButton connectToPlaceholder={stateFilterPlaceholder} onError={onError} />
                 <AttributeFilterButton
                     parentFilters={[stateFilterPlaceholder]}
-                    parentFilterOverAttribute={idRef(MdExt.locationIdAttributeIdentifier)}
+                    parentFilterOverAttribute={idRef(locationIdAttributeIdentifier)}
                     connectToPlaceholder={cityFilterPlaceholder}
                 />
             </div>
             <div style={{ height: 300 }} className="s-line-chart">
                 <BarChart
-                    measures={[MdExt.TotalSales2]}
+                    measures={[TotalSales]}
                     viewBy={Md.LocationCity}
                     filters={[composedLocationFilterPlaceholder]}
                     onLoadingChanged={onLoadingChanged}

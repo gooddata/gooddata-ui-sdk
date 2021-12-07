@@ -1,14 +1,17 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { modifyMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Md, MdExt } from "../../md";
+import { Md } from "../../md";
 
-const primaryMeasure = MdExt.FranchiseFees;
-
-const secondaryMeasure = MdExt.FranchiseFeesAdRoyalty;
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
 
 const filters = [newAbsoluteDateFilter(Md.DateDatasets.Date, "2017-01-01", "2017-12-31")];
 
@@ -20,8 +23,8 @@ export const HeadlineExportExample: React.FC = () => {
             {(onExportReady) => (
                 <div className="s-headline" style={style}>
                     <Headline
-                        primaryMeasure={primaryMeasure}
-                        secondaryMeasure={secondaryMeasure}
+                        primaryMeasure={FranchiseFees}
+                        secondaryMeasure={FranchiseFeesAdRoyalty}
                         filters={filters}
                         onExportReady={onExportReady}
                     />

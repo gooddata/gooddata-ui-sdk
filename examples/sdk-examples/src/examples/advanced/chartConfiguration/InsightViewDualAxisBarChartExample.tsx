@@ -3,7 +3,6 @@ import React, { Component } from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import { Md } from "../../../md";
-import { totalCostsLocalId, totalSalesLocalIdentifier } from "../../../md/ext";
 
 export class InsightViewDualAxisBarChartExample extends Component {
     public render(): React.ReactNode {
@@ -14,7 +13,7 @@ export class InsightViewDualAxisBarChartExample extends Component {
                 rotation: "auto",
                 min: "-75000000",
                 max: "75000000",
-                measures: [totalSalesLocalIdentifier],
+                measures: ["c11c27a0b0314a83bfe5b64ab9de7b89"],
             },
             xaxis: {
                 visible: true,
@@ -22,7 +21,7 @@ export class InsightViewDualAxisBarChartExample extends Component {
                 rotation: "auto",
                 min: "-75000000",
                 max: "75000000",
-                measures: [totalCostsLocalId],
+                measures: ["totalCosts"],
             },
         };
 

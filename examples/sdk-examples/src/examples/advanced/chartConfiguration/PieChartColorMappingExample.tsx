@@ -1,31 +1,33 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PieChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { MdExt } from "../../../md";
+import { Md } from "../../../md";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
-import { modifyMeasure } from "@gooddata/sdk-model";
+import { measureLocalId, modifyMeasure } from "@gooddata/sdk-model";
 
-const measures = [
-    modifyMeasure(MdExt.FranchiseFeesAdRoyalty, (m) => m.localId("franchiseFeesAdRoyaltyIdentifier")),
-    modifyMeasure(MdExt.FranchiseFeesInitialFranchiseFee, (m) =>
-        m.localId("franchiseFeesInitialFranchiseFeeIdentifier"),
-    ),
-    modifyMeasure(MdExt.FranchiseFeesOngoingRoyalty, (m) =>
-        m.localId("franchiseFeesIdentifierOngoingRoyalty"),
-    ),
-];
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
+    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
+);
+
+const measures = [FranchiseFeesAdRoyalty, FranchiseFeesInitialFranchiseFee, FranchiseFeesOngoingRoyalty];
 
 const chartConfig: IChartConfig = {
     colorMapping: [
         {
-            predicate: HeaderPredicates.localIdentifierMatch("franchiseFeesAdRoyaltyIdentifier"),
+            predicate: HeaderPredicates.localIdentifierMatch(measureLocalId(FranchiseFeesAdRoyalty)),
             color: {
                 type: "guid",
                 value: "5",
             },
         },
         {
-            predicate: HeaderPredicates.localIdentifierMatch("franchiseFeesIdentifierOngoingRoyalty"),
+            predicate: HeaderPredicates.localIdentifierMatch(measureLocalId(FranchiseFeesOngoingRoyalty)),
             color: {
                 type: "rgb",
                 value: {

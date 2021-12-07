@@ -2,14 +2,26 @@
 import React, { useState } from "react";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { measureIdentifier } from "@gooddata/sdk-model";
-import { Md, MdExt } from "../../md";
+import { measureIdentifier, measureLocalId, modifyMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
 
-const measures = [MdExt.NrRestaurants, MdExt.TotalSales2, MdExt.arithmeticMeasure];
+const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) =>
+    m.format("#,##0").localId("numberOfRestaurants"),
+);
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
+const arithmeticMeasure = newArithmeticMeasure(
+    [measureLocalId(TotalSales), measureLocalId(NrRestaurants)],
+    "ratio",
+    (m) => m.format("#,##0").title("$ Avg Restaurant Sales"),
+);
+
+const measures = [NrRestaurants, TotalSales, arithmeticMeasure];
 
 const rows = [Md.LocationState];
 
-const drillableItems = [HeaderPredicates.composedFromIdentifier(measureIdentifier(MdExt.TotalSales2)!)];
+const drillableItems = [HeaderPredicates.composedFromIdentifier(measureIdentifier(TotalSales)!)];
 
 const style = { height: 200 };
 

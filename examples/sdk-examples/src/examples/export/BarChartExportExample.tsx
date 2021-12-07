@@ -1,12 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { modifyMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Md, MdExt } from "../../md";
+import { Md } from "../../md";
 
-const measures = [MdExt.TotalSales1];
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
+
+const measures = [TotalSales];
 const filters = [newAbsoluteDateFilter(Md.DateDatasets.Date.ref, "2017-01-01", "2017-12-31")];
 
 const style = { height: 300 };

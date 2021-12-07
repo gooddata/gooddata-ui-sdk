@@ -1,16 +1,30 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
-import { IMeasureValueFilter, measureLocalId } from "@gooddata/sdk-model";
+import {
+    IMeasureValueFilter,
+    measureLocalId,
+    modifyAttribute,
+    modifyMeasure,
+    modifySimpleMeasure,
+} from "@gooddata/sdk-model";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
-import { MdExt } from "../../../md";
+import { Md } from "../../../md";
+
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
+    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
+);
+const FranchisedSalesWithRatio = modifySimpleMeasure(FranchisedSales, (m) =>
+    m.format("#,##0.00%").localId("franchiseSalesComputeRatio").title("Franchise Sales shown in %").ratio(),
+);
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
 
 const measureTitle = "Franchised Sales in %";
 
-const measures = [MdExt.FranchisedSalesWithRatio];
+const measures = [FranchisedSalesWithRatio];
 
-const attributes = [MdExt.LocationName];
+const attributes = [LocationName];
 
 const defaultFilter = {
     measureValueFilter: {
@@ -36,7 +50,7 @@ export class MeasureValueFilterComponentRatioExample extends React.PureComponent
                     filter={filters[0]}
                     buttonTitle={measureTitle}
                     warningMessage="The filter uses actual measure values, not percentage."
-                    measureIdentifier={measureLocalId(MdExt.FranchisedSalesWithRatio)}
+                    measureIdentifier={measureLocalId(FranchisedSalesWithRatio)}
                 />
                 <hr className="separator" />
                 <div style={{ height: 300 }} className="s-pivot-table">

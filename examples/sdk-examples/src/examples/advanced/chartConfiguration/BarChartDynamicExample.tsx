@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { BarChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { Md, MdExt } from "../../../md";
+import { modifyMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../../md";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 
 interface IBarChartDynamicExampleState {
@@ -12,6 +13,8 @@ interface IBarChartDynamicExampleState {
 }
 
 const style = { height: 300 };
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 
 export const BarChartDynamicExample: React.FC = () => {
     const [{ config }, setState] = useState<IBarChartDynamicExampleState>({
@@ -82,7 +85,7 @@ export const BarChartDynamicExample: React.FC = () => {
 
                 <div style={style}>
                     <BarChart
-                        measures={[MdExt.TotalSales1]}
+                        measures={[TotalSales]}
                         viewBy={Md.LocationResort}
                         stackBy={Md.MenuCategory}
                         config={config}

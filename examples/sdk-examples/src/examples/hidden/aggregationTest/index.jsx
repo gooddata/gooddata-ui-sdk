@@ -1,7 +1,18 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { BarChart, ColumnChart, PieChart } from "@gooddata/sdk-ui";
-import { Md, MdExt } from "../../../md";
+import { modifySimpleMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../../md";
+
+const TotalSales = modifySimpleMeasure(Md.$TotalSales, (m) => m.aggregation("sum").localId("totalSales"));
+const franchiseFeesMeasures = [
+    Md.$FranchiseFees,
+    Md.$FranchiseFeesAdRoyalty,
+    Md.$FranchiseFeesInitialFranchiseFee,
+    Md.$FranchiseFeesOngoingRoyalty,
+].map((measure) =>
+    modifySimpleMeasure(measure, (m) => m.aggregation("sum").localId(measure.measure.localIdentifier)),
+);
 
 export class AggregationTest extends Component {
     onLoadingChanged(...params) {
@@ -27,7 +38,7 @@ export class AggregationTest extends Component {
                 <h2 id="bar-chart">Bar chart</h2>
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <BarChart
-                        measures={[MdExt.TotalSales3]}
+                        measures={[TotalSales]}
                         viewBy={Md.LocationResort}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
@@ -39,7 +50,7 @@ export class AggregationTest extends Component {
                 <h2 id="column-chart">Column chart</h2>
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <ColumnChart
-                        measures={[$TotalSales]}
+                        measures={[Md.$TotalSales]}
                         viewBy={Md.DateMonth.Short}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
@@ -52,7 +63,7 @@ export class AggregationTest extends Component {
 
                 <div style={{ height: 300 }} className="s-pie-chart">
                     <PieChart
-                        measures={MdExt.franchiseFeesMeasures}
+                        measures={franchiseFeesMeasures}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
                     />

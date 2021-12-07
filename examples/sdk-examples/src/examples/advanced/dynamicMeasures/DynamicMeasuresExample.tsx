@@ -9,7 +9,9 @@ import sdk from "@gooddata/api-client-bear";
 import { Layout } from "../../../components/Layout";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { workspace } from "../../../constants/fixtures";
-import { Md, MdExt } from "../../../md";
+import { Md } from "../../../md";
+
+const franchiseFeesTag = "franchise_fees";
 
 interface IDynamicMeasuresExampleState {
     measureList: null | any[];
@@ -40,7 +42,7 @@ export const DynamicMeasuresExample: React.FC = () => {
     });
 
     useEffect(() => {
-        getMeasureListByTag(MdExt.franchiseFeesTag)
+        getMeasureListByTag(franchiseFeesTag)
             .then((measures) => {
                 const updatedState = measures.length
                     ? {
@@ -53,8 +55,8 @@ export const DynamicMeasuresExample: React.FC = () => {
                     : {
                           measureList: null,
                           error: {
-                              message: `No measures with tag ${MdExt.franchiseFeesTag}`,
-                              description: `Please check your project. Franchise fees measures should have assigned the tag ${MdExt.franchiseFeesTag}.`,
+                              message: `No measures with tag ${franchiseFeesTag}`,
+                              description: `Please check your project. Franchise fees measures should have assigned the tag ${franchiseFeesTag}.`,
                           },
                       };
 
@@ -64,7 +66,7 @@ export const DynamicMeasuresExample: React.FC = () => {
                 setState({
                     measureList: null,
                     error: {
-                        message: `There was Error while requesting measures by tag ${MdExt.franchiseFeesTag}`,
+                        message: `There was Error while requesting measures by tag ${franchiseFeesTag}`,
                         description: JSON.stringify(error),
                     },
                 });

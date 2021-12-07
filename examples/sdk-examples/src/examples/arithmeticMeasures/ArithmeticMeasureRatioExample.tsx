@@ -1,14 +1,20 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newArithmeticMeasure } from "@gooddata/sdk-model";
-import { Md, MdExt } from "../../md";
+import { modifyMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
 
-const averageRestaurantSales = newArithmeticMeasure([MdExt.TotalSales2, MdExt.NrRestaurants], "ratio", (m) =>
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
+const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) =>
+    m.format("#,##0").localId("numberOfRestaurants"),
+);
+const averageRestaurantSales = newArithmeticMeasure([TotalSales, NrRestaurants], "ratio", (m) =>
     m.format("#,##0").title("$ Avg State Daily Sales"),
 );
 
-const measures = [MdExt.TotalSales2, MdExt.NrRestaurants, averageRestaurantSales];
+const measures = [TotalSales, NrRestaurants, averageRestaurantSales];
 
 const rows = [Md.LocationState];
 const style = { height: 200 };

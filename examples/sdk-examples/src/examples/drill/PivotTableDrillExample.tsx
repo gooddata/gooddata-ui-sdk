@@ -2,19 +2,45 @@
 import React, { useState } from "react";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { ITotal, attributeIdentifier, measureIdentifier } from "@gooddata/sdk-model";
-import { MdExt } from "../../md";
+import {
+    ITotal,
+    attributeIdentifier,
+    measureIdentifier,
+    modifyMeasure,
+    modifyAttribute,
+} from "@gooddata/sdk-model";
+import { Md } from "../../md";
+
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
+    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
+);
+const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("locationState"));
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("locationName"));
+const MenuCategory = modifyAttribute(Md.MenuCategory, (a) => a.localId("menuCategory"));
+const quarterDate = modifyAttribute(Md.DateDatasets.Date.Quarter.Default, (a) => a.localId("quarterDate"));
+const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
+    a.alias("Month").localId("monthDate"),
+);
 
 const measures = [
-    MdExt.FranchiseFees,
-    MdExt.FranchiseFeesAdRoyalty,
-    MdExt.FranchiseFeesInitialFranchiseFee,
-    MdExt.FranchiseFeesOngoingRoyalty,
+    FranchiseFees,
+    FranchiseFeesAdRoyalty,
+    FranchiseFeesInitialFranchiseFee,
+    FranchiseFeesOngoingRoyalty,
 ];
 
-const attributes = [MdExt.LocationState, MdExt.LocationName, MdExt.MenuCategory];
+const attributes = [LocationState, LocationName, MenuCategory];
 
-const columns = [MdExt.quarterDate, MdExt.monthDate];
+const columns = [quarterDate, monthDate];
 
 const totals: ITotal[] = [
     {
@@ -45,8 +71,8 @@ const totals: ITotal[] = [
 ];
 
 const drillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(MdExt.MenuCategory)!),
-    HeaderPredicates.identifierMatch(measureIdentifier(MdExt.FranchiseFees)!),
+    HeaderPredicates.identifierMatch(attributeIdentifier(MenuCategory)!),
+    HeaderPredicates.identifierMatch(measureIdentifier(FranchiseFees)!),
 ];
 
 const style = { height: 500 };

@@ -2,10 +2,19 @@
 import React, { useState, useMemo } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { newPositiveAttributeFilter, attributeDisplayFormRef, ObjRef, idRef } from "@gooddata/sdk-model";
+import {
+    newPositiveAttributeFilter,
+    attributeDisplayFormRef,
+    ObjRef,
+    idRef,
+    modifyMeasure,
+} from "@gooddata/sdk-model";
 import Select from "react-select";
-import { Md, MdExt } from "../../../md";
+import { Md } from "../../../md";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+
+const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 
 interface IFilterValue {
     value: string;
@@ -100,7 +109,7 @@ export const ParentFilterExample: React.FC = () => {
                       attributeFilter: newPositiveAttributeFilter(Md.LocationState, {
                           uris: stateFilterValues.map((filter) => filter.value),
                       }),
-                      overAttribute: idRef(MdExt.locationIdAttributeIdentifier),
+                      overAttribute: idRef(locationIdAttributeIdentifier),
                   },
               ]
             : undefined;
@@ -134,7 +143,7 @@ export const ParentFilterExample: React.FC = () => {
             <hr className="separator" />
             <div style={{ height: 500 }}>
                 <BarChart
-                    measures={[MdExt.TotalSales1]}
+                    measures={[TotalSales]}
                     viewBy={Md.LocationName.Default}
                     filters={insightFilters}
                     height={500}

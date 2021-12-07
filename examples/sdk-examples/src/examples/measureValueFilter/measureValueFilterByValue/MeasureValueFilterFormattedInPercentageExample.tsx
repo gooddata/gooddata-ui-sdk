@@ -1,15 +1,25 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newMeasureValueFilter, IMeasureValueFilter } from "@gooddata/sdk-model";
-import { MdExt } from "../../../md";
+import {
+    newMeasureValueFilter,
+    IMeasureValueFilter,
+    modifyMeasure,
+    modifyAttribute,
+} from "@gooddata/sdk-model";
+import { Md } from "../../../md";
 import { IMeasureValueFilterState } from "./MeasureValueFilterExample";
 
-const measures = [MdExt.FranchisedSalesAsPercent];
+const FranchisedSalesAsPercent = modifyMeasure(Md.$FranchisedSales, (m) =>
+    m.format("#,##0%").title("Franchise Sales").localId("franchiseSalesAsPercentage"),
+);
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
 
-const attributes = [MdExt.LocationName];
+const measures = [FranchisedSalesAsPercent];
 
-const greaterThanFilter = newMeasureValueFilter(MdExt.FranchisedSalesAsPercent, "GREATER_THAN", 7000000);
+const attributes = [LocationName];
+
+const greaterThanFilter = newMeasureValueFilter(FranchisedSalesAsPercent, "GREATER_THAN", 7000000);
 
 export class MeasureValueFilterExample extends Component<unknown, IMeasureValueFilterState> {
     state: IMeasureValueFilterState = {

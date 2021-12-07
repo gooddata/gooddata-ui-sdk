@@ -1,13 +1,20 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { DonutChart } from "@gooddata/sdk-ui-charts";
-import { MdExt } from "../../md";
+import { modifyMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
 
-const measures = [
-    MdExt.FranchiseFeesAdRoyalty,
-    MdExt.FranchiseFeesInitialFranchiseFee,
-    MdExt.FranchiseFeesOngoingRoyalty,
-];
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+export const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
+    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+);
+export const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
+);
+
+const measures = [FranchiseFeesAdRoyalty, FranchiseFeesInitialFranchiseFee, FranchiseFeesOngoingRoyalty];
 
 const style = { height: 300 };
 

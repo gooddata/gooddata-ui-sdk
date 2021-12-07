@@ -1,6 +1,5 @@
-// (C) 2020 GoodData Corporation
+// (C) 2021 GoodData Corporation
 
 import * as Md from "./full";
-import * as MdExt from "./ext";
 
-export { Md, MdExt };
+export { Md };

@@ -1,8 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { ColumnChart, IChartConfig, PositionType } from "@gooddata/sdk-ui-charts";
+import { modifyMeasure } from "@gooddata/sdk-model";
 
-import { Md, MdExt } from "../../md";
+import { Md } from "../../md";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 
 const getConfig = (position: PositionType, responsive: boolean | "autoPositionWithPopup"): IChartConfig => ({
     legend: {
@@ -168,7 +171,7 @@ export const ColumnChartResponsiveLegendExample: React.FC = () => {
             <hr className="separator" />
             <div style={divStyle} className="s-resizable-vis">
                 <ColumnChart
-                    measures={[MdExt.TotalSales1]}
+                    measures={[TotalSales]}
                     viewBy={Md.LocationState}
                     stackBy={Md.MenuCategory}
                     config={getConfig(position, responsive)}

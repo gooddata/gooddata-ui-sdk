@@ -7,11 +7,14 @@ import {
     IDateFilterOptionsByType,
 } from "@gooddata/sdk-ui-filters";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
+import { modifyMeasure } from "@gooddata/sdk-model";
 
-import { Md, MdExt } from "../../../md";
+import { Md } from "../../../md";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
-const measures = [MdExt.TotalSales1];
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
+
+const measures = [TotalSales];
 
 const availableGranularities: DateFilterGranularity[] = ["GDC.time.year"];
 

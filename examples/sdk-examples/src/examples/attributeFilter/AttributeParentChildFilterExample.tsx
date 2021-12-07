@@ -7,9 +7,15 @@ import {
     attributeDisplayFormRef,
     IAttributeFilter,
     idRef,
+    modifyMeasure,
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Md, MdExt } from "../../md";
+import { Md } from "../../md";
+
+const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
 
 export const AttributeParentChildFilterExample: React.FC = () => {
     const [filter, setFilter] = useState<IAttributeFilter>(
@@ -37,13 +43,13 @@ export const AttributeParentChildFilterExample: React.FC = () => {
             <AttributeFilter
                 filter={filter}
                 parentFilters={parentFilter ? [parentFilter] : []}
-                parentFilterOverAttribute={idRef(MdExt.locationIdAttributeIdentifier)}
+                parentFilterOverAttribute={idRef(locationIdAttributeIdentifier)}
                 fullscreenOnMobile={false}
                 onApply={setFilter}
             />
             <div style={{ height: 300 }} className="s-line-chart">
                 <BarChart
-                    measures={[MdExt.TotalSales2]}
+                    measures={[TotalSales]}
                     viewBy={Md.LocationCity}
                     filters={[filter, parentFilter]}
                     onLoadingChanged={onLoadingChanged}

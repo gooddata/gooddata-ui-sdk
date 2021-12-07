@@ -1,18 +1,26 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { ScatterPlot } from "@gooddata/sdk-ui-charts";
-import { Md, MdExt } from "../../md";
+import { modifyMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
 
-const xMeasure = MdExt.FranchiseFees;
-
-const yMeasure = MdExt.FranchisedSales;
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
+    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
+);
 
 const style = { height: 300 };
 
 export const ScatterPlotExample: React.FC = () => {
     return (
         <div style={style} className="s-scatter-plot">
-            <ScatterPlot xAxisMeasure={xMeasure} yAxisMeasure={yMeasure} attribute={Md.LocationResort} />
+            <ScatterPlot
+                xAxisMeasure={FranchiseFees}
+                yAxisMeasure={FranchisedSales}
+                attribute={Md.LocationResort}
+            />
         </div>
     );
 };

@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
-import { MdExt } from "../../md";
+
+const totalSalesIdentifier = "aa7ulGyKhIE5";
 
 interface IExecuteExampleState {
     executionNumber: number;
@@ -55,7 +56,7 @@ export const ExecuteExample: React.FC = () => {
         </p>
     );
 
-    const measure = newMeasure(willFail ? "thisDoesNotExits" : MdExt.totalSalesIdentifier);
+    const measure = newMeasure(willFail ? "thisDoesNotExits" : totalSalesIdentifier);
     const measureArray = [measure];
 
     return (

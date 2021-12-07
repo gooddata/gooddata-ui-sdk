@@ -2,16 +2,22 @@
 import React, { useState } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
-import { measureLocalId, newMeasureValueFilter } from "@gooddata/sdk-model";
-import { MdExt } from "../../../md";
+import { measureLocalId, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+
+const sumOfNumberIdentifier = "fact.csv_4dates.number";
+const nameAttributeIdentifier = "label.csv_4dates.name";
+const sumOfNumber = newMeasure(sumOfNumberIdentifier, (m) =>
+    m.aggregation("sum").localId("sumOfNumber").alias("Sum of Number"),
+);
+const nameAttribute = newAttribute(nameAttributeIdentifier, (a) => a.localId("nameAttribute"));
 
 const measureTitle = "Sum of Number";
 
-const defaultMeasureValueFilter = newMeasureValueFilter(MdExt.sumOfNumber, "BETWEEN", -30, 30, 0);
+const defaultMeasureValueFilter = newMeasureValueFilter(sumOfNumber, "BETWEEN", -30, 30, 0);
 
-const measures = [MdExt.sumOfNumber];
+const measures = [sumOfNumber];
 
-const attributes = [MdExt.nameAttribute];
+const attributes = [nameAttribute];
 
 const MeasureValueFilterTreatNullAsZeroComponentExample: React.FC = () => {
     const [filters, setFilters] = useState([defaultMeasureValueFilter]);
@@ -23,7 +29,7 @@ const MeasureValueFilterTreatNullAsZeroComponentExample: React.FC = () => {
                 filter={filters[0]}
                 buttonTitle={measureTitle}
                 displayTreatNullAsZeroOption
-                measureIdentifier={measureLocalId(MdExt.sumOfNumber)}
+                measureIdentifier={measureLocalId(sumOfNumber)}
             />
             <hr className="separator" />
             <div style={{ height: 300 }} className="s-pivot-table">

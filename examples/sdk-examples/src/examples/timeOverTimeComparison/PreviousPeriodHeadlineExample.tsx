@@ -2,9 +2,13 @@
 
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
-import { Md, MdExt } from "../../md";
+import { modifyMeasure, newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
+import { Md } from "../../md";
 import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
 
 export class PreviousPeriodHeadlineExample extends Component {
     public onLoadingChanged: OnLoadingChanged = (...params) => {
@@ -18,9 +22,9 @@ export class PreviousPeriodHeadlineExample extends Component {
     };
 
     public render(): React.ReactNode {
-        const primaryMeasure = MdExt.TotalSales2;
+        const primaryMeasure = TotalSales;
         const secondaryMeasure = newPreviousPeriodMeasure(
-            MdExt.TotalSales2,
+            TotalSales,
             [{ dataSet: Md.DateDatasets.Date.identifier, periodsAgo: 1 }],
             (m) => m.alias("$ Total Sales - period ago"),
         );

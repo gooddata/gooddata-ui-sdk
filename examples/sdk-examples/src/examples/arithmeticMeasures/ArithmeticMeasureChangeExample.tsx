@@ -1,20 +1,27 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newPreviousPeriodMeasure, newArithmeticMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
-import { Md, MdExt } from "../../md";
+import {
+    newPreviousPeriodMeasure,
+    newArithmeticMeasure,
+    newAbsoluteDateFilter,
+    modifyMeasure,
+} from "@gooddata/sdk-model";
+import { Md } from "../../md";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 
 const totalSalesYearAgoBucketItem = newPreviousPeriodMeasure(
-    MdExt.TotalSales1,
+    TotalSales,
     [{ dataSet: Md.DateDatasets.Date.identifier, periodsAgo: 1 }],
     (m) => m.alias("$ Total Sales - year ago"),
 );
 
-const changeMeasure = newArithmeticMeasure([MdExt.TotalSales1, totalSalesYearAgoBucketItem], "change", (m) =>
+const changeMeasure = newArithmeticMeasure([TotalSales, totalSalesYearAgoBucketItem], "change", (m) =>
     m.title("% Total Sales Change"),
 );
 
-const measures = [totalSalesYearAgoBucketItem, MdExt.TotalSales1, changeMeasure];
+const measures = [totalSalesYearAgoBucketItem, TotalSales, changeMeasure];
 
 const rows = [Md.DateMonth.Short];
 

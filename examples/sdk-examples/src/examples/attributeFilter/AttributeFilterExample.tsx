@@ -10,8 +10,13 @@ import {
     INegativeAttributeFilter,
     isAttributeElementsByRef,
     isPositiveAttributeFilter,
+    modifyMeasure,
 } from "@gooddata/sdk-model";
-import { Md, MdExt } from "../../md";
+import { Md } from "../../md";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
 
 interface IAttributeFilterExampleState {
     filters: Array<IPositiveAttributeFilter | INegativeAttributeFilter> | undefined;
@@ -108,7 +113,7 @@ export class AttributeFilterExample extends Component<unknown, IAttributeFilterE
                         <ErrorComponent message={error} />
                     ) : (
                         <LineChart
-                            measures={[MdExt.TotalSales2]}
+                            measures={[TotalSales]}
                             trendBy={Md.LocationResort}
                             filters={filters}
                             onLoadingChanged={this.onLoadingChanged}

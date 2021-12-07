@@ -1,10 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
+import { modifyMeasure } from "@gooddata/sdk-model";
 
 import Measure from "react-measure";
 
-import { Md, MdExt } from "../../../md";
+import { Md } from "../../../md";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 
 interface IResponsiveExampleState {
     size: [number, number];
@@ -45,7 +48,7 @@ export const ResponsiveExample: React.FC = () => {
                             <div style={{ width: "100%", height: "100%" }} ref={measureRef}>
                                 <BarChart
                                     height={usedHeight}
-                                    measures={[MdExt.TotalSales1]}
+                                    measures={[TotalSales]}
                                     viewBy={Md.LocationResort}
                                     stackBy={Md.DateMonth.Short}
                                 />

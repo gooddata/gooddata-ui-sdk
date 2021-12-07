@@ -1,11 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { BubbleChart } from "@gooddata/sdk-ui-charts";
-import { Md, MdExt } from "../../md";
+import { Md } from "../../md";
+import { modifyMeasure } from "@gooddata/sdk-model";
 
-const xMeasure = MdExt.FranchiseFees;
-
-const yMeasure = MdExt.FranchisedSales;
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
+    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
+);
 
 const style = { height: 300 };
 
@@ -13,8 +17,8 @@ export const BubbleChartExample: React.FC = () => {
     return (
         <div style={style} className="s-bubble-chart">
             <BubbleChart
-                xAxisMeasure={xMeasure}
-                yAxisMeasure={yMeasure}
+                xAxisMeasure={FranchiseFees}
+                yAxisMeasure={FranchisedSales}
                 viewBy={Md.LocationResort}
                 size={Md.AvgCheckSizeByServer}
             />

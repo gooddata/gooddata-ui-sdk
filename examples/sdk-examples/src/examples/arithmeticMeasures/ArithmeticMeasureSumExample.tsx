@@ -1,22 +1,27 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newArithmeticMeasure } from "@gooddata/sdk-model";
-import { Md, MdExt } from "../../md";
+import { modifyMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
 
-const sum = newArithmeticMeasure(
-    [MdExt.FranchiseFeesOngoingRoyalty, MdExt.FranchiseFeesAdRoyalty],
-    "sum",
-    (m) => m.format("#,##0").title("$ Ongoing / Ad Royalty Sum"),
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+
+const sum = newArithmeticMeasure([FranchiseFeesOngoingRoyalty, FranchiseFeesAdRoyalty], "sum", (m) =>
+    m.format("#,##0").title("$ Ongoing / Ad Royalty Sum"),
 );
 
 const difference = newArithmeticMeasure(
-    [MdExt.FranchiseFeesOngoingRoyalty, MdExt.FranchiseFeesAdRoyalty],
+    [FranchiseFeesOngoingRoyalty, FranchiseFeesAdRoyalty],
     "difference",
     (m) => m.format("#,##0").title("$ Ongoing / Ad Royalty Difference"),
 );
 
-const measures = [MdExt.FranchiseFeesAdRoyalty, MdExt.FranchiseFeesOngoingRoyalty, sum, difference];
+const measures = [FranchiseFeesAdRoyalty, FranchiseFeesOngoingRoyalty, sum, difference];
 
 const rows = [Md.LocationState];
 

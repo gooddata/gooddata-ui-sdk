@@ -1,14 +1,19 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { measureIdentifier } from "@gooddata/sdk-model";
+import { measureIdentifier, modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 import { IDrillableItemIdentifier } from "@gooddata/sdk-ui";
-import { MdExt } from "../../../md";
+import { Md } from "../../../md";
 import { useOnDrillExample } from "./useOnDrillExample";
 
-const measures = [MdExt.TotalSales2];
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
+const LocationResort = modifyAttribute(Md.LocationResort, (a) => a.localId("locationName"));
 
-const drillableItems: IDrillableItemIdentifier = { identifier: measureIdentifier(MdExt.TotalSales2)! };
+const measures = [TotalSales];
+
+const drillableItems: IDrillableItemIdentifier = { identifier: measureIdentifier(TotalSales)! };
 
 const style = { height: 300 };
 
@@ -20,7 +25,7 @@ export const BarChartOnDrillExample: React.FC = () => {
             <div style={style} className="s-bar-chart">
                 <BarChart
                     measures={measures}
-                    viewBy={MdExt.LocationResort}
+                    viewBy={LocationResort}
                     onDrill={onDrill}
                     drillableItems={[drillableItems]}
                 />

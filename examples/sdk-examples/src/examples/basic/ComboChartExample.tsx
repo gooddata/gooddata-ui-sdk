@@ -1,11 +1,19 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { ComboChart } from "@gooddata/sdk-ui-charts";
-import { Md, MdExt } from "../../md";
+import { modifyMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
 
-const columnMeasures = [MdExt.FranchiseFeesInitialFranchiseFee];
+const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
+    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
 
-const lineMeasures = [MdExt.FranchiseFeesAdRoyalty];
+const columnMeasures = [FranchiseFeesInitialFranchiseFee];
+
+const lineMeasures = [FranchiseFeesAdRoyalty];
 
 const style = { height: 300 };
 

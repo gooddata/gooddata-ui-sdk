@@ -1,19 +1,24 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newAttributeAreaSort } from "@gooddata/sdk-model";
+import { modifyAttribute, modifyMeasure, newAttributeAreaSort } from "@gooddata/sdk-model";
 
-import { MdExt, Md } from "../../md";
+import { Md } from "../../md";
+
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("locationState"));
 
 export const PivotTableSortingAggregationExample: React.FC = () => {
     return (
         <div style={{ height: 300 }} className="s-pivot-table-sorting">
             <PivotTable
-                measures={[MdExt.FranchiseFees]}
-                rows={[MdExt.LocationState]}
+                measures={[FranchiseFees]}
+                rows={[LocationState]}
                 columns={[Md.DateQuarter]}
                 pageSize={20}
-                sortBy={[newAttributeAreaSort(MdExt.LocationState, "desc")]}
+                sortBy={[newAttributeAreaSort(LocationState, "desc")]}
             />
         </div>
     );

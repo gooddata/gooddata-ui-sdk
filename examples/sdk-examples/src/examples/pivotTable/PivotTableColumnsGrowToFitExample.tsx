@@ -1,13 +1,20 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable, IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
-import { MdExt } from "../../md";
+import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
 
-const measures = [MdExt.FranchiseFees];
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const EmployeeName = modifyAttribute(Md.EmployeeName.Default, (a) => a.localId("employeeName"));
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("locationName"));
 
-const attributes = [MdExt.EmployeeName];
+const measures = [FranchiseFees];
 
-const columns = [MdExt.LocationName];
+const attributes = [EmployeeName];
+
+const columns = [LocationName];
 
 const config: IPivotTableConfig = {
     columnSizing: {

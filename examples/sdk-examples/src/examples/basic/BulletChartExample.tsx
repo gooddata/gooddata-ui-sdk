@@ -1,18 +1,29 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { BulletChart } from "@gooddata/sdk-ui-charts";
+import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 
-import { MdExt } from "../../md";
+import { Md } from "../../md";
 
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
+);
+const LocationResort = modifyAttribute(Md.LocationResort, (a) => a.localId("locationResort"));
 export class BulletChartExample extends Component {
     public render(): React.ReactNode {
         return (
             <div style={{ height: 300 }} className="s-bullet-chart">
                 <BulletChart
-                    primaryMeasure={MdExt.FranchiseFeesAdRoyalty}
-                    targetMeasure={MdExt.FranchiseFees}
-                    comparativeMeasure={MdExt.FranchiseFeesOngoingRoyalty}
-                    viewBy={MdExt.LocationResort}
+                    primaryMeasure={FranchiseFeesAdRoyalty}
+                    targetMeasure={FranchiseFees}
+                    comparativeMeasure={FranchiseFeesOngoingRoyalty}
+                    viewBy={LocationResort}
                 />
             </div>
         );

@@ -3,13 +3,15 @@
 import React, { useState } from "react";
 import { Button, ExportDialog } from "@gooddata/sdk-ui-kit";
 import { ThemeProvider, useTheme, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { modifyMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 
 import { DateFilterComponentExample } from "../dateFilter/DateFilterComponentExample";
-import { Md, MdExt } from "../../md";
 import { customTheme } from "../../constants/customTheme";
+import { Md } from "../../md";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 
 export const ThemeProviderExample: React.FC = () => {
     return (
@@ -90,7 +92,7 @@ const ThemedComponentsExample: React.FC = () => {
                     Bar chart
                     <br />
                     <div style={{ height: 300 }}>
-                        <BarChart measures={[MdExt.TotalSales1]} viewBy={Md.LocationResort} />
+                        <BarChart measures={[TotalSales]} viewBy={Md.LocationResort} />
                     </div>
                 </div>
             )}

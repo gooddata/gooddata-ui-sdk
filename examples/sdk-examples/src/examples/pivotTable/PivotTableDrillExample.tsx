@@ -2,21 +2,47 @@
 import React, { Component } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
-import { attributeIdentifier, measureIdentifier, ITotal } from "@gooddata/sdk-model";
+import {
+    attributeIdentifier,
+    measureIdentifier,
+    ITotal,
+    modifyMeasure,
+    modifyAttribute,
+} from "@gooddata/sdk-model";
 import isNil from "lodash/isNil";
 
-import { MdExt, Md } from "../../md";
+import { Md } from "../../md";
+
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
+    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
+);
+const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("LocationState"));
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
+const MenuCategory = modifyAttribute(Md.MenuCategory, (a) => a.localId("MenuCategory"));
+const quarterDate = modifyAttribute(Md.DateDatasets.Date.Quarter.Default, (a) => a.localId("quarterDate"));
+const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
+    a.alias("Month").localId("monthDate"),
+);
 
 const measures = [
-    MdExt.FranchiseFees,
-    MdExt.FranchiseFeesAdRoyalty,
-    MdExt.FranchiseFeesOngoingRoyalty,
-    MdExt.FranchiseFeesInitialFranchiseFee,
+    FranchiseFees,
+    FranchiseFeesAdRoyalty,
+    FranchiseFeesOngoingRoyalty,
+    FranchiseFeesInitialFranchiseFee,
 ];
 
-const attributes = [MdExt.LocationState, MdExt.LocationName, MdExt.MenuCategory];
+const attributes = [LocationState, LocationName, MenuCategory];
 
-const columns = [MdExt.quarterDate, MdExt.monthDate];
+const columns = [quarterDate, monthDate];
 
 const totals: ITotal[] = [
     {

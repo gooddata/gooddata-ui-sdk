@@ -11,15 +11,27 @@ import {
     newWidthForAllMeasureColumns,
     newWidthForSelectedColumns,
 } from "@gooddata/sdk-ui-pivot";
-import { IAttributeLocatorItem, ILocatorItem, IMeasureLocatorItem } from "@gooddata/sdk-model";
+import {
+    IAttributeLocatorItem,
+    ILocatorItem,
+    IMeasureLocatorItem,
+    modifyAttribute,
+    modifyMeasure,
+} from "@gooddata/sdk-model";
 
-import { MdExt } from "../../../md";
+import { Md } from "../../../md";
 
-const measures = [MdExt.FranchiseFees];
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("LocationState"));
+const quarterDate = modifyAttribute(Md.DateDatasets.Date.Quarter.Default, (a) => a.localId("quarterDate"));
 
-const attributes = [MdExt.LocationState];
+const measures = [FranchiseFees];
 
-const columns = [MdExt.quarterDate];
+const attributes = [LocationState];
+
+const columns = [quarterDate];
 
 const attributeWidth = (width: number) => newWidthForAttributeColumn(attributes[0], width);
 

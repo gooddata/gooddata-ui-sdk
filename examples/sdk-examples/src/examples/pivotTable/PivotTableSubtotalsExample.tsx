@@ -1,16 +1,31 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { ITotal } from "@gooddata/sdk-model";
-import { Md, MdExt } from "../../md";
+import { ITotal, modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
+
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
+    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
+);
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("locationName"));
+const MenuCategory = modifyAttribute(Md.MenuCategory, (a) => a.localId("menuCategory"));
 
 const measures = [
-    MdExt.FranchiseFees,
-    MdExt.FranchiseFeesAdRoyalty,
-    MdExt.FranchiseFeesInitialFranchiseFee,
-    MdExt.FranchiseFeesOngoingRoyalty,
+    FranchiseFees,
+    FranchiseFeesAdRoyalty,
+    FranchiseFeesInitialFranchiseFee,
+    FranchiseFeesOngoingRoyalty,
 ];
-const attributes = [Md.LocationState, MdExt.LocationName, MdExt.MenuCategory];
+const attributes = [Md.LocationState, LocationName, MenuCategory];
 const totals: ITotal[] = [
     {
         measureIdentifier: "franchiseFees",

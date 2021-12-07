@@ -2,16 +2,29 @@
 import React, { useState, useEffect } from "react";
 import { BarChart, PieChart } from "@gooddata/sdk-ui-charts";
 import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { newPositiveAttributeFilter, IAttributeElementsByRef } from "@gooddata/sdk-model";
+import {
+    newPositiveAttributeFilter,
+    IAttributeElementsByRef,
+    modifyMeasure,
+    modifyAttribute,
+} from "@gooddata/sdk-model";
 import { Kpi } from "@gooddata/sdk-ui";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { EmployeeCard } from "./EmployeeCard";
 import { KpiMetricBox } from "./KpiMetricBox";
-import { Md, MdExt } from "../../../md";
+import { Md } from "../../../md";
 import { Layout } from "../../../components/Layout";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
 import { IItem } from "../../attributeFilter/AttributeElementsExample";
+
+const AvgDailyTotalSales = modifyMeasure(Md.$AvgDailyTotalSales, (m) =>
+    m.alias("$ Avg Daily Total Sales").format("$#,##0").localId("averageDailyTotalSales"),
+);
+const AvgCheckSizeByServer = modifyMeasure(Md.AvgCheckSizeByServer, (m) =>
+    m.alias("$ Avg Check Size By Server").format("$#,##0"),
+);
+const MenuItemName = modifyAttribute(Md.MenuItemName, (a) => a.alias("Menu Item name"));
 
 interface IEmployeeProfileProps {
     validElements: IElementsQueryResult;
@@ -21,7 +34,7 @@ interface IEmployeeProfileState {
     selectedEmployeeUri: string;
 }
 
-const measures = [MdExt.AvgDailyTotalSales];
+const measures = [AvgDailyTotalSales];
 
 export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements }) => {
     const [{ selectedEmployeeUri }, setState] = useState<IEmployeeProfileState>({
@@ -133,7 +146,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                             <KpiMetricBox title="Daily sales">
                                 <Kpi
                                     filters={[employeeFilter]}
-                                    measure={MdExt.AvgDailyTotalSales}
+                                    measure={AvgDailyTotalSales}
                                     LoadingComponent={(...otherProps) => (
                                         <CustomLoading inline imageHeight={20} {...otherProps} />
                                     )}
@@ -144,7 +157,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                             <KpiMetricBox title="Average check amount">
                                 <Kpi
                                     filters={[employeeFilter]}
-                                    measure={MdExt.AvgCheckSizeByServer}
+                                    measure={AvgCheckSizeByServer}
                                     LoadingComponent={(...otherProps) => (
                                         <CustomLoading inline imageHeight={20} {...otherProps} />
                                     )}
@@ -170,7 +183,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                             <div className="bar-chart">
                                 <BarChart
                                     measures={measures}
-                                    viewBy={MdExt.MenuItemName}
+                                    viewBy={MenuItemName}
                                     filters={[employeeFilter]}
                                     LoadingComponent={CustomLoading}
                                     ErrorComponent={CustomError}
