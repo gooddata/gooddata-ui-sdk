@@ -14,7 +14,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 
 import {
     enrichBrokenAlertsInfo,
@@ -77,7 +77,7 @@ describe("getBrokenAlertFiltersBasicInfo", () => {
                 dateFilter: {
                     type: "relative",
                     granularity: "GDC.time.date",
-                    dataSet: ReferenceLdm.DateDatasets.Activity.ref,
+                    dataSet: ReferenceMd.DateDatasets.Activity.ref,
                     from: -6,
                     to: 0,
                 },
@@ -99,7 +99,7 @@ describe("getBrokenAlertFiltersBasicInfo", () => {
     });
 
     describe("attribute filters", () => {
-        const displayForm = ReferenceLdm.Account.Name.attribute.displayForm;
+        const displayForm = ReferenceMd.Account.Name.attribute.displayForm;
         const attributeFilter: IDashboardAttributeFilter = {
             attributeFilter: {
                 attributeElements: { uris: ["/gdc/md/foo?id=1"] },
@@ -239,9 +239,9 @@ describe("enrichBrokenAlertsInfo", () => {
         {
             deprecated: false,
             description: "",
-            id: ReferenceLdm.DateDatasets.Activity.identifier,
+            id: ReferenceMd.DateDatasets.Activity.identifier,
             production: true,
-            ref: ReferenceLdm.DateDatasets.Activity.ref,
+            ref: ReferenceMd.DateDatasets.Activity.ref,
             title: "Activity",
             type: "dataSet",
             unlisted: false,
@@ -250,7 +250,7 @@ describe("enrichBrokenAlertsInfo", () => {
     ];
 
     const attributeFiltersMeta: IAttributeFilterMetaCollection = {
-        [objRefToString(ReferenceLdm.StageName.Default.attribute.displayForm)]: {
+        [objRefToString(ReferenceMd.StageName.Default.attribute.displayForm)]: {
             title: "Stage Name",
             totalElementsCount:
                 ReferenceRecordings.Recordings.metadata.displayForms.df_label_stage_status.elements.length,
@@ -273,7 +273,7 @@ describe("enrichBrokenAlertsInfo", () => {
                     dateFilter: {
                         type: "relative",
                         granularity: "GDC.time.date",
-                        dataSet: ReferenceLdm.DateDatasets.Activity.ref,
+                        dataSet: ReferenceMd.DateDatasets.Activity.ref,
                         from: -6,
                         to: 0,
                     },
@@ -286,7 +286,7 @@ describe("enrichBrokenAlertsInfo", () => {
                     dateFilter: {
                         type: "absolute",
                         granularity: "GDC.time.date",
-                        dataSet: ReferenceLdm.DateDatasets.Activity.ref,
+                        dataSet: ReferenceMd.DateDatasets.Activity.ref,
                         from: "2021-01-01",
                         to: "2021-12-31",
                     },
@@ -325,7 +325,7 @@ describe("enrichBrokenAlertsInfo", () => {
     });
 
     describe("attribute filters", () => {
-        const displayForm = ReferenceLdm.StageName.Default.attribute.displayForm;
+        const displayForm = ReferenceMd.StageName.Default.attribute.displayForm;
         const elements = ReferenceRecordings.Recordings.metadata.displayForms.df_label_stage_status.elements;
         const firstElement =
             ReferenceRecordings.Recordings.metadata.displayForms.df_label_stage_status.elements[0];

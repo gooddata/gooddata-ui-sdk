@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureIdentifier, attributeIdentifier } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 
@@ -19,21 +19,21 @@ export const AttributeElements = {
 };
 
 export const AmountMeasurePredicate = HeaderPredicates.identifierMatch(
-    measureIdentifier(ReferenceLdm.Amount)!,
+    measureIdentifier(ReferenceMd.Amount)!,
 );
-export const WonMeasurePredicate = HeaderPredicates.identifierMatch(measureIdentifier(ReferenceLdm.Won)!);
+export const WonMeasurePredicate = HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Won)!);
 export const SampleXirrMeasurePredicate = HeaderPredicates.identifierMatch(
-    measureIdentifier(ReferenceLdm.SampleXIRR)!,
+    measureIdentifier(ReferenceMd.SampleXIRR)!,
 );
 
 export const DepartmentPredicate = HeaderPredicates.identifierMatch(
-    attributeIdentifier(ReferenceLdm.Department)!,
+    attributeIdentifier(ReferenceMd.Department)!,
 );
 
 export const ProductPredicate = HeaderPredicates.identifierMatch(
-    attributeIdentifier(ReferenceLdm.Product.Name)!,
+    attributeIdentifier(ReferenceMd.Product.Name)!,
 );
 
 export const SalesRepPredicate = HeaderPredicates.identifierMatch(
-    attributeIdentifier(ReferenceLdm.SalesRep.OwnerName)!,
+    attributeIdentifier(ReferenceMd.SalesRep.OwnerName)!,
 );

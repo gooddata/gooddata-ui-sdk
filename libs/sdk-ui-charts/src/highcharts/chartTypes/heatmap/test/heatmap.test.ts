@@ -7,7 +7,7 @@ import { HeatmapColorStrategy } from "../heatmapColoring";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
 import { IColorMapping } from "../../../../interfaces";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import range from "lodash/range";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 import { HEATMAP_BLUE_COLOR_PALETTE } from "../../_util/color";
@@ -127,7 +127,7 @@ describe("HeatmapColorStrategy", () => {
         ];
         const colorMapping: IColorMapping[] = [
             {
-                predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
+                predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Amount),
                 color: {
                     type: "guid",
                     value: "02",
@@ -165,7 +165,7 @@ describe("HeatmapColorStrategy", () => {
         ];
         const colorMapping: IColorMapping[] = [
             {
-                predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
+                predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Amount),
                 color: {
                     type: "guid",
                     value: "02",

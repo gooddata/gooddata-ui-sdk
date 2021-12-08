@@ -6,7 +6,7 @@ import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { BulletChartWithAllMeasuresAndViewBy } from "./base";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
@@ -26,17 +26,17 @@ const colorAssignment = scenariosFor<IBulletChartProps>("BulletChart", BulletCha
                 colorPalette: CustomColorPalette,
                 colorMapping: [
                     {
-                        predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Won),
+                        predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Won),
                         color: BlackColor,
                     },
                     {
-                        predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
+                        predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Amount),
                         color: RedColor,
                     },
                 ],
             },
         },
-        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Won, ReferenceLdm.Amount)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceMd.Won, ReferenceMd.Amount)),
     );
 
 export default [colorsAndPalette, colorAssignment];

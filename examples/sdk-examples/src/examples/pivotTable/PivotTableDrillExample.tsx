@@ -1,22 +1,48 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
-import { attributeIdentifier, measureIdentifier, ITotal } from "@gooddata/sdk-model";
+import {
+    attributeIdentifier,
+    measureIdentifier,
+    ITotal,
+    modifyMeasure,
+    modifyAttribute,
+} from "@gooddata/sdk-model";
 import isNil from "lodash/isNil";
 
-import { LdmExt, Ldm } from "../../ldm";
+import { Md } from "../../md";
+
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
+    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
+);
+const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("LocationState"));
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
+const MenuCategory = modifyAttribute(Md.MenuCategory, (a) => a.localId("MenuCategory"));
+const quarterDate = modifyAttribute(Md.DateDatasets.Date.Quarter.Default, (a) => a.localId("quarterDate"));
+const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
+    a.alias("Month").localId("monthDate"),
+);
 
 const measures = [
-    LdmExt.FranchiseFees,
-    LdmExt.FranchiseFeesAdRoyalty,
-    LdmExt.FranchiseFeesOngoingRoyalty,
-    LdmExt.FranchiseFeesInitialFranchiseFee,
+    FranchiseFees,
+    FranchiseFeesAdRoyalty,
+    FranchiseFeesOngoingRoyalty,
+    FranchiseFeesInitialFranchiseFee,
 ];
 
-const attributes = [LdmExt.LocationState, LdmExt.LocationName, LdmExt.MenuCategory];
+const attributes = [LocationState, LocationName, MenuCategory];
 
-const columns = [LdmExt.quarterDate, LdmExt.monthDate];
+const columns = [quarterDate, monthDate];
 
 const totals: ITotal[] = [
     {
@@ -47,8 +73,8 @@ const totals: ITotal[] = [
 ];
 
 const drillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(Ldm.MenuCategory)!),
-    HeaderPredicates.identifierMatch(measureIdentifier(Ldm.$FranchiseFees)!),
+    HeaderPredicates.identifierMatch(attributeIdentifier(Md.MenuCategory)!),
+    HeaderPredicates.identifierMatch(measureIdentifier(Md.$FranchiseFees)!),
 ];
 
 interface IPivotTableDrillExampleState {

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import { LineChart } from "../LineChart";
@@ -10,12 +10,12 @@ import {
 } from "@gooddata/sdk-model";
 import { CoreLineChart } from "../CoreLineChart";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 describe("LineChart", () => {
     it("should render with custom SDK", () => {
         const wrapper = mount(
-            <LineChart workspace="foo" backend={dummyBackend()} measures={[ReferenceLdm.Amount]} />,
+            <LineChart workspace="foo" backend={dummyBackend()} measures={[ReferenceMd.Amount]} />,
         );
         expect(wrapper.find(CoreLineChart)).toHaveLength(1);
     });
@@ -25,16 +25,16 @@ describe("LineChart", () => {
             <LineChart
                 workspace="foo"
                 backend={dummyBackend()}
-                measures={[ReferenceLdm.Amount]}
-                trendBy={ReferenceLdm.CreatedQuarterYear}
-                segmentBy={ReferenceLdm.Region}
-                sortBy={[newAttributeSort(ReferenceLdm.CreatedQuarterYear, "asc")]}
+                measures={[ReferenceMd.Amount]}
+                trendBy={ReferenceMd.CreatedQuarterYear}
+                segmentBy={ReferenceMd.Region}
+                sortBy={[newAttributeSort(ReferenceMd.CreatedQuarterYear, "asc")]}
             />,
         );
 
         const expectedDims = newTwoDimensional(
-            [attributeLocalId(ReferenceLdm.Region)],
-            [attributeLocalId(ReferenceLdm.CreatedQuarterYear), MeasureGroupIdentifier],
+            [attributeLocalId(ReferenceMd.Region)],
+            [attributeLocalId(ReferenceMd.CreatedQuarterYear), MeasureGroupIdentifier],
         );
 
         expect(wrapper.find(CoreLineChart)).toHaveLength(1);

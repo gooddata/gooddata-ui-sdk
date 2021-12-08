@@ -1,10 +1,10 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import keyBy from "lodash/keyBy";
 import mapValues from "lodash/mapValues";
 import { Kpi } from "@gooddata/sdk-ui";
 import { factory } from "@gooddata/api-client-bear";
-import { Ldm } from "../../../ldm";
+import { Md } from "../../../md";
 
 export class MultipleDomainsExample extends Component {
     constructor() {
@@ -45,7 +45,7 @@ export class MultipleDomainsExample extends Component {
         return (
             <div>
                 <h2>Default SDK:</h2>
-                KPI: <Kpi measure={Ldm.$TotalSales.measure.definition} />
+                KPI: <Kpi measure={Md.$TotalSales.measure.definition} />
                 <hr className="separator" />
                 <h2>Second SDK:</h2>
                 KPI: <Kpi workspace={sdk2Config.workspace} measure={sdk2Config.measureId} sdk={sdk2} />

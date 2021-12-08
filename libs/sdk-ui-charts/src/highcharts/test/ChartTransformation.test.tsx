@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
@@ -11,7 +11,7 @@ import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
 import { Chart } from "../adapter/Chart";
 import { VisualizationTypes, IntlWrapper, withIntl } from "@gooddata/sdk-ui";
 import { TOP, BOTTOM, MIDDLE } from "../constants/alignments";
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import * as fixtures from "../../../__mocks__/fixtures";
 import { recordedDataFacade } from "../../../__mocks__/recordings";
 
@@ -348,7 +348,7 @@ describe("ChartTransformation", () => {
         it("should align secondary Y axis labels to left", () => {
             const chartConfig: IChartConfig = {
                 secondary_xaxis: {
-                    measures: [measureLocalId(ReferenceLdm.Won)],
+                    measures: [measureLocalId(ReferenceMd.Won)],
                     rotation: "90",
                 },
             };
@@ -366,7 +366,7 @@ describe("ChartTransformation", () => {
                     rotation: "90",
                 },
                 secondary_xaxis: {
-                    measures: [measureLocalId(ReferenceLdm.Won)],
+                    measures: [measureLocalId(ReferenceMd.Won)],
                     rotation: "90",
                 },
             };
@@ -386,7 +386,7 @@ describe("ChartTransformation", () => {
             const chartConfig: IChartConfig = {
                 type: VisualizationTypes.COLUMN,
                 secondary_yaxis: {
-                    measures: [measureLocalId(ReferenceLdm.Won)],
+                    measures: [measureLocalId(ReferenceMd.Won)],
                     rotation: "90",
                 },
             };

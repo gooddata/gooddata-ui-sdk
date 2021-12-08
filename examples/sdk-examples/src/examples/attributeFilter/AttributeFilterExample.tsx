@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { ErrorComponent, OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
@@ -10,8 +10,13 @@ import {
     INegativeAttributeFilter,
     isAttributeElementsByRef,
     isPositiveAttributeFilter,
+    modifyMeasure,
 } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Md } from "../../md";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
 
 interface IAttributeFilterExampleState {
     filters: Array<IPositiveAttributeFilter | INegativeAttributeFilter> | undefined;
@@ -99,7 +104,7 @@ export class AttributeFilterExample extends Component<unknown, IAttributeFilterE
         return (
             <div className="s-attribute-filter">
                 <AttributeFilter
-                    identifier={attributeIdentifier(Ldm.LocationResort)}
+                    identifier={attributeIdentifier(Md.LocationResort)}
                     fullscreenOnMobile={false}
                     onApply={this.onApply}
                 />
@@ -108,8 +113,8 @@ export class AttributeFilterExample extends Component<unknown, IAttributeFilterE
                         <ErrorComponent message={error} />
                     ) : (
                         <LineChart
-                            measures={[LdmExt.TotalSales2]}
-                            trendBy={Ldm.LocationResort}
+                            measures={[TotalSales]}
+                            trendBy={Md.LocationResort}
                             filters={filters}
                             onLoadingChanged={this.onLoadingChanged}
                             onError={this.onError}

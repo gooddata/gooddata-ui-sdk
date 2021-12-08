@@ -15,8 +15,8 @@ source code.
 
 Look for instance at [chart examples](./src/examples/basic) or [execute examples](./src/examples/execution) for inspiration.
 
-To specify data to render, the examples use the LDM generated using [catalog-export](../../tools/catalog-export). This output
-is in the [src/ldm](./src/ldm) directory together with the extensions and modifications of generated objects.
+To specify data to render, the examples use the MD generated using [catalog-export](../../tools/catalog-export). This output
+is in the [src/md](./src/md) directory together with the extensions and modifications of generated objects.
 
 Your new examples should follow this convention. Additional practices to follow:
 

@@ -4,7 +4,7 @@ import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
 import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base";
 import { coloringCustomizer } from "../_infra/coloringVariants";
 import { BlackColor, CustomColorPalette, CustomPaletteColor } from "../../_infra/colors";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predicates";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { ScenarioGroupNames } from "../_infra/groupNames";
@@ -36,7 +36,7 @@ const colorAssignment = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
                 ],
             },
         },
-        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount, ReferenceLdm.Won)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceMd.Amount, ReferenceMd.Won)),
     );
 
 export default [colorsAndPalette, colorAssignment];

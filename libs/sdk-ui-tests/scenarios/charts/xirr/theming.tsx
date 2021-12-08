@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Xirr, IXirrProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { ScenarioGroupNames } from "../_infra/groupNames";
@@ -9,14 +9,14 @@ export default scenariosFor<IXirrProps>("Xirr", Xirr)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
     .addScenario("themed", {
-        measure: ReferenceLdm.SampleXIRR,
-        attribute: ReferenceLdm.TimelineYear,
+        measure: ReferenceMd.SampleXIRR,
+        attribute: ReferenceMd.TimelineYear,
     })
     .addScenario(
         "font",
         {
-            measure: ReferenceLdm.SampleXIRR,
-            attribute: ReferenceLdm.TimelineYear,
+            measure: ReferenceMd.SampleXIRR,
+            attribute: ReferenceMd.TimelineYear,
         },
         (m) => m.withTags("themed", "font"),
     );

@@ -1,7 +1,15 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { LdmExt } from "../../ldm";
+import { modifyMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
+
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
 
 const config = {
     enableCompactSize: true,
@@ -30,9 +38,6 @@ const SizeButton: React.FC<SizeButtonProps> = (props) => {
 };
 
 export const HeadlineResponsiveExample: React.FC = () => {
-    const primaryMeasure = LdmExt.FranchiseFees;
-    const secondaryMeasure = LdmExt.FranchiseFeesAdRoyalty;
-
     const [[width, height], setSize] = useState<[number, number]>([150, 120]);
     const resize = (size: [number, number]) => {
         setSize(size);
@@ -70,8 +75,8 @@ export const HeadlineResponsiveExample: React.FC = () => {
                 <hr className="separator" />
                 <div style={divStyle}>
                     <Headline
-                        primaryMeasure={primaryMeasure}
-                        secondaryMeasure={secondaryMeasure}
+                        primaryMeasure={FranchiseFees}
+                        secondaryMeasure={FranchiseFeesAdRoyalty}
                         config={config}
                     />
                 </div>

@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 
 import React, { useState } from "react";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { HeaderPredicates, ExplicitDrill, IDrillEvent } from "@gooddata/sdk-ui";
 import { storiesOf } from "@storybook/react";
@@ -15,8 +15,8 @@ import {
 } from "@gooddata/sdk-model";
 
 const backend = StorybookBackend();
-const measures = [ReferenceLdm.Amount, ReferenceLdm.Won];
-const viewBy = [ReferenceLdm.Product.Name, ReferenceLdm.Region];
+const measures = [ReferenceMd.Amount, ReferenceMd.Won];
+const viewBy = [ReferenceMd.Product.Name, ReferenceMd.Region];
 
 const BarChartDrilling: React.FC<{ drillableItems: ExplicitDrill[] }> = ({ drillableItems }) => {
     const [lastEvent, setLastEvent] = useState<IDrillEvent | null>(null);
@@ -42,25 +42,25 @@ const BarChartDrilling: React.FC<{ drillableItems: ExplicitDrill[] }> = ({ drill
 storiesOf(`${StoriesForEndToEndTests}/Drilling`, module)
     .add("bar chart with localId measure drilling", () => (
         <BarChartDrilling
-            drillableItems={[HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceLdm.Amount))]}
+            drillableItems={[HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceMd.Amount))]}
         />
     ))
     .add("bar chart with identifier measure drilling", () => (
         <BarChartDrilling
-            drillableItems={[HeaderPredicates.identifierMatch(measureIdentifier(ReferenceLdm.Amount)!)]}
+            drillableItems={[HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Amount)!)]}
         />
     ))
     .add("bar chart with localId attribute drilling", () => (
         <BarChartDrilling
             drillableItems={[
-                HeaderPredicates.localIdentifierMatch(attributeLocalId(ReferenceLdm.Product.Name)),
+                HeaderPredicates.localIdentifierMatch(attributeLocalId(ReferenceMd.Product.Name)),
             ]}
         />
     ))
     .add("bar chart with identifier attribute drilling", () => (
         <BarChartDrilling
             drillableItems={[
-                HeaderPredicates.identifierMatch(attributeIdentifier(ReferenceLdm.Product.Name)!),
+                HeaderPredicates.identifierMatch(attributeIdentifier(ReferenceMd.Product.Name)!),
             ]}
         />
     ));

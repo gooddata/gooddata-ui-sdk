@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
-import { Ldm } from "../../../ldm";
+import { Md } from "../../../md";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 
 interface IConfigurationColumnChartExampleState {
@@ -90,7 +90,7 @@ export class ConfigurationColumnChartExample extends Component<
                     </button>
 
                     <div style={style}>
-                        <InsightView insight={Ldm.Insights.ColumnsChart} config={config} />
+                        <InsightView insight={Md.Insights.ColumnsChart} config={config} />
                     </div>
                 </div>
             </div>

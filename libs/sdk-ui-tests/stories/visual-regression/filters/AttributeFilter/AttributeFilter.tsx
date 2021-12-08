@@ -7,7 +7,7 @@ import { LongPostInteractionTimeout, withMultipleScreenshots } from "../../../_i
 import { FilterStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilter.css";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend";
 import { wrapWithTheme } from "../../themeWrapper";
@@ -29,7 +29,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                 <AttributeFilter
                     backend={backend}
                     workspace={ReferenceWorkspaceId}
-                    filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
+                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
                 />
             </div>,
@@ -50,7 +50,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                     backend={backend}
                     workspace={ReferenceWorkspaceId}
                     locale="de-DE"
-                    filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
+                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
                 />
             </div>,
@@ -70,7 +70,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                 <AttributeFilter
                     backend={backend}
                     workspace={ReferenceWorkspaceId}
-                    filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["WonderKid", "Explorer"])}
+                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, ["WonderKid", "Explorer"])}
                     onApply={action("on-apply")}
                 />
             </div>,
@@ -94,7 +94,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                 <AttributeFilter
                     backend={backend}
                     workspace={ReferenceWorkspaceId}
-                    filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [
+                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [
                         "WonderKid",
                         "Explorer",
                         "TouchAll",
@@ -126,7 +126,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                 <AttributeFilter
                     backend={backend}
                     workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter(ReferenceLdm.Product.Name, [
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [
                         "WonderKid",
                         "Explorer",
                         "TouchAll",
@@ -159,7 +159,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                     <AttributeFilter
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
-                        filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
+                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
                         onApply={action("on-apply")}
                     />
                 </div>,

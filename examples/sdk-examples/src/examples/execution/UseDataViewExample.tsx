@@ -1,8 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
 import { LoadingComponent, ErrorComponent, useExecutionDataView } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
-import { LdmExt } from "../../ldm";
+
+const totalSalesIdentifier = "aa7ulGyKhIE5";
 
 interface IUseDataViewExample {
     executionNumber: number;
@@ -25,7 +26,7 @@ export const UseDataViewExample: React.FC = () => {
         });
     };
 
-    const measure = newMeasure(willFail ? "thisDoesNotExits" : LdmExt.totalSalesIdentifier);
+    const measure = newMeasure(willFail ? "thisDoesNotExits" : totalSalesIdentifier);
     const seriesBy = [measure];
     const { result, error, status } = useExecutionDataView({ execution: { seriesBy } });
 

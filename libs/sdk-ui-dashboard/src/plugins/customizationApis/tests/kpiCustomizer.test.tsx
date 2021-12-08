@@ -8,7 +8,7 @@ import {
 } from "../../../presentation";
 import { idRef, measureItem } from "@gooddata/sdk-model";
 import { IKpiWidget, ILegacyKpi } from "@gooddata/sdk-backend-spi";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { mount } from "enzyme";
 import invariant from "ts-invariant";
 import { DefaultKpiCustomizer } from "../kpiCustomizer";
@@ -27,7 +27,7 @@ const TestKpiWidget: IKpiWidget = {
     uri: "/uri/testKpi",
     kpi: {
         comparisonDirection: "growIsGood",
-        metric: measureItem(ReferenceLdm.Amount),
+        metric: measureItem(ReferenceMd.Amount),
         comparisonType: "previousPeriod",
     },
     drills: [],

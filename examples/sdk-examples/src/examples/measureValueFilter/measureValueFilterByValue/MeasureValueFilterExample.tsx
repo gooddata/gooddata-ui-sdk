@@ -1,15 +1,25 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newMeasureValueFilter, IMeasureValueFilter } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../ldm";
+import {
+    newMeasureValueFilter,
+    IMeasureValueFilter,
+    modifyMeasure,
+    modifyAttribute,
+} from "@gooddata/sdk-model";
+import { Md } from "../../../md";
 
-const measures = [LdmExt.FranchisedSales];
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
+    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
+);
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("locationName"));
 
-const attributes = [LdmExt.LocationName];
-const greaterThanFilter = newMeasureValueFilter(LdmExt.FranchisedSales, "GREATER_THAN", 7000000);
+const measures = [FranchisedSales];
 
-const betweenFilter = newMeasureValueFilter(LdmExt.FranchisedSales, "BETWEEN", 5000000, 8000000);
+const attributes = [LocationName];
+const greaterThanFilter = newMeasureValueFilter(FranchisedSales, "GREATER_THAN", 7000000);
+
+const betweenFilter = newMeasureValueFilter(FranchisedSales, "BETWEEN", 5000000, 8000000);
 
 export interface IMeasureValueFilterState {
     filters: IMeasureValueFilter[];

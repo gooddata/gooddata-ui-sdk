@@ -1,5 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+// (C) 2007-2021 GoodData Corporation
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
 import React from "react";
 import { mount } from "enzyme";
@@ -30,7 +30,7 @@ const waitForAsync = () =>
 describe("AttributeDropdown", () => {
     const backend = recordedBackend(ReferenceRecordings.Recordings);
     const workspace = "testWorkspace";
-    const testAttributeRef = attributeDisplayFormRef(ReferenceLdm.Product.Name);
+    const testAttributeRef = attributeDisplayFormRef(ReferenceMd.Product.Name);
 
     function renderComponent(props: any = {}) {
         const onApply = props.onApply || noop;

@@ -1,8 +1,8 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import { BubbleChart } from "../BubbleChart";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreBubbleChart } from "../CoreBubbleChart";
 import {
@@ -15,7 +15,7 @@ import {
 describe("BubbleChart", () => {
     it("should render with custom SDK", () => {
         const wrapper = mount(
-            <BubbleChart workspace="foo" backend={dummyBackend()} xAxisMeasure={ReferenceLdm.Amount} />,
+            <BubbleChart workspace="foo" backend={dummyBackend()} xAxisMeasure={ReferenceMd.Amount} />,
         );
         expect(wrapper.find(CoreBubbleChart)).toHaveLength(1);
     });
@@ -25,16 +25,16 @@ describe("BubbleChart", () => {
             <BubbleChart
                 workspace="foo"
                 backend={dummyBackend()}
-                xAxisMeasure={ReferenceLdm.Amount}
-                yAxisMeasure={ReferenceLdm.WinRate}
-                size={ReferenceLdm.Probability}
-                viewBy={ReferenceLdm.Product.Name}
-                sortBy={[newAttributeSort(ReferenceLdm.Product.Name, "desc")]}
+                xAxisMeasure={ReferenceMd.Amount}
+                yAxisMeasure={ReferenceMd.WinRate}
+                size={ReferenceMd.Probability}
+                viewBy={ReferenceMd.Product.Name}
+                sortBy={[newAttributeSort(ReferenceMd.Product.Name, "desc")]}
             />,
         );
 
         const expectedDims = newTwoDimensional(
-            [attributeLocalId(ReferenceLdm.Product.Name)],
+            [attributeLocalId(ReferenceMd.Product.Name)],
             [MeasureGroupIdentifier],
         );
 

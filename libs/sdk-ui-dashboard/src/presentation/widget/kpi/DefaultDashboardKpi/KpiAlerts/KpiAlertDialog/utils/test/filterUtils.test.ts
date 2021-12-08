@@ -13,7 +13,7 @@ import {
     newPositiveAttributeFilter,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 import { areKpiAlertFiltersSameAsDashboard } from "../filterUtils";
 
@@ -43,7 +43,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
                 {
                     attributeFilter: {
                         attributeElements: { uris: ["/gdc/md/123"] },
-                        displayForm: ReferenceLdm.Account.Name.attribute.displayForm,
+                        displayForm: ReferenceMd.Account.Name.attribute.displayForm,
                         negativeSelection: false,
                     },
                 },
@@ -52,7 +52,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return true for matching filter", () => {
             const filters: IFilter[] = [
-                newPositiveAttributeFilter(ReferenceLdm.Account.Name, { uris: ["/gdc/md/123"] }),
+                newPositiveAttributeFilter(ReferenceMd.Account.Name, { uris: ["/gdc/md/123"] }),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertWithAttributeFilter, filters);
@@ -61,7 +61,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return false for filter with wrong type", () => {
             const filters: IFilter[] = [
-                newNegativeAttributeFilter(ReferenceLdm.Account.Name, { uris: ["/gdc/md/123"] }),
+                newNegativeAttributeFilter(ReferenceMd.Account.Name, { uris: ["/gdc/md/123"] }),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertWithAttributeFilter, filters);
@@ -70,7 +70,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return false for filter with wrong elements", () => {
             const filters: IFilter[] = [
-                newPositiveAttributeFilter(ReferenceLdm.Account.Name, {
+                newPositiveAttributeFilter(ReferenceMd.Account.Name, {
                     uris: ["/gdc/md/123", "/gdc/md/456"],
                 }),
             ];
@@ -81,7 +81,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return false for filter with no matching display form", () => {
             const filters: IFilter[] = [
-                newPositiveAttributeFilter(ReferenceLdm.Activity.Subject, { uris: ["/gdc/md/123"] }),
+                newPositiveAttributeFilter(ReferenceMd.Activity.Subject, { uris: ["/gdc/md/123"] }),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertWithAttributeFilter, filters);
@@ -102,7 +102,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
                     {
                         attributeFilter: {
                             attributeElements: { uris: [] },
-                            displayForm: ReferenceLdm.Account.Name.attribute.displayForm,
+                            displayForm: ReferenceMd.Account.Name.attribute.displayForm,
                             negativeSelection: true,
                         },
                     },
@@ -136,7 +136,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return true for matching absolute filter", () => {
             const filters: IFilter[] = [
-                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Activity.Date, "2020-01-01", "2020-12-31"),
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Activity.Date, "2020-01-01", "2020-12-31"),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertWithAbsoluteDateFilter, filters);
@@ -145,7 +145,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return false for absolute filter with wrong from", () => {
             const filters: IFilter[] = [
-                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Activity.Date, "1990-01-01", "2020-12-31"),
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Activity.Date, "1990-01-01", "2020-12-31"),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertWithAbsoluteDateFilter, filters);
@@ -154,7 +154,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return false for absolute filter with wrong to", () => {
             const filters: IFilter[] = [
-                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Activity.Date, "2020-01-01", "2100-12-31"),
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Activity.Date, "2020-01-01", "2100-12-31"),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertWithAbsoluteDateFilter, filters);
@@ -179,7 +179,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return true for matching relative filter", () => {
             const filters: IFilter[] = [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity.Date, "GDC.time.date", -6, 0),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity.Date, "GDC.time.date", -6, 0),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertWithRelativeDateFilter, filters);
@@ -188,7 +188,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return false for relative filter with wrong from", () => {
             const filters: IFilter[] = [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity.Date, "GDC.time.date", -600, 0),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity.Date, "GDC.time.date", -600, 0),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertWithRelativeDateFilter, filters);
@@ -197,7 +197,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return false for relative filter with wrong to", () => {
             const filters: IFilter[] = [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity.Date, "GDC.time.date", -6, 600),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity.Date, "GDC.time.date", -6, 600),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertWithRelativeDateFilter, filters);
@@ -206,7 +206,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return false for relative filter with wrong granularity", () => {
             const filters: IFilter[] = [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity.Date, "GDC.time.year", -6, 0),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity.Date, "GDC.time.year", -6, 0),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertWithRelativeDateFilter, filters);
@@ -214,7 +214,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
         });
 
         it("should return true for alert with no filters with all time filter applied", () => {
-            const filters: IFilter[] = [newAllTimeFilter(ReferenceLdm.DateDatasets.Activity.Date)];
+            const filters: IFilter[] = [newAllTimeFilter(ReferenceMd.DateDatasets.Activity.Date)];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertBase, filters);
             expect(actual).toBe(true);
@@ -222,7 +222,7 @@ describe("areKpiAlertFiltersSameAsDashboard", () => {
 
         it("should return false for alert with no filters with non-all time filter applied", () => {
             const filters: IFilter[] = [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity.Date, "GDC.time.date", -6, 0),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity.Date, "GDC.time.date", -6, 0),
             ];
 
             const actual = areKpiAlertFiltersSameAsDashboard(alertBase, filters);

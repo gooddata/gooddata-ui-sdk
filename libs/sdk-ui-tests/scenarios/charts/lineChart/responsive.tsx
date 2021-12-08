@@ -3,7 +3,7 @@ import { LineChart } from "@gooddata/sdk-ui-charts";
 import { LineChartTwoMeasuresWithTrendyBy } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 const sizeVariantsSimple: Array<IResponsiveSize> = [
     { label: "without y axis title", width: 140, height: 354 },
@@ -15,8 +15,8 @@ const simpleScenarios = responsiveScenarios(
     ScenarioGroupNames.Responsive,
     LineChart,
     {
-        measures: [ReferenceLdm.Amount],
-        trendBy: ReferenceLdm.CreatedQuarterYear,
+        measures: [ReferenceMd.Amount],
+        trendBy: ReferenceMd.CreatedQuarterYear,
         config: { enableCompactSize: true, legend: { enabled: false } },
     },
     sizeVariantsSimple,

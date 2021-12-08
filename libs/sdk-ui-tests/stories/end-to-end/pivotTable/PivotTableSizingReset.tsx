@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { ReferenceLdm, ReferenceData } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceData } from "@gooddata/reference-workspace";
 import {
     IAttributeLocatorItem,
     ILocatorItem,
@@ -26,9 +26,9 @@ import {
 } from "./widthItems";
 
 const backend = StorybookBackend();
-const measures = [ReferenceLdm.Amount];
-const attributes = [ReferenceLdm.Product.Name];
-const columns = [ReferenceLdm.Region];
+const measures = [ReferenceMd.Amount];
+const attributes = [ReferenceMd.Product.Name];
+const columns = [ReferenceMd.Region];
 
 const attributeWidth = (width: number) => attributeColumnWidthItem(attributes[0], width);
 
@@ -74,7 +74,7 @@ const isSameWidthItem = (item: any, newItem: any) => {
 
 const measureWidth = (width: number) =>
     measureColumnWidthItemSimple(measures[0], width, [
-        newAttributeLocator(ReferenceLdm.Region, ReferenceData.Region.EastCoast.uri),
+        newAttributeLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
     ]);
 
 class PivotTableSizingReset extends Component {

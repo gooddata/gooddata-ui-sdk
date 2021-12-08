@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import {
@@ -11,61 +11,61 @@ import {
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const ColumnChartWithSingleMeasureAndViewBy = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.Product.Name],
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.Product.Name],
 };
 
 export const ColumnChartWithSingleMeasureViewByAndStackBy = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.Product.Name],
-    stackBy: ReferenceLdm.Region,
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.Product.Name],
+    stackBy: ReferenceMd.Region,
 };
 
 export const ColumnChartWithTwoMeasuresAndViewBy = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    viewBy: [ReferenceLdm.Product.Name],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    viewBy: [ReferenceMd.Product.Name],
 };
 
 export const ColumnChartWithTwoMeasuresAndTwoViewBy = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
 };
 
 export const ColumnChartWithSingleMeasureAndViewByAndStackMultipleItems = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.Region],
-    stackBy: ReferenceLdm.Product.Name,
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.Region],
+    stackBy: ReferenceMd.Product.Name,
 };
 
 export const ColumnChartWithSingleMeasureAndTwoViewByAndStack = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
-    stackBy: ReferenceLdm.Department,
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
+    stackBy: ReferenceMd.Department,
 };
 
 export const ColumnChartWithArithmeticMeasuresAndViewBy = {
     measures: [
-        ReferenceLdm.Amount,
-        ReferenceLdm.Won,
-        ReferenceLdmExt.CalculatedLost,
-        ReferenceLdmExt.CalculatedWonLostRatio,
+        ReferenceMd.Amount,
+        ReferenceMd.Won,
+        ReferenceMdExt.CalculatedLost,
+        ReferenceMdExt.CalculatedWonLostRatio,
     ],
-    viewBy: [ReferenceLdm.Product.Name],
+    viewBy: [ReferenceMd.Product.Name],
 };
 
 export const ColumnChartViewByDateAndPop = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.WonPopClosedYear],
-    viewBy: [ReferenceLdm.ClosedYear],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
+    viewBy: [ReferenceMd.ClosedYear],
 };
 
 export const ColumnChartViewByTwoDates = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.WonPopClosedYear],
-    viewBy: [ReferenceLdm.ClosedYear, ReferenceLdmExt.ModifiedClosedYear],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
+    viewBy: [ReferenceMd.ClosedYear, ReferenceMdExt.ModifiedClosedYear],
 };
 
 export const ColumnChartStackByDate = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.WonPopClosedYear],
-    stackBy: ReferenceLdm.ClosedYear,
+    measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
+    stackBy: ReferenceMd.ClosedYear,
 };
 
 /*
@@ -77,19 +77,19 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .addScenario("single measure", {
-        measures: [ReferenceLdm.Amount],
+        measures: [ReferenceMd.Amount],
     })
     .addScenario("single measure with viewBy", ColumnChartWithSingleMeasureAndViewBy)
     .addScenario("single ratio measure with viewBy", {
-        measures: [ReferenceLdmExt.AmountWithRatio],
-        viewBy: [ReferenceLdm.Product.Name],
+        measures: [ReferenceMdExt.AmountWithRatio],
+        viewBy: [ReferenceMd.Product.Name],
     })
     .addScenario("single measure with viewBy and stackBy", ColumnChartWithSingleMeasureViewByAndStackBy)
     .addScenario("single measure with viewBy and stackBy filtered to single stack", {
-        measures: [ReferenceLdm.Amount],
-        viewBy: [ReferenceLdm.Product.Name],
-        stackBy: ReferenceLdm.Region,
-        filters: [newPositiveAttributeFilter(ReferenceLdm.Region, ["East Coast"])],
+        measures: [ReferenceMd.Amount],
+        viewBy: [ReferenceMd.Product.Name],
+        stackBy: ReferenceMd.Region,
+        filters: [newPositiveAttributeFilter(ReferenceMd.Region, ["East Coast"])],
     })
     .addScenario("single measure with two viewBy and stack", ColumnChartWithSingleMeasureAndTwoViewByAndStack)
     .addScenario(
@@ -97,25 +97,25 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         ColumnChartWithSingleMeasureAndViewByAndStackMultipleItems,
     )
     .addScenario("two measures", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
     })
     .addScenario("two measures with viewBy", ColumnChartWithTwoMeasuresAndViewBy)
     .addScenario("two measures with two viewBy", ColumnChartWithTwoMeasuresAndTwoViewBy)
     .addScenario("two measures with viewBy sorted by attribute", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        viewBy: [ReferenceLdm.Product.Name],
-        sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        viewBy: [ReferenceMd.Product.Name],
+        sortBy: [newAttributeSort(ReferenceMd.Product.Name, "desc")],
     })
     .addScenario("two measures with viewBy sorted by measure", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        viewBy: [ReferenceLdm.Product.Name],
-        sortBy: [newMeasureSort(ReferenceLdm.Won, "asc")],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        viewBy: [ReferenceMd.Product.Name],
+        sortBy: [newMeasureSort(ReferenceMd.Won, "asc")],
     })
     .addScenario("viewBy date and PoP measure", ColumnChartViewByDateAndPop)
     .addScenario("dense chart with two view by", {
-        measures: [ReferenceLdm.Amount_1.Sum],
-        filters: [newMeasureValueFilter(ReferenceLdm.Amount_1.Sum, "GREATER_THAN", 5000000)],
-        viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Opportunity.Name],
+        measures: [ReferenceMd.Amount_1.Sum],
+        filters: [newMeasureValueFilter(ReferenceMd.Amount_1.Sum, "GREATER_THAN", 5000000)],
+        viewBy: [ReferenceMd.Product.Name, ReferenceMd.Opportunity.Name],
     })
     .addScenario("viewBy with two dates", ColumnChartViewByTwoDates)
     .addScenario("stackBy with one date", ColumnChartStackByDate);

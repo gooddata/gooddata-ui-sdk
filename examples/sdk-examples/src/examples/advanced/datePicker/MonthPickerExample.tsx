@@ -1,12 +1,15 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { newRelativeDateFilter } from "@gooddata/sdk-model";
+import { modifyMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { Ldm, LdmExt } from "../../../ldm";
+import { Md } from "../../../md";
 import { IDatePickerState } from "./DatePickerExample";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
+
 const dateFormat = "yyyy-MM-DD";
 
 // sync with backend timezone
@@ -14,7 +17,7 @@ const withGTM0 = (time: moment.Moment) => time.utcOffset("+00:00", true);
 
 const currentDate = withGTM0(moment().startOf("months"));
 
-const measures = [LdmExt.TotalSales1];
+const measures = [TotalSales];
 
 const style = { height: 300 };
 
@@ -56,7 +59,7 @@ export const MonthPickerExample: React.FC = () => {
 
     const filters = [
         newRelativeDateFilter(
-            Ldm.DateDatasets.Date.ref,
+            Md.DateDatasets.Date.ref,
             "GDC.time.month",
             Math.floor(from.diff(currentDate, "months", true)),
             Math.floor(to.diff(currentDate, "months", true)),
@@ -105,7 +108,7 @@ export const MonthPickerExample: React.FC = () => {
                 {error ? (
                     <ErrorComponent message={error} />
                 ) : (
-                    <ColumnChart measures={measures} viewBy={Ldm.DateMonthYear.Short} filters={filters} />
+                    <ColumnChart measures={measures} viewBy={Md.DateMonthYear.Short} filters={filters} />
                 )}
             </div>
         </div>

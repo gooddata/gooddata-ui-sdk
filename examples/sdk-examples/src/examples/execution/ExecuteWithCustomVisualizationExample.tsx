@@ -1,17 +1,27 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar } from "recharts";
+import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 
-import * as LdmExt from "../../ldm/ext";
+import { Md } from "../../md";
 
-const seriesBy = [
-    LdmExt.FranchiseFeesAdRoyalty,
-    LdmExt.FranchiseFeesInitialFranchiseFee,
-    LdmExt.FranchiseFeesOngoingRoyalty,
-];
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
+    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
+);
+const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
+    a.alias("Month").localId("monthDate"),
+);
 
-const slicesBy = [LdmExt.monthDate];
+const seriesBy = [FranchiseFeesAdRoyalty, FranchiseFeesInitialFranchiseFee, FranchiseFeesOngoingRoyalty];
+
+const slicesBy = [monthDate];
 
 const colors = ["rgb(20,178,226)", "rgb(0,193,141)", "rgb(229,77,66)"];
 

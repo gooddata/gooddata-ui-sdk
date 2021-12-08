@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { customBackend } from "../index";
 import {
@@ -10,7 +10,7 @@ import {
     NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 import { dummyDataView } from "../../dummyBackend";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newDefForItems } from "@gooddata/sdk-model";
 import { AnonymousAuthProvider } from "../../toolkit/auth";
 import {
@@ -105,7 +105,7 @@ function createAuthenticationProvider(
 //
 
 describe("custom backend", () => {
-    const TestDefinition = newDefForItems("test", [ReferenceLdm.Won, ReferenceLdm.Amount]);
+    const TestDefinition = newDefForItems("test", [ReferenceMd.Won, ReferenceMd.Amount]);
 
     describe("result and data provider integration", () => {
         it("should dispatch execution to resultProvider", async () => {

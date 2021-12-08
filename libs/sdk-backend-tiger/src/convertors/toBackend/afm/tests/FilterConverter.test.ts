@@ -13,7 +13,7 @@ import {
     newRelativeDateFilter,
     uriRef,
 } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { InvariantError } from "ts-invariant";
 
 describe("tiger filter converter from model to AFM", () => {
@@ -33,7 +33,7 @@ describe("tiger filter converter from model to AFM", () => {
             ],
             [
                 "specified using localId of metric specified by value",
-                newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 10),
+                newMeasureValueFilter(ReferenceMd.Amount, "GREATER_THAN", 10),
             ],
         ];
 
@@ -59,7 +59,7 @@ describe("tiger filter converter from model to AFM", () => {
             ["absolute date filter without 'from' attribute", absoluteFilter.withoutFrom],
             [
                 "absolute date filter from model to AFM with all attributes",
-                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
         ];
 
@@ -71,23 +71,23 @@ describe("tiger filter converter from model to AFM", () => {
         const Scenarios: Array<[string, any]> = [
             [
                 "year granularity",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.year, 2, 7),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.year, 2, 7),
             ],
             [
                 "month granularity",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.month, -3, 9),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.month, -3, 9),
             ],
             [
                 "quarter granularity",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.quarter, 25, -2),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.quarter, 25, -2),
             ],
             [
                 "date granularity",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, -11, 0),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.date, -11, 0),
             ],
             [
                 "week granularity",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.week, 50, 100),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.week, 50, 100),
             ],
             ["missing 'to' parameter", relativeFilter.withoutTo],
             ["mission 'from' parameter", relativeFilter.withoutFrom],
@@ -97,12 +97,12 @@ describe("tiger filter converter from model to AFM", () => {
         });
     });
     describe("convert filter", () => {
-        const positiveAttributeFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"]);
-        const negativeAttributeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["value 2"]);
-        const positiveAttributeFilterWithUris = newPositiveAttributeFilter(ReferenceLdm.Product.Name, {
+        const positiveAttributeFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, ["value"]);
+        const negativeAttributeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, ["value 2"]);
+        const positiveAttributeFilterWithUris = newPositiveAttributeFilter(ReferenceMd.Product.Name, {
             uris: ["value"],
         });
-        const negativeAttributeFilterWithUris = newNegativeAttributeFilter(ReferenceLdm.Product.Name, {
+        const negativeAttributeFilterWithUris = newNegativeAttributeFilter(ReferenceMd.Product.Name, {
             uris: ["value"],
         });
 
@@ -121,30 +121,30 @@ describe("tiger filter converter from model to AFM", () => {
             ],
             [
                 "absolute date filter",
-                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
             [
                 "relative date filter",
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, 20, 30),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.date, 20, 30),
             ],
-            ["comparison measure value filter", newMeasureValueFilter(ReferenceLdm.Won, "GREATER_THAN", 128)],
+            ["comparison measure value filter", newMeasureValueFilter(ReferenceMd.Won, "GREATER_THAN", 128)],
             [
                 "comparison measure value filter with treatNullValueAs",
-                newMeasureValueFilter(ReferenceLdm.Won, "GREATER_THAN", 128, 0),
+                newMeasureValueFilter(ReferenceMd.Won, "GREATER_THAN", 128, 0),
             ],
-            ["range measure value filter", newMeasureValueFilter(ReferenceLdm.Won, "BETWEEN", 64, 128)],
+            ["range measure value filter", newMeasureValueFilter(ReferenceMd.Won, "BETWEEN", 64, 128)],
             [
                 "range measure value filter with treatNullValueAs",
-                newMeasureValueFilter(ReferenceLdm.Won, "BETWEEN", 64, 128, 0),
+                newMeasureValueFilter(ReferenceMd.Won, "BETWEEN", 64, 128, 0),
             ],
             [
                 "range measure value filter with crossed boundaries",
-                newMeasureValueFilter(ReferenceLdm.Won, "BETWEEN", 128, 64),
+                newMeasureValueFilter(ReferenceMd.Won, "BETWEEN", 128, 64),
             ],
-            ["ranking filter", newRankingFilter(ReferenceLdm.Won, "BOTTOM", 3)],
+            ["ranking filter", newRankingFilter(ReferenceMd.Won, "BOTTOM", 3)],
             [
                 "ranking filter with attributes",
-                newRankingFilter(ReferenceLdm.Won, [ReferenceLdm.IsActive.attribute.displayForm], "TOP", 3),
+                newRankingFilter(ReferenceMd.Won, [ReferenceMd.IsActive.attribute.displayForm], "TOP", 3),
             ],
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {
@@ -152,29 +152,29 @@ describe("tiger filter converter from model to AFM", () => {
         });
 
         it("should filter out empty attribute filters and not cause RAIL-2083", () => {
-            const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, []);
-            const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, []);
+            const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, []);
+            const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, []);
 
             expect(convertFilter(emptyPositiveFilter)).toBeNull();
             expect(convertFilter(emptyNegativeFilter)).toBeNull();
         });
 
         it("should convert ranking filter when localIds used for attributes", () => {
-            const rankingFilter = newRankingFilter(ReferenceLdm.Won, [ReferenceLdm.IsActive], "TOP", 3);
+            const rankingFilter = newRankingFilter(ReferenceMd.Won, [ReferenceMd.IsActive], "TOP", 3);
 
-            expect(convertFilter(rankingFilter, [ReferenceLdm.IsActive])).toMatchSnapshot();
+            expect(convertFilter(rankingFilter, [ReferenceMd.IsActive])).toMatchSnapshot();
         });
 
         it("should throw error when converting ranking filter with localIds used for attributes and no attribute list", () => {
-            const rankingFilter = newRankingFilter(ReferenceLdm.Won, [ReferenceLdm.IsActive], "TOP", 3);
+            const rankingFilter = newRankingFilter(ReferenceMd.Won, [ReferenceMd.IsActive], "TOP", 3);
 
             expect(() => convertFilter(rankingFilter)).toThrow(InvariantError);
         });
 
         it("should throw error when converting ranking filter with localIds used for attributes and no matching attribute provided", () => {
-            const rankingFilter = newRankingFilter(ReferenceLdm.Won, [ReferenceLdm.IsActive], "TOP", 3);
+            const rankingFilter = newRankingFilter(ReferenceMd.Won, [ReferenceMd.IsActive], "TOP", 3);
 
-            expect(() => convertFilter(rankingFilter, [ReferenceLdm.Product.Name])).toThrow(InvariantError);
+            expect(() => convertFilter(rankingFilter, [ReferenceMd.Product.Name])).toThrow(InvariantError);
         });
     });
 });

@@ -1,12 +1,29 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
 import fetch from "isomorphic-fetch";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { LoadingComponent, ErrorComponent, HeaderPredicates } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { newPositiveAttributeFilter, attributeIdentifier } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import {
+    newPositiveAttributeFilter,
+    attributeIdentifier,
+    modifyMeasure,
+    modifyAttribute,
+} from "@gooddata/sdk-model";
+import { workspace } from "../../constants/fixtures";
+import { Md } from "../../md";
 import { EmployeeProfile } from "./EmployeeProfile";
+
+const AvgDailyTotalSales = modifyMeasure(Md.$AvgDailyTotalSales, (m) =>
+    m.alias("$ Avg Daily Total Sales").format("$#,##0").localId("averageDailyTotalSales"),
+);
+const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("locationState"));
+const EmployeeName = modifyAttribute(Md.EmployeeName.Default, (a) => a.localId("employeeName"));
+const TotalSales2 = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("locationName"));
+const locationStateAttributeUri = `/gdc/md/${workspace}/obj/2210`;
 
 interface IEmployee3rdPartyData {
     error: any;
@@ -23,22 +40,16 @@ const stateTableStyle: React.CSSProperties = { height: 200 };
 const employeeTableStyle: React.CSSProperties = { height: 300 };
 const salesChartStyle: React.CSSProperties = { height: 300 };
 
-const stateTableMeasures = [LdmExt.AvgDailyTotalSales];
-const stateTableRows = [LdmExt.LocationState];
-const stateTableDrillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationState)!),
-];
+const stateTableMeasures = [AvgDailyTotalSales];
+const stateTableRows = [LocationState];
+const stateTableDrillableItems = [HeaderPredicates.identifierMatch(attributeIdentifier(LocationState)!)];
 
-const employeeTableMeasures = [LdmExt.AvgDailyTotalSales];
-const employeeTableRows = [LdmExt.EmployeeName];
-const employeeTableDrillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.EmployeeName)!),
-];
+const employeeTableMeasures = [AvgDailyTotalSales];
+const employeeTableRows = [EmployeeName];
+const employeeTableDrillableItems = [HeaderPredicates.identifierMatch(attributeIdentifier(EmployeeName)!)];
 
-const salesChartMeasures = [LdmExt.TotalSales2];
-const salesChartDrillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationName)!),
-];
+const salesChartMeasures = [TotalSales2];
+const salesChartDrillableItems = [HeaderPredicates.identifierMatch(attributeIdentifier(LocationName)!)];
 
 const EmployeeDetails: React.FC<{ employeeData: IEmployee3rdPartyData }> = ({ employeeData }) => {
     if (employeeData.error) {
@@ -81,7 +92,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
 
         const newState: IHasNameUri = {
             name,
-            uri: `${LdmExt.locationStateAttributeUri}/elements?id=${id}`,
+            uri: `${locationStateAttributeUri}/elements?id=${id}`,
         };
 
         setState(newState);
@@ -149,14 +160,14 @@ export const DrillWithExternalDataExample: React.FC = () => {
         const filters = [];
         if (state) {
             filters.push(
-                newPositiveAttributeFilter(Ldm.LocationState, {
+                newPositiveAttributeFilter(Md.LocationState, {
                     uris: [state.uri],
                 }),
             );
         }
         if (location) {
             filters.push(
-                newPositiveAttributeFilter(Ldm.LocationName.Default, {
+                newPositiveAttributeFilter(Md.LocationName.Default, {
                     uris: [location.uri],
                 }),
             );
@@ -266,7 +277,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                 <div style={salesChartStyle} className="s-sales-chart">
                     <ColumnChart
                         measures={salesChartMeasures}
-                        viewBy={LdmExt.LocationName}
+                        viewBy={LocationName}
                         filters={tableFilters}
                         drillableItems={salesChartDrillableItems}
                         onDrill={onLocationDrill}

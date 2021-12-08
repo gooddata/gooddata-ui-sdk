@@ -5,7 +5,7 @@ import {
     newMeasure,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { convertAfmFilters } from "../AfmFiltersConverter";
 
 describe("convertAfmFilters", () => {
@@ -21,7 +21,7 @@ describe("convertAfmFilters", () => {
     it("should not transform measure based filter of non-ratio measure", () => {
         const nonRatioFilter = newRankingFilter(
             "nonRatio",
-            [ReferenceLdm.IsActive.attribute.displayForm],
+            [ReferenceMd.IsActive.attribute.displayForm],
             "TOP",
             3,
         );
@@ -29,7 +29,7 @@ describe("convertAfmFilters", () => {
     });
 
     it("should keep non-measure based filter", () => {
-        const positiveAttributeFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"]);
+        const positiveAttributeFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, ["value"]);
         expect(convertAfmFilters([], afmMeasures, [positiveAttributeFilter])).toMatchSnapshot();
     });
 });

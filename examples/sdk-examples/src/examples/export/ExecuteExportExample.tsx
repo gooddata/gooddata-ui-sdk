@@ -1,13 +1,17 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
-import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { modifyMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Ldm, LdmExt } from "../../ldm";
+import { Md } from "../../md";
 import { Execute, ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 
-const primaryMeasure = LdmExt.FranchiseFees;
-const filters = [newAbsoluteDateFilter(Ldm.DateDatasets.Date, "2017-01-01", "2017-12-31")];
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+
+const primaryMeasure = FranchiseFees;
+const filters = [newAbsoluteDateFilter(Md.DateDatasets.Date, "2017-01-01", "2017-12-31")];
 
 export const ExecuteExportExample: React.FC = () => {
     return (

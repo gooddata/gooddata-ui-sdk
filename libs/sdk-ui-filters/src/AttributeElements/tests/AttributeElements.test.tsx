@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+// (C) 2019-2021 GoodData Corporation
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { attributeIdentifier, idRef } from "@gooddata/sdk-model";
 import React from "react";
 import { mount } from "enzyme";
@@ -15,8 +15,8 @@ const waitForAsync = () => new Promise((resolve: (...args: any[]) => void) => se
 describe("AttributeElements", () => {
     const backend = recordedBackend(ReferenceRecordings.Recordings);
     const workspace = "testWorkspace";
-    const identifier = attributeIdentifier(ReferenceLdm.Product.Name);
-    const anotherIdentifier = attributeIdentifier(ReferenceLdm.Department);
+    const identifier = attributeIdentifier(ReferenceMd.Product.Name);
+    const anotherIdentifier = attributeIdentifier(ReferenceMd.Department);
 
     const renderComponent = (props: any = {}) =>
         mount(

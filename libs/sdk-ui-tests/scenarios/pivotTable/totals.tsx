@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { requestPages } from "@gooddata/mock-handling";
@@ -13,28 +13,28 @@ import {
 export const PivotTableWithTwoMeasuresAndTotals = {
     ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
     totals: [
-        newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
-        newTotal("sum", ReferenceLdm.Won, ReferenceLdm.Product.Name),
+        newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
+        newTotal("sum", ReferenceMd.Won, ReferenceMd.Product.Name),
     ],
 };
 
 export const PivotTableWithTwoMeasuresGrandTotalsAndSubtotals = {
     ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
     totals: [
-        newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
-        newTotal("min", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
-        newTotal("max", ReferenceLdm.Won, ReferenceLdm.Product.Name),
-        newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Product.Name),
-        newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Department),
-        newTotal("med", ReferenceLdm.Amount, ReferenceLdm.Department),
-        newTotal("med", ReferenceLdm.Won, ReferenceLdm.Department),
-        newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Department),
+        newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
+        newTotal("min", ReferenceMd.Amount, ReferenceMd.Product.Name),
+        newTotal("max", ReferenceMd.Won, ReferenceMd.Product.Name),
+        newTotal("nat", ReferenceMd.Won, ReferenceMd.Product.Name),
+        newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department),
+        newTotal("med", ReferenceMd.Amount, ReferenceMd.Department),
+        newTotal("med", ReferenceMd.Won, ReferenceMd.Department),
+        newTotal("nat", ReferenceMd.Won, ReferenceMd.Department),
     ],
 };
 
 export const PivotTableWithSingleMeasureAndGrandTotal = {
     ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
-    totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name)],
+    totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)],
 };
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
@@ -44,17 +44,17 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario("single measure and multiple grand totals", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
         totals: [
-            newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
-            newTotal("min", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
-            newTotal("max", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
-            newTotal("nat", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
+            newTotal("min", ReferenceMd.Amount, ReferenceMd.Product.Name),
+            newTotal("max", ReferenceMd.Amount, ReferenceMd.Product.Name),
+            newTotal("nat", ReferenceMd.Amount, ReferenceMd.Product.Name),
         ],
     })
     .addScenario(
         "two measures and single grand total for one",
         {
             ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-            totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name)],
+            totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)],
         },
         (m) => m.withCustomDataCapture({ windows: requestPages([0, 0], [22, 1000], 1) }),
     )
@@ -64,27 +64,27 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario("two measures and multiple grand totals for each", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
         totals: [
-            newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
-            newTotal("min", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
-            newTotal("max", ReferenceLdm.Won, ReferenceLdm.Product.Name),
-            newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Product.Name),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
+            newTotal("min", ReferenceMd.Amount, ReferenceMd.Product.Name),
+            newTotal("max", ReferenceMd.Won, ReferenceMd.Product.Name),
+            newTotal("nat", ReferenceMd.Won, ReferenceMd.Product.Name),
         ],
     })
     .addScenario(
         "two measures and one subtotal",
         {
             ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-            totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Department)],
+            totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department)],
         },
         (m) => m.withCustomDataCapture({ windows: requestPages([0, 0], [22, 1000], 1) }),
     )
     .addScenario("two measures and multiple subtotals", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
         totals: [
-            newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Department),
-            newTotal("med", ReferenceLdm.Amount, ReferenceLdm.Department),
-            newTotal("med", ReferenceLdm.Won, ReferenceLdm.Department),
-            newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Department),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department),
+            newTotal("med", ReferenceMd.Amount, ReferenceMd.Department),
+            newTotal("med", ReferenceMd.Won, ReferenceMd.Department),
+            newTotal("nat", ReferenceMd.Won, ReferenceMd.Department),
         ],
     })
     .addScenario("two measures and grand totals and multiple subtotals", {

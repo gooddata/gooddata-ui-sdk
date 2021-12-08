@@ -1,14 +1,25 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import classNames from "classnames";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
-import { IMeasureValueFilter, measureLocalId, localIdRef } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../ldm";
+import {
+    IMeasureValueFilter,
+    measureLocalId,
+    localIdRef,
+    modifyMeasure,
+    modifyAttribute,
+} from "@gooddata/sdk-model";
+import { Md } from "../../../md";
 
-const measures = [LdmExt.FranchisedSales];
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
+    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
+);
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
 
-const attributes = [LdmExt.LocationName];
+const measures = [FranchisedSales];
+
+const attributes = [LocationName];
 
 const defaultFilter: IMeasureValueFilter = {
     measureValueFilter: {
@@ -85,7 +96,7 @@ export class MeasureValueFilterComponentExample extends React.PureComponent<
                         onCancel={this.onCancel}
                         filter={filters[0]}
                         anchorEl={this.ref.current!}
-                        measureIdentifier={measureLocalId(LdmExt.FranchisedSales)}
+                        measureIdentifier={measureLocalId(FranchisedSales)}
                     />
                 ) : null}
                 <hr className="separator" />

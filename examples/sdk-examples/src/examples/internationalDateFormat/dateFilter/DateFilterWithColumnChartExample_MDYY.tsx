@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
 import {
     DateFilter,
@@ -7,11 +7,14 @@ import {
     IDateFilterOptionsByType,
 } from "@gooddata/sdk-ui-filters";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
+import { modifyMeasure } from "@gooddata/sdk-model";
 
-import { Ldm, LdmExt } from "../../../ldm";
+import { Md } from "../../../md";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
-const measures = [LdmExt.TotalSales1];
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
+
+const measures = [TotalSales];
 
 const availableGranularities: DateFilterGranularity[] = ["GDC.time.year"];
 
@@ -121,7 +124,7 @@ export const DateFilterWithColumnChartExample_MDYY: React.FC = () => {
 
     const dateFilter = DateFilterHelpers.mapOptionToAfm(
         state.selectedFilterOption,
-        Ldm.DateDatasets.Date.ref,
+        Md.DateDatasets.Date.ref,
         state.excludeCurrentPeriod,
     );
 
@@ -142,7 +145,7 @@ export const DateFilterWithColumnChartExample_MDYY: React.FC = () => {
             <div style={columnChartContainerStyle}>
                 <ColumnChart
                     measures={measures}
-                    viewBy={Ldm.DateMonth.Short}
+                    viewBy={Md.DateMonth.Short}
                     filters={dateFilter ? [dateFilter] : []}
                 />
             </div>

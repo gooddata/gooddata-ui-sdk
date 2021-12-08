@@ -5,7 +5,7 @@ import { MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries"
 import { measureItem } from "@gooddata/sdk-model";
 import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
 import { initializeDashboard } from "../../commands";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     MockAvailabilityWithDifferentRelevance,
     MockAvailabilityWithSameRelevance,
@@ -35,7 +35,7 @@ describe("query measure date datasets", () => {
             await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
 
             const result: MeasureDateDatasets = await Tester.query(
-                queryDateDatasetsForMeasure(measureItem(ReferenceLdm.Won)),
+                queryDateDatasetsForMeasure(measureItem(ReferenceMd.Won)),
             );
 
             expect(datasetsDigest(result.dateDatasetsOrdered)).toMatchSnapshot();
@@ -56,7 +56,7 @@ describe("query measure date datasets", () => {
             await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
 
             const result: MeasureDateDatasets = await Tester.query(
-                queryDateDatasetsForMeasure(measureItem(ReferenceLdm.Won)),
+                queryDateDatasetsForMeasure(measureItem(ReferenceMd.Won)),
             );
 
             expect(datasetsDigest(result.dateDatasetsOrdered)).toMatchSnapshot();

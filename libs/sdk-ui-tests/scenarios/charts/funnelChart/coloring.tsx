@@ -6,7 +6,7 @@ import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "
 import { coloringCustomizer } from "../_infra/coloringVariants";
 import { FunnelChartWithArithmeticMeasures, FunnelChartWithMeasureAndViewBy } from "./base";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
-import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
@@ -36,7 +36,7 @@ const colorAssignment = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelCha
                 ],
             },
         },
-        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount, ReferenceLdm.Won)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceMd.Amount, ReferenceMd.Won)),
     )
     .addScenario(
         "assign color to attributes",

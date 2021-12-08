@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { storiesOf } from "@storybook/react";
 import React, { Component } from "react";
@@ -7,9 +7,9 @@ import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
 import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
 
 const backend = StorybookBackend();
-const measures = [ReferenceLdm.Amount, ReferenceLdm.Won];
-const attributes = [ReferenceLdm.Product.Name, ReferenceLdm.Department];
-const columns = [ReferenceLdm.ForecastCategory, ReferenceLdm.Region];
+const measures = [ReferenceMd.Amount, ReferenceMd.Won];
+const attributes = [ReferenceMd.Product.Name, ReferenceMd.Department];
+const columns = [ReferenceMd.ForecastCategory, ReferenceMd.Region];
 
 class PivotTableAggregationsMenu extends Component {
     public render() {

@@ -7,7 +7,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { CacheControl, withCaching } from "../index";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { IAttributeOrMeasure, IBucket, newBucket, newInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import { withEventing } from "../../eventingBackend";
 
@@ -59,8 +59,8 @@ describe("withCaching", () => {
     it("caches executions calls", async () => {
         const backend = withCachingForTests();
 
-        const first = await doExecution(backend, [ReferenceLdm.Won]);
-        const second = await doExecution(backend, [ReferenceLdm.Won]);
+        const first = await doExecution(backend, [ReferenceMd.Won]);
+        const second = await doExecution(backend, [ReferenceMd.Won]);
         const firstData = await first.readAll();
         const secondData = await second.readAll();
 
@@ -70,7 +70,7 @@ describe("withCaching", () => {
     it("maintains the caching decorator", async () => {
         const backend = withCachingForTests();
 
-        const result = await doExecution(backend, [ReferenceLdm.Won]);
+        const result = await doExecution(backend, [ReferenceMd.Won]);
         const dataView = await result.readAll();
 
         expect(dataView.result).toBe(result);
@@ -79,11 +79,11 @@ describe("withCaching", () => {
     it("caches insight executions calls with different buckets with the same measures and sanitizes the definition", async () => {
         const backend = withCachingForTests();
 
-        const firstBuckets = [newBucket("measures", ReferenceLdm.Won, ReferenceLdm.WinRate)];
+        const firstBuckets = [newBucket("measures", ReferenceMd.Won, ReferenceMd.WinRate)];
 
         const secondBuckets = [
-            newBucket("measures", ReferenceLdm.Won),
-            newBucket("secondary_measures", ReferenceLdm.WinRate),
+            newBucket("measures", ReferenceMd.Won),
+            newBucket("secondary_measures", ReferenceMd.WinRate),
         ];
 
         const first = await doInsightExecution(backend, firstBuckets);
@@ -108,11 +108,11 @@ describe("withCaching", () => {
     it("keeps the cached data views' methods intact", async () => {
         const backend = withCachingForTests();
 
-        const firstBuckets = [newBucket("measures", ReferenceLdm.Won, ReferenceLdm.WinRate)];
+        const firstBuckets = [newBucket("measures", ReferenceMd.Won, ReferenceMd.WinRate)];
 
         const secondBuckets = [
-            newBucket("measures", ReferenceLdm.Won),
-            newBucket("secondary_measures", ReferenceLdm.WinRate),
+            newBucket("measures", ReferenceMd.Won),
+            newBucket("secondary_measures", ReferenceMd.WinRate),
         ];
 
         const first = await doInsightExecution(backend, firstBuckets);
@@ -129,9 +129,9 @@ describe("withCaching", () => {
     it("evicts when execution cache limit hit", () => {
         const backend = withCachingForTests();
 
-        const first = doExecution(backend, [ReferenceLdm.Won]);
-        doExecution(backend, [ReferenceLdm.Amount]);
-        const second = doExecution(backend, [ReferenceLdm.Won]);
+        const first = doExecution(backend, [ReferenceMd.Won]);
+        doExecution(backend, [ReferenceMd.Amount]);
+        const second = doExecution(backend, [ReferenceMd.Won]);
 
         expect(second).not.toBe(first);
     });
@@ -139,7 +139,7 @@ describe("withCaching", () => {
     it("caches readWindow calls", async () => {
         const backend = withCachingForTests();
 
-        const result = await doExecution(backend, [ReferenceLdm.Won]);
+        const result = await doExecution(backend, [ReferenceMd.Won]);
         const first = await result.readWindow([0, 0], [1, 1]);
         const second = await result.readWindow([0, 0], [1, 1]);
 
@@ -149,7 +149,7 @@ describe("withCaching", () => {
     it("evicts when readWindow limit hit", async () => {
         const backend = withCachingForTests();
 
-        const result = await doExecution(backend, [ReferenceLdm.Won]);
+        const result = await doExecution(backend, [ReferenceMd.Won]);
         const first = result.readWindow([0, 0], [1, 1]);
         result.readWindow([0, 0], [2, 2]);
         const second = result.readWindow([0, 0], [1, 1]);
@@ -160,7 +160,7 @@ describe("withCaching", () => {
     it("deletes from cache if error occurs", async () => {
         const backend = withCachingForTests(dummyBackend());
 
-        const result = await doExecution(backend, [ReferenceLdm.Won]);
+        const result = await doExecution(backend, [ReferenceMd.Won]);
 
         // backend will throw no data
         const first = result.readWindow([0, 0], [1, 1]);
@@ -237,9 +237,9 @@ describe("withCaching", () => {
         const realBackend = withEventing(defaultBackend, { successfulExecute: () => effectiveExecutions++ });
         const cachingBackend = withCachingForTests(realBackend, (cc) => (cacheControl = cc));
 
-        await doExecution(cachingBackend, [ReferenceLdm.Won]);
+        await doExecution(cachingBackend, [ReferenceMd.Won]);
         cacheControl?.resetExecutions();
-        await doExecution(cachingBackend, [ReferenceLdm.Won]);
+        await doExecution(cachingBackend, [ReferenceMd.Won]);
 
         expect(effectiveExecutions).toEqual(2);
     });
@@ -339,11 +339,11 @@ describe("withCaching", () => {
 
                 const first = doGetAttributeDisplayForm(
                     backend,
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 );
                 const second = doGetAttributeDisplayForm(
                     backend,
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 );
 
                 expect(second).toBe(first);
@@ -353,10 +353,10 @@ describe("withCaching", () => {
                 const backend = withCachingForTests();
 
                 const first = await doGetAttributeDisplayForms(backend, [
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 ]);
                 const second = await doGetAttributeDisplayForms(backend, [
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 ]);
 
                 expect(second[0]).toBe(first[0]);
@@ -367,11 +367,11 @@ describe("withCaching", () => {
 
                 const scalar = await doGetAttributeDisplayForm(
                     backend,
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 );
                 const vector = await doGetAttributeDisplayForms(backend, [
-                    ReferenceLdm.Account.Name.attribute.displayForm,
-                    ReferenceLdm.Activity.Default.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                    ReferenceMd.Activity.Default.attribute.displayForm,
                 ]);
 
                 expect(vector[0]).toBe(scalar);
@@ -381,11 +381,11 @@ describe("withCaching", () => {
                 const backend = withCachingForTests();
 
                 const vector = await doGetAttributeDisplayForms(backend, [
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 ]);
                 const scalar = await doGetAttributeDisplayForm(
                     backend,
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 );
 
                 expect(scalar).toBe(vector[0]);
@@ -396,16 +396,16 @@ describe("withCaching", () => {
 
                 const first = doGetAttributeDisplayForm(
                     backend,
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 );
 
                 // other 2 calls with different display form to replace the first one
-                doGetAttributeDisplayForm(backend, ReferenceLdm.Activity.Default.attribute.displayForm);
-                doGetAttributeDisplayForm(backend, ReferenceLdm.Activity.Subject.attribute.displayForm);
+                doGetAttributeDisplayForm(backend, ReferenceMd.Activity.Default.attribute.displayForm);
+                doGetAttributeDisplayForm(backend, ReferenceMd.Activity.Subject.attribute.displayForm);
 
                 const second = doGetAttributeDisplayForm(
                     backend,
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 );
 
                 expect(second).not.toBe(first);
@@ -418,14 +418,14 @@ describe("withCaching", () => {
 
                 const first = doGetAttributeDisplayForm(
                     backend,
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 );
 
                 cacheControl?.resetAttributes();
 
                 const second = doGetAttributeDisplayForm(
                     backend,
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 );
 
                 expect(second).not.toBe(first);
@@ -438,14 +438,14 @@ describe("withCaching", () => {
 
                 const first = doGetAttributeDisplayForm(
                     backend,
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 );
 
                 cacheControl?.resetAll();
 
                 const second = doGetAttributeDisplayForm(
                     backend,
-                    ReferenceLdm.Account.Name.attribute.displayForm,
+                    ReferenceMd.Account.Name.attribute.displayForm,
                 );
 
                 expect(second).not.toBe(first);

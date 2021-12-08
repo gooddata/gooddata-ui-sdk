@@ -1,9 +1,12 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { idRef, newPositiveAttributeFilter, newNegativeAttributeFilter, uriRef } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Md } from "../../md";
+import { workspace } from "../../constants/fixtures";
 
+const EmployeeNameIdentifier = "label.employee.employeename";
+const employeeNameDisplayFormUri = `/gdc/md/${workspace}/obj/2201`;
 export class AttributeFilterComponentExample extends Component {
     public onApply = (...params: any[]): void => {
         // eslint-disable-next-line no-console
@@ -15,20 +18,20 @@ export class AttributeFilterComponentExample extends Component {
             <div>
                 <div>attribute defined by identifier</div>
                 <AttributeFilter
-                    filter={newPositiveAttributeFilter(idRef(LdmExt.EmployeeNameIdentifier), [])}
+                    filter={newPositiveAttributeFilter(idRef(EmployeeNameIdentifier), [])}
                     fullscreenOnMobile={false}
                     onApply={this.onApply}
                 />
                 <br />
                 <div>attribute defined by display form uri</div>
                 <AttributeFilter
-                    filter={newNegativeAttributeFilter(uriRef(LdmExt.employeeNameDisplayFormUri), [])}
+                    filter={newNegativeAttributeFilter(uriRef(employeeNameDisplayFormUri), [])}
                     onApply={this.onApply}
                 />
                 <br />
                 <div>attribute defined by filter definition, including selection</div>
                 <AttributeFilter
-                    filter={newPositiveAttributeFilter(Ldm.EmployeeName.Default, ["Abbie Adams"])}
+                    filter={newPositiveAttributeFilter(Md.EmployeeName.Default, ["Abbie Adams"])}
                     onApply={this.onApply}
                 />
             </div>

@@ -1,6 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
-import * as ExperimentalLdm from "./ldm/full";
+import * as ExperimentalMd from "./md/full";
 import * as ExperimentalRecordings from "./recordings";
 
-export { ExperimentalLdm, ExperimentalRecordings };
+export { ExperimentalMd, ExperimentalRecordings };

@@ -5,11 +5,11 @@ import { scenariosFor } from "../../src";
 import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base";
 import { GermanNumberFormat } from "../_infra/formatting";
 import { modifyMeasure } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { PivotTableWithSingleMeasureAndGrandTotal, PivotTableWithTwoMeasuresAndTotals } from "./totals";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames";
 
-const MeasureWithCustomFormat = modifyMeasure(ReferenceLdm.Amount, (m) =>
+const MeasureWithCustomFormat = modifyMeasure(ReferenceMd.Amount, (m) =>
     m.format("[backgroundColor=ffff00][green]#,##0.00 €").defaultLocalId(),
 );
 

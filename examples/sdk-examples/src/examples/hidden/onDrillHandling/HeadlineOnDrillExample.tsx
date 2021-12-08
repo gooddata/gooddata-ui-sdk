@@ -1,14 +1,20 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { measureIdentifier } from "@gooddata/sdk-model";
+import { measureIdentifier, modifyMeasure } from "@gooddata/sdk-model";
 
-import { LdmExt } from "../../../ldm";
+import { Md } from "../../../md";
 import { useOnDrillExample } from "./useOnDrillExample";
 
-const primaryMeasure = LdmExt.FranchiseFees;
-
-const secondaryMeasure = LdmExt.FranchiseFeesAdRoyalty;
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
+    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
+);
 
 export const HeadlineOnDrillExample: React.FC = () => {
     const { onDrill, renderDrillEvent } = useOnDrillExample();
@@ -25,12 +31,12 @@ export const HeadlineOnDrillExample: React.FC = () => {
                 </style>
                 <div className="column">
                     <Headline
-                        primaryMeasure={primaryMeasure}
-                        secondaryMeasure={secondaryMeasure}
+                        primaryMeasure={FranchiseFees}
+                        secondaryMeasure={FranchiseFeesAdRoyalty}
                         onDrill={onDrill}
                         drillableItems={[
                             {
-                                identifier: measureIdentifier(LdmExt.FranchisedSales)!,
+                                identifier: measureIdentifier(FranchisedSales)!,
                             },
                         ]}
                     />

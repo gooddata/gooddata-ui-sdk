@@ -1,14 +1,14 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
-import { Ldm } from "../../../ldm";
+import { Md } from "../../../md";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
 import { EmployeeProfile } from "./EmployeeProfile";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
 
 export const GlobalFiltersExample = (): JSX.Element => (
-    <AttributeElements displayForm={attributeDisplayFormRef(Ldm.EmployeeName.Default)} limit={20}>
+    <AttributeElements displayForm={attributeDisplayFormRef(Md.EmployeeName.Default)} limit={20}>
         {({ validElements, error, isLoading }) => {
             if (error) {
                 return <CustomError message="There was an error getting Employee Name attribute values" />;

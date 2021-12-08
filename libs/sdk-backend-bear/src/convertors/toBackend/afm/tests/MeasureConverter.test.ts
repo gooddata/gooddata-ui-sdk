@@ -1,8 +1,8 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { convertMeasure } from "../MeasureConverter";
 import { invalidMeasureDefinition } from "./InvalidInputs.fixture";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     newArithmeticMeasure,
     newPopMeasure,
@@ -13,12 +13,12 @@ import {
 
 describe("measure converter", () => {
     const Scenarios: Array<[string, any]> = [
-        ["local identifier of measure", ReferenceLdm.Amount],
+        ["local identifier of measure", ReferenceMd.Amount],
         [
             "converted arithmetic measure definition from model to AFM",
             newArithmeticMeasure(["foo", "bar"], "sum"),
         ],
-        ["converted pop measure definition from model to AFM", newPopMeasure(ReferenceLdm.Won, "attr")],
+        ["converted pop measure definition from model to AFM", newPopMeasure(ReferenceMd.Won, "attr")],
         [
             "converted previous period measure from model to AFM",
             newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }]),
@@ -38,7 +38,7 @@ describe("measure converter", () => {
         ],
         [
             "custom format: pop measure",
-            newPopMeasure(ReferenceLdm.Won, "attr", (m) => m.format("custom #,##0,00")),
+            newPopMeasure(ReferenceMd.Won, "attr", (m) => m.format("custom #,##0,00")),
         ],
         [
             "custom format: previous period measure",

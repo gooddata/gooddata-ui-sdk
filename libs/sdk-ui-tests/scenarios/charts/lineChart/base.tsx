@@ -1,83 +1,83 @@
 // (C) 2007-2019 GoodData Corporation
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const LineChartTwoMeasuresWithTrendyBy = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    trendBy: ReferenceLdm.CreatedQuarterYear,
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    trendBy: ReferenceMd.CreatedQuarterYear,
 };
 
 export const LineChartWithArithmeticMeasuresAndViewBy = {
     measures: [
-        ReferenceLdm.Amount,
-        ReferenceLdm.Won,
-        ReferenceLdmExt.CalculatedLost,
-        ReferenceLdmExt.CalculatedWonLostRatio,
+        ReferenceMd.Amount,
+        ReferenceMd.Won,
+        ReferenceMdExt.CalculatedLost,
+        ReferenceMdExt.CalculatedWonLostRatio,
     ],
-    trendBy: ReferenceLdm.CreatedQuarterYear,
+    trendBy: ReferenceMd.CreatedQuarterYear,
 };
 
 export const LineChartWithLotArithmeticMeasuresAndViewBy = {
     measures: [
-        ReferenceLdm.Amount,
-        ReferenceLdm.Won,
-        ReferenceLdm.Probability,
-        ReferenceLdm.WinRate,
-        ReferenceLdm.SnapshotEOP,
-        ReferenceLdmExt.CalculatedLost,
-        ReferenceLdmExt.CalculatedWonLostRatio,
+        ReferenceMd.Amount,
+        ReferenceMd.Won,
+        ReferenceMd.Probability,
+        ReferenceMd.WinRate,
+        ReferenceMd.SnapshotEOP,
+        ReferenceMdExt.CalculatedLost,
+        ReferenceMdExt.CalculatedWonLostRatio,
     ],
-    trendBy: ReferenceLdm.CreatedQuarterYear,
+    trendBy: ReferenceMd.CreatedQuarterYear,
 };
 
 export const LineChartWithManyDataPoints = {
-    measures: [ReferenceLdm.Amount],
-    filters: [newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 100000)],
-    trendBy: ReferenceLdm.Opportunity.Name,
+    measures: [ReferenceMd.Amount],
+    filters: [newMeasureValueFilter(ReferenceMd.Amount, "GREATER_THAN", 100000)],
+    trendBy: ReferenceMd.Opportunity.Name,
 };
 
 export const LineChartWithSegmentByDate = {
-    measures: [ReferenceLdm.Amount],
-    segmentBy: ReferenceLdm.CreatedYear,
+    measures: [ReferenceMd.Amount],
+    segmentBy: ReferenceMd.CreatedYear,
 };
 
 export const LineChartWithTrendByDateAndSegmentByDate = {
-    measures: [ReferenceLdm.Amount],
-    trendBy: ReferenceLdm.CreatedYear,
-    segmentBy: ReferenceLdm.ClosedYear,
+    measures: [ReferenceMd.Amount],
+    trendBy: ReferenceMd.CreatedYear,
+    segmentBy: ReferenceMd.ClosedYear,
 };
 
 export default scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
-        measures: [ReferenceLdm.Amount],
+        measures: [ReferenceMd.Amount],
     })
     .addScenario("single measure with trendBy", {
-        measures: [ReferenceLdm.Amount],
-        trendBy: ReferenceLdm.CreatedQuarterYear,
+        measures: [ReferenceMd.Amount],
+        trendBy: ReferenceMd.CreatedQuarterYear,
     })
     .addScenario("single measure with % and trendBy", {
-        measures: [ReferenceLdm.WinRate],
-        trendBy: ReferenceLdm.CreatedQuarterYear,
+        measures: [ReferenceMd.WinRate],
+        trendBy: ReferenceMd.CreatedQuarterYear,
     })
     .addScenario("two measures with trendBy", LineChartTwoMeasuresWithTrendyBy)
     .addScenario("two measures with trendBy and sort by measure", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        trendBy: ReferenceLdm.CreatedQuarterYear,
-        sortBy: [newMeasureSort(ReferenceLdm.Won, "asc")],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        trendBy: ReferenceMd.CreatedQuarterYear,
+        sortBy: [newMeasureSort(ReferenceMd.Won, "asc")],
     })
     .addScenario("two measures with trendBy and sort by attribute", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        trendBy: ReferenceLdm.CreatedQuarterYear,
-        sortBy: [newAttributeSort(ReferenceLdm.CreatedQuarterYear, "desc")],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        trendBy: ReferenceMd.CreatedQuarterYear,
+        sortBy: [newAttributeSort(ReferenceMd.CreatedQuarterYear, "desc")],
     })
     .addScenario("single measure with trendBy and segmentBy", {
-        measures: [ReferenceLdm.Amount],
-        trendBy: ReferenceLdm.CreatedQuarterYear,
-        segmentBy: ReferenceLdm.Region,
+        measures: [ReferenceMd.Amount],
+        trendBy: ReferenceMd.CreatedQuarterYear,
+        segmentBy: ReferenceMd.Region,
     })
     .addScenario("arithmetic measures", LineChartWithArithmeticMeasuresAndViewBy)
     .addScenario("with one measure and segment by date", LineChartWithSegmentByDate)

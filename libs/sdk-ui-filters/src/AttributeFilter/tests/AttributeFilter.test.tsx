@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+// (C) 2019-2021 GoodData Corporation
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
@@ -24,7 +24,7 @@ describe("AttributeFilter", () => {
     it("should download attribute title", async () => {
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
                 backend={backend}
                 onApply={noop}
                 workspace={workspace}
@@ -60,7 +60,7 @@ describe("AttributeFilter", () => {
         console.warn = warnMock;
         mount(
             <AttributeFilter
-                identifier={attributeIdentifier(ReferenceLdm.Product.Name)}
+                identifier={attributeIdentifier(ReferenceMd.Product.Name)}
                 backend={backend}
                 onApply={noop}
                 workspace={workspace}
@@ -76,8 +76,8 @@ describe("AttributeFilter", () => {
         expect(() => {
             mount(
                 <AttributeFilter
-                    filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
-                    identifier={attributeIdentifier(ReferenceLdm.Product.Name)}
+                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                    identifier={attributeIdentifier(ReferenceMd.Product.Name)}
                     backend={backend}
                     onApply={noop}
                     workspace={workspace}
@@ -90,7 +90,7 @@ describe("AttributeFilter", () => {
     it("should extract selection from filter definition with text values", async () => {
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"])}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, ["CompuSci"])}
                 backend={backend}
                 onApply={noop}
                 workspace={workspace}
@@ -106,7 +106,7 @@ describe("AttributeFilter", () => {
     it("should extract selection from filter definition with uri values", async () => {
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, {
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
                     uris: ["/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678"],
                 })}
                 backend={backend}
@@ -127,7 +127,7 @@ describe("AttributeFilter", () => {
         const onApply = jest.fn();
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"])}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, ["CompuSci"])}
                 backend={backend}
                 onApply={onApply}
                 workspace={workspace}
@@ -147,7 +147,7 @@ describe("AttributeFilter", () => {
             false,
         );
 
-        const expectedFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"]);
+        const expectedFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, ["CompuSci"]);
 
         expect(onApply).toHaveBeenCalledWith(expectedFilter);
     });
@@ -156,7 +156,7 @@ describe("AttributeFilter", () => {
         const onApply = jest.fn();
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"])}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, ["CompuSci"])}
                 backend={backend}
                 onApply={onApply}
                 workspace={workspace}
@@ -176,7 +176,7 @@ describe("AttributeFilter", () => {
             true,
         );
 
-        const expectedFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"]);
+        const expectedFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, ["CompuSci"]);
 
         expect(onApply).toHaveBeenCalledWith(expectedFilter);
     });
@@ -185,7 +185,7 @@ describe("AttributeFilter", () => {
         const onApply = jest.fn();
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, {
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
                     uris: ["/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678"],
                 })}
                 backend={backend}
@@ -207,7 +207,7 @@ describe("AttributeFilter", () => {
             false,
         );
 
-        const expectedFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, {
+        const expectedFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, {
             uris: ["/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678"],
         });
 

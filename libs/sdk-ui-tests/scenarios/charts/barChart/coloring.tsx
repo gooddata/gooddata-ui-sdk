@@ -11,7 +11,7 @@ import {
 } from "./base";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IBarChartProps>("BarChart", BarChart)
@@ -43,10 +43,7 @@ const colorAssignment = scenariosFor<IBarChartProps>("BarChart", BarChart)
         },
         (m) =>
             m.withInsightConverter(
-                replaceMappingPredicates(
-                    measureLocalId(ReferenceLdm.Amount),
-                    measureLocalId(ReferenceLdm.Won),
-                ),
+                replaceMappingPredicates(measureLocalId(ReferenceMd.Amount), measureLocalId(ReferenceMd.Won)),
             ),
     )
     .addScenario(
@@ -63,7 +60,7 @@ const colorAssignment = scenariosFor<IBarChartProps>("BarChart", BarChart)
                 ],
             },
         },
-        (m) => m.withInsightConverter(replaceMappingPredicates(measureLocalId(ReferenceLdm.Won))),
+        (m) => m.withInsightConverter(replaceMappingPredicates(measureLocalId(ReferenceMd.Won))),
     )
     .addScenario(
         "assign color to attribute element stack",

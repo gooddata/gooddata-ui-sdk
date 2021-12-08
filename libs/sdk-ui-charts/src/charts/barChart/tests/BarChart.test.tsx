@@ -1,10 +1,10 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { BarChart } from "../BarChart";
 import { IChartConfig } from "../../../interfaces";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import {
     attributeLocalId,
     IAttributeOrMeasure,
@@ -31,16 +31,16 @@ describe("BarChart", () => {
             <BarChart
                 workspace="foo"
                 backend={dummyBackend()}
-                measures={[ReferenceLdm.Amount]}
-                viewBy={ReferenceLdm.Product.Name}
-                stackBy={ReferenceLdm.Region}
-                sortBy={[newAttributeSort(ReferenceLdm.Product.Name, "asc")]}
+                measures={[ReferenceMd.Amount]}
+                viewBy={ReferenceMd.Product.Name}
+                stackBy={ReferenceMd.Region}
+                sortBy={[newAttributeSort(ReferenceMd.Product.Name, "asc")]}
             />,
         );
 
         const exceptedDimensions = newTwoDimensional(
-            [attributeLocalId(ReferenceLdm.Region)],
-            [attributeLocalId(ReferenceLdm.Product.Name), MeasureGroupIdentifier],
+            [attributeLocalId(ReferenceMd.Region)],
+            [attributeLocalId(ReferenceMd.Product.Name), MeasureGroupIdentifier],
         );
 
         expect(wrapper.find(CoreBarChart)).toHaveLength(1);
@@ -55,7 +55,7 @@ describe("BarChart", () => {
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
-            const wrapper = renderChart([ReferenceLdm.Amount], config);
+            const wrapper = renderChart([ReferenceMd.Amount], config);
             expect(wrapper.find(CoreBarChart).prop("config")).toEqual({
                 stackMeasures: true,
                 stackMeasuresToPercent: true,
@@ -63,7 +63,7 @@ describe("BarChart", () => {
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
-            const wrapper = renderChart([ReferenceLdmExt.AmountWithRatio], config);
+            const wrapper = renderChart([ReferenceMdExt.AmountWithRatio], config);
             expect(wrapper.find(CoreBarChart).prop("config")).toEqual({
                 stackMeasures: false,
                 stackMeasuresToPercent: false,

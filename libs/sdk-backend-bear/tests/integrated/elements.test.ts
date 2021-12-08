@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 
 import { testBackend, testWorkspace } from "./backend";
-import { ReferenceLdm, ReferenceRecordings, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceRecordings, ReferenceMdExt } from "@gooddata/reference-workspace";
 import {
     attributeDisplayFormRef,
     newNegativeAttributeFilter,
@@ -21,7 +21,7 @@ describe("bear elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(ReferenceMd.Account.Default))
                 .withLimit(20)
                 .query();
 
@@ -38,15 +38,15 @@ describe("bear elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(ReferenceMd.Account.Default))
                 .withLimit(20)
                 .withAttributeFilters([
                     {
-                        attributeFilter: newPositiveAttributeFilter(ReferenceLdm.Status_1, {
+                        attributeFilter: newPositiveAttributeFilter(ReferenceMd.Status_1, {
                             // get only Won accounts
                             uris: [wonAttributeElement!.uri],
                         }),
-                        overAttribute: ReferenceLdmExt.StageHistoryAttributeRef,
+                        overAttribute: ReferenceMdExt.StageHistoryAttributeRef,
                     },
                 ])
                 .query();
@@ -59,9 +59,9 @@ describe("bear elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(ReferenceMd.Account.Default))
                 .withLimit(20)
-                .withMeasures([ReferenceLdm.Amount])
+                .withMeasures([ReferenceMd.Amount])
                 .query();
 
             expect(result).toMatchSnapshot();
@@ -78,7 +78,7 @@ describe("bear elements", () => {
             testWorkspace(),
         );
         it("should load attribute filter elements for provided positive attribute filter", async () => {
-            const attributeFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, {
+            const attributeFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, {
                 uris: [testAttributeElementUri],
             });
             const result = await backend
@@ -92,7 +92,7 @@ describe("bear elements", () => {
         });
 
         it("should load attribute filter elements for provided negative attribute filter", async () => {
-            const testAttributeRef = attributeDisplayFormRef(ReferenceLdm.Product.Name);
+            const testAttributeRef = attributeDisplayFormRef(ReferenceMd.Product.Name);
             const attributeFilter = newNegativeAttributeFilter(testAttributeRef, {
                 uris: [testAttributeElementUri],
             });
@@ -107,7 +107,7 @@ describe("bear elements", () => {
         });
 
         it("should load no attribute filter elements for provided ALL attribute filter", async () => {
-            const testAttributeRef = attributeDisplayFormRef(ReferenceLdm.Product.Name);
+            const testAttributeRef = attributeDisplayFormRef(ReferenceMd.Product.Name);
             const allAttributeFilter = newNegativeAttributeFilter(testAttributeRef, {
                 uris: [],
             });
@@ -122,7 +122,7 @@ describe("bear elements", () => {
         });
 
         it("should return attribute filter elements for provided attribute filter with elements by value", async () => {
-            const testAttributeRef = attributeDisplayFormRef(ReferenceLdm.Product.Name);
+            const testAttributeRef = attributeDisplayFormRef(ReferenceMd.Product.Name);
             const attributeFilter = newNegativeAttributeFilter(testAttributeRef, {
                 values: ["Educationly"],
             });
@@ -141,7 +141,7 @@ describe("bear elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(ReferenceMd.Account.Default))
                 .withLimit(2)
                 .query();
 
@@ -154,7 +154,7 @@ describe("bear elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(ReferenceMd.Account.Default))
                 .withLimit(100)
                 .withOffset(5000)
                 .query();
@@ -167,7 +167,7 @@ describe("bear elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(ReferenceMd.Account.Default))
                 .withLimit(100)
                 .query();
 
@@ -180,7 +180,7 @@ describe("bear elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(ReferenceMd.Account.Default))
                 .withLimit(100)
                 .withOffset(4840)
                 .query();

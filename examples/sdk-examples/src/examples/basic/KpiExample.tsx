@@ -1,7 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { Kpi } from "@gooddata/sdk-ui";
-import { Ldm } from "../../ldm";
+import { Md } from "../../md";
 
 export const KpiExample = (): JSX.Element => {
     return (
@@ -19,7 +19,7 @@ export const KpiExample = (): JSX.Element => {
                     width: 300px;
                 }
             `}</style>
-            <Kpi measure={Ldm.$TotalSales} />
+            <Kpi measure={Md.$TotalSales} />
         </div>
     );
 };

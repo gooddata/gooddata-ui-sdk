@@ -1,14 +1,14 @@
 // (C) 2021 GoodData Corporation
 import { IFilter, newRelativeDateFilter, ObjRef } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 import { hasDateFilterForDateDataset } from "../filters";
 
 describe("hasDateFilterForDateDataset", () => {
     type Scenario = [boolean, string, IFilter[], ObjRef];
 
-    const dateDimension = ReferenceLdm.DateDatasets.Created.ref;
-    const otherDateDimension = ReferenceLdm.DateDatasets.Timeline.ref;
+    const dateDimension = ReferenceMd.DateDatasets.Created.ref;
+    const otherDateDimension = ReferenceMd.DateDatasets.Timeline.ref;
 
     const matchingFilter = newRelativeDateFilter(dateDimension, "GDC.time.date", -5, 5);
     const notMatchingFilter = newRelativeDateFilter(otherDateDimension, "GDC.time.date", -5, 5);

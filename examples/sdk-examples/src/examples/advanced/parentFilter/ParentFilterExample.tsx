@@ -1,11 +1,20 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState, useMemo } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { newPositiveAttributeFilter, attributeDisplayFormRef, ObjRef, idRef } from "@gooddata/sdk-model";
+import {
+    newPositiveAttributeFilter,
+    attributeDisplayFormRef,
+    ObjRef,
+    idRef,
+    modifyMeasure,
+} from "@gooddata/sdk-model";
 import Select from "react-select";
-import { Ldm, LdmExt } from "../../../ldm";
+import { Md } from "../../../md";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+
+const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 
 interface IFilterValue {
     value: string;
@@ -77,14 +86,14 @@ export const ParentFilterExample: React.FC = () => {
 
         if (stateFilterValues?.length) {
             filters.push(
-                newPositiveAttributeFilter(Ldm.LocationState, {
+                newPositiveAttributeFilter(Md.LocationState, {
                     uris: stateFilterValues.map((filter) => filter.value),
                 }),
             );
         }
         if (cityFilterValues?.length) {
             filters.push(
-                newPositiveAttributeFilter(Ldm.LocationCity, {
+                newPositiveAttributeFilter(Md.LocationCity, {
                     uris: cityFilterValues.map((filter) => filter.value),
                 }),
             );
@@ -97,10 +106,10 @@ export const ParentFilterExample: React.FC = () => {
         return stateFilterValues?.length
             ? [
                   {
-                      attributeFilter: newPositiveAttributeFilter(Ldm.LocationState, {
+                      attributeFilter: newPositiveAttributeFilter(Md.LocationState, {
                           uris: stateFilterValues.map((filter) => filter.value),
                       }),
-                      overAttribute: idRef(LdmExt.locationIdAttributeIdentifier),
+                      overAttribute: idRef(locationIdAttributeIdentifier),
                   },
               ]
             : undefined;
@@ -116,7 +125,7 @@ export const ParentFilterExample: React.FC = () => {
         <div>
             <span>Total Sales per site in&emsp;</span>
             <CustomFilter
-                displayForm={attributeDisplayFormRef(Ldm.LocationState)}
+                displayForm={attributeDisplayFormRef(Md.LocationState)}
                 filterValues={stateFilterValues}
                 onChange={onStateValueChange}
                 placeholder="all states"
@@ -124,7 +133,7 @@ export const ParentFilterExample: React.FC = () => {
             />
             &emsp;and&emsp;{" "}
             <CustomFilter
-                displayForm={attributeDisplayFormRef(Ldm.LocationCity)}
+                displayForm={attributeDisplayFormRef(Md.LocationCity)}
                 filterValues={cityFilterValues}
                 onChange={setCityFilterValues}
                 placeholder="all cities"
@@ -134,8 +143,8 @@ export const ParentFilterExample: React.FC = () => {
             <hr className="separator" />
             <div style={{ height: 500 }}>
                 <BarChart
-                    measures={[LdmExt.TotalSales1]}
-                    viewBy={Ldm.LocationName.Default}
+                    measures={[TotalSales]}
+                    viewBy={Md.LocationName.Default}
                     filters={insightFilters}
                     height={500}
                 />

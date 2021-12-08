@@ -1,19 +1,19 @@
 // (C) 2007-2019 GoodData Corporation
-import { ExperimentalLdm } from "@gooddata/experimental-workspace";
+import { ExperimentalMd } from "@gooddata/experimental-workspace";
 import { scenariosFor } from "../../src";
 import { newRankingFilter, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { PivotTable, IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 
 export const PivotTableWithRankingFilter = {
-    measures: [ExperimentalLdm.Amount],
-    rows: [ExperimentalLdm.Product.Default],
-    filters: [newRankingFilter(ExperimentalLdm.Amount, "BOTTOM", 10)],
+    measures: [ExperimentalMd.Amount],
+    rows: [ExperimentalMd.Product.Default],
+    filters: [newRankingFilter(ExperimentalMd.Amount, "BOTTOM", 10)],
 };
 
 export const PivotTableWithMeasureValueFilter = {
-    measures: [ExperimentalLdm.Amount],
-    rows: [ExperimentalLdm.Product.Default],
-    filters: [newMeasureValueFilter(ExperimentalLdm.Amount, "GREATER_THAN", 500)],
+    measures: [ExperimentalMd.Amount],
+    rows: [ExperimentalMd.Product.Default],
+    filters: [newMeasureValueFilter(ExperimentalMd.Amount, "GREATER_THAN", 500)],
 };
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)

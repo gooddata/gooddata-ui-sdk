@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import { PluggableBulletChart } from "../PluggableBulletChart";
@@ -14,7 +14,7 @@ import { DEFAULT_BULLET_CHART_CONFIG } from "../../../../constants/uiConfig";
 import { OverTimeComparisonTypes, BucketNames, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
-import { Department, Region } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
 import { createDrillEvent, insightDefinitionToInsight, createDrillDefinition } from "../../tests/testHelpers";
 import {
     sourceInsightDef,

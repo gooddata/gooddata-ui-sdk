@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import React, { Component } from "react";
 import {
     PivotTable,
@@ -9,21 +9,28 @@ import {
     newWidthForSelectedColumns,
     newAttributeColumnLocator,
 } from "@gooddata/sdk-ui-pivot";
-import { LdmExt } from "../../ldm";
+import { Md } from "../../md";
 import { workspace } from "../../constants/fixtures";
+import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 
-const measures = [LdmExt.FranchiseFees];
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("LocationState"));
+const quarterDate = modifyAttribute(Md.DateDatasets.Date.Quarter.Default, (a) => a.localId("quarterDate"));
 
-const attributes = [LdmExt.LocationState];
+const measures = [FranchiseFees];
 
-const columns = [LdmExt.quarterDate];
+const attributes = [LocationState];
+
+const columns = [quarterDate];
 
 const attributeWidth = (width: number) => newWidthForAttributeColumn(attributes[0], width);
 
 const measureWidth = (width: number) =>
     newWidthForSelectedColumns(
-        LdmExt.FranchiseFees,
-        [newAttributeColumnLocator(LdmExt.quarterDate, `/gdc/md/${workspace}/obj/2009/elements?id=1`)],
+        FranchiseFees,
+        [newAttributeColumnLocator(quarterDate, `/gdc/md/${workspace}/obj/2009/elements?id=1`)],
         width,
     );
 

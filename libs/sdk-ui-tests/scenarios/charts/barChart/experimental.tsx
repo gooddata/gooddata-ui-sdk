@@ -1,24 +1,24 @@
 // (C) 2007-2019 GoodData Corporation
-import { ExperimentalLdm } from "@gooddata/experimental-workspace";
+import { ExperimentalMd } from "@gooddata/experimental-workspace";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newRankingFilter, newMeasureValueFilter } from "@gooddata/sdk-model";
 
 const BarChartWithSingleMeasureAndViewBy = {
-    measures: [ExperimentalLdm.Amount],
-    viewBy: [ExperimentalLdm.Product.Name],
+    measures: [ExperimentalMd.Amount],
+    viewBy: [ExperimentalMd.Product.Name],
 };
 
 const BarChartWithRankingFilter = {
-    measures: [ExperimentalLdm.Amount],
-    viewBy: [ExperimentalLdm.Product.Default],
-    filters: [newRankingFilter(ExperimentalLdm.Amount, "TOP", 3)],
+    measures: [ExperimentalMd.Amount],
+    viewBy: [ExperimentalMd.Product.Default],
+    filters: [newRankingFilter(ExperimentalMd.Amount, "TOP", 3)],
 };
 
 const BarChartWithMeasureValueFilter = {
-    measures: [ExperimentalLdm.Amount],
-    viewBy: [ExperimentalLdm.Product.Default],
-    filters: [newMeasureValueFilter(ExperimentalLdm.Amount, "GREATER_THAN", 500)],
+    measures: [ExperimentalMd.Amount],
+    viewBy: [ExperimentalMd.Product.Default],
+    filters: [newMeasureValueFilter(ExperimentalMd.Amount, "GREATER_THAN", 500)],
 };
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)

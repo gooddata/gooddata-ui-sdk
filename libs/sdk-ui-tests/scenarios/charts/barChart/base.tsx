@@ -1,50 +1,50 @@
 // (C) 2007-2019 GoodData Corporation
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const BarChartWithSingleMeasureAndViewBy = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.Product.Name],
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.Product.Name],
 };
 
 export const BarChartWithSingleMeasureViewByAndStackBy = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.Product.Name],
-    stackBy: ReferenceLdm.Region,
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.Product.Name],
+    stackBy: ReferenceMd.Region,
 };
 
 export const BarChartWithTwoMeasuresAndViewBy = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    viewBy: [ReferenceLdm.Product.Name],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    viewBy: [ReferenceMd.Product.Name],
 };
 
 export const BarChartWithTwoMeasuresAndTwoViewBy = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
 };
 
 export const BarChartWithTwoMeasuresAndTwoViewByFiltered = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-    viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
     filters: [
-        newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["WonderKid"]),
-        newPositiveAttributeFilter(ReferenceLdm.Region, ["East Coast"]),
+        newPositiveAttributeFilter(ReferenceMd.Product.Name, ["WonderKid"]),
+        newPositiveAttributeFilter(ReferenceMd.Region, ["East Coast"]),
     ],
 };
 
 export const BarChartWithSingleMeasureAndViewByAndStackMultipleItems = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.Region],
-    stackBy: ReferenceLdm.Product.Name,
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.Region],
+    stackBy: ReferenceMd.Product.Name,
 };
 
 export const BarChartWithSingleMeasureAndTwoViewByAndStack = {
-    measures: [ReferenceLdm.Amount],
-    viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
-    stackBy: ReferenceLdm.Department,
+    measures: [ReferenceMd.Amount],
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
+    stackBy: ReferenceMd.Department,
 };
 
 const arrayOfAccountUris = [
@@ -94,41 +94,41 @@ const arrayOfAccountUris = [
 ];
 
 export const BarChartWithLargeLegend = {
-    measures: [ReferenceLdm.Amount],
-    stackBy: ReferenceLdm.Account.Name,
-    filters: [newPositiveAttributeFilter(ReferenceLdm.Account.Name, { uris: arrayOfAccountUris })],
+    measures: [ReferenceMd.Amount],
+    stackBy: ReferenceMd.Account.Name,
+    filters: [newPositiveAttributeFilter(ReferenceMd.Account.Name, { uris: arrayOfAccountUris })],
 };
 
 export const BarChartWithArithmeticMeasuresAndViewBy = {
     measures: [
-        ReferenceLdm.Amount,
-        ReferenceLdm.Won,
-        ReferenceLdmExt.CalculatedLost,
-        ReferenceLdmExt.CalculatedWonLostRatio,
+        ReferenceMd.Amount,
+        ReferenceMd.Won,
+        ReferenceMdExt.CalculatedLost,
+        ReferenceMdExt.CalculatedWonLostRatio,
     ],
-    viewBy: [ReferenceLdm.Product.Name],
+    viewBy: [ReferenceMd.Product.Name],
 };
 
 export const BarChartViewByDateAndPop = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.WonPopClosedYear],
-    viewBy: [ReferenceLdm.ClosedYear],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
+    viewBy: [ReferenceMd.ClosedYear],
 };
 
 export const BarChartViewByTwoDates = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.WonPopClosedYear],
-    viewBy: [ReferenceLdm.ClosedYear, ReferenceLdmExt.ModifiedClosedYear],
+    measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
+    viewBy: [ReferenceMd.ClosedYear, ReferenceMdExt.ModifiedClosedYear],
 };
 
 export const BarChartStackByDate = {
-    measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.WonPopClosedYear],
-    stackBy: ReferenceLdm.ClosedYear,
+    measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
+    stackBy: ReferenceMd.ClosedYear,
 };
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .addScenario("single measure", {
-        measures: [ReferenceLdm.Amount],
+        measures: [ReferenceMd.Amount],
     })
     .addScenario("single measure with viewBy", BarChartWithSingleMeasureAndViewBy)
     .addScenario("single measure with viewBy and stackBy", BarChartWithSingleMeasureViewByAndStackBy)
@@ -140,26 +140,26 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         BarChartWithTwoMeasuresAndTwoViewByFiltered,
     )
     .addScenario("two measures with viewBy sorted by attribute", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        viewBy: [ReferenceLdm.Product.Name],
-        sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        viewBy: [ReferenceMd.Product.Name],
+        sortBy: [newAttributeSort(ReferenceMd.Product.Name, "desc")],
     })
     .addScenario("two measures with viewBy sorted by measure", {
-        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
-        viewBy: [ReferenceLdm.Product.Name],
-        sortBy: [newMeasureSort(ReferenceLdm.Won, "asc")],
+        measures: [ReferenceMd.Amount, ReferenceMd.Won],
+        viewBy: [ReferenceMd.Product.Name],
+        sortBy: [newMeasureSort(ReferenceMd.Won, "asc")],
     })
     .addScenario("viewBy date and PoP measure", BarChartViewByDateAndPop)
     .addScenario("arithmetic measures", BarChartWithArithmeticMeasuresAndViewBy)
     .addScenario("four measures and PoP", {
         measures: [
-            ReferenceLdm.Amount,
-            ReferenceLdm.Won,
-            ReferenceLdmExt.WonPopClosedYear,
-            ReferenceLdmExt.CalculatedLost,
-            ReferenceLdmExt.CalculatedWonLostRatio,
+            ReferenceMd.Amount,
+            ReferenceMd.Won,
+            ReferenceMdExt.WonPopClosedYear,
+            ReferenceMdExt.CalculatedLost,
+            ReferenceMdExt.CalculatedWonLostRatio,
         ],
-        viewBy: [ReferenceLdm.ClosedYear],
+        viewBy: [ReferenceMd.ClosedYear],
     })
     .addScenario("viewBy with two dates", BarChartViewByTwoDates)
     .addScenario("stackBy with one date", BarChartStackByDate);

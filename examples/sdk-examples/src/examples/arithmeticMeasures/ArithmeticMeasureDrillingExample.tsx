@@ -1,15 +1,27 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { measureIdentifier } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { measureIdentifier, measureLocalId, modifyMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
 
-const measures = [LdmExt.NrRestaurants, LdmExt.TotalSales2, LdmExt.arithmeticMeasure];
+const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) =>
+    m.format("#,##0").localId("numberOfRestaurants"),
+);
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
+const arithmeticMeasure = newArithmeticMeasure(
+    [measureLocalId(TotalSales), measureLocalId(NrRestaurants)],
+    "ratio",
+    (m) => m.format("#,##0").title("$ Avg Restaurant Sales"),
+);
 
-const rows = [Ldm.LocationState];
+const measures = [NrRestaurants, TotalSales, arithmeticMeasure];
 
-const drillableItems = [HeaderPredicates.composedFromIdentifier(measureIdentifier(LdmExt.TotalSales2)!)];
+const rows = [Md.LocationState];
+
+const drillableItems = [HeaderPredicates.composedFromIdentifier(measureIdentifier(TotalSales)!)];
 
 const style = { height: 200 };
 

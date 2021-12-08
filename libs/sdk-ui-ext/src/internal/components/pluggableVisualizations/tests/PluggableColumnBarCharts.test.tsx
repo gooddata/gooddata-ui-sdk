@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks";
@@ -32,7 +32,7 @@ import {
 } from "./getInsightWithDrillDownAppliedMock";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { createDrillEvent, createDrillDefinition, insightDefinitionToInsight } from "./testHelpers";
-import { Department, Region } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
 
 describe("PluggableColumnBarCharts", () => {
     const defaultProps: IVisConstruct = {

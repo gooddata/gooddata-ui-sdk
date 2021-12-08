@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import React, { Component } from "react";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
@@ -13,7 +13,7 @@ import {
     segmentByAttribute,
     colorMeasure,
     attributeUriPredicate,
-} from "../../ldm/geoModel";
+} from "../../md/geoModel";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-charts";
 

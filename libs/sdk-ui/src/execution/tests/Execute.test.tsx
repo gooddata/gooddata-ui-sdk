@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
@@ -6,7 +6,7 @@ import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base/results/facade";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { Execute, IExecuteProps } from "../Execute";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
 import { createExecution, CreateExecutionOptions } from "../createExecution";
 import { LoadingComponent } from "../../base/react/LoadingComponent";
@@ -20,7 +20,7 @@ const renderDummyExecutor = (
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
     return mount(
-        <Execute backend={backend} workspace={"testWorkspace"} seriesBy={[ReferenceLdm.Amount]} {...props}>
+        <Execute backend={backend} workspace={"testWorkspace"} seriesBy={[ReferenceMd.Amount]} {...props}>
             {child}
         </Execute>,
     );
@@ -220,38 +220,38 @@ describe("Execute", () => {
 
 describe("createExecution", () => {
     const Scenarios: Array<[string, Partial<IExecuteProps>]> = [
-        ["unscoped series only", { seriesBy: [ReferenceLdm.Amount] }],
-        ["scoped series only", { seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Region] }],
+        ["unscoped series only", { seriesBy: [ReferenceMd.Amount] }],
+        ["scoped series only", { seriesBy: [ReferenceMd.Amount, ReferenceMd.Region] }],
         [
             "unscoped series with slicing",
-            { seriesBy: [ReferenceLdm.Amount], slicesBy: [ReferenceLdm.Product.Name] },
+            { seriesBy: [ReferenceMd.Amount], slicesBy: [ReferenceMd.Product.Name] },
         ],
         [
             "scoped series with slicing",
-            { seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Region], slicesBy: [ReferenceLdm.Product.Name] },
+            { seriesBy: [ReferenceMd.Amount, ReferenceMd.Region], slicesBy: [ReferenceMd.Product.Name] },
         ],
         [
             "scoped series with slicing and filter",
             {
-                seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Region],
-                slicesBy: [ReferenceLdm.Product.Name],
-                filters: [newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"])],
+                seriesBy: [ReferenceMd.Amount, ReferenceMd.Region],
+                slicesBy: [ReferenceMd.Product.Name],
+                filters: [newPositiveAttributeFilter(ReferenceMd.Product.Name, ["CompuSci"])],
             },
         ],
         [
             "scoped series with slicing and sortBy",
             {
-                seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Region],
-                slicesBy: [ReferenceLdm.Product.Name],
-                sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
+                seriesBy: [ReferenceMd.Amount, ReferenceMd.Region],
+                slicesBy: [ReferenceMd.Product.Name],
+                sortBy: [newAttributeSort(ReferenceMd.Product.Name, "desc")],
             },
         ],
         [
             "scoped series with slicing and totals",
             {
-                seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Region],
-                slicesBy: [ReferenceLdm.Product.Name],
-                totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name)],
+                seriesBy: [ReferenceMd.Amount, ReferenceMd.Region],
+                slicesBy: [ReferenceMd.Product.Name],
+                totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)],
             },
         ],
     ];

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 import { LineChart, ColumnChart, IChartConfig } from "@gooddata/sdk-ui-charts";
@@ -9,7 +9,9 @@ import sdk from "@gooddata/api-client-bear";
 import { Layout } from "../../../components/Layout";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { workspace } from "../../../constants/fixtures";
-import { Ldm, LdmExt } from "../../../ldm";
+import { Md } from "../../../md";
+
+const franchiseFeesTag = "franchise_fees";
 
 interface IDynamicMeasuresExampleState {
     measureList: null | any[];
@@ -40,7 +42,7 @@ export const DynamicMeasuresExample: React.FC = () => {
     });
 
     useEffect(() => {
-        getMeasureListByTag(LdmExt.franchiseFeesTag)
+        getMeasureListByTag(franchiseFeesTag)
             .then((measures) => {
                 const updatedState = measures.length
                     ? {
@@ -53,8 +55,8 @@ export const DynamicMeasuresExample: React.FC = () => {
                     : {
                           measureList: null,
                           error: {
-                              message: `No measures with tag ${LdmExt.franchiseFeesTag}`,
-                              description: `Please check your project. Franchise fees measures should have assigned the tag ${LdmExt.franchiseFeesTag}.`,
+                              message: `No measures with tag ${franchiseFeesTag}`,
+                              description: `Please check your project. Franchise fees measures should have assigned the tag ${franchiseFeesTag}.`,
                           },
                       };
 
@@ -64,7 +66,7 @@ export const DynamicMeasuresExample: React.FC = () => {
                 setState({
                     measureList: null,
                     error: {
-                        message: `There was Error while requesting measures by tag ${LdmExt.franchiseFeesTag}`,
+                        message: `There was Error while requesting measures by tag ${franchiseFeesTag}`,
                         description: JSON.stringify(error),
                     },
                 });
@@ -156,7 +158,7 @@ export const DynamicMeasuresExample: React.FC = () => {
                         }
                     `}</style>
                     <div className="graph graph-line s-dynamic-measures-line-chart">
-                        <LineChart measures={measures} trendBy={Ldm.DateMonth.Short} config={config} />
+                        <LineChart measures={measures} trendBy={Md.DateMonth.Short} config={config} />
                     </div>
                     <div className="graph graph-column s-dynamic-measures-column-chart">
                         <ColumnChart measures={measures} config={config} />

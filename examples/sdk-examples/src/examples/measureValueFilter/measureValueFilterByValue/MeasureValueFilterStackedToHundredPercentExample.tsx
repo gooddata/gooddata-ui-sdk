@@ -1,15 +1,28 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { newMeasureValueFilter, IMeasureValueFilter } from "@gooddata/sdk-model";
-import { LdmExt } from "../../../ldm";
+import {
+    newMeasureValueFilter,
+    IMeasureValueFilter,
+    modifyMeasure,
+    modifyAttribute,
+} from "@gooddata/sdk-model";
+import { Md } from "../../../md";
 import { IMeasureValueFilterState } from "./MeasureValueFilterExample";
 
-const measures = [LdmExt.TotalSales2, LdmExt.numberOfChecks];
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
+const numberOfChecks = modifyMeasure(Md.NrChecks, (m) =>
+    m.localId("numOfChecks").format("#,##0").alias("# Checks").title("Number of Checks"),
+);
+const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
 
-const attributes = [LdmExt.LocationName];
+const measures = [TotalSales, numberOfChecks];
 
-const greaterThanFilter = newMeasureValueFilter(LdmExt.TotalSales2, "GREATER_THAN", 7000000);
+const attributes = [LocationName];
+
+const greaterThanFilter = newMeasureValueFilter(TotalSales, "GREATER_THAN", 7000000);
 
 export class MeasureValueFilterExample extends Component<unknown, IMeasureValueFilterState> {
     state: IMeasureValueFilterState = {

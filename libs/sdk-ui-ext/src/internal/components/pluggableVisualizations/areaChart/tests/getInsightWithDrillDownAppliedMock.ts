@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import {
     IInsightDefinition,
@@ -10,7 +10,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { ReferenceData } from "@gooddata/reference-workspace";
-import { Department, Region, Won } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Department, Region, Won } from "@gooddata/reference-workspace/dist/md/full";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 const regionUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1024";

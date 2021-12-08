@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import noop from "lodash/noop";
 import { PluggableTreemap } from "../PluggableTreemap";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
@@ -13,7 +13,7 @@ import {
 } from "../../../../interfaces/Visualization";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { Department, Region } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
 import { IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
 import { createDrillEvent, insightDefinitionToInsight, createDrillDefinition } from "../../tests/testHelpers";
 import {

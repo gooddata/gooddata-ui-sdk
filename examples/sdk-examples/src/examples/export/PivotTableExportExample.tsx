@@ -1,24 +1,38 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newAttributeSort, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { newAttributeSort, newAbsoluteDateFilter, modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Ldm, LdmExt } from "../../ldm";
+import { Md } from "../../md";
+
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
+    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
+);
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
+);
+const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
+    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
+    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
+);
+const MenuCategory = modifyAttribute(Md.MenuCategory, (a) => a.localId("menuCategory"));
 
 const measures = [
-    LdmExt.FranchiseFees,
-    LdmExt.FranchiseFeesAdRoyalty,
-    LdmExt.FranchiseFeesInitialFranchiseFee,
-    LdmExt.FranchiseFeesOngoingRoyalty,
+    FranchiseFees,
+    FranchiseFeesAdRoyalty,
+    FranchiseFeesInitialFranchiseFee,
+    FranchiseFeesOngoingRoyalty,
 ];
 
-const attributes = [Ldm.LocationState, Ldm.LocationName.Default, LdmExt.MenuCategory];
+const attributes = [Md.LocationState, Md.LocationName.Default, MenuCategory];
 
-const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
+const columns = [Md.DateQuarter, Md.DateMonth.Short];
 
 const sortBy = [newAttributeSort("menu", "asc")];
 
-const filters = [newAbsoluteDateFilter(Ldm.DateDatasets.Date, "2017-01-01", "2017-12-31")];
+const filters = [newAbsoluteDateFilter(Md.DateDatasets.Date, "2017-01-01", "2017-12-31")];
 
 const style = { height: 300 };
 

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { mount } from "enzyme";
 import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
@@ -18,7 +18,7 @@ import {
     newRankingFilter,
 } from "@gooddata/sdk-model";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 import { TableDescriptor } from "../../tableDescriptor";
 
@@ -85,13 +85,13 @@ describe("AggregationsMenu", () => {
         const totals: ITotal[] = [
             {
                 type: "sum",
-                attributeIdentifier: attributeLocalId(ReferenceLdm.Product.Name), // first row attribute => grand totals, selected right in menu
-                measureIdentifier: measureLocalId(ReferenceLdm.Amount),
+                attributeIdentifier: attributeLocalId(ReferenceMd.Product.Name), // first row attribute => grand totals, selected right in menu
+                measureIdentifier: measureLocalId(ReferenceMd.Amount),
             },
             {
                 type: "min",
-                attributeIdentifier: attributeLocalId(ReferenceLdm.Department), // second row attr => subtotals, selected in submenu
-                measureIdentifier: measureLocalId(ReferenceLdm.Amount),
+                attributeIdentifier: attributeLocalId(ReferenceMd.Department), // second row attr => subtotals, selected in submenu
+                measureIdentifier: measureLocalId(ReferenceMd.Amount),
             },
         ];
         const wrapper = render({ getTotals: () => totals });

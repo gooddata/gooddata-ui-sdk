@@ -1,13 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import { measureIdentifier } from "@gooddata/sdk-model";
 import { IDrillableItemIdentifier } from "@gooddata/sdk-ui";
 import { useOnDrillExample } from "./useOnDrillExample";
-import { Ldm } from "../../../ldm";
+import { Md } from "../../../md";
 
 const drillableItems: IDrillableItemIdentifier = {
-    identifier: measureIdentifier(Ldm.$TotalSales)!,
+    identifier: measureIdentifier(Md.$TotalSales)!,
 };
 
 const style = { height: 300 };
@@ -19,7 +19,7 @@ export const InsightOnDrillExample: React.FC = () => {
         <div className="s-insightView-on-drill">
             <div style={style} className="s-insightView-chart">
                 <InsightView
-                    insight={Ldm.Insights.SalesOverTime}
+                    insight={Md.Insights.SalesOverTime}
                     onDrill={onDrill}
                     drillableItems={[drillableItems]}
                 />

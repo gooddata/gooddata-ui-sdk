@@ -1,14 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ScatterPlot, IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort } from "@gooddata/sdk-model";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const ScatterPlotWithMeasuresAndAttribute = {
-    xAxisMeasure: ReferenceLdm.Amount,
-    yAxisMeasure: ReferenceLdm.WinRate,
-    attribute: ReferenceLdm.Product.Name,
+    xAxisMeasure: ReferenceMd.Amount,
+    yAxisMeasure: ReferenceMd.WinRate,
+    attribute: ReferenceMd.Product.Name,
 };
 
 /*
@@ -19,25 +19,25 @@ export const ScatterPlotWithMeasuresAndAttribute = {
 export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("x axis measure", {
-        xAxisMeasure: ReferenceLdm.Amount,
+        xAxisMeasure: ReferenceMd.Amount,
     })
     .addScenario("x axis measure and attribute", {
-        xAxisMeasure: ReferenceLdm.Amount,
-        attribute: ReferenceLdm.Product.Name,
+        xAxisMeasure: ReferenceMd.Amount,
+        attribute: ReferenceMd.Product.Name,
     })
     .addScenario("y axis measure and attribute", {
-        yAxisMeasure: ReferenceLdm.Amount,
-        attribute: ReferenceLdm.Product.Name,
+        yAxisMeasure: ReferenceMd.Amount,
+        attribute: ReferenceMd.Product.Name,
     })
     .addScenario("x and y axis measures and attribute", ScatterPlotWithMeasuresAndAttribute)
     .addScenario("x and y axis measures and attribute with attr sorting", {
-        xAxisMeasure: ReferenceLdm.Amount,
-        yAxisMeasure: ReferenceLdm.WinRate,
-        attribute: ReferenceLdm.Product.Name,
-        sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
+        xAxisMeasure: ReferenceMd.Amount,
+        yAxisMeasure: ReferenceMd.WinRate,
+        attribute: ReferenceMd.Product.Name,
+        sortBy: [newAttributeSort(ReferenceMd.Product.Name, "desc")],
     })
     .addScenario("x and y axis measures and attribute with nulls in data", {
-        xAxisMeasure: ReferenceLdm.Amount,
-        yAxisMeasure: ReferenceLdm.WinRate,
-        attribute: ReferenceLdm.ClosedYear,
+        xAxisMeasure: ReferenceMd.Amount,
+        yAxisMeasure: ReferenceMd.WinRate,
+        attribute: ReferenceMd.ClosedYear,
     });

@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import { toAfmExecution } from "../toAfmResultSpec";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture";
 import {
     emptyDef,
@@ -25,11 +25,11 @@ describe("converts execution definition to AFM Execution", () => {
             "definition that has filters",
             newDefForItems(
                 workspace,
-                [ReferenceLdm.Account.Name, ReferenceLdm.Activity.Subject, ReferenceLdm.Won],
-                [newPositiveAttributeFilter(ReferenceLdm.Account.Name, ["myAccount"])],
+                [ReferenceMd.Account.Name, ReferenceMd.Activity.Subject, ReferenceMd.Won],
+                [newPositiveAttributeFilter(ReferenceMd.Account.Name, ["myAccount"])],
             ),
         ],
-        ["sorts", defSetSorts(emptyDef(workspace), [newAttributeSort(ReferenceLdm.Account.Name, "asc")])],
+        ["sorts", defSetSorts(emptyDef(workspace), [newAttributeSort(ReferenceMd.Account.Name, "asc")])],
         ["dimensions", defSetDimensions(emptyDef(workspace), [newDimension(["localId1"])])],
     ];
 
@@ -38,10 +38,10 @@ describe("converts execution definition to AFM Execution", () => {
     });
 
     it("should remove empty attribute filters and not cause RAIL-2083", () => {
-        const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, []);
-        const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, []);
-        const positiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value 1"]);
-        const negativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["value 2"]);
+        const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, []);
+        const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, []);
+        const positiveFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, ["value 1"]);
+        const negativeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, ["value 2"]);
 
         const def = defWithFilters(emptyDef("test"), [
             emptyPositiveFilter,

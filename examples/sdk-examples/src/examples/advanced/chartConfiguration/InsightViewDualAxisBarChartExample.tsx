@@ -1,9 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";
-import { Ldm } from "../../../ldm";
-import { totalCostsLocalId, totalSalesLocalIdentifier } from "../../../ldm/ext";
+import { Md } from "../../../md";
 
 export class InsightViewDualAxisBarChartExample extends Component {
     public render(): React.ReactNode {
@@ -14,7 +13,7 @@ export class InsightViewDualAxisBarChartExample extends Component {
                 rotation: "auto",
                 min: "-75000000",
                 max: "75000000",
-                measures: [totalSalesLocalIdentifier],
+                measures: ["c11c27a0b0314a83bfe5b64ab9de7b89"],
             },
             xaxis: {
                 visible: true,
@@ -22,13 +21,13 @@ export class InsightViewDualAxisBarChartExample extends Component {
                 rotation: "auto",
                 min: "-75000000",
                 max: "75000000",
-                measures: [totalCostsLocalId],
+                measures: ["totalCosts"],
             },
         };
 
         return (
             <div style={{ height: 300 }} className="s-insightView-dual-axis-bar">
-                <InsightView insight={Ldm.Insights.DualAxisBarChart} config={config} />
+                <InsightView insight={Md.Insights.DualAxisBarChart} config={config} />
             </div>
         );
     }

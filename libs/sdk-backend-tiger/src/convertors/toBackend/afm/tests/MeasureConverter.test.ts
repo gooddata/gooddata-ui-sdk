@@ -1,7 +1,7 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { convertMeasure } from "../MeasureConverter";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     DateGranularity,
     newAbsoluteDateFilter,
@@ -19,7 +19,7 @@ describe("measure converter", () => {
             "converted arithmetic measure definition from model to AFM",
             newArithmeticMeasure(["foo", "bar"], "sum"),
         ],
-        ["converted pop measure definition from model to AFM", newPopMeasure(ReferenceLdm.Won, "attr")],
+        ["converted pop measure definition from model to AFM", newPopMeasure(ReferenceMd.Won, "attr")],
         [
             "converted previous period measure from model to AFM",
             newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }]),
@@ -38,8 +38,8 @@ describe("measure converter", () => {
             "measure with two filters",
             newMeasure("foo", (m) =>
                 m.filters(
-                    newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
-                    newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, 5, 22),
+                    newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
+                    newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.date, 5, 22),
                 ),
             ),
         ],

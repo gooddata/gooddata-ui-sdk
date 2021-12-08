@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -18,7 +18,7 @@ import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import { MAX_VIEW_COUNT } from "../../../../constants/uiConfig";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAttribute, IInsight, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
-import { Department, Region } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "../../tests/testHelpers";
 import {

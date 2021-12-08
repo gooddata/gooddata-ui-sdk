@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import { createIntlMock, DefaultLocale } from "@gooddata/sdk-ui";
 import { IDateFilter, newAllTimeFilter, newRelativeDateFilter } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 
 import { getKpiAlertTranslationData, KpiAlertTranslationData } from "../translationUtils";
@@ -17,7 +17,7 @@ describe("getKpiAlertTranslationData", () => {
 
     it("should return null for unsupported filter", () => {
         const res = getKpiAlertTranslationData(
-            newAllTimeFilter(ReferenceLdm.DateDatasets.Activity),
+            newAllTimeFilter(ReferenceMd.DateDatasets.Activity),
             intl,
             DEFAULT_DATE_FORMAT,
         );
@@ -27,42 +27,42 @@ describe("getKpiAlertTranslationData", () => {
     describe("date filters", () => {
         const testedData: TranslationTestPair[] = [
             [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity, "GDC.time.week_us", 0, 0),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity, "GDC.time.week_us", 0, 0),
                 {
                     intlIdRoot: "filters.alertMessage.relativePreset",
                     rangeText: "this week",
                 },
             ],
             [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity, "GDC.time.week_us", -1, -1),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity, "GDC.time.week_us", -1, -1),
                 {
                     intlIdRoot: "filters.alertMessage.relativePreset",
                     rangeText: "last week",
                 },
             ],
             [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity, "GDC.time.date", -6, 0),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity, "GDC.time.date", -6, 0),
                 {
                     intlIdRoot: "filters.alertMessage.relativePreset",
                     rangeText: "last 7 days",
                 },
             ],
             [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity, "GDC.time.date", -6, -1),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity, "GDC.time.date", -6, -1),
                 {
                     intlIdRoot: "filters.alertMessage.relativePreset.inPeriod",
                     rangeText: "from 6 to 1 day ago",
                 },
             ],
             [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity, "GDC.time.month", -11, 0),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity, "GDC.time.month", -11, 0),
                 {
                     intlIdRoot: "filters.alertMessage.relativePreset",
                     rangeText: "last 12 months",
                 },
             ],
             [
-                newRelativeDateFilter(ReferenceLdm.DateDatasets.Activity, "GDC.time.month", -3, 3),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Activity, "GDC.time.month", -3, 3),
                 {
                     intlIdRoot: "filters.alertMessage.relativePreset.inPeriod",
                     rangeText: "from 3 months ago to 3 months ahead",

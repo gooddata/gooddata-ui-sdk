@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { getMVS } from "../../_util/test/helper";
 import { IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
@@ -9,7 +9,7 @@ import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorMapping } from "../../../../interfaces";
 import { getColorsFromStrategy } from "../../_chartColoring/test/helper";
 import { TwoColorPalette } from "../../_chartColoring/test/color.fixture";
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 describe("TreemapColorStrategy", () => {
@@ -45,7 +45,7 @@ describe("TreemapColorStrategy", () => {
 
         const colorMapping: IColorMapping[] = [
             {
-                predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
+                predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Amount),
                 color: {
                     type: "guid",
                     value: "02",

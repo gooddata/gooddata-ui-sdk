@@ -1,15 +1,15 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { Ldm } from "../../ldm";
+import { Md } from "../../md";
 
 const style = { height: 300 };
 
 export const InsightViewBubbleByIdentifierExample: React.FC = () => {
     return (
         <div style={style} className="s-insightView-bubble">
-            <InsightView insight={Ldm.Insights.BubbleChart_1} />
+            <InsightView insight={Md.Insights.BubbleChart_1} />
         </div>
     );
 };

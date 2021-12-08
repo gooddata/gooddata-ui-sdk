@@ -7,9 +7,9 @@ workspace.
 
 ## Working with experimental workspace LDM
 
-This is stored in [src/ldm](src/ldm) and consists of two files:
+This is stored in [src/md](src/md) and consists of two files:
 
--   The auto-generated `full.ts` - this is created by running `npm run refresh-ldm` script
+-   The auto-generated `full.ts` - this is created by running `npm run refresh-md` script
 
     Note: the script has an existing workspace from `staging3.intgdc.com` hardcoded. This is not available
     outside of GoodData.

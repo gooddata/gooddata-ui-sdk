@@ -1,11 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { locationAttribute, sizeMeasure, colorMeasure } from "../../ldm/geoModel";
+import { locationAttribute, sizeMeasure, colorMeasure } from "../../md/geoModel";
 
 export class GeoPushpinChartWithColorLegendExample extends Component {
     public render(): React.ReactNode {

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { PlaceholdersProvider, newPlaceholder, newComposedPlaceholder } from "@gooddata/sdk-ui";
 import { BarChart } from "@gooddata/sdk-ui-charts";
@@ -11,14 +11,14 @@ import {
     modifySimpleMeasure,
     newAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
-import { Ldm } from "../../ldm";
+import { Md } from "../../md";
 
-const totalSalesProfit = modifySimpleMeasure(Ldm.$TotalSales, (m) => m.title("Total sales"));
-const grossProfit = modifySimpleMeasure(Ldm.$GrossProfit, (m) => m.title("Gross profit"));
+const totalSalesProfit = modifySimpleMeasure(Md.$TotalSales, (m) => m.title("Total sales"));
+const grossProfit = modifySimpleMeasure(Md.$GrossProfit, (m) => m.title("Gross profit"));
 const allMeasures = [totalSalesProfit, grossProfit];
 
-const dateFilter2016 = newAbsoluteDateFilter(Ldm.DateDatasets.Date.ref, "2016-01-01", "2016-12-31");
-const dateFilter2017 = newAbsoluteDateFilter(Ldm.DateDatasets.Date.ref, "2017-01-01", "2017-12-31");
+const dateFilter2016 = newAbsoluteDateFilter(Md.DateDatasets.Date.ref, "2016-01-01", "2016-12-31");
+const dateFilter2017 = newAbsoluteDateFilter(Md.DateDatasets.Date.ref, "2017-01-01", "2017-12-31");
 const filtersWithTitles: [IMeasureFilter, string][] = [
     [dateFilter2016, "2016"],
     [dateFilter2017, "2017"],

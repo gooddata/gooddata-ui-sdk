@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { addAttributeFilter } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import {
@@ -21,7 +21,7 @@ describe("addAttributeFilterHandler", () => {
 
     it("should emit the appropriate events for added attribute filter", async () => {
         await Tester.dispatchAndWaitFor(
-            addAttributeFilter(ReferenceLdm.Product.Name.attribute.displayForm, 0, TestCorrelation),
+            addAttributeFilter(ReferenceMd.Product.Name.attribute.displayForm, 0, TestCorrelation),
             "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
         );
 
@@ -30,7 +30,7 @@ describe("addAttributeFilterHandler", () => {
 
     it("should set the attribute filter in state when it is added", async () => {
         await Tester.dispatchAndWaitFor(
-            addAttributeFilter(ReferenceLdm.Product.Name.attribute.displayForm, 0, TestCorrelation),
+            addAttributeFilter(ReferenceMd.Product.Name.attribute.displayForm, 0, TestCorrelation),
             "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
         );
 
@@ -40,12 +40,12 @@ describe("addAttributeFilterHandler", () => {
             },
         });
         const displayFormMap = selectAttributeFilterDisplayFormsMap(Tester.state());
-        expect(displayFormMap.has(ReferenceLdm.Product.Name.attribute.displayForm)).toBeTruthy();
+        expect(displayFormMap.has(ReferenceMd.Product.Name.attribute.displayForm)).toBeTruthy();
     });
 
     it("should emit the appropriate events when trying to add a duplicate attribute filter", async () => {
         const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-            addAttributeFilter(ReferenceLdm.Department.attribute.displayForm, 0, TestCorrelation),
+            addAttributeFilter(ReferenceMd.Department.attribute.displayForm, 0, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );
 
@@ -65,7 +65,7 @@ describe("addAttributeFilterHandler", () => {
         const originalFilters = selectFilterContextAttributeFilters(Tester.state());
 
         await Tester.dispatchAndWaitFor(
-            addAttributeFilter(ReferenceLdm.Department.attribute.displayForm, 0, TestCorrelation),
+            addAttributeFilter(ReferenceMd.Department.attribute.displayForm, 0, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );
 

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import {
     defaultDimensionsGenerator,
@@ -21,7 +21,7 @@ import {
     newNegativeAttributeFilter,
     newRankingFilter,
 } from "@gooddata/sdk-model";
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { Normalizer } from "../normalizer";
 
 // cannot be constructed using model functions - so doing this
@@ -40,50 +40,50 @@ describe("Normalizer", () => {
         [
             "simple attributes and measures",
             newDefForItems("test", [
-                ReferenceLdm.Region,
-                ReferenceLdm.Product.Name,
-                ReferenceLdm.Won,
-                ReferenceLdmExt.MaxAmount,
-                ReferenceLdmExt.AmountWithRatio,
+                ReferenceMd.Region,
+                ReferenceMd.Product.Name,
+                ReferenceMd.Won,
+                ReferenceMdExt.MaxAmount,
+                ReferenceMdExt.AmountWithRatio,
             ]),
         ],
         [
             "duplicate attributes and measures",
             newDefForItems("test", [
-                ReferenceLdm.Region,
-                modifyAttribute(ReferenceLdm.Region, (m) => m.localId("duplicateAttr")),
-                ReferenceLdm.Won,
-                modifyMeasure(ReferenceLdm.Won, (m) => m.localId("duplicateMeasure")),
+                ReferenceMd.Region,
+                modifyAttribute(ReferenceMd.Region, (m) => m.localId("duplicateAttr")),
+                ReferenceMd.Won,
+                modifyMeasure(ReferenceMd.Won, (m) => m.localId("duplicateMeasure")),
             ]),
         ],
         [
             "derived measures",
             newDefForItems("test", [
-                ReferenceLdm.Won,
-                ReferenceLdmExt.WonPopClosedYear,
-                ReferenceLdmExt.WonPreviousPeriod,
+                ReferenceMd.Won,
+                ReferenceMdExt.WonPopClosedYear,
+                ReferenceMdExt.WonPreviousPeriod,
             ]),
         ],
         [
             "arithmetic measures",
             newDefForItems("test", [
-                ReferenceLdm.Won,
-                ReferenceLdm.Amount,
-                ReferenceLdmExt.CalculatedLost,
-                ReferenceLdmExt.CalculatedWonLostRatio,
+                ReferenceMd.Won,
+                ReferenceMd.Amount,
+                ReferenceMdExt.CalculatedLost,
+                ReferenceMdExt.CalculatedWonLostRatio,
             ]),
         ],
         [
             "arithmetic measures when mixed between their operands",
-            newDefForItems("test", [ReferenceLdm.Amount, ReferenceLdmExt.CalculatedLost, ReferenceLdm.Won]),
+            newDefForItems("test", [ReferenceMd.Amount, ReferenceMdExt.CalculatedLost, ReferenceMd.Won]),
         ],
         [
             "simple measures with filters",
             newDefForItems("test", [
-                ReferenceLdm.Won,
-                modifySimpleMeasure(ReferenceLdm.Won, (m) =>
+                ReferenceMd.Won,
+                modifySimpleMeasure(ReferenceMd.Won, (m) =>
                     m
-                        .filters(newNegativeAttributeFilter(ReferenceLdm.Region, ["East Coast"]))
+                        .filters(newNegativeAttributeFilter(ReferenceMd.Region, ["East Coast"]))
                         .defaultLocalId(),
                 ),
             ]),
@@ -93,12 +93,12 @@ describe("Normalizer", () => {
             newDefForItems(
                 "test",
                 [
-                    ReferenceLdm.Won,
-                    ReferenceLdm.Amount,
-                    ReferenceLdmExt.CalculatedLost,
-                    ReferenceLdmExt.CalculatedWonLostRatio,
+                    ReferenceMd.Won,
+                    ReferenceMd.Amount,
+                    ReferenceMdExt.CalculatedLost,
+                    ReferenceMdExt.CalculatedWonLostRatio,
                 ],
-                [newMeasureValueFilter(ReferenceLdmExt.CalculatedWonLostRatio, "EQUAL_TO", 1)],
+                [newMeasureValueFilter(ReferenceMdExt.CalculatedWonLostRatio, "EQUAL_TO", 1)],
             ),
         ],
         [
@@ -106,9 +106,9 @@ describe("Normalizer", () => {
             newDefForItems(
                 "test",
                 [
-                    modifyMeasure(ReferenceLdm.Won, (m) => m.localId("someMeasure")),
-                    modifyAttribute(ReferenceLdm.Region, (a) => a.localId("someAttr")),
-                    ReferenceLdm.Product.Name,
+                    modifyMeasure(ReferenceMd.Won, (m) => m.localId("someMeasure")),
+                    modifyAttribute(ReferenceMd.Region, (a) => a.localId("someAttr")),
+                    ReferenceMd.Product.Name,
                 ],
                 [
                     newRankingFilter(
@@ -132,8 +132,8 @@ describe("Normalizer", () => {
     it("should strip away empty negative attr filter (noop)", () => {
         const def = newDefForItems(
             "test",
-            [ReferenceLdm.Region, ReferenceLdm.Won],
-            [newNegativeAttributeFilter(ReferenceLdm.Region, [])],
+            [ReferenceMd.Region, ReferenceMd.Won],
+            [newNegativeAttributeFilter(ReferenceMd.Region, [])],
         );
 
         const result = Normalizer.normalize(def);
@@ -143,8 +143,8 @@ describe("Normalizer", () => {
 
     it("should strip away empty negative attr filter (noop) from simple measure", () => {
         const def = newDefForItems("test", [
-            modifySimpleMeasure(ReferenceLdm.Won, (m) =>
-                m.filters(newNegativeAttributeFilter(ReferenceLdm.Region, [])),
+            modifySimpleMeasure(ReferenceMd.Won, (m) =>
+                m.filters(newNegativeAttributeFilter(ReferenceMd.Region, [])),
             ),
         ]);
 
@@ -156,8 +156,8 @@ describe("Normalizer", () => {
     it("should strip away empty measure value filter (noop)", () => {
         const def = newDefForItems(
             "test",
-            [ReferenceLdm.Region, ReferenceLdm.Won],
-            [EmptyMvf(ReferenceLdm.Won)],
+            [ReferenceMd.Region, ReferenceMd.Won],
+            [EmptyMvf(ReferenceMd.Won)],
         );
 
         const result = Normalizer.normalize(def);
@@ -166,15 +166,15 @@ describe("Normalizer", () => {
     });
 
     it("should throw if dangling references", () => {
-        const def = newDefForItems("test", [ReferenceLdmExt.CalculatedLost]);
+        const def = newDefForItems("test", [ReferenceMdExt.CalculatedLost]);
 
         expect(() => Normalizer.normalize(def)).toThrow();
     });
 
     it("should throw if circular references", () => {
         const def = newDefForItems("test", [
-            ReferenceLdm.Won,
-            newArithmeticMeasure([ReferenceLdm.Won, "cycle"], "multiplication", (m) => m.localId("cycle")),
+            ReferenceMd.Won,
+            newArithmeticMeasure([ReferenceMd.Won, "cycle"], "multiplication", (m) => m.localId("cycle")),
         ]);
 
         expect(() => Normalizer.normalize(def)).toThrow();
@@ -184,10 +184,10 @@ describe("Normalizer", () => {
         const buckets = [
             newBucket(
                 "bucket",
-                ReferenceLdm.Won,
-                ReferenceLdm.Amount,
-                ReferenceLdmExt.CalculatedLost,
-                ReferenceLdmExt.CalculatedWonLostRatio,
+                ReferenceMd.Won,
+                ReferenceMd.Amount,
+                ReferenceMdExt.CalculatedLost,
+                ReferenceMdExt.CalculatedWonLostRatio,
             ),
         ];
 
@@ -199,10 +199,10 @@ describe("Normalizer", () => {
 
     it("should correctly assign localIds and not hit RAIL-2631", () => {
         const def = newDefForItems("test", [
-            modifyPopMeasure(ReferenceLdmExt.WonPopClosedYear, (m) =>
+            modifyPopMeasure(ReferenceMdExt.WonPopClosedYear, (m) =>
                 m.localId("previousPeriodLocalId").masterMeasure("someCustomLocalId"),
             ),
-            modifyMeasure(ReferenceLdm.Won, (m) => m.localId("someCustomLocalId")),
+            modifyMeasure(ReferenceMd.Won, (m) => m.localId("someCustomLocalId")),
         ]);
         const result = Normalizer.normalize(def);
 

@@ -1,10 +1,14 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { modifyMeasure, newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
+import { Md } from "../../md";
 import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
 
 export class PreviousPeriodHeadlineExample extends Component {
     public onLoadingChanged: OnLoadingChanged = (...params) => {
@@ -18,10 +22,10 @@ export class PreviousPeriodHeadlineExample extends Component {
     };
 
     public render(): React.ReactNode {
-        const primaryMeasure = LdmExt.TotalSales2;
+        const primaryMeasure = TotalSales;
         const secondaryMeasure = newPreviousPeriodMeasure(
-            LdmExt.TotalSales2,
-            [{ dataSet: Ldm.DateDatasets.Date.identifier, periodsAgo: 1 }],
+            TotalSales,
+            [{ dataSet: Md.DateDatasets.Date.identifier, periodsAgo: 1 }],
             (m) => m.alias("$ Total Sales - period ago"),
         );
 
@@ -30,7 +34,7 @@ export class PreviousPeriodHeadlineExample extends Component {
                 <Headline
                     primaryMeasure={primaryMeasure}
                     secondaryMeasure={secondaryMeasure}
-                    filters={[newRelativeDateFilter(Ldm.DateDatasets.Date.ref, "GDC.time.year", -4, -3)]}
+                    filters={[newRelativeDateFilter(Md.DateDatasets.Date.ref, "GDC.time.year", -4, -3)]}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

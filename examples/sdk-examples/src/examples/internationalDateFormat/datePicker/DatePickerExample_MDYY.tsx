@@ -1,14 +1,19 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { Datepicker } from "@gooddata/sdk-ui-kit";
 import moment from "moment";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { Ldm, LdmExt } from "../../../ldm";
-import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { Md } from "../../../md";
+import { modifyAttribute, modifyMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
+const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
+    a.alias("Month").localId("monthDate"),
+);
 
 const dateFormat = "YYYY-MM-DD";
-const measures = [LdmExt.TotalSales1];
+const measures = [TotalSales];
 
 export interface IDatePickerState {
     from: moment.Moment;
@@ -53,7 +58,7 @@ export const DatePickerExample_MDYY: React.FC = () => {
     const { from, to, error } = state;
 
     const filters = [
-        newAbsoluteDateFilter(Ldm.DateDatasets.Date.ref, from.format(dateFormat), to.format(dateFormat)),
+        newAbsoluteDateFilter(Md.DateDatasets.Date.ref, from.format(dateFormat), to.format(dateFormat)),
     ];
 
     return (
@@ -84,7 +89,7 @@ export const DatePickerExample_MDYY: React.FC = () => {
                 {error ? (
                     <ErrorComponent message={error} />
                 ) : (
-                    <ColumnChart viewBy={LdmExt.monthDate} measures={measures} filters={filters} />
+                    <ColumnChart viewBy={monthDate} measures={measures} filters={filters} />
                 )}
             </div>
         </div>

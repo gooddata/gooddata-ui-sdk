@@ -108,6 +108,6 @@
         "playWithWdyr": "WDYR=true bash scripts/run-playground.sh",
         "build": "echo Build of playground is skipped by default. See the alternative 'build_' script.",
         "build_": "bash scripts/build-playground.sh ${EXAMPLES_BUILD_TYPE}",
-        "refresh-ldm": "./scripts/refresh-ldm.sh && npm run build"
+        "refresh-md": "./scripts/refresh-md.sh && npm run build"
     }
 }

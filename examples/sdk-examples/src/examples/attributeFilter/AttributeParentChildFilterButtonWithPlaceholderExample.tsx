@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import {
     IPlaceholder,
@@ -14,18 +14,24 @@ import {
     attributeDisplayFormRef,
     IAttributeFilter,
     idRef,
+    modifyMeasure,
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Md } from "../../md";
+
+const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
 
 const stateFilterPlaceholder = newPlaceholder<IAttributeFilter>(
-    newNegativeAttributeFilter(attributeDisplayFormRef(Ldm.LocationState), {
+    newNegativeAttributeFilter(attributeDisplayFormRef(Md.LocationState), {
         uris: [],
     }),
 );
 
 const cityFilterPlaceholder = newPlaceholder<IAttributeFilter>(
-    newNegativeAttributeFilter(attributeDisplayFormRef(Ldm.LocationCity), {
+    newNegativeAttributeFilter(attributeDisplayFormRef(Md.LocationCity), {
         uris: [],
     }),
 );
@@ -52,14 +58,14 @@ const AttributeParentChildFilterButtonWithPlaceholder: React.FC = () => {
                 <AttributeFilterButton connectToPlaceholder={stateFilterPlaceholder} onError={onError} />
                 <AttributeFilterButton
                     parentFilters={[stateFilterPlaceholder]}
-                    parentFilterOverAttribute={idRef(LdmExt.locationIdAttributeIdentifier)}
+                    parentFilterOverAttribute={idRef(locationIdAttributeIdentifier)}
                     connectToPlaceholder={cityFilterPlaceholder}
                 />
             </div>
             <div style={{ height: 300 }} className="s-line-chart">
                 <BarChart
-                    measures={[LdmExt.TotalSales2]}
-                    viewBy={Ldm.LocationCity}
+                    measures={[TotalSales]}
+                    viewBy={Md.LocationCity}
                     filters={[composedLocationFilterPlaceholder]}
                     onLoadingChanged={onLoadingChanged}
                     onError={onError}

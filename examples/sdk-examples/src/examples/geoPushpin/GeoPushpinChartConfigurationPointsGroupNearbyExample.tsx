@@ -1,11 +1,11 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import React, { Component } from "react";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
-import { locationAttribute } from "../../ldm/geoModel";
+import { locationAttribute } from "../../md/geoModel";
 
 type State = {
     groupNearbyPoints: boolean;

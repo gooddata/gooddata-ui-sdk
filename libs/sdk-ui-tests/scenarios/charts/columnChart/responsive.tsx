@@ -3,7 +3,7 @@ import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { ColumnChartWithArithmeticMeasuresAndViewBy } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 const sizeVariantsSimple: Array<IResponsiveSize> = [
     { label: "without y axis title", width: 120, height: 354 },
@@ -15,8 +15,8 @@ const simpleScenarios = responsiveScenarios(
     ScenarioGroupNames.Responsive,
     ColumnChart,
     {
-        measures: [ReferenceLdm.Amount],
-        viewBy: [ReferenceLdm.Product.Name],
+        measures: [ReferenceMd.Amount],
+        viewBy: [ReferenceMd.Product.Name],
         config: { enableCompactSize: true, legend: { enabled: false } },
     },
     sizeVariantsSimple,

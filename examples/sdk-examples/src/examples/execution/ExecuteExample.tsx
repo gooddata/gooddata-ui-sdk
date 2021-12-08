@@ -1,8 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
 import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
-import { LdmExt } from "../../ldm";
+
+const totalSalesIdentifier = "aa7ulGyKhIE5";
 
 interface IExecuteExampleState {
     executionNumber: number;
@@ -55,7 +56,7 @@ export const ExecuteExample: React.FC = () => {
         </p>
     );
 
-    const measure = newMeasure(willFail ? "thisDoesNotExits" : LdmExt.totalSalesIdentifier);
+    const measure = newMeasure(willFail ? "thisDoesNotExits" : totalSalesIdentifier);
     const measureArray = [measure];
 
     return (

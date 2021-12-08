@@ -102,14 +102,14 @@ deprecated option.
 Working with the catalog-export and its outputs on daily basis, we found a few good practices that we suggest for
 your consideration:
 
--   Include the `@gooddata/catalog-export` as a devDependency of your application and define an NPM script `refresh-ldm`
+-   Include the `@gooddata/catalog-export` as a devDependency of your application and define an NPM script `refresh-md`
     to run the program with the necessary parameters. For example given that you have username and password in
     config file:
 
     ```json
     {
         "scripts": {
-            "refresh-ldm": "gdc-catalog-export --hostname \"your.domain.gooddata.com\" --project-id \"yourProjectId\" --output \"catalog.ts\""
+            "refresh-md": "gdc-catalog-export --hostname \"your.domain.gooddata.com\" --project-id \"yourProjectId\" --output \"catalog.ts\""
         }
     }
     ```
@@ -117,8 +117,8 @@ your consideration:
 -   Do not import the constants directly. Instead wrap the constants into a namespace as follows:
 
     ```typescript
-    import * as ReferenceLdm from "./ldm/generatedFile";
-    export { ReferenceLdm };
+    import * as ReferenceMd from "./md/generatedFile";
+    export { ReferenceMd };
     ```
 
 -   Never modify the generated files
@@ -135,7 +135,7 @@ We are planning to drop support for export to JSON. We will drop this in next ma
 Please read the official documentation site for more information:
 [Official documentation](https://sdk.gooddata.com/gooddata-ui/docs/gdc_catalog_export.html)
 
-Also, check out [the generated results](../reference-workspace/src/ldm/full.ts) to see example of the
+Also, check out [the generated results](../reference-workspace/src/md/full.ts) to see example of the
 generated output.
 
 ## License

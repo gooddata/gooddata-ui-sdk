@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { ColumnChart } from "../ColumnChart";
@@ -12,7 +12,7 @@ import {
     MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
 import { CoreColumnChart } from "../CoreColumnChart";
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 
 function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
     return mount(
@@ -31,16 +31,16 @@ describe("ColumnChart", () => {
             <ColumnChart
                 workspace="foo"
                 backend={dummyBackend()}
-                measures={[ReferenceLdm.Amount]}
-                viewBy={ReferenceLdm.Product.Name}
-                stackBy={ReferenceLdm.Region}
-                sortBy={[newMeasureSort(ReferenceLdm.Amount, "asc")]}
+                measures={[ReferenceMd.Amount]}
+                viewBy={ReferenceMd.Product.Name}
+                stackBy={ReferenceMd.Region}
+                sortBy={[newMeasureSort(ReferenceMd.Amount, "asc")]}
             />,
         );
 
         const expectedDims = newTwoDimensional(
-            [attributeLocalId(ReferenceLdm.Region)],
-            [attributeLocalId(ReferenceLdm.Product.Name), MeasureGroupIdentifier],
+            [attributeLocalId(ReferenceMd.Region)],
+            [attributeLocalId(ReferenceMd.Product.Name), MeasureGroupIdentifier],
         );
 
         expect(wrapper.find(CoreColumnChart)).toHaveLength(1);
@@ -52,7 +52,7 @@ describe("ColumnChart", () => {
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
-            const wrapper = renderChart([ReferenceLdm.Amount], config);
+            const wrapper = renderChart([ReferenceMd.Amount], config);
             expect(wrapper.find(CoreColumnChart).prop("config")).toEqual({
                 stackMeasures: true,
                 stackMeasuresToPercent: true,
@@ -60,7 +60,7 @@ describe("ColumnChart", () => {
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
-            const wrapper = renderChart([ReferenceLdmExt.AmountWithRatio], config);
+            const wrapper = renderChart([ReferenceMdExt.AmountWithRatio], config);
             expect(wrapper.find(CoreColumnChart).prop("config")).toEqual({
                 stackMeasures: false,
                 stackMeasuresToPercent: false,

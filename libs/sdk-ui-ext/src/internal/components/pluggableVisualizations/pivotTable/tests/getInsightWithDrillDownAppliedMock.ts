@@ -16,7 +16,7 @@ import {
     newTotal,
     uriRef,
 } from "@gooddata/sdk-model";
-import { Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/md/full";
 import { newWidthForAllMeasureColumns, newWidthForAttributeColumn } from "@gooddata/sdk-ui-pivot";
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IDrillEventIntersectionElement, IDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";

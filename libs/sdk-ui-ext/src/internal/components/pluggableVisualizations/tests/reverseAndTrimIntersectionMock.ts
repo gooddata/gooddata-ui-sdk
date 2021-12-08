@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 
-import { Department, Region, Won } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Department, Region, Won } from "@gooddata/reference-workspace/dist/md/full";
 import { ReferenceData } from "@gooddata/reference-workspace";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { IDrillDownDefinition } from "../../../interfaces/Visualization";

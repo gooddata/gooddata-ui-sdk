@@ -1,11 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { FilterContextItem, isKpiWidget } from "@gooddata/sdk-backend-spi";
 import { DashboardView, useDashboardWidgetExecution } from "@gooddata/sdk-ui-ext";
 import { idRef, newPositiveAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { useDataView, IErrorProps, ILoadingProps } from "@gooddata/sdk-ui";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { Ldm } from "../../ldm";
+import { Md } from "../../md";
 
 const dashboardRef = idRef("aeO5PVgShc0T");
 const config = { mapboxToken: MAPBOX_TOKEN };
@@ -223,7 +223,7 @@ const CustomKpi: React.FC<CustomWidgetProps> = ({ widgetRef, filters, ErrorCompo
 };
 
 const dashboardFilters = [
-    newPositiveAttributeFilter(Ldm.LocationState, {
+    newPositiveAttributeFilter(Md.LocationState, {
         uris: ["/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116"],
     }),
 ];

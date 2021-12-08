@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import { PieChart } from "../PieChart";
@@ -8,14 +8,14 @@ import {
     newTwoDimensional,
     attributeLocalId,
 } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CorePieChart } from "../CorePieChart";
 
 describe("PieChart", () => {
     it("should render with custom SDK", () => {
         const wrapper = mount(
-            <PieChart workspace="foo" backend={dummyBackend()} measures={[ReferenceLdm.Amount]} />,
+            <PieChart workspace="foo" backend={dummyBackend()} measures={[ReferenceMd.Amount]} />,
         );
         expect(wrapper.find(CorePieChart)).toHaveLength(1);
     });
@@ -25,15 +25,15 @@ describe("PieChart", () => {
             <PieChart
                 workspace="foo"
                 backend={dummyBackend()}
-                measures={[ReferenceLdm.Amount]}
-                viewBy={ReferenceLdm.Product.Name}
-                sortBy={[newAttributeSort(ReferenceLdm.Product.Name, "asc")]}
+                measures={[ReferenceMd.Amount]}
+                viewBy={ReferenceMd.Product.Name}
+                sortBy={[newAttributeSort(ReferenceMd.Product.Name, "asc")]}
             />,
         );
 
         const expectedDims = newTwoDimensional(
             [MeasureGroupIdentifier],
-            [attributeLocalId(ReferenceLdm.Product.Name)],
+            [attributeLocalId(ReferenceMd.Product.Name)],
         );
 
         expect(wrapper.find(CorePieChart)).toHaveLength(1);

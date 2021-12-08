@@ -1,9 +1,9 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { generateChartOptions } from "../../chartTypes/_util/test/helper";
 
 import buildLegendOptions, { getLegendItems, shouldLegendBeEnabled } from "../legendBuilder";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { recordedDataFacade } from "../../../../__mocks__/recordings";
 import { DEFAULT_LEGEND_CONFIG } from "@gooddata/sdk-ui-vis-commons";
@@ -139,7 +139,7 @@ describe("getLegendItems", () => {
         const config = {
             type: "column",
             secondary_yaxis: {
-                measures: [measureLocalId(ReferenceLdm.Won)],
+                measures: [measureLocalId(ReferenceMd.Won)],
             },
         };
         const chartOptions = generateChartOptions(

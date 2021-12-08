@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { LineChart } from "@gooddata/sdk-ui-charts";
@@ -8,10 +8,15 @@ import {
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
     isPositiveAttributeFilter,
+    modifyMeasure,
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Md } from "../../md";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
+
+const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+);
 
 interface IAttributeFilterExampleState {
     filters: Array<IPositiveAttributeFilter | INegativeAttributeFilter> | undefined;
@@ -90,15 +95,15 @@ export class AttributeFilterButtonExample extends Component<unknown, IAttributeF
 
     public render(): React.ReactNode {
         const { filters } = this.state;
-        const filter = filters?.[0] ?? newNegativeAttributeFilter(Ldm.LocationResort, []);
+        const filter = filters?.[0] ?? newNegativeAttributeFilter(Md.LocationResort, []);
 
         return (
             <div className="s-attribute-filter">
                 <AttributeFilterButton filter={filter} onApply={this.onApply} onError={this.onError} />
                 <div style={{ height: 300 }} className="s-line-chart">
                     <LineChart
-                        measures={[LdmExt.TotalSales2]}
-                        trendBy={Ldm.LocationResort}
+                        measures={[TotalSales]}
+                        trendBy={Md.LocationResort}
                         filters={filters}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}

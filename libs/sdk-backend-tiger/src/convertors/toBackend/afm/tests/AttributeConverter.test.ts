@@ -1,11 +1,11 @@
-// (C) 2020 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+// (C) 2020-2021 GoodData Corporation
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttribute } from "@gooddata/sdk-model";
 
 import { convertAttribute } from "../AttributeConverter";
 
 describe("attribute converter", () => {
-    const displayFormRef = ReferenceLdm.Account.Name.attribute.displayForm;
+    const displayFormRef = ReferenceMd.Account.Name.attribute.displayForm;
     const Scenarios: Array<[string, any]> = [
         ["simple attribute", newAttribute(displayFormRef)],
         ["attribute with empty localId", newAttribute(displayFormRef, (a) => a.localId(""))],

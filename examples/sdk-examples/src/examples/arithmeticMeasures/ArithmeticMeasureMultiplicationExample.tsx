@@ -1,18 +1,26 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newArithmeticMeasure } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { modifyMeasure, newArithmeticMeasure, newMeasure } from "@gooddata/sdk-model";
+import { Md } from "../../md";
+
+const averageRestaurantDailyCostsIdentifier = "aaQJzQzoeKwZ";
+const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) =>
+    m.format("#,##0").localId("numberOfRestaurants"),
+);
+const averageRestaurantDailyCosts = newMeasure(averageRestaurantDailyCostsIdentifier, (m) =>
+    m.format("#,##0").localId("averageRestaurantDailyCosts"),
+);
 
 const averageStateDailyCosts = newArithmeticMeasure(
-    [LdmExt.NrRestaurants, LdmExt.averageRestaurantDailyCosts],
+    [NrRestaurants, averageRestaurantDailyCosts],
     "multiplication",
     (m) => m.format("#,##0").title("$ Avg State Daily Costs"),
 );
 
-const measures = [LdmExt.NrRestaurants, LdmExt.averageRestaurantDailyCosts, averageStateDailyCosts];
+const measures = [NrRestaurants, averageRestaurantDailyCosts, averageStateDailyCosts];
 
-const rows = [Ldm.LocationState];
+const rows = [Md.LocationState];
 const style = { height: 200 };
 
 export const ArithmeticMeasureMultiplicationExample: React.FC = () => {

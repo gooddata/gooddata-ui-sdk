@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import React, { Component } from "react";
 import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
 
@@ -11,7 +11,7 @@ import {
     sizeMeasure,
     colorMeasure,
     segmentByAttribute,
-} from "../../ldm/geoModel";
+} from "../../md/geoModel";
 
 export class GeoPushpinChartConfigurationExample extends Component {
     public render(): React.ReactNode {

@@ -1,11 +1,11 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import React, { Component } from "react";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { GeoPushpinChart, IGeoConfig, PushpinSizeOption } from "@gooddata/sdk-ui-geo";
-import { locationAttribute, sizeMeasure } from "../../ldm/geoModel";
+import { locationAttribute, sizeMeasure } from "../../md/geoModel";
 
 const POINT_SIZE_OPTIONS = ["default", "0.5x", "0.75x", "normal", "1.25x", "1.5x"];
 

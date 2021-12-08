@@ -16,10 +16,10 @@ else
   echo Command not installed: ${PRETTIER_COMMAND}
 fi
 
-if [ -f ${FIX_COPYRIGHT_COMMAND} ] && command -v npx > /dev/null 2>&1; then
-  for FILE in $(exec git diff --cached --name-status | grep -E '^.*\/src\/.*\.(ts|js|ts|jsx|scss)$'  | awk '$1 != "R" { print $2 }'); do
+if [ -f ${FIX_COPYRIGHT_COMMAND} ]; then
+  for FILE in $(exec git diff --cached --name-status --diff-filter=ACM  | grep -E '^.*\/src\/.*\.(ts|js|tsx|jsx|scss)$'  | awk '$1 { print $2 }'); do
     echo "©️  Fixing copyright header of ${FILE}"
-    npx ${FIX_COPYRIGHT_COMMAND} "$FILE"
+    ${FIX_COPYRIGHT_COMMAND} "$FILE"
     git add "$FILE"
   done
   echo '✅ Every copyright header is up-to-date'

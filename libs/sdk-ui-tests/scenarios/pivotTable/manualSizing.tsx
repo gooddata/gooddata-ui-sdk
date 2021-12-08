@@ -12,14 +12,14 @@ import {
     PivotTableWithTwoMeasuresAndSingleRowAttr,
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
 } from "./base";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 const ATTRIBUTE_WIDTH = 400;
 const MEASURE_WIDTH = 60;
 
-const attributeColumnWidthItem = newWidthForAttributeColumn(ReferenceLdm.Product.Name, ATTRIBUTE_WIDTH);
-const measureColumnWidthItemSimple = newWidthForSelectedColumns(ReferenceLdm.Amount, [], MEASURE_WIDTH);
-const weakMeasureColumnWidthItem = newWidthForAllColumnsForMeasure(ReferenceLdm.Amount, MEASURE_WIDTH);
+const attributeColumnWidthItem = newWidthForAttributeColumn(ReferenceMd.Product.Name, ATTRIBUTE_WIDTH);
+const measureColumnWidthItemSimple = newWidthForSelectedColumns(ReferenceMd.Amount, [], MEASURE_WIDTH);
+const weakMeasureColumnWidthItem = newWidthForAllColumnsForMeasure(ReferenceMd.Amount, MEASURE_WIDTH);
 
 const justManualResizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("manual-resizing", "no other options")
