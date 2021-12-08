@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { AreaChart } from "@gooddata/sdk-ui-charts";
 import { Md } from "../../md";

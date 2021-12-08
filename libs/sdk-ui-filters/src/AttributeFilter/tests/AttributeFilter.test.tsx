@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import React from "react";
 import { mount } from "enzyme";

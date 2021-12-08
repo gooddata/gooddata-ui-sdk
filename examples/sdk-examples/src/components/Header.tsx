@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";

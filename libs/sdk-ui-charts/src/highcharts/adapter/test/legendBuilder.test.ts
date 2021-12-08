@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { generateChartOptions } from "../../chartTypes/_util/test/helper";
 
 import buildLegendOptions, { getLegendItems, shouldLegendBeEnabled } from "../legendBuilder";

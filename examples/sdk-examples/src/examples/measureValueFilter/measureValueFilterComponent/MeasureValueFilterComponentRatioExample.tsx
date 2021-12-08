@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
 import {

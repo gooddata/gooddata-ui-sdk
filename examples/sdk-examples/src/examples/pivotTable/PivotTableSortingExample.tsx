@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newAttributeSort, modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";

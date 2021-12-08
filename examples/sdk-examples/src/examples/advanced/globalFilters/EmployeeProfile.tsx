@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { BarChart, PieChart } from "@gooddata/sdk-ui-charts";
 import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";

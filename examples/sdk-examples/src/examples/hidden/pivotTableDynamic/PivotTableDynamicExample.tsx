@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";

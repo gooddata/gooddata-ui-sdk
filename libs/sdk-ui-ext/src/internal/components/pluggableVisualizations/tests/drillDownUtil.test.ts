@@ -2,7 +2,7 @@
 
 import { localIdRef, newAttribute, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
 import { reverseAndTrimIntersection, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
-import { Account, Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Account, Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/md/full";
 import { insightDefinitionToInsight } from "./testHelpers";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { reverseAndTrimIntersectionMock } from "./reverseAndTrimIntersectionMock";

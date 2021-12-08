@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { mount } from "enzyme";
 import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";

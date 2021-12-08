@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import React from "react";
 import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
 import {
@@ -17,7 +17,7 @@ import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartC
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, IAttribute, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
-import { Region } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Region } from "@gooddata/reference-workspace/dist/md/full";
 import { createDrillEvent, insightDefinitionToInsight, createDrillDefinition } from "../../tests/testHelpers";
 import {
     sourceInsightDef,

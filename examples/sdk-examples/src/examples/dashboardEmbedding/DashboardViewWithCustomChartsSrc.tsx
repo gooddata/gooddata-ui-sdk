@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { FilterContextItem, isKpiWidget } from "@gooddata/sdk-backend-spi";
 import { DashboardView, useDashboardWidgetExecution } from "@gooddata/sdk-ui-ext";

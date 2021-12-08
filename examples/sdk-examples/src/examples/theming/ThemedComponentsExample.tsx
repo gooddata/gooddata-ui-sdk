@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import React, { useState } from "react";
 import { Button, ExportDialog } from "@gooddata/sdk-ui-kit";

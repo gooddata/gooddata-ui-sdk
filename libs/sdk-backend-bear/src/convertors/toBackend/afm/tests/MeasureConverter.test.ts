@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { convertMeasure } from "../MeasureConverter";
 import { invalidMeasureDefinition } from "./InvalidInputs.fixture";

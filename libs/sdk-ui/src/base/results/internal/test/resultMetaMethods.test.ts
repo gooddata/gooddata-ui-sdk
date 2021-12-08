@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { ISortItem, newAttributeLocator, newMeasureSort } from "@gooddata/sdk-model";
 import { ReferenceRecordings, ReferenceMd, ReferenceData } from "@gooddata/reference-workspace";

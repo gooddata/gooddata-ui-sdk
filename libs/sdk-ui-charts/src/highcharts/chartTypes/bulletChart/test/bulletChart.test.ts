@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import range from "lodash/range";
 import { ColorFactory } from "../../_chartOptions/colorFactory";
 import { IColorPalette, IMeasure } from "@gooddata/sdk-model";

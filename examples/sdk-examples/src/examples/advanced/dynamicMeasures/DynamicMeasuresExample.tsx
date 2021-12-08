@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 import { LineChart, ColumnChart, IChartConfig } from "@gooddata/sdk-ui-charts";

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import noop from "lodash/noop";
 import {
     IBucketOfFun,
@@ -21,7 +21,7 @@ import {
     sourceInsightDef,
     targetUri,
 } from "../../treeMap/tests/getInsightWithDrillDownAppliedMock";
-import { Department, Region } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
 import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "../../tests/testHelpers";
 

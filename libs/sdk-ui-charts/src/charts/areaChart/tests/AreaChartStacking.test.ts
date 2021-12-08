@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { getBucketsProps, getConfigProps, IAreaChartProps } from "../AreaChart";
 import { IChartConfig } from "../../../interfaces";
 import { IAttributeOrMeasure, IAttribute } from "@gooddata/sdk-model";

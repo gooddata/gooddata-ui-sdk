@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import { DashboardView, mergeFiltersWithDashboard } from "@gooddata/sdk-ui-ext";
 import { idRef, newPositiveAttributeFilter } from "@gooddata/sdk-model";

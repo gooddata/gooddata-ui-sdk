@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { BulletChart } from "@gooddata/sdk-ui-charts";
 import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";

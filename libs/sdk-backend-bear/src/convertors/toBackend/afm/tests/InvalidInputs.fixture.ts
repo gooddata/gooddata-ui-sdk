@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 /**

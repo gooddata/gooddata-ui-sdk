@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
 import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";

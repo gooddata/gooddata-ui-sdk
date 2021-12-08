@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import * as ReferenceMd from "./md/full";
 import * as ReferenceMdExt from "./md/ext";

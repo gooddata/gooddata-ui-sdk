@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { RawExecute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import toPairs from "lodash/toPairs";

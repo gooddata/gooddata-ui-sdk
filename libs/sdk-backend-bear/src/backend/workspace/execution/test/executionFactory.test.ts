@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { BearExecution } from "../executionFactory";
 import { BearAuthenticatedCallGuard } from "../../../../types/auth";

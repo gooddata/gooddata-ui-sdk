@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { toAfmExecution } from "../ExecutionConverter";
 import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture";
 import { ReferenceMd } from "@gooddata/reference-workspace";

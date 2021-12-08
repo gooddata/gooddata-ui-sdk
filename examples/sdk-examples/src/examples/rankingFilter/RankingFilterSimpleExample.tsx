@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import React from "react";
 import { Md } from "../../md";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
