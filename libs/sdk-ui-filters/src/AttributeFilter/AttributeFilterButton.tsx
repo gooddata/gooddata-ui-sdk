@@ -354,6 +354,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     appliedFilterOptions: [],
                     isInverted: true,
                     appliedIsInverted: true,
+                    validOptions: null,
                     isFiltering: true,
                 };
             });
@@ -365,6 +366,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             return {
                 ...prevState,
                 validOptions: null,
+                offset: 0,
+                limit: LIMIT,
             };
         });
     }, [state.searchString]);
