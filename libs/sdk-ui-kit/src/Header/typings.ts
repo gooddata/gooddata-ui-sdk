@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ITheme } from "@gooddata/sdk-backend-spi";
+import { IntlShape } from "react-intl";
 
 /**
  * @internal
@@ -52,6 +53,9 @@ export interface IAppHeaderProps {
 
     showUpsellButton?: boolean;
     onUpsellButtonClick?: (e: React.MouseEvent) => void;
+
+    // intl object to inject in all the AppHeader subcomponents
+    intl?: IntlShape;
 }
 
 /**

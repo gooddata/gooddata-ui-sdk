@@ -48,7 +48,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<IAppHeaderProps, "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick" | "showUpsellButton">>;
+export const AppHeader: React_2.ComponentType<Pick<IAppHeaderProps, "intl" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick" | "showUpsellButton">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -612,6 +612,8 @@ export interface IAppHeaderProps {
     helpMenuItems?: IHeaderMenuItem[];
     // (undocumented)
     helpRedirectUrl?: string;
+    // (undocumented)
+    intl?: IntlShape;
     // (undocumented)
     logoHref?: string;
     // (undocumented)
