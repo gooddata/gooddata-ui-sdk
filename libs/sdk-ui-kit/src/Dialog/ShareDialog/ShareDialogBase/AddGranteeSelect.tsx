@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
 import { ValueType } from "react-select";
@@ -28,7 +28,6 @@ const SEARCH_INTERVAL = 400;
  */
 export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
     const { appliedGrantees, currentUserRef, onSelectGrantee } = props;
-
     const backend: IAnalyticalBackend = useBackendStrict();
     const workspace: string = useWorkspaceStrict();
 
@@ -71,6 +70,18 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
         [backend, workspace, intl, appliedGrantees],
     );
 
+    const onKeyDownCallback: KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {
+        const target = e.target as HTMLInputElement;
+
+        if (e.code === "Space" && !target.value) {
+            e.preventDefault();
+        }
+
+        if (e.code === "Tab") {
+            e.preventDefault();
+        }
+    }, []);
+
     const filterOption = (option: any) => {
         const grantee = option.value;
 
@@ -105,6 +116,7 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
                 placeholder={intl.formatMessage({
                     id: "shareDialog.share.grantee.add.search.placeholder",
                 })}
+                onKeyDown={onKeyDownCallback}
                 noOptionsMessage={noOptionsMessage}
                 onChange={onSelect}
                 value={null}
