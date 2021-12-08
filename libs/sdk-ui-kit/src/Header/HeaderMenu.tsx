@@ -1,13 +1,13 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { PureComponent, ReactNode } from "react";
-import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import uniqueId from "lodash/uniqueId";
 import identity from "lodash/identity";
 import cx from "classnames";
 
 import { IHeaderMenuProps, IHeaderMenuItem } from "./typings";
 
-class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponentProps> {
+export class HeaderMenu extends PureComponent<IHeaderMenuProps> {
     static defaultProps: Pick<IHeaderMenuProps, "className" | "onMenuItemClick" | "sections"> = {
         className: "",
         onMenuItemClick: identity,
@@ -60,5 +60,3 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
         return <div className={this.getClassNames()}>{this.renderSections()}</div>;
     }
 }
-
-export const HeaderMenu = injectIntl(WrappedHeaderMenu);

@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { PureComponent } from "react";
-import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop";
 
@@ -10,7 +10,6 @@ import { stringUtils } from "@gooddata/util";
  * @internal
  */
 export interface ILegacyMultiSelectListItemProps {
-    intl: IntlShape;
     isLoading?: boolean;
     onMouseOut?: (source: any) => void;
     onMouseOver?: (source: any) => void;
@@ -24,7 +23,7 @@ export interface ILegacyMultiSelectListItemProps {
  * @internal
  * @deprecated This component is deprecated use MultiSelectListItem instead
  */
-export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectListItemProps> {
+export default class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectListItemProps> {
     static defaultProps = {
         isLoading: false,
         onMouseOver: noop,
@@ -100,5 +99,3 @@ export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectL
         );
     }
 }
-
-export default injectIntl(LegacyMultiSelectListItem);

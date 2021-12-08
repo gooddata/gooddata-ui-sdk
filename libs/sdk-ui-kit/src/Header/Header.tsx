@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component, createRef } from "react";
-import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -40,7 +40,7 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
         .reduce((sum, childWidth) => sum + childWidth, SAFETY_PADDING);
 }
 
-class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, IAppHeaderState> {
+class AppHeaderCore extends Component<IAppHeaderProps, IAppHeaderState> {
     public static defaultProps: Pick<
         IAppHeaderProps,
         "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups"
@@ -55,7 +55,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     private resizeHandler = debounce(() => this.measure(), 100);
     private stylesheet: HTMLStyleElement;
 
-    constructor(props: IAppHeaderProps & WrappedComponentProps) {
+    constructor(props: IAppHeaderProps) {
         super(props);
 
         this.state = {
@@ -356,6 +356,4 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 /**
  * @internal
  */
-export const AppHeader = withTheme(
-    injectIntl<"intl", IAppHeaderProps & WrappedComponentProps>(AppHeaderCore),
-);
+export const AppHeader = withTheme(AppHeaderCore);

@@ -1,23 +1,20 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { PureComponent, ReactNode } from "react";
 import cx from "classnames";
-import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { Overlay } from "../Overlay";
 
 import { IHeaderAccountState, IHeaderMenuItem, IHeaderAccountProps } from "./typings";
 
-class WrappedHeaderAccount extends PureComponent<
-    IHeaderAccountProps & WrappedComponentProps,
-    IHeaderAccountState
-> {
+export class HeaderAccount extends PureComponent<IHeaderAccountProps, IHeaderAccountState> {
     static defaultProps: Pick<IHeaderAccountProps, "className" | "items" | "userName"> = {
         className: "",
         items: [],
         userName: "",
     };
 
-    constructor(props: IHeaderAccountProps & WrappedComponentProps) {
+    constructor(props: IHeaderAccountProps) {
         super(props);
 
         this.state = {
@@ -101,5 +98,3 @@ class WrappedHeaderAccount extends PureComponent<
         );
     }
 }
-
-export const HeaderAccount = injectIntl(WrappedHeaderAccount);

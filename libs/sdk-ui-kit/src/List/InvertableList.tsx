@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import keyBy from "lodash/keyBy";
 import values from "lodash/values";
@@ -69,7 +69,6 @@ export interface IInvertableListProps<T> {
     renderNoItems?: (props: { height: number }) => React.ReactNode;
     renderLoading?: (props: { height: number }) => React.ReactNode;
 
-    intl: IntlShape;
     getItemKey?: (item: T) => string;
     className?: string;
 
@@ -101,7 +100,7 @@ export interface IInvertableListState {
 /**
  * @internal
  */
-export class InvertableList<T> extends Component<IInvertableListProps<T>, IInvertableListState> {
+export default class InvertableList<T> extends Component<IInvertableListProps<T>, IInvertableListState> {
     public static defaultProps: Partial<IInvertableListProps<any>> = {
         getItemKey: guidFor,
         isInverted: true,
@@ -362,9 +361,3 @@ export class InvertableList<T> extends Component<IInvertableListProps<T>, IInver
         return renderLoading({ height });
     };
 }
-
-/**
- * @internal
- */
-const InvertableListWithIntl = injectIntl(InvertableList);
-export default InvertableListWithIntl;

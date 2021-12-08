@@ -48,7 +48,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "className" | "forwardedRef" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick" | "showUpsellButton">>;
+export const AppHeader: React_2.ComponentType<Pick<IAppHeaderProps, "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick" | "showUpsellButton">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -1554,8 +1554,6 @@ export interface IInvertableListProps<T> {
     // (undocumented)
     height: number;
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
     isInverted?: boolean;
     // (undocumented)
     isLoading?: boolean;
@@ -1618,6 +1616,12 @@ export interface IInvertableListRenderItemProps<T> {
     onSelect: (item: T) => void;
     // (undocumented)
     onSelectOnly: (item: T) => void;
+}
+
+// @internal (undocumented)
+export interface IInvertableListState {
+    // (undocumented)
+    notifyLimitHit: boolean;
 }
 
 // @internal (undocumented)
@@ -1756,8 +1760,6 @@ export interface ILegacyListState {
 
 // @internal (undocumented)
 export interface ILegacyMultiSelectListItemProps {
-    // (undocumented)
-    intl: IntlShape;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
@@ -2378,9 +2380,13 @@ export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & W
 export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
 
 // @internal (undocumented)
-export const InvertableList: React_2.FC<WithIntlProps<IInvertableListProps<unknown>>> & {
-    WrappedComponent: React_2.ComponentType<IInvertableListProps<unknown>>;
-};
+export class InvertableList<T> extends Component<IInvertableListProps<T>, IInvertableListState> {
+    constructor(props: IInvertableListProps<T>);
+    // (undocumented)
+    static defaultProps: Partial<IInvertableListProps<any>>;
+    // (undocumented)
+    render(): JSX.Element;
+}
 
 // @internal (undocumented)
 export interface IOffset {
