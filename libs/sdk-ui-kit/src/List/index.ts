@@ -23,6 +23,7 @@ export {
 export {
     default as InvertableList,
     IInvertableListProps,
+    IInvertableListState,
     IInvertableListRenderItemProps,
 } from "./InvertableList";
 export { List, IListProps, ScrollCallback, IRenderItemProps } from "./List";
@@ -39,7 +40,10 @@ export { default as LegacyInvertableList, ILegacyInvertableListProps } from "./L
 export { LegacyList, ILegacyListProps, ILegacyListState } from "./LegacyList";
 export { LegacyListItem, ILegacyListItemProps } from "./LegacyListItem";
 export { default as LegacyMultiSelectList, ILegacyMultiSelectListProps } from "./LegacyMultiSelectList";
-export { LegacyMultiSelectListItem, ILegacyMultiSelectListItemProps } from "./LegacyMultiSelectListItem";
+export {
+    default as LegacyMultiSelectListItem,
+    ILegacyMultiSelectListItemProps,
+} from "./LegacyMultiSelectListItem";
 export {
     LegacySingleSelectListItem,
     ILegacySingleSelectListItemProps,

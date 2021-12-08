@@ -290,17 +290,17 @@
         "limit": 0
     },
     "dashboard.bucket.metric_segment_by_warning": {
-        "value": "To add additional measure, remove {icons} from <span class=\"stack-by\">segment by</span>",
+        "value": "To add additional measure, remove {icons} from '<span class=\"stack-by\">'segment by'</span>'",
         "comment": "Do not translate HTML markup enclosed in <>. Do not translate {icons}. Translate words 'segment by'.",
         "limit": 0
     },
     "dashboard.bucket.metric_stack_by_warning": {
-        "value": "To add additional measure, remove {icons} from <span class=\"stack-by\">stack by</span>",
-        "comment": "Do not translate HTML markup enclosed in <>.  Do not translate {icons}. Translate words 'stack by'.",
+        "value": "To add additional measure, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
+        "comment": "Do not translate HTML markup enclosed in <>. Do not translate {icons}. Translate words 'stack by'.",
         "limit": 0
     },
     "dashboard.bucket.metric_view_by_warning": {
-        "value": "To add additional measure, remove {icons} from <span class=\"stack-by\">view by</span>",
+        "value": "To add additional measure, remove {icons} from '<span class=\"stack-by\">'view by'</span>'",
         "comment": "Do not translate HTML markup enclosed in <>. Do not translate {icons}. Translate words 'view by'.",
         "limit": 0
     },
@@ -316,8 +316,8 @@
         "translate": false
     },
     "dashboard.bucket.view_stack_by_warning": {
-        "value": "To add additional attribute, remove {icons} from <span class=\"stack-by\">stack by</span>",
-        "comment": "Do not translate HTML markup enclosed in <>.  Do not translate {icons}. Translate words 'stack by'.",
+        "value": "To add additional attribute, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
+        "comment": "Do not translate HTML markup enclosed in <>. Do not translate {icons}. Translate words 'stack by'.",
         "limit": 0
     },
     "dashboard.bucket.category_stack_by_warning|insight": {
@@ -1190,7 +1190,7 @@
         "limit": 0
     },
     "kpiAlertDialog.invalidNumber": {
-        "value": "<strong>This number is not valid.</strong><br />Double-check it and try again.",
+        "value": "<strong>This number is not valid.</strong>Double-check it and try again.",
         "comment": "Do not translate HTML markup enclosed in <>.",
         "limit": 0
     },

@@ -78,7 +78,7 @@
     "kpiAlertDialog.emailMe": "Envoyez-moi un e-mail",
     "kpiAlertDialog.emailMeWhen": "{emailMe} lorsque ce KPI est",
     "kpiAlertDialog.emailInfo": "L'e-mail sera envoyé à {userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>Ce numéro n'est pas valide.</strong><br />Revérifiez et réessayez.",
+    "kpiAlertDialog.invalidNumber": "<strong>Ce numéro n'est pas valide.</strong>Revérifiez et réessayez.",
     "kpiAlertDialog.filtersDiffer": "KPI est à présent filtré différemment que lors de la configuration de l'alerte.",
     "kpiAlertDialog.filtersApply": "Appliquer les filtres d'alerte au tableau de bord",
     "kpiAlertDialog.savingFailed": "Échec de l'enregistrement de l'alerte. Réessayez.",
@@ -125,5 +125,18 @@
     "widget.options.menu.exportToCSV": "Exporter au format CSV",
     "widget.options.menu.exportToXLSX": "Exporter vers XLSX",
     "dashboard.error.empty.heading": "Ce tableau de bord est vide",
-    "dashboard.error.empty.text": "Toutes les perceptions ont été retirées."
+    "dashboard.error.empty.text": "Toutes les perceptions ont été retirées.",
+    "attributesDropdown.placeholder": "Rechercher…",
+    "attributesDropdown.noData": "Cet attribut ne possède aucune valeur.",
+    "attributesDropdown.configuration": "Configuration",
+    "attributesDropdown.itemsFiltered": "Les éléments sont filtrés.",
+    "attributesDropdown.allItemsFiltered": "Tous les éléments ont été filtrés.",
+    "attributesDropdown.itemsFiltered.tooltip": "Les éléments sont filtrés par : <strong>{filters}</strong>",
+    "attributesDropdown.save": "Enregistrer",
+    "attributesDropdown.filterBy": "Filtrer par",
+    "attributesDropdown.displayValuesAs": "Affichage des valeurs",
+    "attributesDropdown.attributeNameWithData": "avec les données de",
+    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> ne peut pas être filtré par <strong>{parentTitle}</strong>. Il n'existe aucune connexion entre les attributs du filtre dans le modèle de données.",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> est déjà filtré par le filtre <strong>{childTitle}</strong>, directement ou via d'autres filtres.",
+    "attributesDropdown.removeTooltip": "Retirer du tableau de bord"
 }

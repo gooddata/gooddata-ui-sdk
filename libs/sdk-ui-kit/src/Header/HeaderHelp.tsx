@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React, { useState } from "react";
-import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 
@@ -16,7 +16,6 @@ interface IHelpItem {
 }
 
 interface IHeaderHelpProps {
-    intl: IntlShape;
     className: string;
     items: IHelpItem[];
     onMenuItemClick?: (...args: any[]) => void;
@@ -25,7 +24,7 @@ interface IHeaderHelpProps {
     helpRedirectUrl?: string;
 }
 
-export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
+export const HeaderHelp: React.FC<IHeaderHelpProps> = ({
     className,
     items,
     onMenuItemClick,
@@ -108,5 +107,3 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
         </div>
     );
 };
-
-export const HeaderHelp = injectIntl(CoreHeaderHelp);

@@ -1,12 +1,10 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
-interface IDocumentationLinkOwnProps {
+interface IDocumentationLinkProps {
     url: string;
 }
-
-type IDocumentationLinkProps = IDocumentationLinkOwnProps & WrappedComponentProps;
 
 const DocumentationLink = ({ url }: IDocumentationLinkProps) => (
     <div className="gd-measure-custom-format-dialog-section gd-measure-custom-format-dialog-section-help">
@@ -24,4 +22,4 @@ const DocumentationLink = ({ url }: IDocumentationLinkProps) => (
     </div>
 );
 
-export default injectIntl(DocumentationLink);
+export default DocumentationLink;

@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import { injectIntl, IntlShape } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 
@@ -10,19 +10,15 @@ export interface IHeaderWorkspacePickerItemProps {
     isSelected?: boolean;
     isLoading?: boolean;
     onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
-    intl: IntlShape;
 }
 
-export const CoreHeaderWorkspacePickerItem: React.FC<IHeaderWorkspacePickerItemProps> = ({
-    intl,
+export const HeaderWorkspacePickerItem: React.FC<IHeaderWorkspacePickerItemProps> = ({
     title,
     isLoading,
     isSelected,
     isDemo,
     onClick,
 }) => {
-    const t = intl.formatMessage;
-
     if (isLoading) {
         return (
             <div className="gd-list-item gd-project-list-item gd-is-loading">
@@ -42,9 +38,11 @@ export const CoreHeaderWorkspacePickerItem: React.FC<IHeaderWorkspacePickerItemP
     return (
         <div className={classes} title={title} onClick={onClick}>
             <span className="project-title">{title}</span>
-            {isDemo && <span className="demo-sticker">{t({ id: "gs.header.projectPicker.demo" })}</span>}
+            {isDemo && (
+                <span className="demo-sticker">
+                    <FormattedMessage id="gs.header.projectPicker.demo" />
+                </span>
+            )}
         </div>
     );
 };
-
-export const HeaderWorkspacePickerItem = injectIntl(CoreHeaderWorkspacePickerItem);

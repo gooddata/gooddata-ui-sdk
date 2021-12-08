@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import isEqual from "lodash/isEqual";
 import last from "lodash/last";
-import { FormattedHTMLMessage, FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { Button, Input, Typography, Overlay, useMediaQuery, Spinner, Message } from "@gooddata/sdk-ui-kit";
 import {
     IDashboardDateFilter,
@@ -299,7 +299,7 @@ export class KpiAlertDialog extends Component<
 
         const emailMe = (
             <span className="underline-dotted" title={this.props.userEmail}>
-                <FormattedHTMLMessage id="kpiAlertDialog.emailMe" />
+                <FormattedMessage id="kpiAlertDialog.emailMe" />
             </span>
         );
 
@@ -398,12 +398,12 @@ export class KpiAlertDialog extends Component<
         const shouldShowFiltersDifferMessage = !!this.props.alert && filtersDiffer;
         return shouldShowFiltersDifferMessage ? (
             <Message type="warning">
-                <FormattedHTMLMessage id="kpiAlertDialog.filtersDiffer" />
+                <FormattedMessage id="kpiAlertDialog.filtersDiffer" />
                 {!!this.props.onApplyAlertFiltersClick && (
                     <>
                         {" "}
                         <a className="s-apply-alert-filters" onClick={this.applyAlertFilterSetting}>
-                            <FormattedHTMLMessage id="kpiAlertDialog.filtersApply" />
+                            <FormattedMessage id="kpiAlertDialog.filtersApply" />
                         </a>
                     </>
                 )}
@@ -413,17 +413,23 @@ export class KpiAlertDialog extends Component<
         );
     }
 
-    renderErrorMessage(messageId: string): React.ReactNode {
-        return (
-            <Message type="error">
-                <FormattedHTMLMessage id={messageId} />
-            </Message>
-        );
-    }
-
     renderValidationMessage(): React.ReactNode {
         if (!this.isAlertValid() && !this.isAlertEmpty()) {
-            return this.renderErrorMessage("kpiAlertDialog.invalidNumber");
+            return (
+                <Message type="error">
+                    <FormattedMessage
+                        id="kpiAlertDialog.invalidNumber"
+                        values={{
+                            strong: (chunks: string) => (
+                                <>
+                                    <strong>{chunks}</strong>
+                                    <br />
+                                </>
+                            ),
+                        }}
+                    />
+                </Message>
+            );
         }
 
         return false;
@@ -431,7 +437,11 @@ export class KpiAlertDialog extends Component<
 
     renderSavingErrorMessage(): React.ReactNode {
         if (this.props.alertSavingStatus === "error") {
-            return this.renderErrorMessage("kpiAlertDialog.savingFailed");
+            return (
+                <Message type="error">
+                    <FormattedMessage id="kpiAlertDialog.savingFailed" />
+                </Message>
+            );
         }
 
         return false;
@@ -439,7 +449,11 @@ export class KpiAlertDialog extends Component<
 
     renderUpdatingErrorMessage(): React.ReactNode {
         if (this.props.alertUpdatingStatus === "error") {
-            return this.renderErrorMessage("kpiAlertDialog.updateBrokenFailed");
+            return (
+                <Message type="error">
+                    <FormattedMessage id="kpiAlertDialog.updateBrokenFailed" />
+                </Message>
+            );
         }
 
         return false;
@@ -447,7 +461,11 @@ export class KpiAlertDialog extends Component<
 
     renderDeletingErrorMessage(): React.ReactNode {
         if (this.props.alertDeletingStatus === "error") {
-            return this.renderErrorMessage("kpiAlertDialog.deleteingFailed");
+            return (
+                <Message type="error">
+                    <FormattedMessage id="kpiAlertDialog.deleteingFailed" />
+                </Message>
+            );
         }
 
         return false;
