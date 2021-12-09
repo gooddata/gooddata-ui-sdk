@@ -207,6 +207,7 @@ export {
     identifierMatch,
     localIdentifierMatch,
     uriMatch,
+    objRefMatch,
 } from "./headerMatching/HeaderPredicateFactory";
 
 /*
