@@ -1190,7 +1190,7 @@
         "limit": 0
     },
     "kpiAlertDialog.invalidNumber": {
-        "value": "<strong>This number is not valid.</strong>Double-check it and try again.",
+        "value": "<strong>This number is not valid.</strong><br />Double-check it and try again.",
         "comment": "Do not translate HTML markup enclosed in <>.",
         "limit": 0
     },

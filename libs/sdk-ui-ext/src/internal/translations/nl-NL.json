@@ -219,7 +219,7 @@
     "kpiAlertDialog.emailMe": "E-mail mij",
     "kpiAlertDialog.emailMeWhen": "{emailMe} wanneer deze KPI wordt",
     "kpiAlertDialog.emailInfo": "De e-mail zal worden verstuurd naar {userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>Dit nummer is niet geldig.</strong>Controleer het nogmaals en probeer het opnieuw.",
+    "kpiAlertDialog.invalidNumber": "<strong>Dit nummer is niet geldig.</strong><br />Controleer het nogmaals en probeer het opnieuw.",
     "kpiAlertDialog.filtersDiffer": "De KPI wordt nu anders gefilterd dan wanneer het alarm werd ingesteld.",
     "kpiAlertDialog.filtersApply": "Alarmfilters op het dashboard toepassen",
     "kpiAlertDialog.savingFailed": "Alamr kon niet worden opgeslagen. Probeer het opnieuw.",

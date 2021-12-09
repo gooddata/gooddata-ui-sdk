@@ -219,7 +219,7 @@
     "kpiAlertDialog.emailMe": "Enviarme un correo electrónico",
     "kpiAlertDialog.emailMeWhen": "{emailMe} cuando este KPI sea",
     "kpiAlertDialog.emailInfo": "El correo electrónico se enviará a {userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>Este número no es válido.</strong>Compruebe y vuelva a intentarlo.",
+    "kpiAlertDialog.invalidNumber": "<strong>Este número no es válido.</strong><br />Compruebe y vuelva a intentarlo.",
     "kpiAlertDialog.filtersDiffer": "El KPI está filtrado de manera distinta a cuando se estableció la alerta.",
     "kpiAlertDialog.filtersApply": "Aplicar filtros de alerta al panel",
     "kpiAlertDialog.savingFailed": "Error al guardar la alerta. Vuelva a intentarlo más tarde.",

@@ -67,7 +67,6 @@ import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { VisType } from '@gooddata/sdk-ui';
-import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
@@ -519,7 +518,9 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo;
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo;
 
 // @internal (undocumented)
-export const InsightError: React_2.FC<WithIntlProps<IInsightErrorProps & WrappedComponentProps<"intl">>> & {
+export const InsightError: React_2.ForwardRefExoticComponent<Pick<IInsightErrorProps & WrappedComponentProps<"intl">, "error" | "height" | "clientHeight" | "ErrorComponent"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IInsightErrorProps & WrappedComponentProps<"intl">>;
 };
 

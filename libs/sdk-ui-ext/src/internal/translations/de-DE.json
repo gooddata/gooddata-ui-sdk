@@ -219,7 +219,7 @@
     "kpiAlertDialog.emailMe": "Schicken Sie mir eine E-Mail",
     "kpiAlertDialog.emailMeWhen": "{emailMe}, wenn dieser KPI ist",
     "kpiAlertDialog.emailInfo": "E-Mail wird gesendet an {userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>Diese Zahl ist nicht gültig.</strong>Prüfen Sie sie nach und versuchen Sie es noch einmal.",
+    "kpiAlertDialog.invalidNumber": "<strong>Diese Zahl ist nicht gültig.</strong><br />Prüfen Sie sie nach und versuchen Sie es noch einmal.",
     "kpiAlertDialog.filtersDiffer": "Der KPI wird jetzt anders gefiltert als beim Einrichten des Alarms.",
     "kpiAlertDialog.filtersApply": "Alarmfilter auf Dashboard anwenden",
     "kpiAlertDialog.savingFailed": "Speichern des Alarms fehlgeschlagen. Bitte versuchen Sie es noch einmal.",
