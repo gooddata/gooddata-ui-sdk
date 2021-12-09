@@ -4,7 +4,7 @@ import { IntlProvider, IntlShape, createIntl } from "react-intl";
 import {
     DefaultLocale,
     ILocale,
-    pickCorrectInsightWording,
+    pickCorrectWording,
     TranslationsCustomizationProvider,
 } from "@gooddata/sdk-ui";
 
@@ -24,7 +24,7 @@ export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
      */
     const settings = window.gdSettings as IWorkspaceSettings;
     if (!intlCache.get(INTL_CACHE_KEY)) {
-        intlCache.set(INTL_CACHE_KEY, pickCorrectInsightWording(translations[locale], settings));
+        intlCache.set(INTL_CACHE_KEY, pickCorrectWording(translations[locale], settings));
     }
     return createIntl({ locale, messages: intlCache.get(INTL_CACHE_KEY) });
 }
@@ -48,7 +48,7 @@ export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
 
     if (settings) {
         const messages = useMemo(
-            () => pickCorrectInsightWording(translations[locale], settings),
+            () => pickCorrectWording(translations[locale], settings),
             [locale, settings, translations],
         );
 

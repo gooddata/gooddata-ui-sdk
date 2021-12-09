@@ -39,6 +39,51 @@ export const pickCorrectInsightWording = (
     return memoizedPickCorrectInsightWordingInner(translations, isEnabledInsightToReport);
 };
 
+const pickCorrectMetricWordingInner = (
+    translations: Record<string, string>,
+    isEnabledRenamingMeasureToMetric: boolean,
+): Record<string, string> => {
+    const modifiedTranslations = {};
+    Object.keys(translations).forEach((key) => {
+        if (key.includes(".renaming_measure")) {
+            const newKey = getNewKey(key, isEnabledRenamingMeasureToMetric ? ".renaming_measure" : "");
+            modifiedTranslations[newKey] = translations[key];
+        }
+    });
+    return {
+        ...translations,
+        ...modifiedTranslations,
+    };
+};
+
+/**
+ * Even this simple translations-reference-based cache is very effective as most of the time the 'translations'
+ * objects come from some static constant.
+ */
+const memoizedPickCorrectMetricWordingInner = memoizeOne(pickCorrectMetricWordingInner);
+
+/**
+ * The function to pick correct wording 'measure' or 'metric'
+ * @beta
+ */
+export const pickCorrectMetricWording = (
+    translations: Record<string, string>,
+    settings?: IWorkspaceSettings,
+): Record<string, string> => {
+    const isEnabledRenamingMeasureToMetric = !!settings?.enableRenamingMeasureToMetric;
+
+    return memoizedPickCorrectMetricWordingInner(translations, isEnabledRenamingMeasureToMetric);
+};
+
+/**
+ * @beta
+ */
+export const pickCorrectWording = (
+    translations: Record<string, string>,
+    settings?: IWorkspaceSettings,
+): Record<string, string> =>
+    pickCorrectMetricWording(pickCorrectInsightWording(translations, settings), settings);
+
 /**
  * @beta
  */

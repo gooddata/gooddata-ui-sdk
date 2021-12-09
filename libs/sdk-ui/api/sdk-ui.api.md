@@ -1487,6 +1487,12 @@ export const OverTimeComparisonTypes: {
 // @beta (undocumented)
 export const pickCorrectInsightWording: (translations: Record<string, string>, settings?: IWorkspaceSettings | undefined) => Record<string, string>;
 
+// @beta
+export const pickCorrectMetricWording: (translations: Record<string, string>, settings?: IWorkspaceSettings | undefined) => Record<string, string>;
+
+// @beta (undocumented)
+export const pickCorrectWording: (translations: Record<string, string>, settings?: IWorkspaceSettings | undefined) => Record<string, string>;
+
 // @public
 export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
 

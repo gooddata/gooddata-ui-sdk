@@ -178,6 +178,8 @@ export {
     ITranslationsCustomizationProviderProps,
     TranslationsCustomizationProvider,
     pickCorrectInsightWording,
+    pickCorrectMetricWording,
+    pickCorrectWording,
     removeAllInsightToReportTranslations,
 } from "./localization/TranslationsCustomizationProvider";
 

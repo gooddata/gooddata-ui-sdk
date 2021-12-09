@@ -70,6 +70,7 @@ export const DefaultUiSettings: ISettings = {
     dashboardComponentDevRollout: true,
 
     enableRenamingProjectToWorkspace: true,
+    enableRenamingMeasureToMetric: false,
 };
 
 /**

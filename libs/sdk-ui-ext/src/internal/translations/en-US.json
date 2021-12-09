@@ -9,8 +9,18 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.column.renaming_measure": {
+        "value": "Metrics",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.measures_title.bar": {
         "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.bar.renaming_measure": {
+        "value": "Metrics",
         "comment": "",
         "limit": 0
     },
@@ -19,8 +29,18 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.line.renaming_measure": {
+        "value": "Metrics",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.measures_title.area": {
         "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.area.renaming_measure": {
+        "value": "Metrics",
         "comment": "",
         "limit": 0
     },
@@ -29,8 +49,18 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.pie.renaming_measure": {
+        "value": "Metrics",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.measures_title.funnel": {
         "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.funnel.renaming_measure": {
+        "value": "Metrics",
         "comment": "",
         "limit": 0
     },
@@ -39,8 +69,18 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.treemap.renaming_measure": {
+        "value": "Metrics",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.measures_title.donut": {
         "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.donut.renaming_measure": {
+        "value": "Metrics",
         "comment": "",
         "limit": 0
     },
@@ -49,8 +89,18 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.heatmap.renaming_measure": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.measures_title.headline": {
         "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.headline.renaming_measure": {
+        "value": "Metric",
         "comment": "",
         "limit": 0
     },
@@ -64,6 +114,11 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.secondary_measures_title.headline.renaming_measure": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.secondary_measures_subtitle.headline": {
         "value": "secondary",
         "comment": "",
@@ -74,8 +129,18 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.scatter.renaming_measure": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.secondary_measures_title.scatter": {
         "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_title.scatter.renaming_measure": {
+        "value": "Metric",
         "comment": "",
         "limit": 0
     },
@@ -99,6 +164,11 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.combo.renaming_measure": {
+        "value": "Metrics",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.measures_subtitle.combo": {
         "value": "Column",
         "comment": "",
@@ -109,6 +179,11 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.secondary_measures_title.combo.renaming_measure": {
+        "value": "Metrics",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.secondary_measures_subtitle.combo": {
         "value": "Line",
         "comment": "",
@@ -116,6 +191,11 @@
     },
     "dashboard.bucket.measures_title.xirr": {
         "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.xirr.renaming_measure": {
+        "value": "Metric",
         "comment": "",
         "limit": 0
     },
@@ -144,13 +224,28 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.bubble.renaming_measure": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.secondary_measures_title.bubble": {
         "value": "Measure",
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.secondary_measures_title.bubble.renaming_measure": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.tertiary_measures_title.bubble": {
         "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.tertiary_measures_title.bubble.renaming_measure": {
+        "value": "Metric",
         "comment": "",
         "limit": 0
     },
@@ -179,6 +274,11 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.size_title.pushpin.renaming_measure": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.size_subtitle.pushpin": {
         "value": "Size",
         "comment": "Size of a pin pushed to a map",
@@ -186,6 +286,11 @@
     },
     "dashboard.bucket.color_title.pushpin": {
         "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.color_title.pushpin.renaming_measure": {
+        "value": "Metric",
         "comment": "",
         "limit": 0
     },
@@ -294,8 +399,18 @@
         "comment": "Do not translate HTML markup enclosed in <>. Do not translate {icons}. Translate words 'segment by'.",
         "limit": 0
     },
+    "dashboard.bucket.metric_segment_by_warning.renaming_measure": {
+        "value": "To add additional metric, remove {icons} from <span class=\"stack-by\">segment by</span>",
+        "comment": "Do not translate HTML markup enclosed in <>. Do not translate {icons}. Translate words 'segment by'.",
+        "limit": 0
+    },
     "dashboard.bucket.metric_stack_by_warning": {
         "value": "To add additional measure, remove {icons} from <span class=\"stack-by\">stack by</span>",
+        "comment": "Do not translate HTML markup enclosed in <>.  Do not translate {icons}. Translate words 'stack by'.",
+        "limit": 0
+    },
+    "dashboard.bucket.metric_stack_by_warning.renaming_measure": {
+        "value": "To add additional metric, remove {icons} from <span class=\"stack-by\">stack by</span>",
         "comment": "Do not translate HTML markup enclosed in <>.  Do not translate {icons}. Translate words 'stack by'.",
         "limit": 0
     },
@@ -304,13 +419,29 @@
         "comment": "Do not translate HTML markup enclosed in <>. Do not translate {icons}. Translate words 'view by'.",
         "limit": 0
     },
+    "dashboard.bucket.metric_view_by_warning.renaming_measure": {
+        "value": "To add additional metric, remove {icons} from <span class=\"stack-by\">view by</span>",
+        "comment": "Do not translate HTML markup enclosed in <>. Do not translate {icons}. Translate words 'view by'.",
+        "limit": 0
+    },
     "dashboard.bucket.category_view_by_warning|insight": {
         "value": "To view by another attribute, an insight can have only one measure",
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.category_view_by_warning.renaming_measure|insight": {
+        "value": "To view by another attribute, an insight can have only one metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.category_view_by_warning|report": {
         "value": "To view by another attribute, a report can have only one measure",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.bucket.category_view_by_warning.renaming_measure|report": {
+        "value": "To view by another attribute, a report can have only one metric",
         "comment": "",
         "limit": 0,
         "translate": false
@@ -325,8 +456,19 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.category_stack_by_warning.renaming_measure|insight": {
+        "value": "To stack by, an insight can have only one metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.category_stack_by_warning|report": {
         "value": "To stack by, a report can have only one measure",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.bucket.category_stack_by_warning.renaming_measure|report": {
+        "value": "To stack by, a report can have only one metric",
         "comment": "",
         "limit": 0,
         "translate": false
@@ -347,8 +489,19 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measure_stack_by_warning.renaming_measure|insight": {
+        "value": "To stack by an attribute, an insight can have only one metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.measure_stack_by_warning|report": {
         "value": "To stack by an attribute, a report can have only one measure",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.bucket.measure_stack_by_warning.renaming_measure|report": {
+        "value": "To stack by an attribute, a report can have only one metric",
         "comment": "",
         "limit": 0,
         "translate": false
@@ -358,8 +511,19 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.category_category_by_warning.renaming_measure|insight": {
+        "value": "To view by, an insight can have only one metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.category_category_by_warning|report": {
         "value": "To view by, a report can have only one measure",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.bucket.category_category_by_warning.renaming_measure|report": {
+        "value": "To view by, a report can have only one metric",
         "comment": "",
         "limit": 0,
         "translate": false
@@ -369,8 +533,19 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.category_segment_by_warning.renaming_measure|insight": {
+        "value": "To segment by, an insight can have only one metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.category_segment_by_warning|report": {
         "value": "To segment by, a report can have only one measure",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.bucket.category_segment_by_warning.renaming_measure|report": {
+        "value": "To segment by, a report can have only one metric",
         "comment": "",
         "limit": 0,
         "translate": false
@@ -382,6 +557,11 @@
     },
     "dashboard.bucket.measures_title.table": {
         "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.table.renaming_measure": {
+        "value": "Metrics",
         "comment": "",
         "limit": 0
     },
@@ -400,8 +580,19 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.error.missing_primary_bucket_item.heading.renaming_measure|insight": {
+        "value": "No primary metric in your insight",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.error.missing_primary_bucket_item.heading|report": {
         "value": "No primary measure in your report",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.error.missing_primary_bucket_item.heading.renaming_measure|report": {
+        "value": "No primary metric in your report",
         "comment": "",
         "limit": 0,
         "translate": false
@@ -411,8 +602,19 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.error.missing_primary_bucket_item.text.renaming_measure|insight": {
+        "value": "Add a primary metric to your insight, or switch to table.\nOnce done, you'll be able to save it.",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.error.missing_primary_bucket_item.text|report": {
         "value": "Add a primary measure to your report, or switch to table.\nOnce done, you'll be able to save it.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "dashboard.error.missing_primary_bucket_item.text.renaming_measure|report": {
+        "value": "Add a primary metric to your report, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "",
         "limit": 0,
         "translate": false
@@ -425,6 +627,11 @@
     "dashboard.xirr.error.invalid_buckets.text": {
         "value": "Make sure you have selected one measure and one date attribute",
         "comment": "The user should be instructed to review that they have added one measure and one date attribute to the insight",
+        "limit": 0
+    },
+    "dashboard.xirr.error.invalid_buckets.text.renaming_measure": {
+        "value": "Make sure you have selected one metric and one date attribute",
+        "comment": "The user should be instructed to review that they have added one metric and one date attribute to the insight",
         "limit": 0
     },
     "dashboard.error.empty.heading": {
@@ -591,8 +798,19 @@
         "comment": "Info text for axis format option.",
         "limit": 0
     },
+    "properties.axis.format.info.inherit.renaming_measure|insight": {
+        "value": "The format is inherited from the first metric in the insight.",
+        "comment": "Info text for axis format option.",
+        "limit": 0
+    },
     "properties.axis.format.info.inherit|report": {
         "value": "The format is inherited from the first measure in the report.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "properties.axis.format.info.inherit.renaming_measure|report": {
+        "value": "The format is inherited from the first metric in the report.",
         "comment": "",
         "limit": 0,
         "translate": false
@@ -914,13 +1132,28 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.bullet.renaming_measure": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.secondary_measures_title.bullet": {
         "value": "Measure",
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.secondary_measures_title.bullet.renaming_measure": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.tertiary_measures_title.bullet": {
         "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.tertiary_measures_title.bullet.renaming_measure": {
+        "value": "Metric",
         "comment": "",
         "limit": 0
     },
