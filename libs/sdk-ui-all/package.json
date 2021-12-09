@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-all",
-    "version": "8.8.0-alpha.20",
+    "version": "8.8.0-alpha.21",
     "author": "GoodData",
     "description": "GoodData SDK - All-In-One",
     "repository": {
@@ -49,14 +49,14 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.8.0-alpha.20",
-        "@gooddata/sdk-model": "^8.8.0-alpha.20",
-        "@gooddata/sdk-ui": "^8.8.0-alpha.20",
-        "@gooddata/sdk-ui-charts": "^8.8.0-alpha.20",
-        "@gooddata/sdk-ui-ext": "^8.8.0-alpha.20",
-        "@gooddata/sdk-ui-filters": "^8.8.0-alpha.20",
-        "@gooddata/sdk-ui-geo": "^8.8.0-alpha.20",
-        "@gooddata/sdk-ui-pivot": "^8.8.0-alpha.20",
+        "@gooddata/sdk-backend-spi": "^8.8.0-alpha.21",
+        "@gooddata/sdk-model": "^8.8.0-alpha.21",
+        "@gooddata/sdk-ui": "^8.8.0-alpha.21",
+        "@gooddata/sdk-ui-charts": "^8.8.0-alpha.21",
+        "@gooddata/sdk-ui-ext": "^8.8.0-alpha.21",
+        "@gooddata/sdk-ui-filters": "^8.8.0-alpha.21",
+        "@gooddata/sdk-ui-geo": "^8.8.0-alpha.21",
+        "@gooddata/sdk-ui-pivot": "^8.8.0-alpha.21",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
