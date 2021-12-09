@@ -78,7 +78,7 @@
     "kpiAlertDialog.emailMe": "Enviar-me um e-mail",
     "kpiAlertDialog.emailMeWhen": "{emailMe} quando este KPI for",
     "kpiAlertDialog.emailInfo": "O e-mail será enviado para {userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>Este número não é válido.</strong>Verifique-o novamente e tente de novo.",
+    "kpiAlertDialog.invalidNumber": "<strong>Este número não é válido.</strong><br />Verifique-o novamente e tente de novo.",
     "kpiAlertDialog.filtersDiffer": "O KPI está agora filtrado de forma diferente do que quando o alerta foi configurado.",
     "kpiAlertDialog.filtersApply": "Aplicar filtros de alerta ao dashboard",
     "kpiAlertDialog.savingFailed": "Guardar o alerta falhou. Tente de novo.",
@@ -125,18 +125,5 @@
     "widget.options.menu.exportToCSV": "Exportar para CSV",
     "widget.options.menu.exportToXLSX": "Exportar para XLSX",
     "dashboard.error.empty.heading": "Este dashboard está vazio",
-    "dashboard.error.empty.text": "Todos os insights foram removidos.",
-    "attributesDropdown.placeholder": "Pesquisar atributos…",
-    "attributesDropdown.noData": "Este atributo não tem valores.",
-    "attributesDropdown.configuration": "Configuração",
-    "attributesDropdown.itemsFiltered": "Há itens filtrados",
-    "attributesDropdown.allItemsFiltered": "Todos os itens foram filtrados",
-    "attributesDropdown.itemsFiltered.tooltip": "Os itens foram filtrados por: <strong>{filters}</strong>",
-    "attributesDropdown.save": "Guardar",
-    "attributesDropdown.filterBy": "Filtrar por",
-    "attributesDropdown.displayValuesAs": "Apresentar valores como",
-    "attributesDropdown.attributeNameWithData": "com dados de",
-    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> não pode ser filtrado por <strong>{parentTitle}</strong>. Não há ligação entre os atributos de filtro no modelo de dados.",
-    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> já se encontra filtrado pelo filtro <strong>{childTitle}</strong>, de forma direta ou através de outros filtros.",
-    "attributesDropdown.removeTooltip": "Remover do dashboard"
+    "dashboard.error.empty.text": "Todos os insights foram removidos."
 }

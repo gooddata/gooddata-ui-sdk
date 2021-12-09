@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import React from "react";
 import partition from "lodash/partition";
-import { FormattedMessage } from "react-intl";
+import { FormattedHTMLMessage } from "react-intl";
 import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
 import { DrillSelectListItem } from "./DrillSelectListItem";
 import { DrillSelectItem } from "./types";
@@ -29,7 +29,7 @@ export const DrillSelectList: React.FunctionComponent<DrillSelectListProps> = (p
             return (
                 <>
                     <div className="gd-drill-modal-picker-title">
-                        <FormattedMessage id="drill_modal_picker.drill-down" />
+                        <FormattedHTMLMessage id="drill_modal_picker.drill-down" />
                     </div>
                     {renderItems(items)}
                 </>
@@ -42,7 +42,7 @@ export const DrillSelectList: React.FunctionComponent<DrillSelectListProps> = (p
             return (
                 <>
                     <div className="gd-drill-modal-picker-title">
-                        <FormattedMessage id="drill_modal_picker.drill-into" />
+                        <FormattedHTMLMessage id="drill_modal_picker.drill-into" />
                     </div>
                     {renderItems(items)}
                 </>

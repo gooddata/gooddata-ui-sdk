@@ -78,7 +78,7 @@
     "kpiAlertDialog.emailMe": "给我发邮件",
     "kpiAlertDialog.emailMeWhen": "{emailMe}，当此 KPI 是",
     "kpiAlertDialog.emailInfo": "电子邮件将发送至 {userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>此号码无效。</strong>请仔细检查并重试。",
+    "kpiAlertDialog.invalidNumber": "<strong>此号码无效。</strong><br />请仔细检查并重试。",
     "kpiAlertDialog.filtersDiffer": "现在 KPI 的筛选方式与设置警报时的筛选方式不同。",
     "kpiAlertDialog.filtersApply": "将警报筛选器应用于控制面板",
     "kpiAlertDialog.savingFailed": "保存警报失败。请重试。",
@@ -125,18 +125,5 @@
     "widget.options.menu.exportToCSV": "导出至 CSV",
     "widget.options.menu.exportToXLSX": "导出为 XLSX",
     "dashboard.error.empty.heading": "此控制面板为空",
-    "dashboard.error.empty.text": "已删除所有洞察。",
-    "attributesDropdown.placeholder": "搜索属性...",
-    "attributesDropdown.noData": "此属性没有任何值。",
-    "attributesDropdown.configuration": "配置",
-    "attributesDropdown.itemsFiltered": "各项已筛选",
-    "attributesDropdown.allItemsFiltered": "所有各项都被筛选掉",
-    "attributesDropdown.itemsFiltered.tooltip": "各项已筛选： <strong>{filters}</strong>",
-    "attributesDropdown.save": "保存",
-    "attributesDropdown.filterBy": "筛选条件",
-    "attributesDropdown.displayValuesAs": "将数值显示为",
-    "attributesDropdown.attributeNameWithData": "带下列数据",
-    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> 无法被 <strong>{parentTitle}</strong> 筛选。数据模型中的筛选器属性之间没有关联。",
-    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> 已被 <strong>{childTitle}</strong> 筛选器直接筛选或已通过其他筛选器筛选。",
-    "attributesDropdown.removeTooltip": "从控制面板中移除"
+    "dashboard.error.empty.text": "已删除所有洞察。"
 }

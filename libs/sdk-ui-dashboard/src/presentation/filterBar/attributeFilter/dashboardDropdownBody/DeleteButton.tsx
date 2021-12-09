@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 import { Bubble, BubbleHoverTrigger, Button, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage } from "react-intl";
+import { FormattedHTMLMessage } from "react-intl";
 
 interface IDeleteButton {
     deleteFilter: () => void;
@@ -20,7 +20,7 @@ export const DeleteButton: React.FC<IDeleteButton> = ({ deleteFilter }) => {
                     onClick={deleteFilter}
                 />
                 <Bubble className="bubble-primary" alignPoints={bubbleAlignPoints}>
-                    <FormattedMessage id="attributesDropdown.removeTooltip" />
+                    <FormattedHTMLMessage id="attributesDropdown.removeTooltip" />
                 </Bubble>
             </BubbleHoverTrigger>
         </div>

@@ -78,7 +78,7 @@
     "kpiAlertDialog.emailMe": "E-mail mij",
     "kpiAlertDialog.emailMeWhen": "{emailMe} wanneer deze KPI wordt",
     "kpiAlertDialog.emailInfo": "De e-mail zal worden verstuurd naar {userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>Dit nummer is niet geldig.</strong>Controleer het nogmaals en probeer het opnieuw.",
+    "kpiAlertDialog.invalidNumber": "<strong>Dit nummer is niet geldig.</strong><br />Controleer het nogmaals en probeer het opnieuw.",
     "kpiAlertDialog.filtersDiffer": "De KPI wordt nu anders gefilterd dan wanneer het alarm werd ingesteld.",
     "kpiAlertDialog.filtersApply": "Alarmfilters op het dashboard toepassen",
     "kpiAlertDialog.savingFailed": "Alamr kon niet worden opgeslagen. Probeer het opnieuw.",
@@ -125,18 +125,5 @@
     "widget.options.menu.exportToCSV": "Exporteren naar CSV",
     "widget.options.menu.exportToXLSX": "Exporteren naar XLSX",
     "dashboard.error.empty.heading": "Dit dashboard is leeg",
-    "dashboard.error.empty.text": "Alle inzichten zijn verwijderd.",
-    "attributesDropdown.placeholder": "Zoeken…",
-    "attributesDropdown.noData": "Dit attribuut bevat geen enkele waarde.",
-    "attributesDropdown.configuration": "Configuratie",
-    "attributesDropdown.itemsFiltered": "Items zijn gefilterd",
-    "attributesDropdown.allItemsFiltered": "Alle items zijn uitgefilterd",
-    "attributesDropdown.itemsFiltered.tooltip": "Items zijn gefilterd op: <strong>{filters}</strong> ",
-    "attributesDropdown.save": "Opslaan",
-    "attributesDropdown.filterBy": "Filteren volgens",
-    "attributesDropdown.displayValuesAs": "Waarden weergeven als",
-    "attributesDropdown.attributeNameWithData": "met gegevens van",
-    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> kan niet worden gefilterd op <strong>{parentTitle}</strong>. Er is geen verbinding tussen de filterattributen in het gegevensmodel.",
-    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> is al gefilterd op <strong>{childTitle}</strong>, rechtstreeks of via andere filters.",
-    "attributesDropdown.removeTooltip": "Verwijderen van dashboard"
+    "dashboard.error.empty.text": "Alle inzichten zijn verwijderd."
 }
