@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
@@ -101,10 +101,12 @@ export class LegacyInvertableList<T> extends Component<
         isLoading: false,
         isLoadingClass: LoadingMessage,
         isMobile: false,
-        limitHitWarningClass: LimitHitWarning,
+        limitHitWarningClass: injectIntl<"intl", ILimitHitWarningProps & WrappedComponentProps>(
+            LimitHitWarning,
+        ),
         listItemClass: LegacyMultiSelectListItem,
         noItemsFound: false,
-        noItemsFoundClass: NoItemsFound,
+        noItemsFoundClass: injectIntl(NoItemsFound),
         onRangeChange: noop,
         onSelect: noop,
         searchPlaceholder: "",

@@ -27,6 +27,7 @@ import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
+import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
@@ -47,7 +48,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<IAppHeaderProps, "intl" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick" | "showUpsellButton">>;
+export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "className" | "forwardedRef" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick" | "showUpsellButton">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -1563,6 +1564,8 @@ export interface IInvertableListProps<T> {
     // (undocumented)
     height: number;
     // (undocumented)
+    intl: IntlShape;
+    // (undocumented)
     isInverted?: boolean;
     // (undocumented)
     isLoading?: boolean;
@@ -1625,12 +1628,6 @@ export interface IInvertableListRenderItemProps<T> {
     onSelect: (item: T) => void;
     // (undocumented)
     onSelectOnly: (item: T) => void;
-}
-
-// @internal (undocumented)
-export interface IInvertableListState {
-    // (undocumented)
-    notifyLimitHit: boolean;
 }
 
 // @internal (undocumented)
@@ -1769,6 +1766,8 @@ export interface ILegacyListState {
 
 // @internal (undocumented)
 export interface ILegacyMultiSelectListItemProps {
+    // (undocumented)
+    intl: IntlShape;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
@@ -2391,13 +2390,11 @@ export const InsightListItem: React_2.ForwardRefExoticComponent<Pick<IInsightLis
 export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
 
 // @internal (undocumented)
-export class InvertableList<T> extends Component<IInvertableListProps<T>, IInvertableListState> {
-    constructor(props: IInvertableListProps<T>);
-    // (undocumented)
-    static defaultProps: Partial<IInvertableListProps<any>>;
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const InvertableList: React_2.ForwardRefExoticComponent<Pick<IInvertableListProps<unknown>, "height" | "width" | "tagName" | "className" | "onSelect" | "isLoading" | "items" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "renderLimitHit" | "renderNoItems" | "renderLoading" | "getItemKey" | "noItemsFound" | "showSearchField" | "smallSearch" | "actionsAsCheckboxes" | "searchPlaceholder" | "searchString" | "onSearch"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
+    WrappedComponent: React_2.ComponentType<IInvertableListProps<unknown>>;
+};
 
 // @internal (undocumented)
 export interface IOffset {
