@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
-import { FormattedMessage } from "react-intl";
+import { FormattedHTMLMessage } from "react-intl";
 
 import { IMeasureDropdownItem, IAttributeDropdownItem } from "./types";
 
@@ -29,14 +29,13 @@ const getPreviewTemplate = (operator: RankingFilterOperator, attribute?: IAttrib
 
 export const Preview: React.FC<IPreviewProps> = ({ operator, value, measure, attribute }) => (
     <div className="gd-rf-preview s-rf-preview">
-        <FormattedMessage
+        <FormattedHTMLMessage
             id={getPreviewTemplate(operator, attribute)}
             values={{
                 measure: measure.title,
                 attribute: attribute?.title,
                 operator,
                 value,
-                strong: (chunks: string) => <strong>{chunks}</strong>,
             }}
         />
     </div>
