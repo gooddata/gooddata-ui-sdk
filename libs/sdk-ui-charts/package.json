@@ -74,7 +74,7 @@
         "hoist-non-react-statics": "^3.3.0",
         "lodash": "^4.17.19",
         "polished": "^3.6.7",
-        "react-intl": "^5.23.0",
+        "react-intl": "^3.6.0",
         "react-measure": "^2.3.0",
         "svg-classlist-polyfill": "^1.0.5",
         "ts-invariant": "^0.7.3",

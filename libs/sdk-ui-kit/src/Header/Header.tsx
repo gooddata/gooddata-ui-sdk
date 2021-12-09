@@ -1,6 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import React, { Component, createRef } from "react";
-import { FormattedMessage, IntlProvider } from "react-intl";
+import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -40,7 +40,7 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
         .reduce((sum, childWidth) => sum + childWidth, SAFETY_PADDING);
 }
 
-class AppHeaderCore extends Component<IAppHeaderProps, IAppHeaderState> {
+class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, IAppHeaderState> {
     public static defaultProps: Pick<
         IAppHeaderProps,
         "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups"
@@ -55,7 +55,7 @@ class AppHeaderCore extends Component<IAppHeaderProps, IAppHeaderState> {
     private resizeHandler = debounce(() => this.measure(), 100);
     private stylesheet: HTMLStyleElement;
 
-    constructor(props: IAppHeaderProps) {
+    constructor(props: IAppHeaderProps & WrappedComponentProps) {
         super(props);
 
         this.state = {
@@ -68,14 +68,6 @@ class AppHeaderCore extends Component<IAppHeaderProps, IAppHeaderState> {
     }
 
     public render() {
-        const { intl } = this.props;
-        if (intl) {
-            return <IntlProvider {...intl}>{this.renderMain()}</IntlProvider>;
-        }
-        return this.renderMain();
-    }
-
-    private renderMain() {
         const { logoUrl, logoTitle, workspacePicker } = this.props;
 
         this.createStyles();
@@ -364,4 +356,6 @@ class AppHeaderCore extends Component<IAppHeaderProps, IAppHeaderState> {
 /**
  * @internal
  */
-export const AppHeader = withTheme(AppHeaderCore);
+export const AppHeader = withTheme(
+    injectIntl<"intl", IAppHeaderProps & WrappedComponentProps>(AppHeaderCore),
+);

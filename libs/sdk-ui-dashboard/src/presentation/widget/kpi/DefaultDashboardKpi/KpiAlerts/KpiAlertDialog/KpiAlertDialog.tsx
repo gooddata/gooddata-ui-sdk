@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import isEqual from "lodash/isEqual";
 import last from "lodash/last";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedHTMLMessage, FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { Button, Input, Typography, Overlay, useMediaQuery, Spinner, Message } from "@gooddata/sdk-ui-kit";
 import {
     IDashboardDateFilter,
@@ -299,7 +299,7 @@ export class KpiAlertDialog extends Component<
 
         const emailMe = (
             <span className="underline-dotted" title={this.props.userEmail}>
-                <FormattedMessage id="kpiAlertDialog.emailMe" />
+                <FormattedHTMLMessage id="kpiAlertDialog.emailMe" />
             </span>
         );
 
@@ -398,12 +398,12 @@ export class KpiAlertDialog extends Component<
         const shouldShowFiltersDifferMessage = !!this.props.alert && filtersDiffer;
         return shouldShowFiltersDifferMessage ? (
             <Message type="warning">
-                <FormattedMessage id="kpiAlertDialog.filtersDiffer" />
+                <FormattedHTMLMessage id="kpiAlertDialog.filtersDiffer" />
                 {!!this.props.onApplyAlertFiltersClick && (
                     <>
                         {" "}
                         <a className="s-apply-alert-filters" onClick={this.applyAlertFilterSetting}>
-                            <FormattedMessage id="kpiAlertDialog.filtersApply" />
+                            <FormattedHTMLMessage id="kpiAlertDialog.filtersApply" />
                         </a>
                     </>
                 )}
@@ -413,23 +413,17 @@ export class KpiAlertDialog extends Component<
         );
     }
 
+    renderErrorMessage(messageId: string): React.ReactNode {
+        return (
+            <Message type="error">
+                <FormattedHTMLMessage id={messageId} />
+            </Message>
+        );
+    }
+
     renderValidationMessage(): React.ReactNode {
         if (!this.isAlertValid() && !this.isAlertEmpty()) {
-            return (
-                <Message type="error">
-                    <FormattedMessage
-                        id="kpiAlertDialog.invalidNumber"
-                        values={{
-                            strong: (chunks: string) => (
-                                <>
-                                    <strong>{chunks}</strong>
-                                    <br />
-                                </>
-                            ),
-                        }}
-                    />
-                </Message>
-            );
+            return this.renderErrorMessage("kpiAlertDialog.invalidNumber");
         }
 
         return false;
@@ -437,11 +431,7 @@ export class KpiAlertDialog extends Component<
 
     renderSavingErrorMessage(): React.ReactNode {
         if (this.props.alertSavingStatus === "error") {
-            return (
-                <Message type="error">
-                    <FormattedMessage id="kpiAlertDialog.savingFailed" />
-                </Message>
-            );
+            return this.renderErrorMessage("kpiAlertDialog.savingFailed");
         }
 
         return false;
@@ -449,11 +439,7 @@ export class KpiAlertDialog extends Component<
 
     renderUpdatingErrorMessage(): React.ReactNode {
         if (this.props.alertUpdatingStatus === "error") {
-            return (
-                <Message type="error">
-                    <FormattedMessage id="kpiAlertDialog.updateBrokenFailed" />
-                </Message>
-            );
+            return this.renderErrorMessage("kpiAlertDialog.updateBrokenFailed");
         }
 
         return false;
@@ -461,11 +447,7 @@ export class KpiAlertDialog extends Component<
 
     renderDeletingErrorMessage(): React.ReactNode {
         if (this.props.alertDeletingStatus === "error") {
-            return (
-                <Message type="error">
-                    <FormattedMessage id="kpiAlertDialog.deleteingFailed" />
-                </Message>
-            );
+            return this.renderErrorMessage("kpiAlertDialog.deleteingFailed");
         }
 
         return false;

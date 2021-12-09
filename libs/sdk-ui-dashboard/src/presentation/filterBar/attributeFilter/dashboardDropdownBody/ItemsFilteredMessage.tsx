@@ -2,7 +2,7 @@
 import React from "react";
 import { IItemsFilteredMessageProps } from "./AllItemsFilteredMessage";
 import { ArrowOffsets, Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage } from "react-intl";
+import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tl" }, { align: "tc bl" }];
 const bubbleArrowOffsets: ArrowOffsets = { "bc tl": [-100, 10], "tc bl": [-100, -10] };
@@ -20,12 +20,9 @@ export const ItemsFilteredMessage: React.FC<IItemsFilteredMessageProps> = ({ par
                     alignPoints={bubbleAlignPoints}
                     arrowOffsets={bubbleArrowOffsets}
                 >
-                    <FormattedMessage
+                    <FormattedHTMLMessage
                         id="attributesDropdown.itemsFiltered.tooltip"
-                        values={{
-                            filters: parentFilterTitles.join(", "),
-                            strong: (chunks: string) => <strong>{chunks}</strong>,
-                        }}
+                        values={{ filters: parentFilterTitles.join(", ") }}
                     />
                 </Bubble>
             </BubbleHoverTrigger>

@@ -78,7 +78,7 @@
     "kpiAlertDialog.emailMe": "メールで通知する",
     "kpiAlertDialog.emailMeWhen": "KPI が次の場合、{emailMe}",
     "kpiAlertDialog.emailInfo": "電子メールの送信先:{userEmail}",
-    "kpiAlertDialog.invalidNumber": "<strong>この数字は有効ではありません。</strong>再確認してもう一度試してください。",
+    "kpiAlertDialog.invalidNumber": "<strong>この数字は有効ではありません。</strong><br />再確認してもう一度試してください。",
     "kpiAlertDialog.filtersDiffer": "通知が設定されたときと異なるフィルターが、KPIに適用されています。",
     "kpiAlertDialog.filtersApply": "通知のフィルターをダッシュボードに適用",
     "kpiAlertDialog.savingFailed": "通知を保存できませんでした。もう一度やり直してください。",
@@ -125,18 +125,5 @@
     "widget.options.menu.exportToCSV": "CSV にエクスポート",
     "widget.options.menu.exportToXLSX": "XLSX にエクスポート",
     "dashboard.error.empty.heading": "このダッシュボードは空欄です",
-    "dashboard.error.empty.text": "すべてのインサイトは削除されました。",
-    "attributesDropdown.placeholder": "アトリビュートを検索…",
-    "attributesDropdown.noData": "このアトリビュートには値がありません。",
-    "attributesDropdown.configuration": "設定",
-    "attributesDropdown.itemsFiltered": "アイテムはフィルター済み",
-    "attributesDropdown.allItemsFiltered": "すべてのアイテムはフィルター済み",
-    "attributesDropdown.itemsFiltered.tooltip": "アイテムのフィルター：<strong>{filters}</strong>",
-    "attributesDropdown.save": "保存",
-    "attributesDropdown.filterBy": "次によりフィルター:",
-    "attributesDropdown.displayValuesAs": "値の表示方法",
-    "attributesDropdown.attributeNameWithData": "データの",
-    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> フィルターが無効 <strong>{parentTitle}</strong>。フィルターアトリビュートとデータモデルが無関係です。",
-    "attributesDropdown.filterConfiguredMessage": "直接フィルターか、他のフィルターで<strong>{parentTitle}</strong> すでにフィルター済み <strong>{childTitle}</strong>。",
-    "attributesDropdown.removeTooltip": "ダッシュボードから削除"
+    "dashboard.error.empty.text": "すべてのインサイトは削除されました。"
 }
