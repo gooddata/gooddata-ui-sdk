@@ -370,6 +370,8 @@ export class XhrModule {
             this.configStorage.domain,
         );
 
+        simulateBeforeSend(url, settings); // mutates `settings` param
+
         this.tokenRequest = this.fetch(url, settings);
         const response = await this.tokenRequest;
         const responseBody = await response.text();
