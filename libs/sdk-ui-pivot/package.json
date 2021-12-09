@@ -73,7 +73,7 @@
         "custom-event": "^1.0.1",
         "fixed-data-table-2": "^1.2.0",
         "lodash": "^4.17.19",
-        "react-intl": "^5.23.0",
+        "react-intl": "^3.6.0",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0",
         "uuid": "^8.3.2"

@@ -52,7 +52,7 @@
         "@gooddata/sdk-ui": "^8.8.0-alpha.21",
         "lodash": "^4.17.19",
         "polished": "^3.6.7",
-        "react-intl": "^5.23.0",
+        "react-intl": "^3.6.0",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0"
     },
